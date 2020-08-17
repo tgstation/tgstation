@@ -7,7 +7,7 @@
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	item_state = "spaceold"
+	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -28,7 +28,7 @@
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
-	item_state = "s_suit"
+	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -61,6 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
+		update_hud_icon(user)		// update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -227,10 +228,10 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge >= THERMAL_REGULATOR_COST)
-		if(cell_percent > 0.60)
+		if(cell_percent > 60)
 			human.update_spacesuit_hud_icon("high")
 			return
-		if(cell_percent > 0.20)
+		if(cell_percent > 20)
 			human.update_spacesuit_hud_icon("mid")
 			return
 		human.update_spacesuit_hud_icon("low")

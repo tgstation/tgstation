@@ -10,14 +10,15 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("warned", "cautioned", "smashed")
+	attack_verb_continuous = list("warns", "cautions", "smashes")
+	attack_verb_simple = list("warn", "caution", "smash")
 
 /obj/item/choice_beacon
 	name = "choice beacon"
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
-	item_state = "radio"
+	inhand_icon_state = "radio"
 	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
@@ -61,7 +62,7 @@
 			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Item request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
 	to_chat(M, msg)
 
-	new /obj/effect/DPtarget(get_turf(src), pod)
+	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
@@ -111,7 +112,7 @@
 
 /obj/item/storage/box/hero/carphunter
 	name = "Carp Hunter, Wildlife Expert - 2506."
-	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate enviromentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
+	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
@@ -150,7 +151,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("skubbed")
+	attack_verb_continuous = list("skubs")
+	attack_verb_simple = list("skub")
 
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
@@ -160,7 +162,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/virgin_mary
-	name = "A picture of the virgin mary"
+	name = "\proper a picture of the virgin mary"
 	desc = "A small, cheap icon depicting the virgin mother."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "madonna"
@@ -173,14 +175,10 @@
 #define NICKNAME_CAP	(MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	var/ignition_msg = W.ignition_effect(src, user)
-	if(!ignition_msg)
-		return
 	if(resistance_flags & ON_FIRE)
 		return
-	user.dropItemToGround(src)
-	user.visible_message("<span class='danger'>[user] lights [src] ablaze with [W]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-	fire_act()
+	if(!burn_paper_product_attackby_check(W, user, TRUE))
+		return
 	if(used_up)
 		return
 	if(!isliving(user) || !user.mind) //A sentient mob needs to be burning it, ya cheezit.
@@ -205,7 +203,7 @@
 	joe.real_name = new_name
 	used_up = TRUE
 	mob_mobs += joe
-	joe.say("My soul will burn like this saint if I betray my familiy. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
+	joe.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
 	to_chat(joe, "<span class='userdanger'>Being inducted into the mafia does not grant antagonist status.</span>")
 
 #undef NICKNAME_CAP

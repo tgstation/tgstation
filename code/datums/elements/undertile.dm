@@ -11,7 +11,7 @@
 	var/tile_overlay
 	///whether we use alpha or not. TRUE uses ALPHA_UNDERTILE because otherwise we have 200 different instances of this element for different alphas
 	var/use_alpha
-	///We will switch between anchored and unanchored. for stuff like satchels that shouldnt be pullable under tiles but are otherwise unanchored
+	///We will switch between anchored and unanchored. for stuff like satchels that shouldn't be pullable under tiles but are otherwise unanchored
 	var/use_anchor
 
 /datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE)
@@ -41,7 +41,7 @@
 		if(use_alpha)
 			source.alpha = ALPHA_UNDERTILE
 		if(use_anchor)
-			source.anchored = TRUE
+			source.set_anchored(TRUE)
 
 	else
 		if(invisibility_trait)
@@ -51,7 +51,7 @@
 		if(use_alpha)
 			source.alpha = 255
 		if(use_anchor)
-			source.anchored = FALSE
+			source.set_anchored(FALSE)
 
 /datum/element/undertile/Detach(atom/movable/AM, visibility_trait, invisibility_level = INVISIBILITY_MAXIMUM)
 	. = ..()

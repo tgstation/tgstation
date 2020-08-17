@@ -37,7 +37,7 @@
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
 	icon = 'icons/obj/machines/cloning.dmi'
-	icon_state = "pod_g"
+	icon_state = "pod_g" // Please don't delete it and not notice it for months this time.
 
 /obj/structure/showcase/machinery/oldpod
 	name = "damaged cryogenic pod"

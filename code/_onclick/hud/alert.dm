@@ -231,7 +231,7 @@ or something covering your eyes."
 		return
 	to_chat(L, "<span class='mind_control'>[command]</span>")
 
-/obj/screen/alert/drunk //Not implemented
+/obj/screen/alert/drunk
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
@@ -301,11 +301,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, taker)
 
-/obj/screen/alert/give/proc/removeAlert()
-	to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
-	owner.clear_alert("[giver]")
+/obj/screen/alert/give/proc/check_in_range(atom/taker)
+	if (!giver.CanReach(taker))
+		to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
+		owner.clear_alert("[giver]")
 
 /obj/screen/alert/give/Click(location, control, params)
 	. = ..()

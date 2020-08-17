@@ -11,9 +11,8 @@ Contents:
 	name = "ninja suit"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
+	inhand_icon_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
-	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
 	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
@@ -133,7 +132,6 @@ Contents:
 		return FALSE
 	affecting = H
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 0
 	n_hood = H.head
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes
@@ -146,14 +144,13 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
 	icon_state = H.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
 	H.gloves.icon_state = "s-ninjan"
-	H.gloves.item_state = "s-ninjan"
+	H.gloves.inhand_icon_state = "s-ninjan"
 
 
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
@@ -162,7 +159,7 @@ Contents:
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
-		n_gloves.item_state = "s-ninja"
+		n_gloves.inhand_icon_state = "s-ninja"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_gloves.candrain = FALSE
 		n_gloves.draining = FALSE

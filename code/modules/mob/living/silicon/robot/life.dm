@@ -4,7 +4,6 @@
 		return
 
 	..()
-	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
@@ -94,10 +93,9 @@
 		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_mobility()
-	if(stat || buckled || lockcharge)
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		mobility_flags &= ~MOBILITY_MOVE
 	else
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	update_transform()
 	update_action_buttons_icon()
-

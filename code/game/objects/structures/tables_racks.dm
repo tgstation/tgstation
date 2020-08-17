@@ -32,8 +32,9 @@
 	custom_materials = list(/datum/material/iron = 2000)
 	max_integrity = 100
 	integrity_failure = 0.33
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_TABLES)
+	canSmoothWith = list(SMOOTH_GROUP_TABLES)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -43,9 +44,9 @@
 	return "<span class='notice'>The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.</span>"
 
 /obj/structure/table/update_icon()
-	if(smooth)
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
+	if(smoothing_flags)
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/table/narsie_act()
 	var/atom/A = loc
@@ -67,7 +68,7 @@
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
 				if(user.grab_state >= GRAB_NECK)
-					tableheadsmash(user, pushed_mob)
+					tablelimbsmash(user, pushed_mob)
 				else
 					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
@@ -130,24 +131,28 @@
 	pushed_mob.apply_damage(40, STAMINA)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
-	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
+	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto \the [src]!</span>", \
 								"<span class='userdanger'>[user] slams you onto \the [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
-/obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-	pushed_mob.apply_damage(40, STAMINA)
+	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
+	var/extra_wound = 0
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		extra_wound = 20
+	banged_limb.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
-	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
-	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s head against \the [src]!</span>",
-								"<span class='userdanger'>[user] smashes your head against \the [src]</span>")
+	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
+	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!</span>",
+								"<span class='userdanger'>[user] smashes your [banged_limb.name] against \the [src]</span>")
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_headsmash)
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
@@ -183,7 +188,7 @@
 		switch(user.a_intent)
 			if(INTENT_HARM)
 				user.unbuckle_mob(carried_mob)
-				tableheadsmash(user, carried_mob)
+				tablelimbsmash(user, carried_mob)
 			if(INTENT_HELP)
 				var/tableplace_delay = 3.5 SECONDS
 				var/skills_space = ""
@@ -235,6 +240,20 @@
 			new framestack(T, framestackamount)
 	qdel(src)
 
+/obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 24, "cost" = 16)
+	return FALSE
+
+/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the table.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE
+
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -245,10 +264,11 @@
 ///Table on wheels
 /obj/structure/table/rolling
 	name = "Rolling table"
-	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
+	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
-	smooth = SMOOTH_FALSE
-	canSmoothWith = list()
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
@@ -282,6 +302,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
+	smoothing_groups = null
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
@@ -364,9 +385,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	canSmoothWith = list(/obj/structure/table/wood,
-		/obj/structure/table/wood/poker,
-		/obj/structure/table/wood/bar)
+	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -390,16 +410,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy,
-		/obj/structure/table/wood/fancy/black,
-		/obj/structure/table/wood/fancy/blue,
-		/obj/structure/table/wood/fancy/cyan,
-		/obj/structure/table/wood/fancy/green,
-		/obj/structure/table/wood/fancy/orange,
-		/obj/structure/table/wood/fancy/purple,
-		/obj/structure/table/wood/fancy/red,
-		/obj/structure/table/wood/fancy/royalblack,
-		/obj/structure/table/wood/fancy/royalblue)
+	smoothing_groups = list(SMOOTH_GROUP_FANCY_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_FANCY_WOOD_TABLES)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
@@ -465,7 +477,6 @@
 	icon_state = "r_table"
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
-	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
@@ -501,7 +512,8 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/tile/bronze
-	canSmoothWith = list(/obj/structure/table/bronze)
+	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -517,7 +529,9 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "optable"
 	buildstack = /obj/item/stack/sheet/mineral/silver
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 	can_buckle = 1
 	buckle_lying = -1
 	buckle_requires_restraints = 1

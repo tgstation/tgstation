@@ -8,7 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
@@ -197,7 +197,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -276,7 +276,7 @@
 	desc = "Something creepy about it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
@@ -293,14 +293,16 @@
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
-		else if(is_pointed(I))
+		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			target.adjustEarDamage(0,3)
+			var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				ears.adjustEarDamage(0, 3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return

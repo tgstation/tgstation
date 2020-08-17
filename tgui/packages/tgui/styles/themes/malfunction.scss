@@ -14,7 +14,6 @@
 @use '../base.scss' with (
   $color-bg: #1b3443,
   $color-bg-grad-spread: 6%,
-  $border-radius: 2px,
 );
 
 .theme-malfunction {
@@ -33,24 +32,24 @@
     'border-color': #910101,
   ));
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-background': #1a3f57,
+    'background-color': #1a3f57,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #910101,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #235577,
+    'background-color': #235577,
   ));
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #1a3f57,
+    'background-color': #1a3f57,
   ));
 
   .Layout__content {

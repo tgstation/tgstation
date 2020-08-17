@@ -113,21 +113,24 @@
 			continue
 
 		var/image/I
+
+		switch(D)
+			if(NORTH)
+				direction = "north"
+			if(SOUTH)
+				direction = "south"
+			if(EAST)
+				direction = "east"
+			if(WEST)
+				direction = "west"
+
 		if(turn_connects)
-			switch(D)
-				if(NORTH)
-					direction = "north"
-				if(SOUTH)
-					direction = "south"
-				if(EAST)
-					direction = "east"
-				if(WEST)
-					direction = "west"
 			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
 
 		else
-			I = image('icons/obj/plumbing/plumbers.dmi', color,layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
+			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]-s", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
 			I.dir = D
+
 		overlays += I
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
@@ -158,7 +161,7 @@
 	active = TRUE
 
 	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self destruct if placed under a plumbing machine. machines disable when they get moved
+	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
 		if(D.anchored)								//that should cover everything
 			D.disconnect_duct()
 

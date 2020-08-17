@@ -3,7 +3,7 @@
 	desc = "Safely and efficiently extracts excess fat from a subject."
 	icon = 'icons/obj/machines/fat_sucker.dmi'
 	icon_state = "fat"
-
+	circuit = /obj/item/circuitboard/machine/fat_sucker
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)
@@ -164,7 +164,7 @@
 		else
 			say("Subject not fat enough.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it wont work
+			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it won't work
 
 /obj/machinery/fat_sucker/proc/stop()
 	processing = FALSE

@@ -45,7 +45,7 @@
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
 
-/datum/antagonist/obsessed/proc/forge_objectives(var/datum/mind/obsessionmind)
+/datum/antagonist/obsessed/proc/forge_objectives(datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner
@@ -248,7 +248,7 @@
 /datum/objective/polaroid/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Take a photo with [target.name] while they're alive."
+		explanation_text = "Take a photo of [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -261,7 +261,7 @@
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I
-				if(P.picture.mobs_seen.Find(owner) && P.picture.mobs_seen.Find(target) && !P.picture.dead_seen.Find(target))//you are in the picture, they are but they are not dead.
+				if(P.picture && (target.current in P.picture.mobs_seen) && !(target.current in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
 					return TRUE
 	return FALSE
 

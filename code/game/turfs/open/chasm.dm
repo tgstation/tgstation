@@ -3,10 +3,11 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturfs = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/chasms.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_TURF_CHASM)
+	canSmoothWith = list(SMOOTH_GROUP_TURF_CHASM)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
 
@@ -90,6 +91,15 @@
 	light_power = 0.65 //less bright, too
 	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
+// Chasms for Ice moon, with planetary atmos and glow
+/turf/open/chasm/icemoon
+	icon = 'icons/turf/floors/icechasms.dmi'
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/chasm/icemoon
+	light_range = 1.9
+	light_power = 0.65
+	light_color = LIGHT_COLOR_PURPLE
 
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle

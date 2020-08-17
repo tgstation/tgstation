@@ -35,14 +35,6 @@
 /obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
-/obj/item/singularityhammer/equipped(mob/user, slot, initial)
-	. = ..()
-	add_atom_colour("#212121", FIXED_COLOUR_PRIORITY)
-
-/obj/item/singularityhammer/dropped(mob/user, silent)
-	. = ..()
-	remove_atom_colour(FIXED_COLOUR_PRIORITY, "#212121")
-
 /obj/item/singularityhammer/update_icon_state()
 	. = ..()
 	icon_state = "singularity_hammer0"
@@ -90,6 +82,7 @@
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
+	worn_icon_state = "mjolnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -121,7 +114,8 @@
 	icon_state = "mjollnir0"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
-	target.Stun(60)
+	target.Stun(1.5 SECONDS)
+	target.Knockdown(10 SECONDS)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()

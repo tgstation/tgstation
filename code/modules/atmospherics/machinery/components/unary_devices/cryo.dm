@@ -1,4 +1,6 @@
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+///Max temperature allowed inside the cryotube, should break before reaching this heat
+#define MAX_TEMPERATURE 4000
 
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
@@ -10,8 +12,6 @@
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
-	ui_x = 400
-	ui_y = 550
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
@@ -36,6 +36,8 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
+	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
+	var/treating_wounds = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
@@ -78,6 +80,16 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
+	///Take the turf the cryotube is on
+	var/turf/T = get_turf(src)
+	if(T)
+		///Take the air composition of the turf
+		var/datum/gas_mixture/env = T.return_air()
+		///Take the air composition inside the cryotube
+		var/datum/gas_mixture/air1 = airs[1]
+		env.merge(air1)
+		T.air_update_turf()
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
@@ -185,21 +197,34 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
+	if(mob_occupant.on_fire)
+		mob_occupant.ExtinguishMob()
 	if(!check_nap_violations())
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
+	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
+		if(iscarbon(mob_occupant))
+			var/mob/living/carbon/C = mob_occupant
+			if(C.all_wounds)
+				if(!treating_wounds) // if we have wounds and haven't already alerted the doctors we're only dealing with the wounds, let them know
+					treating_wounds = TRUE
+					playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+					var/msg = "Patient vitals fully recovered, continuing automated wound treatment."
+					radio.talk_into(src, msg, radio_channel)
+			else // otherwise if we were only treating wounds and now we don't have any, turn off treating_wounds so we can boot 'em out
+				treating_wounds = FALSE
 
-	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
-		on = FALSE
-		update_icon()
-		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		var/msg = "Patient fully restored."
-		if(autoeject) // Eject if configured.
-			msg += " Auto ejecting patient now."
-			open_machine()
-		radio.talk_into(src, msg, radio_channel)
-		return
+		if(!treating_wounds)
+			on = FALSE
+			update_icon()
+			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+			var/msg = "Patient fully restored."
+			if(autoeject) // Eject if configured.
+				msg += " Auto ejecting patient now."
+				open_machine()
+			radio.talk_into(src, msg, radio_channel)
+			return
 
 	var/datum/gas_mixture/air1 = airs[1]
 
@@ -209,8 +234,7 @@
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
-				beaker.reagents.reaction(occupant, VAPOR)
+				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25, method = VAPOR) // Transfer reagents.
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
@@ -245,11 +269,14 @@
 
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
-			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
+			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()
+
+		if(air1.temperature > 2000)
+			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
@@ -269,6 +296,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
+	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
@@ -335,11 +363,14 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Cryo", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Cryo", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
@@ -470,3 +501,4 @@
 		SSair.add_to_rebuild_queue(src)
 
 #undef CRYOMOBS
+#undef MAX_TEMPERATURE

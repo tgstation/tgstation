@@ -17,6 +17,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 	can_be_held = TRUE
+	pet_bonus = TRUE
+	pet_bonus_emote = "woofs happily!"
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
@@ -70,10 +72,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+							manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 		if(prob(1))
-			emote("me", 1, pick("dances around.","chases its tail!"))
+			manual_emote(pick("dances around.","chases its tail!"))
 			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
 //Corgis and pugs are now under one dog subtype
@@ -125,6 +127,10 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 	held_state = "pug"
+
+/mob/living/simple_animal/pet/dog/pug/mcgriff
+	name = "McGriff"
+	desc = "This dog can tell someting smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
@@ -379,7 +385,7 @@
 		DF.apply(src)
 
 //IAN! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/dog/corgi/Ian
+/mob/living/simple_animal/pet/dog/corgi/ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
 	gender = MALE
@@ -397,7 +403,7 @@
 	var/memory_saved = FALSE
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/ian/Initialize()
 	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
@@ -420,18 +426,18 @@
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/ian/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/death()
+/mob/living/simple_animal/pet/dog/corgi/ian/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
+/mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
 		S["age"] 		>> age
@@ -453,7 +459,7 @@
 	if(saved_head)
 		place_on_head(new saved_head)
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/dog/corgi/ian/proc/Write_Memory(dead)
 	var/json_file = file("data/npc_saves/Ian.json")
 	var/list/file_data = list()
 	if(!dead)
@@ -473,7 +479,7 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
+/mob/living/simple_animal/pet/dog/corgi/ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
 	N.setDir(dir)
@@ -600,7 +606,7 @@
 
 
 //LISA! SQUEEEEEEEEE~
-/mob/living/simple_animal/pet/dog/corgi/Lisa
+/mob/living/simple_animal/pet/dog/corgi/lisa
 	name = "Lisa"
 	real_name = "Lisa"
 	gender = FEMALE
@@ -620,32 +626,13 @@
 	var/puppies = 0
 
 //Lisa already has a cute bow!
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
+/mob/living/simple_animal/pet/dog/corgi/lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
+/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
 	..()
 
 	make_babies()
-
-/mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", 1, "yaps happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", 1, "growls!")

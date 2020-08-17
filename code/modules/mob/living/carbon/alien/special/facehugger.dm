@@ -13,7 +13,7 @@
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
-	item_state = "facehugger"
+	inhand_icon_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	clothing_flags = MASKINTERNALS
 	throw_range = 5
@@ -32,16 +32,17 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
+	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
 	sterile = 1
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
-	item_state = "facehugger_inactive"
+	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
-	item_state = "facehugger_impregnated"
+	inhand_icon_state = "facehugger_impregnated"
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -240,7 +241,7 @@
 		return
 
 	icon_state = "[initial(icon_state)]_dead"
-	item_state = "facehugger_inactive"
+	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
 	visible_message("<span class='danger'>[src] curls up into a ball!</span>")

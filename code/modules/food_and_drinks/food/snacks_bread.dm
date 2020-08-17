@@ -197,13 +197,15 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-	item_state = "baguette"
+	inhand_icon_state = "baguette"
+	worn_icon_state = "baguette"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	attack_verb = list("touche'd")
+	attack_verb_continuous = list("touche's")
+	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 	value = FOOD_FAST
@@ -213,7 +215,7 @@
 	desc = "Alas, it is limited."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
-	item_state = "garlicbread"
+	inhand_icon_state = "garlicbread"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/garlic = 2)
 	bitesize = 3
@@ -237,7 +239,7 @@
 	plane = initial(plane)
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
-	item_state = fried.item_state
+	inhand_icon_state = fried.inhand_icon_state
 	desc = fried.desc
 	w_class = fried.w_class
 	slowdown = fried.slowdown
@@ -282,7 +284,7 @@
 			desc = "[desc] Deep-fried to perfection."
 		if(60 to INFINITY)
 			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
-			name = "the physical manifestation of the very concept of fried foods"
+			name = "\proper the physical manifestation of the very concept of fried foods"
 			desc = "A heavily-fried...something.  Who can tell anymore?"
 	filling_color = color
 	foodtype |= FRIED

@@ -134,7 +134,7 @@
 	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
-/obj/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+/obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
@@ -158,7 +158,7 @@
 	wabbajack(change)
 	qdel(src)
 
-/proc/wabbajack(mob/living/M)
+/proc/wabbajack(mob/living/M, randomize)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
@@ -185,7 +185,8 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	if(!randomize)
+		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -312,7 +313,7 @@
 	target.animate_atom_living(firer)
 	..()
 
-/atom/proc/animate_atom_living(var/mob/living/owner = null)
+/atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
@@ -336,9 +337,9 @@
 		else
 			var/obj/O = src
 			if(istype(O, /obj/item/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
 
 	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
@@ -455,7 +456,7 @@
 	animate(src, alpha = 0, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
 
-/obj/structure/closet/decay/open(mob/living/user)
+/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
 		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
@@ -577,7 +578,7 @@
 		possession_test(M)
 		return BULLET_ACT_HIT
 
-/obj/projectile/magic/wipe/proc/possession_test(var/mob/living/carbon/M)
+/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)

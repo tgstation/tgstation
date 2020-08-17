@@ -2,8 +2,8 @@
 NOTES:
 There is a DB table to track ckeys and associated discord IDs.
 This system REQUIRES TGS, and will auto-disable if TGS is not present.
-The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasnt properly shutdown
-It only writes to the disk every 5 minutes, and it wont write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
+The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
+It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
 The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
 
 ##################
@@ -20,7 +20,7 @@ MIDROUND:
 2] On fire, it will write that to the disk, as long as conditions above are correct
 
 END ROUND:
-1] The file is force-saved, incase it hasnt fired at end round
+1] The file is force-saved, incase it hasn't fired at end round
 
 This is an absolute clusterfuck, but its my clusterfuck -aa07
 */
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(discord)
 	/// list of people who tried to reverify, so they can only do it once per round as a shitty slowdown
 	var/list/reverify_cache = list()
 	var/notify_file = file("data/notify.json")
-	/// Is TGS enabled (If not we wont fire because otherwise this is useless)
+	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = 0
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
@@ -56,12 +56,10 @@ SUBSYSTEM_DEF(discord)
 		people_to_notify = json_decode(file2text(notify_file))
 	catch
 		pass() // The list can just stay as its default (blank). Pass() exists because it needs a catch
-	var/notifymsg = ""
-	for(var/id in people_to_notify)
-		// I would use jointext here, but I dont think you can two-side glue with it, and I would have to strip characters otherwise
-		notifymsg += "<@[id]> " // 22 charaters per notify, 90 notifies per message, so I am not making a failsafe because 90 people arent going to notify at once
+	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
-		send2chat("[notifymsg]", CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
+		notifymsg += ", a new round is starting!"
+		send2chat(trim(notifymsg), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
 	return ..()
 
@@ -85,7 +83,12 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ID from ckey
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
-	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery("SELECT discord_id FROM [format_table_name("player")] WHERE ckey = '[sanitizeSQL(lookup_ckey)]'")
+	//We cast the discord ID to varchar to prevent BYOND mangling
+	//it into it's scientific notation
+	var/datum/db_query/query_get_discord_id = SSdbcore.NewQuery(
+		"SELECT CAST(discord_id AS CHAR(25)) FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = lookup_ckey)
+	)
 	if(!query_get_discord_id.Execute())
 		qdel(query_get_discord_id)
 		return
@@ -95,7 +98,10 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ckey from ID
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/DBQuery/query_get_discord_ckey = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE discord_id = '[sanitizeSQL(lookup_id)]'")
+	var/datum/db_query/query_get_discord_ckey = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("player")] WHERE discord_id = :discord_id",
+		list("discord_id" = lookup_id)
+	)
 	if(!query_get_discord_ckey.Execute())
 		qdel(query_get_discord_ckey)
 		return
@@ -105,14 +111,20 @@ SUBSYSTEM_DEF(discord)
 
 // Finalises link
 /datum/controller/subsystem/discord/proc/link_account(ckey)
-	var/datum/DBQuery/link_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = '[sanitizeSQL(account_link_cache[ckey])]' WHERE ckey = '[sanitizeSQL(ckey)]'")
+	var/datum/db_query/link_account = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("player")] SET discord_id = :discord_id WHERE ckey = :ckey",
+		list("discord_id" = account_link_cache[ckey], "ckey" = ckey)
+	)
 	link_account.Execute()
 	qdel(link_account)
 	account_link_cache -= ckey
 
 // Unlink account (Admin verb used)
 /datum/controller/subsystem/discord/proc/unlink_account(ckey)
-	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = '[sanitizeSQL(ckey)]'")
+	var/datum/db_query/unlink_account = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	unlink_account.Execute()
 	qdel(unlink_account)
 
@@ -122,11 +134,11 @@ SUBSYSTEM_DEF(discord)
 	return num_only.Replace(input, "")
 
 /datum/controller/subsystem/discord/proc/grant_role(id)
-	// Ignore this shit if config isnt enabled for it
+	// Ignore this shit if config isn't enabled for it
 	if(!CONFIG_GET(flag/enable_discord_autorole))
 		return
 
-	var/url = "https://discordapp.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
+	var/url = "https://discord.com/api/guilds/[CONFIG_GET(string/discord_guildid)]/members/[id]/roles/[CONFIG_GET(string/discord_roleid)]"
 
 	// Make the request
 	var/datum/http_request/req = new()

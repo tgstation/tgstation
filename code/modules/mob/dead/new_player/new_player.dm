@@ -41,6 +41,8 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
+	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
+	asset_datum.send(client)
 	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
@@ -61,8 +63,22 @@
 			var/isadmin = FALSE
 			if(client?.holder)
 				isadmin = TRUE
-			var/sql_ckey = sanitizeSQL(ckey)
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = 0 AND")] Now() BETWEEN starttime AND endtime AND deleted = 0 AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = '[sql_ckey]' AND deleted = 0) AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = '[sql_ckey]' AND deleted = 0)")
+			var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
+				SELECT id FROM [format_table_name("poll_question")]
+				WHERE (adminonly = 0 OR :isadmin = 1)
+				AND Now() BETWEEN starttime AND endtime
+				AND deleted = 0
+				AND id NOT IN (
+					SELECT pollid FROM [format_table_name("poll_vote")]
+					WHERE ckey = :ckey
+					AND deleted = 0
+				)
+				AND id NOT IN (
+					SELECT pollid FROM [format_table_name("poll_textreply")]
+					WHERE ckey = :ckey
+					AND deleted = 0
+				)
+			"}, list("isadmin" = isadmin, "ckey" = ckey))
 			var/rs = REF(src)
 			if(!query_get_new_polls.Execute())
 				qdel(query_get_new_polls)
@@ -77,7 +93,6 @@
 
 	output += "</center>"
 
-	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
@@ -163,9 +178,6 @@
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
-	if(!ready && href_list["preference"])
-		if(client)
-			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
 		new_player_panel()
 
@@ -320,6 +332,9 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		humanc.increment_scar_slot()
+		humanc.load_persistent_scars()
+
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
@@ -420,6 +435,8 @@
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
 
+	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
+
 	client.prefs.copy_to(H, antagonist = is_antag)
 	H.dna.update_dna_identity()
 	if(mind)
@@ -427,6 +444,7 @@
 			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.original_character = H
 
 	H.name = real_name
 
@@ -444,6 +462,12 @@
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest_html()

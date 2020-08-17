@@ -2,7 +2,7 @@
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
+	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
@@ -15,6 +15,7 @@
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
 	custom_price = 150
+	sharpness = SHARP_POINTY
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -155,10 +156,21 @@
 				mode = SYRINGE_DRAW
 				update_icon()
 
+/* 
+ * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
+ */
+/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
+	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) 
+	if(reagents?.total_volume)
+		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, method = INJECT)
+
+	return discover_after
+
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
+	inhand_icon_state = "syringe_[rounded_vol]"
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
@@ -191,12 +203,12 @@
 /obj/item/reagent_containers/syringe/multiver
 	name = "syringe (multiver)"
 	desc = "Contains multiver. Diluted with granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 6, /datum/reagent/medicine/granibitaluri = 9)
+	list_reagents = list(/datum/reagent/medicine/c2/multiver = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/convermol
 	name = "syringe (convermol)"
 	desc = "Contains convermol. Diluted with granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/convermol = 6, /datum/reagent/medicine/granibitaluri = 9)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 6, /datum/reagent/medicine/granibitaluri = 9)
 
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
@@ -279,7 +291,7 @@
 /obj/item/reagent_containers/syringe/syriniver
 	name = "syringe (syriniver)"
 	desc = "Contains syriniver, used to treat toxins and purge chemicals.The tag on the syringe states 'Inject one time per minute'"
-	list_reagents = list(/datum/reagent/medicine/C2/syriniver = 15)
+	list_reagents = list(/datum/reagent/medicine/c2/syriniver = 15)
 
 /obj/item/reagent_containers/syringe/contraband
 	name = "unlabeled syringe"

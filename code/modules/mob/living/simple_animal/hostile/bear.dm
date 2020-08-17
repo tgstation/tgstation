@@ -25,8 +25,11 @@
 	speed = 0
 
 	obj_damage = 60
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage_lower = 15 // i know it's like half what it used to be, but bears cause bleeding like crazy now so it works out
+	melee_damage_upper = 15
+	wound_bonus = -5
+	bare_wound_bonus = 10 // BEAR wound bonus am i right
+	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -70,7 +73,7 @@
 
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
-/mob/living/simple_animal/hostile/bear/Hudson
+/mob/living/simple_animal/hostile/bear/hudson
 	name = "Hudson"
 	gender = MALE
 	desc = "Feared outlaw, this guy is one bad news bear." //I'm sorry...
@@ -91,8 +94,9 @@
 	icon_dead = "combatbear_dead"
 	faction = list("russian")
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
-	melee_damage_lower = 25
-	melee_damage_upper = 35
+	melee_damage_lower = 18
+	melee_damage_upper = 20
+	wound_bonus = 0
 	armour_penetration = 20
 	health = 120
 	maxHealth = 120
@@ -117,13 +121,14 @@
 		A.maxHealth += 60
 		A.health += 60
 		A.armour_penetration += 20
-		A.melee_damage_lower += 5
+		A.melee_damage_lower += 3
 		A.melee_damage_upper += 5
+		A.wound_bonus += 5
 		A.update_icons()
 		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
 
-mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
+/mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
 	name = "Terrygold"
 	icon_state = "butterbear"
 	icon_living = "butterbear"
@@ -168,7 +173,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
 	if(isliving(target))
 		var/mob/living/L = target
 		if((L.mobility_flags & MOBILITY_STAND))

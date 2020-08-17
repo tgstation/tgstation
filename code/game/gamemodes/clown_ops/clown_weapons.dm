@@ -3,7 +3,7 @@
 	desc = "A seemingly innocent sunflower...with a twist. A <i>slippery</i> twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 3
 	spray_range = 1
 	stream_range = 1
@@ -62,12 +62,12 @@
 	force_on = 0
 	throwforce_on = 0
 	hitsound = null
-	attack_verb_on = list("slipped")
+	attack_verb_on = list("slips")
 	clumsy_check = FALSE
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	sword_color = "yellow"
 	heat = 0
-	light_color = "#ffff00"
+	light_color = COLOR_YELLOW
 	var/next_trombone_allowed = 0
 
 /obj/item/melee/transforming/energy/sword/bananium/ComponentInitialize()

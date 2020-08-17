@@ -333,7 +333,7 @@
 	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
 		stam_regen = TRUE
-		if(stam_paralyzed)
+		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
@@ -361,6 +361,12 @@
 
 		if(stat != DEAD || D.process_dead)
 			D.stage_act()
+
+/mob/living/carbon/handle_wounds()
+	for(var/thing in all_wounds)
+		var/datum/wound/W = thing
+		if(W.processes) // meh
+			W.handle_process()
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
@@ -506,8 +512,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
+			throw_alert("drunk", /obj/screen/alert/drunk)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+			clear_alert("drunk")
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -531,12 +539,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 41)
 			if(prob(25))
-				confused += 2
+				add_confusion(2)
 			Dizzy(10)
 
 		if(drunkenness >= 51)
 			if(prob(3))
-				confused += 15
+				add_confusion(15)
 				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(25)
 

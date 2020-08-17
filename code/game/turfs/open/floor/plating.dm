@@ -99,7 +99,12 @@
 
 	return TRUE
 
-/turf/open/floor/plating/make_plating()
+/turf/open/floor/plating/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
+/turf/open/floor/plating/make_plating(force = FALSE)
 	return
 
 /turf/open/floor/plating/foam

@@ -10,6 +10,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	plane           = OPENSPACE_BACKDROP_PLANE
 	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
+	//I don't know why the others are aligned but I shall do the same.
+	vis_flags		= VIS_INHERIT_ID
 
 /turf/open/transparent/openspace
 	name = "open space"
@@ -49,15 +51,32 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return TRUE
 
 /turf/open/transparent/openspace/zPassIn(atom/movable/A, direction, turf/source)
-	return TRUE
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 /turf/open/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
 	if(A.anchored)
 		return FALSE
-	for(var/obj/O in contents)
-		if(O.obj_flags & BLOCK_Z_FALL)
-			return FALSE
-	return TRUE
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 /turf/open/transparent/openspace/proc/CanCoverUp()
 	return can_cover_up
@@ -78,6 +97,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			return
 		if(L)
 			if(R.use(1))
+				qdel(L)
 				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 				new/obj/structure/lattice/catwalk(src)
@@ -127,3 +147,22 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
+
+/turf/open/transparent/openspace/icemoon
+	name = "ice chasm"
+	baseturfs = /turf/open/transparent/openspace/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+
+/turf/open/transparent/openspace/icemoon/Initialize()
+	. = ..()
+	var/turf/T = below()
+	if(T.flags_1 & NO_RUINS_1)
+		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		return
+	if(!ismineralturf(T))
+		return
+	var/turf/closed/mineral/M = T
+	M.mineralAmt = 0
+	M.gets_drilled()
+

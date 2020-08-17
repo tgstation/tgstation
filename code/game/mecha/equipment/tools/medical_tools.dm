@@ -1,6 +1,7 @@
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
+	mech_flags = EXOSUIT_MODULE_MEDICAL
 
 /obj/item/mecha_parts/mecha_equipment/medical/Initialize()
 	. = ..()
@@ -262,7 +263,7 @@
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	syringes = new
-	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/C2/multiver="Multiver")
+	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
 	processed_reagents = new
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
@@ -301,6 +302,9 @@
 	if(reagents.total_volume<=0)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
+	if(HAS_TRAIT(chassis.occupant, TRAIT_PACIFISM))
+		occupant_message("<span class=\"alert\">The [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+		return
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
 	mechsyringe.forceMove(get_turf(chassis))
@@ -330,8 +334,7 @@
 								R += "[A.name] ([num2text(A.volume)]"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.reaction(M, INJECT)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant, method = INJECT)
 						M.take_bodypart_damage(2)
 						log_combat(originaloccupant, M, "shot", "syringegun")
 					break
@@ -478,7 +481,7 @@
 		if(R.can_synth && add_known_reagent(R.type,R.name))
 			occupant_message("<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
-	occupant_message("<span class='notice'>Analyzis complete.</span>")
+	occupant_message("<span class='notice'>Analysis complete.</span>")
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)

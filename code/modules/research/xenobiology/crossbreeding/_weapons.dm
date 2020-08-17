@@ -22,7 +22,7 @@ Slimecrossing Weapons
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "rainbowknife"
-	item_state = "rainbowknife"
+	inhand_icon_state = "rainbowknife"
 	force = 15
 	throwforce = 15
 	damtype = BRUTE
@@ -33,19 +33,24 @@ Slimecrossing Weapons
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
-			attack_verb = list("slashed","sliced","cut")
+			attack_verb_continuous = list("slashes", "slices", "cuts")
+			attack_verb_simple = list("slash", "slice", "cut")
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb = list("burned","singed","heated")
+			attack_verb_continuous = list("burns", "sings", "heats")
+			attack_verb_simple = list("burn", "sing", "heat")
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
-			attack_verb = list("poisoned","dosed","toxified")
+			attack_verb_continuous = list("poisons", "doses", "toxifies")
+			attack_verb_simple = list("poison", "dose", "toxify")
 		if(OXY)
 			hitsound = 'sound/effects/space_wind.ogg'
-			attack_verb = list("suffocated","winded","vacuumed")
+			attack_verb_continuous = list("suffocates", "winds", "vacuums")
+			attack_verb_simple = list("suffocate", "wind", "vacuum")
 		if(CLONE)
 			hitsound = 'sound/items/geiger/ext1.ogg'
-			attack_verb = list("irradiated","mutated","maligned")
+			attack_verb_continuous = list("irradiates", "mutates", "maligns")
+			attack_verb_simple = list("irradiate", "mutate", "malign")
 	return ..()
 
 //Adamantine shield - Chilling Adamantine
@@ -54,7 +59,7 @@ Slimecrossing Weapons
 	desc = "A gigantic shield made of solid adamantium."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "adamshield"
-	item_state = "adamshield"
+	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	slot_flags = ITEM_SLOT_BACK
@@ -62,7 +67,8 @@ Slimecrossing Weapons
 	force = 0
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2
-	attack_verb = list("bashed","pounded","slammed")
+	attack_verb_continuous = list("bashes", "pounds", "slams")
+	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/shield/adamantineshield/ComponentInitialize()
@@ -75,7 +81,7 @@ Slimecrossing Weapons
 	desc = "A horrifying weapon made of your own bone and blood vessels. It shoots slowing globules of your own blood. Ech."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "bloodgun"
-	item_state = "bloodgun"
+	inhand_icon_state = "bloodgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL

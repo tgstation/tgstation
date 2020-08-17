@@ -5,6 +5,7 @@
 	icon_keyboard = "security_key"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/secure_data
+	light_color = COLOR_SOFT_RED
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1 = null
@@ -18,7 +19,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
@@ -55,7 +55,7 @@
 					dat += {"
 
 		<head>
-			<script src="jquery.min.js"></script>
+			<script src="[SSassets.transport.get_asset_url("jquery.min.js")]"></script>
 			<script type='text/javascript'>
 
 				function updateSearch(){
@@ -258,7 +258,6 @@
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
@@ -273,7 +272,7 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -314,7 +313,7 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
-				else if(IsAdminGhost(M))
+				else if(isAdminGhostAI(M))
 					active1 = null
 					active2 = null
 					authenticated = M.client.holder.admin_signature

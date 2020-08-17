@@ -17,6 +17,7 @@
 	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
+	light_color = LIGHT_COLOR_GREEN
 	//Server linked to.
 	var/obj/machinery/telecomms/message_server/linkedServer = null
 	//Sparks effect - For emag
@@ -38,7 +39,6 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
-	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
 	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
@@ -239,7 +239,6 @@
 	message = defaultmsg
 	var/datum/browser/popup = new(user, "hologram_console", name, 700, 700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
@@ -471,7 +470,6 @@
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-	info_links = info
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()

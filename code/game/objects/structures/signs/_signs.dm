@@ -9,7 +9,7 @@
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
@@ -28,7 +28,7 @@
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	item_state = "backing"
+	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -49,7 +49,7 @@
 
 /obj/structure/sign/attack_hand(mob/user)
 	. = ..()
-	if(.)
+	if(. || user.is_blind())
 		return
 	user.examinate(src)
 
@@ -181,7 +181,7 @@
 		else
 			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
 		icon_state = initial(sign_type.icon_state)
-		sign_path = sign_type	
+		sign_path = sign_type
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()

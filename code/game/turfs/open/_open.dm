@@ -4,25 +4,29 @@
 
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/wet
 
 	var/footstep = null
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
-/turf/open/ComponentInitialize()
-	. = ..()
-	if(wet)
-		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
-
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
-	return (direction == DOWN)
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of A
 /turf/open/zPassOut(atom/movable/A, direction, turf/destination)
-	return (direction == UP)
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of air
 /turf/open/zAirIn(direction, turf/source)
@@ -52,15 +56,33 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
-/turf/open/indestructible/sound
-	name = "squeaky floor"
+/turf/open/indestructible/white
+	icon_state = "white"
+
+/turf/open/indestructible/light
+	icon_state = "light_on-1"
+
+/turf/open/indestructible/permalube
+	icon_state = "darkfull"
+
+/turf/open/indestructible/permalube/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/indestructible/honk
+	name = "bananium floor"
+	icon_state = "bananium"
 	footstep = null
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound
+	var/sound = 'sound/effects/clownstep1.ogg'
 
-/turf/open/indestructible/sound/Entered(atom/movable/AM)
+/turf/open/indestructible/honk/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/indestructible/honk/Entered(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		playsound(src,sound,50,TRUE)
@@ -77,22 +99,6 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
-
-/turf/open/indestructible/carpet
-	name = "carpet"
-	desc = "Soft velvet carpeting. Feels good between your toes."
-	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "carpet"
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/indestructible/carpet)
-	flags_1 = NONE
-	bullet_bounce_sound = null
-	footstep = FOOTSTEP_CARPET
-	barefootstep = FOOTSTEP_CARPET_BAREFOOT
-	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -116,7 +122,7 @@
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
-	smooth = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two
@@ -191,10 +197,12 @@
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	for(var/obj/effect/O in src)
-		if(is_cleanable(O))
-			qdel(O)
+	wash(CLEAN_WASH)
+	for(var/am in src)
+		var/atom/movable/movable_content = am
+		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
+			continue
+		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)

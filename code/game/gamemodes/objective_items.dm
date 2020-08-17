@@ -63,7 +63,7 @@
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray."
-	targetitem = /obj/item/reagent_containers/hypospray/CMO
+	targetitem = /obj/item/reagent_containers/hypospray/cmo
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 
@@ -195,9 +195,9 @@
 	return ..()
 
 //Old ninja objectives.
-/datum/objective_item/special/pinpointer/nuke
+/datum/objective_item/special/pinpointer
 	name = "the captain's pinpointer."
-	targetitem = /obj/item/pinpointer
+	targetitem = /obj/item/pinpointer/nuke
 	difficulty = 10
 
 /datum/objective_item/special/aegun

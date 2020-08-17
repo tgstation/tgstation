@@ -18,7 +18,7 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
 	GLOB.human_list += src
@@ -65,6 +65,10 @@
 				stat(null, "Internal Atmosphere Info: [internal.name]")
 				stat(null, "Tank Pressure: [internal.air_contents.return_pressure()]")
 				stat(null, "Distribution Pressure: [internal.distribute_pressure]")
+		if(istype(wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/S = wear_suit
+			stat(null, "Thermal Regulator: [S.thermal_on ? "on" : "off"]")
+			stat(null, "Cell Charge: [S.cell ? "[round(S.cell.percent(), 0.1)]%" : "!invalid!"]")
 
 		if(mind)
 			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
@@ -275,7 +279,7 @@
 			update_body()
 
 	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
 		shoes.handle_tying(usr)
 
 ///////HUDs///////
@@ -392,7 +396,7 @@
 			else //Implant and standard glasses check access
 				if(H.wear_id)
 					var/list/access = H.wear_id.GetAccess()
-					if(ACCESS_SEC_DOORS in access)
+					if(ACCESS_SECURITY in access)
 						allowed_access = H.get_authentification_name()
 
 			if(!allowed_access)
@@ -646,46 +650,69 @@
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
 	rad_act(current_size * 3)
 
-/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
-	CHECK_DNA_AND_SPECIES(C)
+#define CPR_PANIC_SPEED (0.8 SECONDS)
 
-	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
-		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
-		return
-	if(is_mouth_covered())
-		to_chat(src, "<span class='warning'>Remove your mask first!</span>")
-		return 0
-	if(C.is_mouth_covered())
-		to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
-		return 0
+/// Performs CPR on the target after a delay.
+/mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
+	var/panicking = FALSE
 
-	if(C.cpr_time < world.time + 30)
-		visible_message("<span class='notice'>[src] is trying to perform CPR on [C.name]!</span>", \
-						"<span class='notice'>You try to perform CPR on [C.name]... Hold still!</span>")
-		if(!do_mob(src, C))
-			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
-			return 0
+	do
+		CHECK_DNA_AND_SPECIES(target)
 
-		var/they_breathe = !HAS_TRAIT(C, TRAIT_NOBREATH)
-		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
+		if (INTERACTING_WITH(src, target))
+			return FALSE
 
-		if(C.health > C.crit_threshold)
-			return
+		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
+			to_chat(src, "<span class='warning'>[target.name] is dead!</span>")
+			return FALSE
 
-		src.visible_message("<span class='notice'>[src] performs CPR on [C.name]!</span>", "<span class='notice'>You perform CPR on [C.name].</span>")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
-		C.cpr_time = world.time
-		log_combat(src, C, "CPRed")
+		if (is_mouth_covered())
+			to_chat(src, "<span class='warning'>Remove your mask first!</span>")
+			return FALSE
 
-		if(they_breathe && they_lung)
-			var/suff = min(C.getOxyLoss(), 7)
-			C.adjustOxyLoss(-suff)
-			C.updatehealth()
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
-		else if(they_breathe && !they_lung)
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
+		if (target.is_mouth_covered())
+			to_chat(src, "<span class='warning'>Remove [p_their()] mask first!</span>")
+			return FALSE
+
+		if (!getorganslot(ORGAN_SLOT_LUNGS))
+			to_chat(src, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR!</span>")
+			return FALSE
+
+		if (HAS_TRAIT(src, TRAIT_NOBREATH))
+			to_chat(src, "<span class='warning'>You do not breathe, so you cannot perform CPR!</span>")
+			return FALSE
+
+		visible_message("<span class='notice'>[src] is trying to perform CPR on [target.name]!</span>", \
+						"<span class='notice'>You try to perform CPR on [target.name]... Hold still!</span>")
+
+		if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : (3 SECONDS)))
+			to_chat(src, "<span class='warning'>You fail to perform CPR on [target]!</span>")
+			return FALSE
+
+		if (target.health > target.crit_threshold)
+			return FALSE
+
+		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		log_combat(src, target, "CPRed")
+
+		if (HAS_TRAIT(target, TRAIT_NOBREATH))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
+		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
+			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))
+			to_chat(target, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
+
+		if (target.health <= target.crit_threshold)
+			if (!panicking)
+				to_chat(src, "<span class='warning'>[target] still isn't up! You try harder!</span>")
+			panicking = TRUE
+		else
+			panicking = FALSE
+	while (panicking)
+
+#undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
@@ -696,16 +723,82 @@
 		if(..())
 			dropItemToGround(I)
 
-/mob/living/carbon/human/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/**
+  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
+  *
+  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
+  */
+/mob/living/carbon/human/proc/wash_hands(clean_types)
+	var/list/obscured = check_obscured_slots()
+	if(ITEM_SLOT_GLOVES in obscured)
+		return FALSE
+
 	if(gloves)
-		if(SEND_SIGNAL(gloves, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
+		if(gloves.wash(clean_types))
 			update_inv_gloves()
-	else
-		if(bloody_hands)
-			bloody_hands = 0
-			update_inv_gloves()
+	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
+		blood_in_hands = 0
+		update_inv_gloves()
+
+	return TRUE
+
+/**
+  * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+  */
+/mob/living/carbon/human/proc/clean_lips()
+	if(isnull(lip_style) && lip_color == initial(lip_color))
+		return FALSE
+	lip_style = null
+	lip_color = initial(lip_color)
+	update_body()
+	return TRUE
+
+/**
+  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
+  */
+/mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
+		update_inv_glasses()
+		. = TRUE
+
+	var/list/obscured = check_obscured_slots()
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(clean_types))
+		update_inv_wear_mask()
+		. = TRUE
+
+/**
+  * Called when this human should be washed
+  */
+/mob/living/carbon/human/wash(clean_types)
+	. = ..()
+
+	// Wash equipped stuff that cannot be covered
+	if(wear_suit?.wash(clean_types))
+		update_inv_wear_suit()
+		. = TRUE
+
+	if(belt?.wash(clean_types))
+		update_inv_belt()
+		. = TRUE
+
+	// Check and wash stuff that can be covered
+	var/list/obscured = check_obscured_slots()
+
+	if(w_uniform && !(ITEM_SLOT_ICLOTHING in obscured) && w_uniform.wash(clean_types))
+		update_inv_w_uniform()
+		. = TRUE
+
+	if(!is_mouth_covered() && clean_lips())
+		. = TRUE
+
+	// Wash hands if exposed
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(ITEM_SLOT_GLOVES in obscured))
+		blood_in_hands = 0
+		update_inv_gloves()
+		. = TRUE
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
@@ -825,7 +918,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
-	..()
+	return ..()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -1099,24 +1192,6 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
-/mob/living/carbon/human/washed(var/atom/washer)
-	. = ..()
-	if(wear_suit)
-		update_inv_wear_suit()
-	else if(w_uniform && w_uniform.washed(washer))
-		update_inv_w_uniform()
-
-	if(!is_mouth_covered())
-		lip_style = null
-		update_body()
-	if(belt && belt.washed(washer))
-		update_inv_belt()
-
-	var/list/obscured = check_obscured_slots()
-
-	if(gloves && !(HIDEGLOVES in obscured) && gloves.washed(washer))
-		SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
 /mob/living/carbon/human/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return FALSE
@@ -1124,6 +1199,16 @@
 
 /mob/living/carbon/human/set_nutrition(change) //Seriously fuck you oldcoders.
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/is_bleeding()
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+		return FALSE
+	return ..()
+
+/mob/living/carbon/human/get_total_bleed_rate()
+	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
 	return ..()
 

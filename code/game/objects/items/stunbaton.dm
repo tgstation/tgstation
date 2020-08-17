@@ -3,12 +3,14 @@
 	desc = "A stun baton for incapacitating people with."
 
 	icon_state = "stunbaton"
-	item_state = "baton"
+	inhand_icon_state = "baton"
+	worn_icon_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
 	force = 10
-	attack_verb = list("beaten")
+	attack_verb_continuous = list("beats")
+	attack_verb_simple = list("beat")
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -223,7 +225,7 @@
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(confusion_amt, L.confused)
+	L.set_confusion(max(confusion_amt, L.get_confusion()))
 	L.stuttering = max(8, L.stuttering)
 	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 
@@ -238,10 +240,6 @@
 		log_combat(user, L, "stunned")
 
 	playsound(src, stun_sound, 50, TRUE, -1)
-
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.forcesay(GLOB.hit_appends)
 
 	attack_cooldown_check = world.time + attack_cooldown
 
@@ -279,7 +277,8 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon_state = "stunprod"
-	item_state = "prod"
+	inhand_icon_state = "prod"
+	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -310,7 +309,7 @@
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
 	throw_speed = 1
 	icon_state = "boomerang"
-	item_state = "boomerang"
+	inhand_icon_state = "boomerang"
 	force = 5
 	throwforce = 5
 	throw_range = 5

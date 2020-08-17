@@ -41,7 +41,7 @@ All the important duct code:
 
 	if(no_anchor)
 		active = FALSE
-		anchored = FALSE
+		set_anchored(FALSE)
 	else if(!can_anchor())
 		qdel(src)
 		CRASH("Overlapping ducts detected")
@@ -152,8 +152,9 @@ All the important duct code:
 			return TRUE
 
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
-/obj/machinery/duct/proc/disconnect_duct()
-	anchored = FALSE
+/obj/machinery/duct/proc/disconnect_duct(skipanchor)
+	if(!skipanchor) //since set_anchored calls us too.
+		set_anchored(FALSE)
 	active = FALSE
 	if(duct)
 		duct.remove_duct(src)
@@ -272,26 +273,28 @@ All the important duct code:
 	pixel_y = offset
 
 
+/obj/machinery/duct/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	if(anchorvalue)
+		active = TRUE
+		attempt_connect()
+	else
+		disconnect_duct(TRUE)
+
 /obj/machinery/duct/wrench_act(mob/living/user, obj/item/I) //I can also be the RPD
 	..()
 	add_fingerprint(user)
 	I.play_tool_sound(src)
-	if(anchored)
+	if(anchored || can_anchor())
+		set_anchored(!anchored)
 		user.visible_message( \
-		"[user] unfastens \the [src].", \
-		"<span class='notice'>You unfasten \the [src].</span>", \
+		"[user] [anchored ? null : "un"]fastens \the [src].", \
+		"<span class='notice'>You [anchored ? null : "un"]fasten \the [src].</span>", \
 		"<span class='hear'>You hear ratcheting.</span>")
-		disconnect_duct()
-	else if(can_anchor())
-		anchored = TRUE
-		active = TRUE
-		user.visible_message( \
-		"[user] fastens \the [src].", \
-		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='hear'>You hear ratcheting.</span>")
-		attempt_connect()
 	return TRUE
-///collection of all the sanity checks to prevent us from stacking ducts that shouldnt be stacked
+///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
 		T = get_turf(src)
@@ -371,7 +374,7 @@ All the important duct code:
 	else
 		connects = EAST | WEST
 
-///don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
+///don't connect to other multilayered stuff because honestly it shouldn't be done and I dont wanna deal with it
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered))
 		return

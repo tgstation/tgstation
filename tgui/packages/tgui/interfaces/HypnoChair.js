@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const HypnoChair = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={375}
+      height={480}>
       <Window.Content>
         <Section
           title="Information"

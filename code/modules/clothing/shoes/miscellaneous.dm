@@ -9,7 +9,7 @@
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
 	icon_state = "jackboots"
-	item_state = "jackboots"
+	inhand_icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
@@ -23,7 +23,7 @@
 	name = "sneakboots"
 	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
 	icon_state = "sneakboots"
-	item_state = "sneakboots"
+	inhand_icon_state = "sneakboots"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 
@@ -35,7 +35,7 @@
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
 	return ..()
-	
+
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
@@ -92,7 +92,7 @@
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge! Ctrl-click to toggle waddle dampeners."
 	name = "clown shoes"
 	icon_state = "clown"
-	item_state = "clown_shoes"
+	inhand_icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
@@ -138,7 +138,7 @@
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
-	item_state = "jackboots"
+	inhand_icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	strip_delay = 30
@@ -155,7 +155,7 @@
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
-	item_state = "winterboots"
+	inhand_icon_state = "winterboots"
 	permeability_coefficient = 0.15
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -164,11 +164,18 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
+/obj/item/clothing/shoes/winterboots/ice_boots
+	name = "ice hiking boots"
+	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
+	icon_state = "iceboots"
+	inhand_icon_state = "iceboots"
+	clothing_flags = NOSLIP_ICE
+
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
 	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
 	icon_state = "workboots"
-	item_state = "jackboots"
+	inhand_icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	permeability_coefficient = 0.15
@@ -187,7 +194,7 @@
 	name = "\improper Nar'Sien invoker boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
-	item_state = "cult"
+	inhand_icon_state = "cult"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
@@ -220,7 +227,7 @@
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
-	item_state = "roman"
+	inhand_icon_state = "roman"
 	strip_delay = 100
 	equip_delay_other = 100
 	permeability_coefficient = 0.9
@@ -230,7 +237,7 @@
 	name = "griffon boots"
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
-	item_state = "griffinboots"
+	inhand_icon_state = "griffinboots"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
@@ -238,7 +245,7 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	item_state = "jetboots"
+	inhand_icon_state = "jetboots"
 	resistance_flags = FIRE_PROOF
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
@@ -293,7 +300,7 @@
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	icon_state = "wheelys"
-	item_state = "wheelys"
+	inhand_icon_state = "wheelys"
 	actions_types = list(/datum/action/item_action/wheelys)
 	var/wheelToggle = FALSE //False means wheels are not popped out
 	var/obj/vehicle/ridden/scooter/wheelys/W
@@ -328,23 +335,23 @@
 	QDEL_NULL(W)
 	. = ..()
 
-/obj/item/clothing/shoes/kindleKicks
+/obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
 	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
 	icon_state = "kindleKicks"
-	item_state = "kindleKicks"
-	actions_types = list(/datum/action/item_action/kindleKicks)
+	inhand_icon_state = "kindleKicks"
+	actions_types = list(/datum/action/item_action/kindle_kicks)
 	var/lightCycle = 0
 	var/active = FALSE
 
-/obj/item/clothing/shoes/kindleKicks/ui_action_click(mob/user, action)
+/obj/item/clothing/shoes/kindle_kicks/ui_action_click(mob/user, action)
 	if(active)
 		return
 	active = TRUE
 	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 	addtimer(CALLBACK(src, .proc/lightUp), 5)
 
-/obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
+/obj/item/clothing/shoes/kindle_kicks/proc/lightUp(mob/user)
 	if(lightCycle < 15)
 		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
 		lightCycle += 1
@@ -358,7 +365,7 @@
 	name = "russian boots"
 	desc = "Comfy shoes."
 	icon_state = "rus_shoes"
-	item_state = "rus_shoes"
+	inhand_icon_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
@@ -455,10 +462,10 @@
 	name = "tojo clan shoes"
 	desc = "Steel-toed and intimidating."
 	icon_state = "MajimaShoes"
-	item_state = "MajimaShoes_worn"
+	inhand_icon_state = "MajimaShoes_worn"
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
-	item_state = "JackFrostShoes_worn"
+	inhand_icon_state = "JackFrostShoes_worn"

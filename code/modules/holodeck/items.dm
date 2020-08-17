@@ -71,14 +71,14 @@
 	name = "basketball"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "basketball"
-	item_state = "basketball"
+	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
 	icon_state = "dodgeball"
-	item_state = "dodgeball"
+	inhand_icon_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
 /obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -6,7 +6,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
@@ -34,6 +35,9 @@
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)
+		return
+	if (get_turf(src) == T)
+		to_chat(user, "<span class='warning'>Target is too close, aborting!</span>")
 		return
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")

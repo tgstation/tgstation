@@ -39,6 +39,10 @@
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
+	if(gender in list(MALE, FEMALE))
+		body_type = gender
+	else
+		body_type = pick(MALE, FEMALE)
 
 /datum/preferences/proc/random_species()
 	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
@@ -47,10 +51,13 @@
 		real_name = pref_species.random_name(gender,1)
 
 ///Setup a hardcore random character and calculate their hardcore random score
-/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist)
-	random_character(TRUE, antagonist)
+/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist, is_latejoiner)
+	var/rand_gender = pick(list(MALE, FEMALE, PLURAL))
+	random_character(rand_gender, antagonist)
 	select_hardcore_quirks()
 	hardcore_survival_score = hardcore_survival_score ** 1.2 //30 points would be about 60 score
+	if(is_latejoiner)//prevent them from cheatintg
+		hardcore_survival_score = 0
 
 ///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
 /datum/preferences/proc/select_hardcore_quirks()

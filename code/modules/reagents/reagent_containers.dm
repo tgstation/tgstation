@@ -63,6 +63,17 @@
 		return 0
 	return 1
 
+/*
+ * On accidental consumption, transfer a portion of the reagents to the eater and the item it's in, then continue to the base proc (to deal with shattering glass containers)
+ */
+/obj/item/reagent_containers/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	M.losebreath += 2
+	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transfered_by = user, method = INGEST)
+	if(source_item?.reagents)
+		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, method = TOUCH)
+
+	return ..()
+
 /obj/item/reagent_containers/ex_act()
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
@@ -99,7 +110,7 @@
 
 		if(thrownby)
 			log_combat(thrownby, M, "splashed", R)
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
@@ -111,7 +122,7 @@
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
 			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
 

@@ -244,7 +244,7 @@
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
 		O.diseases = diseases
-		diseases = list()
+		diseases = null	//null the old diseases, bye bye!
 		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
@@ -419,7 +419,7 @@
 	if(client)
 		R.updatename(client)
 
-	if(mind)		//TODO
+	if(mind)		//TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
@@ -613,7 +613,7 @@
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *
  * This proc is here to force coders to manually place their mob in this list, hopefully tested.
- * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
+ * This also gives a place to explain -why- players shouldn't be turn into certain mobs and hopefully someone can fix them.
  */
 /mob/proc/safe_animal(MP)
 

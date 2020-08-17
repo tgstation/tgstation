@@ -242,7 +242,7 @@
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 			if(method)
-				R.react_single(T, target_atom, method, part, show_message)
+				R.expose_single(T, target_atom, method, part, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -262,7 +262,7 @@
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(method)
-				R.react_single(T, target_atom, method, transfer_amount, show_message)
+				R.expose_single(T, target_atom, method, transfer_amount, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
@@ -376,15 +376,16 @@
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
-							var/datum/reagent/new_reagent = new R.type()
+							var/datum/reagent/new_reagent = new R.addiction_type()
 							cached_addictions.Add(new_reagent)
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
-					if(is_type_in_list(R,cached_addictions))
+					var/datum/reagent/addiction_type = new R.addiction_type()
+					if(is_type_in_list(addiction_type ,cached_addictions))
 						for(var/addiction in cached_addictions)
 							var/datum/reagent/A = addiction
-							if(istype(R, A))
+							if(istype(addiction_type, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
 				need_mob_update += R.on_mob_life(C)
 
@@ -490,11 +491,11 @@
 				var/list/cached_required_catalysts = C.required_catalysts
 				var/total_required_catalysts = cached_required_catalysts.len
 				var/total_matching_catalysts= 0
-				var/matching_container = 0
-				var/matching_other = 0
+				var/matching_container = FALSE
+				var/matching_other = FALSE
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = 0
+				var/meets_temp_requirement = FALSE
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -506,29 +507,28 @@
 					total_matching_catalysts++
 				if(cached_my_atom)
 					if(!C.required_container)
-						matching_container = 1
-
+						matching_container = TRUE
 					else
 						if(cached_my_atom.type == C.required_container)
-							matching_container = 1
+							matching_container = TRUE
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						return
+						matching_container = FALSE
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 					else if(istype(cached_my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/M = cached_my_atom
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-							matching_other = 1
+							matching_other = TRUE
 				else
 					if(!C.required_container)
-						matching_container = 1
+						matching_container = TRUE
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = 1
+					meets_temp_requirement = TRUE
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 					possible_reactions  += C
@@ -554,7 +554,7 @@
 				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 			for(var/P in selected_reaction.results)
-				multiplier = max(multiplier, 1) //this shouldnt happen ...
+				multiplier = max(multiplier, 1) //this shouldn't happen ...
 				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
 				add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
@@ -638,64 +638,39 @@
 	return 0
 
 /**
-  * Applies the relevant reaction_ proc for every reagent in this holder
-  * * [/datum/reagent/proc/reaction_mob]
-  * * [/datum/reagent/proc/reaction_turf]
-  * * [/datum/reagent/proc/reaction_obj]
+  * Applies the relevant expose_ proc for every reagent in this holder
+  * * [/datum/reagent/proc/expose_mob]
+  * * [/datum/reagent/proc/expose_turf]
+  * * [/datum/reagent/proc/expose_obj]
   */
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
-	var/react_type
-	if(isliving(A))
-		react_type = "LIVING"
-		if(method == INGEST)
-			var/mob/living/L = A
-			L.taste(src)
-	else if(isturf(A))
-		react_type = "TURF"
-	else if(isobj(A))
-		react_type = "OBJ"
-	else
-		return
+/datum/reagents/proc/expose(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+	if(isnull(A))
+		return null
+
 	var/list/cached_reagents = reagent_list
+	if(!cached_reagents.len)
+		return null
+
+	var/list/reagents = list()
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		switch(react_type)
-			if("LIVING")
-				var/touch_protection = 0
-				if(method == VAPOR)
-					var/mob/living/L = A
-					touch_protection = L.get_permeability_protection()
-				R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
-			if("TURF")
-				R.reaction_turf(A, R.volume * volume_modifier, show_message)
-			if("OBJ")
-				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+		reagents[R] = R.volume * volume_modifier
 
-/// Same as [/datum/reagents/proc/reaction] but only for one reagent
-/datum/reagents/proc/react_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
-	var/react_type
-	if(isliving(A))
-		react_type = "LIVING"
-		if(method == INGEST)
-			var/mob/living/L = A
-			L.taste(src)
-	else if(isturf(A))
-		react_type = "TURF"
-	else if(isobj(A))
-		react_type = "OBJ"
-	else
-		return
-	switch(react_type)
-		if("LIVING")
-			var/touch_protection = 0
-			if(method == VAPOR)
-				var/mob/living/L = A
-				touch_protection = L.get_permeability_protection()
-			R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
-		if("TURF")
-			R.reaction_turf(A, R.volume * volume_modifier, show_message)
-		if("OBJ")
-			R.reaction_obj(A, R.volume * volume_modifier, show_message)
+	return A.expose_reagents(reagents, src, method, volume_modifier, show_message)
+
+
+/// Same as [/datum/reagents/proc/expose] but only for one reagent
+/datum/reagents/proc/expose_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
+	if(isnull(A))
+		return null
+
+	if(ispath(R))
+		R = get_reagent(R)
+	if(isnull(R))
+		return null
+
+	// Yes, we need the parentheses.
+	return A.expose_reagents(list((R) = R.volume * volume_modifier), src, method, volume_modifier, show_message)
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
@@ -741,7 +716,7 @@
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
-		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
+		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
 		if(amount <= 0)
 			return FALSE
 	var/new_total = cached_total + amount
@@ -947,7 +922,7 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
   * Arguments:
   * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
   */
-/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+/datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
@@ -955,22 +930,12 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 			if(!R.taste_mult)
 				continue
 
-			if(istype(R, /datum/reagent/consumable/nutriment))
-				var/list/taste_data = R.data
-				for(var/taste in taste_data)
-					var/ratio = taste_data[taste]
-					var/amount = ratio * R.taste_mult * R.volume
-					if(taste in tastes)
-						tastes[taste] += amount
-					else
-						tastes[taste] = amount
-			else
-				var/taste_desc = R.taste_description
-				var/taste_amount = R.volume * R.taste_mult
-				if(taste_desc in tastes)
-					tastes[taste_desc] += taste_amount
+			var/list/taste_data = R.get_taste_description(taster)
+			for(var/taste in taste_data)
+				if(taste in tastes)
+					tastes[taste] += taste_data[taste] * R.volume * R.taste_mult
 				else
-					tastes[taste_desc] = taste_amount
+					tastes[taste] = taste_data[taste] * R.volume * R.taste_mult
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = counterlist_sum(tastes)

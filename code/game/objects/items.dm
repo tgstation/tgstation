@@ -11,19 +11,38 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	///icon state name for inhand overlays
-	var/item_state = null
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
+
+	///icon state for inhand overlays, if null the normal icon_state will be used.
+	var/inhand_icon_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 	///Icon file for mob worn overlays.
-	var/icon/mob_overlay_icon
-	///Item state for mob worn overlays
-	var/mob_overlay_state
+	var/icon/worn_icon
+	///icon state for mob worn overlays, if null the normal icon_state will be used.
+	var/worn_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
+
+	/*	!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+
+		IF YOU ADD MORE ICON CRAP TO THIS
+		ENSURE YOU ALSO ADD THE NEW VARS TO CHAMELEON ITEM_ACTION'S update_item() PROC (/datum/action/item_action/chameleon/change/proc/update_item())
+		WASHING MASHINE'S dye_item() PROC (/obj/item/proc/dye_item())
+		AND ALSO TO THE CHANGELING PROFILE DISGUISE SYSTEMS (/datum/changelingprofile / /datum/antagonist/changeling/proc/create_profile() / /proc/changeling_transform())
+
+		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!	*/
 
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
 	var/worn_x_dimension = 32
@@ -109,7 +128,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/breakouttime = 0
 
 	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/attack_verb
+	var/list/attack_verb_continuous
+	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
 
@@ -120,13 +140,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	///Does it embed and if yes, what kind of embed
-	var/list/embedding = NONE
+	var/list/embedding
 
 	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
 	var/heat = 0
-	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
-	var/sharpness = IS_BLUNT
+	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
+	var/sharpness = SHARP_NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = NONE
@@ -170,8 +190,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Initialize()
 
-	if(attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
+	if(attack_verb_continuous)
+		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+	if(attack_verb_simple)
+		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
 
 	. = ..()
 	for(var/path in actions_types)
@@ -222,7 +244,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(GLOB.rpg_loot_items)
 		AddComponent(/datum/component/fantasy)
 
-	if(sharpness) //give sharp objects butchering functionality, for consistency
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -434,7 +456,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return 1
 	return 0
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
+/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language, list/message_mods)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
@@ -530,7 +552,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(var/def_zone)
+/obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
@@ -544,7 +566,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	if(M.is_eyes_covered())
 		// you can't stab someone in the eyes wearing a mask!
-		to_chat(user, "<span class='warning'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		to_chat(user, "<span class='warning'>You failed to stab [M.p_their()] eyes, you need to remove [M.p_their()] eye protection first!</span>")
 		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
@@ -581,8 +603,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
-	if (!eyes)
-		return
+	if(!eyes)
+		return TRUE
 	M.adjust_blurriness(3)
 	eyes.applyOrganDamage(rand(2,4))
 	if(eyes.damage >= 10)
@@ -599,9 +621,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
 			M.Paralyze(40)
-		if (prob(eyes.damage - 10 + 1))
+		if(prob(eyes.damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
+	return TRUE
 
 /obj/item/singularity_pull(S, current_size)
 	..()
@@ -700,16 +723,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/get_sharpness()
 	return sharpness
 
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
-	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
-			. = force * (affecting.get_damage() / affecting.max_damage)
-
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
 	else
-		. = "desceration"
+		. = "desecration"
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
@@ -933,11 +951,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
-///In case we want to do something special (like self delete) upon failing to embed in something, return true
+///In case we want to do something special (like self delete) upon failing to embed in something. Returns a bitflag.
 /obj/item/proc/failedEmbed()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
-		return TRUE
+		qdel(src)
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE
+	return NONE
+
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
@@ -954,19 +974,22 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   *
   * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
   *
+  * Returns bitflags informing whether the item was able to embed itself, deleted itself in the process, or nothing happened.
+  *
   * Arguments:
-  * * target- Either a body part, a carbon, or a closed turf. What are we hitting?
+  * * target- Either a body part or a carbon. What are we hitting?
   * * forced- Do we want this to go through 100%?
   */
 /obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
-	if(!isbodypart(target) && !iscarbon(target) && !isclosedturf(target))
-		return
+	if(!isbodypart(target) && !iscarbon(target))
+		return NONE
 	if(!forced && !LAZYLEN(embedding))
-		return
+		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
-		return TRUE
-	failedEmbed()
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS
+	return failedEmbed()
+
 
 ///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
 /obj/item/proc/disableEmbedding()
@@ -975,7 +998,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 ///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
-	if(!islist(embedding) || !LAZYLEN(embedding))
+	if(!LAZYLEN(embedding))
 		return
 
 	AddElement(/datum/element/embed,\
@@ -989,6 +1012,119 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
 		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
 		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
-		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
-		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
+		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT))
 	return TRUE
+
+/// How many different types of mats will be counted in a bite?
+#define MAX_BONUS_MATS_PER_BITE 2
+
+/*
+ * On accidental consumption: when you somehow end up eating an item accidentally (currently, this is used for when items are hidden in food like bread or cake)
+ *
+ * The base proc will check if the item is sharp and has a decent force.
+ * Then, it checks the item's mat datums for the effects it applies afterwards.
+ * Then, it checks tiny items.
+ * After all that, it returns TRUE if the item is set to be discovered. Otherwise, it returns FALSE.
+ *
+ * This works similarily to /suicide_act: if you want an item to have a unique interaction, go to that item
+ * and give it an /on_accidental_consumption proc override. For a simple example of this, check out the nuke disk.
+ *
+ * Arguments
+ * * M - the mob accidentally consuming the item
+ * * user - the mob feeding M the item - usually, it's the same as M
+ * * source_item - the item that held the item being consumed - bread, cake, etc
+ * * discover_after - if the item will be discovered after being chomped (FALSE will usually mean it was swallowed, TRUE will usually mean it was bitten into and discovered)
+ */
+/obj/item/proc/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	/// If source_item is a snack, we can adjust its taste
+	var/obj/item/reagent_containers/food/snacks/S = source_item
+	if(!istype(S))
+		S = null
+
+	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
+		M.emote("scream")
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bit something they shouldn't have!</span>", \
+							"<span class='boldwarning'>OH GOD! Was that a crunch? That didn't feel good at all!!</span>")
+
+		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
+		M.losebreath += 2
+		switch(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
+				return
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS)
+				M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+				M.losebreath += 6
+				discover_after = FALSE
+
+		if(S?.tastes?.len) //is that blood in my mouth?
+			S.tastes += "iron"
+			S.tastes["iron"] = 2
+
+	else if(custom_materials?.len) //if we've got materials, lets see whats in it
+		/// How many 'bonus' mats have we found? You can only be affected by two 'bonus' material datums by default
+		var/found_mats = 0
+		/// How much of each material is in it? Used to determine if the glass should break
+		var/total_material_amount = 0
+
+		for(var/mats in custom_materials)
+			total_material_amount += custom_materials[mats]
+			if(found_mats >= MAX_BONUS_MATS_PER_BITE)
+				continue //continue instead of break so we can finish adding up all the mats to the total
+
+			var/datum/material/FM = mats
+			if(FM.on_accidental_mat_consumption(M, S))
+				found_mats++
+
+		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
+		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
+			if(prob(66)) //66% chance to break it
+				/// The glass shard that is spawned into the source item
+				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
+				broken_glass.name = "broken [name]"
+				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
+				playsound(M, "shatter", 25, TRUE)
+				qdel(src)
+				if(S)
+					S.contents += broken_glass //puts the glass back into the source item
+				else
+					broken_glass.on_accidental_consumption(M, user)
+			else //33% chance to just "crack" it (play a sound) and leave it in the bread
+				playsound(M, "shatter", 15, TRUE)
+				discover_after = FALSE
+
+		M.adjust_disgust(33)
+		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
+						"<span class='warning'>Eugh! Did I just bite into something?</span>")
+
+	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
+		/// M's chest (for cavity implanting the item)
+		var/obj/item/bodypart/chest/CV = M.get_bodypart(BODY_ZONE_CHEST)
+		if(CV.cavity_item)
+			M.vomit(5, FALSE, FALSE, distance = 0)
+			forceMove(drop_location())
+			to_chat(M, "<span class='warning'>You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]</span>")
+		else
+			M.transferItemToLoc(src, M, TRUE)
+			M.losebreath += 2
+			CV.cavity_item = src
+			to_chat(M, "<span class='warning'>You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]</span>")
+		discover_after = FALSE
+
+	else
+		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
+
+	//Just in case - can't discover something that doesn't exist
+	if(QDELETED(src))
+		return FALSE
+
+	return discover_after
+
+#undef MAX_BONUS_MATS_PER_BITE
+
+// Update icons if this is being carried by a mob
+/obj/item/wash(clean_types)
+	. = ..()
+
+	if(ismob(loc))
+		var/mob/mob_loc = loc
+		mob_loc.regenerate_icons()

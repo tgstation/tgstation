@@ -2,7 +2,7 @@
 	name = "flashbang"
 	desc = "A modified flashbang which uses hypnotic flashes and mind-altering soundwaves to induce an instant trance upon detonation."
 	icon_state = "flashbang"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
@@ -62,6 +62,6 @@
 				C.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
 			else
 				to_chat(C, "<span class='hypnophrase'>The light is so pretty...</span>")
-				C.confused += min(C.confused + 10, 20)
+				C.add_confusion(min(C.get_confusion() + 10, 20))
 				C.dizziness += min(C.dizziness + 10, 20)
 				C.drowsyness += min(C.drowsyness + 10, 20)

@@ -76,6 +76,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
+#define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
+#define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -112,6 +115,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
 #define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
+#define TRAIT_GENELESS  		"geneless"
 #define TRAIT_VIRUSIMMUNE		"virus_immunity"
 #define TRAIT_PIERCEIMMUNE		"pierce_immunity"
 #define TRAIT_NODISMEMBER		"dismember_immunity"
@@ -124,7 +128,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
-#define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
+#define TRAIT_EASYLIMBWOUND		"easy_limb_wound"
+#define TRAIT_HARDLIMBWOUND		"hard_limb_wound"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -184,9 +189,19 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DWARF				"dwarf"
 #define TRAIT_SILENT_FOOTSTEPS	"silent_footsteps" //makes your footsteps completely silent
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....
+#define TRAIT_TUMOR_SUPPRESSED	"brain_tumor_suppressed" //prevents the damage done by a brain tumor
+#define TRAIT_PERMANENTLY_ONFIRE	"permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
+
+//SKILLS
+#define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
+#define TRAIT_WINE_TASTER "wine_taster"
+#define TRAIT_BONSAI "bonsai"
+#define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
+#define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 
 //non-mob traits
-#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PARALYSIS				"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 
 ///Used for managing KEEP_TOGETHER in [appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
@@ -232,8 +247,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define GENERIC_ITEM_TRAIT "generic_item"
-#define UNCONSCIOUS_BLIND "unconscious_blind"
+#define UNCONSCIOUS_TRAIT "unconscious"
 #define EYE_DAMAGE "eye_damage"
+#define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
@@ -257,6 +273,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define CRIT_HEALTH_TRAIT "crit_health"
+#define OXYLOSS_TRAIT "oxyloss"
+#define TURF_TRAIT "turf"
+#define BUCKLED_TRAIT "buckled" //trait associated to being buckled
+#define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
+#define RESTING_TRAIT "resting" //trait associated to resting
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -298,3 +320,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+#define SKILLCHIP_TRAIT "skillchip"
+#define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
+#define LOCKED_BORG_TRAIT "locked-borg"

@@ -71,8 +71,6 @@
 	integrity_failure = 0.33
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
-	ui_x = 440
-	ui_y = 650
 
 	var/danger_level = 0
 	var/mode = AALARM_MODE_SCRUBBING
@@ -161,7 +159,7 @@
 	name = "chamber air alarm"
 	locked = FALSE
 	req_access = null
-	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOX, ACCESS_TOX_STORAGE)
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOXINS)
 
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
@@ -243,11 +241,11 @@
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/airalarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
+/obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AirAlarm", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AirAlarm", name)
 		ui.open()
 
 /obj/machinery/airalarm/ui_data(mob/user)
@@ -384,7 +382,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "toggle_filter", "widenet", "scrubbing")
+		if("power", "toggle_filter", "widenet", "scrubbing", "direction")
 			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
@@ -428,12 +426,12 @@
 			. = TRUE
 		if("alarm")
 			var/area/A = get_area(src)
-			if(A.atmosalert(2, src))
+			if(A.atmosalert(TRUE, src))
 				post_alert(2)
 			. = TRUE
 		if("reset")
 			var/area/A = get_area(src)
-			if(A.atmosalert(0, src))
+			if(A.atmosalert(FALSE, src))
 				post_alert(0)
 			. = TRUE
 	update_icon()
@@ -689,7 +687,7 @@
 		return
 
 	var/datum/signal/alert_signal = new(list(
-		"zone" = get_area_name(src),
+		"zone" = get_area_name(src, TRUE),
 		"type" = "Atmospheric"
 	))
 	if(alert_level==2)
@@ -707,7 +705,7 @@
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
 		if (!(AA.machine_stat & (NOPOWER|BROKEN)) && !AA.shorted)
-			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0,1)
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 

@@ -1,0 +1,25 @@
+#Listing maps here will blacklist them from generating in the ice moon.
+#Maps must be the full path to them
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\IceRuins
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+##RESPAWN
+#_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
+
+##MEGAFAUNA
+#_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_mining_site.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_wendigo_cave.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_lavaland.dmm
+
+##MISC
+#_maps/RandomRuins/IceRuins/icemoon_surface_lust.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_asteroid.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_hotsprings.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_engioutpost.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_puzzle.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_village.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_library.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_wrath.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_bathhouse.dmm
+#_maps/RandomRuins/AnywhereRuins/fountain_hall.dmm

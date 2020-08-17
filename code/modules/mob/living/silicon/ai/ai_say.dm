@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
@@ -17,7 +17,7 @@
 /mob/living/silicon/ai/IsVocal()
 	return !CONFIG_GET(flag/silent_ai)
 
-/mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
+/mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())
 		return FALSE
 	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
@@ -25,17 +25,8 @@
 		return FALSE
 	..()
 
-/mob/living/silicon/ai/get_message_mode(message)
-	var/static/regex/holopad_finder = regex(@"[:.#][hH]")
-	if(holopad_finder.Find(message, 1, 1))
-		return MODE_HOLOPAD
-	else
-		return ..()
-
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-
-
 	message = trim(message)
 
 	if (!message)
@@ -50,7 +41,7 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, "robot", message_language = language)
+		send_speech(message, 7, T, MODE_ROBOT, message_language = language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "<span class='alert'>No holopad connected.</span>")

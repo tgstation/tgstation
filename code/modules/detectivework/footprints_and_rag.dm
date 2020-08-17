@@ -33,7 +33,7 @@
 			C.visible_message("<span class='danger'>[user] smothers \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] smothers you with \the [src]!</span>", "<span class='hear'>You hear some struggling and muffled cries of surprise.</span>")
 			log_combat(user, C, "smothered", src, log_object)
 		else
-			reagents.reaction(C, TOUCH)
+			reagents.expose(C, TOUCH)
 			reagents.clear_reagents()
 			C.visible_message("<span class='notice'>[user] touches \the [C] with \the [src].</span>")
 			log_combat(user, C, "touched", src, log_object)
@@ -42,4 +42,4 @@
 		user.visible_message("<span class='notice'>[user] starts to wipe down [A] with [src]!</span>", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("<span class='notice'>[user] finishes wiping off [A]!</span>", "<span class='notice'>You finish wiping off [A].</span>")
-			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			A.wash(CLEAN_SCRUB)

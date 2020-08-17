@@ -5,7 +5,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
+	worn_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -60,6 +61,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -71,6 +73,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/electrolite/adv(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -82,6 +85,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/electrolite/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -93,6 +97,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/electrolite/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -103,12 +108,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -260,7 +266,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/capacitor/quadratic
 	name = "quadratic capacitor"
-	desc = "An capacity capacitor used in the construction of a variety of devices."
+	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
@@ -294,7 +300,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	custom_materials = list(/datum/material/iron=80)
 
 /obj/item/stock_parts/electrolite/bluespace
-	name = "super electrolite"
+	name = "bluespace electrolite"
 	desc = "An electrolite component to separate matters into others"
 	icon_state = "bluespace_electrolite"
 	rating = 4

@@ -152,7 +152,7 @@
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
 			return
-		materials.insert_item(I, multiplier = (amount_produced / 100))
+		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
 		materials.retrieve_all()
 
 

@@ -495,7 +495,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
-		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 /obj/machinery/newscaster/Topic(href, href_list)
@@ -861,7 +860,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bapped")
+	attack_verb_continuous = list("baps")
+	attack_verb_simple = list("bap")
+	resistance_flags = FLAMMABLE
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
@@ -1008,7 +1009,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(ismob(loc))
 			attack_self(loc)
 
-/obj/item/newspaper/attackby(obj/item/W, mob/user, params)
+/obj/item/newspaper/attackby(obj/item/W, mob/living/user, params)
+	if(burn_paper_product_attackby_check(W, user))
+		return
+
 	if(istype(W, /obj/item/pen))
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
@@ -1024,5 +1028,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 			scribble_page = curr_page
 			scribble = s
 			attack_self(user)
+			add_fingerprint(user)
 	else
 		return ..()

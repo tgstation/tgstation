@@ -23,6 +23,8 @@
 	var/cloneloss = 0	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/staminaloss = 0		///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT /// when the mob goes from "normal" to crit
+	///When the mob enters hard critical state and is fully incapacitated.
+	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
@@ -30,8 +32,6 @@
 
 	VAR_PROTECTED/lying_angle = 0			///number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
 	var/lying_prev = 0		///last value of lying on update_mobility
-
-	var/confused = 0	///Makes the mob move in random directions.
 
 	var/hallucination = 0 ///Directly affects how long a mob will hallucinate for
 
@@ -86,7 +86,7 @@
 
 	var/hellbound = 0 ///People who've signed infernal contracts are unrevivable.
 
-	var/list/weather_immunities = list()
+	var/list/weather_immunities
 
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
@@ -120,8 +120,8 @@
 	var/losebreath = 0
 
 	//List of active diseases
-	var/list/diseases = list() /// list of all diseases in a mob
-	var/list/disease_resistances = list()
+	var/list/diseases /// list of all diseases in a mob
+	var/list/disease_resistances
 
 	var/slowed_by_drag = TRUE ///Whether the mob is slowed down when dragging another prone mob
 

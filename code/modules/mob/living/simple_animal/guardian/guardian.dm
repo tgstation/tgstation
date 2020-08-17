@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/cooldown = 0
 	var/mob/living/summoner
 	var/range = 10 //how far from the user the spirit can be
-	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
+	var/toggle_button_type = /obj/screen/guardian/toggle_mode/inactive //what sort of toggle button the hud uses
 	var/playstyle_string = "<span class='holoparasite bold'>You are a Guardian without any type. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
-	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
+	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isn't gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
 		add_overlay(cooloverlay)
 
@@ -499,10 +499,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 ////////Creation
 
 /obj/item/guardiancreator
-	name = "deck of tarot cards"
+	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_syndicate_full"
+	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
 	var/mob_name = "Guardian Spirit"
@@ -535,20 +535,20 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		spawn_guardian(user, C.key)
+		var/mob/dead/observer/candidate = pick(candidates)
+		spawn_guardian(user, candidate)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE
 
 
-/obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, key)
+/obj/item/guardiancreator/proc/spawn_guardian(mob/living/user, mob/dead/candidate)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
 		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
-		if(!guardiantype)
+		if(!guardiantype || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
 			return
@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, theme)
 	G.name = mob_name
 	G.summoner = user
-	G.key = key
+	G.key = candidate.key
 	G.mind.enslave_mind_to_creator(user)
 	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
@@ -650,7 +650,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
-	icon_state = "paper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
@@ -673,10 +672,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
  <br>
 "}
-
-/obj/item/paper/guides/antag/guardian/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"

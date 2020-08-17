@@ -3,7 +3,7 @@
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "fire_extinguisher0"
-	item_state = "fire_extinguisher"
+	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags_1 = CONDUCT_1
 	throwforce = 10
@@ -12,7 +12,8 @@
 	throw_range = 7
 	force = 10
 	custom_materials = list(/datum/material/iron = 90)
-	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
+	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
 	var/max_water = 50
@@ -30,7 +31,7 @@
 	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
-	item_state = "miniFE"
+	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
@@ -42,6 +43,8 @@
 	dog_fashion = null
 
 /obj/item/extinguisher/proc/refill()
+	if(!chem)
+		return
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
@@ -53,7 +56,7 @@
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
-	//item_state = "foam_extinguisher" needs sprite
+	//inhand_icon_state = "foam_extinguisher" needs sprite
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
@@ -192,9 +195,9 @@
 		step_towards(W,my_target)
 		if(!W.reagents)
 			continue
-		W.reagents.reaction(get_turf(W))
+		W.reagents.expose(get_turf(W))
 		for(var/A in get_turf(W))
-			W.reagents.reaction(A)
+			W.reagents.expose(A)
 		if(W.loc == my_target)
 			particles -= W
 	if(repetition < power)
@@ -227,7 +230,7 @@
 		return
 	EmptyExtinguisher(user)
 
-/obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
+/obj/item/extinguisher/proc/EmptyExtinguisher(mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
 

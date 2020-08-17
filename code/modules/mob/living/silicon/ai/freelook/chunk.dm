@@ -18,7 +18,7 @@
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/camera/aiEye/eye)
+/datum/camerachunk/proc/add(mob/camera/ai_eye/eye)
 	eye.visibleCameraChunks += src
 	seenby += eye
 	if(changed)
@@ -26,7 +26,7 @@
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_static_with_last_chunk = TRUE)
+/datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
@@ -111,6 +111,10 @@
 	for(var/obj/machinery/camera/c in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(c.can_use())
 			cameras += c
+
+	for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
+		if(sillycone.builtInCamera?.can_use())
+			cameras += sillycone.builtInCamera
 
 	for(var/turf/t in block(locate(max(x, 1), max(y, 1), z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
 		turfs[t] = t

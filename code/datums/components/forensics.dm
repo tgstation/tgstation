@@ -51,13 +51,16 @@
 	fibers = null
 	return TRUE
 
-/datum/component/forensics/proc/clean_act(datum/source, strength)
-	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
+/datum/component/forensics/proc/clean_act(datum/source, clean_types)
+	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
 		wipe_fingerprints()
-	if(strength >= CLEAN_STRENGTH_BLOOD)
+		. = TRUE
+	if(clean_types & CLEAN_TYPE_BLOOD)
 		wipe_blood_DNA()
-	if(strength >= CLEAN_STRENGTH_FIBERS)
+		. = TRUE
+	if(clean_types & CLEAN_TYPE_FIBERS)
 		wipe_fibers()
+		. = TRUE
 
 /datum/component/forensics/proc/add_fingerprint_list(list/_fingerprints)	//list(text)
 	if(!length(_fingerprints))
@@ -72,7 +75,7 @@
 		if(!iscameramob(M))
 			return
 		if(isaicamera(M))
-			var/mob/camera/aiEye/ai_camera = M
+			var/mob/camera/ai_eye/ai_camera = M
 			if(!ai_camera.ai)
 				return
 			M = ai_camera.ai
@@ -144,7 +147,7 @@
 		if(!iscameramob(M))
 			return
 		if(isaicamera(M))
-			var/mob/camera/aiEye/ai_camera = M
+			var/mob/camera/ai_eye/ai_camera = M
 			if(!ai_camera.ai)
 				return
 			M = ai_camera.ai

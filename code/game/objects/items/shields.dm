@@ -21,7 +21,8 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
-	attack_verb = list("shoved", "bashed")
+	attack_verb_continuous = list("shoves", "bashes")
+	attack_verb_simple = list("shove", "bash")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
 	max_integrity = 75
@@ -84,7 +85,7 @@
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
-	item_state = "roman_shield"
+	inhand_icon_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
@@ -105,7 +106,7 @@
 	name = "wooden buckler"
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
-	item_state = "buckler"
+	inhand_icon_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
@@ -123,7 +124,7 @@
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
-	item_state = "flashshield"
+	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
 /obj/item/shield/riot/flash/Initialize()
@@ -176,10 +177,10 @@
 /obj/item/shield/riot/flash/update_icon_state()
 	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
-		item_state = "riot"
+		inhand_icon_state = "riot"
 	else
 		icon_state = "flashshield"
-		item_state = "flashshield"
+		inhand_icon_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()
@@ -192,7 +193,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb = list("shoved", "bashed")
+	attack_verb_continuous = list("shoves", "bashes")
+	attack_verb_simple = list("shove", "bash")
 	throw_range = 5
 	force = 3
 	throwforce = 3

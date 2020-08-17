@@ -57,8 +57,6 @@
 	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
-	ui_x = 450
-	ui_y = 460
 
 	var/lon_range = 1.5
 	var/area/area
@@ -334,14 +332,14 @@
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
 			if(APC_NOT_CHARGING)
-				light_color = LIGHT_COLOR_RED
+				set_light_color(COLOR_SOFT_RED)
 			if(APC_CHARGING)
-				light_color = LIGHT_COLOR_BLUE
+				set_light_color(LIGHT_COLOR_BLUE)
 			if(APC_FULLY_CHARGED)
-				light_color = LIGHT_COLOR_GREEN
+				set_light_color(LIGHT_COLOR_GREEN)
 		set_light(lon_range)
 	else if(update_state & UPSTATE_BLUESCREEN)
-		light_color = LIGHT_COLOR_BLUE
+		set_light_color(LIGHT_COLOR_BLUE)
 		set_light(lon_range)
 	else
 		set_light(0)
@@ -797,7 +795,7 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
-			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
+			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldn't drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
@@ -849,12 +847,10 @@
 	if((machine_stat & MAINT) && !opened) //no board; no interface
 		return
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-
+/obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Apc", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Apc", name)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
@@ -938,7 +934,7 @@
 	area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if(IsAdminGhost(user))
+	if(isAdminGhostAI(user))
 		return TRUE
 	if(user.has_unlimited_silicon_privilege)
 		var/mob/living/silicon/ai/AI = user
@@ -1069,6 +1065,7 @@
 		return
 	if(!is_station_level(z))
 		return
+	malf.ShutOffDoomsdayDevice()
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))

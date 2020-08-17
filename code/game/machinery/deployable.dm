@@ -107,8 +107,9 @@
 	pass_flags = LETPASSTHROW
 	bar_material = SAND
 	climbable = TRUE
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SANDBAGS)
+	canSmoothWith = list(SMOOTH_GROUP_SANDBAGS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SECURITY_BARRICADE)
 
 
 /obj/structure/barricade/security
@@ -143,7 +144,7 @@
 	desc = "Instant cover."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
@@ -172,20 +173,20 @@
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)
-			var/target_turf = get_step(src, NORTH)
-			if(!(is_blocked_turf(target_turf)))
+			var/turf/target_turf = get_step(src, NORTH)
+			if(!target_turf.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf)
 
-			var/target_turf2 = get_step(src, SOUTH)
-			if(!(is_blocked_turf(target_turf2)))
+			var/turf/target_turf2 = get_step(src, SOUTH)
+			if(!target_turf2.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf2)
 		if(HORIZONTAL)
-			var/target_turf = get_step(src, EAST)
-			if(!(is_blocked_turf(target_turf)))
+			var/turf/target_turf = get_step(src, EAST)
+			if(!target_turf.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf)
 
-			var/target_turf2 = get_step(src, WEST)
-			if(!(is_blocked_turf(target_turf2)))
+			var/turf/target_turf2 = get_step(src, WEST)
+			if(!target_turf2.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
 

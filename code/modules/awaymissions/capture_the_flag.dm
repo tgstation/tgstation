@@ -13,7 +13,7 @@
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
-	item_state = "banner"
+	inhand_icon_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
@@ -71,7 +71,7 @@
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
-	user.anchored = TRUE
+	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
@@ -82,7 +82,7 @@
 
 /obj/item/ctf/dropped(mob/user)
 	..()
-	user.anchored = FALSE
+	user.set_anchored(FALSE)
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
@@ -96,7 +96,7 @@
 /obj/item/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
-	item_state = "banner-red"
+	inhand_icon_state = "banner-red"
 	desc = "A red banner used to play capture the flag."
 	team = RED_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/red
@@ -105,7 +105,7 @@
 /obj/item/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
-	item_state = "banner-blue"
+	inhand_icon_state = "banner-blue"
 	desc = "A blue banner used to play capture the flag."
 	team = BLUE_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/blue
@@ -216,6 +216,9 @@
 			return
 
 
+		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+			to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
+			return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
@@ -262,7 +265,7 @@
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
-/obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
+/obj/machinery/capture_the_flag/proc/clear_cooldown(ckey)
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
@@ -485,7 +488,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/tackler/combat
+	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/card/id/away
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
@@ -590,6 +593,10 @@
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
+
+/obj/structure/table/reinforced/ctf
+	resistance_flags = INDESTRUCTIBLE
+	flags_1 = NODECONSTRUCT_1
 
 /obj/effect/ctf
 	density = FALSE

@@ -8,6 +8,11 @@
 	var/damtype = BRUTE
 	var/force = 0
 
+	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
+	var/wound_bonus = 0
+	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
+	var/bare_wound_bonus = 0
+
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
@@ -28,6 +33,8 @@
 	var/req_access_txt = "0"
 	var/list/req_one_access
 	var/req_one_access_txt = "0"
+	/// Custom fire overlay icon
+	var/custom_fire_overlay
 
 	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
@@ -36,17 +43,9 @@
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
 /obj/vv_edit_var(vname, vval)
-	switch(vname)
-		if("anchored")
-			setAnchored(vval)
-			return TRUE
-		if("obj_flags")
-			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
-				return FALSE
-		if("control_object")
-			var/obj/O = vval
-			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
+	if(vname == NAMEOF(src, obj_flags))
+		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
+			return FALSE
 	return ..()
 
 /obj/Initialize()
@@ -80,9 +79,6 @@
 	SStgui.close_uis(src)
 	. = ..()
 
-/obj/proc/setAnchored(anchorvalue)
-	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
-	anchored = anchorvalue
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	..()
@@ -130,7 +126,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
 				ui_interact(M)
-		if(issilicon(usr) || IsAdminGhost(usr))
+		if(issilicon(usr) || isAdminGhostAI(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = TRUE
@@ -200,6 +196,8 @@
 
 /obj/singularity_pull(S, current_size)
 	..()
+	if(move_resist == INFINITY)
+		return
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
@@ -299,21 +297,47 @@
 	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
+/**
+  * Reskins object based on a user's choice
+  *
+  * Arguments:
+  * * M The mob choosing a reskin option
+  */
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	to_chat(M, "<b>Reskin options for [name]:</b>")
-	for(var/V in unique_reskin)
-		var/output = icon2html(src, M, unique_reskin[V])
-		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
 
-	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in sortList(unique_reskin)
-	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(!unique_reskin[choice])
-			return
-		current_skin = choice
-		icon_state = unique_reskin[choice]
-		to_chat(M, "[src] is now skinned as '[choice].'")
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	if(!pick)
+		return
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+	to_chat(M, "[src] is now skinned as '[pick].'")
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/proc/check_reskin_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
 
 /obj/analyzer_act(mob/living/user, obj/item/I)
 	if(atmosanalyzer_scan(user, src))
@@ -331,3 +355,19 @@
 	. = ..()
 	if(. && ricochet_damage_mod)
 		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+
+/obj/update_overlays()
+	. = ..()
+	if(acid_level)
+		. += GLOB.acid_overlay
+	if(resistance_flags & ON_FIRE)
+		. += custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay
+
+/// Handles exposing an object to reagents.
+/obj/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
+	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	for(var/reagent in reagents)
+		var/datum/reagent/R = reagent
+		. |= R.expose_obj(src, reagents[R])

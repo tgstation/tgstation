@@ -24,6 +24,8 @@
 	var/mob/living/silicon/ai/mainframe = null
 	var/datum/action/innate/undeployment/undeployment_action = new
 
+	/// the last health before updating - to check net change in health
+	var/previous_health
 //Hud stuff
 
 	var/obj/screen/inv1 = null
@@ -40,6 +42,9 @@
 	var/obj/item/robot_module/module = null
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
+
+	/// For checking which modules are disabled or not.
+	var/disabled_modules
 
 	var/mutable_appearance/eye_lights
 
@@ -109,6 +114,8 @@
 	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
+
+	previous_health = health
 
 	if(ispath(cell))
 		cell = new cell(src)
@@ -219,7 +226,6 @@
 		return
 
 	module.transform_to(modulelist[input_module])
-
 
 /mob/living/silicon/robot/proc/updatename(client/C)
 	if(shell)
@@ -422,7 +428,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -447,11 +453,10 @@
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
-		if(mmi)
-			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		QDEL_NULL(mmi)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -459,8 +464,7 @@
 		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = FALSE
-	lockcharge = FALSE
-	mobility_flags |= MOBILITY_FLAGS_DEFAULT
+	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
@@ -482,16 +486,30 @@
 		W.attack_self(src)
 
 
-/mob/living/silicon/robot/proc/SetLockdown(state = 1)
+/mob/living/silicon/robot/proc/SetLockdown(state = TRUE)
 	// They stay locked down if their wire is cut.
 	if(wires.is_cut(WIRE_LOCKDOWN))
-		state = 1
+		state = TRUE
 	if(state)
 		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
-	lockcharge = state
+	set_lockcharge(state)
+
+
+///Reports the event of the change in value of the lockcharge variable.
+/mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
+	if(new_lockcharge == lockcharge)
+		return
+	. = lockcharge
+	lockcharge = new_lockcharge
+	if(lockcharge)
+		if(!.)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
+	else if(.)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
 	update_mobility()
+
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
@@ -705,21 +723,30 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
-	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
-		if(uneq_module(held_items[3]))
-			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>")
-			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
-		if(health < 0)
-			if(uneq_module(held_items[2]))
-				audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>")
-				to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
-				playsound(loc, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			if(health < -maxHealth*0.5)
-				if(uneq_module(held_items[1]))
-					audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>")
-					to_chat(src, "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
-					playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
+
+	/// the current percent health of the robot (-1 to 1)
+	var/percent_hp = health/maxHealth
+	if(health <= previous_health) //if change in health is negative (we're losing hp)
+		if(percent_hp <= 0.5)
+			break_cyborg_slot(3)
+
+		if(percent_hp <= 0)
+			break_cyborg_slot(2)
+
+		if(percent_hp <= -0.5)
+			break_cyborg_slot(1)
+
+	else //if change in health is positive (we're gaining hp)
+		if(percent_hp >= 0.5)
+			repair_cyborg_slot(3)
+
+		if(percent_hp >= 0)
+			repair_cyborg_slot(2)
+
+		if(percent_hp >= -0.5)
+			repair_cyborg_slot(1)
+
+	previous_health = health
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)
@@ -757,6 +784,7 @@
 
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
 		see_in_dark = 8
 
@@ -771,18 +799,12 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
-			if(stat == CONSCIOUS)
-				set_stat(UNCONSCIOUS)
-				become_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsKnockdown() || IsParalyzed())
+			set_stat(UNCONSCIOUS)
 		else
-			if(stat == UNCONSCIOUS)
-				set_stat(CONSCIOUS)
-				cure_blind(UNCONSCIOUS_BLIND)
-				update_mobility()
-				update_headlamp()
+			set_stat(CONSCIOUS)
+	update_mobility()
+	update_headlamp()
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()
@@ -919,7 +941,7 @@
   * * AI - AI unit that initiated the deployment into the AI shell
   */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] Shell-[ident]"
+	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name	//update the camera name too
@@ -973,6 +995,8 @@
 	mainframe.diag_hud_set_deployed()
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
+	if(mainframe.eyeobj)
+		mainframe.eyeobj.setLoc(loc)
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -985,7 +1009,7 @@
 	cell = null
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		if(buckle_mob(M))
 			return TRUE
 

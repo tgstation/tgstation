@@ -5,6 +5,7 @@
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "ninja"
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE

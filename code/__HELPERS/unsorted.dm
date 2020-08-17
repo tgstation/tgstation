@@ -229,8 +229,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
-/proc/ionnum()
-	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
+/proc/ionnum() //! is at the start to prevent us from changing say modes via get_message_mode()
+	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
@@ -383,6 +383,30 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = ATAN2(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
+
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -395,7 +419,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T, ignore_flag_1)
+/atom/proc/GetAllContents(T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -448,63 +472,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			steps++
 
 	return 1
-
-/proc/is_blocked_turf(turf/T, exclude_mobs)
-	if(T.density)
-		return 1
-	for(var/i in T)
-		var/atom/A = i
-		if(A.density && (!exclude_mobs || !ismob(A)))
-			return 1
-	return 0
-
-/proc/is_anchored_dense_turf(turf/T) //like the older version of the above, fails only if also anchored
-	if(T.density)
-		return 1
-	for(var/i in T)
-		var/atom/movable/A = i
-		if(A.density && A.anchored)
-			return 1
-	return 0
-
-/proc/get_step_towards2(atom/ref , atom/trg)
-	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
-	var/turf/temp = get_step_towards(ref,trg)
-
-	if(is_blocked_turf(temp))
-		var/dir_alt1 = turn(base_dir, 90)
-		var/dir_alt2 = turn(base_dir, -90)
-		var/turf/turf_last1 = temp
-		var/turf/turf_last2 = temp
-		var/free_tile = null
-		var/breakpoint = 0
-
-		while(!free_tile && breakpoint < 10)
-			if(!is_blocked_turf(turf_last1))
-				free_tile = turf_last1
-				break
-			if(!is_blocked_turf(turf_last2))
-				free_tile = turf_last2
-				break
-			turf_last1 = get_step(turf_last1,dir_alt1)
-			turf_last2 = get_step(turf_last2,dir_alt2)
-			breakpoint++
-
-		if(!free_tile)
-			return get_step(ref, base_dir)
-		else
-			return get_step_towards(ref,free_tile)
-
-	else
-		return get_step(ref, base_dir)
-
-//Takes: Anything that could possibly have variables and a varname to check.
-//Returns: 1 if found, 0 if not.
-/proc/hasvar(datum/A, varname)
-	if(A.vars.Find(lowertext(varname)))
-		return 1
-	else
-		return 0
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -688,7 +655,7 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
-	/obj/structure/sign/picture_frame
+	/obj/structure/sign/picture_frame, /obj/machinery/bounty_board
 	)))
 
 GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
@@ -854,7 +821,7 @@ B --><-- A
 // eg: center_image(I, 32,32)
 // eg2: center_image(I, 96,96)
 
-/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+/proc/center_image(image/I, x_dimension = 0, y_dimension = 0)
 	if(!I)
 		return
 
@@ -1011,7 +978,7 @@ B --><-- A
 
 	return L
 
-/atom/proc/contains(var/atom/A)
+/atom/proc/contains(atom/A)
 	if(!A)
 		return 0
 	for(var/atom/location = A.loc, location, location = location.loc)
@@ -1039,7 +1006,7 @@ B --><-- A
 			var/I = rand(1, L.len)
 			var/turf/T = L[I]
 			var/area/X = get_area(T)
-			if(!T.density && X.valid_territory)
+			if(!T.density && (X.area_flags & VALID_TERRITORY))
 				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
@@ -1070,12 +1037,18 @@ B --><-- A
 	return closest_atom
 
 
-proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
+/proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
 		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
 		if (isnull(value))
 			return
 	value = trim(value)
+
+	var/random = FALSE
+	if(findtext(value, "?"))
+		value = replacetext(value, "?", "")
+		random = TRUE
+
 	if(!isnull(value) && value != "")
 		matches = filter_fancy_list(matches, value)
 
@@ -1085,10 +1058,12 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	var/chosen
 	if(matches.len==1)
 		chosen = matches[1]
+	else if(random)
+		chosen = pick(matches) || null
 	else
 		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sortList(matches)
-		if(!chosen)
-			return
+	if(!chosen)
+		return
 	chosen = matches[chosen]
 	return chosen
 
@@ -1166,7 +1141,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
-/proc/weightclass2text(var/w_class)
+/proc/weightclass2text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
 			. = "tiny"
@@ -1489,33 +1464,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
-/proc/generate_items_inside(list/items_list,var/where_to)
+/proc/generate_items_inside(list/items_list,where_to)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
 
-//sends a message to chat
-//config_setting should be one of the following
-//null - noop
-//empty string - use TgsTargetBroadcast with admin_only = FALSE
-//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
-/proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
-		return
-
-	var/datum/tgs_version/version = world.TgsVersion()
-	if(config_setting == "" || version.suite == 3)
-		world.TgsTargetedChatBroadcast(message, FALSE)
-		return
-
-	var/list/channels_to_use = list()
-	for(var/I in world.TgsChatChannelInfo())
-		var/datum/tgs_chat_channel/channel = I
-		if(channel.tag == config_setting)
-			channels_to_use += channel
-
-	if(channels_to_use.len)
-		world.TgsChatBroadcast()
 
 /proc/num2sign(numeric)
 	if(numeric > 0)
@@ -1530,47 +1483,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return call(source, proctype)(arglist(arguments))
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
-
-// Converts browser keycodes to BYOND keycodes.
-/proc/browser_keycode_to_byond(keycode)
-	keycode = text2num(keycode)
-	switch(keycode)
-		// letters and numbers
-		if(65 to 90, 48 to 57)
-			return ascii2text(keycode)
-		if(17)
-			return "Ctrl"
-		if(18)
-			return "Alt"
-		if(16)
-			return "Shift"
-		if(37)
-			return "West"
-		if(38)
-			return "North"
-		if(39)
-			return "East"
-		if(40)
-			return "South"
-		if(45)
-			return "Insert"
-		if(46)
-			return "Delete"
-		if(36)
-			return "Northwest"
-		if(35)
-			return "Southwest"
-		if(33)
-			return "Northeast"
-		if(34)
-			return "Southeast"
-		if(112 to 123)
-			return "F[keycode-111]"
-		if(96 to 105)
-			return "Numpad[keycode-96]"
-		if(188)
-			return ","
-		if(190)
-			return "."
-		if(189)
-			return "-"

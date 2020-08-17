@@ -12,9 +12,9 @@
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	. = ..()
 	if(head_icon)
-		mob_overlay_icon = head_icon
+		worn_icon = head_icon
 	if(worn_state)
-		item_state = worn_state
+		inhand_icon_state = worn_state
 	if(lh_icon)
 		lefthand_file = lh_icon
 	if(rh_icon)

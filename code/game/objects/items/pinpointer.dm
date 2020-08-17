@@ -7,13 +7,13 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination

@@ -64,10 +64,11 @@
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
 	tackle = TT
+	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
-	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
+	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
 	if(!A || !(isturf(A) || isturf(A.loc)))
@@ -365,6 +366,7 @@
 			user.adjustBruteLoss(30)
 			playsound(user, 'sound/effects/blobattack.ogg', 60, TRUE)
 			playsound(user, 'sound/effects/splat.ogg', 70, TRUE)
+			playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
 			user.emote("scream")
 			user.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic) // oopsie indeed!
 			shake_camera(user, 7, 7)
@@ -386,7 +388,7 @@
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
 			user.adjustStaminaLoss(30)
 			user.adjustBruteLoss(30)
-			user.confused += 15
+			user.add_confusion(15)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
@@ -399,7 +401,7 @@
 			user.visible_message("<span class='danger'>[user] slams hard into [hit], knocking [user.p_them()] senseless!</span>", "<span class='userdanger'>You slam hard into [hit], knocking yourself senseless!</span>")
 			user.adjustStaminaLoss(30)
 			user.adjustBruteLoss(10)
-			user.confused += 10
+			user.add_confusion(10)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 
@@ -420,7 +422,7 @@
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
-	playsound(user, "sound/effects/Glasshit.ogg", 140, TRUE)
+	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i = 0, i < speed, i++)
@@ -433,13 +435,13 @@
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(30)
-		user.visible_message("<span class='danger'>[user] slams into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [W] and shatter it, shredding yourself with glass!</span>")
+		user.visible_message("<span class='danger'>[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You smacks into [W] and shatter it, shredding yourself with glass!</span>")
 
 	else
-		user.visible_message("<span class='danger'>[user] slams into [W] like a bug, then slowly slides off it!</span>", "<span class='userdanger'>You slam into [W] like a bug, then slowly slide off it!</span>")
+		user.visible_message("<span class='danger'>[user] smacks into [W] like a bug!</span>", "<span class='userdanger'>You smacks into [W] like a bug!</span>")
 		user.Paralyze(10)
 		user.Knockdown(30)
-		W.take_damage(20 * speed)
+		W.take_damage(30 * speed)
 		user.adjustStaminaLoss(10 * speed)
 		user.adjustBruteLoss(5 * speed)
 

@@ -42,14 +42,14 @@
 	var/turf/T = get_turf(hit_atom)
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
-		reagents.reaction(hit_atom, TOUCH)
+		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		if(stunning)
 			L.Paralyze(20) //splat!
 		L.adjust_blurriness(1)
 		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(L, "desceration", 50, TRUE)
+		playsound(L, "desecration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)

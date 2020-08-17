@@ -30,6 +30,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
+	/client/proc/ghost_pool_protection,	/*opens a menu for toggling ghost roles*/
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
@@ -40,8 +41,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/client/proc/getserverlogs,		/*for accessing server logs*/
 	/client/proc/getcurrentlogs,		/*for accessing server logs for the current round*/
-	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
-	/client/proc/cmd_admin_headset_message,	/*send an message to somebody through their headset as CentCom*/
+	/client/proc/cmd_admin_subtle_message,	/*send a message to somebody as a 'voice in their head'*/
+	/client/proc/cmd_admin_headset_message,	/*send a message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
@@ -124,7 +125,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
-	/client/proc/toggle_hub
+	/client/proc/toggle_hub,
+	/client/proc/toggle_cdn
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -165,7 +167,18 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
+	/client/proc/atmos_control,
+	/client/proc/reload_cards,
+	/client/proc/validate_cards,
+	/client/proc/test_cardpack_distribution,
+	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
+#ifdef REFERENCE_TRACKING
+	/datum/admins/proc/view_refs,
+	/datum/admins/proc/view_del_failures,
+#endif
+	/client/proc/check_timer_sources,
+	/client/proc/toggle_cdn
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -180,6 +193,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/reset_ooc,
 	/client/proc/deadmin,
 	/datum/admins/proc/show_traitor_panel,
+	/datum/admins/proc/show_skill_panel,
 	/datum/admins/proc/toggleenter,
 	/datum/admins/proc/toggleguests,
 	/datum/admins/proc/announce,
@@ -549,6 +563,55 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[key_name(usr)] has modified Dynamic Explosion Scale: [ex_scale]")
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
+/client/proc/atmos_control()
+	set name = "Atmos Control Panel"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	SSair.ui_interact(mob)
+
+/client/proc/reload_cards()
+	set name = "Reload Cards"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
+
+/client/proc/validate_cards()
+	set name = "Validate Cards"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	var/message = checkCardpacks(SStrading_card_game.card_packs)
+	message += checkCardDatums()
+	if(message)
+		message_admins(message)
+
+/client/proc/test_cardpack_distribution()
+	set name = "Test Cardpack Distribution"
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(SStrading_card_game.card_packs)
+	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
+	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
+	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
+	checkCardDistribution(pack, batchSize, batchCount, guar)
+
+/client/proc/print_cards()
+	set name = "Print Cards"
+	set category = "Debug"
+	printAllCards()
+
 /client/proc/give_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"
 	set name = "Give Spell"
@@ -711,7 +774,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	if(mob && IsAdminGhost(mob))
+	if(mob && isAdminGhostAI(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")

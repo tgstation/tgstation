@@ -16,9 +16,6 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -58,17 +55,21 @@
 	fancy_open = TRUE
 	update_icon()
 
+#define DONUT_INBOX_SPRITE_WIDTH 3
+
 /*
  * Donut Box
  */
 
 /obj/item/storage/fancy/donut_box
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Mmm. Donuts."
+	icon = 'icons/obj/food/donuts.dmi'
+	icon_state = "donutbox_inner"
+	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
+	appearance_flags = KEEP_TOGETHER
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
@@ -76,13 +77,43 @@
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
 
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
+	update_icon()
+
+/obj/item/storage/fancy/donut_box/update_icon_state()
+	if(fancy_open)
+		icon_state = "donutbox_inner"
+	else
+		icon_state = "donutbox"
+
+/obj/item/storage/fancy/donut_box/update_overlays()
+	. = ..()
+
+	if (!fancy_open)
+		return
+
+	var/donuts = 0
+
+	for (var/_donut in contents)
+		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		if (!istype(donut))
+			continue
+
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		donuts += 1
+
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
+
+#undef DONUT_INBOX_SPRITE_WIDTH
+
 /*
  * Egg Box
  */
 
 /obj/item/storage/fancy/egg_box
 	icon = 'icons/obj/food/containers.dmi'
-	item_state = "eggbox"
+	inhand_icon_state = "eggbox"
 	icon_state = "eggbox"
 	icon_type = "egg"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -107,7 +138,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	icon_type = "candle"
-	item_state = "candlebox5"
+	inhand_icon_state = "candlebox5"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -129,15 +160,35 @@
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
-	item_state = "cigpacket"
+	inhand_icon_state = "cigpacket"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
 	age_restricted = TRUE
+	///for cigarette overlay
+	var/candy = FALSE
+	/// Does this cigarette packet come with a coupon attached?
+	var/spawn_coupon = TRUE
+	/// For VV'ing, set this to true if you want to force the coupon to give an omen
+	var/rigged_omen = FALSE
+
+/obj/item/storage/fancy/cigarettes/attack_self(mob/user)
+	if(contents.len == 0 && spawn_coupon)
+		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+		var/obj/item/coupon/attached_coupon = new
+		user.put_in_hands(attached_coupon)
+		attached_coupon.generate(rigged_omen)
+		attached_coupon = null
+		spawn_coupon = FALSE
+		name = "discarded cigarette packet"
+		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		STR.max_items = 0
+		return
+	return ..()
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -147,7 +198,10 @@
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
+
 	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	if(spawn_coupon)
+		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -323,6 +377,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
@@ -365,7 +420,7 @@
 	name = "heart-shaped box"
 	desc = "A heart-shaped box for holding tiny chocolates."
 	icon = 'icons/obj/food/containers.dmi'
-	item_state = "chocolatebox"
+	inhand_icon_state = "chocolatebox"
 	icon_state = "chocolatebox"
 	icon_type = "chocolate"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'

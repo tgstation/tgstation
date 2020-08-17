@@ -176,7 +176,7 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
 
@@ -387,6 +387,13 @@
 	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
 	credit_cost = 50000
+
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "nature"
+	name = "Dynamic Environmental Interaction Shuttle"
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	credit_cost = 8000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

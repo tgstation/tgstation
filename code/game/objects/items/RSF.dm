@@ -3,7 +3,7 @@ CONTAINS:
 RSF
 
 */
-///Extracts the related object from a associated list of objects and values, or lists and objects.
+///Extracts the related object from an associated list of objects and values, or lists and objects.
 #define OBJECT_OR_LIST_ELEMENT(from, input) (islist(input) ? from[input] : input)
 /obj/item/rsf
 	name = "\improper Rapid-Service-Fabricator"

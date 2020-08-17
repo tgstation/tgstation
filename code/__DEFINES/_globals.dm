@@ -56,5 +56,5 @@
 /// Create a null global list
 #define GLOBAL_LIST(X) GLOBAL_RAW(/list/##X); GLOBAL_UNMANAGED(X)
 
-/// Create an typed null global
+/// Create a typed null global
 #define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X); GLOBAL_UNMANAGED(X)

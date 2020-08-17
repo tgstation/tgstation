@@ -126,11 +126,8 @@ Class Procs:
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	// For storing and overriding ui id and dimensions
+	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
-	var/ui_style // ID of custom TGUI style (optional)
-	var/ui_x // Default size of TGUI window, in pixels
-	var/ui_y
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -169,10 +166,8 @@ Class Procs:
 	GLOB.machines.Remove(src)
 	end_processing()
 	dropContents()
-	if(length(component_parts))
-		for(var/atom/A in component_parts)
-			qdel(A)
-		component_parts.Cut()
+	QDEL_LIST(component_parts)
+	QDEL_NULL(circuit)
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -248,24 +243,36 @@ Class Procs:
 	return !(machine_stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issiliconoradminghost(user)
-	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
+	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
-	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
+
+	var/silicon = issilicon(user)
+	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN)) // Check if we can interact with an open panel machine, if the panel is open
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-	if(silicon)
+	if(silicon || isAdminGhostAI(user)) // If we are an AI or adminghsot, make sure the machine allows silicons to interact
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
-	else
-		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+
+	else if(isliving(user)) // If we are a living human
+		var/mob/living/L = user
+
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
-		if(!Adjacent(user))
-			var/mob/living/carbon/H = user
+
+		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
+			var/mob/living/carbon/H = L
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
-	return TRUE
+
+		if(L.incapacitated()) // Finally make sure we aren't incapacitated
+			return FALSE
+
+	else // If we aren't a silicon, living, or admin ghost, bad!
+		return FALSE
+
+	return TRUE // If we pass all these checks, woohoo! We can interact
 
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
@@ -329,8 +336,20 @@ Class Procs:
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
 
+/obj/machinery/attack_hulk(mob/living/carbon/user)
+	. = ..()
+	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
+	if(!arm)
+		return
+	if(arm.disabled)
+		return
+	var/damage = damage_deflection / 10
+	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
+
+
+
 /obj/machinery/attack_robot(mob/user)
-	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
+	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
 	if(Adjacent(user) && can_buckle && has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
 		if(buckled_mobs.len > 1)
@@ -343,7 +362,7 @@ Class Procs:
 	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
-	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
+	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
 	if(iscyborg(user))// For some reason attack_robot doesn't work
 		return attack_robot(user)
@@ -383,12 +402,13 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
-	qdel(src)
+			circuit = null
+	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
 	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 	. = M
-	M.setAnchored(anchored)
+	M.set_anchored(anchored)
 	if(!disassembled)
 		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
 	transfer_fingerprints_to(M)
@@ -413,6 +433,9 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+	if(A == circuit)
+		circuit = null
+	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -460,7 +483,7 @@ Class Procs:
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-			setAnchored(!anchored)
+			set_anchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 			return SUCCESSFUL_UNFASTEN
@@ -555,19 +578,22 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/zap_act(power, zap_flags, shocked_objects)
-	. = ..()
+/obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power/2000, BURN, "energy")
+		take_damage(power * 0.0005, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)
+		power -= power * 0.0005
+	return ..()
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if (AM == occupant)
 		occupant = null
+	if(AM == circuit)
+		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
@@ -576,3 +602,6 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

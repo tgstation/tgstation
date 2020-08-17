@@ -1,7 +1,7 @@
 /obj/item/grenade/flashbang
 	name = "flashbang"
 	icon_state = "flashbang"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
@@ -14,7 +14,7 @@
 		return
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, COLOR_WHITE, (flashbang_range + 2), 4, 2)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(M), M)
 	qdel(src)
@@ -44,7 +44,7 @@
 /obj/item/grenade/stingbang
 	name = "stingbang"
 	icon_state = "timeg"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
@@ -56,6 +56,14 @@
 	name = "mega stingbang"
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
 	shrapnel_radius = 12
+
+/obj/item/grenade/stingbang/breaker
+	name = "breakbang"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball/breaker
+
+/obj/item/grenade/stingbang/shred
+	name = "shredbang"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball/shred
 
 /obj/item/grenade/stingbang/prime(mob/living/lanced_by)
 	if(iscarbon(loc))
@@ -74,7 +82,7 @@
 		return
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 50, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 2, 1)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, COLOR_WHITE, (flashbang_range + 2), 2, 1)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		pop(get_turf(M), M)
 	qdel(src)
@@ -104,7 +112,7 @@
 	name = "rotfrag grenade"
 	desc = "A grenade that generates more shrapnel the more you rotate it in your hand after pulling the pin. This one releases shrapnel shards."
 	icon_state = "timeg"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/rots_per_mag = 3 /// how many times we need to "rotate" the charge in hand per extra tile of magnitude

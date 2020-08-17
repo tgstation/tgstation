@@ -3,7 +3,7 @@
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "cutters_map"
-	item_state = "cutters"
+	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,7 +13,8 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=80)
-	attack_verb = list("pinched", "nipped")
+	attack_verb_continuous = list("pinches", "nips")
+	attack_verb_simple = list("pinch", "nip")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
 	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
