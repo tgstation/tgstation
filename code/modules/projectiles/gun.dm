@@ -610,6 +610,8 @@
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
+		if(chambered.BB.wound_bonus != CANT_WOUND)
+			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 
