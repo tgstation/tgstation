@@ -67,6 +67,8 @@
 	var/list/initial_modules = list()
 	/// Modules the RIG currently possesses
 	var/list/modules
+	/// PAI inserted in the RIG
+	var/obj/item/paicard/pai
 	/// Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
@@ -255,6 +257,11 @@
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
 	..()
+
+/obj/item/rig/control/relaymove(mob/user)
+	if(!istype(user, pai) || !(locate(/obj/item/rig/module/pai_upgrade) in contents) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
+		return
+	step_towards(wearer, get_step(wearer, direction))
 
 /obj/item/rig/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)

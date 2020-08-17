@@ -56,3 +56,8 @@
 /obj/item/rig/module/storage/on_uninstall()
 	var/datum/component/storage/rigstorage = rig.GetComponent(/datum/component/storage)
 	rigstorage.RemoveComponent()
+
+/obj/item/rig/module/pai_upgrade
+	name = "RIG pAI upgrade module"
+	complexity = 2
+	idle_power_use = 10
