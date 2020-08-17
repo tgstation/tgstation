@@ -13,7 +13,8 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("swept", "brushed off", "bludgeoned", "whacked")
+	attack_verb_continuous = list("sweeps", "brushes off", "bludgeons", "whacks")
+	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
 
 /obj/item/pushbroom/Initialize()

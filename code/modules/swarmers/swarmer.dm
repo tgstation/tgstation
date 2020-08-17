@@ -130,15 +130,17 @@
 		drone.LoseTarget()
 		drone.Goto(clicked_turf, drone.move_to_delay)
 
-/mob/living/simple_animal/hostile/swarmer/CtrlClickOn(atom/A)
-	face_atom(A)
+/mob/living/simple_animal/hostile/swarmer/CtrlClickOn(atom/target)
+	face_atom(target)
+	if(!istype(target, /mob/living))
+		return
 	if(!isturf(loc))
 		return
 	if(next_move > world.time)
 		return
-	if(!A.Adjacent(src))
+	if(!target.Adjacent(src))
 		return
-	prepare_target(src)
+	prepare_target(target)
 
 ////END CTRL CLICK FOR SWARMERS////
 

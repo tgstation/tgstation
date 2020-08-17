@@ -23,7 +23,8 @@
 	wound_bonus = 15
 	bare_wound_bonus = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
+	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/chainhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 
@@ -43,7 +44,8 @@
 	force = 20
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
@@ -65,7 +67,8 @@
 	block_chance = 50
 	armour_penetration = 75
 	sharpness = SHARP_EDGED
-	attack_verb = list("slashed", "cut")
+	attack_verb_continuous = list("slashes", "cuts")
+	attack_verb_simple = list("slash", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	custom_materials = list(/datum/material/iron = 1000)
 	wound_bonus = 10
@@ -149,7 +152,8 @@
 	throwforce = 10
 	block_chance = 20
 	armour_penetration = 65
-	attack_verb = list("slashed", "stung", "prickled", "poked")
+	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
+	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
@@ -377,7 +381,8 @@
 		inhand_icon_state = on_inhand_icon_state
 		w_class = weight_class_on
 		force = force_on
-		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
+		attack_verb_simple = list("smack", "strike", "crack", "beat")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
@@ -385,7 +390,8 @@
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
-		attack_verb = list("hit", "poked")
+		attack_verb_continuous = list("hits", "pokes")
+		attack_verb_simple = list("hit", "poke")
 
 	playsound(src.loc, on_sound, 50, TRUE)
 	add_fingerprint(user)
@@ -531,7 +537,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
+	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
 
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
@@ -550,7 +557,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
-	attack_verb = list("hit", "poked")
+	attack_verb_continuous = list("hits", "pokes")
+	attack_verb_simple = list("hit", "poke")
 	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
 	var/static/list/ovens
 	var/on = FALSE
@@ -666,7 +674,8 @@
 	throwforce = 8
 	block_chance = 10
 	armour_penetration = 50
-	attack_verb = list("smacked", "struck", "cracked", "beaten")
+	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
+	attack_verb_simple = list("smack", "strike", "crack", "beat")
 	var/overlay_state = "mace_handle"
 	var/mutable_appearance/overlay
 

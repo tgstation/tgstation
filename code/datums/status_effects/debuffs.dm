@@ -24,6 +24,7 @@
 		owner.update_stat()
 	return ..()
 
+
 //STUN
 /datum/status_effect/incapacitating/stun
 	id = "stun"
@@ -40,9 +41,20 @@
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
+
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
+
+/datum/status_effect/incapacitating/knockdown/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/knockdown/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 
 //IMMOBILIZED
@@ -60,6 +72,7 @@
 	return ..()
 
 
+//PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
@@ -69,11 +82,14 @@
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
@@ -93,6 +109,7 @@
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping

@@ -402,6 +402,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
+			circuit = null
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -577,14 +578,15 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/zap_act(power, zap_flags, shocked_objects)
-	. = ..()
+/obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power/2000, BURN, "energy")
+		take_damage(power * 0.0005, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)
+		power -= power * 0.0005
+	return ..()
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()

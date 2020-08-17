@@ -45,7 +45,7 @@ $bg-map: colors.$bg-map !default;
 .Button {
   position: relative;
   display: inline-block;
-  line-height: base.em(20px);
+  line-height: 1.667em;
   padding: 0 0.5em;
   margin-right: base.em(2px);
   white-space: nowrap;
@@ -58,12 +58,13 @@ $bg-map: colors.$bg-map !default;
 
   &:last-child {
     margin-right: 0;
+    margin-bottom: 0;
   }
 
   .fa, .fas, .far {
     margin-left: -0.25em;
     margin-right: -0.25em;
-    min-width: base.em(16px);
+    min-width: 1.333em;
     text-align: center;
   }
 }
@@ -84,7 +85,15 @@ $bg-map: colors.$bg-map !default;
   display: block;
   margin-left: 0;
   margin-right: 0;
-  // padding: 3px 6px;
+}
+
+.Button--circular {
+  border-radius: 50%;
+}
+
+.Button--compact {
+  padding: 0 0.25em;
+  line-height: 1.333em;
 }
 
 @each $color-name, $color-value in $bg-map {
