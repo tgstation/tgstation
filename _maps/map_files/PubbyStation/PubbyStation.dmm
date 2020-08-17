@@ -40151,9 +40151,6 @@
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
-"bWh" = (
-/turf/open/floor/plating/asteroid,
-/area/chapel/office)
 "bWi" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
@@ -43840,7 +43837,7 @@
 	width = 35
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cjC" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -45705,8 +45702,14 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/dock)
 "cqS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
 /area/space/nearstation)
 "cqU" = (
 /obj/structure/window/reinforced{
@@ -48108,6 +48111,14 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
+"cFX" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/space/nearstation)
 "cHS" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Firing Range"
@@ -55877,6 +55888,14 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/security/brig)
+"tpI" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/space/nearstation)
 "tqO" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
@@ -56233,7 +56252,7 @@
 	name = "Outlet Injector"
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/maintenance/department/chapel/monastery)
 "tYU" = (
 /obj/structure/reflector/box/anchored,
 /turf/open/floor/plating,
@@ -57648,6 +57667,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"wWO" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "wXu" = (
 /obj/machinery/disposal/bin,
 /obj/structure/window/reinforced{
@@ -72857,10 +72883,10 @@ aaa
 aby
 aaa
 aaa
-bOv
+tpI
 bNs
 bNs
-bWh
+bOw
 bOw
 bOw
 bOw
@@ -76963,7 +76989,7 @@ bGE
 bHM
 bNA
 bHM
-abI
+cqS
 bQi
 bQR
 bNs
@@ -77482,8 +77508,8 @@ aby
 aby
 abI
 bSn
-bSZ
-cqS
+cFX
+bNs
 bNs
 bQe
 bOw
@@ -77740,7 +77766,7 @@ aaa
 abI
 abI
 abI
-abI
+cFX
 bNs
 bNs
 bNs
@@ -77997,8 +78023,8 @@ aaa
 aaa
 aaa
 abI
-aaa
-aaa
+aht
+wWO
 bQR
 bNs
 bNs
