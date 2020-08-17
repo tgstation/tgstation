@@ -136,7 +136,13 @@
 	if(weapon.check_botched(shooter))
 		return
 
-	weapon.process_fire(target, shooter)
+	var/fired = weapon.process_fire(target, shooter)
+	if(!fired && chambered?.BB)
+		chambered.BB.damage /= damage_mult
+		if(chambered.BB.wound_bonus != CANT_WOUND)
+			chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+
 	qdel(src)
 
 ///Shooter canceled their shot, either by dropping/equipping their weapon, leaving sight/range, or clicking on the alert
