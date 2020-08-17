@@ -44,7 +44,11 @@
 	eat_atom(I)
 
 /mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/A)
-	. = ..()
+	if(!check_edible(A))
+		return ..()
+	eat_atom(A)
+
+/mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)
@@ -239,12 +243,12 @@
 ///Gain health for the consumption and dump some clone loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	vored_mob.adjustCloneLoss(6)
+	vored_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
 	///Dump em at 200 cloneloss.
-	if(vored_mob.getCloneLoss() >= 200)
+	if(vored_mob.getBruteLoss() >= 200)
 		stop_consuming()
 
 ///On owner death dump the current vored mob
@@ -356,6 +360,7 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
 	nodamage = TRUE
 	damage = 0
 
@@ -366,15 +371,14 @@
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "globule"
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
-	var/mob/living/carbon/human/healing_target
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
-/obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob)
+/obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob, obj/item/bodypart/part)
 	. = ..()
-	if(!istype(loc, /obj/item/bodypart))
+	if(!istype(part))
 		return
-	healing_target = embedded_mob
+	bodypart = part
 	START_PROCESSING(SSobj, src)
 
 /obj/item/mending_globule/unembedded()

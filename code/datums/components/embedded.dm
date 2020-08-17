@@ -80,7 +80,7 @@
 	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
-	weapon.embedded(parent)
+	weapon.embedded(parent, part)
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/victim = parent
 
