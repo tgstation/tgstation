@@ -40,6 +40,4 @@
 	icon_state = "blob_glow"
 	flags_ricochet = RICOCHET_SHINY
 	point_return = 8
-	max_integrity = 100
-	brute_resist = 0.5
 	explosion_block = 2
