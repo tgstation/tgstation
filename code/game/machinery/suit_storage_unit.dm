@@ -332,7 +332,7 @@
 	open_machine()
 	dump_contents()
 
-/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
+/obj/machinery/suit_storage_unit/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		dump_contents()

@@ -144,7 +144,7 @@
 
 	open_machine()
 
-/obj/machinery/nanite_chamber/container_resist(mob/living/user)
+/obj/machinery/nanite_chamber/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return

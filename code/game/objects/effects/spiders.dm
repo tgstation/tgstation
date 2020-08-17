@@ -243,7 +243,7 @@
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 
-/obj/structure/spider/cocoon/container_resist(mob/living/user)
+/obj/structure/spider/cocoon/container_resist_act(mob/living/user)
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT

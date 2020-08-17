@@ -59,18 +59,18 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/sleeper/container_resist(mob/living/user)
+/obj/machinery/sleeper/container_resist_act(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/sleeper/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/sleeper/relaymove(mob/user)
 	if (!state_open)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

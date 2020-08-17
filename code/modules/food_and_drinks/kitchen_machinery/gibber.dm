@@ -54,7 +54,7 @@
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/gibber/container_resist(mob/living/user)
+/obj/machinery/gibber/container_resist_act(mob/living/user)
 	go_out()
 
 /obj/machinery/gibber/relaymove(mob/living/user)

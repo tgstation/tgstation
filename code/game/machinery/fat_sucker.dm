@@ -68,7 +68,7 @@
 		stop()
 	..()
 
-/obj/machinery/fat_sucker/container_resist(mob/living/user)
+/obj/machinery/fat_sucker/container_resist_act(mob/living/user)
 	if(!free_exit || state_open)
 		to_chat(user, "<span class='notice'>The emergency release is not responding! You start pushing against the hull!</span>")
 		user.changeNext_move(CLICK_CD_BREAKOUT)
