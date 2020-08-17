@@ -234,7 +234,7 @@ Class Procs:
 	// We'll have dropped the occupant, circuit and component parts as part of this.
 	occupant = null
 	circuit = null
-	component_parts.Cut()
+	LAZYCLEARLIST(component_parts)
 
 /**
   * Drop every movable atom in the machine's contents list.
@@ -485,13 +485,13 @@ Class Procs:
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
-		if(component_parts && component_parts.len)
+		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 				if(circuit == I)
 					circuit = null
-			component_parts.Cut()
+			LAZYCLEARLIST(component_parts)
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -621,7 +621,7 @@ Class Procs:
 							else
 								if(SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE, B, src))
 									component_parts += B
-									B.moveToNullspace()
+									B.forceMove(src)
 							SEND_SIGNAL(W, COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
 							to_chat(user, "<span class='notice'>[capitalize(A.name)] replaced with [B.name].</span>")

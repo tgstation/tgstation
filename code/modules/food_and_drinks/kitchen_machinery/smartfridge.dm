@@ -248,9 +248,9 @@
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
 	. = ..()
-	if(component_parts && component_parts.len)
-		component_parts.Cut()
+	LAZYCLEARLIST(component_parts)
 	component_parts = null
+	circuit = null
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)

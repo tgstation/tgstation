@@ -32,7 +32,7 @@
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		component_parts -= circuit
+		LAZYREMOVE(component_parts, circuit)
 		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
@@ -267,12 +267,12 @@
 
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
+	QDEL_LIST(component_parts)
 	component_parts = list()
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 2)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
 	RefreshParts()
 
 /obj/machinery/sleeper/old
