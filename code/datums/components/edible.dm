@@ -44,7 +44,6 @@ Behavior that's still missing from this component that original food items had t
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
-	RegisterSignal(parent, COMSIG_EDIBLE_CHECK_LIKED, .proc/checkLiked)
 
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags
