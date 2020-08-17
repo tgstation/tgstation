@@ -3,8 +3,8 @@
 	name = "Distributed Neurons"
 	description = "will do very low toxin damage and turns unconscious targets into blob zombies."
 	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do very low toxin damage and will turn unconscious targets into blob zombies for additional resources(for your overmind).  Spores produced by factories are sentient."
-	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans, turning them into blob zombies."
+	shortdesc = "will do very low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
+	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans."
 	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"
@@ -29,11 +29,3 @@
 	M.apply_damage(0.6*reac_volume, TOX)
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		M.death() //sleeping in a fight? bad plan.
-		var/points = rand(5, 10)
-		var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore/weak(get_turf(M))
-		BS.overmind = O
-		BS.update_icons()
-		O.blob_mobs.Add(BS)
-		BS.Zombify(M)
-		O.add_points(points)
-		to_chat(O, "<span class='notice'>Gained [points] resources from the zombification of [M].</span>")

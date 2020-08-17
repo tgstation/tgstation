@@ -15,6 +15,8 @@
 /datum/blobstrain/reagent/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") || damage_type != BURN)
 		extinguisharea(B, damage)
+	if(damage_type == BRUTE)
+		return damage * 0.5
 	return ..()
 
 /datum/blobstrain/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
