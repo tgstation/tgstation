@@ -226,7 +226,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 
 		var/obj/item/I = L.get_item_by_slot(X)
-		if(I && HAS_BLOOD_DNA(I))
+		if(I && SEND_SIGNAL(I, COMSIG_IS_BLOODY))
 			return FALSE
 	return TRUE
 

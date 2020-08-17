@@ -12,7 +12,7 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(HAS_BLOOD_DNA(src))
+			if(SEND_SIGNAL(src, COMSIG_IS_BLOODY))
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
