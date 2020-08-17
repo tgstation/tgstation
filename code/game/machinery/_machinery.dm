@@ -164,7 +164,7 @@ Class Procs:
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	end_processing()
-	dropContents()
+	drop_contents()
 	QDEL_LIST(component_parts)
 	QDEL_NULL(circuit)
 	return ..()
@@ -203,24 +203,63 @@ Class Procs:
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
 
+/**
+  * Opens the machine.
+  *
+  * Will update the machine icon and any user interfaces currently open.
+  * Arguments:
+  * * drop - Boolean. Whether to drop any stored items in the machine. Does not include components.
+  */
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
 	density = FALSE
 	if(drop)
-		dropContents()
+		drop_stored_items()
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents(list/subset = null)
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/A in contents)
-		if(subset && !(A in subset))
-			continue
-		A.forceMove(T)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.update_mobility()
+/**
+  * Drop every movable atom in the machine's contents list.
+  */
+/obj/machinery/proc/drop_contents()
+	// Start by calling the drop_stored_items proc. Will allow machines with special contents
+	// to handle their dropping.
+	drop_stored_items()
+
+	// Then we can clean up and drop everything else.
+	var/turf/this_turf = get_turf(src)
+	for(var/atom/movable/movable_atom in contents)
+		movable_atom.forceMove(this_turf)
+
+	// We'll have dropped the occupant, circuit and component parts as part of this.
 	occupant = null
+	circuit = null
+	component_parts.Cut()
+
+/**
+  * Drop every movable atom in the machine's contents list.
+  *
+  * Proc does not drop components and will skip over anything in the component_parts list.
+  * Call drop_contents() to drop all contents including components.
+  * Arguments:
+  * * subset - If this is not null, only atoms that are also contained within the subset list will be dropped.
+  */
+/obj/machinery/proc/drop_stored_items(list/subset = null)
+	var/turf/this_turf = get_turf(src)
+	for(var/atom/movable/movable_atom in contents)
+		if(subset && !(movable_atom in subset))
+			continue
+
+		if(movable_atom in component_parts)
+			continue
+
+		movable_atom.forceMove(this_turf)
+		if(isliving(movable_atom))
+			var/mob/living/living_mob = movable_atom
+			living_mob.update_mobility()
+
+		if(occupant == movable_atom)
+			occupant = null
 
 /**
  * Puts passed object in to user's hand
@@ -397,8 +436,6 @@ Class Procs:
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
 
-
-
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
@@ -452,8 +489,9 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
+				if(circuit == I)
+					circuit = null
 			component_parts.Cut()
-			circuit = null
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -484,8 +522,12 @@ Class Procs:
 		occupant = null
 		update_icon()
 		updateUsrDialog()
+		return ..()
 	if(A == circuit)
 		circuit = null
+	if(A in component_parts)
+		component_parts.Remove(A)
+		RefreshParts()
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
