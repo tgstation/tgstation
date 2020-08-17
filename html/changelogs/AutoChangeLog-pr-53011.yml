@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "tgchat: Fixed adminsay to no longer show up as [object Object]."
