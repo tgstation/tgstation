@@ -157,6 +157,7 @@
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	if(. && ooze.ooze_nutrition >= nutrition_cost && !active)
 		return TRUE
+	return FALSE
 
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
 /datum/action/cooldown/metabolicboost/Trigger()
@@ -167,7 +168,7 @@
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
 	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
-	to_chat(ooze, "<span class='notice>You start feel a lot quicker.</span>")
+	to_chat(ooze, "<span class='notice'>You start feel a lot quicker.</span>")
 	ooze.adjust_ooze_nutrition(-10)
 
 ///Heat up the mob a little
@@ -179,7 +180,7 @@
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
-	to_chat(ooze, "<span class='notice>You start slowing down again.</span>")
+	to_chat(ooze, "<span class='notice'>You start slowing down again.</span>")
 	deltimer(timerid)
 
 
