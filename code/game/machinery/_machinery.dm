@@ -489,8 +489,6 @@ Class Procs:
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-				if(circuit == I)
-					circuit = null
 			LAZYCLEARLIST(component_parts)
 	return ..()
 
@@ -523,6 +521,8 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 		return ..()
+
+	// The circuit should also be in component parts, so don't early return.
 	if(A == circuit)
 		circuit = null
 	if(A in component_parts)
@@ -683,7 +683,7 @@ Class Procs:
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
-	if (AM == occupant)
+	if(AM == occupant)
 		occupant = null
 	if(AM == circuit)
 		circuit = null
