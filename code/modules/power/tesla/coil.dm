@@ -31,7 +31,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
-	input_power_multiplier = power_multiplier
+	input_power_multiplier = (0.85 * (power_multiplier / 4)) //Max out at 85% efficency.
 
 /obj/machinery/power/tesla_coil/examine(mob/user)
 	. = ..()
@@ -71,21 +71,21 @@
 
 	return ..()
 
-/obj/machinery/power/tesla_coil/zap_act(power, zap_flags, shocked_targets)
+/obj/machinery/power/tesla_coil/zap_act(power, zap_flags)
 	if(anchored && !panel_open)
-		obj_flags |= BEING_SHOCKED
 		//don't lose arc power when it's not connected to anything
 		//please place tesla coils all around the station to maximize effectiveness
-		var/power_produced = powernet ? power / 2 : power
-		add_avail(power_produced*input_power_multiplier)
-		flick("coilhit", src)
+		var/power_produced = powernet ? power * input_power_multiplier : power
+		add_avail(power_produced)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		if(D)
 			D.adjust_money(min(power_produced, 1))
-		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+		flick("coilhit", src)
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		return power_produced
+		obj_flags |= BEING_SHOCKED
+		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+		return power - power_produced //You get back the amount we didn't use
 	else
 		. = ..()
 
@@ -93,17 +93,16 @@
 	if((last_zap + zap_cooldown) > world.time || !powernet)
 		return FALSE
 	last_zap = world.time
-	var/coeff = (20 - ((input_power_multiplier - 1) * 3))
-	coeff = max(coeff, 10)
-	var/power = (powernet.avail/2)
+	var/power = (powernet.avail) * 0.2 * input_power_multiplier  //Always always always use more then you output for the love of god
+	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-	tesla_zap(src, 10, power/(coeff/2), zap_flags)
-	zap_buckle_check(power/(coeff/2))
+	tesla_zap(src, 10, power, zap_flags)
+	zap_buckle_check(power)
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
-	desc = "Keep an area from being fried from Edison's Bane."
+	desc = "Keep an area from being fried."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
@@ -133,7 +132,7 @@
 
 	return ..()
 
-/obj/machinery/power/grounding_rod/zap_act(power)
+/obj/machinery/power/grounding_rod/zap_act(power, zap_flags)
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)

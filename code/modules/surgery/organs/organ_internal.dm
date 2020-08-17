@@ -101,12 +101,16 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
+
+	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken.</span>"
 			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
 		return
+
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 

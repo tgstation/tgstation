@@ -31,6 +31,11 @@
 	icon_state = "cult"
 	},
 /area/awaymission/wildwest/vault)
+"ai" = (
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/wood,
+/area/awaymission/wildwest/mines)
 "aj" = (
 /turf/open/floor/plating{
 	icon_state = "cultdamage3"
@@ -63,6 +68,19 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
+"ar" = (
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/awaymission/wildwest/mines)
+"as" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/wood,
+/area/awaymission/wildwest/mines)
 "av" = (
 /obj/machinery/gateway/away{
 	calibrated = 0
@@ -286,11 +304,6 @@
 /obj/structure/bed,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
-"bC" = (
-/obj/structure/table/wood,
-/obj/item/gun/ballistic,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
 "bD" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -506,13 +519,6 @@
 "cg" = (
 /obj/structure/table/wood,
 /obj/item/paper/fluff/awaymissions/wildwest/journal/page4,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/awaymission/wildwest/mines)
-"ch" = (
-/obj/structure/table/wood,
-/obj/item/gun/ballistic,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -1158,12 +1164,6 @@
 	dir = 5
 	},
 /area/awaymission/wildwest/mines)
-"en" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
 "eo" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
@@ -1232,12 +1232,6 @@
 	icon_state = "ironsand12"
 	},
 /area/awaymission/wildwest/gov)
-"eE" = (
-/obj/structure/bed,
-/obj/item/bedsheet/blue,
-/obj/item/gun/ballistic,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
 "eF" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/bed,
@@ -1281,10 +1275,6 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/human/miner/rig,
 /turf/open/floor/carpet,
-/area/awaymission/wildwest/mines)
-"eM" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "eN" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -1515,14 +1505,6 @@
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
-/area/awaymission/wildwest/mines)
-"fs" = (
-/obj/effect/decal/cleanable/blood,
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wildwest/mines)
-"ft" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "fu" = (
 /obj/structure/chair/comfy/beige{
@@ -1815,10 +1797,6 @@
 /area/awaymission/wildwest/mines)
 "gl" = (
 /obj/machinery/photocopier,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
-"gm" = (
-/obj/item/gun/ballistic,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gn" = (
@@ -37900,7 +37878,7 @@ bu
 bz
 bM
 bM
-ch
+ar
 by
 bu
 bj
@@ -39696,7 +39674,7 @@ bj
 bj
 aT
 bu
-bC
+ai
 bj
 bj
 bu
@@ -39735,7 +39713,7 @@ bj
 bj
 bp
 bj
-fs
+bu
 aT
 aN
 aP
@@ -39992,7 +39970,7 @@ gk
 bj
 bj
 bj
-en
+dj
 aT
 aN
 aN
@@ -40240,7 +40218,7 @@ bj
 bj
 bj
 bu
-fs
+bu
 aT
 bu
 bj
@@ -40250,7 +40228,7 @@ bj
 bj
 bj
 bu
-fs
+bu
 aN
 aN
 aG
@@ -41527,11 +41505,11 @@ dt
 fr
 aT
 aY
-fs
+bu
 bu
 bu
 ci
-eM
+bu
 bu
 bu
 bu
@@ -42038,11 +42016,11 @@ bu
 bu
 bu
 bu
-fs
-fB
-fs
 bu
-eM
+fB
+bu
+bu
+bu
 bu
 bu
 bu
@@ -42547,7 +42525,7 @@ bj
 dH
 bj
 bj
-eE
+as
 bj
 dH
 bj
@@ -43066,7 +43044,7 @@ bj
 eF
 bj
 bj
-eM
+bu
 aT
 bu
 bj
@@ -43076,7 +43054,7 @@ bj
 bj
 bj
 bj
-eM
+bu
 aT
 aN
 aN
@@ -43582,7 +43560,7 @@ bj
 bj
 bu
 aT
-eM
+bu
 bj
 cA
 bj
@@ -45129,9 +45107,9 @@ bu
 dm
 bu
 bu
-eM
 bu
-fs
+bu
+bu
 bu
 fr
 aN
@@ -46123,7 +46101,7 @@ aT
 bu
 bD
 bj
-bC
+ai
 cl
 bj
 bj
@@ -46664,13 +46642,13 @@ bu
 bu
 bu
 bu
-ft
+bu
 bu
 ci
 ci
 bu
 bu
-eM
+bu
 bu
 bu
 bu
@@ -49755,7 +49733,7 @@ bl
 bj
 bj
 bj
-eM
+bu
 bj
 dP
 bu
@@ -50511,7 +50489,7 @@ bu
 dE
 bj
 bj
-bj
+eq
 bj
 bu
 bA
@@ -52066,9 +52044,9 @@ eX
 dj
 bj
 bu
-gm
+gw
 bj
-eM
+bu
 bj
 bj
 bu
@@ -53085,7 +53063,7 @@ cA
 bj
 bj
 bj
-eM
+bu
 fa
 fi
 fi
