@@ -305,7 +305,7 @@
 
 /obj/structure/statue/elder_atmosian
 	name = "Elder Atmosian"
-	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodinamics at his/her will"
+	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodinamics at their will"
 	icon_state = "eng"
 	material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	max_integrity = 1000

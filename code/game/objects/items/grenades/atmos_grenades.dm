@@ -10,17 +10,20 @@
 /obj/item/grenade/gas_crystal/x_crystal
 	name = "X Crystal"
 	desc = "A crystal made from the Gas X, it's cold to the touch."
+	icon_state = "crystal_x"
 	var/stamina_damage = 30
 	var/freeze_range = 4
 
 /obj/item/grenade/gas_crystal/y_crystal
 	name = "Y Crystal"
-	desc = "A crustal made from the Gas Y, you can see the liquid gases inside."
+	desc = "A crystal made from the Gas Y, you can see the liquid gases inside."
+	icon_state = "crystal_y"
 	var/refill_range = 5
 
 /obj/item/grenade/gas_crystal/z_crystal
 	name = "Z Crystal"
-	desc = "A crustal made from the Gas Z, you can see the liquid plasma inside."
+	desc = "A crystal made from the Gas Z, you can see the liquid plasma inside."
+	icon_state = "crystal_z"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
@@ -53,6 +56,7 @@
 			if(F.air.gases[/datum/gas/plasma])
 				F.air.gases[/datum/gas/plasma][MOLES] -= F.air.gases[/datum/gas/plasma][MOLES] * 0.5
 			F.air.gases[/datum/gas/nitrogen][MOLES] += 50
+			F.air_update_turf()
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
 				L.adjust_bodytemperature(-150)
@@ -66,6 +70,7 @@
 			var/turf/open/F = T
 			F.air.gases[/datum/gas/nitrogen][MOLES] += 1400
 			F.air.gases[/datum/gas/oxygen][MOLES] += 600
+			F.air_update_turf()
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/z_crystal/prime(mob/living/lanced_by)
