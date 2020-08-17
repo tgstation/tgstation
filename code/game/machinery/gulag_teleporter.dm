@@ -28,6 +28,7 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
+		/obj/item/clothing/gloves/color/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))

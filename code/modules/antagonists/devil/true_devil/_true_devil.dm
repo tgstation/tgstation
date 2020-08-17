@@ -123,8 +123,8 @@
 	var/weakness = check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
-	if(I.attack_verb && length(I.attack_verb))
-		message_verb = "[pick(I.attack_verb)]"
+	if(length(I.attack_verb_continuous))
+		message_verb = "[pick(I.attack_verb_continuous)]"
 	else if(I.force)
 		message_verb = "attacked"
 
@@ -146,7 +146,7 @@
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
-		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
+		var/mob/living/simple_animal/hostile/imp/S = new(get_turf(loc))
 		S.key = user.key
 		var/datum/antagonist/imp/A = new()
 		S.mind.add_antag_datum(A)

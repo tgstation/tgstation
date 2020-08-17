@@ -24,6 +24,7 @@
 #define MEDAL_SNAIL				"KKKiiilll mmmeee"
 #define MEDAL_LOOKOUTSIR		"Look Out, Sir!"
 #define MEDAL_GOTTEM			"GOTTEM"
+#define MEDAL_ASCENSION			"Ascension"
 #define MEDAL_BEANBALL			"Brained Bird"
 
 //Skill medal hub IDs

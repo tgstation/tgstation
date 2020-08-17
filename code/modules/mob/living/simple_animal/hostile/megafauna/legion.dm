@@ -234,7 +234,7 @@
 	return TRUE
 
 ///Sets the variables for new legion skulls. Usually called after splitting.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(var/mob/living/simple_animal/hostile/megafauna/legion/L)
+/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/L)
 	maxHealth = L.maxHealth
 	updatehealth()
 	size = L.size
@@ -376,7 +376,7 @@
 	damage = 19
 	range = 6
 	eyeblur = 0
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion
 	muzzle_type = /obj/effect/projectile/tracer/legion

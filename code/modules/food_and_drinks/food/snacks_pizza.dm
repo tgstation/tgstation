@@ -179,20 +179,25 @@
 	value = FOOD_ILLEGAL
 
 /obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
+	if(prob(50) || (M != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
+		return
 	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/r_arm = user.get_bodypart(BODY_ZONE_R_ARM)
-	if(prob(50) && iscarbon(user) && M == user && (r_arm || l_arm))
-		user.visible_message("<span class='warning'>\The [src] breaks off [user]'s arm!!</span>", "<span class='warning'>\The [src] breaks off your arm!</span>")
-		if(l_arm)
-			l_arm.dismember()
-		else
-			r_arm.dismember()
-		playsound(user, "desecration" ,50, TRUE, -1)
+	var/did_the_thing = (l_arm?.dismember() || r_arm?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
+	if(!did_the_thing)
+		return
+	to_chat(user, "<span class='userdanger'>Maybe I'll give you a pizza, maybe I'll break off your arm.</span>") //makes the reference more obvious
+	user.visible_message("<span class='warning'>\The [src] breaks off [user]'s arm!</span>", "<span class='warning'>\The [src] breaks off your arm!</span>")
+	playsound(user, "desecration", 50, TRUE, -1)
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
-		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I kill you.</font>")
-		user.gib() //if you want something crazy like pineapple, i kill you
+		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
+		user.gib() //if you want something crazy like pineapple, i'll kill you
+	else if(istype(I, /obj/item/reagent_containers/food/snacks/grown/mushroom) && iscarbon(user))
+		to_chat(user, "<span class='userdanger'>So, if you want mushroom, shut up.</span>") //not as large as the pineapple text, because you could in theory spam it
+		var/mob/living/carbon/shutup = user
+		shutup.gain_trauma(/datum/brain_trauma/severe/mute)
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold/attack(mob/living/M, mob/living/user)
 	. = ..()

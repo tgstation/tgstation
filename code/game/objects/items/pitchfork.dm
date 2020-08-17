@@ -7,7 +7,8 @@
 	force = 7
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("attacked", "impaled", "pierced")
+	attack_verb_continuous = list("attacks", "impales", "pierces")
+	attack_verb_simple = list("attack", "impale", "pierce")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
@@ -43,7 +44,7 @@
 
 /obj/item/pitchfork/demonic/Initialize()
 	. = ..()
-	set_light(3,6,LIGHT_COLOR_RED)
+	set_light(3,6,COLOR_SOFT_RED)
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()

@@ -8,7 +8,7 @@ import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, ByondUi, Collapsible, DraggableControl, Flex, Icon, Input, Knob, LabeledList, NoticeBox, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
-import { Window } from '../layouts';
+import { Pane, Window } from '../layouts';
 import { createLogger } from '../logging';
 
 const logger = createLogger('KitchenSink');
@@ -88,11 +88,13 @@ const PAGES = [
 ];
 
 export const KitchenSink = (props, context) => {
+  const { panel } = props;
   const [theme] = useLocalState(context, 'kitchenSinkTheme');
   const [pageIndex, setPageIndex] = useLocalState(context, 'pageIndex', 0);
   const PageComponent = PAGES[pageIndex].component();
+  const Layout = panel ? Pane : Window;
   return (
-    <Window
+    <Layout
       title="Kitchen Sink"
       width={600}
       height={500}
@@ -100,28 +102,29 @@ export const KitchenSink = (props, context) => {
       resizable>
       <Flex height="100%">
         <Flex.Item m={1} mr={0}>
-          <Section fill>
-            {PAGES.map((page, i) => (
-              <Button
-                key={i}
-                fluid
-                color="transparent"
-                selected={i === pageIndex}
-                onClick={() => setPageIndex(i)}>
-                {page.title}
-              </Button>
-            ))}
+          <Section fill fitted>
+            <Tabs vertical>
+              {PAGES.map((page, i) => (
+                <Tabs.Tab
+                  key={i}
+                  color="transparent"
+                  selected={i === pageIndex}
+                  onClick={() => setPageIndex(i)}>
+                  {page.title}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
           </Section>
         </Flex.Item>
         <Flex.Item
           position="relative"
           grow={1}>
-          <Window.Content scrollable>
+          <Layout.Content scrollable>
             <PageComponent />
-          </Window.Content>
+          </Layout.Content>
         </Flex.Item>
       </Flex>
-    </Window>
+    </Layout>
   );
 };
 
@@ -302,35 +305,96 @@ const KitchenSinkProgressBar = (props, context) => {
 
 const KitchenSinkTabs = (props, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
-  const [vertical, setVertical] = useLocalState(context, 'tabVert');
-  const [altSelection, setAltSelection] = useLocalState(context, 'tabAlt');
-  const TAB_RANGE = [1, 2, 3, 4, 5];
+  const [tabProps, setTabProps] = useLocalState(context, 'tabProps', {});
+  const TAB_RANGE = [
+    'Tab #1',
+    'Tab #2',
+    'Tab #3',
+    'Tab #4',
+  ];
   return (
-    <Section>
-      <Box mb={2}>
+    <Fragment>
+      <Section>
         <Button.Checkbox
           inline
           content="vertical"
-          checked={vertical}
-          onClick={() => setVertical(!vertical)} />
+          checked={tabProps.vertical}
+          onClick={() => setTabProps({
+            ...tabProps,
+            vertical: !tabProps.vertical,
+          })} />
         <Button.Checkbox
           inline
-          content="altSelection"
-          checked={altSelection}
-          onClick={() => setAltSelection(!altSelection)} />
-      </Box>
-      <Tabs vertical={vertical}>
-        {TAB_RANGE.map((number, i) => (
-          <Tabs.Tab
-            key={i}
-            altSelection={altSelection}
-            selected={i === tabIndex}
-            onClick={() => setTabIndex(i)}>
-            Tab #{number}
-          </Tabs.Tab>
-        ))}
-      </Tabs>
-    </Section>
+          content="leftSlot"
+          checked={tabProps.leftSlot}
+          onClick={() => setTabProps({
+            ...tabProps,
+            leftSlot: !tabProps.leftSlot,
+          })} />
+        <Button.Checkbox
+          inline
+          content="rightSlot"
+          checked={tabProps.rightSlot}
+          onClick={() => setTabProps({
+            ...tabProps,
+            rightSlot: !tabProps.rightSlot,
+          })} />
+        <Button.Checkbox
+          inline
+          content="icon"
+          checked={tabProps.icon}
+          onClick={() => setTabProps({
+            ...tabProps,
+            icon: !tabProps.icon,
+          })} />
+        <Button.Checkbox
+          inline
+          content="fluid"
+          checked={tabProps.fluid}
+          onClick={() => setTabProps({
+            ...tabProps,
+            fluid: !tabProps.fluid,
+          })} />
+        <Button.Checkbox
+          inline
+          content="left aligned"
+          checked={tabProps.leftAligned}
+          onClick={() => setTabProps({
+            ...tabProps,
+            leftAligned: !tabProps.leftAligned,
+          })} />
+      </Section>
+      <Section fitted>
+        <Tabs
+          vertical={tabProps.vertical}
+          fluid={tabProps.fluid}
+          textAlign={tabProps.leftAligned && 'left'}>
+          {TAB_RANGE.map((text, i) => (
+            <Tabs.Tab
+              key={i}
+              selected={i === tabIndex}
+              icon={tabProps.icon && 'info-circle'}
+              leftSlot={tabProps.leftSlot && (
+                <Button
+                  circular
+                  compact
+                  color="transparent"
+                  icon="times" />
+              )}
+              rightSlot={tabProps.rightSlot && (
+                <Button
+                  circular
+                  compact
+                  color="transparent"
+                  icon="times" />
+              )}
+              onClick={() => setTabIndex(i)}>
+              {text}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+      </Section>
+    </Fragment>
   );
 };
 

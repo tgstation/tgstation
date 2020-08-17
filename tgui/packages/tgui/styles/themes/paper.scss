@@ -32,8 +32,8 @@ $font-size: 24px;
   // Components
   @include meta.load-css('../components/Tabs.scss');
   @include meta.load-css('../components/Section.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.1),
-    'color-shadow': rgba(0, 0, 0, 0.2),
+    'background-color': rgba(0, 0, 0, 0.1),
+    'shadow-color': rgba(0, 0, 0, 0.2),
   ));
   @include meta.load-css('../components/Button.scss', $with: (
     'color-default': #E8E4C9,
@@ -48,9 +48,9 @@ $font-size: 24px;
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-text': rgba(0, 0, 0, 0.75),
-    'color-background': base.$color-bg,
-    'color-shadow-core': rgba(0, 0, 0, 0.25),
+    'text-color': rgba(0, 0, 0, 0.75),
+    'background-color': base.$color-bg,
+    'shadow-color-core': rgba(0, 0, 0, 0.25),
   ));
 
   .PaperInput {

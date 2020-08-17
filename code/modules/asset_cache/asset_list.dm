@@ -26,25 +26,38 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return
 
 
-//If you don't need anything complicated.
+/// If you don't need anything complicated.
 /datum/asset/simple
 	_abstract = /datum/asset/simple
+	/// list of assets for this datum in the form of:
+	/// asset_filename = asset_file. At runtime the asset_file will be
+	/// converted into a asset_cache datum.
 	var/assets = list()
+	/// Set to true to have this asset also be sent via the legacy browse_rsc
+	/// system when cdn transports are enabled?
+	var/legacy = FALSE
+	/// TRUE for keeping local asset names when browse_rsc backend is used
+	var/keep_local_name = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
-		assets[asset_name] = register_asset(asset_name, assets[asset_name])
+		var/datum/asset_cache_item/ACI = SSassets.transport.register_asset(asset_name, assets[asset_name])
+		if (!ACI)
+			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
+			continue
+		if (legacy)
+			ACI.legacy = legacy
+		if (keep_local_name)
+			ACI.keep_local_name = keep_local_name
+		assets[asset_name] = ACI
 
 /datum/asset/simple/send(client)
-	. = send_asset_list(client, assets)
+	. = SSassets.transport.send_assets(client, assets)
 
 /datum/asset/simple/get_url_mappings()
 	. = list()
 	for (var/asset_name in assets)
-		var/datum/asset_cache_item/ACI = assets[asset_name]
-		if (!ACI)
-			continue
-		.[asset_name] = ACI.url
+		.[asset_name] = SSassets.transport.get_asset_url(asset_name, assets[asset_name])
 
 
 // For registering or sending multiple others at once
@@ -88,12 +101,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	ensure_stripped()
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
-		register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
+		SSassets.transport.register_asset("[name]_[size_id].png", size[SPRSZ_STRIPPED])
 	var/res_name = "spritesheet_[name].css"
 	var/fname = "data/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
-	register_asset(res_name, fcopy_rsc(fname))
+	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
 
 /datum/asset/spritesheet/send(client/C)
@@ -102,14 +115,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/all = list("spritesheet_[name].css")
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
-	. = send_asset_list(C, all)
+	. = SSassets.transport.send_assets(C, all)
 
 /datum/asset/spritesheet/get_url_mappings()
 	if (!name)
 		return
-	. = list("spritesheet_[name].css" = get_asset_url("spritesheet_[name].css"))
+	. = list("spritesheet_[name].css" = SSassets.transport.get_asset_url("spritesheet_[name].css"))
 	for(var/size_id in sizes)
-		.["[name]_[size_id].png"] = get_asset_url("[name]_[size_id].png")
+		.["[name]_[size_id].png"] = SSassets.transport.get_asset_url("[name]_[size_id].png")
 
 
 
@@ -134,7 +147,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_asset_url("[name]_[size_id].png")]') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -188,7 +201,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	return {"<link rel="stylesheet" href="[css_filename()]" />"}
 
 /datum/asset/spritesheet/proc/css_filename()
-	return get_asset_url("spritesheet_[name].css")
+	return SSassets.transport.get_asset_url("spritesheet_[name].css")
 
 /datum/asset/spritesheet/proc/icon_tag(sprite_name)
 	var/sprite = sprites[sprite_name]
@@ -243,7 +256,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			if (generic_icon_names)
 				asset_name = "[generate_asset_name(asset)].png"
 
-			register_asset(asset_name, asset)
+			SSassets.transport.register_asset(asset_name, asset)
 
 /datum/asset/simple/icon_states/multiple_icons
 	_abstract = /datum/asset/simple/icon_states/multiple_icons
@@ -253,4 +266,52 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for(var/i in icons)
 		..(i)
 
+/// Namespace'ed assets (for static css and html files)
+/// When sent over a cdn transport, all assets in the same asset datum will exist in the same folder, as their plain names.
+/// Used to ensure css files can reference files by url() without having to generate the css at runtime, both the css file and the files it depends on must exist in the same namespace asset datum. (Also works for html)
+/// For example `blah.css` with asset `blah.png` will get loaded as `namespaces/a3d..14f/f12..d3c.css` and `namespaces/a3d..14f/blah.png`. allowing the css file to load `blah.png` by a relative url rather then compute the generated url with get_url_mappings().
+/// The namespace folder's name will change if any of the assets change. (excluding parent assets)
+/datum/asset/simple/namespaced
+	_abstract = /datum/asset/simple/namespaced
+	/// parents - list of the parent asset or assets (in name = file assoicated format) for this namespace.
+	/// parent assets must be referenced by their generated url, but if an update changes a parent asset, it won't change the namespace's identity.
+	var/list/parents = list()
+
+/datum/asset/simple/namespaced/register()
+	if (legacy)
+		assets |= parents
+	var/list/hashlist = list()
+	var/list/sorted_assets = sortList(assets)
+
+	for (var/asset_name in sorted_assets)
+		var/datum/asset_cache_item/ACI = new(asset_name, sorted_assets[asset_name])
+		if (!ACI?.hash)
+			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
+			continue
+		hashlist += ACI.hash
+		sorted_assets[asset_name] = ACI
+	var/namespace = md5(hashlist.Join())
+
+	for (var/asset_name in parents)
+		var/datum/asset_cache_item/ACI = new(asset_name, parents[asset_name])
+		if (!ACI?.hash)
+			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
+			continue
+		ACI.namespace_parent = TRUE
+		sorted_assets[asset_name] = ACI
+
+	for (var/asset_name in sorted_assets)
+		var/datum/asset_cache_item/ACI = sorted_assets[asset_name]
+		if (!ACI?.hash)
+			log_asset("ERROR: Invalid asset: [type]:[asset_name]:[ACI]")
+			continue
+		ACI.namespace = namespace
+
+	assets = sorted_assets
+	..()
+
+/// Get a html string that will load a html asset.
+/// Needed because byond doesn't allow you to browse() to a url.
+/datum/asset/simple/namespaced/proc/get_htmlloader(filename)
+	return url2htmlloader(SSassets.transport.get_asset_url(filename, assets[filename]))
 

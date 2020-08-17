@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 /datum/skill/proc/get_skill_modifier(modifier, level)
 	return modifiers[modifier][level] //Levels range from 1 (None) to 7 (Legendary)
 /**
-  * new: sets up some lists. 
+  * new: sets up some lists.
   *
   *Can't happen in the datum's definition because these lists are not constant expressions
   */
@@ -47,12 +47,12 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
   * * new_level - The newly gained level. Can check the actual level to give different messages at different levels, see defines in skills.dm
   * * old_level - Similar to the above, but the level you had before levelling up.
   */
-/datum/skill/proc/level_gained(var/datum/mind/mind, new_level, old_level)//just for announcements (doesn't go off if the xp gain is silent)
+/datum/skill/proc/level_gained(datum/mind/mind, new_level, old_level)//just for announcements (doesn't go off if the xp gain is silent)
 	to_chat(mind.current, levelUpMessages[new_level]) //new_level will be a value from 1 to 6, so we get appropriate message from the 6-element levelUpMessages list
 /**
   * level_lost: See level_gained, same idea but fires on skill level-down
   */
-/datum/skill/proc/level_lost(var/datum/mind/mind, new_level, old_level)
+/datum/skill/proc/level_lost(datum/mind/mind, new_level, old_level)
 	to_chat(mind.current, levelDownMessages[old_level]) //old_level will be a value from 1 to 6, so we get appropriate message from the 6-element levelUpMessages list
 
 /**
@@ -63,10 +63,10 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
   * * mind - The mind that you'll want to send messages and rewards to
   * * new_level - The current level of the user. Used to check if it meets the requirements for a reward
   */
-/datum/skill/proc/try_skill_reward(var/datum/mind/mind, new_level)
+/datum/skill/proc/try_skill_reward(datum/mind/mind, new_level)
 	if (new_level != SKILL_LEVEL_LEGENDARY)
 		return
-	if (!ispath(skill_cape_path))	
+	if (!ispath(skill_cape_path))
 		to_chat(mind.current, "<span class='nicegreen'>My legendary [name] skill is quite impressive, though it seems the Professional [title] Association doesn't have any status symbols to commemorate my abilities with. I should let Centcom know of this travesty, maybe they can do something about it.</span>")
 		return
 	if (LAZYFIND(mind.skills_rewarded, src.type))

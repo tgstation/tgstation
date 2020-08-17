@@ -203,9 +203,9 @@
 
 /obj/item/transfer_valve/ui_data(mob/user)
 	var/list/data = list()
-	data["tank_one"] = tank_one
-	data["tank_two"] = tank_two
-	data["attached_device"] = attached_device
+	data["tank_one"] = tank_one ? tank_one.name : null
+	data["tank_two"] = tank_two ? tank_two.name : null
+	data["attached_device"] = attached_device ? attached_device.name : null
 	data["valve"] = valve_open
 	return data
 

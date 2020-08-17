@@ -112,6 +112,12 @@
 	desc = "Made you look!"
 	database_id = MEDAL_GOTTEM
 
+/datum/award/achievement/misc/ascension
+	name = "Ascension"
+	desc = "Caedite eos. Novit enim Dominus qui sunt eius."
+	database_id = MEDAL_ASCENSION
+	icon = "ascension"
+
 /datum/award/achievement/misc/beanball
 	name = "Brained Bird"
 	desc = "Today, Poly learned a very important lesson about trash talking those who are capable of throwing things over 100MPH."

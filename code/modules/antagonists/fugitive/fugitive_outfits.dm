@@ -95,6 +95,7 @@
 /datum/outfit/bountyarmor
 	name = "Bounty Hunter - Armored"
 	uniform = /obj/item/clothing/under/rank/prisoner
+	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
 	gloves = /obj/item/clothing/gloves/tackler/combat
@@ -132,7 +133,7 @@
 		/obj/item/ammo_casing/shotgun/incapacitate = 6
 		)
 
-/datum/outfit/bountygrapple/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id

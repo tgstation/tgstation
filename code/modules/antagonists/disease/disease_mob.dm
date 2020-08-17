@@ -286,13 +286,13 @@ the new instance inside the host to be updated to the template's stats.
 	if(T)
 		forceMove(T)
 
-/mob/camera/disease/DblClickOn(var/atom/A, params)
+/mob/camera/disease/DblClickOn(atom/A, params)
 	if(hosts[A])
 		set_following(A)
 	else
 		..()
 
-/mob/camera/disease/ClickOn(var/atom/A, params)
+/mob/camera/disease/ClickOn(atom/A, params)
 	if(freemove && ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")

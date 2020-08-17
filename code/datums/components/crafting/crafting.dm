@@ -107,18 +107,17 @@
 		return
 
 	for(var/atom/movable/AM in range(radius_range, a))
-		if(AM.flags_1 & HOLOGRAM_1)
+		if((AM.flags_1 & HOLOGRAM_1)  || (blacklist && (AM.type in blacklist)))
 			continue
 		. += AM
 
-/datum/component/personal_crafting/proc/get_surroundings(atom/a)
+
+/datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
-	for(var/obj/item/I in get_environment(a))
-		if(I.flags_1 & HOLOGRAM_1)
-			continue
+	for(var/obj/item/I in get_environment(a,blacklist))
 		if(.["instances"][I.type])
 			.["instances"][I.type] += I
 		else
@@ -169,14 +168,14 @@
 	return TRUE
 
 /datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
-	var/list/contents = get_surroundings(a)
+	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."
-			contents = get_surroundings(a)
+			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
 			if(!check_tools(a, R, contents))

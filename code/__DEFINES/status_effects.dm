@@ -85,6 +85,14 @@
 
 #define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
+#define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
+
+#define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
+
+/// Makes the mob move randomly.
+/// Read the documentation for /datum/status_effect/confusion for more information.
+#define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
+
 /////////////
 // NEUTRAL //
 /////////////

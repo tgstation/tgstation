@@ -67,6 +67,9 @@
 	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 	if(intelliholder?.stored_card)
 		data["removable_media"] += "intelliCard"
+	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
+	if(secondarycardholder?.stored_card)
+		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
@@ -160,7 +163,7 @@
 			return 1
 
 		if("PC_toggle_light")
-			light_on = !light_on
+			set_light_on(!light_on)
 			if(light_on)
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
@@ -178,7 +181,7 @@
 					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
 					new_color = null
 			comp_light_color = new_color
-			light_color = new_color
+			set_light_color(new_color)
 			update_light()
 			return TRUE
 
@@ -197,13 +200,19 @@
 					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 					if(!intelliholder)
 						return
-					if(intelliholder.try_eject(0,user))
+					if(intelliholder.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 					if(!cardholder)
 						return
-					cardholder.try_eject(0, user)
+					cardholder.try_eject(user)
+				if("secondary RFID card")
+					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
+					if(!cardholder)
+						return
+					cardholder.try_eject(user)
+
 
 		else
 			return
