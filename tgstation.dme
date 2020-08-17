@@ -1085,6 +1085,7 @@
 #include "code\game\objects\items\devices\radio\intercom.dm"
 #include "code\game\objects\items\devices\radio\radio.dm"
 #include "code\game\objects\items\grenades\antigravity.dm"
+#include "code\game\objects\items\grenades\atmos_grenades.dm"
 #include "code\game\objects\items\grenades\chem_grenade.dm"
 #include "code\game\objects\items\grenades\clusterbuster.dm"
 #include "code\game\objects\items\grenades\emgrenade.dm"

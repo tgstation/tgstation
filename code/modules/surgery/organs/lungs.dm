@@ -99,7 +99,23 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/freon)
+	breath.assert_gases(/datum/gas/oxygen,
+						/datum/gas/plasma,
+						/datum/gas/carbon_dioxide,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/bz,
+						/datum/gas/nitrogen,
+						/datum/gas/tritium,
+						/datum/gas/nitryl,
+						/datum/gas/pluoxium,
+						/datum/gas/stimulum,
+						/datum/gas/freon,
+						/datum/gas/gas_x,
+						/datum/gas/gas_y,
+						/datum/gas/gas_z,
+						/datum/gas/delta_gas,
+						/datum/gas/gamma_gas
+						)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
@@ -313,6 +329,34 @@
 			H.reagents.add_reagent(/datum/reagent/freon,1)
 
 		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
+
+	// Gas X
+		var/gas_x_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/gas_x][MOLES])
+		if(gas_x_pp > 0.01)
+			H.Unconscious(200)
+			H.Sleeping(200)
+			H.adjustOxyLoss(-5)
+			H.adjustFireLoss(-7)
+			H.adjustToxLoss(-7)
+			H.adjustBruteLoss(-10)
+		gas_breathed = breath_gases[/datum/gas/gas_x][MOLES]
+		breath_gases[/datum/gas/gas_x][MOLES]-=gas_breathed
+
+	// Gas Y
+		// Inert
+	// Gas Z
+		var/gas_z_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/gas_z][MOLES])
+		if(gas_z_pp > 0.1)
+			H.adjustBruteLoss(25)
+			H.adjustOxyLoss(5)
+			H.adjustFireLoss(8)
+			H.adjustToxLoss(8)
+		gas_breathed = breath_gases[/datum/gas/gas_z][MOLES]
+		breath_gases[/datum/gas/gas_z][MOLES]-=gas_breathed
+
+	// Delta Gas
+
+	// Gamma Gas
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

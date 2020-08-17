@@ -170,6 +170,51 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 700
 
+/datum/gas/gas_x
+	id = "gas_x"
+	specific_heat = 150
+	name = "Gas X"
+	dangerous = TRUE
+	gas_overlay = "gas_x"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 100
+
+/datum/gas/gas_y
+	id = "gas_y"
+	specific_heat = 100
+	name = "Gas Y"
+	dangerous = TRUE
+	gas_overlay = "gas_y"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 100
+
+/datum/gas/gas_z
+	id = "gas_z"
+	specific_heat = 900
+	name = "Gas Z"
+	dangerous = TRUE
+	gas_overlay = "gas_z"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 600
+
+/datum/gas/delta_gas
+	id = "delta_gas"
+	specific_heat = 150
+	name = "Delta gas"
+	dangerous = TRUE
+	gas_overlay = "delta_gas"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 100
+
+/datum/gas/gamma_gas
+	id = "gamma_gas"
+	specific_heat = 150
+	name = "Gamma gas"
+	dangerous = TRUE
+	gas_overlay = "gamma_gas"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 100
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

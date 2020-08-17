@@ -65,7 +65,12 @@
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
 		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
-		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen
+		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
+		"gas-x" = /obj/machinery/portable_atmospherics/canister/gas_x,
+		"gas-y" = /obj/machinery/portable_atmospherics/canister/gas_y,
+		"gas-z" = /obj/machinery/portable_atmospherics/canister/gas_z,
+		"delta-gas" = /obj/machinery/portable_atmospherics/canister/delta_gas,
+		"gamma-gas" = /obj/machinery/portable_atmospherics/canister/gamma_gas
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -195,6 +200,45 @@
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/gas_x
+	name = "gas_x canister"
+	desc = "gas_x, highly flammable"
+	icon_state = "gas_x"
+	base_icon_state = "gas_x"
+	gas_type = /datum/gas/gas_x
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/gas_y
+	name = "gas_y canister"
+	desc = "gas_y, highly flammable"
+	icon_state = "gas_y"
+	base_icon_state = "gas_y"
+	gas_type = /datum/gas/gas_y
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/gas_z
+	name = "gas_z canister"
+	desc = "gas_z, highly flammable"
+	icon_state = "gas_z"
+	base_icon_state = "gas_z"
+	gas_type = /datum/gas/gas_z
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/delta_gas
+	name = "delta_gas canister"
+	desc = "delta_gas, highly flammable"
+	icon_state = "delta_gas"
+	base_icon_state = "delta_gas"
+	gas_type = /datum/gas/delta_gas
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/gamma_gas
+	name = "gamma_gas canister"
+	desc = "gamma_gas, highly flammable"
+	icon_state = "gamma_gas"
+	base_icon_state = "gamma_gas"
+	gas_type = /datum/gas/gamma_gas
+	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"

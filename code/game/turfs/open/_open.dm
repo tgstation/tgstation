@@ -270,3 +270,8 @@
 		air.assert_gas(/datum/gas/pluoxium)
 		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
 		air.garbage_collect()
+	if (air.gases[/datum/gas/hydrogen])
+		pulse_strength = min(pulse_strength, air.gases[/datum/gas/hydrogen][MOLES] * 1000)
+		air.gases[/datum/gas/hydrogen][MOLES] = max(air.gases[/datum/gas/hydrogen][MOLES] - (pulse_strength/1000), 0)
+		air.assert_gas(/datum/gas/tritium)
+		air.gases[/datum/gas/tritium][MOLES] += (pulse_strength / 1000)

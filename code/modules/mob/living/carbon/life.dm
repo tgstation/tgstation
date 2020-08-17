@@ -250,6 +250,16 @@
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
+	/*if(breath_gases[/datum/gas/gas_x])
+		var/gas_x_partialpressure = (breath_gases[/datum/gas/gas_x][MOLES]/breath.total_moles())*breath_pressure
+		if(gas_x_partialpressure > 0.1)
+			message_admins("AHHHH")
+			Unconscious(150)
+			Sleeping(150)
+			adjustOxyLoss(-3)
+			adjustFireLoss(-3)
+			adjustToxLoss(-3)*/
+
 	//NITRYL
 	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
