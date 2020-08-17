@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "The ash drake fight is winnable again, and  the game will no longer die when he goes into the lava arena attack."
