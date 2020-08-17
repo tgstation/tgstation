@@ -1032,7 +1032,7 @@
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
-			mecha_flags  &= ~SILICON_PILOT
+			mecha_flags &= ~SILICON_PILOT
 			return
 		else
 			if(!AI.linked_core)
