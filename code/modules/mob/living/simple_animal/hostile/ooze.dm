@@ -146,7 +146,7 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
-	cooldown_time = 240
+	cooldown_time = 24 SECONDS
 	var/nutrition_cost = 10
 	var/active = FALSE
 
@@ -155,9 +155,9 @@
 /datum/action/cooldown/metabolicboost/IsAvailable()
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	if(. && ooze.ooze_nutrition >= nutrition_cost && !active)
-		return TRUE
-	return FALSE
+	if(!.)
+		return FALSE
+	return (ooze.ooze_nutrition >= nutrition_cost && !active)
 
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
 /datum/action/cooldown/metabolicboost/Trigger()
@@ -169,6 +169,7 @@
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
 	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
 	to_chat(ooze, "<span class='notice'>You start feel a lot quicker.</span>")
+	active = TRUE
 	ooze.adjust_ooze_nutrition(-10)
 
 ///Heat up the mob a little
@@ -182,6 +183,8 @@
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	to_chat(ooze, "<span class='notice'>You start slowing down again.</span>")
 	deltimer(timerid)
+	active = FALSE
+	StartCooldown()
 
 
 ///This action lets you consume the mob you're currently pulling. I'M GONNA CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
@@ -429,14 +432,16 @@
 /datum/action/cooldown/gel_cocoon/IsAvailable()
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	if(. && ooze.ooze_nutrition >= 30)
-		return TRUE
+	if(!.)
+		return FALSE
+	return ooze.ooze_nutrition >= 30
 
 ///Puts the mob in the new cocoon
 /datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
 	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
 	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", "<span class='notice'>You put [target] into a gel cocoon.</span>")
+	StartCooldown()
 
 /obj/structure/gel_cocoon
 	name = "gel cocoon"
