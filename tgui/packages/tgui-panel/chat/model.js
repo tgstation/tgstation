@@ -4,18 +4,17 @@
  * @license MIT
  */
 
-import { MESSAGE_TYPES } from './constants';
 import { createUuid } from 'common/uuid';
+import { MESSAGE_TYPES, MESSAGE_TYPE_INTERNAL } from './constants';
 
 export const canPageAcceptType = (page, type) => (
-  type.startsWith('internal') || page.acceptedTypes[type]
+  type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type]
 );
 
 export const createPage = obj => ({
   id: createUuid(),
   name: 'New Tab',
   acceptedTypes: {},
-  count: 0,
   unreadCount: 0,
   createdAt: Date.now(),
   ...obj,
@@ -40,6 +39,12 @@ export const createMessage = payload => ({
 export const serializeMessage = message => ({
   type: message.type,
   text: message.text,
+  html: message.html,
   times: message.times,
   createdAt: message.createdAt,
 });
+
+export const isSameMessage = (a, b) => (
+  typeof a.text === 'string' && a.text === b.text
+  || typeof a.html === 'string' && a.html === b.html
+);

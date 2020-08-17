@@ -25,7 +25,7 @@ export const loadStyleSheet = (url, attempt = 1) => {
   /** @type {HTMLLinkElement} */
   let node = fgLoadCss(url);
   node.addEventListener('load', () => {
-    if (!isStyleSheetReallyLoaded(url)) {
+    if (!isStyleSheetReallyLoaded(node, url)) {
       node.parentNode.removeChild(node);
       node = null;
       loadedStyleSheetByUrl[url] = null;
@@ -46,17 +46,13 @@ export const loadStyleSheet = (url, attempt = 1) => {
  * Checks whether the stylesheet was registered in the DOM
  * and is not empty.
  */
-const isStyleSheetReallyLoaded = url => {
-  const styleSheets = document.styleSheets;
-  const len = styleSheets.length;
-  for (let i = 0; i < len; i++) {
-    const styleSheet = styleSheets[i];
-    if (styleSheet.href.includes(url)) {
-      return styleSheet.rules.length !== 0;
-    }
+const isStyleSheetReallyLoaded = (node, url) => {
+  const styleSheet = node.sheet;
+  if (!styleSheet) {
+    logger.warn(`Warning: stylesheet '${url}' was not found in the DOM`);
+    return false;
   }
-  logger.warn(`Warning: stylesheet '${url}' was not found in the DOM`);
-  return false;
+  return styleSheet.rules.length !== 0;
 };
 
 export const resolveAsset = name => (

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 SUBSYSTEM_DEF(chat)
 	name = "Chat"
 	flags = SS_TICKER
@@ -16,24 +21,18 @@ SUBSYSTEM_DEF(chat)
 			// Send to tgchat
 			client.tgui_panel?.window.send_message("chat/message", payload)
 			// Send to old chat
-			for(var/msg in payload)
-				SEND_TEXT(client, msg["text"])
+			for(var/message in payload)
+				SEND_TEXT(client, message_to_html(message))
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/chat/proc/queue(target, text, flags)
+/datum/controller/subsystem/chat/proc/queue(target, message)
 	if(islist(target))
 		for(var/_target in target)
 			var/client/client = CLIENT_FROM_VAR(_target)
 			if(client)
-				LAZYADD(payload_by_client[client], list(list(
-					"text" = text,
-					"flags" = flags,
-				)))
+				LAZYADD(payload_by_client[client], list(message))
 		return
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
-		LAZYADD(payload_by_client[client], list(list(
-			"text" = text,
-			"flags" = flags,
-		)))
+		LAZYADD(payload_by_client[client], list(message))
