@@ -8,11 +8,11 @@
 	var/datum/map_template/shuttle/new_shuttle
 
 /datum/round_event/shuttle_catastrophe/announce(fake)
-	var/cause = pick("was attacked by [syndicate_name()] Operatives", "mysteriously teleported away", "had it's refuelling crew mutiny",
-		"was found with it's engines stolen", "\[REDACTED\]", "flew into the sunset, and melted", "learned something from a very wise cow, and left on it's own",
-		"\[REDACTED\]", "had cloning devices on it")
+	var/cause = pick("was attacked by [syndicate_name()] Operatives", "mysteriously teleported away", "had its refuelling crew mutiny",
+		"was found with its engines stolen", "\[REDACTED\]", "flew into the sunset, and melted", "learned something from a very wise cow, and left on its own",
+		"\[REDACTED\]", "had cloning devices on it", "had its shuttle inspector put the shuttle in reverse instead of park, causing the shuttle to crash into the hangar.")
 
-	priority_announce("Your emergency shuttle [cause]. Your replacement shuttle will be [new_shuttle.name] until further notice.", "CentCom Spacecraft Engineering")
+	priority_announce("Your emergency shuttle [cause]. Your replacement shuttle will be the [new_shuttle.name] until further notice.", "CentCom Spacecraft Engineering")
 
 /datum/round_event/shuttle_catastrophe/setup()
 	var/list/valid_shuttle_templates = list()
