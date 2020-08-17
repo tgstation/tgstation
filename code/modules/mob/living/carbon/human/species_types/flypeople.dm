@@ -14,12 +14,18 @@
 	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 0.75
 
+	mutantheart = /obj/item/organ/heart/fly
+	mutantlungs = /obj/item/organ/lungs/fly
+	mutantliver = /obj/item/organ/liver/fly
+	mutantstomach = /obj/item/organ/stomach/fly
+	mutantappendix = /obj/item/organ/appendix/fly
+	mutant_organs = list(/obj/item/organ/fly)
+
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/pestkiller)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
-
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem, /datum/reagent/consumable))
@@ -36,3 +42,52 @@
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 29 //Flyswatters deal 30x damage to flypeople.
 	return 0
+
+/obj/item/organ/heart/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/heart/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+/obj/item/organ/lungs/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/lungs/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+/obj/item/organ/liver/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/liver/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+/obj/item/organ/stomach/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/stomach/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+/obj/item/organ/appendix/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/appendix/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+//useless organ we throw in just to fuck with surgeons a bit more
+/obj/item/organ/fly
+	name = "???"
+	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+
+/obj/item/organ/fly/Initialize()
+	. = ..()
+	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
