@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { KEY_CTRL, KEY_ENTER, KEY_ESCAPE, KEY_F5, KEY_R, KEY_SHIFT, KEY_SPACE, KEY_TAB } from 'common/keycodes';
+import { KEY_CTRL, KEY_ENTER, KEY_ESCAPE, KEY_F, KEY_F5, KEY_R, KEY_SHIFT, KEY_SPACE, KEY_TAB } from 'common/keycodes';
 import { globalEvents } from './events';
 import { createLogger } from './logging';
 
@@ -67,6 +67,10 @@ const handlePassthrough = key => {
   // In addition to F5, support reloading with Ctrl+R and Ctrl+F5
   if (key.ctrl && (key.code === KEY_F5 || key.code === KEY_R)) {
     location.reload();
+    return;
+  }
+  // Prevent passthrough on Ctrl+F
+  if (key.ctrl && key.code === KEY_F) {
     return;
   }
   // NOTE: Alt modifier is pretty bad and sticky in IE11.
