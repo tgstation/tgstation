@@ -926,7 +926,11 @@ RLD
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
-	var/list/plumbing_design_types = GLOB.plumbing_constructables_default
+	var/list/plumbing_design_types
+
+/obj/item/construction/plumbing/Initialize(mapload)
+	. = ..()
+	plumbing_design_types  = GLOB.plumbing_constructables_default
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
@@ -989,7 +993,10 @@ RLD
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
 	icon_state = "plumberer_sci"
 	has_ammobar = TRUE
-	plumbing_design_types = GLOB.plumbing_constructables_research
+
+/obj/item/construction/plumbing/Initialize(mapload)
+	. = ..()
+	plumbing_design_types  = GLOB.plumbing_constructables_research
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

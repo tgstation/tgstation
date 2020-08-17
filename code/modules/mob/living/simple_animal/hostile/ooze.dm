@@ -445,7 +445,7 @@
 	dump_inhabitant(FALSE)
 	. = ..()
 
-/obj/structure/gel_cocoon/resist_act(mob/living/user)
+/obj/structure/gel_cocoon/resist_container_act(mob/living/user)
 	. = ..()
 	user.visible_message("<span class='notice'>You see [user] breaking out of [src]!</span>", \
 		"<span class='notice'>You start tearing the soft tissue of the gel cocoon</span>")
