@@ -1,8 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - rscadd: "tgchat: Unread message count is now smarter and won't increase on other tabs if you have already read the same message in the active tab."
-  - rscadd: "tgchat: Admin PMs are now properly annotated and can be filtered into separate tabs."
-  - bugfix: "tgchat: Fix: Highlighted message overlay no longer blocks clicks. Clicking a highlighted `(F)` link should work as it should."
-  - bugfix: "tgui: Fixed NTOS bluescreen due to calling `.includes()` on a stylesheet href which could be null on certain browsers."
-  - code_imp: "tgchat: Chat schema bumped to version 5. All chat-related settings were reset to avoid breakage."
