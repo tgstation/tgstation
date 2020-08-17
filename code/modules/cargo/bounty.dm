@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	if(guided)
 		bounty_num = guided
 	else
-		bounty_num = rand(1,13)
+		bounty_num = rand(1,12)
 	switch(bounty_num)
 		if(1)
 			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
@@ -128,9 +128,6 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			return new subtype
 		if(12)
 			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
-			return new subtype
-		if(13)
-			var/subtype = pick(subtypesof(/datum/bounty/item/special))
 			return new subtype
 
 // Called lazily at startup to populate GLOB.bounties_list with random bounties.
