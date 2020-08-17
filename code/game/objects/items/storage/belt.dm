@@ -732,5 +732,6 @@
 		/obj/item/graft,
 		/obj/item/secateurs,
 		/obj/item/geneshears,
-		/obj/item/shovel/spade
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
 		))
