@@ -137,11 +137,11 @@
 		return
 
 	var/fired = weapon.process_fire(target, shooter)
-	if(!fired && chambered?.BB)
-		chambered.BB.damage /= damage_mult
-		if(chambered.BB.wound_bonus != CANT_WOUND)
-			chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(!fired && weapon.chambered?.BB)
+		weapon.chambered.BB.damage /= damage_mult
+		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
+			weapon.chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	qdel(src)
 
