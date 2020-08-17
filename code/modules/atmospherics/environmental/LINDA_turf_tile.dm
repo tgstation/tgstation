@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
-
+	var/delta = 0
 	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in GLOB.cardinals)
@@ -485,14 +485,14 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()
+				delta = max(delta, get_delta(neighbor))
 
-	radiate_to_spess()
 
-	finish_superconduction()
+	finish_superconduction(delta)
 
-/turf/proc/finish_superconduction(temp = temperature)
+/turf/proc/finish_superconduction(delta)
 	//Make sure still hot enough to continue conducting heat
-	if(temp < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
+	if(delta < 1)
 		SSair.active_super_conductivity -= src
 		return FALSE
 
@@ -505,14 +505,22 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/proc/consider_superconductivity()
 	if(!thermal_conductivity)
 		return FALSE
-
+	var/delta = 0
+	var/conductivity_directions = conductivity_directions()
+	if(conductivity_directions)
+		for(var/direction in GLOB.cardinals)
+			if(conductivity_directions & direction)
+				var/turf/neighbor = get_step(src,direction)
+				delta = max(delta, get_delta(neighbor))
+	if(delta < 1)
+		return
 	SSair.active_super_conductivity |= src
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
 	if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
-	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
+	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant. //This isn't a constant, reconsider life choices
 		return FALSE
 	return ..()
 
@@ -521,14 +529,6 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		return FALSE
 	return ..()
 
-/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature > T0C) //Considering 0 degC as te break even point for radiation in and out
-		var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
-		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
-
-			var/heat = thermal_conductivity*delta_temperature* \
-				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))
-			temperature -= heat/heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
@@ -542,3 +542,20 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 		temperature -= heat/heat_capacity //The higher your own heat cap the less heat you get from this arangement
 		sharer.temperature += heat/sharer.heat_capacity
+
+/turf/proc/get_delta(turf/neighbor)
+	if(!neighbor.blocks_air)
+		var/turf/open/horse = neighbor
+		if(horse.air)
+			return abs(temperature - horse.air.temperature)
+	return abs(temperature - neighbor.temperature)
+
+/turf/open/get_delta(turf/neighbor)
+	if(blocks_air)
+		return ..()
+	if(neighbor.blocks_air)
+		if(air)
+			return abs(neighbor.temperature - air.temperature)
+	var/turf/open/horse = neighbor
+	if(air && horse.air)
+		return abs(horse.air.temperature - air.temperature)
