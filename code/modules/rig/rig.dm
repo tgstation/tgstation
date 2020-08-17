@@ -258,7 +258,7 @@
 		wires.interact(user)
 	..()
 
-/obj/item/rig/control/relaymove(mob/user)
+/obj/item/rig/control/relaymove(mob/user, direction)
 	if(!istype(user, pai) || !(locate(/obj/item/rig/module/pai_upgrade) in contents) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
 		return
 	step_towards(wearer, get_step(wearer, direction))
