@@ -494,3 +494,23 @@
 		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
 	if(update)
 		update_movespeed()
+
+/// Gets the amount of confusion on the mob.
+/mob/living/proc/get_confusion()
+	var/datum/status_effect/confusion/confusion = has_status_effect(STATUS_EFFECT_CONFUSION)
+	return confusion ? confusion.strength : 0
+
+/// Set the confusion of the mob. Confusion will make the mob walk randomly.
+/mob/living/proc/set_confusion(new_confusion)
+	new_confusion = max(new_confusion, 0)
+
+	if (new_confusion)
+		var/datum/status_effect/confusion/confusion_status = has_status_effect(STATUS_EFFECT_CONFUSION) || apply_status_effect(STATUS_EFFECT_CONFUSION)
+		confusion_status.set_strength(new_confusion)
+	else
+		remove_status_effect(STATUS_EFFECT_CONFUSION)
+
+/// Add confusion to the mob. Confusion will make the mob walk randomly.
+/// Shorthand for set_confusion(confusion + x).
+/mob/living/proc/add_confusion(confusion_to_add)
+	set_confusion(get_confusion() + confusion_to_add)

@@ -25,8 +25,6 @@
 	var/ntnet_status = 1
 	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
-	/// Optional string that describes what NTNet server/system this program connects to. Used in default logging.
-	var/network_destination = null
 	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_ntnet = 1
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
@@ -82,10 +80,18 @@
 /datum/computer_file/program/proc/process_tick()
 	return 1
 
-// Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
-// User has to wear their ID for ID Scan to work.
-// Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE)
+/**
+  *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+  *NT Software Hub is checking available software), a list can be given to be used instead.
+  *Arguments:
+  *user is a ref of the mob using the device.
+  *loud is a bool deciding if this proc should use to_chats
+  *access_to_check is an access level that will be checked against the ID
+  *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+*/
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, var/list/access)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -104,29 +110,24 @@
 	if(issilicon(user))
 		return TRUE
 
-	if(ishuman(user))
+	if(!length(access))
 		var/obj/item/card/id/D
 		var/obj/item/computer_hardware/card_slot/card_slot
-		if(computer && card_slot)
+		if(computer)
 			card_slot = computer.all_components[MC_CARD]
-			D = card_slot.GetID()
-		var/mob/living/carbon/human/h = user
-		var/obj/item/card/id/I = h.get_idcard(TRUE)
+			D = card_slot?.GetID()
 
-		if(!I && !D)
+		if(!D)
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
 			return FALSE
+		access = D.GetAccess()
 
-		if(I)
-			if(access_to_check in I.GetAccess())
-				return TRUE
-		else if(D)
-			if(access_to_check in D.GetAccess())
-				return TRUE
-		if(loud)
-			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
-	return 0
+	if(access_to_check in access)
+		return TRUE
+	if(loud)
+		to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
+	return FALSE
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
@@ -139,8 +140,12 @@
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
-		if(requires_ntnet && network_destination)
-			generate_network_log("Connection opened to [network_destination].")
+		if(requires_ntnet)
+			var/obj/item/card/id/ID
+			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+			if(card_holder)
+				ID = card_holder.GetID()
+			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return 1
 	return 0
@@ -162,8 +167,12 @@
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
-	if(network_destination)
-		generate_network_log("Connection to [network_destination] closed.")
+	if(requires_ntnet)
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 	return 1
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)

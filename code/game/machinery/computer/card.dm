@@ -16,6 +16,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
+	light_color = LIGHT_COLOR_BLUE
 	var/mode = 0
 	var/printing = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
@@ -48,7 +49,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/region_access = null
 	var/list/head_subordinates = null
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/card/proc/get_jobs()
 	return get_all_jobs()
@@ -355,7 +355,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/card/Topic(href, href_list)
@@ -610,7 +609,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	target_dept = 2
 	icon_screen = "idhos"
 
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3

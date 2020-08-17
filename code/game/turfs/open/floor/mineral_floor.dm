@@ -58,6 +58,11 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
+//Plasma floor that can't be removed, for disco inferno
+
+/turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
+	return
+
 
 //GOLD
 

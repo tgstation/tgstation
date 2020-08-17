@@ -56,8 +56,9 @@
 	desc = "Dont jump on it, or do, I'm not your mom."
 	icon = 'icons/turf/floors/glass.dmi'
 	icon_state = "floor_glass"
-	smoothing_flags = SMOOTH_MORE
-	canSmoothWith = list(/turf/open/transparent/glass, /turf/open/transparent/glass/reinforced)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
+	canSmoothWith = list(SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW

@@ -9,15 +9,13 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
+	canSmoothWith = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_WALLS)
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smoothing_flags = SMOOTH_MORE
-	//	flags = CONDUCT_1
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
@@ -76,7 +74,8 @@
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
 	number_of_mats = 2
-	smoothing_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
@@ -102,7 +101,8 @@
 	icon_state = "catwalk"
 	number_of_mats = 1
 	color = "#5286b9ff"
-	smoothing_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = null
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	resistance_flags = FIRE_PROOF | LAVA_PROOF

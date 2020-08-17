@@ -32,7 +32,7 @@
 		return MAP_ERROR
 
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter((pick(spawn_locs)))
-	var/mob/living/simple_animal/slaughter/S = new (holder)
+	var/mob/living/simple_animal/hostile/imp/slaughter/S = new (holder)
 	holder.RegisterSignal(src, list(COMSIG_BLOODCRAWL_DELETE,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/slaughter/.proc/deleteself)
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"

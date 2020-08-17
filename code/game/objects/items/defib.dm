@@ -350,7 +350,7 @@
 			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
 		snap_back()
 
-/obj/item/shockpaddles/proc/recharge(var/time)
+/obj/item/shockpaddles/proc/recharge(time)
 	if(req_defib || !time)
 		return
 	cooldown = TRUE
@@ -608,6 +608,7 @@
 					H.emote("gasp")
 					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

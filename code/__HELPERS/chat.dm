@@ -53,7 +53,7 @@ In TGS3 it will always be sent to all connected designated game chats.
 	var/list/channels_to_use = list()
 	for(var/I in world.TgsChatChannelInfo())
 		var/datum/tgs_chat_channel/channel = I
-		var/list/applicable_tags = splittext(channel.tag, ",")
+		var/list/applicable_tags = splittext(channel.custom_tag, ",")
 		if(channel_tag in applicable_tags)
 			channels_to_use += channel
 

@@ -52,6 +52,8 @@
 	return FALSE
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
+	if(!account_job)
+		return
 	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
 	if(free)
 		adjust_money(money_to_transfer)
@@ -112,12 +114,8 @@
 /datum/bank_account/proc/bounty_text()
 	if(!civilian_bounty)
 		return FALSE
-	if(istype(civilian_bounty, /datum/bounty/item))
-		var/datum/bounty/item/item = civilian_bounty
-		return item.description
-	if(istype(civilian_bounty, /datum/bounty/reagent))
-		var/datum/bounty/reagent/chemical = civilian_bounty
-		return chemical.description
+	return civilian_bounty.description
+
 
 /**
   * Returns the required item count, or required chemical units required to submit a bounty.
@@ -131,6 +129,8 @@
 	if(istype(civilian_bounty, /datum/bounty/reagent))
 		var/datum/bounty/reagent/chemical = civilian_bounty
 		return "[chemical.shipped_volume]/[chemical.required_volume] u"
+	if(istype(civilian_bounty, /datum/bounty/virus))
+		return "At least 1u"
 
 /**
   * Produces the value of the account's civilian bounty reward, if able.

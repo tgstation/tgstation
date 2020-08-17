@@ -47,7 +47,7 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
-/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, var/damage = 41)
+/turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
 
 /turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
@@ -199,7 +199,7 @@
 		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
-		smoothing_flags = SMOOTH_TRUE
+		smoothing_flags = SMOOTH_CORNERS
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
@@ -237,14 +237,15 @@
 	icon_state = "map-shuttle"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smoothing_flags = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_DIAGONAL
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	smoothing_flags = SMOOTH_MORE
+	smoothing_flags = SMOOTH_CORNERS
 	icon_state = "map-shuttle_nd"
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
