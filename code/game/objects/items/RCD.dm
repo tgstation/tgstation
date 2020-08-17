@@ -925,11 +925,13 @@ RLD
 	var/list/name_to_type = list()
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
+	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
+	var/list/plumbing_design_types = GLOB.plumbing_constructables_default
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
-		for(var/A in GLOB.plumbing_constructables)
+		for(var/A in plumbing_design_types)
 			var/obj/machinery/plumbing/M = A
 
 			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
@@ -981,6 +983,13 @@ RLD
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
 		create_machine(A, user)
+
+/obj/item/construction/plumbing/research
+	name = "research plumbing constructor"
+	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
+	icon_state = "plumberer_sci"
+	has_ammobar = TRUE
+	plumbing_design_types = GLOB.plumbing_constructables_research
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
