@@ -1,8 +1,9 @@
 /obj/structure/microscope
 	name = "Microscope"
 	desc = "A simple microscope, allowing you to examine micro-organisms."
+	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon_state = "microscope"
 	var/obj/item/petri_dish/current_dish
-
 
 /obj/structure/microscope/attacked_by(obj/item/I, mob/living/user)
 	if(!istype(I, /obj/item/petri_dish))

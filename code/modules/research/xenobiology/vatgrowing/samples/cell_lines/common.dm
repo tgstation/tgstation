@@ -124,7 +124,7 @@
 	required_reagents = list(
 						/datum/reagent/consumable/nutriment/protein,
 						/datum/reagent/liquidgibs,
-						/datum/reagent/medicine/C2/instabitaluri) //Nuke this if the dispenser becomes xenobio meta.
+						/datum/reagent/medicine/c2/synthflesh) //Nuke this if the dispenser becomes xenobio meta.
 
 	supplementary_reagents = list(
 						/datum/reagent/consumable/honey = 8, //Hunny.
@@ -164,7 +164,7 @@
 	desc = "Cartilaginous cyprinid cells"
 	required_reagents = list(
 						/datum/reagent/consumable/nutriment/protein,
-						/datum/reagent/medicine/C2/instabitaluri,
+						/datum/reagent/medicine/c2/synthflesh,
 						/datum/reagent/consumable/nutriment)
 
 	supplementary_reagents = list(
@@ -241,7 +241,7 @@
 	desc = "Blobular myocytes"
 	required_reagents = list(
 	 					/datum/reagent/consumable/nutriment/protein,
-	 					/datum/reagent/medicine/C2/instabitaluri,
+	 					/datum/reagent/medicine/c2/synthflesh,
 	 					/datum/reagent/sulfur) //grind flares to get this
 
 	supplementary_reagents = list(
@@ -366,7 +366,7 @@
 
 	suppressive_reagents = list(
 						/datum/reagent/consumable/sodiumchloride = -3,
-						/datum/reagent/medicine/C2/syriniver = -2)
+						/datum/reagent/medicine/c2/syriniver = -2)
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
 
