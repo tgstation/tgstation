@@ -3,7 +3,7 @@
 	name = "Pressurized Slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
-	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them."
+	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them.  Is resistant to brute attacks."
 	analyzerdesceffect = "When attacked or killed, lubricates nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"

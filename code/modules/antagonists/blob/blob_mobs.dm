@@ -12,7 +12,7 @@
 	speak_emote = null //so we use verb_yell/verb_say/etc
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	maxbodytemp = 360
+	maxbodytemp = INFINITY
 	unique_name = 1
 	a_intent = INTENT_HARM
 	see_in_dark = 8
