@@ -1957,16 +1957,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
-<<<<<<< HEAD
-=======
-"aeE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
->>>>>>> master
 "aeF" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/structure/lattice/catwalk,
@@ -5267,8 +5257,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-<<<<<<< HEAD
-=======
 "all" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
@@ -5277,7 +5265,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
->>>>>>> master
 "alm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -5298,20 +5285,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"alo" = (
-/obj/machinery/camera{
-	c_tag = "Holodeck Control";
-	dir = 1
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -5972,14 +5945,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "amD" = (
-<<<<<<< HEAD
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
-=======
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
@@ -5988,7 +5953,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
->>>>>>> master
 "amE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/closed/wall,
@@ -7092,15 +7056,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-<<<<<<< HEAD
-=======
 "apa" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
->>>>>>> master
 "apb" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -66432,6 +66393,15 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"eVo" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "eWs" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/white,
@@ -67406,6 +67376,12 @@
 /obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
+"gmg" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "gmp" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -68469,6 +68445,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
+"hZc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "iaR" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -70474,6 +70456,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"lpp" = (
+/obj/item/cigbutt,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "lqa" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/fork/plastic,
@@ -71132,17 +71121,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
+"mqt" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/fitness/recreation)
 "mrv" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cloth/five,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"mrJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/closed/wall,
-/area/crew_quarters/fitness/recreation)
 "msD" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -73653,15 +73643,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"qFS" = (
-/obj/machinery/camera{
-	c_tag = "Holodeck";
-	dir = 1
-	},
-/turf/open/floor/engine{
-	name = "Holodeck Projector Floor"
-	},
-/area/holodeck/rec_center)
 "qGP" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -76113,6 +76094,12 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/closed/wall,
 /area/medical/morgue)
+"uUV" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/fore)
 "uVk" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -76143,6 +76130,20 @@
 /obj/structure/flora/rock/jungle,
 /turf/open/floor/grass,
 /area/medical/virology)
+"uWX" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck";
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "uYd" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
@@ -116031,11 +116032,7 @@ aiY
 ahh
 amC
 amC
-<<<<<<< HEAD
-aoZ
-=======
 ahh
->>>>>>> master
 aqm
 arB
 atc
@@ -116283,7 +116280,7 @@ aaa
 aaa
 aaa
 aeB
-aho
+afC
 afC
 afC
 aib
@@ -116292,13 +116289,8 @@ acQ
 alm
 acQ
 acQ
-<<<<<<< HEAD
-amD
-aqn
-=======
 acQ
 aqo
->>>>>>> master
 arB
 arB
 arB
@@ -117582,7 +117574,7 @@ afD
 afD
 afD
 afD
-qFS
+afD
 aqo
 arI
 atd
@@ -117829,22 +117821,22 @@ aaa
 aaa
 aai
 aaa
-aeC
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-aqo
-arI
-atd
-atd
-atd
+mqt
+afC
+afC
+aho
+aic
+acQ
+acQ
+aln
+amE
+amE
+amE
+aqp
+dnh
+dnR
+aus
+dnS
 dnh
 aAm
 oeK
@@ -118086,22 +118078,22 @@ aaa
 aaa
 aaf
 aaa
-aeC
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-aqo
-atd
-atd
-atd
-atd
+aaa
+aaf
+aaa
+acP
+aid
+aiZ
+ajX
+uWX
+acP
+dnz
+dnR
+lpp
+dnh
+dnh
+dnh
+dnh
 dnh
 axQ
 ayR
@@ -118343,23 +118335,23 @@ aaa
 aaa
 aaf
 aaf
-aeC
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-aqo
-dnh
-dnR
-aus
+aaf
+aaf
+aaa
+acP
+aie
+aja
+gmg
+alp
+dtE
+hZc
 dnS
-dnh
+doh
+dnS
+dnS
+uUV
+dnS
+dnS
 axO
 dnS
 axY
@@ -118600,18 +118592,18 @@ aaa
 aaa
 aaa
 aaa
-aeC
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-afD
-aqo
+aaa
+aaf
+aaa
+acP
+acQ
+acQ
+acQ
+acP
+acP
+dnh
+dnh
+dnh
 dnh
 dnh
 dnh
@@ -118857,18 +118849,18 @@ aaa
 aaa
 aaa
 aaa
-mrJ
-aho
-aho
-aho
-aic
-acQ
-acQ
-aln
-amE
-amE
-amE
-aqp
+aaa
+aaf
+aaa
+aaa
+aaa
+aaa
+aaf
+dni
+eVo
+amH
+hZc
+dnS
 arJ
 arI
 dnh
@@ -119117,15 +119109,15 @@ aaa
 aaa
 aaf
 aaf
-acP
-aid
-aiZ
-ajX
-alo
-acP
+aaf
+aaf
+aaf
+aaf
+dnh
+amH
 dnh
 apd
-ape
+dnS
 arK
 dnS
 dnh
@@ -119374,14 +119366,14 @@ aaa
 aaa
 aaa
 aaa
-acP
-aie
-aja
-ahg
-alp
-dtE
-dnS
-dnS
+aaa
+aaf
+aaa
+aaf
+aaa
+ack
+dnh
+ape
 dnS
 arL
 ate
@@ -119631,13 +119623,13 @@ aaa
 aaa
 aaa
 aaa
-acP
-acP
-acP
-acP
-acP
-acP
-dnh
+aaa
+aaf
+aaf
+aaf
+aaf
+ack
+dni
 bcO
 dnS
 dnS
@@ -119889,12 +119881,12 @@ aaa
 aaa
 aaa
 aaa
+aaf
 aaa
-amH
-dnS
-amH
-dnS
-dnS
+aaf
+aaa
+aaf
+dnh
 apg
 aqs
 arM
