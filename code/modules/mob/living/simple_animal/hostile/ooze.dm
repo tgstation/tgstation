@@ -125,7 +125,7 @@
 	consume.Grant(src)
 
 ///If this mob gets resisted by something, its trying to escape consumption.
-/mob/living/simple_animal/hostile/ooze/gelatinous/resist_act(mob/living/user)
+/mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
 	. = ..()
 	if(!do_after(user, 60)) //6 second struggle
 		return FALSE
@@ -445,7 +445,7 @@
 	dump_inhabitant(FALSE)
 	. = ..()
 
-/obj/structure/gel_cocoon/resist_container_act(mob/living/user)
+/obj/structure/gel_cocoon/container_resist_act(mob/living/user)
 	. = ..()
 	user.visible_message("<span class='notice'>You see [user] breaking out of [src]!</span>", \
 		"<span class='notice'>You start tearing the soft tissue of the gel cocoon</span>")

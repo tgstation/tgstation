@@ -940,7 +940,7 @@ RLD
 
 			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
 			name_to_type[initial(M.name)] = M
-			machinery_data["cost"][A] = GLOB.plumbing_constructables[A]
+			machinery_data["cost"][A] = plumbing_design_types[A]
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
