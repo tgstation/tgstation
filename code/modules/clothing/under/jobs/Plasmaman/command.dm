@@ -23,7 +23,7 @@
 	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/chief_engineer
-	name = "chief engineer envirosuit"
+	name = "chief engineer's plasma envirosuit"
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."
 	icon_state = "ce_envirosuit"
 	inhand_icon_state = "ce_envirosuit"
