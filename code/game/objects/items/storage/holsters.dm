@@ -115,7 +115,6 @@
 		/obj/item/gun/energy/kinetic_accelerator/crossbow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/pulse/carbine,
 		/obj/item/gun/energy/dueling
 		))
 
