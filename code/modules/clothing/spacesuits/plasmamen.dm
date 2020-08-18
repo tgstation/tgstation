@@ -315,7 +315,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_official
 	name = "centom official plasma envirosuit helmet"
-	desc = "A plasmaman envirohelm designed for Centcom Officials."
+	desc = "A special containment helmet designed for the Centcom Staff. They sure do love their green."
 	icon_state = "official_envirohelm"
 	inhand_icon_state = "official_envirohelm"
 
