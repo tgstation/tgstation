@@ -321,6 +321,6 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_intern
 	name = "CentCom intern plasma envirosuit helmet"
-	desc = "A special containment helmet designed for the Centcom Staff. You know, so any coffee spills don't kill the poor sod."
+	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
 	icon_state = "intern_envirohelm"
 	inhand_icon_state = "intern_envirohelm"
