@@ -309,7 +309,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
 	name = "centom plasma envirosuit helmet"
-	desc = "A plasmaman envirohelm designed for Centcom Commanders."
+	desc = "A special containment helmet designed for the Higher Centcom Command Staff. Not many of these exist, as Centcom does not usually employ plasmamen to higher staff positions due to their complications."
 	icon_state = "commander_envirohelm"
 	inhand_icon_state = "commander_envirohelm"
 
