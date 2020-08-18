@@ -4,9 +4,8 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
-	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN, TRAIT_HARDLIMBWOUND)
+	species_traits = list(NOBLOOD,NOTRANSSTING)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -133,6 +132,24 @@
 		if("Clown")
 			O = new /datum/outfit/plasmaman/clown
 
+		if("Captain")
+			O = new /datum/outfit/plasmaman/captain
+
+		if("Head of Personnel")
+			O = new /datum/outfit/plasmaman/head_of_personnel
+
+		if("Head of Security")
+			O = new /datum/outfit/plasmaman/head_of_security
+
+		if("Chief Engineer")
+			O = new /datum/outfit/plasmaman/chief_engineer
+
+		if("Chief Medical Officer")
+			O = new /datum/outfit/plasmaman/chief_medical_officer
+
+		if("Research Director")
+			O = new /datum/outfit/plasmaman/research_director
+
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
@@ -151,23 +168,14 @@
 
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
-	if(istype(chem, /datum/reagent/consumable/milk))
+	if(chem.type == /datum/reagent/consumable/milk)
 		if(chem.volume > 10)
 			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		for(var/i in H.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
 		return TRUE
-	if(istype(chem, /datum/reagent/toxin/plasma))
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
-		for(var/i in H.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
-		return TRUE
-	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
+	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
 		H.adjustStaminaLoss(7.5, 0)
 		H.adjustBruteLoss(0.5, 0)
 		if(prob(20))
@@ -175,7 +183,7 @@
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+					H.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 				if(3)
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
 		if(chem.overdosed)
