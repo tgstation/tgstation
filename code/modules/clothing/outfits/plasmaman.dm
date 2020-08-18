@@ -206,7 +206,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/research_director
 
 /datum/outfit/plasmaman/centcom_commander
-	name = "Centcom Command Plasmaman"
+	name = "CentCom Command Plasmaman"
 
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
