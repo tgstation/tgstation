@@ -131,10 +131,10 @@
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun, // ALL guns.
-		/obj/item/ammo_box/magazine, // All magazines.
-		/obj/item/ammo_box/c38, //There is not a speedloader parent type, so I just put these three here by hand.
-		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then holster could fit huge boxes of ammo.
+		/obj/item/ammo_box/magazine, // ALL magazines.
+		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.
+		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then this could hold huge boxes of ammo.
 		/obj/item/ammo_box/a762,
-		/obj/item/ammo_casing, // Covers shotgun casings, rockets, launcher grenades.
-		/obj/item/grenade, // All regular grenades.
+		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
+		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
 		))
