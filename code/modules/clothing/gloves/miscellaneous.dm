@@ -153,7 +153,7 @@
 	inhand_icon_state = "hopplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/chief_engineer
-	name = "chief engineer envirogloves"
+	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
 
