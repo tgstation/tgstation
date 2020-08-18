@@ -453,12 +453,16 @@
 	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
+///how many times can the shuttle be cursed?
+#define MAX_SHUTTLE_CURSES 3
+
 /obj/item/shuttle_curse
 	name = "cursed orb"
-	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	desc = "You peer within this smokey orb and glimpse terrible fates befalling the emergency escape shuttle. "
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
-	var/static/curselimit = 0
+	///how many times has the shuttle been cursed so far?
+	var/static/totalcurses = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -466,8 +470,9 @@
 		user.Paralyze(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
-	if(curselimit > 1)
-		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
+	if(totalcurses >= MAX_SHUTTLE_CURSES)
+		to_chat(user, "<span class='warning'>You try to shatter the orb, but it remains as solid as a rock!</span>")
+		to_chat(user, "<span class='danger'><span class='big'>It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.</span></span>")
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		to_chat(user, "<span class='warning'>Nar'Sie is already on this plane, there is no delaying the end of all things.</span>")
@@ -489,10 +494,9 @@
 		SSshuttle.emergency.setTimer(timer)
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
+		totalcurses++
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
-		qdel(src)
-		sleep(20)
 		var/static/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death.",
@@ -505,7 +509,15 @@
 		var/message = pick_n_take(curses)
 		message += " The shuttle will be delayed by three minutes."
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
-		curselimit++
+		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.</span></span>")
+		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed one more time.</span></span>")
+		else
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.</span></span>")
+		qdel(src)
+
+#undef MAX_SHUTTLE_CURSES
 
 /obj/item/cult_shift
 	name = "veil shifter"
