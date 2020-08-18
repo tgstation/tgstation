@@ -139,14 +139,23 @@
 // bones
 /datum/status_effect/wound/blunt
 
-/datum/status_effect/wound/blunt/interact_speed_modifier()
+/datum/status_effect/wound/blunt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	on_swap_hands()
+
+/datum/status_effect/wound/blunt/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
 	var/mob/living/carbon/C = owner
+	C.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
+/datum/status_effect/wound/blunt/proc/on_swap_hands()
+	var/mob/living/carbon/C = owner
 	if(C.get_active_hand() == linked_limb)
-		to_chat(C, "<span class='warning'>The [lowertext(linked_wound)] in your [linked_limb.name] slows your progress!</span>")
-		return linked_wound.interaction_efficiency_penalty
-
-	return 1
+		C.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, linked_wound.interaction_efficiency_penalty)
+	else
+		C.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/blunt/nextmove_modifier()
 	var/mob/living/carbon/C = owner
