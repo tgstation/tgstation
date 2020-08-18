@@ -459,9 +459,9 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		switch(child)
 			if(/datum)
 				return null
-			if(/obj || /mob)
+			if(/obj, /mob)
 				return /atom/movable
-			if(/area || /turf)
+			if(/area, /turf)
 				return /atom
 			else
 				return /datum
