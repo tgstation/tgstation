@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(economy)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
 			station_total += bank_account.account_balance
-	station_target = max(round(temporary_total / (bank_accounts.len * 2)) + station_target_buffer, 1)
+	station_target = max(round(temporary_total / min(bank_accounts.len * 2, 1)) + station_target_buffer, 1)
 	if(!market_crashing)
 		price_update()
 
