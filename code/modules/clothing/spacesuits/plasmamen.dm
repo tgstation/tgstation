@@ -308,7 +308,7 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75, "wound" = 10)
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
-	name = "centom plasma envirosuit helmet"
+	name = "CentCom commander plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Higher Centcom Command Staff. Not many of these exist, as Centcom does not usually employ plasmamen to higher staff positions due to their complications."
 	icon_state = "commander_envirohelm"
 	inhand_icon_state = "commander_envirohelm"
