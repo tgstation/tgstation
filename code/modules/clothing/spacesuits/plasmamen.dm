@@ -295,7 +295,7 @@
 	smile_state = "clown_smile"
 
 /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
-	name = "head of personnel envirosuit helmet"
+	name = "head of personnel's envirosuit helmet"
 	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
 	icon_state = "hop_envirohelm"
 	inhand_icon_state = "hop_envirohelm"
