@@ -4,6 +4,7 @@
 	volume = 80
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
+	eat_time = 3 SECONDS
 
 /obj/item/food/bread/Initialize()
 	. = ..()
@@ -14,6 +15,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	slot_flags = ITEM_SLOT_HEAD
 	foodtypes = GRAIN
+	eat_time = 0.5 SECONDS
 
 /obj/item/food/breadslice/Initialize()
 	. = ..()
