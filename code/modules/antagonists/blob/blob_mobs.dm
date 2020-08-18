@@ -232,6 +232,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
+	gold_core_spawnable = NO_SPAWN
 
 /////////////////
 // BLOBBERNAUT //
