@@ -1,6 +1,0 @@
-author: "Bald People"
-delete-after: True
-changes: 
-  - rscadd: "Various away missions now have minor fixes."
-  - rscadd: "The horrific experiment structure has it's icon_state restored"
-  - tweak: "SnowCabin has been changed a bit. No more empty void of despair!"
