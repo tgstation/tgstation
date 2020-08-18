@@ -153,6 +153,7 @@
 		/obj/item/ammo_box/a762,
 		/obj/item/gun/energy,
 		/obj/item/gun/ballistic/shotgun,
+		/obj/item/gun/ballistic/rocketlauncher,
 		/obj/item/ammo_box/magazine/m12g,
 		/obj/item/gun/ballistic/rocketlauncher,
 		/obj/item/ammo_casing/caseless/rocket,
