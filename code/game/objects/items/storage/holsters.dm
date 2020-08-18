@@ -32,7 +32,7 @@
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
-	desc = "A holster able to carry a handgun and some ammo. WARNING: Badasses only."
+	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
@@ -64,7 +64,7 @@
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
-	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold a handgun and its ammo."
+	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold handguns and their ammo."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
@@ -151,13 +151,14 @@
 		/obj/item/ammo_box/c38,
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a762,
-		/obj/item/gun/energy/e_gun/mini,
-		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/pulse/carbine,
-		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy,
 		/obj/item/gun/ballistic/shotgun,
 		/obj/item/ammo_box/magazine/m12g,
 		/obj/item/gun/ballistic/rocketlauncher,
 		/obj/item/ammo_casing/caseless/rocket,
-		/obj/item/gun/energy/kinetic_accelerator/crossbow
+		/obj/item/gun/ballistic/revolver/grenadelauncher,
+		/obj/item/ammo_casing/a40mm,
+		/obj/item/gun/grenadelauncher,
+		/obj/item/grenade,
+		/obj/item/gun/energy/kinetic_accelerator
 		))
