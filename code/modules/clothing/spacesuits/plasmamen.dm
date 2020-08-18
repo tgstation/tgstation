@@ -228,7 +228,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 	name = "chief engineer plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for chief engineer plasmamen, the top is painted white to resemble a hardhat and has the Chief's green stripes."
+	desc = "A special containment helmet designed for the Chief Engineer. An expensive, element resistant white and green carapace design is applied to protect the plasmaman inside."
 	icon_state = "ce_envirohelm"
 	inhand_icon_state = "ce_envirohelm"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 100, "acid" = 75)
