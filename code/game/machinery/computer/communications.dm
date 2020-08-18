@@ -162,7 +162,7 @@
 					if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
 						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
 					else if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
-						to_chat(usr, "<span class='alert'>Due to unforseen consequences, shuttle purchasing is no longer available.</span>")
+						to_chat(usr, "<span class='alert'>Due to unforseen circumstances, shuttle purchasing is no longer available.</span>")
 					else if(!S.prerequisites_met())
 						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 					else
