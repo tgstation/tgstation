@@ -111843,9 +111843,9 @@
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = null
 	},
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
