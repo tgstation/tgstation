@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/gas_x
 	id = "gas_x"
-	specific_heat = 150
+	specific_heat = 10
 	name = "Gas X"
 	dangerous = TRUE
 	gas_overlay = "gas_x"
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/gas_y
 	id = "gas_y"
-	specific_heat = 100
+	specific_heat = 30
 	name = "Gas Y"
 	dangerous = TRUE
 	gas_overlay = "gas_y"
@@ -190,16 +190,16 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/gas_z
 	id = "gas_z"
-	specific_heat = 900
+	specific_heat = 350
 	name = "Gas Z"
 	dangerous = TRUE
 	gas_overlay = "gas_z"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 600
+	rarity = 100
 
 /datum/gas/delta_gas
 	id = "delta_gas"
-	specific_heat = 150
+	specific_heat = 175
 	name = "Delta gas"
 	dangerous = TRUE
 	gas_overlay = "delta_gas"
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/gamma_gas
 	id = "gamma_gas"
-	specific_heat = 150
+	specific_heat = 5
 	name = "Gamma gas"
 	dangerous = TRUE
 	gas_overlay = "gamma_gas"

@@ -48,11 +48,13 @@
 /obj/item/grenade/gas_crystal/x_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
+	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isopenturf(T))
 			var/turf/open/F = T
-			if(F.air.temperature > 400)
-				F.air.temperature = 260
+			if(F.air.temperature > 260)
+				F.air.temperature = 200
+				F.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
 			if(F.air.gases[/datum/gas/plasma])
 				F.air.gases[/datum/gas/plasma][MOLES] -= F.air.gases[/datum/gas/plasma][MOLES] * 0.5
 			F.air.gases[/datum/gas/nitrogen][MOLES] += 50
@@ -65,11 +67,12 @@
 /obj/item/grenade/gas_crystal/y_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
+	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	for(var/turf/T in view(refill_range,loc))
 		if(isopenturf(T))
 			var/turf/open/F = T
-			F.air.gases[/datum/gas/nitrogen][MOLES] += 1400
-			F.air.gases[/datum/gas/oxygen][MOLES] += 600
+			F.air.gases[/datum/gas/nitrogen][MOLES] += 400
+			F.air.gases[/datum/gas/oxygen][MOLES] += 100
 			F.air_update_turf()
 	qdel(src)
 

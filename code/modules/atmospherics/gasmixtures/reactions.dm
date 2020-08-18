@@ -27,7 +27,6 @@ gamma_gas_formation = 16
 crystalX_production = 17
 crystalY_production = 18
 crystalZ_production = 19
-statue_creation = 20
 nobiliumsuppression = INFINITY
 */
 
@@ -873,7 +872,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
-		"TEMP" = 10
+		"TEMP" = 50
 	)
 
 /datum/gas_reaction/gas_x_formation/react(datum/gas_mixture/air, datum/holder)
@@ -885,7 +884,7 @@ nobiliumsuppression = INFINITY
 	ASSERT_GAS(/datum/gas/gas_x,air)
 	if ((cached_gases[/datum/gas/freon][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	if(air.temperature >= 50)
+	if(air.temperature >= 100)
 		return NO_REACTION
 	cached_gases[/datum/gas/freon][MOLES] -= heat_efficency * 5
 	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25
@@ -1063,7 +1062,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/gasZ_decomp/init_reqs()
 	min_requirements = list(
-		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
 		/datum/gas/gas_z = MINIMUM_MOLE_COUNT
 	)
 
@@ -1075,7 +1074,7 @@ nobiliumsuppression = INFINITY
 	var/burned_fuel = 0
 
 
-	burned_fuel = min(20, cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/gas_z][MOLES])
+	burned_fuel = min(20, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/gas_z][MOLES])
 	if(cached_gases[/datum/gas/gas_z][MOLES] - burned_fuel < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/gas_z][MOLES] -= burned_fuel
@@ -1183,3 +1182,70 @@ nobiliumsuppression = INFINITY
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+
+/datum/gas_reaction/y_terror
+	priority = 20
+	name = "gas y terror"
+	id = "y_terror"
+
+/datum/gas_reaction/y_terror/init_reqs()
+	min_requirements = list(
+		/datum/gas/gas_y = MINIMUM_MOLE_COUNT,
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	)
+
+/datum/gas_reaction/y_terror/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/turf/open/location = isturf(holder) ? holder : null
+	air.assert_gases(	/datum/gas/plasma,
+						/datum/gas/bz,
+						/datum/gas/freon,
+						/datum/gas/oxygen,
+						/datum/gas/tritium,
+						/datum/gas/hydrogen,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/gas_z
+	)
+	if(cached_gases[/datum/gas/plasma][MOLES] > MINIMUM_MOLE_COUNT && cached_gases[/datum/gas/plasma][MOLES] < 10)
+		var produced_amount = min(5, cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/gas_y][MOLES])
+		cached_gases[/datum/gas/plasma][MOLES] = 0
+		cached_gases[/datum/gas/gas_y][MOLES] -= produced_amount * 0.1
+		energy_released -= produced_amount * 1500
+		if(prob(produced_amount * 20))
+			new/obj/item/stack/sheet/mineral/plasma(location)
+	if(cached_gases[/datum/gas/bz][MOLES] > MINIMUM_MOLE_COUNT)
+		var consumed_amount = min(5, cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/gas_y][MOLES])
+		if(cached_gases[/datum/gas/bz][MOLES] < 30)
+			location.rad_act(cached_gases[/datum/gas/bz][MOLES])
+			cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
+		else
+			for(var/mob/living/carbon/L in location)
+				L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.5
+		energy_released += 100
+	if(cached_gases[/datum/gas/freon][MOLES] > 100 && cached_gases[/datum/gas/oxygen][MOLES] > 100)
+		cached_gases[/datum/gas/gas_y][MOLES] = 0
+		location.air.temperature = 240
+	if(cached_gases[/datum/gas/tritium][MOLES] > MINIMUM_MOLE_COUNT)
+		var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/gas_y][MOLES])
+		location.rad_act(produced_amount * 2.4)
+		cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
+		cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
+		cached_gases[/datum/gas/gas_y][MOLES] -= produced_amount * 0.01
+		energy_released += 50
+	if(cached_gases[/datum/gas/hydrogen][MOLES] > 150)
+		var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/gas_y][MOLES])
+		cached_gases[/datum/gas/hydrogen][MOLES] -= produced_amount
+		cached_gases[/datum/gas/gas_y][MOLES] += produced_amount * 0.5
+		energy_released -= 150
+	if(cached_gases[/datum/gas/gas_z][MOLES] > MINIMUM_MOLE_COUNT)
+		var max_power = min(5, cached_gases[/datum/gas/gas_z][MOLES])
+		cached_gases[/datum/gas/gas_z][MOLES] = 0
+		explosion(location, max_power * 0.15, max_power * 0.45, max_power * 0.65, max_power, max_power* 2)
+
+
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
