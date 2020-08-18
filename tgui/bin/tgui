@@ -59,6 +59,7 @@ task-eslint() {
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
+  rm -rf public/.tmp
   rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
   rm -f **/package-lock.json
@@ -68,7 +69,7 @@ task-clean() {
 task-validate-build() {
   cd "${base_dir}"
   local diff
-  diff="$(git diff packages/tgui/public/*)"
+  diff="$(git diff public/*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
