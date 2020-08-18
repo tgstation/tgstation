@@ -5,7 +5,7 @@
 	inhand_icon_state = "commander_envirosuit"
 
 /obj/item/clothing/under/plasmaman/centcom_official
-	name = "centcom official plasma envirosuit"
+	name = "CentCom official plasma envirosuit"
 	desc = "It's an envirosuit worn by CentCom Officers."
 	icon_state = "official_envirosuit"
 	inhand_icon_state = "official_envirosuit"
