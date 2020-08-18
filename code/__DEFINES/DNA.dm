@@ -16,7 +16,9 @@
 #define CLOWNMUT	/datum/mutation/human/clumsy
 #define TOURETTES	/datum/mutation/human/tourettes
 #define DEAFMUT		/datum/mutation/human/deaf
+#define TRUEHEARING	/datum/mutation/human/true_hearing
 #define BLINDMUT	/datum/mutation/human/blind
+#define TRUESIGHT	/datum/mutation/human/true_sight
 #define RACEMUT		/datum/mutation/human/race
 #define BADSIGHT	/datum/mutation/human/nearsight
 #define LASEREYES	/datum/mutation/human/laser_eyes

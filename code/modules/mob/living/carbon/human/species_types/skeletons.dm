@@ -5,9 +5,9 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE)
+	species_traits = list(NOBLOOD, HAS_BONE, NOEYESPRITES)
 	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_GENELESS,\
-	TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_FAKEDEATH,TRAIT_XENO_IMMUNE,TRAIT_NOCLONELOSS)
+	TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_FAKEDEATH,TRAIT_XENO_IMMUNE,TRAIT_NOCLONELOSS, TRAIT_TRUE_SIGHT, TRAIT_TRUE_HEARING)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
@@ -21,6 +21,10 @@
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
+
+/datum/species/skeleton/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	..()
+	C.update_sight()
 
 //Can still metabolize milk through meme magic
 /datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

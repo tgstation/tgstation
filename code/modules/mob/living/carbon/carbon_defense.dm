@@ -368,7 +368,7 @@
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes) //can't flash what can't see!
+	if(!eyes) //can't flash what can't see! //ignoring true sight here, if there's no eyes to damage we'd be just chucking half the proc out the window
 		return
 
 	. = ..()
@@ -465,7 +465,7 @@
 /mob/living/carbon/can_hear()
 	. = FALSE
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
-	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
+	if((ears && !HAS_TRAIT(src, TRAIT_DEAF)) || HAS_TRAIT(src, TRAIT_TRUE_HEARING))
 		. = TRUE
 
 

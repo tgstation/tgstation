@@ -153,6 +153,7 @@
 	name = "Deafness"
 	desc = "The holder of this genome is completely deaf."
 	quality = NEGATIVE
+	conflicts = list(TRUEHEARING)
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
@@ -165,6 +166,26 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
+/datum/mutation/human/true_hearing
+	name = "True Hearing"
+	desc = "The holder of this genome can hear without assistance."
+	instability = 10
+	quality = POSITIVE
+	conflicts = list(DEAFMUT)
+	text_gain_indication = "<span class='notice'>Your hearing feels unhindered.</span>"
+
+/datum/mutation/human/true_hearing/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return TRUE
+	if(owner.has_quirk(/datum/quirk/deafness))
+		to_chat(H, "<span class='warning'>Even True Hearing cannot fix your incurable deafness. The gene is completely muted out.</span>")
+		return TRUE
+	ADD_TRAIT(owner, TRAIT_TRUE_HEARING, GENETIC_MUTATION)
+
+/datum/mutation/human/true_hearing/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_TRUE_HEARING, GENETIC_MUTATION)
 
 //Monified turns you into a monkey.
 /datum/mutation/human/race

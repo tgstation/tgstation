@@ -409,6 +409,8 @@
 		update_blindness()
 
 /mob/living/proc/become_blind(source)
+	if(HAS_TRAIT(src, TRAIT_TRUE_SIGHT))
+		return
 	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 		update_blindness()

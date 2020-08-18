@@ -21,6 +21,7 @@
 	name = "Blindness"
 	desc = "Renders the subject completely blind."
 	quality = NEGATIVE
+	conflicts = list(TRUESIGHT)
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
@@ -32,6 +33,29 @@
 	if(..())
 		return
 	owner.cure_blind(GENETIC_MUTATION)
+
+/datum/mutation/human/true_sight
+	name = "True Sight"
+	desc = "The holder of this genome can see without assistance."
+	quality = POSITIVE
+	conflicts = list(BLINDMUT)
+	instability = 10
+	text_gain_indication = "<span class='notice'>Your sight feels unhindered.</span>"
+
+/datum/mutation/human/true_sight/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return TRUE
+	if(owner.has_quirk(/datum/quirk/blindness))
+		to_chat(H, "<span class='warning'>Even True Sight cannot fix your incurable blindness. The gene is completely blackened out.</span>")
+		return TRUE
+	ADD_TRAIT(owner, TRAIT_TRUE_SIGHT, GENETIC_MUTATION)
+	owner.update_sight()//if we're blind because of no eyes or something, that's gotta update
+
+/datum/mutation/human/true_sight/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_TRUE_SIGHT, GENETIC_MUTATION)
+	owner.update_sight()
 
 ///Thermal Vision lets you see mobs through walls
 /datum/mutation/human/thermal

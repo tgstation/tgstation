@@ -108,6 +108,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TESLA_SHOCKIMMUNE	"tesla_shock_immunity"
 #define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_STABLELIVER		"stable_liver"
+#define TRAIT_TRUE_SIGHT		"true_sight" //doesn't need eyes to see
+#define TRAIT_TRUE_HEARING		"true_hearing" //doesn't need ears to hear
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTHEATHANDS	"resist_heat_handsonly" //For when you want to be able to touch hot things, but still want fire to be an issue.
 #define TRAIT_RESISTCOLD		"resist_cold"

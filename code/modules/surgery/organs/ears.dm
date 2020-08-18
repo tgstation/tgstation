@@ -57,6 +57,9 @@
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
+/obj/item/organ/ears/get_availability(datum/species/S)
+	return !(TRAIT_TRUE_HEARING in S.inherent_traits)
+
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
 

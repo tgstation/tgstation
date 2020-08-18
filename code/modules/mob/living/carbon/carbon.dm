@@ -574,7 +574,7 @@
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-	if(!E)
+	if(!E) //this is where true sight is handled
 		update_tint()
 	else
 		see_invisible = E.see_invisible
@@ -628,6 +628,8 @@
 
 /mob/living/carbon/proc/get_total_tint()
 	. = 0
+	if(HAS_TRAIT(src, TRAIT_TRUE_SIGHT))
+		return 0 //you just have no issues seeing with true sight
 	if(isclothing(head))
 		. += head.tint
 	if(isclothing(wear_mask))
