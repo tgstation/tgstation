@@ -204,7 +204,8 @@
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	attack_verb = list("touche'd")
+	attack_verb_continuous = list("touche's")
+	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 	value = FOOD_FAST

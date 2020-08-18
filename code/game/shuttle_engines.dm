@@ -9,6 +9,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	max_integrity = 500
 	armor = list("melee" = 100, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70) //default + ignores melee
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/shuttle/engine
 	name = "engine"

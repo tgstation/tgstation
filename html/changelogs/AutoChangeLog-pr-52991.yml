@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - tweak: "Messages sent by yourself no longer highlight."

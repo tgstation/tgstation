@@ -39,6 +39,10 @@ export const loadSourceMaps = async bundleDir => {
 };
 
 export const retrace = stack => {
+  if (typeof stack !== 'string') {
+    logger.log('ERROR: Stack is not a string!', stack);
+    return stack;
+  }
   const header = stack.split(/\n\s.*at/)[0];
   const mappedStack = StackTraceParser.parse(stack)
     .map(frame => {

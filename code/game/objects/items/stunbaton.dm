@@ -9,7 +9,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
 	force = 10
-	attack_verb = list("beaten")
+	attack_verb_continuous = list("beats")
+	attack_verb_simple = list("beat")
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT

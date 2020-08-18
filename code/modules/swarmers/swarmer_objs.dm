@@ -75,7 +75,7 @@
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
 	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), 30 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTURCTION INITIALIZED.  TIME TO COMPLETION: 30 SECONDS</span>")
+	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.  TIME TO COMPLETION: 30 SECONDS</span>")
 	processing_swarmer = TRUE
 	return TRUE
 
@@ -87,7 +87,7 @@
   * * swarmer - The swarmer being released and told what to do
   */
 /obj/structure/swarmer_beacon/proc/release_swarmer(mob/swarmer)
-	to_chat(swarmer, "<span class='bold'>SWARMER CONSTURCTION COMPLETED.  OBJECTIVES:\n\
+	to_chat(swarmer, "<span class='bold'>SWARMER CONSTRUCTION COMPLETED.  OBJECTIVES:\n\
 	                     1. CONSUME RESOURCES AND REPLICATE UNTIL THERE ARE NO MORE RESOURCES LEFT\n\
 						 2. ENSURE PROTECTION OF THE BEACON SO THIS LOCATION CAN BE INVADED AT A LATER DATE; DO NOT PERFORM ACTIONS THAT WOULD RENDER THIS LOCATION DANGEROUS OR INHOSPITABLE\n\
 						 3. BIOLOGICAL RESOURCES WILL BE HARVESTED AT A LATER DATE: DO NOT HARM THEM\n\

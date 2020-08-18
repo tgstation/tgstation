@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - tweak: "The Fission360 app can now detect nukes and nuke disks on other Z levels (though it won't start tracking until you're on the same level)."

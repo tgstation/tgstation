@@ -3,59 +3,105 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use 'sass:color';
 @use '../base.scss';
+@use '../colors.scss';
 
+$color-default: color.scale(colors.fg(colors.$primary), $lightness: 75%) !default;
+$text-color: rgba(255, 255, 255, 0.5) !default;
+$text-color-selected: color.scale($color-default, $lightness: 25%) !default;
 $border-radius: base.$border-radius !default;
+$fg-map: colors.$fg-map !default;
+
+.Tabs {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.Tabs--vertical {
+  flex-direction: column;
+}
 
 .Tabs--horizontal {
-  border-bottom: base.em(2px) solid rgba(255, 255, 255, 0.1);
   margin-bottom: 0.5em;
 
-  .Tabs__tab--altSelection::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: base.em(2px);
-    width: 100%;
-    background-color: #fff;
-    border-radius: $border-radius;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.Tabs__Tab {
+  flex-grow: 0;
+}
+
+.Tabs--fluid .Tabs__Tab {
+  flex-grow: 1;
+}
+
+.Tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $text-color;
+  min-height: 2.25em;
+  min-width: 4em;
+}
+
+.Tab--selected {
+  color: $text-color-selected;
+}
+
+.Tab__text {
+  flex-grow: 1;
+  margin: 0 0.5em;
+}
+
+.Tab__left {
+  min-width: 1.5em;
+  text-align: center;
+  margin-left: 0.25em;
+}
+
+.Tab__right {
+  min-width: 1.5em;
+  text-align: center;
+  margin-right: 0.25em;
+}
+
+.Tabs--horizontal {
+  .Tab {
+    border-top: (1em / 6) solid transparent;
+    border-bottom: (1em / 6) solid transparent;
+  }
+
+  .Tab--selected {
+    border-bottom: (1em / 6) solid $color-default;
   }
 }
 
 .Tabs--vertical {
-  margin-right: 0.75em;
-
-  .Tabs__tabBox {
-    border-right: base.em(2px) solid rgba(255, 255, 255, 0.1);
-    // Disable baseline alignment when doing vertical tabs
-    vertical-align: top;
+  .Tab {
+    min-height: 2em;
+    border-left: (1em / 6) solid transparent;
+    border-right: (1em / 6) solid transparent;
   }
 
-  .Tabs__tab {
-    // Force display block because Button theme overrides it via cascading.
-    display: block !important;
-    // Override to stop themed buttons from taking priority over it.
-    margin-right: 0 !important;
-    margin-bottom: 0;
-    padding: base.em(1px) base.em(9px) 0px 0.5em;
-    border-bottom: base.em(2px) solid rgba(255, 255, 255, 0.1);
+  .Tab--selected {
+    border-right: (1em / 6) solid $color-default;
+  }
+}
 
-    &:last-child {
-      border-bottom: 0;
-    }
+@each $color-name, $color-value in $fg-map {
+  .Tab--selected.Tab--color--#{$color-name} {
+    color: color.scale($color-value, $lightness: 25%);
   }
 
-  .Tabs__tab--altSelection::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    height: 100%;
-    width: 0.25em;
-    background-color: #fff;
-    border-radius: $border-radius;
+  .Tabs--horizontal .Tab--selected.Tab--color--#{$color-name} {
+    border-bottom-color: $color-value;
+  }
+
+  .Tabs--vertical .Tab--selected.Tab--color--#{$color-name} {
+    border-right-color: $color-value;
   }
 }

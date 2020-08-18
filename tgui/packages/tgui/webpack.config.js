@@ -25,21 +25,20 @@ const createStats = verbose => ({
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
-    context: __dirname,
+    context: path.resolve(__dirname, '../..'),
     entry: {
-      tgui: [
-        path.resolve(__dirname, './index.js'),
-      ],
+      'tgui': ['tgui'],
+      'tgui-panel': ['tgui-panel'],
     },
     output: {
-      path: argv.mode === 'production'
-        ? path.resolve(__dirname, './public')
-        : path.resolve(__dirname, './public/.tmp'),
+      path: argv.useTmpFolder
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx'],
+      extensions: ['.js', '.jsx'],
       alias: {},
     },
     module: {
@@ -54,7 +53,7 @@ module.exports = (env = {}, argv) => {
                   ['@babel/preset-env', {
                     modules: 'commonjs',
                     useBuiltIns: 'entry',
-                    corejs: '3',
+                    corejs: '3.6',
                     spec: false,
                     loose: true,
                     targets: {
@@ -104,6 +103,10 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       noEmitOnErrors: true,
+      splitChunks: {
+        chunks: 'initial',
+        name: 'tgui-common',
+      },
     },
     performance: {
       hints: false,
@@ -133,7 +136,7 @@ module.exports = (env = {}, argv) => {
     ];
   }
 
-  // Production specific options
+  // Production build specific options
   if (argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -166,18 +169,22 @@ module.exports = (env = {}, argv) => {
     ];
   }
 
-  // Development specific options
+  // Development build specific options
   if (argv.mode !== 'production') {
+    if (argv.hot) {
+      config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
+    config.devtool = 'cheap-module-source-map';
+  }
+
+  // Development server specific options
+  if (argv.devServer) {
     config.plugins = [
       ...config.plugins,
       new BuildNotifierPlugin({
         suppressSuccess: true,
       }),
     ];
-    if (argv.hot) {
-      config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
-    config.devtool = 'cheap-module-source-map';
     config.devServer = {
       progress: false,
       quiet: false,

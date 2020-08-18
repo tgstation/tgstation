@@ -133,7 +133,7 @@
 
 	var/damage = weapon.w_class * pain_mult
 	var/pain_chance_current = pain_chance
-	if(pain_stam_pct && victim.stam_paralyzed) //if it's a less-lethal embed, give them a break if they're already stamcritted
+	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
 	else if(victim.mobility_flags & ~MOBILITY_STAND)

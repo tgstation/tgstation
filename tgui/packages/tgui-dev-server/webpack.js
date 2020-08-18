@@ -9,7 +9,7 @@ import fs from 'fs';
 import { createRequire } from 'module';
 import { promisify } from 'util';
 import webpack from 'webpack';
-import { broadcastMessage, loadSourceMaps, setupLink } from './link/server.js';
+import { loadSourceMaps, setupLink } from './link/server.js';
 import { reloadByondCache } from './reloader.js';
 import { resolveGlob } from './util.js';
 
@@ -44,7 +44,7 @@ export const setupWebpack = async config => {
     // Reload cache
     await reloadByondCache(bundleDir);
     // Notify all clients that update has happened
-    broadcastMessage(link, {
+    link.broadcastMessage({
       type: 'hotUpdate',
     });
   });
@@ -55,6 +55,9 @@ export const setupWebpack = async config => {
       logger.error('compilation error', err);
       return;
     }
-    logger.log(stats.toString(config.devServer.stats));
+    stats
+      .toString(config.devServer.stats)
+      .split('\n')
+      .forEach(line => logger.log(line));
   });
 };
