@@ -83,7 +83,7 @@
 			tool_behaviour = TOOL_WELDER
 		if("Analyzer")
 			tool_behaviour = TOOL_ANALYZER
-		if("Mining Tool")
+		if("Pickaxe")
 			tool_behaviour = TOOL_MINING
 		if("Shovel")
 			tool_behaviour = TOOL_SHOVEL
