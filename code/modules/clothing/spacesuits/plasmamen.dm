@@ -147,7 +147,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
 	name = "head of security's plasma envirosuit helmet"
-	desc = "A plasmaman containment helmet designed for the Head of Security, a pair of gold stripes being added to differeciate them from other members of security."
+	desc = "A special containment helmet designed for the Head of Security. A pair of gold stripes are added to differentiate them from other members of security."
 	icon_state = "hos_envirohelm"
 	inhand_icon_state = "hos_envirohelm"
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75, "wound" = 10)
