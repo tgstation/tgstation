@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - tweak: "Blinded people can no longer use camera consoles"
+  - bugfix: "Blinded people can no longer activate all types of advanced camera consoles, including navigation consoles (They were already not intended to be able to use them)"
+  - code_imp: "adds a machine interaction flag for machines that require the user not be blind to use"
