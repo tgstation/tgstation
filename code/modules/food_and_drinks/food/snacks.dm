@@ -45,7 +45,6 @@ All foods are distributed among various categories. Use common sense.
 	var/eatverb
 	var/dried_type = null
 	var/dry = 0
-	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
@@ -63,9 +62,9 @@ All foods are distributed among various categories. Use common sense.
 	RegisterSignal(src, COMSIG_ITEM_FRIED, .proc/OnFried)
 
 
-/obj/item/reagent_containers/food/snacks/proc/OnFried()
-	fried.reagents.trans_to(src, fried.reagents.total_volume)
-	qdel(fried)
+/obj/item/reagent_containers/food/snacks/proc/OnFried(fry_object)
+	reagents.trans_to(fry_object, reagents.total_volume)
+	qdel()
 	return COMSIG_FRYING_HANDLED
 
 /obj/item/reagent_containers/food/snacks/add_initial_reagents()

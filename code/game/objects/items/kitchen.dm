@@ -94,6 +94,7 @@
 	custom_price = 250
 	wound_bonus = -5
 	bare_wound_bonus = 10
+	tool_behaviour = TOOL_KNIFE
 
 /obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
