@@ -31,7 +31,7 @@
 
 /obj/item/clothing/under/plasmaman/chief_medical_officer
 	name = "chief medical officer's plasma envirosuit"
-	desc = "It's a envirosuit worn by those with the experience to be \"Chief Medical Officer\"."
+	desc = "It's an envirosuit worn by those with the experience to be \"Chief Medical Officer\"."
 	icon_state = "cmo_envirosuit"
 	inhand_icon_state = "cmo_envirosuit"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 95, "acid" = 95)
