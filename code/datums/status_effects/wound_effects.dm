@@ -153,7 +153,7 @@
 /datum/status_effect/wound/blunt/proc/on_swap_hands()
 	var/mob/living/carbon/C = owner
 	if(C.get_active_hand() == linked_limb)
-		C.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, linked_wound.interaction_efficiency_penalty)
+		C.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
 	else
 		C.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
