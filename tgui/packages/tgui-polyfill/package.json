@@ -2,5 +2,9 @@
   "private": true,
   "name": "tgui-polyfill",
   "version": "4.2.0",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "regenerator-runtime": "^0.13.7"
+  }
 }

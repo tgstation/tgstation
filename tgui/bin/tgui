@@ -23,8 +23,10 @@ fi
 base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
 base_dir="$(tgui-realpath "${base_dir}")"
 
-## Add locally installed node programs to path
-PATH="${PATH}:node_modules/.bin"
+## Fall back to running Yarn from the repo
+if ! hash yarn 2>/dev/null; then
+  alias yarn="node '${base_dir}/.yarn/releases/yarn-berry.js'"
+fi
 
 
 ## Functions
@@ -38,21 +40,20 @@ task-install() {
 
 ## Runs webpack
 task-webpack() {
-  cd "${base_dir}/packages/tgui"
-  webpack "${@}"
+  cd "${base_dir}"
+  yarn run webpack "${@}"
 }
 
 ## Runs a development server
 task-dev-server() {
-  cd "${base_dir}/packages/tgui-dev-server"
-  exec node --experimental-modules index.js "${@}"
+  cd "${base_dir}"
+  exec yarn run dev-server "${@}"
 }
 
 ## Run a linter through all packages
 task-eslint() {
   cd "${base_dir}"
-  eslint ./packages "${@}"
-  echo "tgui: eslint check passed"
+  yarn run lint "${@}"
 }
 
 ## Mr. Proper

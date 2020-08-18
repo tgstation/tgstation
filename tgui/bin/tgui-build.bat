@@ -2,4 +2,4 @@
 cd "%~dp0\.."
 call yarn install
 call yarn run build
-timeout /t 9
+if %0 == "%~0" pause
