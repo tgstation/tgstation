@@ -217,6 +217,10 @@
 	if(air_transfer.gases[/datum/gas/plasma] || air_transfer.gases[/datum/gas/tritium] || air_transfer.gases[/datum/gas/hydrogen])
 		if(air_transfer.gases[/datum/gas/plasma])
 			air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
+		if(air_transfer.gases[/datum/gas/tritium])
+			air_transfer.gases[/datum/gas/tritium][MOLES] *= 6.5
+		if(air_transfer.gases[/datum/gas/hydrogen])
+			air_transfer.gases[/datum/gas/hydrogen][MOLES] *= 7
 	else
 		air_transfer.temperature += 15000
 	target.assume_air(air_transfer)
