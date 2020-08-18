@@ -39,7 +39,7 @@
 	desc = "The holder of this genome can see without assistance."
 	quality = POSITIVE
 	conflicts = list(BLINDMUT)
-	instability = 10
+	instability = 25
 	text_gain_indication = "<span class='notice'>Your sight feels unhindered.</span>"
 
 /datum/mutation/human/true_sight/on_acquiring(mob/living/carbon/human/owner)

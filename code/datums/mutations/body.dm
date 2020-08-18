@@ -169,7 +169,7 @@
 /datum/mutation/human/true_hearing
 	name = "True Hearing"
 	desc = "The holder of this genome can hear without assistance."
-	instability = 10
+	instability = 25
 	quality = POSITIVE
 	conflicts = list(DEAFMUT)
 	text_gain_indication = "<span class='notice'>Your hearing feels unhindered.</span>"
