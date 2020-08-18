@@ -296,7 +296,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
 	name = "head of personnel envirosuit helmet"
-	desc = "A blue plasmaman envirohelm designed for the Head of Personnel. You could mistake it for the Captain's if it wasn't for the red stripes"
+	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
 	icon_state = "hop_envirohelm"
 	inhand_icon_state = "hop_envirohelm"
 
