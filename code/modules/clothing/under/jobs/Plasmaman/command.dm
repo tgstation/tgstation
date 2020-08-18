@@ -8,7 +8,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95, "wound" = 15)
 
 /obj/item/clothing/under/plasmaman/head_of_personnel
-	name = "head of personnel envirosuit"
+	name = "head of personnel's plasma envirosuit"
 	desc = "It's a envirosuit worn by someone who works in the position of \"Head of Personnel\"."
 	icon_state = "hop_envirosuit"
 	inhand_icon_state = "hop_envirosuit"
