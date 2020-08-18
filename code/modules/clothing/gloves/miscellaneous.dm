@@ -145,3 +145,39 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
+
+/obj/item/clothing/gloves/color/plasmaman/head_of_personnel
+	name = "head of personnel envirogloves"
+	desc = "Covers up those scandalous boney hands. Appears to be a attempt at making a Captain's glove replica"
+	icon_state = "hopplasma"
+	inhand_icon_state = "hopplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/chief_engineer
+	name = "chief engineer envirogloves"
+	icon_state = "ceplasma"
+	inhand_icon_state = "ceplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
+	name = "research director envirogloves"
+	icon_state = "cmoplasma"
+	inhand_icon_state = "cmoplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/research_director
+	name = "research director envirogloves"
+	icon_state = "rdplasma"
+	inhand_icon_state = "rdplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_commander
+	name = "black envirogloves"
+	icon_state = "commanderplasma"
+	inhand_icon_state = "commanderplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_official
+	name = "black envirogloves"
+	icon_state = "officialplasma"
+	inhand_icon_state = "officialplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_intern
+	name = "black envirogloves"
+	icon_state = "internplasma"
+	inhand_icon_state = "internplasma"
