@@ -11,7 +11,7 @@
 	inhand_icon_state = "official_envirosuit"
 
 /obj/item/clothing/under/plasmaman/centcom_intern
-	name = "centcom intern plasma envirosuit"
+	name = "CentCom intern plasma envirosuit"
 	desc = "It's a envirosuit worn by those interning for CentCom. The top is styled after a polo shirt for easy identification."
 	icon_state = "intern_envirosuit"
 	inhand_icon_state = "intern_envirosuit"
