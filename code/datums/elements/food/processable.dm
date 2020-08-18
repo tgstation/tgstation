@@ -21,6 +21,8 @@
 	src.time_to_process = time_to_process
 	src.result = result
 
+	message_admins(COMSIG_TOOL(tool_behaviour))
+
 	RegisterSignal(target, COMSIG_TOOL(tool_behaviour), .proc/try_process)
 
 /datum/element/processable/Detach(datum/target)
@@ -28,5 +30,5 @@
 	UnregisterSignal(target, COMSIG_TOOL(tool_behaviour))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
-	mutable_recipes += list(TOOL_PROCESSING_RESULT = result, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process)
+	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
 	return COMPONENT_NO_AFTERATTACK

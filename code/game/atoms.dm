@@ -1159,8 +1159,9 @@
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
 	var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
 	. |= SEND_SIGNAL(src, COMSIG_TOOL(tool_type), user, I, processing_recipes)
+	message_admins(COMSIG_TOOL(tool_type))
 	if(processing_recipes.len)
-		process_recipes(user, processing_recipes)
+		process_recipes(user, I, processing_recipes)
 	switch(tool_type)
 		if(TOOL_CROWBAR)
 			crowbar_act(user, I)
@@ -1189,7 +1190,7 @@
 	ShowProcessingGui(user, I, processing_recipes)
 
 ///Creates the radial and processes the selected option
-/atom/proc/ShowProcessingGui(mob/living/user, obj/item/I, possible_options)
+/atom/proc/ShowProcessingGui(mob/living/user, obj/item/I, list/possible_options)
 	var/list/choicestooptions = list() //Dict of object name | dict of object processing settings
 	var/list/choices = list()
 
@@ -1211,7 +1212,7 @@
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			new atom_to_create(loc)
-		to_chat(user, "<span class='notice'>You manage to create [initial(atom_to_create.name)] from [src]</span>")
+		to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)] from [src]</span>")
 		qdel(src)
 		return
 

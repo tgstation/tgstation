@@ -40,6 +40,7 @@
 /obj/item/food/breadslice/moldy
 	name = "moldy bread slice"
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
+	icon_state = "moldybreadslice"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/mold = 10)
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
