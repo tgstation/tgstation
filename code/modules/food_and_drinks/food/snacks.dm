@@ -58,6 +58,16 @@ All foods are distributed among various categories. Use common sense.
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
+/obj/item/reagent_containers/food/snacks/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_FRIED, .proc/OnFried)
+
+
+/obj/item/reagent_containers/food/snacks/proc/OnFried()
+	fried.reagents.trans_to(src, fried.reagents.total_volume)
+	qdel(fried)
+	return COMSIG_FRYING_HANDLED
+
 /obj/item/reagent_containers/food/snacks/add_initial_reagents()
 	if(tastes && tastes.len)
 		if(list_reagents)

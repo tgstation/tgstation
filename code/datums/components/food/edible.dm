@@ -42,6 +42,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
@@ -82,6 +83,11 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/proc/TryToEatTurf(datum/source, mob/user)
 	return TryToEat(user, user)
+
+/datum/component/edible/proc/OnFried()
+	fried.reagents.trans_to(src, fried.reagents.total_volume)
+	qdel(fried)
+	return COMSIG_FRYING_HANDLED
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
