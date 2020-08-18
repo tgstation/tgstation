@@ -1,0 +1,4 @@
+author: "floyd"
+delete-after: True
+changes: 
+  - code_imp: "resisting is now on atom level so it can be used on mobs too"
