@@ -510,7 +510,7 @@
 		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
 			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.</span></span>")
 		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
-			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed 1 more time.</span></span>")
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed one more time.</span></span>")
 		else
 			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.</span></span>")
 		qdel(src)
