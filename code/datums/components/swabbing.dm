@@ -96,6 +96,8 @@ This component is used in vat growing to swab for microbiological samples which 
 	if(!do_after(user, 30, TRUE, target)) // Start swabbing boi
 		return
 
+	LAZYINITLIST(swabbed_items) //If it isn't initialized, initialize it. As we need to pass it by reference
+
 	if(!SEND_SIGNAL(target, COMSIG_SWAB_FOR_SAMPLES, swabbed_items)) //If we found something to swab now we let the swabbed thing handle what it would do, we just sit back and relax now.
 		to_chat(user, "<span class='warning'>You do not manage to find a anything on [target]!</span>")
 		return

@@ -41,4 +41,4 @@
 ///Call HandleGrowth on all our microorganisms.
 /datum/biological_sample/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
-		organism.HandleGrowth(vat)
+		return organism.HandleGrowth(vat)

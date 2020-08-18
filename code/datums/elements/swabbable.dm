@@ -16,7 +16,7 @@ This element is used in vat growing to allow for the object to be
 	var/virus_chance
 
 ///Listens for the swab signal and then generate a sample based on pre-determined lists that are saved as GLOBs. this allows us to have very few swabbable element instances.
-/datum/element/swabable/Attach(datum/target, cell_line_define, virus_define, cell_line_amount = 3, virus_chance = 10)
+/datum/element/swabable/Attach(datum/target, cell_line_define, virus_define, cell_line_amount = 1, virus_chance = 10)
 	. = ..()
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE

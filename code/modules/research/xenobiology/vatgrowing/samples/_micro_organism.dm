@@ -30,10 +30,11 @@
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
 	if(!try_eat(vat.reagents))
-		return
+		return FALSE
 	growth = max(growth, growth + calculate_growth(vat.reagents, vat.biological_sample)) //Prevent you from having minus growth.
 	if(growth >= 100)
 		finish_growing(vat)
+	return TRUE
 
 ///Tries to consume the required reagents. Can only do this if all of them are available. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/try_eat(var/datum/reagents/reagents)
