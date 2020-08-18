@@ -1,7 +1,7 @@
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A rather plain but still badass looking holster with a single pouch that can hold a small firearm."
+	desc = "A rather plain but still badass looking holster that can hold a small firearm."
 	icon_state = "holster"
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
@@ -24,15 +24,16 @@
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/ballistic/automatic/toy/pistol,
+		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/pulse/carbine,
 		/obj/item/gun/energy/dueling
 		))
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
-	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
+	desc = "A holster able to carry a small firearm and some ammo. WARNING: Badasses only."
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
@@ -40,8 +41,19 @@
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box,
+		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a762,
+		/obj/item/gun/ballistic/automatic/toy/pistol,
+		/obj/item/ammo_box/magazine/toy/pistol,
+		/obj/item/ammo_casing/caseless/foam_dart,
+		/obj/item/gun/energy/e_gun/mini,	
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling
 		))
@@ -54,7 +66,7 @@
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
-	desc = "A two pouched hip holster that uses chameleon technology to disguise itself and any guns in it."
+	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold a small firearm and its ammo."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
@@ -90,7 +102,18 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m9mm_aps,
+		/obj/item/ammo_box/magazine/m45,
+		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a762,
+		/obj/item/gun/ballistic/automatic/toy/pistol,
+		/obj/item/ammo_box/magazine/toy/pistol,
+		/obj/item/ammo_casing/caseless/foam_dart,
+		/obj/item/gun/energy/kinetic_accelerator/crossbow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/pulse/carbine,
@@ -99,7 +122,7 @@
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
-	desc = "A deep shoulder holster capable of holding almost any form of ballistic weaponry."
+	desc = "A deep shoulder holster capable of holding almost any form of firearm and its ammo."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
@@ -112,11 +135,32 @@
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic,
+		/obj/item/ammo_box/magazine/m75,
+		/obj/item/ammo_box/magazine/m10mm/rifle,
+		/obj/item/ammo_box/magazine/sniper_rounds,
+		/obj/item/ammo_box/magazine/mm712x82,
+		/obj/item/ammo_box/magazine/m556,
+		/obj/item/ammo_box/magazine/tommygunm45,
+		/obj/item/ammo_box/magazine/uzim9mm,
+		/obj/item/ammo_box/magazine/plastikov9mm,
+		/obj/item/ammo_box/magazine/wt550m9,
+		/obj/item/ammo_box/magazine/smgm9mm,
+		/obj/item/ammo_box/magazine/smgm45,
+		/obj/item/ammo_box/magazine/recharge,
+		/obj/item/ammo_box/magazine/toy/pistol,
+		/obj/item/ammo_box/magazine/toy/smg,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/a762,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/pulse/carbine,
 		/obj/item/gun/energy/dueling,
 		/obj/item/gun/ballistic/shotgun,
-		/obj/item/gun/ballistic/rocketlauncher
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box/magazine/m12g,
+		/obj/item/gun/ballistic/rocketlauncher,
+		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/gun/energy/kinetic_accelerator/crossbow
 		))
