@@ -168,7 +168,7 @@
 	inhand_icon_state = "rdplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/centcom_commander
-	name = "black envirogloves"
+	name = "CentCom commander envirogloves"
 	icon_state = "commanderplasma"
 	inhand_icon_state = "commanderplasma"
 
