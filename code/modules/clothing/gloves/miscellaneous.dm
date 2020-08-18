@@ -148,7 +148,7 @@
 
 /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
 	name = "head of personnel envirogloves"
-	desc = "Covers up those scandalous boney hands. Appears to be a attempt at making a Captain's glove replica"
+	desc = "Covers up those scandalous, bony hands. Appears to be an attempt at making a replica of the captain's gloves."
 	icon_state = "hopplasma"
 	inhand_icon_state = "hopplasma"
 
