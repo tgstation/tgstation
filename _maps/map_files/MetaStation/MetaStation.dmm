@@ -1734,6 +1734,11 @@
 /obj/item/hand_labeler,
 /obj/structure/table/glass,
 /obj/item/book/manual/hydroponics_pod_people,
+/obj/machinery/requests_console{
+	department = "Hydroponics";
+	departmentType = 2;
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aec" = (
@@ -35523,7 +35528,8 @@
 	dir = 8
 	},
 /obj/machinery/requests_console{
-	department = "Detective's office";
+	department = "Bar";
+	departmentType = 2;
 	pixel_x = -30
 	},
 /obj/machinery/disposal/bin,
@@ -37398,7 +37404,7 @@
 /area/crew_quarters/kitchen)
 "bLJ" = (
 /obj/machinery/requests_console{
-	department = "Chapel";
+	department = "Kitchen";
 	departmentType = 2;
 	pixel_y = 30
 	},
