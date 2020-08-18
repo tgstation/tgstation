@@ -1476,6 +1476,10 @@
 /atom/proc/setClosed()
 	return
 
+
+///Called when something resists while this atom is its loc
+/atom/proc/container_resist_act(mob/living/user)
+
 /**
   * Used to attempt to charge an object with a payment component.
   *

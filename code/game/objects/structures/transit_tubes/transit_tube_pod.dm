@@ -72,7 +72,7 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube_pod/container_resist(mob/living/user)
+/obj/structure/transit_tube_pod/container_resist_act(mob/living/user)
 	if(!user.incapacitated())
 		empty_pod()
 		return
