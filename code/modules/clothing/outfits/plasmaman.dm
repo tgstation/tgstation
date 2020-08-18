@@ -192,7 +192,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/chief_engineer
 
 /datum/outfit/plasmaman/chief_medical_officer
-	name = "Chief Medical Plasmaman"
+	name = "Chief Medical Officer Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
 	uniform = /obj/item/clothing/under/plasmaman/chief_medical_officer
