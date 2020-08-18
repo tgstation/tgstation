@@ -11,7 +11,7 @@
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
-		C.bloodiness = min((C.bloodiness + bloodiness),MAX_ITEM_BLOODINESS)
+		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -192,7 +192,7 @@
 				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
-	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
+	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
 
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)

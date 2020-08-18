@@ -84,10 +84,8 @@
 /obj/effect/decal/cleanable/Crossed(atom/movable/AM)
 	..()
 	if(iscarbon(AM) && blood_state && bloodiness > 0)
-		var/add_blood = min(bloodiness, BLOOD_GAIN_PER_STEP)
-		bloodiness -= add_blood
+		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 		update_icon()
-		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, add_blood, blood_state, return_blood_DNA())
 
 /obj/effect/decal/cleanable/wash(clean_types)
 	..()

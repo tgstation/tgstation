@@ -9,6 +9,7 @@
 	var/equipped_slot
 	var/obj/item/clothing/parent_c
 	var/mob/living/carbon/wielder
+	var/last_pickup
 
 /datum/component/bloodysoles/Initialize()
 	if(!isclothing(parent))
@@ -71,48 +72,77 @@
 	if(!(wielder.mobility_flags & MOBILITY_STAND) || !wielder.has_gravity(wielder.loc) || bloody_shoes[last_blood_state] == 0)
 		return
 
-	// Update footprints in old loc
-	for(var/obj/effect/decal/cleanable/blood/footprints/FP in get_turf(OldLoc))
-		if (FP.blood_state == last_blood_state)
-			FP.shoe_types |= parent_c.type
-			if (!(FP.exited_dirs & wielder.dir))
-				FP.exited_dirs |= wielder.dir
-				FP.update_icon()
+	// Share the blood on our boots between us and the floor
+	var/blood_in_decal = bloody_shoes[last_blood_state] / 2
 
-	// Update footprints in new loc
+	// Add footprints in old loc if we have enough cream
+	if(blood_in_decal >= BLOOD_FOOTPRINTS_MIN)
+		for(var/obj/effect/decal/cleanable/blood/footprints/FP in get_turf(OldLoc))
+			if (FP.blood_state == last_blood_state)
+				FP.shoe_types |= parent_c.type
+				if (!(FP.exited_dirs & wielder.dir))
+					FP.exited_dirs |= wielder.dir
+					FP.update_icon()
+
+	// If we picked up the blood on this tick in on_step_blood, don't make footprints at the same place
+	if(last_pickup && last_pickup == world.time)
+		return
+
+	// Find if new loc already has a footprint with this blood type
+	var/obj/effect/decal/cleanable/blood/footprints/existing_footprint
 	var/turf/T = get_turf(parent_c)
 	for(var/obj/effect/decal/cleanable/blood/footprints/FP in T)
 		if (FP.blood_state == last_blood_state)
-			FP.shoe_types |= parent_c.type
-			if (!(FP.entered_dirs & wielder.dir))
-				FP.entered_dirs |= wielder.dir
-				FP.update_icon()
-			return // If new loc had a footprint we shouldn't make new ones
+			existing_footprint = FP
+			break
 
 	// Create new footprints
-	bloody_shoes[last_blood_state] = max(0, bloody_shoes[last_blood_state] - BLOOD_LOSS_PER_STEP)
-	if(bloody_shoes[last_blood_state] > BLOOD_LOSS_IN_SPREAD)
-		var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
-		FP.blood_state = last_blood_state
-		FP.entered_dirs |= wielder.dir
-		FP.bloodiness = bloody_shoes[last_blood_state] - BLOOD_LOSS_IN_SPREAD
-		FP.add_blood_DNA(parent_c.return_blood_DNA())
-		FP.update_icon()
-	parent_c.update_slot_icon()
+	if(blood_in_decal >= BLOOD_FOOTPRINTS_MIN)
+		bloody_shoes[last_blood_state] -= blood_in_decal
+		if(bloody_shoes[last_blood_state] < (BLOOD_FOOTPRINTS_MIN * 2))
+			// If this is true we won't be able to make any footprints next step, so give this last footprint the rest of our blood
+			blood_in_decal += bloody_shoes[last_blood_state]
+			bloody_shoes[last_blood_state] = 0
+
+		if(existing_footprint)
+			existing_footprint.shoe_types |= parent_c.type
+			if (!(existing_footprint.entered_dirs & wielder.dir))
+				existing_footprint.entered_dirs |= wielder.dir
+				existing_footprint.update_icon()
+		else
+			var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
+			FP.blood_state = last_blood_state
+			FP.entered_dirs |= wielder.dir
+			FP.bloodiness = blood_in_decal
+			FP.add_blood_DNA(parent_c.return_blood_DNA())
+			FP.update_icon()
+
+		parent_c.update_slot_icon()
 
 /**
   * Called when the wielder steps in a pool of blood
   *
   * Used to make the parent item bloody
   */
-/datum/component/bloodysoles/proc/on_step_blood(datum/source, blood_am, blood_state, list/blood_DNA)
+/datum/component/bloodysoles/proc/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
 	if(QDELETED(wielder) || is_obscured())
 		return
 
-	bloody_shoes[blood_state] = min(MAX_ITEM_BLOODINESS, bloody_shoes[blood_state] + blood_am)
-	parent_c.add_blood_DNA(blood_DNA)
-	last_blood_state = blood_state
+	last_blood_state = pool.blood_state
+
+	// Share the blood between our boots and the blood pool
+	var/total_bloodiness = pool.bloodiness + bloody_shoes[last_blood_state]
+
+	// We can however be limited by how much blood we can hold
+	var/new_our_bloodiness = min(BLOOD_ITEM_MAX, total_bloodiness / 2)
+
+	bloody_shoes[last_blood_state] = new_our_bloodiness
+	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
+
+	parent_c.add_blood_DNA(pool.return_blood_DNA())
 	parent_c.update_slot_icon()
+
+	last_pickup = world.time
 
 /**
   * Called by code asking if it's bloody or not, usually for determining blood overlays
