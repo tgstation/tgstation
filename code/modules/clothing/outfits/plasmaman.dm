@@ -222,7 +222,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/centcom_official
 
 /datum/outfit/plasmaman/centcom_intern
-	name = "Centcom Intern Plasmaman"
+	name = "CentCom Intern Plasmaman"
 
 	mask = /obj/item/clothing/mask/breath
 	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_intern
