@@ -1,12 +1,18 @@
 
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin filter_adminlog\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
-	msg = "<span class=\"admin filter_adminlog\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels

@@ -13,7 +13,7 @@ export const selectChatPages = state => (
 );
 
 export const selectCurrentChatPage = state => (
-  state.chat.pageById[state.chat.currentPage]
+  state.chat.pageById[state.chat.currentPageId]
 );
 
 export const selectChatPageById = id => state => (

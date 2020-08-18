@@ -143,7 +143,7 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	payload.tryEmbed(limb)
+	. = payload.tryEmbed(limb)
 	Detach(P)
 
 /**
