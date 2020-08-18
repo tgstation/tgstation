@@ -261,6 +261,11 @@ Class Procs:
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
 
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
+			if(user.is_blind())
+				to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+				return FALSE
+
 		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
 			var/mob/living/carbon/H = L
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
