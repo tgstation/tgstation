@@ -54687,7 +54687,7 @@
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
-/area/icemoon/surface/outdoors)
+/area/maintenance/starboard/fore)
 "rKP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 9
@@ -54745,10 +54745,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/maintenance/port)
-"rTe" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/icemoon/surface/outdoors)
 "rTE" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -96742,7 +96738,7 @@ boP
 boP
 boP
 boP
-rTe
+alO
 arp
 alO
 alP
@@ -97256,7 +97252,7 @@ boP
 boP
 boP
 boP
-rTe
+alO
 arp
 alO
 aqy

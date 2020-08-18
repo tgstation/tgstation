@@ -67518,6 +67518,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"guB" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/fitness/recreation)
 "gwH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -69698,6 +69704,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"kiI" = (
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "kjh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/ridden/janicart,
@@ -71578,6 +71588,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"nyS" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "nBw" = (
 /obj/item/clothing/mask/pig,
 /obj/item/bikehorn,
@@ -118064,9 +118079,9 @@ afD
 afD
 afD
 aqo
+arI
 atd
-atd
-atd
+dnS
 atd
 dnh
 axQ
@@ -118321,11 +118336,11 @@ afD
 afD
 afD
 aqo
-dnh
 dnR
 aus
-dnS
-dnS
+nyS
+kiI
+dnh
 axO
 dnS
 axY
@@ -119345,7 +119360,7 @@ aie
 aja
 ahg
 alp
-dtE
+guB
 dnS
 dnS
 dnS

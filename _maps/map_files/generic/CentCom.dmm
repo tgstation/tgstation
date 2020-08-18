@@ -1350,7 +1350,6 @@
 /area/holodeck/rec_center/spacechess)
 "ex" = (
 /turf/open/floor/holofloor{
-	dir = 8;
 	icon_state = "stairs-old"
 	},
 /area/holodeck/rec_center/thunderdome1218)
@@ -8721,6 +8720,7 @@
 "ub" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
+/obj/item/lighter,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -10694,6 +10694,10 @@
 /obj/item/seeds/cherry/bomb,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"yN" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/lounge)
 "yQ" = (
 /obj/structure/table/wood,
 /obj/item/scythe,
@@ -11695,12 +11699,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
-"Bw" = (
-/obj/structure/bed/roller,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
-/area/holodeck/rec_center/medical)
 "Bx" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -14758,6 +14756,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"HE" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/holodeck/rec_center/medical)
 "HF" = (
 /obj/structure/sink{
 	dir = 8;
@@ -16973,6 +16979,12 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"NA" = (
+/obj/structure/musician/piano{
+	icon_state = "piano"
+	},
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/lounge)
 "NC" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -17180,10 +17192,6 @@
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Pb" = (
-/obj/machinery/holopad,
-/turf/open/floor/holofloor/plating,
-/area/holodeck/rec_center/kobayashi)
 "Ph" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
@@ -18088,13 +18096,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
-"Ur" = (
-/obj/machinery/holopad,
-/turf/open/floor/holofloor{
-	dir = 8;
-	icon_state = "dark"
-	},
-/area/holodeck/rec_center/chapelcourt)
 "Uw" = (
 /obj/machinery/light{
 	dir = 8
@@ -18720,6 +18721,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/healthanalyzer,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -64656,7 +64658,7 @@ aN
 aQ
 NV
 JV
-aZ
+NA
 aZ
 bd
 bj
@@ -64913,7 +64915,7 @@ aN
 an
 Bt
 aZ
-aZ
+yN
 aZ
 TL
 bj
@@ -66476,7 +66478,7 @@ ep
 eB
 eM
 eR
-eM
+dV
 eR
 eM
 ep
@@ -66733,7 +66735,7 @@ en
 eB
 eN
 eS
-eN
+dT
 eS
 eN
 en
@@ -66990,7 +66992,7 @@ ep
 eB
 eM
 eR
-eM
+dV
 eR
 eM
 ep
@@ -67247,7 +67249,7 @@ OI
 eB
 eN
 eS
-eN
+dT
 eS
 eN
 en
@@ -67501,7 +67503,7 @@ bj
 dx
 dU
 eo
-Ur
+eB
 eB
 eB
 eB
@@ -67761,7 +67763,7 @@ Vy
 eB
 eM
 eR
-eM
+dV
 eR
 eM
 ep
@@ -68018,7 +68020,7 @@ en
 eB
 eN
 eS
-eN
+dT
 eS
 eN
 en
@@ -68275,7 +68277,7 @@ ep
 eB
 eM
 eR
-eM
+dV
 eR
 eM
 ep
@@ -68532,7 +68534,7 @@ en
 eB
 eN
 eS
-eN
+dT
 eS
 eN
 en
@@ -69022,8 +69024,8 @@ PJ
 bH
 bH
 bH
-bH
-bH
+HE
+HE
 bH
 cO
 bH
@@ -69795,7 +69797,7 @@ MV
 Ze
 bH
 bH
-Bw
+bH
 cO
 bH
 cZ
@@ -69816,7 +69818,7 @@ dO
 ej
 ej
 ej
-Pb
+ej
 eV
 fb
 fo
@@ -74180,16 +74182,16 @@ ar
 ar
 ar
 bj
-Bq
-SC
-SC
-SC
-Bq
-Bq
-SC
+NK
 SC
 SC
 Bq
+SC
+SC
+Bq
+SC
+SC
+NK
 bj
 ab
 ab
@@ -74437,16 +74439,16 @@ ar
 ar
 ar
 bj
-Bq
-SC
-SC
-SC
-Bq
-Bq
-SC
+Sy
 SC
 SC
 Bq
+SC
+SC
+Bq
+SC
+SC
+Sy
 bj
 ab
 fD
@@ -75982,10 +75984,10 @@ bj
 Sy
 QV
 QV
-QV
-Bq
 Bq
 QV
+QV
+Bq
 QV
 QV
 Sy
@@ -76239,10 +76241,10 @@ bj
 NK
 QV
 QV
-QV
-Bq
 Bq
 QV
+QV
+Bq
 QV
 QV
 NK

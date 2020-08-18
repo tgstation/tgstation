@@ -56636,7 +56636,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/structure/cable,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "uCS" = (
 /obj/machinery/door/poddoor/shutters{
