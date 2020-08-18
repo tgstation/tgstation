@@ -1,7 +1,7 @@
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A rather plain but still badass looking holster that can hold a small firearm."
+	desc = "A rather plain but still cool looking holster that can hold a handgun."
 	icon_state = "holster"
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
@@ -32,7 +32,7 @@
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
-	desc = "A holster able to carry a small firearm and some ammo. WARNING: Badasses only."
+	desc = "A holster able to carry a handgun and some ammo. WARNING: Badasses only."
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
@@ -64,7 +64,7 @@
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
-	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold a small firearm and its ammo."
+	desc = "A hip holster that uses chameleon technology to disguise itself, it can hold a handgun and its ammo."
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
