@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "tgui: Pressing Ctrl+F will no longer make you flip (or trigger any other custom keybind on F)."
