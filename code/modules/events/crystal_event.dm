@@ -11,10 +11,10 @@ This section is for the event controller
 /datum/round_event_control/crystal_invasion
 	name = "Crystal Invasion"
 	typepath = /datum/round_event/crystal_invasion
-	weight = 2
+	weight = 8
 	min_players = 35
 	max_occurrences = 1
-	earliest_start = 45 MINUTES
+	earliest_start = 35 MINUTES
 
 /datum/round_event/crystal_invasion
 	startWhen = 10
@@ -421,9 +421,9 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
-	maxHealth = 25
-	health = 25
-	speed = 1.2
+	maxHealth = 40
+	health = 40
+	speed = 1.5
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 10
@@ -435,10 +435,10 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_thug"
 	icon_living = "crystal_thug"
 	icon_dead = "crystal_thug"
-	maxHealth = 35
-	health = 35
-	speed = 1
-	harm_intent_damage = 5
+	maxHealth = 50
+	health = 50
+	speed = 1.3
+	harm_intent_damage = 9
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 
@@ -449,12 +449,12 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_recruit"
 	icon_living = "crystal_recruit"
 	icon_dead = "crystal_recruit"
-	maxHealth = 45
-	health = 45
-	speed = 1
-	harm_intent_damage = 5
+	maxHealth = 65
+	health = 65
+	speed = 1.2
+	harm_intent_damage = 11
 	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage_upper = 35
 
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
@@ -463,12 +463,12 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_killer"
 	icon_living = "crystal_killer"
 	icon_dead = "crystal_killer"
-	maxHealth = 60
-	health = 60
-	speed = 0.9
-	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 40
+	maxHealth = 80
+	health = 80
+	speed = 1.2
+	harm_intent_damage = 13
+	melee_damage_lower = 30
+	melee_damage_upper = 45
 
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
@@ -477,9 +477,9 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_boss"
 	icon_living = "crystal_boss"
 	icon_dead = "crystal_boss"
-	maxHealth = 80
-	health = 80
-	speed = 0.9
-	harm_intent_damage = 5
-	melee_damage_lower = 25
-	melee_damage_upper = 55
+	maxHealth = 150
+	health = 150
+	speed = 1
+	harm_intent_damage = 15
+	melee_damage_lower = 45
+	melee_damage_upper = 65
