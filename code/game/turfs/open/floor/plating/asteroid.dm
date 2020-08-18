@@ -303,7 +303,14 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			for(var/current_tunnel_width = 1 to tunnel_width)
 				if(!sanity)
 					break
-				edge = get_step(edge, angle2dir(dir2angle(dir) + edge_angle))
+				var/turf/temp = get_step(edge, angle2dir(dir2angle(dir) + edge_angle))
+				// check for tunnel allowed, no glitching caves through walls
+				if(temp && isarea(temp.loc))
+					var/area/A = temp.loc
+					if(!A.tunnel_allowed)
+						sanity = 0
+						break
+				edge = temp
 				if(istype(edge))
 					SpawnFloor(edge)
 

@@ -146,7 +146,8 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
 	if(new_stat > CONSCIOUS && new_stat < DEAD && world.time > effect_cooldown)
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
-		user.visible_message("<span class='notice'>[user] suddenly revives, as their armor swirls with demonic energy!.</span>", "<span class='notice'>You suddenly feel invigorated!</span>")
+		user.visible_message("<span class='notice'>[user] suddenly revives, as their armor swirls with demonic energy!</span>", "<span class='notice'>You suddenly feel invigorated!</span>")
+		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
 		effect_cooldown = world.time + effect_cooldown_time
 
 /obj/item/clothing/neck/cloak/skill_reward

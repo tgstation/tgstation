@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(frost_miner_prisms)
+
 /*
 
 Difficulty: Extremely Hard
@@ -130,7 +132,7 @@ Difficulty: Extremely Hard
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
-	speed = 4
+	speed = 3
 	damage_type = BRUTE
 
 /obj/projectile/ice_blast
@@ -138,7 +140,7 @@ Difficulty: Extremely Hard
 	icon_state = "ice_2"
 	damage = 15
 	armour_penetration = 100
-	speed = 4
+	speed = 3
 	damage_type = BRUTE
 
 /obj/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
@@ -253,6 +255,8 @@ Difficulty: Extremely Hard
 	icon_state = "demonic_miner_phase2"
 	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
 	spin(8, 2)
+	for(var/obj/structure/frost_miner_prism/P in GLOB.frost_miner_prisms)
+		P.set_prism_light(LIGHT_COLOR_PURPLE, 5)
 	SLEEP_CHECK_DEATH(8)
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
@@ -266,6 +270,8 @@ Difficulty: Extremely Hard
 		return
 	var/turf/T = get_turf(src)
 	var/loot = rand(1, 3)
+	for(var/obj/structure/frost_miner_prism/P in GLOB.frost_miner_prisms)
+		P.set_prism_light(COLOR_GRAY, 1)
 	switch(loot)
 		if(1)
 			new /obj/item/resurrection_crystal(T)
@@ -409,3 +415,22 @@ Difficulty: Extremely Hard
 	icon_state = "ice_crystal"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
+/obj/structure/frost_miner_prism
+	name = "frost miner light prism"
+	desc = "A magical crystal enhanced by a demonic presence."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "lightprism"
+	density = FALSE
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+
+/obj/structure/frost_miner_prism/Initialize(mapload)
+	. = ..()
+	GLOB.frost_miner_prisms |= src
+	set_prism_light(LIGHT_COLOR_BLUE, 5)
+
+/obj/structure/frost_miner_prism/proc/set_prism_light(new_color, new_range)
+	color = new_color
+	set_light_color(new_color)
+	set_light(new_range)
