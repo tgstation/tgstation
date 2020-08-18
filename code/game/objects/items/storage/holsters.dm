@@ -41,12 +41,12 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
 		/obj/item/ammo_box/magazine/m9mm_aps,
 		/obj/item/ammo_box/magazine/m45,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box/c38,
+		/obj/item/ammo_box/c38, // Revolver speedloaders.
 		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a762,
 		/obj/item/gun/ballistic/automatic/toy/pistol,
@@ -130,35 +130,11 @@
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
-		/obj/item/gun/ballistic/automatic,
-		/obj/item/ammo_box/magazine/m75,
-		/obj/item/ammo_box/magazine/m10mm/rifle,
-		/obj/item/ammo_box/magazine/sniper_rounds,
-		/obj/item/ammo_box/magazine/mm712x82,
-		/obj/item/ammo_box/magazine/m556,
-		/obj/item/ammo_box/magazine/tommygunm45,
-		/obj/item/ammo_box/magazine/uzim9mm,
-		/obj/item/ammo_box/magazine/plastikov9mm,
-		/obj/item/ammo_box/magazine/wt550m9,
-		/obj/item/ammo_box/magazine/smgm9mm,
-		/obj/item/ammo_box/magazine/smgm45,
-		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/gun/ballistic/automatic/toy/pistol,
-		/obj/item/ammo_box/magazine/toy/pistol,
-		/obj/item/gun/ballistic/automatic/toy,
-		/obj/item/ammo_box/magazine/toy/smg,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box/c38,
-		/obj/item/ammo_box/a357,
+		/obj/item/gun, // ALL guns.
+		/obj/item/ammo_box/magazine, // All magazines.
+		/obj/item/ammo_box/c38, //There is not a speedloader parent type, so I just put these three here by hand.
+		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then holster could fit huge boxes of ammo.
 		/obj/item/ammo_box/a762,
-		/obj/item/gun/energy,
-		/obj/item/gun/ballistic/shotgun,
-		/obj/item/ammo_box/magazine/m12g,
-		/obj/item/gun/ballistic/rocketlauncher,
-		/obj/item/ammo_casing/caseless/rocket,
-		/obj/item/gun/ballistic/revolver/grenadelauncher,
-		/obj/item/ammo_casing/a40mm,
-		/obj/item/gun/grenadelauncher,
-		/obj/item/grenade,
-		/obj/item/gun/energy/kinetic_accelerator
+		/obj/item/ammo_casing, // Covers shotgun casings, rockets, launcher grenades.
+		/obj/item/grenade, // All regular grenades.
 		))
