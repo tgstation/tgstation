@@ -233,6 +233,44 @@
   * * deaf_message (optional) is what deaf people will see.
   * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
   */
+
+///Adds the functionality to self_message.
+/atom/proc/graphic_message(message, self_message, alt_message, alt_self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	hearers -= ignored_mobs
+
+	if(self_message)
+		hearers -= src
+
+	var/raw_msg = message
+	if(visible_message_flags & EMOTE_MESSAGE)
+		message = "<b>[src]</b> [message]"
+
+	for(var/mob/M in hearers)
+		if(!M.client)
+			continue
+
+		//This entire if/else chain could be in two lines but isn't for readibilties sake.
+		var/msg = message
+		if(M.see_invisible < invisibility)//if src is invisible to M
+			msg = blind_message
+		else if(T != loc && T != src) //if src is inside something and not a turf.
+			msg = blind_message
+		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //if it is too dark.
+			msg = blind_message
+		if(!msg)
+			continue
+
+		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !M.is_blind())
+			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
+
+		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
 	var/list/hearers = get_hearers_in_view(hearing_distance, src)
 	if(self_message)

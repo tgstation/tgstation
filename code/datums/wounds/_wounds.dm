@@ -16,7 +16,7 @@
 
 /datum/wound
 	/// What it's named
-	var/name = "ouchie"
+	var/name = "Wound"
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
