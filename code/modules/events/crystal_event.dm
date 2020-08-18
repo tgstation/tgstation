@@ -37,19 +37,19 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"small wave" = 50,
-			"medium wave" = 40,
-			"big wave" = 5,
+			"small wave" = 35,
+			"medium wave" = 45,
+			"big wave" = 15,
 			"huge wave" = 5))
 	switch(wave_name)
 		if("small wave")
-			portal_numbers = rand(5, 7)
+			portal_numbers = rand(9, 11)
 		if("medium wave")
-			portal_numbers = rand(6, 9)
+			portal_numbers = rand(8, 12)
 		if("big wave")
-			portal_numbers = rand(8, 10)
-		if("huge wave")
 			portal_numbers = rand(9, 13)
+		if("huge wave")
+			portal_numbers = rand(11, 15)
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
@@ -67,7 +67,7 @@ This section is for the event controller
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
-						anomaly from a portal, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
+						anomaly from a portal by using the anomaly neutralizer, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
 	addtimer(CALLBACK(src, .proc/spawn_portals), 10 SECONDS)
@@ -186,7 +186,7 @@ This section is for the destabilized SM
 	var/pick_portal = pickweight(GLOB.crystal_invasion_waves["huge wave"])
 	for(var/i in 10 to 15)
 		new pick_portal(spawner.loc)
-	explosion(src, 7, 10, 25, 25)
+	explosion(src, 15, 18, 30, 30)
 	is_zk = TRUE
 	qdel(src)
 
