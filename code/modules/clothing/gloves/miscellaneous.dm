@@ -163,7 +163,7 @@
 	inhand_icon_state = "cmoplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/research_director
-	name = "research director envirogloves"
+	name = "research director's envirogloves"
 	icon_state = "rdplasma"
 	inhand_icon_state = "rdplasma"
 
