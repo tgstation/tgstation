@@ -171,7 +171,7 @@
 	gloves = /obj/item/clothing/gloves/color/captain //Too iconic to be replaced with a plasma version
 
 /datum/outfit/plasmaman/head_of_personnel
-	name = "Head Personnel Plasmaman"
+	name = "Head of Personnel Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
 	uniform = /obj/item/clothing/under/plasmaman/head_of_personnel
