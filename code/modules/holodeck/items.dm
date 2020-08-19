@@ -229,8 +229,9 @@
 	info = "Bruises sustained in the holodeck can be healed simply by sleeping."
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck
-    name = "holographic skateboard"
-    desc = "A holographic copy of the RaDSTORMz brand professional skateboard."
+	name = "holographic skateboard"
+	desc = "A holographic copy of the RaDSTORMz brand professional skateboard."
+	instability = 6
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck/MouseDrop(atom/over_object) //picking up normal skateboards spawned in the holodeck gets rid of the holo flag, now you cant pick them up.
     return

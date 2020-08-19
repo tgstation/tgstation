@@ -17232,9 +17232,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
-"Pw" = (
-/turf/closed/wall/mineral/snow,
-/area/holodeck/rec_center/winterwonderland)
 "Pz" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -18684,6 +18681,17 @@
 /obj/item/banner/blue,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
+"YS" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/structure/holohoop{
+	dir = 1;
+	layer = 4.1
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/basketball)
 "YV" = (
 /obj/machinery/light{
 	dir = 8
@@ -65695,7 +65703,7 @@ Mj
 bj
 SE
 TN
-TN
+SE
 SE
 SE
 SE
@@ -75211,7 +75219,7 @@ QR
 bJ
 zT
 bJ
-zT
+YS
 bj
 fA
 fF
@@ -77260,11 +77268,11 @@ dA
 bj
 af
 af
-Pw
 af
 af
 af
-Pw
+af
+af
 af
 af
 af
@@ -77517,7 +77525,7 @@ dA
 bj
 af
 aw
-Pw
+af
 af
 af
 af
