@@ -1,6 +1,3 @@
-
-#define SSMACHINES_DT 2
-
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
 	init_order = INIT_ORDER_MACHINES

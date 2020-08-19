@@ -1,5 +1,4 @@
 #define EXP_ASSIGN_WAYFINDER 1200
-#define SSQUIRKS_DT 1
 //Used to process and handle roundstart quirks
 // - Quirk strings are used for faster checking in code
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string

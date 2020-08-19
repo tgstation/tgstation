@@ -1,6 +1,4 @@
-//Used to process objects. Fires once every second.
-
-#define SSPROCESSING_DT 1
+//Used to process objects.
 
 SUBSYSTEM_DEF(processing)
 	name = "Processing"

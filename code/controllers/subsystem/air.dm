@@ -1,6 +1,3 @@
-
-#define SSAIR_DT 0.5
-
 SUBSYSTEM_DEF(air)
 	name = "Atmospherics"
 	init_order = INIT_ORDER_AIR

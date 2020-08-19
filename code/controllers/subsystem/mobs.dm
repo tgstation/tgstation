@@ -1,6 +1,3 @@
-
-#define SSMOBS_DT 2
-
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
 	priority = FIRE_PRIORITY_MOBS

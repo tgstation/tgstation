@@ -1,6 +1,3 @@
-
-#define SSDCS_DT 1
-
 PROCESSING_SUBSYSTEM_DEF(dcs)
 	name = "Datum Component System"
 	flags = SS_NO_INIT

@@ -238,3 +238,15 @@
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
+#define SSAIR_DT 0.5
+#define SSDCS_DT 1
+#define SSFASTPROCESS_DT 0.2
+#define SSMACHINES_DT 2
+#define SSMOBS_DT 2
+#define SSMOOD_DT 1
+#define SSNANITES_DT 1
+#define SSOBJ_DT 2
+#define SSPROCESSING_DT 1
+#define SSQUIRKS_DT 1
+#define SSRADIATION_DT 1
