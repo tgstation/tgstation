@@ -44,6 +44,8 @@ It has a punishment variable that is what happens to the parent when they leave 
   * * PUNISHMENT_TELEPORT:  finds a safe turf if possible, or a completely random one if not.
   */
 /datum/component/stationstuck/proc/punish()
+	SIGNAL_HANDLER
+
 	var/mob/living/L = parent
 	if(message)
 		var/span = punishment == PUNISHMENT_TELEPORT ? "danger" : "userdanger"

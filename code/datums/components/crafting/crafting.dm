@@ -3,6 +3,8 @@
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
+	SIGNAL_HANDLER
+
 	var/datum/hud/H = user.hud_used
 	var/obj/screen/craft/C = new()
 	C.icon = H.ui_style
@@ -312,6 +314,8 @@
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(user == parent)
 		ui_interact(user)
 

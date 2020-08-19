@@ -646,6 +646,8 @@
 	..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(ismob(thing))
 		var/mob/lad = thing
 		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)

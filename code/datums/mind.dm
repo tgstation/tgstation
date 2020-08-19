@@ -219,6 +219,8 @@
 	to_chat(user, msg)
 
 /datum/mind/proc/set_death_time()
+	SIGNAL_HANDLER
+
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
