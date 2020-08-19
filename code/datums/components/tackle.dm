@@ -329,11 +329,12 @@
   *	* Clumsy: +6
   *
   * Effects: Below are the outcomes based off your roll, in order of increasing severity
-  *	* 1-63: Knocked down for a few seconds and a bit of brute and stamina damage
-  *	* 64-83: Knocked silly, gain some confusion as well as the above
-  *	* 84-93: Cranial trauma, get a concussion and more confusion, plus more damage
-  *	* 94-98: Knocked unconscious, significant chance to get a random mild brain trauma, as well as a fair amount of damage
-  *	* 99-100: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
+  *	* 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
+  *	* 68-85: Knocked silly, gain some confusion as well as the above
+  *	* 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
+  *	* 93-96: Knocked unconscious, get a random mild brain trauma, as well as a fair amount of damage
+  *	* 97-98: Massive head damage, probably crack your skull open, random mild brain trauma
+  *	* 99-Infinity: Break your spinal cord, get paralyzed, take a bunch of damage too. Very unlucky!
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
