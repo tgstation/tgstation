@@ -1,6 +1,0 @@
-author: "ATH1909"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an exploit that made it possible to use more shuttle curse orbs in a single round than you were supposed to as a blood cultist."
-  - balance: "Increased the number of shuttle curse orbs that can be used in a single round from 2 to 3."
-  - tweak: "Added better feedback for shuttle curse orbs."

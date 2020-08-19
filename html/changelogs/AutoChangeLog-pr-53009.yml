@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "If anyone noticed that you were sometimes unable to examine a modular computer with no primary ID slot, that's been fixed now."
