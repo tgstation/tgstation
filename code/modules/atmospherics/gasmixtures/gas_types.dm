@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /list(TOTAL_VISIBLE_STATES)
 			for(var/i in 1 to TOTAL_VISIBLE_STATES)
-				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(2, (i+TOTAL_VISIBLE_STATES) / TOTAL_VISIBLE_STATES) * 255)
+				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
 
 		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
