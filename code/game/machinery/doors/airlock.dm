@@ -1215,6 +1215,8 @@
 
 
 /obj/machinery/door/airlock/proc/on_break()
+	SIGNAL_HANDLER
+
 	if(!panel_open)
 		panel_open = TRUE
 	wires.cut_all()

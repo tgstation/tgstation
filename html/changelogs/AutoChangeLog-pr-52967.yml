@@ -1,0 +1,4 @@
+author: "kriskog"
+delete-after: True
+changes: 
+  - admin: "Check antagonists now has a button to force war for nuclear operatives."

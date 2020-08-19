@@ -359,7 +359,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		x = world.maxx
 	else if(direction & WEST)
 		x = 1
-	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
+	if(ISDIAGONALDIR(direction)) //let's make sure it's accurately-placed for diagonals
 		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
 		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
 	return locate(x,y,A.z)
@@ -461,17 +461,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
-			if(current.opacity)
-				return 0
-			for(var/thing in current)
-				var/atom/A = thing
-				if(A.opacity)
-					return 0
+				return FALSE
+			if(IS_OPAQUE_TURF(current))
+				return FALSE
 			current = get_step_towards(current, target_turf)
 			steps++
+	return TRUE
 
-	return 1
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()

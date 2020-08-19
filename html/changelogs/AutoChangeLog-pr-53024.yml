@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Hydrating monkey powder no longer circumvents bluespace harmonic limitations."

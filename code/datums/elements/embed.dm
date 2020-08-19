@@ -68,6 +68,8 @@
 
 /// Checking to see if we're gonna embed into a human
 /datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
+	SIGNAL_HANDLER
+
 	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
@@ -108,15 +110,21 @@
 
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
+	SIGNAL_HANDLER
+
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
 ///If we don't want to be embeddable anymore (deactivating an e-dagger for instance)
 /datum/element/embed/proc/detachFromWeapon(obj/weapon)
+	SIGNAL_HANDLER
+
 	Detach(weapon)
 
 ///Someone inspected our embeddable item
 /datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(I.isEmbedHarmless())
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
@@ -129,6 +137,8 @@
   *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
   */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
+	SIGNAL_HANDLER
+
 	if(!iscarbon(hit))
 		Detach(P)
 		return // we don't care
@@ -159,6 +169,8 @@
   * * forced- if we want this to succeed 100%
   */
 /datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE)
+	SIGNAL_HANDLER
+
 	var/obj/item/bodypart/limb
 	var/mob/living/carbon/C
 

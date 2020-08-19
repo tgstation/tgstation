@@ -118,7 +118,9 @@
   * Returns TRUE if the NOPOWER flag was toggled
   */
 /obj/machinery/proc/power_change()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(1)
+
 	if(machine_stat & BROKEN)
 		return
 	if(powered(power_channel))

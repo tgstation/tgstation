@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Slapping the floor with glass will shatter the glass."

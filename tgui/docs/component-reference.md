@@ -258,7 +258,7 @@ commit, while escape cancels.
 **Props:**
 
 - See inherited props: [Box](#box)
-- `fluid`: fill availible horizontal space
+- `fluid`: fill available horizontal space
 - `onCommit: (e, value) => void`: function that is called after the user
 defocuses the input or presses enter
 - `currentValue: string`: default string to display when the input is shown

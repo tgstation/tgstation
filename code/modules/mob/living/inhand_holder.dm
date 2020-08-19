@@ -69,7 +69,7 @@
 /obj/item/clothing/head/mob_holder/relaymove(mob/user)
 	release()
 
-/obj/item/clothing/head/mob_holder/container_resist()
+/obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
 
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)

@@ -159,8 +159,10 @@
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
 						return
-					if(SSshuttle.shuttle_purchased)
+					if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
 						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
+					else if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
+						to_chat(usr, "<span class='alert'>Due to unforseen circumstances, shuttle purchasing is no longer available.</span>")
 					else if(!S.prerequisites_met())
 						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 					else
@@ -169,7 +171,7 @@
 						if(D)
 							points_to_check = D.account_balance
 						if(points_to_check >= S.credit_cost)
-							SSshuttle.shuttle_purchased = TRUE
+							SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 							SSshuttle.unload_preview()
 							SSshuttle.load_template(S)
 							SSshuttle.existing_shuttle = SSshuttle.emergency
