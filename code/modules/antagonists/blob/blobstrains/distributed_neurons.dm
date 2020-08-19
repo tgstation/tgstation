@@ -27,13 +27,14 @@
 /datum/reagent/blob/distributed_neurons/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, TOX)
-	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
-		M.death() //sleeping in a fight? bad plan.
-	if(O && ishuman(M) && M.stat == DEAD && O.can_buy(5))
-		var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(M))
-		BS.overmind = O
-		BS.update_icons()
-		O.blob_mobs.Add(BS)
-		BS.Zombify(M)
-		O.add_points(-5)
-		to_chat(O, "<span class='notice'>Spent 5 resources for the zombification of [M].</span>")
+	if(O && ishuman(M))
+		if(M.stat == UNCONSCIOUS)
+			M.death() //sleeping in a fight? bad plan.
+		if(M.stat == DEAD && O.can_buy(5))
+			var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(M))
+			BS.overmind = O
+			BS.update_icons()
+			O.blob_mobs.Add(BS)
+			BS.Zombify(M)
+			O.add_points(-5)
+			to_chat(O, "<span class='notice'>Spent 5 resources for the zombification of [M].</span>")

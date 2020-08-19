@@ -115,6 +115,8 @@
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = FALSE
+	///Whether or not this is a fragile spore from Distributed Neurons
+	var/is_weak = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
 	. = ..()
@@ -127,7 +129,7 @@
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(!istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak) && H.stat == DEAD)
+			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
 	if(factory && z != factory.z)
@@ -232,6 +234,7 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
+	is_weak = TRUE
 	gold_core_spawnable = NO_SPAWN
 
 /////////////////
