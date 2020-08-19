@@ -679,6 +679,9 @@
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+			else if(species_id == "beefman") //Fulp. If we ever add more unique races - this should be a list of them.
+				limb.icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
+				limb.icon_state = "[species_id]_[body_zone]"
 			else if(use_digitigrade)
 				limb.icon_state = "digitigrade_[use_digitigrade]_[body_zone]"
 			else
@@ -687,6 +690,9 @@
 			limb.icon = 'icons/mob/human_parts.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
+			else if(species_id == "beefman") //Fulp. Same as above.
+				limb.icon = 'icons/Fulpicons/fulp_bodyparts.dmi'
+				limb.icon_state = "[species_id]_[body_zone]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
 		if(aux_zone)
