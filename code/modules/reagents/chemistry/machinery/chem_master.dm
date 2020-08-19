@@ -135,7 +135,7 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		hand_object(beaker, user)
+		try_put_in_hand(beaker, user)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker

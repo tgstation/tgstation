@@ -23,7 +23,7 @@
 	switch(action)
 		if("ejectBeaker")
 			if(beaker)
-				hand_object(beaker, usr)
+				try_put_in_hand(beaker, usr)
 				beaker = null
 				. = TRUE
 		if("input")

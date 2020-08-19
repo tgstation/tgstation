@@ -205,16 +205,16 @@ Class Procs:
 	occupant = null
 
 /**
- * Places passed object in to users hand
+ * Puts passed object in to user's hand
  *
- * Places the passed object in to the users hand if they are ajacent.
- * If the user is not ajacent then place the object on top of the machine.
+ * Puts the passed object in to the users hand if they are adjacent.
+ * If the user is not adjacent then place the object on top of the machine.
  *
  * Vars:
  * * object (obj) The object to be moved in to the users hand.
  * * user (mob/living) The user to recive the object
  */
-/obj/machinery/proc/hand_object(obj/object, mob/living/user)
+/obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
 	if(!issilicon(user) && in_range(src, user))
 		user.put_in_hands(object)
 	else
