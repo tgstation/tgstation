@@ -23,6 +23,10 @@
 	permeability_coefficient = 0.05
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
+/// Recharging rate in PPS (peels per second)
+#define BANANA_SHOES_RECHARGE_RATE 17
+#define BANANA_SHOES_MAX_CHARGE 3000
+
 //The super annoying version
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
 	name = "mk-honk combat shoes"
@@ -34,24 +38,24 @@
 	permeability_coefficient = 0.05
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
-	var/max_recharge = 3000 //30 peels worth
-	/// Recharging rate in PPS (peels per second)
-	var/recharge_rate = 17
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	bananium.insert_amount_mat(max_recharge, /datum/material/bananium)
+	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
-	if(bananium_amount < max_recharge)
-		bananium.insert_amount_mat(min(recharge_rate * SSOBJ_DT, max_recharge - bananium_amount), /datum/material/bananium)
+	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
+		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * SSOBJ_DT, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
 	ui_action_click(user)
+
+#undef BANANA_SHOES_RECHARGE_RATE
+#undef BANANA_SHOES_MAX_CHARGE
 
 //BANANIUM SWORD
 

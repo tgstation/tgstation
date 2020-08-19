@@ -192,7 +192,7 @@ RSF
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
 /obj/item/rsf/cookiesynth/process()
-	matter = min(matter += SSOBJ_DT, max_matter) //We add 1 up to a point
+	matter = min(matter += SSPROCESSING_DT, max_matter) //We add 1 up to a point
 	if(matter >= max_matter)
 		STOP_PROCESSING(SSprocessing, src)
 

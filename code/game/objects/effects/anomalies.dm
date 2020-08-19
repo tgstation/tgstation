@@ -1,5 +1,8 @@
 //Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
 
+/// Chance of taking a step per second
+#define ANOMALY_MOVECHANCE 45
+
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -7,8 +10,7 @@
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
-	/// Chance of taking a step per second
-	var/movechance = 45
+
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
@@ -65,7 +67,7 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
-	if(DT_PROB(movechance, SSOBJ_DT))
+	if(DT_PROB(ANOMALY_MOVECHANCE, SSOBJ_DT))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -379,3 +381,5 @@
 				SSexplosions.medturf += T
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
+
+#undef ANOMALY_MOVECHANCE

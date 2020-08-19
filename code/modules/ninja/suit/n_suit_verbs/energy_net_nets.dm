@@ -45,7 +45,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	if(check > 0)
-		check -= SSOBJ_DT // Not sure what is processing this, might be SSMACHINES_DT instead.
+		check -= SSOBJ_DT
 		return
 
 	success = TRUE
