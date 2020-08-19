@@ -737,7 +737,7 @@
 	name = "Pwr Game"
 	desc = "The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to."
 	icon_state = "purple_can"
-	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
+	list_reagents = list(/datum/reagent/consumable/pwr_game = 20, /datum/reagent/stable_plasma = 10)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/shamblers
 	name = "Shambler's juice"
