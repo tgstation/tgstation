@@ -114,7 +114,9 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/court)
 "aw" = (
-/obj/structure/flora/bush,
+/obj/structure/statue/snow/snowman{
+	anchored = 1
+	},
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ay" = (
@@ -157,7 +159,7 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/court)
 "aG" = (
-/obj/structure/flora/grass/brown,
+/obj/effect/holodeck_effect/mobspawner/penguin,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aH" = (
@@ -201,9 +203,7 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aM" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1
-	},
+/obj/structure/flora/grass/green,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aN" = (
@@ -223,12 +223,14 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aR" = (
-/obj/effect/holodeck_effect/mobspawner/penguin_baby,
-/obj/structure/flora/tree/pine,
+/obj/item/clothing/neck/stripedredscarf{
+	pixel_x = -3;
+	pixel_y = -5
+	},
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aS" = (
-/obj/structure/chair/wood,
+/obj/structure/flora/bush,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "aT" = (
@@ -8724,6 +8726,10 @@
 	icon_state = "wood"
 	},
 /area/holodeck/rec_center/lounge)
+"uc" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "nukeop_ready";
@@ -15181,7 +15187,13 @@
 /turf/closed/indestructible/fakeglass,
 /area/tdome/tdomeobserve)
 "Im" = (
-/obj/structure/flora/tree/pine,
+/obj/item/grown/log/tree{
+	pixel_y = -5
+	},
+/obj/item/hatchet/wooden{
+	pixel_x = 7;
+	pixel_y = -8
+	},
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "Io" = (
@@ -15916,6 +15928,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
+"JY" = (
+/obj/structure/flora/tree/pine{
+	pixel_x = -21
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "JZ" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -16879,6 +16897,13 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/holding)
+"MH" = (
+/obj/structure/flora/bush{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "MI" = (
 /obj/machinery/light{
 	dir = 1
@@ -16915,6 +16940,10 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
+"MZ" = (
+/obj/structure/flora/tree/pine/xmas,
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Nd" = (
 /turf/closed/indestructible/wood,
 /area/centcom/holding)
@@ -17080,6 +17109,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Ok" = (
+/obj/effect/holodeck_effect/mobspawner/penguin_baby,
+/turf/open/space/basic,
+/area/space)
 "Oo" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
@@ -17165,6 +17198,12 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
+"ON" = (
+/obj/item/clothing/shoes/winterboots{
+	pixel_y = 12
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "OP" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -17186,6 +17225,13 @@
 /obj/item/clothing/under/costume/roman,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"OW" = (
+/obj/item/clothing/head/collectable/tophat{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Pa" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/white,
@@ -17223,6 +17269,13 @@
 /obj/item/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"Pu" = (
+/obj/item/clothing/gloves/color/green{
+	pixel_x = -7;
+	pixel_y = -7
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Pv" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -17256,6 +17309,18 @@
 	},
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
+"PE" = (
+/obj/item/toy/snowball{
+	pixel_y = 6
+	},
+/obj/item/toy/snowball{
+	pixel_x = 5
+	},
+/obj/item/toy/snowball{
+	pixel_x = -4
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "PI" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/green{
@@ -17346,6 +17411,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
+"Qc" = (
+/obj/structure/flora/grass/brown,
+/turf/open/space/basic,
+/area/space)
 "Qd" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/syndicate{
@@ -17443,7 +17512,7 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
 "QJ" = (
-/obj/effect/holodeck_effect/mobspawner/penguin,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "QL" = (
@@ -17506,6 +17575,10 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"QX" = (
+/obj/effect/holodeck_effect/mobspawner/penguin_baby,
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Rc" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/pill_bottle/dice,
@@ -17584,6 +17657,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"Rq" = (
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Ru" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -17608,14 +17685,9 @@
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "RL" = (
-/obj/item/toy/snowball{
-	pixel_y = 6
-	},
-/obj/item/toy/snowball{
-	pixel_x = 5
-	},
-/obj/item/toy/snowball{
-	pixel_x = -4
+/obj/item/stack/sheet/mineral/coal{
+	pixel_x = -8;
+	pixel_y = -4
 	},
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
@@ -17628,6 +17700,10 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"RN" = (
+/obj/effect/holodeck_effect/mobspawner/penguin,
+/turf/open/space/basic,
+/area/space)
 "RO" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -17663,6 +17739,10 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"RT" = (
+/obj/structure/flora/bush,
+/turf/open/space/basic,
+/area/space)
 "Sa" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
@@ -17692,15 +17772,8 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
 "Sm" = (
-/obj/effect/holodeck_effect/mobspawner/penguin,
-/obj/item/toy/snowball{
-	pixel_y = 6
-	},
-/obj/item/toy/snowball{
-	pixel_x = 5
-	},
-/obj/item/toy/snowball{
-	pixel_x = -4
+/obj/structure/flora/tree/pine{
+	pixel_y = -6
 	},
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
@@ -17710,6 +17783,10 @@
 /obj/item/camera,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/photobooth)
+"Sr" = (
+/obj/structure/flora/grass/both,
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "Su" = (
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
@@ -17980,6 +18057,13 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"TW" = (
+/obj/structure/flora/bush{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "TY" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/structure/window{
@@ -18313,6 +18397,10 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
+"Wl" = (
+/obj/structure/flora/tree/pine,
+/turf/open/space/basic,
+/area/space)
 "Wm" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -18344,6 +18432,13 @@
 	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
+"WC" = (
+/obj/item/clothing/head/ushanka{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "WE" = (
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -18446,6 +18541,18 @@
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"Xp" = (
+/obj/item/toy/snowball{
+	pixel_x = -4
+	},
+/obj/item/toy/snowball{
+	pixel_x = 5
+	},
+/obj/item/toy/snowball{
+	pixel_y = 6
+	},
+/turf/open/space/basic,
+/area/space)
 "Xs" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18630,6 +18737,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"Yx" = (
+/obj/structure/flora/tree/pine{
+	pixel_x = -10
+	},
+/turf/open/floor/holofloor/snow,
+/area/holodeck/rec_center/winterwonderland)
 "YB" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -18752,6 +18865,12 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
+"Zp" = (
+/obj/structure/statue/snow/snowman{
+	anchored = 1
+	},
+/turf/open/space/basic,
+/area/space)
 "Zs" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
@@ -76752,16 +76871,16 @@ dA
 dA
 dA
 bj
+aM
+Im
+af
+af
+aS
 af
 af
 af
 af
-af
-aw
-af
-af
-af
-af
+Sr
 bj
 fz
 fH
@@ -77010,14 +77129,14 @@ eO
 dA
 bj
 af
-af
-af
 Sm
 af
-aw
-aR
 af
 af
+af
+af
+af
+JY
 af
 bj
 fz
@@ -77267,15 +77386,15 @@ dA
 dA
 bj
 af
+OW
+PE
 af
 af
 af
 af
 af
 af
-af
-af
-af
+TW
 bj
 fz
 fH
@@ -77523,15 +77642,15 @@ eU
 eO
 dA
 bj
-af
+aR
 aw
 af
 af
 af
 af
-aG
-RL
 af
+af
+aG
 af
 bj
 fz
@@ -77780,16 +77899,16 @@ dA
 dA
 dA
 bj
-af
+aS
 RL
 af
 af
 af
+MZ
+QX
 af
-af
-RL
 QJ
-af
+ON
 bj
 fA
 fF
@@ -78038,15 +78157,15 @@ eO
 dA
 bj
 af
-RL
-aG
-aM
-aS
-af
-af
 af
 aG
 af
+af
+af
+af
+PE
+Pu
+WC
 bj
 fz
 fz
@@ -78296,12 +78415,12 @@ dA
 bj
 af
 af
+uc
+MH
 af
 af
 af
-aw
 af
-Im
 af
 af
 bj
@@ -78556,11 +78675,11 @@ af
 af
 af
 af
-aw
 af
 af
 af
 af
+Yx
 bj
 ab
 fD
@@ -78809,15 +78928,15 @@ dA
 dA
 bj
 af
+Sr
 af
 af
 af
-af
-aw
-af
+aM
 af
 af
 af
+Rq
 bj
 ab
 ab
@@ -81137,7 +81256,7 @@ aa
 aa
 aa
 aa
-aa
+Xp
 aa
 aa
 aa
@@ -81392,7 +81511,7 @@ bj
 aa
 aa
 aa
-aa
+Wl
 aa
 aa
 aa
@@ -81653,7 +81772,7 @@ aa
 aa
 aa
 aa
-aa
+RN
 aa
 aa
 aa
@@ -81910,7 +82029,7 @@ aa
 aa
 aa
 aa
-aa
+Ok
 aa
 aa
 aa
@@ -82163,7 +82282,7 @@ bj
 aa
 aa
 aa
-aa
+RT
 aa
 aa
 aa
@@ -82420,7 +82539,7 @@ bj
 aa
 aa
 aa
-aa
+Qc
 aa
 aa
 aa
@@ -83191,7 +83310,7 @@ bj
 aa
 aa
 aa
-aa
+Zp
 aa
 aa
 aa
