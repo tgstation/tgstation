@@ -178,7 +178,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
 
 /datum/outfit/plasmaman/head_of_security
-	name = "Head Security Plasmaman"
+	name = "Head of Security Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
 	uniform = /obj/item/clothing/under/plasmaman/security/head_of_security
