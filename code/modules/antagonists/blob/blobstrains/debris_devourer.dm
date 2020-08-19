@@ -1,4 +1,4 @@
-#define DEBRIS_DENSITY (length(core.contents) / (length(overmind.blobs_legit) / 4)) // items per blob
+#define DEBRIS_DENSITY (length(core.contents) / (length(overmind.blobs_legit) * 0.25)) // items per blob
 
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
