@@ -1,7 +1,7 @@
 
 /obj/item/food/bread
 	icon = 'icons/obj/food/burgerbread.dmi'
-	volume = 80
+	max_volume = 80
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
@@ -222,7 +222,7 @@
 			initial_reagents = food_reagents,\
 			food_flags = food_flags,\
 			foodtypes = foodtypes,\
-			volume = volume,\
+			volume = max_volume,\
 			eat_time = eat_time,\
 			tastes = tastes,\
 			eatverbs = eatverbs,\
