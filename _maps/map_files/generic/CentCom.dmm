@@ -1056,11 +1056,9 @@
 /turf/open/floor/holofloor/hyperspace,
 /area/holodeck/rec_center/kobayashi)
 "dv" = (
-/obj/structure/closet{
-	density = 0
-	},
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -17412,10 +17410,8 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qx" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/item/clothing/suit/chaplainsuit/bishoprobe,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -18283,10 +18279,8 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/four)
 "VR" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/item/toy/figure/chaplain,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -18404,10 +18398,8 @@
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
 "WU" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat,
+/obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark"
@@ -64165,8 +64157,8 @@ TN
 SE
 SE
 SE
-TN
-TN
+SE
+SE
 SE
 Sb
 bj
@@ -64417,12 +64409,12 @@ WE
 Mj
 bj
 SE
-SE
 TN
 TN
 TN
+TN
 SE
-SE
+TN
 TN
 SE
 Sb
@@ -64676,9 +64668,9 @@ bj
 SE
 SE
 TN
-SE
 TN
-SE
+TN
+TN
 TN
 SE
 SE
@@ -64933,8 +64925,8 @@ bj
 SE
 SE
 TN
-TN
 Gt
+SE
 TN
 TN
 SE
@@ -65190,11 +65182,11 @@ bj
 SE
 SE
 TN
-SE
+TN
+TN
 TN
 SE
-TN
-TN
+SE
 SE
 Sb
 bj
@@ -65445,11 +65437,11 @@ WE
 Mj
 bj
 SE
-SE
+TN
+TN
 TN
 TN
 SE
-TN
 TN
 TN
 SE
@@ -65702,13 +65694,13 @@ To
 Mj
 bj
 SE
+TN
+TN
 SE
 SE
 SE
-SE
-SE
-SE
-SE
+TN
+TN
 SE
 SE
 bj
