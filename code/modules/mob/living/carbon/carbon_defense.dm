@@ -231,6 +231,9 @@
 		return affecting.body_zone
 	return dam_zone
 
+/// Attempt to disarm the target mob.
+/// Will shove the target mob back, and drop them if they're in front of something dense
+/// or another carbon.
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
