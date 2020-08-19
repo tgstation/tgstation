@@ -754,7 +754,7 @@
 	id = /obj/item/card/id
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	. = ..()
 	if(visualsOnly)
 		return
 	H.dna.add_mutation(STONER)
@@ -782,9 +782,9 @@
 
 /datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	var/obj/item/card/id/W = H.wear_id
+	var/obj/item/card/id/id_card = H.wear_id
 	if(H.age < AGE_MINOR)
-		W.registered_age = AGE_MINOR
+		id_card.registered_age = AGE_MINOR
 		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
 
 /obj/effect/mob_spawn/human/skeleton/alive
@@ -828,7 +828,7 @@
 	assignedrole = "Space Bar Patron"
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
-	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
+	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)", null, "Yes", "No")
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
 	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
