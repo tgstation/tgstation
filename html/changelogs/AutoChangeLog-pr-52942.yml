@@ -1,0 +1,5 @@
+author: "Guillaume H. Prata"
+delete-after: True
+changes: 
+  - rscadd: "Hypernoblium now turns into a reagent when inhaled, which stops the combustion if on a Plasmaman system."
+  - rscadd: "Plasmaman interaction with Hypernoblium in the air, stop combustion and extinguishes if they are already on fire."
