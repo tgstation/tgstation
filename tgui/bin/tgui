@@ -1,4 +1,7 @@
 #!/bin/bash
+## Copyright (c) 2020 Aleksej Komarov
+## SPDX-License-Identifier: MIT
+
 set -e
 shopt -s globstar
 shopt -s expand_aliases
@@ -41,26 +44,36 @@ task-install() {
 ## Runs webpack
 task-webpack() {
   cd "${base_dir}"
-  yarn run webpack "${@}"
+  yarn run webpack-cli "${@}"
 }
 
 ## Runs a development server
 task-dev-server() {
   cd "${base_dir}"
-  exec yarn run dev-server "${@}"
+  yarn node packages/tgui-dev-server/index.esm.js "${@}"
 }
 
 ## Run a linter through all packages
 task-eslint() {
   cd "${base_dir}"
-  yarn run lint "${@}"
+  yarn run eslint packages "${@}"
+  echo "tgui: eslint check passed"
 }
 
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
+  ## Build artifacts
   rm -rf public/.tmp
-  rm -rf packages/tgui/public/.tmp
+  rm -f public/*.map
+  rm -f public/*.hot-update.*
+  ## Yarn artifacts
+  rm -rf .yarn/cache
+  rm -rf .yarn/unplugged
+  rm -rf .yarn/build-state.yml
+  rm -rf .yarn/install-state.gz
+  rm -f .pnp.js
+  ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
 }

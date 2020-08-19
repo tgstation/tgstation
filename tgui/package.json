@@ -5,15 +5,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-    "build": "eslint packages && webpack-cli --mode=production",
-    "webpack": "webpack-cli",
-    "watch": "node packages/tgui-dev-server/index.esm.js",
-    "dev-server": "node packages/tgui-dev-server/index.esm.js",
-    "analyze": "webpack-cli --mode=production --env.analyze=1",
-    "lint": "eslint packages && echo 'tgui: eslint check passed'",
-    "doctor": "yarn dlx @yarnpkg/doctor"
-  },
   "dependencies": {
     "@babel/core": "^7.6.2",
     "@babel/plugin-transform-jscript": "^7.2.0",
