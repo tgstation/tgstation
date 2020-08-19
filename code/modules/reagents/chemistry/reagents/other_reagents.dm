@@ -1342,14 +1342,14 @@
 	taste_description = "searingly cold"
 
 /datum/reagent/hypernoblium/on_mob_metabolize(mob/living/L)
-	..()
+	. = ..()
 	if(isplasmaman(L))
 		ADD_TRAIT(L, TRAIT_NOFIRE, type)
 
 /datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/L)
 	if(isplasmaman(L))
 		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
-	..()
+	return ..()
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
