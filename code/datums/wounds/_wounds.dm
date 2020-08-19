@@ -25,7 +25,7 @@
 	var/examine_desc = "is badly hurt"
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
-	var/a_or_from = "a"
+	var/plurality = FALSE
 	/// The visible message when this happens
 	var/occur_text = ""
 	/// This sound will be played upon the wound being applied
@@ -147,16 +147,8 @@
 		return
 
 	if(!(silent || demoted))
-		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
-		var/vis_dist = COMBAT_MESSAGE_RANGE
-
-		if(severity != WOUND_SEVERITY_MODERATE)
-			msg = "<b>[msg]</b>"
-			vis_dist = DEFAULT_MESSAGE_RANGE
-
-		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>", vision_distance = vis_dist)
-		if(sound_effect)
-			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
+		display_wounding()
+		play_wounding_sound()
 
 	if(!demoted)
 		wound_injury(old_wound)
@@ -309,7 +301,11 @@
   * * mob/user: The user examining the wound's owner, if that matters
   */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	if(user.client && (user.client.prefs.toggles & REDUCE_WOUND_GORE))
+		. = "[victim.p_their(TRUE)] [limb.name] is suffering [plurality ? "[lowertext(name)]" : "\an [lowertext(name)]"]"
+	else
+		. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)
@@ -325,3 +321,64 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
+
+/datum/wound/proc/get_alt_sound()
+	switch(severity)
+		if(WOUND_SEVERITY_MODERATE)
+			return 'sound/effects/wounds/beep_moderate.ogg'
+		if(WOUND_SEVERITY_SEVERE)
+			return 'sound/effects/wounds/beep_severe.ogg'
+		if(WOUND_SEVERITY_CRITICAL)
+			return 'sound/effects/wounds/beep_critical.ogg'
+	return sound_effect
+
+///Adds the functionality to self_message.
+/datum/wound/proc/display_wounding()
+	if(!get_turf(victim))
+		return
+
+	var/vis_dist = COMBAT_MESSAGE_RANGE
+	var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
+	var/alt_msg = "<span class='danger'>[victim]'s [limb.name] suffers [plurality ? "[lowertext(name)]" : "\an [lowertext(name)]"]!</span>"
+	var/self_msg = "<span class='userdanger'>Your [limb.name] [occur_text]!</span>"
+
+	if(victim.client && (victim.client.prefs.toggles & REDUCE_WOUND_GORE))
+		self_msg = "<span class='userdanger'>Your [limb.name] suffers [plurality ? "[lowertext(name)]" : "\an [lowertext(name)]"]!</span>"
+	victim.show_message(self_msg)
+
+	if(severity != WOUND_SEVERITY_MODERATE)
+		msg = "<b>[msg]</b>"
+		alt_msg = "<b>[alt_msg]</b>"
+		vis_dist = DEFAULT_MESSAGE_RANGE
+
+	var/list/hearers = get_hearers_in_view(vis_dist, victim) - victim //caches the hearers and then removes ignored mobs.
+	for(var/mob/M in hearers)
+		if(!M.client)
+			continue
+		M.show_message((M.client.prefs.toggles & REDUCE_WOUND_GORE) ? alt_msg : msg)
+
+
+/datum/wound/proc/play_wounding_sound()
+	var/turf/turf_source = get_turf(victim)
+	if(!sound_effect || !turf_source)
+		return
+
+	//allocate a channel if necessary now so its the same for everyone
+	var/channel_gore = SSsounds.random_available_channel()
+	var/channel_alt = SSsounds.random_available_channel()
+
+ 	// Looping through the player list has the added bonus of working for mobs inside containers
+	var/sound/S = sound(get_sfx(sound_effect))
+	var/sound/alt_S = sound(get_sfx(get_alt_sound()))
+
+	var/list/listeners = get_listeners(victim) + SSmobs.dead_players_by_zlevel[turf_source.z]
+	var/vol = 70 + 20 * severity
+
+	for(var/P in listeners)
+		var/mob/M = P
+		if(get_dist(M, turf_source) > world.view || !M.client)
+			continue
+		if((M.client.prefs.toggles & REDUCE_WOUND_GORE))
+			M.playsound_local(turf_source, get_alt_sound(), vol, TRUE, channel = channel_gore, S=alt_S)
+		else
+			M.playsound_local(turf_source, sound_effect, vol, TRUE, channel = channel_alt, S=S)

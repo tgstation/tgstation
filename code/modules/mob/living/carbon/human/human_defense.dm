@@ -761,16 +761,16 @@
 
 		for(var/thing in LB.wounds)
 			var/datum/wound/W = thing
-			var/msg
+			var/msg = "Your [LB.name] is suffering [W.plurality ? "[lowertext(W.name)]" : "\an [lowertext(W.name)]"]"
 			switch(W.severity)
 				if(WOUND_SEVERITY_TRIVIAL)
-					msg = "\t <span class='danger'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
+					msg = "\t <span class='danger'>[msg].</span>"
 				if(WOUND_SEVERITY_MODERATE)
-					msg = "\t <span class='warning'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
+					msg = "\t <span class='warning'>[msg]!</span>"
 				if(WOUND_SEVERITY_SEVERE)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
+					msg = "\t <span class='warning'>[msg]!</b></span>"
 				if(WOUND_SEVERITY_CRITICAL)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
+					msg = "\t <span class='warning'>[msg]!!</b></span>"
 			combined_msg += msg
 
 		for(var/obj/item/I in LB.embedded_objects)

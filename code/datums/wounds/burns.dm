@@ -3,7 +3,7 @@
 
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
-	a_or_from = "from"
+	plurality = TRUE
 	wound_type = WOUND_BURN
 	processes = TRUE
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'

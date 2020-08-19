@@ -555,6 +555,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Runechat message char limit:</b> <a href='?_src_=prefs;preference=max_chat_length;task=input'>[max_chat_length]</a><br>"
 			dat += "<b>See Runechat for non-mobs:</b> <a href='?_src_=prefs;preference=see_chat_non_mob'>[see_chat_non_mob ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>See Runechat emotes:</b> <a href='?_src_=prefs;preference=see_rc_emotes'>[see_rc_emotes ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Reduce Wound Graphic Content:</b> <a href='?_src_=prefs;preference=wound_gore'>[(toggles & REDUCE_WOUND_GORE) ? "Reduced":"Full Gore"]</a><br>"
 			dat += "<br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>Hotkey mode:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
@@ -1756,6 +1757,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR
+
+				if("wound_gore")
+					toggles ^= REDUCE_WOUND_GORE
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
