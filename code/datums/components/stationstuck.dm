@@ -4,6 +4,13 @@
 #define PUNISHMENT_TELEPORT "teleport"
 
 //very similar to stationloving, but more made for mobs and not objects. used on derelict drones currently
+
+
+/*
+This component is similar to stationloving in that it is meant to keep something on the z-level
+The difference is that stationloving is for objects and stationstuck is for mobs.
+It has a punishment variable that is what happens to the parent when they leave the z-level. See punish() documentation
+*/
 /datum/component/stationstuck
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/punishment = PUNISHMENT_GIB //see defines above
@@ -27,6 +34,15 @@
 		punishment = _punishment
 		message = _message
 
+/**
+  * Called when parent leaves the zlevel this is set to (aka whichever zlevel it was on when it was added)
+  * Sends a message, then does an effect depending on what the punishment was.
+  *
+  * Punishments:
+  * * PUNISHMENT_MURDER: kills parent
+  * * PUNISHMENT_GIB: gibs parent
+  * * PUNISHMENT_TELEPORT:  finds a safe turf if possible, or a completely random one if not.
+  */
 /datum/component/stationstuck/proc/punish()
 	var/mob/living/L = parent
 	if(message)

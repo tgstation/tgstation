@@ -871,13 +871,13 @@
 	short_desc = "You are a space doctor!"
 	assignedrole = "Space Doctor"
 
-/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
-	..()
+/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/doctor)
+	. = ..()
 	// Remove radio and PDA so they wouldn't annoy station crew.
 	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
 	for(var/del_type in del_types)
-		var/obj/item/I = locate(del_type) in H
-		qdel(I)
+		var/obj/item/unwanted_item = locate(del_type) in doctor
+		qdel(unwanted_item)
 
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
