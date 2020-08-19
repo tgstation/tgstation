@@ -67079,7 +67079,7 @@
 "fOY" = (
 /obj/machinery/door/airlock{
 	name = "Bar";
-	req_one_access_txt = "25;28"
+	req_access_txt = "25"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/navbeacon/wayfinding/bar,
