@@ -270,7 +270,7 @@
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
-	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
+	text_lose_indication = "<span class='notice'>You feel a lot cooler.</span>"
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
