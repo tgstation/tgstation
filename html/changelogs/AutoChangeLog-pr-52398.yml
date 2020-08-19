@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Prevent duplicate vent and scrubber names in the air alarm interface."
