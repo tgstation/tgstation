@@ -85,6 +85,8 @@
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
 /datum/wound/blunt/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
+	SIGNAL_HANDLER
+
 	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
 

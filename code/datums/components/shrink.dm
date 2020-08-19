@@ -11,7 +11,7 @@
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
 	parent_atom.density = 0
-	parent_atom.opacity = 0
+	parent_atom.set_opacity(FALSE)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
 		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
@@ -31,7 +31,7 @@
 	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
 	parent_atom.density = olddens
-	parent_atom.opacity = oldopac
+	parent_atom.set_opacity(oldopac)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
 		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)

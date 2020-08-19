@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Plants now show their maximum reagent capacity on plant analyzer examine with reagent mode on."

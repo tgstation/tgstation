@@ -69,7 +69,7 @@
 	R.foldedbag_instance = src
 	moveToNullspace()
 
-/obj/item/bodybag/bluespace/container_resist(mob/living/user)
+/obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return

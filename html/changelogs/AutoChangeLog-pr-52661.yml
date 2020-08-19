@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The expanded medkits that medical doctors start the round with now come with epinephrine medipens (the kind normally found in white medkits/roundstart internals boxes), not emergency first aid kit medipens (the kind normally found in emergency first aid kits from oxygen lockers)."

@@ -16,12 +16,16 @@
 		enter_area(null, A)
 
 /datum/component/beauty/proc/enter_area(datum/source, area/A)
+	SIGNAL_HANDLER
+
 	if(A.outdoors)
 		return
 	A.totalbeauty += beauty
 	A.update_beauty()
 
 /datum/component/beauty/proc/exit_area(datum/source, area/A)
+	SIGNAL_HANDLER
+
 	if(A.outdoors)
 		return
 	A.totalbeauty -= beauty

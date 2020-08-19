@@ -1,0 +1,4 @@
+author: "Ziiro"
+delete-after: True
+changes: 
+  - bugfix: "xenos can now climb ladders properly"
