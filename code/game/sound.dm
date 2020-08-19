@@ -1,3 +1,4 @@
+///Gutted from [/proc/playsound], for when you want to see all the people who are eligible to hear a sound file play
 /proc/get_listeners(atom/source, extrarange as num, var/ignore_walls=TRUE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")

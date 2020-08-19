@@ -308,9 +308,11 @@
 
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
+///What shows up on a wound scanner/health scanner in wound mode, gives extra information about effects and treatment vs normal health scan
 /datum/wound/proc/get_scanner_description(mob/user)
 	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
+///How severe are we, for text purposes
 /datum/wound/proc/severity_text()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
@@ -322,6 +324,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
 
+///If someone has REDUCE_WOUND_GORE in their prefs, pull the sound from here instead if one exists
 /datum/wound/proc/get_alt_sound()
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
@@ -332,7 +335,7 @@
 			return 'sound/effects/wounds/beep_critical.ogg'
 	return sound_effect
 
-///Adds the functionality to self_message.
+///A pared down version of [/atom/proc/visible_message] for wounds especially. If someone has REDUCE_WOUND_GORE in their prefs, we just tell them so-and-so suffered the wound name, rather than use the normal occur_text
 /datum/wound/proc/display_wounding()
 	if(!get_turf(victim))
 		return
@@ -357,7 +360,7 @@
 			continue
 		M.show_message((M.client.prefs.toggles & REDUCE_WOUND_GORE) ? alt_msg : msg)
 
-
+///The audio version of [/datum/wound/proc/display_wounding], this is a pared down version of [/proc/playsound] that substitutes alternate sounds for people with REDUCE_WOUND_GORE in their prefs
 /datum/wound/proc/play_wounding_sound()
 	var/turf/turf_source = get_turf(victim)
 	if(!sound_effect || !turf_source)
