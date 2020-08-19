@@ -12,7 +12,7 @@
 	//used to determine whether we should archive
 	var/archived_cycle = 0
 	var/current_cycle = 0
-
+	
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
-	var/delta = 0
+	var/temp = 0
 	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in GLOB.cardinals)
@@ -485,14 +485,14 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 				neighbor.neighbor_conduct_with_src(src)
 
 				neighbor.consider_superconductivity()
-				delta = max(delta, get_delta(neighbor))
+				temp = max(temp, neighbor.get_temp())
 
+	finish_superconduction(temp)
 
-	finish_superconduction(delta)
-
-/turf/proc/finish_superconduction(delta)
+/turf/proc/finish_superconduction(temp)
 	//Make sure still hot enough to continue conducting heat
-	if(delta < 1)
+	var/tem = get_temp()
+	if(abs(temp - tem) < 5 || tem < T0C)
 		SSair.active_super_conductivity -= src
 		return FALSE
 
@@ -500,26 +500,29 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	//Conduct with air on my tile if I have it
 	if(!blocks_air)
 		temperature = air.temperature_share(null, thermal_conductivity, temperature, heat_capacity)
-	..((blocks_air ? temperature : air.temperature))
+	return ..((blocks_air ? temperature : air.temperature))
 
 /turf/proc/consider_superconductivity()
 	if(!thermal_conductivity)
 		return FALSE
-	var/delta = 0
+	var/our_temp = get_temp()
+	if(our_temp < T0C)
+		return FALSE
+	var/temp = 0
 	var/conductivity_directions = conductivity_directions()
 	if(conductivity_directions)
 		for(var/direction in GLOB.cardinals)
 			if(conductivity_directions & direction)
 				var/turf/neighbor = get_step(src,direction)
-				delta = max(delta, get_delta(neighbor))
-	if(delta < 1)
+				temp = max(temp, neighbor.get_temp())
+
+	if(abs(temp - our_temp) < 5)
 		return
+
 	SSair.active_super_conductivity |= src
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
-	if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
-		return FALSE
 	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant. //This isn't a constant, reconsider life choices
 		return FALSE
 	return ..()
@@ -559,3 +562,12 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	var/turf/open/horse = neighbor
 	if(air && horse.air)
 		return abs(horse.air.temperature - air.temperature)
+
+/turf/proc/get_temp()
+	return temperature
+
+/turf/open/get_temp()
+	if(blocks_air)
+		return ..()
+	if(air)
+		return air.temperature
