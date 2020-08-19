@@ -626,3 +626,25 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
+
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices5
+ * The length of the generated name can be set by passing in an int
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * Returns (string) The generated name
+ */
+/obj/machinery/proc/assign_random_name(len=5)
+	var/list/new_name = list()
+	// machine id's should be fun random chars hinting at a larger world
+	for(var/i = 1 to len)
+		switch(rand(1,3))
+			if(1)
+				new_name += ascii2text(rand(65, 90)) // A - Z
+			if(2)
+				new_name += ascii2text(rand(97,122)) // a - z
+			if(3)
+				new_name += ascii2text(rand(48, 57)) // 0 - 9
+	return new_name.Join()
