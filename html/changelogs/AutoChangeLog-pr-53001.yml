@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Runtime in wounds system fixed for projectiles that can't wound. As a result, non-woundy weapons will now complete code execution and apply appropriate damage. In particular, this fixes the DRAGnet not dealing stamina damage on net mode, may fix other weapons too."

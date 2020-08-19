@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - balance: "Mechs no longer block sight. It's a non-trivial cost for the lighting system with little to no gain."
