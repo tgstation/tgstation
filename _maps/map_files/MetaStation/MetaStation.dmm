@@ -69686,6 +69686,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"kgT" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Fore";
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "kiy" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -72676,8 +72685,9 @@
 /area/crew_quarters/theatre)
 "pnI" = (
 /obj/machinery/camera{
-	c_tag = "Holodeck";
-	dir = 1
+	c_tag = "Holodeck - Aft";
+	dir = 1;
+	name = "holodeck camera"
 	},
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
@@ -117554,7 +117564,7 @@ aaa
 aag
 aaa
 aeC
-afD
+kgT
 afD
 afD
 afD

@@ -13605,6 +13605,10 @@
 /obj/item/reagent_containers/food/snacks/sashimi,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Fg" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/floor/holofloor/beach,
+/area/holodeck/rec_center/beach)
 "Fh" = (
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
@@ -17109,10 +17113,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"Ok" = (
-/obj/effect/holodeck_effect/mobspawner/penguin_baby,
-/turf/open/space/basic,
-/area/space)
 "Oo" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
@@ -17411,10 +17411,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom/holding)
-"Qc" = (
-/obj/structure/flora/grass/brown,
-/turf/open/space/basic,
-/area/space)
 "Qd" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/syndicate{
@@ -17487,6 +17483,9 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"QD" = (
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/beach)
 "QH" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
@@ -17684,6 +17683,12 @@
 /obj/effect/spawner/xmastree,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
+"RJ" = (
+/mob/living/simple_animal/crab{
+	name = "Jon"
+	},
+/turf/open/floor/holofloor/beach/coast_t,
+/area/holodeck/rec_center/beach)
 "RL" = (
 /obj/item/stack/sheet/mineral/coal{
 	pixel_x = -8;
@@ -17700,10 +17705,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
-"RN" = (
-/obj/effect/holodeck_effect/mobspawner/penguin,
-/turf/open/space/basic,
-/area/space)
 "RO" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -17739,10 +17740,10 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
-"RT" = (
-/obj/structure/flora/bush,
-/turf/open/space/basic,
-/area/space)
+"RX" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/holofloor/beach,
+/area/holodeck/rec_center/beach)
 "Sa" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
@@ -18367,6 +18368,10 @@
 	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
+"VV" = (
+/obj/item/toy/seashell,
+/turf/open/floor/holofloor/beach,
+/area/holodeck/rec_center/beach)
 "VX" = (
 /obj/effect/landmark/shuttle_import,
 /turf/open/space/basic,
@@ -18397,10 +18402,6 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/syndicate_mothership/control)
-"Wl" = (
-/obj/structure/flora/tree/pine,
-/turf/open/space/basic,
-/area/space)
 "Wm" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -18541,18 +18542,6 @@
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
-"Xp" = (
-/obj/item/toy/snowball{
-	pixel_x = -4
-	},
-/obj/item/toy/snowball{
-	pixel_x = 5
-	},
-/obj/item/toy/snowball{
-	pixel_y = 6
-	},
-/turf/open/space/basic,
-/area/space)
 "Xs" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18865,12 +18854,6 @@
 	},
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
-"Zp" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "Zs" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
@@ -79703,9 +79686,9 @@ bw
 bw
 bL
 bw
+Fg
 bw
-bw
-cS
+RJ
 cY
 dh
 bj
@@ -79955,13 +79938,13 @@ Uz
 Uz
 Uz
 bj
+bL
+bY
 bw
 bw
 bw
-bw
-bw
-bw
-bw
+QD
+QD
 cS
 cY
 dh
@@ -80213,13 +80196,13 @@ aj
 aj
 bj
 bw
-bL
-bY
+bw
+bw
 bw
 cl
 bw
 bw
-cT
+cS
 cY
 dh
 bj
@@ -80471,12 +80454,12 @@ aj
 bj
 bw
 bw
+RX
 bw
 bw
-bw
-bw
-bw
-cU
+QD
+QD
+cS
 cY
 dh
 bj
@@ -80727,13 +80710,13 @@ aj
 aj
 bj
 bw
-bM
-bY
 bw
 bw
+bw
+bL
 cy
 bw
-cS
+cT
 cY
 dh
 bj
@@ -80984,13 +80967,13 @@ aj
 aj
 bj
 bw
+bM
+bY
 bw
 bw
 bw
 bw
-bw
-bw
-cS
+cU
 cY
 dh
 bj
@@ -81240,13 +81223,13 @@ aj
 aj
 aj
 bj
-bw
+RX
 bw
 bw
 bw
 bY
 bw
-bw
+VV
 cS
 cY
 dh
@@ -81256,7 +81239,7 @@ aa
 aa
 aa
 aa
-Xp
+aa
 aa
 aa
 aa
@@ -81511,7 +81494,7 @@ bj
 aa
 aa
 aa
-Wl
+aa
 aa
 aa
 aa
@@ -81772,7 +81755,7 @@ aa
 aa
 aa
 aa
-RN
+aa
 aa
 aa
 aa
@@ -82029,7 +82012,7 @@ aa
 aa
 aa
 aa
-Ok
+aa
 aa
 aa
 aa
@@ -82282,7 +82265,7 @@ bj
 aa
 aa
 aa
-RT
+aa
 aa
 aa
 aa
@@ -82539,7 +82522,7 @@ bj
 aa
 aa
 aa
-Qc
+aa
 aa
 aa
 aa
@@ -83310,7 +83293,7 @@ bj
 aa
 aa
 aa
-Zp
+aa
 aa
 aa
 aa

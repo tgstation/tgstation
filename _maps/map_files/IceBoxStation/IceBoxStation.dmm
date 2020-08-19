@@ -50409,7 +50409,8 @@
 /area/science/nanite)
 "esn" = (
 /obj/machinery/camera{
-	c_tag = "Holodeck"
+	c_tag = "Holodeck - Fore";
+	name = "holodeck camera"
 	},
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
@@ -52852,6 +52853,16 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"mlK" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Aft";
+	dir = 1;
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "mpJ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -93142,7 +93153,7 @@ boP
 boP
 boP
 aqr
-asY
+pFg
 asY
 asY
 atZ
@@ -94436,7 +94447,7 @@ aro
 aro
 aro
 aro
-aro
+mlK
 aCv
 cVb
 ijI
