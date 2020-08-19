@@ -158,7 +158,7 @@
 	inhand_icon_state = "ceplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
-	name = "research director envirogloves"
+	name = "chief medical officer's envirogloves"
 	icon_state = "cmoplasma"
 	inhand_icon_state = "cmoplasma"
 
