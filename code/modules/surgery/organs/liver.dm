@@ -59,7 +59,7 @@
 #undef HAS_PAINFUL_TOXIN
 
 /obj/item/organ/liver/get_availability(datum/species/S)
-	return !(TRAIT_NOMETABOLISM in S.species_traits)
+	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"

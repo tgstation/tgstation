@@ -44,7 +44,7 @@
 			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
-	return !(NOSTOMACH in S.species_traits)
+	return !(NOSTOMACH in S.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
