@@ -1342,7 +1342,7 @@
 	taste_description = "searingly cold"
 
 /datum/reagent/hypernoblium/on_mob_metabolize(mob/living/L)
-	..()
+	. = ..()
 	if(isplasmaman(L))
 		ADD_TRAIT(L, TRAIT_NOFIRE, type)
 
