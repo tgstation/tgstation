@@ -1157,9 +1157,10 @@
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
 	var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
 	. |= SEND_SIGNAL(src, COMSIG_TOOL(tool_type), user, I, processing_recipes)
-	message_admins(COMSIG_TOOL(tool_type))
 	if(processing_recipes.len)
 		process_recipes(user, I, processing_recipes)
+	if(QDELETED(I))
+		return TRUE
 	switch(tool_type)
 		if(TOOL_CROWBAR)
 			crowbar_act(user, I)

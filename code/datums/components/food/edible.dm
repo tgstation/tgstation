@@ -90,7 +90,8 @@ Behavior that's still missing from this component that original food items had t
 	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 	bite_consumption = 2,
 	datum/callback/after_eat,
-	datum/callback/on_consume)
+	datum/callback/on_consume
+	)
 
 	. = ..()
 	src.bite_consumption = bite_consumption
@@ -127,6 +128,7 @@ Behavior that's still missing from this component that original food items had t
 	return TryToEat(user, user)
 
 /datum/component/edible/proc/OnFried(fry_object)
+	SIGNAL_HANDLER
 	var/atom/our_atom = parent
 	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
 	qdel(our_atom)

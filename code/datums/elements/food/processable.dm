@@ -12,6 +12,7 @@
 	var/amount_created
 
 /datum/element/processable/Attach(datum/target, tool_behaviour, result, amount_created = 3, time_to_process = 20)
+	SIGNAL_HANDLER
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -20,8 +21,6 @@
 	src.amount_created = amount_created
 	src.time_to_process = time_to_process
 	src.result = result
-
-	message_admins(COMSIG_TOOL(tool_behaviour))
 
 	RegisterSignal(target, COMSIG_TOOL(tool_behaviour), .proc/try_process)
 
