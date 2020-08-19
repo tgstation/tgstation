@@ -185,7 +185,7 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
 
 /datum/outfit/plasmaman/chief_engineer
-	name = "Chief Engineering Plasmaman"
+	name = "Chief Engineer Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 	uniform = /obj/item/clothing/under/plasmaman/chief_engineer
