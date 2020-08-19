@@ -145,7 +145,7 @@
 		x_hit += target_x
 		y_hit += target_y
 		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
-		if(hit.opacity)
+		if(IS_OPAQUE_TURF(hit))
 			return
 		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) //edge of the map
 			break

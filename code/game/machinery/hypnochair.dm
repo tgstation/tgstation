@@ -5,7 +5,7 @@
 	icon_state = "hypnochair"
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 
 	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
 	var/interrogating = FALSE ///Is the device currently interrogating someone?

@@ -204,10 +204,6 @@
 	if (light_power && light_range)
 		update_light()
 
-	if (opacity && isturf(loc))
-		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
-
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
 		SET_BITFLAG_LIST(smoothing_groups)
