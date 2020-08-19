@@ -321,6 +321,13 @@
 			H.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
+	// Hyper-Nob
+		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]
+		if (gas_breathed > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
+			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
+		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
+
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
@@ -371,13 +378,6 @@
 
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
-
-	// Hyper-Nob
-		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/gas/hypernoblium)
-			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
-		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
 
 	return TRUE
 
