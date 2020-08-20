@@ -86,7 +86,7 @@
 		user.start_pulling(AM)
 	
 	//reopening ladder radial menu ahead
-	var/turf/T = get_turf(user)
+	T = get_turf(user)
 	var/obj/structure/ladder/L = locate() in T
 	if (L)
 		L.use(user)
