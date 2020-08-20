@@ -59,16 +59,21 @@ DreamSeeker.getInstancesByPids = async pids => {
       });
       // Line format:
       // proto addr mask mode pid
-      const entries = stdout
-        .split('\r\n')
-        .map(line => {
-          const words = line.match(/\S+/g);
-          return {
-            addr: words[1],
-            pid: parseInt(words[4], 10),
-          };
-        })
-        .filter(entry => pidsToResolve.includes(entry.pid));
+      const entries = [];
+      const lines = stdout.split('\r\n');
+      for (let line of lines) {
+        const words = line.match(/\S+/g);
+        if (!words || words.length === 0) {
+          continue;
+        }
+        const entry = {
+          addr: words[1],
+          pid: parseInt(words[4], 10),
+        };
+        if (pidsToResolve.includes(entry.pid)) {
+          entries.push(entry);
+        }
+      }
       const len = entries.length;
       logger.log('found', len, plural('instance', len));
       for (let entry of entries) {
