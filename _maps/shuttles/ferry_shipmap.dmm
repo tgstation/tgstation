@@ -1,0 +1,16 @@
+"a" = (/turf/open/space/basic,/area/space)
+"h" = (/obj/machinery/computer/shuttle/ferry/request{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/transport)
+"q" = (/turf/closed/wall/mineral/titanium,/area/shuttle/transport)
+"r" = (/obj/machinery/door/airlock/external,/obj/docking_port/mobile{dir = 4; id = "ferry"},/turf/open/floor/mineral/titanium,/area/shuttle/transport)
+"H" = (/turf/open/floor/mineral/titanium,/area/shuttle/transport)
+"I" = (/obj/structure/shuttle/engine/heater,/turf/closed/wall/mineral/titanium,/area/shuttle/transport)
+"N" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/open/floor/plating/airless,/area/shuttle/transport)
+"Q" = (/obj/structure/chair/comfy/shuttle{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/transport)
+
+(1,1,1) = {"
+qqqqa
+rHQqq
+qqQhq
+aIIIq
+aNNNq
+"}

@@ -427,6 +427,11 @@
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
 
+/datum/map_template/shuttle/ferry/ship
+	suffix = "shipmap"
+	name = "ship wing ferry"
+	description = "Oh no."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -470,6 +475,10 @@
 /datum/map_template/shuttle/cargo/donut
 	suffix = "donut"
 	name = "supply shuttle (Donut)"
+
+/datum/map_template/shuttle/cargo/shipmap
+	suffix = "shipmap"
+	name = "supply shuttle (Ship)"
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"

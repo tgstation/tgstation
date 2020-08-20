@@ -1,7 +1,7 @@
 {
-    "map_name": "Ship Map Test",
-    "map_path": "map_files/debug",
-    "map_file": "shipmap.dmm",
+    "map_name": "ShipMap",
+    "map_path": "map_files/ShipMap",
+    "map_file": "ShipMap.dmm",
     "shuttles": {
 	    "cargo": "cargo_box",
 	    "ferry": "ferry_fancy",
