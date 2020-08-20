@@ -99,15 +99,21 @@
 	. = ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	if(rotation_flags & ROTATION_ALTCLICK)
 		examine_list += "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
+	SIGNAL_HANDLER
+
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
 		return
 	BaseRot(user, rotation)
 
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
 	BaseRot(user,default_rotation_direction)

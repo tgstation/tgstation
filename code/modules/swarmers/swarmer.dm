@@ -433,6 +433,8 @@
   * * mob/drone - The drone to be removed from the list.
   */
 /mob/living/simple_animal/hostile/swarmer/proc/remove_drone(mob/drone, force)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(drone, COMSIG_PARENT_QDELETING)
 	dronelist -= drone
 

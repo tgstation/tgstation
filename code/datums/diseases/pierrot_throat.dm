@@ -32,6 +32,8 @@
 
 
 /datum/disease/pierrot_throat/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/list/split_message = splittext(message, " ") //List each word in the message
 	var/applied = 0

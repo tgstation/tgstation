@@ -110,6 +110,7 @@
 						/datum/gas/pluoxium,
 						/datum/gas/stimulum,
 						/datum/gas/freon,
+						/datum/gas/hypernoblium,
 						/datum/gas/gas_x,
 						/datum/gas/gas_y,
 						/datum/gas/gas_z,
@@ -365,6 +366,13 @@
 			H.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
+	// Hyper-Nob
+		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]
+		if (gas_breathed > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
+			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
+		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
+
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
@@ -415,6 +423,7 @@
 
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
+
 	return TRUE
 
 
@@ -479,7 +488,7 @@
 		failed = TRUE
 
 /obj/item/organ/lungs/get_availability(datum/species/S)
-	return !(TRAIT_NOBREATH in S.species_traits)
+	return !(TRAIT_NOBREATH in S.inherent_traits)
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"

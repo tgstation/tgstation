@@ -93,5 +93,7 @@ $color-bg-section: base.$color-bg-section !default;
     left: 0;
     right: 0;
     background-color: rgba(255, 221, 68, 0.1);
+    // Make this click-through since this is an overlay
+    pointer-events: none;
   }
 }

@@ -458,6 +458,8 @@ BLIND     // can't see anything
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)
+	SIGNAL_HANDLER
+
 	if(!istype(L))
 		return
 	if(prob(0.2))

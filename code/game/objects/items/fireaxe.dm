@@ -34,10 +34,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/fireaxe/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/fireaxe/update_icon_state()
