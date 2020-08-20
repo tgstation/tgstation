@@ -258,12 +258,12 @@
 /obj/item/food/deepfryholder/Destroy()
 	if(contents)
 		QDEL_LIST(contents)
-	. = ..()
+	return ..()
 
 /obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
 	if(contents)
 		QDEL_LIST(contents)
-	..()
+	return ..()
 
 /obj/item/food/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
@@ -301,7 +301,7 @@
 	icon_state = "butterdog"
 	bite_consumption = 1
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("butter", "exotic butter")
+	tastes = list("butter" = 1, "exotic butter" = 1)
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/butterdog/ComponentInitialize()

@@ -1190,7 +1190,7 @@
 
 ///Creates the radial and processes the selected option
 /atom/proc/ShowProcessingGui(mob/living/user, obj/item/I, list/possible_options)
-	var/list/choicestooptions = list() //Dict of object name | dict of object processing settings
+	var/list/choices_to_options = list() //Dict of object name | dict of object processing settings
 	var/list/choices = list()
 
 	for(var/i in possible_options)

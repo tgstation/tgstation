@@ -2,8 +2,8 @@
 /datum/element/processable
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
-	///The result item
-	var/atom/result
+	///The atom this creates when the processing recipe is used.
+	var/atom/result_atom
 	///The tool behaviour for this processing recipe
 	var/tool_behaviour
 	///Time to process the atom
@@ -11,7 +11,7 @@
 	///Amount of the resulting actor this will create
 	var/amount_created
 
-/datum/element/processable/Attach(datum/target, tool_behaviour, result, amount_created = 3, time_to_process = 20)
+/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom, amount_created = 3, time_to_process = 20)
 	SIGNAL_HANDLER
 	. = ..()
 	if(!isatom(target))
@@ -20,14 +20,14 @@
 	src.tool_behaviour = tool_behaviour
 	src.amount_created = amount_created
 	src.time_to_process = time_to_process
-	src.result = result
+	src.result_atom = result_atom
 
-	RegisterSignal(target, COMSIG_TOOL(tool_behaviour), .proc/try_process)
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
 
 /datum/element/processable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_TOOL(tool_behaviour))
+	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
-	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
+	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
 	return COMPONENT_NO_AFTERATTACK
