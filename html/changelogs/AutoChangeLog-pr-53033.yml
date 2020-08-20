@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Voice analyzers will no longer accept any message when nothing is recorded."
