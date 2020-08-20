@@ -3664,7 +3664,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "aix" = (
@@ -4122,14 +4121,14 @@
 	},
 /area/crew_quarters/bar/atrium)
 "ajC" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/piratepad_control/civilian{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "ajD" = (
@@ -20834,7 +20833,6 @@
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bdG" = (
-/obj/structure/closet/crate/bin,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Hydroponics South";
@@ -20848,17 +20846,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
-"bdI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"bdH" = (
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/brown{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/cable,
-/obj/machinery/computer/piratepad_control/civilian{
-	dir = 2
-	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
+"bdI" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bdK" = (
@@ -26343,6 +26342,21 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"ewW" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/crowbar/red,
+/obj/item/aicard,
+/obj/item/analyzer,
+/obj/item/assembly/flash/handheld,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/storage/tech)
 "exb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -27527,6 +27541,21 @@
 	dir = 8
 	},
 /area/chapel/main)
+"hHu" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/toolbox/electrical,
+/obj/item/electronics/apc,
+/obj/item/electronics/airlock,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/tech)
 "hJR" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/tower,
@@ -28125,21 +28154,6 @@
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/wood,
 /area/library)
-"iOO" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/crowbar/red,
-/obj/item/aicard,
-/obj/item/analyzer,
-/obj/item/assembly/flash/handheld,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark,
-/area/storage/tech)
 "iQp" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
@@ -28226,21 +28240,6 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"iZg" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/storage/toolbox/electrical,
-/obj/item/electronics/apc,
-/obj/item/electronics/airlock,
-/obj/item/stock_parts/cell/high,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/tech)
 "iZQ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/reagent_containers/glass/bucket,
@@ -34275,6 +34274,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "sKP" = (
@@ -35899,10 +35899,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay)
-"tMS" = (
-/obj/structure/sign/departments/botany,
-/turf/closed/wall,
-/area/hydroponics)
 "tPO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -37750,6 +37746,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"xnB" = (
+/obj/structure/sign/departments/botany,
+/turf/closed/wall,
+/area/hydroponics)
 "xnD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -61161,7 +61161,7 @@ aws
 azP
 aCW
 aFl
-iOO
+ewW
 aco
 agl
 asW
@@ -61418,7 +61418,7 @@ aiD
 aiD
 aiD
 aFl
-iZg
+hHu
 adK
 agS
 auc
@@ -71193,7 +71193,7 @@ bbd
 bbR
 dEa
 bdE
-tMS
+xnB
 sAX
 sIv
 sLL
@@ -72477,7 +72477,7 @@ bft
 biA
 sKH
 bcK
-sKL
+bdH
 bey
 sBy
 sIG
@@ -78877,7 +78877,7 @@ aCS
 aDM
 aEV
 sHZ
-bdI
+air
 aHP
 aIO
 uuU
@@ -79650,7 +79650,7 @@ ahv
 awT
 aiz
 ajb
-bxL
+bdI
 uuU
 bde
 aMt
