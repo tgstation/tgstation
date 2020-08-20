@@ -11,6 +11,9 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
@@ -23,6 +26,7 @@
 	var/list/burnt_states
 
 	tiled_dirt = TRUE
+
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
@@ -161,14 +165,19 @@
 	W.update_icon()
 	return W
 
-/turf/open/floor/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
-		return 1
-	if(..())
-		return 1
-	if(intact && istype(C, /obj/item/stack/tile))
-		try_replace_tile(C, user, params)
-	return 0
+/turf/open/floor/attackby(obj/item/object, mob/user, params)
+	if(!object || !user)
+		return TRUE
+	. = ..()
+	if(.)
+		return .
+	if(intact && istype(object, /obj/item/stack/tile))
+		try_replace_tile(object, user, params)
+		return TRUE
+	if(user.a_intent == INTENT_HARM && istype(object, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/sheets = object
+		return sheets.on_attack_floor(user, params)
+	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	if(intact && pry_tile(I, user))

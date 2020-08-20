@@ -112,6 +112,8 @@
 		unfreeze_turf(T)
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_atom(atom/movable/A)
+	SIGNAL_HANDLER
+
 	if(A.throwing)
 		unfreeze_throwing(A)
 	if(isliving(A))

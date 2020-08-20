@@ -206,7 +206,7 @@
 		"neutralize_unidentified" = turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS,
 		"neutralize_nonmindshielded" = turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED,
 		"neutralize_cyborgs" = turret_flags & TURRET_FLAG_SHOOT_BORGS,
-		"ignore_heads" = turret_flags & TURRET_FLAG_SHOOT_HEADS,
+		"neutralize_heads" = turret_flags & TURRET_FLAG_SHOOT_HEADS,
 		"manual_control" = manual_control,
 		"silicon_user" = FALSE,
 		"allow_manual_control" = FALSE,
