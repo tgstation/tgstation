@@ -26,7 +26,8 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=80)
 	flags_1 = CONDUCT_1
-	attack_verb = list("attacked", "stabbed", "poked")
+	attack_verb_continuous = list("attacks", "stabs", "pokes")
+	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	item_flags = EYE_STAB
@@ -84,7 +85,8 @@
 	throw_speed = 3
 	throw_range = 6
 	custom_materials = list(/datum/material/iron=12000)
-	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	item_flags = EYE_STAB
@@ -117,7 +119,8 @@
 	throwforce = 0
 	throw_range = 5
 	custom_materials = list(/datum/material/plastic = 100)
-	attack_verb = list("prodded", "whiffed","scratched", "poked")
+	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
+	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = 50
 	var/break_chance = 25
@@ -168,7 +171,8 @@
 	force = 15
 	throwforce = 10
 	custom_materials = list(/datum/material/iron=18000)
-	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut")
+	attack_verb_continuous = list("cleaves", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = 600
 
@@ -188,7 +192,8 @@
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	force = 20
 	throwforce = 20
-	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "cut")
+	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
+	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	bayonet = TRUE
 
 /obj/item/kitchen/knife/combat/survival
@@ -228,7 +233,8 @@
 	desc = "A makeshift glass shiv."
 	force = 8
 	throwforce = 12
-	attack_verb = list("shanked", "shivved")
+	attack_verb_continuous = list("shanks", "shivs")
+	attack_verb_simple = list("shank", "shiv")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	custom_materials = list(/datum/material/glass=400)
 
@@ -254,7 +260,8 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = 200
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)

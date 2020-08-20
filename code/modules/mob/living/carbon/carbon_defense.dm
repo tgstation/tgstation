@@ -99,10 +99,9 @@
 		return TRUE //successful attack
 
 /mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
-	var/message_verb = "attacked"
-	if(length(I.attack_verb))
-		message_verb = "[pick(I.attack_verb)]"
-	else if(!I.force)
+	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
+	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
+	if(!I.force)
 		return
 
 	var/extra_wound_details = ""
@@ -119,15 +118,18 @@
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] is [message_verb][message_hit_area] with [I][extra_wound_details]!"
-	var/attack_message_local = "You're [message_verb][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I]!"
 	if(user in viewers(src, null))
-		attack_message = "[user] [message_verb] [src][message_hit_area] with [I][extra_wound_details]!"
-		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I][extra_wound_details]!"
+		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I][extra_wound_details]!"
+		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I][extra_wound_details]!"
 	if(user == src)
-		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I][extra_wound_details]"
-	visible_message("<span class='danger'>[attack_message]</span>",\
-		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
+		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [I][extra_wound_details]!"
+	visible_message("<span class='danger'>[attack_message_spectator]</span>",\
+		"<span class='userdanger'>[attack_message_victim]</span>", null, COMBAT_MESSAGE_RANGE, user)
+	if(user != src)
+		to_chat(user, "<span class='danger'>[attack_message_attacker]</span>")
 	return TRUE
 
 
@@ -229,6 +231,131 @@
 		return affecting.body_zone
 	return dam_zone
 
+/**
+ * Attempt to disarm the target mob.
+ * Will shove the target mob back, and drop them if they're in front of something dense
+ * or another carbon.
+*/
+/mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+	if (ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		human_target.w_uniform?.add_fingerprint(src)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
+
+	var/turf/target_oldturf = target.loc
+	var/shove_dir = get_dir(loc, target_oldturf)
+	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+	var/mob/living/carbon/target_collateral_carbon
+	var/obj/structure/table/target_table
+	var/obj/machinery/disposal/bin/target_disposal_bin
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+
+	//Thank you based whoneedsspace
+	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
+
+	// If we can't shove the target into the carbon (such as if it's an alien), then just pretend nothing was there
+	if (!target_collateral_carbon?.can_be_shoved_into)
+		target_collateral_carbon = null
+
+	if(target_collateral_carbon)
+		shove_blocked = TRUE
+	else
+		target.Move(target_shove_turf, shove_dir)
+		if(get_turf(target) == target_oldturf)
+			target_table = locate(/obj/structure/table) in target_shove_turf.contents
+			target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
+			shove_blocked = TRUE
+
+	if(target.IsKnockdown() && !target.IsParalyzed())
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message("<span class='danger'>[name] kicks [target.name] onto [target.p_their()] side!</span>",
+						"<span class='userdanger'>You're kicked onto your side by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, "<span class='danger'>You kick [target.name] onto [target.p_their()] side!</span>")
+		addtimer(CALLBACK(target, /mob/living/proc/SetKnockdown, 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+
+	if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
+		var/directional_blocked = FALSE
+		if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
+			var/target_turf = get_turf(target)
+			for(var/obj/obj_content in target_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
+					directional_blocked = TRUE
+					break
+			if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
+				for(var/obj/obj_content in target_shove_turf)
+					if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
+						directional_blocked = TRUE
+						break
+		if((!target_table && !target_collateral_carbon && !target_disposal_bin) || directional_blocked)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.visible_message("<span class='danger'>[name] shoves [target.name], knocking [target.p_them()] down!</span>",
+							"<span class='userdanger'>You're knocked down from a shove by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name], knocking [target.p_them()] down!</span>")
+			log_combat(src, target, "shoved", "knocking them down")
+		else if(target_table)
+			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] onto \the [target_table]!</span>",
+							"<span class='userdanger'>You're shoved onto \the [target_table] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] onto \the [target_table]!</span>")
+			target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+			log_combat(src, target, "shoved", "onto [target_table] (table)")
+		else if(target_collateral_carbon)
+			target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+			target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] into [target_collateral_carbon.name]!</span>",
+				"<span class='userdanger'>You're shoved into [target_collateral_carbon.name] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] into [target_collateral_carbon.name]!</span>")
+			log_combat(src, target, "shoved", "into [target_collateral_carbon.name]")
+		else if(target_disposal_bin)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.forceMove(target_disposal_bin)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] into \the [target_disposal_bin]!</span>",
+							"<span class='userdanger'>You're shoved into \the [target_disposal_bin] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>")
+			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
+	else
+		target.visible_message("<span class='danger'>[name] shoves [target.name]!</span>",
+						"<span class='userdanger'>You're shoved by [name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, "<span class='danger'>You shove [target.name]!</span>")
+		var/target_held_item = target.get_active_held_item()
+		var/knocked_item = FALSE
+		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+			target_held_item = null
+		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			if(target_held_item)
+				target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
+					"<span class='warning'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
+			addtimer(CALLBACK(target, /mob/living/carbon/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+		else if(target_held_item)
+			target.dropItemToGround(target_held_item)
+			knocked_item = TRUE
+			target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!</span>",
+				"<span class='warning'>You drop \the [target_held_item]!</span>", null, COMBAT_MESSAGE_RANGE)
+		var/append_message = ""
+		if(target_held_item)
+			if(knocked_item)
+				append_message = "causing [target.p_them()] to drop [target_held_item]"
+			else
+				append_message = "loosening [target.p_their()] grip on [target_held_item]"
+		log_combat(src, target, "shoved", append_message)
+
+/mob/living/carbon/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
+			return TRUE
+	return FALSE
+
+/mob/living/carbon/proc/clear_shove_slowdown()
+	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
+	var/active_item = get_active_held_item()
+	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+		visible_message("<span class='warning'>[name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)

@@ -232,6 +232,8 @@
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
 /datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
+	SIGNAL_HANDLER
+
 	if(istype(hat, /obj/item/clothing/head/wig))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
@@ -239,4 +241,6 @@
 
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)

@@ -149,6 +149,8 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	SIGNAL_HANDLER
+
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
 	if(!chosen_sting.try_to_sting(ling, A))

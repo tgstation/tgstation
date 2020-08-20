@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/packages/tgui/public/tgui.html')
+	basehtml = file2text('tgui/public/tgui.html')
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

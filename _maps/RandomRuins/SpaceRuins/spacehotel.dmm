@@ -2463,7 +2463,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/plasteel/grimy,

@@ -14,7 +14,7 @@ RSF
 	var/spent_icon_state = "rsf_empty"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON

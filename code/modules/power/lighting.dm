@@ -750,11 +750,12 @@
 	update()
 
 /obj/machinery/light/zap_act(power, zap_flags)
-	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
+	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE)
+	. = ..()
+	if(explosive)
 		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
-	else
-		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()

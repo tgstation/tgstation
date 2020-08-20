@@ -64,6 +64,8 @@
 
 ///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
 /datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1)
+	set waitfor = FALSE
+
 	if(!SSachievements.achievements_enabled)
 		return
 	var/datum/award/A = SSachievements.awards[achievement_type]

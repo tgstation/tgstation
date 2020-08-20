@@ -5,7 +5,7 @@
 	icon_state = "hypnochair"
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 
 	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
 	var/interrogating = FALSE ///Is the device currently interrogating someone?
@@ -175,7 +175,7 @@
 		else
 			icon_state += "_occupied"
 
-/obj/machinery/hypnochair/container_resist(mob/living/user)
+/obj/machinery/hypnochair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \

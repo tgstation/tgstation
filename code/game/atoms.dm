@@ -204,10 +204,6 @@
 	if (light_power && light_range)
 		update_light()
 
-	if (opacity && isturf(loc))
-		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
-
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
 		SET_BITFLAG_LIST(smoothing_groups)
@@ -614,6 +610,8 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()
+	SIGNAL_HANDLER
+
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
 	. = FALSE
 
@@ -826,7 +824,7 @@
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
-/atom/proc/zap_act(power, zap_flags, shocked_targets)
+/atom/proc/zap_act(power, zap_flags)
 	return
 
 /**
@@ -1475,6 +1473,10 @@
   */
 /atom/proc/setClosed()
 	return
+
+
+///Called when something resists while this atom is its loc
+/atom/proc/container_resist_act(mob/living/user)
 
 /**
   * Used to attempt to charge an object with a payment component.

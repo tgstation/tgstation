@@ -1,0 +1,8 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - tweak: "Medical bounties will no longer accept tier 1 cybernetic organs, but will still take tiers 2 and 3."
+  - tweak: "Newscasters no longer chirp in your ear every 5 minutes for a news update, but will still provide regular updates if you check the Station Announcements channel."
+  - balance: "Station inflation has been rebalanced, with roundstart balance staying in the ballpark of 200% until the first paycheck, and now using averages to determine how high inflation should be."
+  - balance: "Market crash and CRAB17 both lock down market prices of vending machines until their event ends."
+  - balance: "The Civilian Budget now gets more pay as more civilian bounties are completed over the course of the shift."
