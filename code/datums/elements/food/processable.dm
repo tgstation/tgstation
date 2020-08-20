@@ -12,7 +12,6 @@
 	var/amount_created
 
 /datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 20)
-	SIGNAL_HANDLER
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -29,5 +28,7 @@
 	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
+	SIGNAL_HANDLER
+
 	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
 	return COMPONENT_NO_AFTERATTACK
