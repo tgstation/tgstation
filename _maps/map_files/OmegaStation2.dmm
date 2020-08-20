@@ -32136,10 +32136,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"rsg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/hydroponics)
 "ruy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -72225,7 +72221,7 @@ biz
 bsx
 bcJ
 bdG
-rsg
+otn
 sBx
 sIL
 sLO
@@ -72996,7 +72992,7 @@ biC
 bbV
 aFu
 bew
-bew
+bey
 sBy
 sIO
 sLP
