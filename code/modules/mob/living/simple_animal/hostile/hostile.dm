@@ -50,22 +50,19 @@
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
-	///When a target is found, will the mob attempt to charge at it's target?
+	///When a target is found, will the mob attempt to charge at it's target? Applies charging component.
 	var/charger = FALSE
-	///Tracks if the target is actively charging.
-	var/charge_state = FALSE
-	///In a charge, how many tiles will the charger travel?
+	///In a charge, how many tiles will the parent travel?
 	var/charge_distance = 3
-	///How often can the charging mob actually charge? Effects the cooldown between charges.
+	///How often can the charging parent actually charge? Effects the cooldown between charges.
 	var/charge_frequency = 6 SECONDS
-	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
+	///If the parent is charging, how long will it stun it's target on success, and itself on failure? Does not affect regular melee.
 	var/knockdown_time = 3 SECONDS
-	///Declares a cooldown for potential charges right off the bat.
-	COOLDOWN_DECLARE(charge_cooldown)
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
-
+	if(charger)
+		AddComponent(/datum/component/charger, charge_distance, charge_frequency, knockdown_time)
 	if(!targets_from)
 		targets_from = src
 	wanted_objects = typecacheof(wanted_objects)
@@ -286,9 +283,8 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(charger && (target_distance > minimum_distance) && (target_distance <= charge_distance))//Attempt to close the distance with a charge.
-			enter_charge(target)
-			return TRUE
+		//Component handles all the math and charge handling, so we can just send the signal here.
+		SEND_SIGNAL(src, COMSIG_HOSTILE_CHARGINGINGTARGET, target)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -510,6 +506,38 @@
 		OpenFire(A)
 	..()
 
+/**
+  * Proc that handles the charge impact of the charging mob.
+  * * hit_atom: the target of the charge.
+  */
+/mob/living/simple_animal/hostile/throw_impact(atom/hit_atom)
+	if(!charge_state)
+		return
+	if(!hit_atom)
+		return
+	if(isliving(hit_atom))
+		var/mob/living/living_target = hit_atom
+		var/blocked = FALSE
+		if(ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			if(H.check_shields(simple_parent, 0, "the [simple_parent.name]", attack_type = LEAP_ATTACK))
+				blocked = TRUE
+		if(!blocked)
+			living_target.visible_message("<span class='danger'>[simple_parent] charges on [living_target]!</span>", "<span class='userdanger'>[simple_parent] charges into you!</span>")
+			living_target.Knockdown(knockdown_time)
+			sleep(2 SECONDS)
+			step_towards(simple_parent, living_target)
+		else
+			simple_parent.Stun((knockdown_time * 2), 1, 1)
+		charge_end()
+	else if(hit_atom.density && !hit_atom.CanPass(simple_parent))
+		simple_parent.visible_message("<span class='danger'>[simple_parent] smashes into [hit_atom]!</span>")
+		simple_parent.Stun((knockdown_time * 2), 1, 1)
+
+	if(charge_state)
+		charge_state = FALSE
+		simple_parent.update_icons()
+		simple_parent.update_mobility()
 
 
 ////// AI Status ///////
@@ -592,55 +620,3 @@
 		friends = fren
 		faction = fren.faction.Copy()
 	return ..()
-
-/**
-  * Proc that handles a charge attack for a mob.
-  */
-/mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
-		return FALSE
-
-	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
-		return FALSE
-	Shake(15, 15, 1 SECONDS)
-	sleep(1.5 SECONDS) //Provides a visable wind up and tell for all charging mobs, with consistant visuals each time.
-	charge_state = TRUE
-	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
-	COOLDOWN_START(src, charge_cooldown, charge_frequency)
-	return TRUE
-
-/mob/living/simple_animal/hostile/proc/charge_end()
-	charge_state = FALSE
-
-/**
-  * Proc that handles the charge impact of the charging mob.
-  */
-/mob/living/simple_animal/hostile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!charge_state)
-		return ..()
-
-	if(hit_atom)
-		if(isliving(hit_atom))
-			var/mob/living/L = hit_atom
-			var/blocked = FALSE
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
-					blocked = TRUE
-			if(!blocked)
-				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
-				L.Knockdown(knockdown_time)
-				sleep(2)
-				step_towards(src,L)
-			else
-				Stun((knockdown_time * 2), 1, 1)
-			charge_end()
-		else if(hit_atom.density && !hit_atom.CanPass(src))
-			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
-			Stun((knockdown_time * 2), 1, 1)
-
-		if(charge_state)
-			charge_state = FALSE
-			update_icons()
-			update_mobility()
-
