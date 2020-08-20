@@ -1,0 +1,4 @@
+author: "Guestratem"
+delete-after: True
+changes: 
+  - spellcheck: "Added a word to fix messaging with the slot machine."
