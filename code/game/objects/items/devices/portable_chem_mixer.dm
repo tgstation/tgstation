@@ -112,12 +112,11 @@
 	return TRUE
 
 /obj/item/storage/portable_chem_mixer/attack_hand(mob/user)
-	if(loc == user)
-		var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-		if (locked)
-			ui_interact(user)
-			return
-	return ..()
+	if (loc != user)
+		return ..()
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		ui_interact(user)
+		return
 
 /obj/item/storage/portable_chem_mixer/attack_self(mob/user)
 	if(loc == user)
