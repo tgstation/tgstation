@@ -1,6 +1,6 @@
 ///Hud type with targetting dol and a nutrition bar
 /datum/hud/ooze/New(mob/living/owner)
-	..()
+	. = ..()
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
