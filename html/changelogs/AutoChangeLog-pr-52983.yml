@@ -1,5 +1,0 @@
-author: "Donkie"
-delete-after: True
-changes: 
-  - tweak: "Cleaning system is now more intuitive. Scrubbing action = forensic wiping, only spraying = forensics kept."
-  - balance: "Cleaning machines (janicart, etc) and the cleanbot will now get rid of forensic evidence"

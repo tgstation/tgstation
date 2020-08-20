@@ -9,6 +9,8 @@
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
 /datum/element/cleaning/proc/Clean(datum/source)
+	SIGNAL_HANDLER
+
 	var/atom/movable/AM = source
 	var/turf/tile = AM.loc
 	if(!isturf(tile))

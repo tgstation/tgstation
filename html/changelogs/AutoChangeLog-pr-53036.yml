@@ -1,0 +1,5 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "Disarming a monkey is now the same as disarming a human."
+  - rscadd: "Monkeys can now be shoved into humans and vice versa."

@@ -1,5 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - bugfix: "Replacing damaged eyes actually fixes your eyes."
-  - bugfix: "You cannot fix your eyes by just putting on glasses"

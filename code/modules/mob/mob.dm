@@ -501,6 +501,8 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 /mob/proc/clear_from_recent_examines(atom/A)
+	SIGNAL_HANDLER
+
 	if(!client)
 		return
 	UnregisterSignal(A, COMSIG_PARENT_QDELETING)

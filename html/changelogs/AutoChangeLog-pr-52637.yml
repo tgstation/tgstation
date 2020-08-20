@@ -1,5 +1,0 @@
-author: "ATHATH (and ShizCalev)"
-delete-after: True
-changes: 
-  - tweak: "The in-hand crafting menu for runic metal now mentions which cult structure makes which cult items."
-  - tweak: "The descriptions of cult structures now remind you which cult items they can create, but only if you're a cultist or an observer."

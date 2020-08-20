@@ -1,7 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "station stuck component now has a murder mode, that doesn't gib."
-  - balance: "skeleton ghost role on away missions can no longer go stationwide. They'll collapse the moment they enter the portal."
-  - code_imp: "moved all those fuckin' ghost role spawners out of corpse.dm and into ghost_role_spawners.dm"
-  - refactor: "cleaned up stationstuck component a ton."
