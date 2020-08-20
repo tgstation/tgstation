@@ -520,9 +520,14 @@
 	. = gun_light
 	gun_light = new_light
 	if(gun_light)
-		light_flags |= LIGHT_ATTACHED
+		gun_light.set_light_flags(gun_light.light_flags | LIGHT_ATTACHED)
+		if(gun_light.loc != src)
+			gun_light.forceMove(src)
 	else if(.)
-		light_flags &= ~LIGHT_ATTACHED
+		var/obj/item/flashlight/seclite/old_gun_light = .
+		old_gun_light.set_light_flags(old_gun_light.light_flags & ~LIGHT_ATTACHED)
+		if(old_gun_light.loc == src)
+			old_gun_light.forceMove(get_turf(src))
 
 
 /obj/item/gun/ui_action_click(mob/user, actiontype)
@@ -537,6 +542,7 @@
 
 	var/mob/living/carbon/human/user = usr
 	gun_light.on = !gun_light.on
+	gun_light.update_brightness()
 	to_chat(user, "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)

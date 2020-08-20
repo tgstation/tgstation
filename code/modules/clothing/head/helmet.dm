@@ -48,6 +48,7 @@
 		update_helmlight()
 		update_icon()
 		QDEL_NULL(alight)
+		qdel(A)
 	return ..()
 
 
@@ -58,9 +59,14 @@
 	. = attached_light
 	attached_light = new_attached_light
 	if(attached_light)
-		light_flags |= LIGHT_ATTACHED
+		attached_light.set_light_flags(attached_light.light_flags | LIGHT_ATTACHED)
+		if(attached_light.loc != src)
+			attached_light.forceMove(src)
 	else if(.)
-		light_flags &= ~LIGHT_ATTACHED
+		var/obj/item/flashlight/seclite/old_attached_light = .
+		old_attached_light.set_light_flags(old_attached_light.light_flags & ~LIGHT_ATTACHED)
+		if(old_attached_light.loc == src)
+			old_attached_light.forceMove(get_turf(src))
 
 
 /obj/item/clothing/head/helmet/sec
@@ -516,7 +522,8 @@
 	if(user.incapacitated())
 		return
 	attached_light.on = !attached_light.on
-	to_chat(user, "<span class='notice'>You toggle the helmet-light [attached_light.on ? "on":"off"].</span>")
+	attached_light.update_brightness()
+	to_chat(user, "<span class='notice'>You toggle the helmet light [attached_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_helmlight()

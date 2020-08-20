@@ -5,7 +5,7 @@
 ///Light made by masking the lighting darkness plane.
 #define MOVABLE_LIGHT 2
 
-///Carries a lighting object inside of it, meaning that the lighting component should go one level deeper.
+///Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
 
 //Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it

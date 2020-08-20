@@ -581,9 +581,20 @@
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
-	light_range = 2.5
-	light_power = -3
-	light_color = COLOR_BLACK
+	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
+	light_range = 0
+	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
+	var/dark_light_range = 2.5
+	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
+	var/dark_light_power = -3
+
+
+/obj/item/flashlight/flashdark/update_brightness(mob/user)
+	. = ..()
+	if(on)
+		set_light(dark_light_range, dark_light_power)
+	else
+		set_light(0)
 
 
 /obj/item/flashlight/eyelight
