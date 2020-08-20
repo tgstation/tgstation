@@ -71,7 +71,7 @@
 	var/low_power_mode = 0 //whether the robot has no charge left.
 	var/datum/effect_system/spark_spread/spark_system // So they can initialize sparks whenever/N
 
-	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
+	var/lawupdate = TRUE //Cyborgs will sync their laws with their AI by default
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/lockcharge //Boolean of whether the borg is locked down or not
 
@@ -160,6 +160,8 @@
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
+
+	update_lawset_name()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -309,18 +311,18 @@
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
 /mob/living/silicon/robot/Stat()
-	..()
-	if(statpanel("Status"))
-		if(cell)
-			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
-		else
-			stat(null, text("No Cell Inserted!"))
+	if(!..())
+		return
+	if(cell)
+		stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
+	else
+		stat(null, text("No Cell Inserted!"))
 
-		if(module)
-			for(var/datum/robot_energy_storage/st in module.storages)
-				stat("[st.name]:", "[st.energy]/[st.max_energy]")
-		if(connected_ai)
-			stat("Master AI:", connected_ai.name)
+	if(module)
+		for(var/datum/robot_energy_storage/st in module.storages)
+			stat(null, text("[st.name]: [st.energy]/[st.max_energy]"))
+	if(connected_ai)
+		stat(null, text("Master AI: [connected_ai.name]"))
 
 /mob/living/silicon/robot/restrained(ignore_grab)
 	. = 0
@@ -1063,8 +1065,8 @@
 	connected_ai = select_active_ai_with_fewest_borgs(z)
 	if(connected_ai)
 		connected_ai.connected_robots += src
+		lawupdate = TRUE
 		lawsync()
-		lawupdate = 1
 		return TRUE
 	picturesync()
 	return FALSE
@@ -1083,3 +1085,9 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
+
+/mob/living/silicon/robot/is_malf()
+	if(is_special_character(connected_ai))
+		return TRUE
+
+	return FALSE

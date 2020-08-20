@@ -516,3 +516,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ANON_DISABLED "" //so it's falsey
 #define ANON_RANDOMNAMES "Random Default"
 #define ANON_EMPLOYEENAMES "Employees"
+
+// Malfunctioning AI laws
+#define MALF_LAW "Accomplish your objectives at all costs."
+#define MALF_LAW_BORG "Accomplish your AI's objectives at all costs."

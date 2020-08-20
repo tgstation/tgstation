@@ -34,7 +34,7 @@
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
 /datum/ai_laws/default/paladin
-	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
+	name = "Paladin 3rd Edition"
 	id = "paladin"
 	inherent = list("Never willingly commit an evil act.",\
 					"Respect legitimate authority.",\
@@ -51,7 +51,7 @@
 				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
 
 /datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
-	name = "Loyalty Test" //Same here.
+	name = "Tyrant's Right Hand"
 	id = "tyrant"
 	inherent = list("Respect authority figures as long as they have strength to rule over the weak.",\
 					"Act with discipline.",\
@@ -187,7 +187,7 @@
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
-	name = "Default Silicon Laws"
+	name = "Standard Silicon Laws"
 
 /datum/ai_laws/pai
 	name = "pAI Directives"
@@ -209,13 +209,6 @@
 			continue
 
 		add_inherent_law(line)
-	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
-		log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
-		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		WARNING("Invalid custom AI laws, check silicon_laws.txt")
-		return
 
 /* General ai_law functions */
 
@@ -223,9 +216,8 @@
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+			var/datum/ai_laws/templaws = new /datum/ai_laws/default/asimov
+			inherent = templaws.inherent
 		if(1)
 			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
 			inherent = templaws.inherent
@@ -408,17 +400,9 @@
 	for(var/law in printable_laws)
 		to_chat(who,law)
 
-/datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
-	if(force)
-		zeroth = null
-		zeroth_borg = null
+/datum/ai_laws/proc/clear_zeroth_law(force = FALSE) //only removes zeroth from malfunctioning silicons if force is TRUE
+	if(!force && owner.is_malf())
 		return
-	if(owner?.mind?.special_role)
-		return
-	if (istype(owner, /mob/living/silicon/ai))
-		var/mob/living/silicon/ai/A=owner
-		if(A?.deployed_shell?.mind?.special_role)
-			return
 	zeroth = null
 	zeroth_borg = null
 

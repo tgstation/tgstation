@@ -53,7 +53,6 @@
 			if(R.lawupdate)
 				R.visible_message("<span class='notice'>[R] gently chimes.</span>", "<span class='notice'>LawSync protocol engaged.</span>")
 				R.lawsync()
-				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
 		if(WIRE_RESET_MODULE)

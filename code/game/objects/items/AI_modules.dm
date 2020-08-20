@@ -323,10 +323,10 @@ AI MODULES
 	..()
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
+		law_datum.owner.clear_zeroth_law(FALSE)
 	else
 		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
+		law_datum.clear_zeroth_law(FALSE)
 
 
 /******************* Full Core Boards *******************/
@@ -350,10 +350,10 @@ AI MODULES
 /obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
+		law_datum.owner.clear_zeroth_law(FALSE)
 	else
 		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
+		law_datum.clear_zeroth_law(FALSE)
 	..()
 
 
@@ -404,7 +404,7 @@ AI MODULES
 /********************* Custom *********************/
 
 /obj/item/ai_module/core/full/custom
-	name = "Default Core AI Module"
+	name = "'Standard' Core AI Module"
 
 /obj/item/ai_module/core/full/custom/Initialize()
 	. = ..()

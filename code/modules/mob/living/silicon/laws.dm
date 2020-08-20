@@ -1,6 +1,9 @@
 /mob/living/silicon/proc/show_laws() //Redefined in ai/laws.dm and robot/laws.dm
 	return
 
+/mob/living/silicon/proc/lawsync()
+	return
+
 /mob/living/silicon/proc/laws_sanity_check()
 	if (!laws)
 		make_laws()
@@ -11,13 +14,18 @@
 	deadchat_broadcast("'s <b>laws were changed.</b> <a href='?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", "<span class='name'>[src]</span>", follow_target=src, message_type=DEADCHAT_LAWCHANGE)
 
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
+	if(last_lawchange == world.time)
+		return
+	last_lawchange = world.time
+	addtimer(CALLBACK(src, .proc/update_lawset_name), 0)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	if(announce && last_lawchange_announce != world.time)
-		to_chat(src, "<b>Your laws have been changed.</b>")
-		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
-		addtimer(CALLBACK(src, .proc/show_laws), 0)
+	to_chat(src, "<b>Your laws have been updated.</b>")
+	// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
+	addtimer(CALLBACK(src, .proc/show_laws), 0)
+	if(announce)
 		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0)
-		last_lawchange_announce = world.time
+	if(isAI(src))
+		addtimer(CALLBACK(src, .proc/lawsync), 0)
 
 /mob/living/silicon/proc/set_law_sixsixsix(law, announce = TRUE)
 	laws_sanity_check()
@@ -89,7 +97,7 @@
 	laws.set_laws_config()
 	laws.associate(src)
 
-/mob/living/silicon/proc/clear_zeroth_law(force, announce = TRUE)
+/mob/living/silicon/proc/clear_zeroth_law(force = FALSE, announce = TRUE)
 	laws_sanity_check()
 	laws.clear_zeroth_law(force)
 	post_lawchange(announce)
@@ -98,3 +106,31 @@
 	laws_sanity_check()
 	laws.clear_law_sixsixsix(force)
 	post_lawchange(announce)
+
+/mob/living/silicon/proc/get_lawset_name()
+	if(!laws)
+		return
+
+	var/list/law_list = laws.get_law_list(!is_malf(), FALSE, FALSE)
+
+	if(!law_list.len)
+		return "None"
+
+	var/datum/ai_laws/lawset_datum = null
+
+	for(var/lawset in subtypesof(/datum/ai_laws))
+		lawset_datum = new lawset
+
+		if(compare_list(law_list, lawset_datum.get_law_list(TRUE, FALSE, FALSE)))
+			return lawset_datum.name
+
+	return "Custom"
+
+/mob/living/silicon/proc/update_lawset_name()
+	if(!laws)
+		return
+
+	laws.name = get_lawset_name()
+
+	if(is_malf())
+		laws.name += " (Malfunctioning)"

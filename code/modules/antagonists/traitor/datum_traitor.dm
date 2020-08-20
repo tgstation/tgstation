@@ -19,8 +19,13 @@
 	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
-	if(owner.current && isAI(owner.current))
-		traitor_kind = TRAITOR_AI
+	if(owner.current)
+		if(iscyborg(owner.current))
+			var/mob/living/silicon/robot/R = owner.current
+			if(R.deployed)
+				R.undeploy()
+		if(isAI(owner.current))
+			traitor_kind = TRAITOR_AI
 
 	SSticker.mode.traitors += owner
 	owner.special_role = special_role
@@ -31,11 +36,16 @@
 
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
-	if(traitor_kind == TRAITOR_AI && owner.current && isAI(owner.current))
-		var/mob/living/silicon/ai/A = owner.current
-		A.set_zeroth_law("")
-		A.remove_malf_abilities()
-		QDEL_NULL(A.malf_picker)
+	if(owner.current && traitor_kind == TRAITOR_AI)
+		if(iscyborg(owner.current))
+			var/mob/living/silicon/robot/R = owner.current
+			if(R.deployed)
+				R.undeploy()
+		if(isAI(owner.current))
+			var/mob/living/silicon/ai/A = owner.current
+			A.clear_zeroth_law(TRUE)
+			A.remove_malf_abilities()
+			QDEL_NULL(A.malf_picker)
 	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
@@ -248,9 +258,7 @@
 	var/mob/living/silicon/ai/killer = owner.current
 	if(!killer || !istype(killer))
 		return
-	var/law = "Accomplish your objectives at all costs."
-	var/law_borg = "Accomplish your AI's objectives at all costs."
-	killer.set_zeroth_law(law, law_borg)
+	killer.set_zeroth_law(MALF_LAW, MALF_LAW_BORG)
 	killer.set_syndie_radio()
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()

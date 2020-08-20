@@ -15,7 +15,7 @@
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
-	var/last_lawchange_announce = 0
+	var/last_lawchange = 0
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
 	var/designation = ""
@@ -58,6 +58,22 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
+
+/mob/living/silicon/Stat()
+	..()
+
+	if(!statpanel("Status"))
+		return FALSE
+
+	if(stat)
+		stat(null, text("Systems nonfunctional!"))
+
+		return FALSE
+
+	if(laws)
+		stat(null, text("Lawset: [laws.name]"))
+
+	return TRUE
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -436,3 +452,6 @@
 
 /mob/living/silicon/rust_heretic_act()
 	adjustBruteLoss(500)
+
+/mob/living/silicon/proc/is_malf()
+	return FALSE

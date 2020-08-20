@@ -297,17 +297,16 @@
 
 
 // moved out of admins.dm because things other than admin procs were calling this.
-/// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
+/// Returns TRUE if we're either a malfunctioning AI, or we're someone with a special role/antag datum
 /proc/is_special_character(mob/M)
-	if(!SSticker.HasRoundStarted())
-		return FALSE
 	if(!istype(M))
 		return FALSE
-	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
-		return FALSE
+	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext unless you're a malfunctioning AI in a shell
+		var/mob/living/silicon/robot/R = M
+		return (R.deployed && R.laws?.zeroth == MALF_LAW)
 	if(isAI(M))
 		var/mob/living/silicon/ai/A = M
-		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
+		return A.laws?.zeroth == MALF_LAW
 	if(M.mind?.special_role || !isnull(M.mind?.antag_datums)) //they have an antag datum!
 		return TRUE
 	return FALSE

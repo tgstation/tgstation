@@ -17,10 +17,7 @@
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
-	if(!everyone)
-		for(var/mob/living/silicon/robot/R in connected_robots)
-			if(R.lawupdate)
-				R.lawsync()
-				R.show_laws()
-				R.law_change_counter++
 
+/mob/living/silicon/ai/lawsync()
+	for(var/mob/living/silicon/robot/R in connected_robots)
+		R.lawsync()

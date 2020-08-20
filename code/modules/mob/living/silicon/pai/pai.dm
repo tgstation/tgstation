@@ -149,6 +149,8 @@
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
+	update_lawset_name()
+
 /mob/living/silicon/pai/proc/pdaconfig()
 	//PDA
 	aiPDA = new/obj/item/pda/ai(src)
@@ -194,12 +196,9 @@
 		client.eye = card
 
 /mob/living/silicon/pai/Stat()
-	..()
-	if(statpanel("Status"))
-		if(!stat)
-			stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
-		else
-			stat(null, text("Systems nonfunctional"))
+	if(!..())
+		return
+	stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
 
 /mob/living/silicon/pai/restrained(ignore_grab)
 	. = FALSE
