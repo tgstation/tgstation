@@ -106,6 +106,14 @@ You can double-click these batch files to achieve the same thing:
 
 ## Troubleshooting
 
+**Development server is crashing**
+
+Make sure path to your working directory does not contain spaces or special
+unicode characters. If so, move codebase to a location which does not contain
+spaces or unicode characters.
+
+This is a known issue with Yarn Berry, and fix is going to happen someday.
+
 **Development server doesn't find my BYOND cache!**
 
 This happens if your Documents folder in Windows has a custom location, for
