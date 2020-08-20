@@ -54,6 +54,7 @@
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
 
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -63,6 +64,8 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
 
 
 /atom/movable/Destroy(force)
@@ -79,13 +82,8 @@
 			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
 
-		// If we have opacity, make sure to tell (potentially) affected light sources.
-		if(opacity && isturf(loc))
-			var/turf/turf_loc = loc
-			var/old_has_opaque_atom = turf_loc.has_opaque_atom
-			turf_loc.recalc_atom_opacity()
-			if(old_has_opaque_atom != turf_loc.has_opaque_atom)
-				turf_loc.reconsider_lights()
+	if(opacity)
+		RemoveElement(/datum/element/light_blocking)
 
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -776,7 +774,7 @@
 	. = dense_object_backup
 
 ///called when a mob resists while inside a container that is itself inside something.
-/atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
+/atom/movable/proc/relay_container_resist_act(mob/living/user, obj/O)
 	return
 
 
@@ -793,10 +791,10 @@
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
 		pixel_y_diff = 8
-		turn_dir = rand(50) ? -1 : 1
+		turn_dir = prob(50) ? -1 : 1
 	else if(direction & SOUTH)
 		pixel_y_diff = -8
-		turn_dir = rand(50) ? -1 : 1
+		turn_dir = prob(50) ? -1 : 1
 
 	if(direction & EAST)
 		pixel_x_diff = 8

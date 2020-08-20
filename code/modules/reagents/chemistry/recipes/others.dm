@@ -438,7 +438,7 @@
 		cube.Expand()
 	else
 		var/location = get_turf(holder.my_atom)
-		new /mob/living/carbon/monkey(location)
+		new /mob/living/carbon/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis

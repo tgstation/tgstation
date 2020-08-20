@@ -17,7 +17,8 @@ const logger = createLogger('webpack');
 
 export const getWebpackConfig = async options => {
   const require = createRequire(import.meta.url);
-  const createConfig = await require('../tgui/webpack.config.js');
+  const cwd = process.cwd();
+  const createConfig = await require(cwd + '/webpack.config.js');
   return createConfig({}, options);
 };
 

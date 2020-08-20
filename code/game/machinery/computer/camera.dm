@@ -21,6 +21,8 @@
 	var/list/cam_plane_masters
 	var/obj/screen/background/cam_background
 
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
+
 /obj/machinery/computer/security/Initialize()
 	. = ..()
 	// Map name has to start and end with an A-Z character,
@@ -279,6 +281,8 @@
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
+	SIGNAL_HANDLER
+
 	interact(usr)
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)

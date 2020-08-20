@@ -302,7 +302,7 @@ class ChatRenderer {
           logger.error('Error: message is missing text payload', message);
         }
         // Highlight text
-        if (this.highlightRegex) {
+        if (!message.avoidHighlighting && this.highlightRegex) {
           const highlighted = highlightNode(node,
             this.highlightRegex,
             text => (

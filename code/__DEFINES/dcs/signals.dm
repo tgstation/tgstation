@@ -165,7 +165,9 @@
 ///from base of atom/attack_paw(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 	#define COMPONENT_NO_ATTACK_HAND (1<<0)								//works on all 3.
-//This signal return value bitflags can be found in __DEFINES/misc.dm
+///from base of atom/set_opacity(): (new_opacity)
+#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
+
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
 #define COMISG_STORAGE_ENTERED "storage_entered"
 //from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
@@ -580,6 +582,8 @@
 
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
+	#define COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS (1<<0)
+	#define COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE (1<<1)
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
