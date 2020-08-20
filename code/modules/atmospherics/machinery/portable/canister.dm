@@ -70,7 +70,7 @@
 		"roinneil" = /obj/machinery/portable_atmospherics/canister/roinneil,
 		"cymar" = /obj/machinery/portable_atmospherics/canister/cymar,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
-		"gamma-gas" = /obj/machinery/portable_atmospherics/canister/sivana
+		"sivana" = /obj/machinery/portable_atmospherics/canister/sivana
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
