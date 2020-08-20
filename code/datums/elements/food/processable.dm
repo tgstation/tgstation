@@ -3,7 +3,7 @@
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	///The type of atom this creates when the processing recipe is used.
-	var/atom/result_atom_type
+	var/result_atom_type
 	///The tool behaviour for this processing recipe
 	var/tool_behaviour
 	///Time to process the atom
