@@ -37,6 +37,7 @@ This element is used in vat growing to allow for the object to be
 
 ///Ran when the parent is swabbed by an object that can swab that type of obj. The list is sent by ref, which means the thing which sent the signal will still have the updated list.
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
+	SIGNAL_HANDLER
 	. = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
 	LAZYADD(mutable_results, GenerateSample())
