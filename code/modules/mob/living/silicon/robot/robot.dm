@@ -1083,3 +1083,8 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
+
+/mob/living/silicon/robot/proc/logevent(var/string = "")
+	if(!string)
+		return
+
