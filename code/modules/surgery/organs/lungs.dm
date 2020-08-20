@@ -333,9 +333,9 @@
 
 	// Raynar
 		var/raynar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/raynar][MOLES])
-		if(raynar_pp > 0.01)
-			H.Unconscious(200)
-			H.Sleeping(200)
+		if(raynar_pp > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/raynar)
+			H.reagents.add_reagent(/datum/reagent/raynar,max(0, 1 - existing))
 			H.adjustOxyLoss(-5)
 			H.adjustFireLoss(-7)
 			H.adjustToxLoss(-7)
@@ -347,7 +347,7 @@
 		// Inert
 	// Cymar
 		var/cymar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/cymar][MOLES])
-		if(cymar_pp > 0.1)
+		if(cymar_pp > gas_stimulation_min)
 			H.adjustBruteLoss(25)
 			H.adjustOxyLoss(5)
 			H.adjustFireLoss(8)

@@ -26,7 +26,8 @@ halon_formation = 15
 sivana_formation = 16
 raynar_crystal_production = 17
 roinneil_crystal_production = 18
-cymar crystal_production = 19
+cymar_crystal_production = 19
+roinneil_response = 20
 nobiliumsuppression = INFINITY
 */
 
