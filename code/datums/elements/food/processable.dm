@@ -2,7 +2,7 @@
 /datum/element/processable
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
-	///The atom this creates when the processing recipe is used.
+	///The type of atom this creates when the processing recipe is used.
 	var/atom/result_atom
 	///The tool behaviour for this processing recipe
 	var/tool_behaviour
