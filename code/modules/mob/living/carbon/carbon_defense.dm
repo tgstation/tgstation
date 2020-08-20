@@ -282,13 +282,13 @@
 		var/directional_blocked = FALSE
 		if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
 			var/target_turf = get_turf(target)
-			for(var/obj/O in target_turf)
-				if(O.flags_1 & ON_BORDER_1 && O.dir == shove_dir && O.density)
+			for(var/obj/obj_content in target_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
 					directional_blocked = TRUE
 					break
 			if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
-				for(var/obj/O in target_shove_turf)
-					if(O.flags_1 & ON_BORDER_1 && O.dir == turn(shove_dir, 180) && O.density)
+				for(var/obj/obj_content in target_shove_turf)
+					if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
 						directional_blocked = TRUE
 						break
 		if((!target_table && !target_collateral_carbon && !target_disposal_bin) || directional_blocked)
