@@ -10,7 +10,7 @@
 	. = ..()
 	starting_area = get_area(loc)
 
-/mob/camera/ai_eye/remote/base_construction/setLoc(var/t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(t)
 	var/area/curr_area = get_area(t)
 	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxiliary_base))
 		return ..()
@@ -210,13 +210,13 @@
 
 
 /datum/action/innate/aux_base/window_type
-	name = "Select Window Type"
+	name = "Select Window Glass"
 	button_icon_state = "window_select"
 
 /datum/action/innate/aux_base/window_type/Activate()
 	if(..())
 		return
-	B.RCD.toggle_window_type()
+	B.RCD.toggle_window_glass()
 
 /datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"

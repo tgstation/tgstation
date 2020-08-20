@@ -57,7 +57,7 @@
 		M.take_damage(50, BRUTE, "melee", 1)
 
 //Elites can't talk (normally)!
-/mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(can_talk)
 		. = ..()
 		return TRUE
@@ -304,7 +304,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
 	icon_state = "wall"
 	duration = 50
-	smoothing_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	layer = BELOW_MOB_LAYER
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE

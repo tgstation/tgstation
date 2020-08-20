@@ -46,7 +46,7 @@
 				affected_mob.AdjustSleeping(100)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")
-				affected_mob.confused = min(100, affected_mob.confused + 8)
+				affected_mob.set_confusion(min(100, affected_mob.get_confusion() + 8))
 			if(prob(10))
 				affected_mob.vomit(20)
 			if(prob(3))

@@ -34,6 +34,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/texture_layer_icon_state
 	///a cached filter for the texture icon
 	var/cached_texture_filter
+	///What type of shard the material will shatter to
+	var/obj/item/shard_type
 
 /datum/material/New()
 	. = ..()
@@ -101,7 +103,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	I.pickup_sound = item_sound_override
 	I.drop_sound = item_sound_override
 
-/datum/material/proc/on_applied_turf(var/turf/T, amount, material_flags)
+/datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
 		if(!turf_sound_override)
 			return

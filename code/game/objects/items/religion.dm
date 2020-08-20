@@ -5,7 +5,8 @@
 	icon_state = "banner"
 	inhand_icon_state = "banner"
 	force = 8
-	attack_verb = list("forcefully inspired", "violently encouraged", "relentlessly galvanized")
+	attack_verb_continuous = list("forcefully inspires", "violently encourages", "relentlessly galvanizes")
+	attack_verb_simple = list("forcefully inspire", "violently encourage", "relentlessly galvanize")
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
@@ -80,8 +81,11 @@
 	inhand_icon_state = "banner_security"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
+
+/obj/item/banner/security/Initialize()
+	. = ..()
+	job_loyalties = GLOB.security_positions
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -101,8 +105,11 @@
 	inhand_icon_state = "banner_medical"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Medical Doctor", "Chemist", "Virologist", "Chief Medical Officer")
 	warcry = "No wounds cannot be healed!"
+
+/obj/item/banner/medical/Initialize()
+	. = ..()
+	job_loyalties = GLOB.medical_positions
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -130,8 +137,11 @@
 	inhand_icon_state = "banner_science"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Scientist", "Roboticist", "Research Director", "Geneticist",)
 	warcry = "For Cuban Pete!"
+
+/obj/item/banner/science/Initialize()
+	. = ..()
+	job_loyalties = GLOB.science_positions
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
@@ -154,8 +164,11 @@
 	inhand_icon_state = "banner_cargo"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
 	warcry = "Hail Cargonia!"
+
+/obj/item/banner/cargo/Initialize()
+	. = ..()
+	job_loyalties = GLOB.supply_positions
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -175,8 +188,11 @@
 	inhand_icon_state = "banner_engineering"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 	warcry = "All hail lord Singuloth!!"
+
+/obj/item/banner/engineering/Initialize()
+	. = ..()
+	job_loyalties = GLOB.engineering_positions
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
@@ -196,8 +212,11 @@
 	name = "command banner"
 	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
 	//No icon state here since the default one is the NT banner
-	job_loyalties = list("Captain", "Head of Personnel", "Chief Engineer", "Head of Security", "Research Director", "Chief Medical Officer")
 	warcry = "Hail Nanotrasen!"
+
+/obj/item/banner/command/Initialize()
+	. = ..()
+	job_loyalties = GLOB.command_positions
 
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE

@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
+	var/alert_cooldown ///don't spam alart messages.
 	var/mob/living/silicon/pai/pai
 	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -157,7 +158,12 @@
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/paicard/proc/alertUpdate()
-	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")
+	if(!COOLDOWN_FINISHED(src, alert_cooldown))
+		return
+	COOLDOWN_START(src, alert_cooldown, 5 SECONDS)
+	flick("[initial(icon_state)]-alert", src)
+	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	loc.visible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", blind_message = "<span class='notice'>[src] vibrates with an alert.</span>")
 
 /obj/item/paicard/emp_act(severity)
 	. = ..()

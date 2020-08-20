@@ -234,7 +234,7 @@
 	return TRUE
 
 ///Sets the variables for new legion skulls. Usually called after splitting.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(var/mob/living/simple_animal/hostile/megafauna/legion/L)
+/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/L)
 	maxHealth = L.maxHealth
 	updatehealth()
 	size = L.size

@@ -115,7 +115,7 @@
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
 ///from base of atom/set_light(): (l_range, l_power, l_color)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
-///from base of atom/setDir(): (old_dir, new_dir)
+///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/handle_atom_del(): (atom/deleted)
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
@@ -165,7 +165,13 @@
 ///from base of atom/attack_paw(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 	#define COMPONENT_NO_ATTACK_HAND (1<<0)								//works on all 3.
-//This signal return value bitflags can be found in __DEFINES/misc.dm
+///from base of atom/set_opacity(): (new_opacity)
+#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
+
+//from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
+#define COMISG_STORAGE_ENTERED "storage_entered"
+//from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
+#define CONSIG_STORAGE_EXITED "storage_exited"
 
 ///from base of atom/expose_reagents():
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
@@ -278,6 +284,8 @@
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
 ///called when the movable sucessfully has it's anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
+///from base of atom/movable/setGrabState(): (newstate)
+#define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
 
 // /mob signals
 
@@ -364,6 +372,8 @@
 #define COMSIG_LIVING_REVIVE "living_revive"
 ///from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
+///from base of mob/living/set_buckled(): (new_buckled)
+#define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
@@ -435,6 +445,13 @@
 #define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"
 ///from base power_change() when power is restored
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
+
+// /obj/machinery/door/airlock signals
+
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/close(): (forced)
+#define COMSIG_AIRLOCK_CLOSE "airlock_close"
 
 // /obj/item signals
 
@@ -565,6 +582,8 @@
 
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"
+	#define COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS (1<<0)
+	#define COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE (1<<1)
 ///from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
 ///from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)

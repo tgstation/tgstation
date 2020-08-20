@@ -85,3 +85,9 @@
 		if(WIRE_RESET_MODULE)
 			if(R.has_module() && !mend)
 				R.ResetModule()
+
+/datum/wires/robot/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))
+		return TRUE
+
+	return ..()

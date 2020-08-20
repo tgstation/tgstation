@@ -511,7 +511,7 @@
   * If the seed's instability is >= 20, the seed donates one of it's reagents to that nearby plant.
   * * Range - The Oview range of trays to which to look for plants to donate reagents.
   */
-/obj/machinery/hydroponics/proc/pollinate(var/range = 1)
+/obj/machinery/hydroponics/proc/pollinate(range = 1)
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
@@ -812,7 +812,7 @@
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.endurance = (myseed.endurance/2)
 			flowergun.cell.use(flowergun.cell.charge)
-			flowergun.update_overlays()
+			flowergun.update_icon()
 			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
 			return
 	else

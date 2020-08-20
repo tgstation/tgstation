@@ -221,7 +221,7 @@
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
-			M.confused += 1
+			M.add_confusion(1)
 			M.drowsyness += 1
 			M.slurring += 3
 		if(5 to 8)
@@ -378,7 +378,7 @@
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 10)
-			M.confused += 2
+			M.add_confusion(2)
 			M.drowsyness += 2
 		if(10 to 50)
 			M.Sleeping(40, 0)
@@ -979,7 +979,7 @@
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
-	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
+	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && prob(8))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
@@ -1000,5 +1000,5 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,1)
 	if(prob(1))
 		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
-		M.confused += 5
+		M.add_confusion(5)
 	return ..()

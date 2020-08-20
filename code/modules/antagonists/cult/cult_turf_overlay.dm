@@ -1,6 +1,7 @@
 //an "overlay" used by clockwork walls and floors to appear normal to mesons.
 /obj/effect/cult_turf/overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
 	var/atom/linked
 
 /obj/effect/cult_turf/overlay/examine(mob/user)

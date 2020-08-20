@@ -15,7 +15,8 @@
 	drop_sound = 'sound/items/handling/wrench_drop.ogg'
 	pickup_sound =  'sound/items/handling/wrench_pickup.ogg'
 
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
@@ -40,7 +41,8 @@
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
-	attack_verb = list("healed", "medicaled", "tapped", "poked", "analyzed") //"cobbyed"
+	attack_verb_continuous = list("heals", "medicals", "taps", "pokes", "analyzes") //"cobbyed"
+	attack_verb_simple = list("heal", "medical", "tap", "poke", "analyze")
 	///var to hold the name of the person who suicided
 	var/suicider
 
@@ -80,7 +82,8 @@
 	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
 	icon_state = "wrench_combat"
 	inhand_icon_state = "wrench_combat"
-	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
+	attack_verb_continuous = list("devastates", "brutalizes", "commits a war crime against", "obliterates", "humiliates")
+	attack_verb_simple = list("devastate", "brutalize", "commit a war crime against", "obliterate", "humiliate")
 	tool_behaviour = null
 	toolspeed = null
 	var/on = FALSE

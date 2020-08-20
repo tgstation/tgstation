@@ -110,7 +110,7 @@
   * * D - Design datum to get information on.
   * * categories - Boolean, whether or not to parse snowflake categories into the part information list.
   */
-/obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D, var/categories = FALSE)
+/obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D, categories = FALSE)
 	var/cost = list()
 	for(var/c in D.materials)
 		var/datum/material/M = c
@@ -442,7 +442,7 @@
   * * resource - Material datum reference to the resource to calculate the cost of.
   * * roundto - Rounding value for round() proc
   */
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
 /**
@@ -526,7 +526,7 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, var/list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
 	if(..())
 		return TRUE
 

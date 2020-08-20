@@ -133,7 +133,7 @@
 /**
   * Show a message to this mob (visual or audible)
   */
-/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)
 		return
 
@@ -160,7 +160,7 @@
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 		return
-	to_chat(src, msg)
+	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
 
 /**
   * Generate a visible message from this atom
@@ -446,9 +446,41 @@
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind())
-		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
-		return
+	if(is_blind()) //blind people see things differently (through touch)
+		//need to be next to something and awake
+		if(!in_range(A, src) || incapacitated())
+			to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
+			return
+		//also neeed an empty hand, and you can only initiate as many examines as you have hands
+		if(LAZYLEN(do_afters) >= get_num_arms() || get_active_held_item())
+			to_chat(src, "<span class='warning'>You don't have a free hand to examine this!</span>")
+			return
+		//can only queue up one examine on something at a time
+		if(A in do_afters)
+			return
+
+		to_chat(src, "<span class='notice'>You start feeling around for something...</span>")
+		visible_message("<span class='notice'> [name] begins feeling around for \the [A.name]...</span>")
+
+		/// how long it takes for the blind person to find the thing they're examining
+		var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
+		if(client?.recent_examines && client?.recent_examines[A]) //easier to find things we just touched
+			examine_delay_length = 0.5 SECONDS
+		else if(isobj(A))
+			examine_delay_length *= 1.5
+		else if(ismob(A) && A != src)
+			examine_delay_length *= 2
+
+		if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = A))
+			to_chat(src, "<span class='notice'>You can't get a good feel for what is there.</span>")
+			return
+
+		//now we touch the thing we're examining
+		/// our current intent, so we can go back to it after touching
+		var/previous_intent = a_intent
+		a_intent = INTENT_HELP
+		A.attack_hand(src)
+		a_intent = previous_intent
 
 	face_atom(A)
 	var/list/result
@@ -469,6 +501,8 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 /mob/proc/clear_from_recent_examines(atom/A)
+	SIGNAL_HANDLER
+
 	if(!client)
 		return
 	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
@@ -778,7 +812,11 @@
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		if (SSticker.round_start_time)
-			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
+			var/round_time = world.time - SSticker.round_start_time
+			if(round_time > MIDNIGHT_ROLLOVER)
+				stat(null, "Round Time: [round(round_time/MIDNIGHT_ROLLOVER)]:[gameTimestamp("hh:mm:ss", round_time)]")
+			else
+				stat(null, "Round Time: [gameTimestamp("hh:mm:ss", round_time)]")
 		else
 			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
 		stat(null, "Station Time: [station_time_timestamp()]")
@@ -968,7 +1006,7 @@
 
 ///Add a spell to the mobs spell list
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
-	mob_spell_list += S
+	LAZYADD(mob_spell_list, S)
 	S.action.Grant(src)
 
 ///Remove a spell from the mobs spell list
@@ -978,7 +1016,7 @@
 	for(var/X in mob_spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
-			mob_spell_list -= S
+			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
 
 ///Return any anti magic atom on this mob that matches the magic type
@@ -1043,7 +1081,11 @@
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	return isAdminGhostAI(src) || Adjacent(A)
+	if(isAdminGhostAI(src) || Adjacent(A))
+		return TRUE
+	var/datum/dna/mob_dna = has_dna()
+	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
+		return TRUE
 
 ///Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
@@ -1301,11 +1343,11 @@
 	H.open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
-/mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	nutrition = max(0, nutrition + change)
 
 ///Force set the mob nutrition
-/mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
+/mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
 
 ///Set the movement type of the mob and update it's movespeed

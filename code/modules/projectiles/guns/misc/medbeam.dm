@@ -108,15 +108,15 @@
 	qdel(dummy)
 	return 1
 
-/obj/item/gun/medbeam/proc/on_beam_hit(var/mob/living/target)
+/obj/item/gun/medbeam/proc/on_beam_hit(mob/living/target)
 	return
 
-/obj/item/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
+/obj/item/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.health != target.maxHealth)
 		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 	target.heal_overall_damage(brute = 4, burn = 4, toxin = 1, oxy = 1)
 
-/obj/item/gun/medbeam/proc/on_beam_release(var/mob/living/target)
+/obj/item/gun/medbeam/proc/on_beam_release(mob/living/target)
 	return
 
 /obj/effect/ebeam/medical

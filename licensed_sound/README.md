@@ -1,0 +1,1 @@
+Each folder here corrosponds to some license used for sound. If you want to add a file that is not licensed under CC BY-SA https://creativecommons.org/licenses/by-sa/3.0/ to the codebase, make a folder here with the info about the license in it, and put the file in said folder.

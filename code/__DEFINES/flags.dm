@@ -6,6 +6,10 @@
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
+/* Directions */
+///All the cardinal direction bitflags.
+#define ALL_CARDINALS (NORTH|SOUTH|EAST|WEST)
+
 // for /datum/var/datum_flags
 #define DF_USE_TAG		(1<<0)
 #define DF_VAR_EDITED	(1<<1)
@@ -56,6 +60,30 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN_1				(1<<6)
 /// Blocks ruins spawning on the turf
 #define NO_RUINS_1					(1<<10)
+
+////////////////Area flags\\\\\\\\\\\\\\
+/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+#define VALID_TERRITORY				(1<<0)
+/// If blobs can spawn there and if it counts towards their score.
+#define BLOBS_ALLOWED				(1<<1)
+/// If mining tunnel generation is allowed in this area
+#define TUNNELS_ALLOWED				(1<<2)
+/// If flora are allowed to spawn in this area randomly through tunnel generation
+#define FLORA_ALLOWED				(1<<3)
+/// If mobs can be spawned by natural random generation
+#define MOB_SPAWN_ALLOWED			(1<<4)
+/// If megafauna can be spawned by natural random generation
+#define MEGAFAUNA_SPAWN_ALLOWED		(1<<5)
+/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+#define NOTELEPORT					(1<<6)
+/// Hides area from player Teleport function.
+#define HIDDEN_AREA					(1<<7)
+/// If false, loading multiple maps with this area type will create multiple instances.
+#define UNIQUE_AREA					(1<<8)
+/// If people are allowed to suicide in it. Mostly for OOC stuff like minigames
+#define BLOCK_SUICIDE				(1<<9)
+/// Can the Xenobio management console transverse this area by default?
+#define XENOBIOLOGY_COMPATIBLE		(1<<10)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -154,6 +182,26 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RELIGION_TOOL_SACRIFICE (1<<1)
 #define RELIGION_TOOL_SECTSELECT (1<<2)
 
-//skillchip flags
-//Skillchip type can be implanted multiple times
+// ---- Skillchip incompatability flags ---- //
+// These flags control which skill chips are compatible with eachother.
+// By default, skillchips are incompatible with themselves and multiple of the same istype() cannot be implanted together. Set this flag to disable that check.
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
+// This skillchip is incompatible with other skillchips from the incompatible_category list.
+#define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
+// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
+#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
+
+//dir macros
+///Returns true if the dir is diagonal, false otherwise
+#define ISDIAGONALDIR(d) (d&(d-1))
+///True if the dir is north or south, false therwise
+#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
+///True if the dir is east/west, false otherwise
+#define EWCOMPONENT(d)   (d&(EAST|WEST))
+///Flips the dir for north/south directions
+#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
+///Flips the dir for east/west directions
+#define EWDIRFLIP(d)     (d^(EAST|WEST))
+///Turns the dir by 180 degrees
+#define DIRFLIP(d)       turn(d, 180)

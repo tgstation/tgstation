@@ -122,7 +122,9 @@
 	var/bottom_left_corner
 	///Smoothing variable
 	var/bottom_right_corner
-	///Type path list this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
+	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it.
+	var/list/smoothing_groups = null
+	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
 
 
@@ -202,12 +204,14 @@
 	if (light_power && light_range)
 		update_light()
 
-	if (opacity && isturf(loc))
-		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
-
-	if (canSmoothWith)
-		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+	if (length(smoothing_groups))
+		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+		SET_BITFLAG_LIST(smoothing_groups)
+	if (length(canSmoothWith))
+		sortTim(canSmoothWith)
+		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+			smoothing_flags |= SMOOTH_OBJ
+		SET_BITFLAG_LIST(canSmoothWith)
 
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
@@ -606,6 +610,8 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()
+	SIGNAL_HANDLER
+
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
 	. = FALSE
 
@@ -818,7 +824,7 @@
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
-/atom/proc/zap_act(power, zap_flags, shocked_targets)
+/atom/proc/zap_act(power, zap_flags)
 	return
 
 /**
@@ -1468,10 +1474,14 @@
 /atom/proc/setClosed()
 	return
 
+
+///Called when something resists while this atom is its loc
+/atom/proc/container_resist_act(mob/living/user)
+
 /**
   * Used to attempt to charge an object with a payment component.
   *
   * Use this if an atom needs to attempt to charge another atom.
   */
-/atom/proc/attempt_charge(var/atom/sender, var/atom/target, var/extra_fees = 0)
+/atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)

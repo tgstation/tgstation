@@ -701,7 +701,7 @@
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M)
 	M.heal_overall_damage(brute = 0.5, burn = 0.5, toxin = 0.5, oxy = 0.5)
 	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+		if(!(M.mind && (M.mind.assigned_role in GLOB.medical_positions))) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2)
 	..()
 	. = 1

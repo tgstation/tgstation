@@ -58,12 +58,10 @@
 	var/obj/halitem
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
-	var/cpr_time = 1 ///CPR cooldown.
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 ///Overall drunkenness
 	var/stam_regen_start_time = 0 ///used to halt stamina regen temporarily
-	var/stam_paralyzed = FALSE ///knocks you down
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
@@ -78,7 +76,5 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
-	/// Maximum number of skillchips slots we can support before they stop working
-	var/max_skillchip_slots = 2
-	/// Currently used skillchip slots
-	var/used_skillchip_slots = 0
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
+	var/skillchip_complexity_modifier = 0

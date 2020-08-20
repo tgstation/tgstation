@@ -80,7 +80,7 @@
   * * attacker_controller - the controller of the attacking toy. there should ALWAYS be an attacker_controller
   * * opponent - (optional) the defender controller in the battle, for PvP
   */
-/obj/item/toy/prize/proc/combat_sleep(var/delay, obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
+/obj/item/toy/prize/proc/combat_sleep(delay, obj/item/toy/prize/attacker, mob/living/carbon/attacker_controller, mob/living/carbon/opponent)
 	if(!attacker_controller)
 		return FALSE
 

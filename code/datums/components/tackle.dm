@@ -63,11 +63,15 @@
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
+	SIGNAL_HANDLER
+
 	tackle = TT
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
+	SIGNAL_HANDLER
+
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
@@ -140,6 +144,8 @@
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!tackling || !tackle)
 		return
 
@@ -385,7 +391,7 @@
 		if(84 to 93)
 			user.visible_message("<span class='danger'>[user] slams head-first into [hit], suffering major cranial trauma!</span>", "<span class='userdanger'>You slam head-first into [hit], and the world explodes around you!</span>")
 			user.take_overall_damage(brute = 30, stamina = 30)
-			user.confused += 15
+			user.add_confusion(15)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
@@ -397,7 +403,7 @@
 		if(64 to 83)
 			user.visible_message("<span class='danger'>[user] slams hard into [hit], knocking [user.p_them()] senseless!</span>", "<span class='userdanger'>You slam hard into [hit], knocking yourself senseless!</span>")
 			user.take_overall_damage(brute = 10, stamina = 30)
-			user.confused += 10
+			user.add_confusion(10)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 
@@ -446,6 +452,8 @@
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
+	SIGNAL_HANDLER
+
 	if(!tackling)
 		return
 

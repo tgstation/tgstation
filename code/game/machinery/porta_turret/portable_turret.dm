@@ -112,7 +112,7 @@
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
-/obj/machinery/porta_turret/proc/toggle_on(var/set_to)
+/obj/machinery/porta_turret/proc/toggle_on(set_to)
 	var/current = on
 	if (!isnull(set_to))
 		on = set_to
@@ -206,7 +206,7 @@
 		"neutralize_unidentified" = turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS,
 		"neutralize_nonmindshielded" = turret_flags & TURRET_FLAG_SHOOT_UNSHIELDED,
 		"neutralize_cyborgs" = turret_flags & TURRET_FLAG_SHOOT_BORGS,
-		"ignore_heads" = turret_flags & TURRET_FLAG_SHOOT_HEADS,
+		"neutralize_heads" = turret_flags & TURRET_FLAG_SHOOT_HEADS,
 		"manual_control" = manual_control,
 		"silicon_user" = FALSE,
 		"allow_manual_control" = FALSE,
