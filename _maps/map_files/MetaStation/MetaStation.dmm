@@ -37441,12 +37441,17 @@
 "bLO" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 6
 	},
 /obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bLQ" = (
@@ -39907,9 +39912,12 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/light,
-/obj/structure/extinguisher_cabinet{
+/obj/machinery/button/door{
+	id = "kitchenwindow";
+	name = "Window Shutter Control";
 	pixel_x = -6;
-	pixel_y = -32
+	pixel_y = -24;
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -65882,13 +65890,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "ecJ" = (
-/obj/machinery/button/door{
-	id = "kitchenwindow";
-	name = "Window Shutter Control";
-	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "28"
-	},
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel/cafeteria{
