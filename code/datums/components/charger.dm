@@ -25,7 +25,9 @@
 		charge_frequency = _charge_freq
 	if(_knockdown_time)
 		knockdown_time = _knockdown_time
-	RegisterSignal(parent, list(COMSIG_HOSTILE_CHARGINGINGTARGET), .proc/enter_charge)
+	RegisterSignal(parent, list(COMSIG_HOSTILE_CHARGING_TARGET), .proc/enter_charge)
+	RegisterSignal(parent, list(COMSIG_HOSTILE_POST_CHARGE), .proc/charge_check)
+	RegisterSignal(parent, list(COMSIG_HOSTILE_STOP_CHARGE), .proc/charge_end)
 
 /**
   * Proc that handles a charge attack for a mob.
@@ -49,4 +51,10 @@
   */
 /datum/component/charger/proc/charge_end()
 	charge_state = FALSE
+
+/**
+  * Proc that tells the hostile mob to use the proper thrown behavior, like a charge, instead of the usual being tossed around.
+  */
+/datum/component/charger/proc/charge_check()
+	return COMPONENT_HOSTILE_POSTCHARGE_IMPACT
 

@@ -284,7 +284,7 @@
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		//Component handles all the math and charge handling, so we can just send the signal here.
-		SEND_SIGNAL(src, COMSIG_HOSTILE_CHARGINGINGTARGET, target)
+		SEND_SIGNAL(src, COMSIG_HOSTILE_CHARGING_TARGET, target)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -511,8 +511,8 @@
   * * hit_atom: the target of the charge.
   */
 /mob/living/simple_animal/hostile/throw_impact(atom/hit_atom)
-	if(!charge_state)
-		return
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_POST_CHARGE) & !(COMPONENT_HOSTILE_POSTCHARGE_IMPACT))
+		return ..()
 	if(!hit_atom)
 		return
 	if(isliving(hit_atom))
@@ -520,24 +520,21 @@
 		var/blocked = FALSE
 		if(ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
-			if(H.check_shields(simple_parent, 0, "the [simple_parent.name]", attack_type = LEAP_ATTACK))
+			if(H.check_shields(src, 0, "the [src]", attack_type = LEAP_ATTACK))
 				blocked = TRUE
 		if(!blocked)
-			living_target.visible_message("<span class='danger'>[simple_parent] charges on [living_target]!</span>", "<span class='userdanger'>[simple_parent] charges into you!</span>")
+			living_target.visible_message("<span class='danger'>[src] charges on [living_target]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 			living_target.Knockdown(knockdown_time)
 			sleep(2 SECONDS)
-			step_towards(simple_parent, living_target)
+			step_towards(src, living_target)
 		else
-			simple_parent.Stun((knockdown_time * 2), 1, 1)
-		charge_end()
-	else if(hit_atom.density && !hit_atom.CanPass(simple_parent))
-		simple_parent.visible_message("<span class='danger'>[simple_parent] smashes into [hit_atom]!</span>")
-		simple_parent.Stun((knockdown_time * 2), 1, 1)
-
-	if(charge_state)
-		charge_state = FALSE
-		simple_parent.update_icons()
-		simple_parent.update_mobility()
+			Stun((knockdown_time * 2), 1, 1)
+	else if(hit_atom.density && !hit_atom.CanPass(src))
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
+		Stun((knockdown_time * 2), 1, 1)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_STOP_CHARGE)
+	update_icons()
+	update_mobility()
 
 
 ////// AI Status ///////

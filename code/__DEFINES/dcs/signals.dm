@@ -411,7 +411,13 @@
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 ///from /mob/living/simple_animal/hostile, when queuing a charge attack.
-#define COMSIG_HOSTILE_CHARGINGINGTARGET "hostile_chargingtarget"
+#define COMSIG_HOSTILE_CHARGING_TARGET "hostile_chargingtarget"
+///from /mob/living/simple_animal/hostile, when impacting a charge attack.
+#define COMSIG_HOSTILE_POST_CHARGE "hostile_postcharge"
+	#define COMPONENT_HOSTILE_POSTCHARGE_IMPACT (1<<0)
+///from /mob/living/simple_animal/hostile, when a charge is ending/resetting.
+#define COMSIG_HOSTILE_STOP_CHARGE "hostile_stop_charge"
+
 
 // /obj signals
 
