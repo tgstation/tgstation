@@ -4,8 +4,8 @@
 	key = "f"
 	space_chance = 70
 	syllables = list(
-		"mao", "cht", "skr", "pspsps", "mew", "maw", "sss", "hss", "mouw", 
-		"reow", "meow", "krr", "cht-cht", "nya", "chrp", "chipt",
-		"baou", "reeaow", "aaahou")
+		"mao", "cht", "skr", "pspsps", "mew", "maw", "sss", "hss", "mouw", "reow", "meow",krr", "cht-cht", 
+		"nya", "chrp", "chipt", "baou", "reeaow", "aaahou")
 	icon_state = "neko"
+
 	default_priority = 90
