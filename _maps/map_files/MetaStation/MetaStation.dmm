@@ -67085,9 +67085,8 @@
 /area/quartermaster/warehouse)
 "fOY" = (
 /obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	name = "Bar";
+	req_access_txt = "25"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/navbeacon/wayfinding/bar,
