@@ -1,0 +1,5 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Lift platform that works like moving catwalk"
+  - rscadd: "Lift now on MultiZ debug station"
