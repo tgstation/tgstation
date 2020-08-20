@@ -263,7 +263,7 @@
 /obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
 	if(contents)
 		QDEL_LIST(contents)
-	return ..()
+
 
 /obj/item/food/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
