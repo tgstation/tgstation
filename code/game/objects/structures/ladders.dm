@@ -84,6 +84,12 @@
 	user.forceMove(T)
 	if(AM)
 		user.start_pulling(AM)
+	
+	//reopening ladder radial menu ahead
+	var/turf/T = get_turf(user)
+	var/obj/structure/ladder/L = locate() in T
+	if (L)
+		L.use(user)
 
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
 	if (!is_ghost && !in_range(src, user))
@@ -94,23 +100,24 @@
 		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 		)
 
-	if (up && down)
-		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-		if (!is_ghost && !in_range(src, user))
-			return  // nice try
-		switch(result)
-			if("Up")
-				travel(TRUE, user, is_ghost, up)
-			if("Down")
-				travel(FALSE, user, is_ghost, down)
-			if("Cancel")
-				return
-	else if(up)
-		travel(TRUE, user, is_ghost, up)
-	else if(down)
-		travel(FALSE, user, is_ghost, down)
-	else
+	if (!(up && down))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
+
+	if (!up)
+		tool_list -= "Up"
+	if (!down)
+		tool_list -= "Down"
+	
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if (!is_ghost && !in_range(src, user))
+		return  // nice try
+	switch(result)
+		if("Up")
+			travel(TRUE, user, is_ghost, up)
+		if("Down")
+			travel(FALSE, user, is_ghost, down)
+		if("Cancel")
+			return
 
 	if(!is_ghost)
 		add_fingerprint(user)
