@@ -29,35 +29,23 @@
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
 	. = ..()
+	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if (pandemonium == TRUE)
-		active_price += (rand(10,30)) //The wheel of capitalism says health care ain't cheap.
-	if(!istype(C))
-		say("No ID card detected.") // No unidentified crew.
-		return
-	if(C.registered_account)
+	if(C?.registered_account)
 		account = C.registered_account
-	else
-		say("No account detected.")  //No homeless crew.
-		return
 	if(account?.account_job?.paycheck_department == payment_department)
 		use_power(20)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
-	if(!account.has_money(active_price))
-		say("You do not possess the funds to purchase this.")  //No jobless crew, either.
+	var/bonus_fee = pandemonium ? rand(10,30) : 0
+	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	else
-		account.adjust_money(-active_price)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
-		if(D)
-			D.adjust_money(active_price)
-		use_power(20)
-		paying_customer = TRUE
+	use_power(20)
+	paying_customer = TRUE
 	icon_state = "kiosk_active"
 	say("Thank you for your patronage!")
 	RefreshParts()
@@ -332,22 +320,26 @@
 		return
 	switch(action)
 		if("beginScan_1")
-			inuse()
+			if(!scan_active_1)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_1 = TRUE
 				paying_customer = FALSE
 		if("beginScan_2")
-			inuse()
+			if(!scan_active_2)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_2 = TRUE
 				paying_customer = FALSE
 		if("beginScan_3")
-			inuse()
+			if(!scan_active_3)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_3 = TRUE
 				paying_customer = FALSE
 		if("beginScan_4")
-			inuse()
+			if(!scan_active_4)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_4 = TRUE
 				paying_customer = FALSE

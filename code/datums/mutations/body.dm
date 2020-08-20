@@ -230,7 +230,7 @@
 	locked = TRUE
 
 /datum/mutation/human/glow/anti/glow_color()
-	return COLOR_WHITE
+	return COLOR_VERY_LIGHT_GRAY
 
 /datum/mutation/human/strong
 	name = "Strength"
@@ -402,6 +402,8 @@
 
 ///Triggers on moved(). Randomly makes the owner trip
 /datum/mutation/human/extrastun/proc/on_move()
+	SIGNAL_HANDLER
+
 	if(prob(99.5)) //The brawl mutation
 		return
 	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
@@ -430,6 +432,8 @@
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
 /datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+	SIGNAL_HANDLER
+
 	if(new_stat != UNCONSCIOUS)
 		return
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
@@ -447,7 +451,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.confused += 3
+		H.add_confusion(3)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Paralyze(60)
@@ -495,5 +499,7 @@
 
 
 /datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+	SIGNAL_HANDLER
+
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH

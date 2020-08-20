@@ -20,6 +20,7 @@
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
 	printer_ready = world.time + PRINTER_TIMEOUT
 
 /obj/machinery/doppler_array/ComponentInitialize()
@@ -114,12 +115,10 @@
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
-			anchored = TRUE
-			power_change()
+			set_anchored(TRUE)
 			to_chat(user, "<span class='notice'>You fasten [src].</span>")
 		else if(anchored)
-			anchored = FALSE
-			power_change()
+			set_anchored(FALSE)
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
 		return
@@ -131,6 +130,8 @@
 
 /obj/machinery/doppler_array/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 			took, orig_dev_range, orig_heavy_range, orig_light_range)
+	SIGNAL_HANDLER
+
 	if(machine_stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)

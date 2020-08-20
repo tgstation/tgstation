@@ -63,6 +63,17 @@
 		return 0
 	return 1
 
+/*
+ * On accidental consumption, transfer a portion of the reagents to the eater and the item it's in, then continue to the base proc (to deal with shattering glass containers)
+ */
+/obj/item/reagent_containers/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	M.losebreath += 2
+	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transfered_by = user, method = INGEST)
+	if(source_item?.reagents)
+		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, method = TOUCH)
+
+	return ..()
+
 /obj/item/reagent_containers/ex_act()
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)

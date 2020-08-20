@@ -25,6 +25,14 @@
 "ag" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/undergroundoutpost45/central)
+"ah" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -1183,8 +1191,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "cM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5;
-	
+	dir = 5
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -2091,15 +2098,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/undergroundoutpost45/central)
-"eu" = (
-/turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating";
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "ev" = (
 /obj/item/clothing/under/misc/pj,
 /obj/structure/closet/secure_closet/personal/cabinet{
@@ -3797,8 +3795,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
@@ -3810,8 +3807,7 @@
 "hV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9286,8 +9282,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance";
@@ -41856,7 +41851,7 @@ tT
 gy
 uN
 hH
-eu
+ah
 eJ
 ad
 ad
@@ -42113,7 +42108,7 @@ tU
 uw
 uO
 vk
-eu
+ah
 eJ
 eJ
 ad
@@ -42370,7 +42365,7 @@ tV
 ux
 uP
 hH
-eu
+ah
 eJ
 eJ
 eJ
@@ -50556,9 +50551,9 @@ ad
 ad
 ad
 ad
-eu
-eu
-eu
+ah
+ah
+ah
 fn
 eJ
 eJ

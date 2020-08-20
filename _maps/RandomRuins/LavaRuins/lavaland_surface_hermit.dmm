@@ -99,7 +99,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "w" = (
-/obj/machinery/smartfridge/survival_pod,
+/obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "x" = (

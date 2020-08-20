@@ -65,9 +65,9 @@
 #define SPAN_SINGING "singing"
 
 //bitflag #defines for return value of the radio() proc.
-#define ITALICS 1
-#define REDUCE_RANGE 2
-#define NOPASS 4
+#define ITALICS			(1<<0)
+#define REDUCE_RANGE	(1<<1)
+#define NOPASS			(1<<2)
 
 //Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
@@ -101,3 +101,6 @@
 #define INVOCATION_SHOUT "shout"
 #define INVOCATION_EMOTE "emote"
 #define INVOCATION_WHISPER "whisper"
+
+//Used in visible_message_flags, audible_message_flags and runechat_flags
+#define EMOTE_MESSAGE (1<<0)

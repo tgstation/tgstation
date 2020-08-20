@@ -106,7 +106,7 @@
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-						setAnchored(!anchored)
+						set_anchored(!anchored)
 				return
 
 		if(2)
@@ -114,7 +114,7 @@
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-					setAnchored(!anchored)
+					set_anchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
@@ -172,7 +172,7 @@
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-					setAnchored(!anchored)
+					set_anchored(!anchored)
 				return
 
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
@@ -183,20 +183,22 @@
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/machinery/new_machine = new circuit.build_path(loc)
-					if(new_machine.circuit)
-						QDEL_NULL(new_machine.circuit)
-					new_machine.circuit = circuit
-					new_machine.setAnchored(anchored)
-					new_machine.on_construction()
-					for(var/obj/O in new_machine.component_parts)
-						qdel(O)
-					new_machine.component_parts = list()
-					for(var/obj/O in src)
-						O.moveToNullspace()
-						new_machine.component_parts += O
-					circuit.moveToNullspace()
-					new_machine.RefreshParts()
+					var/obj/potential_machine = new circuit.build_path(loc)
+					if(ismachinery(potential_machine))
+						var/obj/machinery/new_machine = potential_machine
+						if(new_machine.circuit)
+							QDEL_NULL(new_machine.circuit)
+						new_machine.circuit = circuit
+						new_machine.set_anchored(anchored)
+						new_machine.on_construction()
+						for(var/obj/O in new_machine.component_parts)
+							qdel(O)
+						new_machine.component_parts = list()
+						for(var/obj/O in src)
+							O.moveToNullspace()
+							new_machine.component_parts += O
+						circuit.moveToNullspace()
+						new_machine.RefreshParts()
 					qdel(src)
 				return
 

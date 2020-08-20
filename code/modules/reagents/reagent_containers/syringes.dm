@@ -15,6 +15,7 @@
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
 	custom_price = 150
+	sharpness = SHARP_POINTY
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -154,6 +155,17 @@
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
+
+/* 
+ * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
+ */
+/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
+	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) 
+	if(reagents?.total_volume)
+		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, method = INJECT)
+
+	return discover_after
 
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()

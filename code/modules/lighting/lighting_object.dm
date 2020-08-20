@@ -33,7 +33,7 @@
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(var/force)
+/atom/movable/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
 		if (loc != myturf)
@@ -144,7 +144,7 @@
 /atom/movable/lighting_object/onTransitZ()
 	return
 
-/atom/movable/lighting_object/washed(var/washer)
+/atom/movable/lighting_object/wash(clean_types)
 	return
 
 // Override here to prevent things accidentally moving around overlays.

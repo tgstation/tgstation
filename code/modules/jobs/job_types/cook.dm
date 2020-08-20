@@ -1,8 +1,6 @@
 /datum/job/cook
 	title = "Cook"
-	flag = COOK
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 1

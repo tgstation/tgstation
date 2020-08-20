@@ -1,8 +1,6 @@
 /datum/job/roboticist
 	title = "Roboticist"
-	flag = ROBOTICIST
 	department_head = list("Research Director")
-	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -35,3 +33,5 @@
 	satchel = /obj/item/storage/backpack/satchel/tox
 
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	skillchip_path = /obj/item/skillchip/job/roboticist

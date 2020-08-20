@@ -68,6 +68,27 @@
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/**
+  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
+  *
+  * This is useful if you want to better predict how text is going to look like when displaying it to a user
+  * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
+  * HTML5 defines whitespace pretty much exactly like regex defines the \s group, [ \t\r\n\f].
+  * Arguments:
+  * * t - The text to "render"
+  */
+/proc/htmlrendertext(t)
+	// Trim "whitespace" by lazily capturing word characters in the middle
+	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
+	if(matchMiddle.Find(t) == 0)
+		return t
+	t = matchMiddle.group[1]
+
+	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
+	var/static/regex/matchSpacing = new(@"\s+", "g")
+	t = replacetext(t, matchSpacing, " ")
+
+	return t
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length = 512, ascii_only = TRUE)
@@ -95,10 +116,11 @@
 	if(non_whitespace)
 		return text		//only accepts the text if it has some non-spaces
 
-// Used to get a properly sanitized input, of max_length
-// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
+/// Used to get a properly sanitized input, of max_length
+/// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as text|null
+
 	if(no_trim)
 		return copytext(html_encode(name), 1, max_length)
 	else
@@ -837,7 +859,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	catch
 		return
 
-/proc/num2loadingbar(percent as num, var/numSquares = 20, var/reverse = FALSE)
+/proc/num2loadingbar(percent as num, numSquares = 20, reverse = FALSE)
 	var/loadstring = ""
 	for (var/i in 1 to numSquares)
 		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares

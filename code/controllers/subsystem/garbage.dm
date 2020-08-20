@@ -24,8 +24,7 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-
-	#ifdef TESTING
+	#ifdef LEGACY_REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
 	#endif
 
@@ -136,8 +135,8 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
-			#ifdef TESTING
-			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
+			#ifdef LEGACY_REFERENCE_TRACKING
+			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
@@ -147,18 +146,32 @@ SUBSYSTEM_DEF(garbage)
 		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
-				#ifdef TESTING
+				#ifdef REFERENCE_TRACKING
+				D.find_references()
+				#elif defined(LEGACY_REFERENCE_TRACKING)
 				if(reference_find_on_fail[refID])
-					D.find_references()
+					D.find_references_legacy()
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references()
+					D.find_references_legacy()
 				#endif
 				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
+				#ifdef TESTING
+				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
+					var/client/admin = c
+					if(!check_rights_for(admin, R_ADMIN))
+						continue
+					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
 				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
+				#endif
+				#ifdef REFERENCE_TRACKING
+				GLOB.deletion_failures += D //It should no longer be bothered by the GC, manual deletion only.
+				continue
+				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -242,11 +255,6 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
-#ifdef TESTING
-/proc/qdel_and_find_ref_if_fail(datum/D, force = FALSE)
-	SSgarbage.reference_find_on_fail[REF(D)] = TRUE
-	qdel(D, force)
-#endif
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -301,16 +309,14 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
-			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
+			#ifdef LEGACY_REFERENCE_TRACKING
+			if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
-				#ifdef TESTING
-				D.find_references()
-				#endif
+				D.find_references_legacy()
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
-				#ifdef TESTING
 				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
-				#endif
+			#endif
 			else
 				#ifdef TESTING
 				if(!I.no_hint)
@@ -320,116 +326,3 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
-
-#ifdef TESTING
-
-/datum/verb/find_refs()
-	set category = "Debug"
-	set name = "Find References"
-	set src in world
-
-	find_references(FALSE)
-
-/datum/proc/find_references(skip_alert)
-	running_find_references = type
-	if(usr && usr.client)
-		if(usr.client.running_find_references)
-			testing("CANCELLED search for references to a [usr.client.running_find_references].")
-			usr.client.running_find_references = null
-			running_find_references = null
-			//restart the garbage collector
-			SSgarbage.can_fire = 1
-			SSgarbage.next_fire = world.time + world.tick_lag
-			return
-
-		if(!skip_alert)
-			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-				running_find_references = null
-				return
-
-	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
-
-	if(usr && usr.client)
-		usr.client.running_find_references = type
-
-	testing("Beginning search for references to a [type].")
-	last_find_references = world.time
-
-	DoSearchVar(GLOB) //globals
-	for(var/datum/thing in world) //atoms (don't beleive it's lies)
-		DoSearchVar(thing, "World -> [thing]")
-
-	for (var/datum/thing) //datums
-		DoSearchVar(thing, "World -> [thing]")
-
-	for (var/client/thing) //clients
-		DoSearchVar(thing, "World -> [thing]")
-
-	testing("Completed search for references to a [type].")
-	if(usr && usr.client)
-		usr.client.running_find_references = null
-	running_find_references = null
-
-	//restart the garbage collector
-	SSgarbage.can_fire = 1
-	SSgarbage.next_fire = world.time + world.tick_lag
-
-/datum/verb/qdel_then_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References"
-	set src in world
-
-	qdel(src, TRUE)		//Force.
-	if(!running_find_references)
-		find_references(TRUE)
-
-/datum/verb/qdel_then_if_fail_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References if GC failure"
-	set src in world
-
-	qdel_and_find_ref_if_fail(src, TRUE)
-
-/datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
-	if(usr && usr.client && !usr.client.running_find_references)
-		return
-	if (!recursive_limit)
-		return
-
-	if(istype(X, /datum))
-		var/datum/D = X
-		if(D.last_find_references == last_find_references)
-			return
-
-		D.last_find_references = last_find_references
-		var/list/L = D.vars
-
-		for(var/varname in L)
-			if (varname == "vars")
-				continue
-			var/variable = L[varname]
-
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
-
-			else if(islist(variable))
-				DoSearchVar(variable, "[Xname] -> list", recursive_limit-1)
-
-	else if(islist(X))
-		var/normal = IS_NORMAL_LIST(X)
-		for(var/I in X)
-			if (I == src)
-				testing("Found [src.type] \ref[src] in list [Xname].")
-
-			else if (I && !isnum(I) && normal && X[I] == src)
-				testing("Found [src.type] \ref[src] in list [Xname]\[[I]\]")
-
-			else if (islist(I))
-				DoSearchVar(I, "[Xname] -> list", recursive_limit-1)
-
-#ifndef FIND_REF_NO_CHECK_TICK
-	CHECK_TICK
-#endif
-
-#endif

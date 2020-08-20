@@ -61,7 +61,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/cockroach/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/hostile/cockroach/Crossed(atom/movable/AM)
 	. = ..()
 	if(isliving(AM))
 		var/mob/living/A = AM
@@ -96,14 +96,14 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("hostile")
-	sharpness = IS_SHARP
+	sharpness = SHARP_POINTY
 	squish_chance = 0 // manual squish if relevant
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/caltrop, 10, 15, 100, (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
-/mob/living/simple_animal/hostile/cockroach/hauberoach/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/hostile/cockroach/hauberoach/Crossed(atom/movable/AM)
 	var/mob/living/A = AM
 	if(istype(A) && A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 		if(!HAS_TRAIT(A, TRAIT_PIERCEIMMUNE))

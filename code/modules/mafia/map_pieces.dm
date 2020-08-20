@@ -14,11 +14,14 @@
 	name = "Mafia Game Board"
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "board"
+	anchored = TRUE
 	var/game_id = "mafia"
+	var/datum/mafia_controller/MF
 
 /obj/mafia_game_board/attack_ghost(mob/user)
 	. = ..()
-	var/datum/mafia_controller/MF = GLOB.mafia_game
+	if(!MF)
+		MF = GLOB.mafia_game
 	if(!MF)
 		MF = create_mafia_game()
 	MF.ui_interact(user)
@@ -30,7 +33,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	block_suicide = TRUE
+	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
 
 /datum/map_template/mafia
 	var/description = ""

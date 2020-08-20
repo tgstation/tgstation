@@ -1,4 +1,4 @@
-#define MAX_EMAG_ROCKETS 8
+#define MAX_EMAG_ROCKETS 5
 #define BEACON_COST 500
 #define SP_LINKED 1
 #define SP_READY 2
@@ -149,6 +149,9 @@
 
 
 		if("add")//Generate Supply Order first
+			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EXPRESSPOD_CONSOLE))
+				say("Railgun recalibrating. Stand by.")
+				return
 			var/id = text2path(params["id"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
@@ -182,13 +185,14 @@
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
 						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
-							if(is_blocked_turf(T))
+							if(T.is_blocked_turf())
 								continue
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						D.adjust_money(-SO.pack.cost)
 						new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
@@ -197,11 +201,12 @@
 				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
 					for(var/turf/open/floor/T in landingzone.contents)
-						if(is_blocked_turf(T))
+						if(T.is_blocked_turf())
 							continue
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 
 						SO.generateRequisition(get_turf(src))

@@ -36,6 +36,9 @@
 		return
 	if(get_dist(T,src) > field_distance_limit)
 		return
+	if (get_turf(src) == T)
+		to_chat(user, "<span class='warning'>Target is too close, aborting!</span>")
+		return
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
 		return

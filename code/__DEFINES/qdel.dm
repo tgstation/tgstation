@@ -6,10 +6,17 @@
 #define QDEL_HINT_IWILLGC		2 //functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 #define QDEL_HINT_HARDDEL		3 //qdel should assume this object won't gc, and queue a hard delete using a hard reference.
 #define QDEL_HINT_HARDDEL_NOW	4 //qdel should assume this object won't gc, and hard del it post haste.
-#define QDEL_HINT_FINDREFERENCE	5 //functionally identical to QDEL_HINT_QUEUE if TESTING is not enabled in _compiler_options.dm.
-								  //if TESTING is enabled, qdel will call this object's find_references() verb.
-#define QDEL_HINT_IFFAIL_FINDREFERENCE 6		//Above but only if gc fails.
 //defines for the gc_destroyed var
+
+#ifdef LEGACY_REFERENCE_TRACKING
+/** If LEGACY_REFERENCE_TRACKING is enabled, qdel will call this object's find_references() verb.
+  *
+  * Functionally identical to QDEL_HINT_QUEUE if GC_FAILURE_HARD_LOOKUP is not enabled in _compiler_options.dm.
+*/
+#define QDEL_HINT_FINDREFERENCE	5
+/// Behavior as QDEL_HINT_FINDREFERENCE, but only if the GC fails and a hard delete is forced.
+#define QDEL_HINT_IFFAIL_FINDREFERENCE 6
+#endif
 
 #define GC_QUEUE_CHECK 1
 #define GC_QUEUE_HARDDELETE 2

@@ -30,6 +30,7 @@
 	bot_type = MULE_BOT
 	model = "MULE"
 	bot_core_type = /obj/machinery/bot_core/mulebot
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -50,6 +51,7 @@
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
 	var/obj/item/stock_parts/cell/cell /// Internal Powercell
+	var/cell_move_power_usage = 1///How much power we use when we move.
 	var/bloodiness = 0 ///If we've run over a mob, how many tiles will we leave tracks on while moving
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
@@ -75,6 +77,7 @@
 	D.set_vehicle_dir_layer(NORTH, layer)
 	D.set_vehicle_dir_layer(EAST, layer)
 	D.set_vehicle_dir_layer(WEST, layer)
+	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/ComponentInitialize()
 	. = ..()
@@ -86,6 +89,7 @@
 	if(A == cell)
 		turn_off()
 		cell = null
+		diag_hud_set_mulebotcell()
 	return ..()
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
@@ -148,6 +152,7 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
+		diag_hud_set_mulebotcell()
 		visible_message("<span class='notice'>[user] inserts \a [cell] into [src].</span>",
 						"<span class='notice'>You insert [cell] into [src].</span>")
 	else if(I.tool_behaviour == TOOL_CROWBAR && open && user.a_intent != INTENT_HARM)
@@ -162,6 +167,7 @@
 		visible_message("<span class='notice'>[user] crowbars [cell] out from [src].</span>",
 						"<span class='notice'>You pry [cell] out of [src].</span>")
 		cell = null
+		diag_hud_set_mulebotcell()
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
@@ -246,7 +252,7 @@
 			data["modeStatus"] = "average"
 		if(BOT_NO_ROUTE)
 			data["modeStatus"] = "bad"
-	data["load"] = load ? load.name : null //IF YOU CHANGE THE NAME OF THIS, UPDATE MULEBOT/PARANORMAL/UI_DATA.
+	data["load"] = get_load_name()
 	data["destination"] = destination ? destination : null
 	data["home"] = home_destination
 	data["destinations"] = GLOB.deliverybeacontags
@@ -359,8 +365,9 @@
 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
 	dat += "</div>"
 
-	dat += "<b>Current Load:</b> [isobserver(load) ? "<i>Unknown</i>" : (load ? load.name : "<i>None</i>")]<BR>"
-	dat += "<b>Destination:</b> [!destination ? "<i>none</i>" : destination]<BR>"
+	var/load_message = get_load_name()
+	dat += "<b>Current Load:</b> <i>[load_message ? load_message : "None"]</i><BR>"
+	dat += "<b>Destination:</b> [!destination ? "<i>None</i>" : destination]<BR>"
 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
 	if(locked && !ai && !isAdminGhostAI(user))
@@ -452,6 +459,10 @@
 	mode = BOT_IDLE
 	update_icon()
 
+///resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
+/mob/living/simple_animal/bot/mulebot/proc/get_load_name()
+	return load ? load.name : null
+
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
 	can_buckle = TRUE
 	if(buckle_mob(M))
@@ -492,6 +503,15 @@
 
 	update_icon()
 
+/mob/living/simple_animal/bot/mulebot/Stat()
+	..()
+	if(statpanel("Status"))
+		if(cell)
+			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
+		else
+			stat(null, text("No Cell Inserted!"))
+		if(load)
+			stat("Current Load:", get_load_name())
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
@@ -502,6 +522,9 @@
 		start()
 
 /mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
+	if(!has_power((client || paicard))) //turn off if we ran out of power.
+		turn_off()
+		return FALSE
 	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
 		return ..()
 	var/atom/oldLoc = loc
@@ -512,6 +535,15 @@
 	B.add_blood_DNA(return_blood_DNA())
 	B.setDir(direct)
 	bloodiness--
+
+/mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
+	. = ..()
+	if(!cell)
+		return
+	cell.use(cell_move_power_usage)
+	if(cell.charge < cell_move_power_usage) //make sure we have enough power to move again, otherwise turn off.
+		turn_off()
+	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
 	if(!on)
@@ -551,7 +583,6 @@
 				if(isturf(next))
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
-					cell.use(1)
 					if(moved && oldloc!=loc)	// successful move
 						blockcount = 0
 						path -= loc
@@ -853,11 +884,10 @@
 	ghost_overlay.pixel_y = 12
 	. += ghost_overlay
 
-/mob/living/simple_animal/bot/mulebot/paranormal/ui_data(mob/user)
-	var/list/data = ..()
-	if(isobserver(load))
-		data["load"] = "Unknown" //don't reveal the name of the ghost to prevent metagaming.
-	return data
+/mob/living/simple_animal/bot/mulebot/paranormal/get_load_name() //Don't reveal the name of ghosts so we can't metagame who died and all that.
+	. = ..()
+	if(. && isobserver(load))
+		return "Unknown"
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")

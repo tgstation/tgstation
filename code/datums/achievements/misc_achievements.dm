@@ -111,3 +111,9 @@
 	name = "HA, GOTTEM"
 	desc = "Made you look!"
 	database_id = MEDAL_GOTTEM
+
+/datum/award/achievement/misc/ascension
+	name = "Ascension"
+	desc = "Caedite eos. Novit enim Dominus qui sunt eius."
+	database_id = MEDAL_ASCENSION
+	icon = "ascension"

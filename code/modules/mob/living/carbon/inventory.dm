@@ -197,7 +197,8 @@
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
 		return
 	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[src] tries to hand over [I] but it's stuck to them....", \
-						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
+		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
 		return
+	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
+					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)

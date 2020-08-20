@@ -46,7 +46,7 @@
 /obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, I))
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		update_icon()
 		return
 	if(default_deconstruction_crowbar(I))

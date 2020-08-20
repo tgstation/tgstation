@@ -460,6 +460,16 @@
 		else
 			holder.icon_state = ""
 
+/mob/living/simple_animal/bot/mulebot/proc/diag_hud_set_mulebotcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(cell)
+		var/chargelvl = (cell.charge/cell.maxcharge)
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
 /*~~~~~~~~~~~~
 	Airlocks!
 ~~~~~~~~~~~~~*/

@@ -30,7 +30,8 @@
 	force = 6
 	hitsound = 'sound/items/welder.ogg'
 	name = "lit [initial(name)]"
-	attack_verb = list("burnt")
+	attack_verb_continuous = list("burns")
+	attack_verb_simple = list("burn")
 	set_light(l_range = 2, l_power = 2)
 	damtype = "fire"
 	START_PROCESSING(SSobj, src)
@@ -84,7 +85,7 @@
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
 	prime()
 
-obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
+/obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 	if(active)
 		return
 	if(det_time)
@@ -96,7 +97,7 @@ obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
 
-obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
+/obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T)
 	if(user)

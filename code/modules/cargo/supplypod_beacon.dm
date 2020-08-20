@@ -12,7 +12,7 @@
 	var/ready = FALSE
 	var/launched = FALSE
 
-/obj/item/supplypod_beacon/proc/update_status(var/consoleStatus)
+/obj/item/supplypod_beacon/proc/update_status(consoleStatus)
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE

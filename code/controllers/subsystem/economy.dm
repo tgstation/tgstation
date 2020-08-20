@@ -163,7 +163,6 @@ SUBSYSTEM_DEF(economy)
 		if(!is_station_level(V.z))
 			continue
 		V.reset_prices(V.product_records, V.coin_records)
-		V.updateUsrDialog()
 	earning_report = "Sector Economic Report<br /> Sector price inflation is currently at [SSeconomy.inflation_value()*100]%.<br /> The station budget is currently <b>[station_total] Credits</b>, and the station's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null)
 

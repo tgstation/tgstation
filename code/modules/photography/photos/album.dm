@@ -96,10 +96,10 @@
 	name = "photo album (Library)"
 	persistence_id = "library"
 
-obj/item/storage/photo_album/chapel
+/obj/item/storage/photo_album/chapel
 	name = "photo album (Chapel)"
 	persistence_id = "chapel"
 
-obj/item/storage/photo_album/prison
+/obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
 	persistence_id = "prison"
