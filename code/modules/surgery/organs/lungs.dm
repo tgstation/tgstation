@@ -111,11 +111,11 @@
 						/datum/gas/stimulum,
 						/datum/gas/freon,
 						/datum/gas/hypernoblium,
-						/datum/gas/gas_x,
-						/datum/gas/gas_y,
-						/datum/gas/gas_z,
-						/datum/gas/delta_gas,
-						/datum/gas/gamma_gas
+						/datum/gas/raynar,
+						/datum/gas/roinneil,
+						/datum/gas/cymar,
+						/datum/gas/halon,
+						/datum/gas/sivana
 						)
 
 	//Partial pressures in our breath
@@ -331,33 +331,33 @@
 
 		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
 
-	// Gas X
-		var/gas_x_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/gas_x][MOLES])
-		if(gas_x_pp > 0.01)
+	// Raynar
+		var/raynar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/raynar][MOLES])
+		if(raynar_pp > 0.01)
 			H.Unconscious(200)
 			H.Sleeping(200)
 			H.adjustOxyLoss(-5)
 			H.adjustFireLoss(-7)
 			H.adjustToxLoss(-7)
 			H.adjustBruteLoss(-10)
-		gas_breathed = breath_gases[/datum/gas/gas_x][MOLES]
-		breath_gases[/datum/gas/gas_x][MOLES]-=gas_breathed
+		gas_breathed = breath_gases[/datum/gas/raynar][MOLES]
+		breath_gases[/datum/gas/raynar][MOLES]-=gas_breathed
 
-	// Gas Y
+	// Roinneil
 		// Inert
-	// Gas Z
-		var/gas_z_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/gas_z][MOLES])
-		if(gas_z_pp > 0.1)
+	// Cymar
+		var/cymar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/cymar][MOLES])
+		if(cymar_pp > 0.1)
 			H.adjustBruteLoss(25)
 			H.adjustOxyLoss(5)
 			H.adjustFireLoss(8)
 			H.adjustToxLoss(8)
-		gas_breathed = breath_gases[/datum/gas/gas_z][MOLES]
-		breath_gases[/datum/gas/gas_z][MOLES]-=gas_breathed
+		gas_breathed = breath_gases[/datum/gas/cymar][MOLES]
+		breath_gases[/datum/gas/cymar][MOLES]-=gas_breathed
 
-	// Delta Gas
+	// Halon
 
-	// Gamma Gas
+	// Sivana
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

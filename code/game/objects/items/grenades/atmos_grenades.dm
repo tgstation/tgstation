@@ -7,23 +7,23 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/item/grenade/gas_crystal/x_crystal
-	name = "X Crystal"
-	desc = "A crystal made from the Gas X, it's cold to the touch."
-	icon_state = "crystal_x"
+/obj/item/grenade/gas_crystal/raynar_crystal
+	name = "Raynar crystal"
+	desc = "A crystal made from the Raynar gas, it's cold to the touch."
+	icon_state = "raynar_crystal"
 	var/stamina_damage = 30
 	var/freeze_range = 4
 
-/obj/item/grenade/gas_crystal/y_crystal
-	name = "Y Crystal"
-	desc = "A crystal made from the Gas Y, you can see the liquid gases inside."
-	icon_state = "crystal_y"
+/obj/item/grenade/gas_crystal/roinneil_crystal
+	name = "Roinneil crystal"
+	desc = "A crystal made from the Roinneil gas, you can see the liquid gases inside."
+	icon_state = "roinneil_crystal"
 	var/refill_range = 5
 
-/obj/item/grenade/gas_crystal/z_crystal
-	name = "Z Crystal"
-	desc = "A crystal made from the Gas Z, you can see the liquid plasma inside."
-	icon_state = "crystal_z"
+/obj/item/grenade/gas_crystal/cymar_crystal
+	name = "Cymar crystal"
+	desc = "A crystal made from the Cymar Gas, you can see the liquid plasma inside."
+	icon_state = "cymar_crystal"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
@@ -45,15 +45,17 @@
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/gas_crystal/x_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/raynar_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isopenturf(T))
 			var/turf/open/F = T
-			if(F.air.temperature > 260)
-				F.air.temperature = 200
+			if(F.air.temperature > 260 && F.air.temperature < 370)
+				F.atmos_spawn_air("Nitrogen = 100; TEMP = 273")
+			if(F.air.temperature > 370)
+				F.atmos_spawn_air("Nitrogen = 250; TEMP = 30")
 				F.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
 			if(F.air.gases[/datum/gas/plasma])
 				F.air.gases[/datum/gas/plasma][MOLES] -= F.air.gases[/datum/gas/plasma][MOLES] * 0.5
@@ -64,7 +66,7 @@
 				L.adjust_bodytemperature(-150)
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/y_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/roinneil_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -76,7 +78,7 @@
 			F.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/z_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/cymar_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)

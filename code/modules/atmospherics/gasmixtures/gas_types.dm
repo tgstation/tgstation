@@ -170,48 +170,48 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 700
 
-/datum/gas/gas_x
-	id = "gas_x"
+/datum/gas/raynar
+	id = "raynar"
 	specific_heat = 10
-	name = "Gas X"
+	name = "Raynar"
 	dangerous = TRUE
-	gas_overlay = "gas_x"
+	gas_overlay = "raynar"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/gas_y
-	id = "gas_y"
+/datum/gas/roinneil
+	id = "roinneil"
 	specific_heat = 30
-	name = "Gas Y"
+	name = "Roinneil"
 	dangerous = TRUE
-	gas_overlay = "gas_y"
+	gas_overlay = "roinneil"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/gas_z
-	id = "gas_z"
+/datum/gas/cymar
+	id = "cymar"
 	specific_heat = 350
-	name = "Gas Z"
+	name = "Cymar"
 	dangerous = TRUE
-	gas_overlay = "gas_z"
+	gas_overlay = "cymar"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/delta_gas
-	id = "delta_gas"
+/datum/gas/halon
+	id = "halon"
 	specific_heat = 175
-	name = "Delta gas"
+	name = "Halon"
 	dangerous = TRUE
-	gas_overlay = "delta_gas"
+	gas_overlay = "halon"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/gamma_gas
-	id = "gamma_gas"
+/datum/gas/sivana
+	id = "sivana"
 	specific_heat = 5
-	name = "Gamma gas"
+	name = "Sivana"
 	dangerous = TRUE
-	gas_overlay = "gamma_gas"
+	gas_overlay = "sivana"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 

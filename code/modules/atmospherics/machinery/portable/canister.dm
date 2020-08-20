@@ -66,11 +66,11 @@
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
 		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
-		"gas-x" = /obj/machinery/portable_atmospherics/canister/gas_x,
-		"gas-y" = /obj/machinery/portable_atmospherics/canister/gas_y,
-		"gas-z" = /obj/machinery/portable_atmospherics/canister/gas_z,
-		"delta-gas" = /obj/machinery/portable_atmospherics/canister/delta_gas,
-		"gamma-gas" = /obj/machinery/portable_atmospherics/canister/gamma_gas
+		"raynar" = /obj/machinery/portable_atmospherics/canister/raynar,
+		"roinneil" = /obj/machinery/portable_atmospherics/canister/roinneil,
+		"cymar" = /obj/machinery/portable_atmospherics/canister/cymar,
+		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
+		"gamma-gas" = /obj/machinery/portable_atmospherics/canister/sivana
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -200,44 +200,44 @@
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/gas_x
-	name = "gas_x canister"
-	desc = "gas_x, highly flammable"
-	icon_state = "gas_x"
-	base_icon_state = "gas_x"
-	gas_type = /datum/gas/gas_x
+/obj/machinery/portable_atmospherics/canister/raynar
+	name = "raynar canister"
+	desc = "Raynar, causes deep sleep"
+	icon_state = "raynar"
+	base_icon_state = "raynar"
+	gas_type = /datum/gas/raynar
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/gas_y
-	name = "gas_y canister"
-	desc = "gas_y, highly flammable"
-	icon_state = "gas_y"
-	base_icon_state = "gas_y"
-	gas_type = /datum/gas/gas_y
+/obj/machinery/portable_atmospherics/canister/roinneil
+	name = "roinneil canister"
+	desc = "Roinneil, uses high temperatures to have different reaction with various gases"
+	icon_state = "roinneil"
+	base_icon_state = "roinneil"
+	gas_type = /datum/gas/roinneil
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/gas_z
-	name = "gas_z canister"
-	desc = "gas_z, highly flammable"
-	icon_state = "gas_z"
-	base_icon_state = "gas_z"
-	gas_type = /datum/gas/gas_z
+/obj/machinery/portable_atmospherics/canister/cymar
+	name = "cymar canister"
+	desc = "Cymar, highly toxic"
+	icon_state = "cymar"
+	base_icon_state = "cymar"
+	gas_type = /datum/gas/cymar
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/delta_gas
-	name = "delta_gas canister"
-	desc = "delta_gas, highly flammable"
-	icon_state = "delta_gas"
-	base_icon_state = "delta_gas"
-	gas_type = /datum/gas/delta_gas
+/obj/machinery/portable_atmospherics/canister/halon
+	name = "halon canister"
+	desc = "Halon, remove oxigen from high temperature fires and cool down the area"
+	icon_state = "halon"
+	base_icon_state = "halon"
+	gas_type = /datum/gas/halon
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/gamma_gas
-	name = "gamma_gas canister"
-	desc = "gamma_gas, highly flammable"
-	icon_state = "gamma_gas"
-	base_icon_state = "gamma_gas"
-	gas_type = /datum/gas/gamma_gas
+/obj/machinery/portable_atmospherics/canister/sivana
+	name = "sivana canister"
+	desc = "sivana, highly flammable"
+	icon_state = "sivana"
+	base_icon_state = "sivana"
+	gas_type = /datum/gas/sivana
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/fusion_test
