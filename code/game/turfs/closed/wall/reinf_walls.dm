@@ -3,7 +3,7 @@
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
-	opacity = 1
+	opacity = TRUE
 	density = TRUE
 
 	var/d_state = INTACT

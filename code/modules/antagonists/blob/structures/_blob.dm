@@ -5,7 +5,7 @@
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
-	opacity = 0
+	opacity = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	CanAtmosPass = ATMOS_PASS_PROC

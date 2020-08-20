@@ -15,6 +15,12 @@
 	dynamic_hair_suffix = ""
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/chefhat
 	dog_fashion = /datum/dog_fashion/head/chef
+	///the chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
+	var/mouse_control_probability = 20
+
+/obj/item/clothing/head/chefhat/i_am_assuming_direct_control
+	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
+	mouse_control_probability = 100
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef.</span>")
@@ -26,9 +32,11 @@
 	return(FIRELOSS)
 
 /obj/item/clothing/head/chefhat/relaymove(mob/user, direction)
-	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(20))
+	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
+	if(L.incapacitated(TRUE)) //just in case
+		return
 	step_towards(L, get_step(L, direction))
 
 //Captain
