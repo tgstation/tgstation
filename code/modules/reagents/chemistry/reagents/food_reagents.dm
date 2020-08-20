@@ -695,6 +695,7 @@
 	remove_reagent_light(M)
 
 /datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
+	SIGNAL_HANDLER
 	remove_reagent_light(source)
 
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
