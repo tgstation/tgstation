@@ -118,8 +118,7 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Handle any special overlay cases on the item itself
 /datum/component/swabbing/proc/handle_overlays(datum/source, list/overlays)
-	if(UpdateOverlays)
-		UpdateOverlays.Invoke(overlays, swabbed_items)
+	UpdateOverlays?.Invoke(overlays, swabbed_items)
 
 ///Handle any special icon cases on the item itself
 /datum/component/swabbing/proc/handle_icon(datum/source)
