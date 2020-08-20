@@ -509,6 +509,16 @@
 	desc = "Cute!"
 	icon_state = "nagisa_hat"
 
+/obj/item/clothing/head/erika_hat
+	name = "Hat of Truth"
+	desc = "You feel an inexplicable urge to throw it."
+	icon_state = "erika_hat"
+
+/obj/item/clothing/head/lambda_hat
+	name = "Hat of Certainty"
+	desc = "Smells like candy."
+	icon_state = "lambda_hat"
+
 /obj/item/clothing/head/medjed
 	name = "Medjed Cloak"
 	desc = "Looks eerily similar to an ancient god. You can't help but laugh at how goofy it looks."
