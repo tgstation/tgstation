@@ -263,6 +263,10 @@
 	var/obj/item/clothing/head/hardhat/weldhat/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
+	else
+		var/obj/item/clothing/head/hardhat/weldhat_allsign/J = target
+		if(istype(J))
+			J.toggle_welding_screen(owner)
 
 /datum/action/item_action/toggle_welding_screen/plasmaman
 	name = "Toggle Welding Screen"

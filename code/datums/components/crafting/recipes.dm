@@ -998,3 +998,14 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
 	)
+
+/datum/crafting_recipe/weldhat_allsign
+	name = "Signal Hat"
+	result = /obj/item/clothing/head/hardhat/weldhat_allsign
+	time = 15
+	reqs = list(/obj/item/clothing/mask/golden = 1,
+				/obj/item/stack/cable_coil = 3,
+				/obj/item/radio = 1,
+				/obj/item/toy/crayon/blue = 1)
+	tools = list(TOOL_WIRECUTTER, TOOL_SCREWDRIVER)
+	category = CAT_CLOTHING
