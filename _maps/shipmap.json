@@ -1,0 +1,11 @@
+{
+    "map_name": "Ship Map Test",
+    "map_path": "map_files/debug",
+    "map_file": "shipmap.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_meta",
+	    "emergency": "emergency_meta"
+    }
+}
