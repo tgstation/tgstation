@@ -1156,7 +1156,7 @@
   */
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
 	var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-	. |= SEND_SIGNAL(src, COMSIG_TOOL(tool_type), user, I, processing_recipes)
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
 	if(processing_recipes.len)
 		process_recipes(user, I, processing_recipes)
 	if(QDELETED(I))
@@ -1196,18 +1196,18 @@
 	for(var/i in possible_options)
 		var/list/current_option = i
 		var/atom/current_option_type = current_option[TOOL_PROCESSING_RESULT]
-		choicestooptions[initial(current_option_type.name)] = current_option
+		choices_to_options[initial(current_option_type.name)] = current_option
 		var/image/option_image = image(icon = initial(current_option_type.icon), icon_state = initial(current_option_type.icon_state))
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
 
-	StartProcessingAtom(user, choicestooptions[pick])
+	StartProcessingAtom(user, I, choices_to_options[pick])
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/I, list/chosen_option)
 	to_chat(user, "<span class='notice'>You start working on [src]</span>")
-	if(I.use_tool(user, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
+	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
 			new atom_to_create(loc)
