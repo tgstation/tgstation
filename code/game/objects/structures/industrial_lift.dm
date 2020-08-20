@@ -109,9 +109,9 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
-	canSmoothWith = list(/obj/structure/industrial_lift)
-	smooth = SMOOTH_MORE
-	//	flags = CONDUCT_1
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
+	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 	var/list/atom/movable/lift_load //things to move
