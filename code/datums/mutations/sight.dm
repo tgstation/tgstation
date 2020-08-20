@@ -46,7 +46,7 @@
 	if(..())
 		return TRUE
 	if(owner.has_quirk(/datum/quirk/blindness))
-		to_chat(H, "<span class='warning'>Even True Sight cannot fix your incurable blindness. The gene is completely blackened out.</span>")
+		to_chat(owner, "<span class='warning'>Even True Sight cannot fix your incurable blindness. The gene is completely blackened out.</span>")
 		return TRUE
 	ADD_TRAIT(owner, TRAIT_TRUE_SIGHT, GENETIC_MUTATION)
 	owner.update_sight()//if we're blind because of no eyes or something, that's gotta update

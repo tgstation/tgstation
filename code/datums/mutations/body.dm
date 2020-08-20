@@ -178,7 +178,7 @@
 	if(..())
 		return TRUE
 	if(owner.has_quirk(/datum/quirk/deafness))
-		to_chat(H, "<span class='warning'>Even True Hearing cannot fix your incurable deafness. The gene is completely muted out.</span>")
+		to_chat(owner, "<span class='warning'>Even True Hearing cannot fix your incurable deafness. The gene is completely muted out.</span>")
 		return TRUE
 	ADD_TRAIT(owner, TRAIT_TRUE_HEARING, GENETIC_MUTATION)
 
