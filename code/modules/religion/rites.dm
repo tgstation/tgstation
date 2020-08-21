@@ -63,7 +63,7 @@
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
-	ritual_length = 1 MINUTES
+	ritual_length = 30 SECONDS
 	ritual_invocations = list("By the inner workings of our god...",
 						"... We call upon you, in the face of adversity...",
 						"... to complete us, removing that which is undesirable...")
