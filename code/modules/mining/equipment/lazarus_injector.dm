@@ -37,7 +37,7 @@
 						H.attack_same = 1
 						log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
 					else
-						H.attack_same = 0
+						H.attack_same = initial(H.attack_same)
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				SSblackbox.record_feedback("tally", "lazarus_injector", 1, M.type)

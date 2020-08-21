@@ -392,11 +392,19 @@
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
-			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
-			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
-				user.reagents.add_reagent(/datum/reagent/toxin, 7)
+			var/friendly_friends = FALSE
+			if(istype(occupant, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/H = occupant
+				if(user in H.friends) //tame snakes won't attack their owners
+					friendly_friends = TRUE
+				else if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius)) //asclepius's snakes don't make friends when tamed, so we have to check for them directly (god I hate this check)
+					friendly_friends = TRUE //asclepius's snakes probably shouldn't be making anyone fall over due to pain
+			if(occupant.incapacitated() || occupant.faction_check_mob(user, FALSE) || friendly_friends) //are we unable or unwilling to bite the user?
+				user.visible_message("<span class='warning'>[occupant] falls out of [src]!</span>", "<span class='userdanger'>[occupant] was inside of [src], and [occupant.p_they()] just fell out!</span>")
+			else
+				user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
+				user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
+				occupant.UnarmedAttack(user)
 		occupants.Cut()
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)

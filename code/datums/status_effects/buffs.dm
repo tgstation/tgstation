@@ -301,12 +301,7 @@
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
-	var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
-	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
-	healSnake.poison_type = pick(chems)
-	healSnake.name = "Asclepius's Snake"
-	healSnake.real_name = "Asclepius's Snake"
-	healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
+	var/mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/healSnake = new(owner.loc)
 	new /obj/effect/decal/cleanable/ash(owner.loc)
 	new /obj/item/rod_of_asclepius(owner.loc)
 	qdel(owner)
