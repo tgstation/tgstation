@@ -28,7 +28,6 @@
 
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_IS_BLOODY, .proc/is_bloody)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 
 /**
@@ -195,12 +194,6 @@
 	last_pickup = world.time
 
 /**
-  * Called by code asking if it's bloody or not, usually for determining blood overlays
-  */
-/datum/component/bloodysoles/proc/is_bloody(datum/source)
-	return bloody_shoes[BLOOD_STATE_HUMAN] > 0
-
-/**
   * Called when the parent item is being washed
   */
 /datum/component/bloodysoles/proc/on_clean(datum/source, clean_types)
@@ -231,14 +224,13 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
-	RegisterSignal(parent, COMSIG_IS_BLOODY, .proc/is_bloody)
 	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOES, .proc/unequip_shoes)
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(ishuman(wielder))
 		testing("Update icon - is bloody: [is_bloody() ? "Yes" : "No"] - has shoes: [wielder.shoes ? "Yes" : "No"]")
 		// Monkeys get no bloody feet :(
-		if(SEND_SIGNAL(wielder, COMSIG_IS_BLOODY) && !wielder.shoes)
+		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !wielder.shoes)
 			wielder.remove_overlay(SHOES_LAYER)
 			wielder.overlays_standing[SHOES_LAYER] = bloody_feet
 			wielder.apply_overlay(SHOES_LAYER)
