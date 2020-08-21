@@ -83,6 +83,12 @@
 			return pool
 
 /**
+  * Adds the parent type to the footprint's shoe_types var
+  */
+/datum/component/bloodysoles/proc/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
+	FP.shoe_types |= parent.type
+
+/**
   * Called when the parent item is equipped by someone
   *
   * Used to register our wielder
@@ -129,7 +135,7 @@
 		var/obj/effect/decal/cleanable/blood/footprints/oldLocFP = find_pool_by_blood_state(oldLocTurf, /obj/effect/decal/cleanable/blood/footprints)
 		if(oldLocFP)
 			// Footprints found in the tile we left, add us to it
-			oldLocFP.shoe_types |= parent.type
+			add_parent_to_footprint(oldLocFP)
 			if (!(oldLocFP.exited_dirs & wielder.dir))
 				oldLocFP.exited_dirs |= wielder.dir
 				oldLocFP.update_icon()
@@ -141,7 +147,7 @@
 			oldLocFP = new(oldLocTurf)
 			oldLocFP.blood_state = last_blood_state
 			oldLocFP.exited_dirs |= wielder.dir
-			oldLocFP.shoe_types |= parent.type
+			add_parent_to_footprint(oldLocFP)
 			oldLocFP.bloodiness = half_our_blood
 			oldLocFP.add_blood_DNA(parent_atom.return_blood_DNA())
 			oldLocFP.update_icon()
@@ -160,7 +166,7 @@
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom))
 		FP.blood_state = last_blood_state
 		FP.entered_dirs |= wielder.dir
-		FP.shoe_types |= parent.type
+		add_parent_to_footprint(FP)
 		FP.bloodiness = half_our_blood
 		FP.add_blood_DNA(parent_atom.return_blood_DNA())
 		FP.update_icon()
@@ -178,7 +184,7 @@
 	if(istype(pool, /obj/effect/decal/cleanable/blood/footprints) && pool.blood_state == last_blood_state)
 		// The pool we stepped in was actually footprints with the same type
 		var/obj/effect/decal/cleanable/blood/footprints/pool_FP = pool
-		pool_FP.shoe_types |= parent.type
+		add_parent_to_footprint(pool_FP)
 		if((bloody_shoes[last_blood_state] / 2) >= BLOOD_FOOTPRINTS_MIN && !(pool_FP.entered_dirs & wielder.dir))
 			// If our feet are bloody enough, add an entered dir
 			pool_FP.entered_dirs |= wielder.dir
@@ -237,6 +243,24 @@
 			wielder.apply_overlay(SHOES_LAYER)
 		else
 			wielder.update_inv_shoes()
+
+/datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
+	if(ismonkey(wielder))
+		FP.species_types |= "monkey"
+		return
+
+	if(!ishuman(wielder))
+		FP.species_types |= "unknown"
+		return
+
+	// Find any leg of our human and add that to the footprint, instead of the default which is to just add the human type
+	for(var/X in wielder.bodyparts)
+		var/obj/item/bodypart/affecting = X
+		if(affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT)
+			if(!affecting.disabled)
+				FP.species_types |= affecting.species_id
+				break
+
 
 /datum/component/bloodysoles/feet/is_obscured()
 	if(wielder.shoes)

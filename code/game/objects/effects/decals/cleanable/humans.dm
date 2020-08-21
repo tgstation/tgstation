@@ -148,7 +148,12 @@
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
 	var/exited_dirs = 0
+
+	/// List of shoe types that have made footprints here.
 	var/list/shoe_types = list()
+
+	/// List of species that have made footprints here.
+	var/list/species_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
 	. = ..()
@@ -197,11 +202,21 @@
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
-	if(shoe_types.len)
-		. += "You recognise the footprints as belonging to:\n"
-		for(var/shoe in shoe_types)
-			var/obj/item/clothing/shoes/S = shoe
-			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
+	if((shoe_types.len + species_types.len) > 0)
+		. += "You recognise the footprints as belonging to:"
+		for(var/sole in shoe_types)
+			var/obj/item/clothing/shoes/shoe = sole
+			. += "[icon2html(initial(shoe.icon), user, initial(shoe.icon_state))] Some <B>[initial(shoe.name)]</B>."
+		for(var/species in species_types)
+			// god help me
+			if(species == "unknown")
+				. += "Some <B>feet</B>."
+			else if(species == "monkey")
+				. += "[icon2html('icons/mob/monkey.dmi', user, "monkey1")] Some <B>monkey feet</B>."
+			else if(species == "human")
+				. += "[icon2html('icons/mob/human_parts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
+			else
+				. += "[icon2html('icons/mob/human_parts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
