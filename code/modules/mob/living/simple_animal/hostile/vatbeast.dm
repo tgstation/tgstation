@@ -72,16 +72,13 @@
 	fire(usr)
 
 /obj/effect/proc_holder/tentacle_slap/fire(mob/living/carbon/user)
-	var/message
 	if(current_cooldown > world.time)
 		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
 		return
 	if(active)
-		message = "<span class='notice'>You stop preparing to tentacle slap.</span>"
-		remove_ranged_ability(message)
+		remove_ranged_ability("<span class='notice'>You stop preparing to tentacle slap.</span>")
 	else
-		message = "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>"
-		add_ranged_ability(user, message, TRUE)
+		add_ranged_ability(user, "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>", TRUE)
 
 /obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
