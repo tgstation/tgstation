@@ -284,7 +284,7 @@
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		//Component handles all the math and charge handling, so we can just send the signal here.
-		SEND_SIGNAL(src, COMSIG_HOSTILE_CHARGING_TARGET, target)
+		SEND_SIGNAL(src, COMSIG_HOSTILE_CHARGING_TARGET, target=target)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -511,7 +511,7 @@
   * * hit_atom: the target of the charge.
   */
 /mob/living/simple_animal/hostile/throw_impact(atom/hit_atom)
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_POST_CHARGE) & !(COMPONENT_HOSTILE_POSTCHARGE_IMPACT))
+	if(!SEND_SIGNAL(src, COMSIG_HOSTILE_POST_CHARGE) & COMPONENT_HOSTILE_POSTCHARGE_IMPACT)
 		return ..()
 	if(!hit_atom)
 		return

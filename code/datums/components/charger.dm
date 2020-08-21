@@ -32,7 +32,9 @@
 /**
   * Proc that handles a charge attack for a mob.
   */
-/datum/component/charger/proc/enter_charge(var/atom/target)
+/datum/component/charger/proc/enter_charge(datum/source, var/atom/target)
+	if(!isatom(target))
+		return FALSE
 	var/target_distance = get_dist(simple_parent,target)
 	if((simple_parent.mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
 		return
