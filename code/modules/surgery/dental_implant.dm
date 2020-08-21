@@ -78,6 +78,7 @@
 	name = "Show Off Implant"
 
 /datum/action/item_action/hands_free/showoff/Trigger()
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	owner.visible_message("<span class='notice'>[owner] shows off [owner.p_their()] dental [target.name] with a [pick("cheeky", "cocky", "smug")] grin. [pick("Nice!", "Classy!", "Swanky!")]")
