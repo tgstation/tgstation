@@ -597,7 +597,7 @@
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
 ///Sent when bloodcrawl requests the phase mode holder be deleted
-#define COMSIG_LIVING_PHASEIN "living_phasein"
+#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 // /obj/mecha signals
 

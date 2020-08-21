@@ -173,7 +173,7 @@
 		return
 	forceMove(B.loc)
 	client.eye = src
-	SEND_SIGNAL(src, COMSIG_LIVING_PHASEIN)
+	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN)
 	visible_message("<span class='boldwarning'>[src] rises out of the pool of blood!</span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
