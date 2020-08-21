@@ -506,6 +506,10 @@
 			HY.pestlevel = 0 // Reset
 			HY.update_icon()
 			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
+			if(HY.myseed)
+				HY.name = "[initial(HY.name)] ([HY.myseed.plantname])"
+			else
+				HY.name = initial(HY.name)
 
 /**
   * A plant trait that causes the plant's food reagents to ferment instead.
