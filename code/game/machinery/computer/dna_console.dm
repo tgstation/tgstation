@@ -251,7 +251,7 @@
 	if(!ui)
 		ui = new(user, src, "DnaConsole")
 		ui.open()
-		
+
 /obj/machinery/computer/scan_consolenew/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/genetics)
@@ -597,7 +597,7 @@
 			var/datum/mutation/human/targetmut = get_mut_by_ref(bref, search_flags)
 			var/sequence = GET_GENE_STRING(targetmut.type, scanner_occupant.dna)
 
-			/* DEBUG SECTION: Dump Strings: * <- Add a / before this * to turn this off
+			/* DEBUG SECTION: Dump Strings: /* <- Add a / before this * to turn this off
 			*/
 			for (var/M in subtypesof(/datum/mutation/human))
 				var/truegenes = GET_SEQUENCE(M)
@@ -654,8 +654,8 @@
 						oldSequence+=newpair
 				else
 					return //drop out, no pair
-			to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
-			to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
+			//to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
+			//to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
 			//Apply sequence
 			if(newSequence)
 				var/datum/mutation/human/matchedDna = null
@@ -671,8 +671,6 @@
 				var/mutation_data[0]
 				var/resultDna = ACIDFLESH
 				if(matchedDna)
-					to_chat(usr,"<span class='notice'>   "+GET_SEQUENCE(targetmut.type)+"</span>")
-					to_chat(usr,"<span class='notice'>   "+oldSequence+"</span>")
 					if(oldSequence == GET_SEQUENCE(targetmut.type))
 						resultDna = matchedDna
 				var mutationBucket = scanner_occupant.dna.mutation_index
