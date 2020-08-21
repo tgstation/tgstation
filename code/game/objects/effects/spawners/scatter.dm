@@ -14,10 +14,10 @@
 
 	var/list/candidate_locations = list()
 
-	for(var/turf/T in oview(radius, get_turf(src)))
-		if(!T.density)
+	for(var/turf/turf_in_view in oview(radius, get_turf(src)))
+		if(!turf_in_view.density)
 
-			candidate_locations += T
+			candidate_locations += turf_in_view
 
 	if(!candidate_locations.len)
 		return INITIALIZE_HINT_QDEL
