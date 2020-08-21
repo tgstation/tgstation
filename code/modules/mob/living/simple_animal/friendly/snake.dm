@@ -130,5 +130,5 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/Login()
     . = ..()
-    to_chat(src, "<span class='boldwarning'>You are one of Asclepius's divine snakes! Unlike a normal snake, when you bite someone, you'll inject them with [poison_per_bite]u of [poison_type.name] instead of toxin(s). Fortunately, due to your medical training, your bites will deal no (direct) damage and you'll never inject anyone with enough [poison_type.name] to overdose them.</span>")
-    to_chat(src, "<span class='boldwarning'>Above all else, follow the tenets of the Hippocratic Oath.</span>")
+    to_chat(src, "<span class='boldwarning'>You are one of Asclepius's divine snakes! Unlike a normal snake, when you bite someone, you'll inject them with [poison_per_bite]u of [poison_type.name] instead of toxin(s). Fortunately, due to your medical training, your bites will deal no (direct) damage and you'll never inject anyone with enough [poison_type.name] to overdose them.\n\
+    Above all else, follow the tenets of the Hippocratic Oath.</span>")
