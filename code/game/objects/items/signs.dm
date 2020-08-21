@@ -37,6 +37,7 @@
 /obj/item/picket_sign/attack_self(mob/living/carbon/human/user)
 	if(!COOLDOWN_FINISHED(src, picket_sign_cooldown))
 		return
+	COOLDOWN_START(src, picket_sign_cooldown, 5 SECONDS)
 	if(label)
 		user.manual_emote("waves around \the \"[label]\" sign.")
 	else
@@ -55,7 +56,6 @@
 		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
 		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
 	user.changeNext_move(CLICK_CD_MELEE)
-	COOLDOWN_START(src, picket_sign_cooldown, 5 SECONDS)
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
