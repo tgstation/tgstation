@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Gas overlays are more smooth now, but will display things a little more subtly."
-  - bugfix: "Gas overlays have the proper amount of detail now"

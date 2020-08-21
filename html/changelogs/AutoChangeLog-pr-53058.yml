@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "You can now activate an away mission's exit gateway regardless of whether or not the station-side gateway is still open."
