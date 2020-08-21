@@ -93572,9 +93572,6 @@
 /area/maintenance/port)
 "dCa" = (
 /obj/structure/table/reinforced,
-/obj/item/radio/intercom{
-	pixel_y = -32
-	},
 /obj/item/assembly/igniter{
 	pixel_x = 6;
 	pixel_y = 6
