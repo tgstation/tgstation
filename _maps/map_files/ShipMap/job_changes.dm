@@ -1,3 +1,0 @@
-#define JOB_MODIFICATION_MAP_NAME "ShipMap"
-
-MAP_REMOVE_JOB(assistant)
