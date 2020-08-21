@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { Component } from 'inferno';
 import { compose } from './fp';
 
 /**

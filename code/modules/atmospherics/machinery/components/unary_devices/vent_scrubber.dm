@@ -40,10 +40,10 @@
 			filter_types += gas_id2path(f)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area(src)
-	if (A)
-		A.air_scrub_names -= id_tag
-		A.air_scrub_info -= id_tag
+	var/area/scrub_area = get_area(src)
+	if(scrub_area)
+		scrub_area.air_scrub_info -= id_tag
+		GLOB.air_scrub_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -114,12 +114,14 @@
 		"sigtype" = "status"
 	))
 
-	var/area/A = get_area(src)
-	if(!A.air_scrub_names[id_tag])
-		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
-		A.air_scrub_names[id_tag] = name
+	var/area/scrub_area = get_area(src)
+	if(!GLOB.air_scrub_names[id_tag])
+		// If we do not have a name, assign one
+		name = "[assign_random_name()] [scrub_area.name] Air Scrubber" // matching case
+		GLOB.air_scrub_names[id_tag] = name
 
-	A.air_scrub_info[id_tag] = signal.data
+	scrub_area.air_scrub_info[id_tag] = signal.data
+
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return TRUE

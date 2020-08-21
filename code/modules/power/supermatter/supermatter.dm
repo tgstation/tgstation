@@ -106,6 +106,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
+	base_icon_state = "darkmatter"
 
 	///The id of our supermatter
 	var/uid = 1
@@ -115,8 +116,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
 	///The portion of the gasmix we're on that we should remove
 	var/gasefficency = 0.15
-	///Used for changing icon states for diff base sprites
-	var/base_icon_state = "darkmatter"
 
 	///Are we exploding?
 	var/final_countdown = FALSE
@@ -440,10 +439,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			S.consume(src)
 			return //No boom for me sir
 	else if(power > POWER_PENALTY_THRESHOLD)
-		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has released tritium from an overcharge.", INVESTIGATE_SUPERMATTER)
 		if(T)
-			var/obj/singularity/energy_ball/E = new(T)
-			E.energy = power
+			atmos_spawn_air("tritium=2500;TEMP=500000") //extremely fucking hot and could do fusion if you tried hard enough //GEORGE SEARS DID 9/11
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
