@@ -76,7 +76,7 @@
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
-	desc = "A classic, if not outdated, law enforcement firearm. Uses .38-special rounds."
+	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
@@ -102,38 +102,38 @@
 			return FALSE
 	return ..()
 
-/obj/item/gun/ballistic/revolver/detective/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
+/obj/item/gun/ballistic/revolver/detective/wrench_act(mob/living/user, obj/item/I)
+	var/live_ammo = get_ammo(FALSE, FALSE)
 	if(magazine.caliber == "38")
-		to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src]...</span>")
-		if(magazine.ammo_count())
-			afterattack(user, user)	//you know the drill
-			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+		if(magazine.ammo_count() && live_ammo == 0) //It's not empty, but has no live ammo.
+			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
 			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return TRUE
-			magazine.caliber = "357"
-			fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
-			desc = "The barrel and chamber assembly seems to have been modified."
-			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
+		to_chat(user, "<span class='notice'>You begin to loosen the barrel of [src]...</span>")
+		if(live_ammo > 0) //If it it has any live ammo inside....
+			afterattack(user, user)	//...you learn an important lesson about firearms safety.
+			return TRUE
+		I.play_tool_sound(src)
+		if(!I.use_tool(src, user, 3 SECONDS))
+			return TRUE
+		magazine.caliber = "357"
+		fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+		desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
+		to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
-		to_chat(user, "<span class='notice'>You begin to revert the modifications to [src]...</span>")
-		if(magazine.ammo_count())
-			afterattack(user, user)	//and again
-			user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
+		if(magazine.ammo_count() && live_ammo == 0)
+			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
 			return TRUE
-		if(I.use_tool(src, user, 30))
-			if(magazine.ammo_count())
-				to_chat(user, "<span class='warning'>You can't modify it!</span>")
-				return
-			magazine.caliber = "38"
-			fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-			desc = initial(desc)
-			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
-	return TRUE
+		to_chat(user, "<span class='notice'>You begin to tighten the barrel of [src]...</span>")
+		if(live_ammo > 0)
+			afterattack(user, user)
+			return TRUE
+		I.play_tool_sound(src)
+		if(!I.use_tool(src, user, 30))
+			return TRUE
+		magazine.caliber = "38"
+		fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+		desc = initial(desc)
+		to_chat(user, "<span class='notice'>You tighten the barrel of [src]. Now it will fire .38 rounds.</span>")
 
 
 /obj/item/gun/ballistic/revolver/mateba
