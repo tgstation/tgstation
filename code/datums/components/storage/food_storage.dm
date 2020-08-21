@@ -127,6 +127,8 @@
   * bitesize - how large bties are for this food
   */
 /datum/component/food_storage/proc/consume_food_storage(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
+	SIGNAL_HANDLER
+
 	if(QDELETED(stored_item)) //if the stored item was deleted/null...
 		if(!update_stored_item()) //check if there's a replacement item
 			return
