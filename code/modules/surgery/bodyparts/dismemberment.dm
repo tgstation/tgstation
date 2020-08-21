@@ -310,8 +310,7 @@
 	for(var/datum/action/item_action/hands_free/activate_signaler/AS in owner.actions)
 		AS.Remove(owner)
 		var/obj/sig = AS.target
-		if(sig)
-			sig.forceMove(src)
+		sig?.forceMove(src)
 	for(var/datum/action/item_action/hands_free/showoff/SO in owner.actions)
 		SO.Remove(owner)
 		var/obj/anom = SO.target
