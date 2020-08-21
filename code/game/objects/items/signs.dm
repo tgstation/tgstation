@@ -38,9 +38,22 @@
 	if( last_wave + 20 < world.time )
 		last_wave = world.time
 		if(label)
-			user.visible_message("<span class='warning'>[user] waves around \the \"[label]\" sign.</span>")
+			user.manual_emote("waves around \the \"[label]\" sign.")
 		else
-			user.visible_message("<span class='warning'>[user] waves around blank sign.</span>")
+			user.manual_emote("waves around a blank sign.")
+		var/direction = prob(50) ? -1 : 1
+		if(NSCOMPONENT(user.dir))
+			animate(user, pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_x = user.pixel_x - (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_x = user.pixel_x + (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_x = user.pixel_x - (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_x = user.pixel_x + (2 * direction), time = 1, easing = SINE_EASING)
+		else
+			animate(user, pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_y = user.pixel_y - (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_y = user.pixel_y + (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_y = user.pixel_y - (4 * direction), time = 1, easing = SINE_EASING)
+			animate(pixel_y = user.pixel_y + (2 * direction), time = 1, easing = SINE_EASING)
 		user.changeNext_move(CLICK_CD_MELEE)
 
 /datum/crafting_recipe/picket_sign
