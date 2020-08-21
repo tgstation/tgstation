@@ -64,8 +64,9 @@
 	name = "Activate Signaling Device"
 
 /datum/action/item_action/hands_free/activate_signaler/Trigger()
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/obj/item/assembly/signaler/sig = target
 	to_chat(owner, "<span class='notice'>You slide your jaw and hear a dull click.</span>")
 	log_combat(owner, null, "activated an implanted signaling device [format_frequency(sig.frequency)]", target)
