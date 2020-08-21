@@ -1,0 +1,7 @@
+author: "Guillaume Prata and M. Joyce"
+delete-after: True
+changes: 
+  - rscadd: "Added Command outfits for Plasmamen"
+  - rscadd: "Added Centcom outfits for Plasmamen"
+  - tweak: "Moved some items away from the right hand in outfits to make it more Plasmamen Friendly for future projects."
+  - imageadd: "Icons for Centcom and Command Plasmamen gear."
