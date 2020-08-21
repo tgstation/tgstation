@@ -549,6 +549,147 @@
 
 			return
 
+		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
+		// So AA means the AT pair stays the same, AT means AT becomes TA. This requires both knowing the
+		// solved full DNA of the subject and the full DNA of the replacement genes. Applies probable disease
+		// of probable strengths as well. If you mess it up, you might end up getting undesirable genes, including
+		// unstable DNA. This could lead to permanent monkey. When you get it right, some will be swapped out, on a
+		// probability scale.
+		// ---------------------------------------------------------------------- //
+		// params["mutref"] - ATOM Ref of specific mutation to swap out
+		// params["source"] - The source the request came from.
+		//	Expected results:
+		//   "occupant" - From genetic sequencer
+		//   "console" - From DNA Console storage
+		//   "disk" - From inserted diskette
+		if("crispr")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+
+			var/search_flags = 0
+
+			// Only continue if applying to occupant - all replacements in-vitro
+			switch(params["source"])
+				if("occupant")
+					if(can_modify_occupant())
+						search_flags |= SEARCH_OCCUPANT
+				if("console")
+					search_flags |= SEARCH_STORED
+					return
+				if("disk")
+					search_flags |= SEARCH_DISKETTE
+					return
+
+			var/bref = params["mutref"]
+			var/atstr = "AT"
+			var/cgstr = "CG"
+
+			// GUARD CHECK - Only search occupant for this specific ref, since your
+			//  can only CRISPR existing mutations in a target
+			var/datum/mutation/human/targetmut = get_mut_by_ref(bref, search_flags)
+			var/sequence = GET_GENE_STRING(targetmut.type, scanner_occupant.dna)
+
+			/* DEBUG SECTION: Dump Strings: * <- Add a / before this * to turn this off
+			*/
+			for (var/M in subtypesof(/datum/mutation/human))
+				var/truegenes = GET_SEQUENCE(M)
+				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(M)
+				var/newString
+				for(var/i=1 to length(truegenes))
+					if(i%2==0)
+						newString+=truegenes[i-1]
+					else
+						newString+=sequence[i]
+
+				to_chat(usr,"<span class='notice'>"+HM.name+" : "+truegenes+" : "+newString+"</span>")
+			to_chat(usr,"<span class='warning'>"+targetmut.name+" : "+sequence+"</span>")
+			// */
+
+
+
+
+			// Prompt for modifier string
+			var/newSequenceInput = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
+			// Drop out if the string is the wrong length
+			if(!(length(newSequenceInput)==32))
+				return
+
+			var/oldSequence
+			var/newSequence
+
+
+			//Unzip the modification string
+			for(var/i = 1 to length(newSequenceInput))
+				var/char = newSequenceInput[i]
+				var/pairstr
+				var/newpair
+				//figure out which pair type
+				if(atstr[1] == char || atstr[2] == char)
+					pairstr=atstr
+				else if(cgstr[1] == char || cgstr[2] == char)
+					pairstr=cgstr
+				else
+					return //invalid char, drop out
+				//identify complement and total pair
+				if(pairstr)
+					newpair += char
+					if(pairstr[1]==char)
+						newpair += pairstr[2]
+					else
+						newpair += pairstr[1]
+				else
+					return//drop out, no complement
+				if(newpair)
+					if(i%2==0)
+						newSequence+=newpair
+					else
+						oldSequence+=newpair
+				else
+					return //drop out, no pair
+			to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
+			to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
+			//Apply sequence
+			if(newSequence)
+				var/datum/mutation/human/matchedDna = null
+				for (var/M in subtypesof(/datum/mutation/human))
+					var/truegenes = GET_SEQUENCE(M)
+					if (newSequence == truegenes)
+						matchedDna = M
+				var/datum/disease/advance/random/ranDisease = new /datum/disease/advance/random(3,3)
+				ranDisease.try_infect(scanner_occupant, FALSE)
+
+				// This needs a check - what if the usr already has this mutation in their DNA? Do we just lose the slot? YES.
+				///datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
+				var/mutation_data[0]
+				var/resultDna = ACIDFLESH
+				if(matchedDna)
+					to_chat(usr,"<span class='notice'>   "+GET_SEQUENCE(targetmut.type)+"</span>")
+					to_chat(usr,"<span class='notice'>   "+oldSequence+"</span>")
+					if(oldSequence == GET_SEQUENCE(targetmut.type))
+						resultDna = matchedDna
+				var mutationBucket = scanner_occupant.dna.mutation_index
+				scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
+				scanner_occupant.dna.add_mutation(resultDna,MUT_NORMAL, 0)
+				for(var/mutation_type in mutationBucket)
+					if(mutation_type == targetmut.type)
+						//newSequence = create_sequence(matchedDna, FALSE)
+						mutation_data[resultDna] = newSequence
+					else
+						mutation_data[mutation_type]=scanner_occupant.dna.mutation_index[mutation_type]
+				scanner_occupant.dna.mutation_index = mutation_data
+				scanner_occupant.domutcheck()
+
+			return
+
+
 		// Print any type of standard injector, limited right now to activators that
 		//  activate a dormant mutation and mutators that forcibly create a new
 		//  MUT_EXTRA mutation
