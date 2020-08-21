@@ -678,15 +678,13 @@ Difficulty: Very Hard
 	initial_language_holder = /datum/language_holder/lightbringer
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	light_range = 4
-	faction = list("neutral")
+	faction = list("lightgeist")
 	del_on_death = TRUE
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
 	. = ..()
