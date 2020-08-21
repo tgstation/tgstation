@@ -7,7 +7,7 @@
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -371,6 +371,13 @@
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
 	duration = 6
+
+/obj/effect/temp_visual/impact_effect/energy
+	icon_state = "impact_energy"
+	duration = 6
+
+/obj/effect/temp_visual/impact_effect/neurotoxin
+	icon_state = "impact_neurotoxin"
 
 /obj/effect/temp_visual/heart
 	name = "heart"

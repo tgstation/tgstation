@@ -640,7 +640,7 @@ SUBSYSTEM_DEF(job)
 		//last hurrah
 		var/list/avail = list()
 		for(var/turf/T in A)
-			if(!is_blocked_turf(T, TRUE))
+			if(!T.is_blocked_turf(TRUE))
 				avail += T
 		if(avail.len)
 			destination = pick(avail)
@@ -651,7 +651,7 @@ SUBSYSTEM_DEF(job)
 	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
 	if(arrivals_turfs.len)
 		for(var/turf/T in arrivals_turfs)
-			if(!is_blocked_turf(T, TRUE))
+			if(!T.is_blocked_turf(TRUE))
 				T.JoinPlayerHere(M, FALSE)
 				return TRUE
 		//last chance, pick ANY spot on arrivals and dump em

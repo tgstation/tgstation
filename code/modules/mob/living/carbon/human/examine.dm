@@ -151,8 +151,9 @@
 			else
 				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
 
-		for(var/datum/wound/W in BP.wounds)
-			msg += "[W.get_examine_description(user)]\n"
+		for(var/i in BP.wounds)
+			var/datum/wound/iter_wound = i
+			msg += "[iter_wound.get_examine_description(user)]\n"
 
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X
@@ -259,7 +260,13 @@
 				bleeding_limbs += BP
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
-		var/bleed_text = "<B>[t_He] [t_is] bleeding from [t_his]"
+
+		var/list/bleed_text
+		if(appears_dead)
+			bleed_text = list("<span class='deadsay'><B>Blood is visible in [t_his] open")
+		else
+			bleed_text = list("<B>[t_He] [t_is] bleeding from [t_his]")
+
 		switch(num_bleeds)
 			if(1 to 2)
 				bleed_text += " [bleeding_limbs[1].name][num_bleeds == 2 ? " and [bleeding_limbs[2].name]" : ""]"
@@ -268,11 +275,15 @@
 					var/obj/item/bodypart/BP = bleeding_limbs[i]
 					bleed_text += " [BP.name],"
 				bleed_text += " and [bleeding_limbs[num_bleeds].name]"
-		if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
-			bleed_text += " incredibly quickly"
 
-		bleed_text += "!</B>\n"
-		msg += bleed_text
+		if(appears_dead)
+			bleed_text += ", but it has pooled and is not flowing.</span></B>\n"
+		else
+			if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
+				bleed_text += " incredibly quickly"
+
+			bleed_text += "!</B>\n"
+		msg += bleed_text.Join()
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
@@ -349,7 +360,7 @@
 
 	switch(scar_severity)
 		if(1 to 2)
-			msg += "<span class='smallnotice'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
+			msg += "<span class='smallnoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
 		if(3 to 4)
 			msg += "<span class='notice'><i>[t_He] [t_has] several bad scars, you can look again to take a closer look...</i></span>\n"
 		if(5 to 6)

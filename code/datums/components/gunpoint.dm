@@ -36,8 +36,8 @@
 	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
 	target.apply_status_effect(STATUS_EFFECT_HELDUP)
 
-	if(target.job == "Captain" && target.stat == CONSCIOUS && is_nuclear_operative(shooter))
-		if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
+	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
+		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && !is_nuclear_operative(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
 
 	target.do_alert_animation(target)
@@ -65,6 +65,8 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/T = A
 	if(T && T == target)
 		var/mob/living/shooter = parent
@@ -74,6 +76,8 @@
 		qdel(src)
 
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+	SIGNAL_HANDLER
+
 	if(T == target && (shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB))
 		shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
 			"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)
@@ -94,10 +98,14 @@
 		damage_mult = GUNPOINT_MULT_STAGE_3
 
 /datum/component/gunpoint/proc/check_deescalate()
+	SIGNAL_HANDLER
+
 	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
 		cancel()
 
 /datum/component/gunpoint/proc/trigger_reaction()
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	if(point_of_no_return)
 		return
@@ -122,6 +130,8 @@
 	qdel(src)
 
 /datum/component/gunpoint/proc/cancel()
+	SIGNAL_HANDLER
+
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
 		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)
@@ -130,6 +140,8 @@
 	qdel(src)
 
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	var/mob/living/shooter = parent
 
 	var/flinch_chance = 50

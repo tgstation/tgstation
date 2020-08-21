@@ -28,6 +28,10 @@
 	var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life()
+	// only inform when things got worse, needs to happen before we heal
+	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
+		to_chat(owner, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+
 	. = ..()
 	// if we have non-damage related deafness like mutations, quirks or clothing (earmuffs), don't bother processing here. Ear healing from earmuffs or chems happen elsewhere
 	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
@@ -43,7 +47,6 @@
 		if((damage > low_threshold) && prob(damage / 30))
 			adjustEarDamage(0, 4)
 			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
-			to_chat(owner, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
 
 	if(deaf)
 		ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)

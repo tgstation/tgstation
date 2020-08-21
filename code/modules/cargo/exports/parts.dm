@@ -15,11 +15,6 @@
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
-/datum/export/swarmer
-	cost = 2000
-	unit_name = "deactivated alien deconstruction drone"
-	export_types = list(/obj/item/deactivated_swarmer)
-
 //Computer Tablets and Parts
 /datum/export/modular_part
 	cost = 15

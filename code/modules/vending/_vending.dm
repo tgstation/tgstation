@@ -318,8 +318,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price) * SSeconomy.inflation_value()
-		R.custom_premium_price = initial(temp.custom_premium_price) * SSeconomy.inflation_value()
+		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
+		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
 
@@ -570,8 +570,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						for(var/i in C.bodyparts)
 							var/obj/item/bodypart/squish_part = i
 							if(squish_part.is_organic_limb())
-								//var/type_wound = pick(WOUND_LIST_BONE)
-								var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 								squish_part.force_wound_upwards(type_wound)
 							else
 								squish_part.receive_damage(brute=30)
