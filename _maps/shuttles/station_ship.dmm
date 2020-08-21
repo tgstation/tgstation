@@ -616,7 +616,7 @@
 	dir = 6
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = /area/shuttle/abandoned;
+	areastring = /area/shuttle/shipstation;
 	name = "Ship APC";
 	pixel_x = -27
 	},
@@ -688,6 +688,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
+	},
+/obj/effect/landmark/portal_exit{
+	id = "station"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -1012,15 +1015,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
-"dI" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/shipstation)
 "dJ" = (
 /obj/machinery/power/emitter{
 	dir = 4
@@ -1144,12 +1138,12 @@
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/light,
 /obj/machinery/meter,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/visible,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "eb" = (
@@ -1198,7 +1192,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/atmospheric_technician,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "em" = (
@@ -1376,9 +1370,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering{
 	name = "Engineering Foyer";
-	req_one_access_txt = "32;19"
+	req_access_txt = "32;19"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -1436,7 +1430,7 @@
 	},
 /obj/effect/landmark/observer_start,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "lz" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/table,
@@ -1566,7 +1560,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -1581,7 +1575,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "oD" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -1794,7 +1788,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "uh" = (
-/obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/structure/window/plasma/reinforced{
@@ -1992,7 +1985,7 @@
 /obj/machinery/door/window/eastleft,
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/engine,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "xu" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -2299,7 +2292,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "Es" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -2311,7 +2304,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "EH" = (
@@ -2336,7 +2329,7 @@
 	},
 /obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/engine,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "Fq" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -2528,7 +2521,7 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "Jl" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -2563,7 +2556,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "KT" = (
 /obj/structure/window/plasma/reinforced,
 /obj/structure/window/plasma/reinforced{
@@ -2617,7 +2610,7 @@
 	},
 /obj/machinery/autolathe,
 /turf/open/floor/engine,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "Lk" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -2654,11 +2647,11 @@
 /area/shuttle/shipstation)
 "Mb" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2798,7 +2791,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "Rx" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -2808,9 +2801,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
-"So" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned)
 "Sr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -2847,18 +2837,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "TH" = (
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2887,7 +2877,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "UU" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -3004,7 +2994,7 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/abandoned)
+/area/shuttle/shipstation)
 "XZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
@@ -3156,7 +3146,7 @@ Zt
 EC
 nL
 el
-dI
+nL
 dX
 IJ
 "}
@@ -3244,9 +3234,9 @@ Pv
 IJ
 IJ
 IJ
-Hc
+IJ
 iF
-Hc
+IJ
 IJ
 IJ
 db
@@ -3605,10 +3595,10 @@ XO
 CI
 IJ
 Rt
-So
+IJ
 Ji
-So
-So
+IJ
+IJ
 IJ
 La
 NG
