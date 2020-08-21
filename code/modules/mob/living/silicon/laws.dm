@@ -15,7 +15,7 @@
 
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
 	if(last_lawchange == world.time)
-		return
+		return FALSE
 	last_lawchange = world.time
 	addtimer(CALLBACK(src, .proc/update_lawset_name), 0)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
@@ -24,8 +24,7 @@
 	addtimer(CALLBACK(src, .proc/show_laws), 0)
 	if(announce)
 		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0)
-	if(isAI(src))
-		addtimer(CALLBACK(src, .proc/lawsync), 0)
+	return TRUE
 
 /mob/living/silicon/proc/set_law_sixsixsix(law, announce = TRUE)
 	laws_sanity_check()

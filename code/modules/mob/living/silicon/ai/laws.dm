@@ -18,6 +18,14 @@
 	src.laws_sanity_check()
 	src.laws.show_laws(who)
 
+/mob/living/silicon/ai/post_lawchange(announce = TRUE)
+	. = ..()
+
+	if(!.)
+		return
+
+	addtimer(CALLBACK(src, .proc/lawsync), 0)
+
 /mob/living/silicon/ai/lawsync()
 	for(var/r in connected_robots)
 		var/mob/living/silicon/robot/connected_robot = r

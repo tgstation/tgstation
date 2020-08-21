@@ -36,7 +36,7 @@
 
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
-	if(owner.current && traitor_kind == TRAITOR_AI)
+	if(traitor_kind == TRAITOR_AI && owner.current)
 		if(iscyborg(owner.current))
 			var/mob/living/silicon/robot/R = owner.current
 			if(R.deployed)
