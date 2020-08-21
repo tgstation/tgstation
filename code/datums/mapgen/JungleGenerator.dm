@@ -17,17 +17,18 @@
 	var/humidity_seed = rand(0, 50000)
 	var/heat_seed = rand(0, 50000)
 
-	for(var/turf/T in turfs) //Go through all the turfs and generate them
-		var/x = T.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)
-		var/y = T.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)
+	for(var/t in turfs) //Go through all the turfs and generate them
+		var/turf/gen_turf = t
+		var/drift_x = (gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
+		var/drift_y = (gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
 
-		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
+		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
 
 		var/datum/biome/selected_biome
 		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
-			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
-			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
+			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
+			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
@@ -53,7 +54,7 @@
 		else //Over 0.85; It's a mountain
 			selected_biome = /datum/biome/mountain
 		selected_biome = SSmapping.biomes[selected_biome] //Get the instance of this biome from SSmapping
-		selected_biome.generate_turf(T)
+		selected_biome.generate_turf(gen_turf)
 		CHECK_TICK
 
 /turf/open/genturf
