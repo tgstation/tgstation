@@ -540,7 +540,7 @@ Difficulty: Very Hard
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
 						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
-						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
+						if(prob(florachance) && NewFlora.len && !O.is_blocked_turf(TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
 						continue
@@ -782,7 +782,7 @@ Difficulty: Very Hard
 		holder_animal.mind.AddSpell(P)
 		holder_animal.verbs -= /mob/living/verb/pulled
 
-/obj/structure/closet/stasis/dump_contents(var/kill = 1)
+/obj/structure/closet/stasis/dump_contents(kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)

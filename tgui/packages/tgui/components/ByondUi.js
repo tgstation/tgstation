@@ -112,7 +112,7 @@ export class ByondUi extends Component {
       params = {},
     } = this.props;
     const box = getBoundingBox(this.containerRef.current);
-    logger.log('bounding box', box);
+    logger.debug('bounding box', box);
     this.byondUiElement.render({
       parent: window.__windowId__,
       ...params,
@@ -132,7 +132,6 @@ export class ByondUi extends Component {
 
   render() {
     const { params, ...rest } = this.props;
-    const type = params?.type;
     const boxProps = computeBoxProps(rest);
     return (
       <div

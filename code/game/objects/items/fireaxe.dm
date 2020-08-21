@@ -11,7 +11,8 @@
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	attack_verb = list("attacked", "chopped", "cleaved", "tore", "lacerated", "cut")
+	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
+	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
@@ -33,10 +34,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/fireaxe/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/fireaxe/update_icon_state()

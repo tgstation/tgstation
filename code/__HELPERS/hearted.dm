@@ -6,10 +6,10 @@
 
 	for(var/i in GLOB.joined_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
-		if(!check_mob || !check_mob.mind || !check_mob.client)
+		if(!check_mob?.mind || !check_mob.client)
 			continue
 		// maybe some other filters like bans or whatever
-		check_mob.query_heart(1)
+		INVOKE_ASYNC(check_mob, /mob.proc/query_heart, 1)
 		number_to_ask--
 		if(number_to_ask == 0)
 			break
@@ -49,6 +49,7 @@
 	if(isnull(heart_nominee) || heart_nominee == "")
 		return
 
+	heart_nominee = lowertext(heart_nominee)
 	var/list/name_checks = get_mob_by_name(heart_nominee)
 	if(!name_checks || name_checks.len == 0)
 		query_heart(attempt + 1)

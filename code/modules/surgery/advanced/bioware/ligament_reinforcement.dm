@@ -31,15 +31,15 @@
 
 /datum/bioware/reinforced_ligaments
 	name = "Reinforced Ligaments"
-	desc = "The ligaments and nerve endings that connect the torso to the limbs are protected by a mix of bone and tissues, and are much harder to separate from the body, but are also easier to disable."
+	desc = "The ligaments and nerve endings that connect the torso to the limbs are protected by a mix of bone and tissues, and are much harder to separate from the body, but are also easier to wound."
 	mod_type = BIOWARE_LIGAMENTS
 
 /datum/bioware/reinforced_ligaments/on_gain()
 	..()
 	ADD_TRAIT(owner, TRAIT_NODISMEMBER, "reinforced_ligaments")
-	ADD_TRAIT(owner, TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
+	ADD_TRAIT(owner, TRAIT_EASYLIMBWOUND, "reinforced_ligaments")
 
 /datum/bioware/reinforced_ligaments/on_lose()
 	..()
 	REMOVE_TRAIT(owner, TRAIT_NODISMEMBER, "reinforced_ligaments")
-	REMOVE_TRAIT(owner, TRAIT_EASYLIMBDISABLE, "reinforced_ligaments")
+	REMOVE_TRAIT(owner, TRAIT_EASYLIMBWOUND, "reinforced_ligaments")

@@ -10,7 +10,7 @@ It is possible to destroy the net by the occupant or someone else.
 	icon_state = "energynet"
 
 	density = TRUE//Can't pass through.
-	opacity = 0//Can see through.
+	opacity = FALSE //Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER

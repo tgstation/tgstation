@@ -11,7 +11,7 @@
 /obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
 	set_luminosity = 2
 	set_cap = 2.5
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 
 /mob/living/simple_animal/hostile/syndicate
@@ -117,7 +117,7 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	status_flags = 0
 	var/obj/effect/light_emitter/red_energy_sword/sord
 	projectile_deflect_chance = 50

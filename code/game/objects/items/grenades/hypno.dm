@@ -62,6 +62,6 @@
 				C.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
 			else
 				to_chat(C, "<span class='hypnophrase'>The light is so pretty...</span>")
-				C.confused += min(C.confused + 10, 20)
+				C.add_confusion(min(C.get_confusion() + 10, 20))
 				C.dizziness += min(C.dizziness + 10, 20)
 				C.drowsyness += min(C.drowsyness + 10, 20)

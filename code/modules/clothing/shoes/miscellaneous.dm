@@ -411,7 +411,7 @@
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
 
-/obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
+/obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 10, target = user))
 		return
 	user.forceMove(user.drop_location())

@@ -173,7 +173,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
 		inv.update_icon()
 
-	if(!gloves && bloody_hands)
+	if(!gloves && blood_in_hands)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
 		if(get_num_arms(FALSE) < 2)
 			if(has_left_hand(FALSE))

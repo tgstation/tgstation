@@ -186,3 +186,26 @@
 	reward = 5000
 	required_count = 5
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/deadmouse)
+
+/datum/bounty/item/assistant/paper_bin
+	name = "Paper Bins"
+	description = "Our accounting division is all out of paper. We need a new shipment immediately."
+	reward = 2500
+	required_count = 5
+	wanted_types = list(/obj/item/paper_bin)
+
+
+/datum/bounty/item/assistant/crayons
+	name = "Crayons"
+	description = "Dr Jones' kid ate all our crayons again. Please send us yours."
+	reward = 2000
+	required_count = 24
+	wanted_types = list(/obj/item/toy/crayon)
+
+/datum/bounty/item/assistant/pens
+	name = "Pens"
+	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized ball point pens."
+	reward = 2000
+	required_count = 10
+	include_subtypes = FALSE
+	wanted_types = list(/obj/item/pen)

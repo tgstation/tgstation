@@ -12,6 +12,8 @@
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	can_be_shoved_into = TRUE
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hairstyle = "Bald"
@@ -64,3 +66,7 @@
 	var/hardcore_survival_score = 0
 	/// For agendered spessmen, which body type to use
 	var/body_type = MALE
+
+	/// How many "units of blood" we have on our hands
+	var/blood_in_hands = 0
+

@@ -9,13 +9,12 @@
 	flags_1 = CONDUCT_1
 	force = 3
 	throwforce = 10
-	var/acti_sound = 'sound/items/welderactivate.ogg'
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
+	trigger_guard = TRIGGER_GUARD_NORMAL
 	var/status = FALSE
 	var/lit = FALSE	//on or off
 	var/operating = FALSE//cooldown
@@ -27,7 +26,8 @@
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
-	trigger_guard = TRIGGER_GUARD_NORMAL
+	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/flamethrower/ComponentInitialize()
 	. = ..()
@@ -74,6 +74,9 @@
 	if(ishuman(user))
 		if(!can_trigger_gun(user))
 			return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
+		return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)

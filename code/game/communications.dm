@@ -5,7 +5,7 @@
   Note that walkie-talkie, intercoms and headsets handle transmission using nonstandard way.
   procs:
 
-    add_object(obj/device as obj, var/new_frequency as num, var/filter as text|null = null)
+    add_object(obj/device as obj, new_frequency as num, filter as text|null = null)
       Adds listening object.
       parameters:
         device - device receiving signals, must have proc receive_signal (see description below).
@@ -30,7 +30,7 @@
   radio_frequency is a global object maintaining list of devices that listening specific frequency.
   procs:
 
-    post_signal(obj/source as obj|null, datum/signal/signal, var/filter as text|null = null, var/range as num|null = null)
+    post_signal(obj/source as obj|null, datum/signal/signal, filter as text|null = null, range as num|null = null)
       Sends signal to all devices that wants such signal.
       parameters:
         source - object, emitted signal. Usually, devices will not receive their own signals.
@@ -38,7 +38,7 @@
         filter - described above.
         range - radius of regular byond's square circle on that z-level. null means everywhere, on all z-levels.
 
-  obj/proc/receive_signal(datum/signal/signal, var/receive_method as num, var/receive_param)
+  obj/proc/receive_signal(datum/signal/signal, receive_method as num, receive_param)
     Handler from received signals. By default does nothing. Define your own for your object.
     Avoid of sending signals directly from this proc, use spawn(0). Do not use sleep() here please.
       parameters:

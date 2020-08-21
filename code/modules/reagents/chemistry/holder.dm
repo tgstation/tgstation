@@ -922,7 +922,7 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
   * Arguments:
   * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
   */
-/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+/datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
@@ -930,22 +930,12 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 			if(!R.taste_mult)
 				continue
 
-			if(istype(R, /datum/reagent/consumable/nutriment))
-				var/list/taste_data = R.data
-				for(var/taste in taste_data)
-					var/ratio = taste_data[taste]
-					var/amount = ratio * R.taste_mult * R.volume
-					if(taste in tastes)
-						tastes[taste] += amount
-					else
-						tastes[taste] = amount
-			else
-				var/taste_desc = R.taste_description
-				var/taste_amount = R.volume * R.taste_mult
-				if(taste_desc in tastes)
-					tastes[taste_desc] += taste_amount
+			var/list/taste_data = R.get_taste_description(taster)
+			for(var/taste in taste_data)
+				if(taste in tastes)
+					tastes[taste] += taste_data[taste] * R.volume * R.taste_mult
 				else
-					tastes[taste_desc] = taste_amount
+					tastes[taste] = taste_data[taste] * R.volume * R.taste_mult
 		//deal with percentages
 		// TODO it would be great if we could sort these from strong to weak
 		var/total_taste = counterlist_sum(tastes)

@@ -463,7 +463,8 @@
 	block_chance = 55
 	armour_penetration = 80
 	wound_bonus = -70
-	attack_verb = list("slapped", "slathered")
+	attack_verb_continuous = list("slaps", "slathers")
+	attack_verb_simple = list("slap", "slather")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
@@ -485,9 +486,7 @@
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1)
-				reagents.expose(C, INGEST, fraction)
-				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
+				if(!reagents.trans_to(C, REAGENTS_METABOLISM, method = INGEST))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
