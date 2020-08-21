@@ -233,5 +233,5 @@
 	desc = "A holographic copy of the RaDSTORMz brand professional skateboard."
 	instability = 6
 
-/obj/vehicle/ridden/scooter/skateboard/pro/holodeck/MouseDrop(atom/over_object) //picking up normal skateboards spawned in the holodeck gets rid of the holo flag, now you cant pick them up.
+/obj/vehicle/ridden/scooter/skateboard/pro/holodeck/pick_up_board() //picking up normal skateboards spawned in the holodeck gets rid of the holo flag, now you cant pick them up.
     return

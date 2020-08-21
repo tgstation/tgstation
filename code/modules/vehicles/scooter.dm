@@ -149,16 +149,21 @@
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()
-	var/mob/living/carbon/M = usr
-	if(!istype(M) || M.incapacitated() || !Adjacent(M))
+	var/mob/living/carbon/Skater = usr
+	if(!istype(Skater))
 		return
-	if(has_buckled_mobs() && over_object == M)
-		to_chat(M, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
+	if (over_object == Skater)
+		pick_up_board(Skater)
+
+/obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/Skater)
+	if (Skater.incapacitated() || !Adjacent(Skater))
 		return
-	if(over_object == M)
-		var/board = new board_item_type(get_turf(M))
-		M.put_in_hands(board)
-		qdel(src)
+	if(has_buckled_mobs())
+		to_chat(Skater, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
+		return
+	var/board = new board_item_type(get_turf(Skater))
+	Skater.put_in_hands(board)
+	qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/pro
 	name = "skateboard"
