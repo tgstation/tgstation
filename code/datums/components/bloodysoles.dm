@@ -91,6 +91,8 @@
   * Used to register our wielder
   */
 /datum/component/bloodysoles/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	if(!iscarbon(equipper))
 		return
 	var/obj/item/parent_item = parent
@@ -109,6 +111,8 @@
   * Used to deregister our wielder
   */
 /datum/component/bloodysoles/proc/on_drop(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+
 	unregister()
 
 /**
@@ -117,6 +121,8 @@
   * Used to make bloody footprints on the ground
   */
 /datum/component/bloodysoles/proc/on_moved(datum/source, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
+
 	if(bloody_shoes[last_blood_state] == 0)
 		return
 	if(QDELETED(wielder) || is_obscured())
@@ -175,6 +181,8 @@
   * Used to make the parent item bloody
   */
 /datum/component/bloodysoles/proc/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
+	SIGNAL_HANDLER
+
 	if(QDELETED(wielder) || is_obscured())
 		return
 
@@ -195,6 +203,8 @@
   * Called when the parent item is being washed
   */
 /datum/component/bloodysoles/proc/on_clean(datum/source, clean_types)
+	SIGNAL_HANDLER
+
 	if(!(clean_types & CLEAN_TYPE_BLOOD) || last_blood_state == BLOOD_STATE_NOT_BLOODY)
 		return
 
@@ -258,16 +268,22 @@
 	return ITEM_SLOT_FEET in wielder.check_obscured_slots(TRUE)
 
 /datum/component/bloodysoles/feet/on_moved(datum/source, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
+
 	if(wielder.get_num_legs(FALSE) < 2)
 		return
 
 	..()
 
 /datum/component/bloodysoles/feet/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
+	SIGNAL_HANDLER
+
 	if(wielder.get_num_legs(FALSE) < 2)
 		return
 
 	..()
 
 /datum/component/bloodysoles/feet/proc/unequip_shoes(datum/source)
+	SIGNAL_HANDLER
+
 	update_icon()
