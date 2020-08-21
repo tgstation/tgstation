@@ -3,23 +3,23 @@
 /// Consuming food storages with an item inside can cause unique interactions, such as eating glass shards.
 
 /datum/component/food_storage
-	//what we have in our food
+	/// Reference to what we have in our food.
 	var/obj/item/stored_item
-	/// The amount of volume the food has on creation
+	/// The amount of volume the food has on creation - Used for probabilities
 	var/initial_volume = 10
 	/// Minimum size items that can be inserted
 	var/minimum_weight_class = WEIGHT_CLASS_SMALL
-	/// What are the odds we bite the stored item?
+	/// What are the odds we bite into the stored item?
 	var/bad_chance_of_discovery = 0
-	/// What are the odds we see the stored item, but don't bite it?
+	/// What are the odds we see the stored item before we bite it?
 	var/good_chance_of_discovery = 100
-	/// We've found the item in the food
+	/// The stored item was found out somehow.
 	var/discovered = FALSE
 
 /datum/component/food_storage/Initialize(_initial_volume = 10, _minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_food)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/try_destroying_food)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/try_removing_item)
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
 
 	if(_initial_volume) //initial volume should not be 0
@@ -36,7 +36,7 @@
   *	inserted_item - the item being placed into the food
   * user - the person inserting the item
   */
-/datum/component/food_storage/proc/try_inserting_food(datum/source, obj/item/inserted_item, mob/user, params)
+/datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
 	SIGNAL_HANDLER
 
 	if(istype(inserted_item, /obj/item/storage) || istype(inserted_item, /obj/item/reagent_containers/food/snacks))
@@ -63,7 +63,7 @@
   * Arguments
   *	user - the person removing the item.
   */
-/datum/component/food_storage/proc/try_destroying_food(datum/source, mob/user)
+/datum/component/food_storage/proc/try_removing_item(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	if(user.a_intent != INTENT_GRAB)
@@ -75,7 +75,7 @@
 	user.visible_message("<span class='notice'>[user.name] begins tearing at \the [parent].</span>", \
 					"<span class='notice'>You start to rip into \the [parent].</span>")
 
-	INVOKE_ASYNC(src, .proc/try_remove_item, user)
+	INVOKE_ASYNC(src, .proc/begin_remove_item, user)
 	return COMPONENT_ITEM_NO_ATTACK
 
 /** Inserts the item into the food, after a do_after.
@@ -100,7 +100,7 @@
   * Arguments
   * user - person removing the item.
   */
-/datum/component/food_storage/proc/try_remove_item(mob/user)
+/datum/component/food_storage/proc/begin_remove_item(mob/user)
 	if(do_after(user, 10 SECONDS, target = parent))
 		remove_item(user)
 
