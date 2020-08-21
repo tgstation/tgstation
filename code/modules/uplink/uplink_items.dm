@@ -1053,7 +1053,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate EMP Bomb"
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
 	item = /obj/item/sbeacondrop/emp
-	cost = 10
+	cost = 7
+	limited_stock = 2
 
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
