@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/retaliate/poison
     var/poison_per_bite = 0
-    var/poison_type = /datum/reagent/toxin
+    var/datum/reagent/poison_type = /datum/reagent/toxin
     ///if set to TRUE, this will make us not inject any chems if doing so would make the person we're biting OD on them
     var/careful = FALSE
 
