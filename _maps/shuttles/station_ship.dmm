@@ -242,7 +242,8 @@
 /area/shuttle/shipstation)
 "aX" = (
 /obj/machinery/door/window/eastleft{
-	dir = 1
+	dir = 1;
+	req_one_access_txt = "47"
 	},
 /turf/open/floor/engine,
 /area/shuttle/shipstation)
@@ -615,10 +616,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/power/apc/highcap/fifteen_k{
-	areastring = /area/shuttle/shipstation;
-	name = "Ship APC";
-	pixel_x = -27
+/obj/machinery/power/apc/auto_name/west{
+	cell_type = /obj/item/stock_parts/cell/high/plus
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2053,13 +2052,16 @@
 	id = "whiteship_windows";
 	name = "Windows Blast Door Control";
 	pixel_x = -5;
-	pixel_y = -24
+	pixel_y = -24;
+	req_access_txt = "19"
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	desc = "Used to designate a precise transit location for the Ship.";
 	dir = 8;
+	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_lavaland" = 1);
 	name = "Ship Navigation Computer";
 	shuttleId = "station";
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral);
 	x_offset = -2;
 	y_offset = -8
 	},
@@ -2238,7 +2240,8 @@
 	lethal = 1;
 	locked = 0;
 	pixel_x = -28;
-	req_access = null
+	req_access = null;
+	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2370,6 +2373,7 @@
 	dwidth = 25;
 	height = 17;
 	id = "station";
+	name = "Ship Station";
 	preferred_direction = 4;
 	width = 32
 	},
@@ -2655,6 +2659,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
+"Mz" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
 "MP" = (
 /obj/effect/spawner/structure/window/shuttle,
 /obj/machinery/door/poddoor{
@@ -2808,6 +2823,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3352,7 +3370,7 @@ bZ
 TQ
 cz
 Hc
-cV
+Mz
 IJ
 dw
 IJ

@@ -40,12 +40,16 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "ai" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate{
+	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_lavaland" = 1)
+	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "aj" = (
-/obj/machinery/computer/shuttle/syndicate,
+/obj/machinery/computer/shuttle/syndicate{
+	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom;whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland"
+	},
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
