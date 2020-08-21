@@ -8,7 +8,7 @@
 	var/fauna_density = 0
 	///list of objects that can be spawned when the turf spawns flora
 	var/list/flora_types = list(/obj/structure/flora/grass/jungle)
-	///list of mobs that can be spawned when the turf spawns fauna
+	///list of type paths of mobs that can be spawned when the turf spawns fauna
 	var/list/fauna_types = list()
 
 ///This proc handles the creation of a turf of a specific biome type
