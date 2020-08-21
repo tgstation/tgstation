@@ -83,7 +83,7 @@
     friendly_verb_continuous = "bites" //so that it will bite people instead of nuzzle them
     friendly_verb_simple = "bite"
     buffed = FALSE //so that you can't use a wumborian fugu gland on it to allow it to break its oath
-    food_type = list(/obj/item/reagent_containers/food/snacks/grown) //it's vegan
+    food_type = list(/obj/item/reagent_containers/food/snacks/grown) //it's vegan (or at least trying to be a vegetarian)
     careful = TRUE //otherwise, NPC asclepius snakes will kill people by ODing them on omnizine
     attack_same = TRUE //we "attack" our allies to heal them
 
