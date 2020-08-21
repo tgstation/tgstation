@@ -551,7 +551,7 @@
 
 		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
 		// So AA means the AT pair stays the same, AT means AT becomes TA. This requires both knowing the
-		// solved full DNA of the subject and the full DNA of the replacement genes. Applies probable disease
+		// solved full DNA of the subject mutation and the full DNA of the replacement genes. Applies probable disease
 		// of probable strengths as well. If you mess it up, you might end up getting undesirable genes, including
 		// unstable DNA. This could lead to permanent monkey. When you get it right, some will be swapped out, on a
 		// probability scale.
@@ -573,7 +573,6 @@
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
-
 			var/search_flags = 0
 
 			// Only continue if applying to occupant - all replacements in-vitro
@@ -588,32 +587,26 @@
 					search_flags |= SEARCH_DISKETTE
 					return
 
+			//Currently selected mutation
 			var/bref = params["mutref"]
+
+			//Valid gene-pairs
 			var/atstr = "AT"
 			var/cgstr = "CG"
 
 			// GUARD CHECK - Only search occupant for this specific ref, since your
 			//  can only CRISPR existing mutations in a target
 			var/datum/mutation/human/targetmut = get_mut_by_ref(bref, search_flags)
-			//var/sequence = GET_GENE_STRING(targetmut.type, scanner_occupant.dna)
-
 			/* DEBUG SECTION: Dump Strings:
 			for (var/M in subtypesof(/datum/mutation/human))
 				var/truegenes = GET_SEQUENCE(M)
 				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(M)
 				var/newString
 				for(var/i=1 to length(truegenes))
-					if(i%2==0)
-						newString+=truegenes[i-1]
-					else
-						newString+=sequence[i]
-
+					newString = (i%2==0 ? truegenes[i-1] : sequence[i])
 				to_chat(usr,"<span class='notice'>"+HM.name+" : "+truegenes+" : "+newString+"</span>")
 			to_chat(usr,"<span class='warning'>"+targetmut.name+" : "+sequence+"</span>")
 			*/
-
-
-
 
 			// Prompt for modifier string
 			var/newSequenceInput = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
@@ -621,31 +614,21 @@
 			if(!(length(newSequenceInput)==32))
 				return
 
+			//Generate the original and new gene sequences from the CRISPR string
+			//vars to hold the 2 sequences
 			var/oldSequence
 			var/newSequence
-
 
 			//Unzip the modification string
 			for(var/i = 1 to length(newSequenceInput))
 				var/char = newSequenceInput[i]
 				var/pairstr
 				var/newpair
-				//figure out which pair type
-				if(atstr[1] == char || atstr[2] == char)
-					pairstr=atstr
-				else if(cgstr[1] == char || cgstr[2] == char)
-					pairstr=cgstr
-				else
-					return //invalid char, drop out
-				//identify complement and total pair
-				if(pairstr)
-					newpair += char
-					if(pairstr[1]==char)
-						newpair += pairstr[2]
-					else
-						newpair += pairstr[1]
-				else
-					return//drop out, no complement
+				//figure out which pair type the character belongs to
+				pairstr = ((atstr[1] == char || atstr[2] == char) ? atstr : ((cgstr[1] == char || cgstr[2] == char) ? cgstr : null))
+				//Valid pair from character
+				newpair = (pairstr ? char + (pairstr[1]==char?pairstr[2]:pairstr[1]) : null)
+				// every secong letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
 				if(newpair)
 					if(i%2==0)
 						newSequence+=newpair
@@ -653,8 +636,10 @@
 						oldSequence+=newpair
 				else
 					return //drop out, no pair
+			//logging for debug
 			//to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
 			//to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
+
 			//Apply sequence
 			if(newSequence)
 				var/datum/mutation/human/matchedDna = null
@@ -664,7 +649,6 @@
 						matchedDna = M
 				var/datum/disease/advance/random/ranDisease = new /datum/disease/advance/random(3,3)
 				ranDisease.try_infect(scanner_occupant, FALSE)
-
 				// This needs a check - what if the usr already has this mutation in their DNA? Do we just lose the slot? YES.
 				///datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
 				var/mutation_data[0]
@@ -677,12 +661,12 @@
 				scanner_occupant.dna.add_mutation(resultDna,MUT_NORMAL, 0)
 				for(var/mutation_type in mutationBucket)
 					if(mutation_type == targetmut.type)
-						//newSequence = create_sequence(matchedDna, FALSE)
 						mutation_data[resultDna] = newSequence
 					else
 						mutation_data[mutation_type]=scanner_occupant.dna.mutation_index[mutation_type]
 				scanner_occupant.dna.mutation_index = mutation_data
 				scanner_occupant.domutcheck()
+				scanner_occupant.dna.add_mutation(resultDna,MUT_NORMAL, 0)
 
 			return
 
