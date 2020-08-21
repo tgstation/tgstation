@@ -68,8 +68,6 @@
 	bloody_shoes[last_blood_state] = new_our_bloodiness
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
 
-	testing("[parent] sharing blood to [pool] - new our: [new_our_bloodiness] - new pool: [pool.bloodiness]")
-
 	parent_atom.add_blood_DNA(pool.return_blood_DNA())
 	update_icon()
 
@@ -228,7 +226,6 @@
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(ishuman(wielder))
-		testing("Update icon - is bloody: [is_bloody() ? "Yes" : "No"] - has shoes: [wielder.shoes ? "Yes" : "No"]")
 		// Monkeys get no bloody feet :(
 		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !wielder.shoes)
 			wielder.remove_overlay(SHOES_LAYER)
