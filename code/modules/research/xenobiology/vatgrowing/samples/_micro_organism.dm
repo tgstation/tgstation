@@ -99,8 +99,8 @@
 	smoke.start()
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
-			var/atom/A = new created_thing(get_turf(vat))
-			vat.visible_message("<span class='nicegreen'>[A] pops out of [vat]!</span>")
+			var/atom/thing = new created_thing(get_turf(vat))
+			vat.visible_message("<span class='nicegreen'>[thing] pops out of [vat]!</span>")
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
