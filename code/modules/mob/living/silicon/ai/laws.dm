@@ -19,7 +19,7 @@
 	src.laws.show_laws(who)
 
 /mob/living/silicon/ai/post_lawchange(announce = TRUE)
-	. = ..()
+	. = ..(announce)
 
 	if(!.)
 		return
