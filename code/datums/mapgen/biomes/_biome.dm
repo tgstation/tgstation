@@ -12,15 +12,15 @@
 	var/list/fauna_types = list()
 
 ///This proc handles the creation of a turf of a specific biome type
-/datum/biome/proc/generate_turf(var/turf/T)
-	T.ChangeTurf(turf_type, null, CHANGETURF_DEFER_CHANGE)
-	if(prob(fauna_density))
+/datum/biome/proc/generate_turf(var/turf/gen_turf)
+	gen_turf.ChangeTurf(turf_type, null, CHANGETURF_DEFER_CHANGE)
+	if(length(fauna_types) && prob(fauna_density))
 		var/mob/fauna = pick(fauna_types)
-		new fauna(T)
+		new fauna(gen_turf)
 
-	if(prob(flora_density))
+	if(length(flora_types) && prob(flora_density))
 		var/obj/structure/flora = pick(flora_types)
-		new flora(T)
+		new flora(gen_turf)
 
 /datum/biome/mudlands
 	turf_type = /turf/open/floor/plating/dirt/jungle/dark
