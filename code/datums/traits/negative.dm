@@ -744,28 +744,6 @@
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 
-/datum/quirk/GCSL
-	name = "Tongue Tied"
-	desc = "Due to a past incident, your ability to speak has been completely removed. Luckily, all nanotrasen employees are taught to understand Galactic Common Sign Language! Too bad they can't understand what they can't see."
-	value = -1
-	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
-	hardcore_value = 2
-
-/datum/quirk/GCSL/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
-	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
-	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
-	old_tongue.Remove(H)
-	new_tongue.Insert(H)
-	qdel(old_tongue)
-	H.put_in_hands(gloves)
-	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
-	H.regenerate_icons()
-
-/datum/quirk/GCSL/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
-
 #undef LOCATION_LPOCKET
 #undef LOCATION_RPOCKET
 #undef LOCATION_BACKPACK

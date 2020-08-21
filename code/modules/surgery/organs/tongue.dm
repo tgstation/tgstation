@@ -311,10 +311,10 @@
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
-//GSL tongue - yep, that's how you speak sign language.
+//Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/tongue/tied
 	name = "tied tongue"
-	desc = "Cat's got your tounge?"
+	desc = "If only one had a sword so we may finally untie this knot."
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
@@ -331,22 +331,20 @@
 
 /obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
 	..()
-	ADD_TRAIT(M, TRAIT_MUTE, "tongue")
-	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
-//Thank you Jwapplephobia for helping me with this literal hellcode
-
+//Thank you Jwapplephobia for helping me with the literal hellcode below
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/exclamation_used = 0
-	var/question_mark_used = 0
+	var/exclamation_used = FALSE
+	var/question_mark_used = FALSE
 	var/mob/living/carbon/M = owner
 	for(var/i in 1 to length(message))
 		if(findtext("!", message[i]))
-			exclamation_used = 1
+			exclamation_used = TRUE
 		else if (findtext("?", message[i]))
-			question_mark_used = 1
+			question_mark_used = TRUE
 		else
 			new_message += message[i]
 	if(exclamation_used)

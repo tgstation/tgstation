@@ -119,6 +119,9 @@
 				I = organs[I]
 				if(!I)
 					return -1
+				if(istype(I, /obj/item/organ/tongue/tied)) //Since I couldn't find any code for unremovable organs
+					to_chat(user, "<span class='warning'>Only Alexander the Great would be able to untie that knot!</span>")
+					return -1
 				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
 					"<span class='notice'>[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 					"<span class='notice'>[user] begins to extract something from [target]'s [parse_zone(target_zone)].</span>")
