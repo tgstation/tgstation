@@ -431,9 +431,9 @@
 ///Mob needs to have enough nutrition
 /datum/action/cooldown/gel_cocoon/IsAvailable()
 	. = ..()
-	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	if(!.)
-		return FALSE
+		return
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	return ooze.ooze_nutrition >= 30
 
 ///Puts the mob in the new cocoon
