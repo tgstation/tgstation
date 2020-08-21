@@ -19,13 +19,6 @@
 	var/unseal_time = 2 SECONDS
 
 /obj/item/door_seal/suicide_act(mob/user)
-<<<<<<< HEAD
 	user.visible_message("<span class='suicide'>[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
 	return(BRUTELOSS)
-=======
-	user.visible_message("<span class='suicide'>[user] is sealing [user.p_them()]self off from the world with the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
-	return(BRUTELOSS)
-
->>>>>>> 9f4817fd6970ad1d64f5cb884ff92ac629c1bf3c
