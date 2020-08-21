@@ -10,7 +10,7 @@
 	icon_state = "meat"
 	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
-	list_reagents = list(list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2)) //Meat has fats that a food processor can process into cooking oil
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2) //Meat has fats that a food processor can process into cooking oil
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain
 	slices_num = 3
