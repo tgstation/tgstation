@@ -107,8 +107,8 @@
     return patients
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/tamed()
-    ..()
-    friends.Cut() //we WANT to be able to "attack" our friends so that we can heal them
+	. = ..()
+	friends.Cut() //we WANT to be able to "attack" our friends so that we can heal them
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/attack_ghost(mob/user)
     . = ..()
