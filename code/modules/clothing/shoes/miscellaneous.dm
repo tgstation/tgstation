@@ -403,7 +403,7 @@
 				user.visible_message("<span class='warning'>[occupant] falls out of [src]!</span>", "<span class='userdanger'>[occupant] was inside of [src], and [occupant.p_they()] just fell out!</span>")
 			else
 				user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
-				user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
+				user.Knockdown(2 SECONDS) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 				occupant.UnarmedAttack(user)
 		occupants.Cut()
 
