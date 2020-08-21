@@ -115,12 +115,8 @@
 	if(!law_list.len)
 		return "None"
 
-	var/datum/ai_laws/lawset_datum = null
-
-	for(var/lawset in subtypesof(/datum/ai_laws))
-		lawset_datum = new lawset
-
-		if(compare_list(law_list, lawset_datum.get_law_list(TRUE, FALSE, FALSE)))
+	for(var/laws in GLOB.lawset_laws)
+		if(compare_list(law_list, laws)
 			return lawset_datum.name
 
 	return "Custom"
