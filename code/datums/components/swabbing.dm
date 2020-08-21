@@ -34,9 +34,8 @@ This component is used in vat growing to swab for microbiological samples which 
 
 /datum/component/swabbing/Destroy()
 	. = ..()
-	for(var/i in swabbed_items)
-		var/datum/D = i
-		qdel(D)
+	for(var/swabbed in swabbed_items)
+		qdel(swabbed)
 
 
 ///Changes examine based on your sample
