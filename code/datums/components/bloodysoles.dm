@@ -268,16 +268,12 @@
 	return ITEM_SLOT_FEET in wielder.check_obscured_slots(TRUE)
 
 /datum/component/bloodysoles/feet/on_moved(datum/source, OldLoc, Dir, Forced)
-	SIGNAL_HANDLER
-
 	if(wielder.get_num_legs(FALSE) < 2)
 		return
 
 	..()
 
 /datum/component/bloodysoles/feet/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
-	SIGNAL_HANDLER
-
 	if(wielder.get_num_legs(FALSE) < 2)
 		return
 
