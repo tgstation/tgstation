@@ -314,10 +314,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/shockpaddles/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/shockpaddles/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/shockpaddles/Destroy()
@@ -340,6 +344,8 @@
 		defib.fire_act(exposed_temperature, exposed_volume)
 
 /obj/item/shockpaddles/proc/check_range()
+	SIGNAL_HANDLER
+
 	if(!req_defib || !defib)
 		return
 	if(!in_range(src,defib))
@@ -608,6 +614,7 @@
 					H.emote("gasp")
 					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 					log_combat(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

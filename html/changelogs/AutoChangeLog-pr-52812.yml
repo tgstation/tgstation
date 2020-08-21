@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being unable to use the implosion compressor after failing an implosion."

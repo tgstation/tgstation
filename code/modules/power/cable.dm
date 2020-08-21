@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
+#define CABLE_RESTRAINTS_COST 15
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -403,7 +403,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
+	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
@@ -417,7 +418,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = GLOB.cable_coil_recipes
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
@@ -448,21 +448,23 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 		return FALSE
 	return TRUE
 
-GLOBAL_LIST(cable_radial_layer_list)
-
 /obj/item/stack/cable_coil/attack_self(mob/living/user)
 	if(!user)
 		return
-	if(!GLOB.cable_radial_layer_list)
-		GLOB.cable_radial_layer_list = list(
-		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
-		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable"),
-		"Cable crafting" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cuff")
-		)
-	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/image/restraints_icon = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cuff")
+	restraints_icon.maptext = "<span class='maptext' [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>"
+
+	var/list/radial_menu = list(
+	"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
+	"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
+	"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+	"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
+	"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable"),
+	"Cable restraints" = restraints_icon
+	)
+
+	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
@@ -497,8 +499,12 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
 			novariants = TRUE
-		if("Cable crafting")
-			interact(user)
+		if("Cable restraints")
+			if (amount >= CABLE_RESTRAINTS_COST)
+				use(CABLE_RESTRAINTS_COST)
+				var/obj/item/restraints/handcuffs/cable/restraints = new
+				restraints.color = color
+				user.put_in_hands(restraints)
 	update_icon()
 
 
@@ -596,6 +602,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	custom_materials = list()
 	cost = 1
 
+#undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 

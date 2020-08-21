@@ -147,7 +147,7 @@
 	attempt_escape(user)
 
 // resist to escape the bin
-/obj/machinery/disposal/container_resist(mob/living/user)
+/obj/machinery/disposal/container_resist_act(mob/living/user)
 	attempt_escape(user)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)

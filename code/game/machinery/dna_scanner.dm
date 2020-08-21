@@ -66,7 +66,7 @@
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist(mob/living/user)
+/obj/machinery/dna_scannernew/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return

@@ -1,0 +1,4 @@
+author: "Guestratem"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the missing sprite for the PKA"

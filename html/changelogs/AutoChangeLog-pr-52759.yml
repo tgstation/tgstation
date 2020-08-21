@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Service cyborgs are now able to properly set a pipe cleaner cable color for their art needs."
-  - tweak: "Service cyborgs can now cancel color choosing input for pipe cleaner cables in case they have changed their minds about it."

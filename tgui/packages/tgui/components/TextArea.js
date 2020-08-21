@@ -1,23 +1,15 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
- * @author Original Aleksej Komarov
- * @author Changes Warlockd (https://github.com/warlockd)
+ * @author Warlockd
  * @license MIT
  */
 
-
-import { classes, isFalsy } from 'common/react';
+import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-
-
-const toInputValue = value => {
-  if (isFalsy(value)) {
-    return '';
-  }
-  return value;
-};
+import { toInputValue } from './Input';
+import { KEY_ESCAPE } from 'common/keycodes';
 
 export class TextArea extends Component {
   constructor(props, context) {
@@ -30,15 +22,6 @@ export class TextArea extends Component {
     const {
       dontUseTabForIndent = false,
     } = props;
-    // found this hack that expands the text area without
-    // having to hard set rows all the time
-    // there has GOT to be a better way though
-    this.autoresize = () => {
-      if (this.fillerRef && this.textareaRef) {
-      //  this.fillerRef.current.innerHTML =
-      //  this.textareaRef.current.value.replace(/\n/g, '<br/>');
-      }
-    };
     this.handleOnInput = e => {
       const { editing } = this.state;
       const { onInput } = this.props;
@@ -48,7 +31,6 @@ export class TextArea extends Component {
       if (onInput) {
         onInput(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleOnChange = e => {
       const { editing } = this.state;
@@ -59,7 +41,6 @@ export class TextArea extends Component {
       if (onChange) {
         onChange(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleKeyPress = e => {
       const { editing } = this.state;
@@ -70,11 +51,16 @@ export class TextArea extends Component {
       if (onKeyPress) {
         onKeyPress(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleKeyDown = e => {
       const { editing } = this.state;
       const { onKeyDown } = this.props;
+      if (e.keyCode === KEY_ESCAPE) {
+        this.setEditing(false);
+        e.target.value = toInputValue(this.props.value);
+        e.target.blur();
+        return;
+      }
       if (!editing) {
         this.setEditing(true);
       }
@@ -82,19 +68,17 @@ export class TextArea extends Component {
         const keyCode = e.keyCode || e.which;
         if (keyCode === 9) {
           e.preventDefault();
-          const s = e.target.selectionStart;
-          e.target.value
-          = e.target.value.substring(0, e.target.selectionStart)
-            + "\t"
-            + e.target.value.substring(e.target.selectionEnd);
-          e.target.selectionEnd = s +1;
+          const { value, selectionStart, selectionEnd } = e.target;
+          e.target.value = (
+            value.substring(0, selectionStart) + "\t"
+              + value.substring(selectionEnd)
+          );
+          e.target.selectionEnd = selectionStart + 1;
         }
       }
-
       if (onKeyDown) {
         onKeyDown(e, e.target.value);
       }
-      this.autoresize();
     };
     this.handleFocus = e => {
       const { editing } = this.state;
@@ -119,7 +103,6 @@ export class TextArea extends Component {
     const input = this.textareaRef.current;
     if (input) {
       input.value = toInputValue(nextValue);
-      this.autoresize();
     }
   }
 
@@ -130,18 +113,18 @@ export class TextArea extends Component {
     const input = this.textareaRef.current;
     if (input && !editing && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
-      this.autoresize();
     }
   }
 
   setEditing(editing) {
     this.setState({ editing });
   }
+
   getValue() {
     return this.textareaRef.current && this.textareaRef.current.value;
   }
+
   render() {
-    const { props } = this;
     // Input only props
     const {
       onChange,
@@ -167,12 +150,9 @@ export class TextArea extends Component {
           'TextArea',
           fluid && 'TextArea--fluid',
           className,
-
         ])}
         {...rest}>
-
         <textarea
-          value={value}
           ref={this.textareaRef}
           className="TextArea__textarea"
           placeholder={placeholder}

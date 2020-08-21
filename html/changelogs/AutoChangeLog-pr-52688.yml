@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscdel: "The Longtimer quirk has been removed"
-  - tweak: "Temporal Scarring has been reworked. Rather than drawing from one of five random slots each round, you now have 3 slots that you will go through sequentially, so if you survive a round with a bunch of scars, they'll be with you 3 rounds from now."

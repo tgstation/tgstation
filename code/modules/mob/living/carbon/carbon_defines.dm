@@ -62,7 +62,6 @@
 
 	var/drunkenness = 0 ///Overall drunkenness
 	var/stam_regen_start_time = 0 ///used to halt stamina regen temporarily
-	var/stam_paralyzed = FALSE ///knocks you down
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
@@ -79,3 +78,6 @@
 
 	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0
+
+	/// Can other carbons be shoved into this one to make it fall?
+	var/can_be_shoved_into = FALSE

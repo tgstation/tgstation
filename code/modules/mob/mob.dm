@@ -133,7 +133,7 @@
 /**
   * Show a message to this mob (visual or audible)
   */
-/mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)
 		return
 
@@ -160,7 +160,7 @@
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 		return
-	to_chat(src, msg)
+	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
 
 /**
   * Generate a visible message from this atom
@@ -501,6 +501,8 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 /mob/proc/clear_from_recent_examines(atom/A)
+	SIGNAL_HANDLER
+
 	if(!client)
 		return
 	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
@@ -810,7 +812,11 @@
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		if (SSticker.round_start_time)
-			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
+			var/round_time = world.time - SSticker.round_start_time
+			if(round_time > MIDNIGHT_ROLLOVER)
+				stat(null, "Round Time: [round(round_time/MIDNIGHT_ROLLOVER)]:[gameTimestamp("hh:mm:ss", round_time)]")
+			else
+				stat(null, "Round Time: [gameTimestamp("hh:mm:ss", round_time)]")
 		else
 			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
 		stat(null, "Station Time: [station_time_timestamp()]")
@@ -1075,7 +1081,11 @@
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
-	return isAdminGhostAI(src) || Adjacent(A)
+	if(isAdminGhostAI(src) || Adjacent(A))
+		return TRUE
+	var/datum/dna/mob_dna = has_dna()
+	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
+		return TRUE
 
 ///Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)

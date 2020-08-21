@@ -461,17 +461,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
-			if(current.opacity)
-				return 0
-			for(var/thing in current)
-				var/atom/A = thing
-				if(A.opacity)
-					return 0
+				return FALSE
+			if(IS_OPAQUE_TURF(current))
+				return FALSE
 			current = get_step_towards(current, target_turf)
 			steps++
+	return TRUE
 
-	return 1
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -1383,8 +1379,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		REMOVE_TRAIT(the_atom2,trait,source)
 
 /proc/get_random_food()
-	var/list/blocked = list(/obj/item/reagent_containers/food/snacks/store/bread,
-		/obj/item/reagent_containers/food/snacks/breadslice,
+	var/list/blocked = list(/obj/item/food/bread,
+		/obj/item/food/breadslice,
 		/obj/item/reagent_containers/food/snacks/store/cake,
 		/obj/item/reagent_containers/food/snacks/cakeslice,
 		/obj/item/reagent_containers/food/snacks/store,
@@ -1398,10 +1394,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
-		/obj/item/reagent_containers/food/snacks/deepfryholder,
+		/obj/item/food/deepfryholder,
 		/obj/item/reagent_containers/food/snacks/clothing,
 		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/food/bread,
 		/obj/item/reagent_containers/food/snacks/grown/nettle
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
@@ -1483,47 +1479,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return call(source, proctype)(arglist(arguments))
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
-
-// Converts browser keycodes to BYOND keycodes.
-/proc/browser_keycode_to_byond(keycode)
-	keycode = text2num(keycode)
-	switch(keycode)
-		// letters and numbers
-		if(65 to 90, 48 to 57)
-			return ascii2text(keycode)
-		if(17)
-			return "Ctrl"
-		if(18)
-			return "Alt"
-		if(16)
-			return "Shift"
-		if(37)
-			return "West"
-		if(38)
-			return "North"
-		if(39)
-			return "East"
-		if(40)
-			return "South"
-		if(45)
-			return "Insert"
-		if(46)
-			return "Delete"
-		if(36)
-			return "Northwest"
-		if(35)
-			return "Southwest"
-		if(33)
-			return "Northeast"
-		if(34)
-			return "Southeast"
-		if(112 to 123)
-			return "F[keycode-111]"
-		if(96 to 105)
-			return "Numpad[keycode-96]"
-		if(188)
-			return ","
-		if(190)
-			return "."
-		if(189)
-			return "-"

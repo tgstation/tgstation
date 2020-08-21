@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a scenario which could cause floorbots to end up with negative tiles in their inventory."
-  - bugfix: "Fixed floorbots not stopping the process of replacing tiles after turning off replace tiles while they're in the middle of replacing tiles."
