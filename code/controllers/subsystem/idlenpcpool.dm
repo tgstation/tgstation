@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(idlenpcpool)
 /datum/controller/subsystem/idlenpcpool/stat_entry()
 	var/list/idlelist = GLOB.simple_animals[AI_IDLE]
 	var/list/zlist = GLOB.simple_animals[AI_Z_OFF]
-	..("IdleNPCS:[idlelist.len]|Z:[zlist.len]")
+	return ..("IdleNPCS:[idlelist.len]|Z:[zlist.len]")
 
 /datum/controller/subsystem/idlenpcpool/proc/MaxZChanged()
 	if (!islist(idle_mobs_by_zlevel))

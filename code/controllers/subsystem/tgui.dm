@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(tgui)
 	close_all_uis()
 
 /datum/controller/subsystem/tgui/stat_entry()
-	..("P:[open_uis.len]")
+	return ..("P:[open_uis.len]")
 
 /datum/controller/subsystem/tgui/fire(resumed = 0)
 	if(!resumed)

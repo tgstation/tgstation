@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(timer)
 	bucket_resolution = world.tick_lag
 
 /datum/controller/subsystem/timer/stat_entry(msg)
-	..("B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]")
+	return ..("B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]")
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	// Store local references to datum vars as it is faster to access them

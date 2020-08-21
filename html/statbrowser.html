@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stat Browser</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 13px !important;
+	margin: 5px !important;
+	padding: 2px !important;
+}
+a {
+	color: black;
+	text-decoration: none
+}
+a:hover, .dark a:hover {
+	text-decoration: underline;
+}
+.dark a{
+	color: #abc6ec;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.button-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 0;
+  white-space: pre-wrap;
+}
+.button {
+  background-color: #FFFFFF;
+  border-color: #FFFFFE;
+  color: black;
+  padding: 7px 14px;
+  text-align: center;
+  text-decoration: none;
+  position: sticky;
+  top: 0;
+  font-size: 13px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 10%;
+  transition-duration: 0.25s;
+  order: 3;
+}
+.dark button {
+  background-color: #252525;
+  border-color: #252524;
+  color: white;
+}
+.button.Status{
+	order: 1;
+}
+.button.MC {
+	order: 2;
+}
+.button:hover {
+	border-color: #FFFFFE;
+    background-color: black;
+    color: white;
+}
+.dark button:hover {
+	border-color: #252524;
+    background-color: white;
+    color: #252525;
+}
+.button:active, .button.active {
+  text-decoration: underline;
+}
+.grid-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 0;
+  white-space: pre-wrap;
+}
+.grid-item {
+  color: black;
+  width: 150px;
+  font-size: 11px;
+  line-height: 24px;
+  text-align: left;
+  min-width: 0;
+  min-height: 0;
+  white-space: pre-wrap;
+}
+</style>
+<ul id="menu" class="button-container">
+</ul>
+</head>
+<body>
+<script>
+var decoder = decodeURIComponent || unescape;
+// browser passthrough code copy pasted here
+if(document.addEventListener && window.location) { // hey maybe some bozo is still using mega-outdated IE
+	let anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
+	document.addEventListener("keydown", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return; // do e.preventDefault() to prevent this behavior.
+		if(e.which) {
+			if(!anti_spam[e.which]) {
+				anti_spam[e.which] = true;
+				let href = "?__keydown=" + e.which;
+				if(e.ctrlKey === false) href += "&ctrlKey=0"
+				else if(e.ctrlKey === true) href += "&ctrlKey=1"
+				window.location.href = href;
+			}
+		}
+	});
+	document.addEventListener("keyup", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return;
+		if(e.which) {
+			anti_spam[e.which] = false;
+			let href = "?__keyup=" + e.which;
+			if(e.ctrlKey === false) href += "&ctrlKey=0"
+			else if(e.ctrlKey === true) href += "&ctrlKey=1"
+			window.location.href = href;
+		}
+	});
+}
+
+if(!Array.prototype.includes) {
+	Array.prototype.includes = function(thing) {
+		for(let i = 0; i < this.length; i++) {
+			if(this[i] == thing) return true;
+		}
+		return false;
+	}
+}
+
+let status_tab_parts = ["loading..."];
+let current_tab = null;
+let mc_tab_parts = [["loading...", ""]];
+let href_token = null;
+let spells = [];
+let spell_tabs = [];
+let verb_tabs = [];
+let verbs = [];
+let inner = "";
+let tickets = [];
+let sqdl2 = [];
+let permanent_tabs = []; // tabs that won't be cleared by wipes
+let turfcontents = [];
+let turfname = "";
+const menu = document.querySelector('#menu');
+
+function createStatusTab(name) {
+	if(document.getElementById(name) || name.trim() == "")
+		return;
+	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
+		return;
+	let B = document.createElement("BUTTON");
+	B.onclick = function() {tab_change(name)};
+	B.id = name;
+	B.textContent = name;
+	B.className = "button";
+	//ORDERING ALPHABETICALLY
+	B.style.order = name.charCodeAt(0);
+	if(name == "Status" || name == "MC")
+		if(name == "Status")
+			B.style.order = 1;
+		else B.style.order = 2;
+	//END ORDERING
+	menu.appendChild(B);
+}
+
+function removeStatusTab(name) {
+	if(!document.getElementById(name) || permanent_tabs.includes(name))
+		return;
+	if(verb_tabs.includes(name))
+		verb_tabs.pop(name);
+	menu.removeChild(document.getElementById(name));
+	if(document.getElementById(name)) // repeat for duplicates
+		removeStatusTab(name);
+}
+
+function addPermanentTab(name) {
+ if(!permanent_tabs.includes(name))
+	permanent_tabs.push(name);
+	createStatusTab(name);
+}
+
+function removePermanentTab(name) {
+	if(permanent_tabs.includes(name))
+		permanent_tabs.pop(name);
+	removeStatusTab(name);
+
+}
+function checkStatusTab() {
+	for(let i=0; i < menu.children.length; i++)
+		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
+			removeStatusTab(menu.children[i].id);
+}
+function add_verb(v) {
+	let to_add = JSON.parse(v);
+	let cat = "";
+	cat = to_add[0];
+	if(verb_tabs.includes(cat)){ // we have the category already
+		verbs.push(to_add); // add it to verb list and we done
+	} else if(cat.length > 0) { // we don't have the category
+		verb_tabs.push(cat);
+		createStatusTab(cat); // create the category
+		verbs.push(to_add) // add verb
+	}
+	if(current_tab == cat) {
+		draw_verbs(cat); // redraw if we added a verb to the tab we're currently in
+	}
+}
+function remove_verb(v) {
+	let to_remove = JSON.parse(v); // to_remove = [verb:category, verb:name]
+	verbs.pop(to_remove); // remove it from verbs
+	if(current_tab == to_remove[0]) // redraw
+		draw_verbs(current_tab);
+	check_verbs();
+}
+
+function check_verbs() {
+	let cat = "";
+	for(let v = 0; v < verb_tabs.length; v++){
+		cat = verb_tabs[v];
+		verbs_cat_check(cat);
+	}
+	checkStatusTab(); // removes any empty status tabs
+}
+
+function verbs_cat_check(cat) {
+	let verbs_in_cat = 0;
+	let verbcat = "";
+	if(!verbs){
+		for(let m = 0; m < verb_tabs.length; m++){
+			verbcat = verb_tabs[m];
+			verb_tabs.pop(verbcat);
+			removeStatusTab(verbcat);
+		}
+		return;
+	}
+	for(let v = 0; v < verbs.length; v++){
+		let verb = verbs[v];
+		verbcat = verb[0];
+		if(verbcat != cat) continue;
+		if(verbcat == cat){
+			verbs_in_cat++;
+		}
+	}
+	if(verbs_in_cat < 1) {
+		verb_tabs.pop(cat);
+		removeStatusTab(cat);
+		if(current_tab == cat)
+			tab_change("Status");
+	}
+}
+
+function wipe_verbs() {
+	verbs = [];
+	verb_tabs = [];
+	check_verbs();
+	verb_tabs = permanent_tabs;
+}
+
+function add_verb_list(v) {
+	let to_add = JSON.parse(v); // list of a list with category and verb inside it
+	for(let i = 0; i < to_add.length; i++) {
+		let part = to_add[i];
+		if(verb_tabs.includes(part[0])){
+			verbs.push(part);
+			if(current_tab == part[0]) {
+				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
+		}
+		} else if(part[0]) {
+			verb_tabs.push(part[0]);
+			createStatusTab(part[0]);
+			verbs.push(part);
+		}
+	}
+}
+
+function remove_verb_list(v) {
+	let to_remove = JSON.parse(v);
+	for(let i = 0; i < to_remove.length; i++) {
+		let part = to_remove[i];
+		if(verb_tabs.includes(part[0])){
+			verbs.pop(part);
+		} else {
+			verbs.pop(part); // its not in a tab, just pop it from our verbs if we had it in there
+		}
+	}
+	check_verbs();
+}
+// passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
+// example (IC, Say)
+function init_verbs(c, v) {
+	wipe_verbs(); // remove all verb categories so we can replace them
+	verb_tabs = JSON.parse(c);
+	verb_tabs.sort(); // sort it
+	let do_update = false;
+	let cat = "";
+	for(let i = 0; i < verb_tabs.length; i++){
+		cat = verb_tabs[i];
+		createStatusTab(cat); // create a category if the verb doesn't exist yet
+	}
+	if(verb_tabs.includes(current_tab)) {
+		do_update = true;
+	}
+	if(v) {
+		verbs = JSON.parse(v);
+		check_verbs();
+		if(do_update) {
+			draw_verbs(current_tab);
+		}
+	}
+}
+
+function update(global_data, ping_entry, other_entries) {
+	status_tab_parts = [ping_entry];
+	let parsed = JSON.parse(global_data);
+	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	parsed = JSON.parse(other_entries);
+	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	if(current_tab == "Status")
+		draw_status();
+	else if(current_tab == "Debug Stat Panel")
+		draw_debug();
+}
+
+function update_mc(global_mc_data, coords_entry, ht) {
+	mc_tab_parts = JSON.parse(global_mc_data);
+	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
+	href_token = ht;
+	if(!verb_tabs.includes("MC"))
+		verb_tabs.push("MC")
+	createStatusTab("MC");
+	if(current_tab == "MC")
+		draw_mc();
+}
+
+function remove_mc() {
+	removeStatusTab("MC");
+	tab_change("Status");
+}
+function remove_spells() {
+	for(let s = 0; s < spell_tabs.length; s++){
+		removeStatusTab(spell_tabs[s]);
+	}
+}
+
+function init_spells() {
+	let cat = "";
+	for(let i = 0; i < spell_tabs.length; i++)
+		cat = spell_tabs[i];
+		if(cat.length > 0)
+			verb_tabs.push(cat);
+			createStatusTab(cat);
+}
+
+function check_spells() {
+	for(let v = 0; v < spell_tabs.length; v++)
+		spell_cat_check(spell_tabs[v]);
+}
+function spell_cat_check(cat) {
+	let spells_in_cat = 0;
+	let spellcat = "";
+	for(let s = 0; s < spells.length; s++){
+		let spell = spells[s];
+		spellcat = spell[0];
+		if(spellcat == cat){
+			spells_in_cat++;
+		}
+	}
+	if(spells_in_cat < 1) {
+		removeStatusTab(cat);
+	}
+}
+function update_spells(t, s) {
+	spell_tabs = JSON.parse(t);
+	let do_update = false;
+	if(spell_tabs.includes(current_tab)) {
+		do_update = true;
+	}
+	init_spells();
+	if(s) {
+		spells = JSON.parse(s);
+		if(do_update) {
+			draw_spells(current_tab);
+		}
+	} if(!s) remove_spells();
+}
+
+function tab_change(tab) {
+	if(tab == current_tab) return;
+	if(document.getElementById(current_tab))
+		document.getElementById(current_tab).className = "button"; // disable active on last button
+	current_tab = tab;
+	if(document.getElementById(tab))
+		document.getElementById(tab).className = "button active"; // make current button active
+	let spell_tabs_thingy = (spell_tabs.includes(tab));
+	let verb_tabs_thingy = (verb_tabs.includes(tab));
+	if(tab == "Status") {
+		draw_status();
+	} else if(tab == "MC") {
+		draw_mc();
+	} else if(spell_tabs_thingy) {
+		draw_spells(tab);
+	} else if(verb_tabs_thingy){
+		draw_verbs(tab);
+	} else if(tab == "Debug Stat Panel") {
+		draw_debug();
+	} else if(tab == "Tickets") {
+		draw_tickets();
+	} else if(tab == "SQDL2") {
+		draw_sqdl2();
+	}else if(tab == turfname) {
+		draw_listedturf();
+	} else {
+	document.getElementById("statcontent").innerHTML = "loading...";
+	}
+	window.location.href = "byond://winset?statbrowser.is-visible=true";
+}
+
+function draw_debug() {
+	document.getElementById("statcontent").innerHTML = "";
+	let wipeverbstabs = document.createElement("div");
+	let link = document.createElement("a");
+	link.onclick = function() {wipe_verbs()};
+	link.textContent = "Wipe All Verbs";
+	wipeverbstabs.appendChild(link);
+	document.getElementById("statcontent").appendChild(wipeverbstabs);
+	let text = document.createElement("div");
+	text.innerHTML = "Verb Tabs:";
+	document.getElementById("statcontent").appendChild(text);
+	let table1 = document.createElement("table");
+	for(let i=0; i < verb_tabs.length ; i++) {
+		let part = verb_tabs[i];
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part;
+		let a = document.createElement("a");
+		a.onclick = function() {removeStatusTab(part)};
+		a.textContent = " Delete Tab " + part;
+		td1.appendChild(a);
+		tr.appendChild(td1);
+		table1.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table1);
+	let header2 = document.createElement("div");
+	header2.innerHTML = "Verbs: Category | Name";
+	document.getElementById("statcontent").appendChild(header2);
+	let table2 = document.createElement("table");
+	for(let v = 0; v < verbs.length; v++) {
+		let part2 = verbs[v];
+		let trr = document.createElement("tr");
+		let tdd1 = document.createElement("td");
+		tdd1.textContent = part2[0];
+		let tdd2 = document.createElement("td");
+		tdd2.textContent = part2[1];
+		trr.appendChild(tdd1);
+		trr.appendChild(tdd2);
+		table2.appendChild(trr);
+	}
+	document.getElementById("statcontent").appendChild(table2);
+	let text3 = document.createElement("div");
+	text3.innerHTML = "Permanent Tabs:";
+	document.getElementById("statcontent").appendChild(text3);
+	let table3 = document.createElement("table");
+	for(let i=0; i < permanent_tabs.length ; i++) {
+		let part3 = permanent_tabs[i];
+		let trrr = document.createElement("tr");
+		let tddd1 = document.createElement("td");
+		tddd1.textContent = part3;
+		trrr.appendChild(tddd1);
+		table3.appendChild(trrr);
+	}
+	document.getElementById("statcontent").appendChild(table3);
+
+}
+function draw_status() {
+	if(!document.getElementById("Status"))
+		createStatusTab("Status");
+		current_tab = "Status";
+	document.getElementById("statcontent").innerHTML = inner;
+	for(let i = 0; i < status_tab_parts.length; i++) {
+		if(status_tab_parts[i].trim() == "") {
+			document.getElementById("statcontent").appendChild(document.createElement("br"));
+		} else {
+			let div = document.createElement("div");
+			div.innerHTML = status_tab_parts[i];
+			document.getElementById("statcontent").appendChild(div);
+		}
+	}
+	if(verb_tabs.length == 0 || !verbs)
+	{
+		window.location.href = "byond://winset?command=Fix-Stat-Panel";
+	}
+}
+
+function draw_mc() {
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < mc_tab_parts.length; i++) {
+		let part = mc_tab_parts[i];
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[0];
+		let td2 = document.createElement("td");
+		if(part[2]) {
+			let a = document.createElement("a");
+			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a.textContent = part[1];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+function update_tickets(T){
+	tickets = JSON.parse(T);
+	if(!verb_tabs.includes("Tickets"))
+		verb_tabs.push("Tickets");
+		addPermanentTab("Tickets");
+	if(current_tab == "Tickets")
+		draw_tickets();
+}
+function update_sqdl2(S) {
+	sqdl2 = JSON.parse(S);
+	if(sqdl2.length > 0 && !verb_tabs.includes("SQDL2"))
+		verb_tabs.push("SQDL2");
+		addPermanentTab("SQDL2");
+	if(current_tab == "SQDL2")
+		draw_sqdl2();
+}
+
+function remove_sqdl2() {
+	if(sqdl2)
+		sqdl2 = [];
+		removePermanentTab("SQDL2");
+		if(current_tab == "SQDL2")
+			tab_change("Status");
+	checkStatusTab();
+}
+
+function remove_tickets() {
+	if(tickets)
+		tickets = [];
+		removePermanentTab("Tickets");
+		if(current_tab == "Tickets")
+			tab_change("Status");
+	checkStatusTab();
+}
+// removes MC, Tickets and MC tabs.
+function remove_admin_tabs() {
+	remove_mc();
+	remove_tickets();
+	remove_sqdl2();
+}
+
+function create_listedturf(TN) {
+	remove_listedturf(); // remove the last one if we had one
+	turfname = JSON.parse(TN);
+	addPermanentTab(turfname);
+	tab_change(turfname);
+}
+function update_listedturf(TC) {
+	turfcontents = JSON.parse(TC);
+	if(current_tab == turfname)
+		draw_listedturf();
+}
+
+function draw_listedturf() {
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < turfcontents.length; i++) {
+		let part = turfcontents[i];
+		if(part[2]) {
+			let img = document.createElement("img");
+			img.src = part[2];
+			table.appendChild(img);
+		}
+		let a = document.createElement("a");
+		a.href = "?src=" + part[1] + ";click=1";
+		a.textContent = part[0];
+		table.appendChild(a);
+		table.appendChild(document.createElement("br"));
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function remove_listedturf() {
+	removePermanentTab(turfname);
+	checkStatusTab();
+	if(current_tab == turfname)
+		tab_change("Status");
+}
+function draw_sqdl2(){
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < sqdl2.length; i++) {
+		let part = sqdl2[i];
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[0];
+		let td2 = document.createElement("td");
+		if(part[2]) {
+			let a = document.createElement("a");
+			a.href = "?src=" + part[2] + ";click=1";
+			a.textContent = part[1];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_tickets() {
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("table");
+	if(!tickets)
+		return;
+	for(let i = 0; i < tickets.length; i++) {
+		let part = tickets[i];
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[0];
+		let td2 = document.createElement("td");
+		if(part[2]) {
+			let a = document.createElement("a");
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket" ;
+			a.textContent = part[1];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_spells(cat) {
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < spells.length; i++) {
+		let part = spells[i];
+		if(part[0] != cat) continue;
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[1];
+		let td2 = document.createElement("td");
+		if(part[3]) {
+			let a = document.createElement("a");
+			a.href = "?src=" + part[3] + ";click=1";
+			a.textContent = part[2];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[2];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_verbs(cat){
+	document.getElementById("statcontent").innerHTML = "";
+	let table = document.createElement("newdiv");
+	table.className = "grid-container";
+	let command = ""; // typecast name to string
+	for(let i = 0; i < verbs.length; i++) {
+		let part = verbs[i]; // should be a list containing category and command
+		if(!part[1]) continue;
+		if(part[0] != cat) continue;
+		command = part[1];
+		let a = document.createElement("a");
+		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
+		a.textContent = command;
+		a.className = "grid-item";
+		table.appendChild(a);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function set_light_theme() {
+	menu.style.backgroundColor = "white";
+	document.body.style.backgroundColor = "white";
+	document.body.style.color = "black";
+	document.body.className = "";
+	set_style_sheet("browserOutput_white");
+}
+
+function set_dark_theme() {
+	menu.style.backgroundColor = "#252525";
+	document.body.style.backgroundColor = "#252525";
+	document.body.style.color = "#abc6ec";
+	document.body.className = "dark";
+	set_style_sheet("browserOutput");
+
+}
+function set_style_sheet(sheet) {
+	if(document.getElementById("goonStyle")) {
+		let currentSheet = document.getElementById("goonStyle");
+		currentSheet.parentElement.removeChild(currentSheet);
+	}
+	let head  = document.getElementsByTagName('head')[0];
+	let sheetElement = document.createElement("link");
+	sheetElement.id = "goonStyle";
+	sheetElement.rel = "stylesheet";
+	sheetElement.type = "text/css";
+	sheetElement.href = sheet + ".css";
+	sheetElement.media = 'all';
+	head.appendChild(sheetElement);
+}
+
+
+  document.addEventListener("click", function(e) {
+		window.location.href = "byond://winset?map.focus=true";
+	});
+  window.addEventListener("load", function() {
+      let darkmodeCookie = getCookie('darkmode');
+      if(darkmodeCookie === 'true') {
+          set_dark_theme();
+      } else {
+          set_light_theme();
+	  }
+      if(!current_tab) {
+		  addPermanentTab("Status");
+          tab_change("Status");
+	  }
+  });
+
+function create_debug(){
+	if(!document.getElementById("Debug Stat Panel")) {
+		addPermanentTab("Debug Stat Panel");
+	} else {
+		removePermanentTab("Debug Stat Panel");
+	}
+}
+
+function getCookie(cname) {
+	var name = cname + '=';
+	var ca = document.cookie.split(';');
+	for(var i=0; i < ca.length; i++) {
+	var c = ca[i];
+	while (c.charAt(0)==' ') c = c.substring(1);
+		if (c.indexOf(name) === 0) {
+			return decoder(c.substring(name.length,c.length));
+		}
+	}
+	return '';
+}
+</script>
+<div id="statcontent">
+</div>
+</body>
+</html>

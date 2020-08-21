@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(lighting)
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
 
 /datum/controller/subsystem/lighting/stat_entry()
-	..("L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]")
+	return ..("L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]")
 
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)

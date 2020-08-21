@@ -1527,3 +1527,13 @@
   */
 /atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)
+
+///Passes Stat Browser Panel clicks to the game and calls client click on an atom
+/atom/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["click"])
+		// first of all make sure we valid
+		var/client/C = usr?.client
+		if(!C)
+			return
+		C.Click(src)

@@ -793,95 +793,16 @@
 /mob/proc/is_muzzled()
 	return 0
 
-/**
-  * Output an update to the stat panel for the client
-  *
-  * calculates client ping, round id, server time, time dilation and other data about the round
-  * and puts it in the mob status panel on a regular loop
-  */
-/mob/Stat()
-	..()
+/// Adds this list to the output to the stat browser
+/mob/proc/get_status_tab_items()
+	. = list()
 
-	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		if (SSticker.round_start_time)
-			var/round_time = world.time - SSticker.round_start_time
-			if(round_time > MIDNIGHT_ROLLOVER)
-				stat(null, "Round Time: [round(round_time/MIDNIGHT_ROLLOVER)]:[gameTimestamp("hh:mm:ss", round_time)]")
-			else
-				stat(null, "Round Time: [gameTimestamp("hh:mm:ss", round_time)]")
-		else
-			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
-		stat(null, "Station Time: [station_time_timestamp()]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
-	if(client && client.holder)
-		if(statpanel("MC"))
-			var/turf/T = get_turf(client.eye)
-			stat("Location:", COORD(T))
-			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[num2text(world.contents.len, 10)]")
-			stat("World Time:", "[world.time]")
-			GLOB.stat_entry()
-			config.stat_entry()
-			stat(null)
-			if(Master)
-				Master.stat_entry()
-			else
-				stat("Master Controller:", "ERROR")
-			if(Failsafe)
-				Failsafe.stat_entry()
-			else
-				stat("Failsafe Controller:", "ERROR")
-			if(Master)
-				stat(null)
-				for(var/datum/controller/subsystem/SS in Master.subsystems)
-					SS.stat_entry()
-			GLOB.cameranet.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
-		if(length(GLOB.sdql2_queries))
-			if(statpanel("SDQL2"))
-				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
-				for(var/i in GLOB.sdql2_queries)
-					var/datum/sdql2_query/Q = i
-					Q.generate_stat()
-
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			var/list/overrides = list()
-			for(var/image/I in client.images)
-				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides += I.loc
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
-					continue
-				statpanel(listed_turf.name, null, A)
-
-
+/// Gets all relevant proc holders for the browser statpenl
+/mob/proc/get_proc_holders()
+	. = list()
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-	add_spells_to_statpanel(mob_spell_list)
+		. += add_spells_to_statpanel(mind.spell_list)
+	. += add_spells_to_statpanel(mob_spell_list)
 
 /**
   * Convert a list of spells into a displyable list for the statpanel
@@ -889,15 +810,17 @@
   * Shows charge and other important info
   */
 /mob/proc/add_spells_to_statpanel(list/spells)
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
 				if("holdervar")
-					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
+	return L
 
 #define MOB_FACE_DIRECTION_DELAY 1
 
@@ -1018,6 +941,8 @@
 		if(istype(S, spell))
 			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
+	if(client)
+		client << output(null, "statbrowser:check_spells")
 
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)

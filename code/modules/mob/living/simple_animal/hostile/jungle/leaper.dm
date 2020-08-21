@@ -128,7 +128,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize()
 	. = ..()
-	verbs -= /mob/living/verb/pulled
+	remove_verb(src, /mob/living/verb/pulled)
 
 /mob/living/simple_animal/hostile/jungle/leaper/CtrlClickOn(atom/A)
 	face_atom(A)

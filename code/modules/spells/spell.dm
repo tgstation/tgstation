@@ -47,6 +47,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/singularity_pull()
 	return
 
+/obj/effect/proc_holder/Topic(href, href_list)
+	. = ..()
+	if(href_list["click"])
+		// first of all make sure we valid
+		var/mob/living/as_living = usr
+		if(!(src in usr.mob_spell_list) && !(usr.mind && (src in usr.mind.spell_list)) && !(istype(as_living) && (src in as_living.abilities)))
+			message_admins("[key_name_admin(usr)] clicked on an invalid proc_holder href! ([src])")
+			log_game("[key_name(usr)] clicked on an invalid proc_holder href! ([src])")
+			return
+		Click()
+
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
 		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")

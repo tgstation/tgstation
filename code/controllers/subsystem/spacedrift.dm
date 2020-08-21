@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(spacedrift)
 	var/list/processing = list()
 
 /datum/controller/subsystem/spacedrift/stat_entry()
-	..("P:[processing.len]")
+	return ..("P:[processing.len]")
 
 
 /datum/controller/subsystem/spacedrift/fire(resumed = 0)
