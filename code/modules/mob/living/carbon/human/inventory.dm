@@ -229,6 +229,7 @@
 		shoes = null
 		if(!QDELETED(src))
 			update_inv_shoes()
+			SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOES, I, force, newloc, no_move, invdrop, silent)
 	else if(I == belt)
 		belt = null
 		if(!QDELETED(src))

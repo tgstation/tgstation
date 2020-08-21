@@ -232,6 +232,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
 	RegisterSignal(parent, COMSIG_IS_BLOODY, .proc/is_bloody)
+	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOES, .proc/unequip_shoes)
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(ishuman(wielder))
@@ -278,3 +279,6 @@
 		return
 
 	..()
+
+/datum/component/bloodysoles/feet/proc/unequip_shoes(datum/source)
+	update_icon()
