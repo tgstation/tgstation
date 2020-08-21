@@ -334,3 +334,10 @@
 			message = replacetextEx(message,regex(capitalize(key),"g"), "[capitalize(value)]")
 			message = replacetextEx(message,regex(key,"g"), "[value]")
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/mask/golden
+	name = "Cultist Mask"
+	desc = "A prop in the image of an ancient cultist mask."
+	icon_state = "mask_golden"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_SMALL

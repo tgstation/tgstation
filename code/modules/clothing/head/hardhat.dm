@@ -162,3 +162,52 @@
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat0_dblue"
 	hat_type = "dblue"
+
+/obj/item/clothing/head/hardhat/weldhat_allsign
+	name = "Allsign Signal Hat"
+	desc = "An odd contraption made of a mask, a coil of wire, and a speaker. It's unclear what purpose it serves."
+	hat_type = "allsign"
+	icon_state = "hardhat0_allsign"
+	inhand_icon_state = "hardhat0_allsign"
+	brightness_on = 0
+	dog_fashion = null
+	actions_types = list(/datum/action/item_action/toggle_welding_screen)
+	flash_protect = FLASH_PROTECTION_WELDER
+	tint = 2
+	flags_inv = HIDEFACE
+	flags_cover = HEADCOVERSMOUTH
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
+	visor_flags_inv = HIDEFACE
+	visor_flags_cover = HEADCOVERSMOUTH
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/attack_self(mob/living/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		toggle_welding_screen(user)
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		toggle_welding_screen(user)
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/proc/toggle_welding_screen(mob/living/user)
+	if(weldingvisortoggle(user))
+		playsound(src, 'sound/items/handling/screwdriver_pickup.ogg', 50, TRUE)
+	update_icon()
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		. += mutable_appearance('icons/mob/clothing/head.dmi', "hardhat0_allsign")
+		if(!up)
+			. += mutable_appearance('icons/mob/clothing/head.dmi', "weldvisor_allsign")
+		else
+			. += mutable_appearance('icons/mob/clothing/head.dmi', "weldhelmet_allsign")
+
+/obj/item/clothing/head/hardhat/weldhat_allsign/update_overlays()
+	. = ..()
+	if(!up)
+		. += "weldvisor_allsign"
