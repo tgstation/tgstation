@@ -175,14 +175,14 @@
 					if(anom_count)
 						var/nice = ""
 						if(anom_count < 3)
-							nice = "Nice."
+							nice = " Nice."
 						else if(anom_count < 5)
-							nice = "Nice!"
+							nice = " Nice!"
 						else if(anom_count < 33)
-							nice = "NICE!!"
+							nice = " NICE!!"
 						else
-							nice = "That's more than humans have teeth, HOLY SHIT!!"
-						to_chat(user, "<span class='notice'>[M] has [anom_count] anomaly core[sig_count > 1 ? "s" : ""] decorating their grin. [nice]</span>")
+							nice = " That's more than humans have teeth, HOLY SHIT!!"
+						to_chat(user, "<span class='notice'>[M] has [anom_count] anomaly core[sig_count > 1 ? "s" : ""] decorating their grin.[nice]</span>")
 
 	else
 		return ..()
