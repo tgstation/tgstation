@@ -95,18 +95,14 @@
 	if (!is_ghost && !in_range(src, user))
 		return
 
-	var/list/tool_list = list(
-		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
-		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
-		)
-
-	if (!(up && down))
+	var/list/tool_list = list()
+	if (up)
+		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	if (down)
+		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+	if (!length(tool_list))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
-
-	if (!up)
-		tool_list -= "Up"
-	if (!down)
-		tool_list -= "Down"
+		return
 	
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if (!is_ghost && !in_range(src, user))
