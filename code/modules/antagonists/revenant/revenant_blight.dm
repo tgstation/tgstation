@@ -26,6 +26,10 @@
 
 
 /datum/disease/revblight/stage_act()
+	. = ..()
+	if(!.)
+		return
+
 	if(!finalstage)
 		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage * 6))
 			cure()
@@ -41,10 +45,6 @@
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(prob(45))
 			affected_mob.adjustStaminaLoss(stage, FALSE)
-
-	. = ..() //So we don't increase a stage before applying the stage damage.
-	if(!.)
-		return
 
 	switch(stage)
 		if(2)
