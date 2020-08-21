@@ -28,9 +28,6 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
-	/// Whether or not the admin is currently using legacy MC mode
-	var/legacy_mc = FALSE
-
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
@@ -115,7 +112,7 @@ GLOBAL_PROTECT(href_token)
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
 		remove_verb(owner, /client/proc/readmin)
-		owner.init_verbs()
+		owner.init_verbs() //re-initialize the verb list
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()

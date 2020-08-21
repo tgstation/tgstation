@@ -79,11 +79,13 @@ li a:hover:not(.active) {
   border-color: #252524;
   color: white;
 }
-.button.Status{
-	order: 1;
-}
-.button.MC {
-	order: 2;
+.button.Theme {
+	position: fixed;
+	top: auto;
+	bottom: 0px;
+	right: 0px;
+	float: right;
+	order: 10000;
 }
 .button:hover {
 	border-color: #FFFFFE;
@@ -180,6 +182,7 @@ let sqdl2 = [];
 let permanent_tabs = []; // tabs that won't be cleared by wipes
 let turfcontents = [];
 let turfname = "";
+let theme = "light";
 const menu = document.querySelector('#menu');
 
 function createStatusTab(name) {
@@ -617,7 +620,7 @@ function draw_listedturf() {
 			table.appendChild(img);
 		}
 		let a = document.createElement("a");
-		a.href = "?src=" + part[1] + ";click=1";
+		a.href = "?src=" + part[1] + ";statpanel_item_click=1";
 		a.textContent = part[0];
 		table.appendChild(a);
 		table.appendChild(document.createElement("br"));
@@ -642,7 +645,7 @@ function draw_sqdl2(){
 		let td2 = document.createElement("td");
 		if(part[2]) {
 			let a = document.createElement("a");
-			a.href = "?src=" + part[2] + ";click=1";
+			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
@@ -693,7 +696,7 @@ function draw_spells(cat) {
 		let td2 = document.createElement("td");
 		if(part[3]) {
 			let a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";click=1";
+			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
 			a.textContent = part[2];
 			td2.appendChild(a);
 		} else {
@@ -723,6 +726,26 @@ function draw_verbs(cat){
 		table.appendChild(a);
 	}
 	document.getElementById("statcontent").appendChild(table);
+}
+
+function create_theme_button() {
+    let B = document.createElement("BUTTON");
+    B.onclick = function() {toggle_theme()};
+    B.id = "Theme";
+    B.textContent = "Theme";
+    B.className = "button Theme";
+    permanent_tabs.push("Theme");
+    menu.appendChild(B);
+}
+
+function toggle_theme() {
+	if(theme == "light"){
+    	theme = "dark";
+        set_dark_theme();
+    } else {
+    	theme = "light";
+        set_light_theme();
+}
 }
 
 function set_light_theme() {
@@ -761,6 +784,7 @@ function set_style_sheet(sheet) {
 		window.location.href = "byond://winset?map.focus=true";
 	});
   window.addEventListener("load", function() {
+      create_theme_button();
       let darkmodeCookie = getCookie('darkmode');
       if(darkmodeCookie === 'true') {
           set_dark_theme();

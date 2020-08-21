@@ -611,9 +611,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("miner")
 			to_chat(user, "[G.miner_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has appeared!</span>")
-	add_verb(user, /mob/living/proc/guardian_comm)
-	add_verb(user, /mob/living/proc/guardian_recall)
-	add_verb(user, /mob/living/proc/guardian_reset)
+	add_verb(user, list(/mob/living/proc/guardian_comm, \
+						/mob/living/proc/guardian_recall, \
+						/mob/living/proc/guardian_reset))
 
 /obj/item/guardiancreator/choose
 	random = FALSE

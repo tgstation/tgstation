@@ -993,3 +993,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!src)
 		return
 	prefs.save_preferences()
+
+/// compiles a full list of verbs and sends it to the browser
+/client/proc/init_verbs()
+	if(IsAdminAdvancedProcCall())
+		return
+	var/list/verblist = list()
+	var/list/fullverbs = verbs + mob?.verbs
+	for(var/L in fullverbs)
+		if(!L)
+			continue
+		if(L:hidden)
+			continue
+		if(!istext(L:category))
+			continue
+		verblist[++verblist.len] = list("[L:category]", "[L:name]")
+	verb_tabs.Cut()
+	for(var/I in verblist)
+		var/list/item = I
+		verb_tabs |= item[1]
+	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+	verbs_init = TRUE

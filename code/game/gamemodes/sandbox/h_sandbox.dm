@@ -5,7 +5,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	sandbox.owner = src.ckey
 	if(src.client.holder)
 		sandbox.admin = 1
-	add_verb(src, new/mob/proc/sandbox_panel)
+	add_verb(src, /mob/proc/sandbox_panel)
 
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"

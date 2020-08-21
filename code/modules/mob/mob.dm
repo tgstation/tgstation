@@ -801,15 +801,15 @@
 /mob/proc/get_proc_holders()
 	. = list()
 	if(mind)
-		. += add_spells_to_statpanel(mind.spell_list)
-	. += add_spells_to_statpanel(mob_spell_list)
+		. += get_spells_for_statpanel(mind.spell_list)
+	. += get_spells_for_statpanel(mob_spell_list)
 
 /**
   * Convert a list of spells into a displyable list for the statpanel
   *
   * Shows charge and other important info
   */
-/mob/proc/add_spells_to_statpanel(list/spells)
+/mob/proc/get_spells_for_statpanel(list/spells)
 	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))

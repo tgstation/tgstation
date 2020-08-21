@@ -7,6 +7,8 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
 	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
  	///Needs to implement InterceptClickOn(user,params,atom) proc
@@ -142,14 +144,14 @@
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
-	/// TODO: Autodoc this
+	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-
+	/// list of tabs containing verbs
 	var/list/verb_tabs = list()
 	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
 	var/list/recent_examines
 
-
+	///whether or not the verbs have been initialized for the browser stat panel
 	var/verbs_init = FALSE
 
 	var/list/parallax_layers
@@ -185,4 +187,3 @@
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
 
-	show_verb_panel = FALSE

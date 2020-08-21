@@ -1531,7 +1531,7 @@
 ///Passes Stat Browser Panel clicks to the game and calls client click on an atom
 /atom/Topic(href, list/href_list)
 	. = ..()
-	if(href_list["click"])
+	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
 		var/client/C = usr?.client
 		if(!C)

@@ -166,6 +166,7 @@
 #include "code\__HELPERS\type_processing.dm"
 #include "code\__HELPERS\typelists.dm"
 #include "code\__HELPERS\unsorted.dm"
+#include "code\__HELPERS\verbs.dm"
 #include "code\__HELPERS\view.dm"
 #include "code\__HELPERS\sorts\__main.dm"
 #include "code\__HELPERS\sorts\InsertSort.dm"

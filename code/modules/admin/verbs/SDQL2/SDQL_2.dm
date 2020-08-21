@@ -1206,33 +1206,18 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	return istype(thing, /datum) || istype(thing, /client)
 
 /obj/effect/statclick/SDQL2_delete/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	var/datum/sdql2_query/Q = target
 	Q.delete_click()
 
-/obj/effect/statclick/SDQL2_delete/Topic(href, list/href_list)
-	. = ..()
-	if(href_list["click"])
-		// first of all make sure we valid
-		var/client/C = usr.client
-		if(!C?.holder)
-			message_admins("[key_name_admin(usr)] clicked on an invalid statclick href! ([src])")
-			log_game("[key_name(usr)] clicked on an invalid statclick href! ([src])")
-			return
-		Click()
-
-/obj/effect/statclick/SDQL2_action/Topic(href, list/href_list)
-	. = ..()
-	if(href_list["click"])
-		// first of all make sure we valid
-		var/client/C = usr.client
-		if(!C?.holder)
-			message_admins("[key_name_admin(usr)] clicked on an invalid statclick href! ([src])")
-			log_game("[key_name(usr)] clicked on an invalid statclick href! ([src])")
-			return
-		Click()
-
-
 /obj/effect/statclick/SDQL2_action/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	var/datum/sdql2_query/Q = target
 	Q.action_click()
 
@@ -1240,15 +1225,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	name = "VIEW VARIABLES"
 
 /obj/effect/statclick/sdql2_vv_all/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	usr.client.debug_variables(GLOB.sdql2_queries)
-
-/obj/effect/statclick/sdql2_vv_all/Topic(href, list/href_list)
-	. = ..()
-	if(href_list["click"])
-		// first of all make sure we valid
-		var/client/C = usr.client
-		if(!C?.holder)
-			message_admins("[key_name_admin(usr)] clicked on an invalid statclick href! ([src])")
-			log_game("[key_name(usr)] clicked on an invalid statclick href! ([src])")
-			return
-		Click()
