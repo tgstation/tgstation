@@ -24,7 +24,7 @@
 		return
 	if(!chassis || !locate(owner) in chassis.occupants)
 		return
-	chassis.container_resist(owner)
+	chassis.container_resist_act(owner)
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"

@@ -171,7 +171,7 @@
 	output += "</div>"
 	return output
 
-/obj/vehicle/sealed/mecha/working/ripley/relay_container_resist(mob/living/user, obj/O)
+/obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
 	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
 	if(do_after(user, 300, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
@@ -182,6 +182,7 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
+
 /**
   * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
   *
