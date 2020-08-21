@@ -86,11 +86,15 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
 	if (silo && istype(I, /obj/item/stack))
 		if (silo.remote_attackby(parent, user, I))
 			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
+	SIGNAL_HANDLER
+
 	if(!I.multitool_check_buffer(user, I))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 	var/obj/item/multitool/M = I

@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(profiler)
 	if(CONFIG_GET(flag/auto_profile))
 		StartProfiling()
 	else
-		StopProfiling() //Stop the early start from world/New
+		StopProfiling() //Stop the early start profiler
 	return ..()
 
 /datum/controller/subsystem/profiler/fire()

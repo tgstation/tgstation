@@ -1,10 +1,10 @@
 /datum/computer_file/program/crew_manifest
-	filename = "crewmani"
-	filedesc = "Crew Manifest"
+	filename = "plexagoncrew"
+	filedesc = "Plexagon Crew List"
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
 	transfer_access = ACCESS_HEADS
-	requires_ntnet = FALSE
+	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosCrewManifest"
 

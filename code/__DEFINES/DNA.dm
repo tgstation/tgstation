@@ -55,6 +55,7 @@
 #define SPIDER_WEB	/datum/mutation/human/webbing
 #define MARTYRDOM	/datum/mutation/human/martyrdom
 #define HARS		/datum/mutation/human/headless
+#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -126,8 +127,13 @@
 #define AGENDER			16
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES	17
-/// If this species can be scarred (fleshy)
-#define CAN_SCAR		18
+
+/// Used for determining which wounds are applicable to this species.
+/// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_FLESH	18
+/// if we have bones (can suffer bone wounds)
+#define HAS_BONE	19
+
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
@@ -166,6 +172,7 @@
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
 
+//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their body_type for the actual sprites, which is not genetic)
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3

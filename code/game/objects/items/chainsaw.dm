@@ -14,9 +14,10 @@
 	throw_speed = 2
 	throw_range = 4
 	custom_materials = list(/datum/material/iron=13000)
-	attack_verb = list("sawed", "tore", "lacerated", "cut", "chopped", "diced")
+	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
+	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = "swing_hit"
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
@@ -35,10 +36,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/chainsaw/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
@@ -72,10 +77,6 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
-/obj/item/chainsaw/get_dismemberment_chance()
-	if(wielded)
-		. = ..()
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"

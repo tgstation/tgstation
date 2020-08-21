@@ -118,8 +118,6 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(confused)
-		confused = max(0, confused - 1)
 
 /mob/living/proc/handle_traits()
 	//Eyes

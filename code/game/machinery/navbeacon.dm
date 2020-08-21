@@ -75,7 +75,7 @@
 	GLOB.deliverybeacontags -= location
 	GLOB.wayfindingbeacons -= src
 
-/obj/machinery/navbeacon/proc/glob_lists_register(var/init=FALSE)
+/obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
 	if(codes["patrol"])

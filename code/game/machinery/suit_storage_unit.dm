@@ -296,11 +296,9 @@
 			if(occupant)
 				things_to_clear += occupant
 				things_to_clear += occupant.GetAllContents()
-			for(var/atom/movable/AM in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
-				SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRONG)
-				var/datum/component/radioactive/contamination = AM.GetComponent(/datum/component/radioactive)
-				if(contamination)
-					qdel(contamination)
+			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
+				var/atom/movable/dirty_movable = am
+				dirty_movable.wash(CLEAN_ALL)
 		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
@@ -334,7 +332,7 @@
 	open_machine()
 	dump_contents()
 
-/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
+/obj/machinery/suit_storage_unit/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		dump_contents()

@@ -9,7 +9,7 @@
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/disguise_fail_health = 75 //When their health gets to this level their instabitaluri partially falls off
+	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
@@ -41,7 +41,7 @@
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/medicine/c2/instabitaluri)
+	if(chem.type == /datum/reagent/medicine/c2/synthflesh)
 		chem.expose_mob(H, TOUCH, 2 ,0) //heal a little
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1

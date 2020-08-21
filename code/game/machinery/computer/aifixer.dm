@@ -62,9 +62,10 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, 0, FALSE)
-	occupier.adjustFireLoss(-5, 0, FALSE)
-	occupier.adjustBruteLoss(-5, 0)
+	occupier.adjustOxyLoss(-5, FALSE)
+	occupier.adjustFireLoss(-5, FALSE)
+	occupier.adjustBruteLoss(-5, FALSE)
+	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 		if(!occupier.radio_enabled)

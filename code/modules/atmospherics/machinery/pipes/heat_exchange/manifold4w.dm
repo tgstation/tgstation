@@ -7,7 +7,7 @@
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of heat-exchanging pipes."
 
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 
 	device_type = QUATERNARY
 

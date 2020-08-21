@@ -37,7 +37,7 @@
 	usr.emote("me",1,message,TRUE)
 
 ///Speak as a dead person (ghost etc)
-/mob/proc/say_dead(var/message)
+/mob/proc/say_dead(message)
 	var/name = real_name
 	var/alt_name = ""
 
@@ -116,6 +116,10 @@
   */
 /mob/proc/get_message_mods(message, list/mods)
 	for(var/I in 1 to MESSAGE_MODS_LENGTH)
+		// Prevents "...text" from being read as a radio message
+		if (length(message) > 1 && message[2] == message[1])
+			continue
+
 		var/key = message[1]
 		var/chop_to = 2 //By default we just take off the first char
 		if(key == "#" && !mods[WHISPER_MODE])

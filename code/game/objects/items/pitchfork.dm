@@ -7,9 +7,10 @@
 	force = 7
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("attacked", "impaled", "pierced")
+	attack_verb_continuous = list("attacks", "impales", "pierces")
+	attack_verb_simple = list("attack", "impale", "pierce")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
@@ -26,10 +27,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/pitchfork/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/pitchfork/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/pitchfork/update_icon_state()
@@ -43,7 +48,7 @@
 
 /obj/item/pitchfork/demonic/Initialize()
 	. = ..()
-	set_light(3,6,LIGHT_COLOR_RED)
+	set_light(3,6,COLOR_SOFT_RED)
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()

@@ -15,7 +15,7 @@
 	pipe_state = "he"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
-	if(dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(dir))
 		initialize_directions = dir
 		return
 	switch(dir)

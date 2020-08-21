@@ -438,6 +438,8 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
-Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
+This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
 
-Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
+Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
+
+Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.

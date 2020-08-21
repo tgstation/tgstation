@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/i = 0
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
-		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (numdir in GLOB.diagonals)
+		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		row["previews"] += list(list("selected" = (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
+	worn_icon_state = "RPD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1

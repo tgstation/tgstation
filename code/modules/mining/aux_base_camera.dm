@@ -10,7 +10,7 @@
 	. = ..()
 	starting_area = get_area(loc)
 
-/mob/camera/ai_eye/remote/base_construction/setLoc(var/t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(t)
 	var/area/curr_area = get_area(t)
 	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxiliary_base))
 		return ..()
@@ -210,13 +210,13 @@
 
 
 /datum/action/innate/aux_base/window_type
-	name = "Select Window Type"
+	name = "Select Window Glass"
 	button_icon_state = "window_select"
 
 /datum/action/innate/aux_base/window_type/Activate()
 	if(..())
 		return
-	B.RCD.toggle_window_type()
+	B.RCD.toggle_window_glass()
 
 /datum/action/innate/aux_base/place_fan
 	name = "Place Tiny Fan"
@@ -261,7 +261,7 @@
 
 	var/turf/turret_turf = get_turf(remote_eye)
 
-	if(is_blocked_turf(turret_turf))
+	if(turret_turf.is_blocked_turf())
 		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
 		return
 

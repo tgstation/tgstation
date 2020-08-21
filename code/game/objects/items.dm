@@ -128,7 +128,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/breakouttime = 0
 
 	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/attack_verb
+	var/list/attack_verb_continuous
+	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
 
@@ -139,13 +140,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	///Does it embed and if yes, what kind of embed
-	var/list/embedding = NONE
+	var/list/embedding
 
 	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
 	var/heat = 0
-	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
-	var/sharpness = IS_BLUNT
+	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
+	var/sharpness = SHARP_NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = NONE
@@ -189,8 +190,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Initialize()
 
-	if(attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
+	if(attack_verb_continuous)
+		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+	if(attack_verb_simple)
+		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
 
 	. = ..()
 	for(var/path in actions_types)
@@ -241,7 +244,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(GLOB.rpg_loot_items)
 		AddComponent(/datum/component/fantasy)
 
-	if(sharpness) //give sharp objects butchering functionality, for consistency
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
@@ -549,7 +552,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_self(user)
 
 ///This proc determines if and at what an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-/obj/item/proc/IsReflect(var/def_zone)
+/obj/item/proc/IsReflect(def_zone)
 	return FALSE
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
@@ -719,11 +722,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 ///Returns the sharpness of src. If you want to get the sharpness of an item use this.
 /obj/item/proc/get_sharpness()
 	return sharpness
-
-/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
-	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
-			. = force * (affecting.get_damage() / affecting.max_damage)
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
@@ -953,11 +951,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
-///In case we want to do something special (like self delete) upon failing to embed in something, return true
+///In case we want to do something special (like self delete) upon failing to embed in something. Returns a bitflag.
 /obj/item/proc/failedEmbed()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
-		return TRUE
+		qdel(src)
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE
+	return NONE
+
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
@@ -974,19 +974,22 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   *
   * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
   *
+  * Returns bitflags informing whether the item was able to embed itself, deleted itself in the process, or nothing happened.
+  *
   * Arguments:
   * * target- Either a body part or a carbon. What are we hitting?
   * * forced- Do we want this to go through 100%?
   */
 /obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
 	if(!isbodypart(target) && !iscarbon(target))
-		return
+		return NONE
 	if(!forced && !LAZYLEN(embedding))
-		return
+		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
-		return TRUE
-	failedEmbed()
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS
+	return failedEmbed()
+
 
 ///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
 /obj/item/proc/disableEmbedding()
@@ -995,7 +998,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 ///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
-	if(!islist(embedding) || !LAZYLEN(embedding))
+	if(!LAZYLEN(embedding))
 		return
 
 	AddElement(/datum/element/embed,\
@@ -1045,10 +1048,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		M.losebreath += 2
-		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
-			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
-			M.losebreath += 6
-			discover_after = FALSE
+		switch(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
+				return
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS)
+				M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+				M.losebreath += 6
+				discover_after = FALSE
 
 		if(S?.tastes?.len) //is that blood in my mouth?
 			S.tastes += "iron"
@@ -1114,3 +1120,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return discover_after
 
 #undef MAX_BONUS_MATS_PER_BITE
+
+// Update icons if this is being carried by a mob
+/obj/item/wash(clean_types)
+	. = ..()
+
+	if(ismob(loc))
+		var/mob/mob_loc = loc
+		mob_loc.regenerate_icons()

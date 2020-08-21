@@ -312,46 +312,66 @@
 	throw_speed = 2
 	throw_range = 4
 
+	/// Can this plant be trimmed by someone with TRAIT_BONSAI
+	var/trimmable = TRUE
+	var/list/static/random_plant_states
+
 /obj/item/kirbyplants/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
-	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500)), 0)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
+	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500))
+
+/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+		to_chat(user,"<span class='notice'>You start trimming [src].</span>")
+		if(do_after(user,3 SECONDS,target=src))
+			to_chat(user,"<span class='notice'>You finish trimming [src].</span>")
+			change_visual()
+
+/// Cycle basic plant visuals
+/obj/item/kirbyplants/proc/change_visual()
+	if(!random_plant_states)
+		generate_states()
+	var/current = random_plant_states.Find(icon_state)
+	var/next = WRAP(current+1,1,length(random_plant_states))
+	icon_state = random_plant_states[next]
 
 /obj/item/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
 	icon_state = "random_plant"
-	var/list/static/states
 
 /obj/item/kirbyplants/random/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
-	if(!states)
+	if(!random_plant_states)
 		generate_states()
-	icon_state = pick(states)
+	icon_state = pick(random_plant_states)
 
-/obj/item/kirbyplants/random/proc/generate_states()
-	states = list()
+/obj/item/kirbyplants/proc/generate_states()
+	random_plant_states = list()
 	for(var/i in 1 to 25)
 		var/number
 		if(i < 10)
 			number = "0[i]"
 		else
 			number = "[i]"
-		states += "plant-[number]"
-	states += "applebush"
+		random_plant_states += "plant-[number]"
+	random_plant_states += "applebush"
 
 
 /obj/item/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+	trimmable = FALSE
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
-	light_color = "#2cb2e8"
+	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
 /obj/item/kirbyplants/fullysynthetic
@@ -359,6 +379,7 @@
 	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
 	icon_state = "plant-26"
 	custom_materials = (list(/datum/material/plastic = 8000))
+	trimmable = FALSE
 
 /obj/item/kirbyplants/fullysynthetic/Initialize()
 	. = ..()
@@ -368,6 +389,7 @@
 	name = "Potty the Potted Plant"
 	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
 	icon_state = "potty"
+	trimmable = FALSE
 
 //a rock is flora according to where the icon file is
 //and now these defines

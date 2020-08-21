@@ -5,7 +5,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
@@ -87,8 +87,9 @@
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "smooth"
-	smooth = SMOOTH_MORE
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
+	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
 /obj/structure/window/shuttle/survival_pod/spawner/north
 	dir = NORTH
@@ -133,7 +134,9 @@
 /obj/structure/table/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "table"
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -148,16 +151,7 @@
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
-	icon_state = "sleeper"
-	mattress_state = null
 	buckle_lying = 270
-
-/obj/machinery/stasis/survival_pod/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/machinery/stasis/survival_pod/play_power_sound()
-	return
 
 //Computer
 /obj/item/gps/computer
@@ -197,22 +191,20 @@
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
+	base_build_path = /obj/machinery/smartfridge/survival_pod
 	light_range = 5
 	light_power = 1.2
-	light_color = "#DDFFD3"
+	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
-	var/empty = FALSE
 
 /obj/machinery/smartfridge/survival_pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/machinery/smartfridge/survival_pod/Initialize(mapload)
+/obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()
-	if(empty)
-		return
 	for(var/i in 1 to 5)
 		var/obj/item/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
@@ -225,11 +217,6 @@
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	return isitem(O)
-
-/obj/machinery/smartfridge/survival_pod/empty
-	name = "dusty survival pod storage"
-	desc = "A heated storage unit. This one's seen better days."
-	empty = TRUE
 
 //Fans
 /obj/structure/fans
@@ -272,7 +259,7 @@
 	. = ..()
 	air_update_turf(1)
 
-//Inivisible, indestructible fans
+//Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

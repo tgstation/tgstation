@@ -33,7 +33,7 @@
 
 /obj/structure/plaque/attack_hand(mob/user)
 	. = ..()
-	if(.)
+	if(. || user.is_blind())
 		return
 	user.examinate(src)
 
