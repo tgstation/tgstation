@@ -3,10 +3,32 @@
 
 /datum/map_generator/jungle_generator
 	///2D list of all biomes based on heat and humidity combos.
-	var/list/possible_biomes = list(BIOME_LOW_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGH_HUMIDITY = /datum/biome/water),\
-	BIOME_LOWMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/mudlands),\
-	BIOME_HIGHMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep, BIOME_HIGH_HUMIDITY = /datum/biome/jungle),\
-	BIOME_HIGH_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/wasteland, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep))
+	var/list/possible_biomes = list(
+	BIOME_LOW_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/plains,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands,
+		BIOME_HIGH_HUMIDITY = /datum/biome/water
+		),
+	BIOME_LOWMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/plains,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mudlands
+		),
+	BIOME_HIGHMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/plains,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep,
+		BIOME_HIGH_HUMIDITY = /datum/biome/jungle
+		),
+	BIOME_HIGH_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/wasteland,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
+		BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep
+		)
+	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 
