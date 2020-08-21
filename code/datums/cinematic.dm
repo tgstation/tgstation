@@ -93,6 +93,8 @@
 		toggle_ooc(TRUE)
 
 /datum/cinematic/proc/show_to(mob/M, client/C)
+	SIGNAL_HANDLER
+
 	if(!M.notransform)
 		locked += M
 		M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
@@ -120,6 +122,8 @@
 	sleep(50)
 
 /datum/cinematic/proc/replacement_cinematic(datum/source, datum/cinematic/other)
+	SIGNAL_HANDLER
+
 	if(!is_global && other.is_global) //Allow it to play if we're local and it's global
 		return NONE
 	return COMPONENT_GLOB_BLOCK_CINEMATIC

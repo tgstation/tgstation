@@ -18,7 +18,7 @@
 	if (!armor)
 		armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	. = ..()
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		icon_state = ""
@@ -26,7 +26,7 @@
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
-	if(smooth)
+	if(smoothing_flags)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
@@ -69,8 +69,8 @@
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
 		if(A.loc == src.loc)
-			var/where_to_climb = get_step(A,dir)
-			if(!(is_blocked_turf(where_to_climb)))
+			var/turf/where_to_climb = get_step(A,dir)
+			if(!where_to_climb.is_blocked_turf())
 				A.forceMove(where_to_climb)
 				return TRUE
 		density = FALSE

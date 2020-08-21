@@ -144,11 +144,11 @@
 		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
-			for(var/obj/effect/decal/cleanable/C in target)
-				user?.mind.adjust_experience(/datum/skill/cleaning, round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-				qdel(C)
+			if(user && isturf(target))
+				for(var/obj/effect/decal/cleanable/cleanable_decal in target)
+					user.mind.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			target.wash(CLEAN_SCRUB)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	return
@@ -164,6 +164,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
+	worn_icon_state = "horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
@@ -172,7 +173,8 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
-	attack_verb = list("HONKED")
+	attack_verb_continuous = list("HONKS")
+	attack_verb_simple = list("HONK")
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
@@ -195,6 +197,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
+	worn_icon_state = "horn_air"
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()
@@ -206,6 +209,7 @@
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	inhand_icon_state = "gold_horn"
+	worn_icon_state = "horn_gold"
 	COOLDOWN_DECLARE(golden_horn_cooldown)
 
 /obj/item/bikehorn/golden/attack()

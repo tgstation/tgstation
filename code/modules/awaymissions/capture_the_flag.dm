@@ -216,6 +216,9 @@
 			return
 
 
+		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+			to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
+			return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
@@ -262,7 +265,7 @@
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
-/obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
+/obj/machinery/capture_the_flag/proc/clear_cooldown(ckey)
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)

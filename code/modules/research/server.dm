@@ -186,7 +186,6 @@
 
 	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)

@@ -64,6 +64,8 @@
 
 ///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
 /datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1)
+	set waitfor = FALSE
+
 	if(!SSachievements.achievements_enabled)
 		return
 	var/datum/award/A = SSachievements.awards[achievement_type]
@@ -107,7 +109,7 @@
 
 /datum/achievement_data/ui_data(mob/user)
 	var/ret_data = list() // screw standards (qustinnus you must rename src.data ok)
-	ret_data["categories"] = list("Bosses", "Misc" , "Scores")
+	ret_data["categories"] = list("Bosses", "Misc", "Mafia", "Scores")
 	ret_data["achievements"] = list()
 	ret_data["user_key"] = user.ckey
 

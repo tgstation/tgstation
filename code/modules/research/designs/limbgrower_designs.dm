@@ -6,7 +6,7 @@
 	name = "Left Arm"
 	id = "leftarm"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 25)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/l_arm
 	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
@@ -14,7 +14,7 @@
 	name = "Right Arm"
 	id = "rightarm"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 25)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/r_arm
 	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
@@ -22,7 +22,7 @@
 	name = "Left Leg"
 	id = "leftleg"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 25)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/l_leg
 	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
@@ -30,7 +30,7 @@
 	name = "Right Leg"
 	id = "rightleg"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 25)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/r_leg
 	category = list("initial","human","lizard","moth","plasmaman","ethereal")
 
@@ -40,7 +40,7 @@
 	name = "Arm Blade"
 	id = "armblade"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 75)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 75)
 	build_path = /obj/item/melee/synthetic_arm_blade
 	category = list("other","emagged")
 
@@ -48,7 +48,7 @@
 	name = "Heart"
 	id = "heart"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 30)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 30)
 	build_path = /obj/item/organ/heart
 	category = list("other")
 
@@ -56,7 +56,7 @@
 	name = "Lungs"
 	id = "lungs"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 20)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/lungs
 	category = list("other")
 
@@ -64,7 +64,7 @@
 	name = "Liver"
 	id = "liver"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 20)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/liver
 	category = list("other")
 
@@ -72,7 +72,7 @@
 	name = "Stomach"
 	id = "stomach"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 15)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 15)
 	build_path = /obj/item/organ/stomach
 	category = list("other")
 
@@ -80,7 +80,7 @@
 	name = "Appendix"
 	id = "appendix"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 5) //why would you need this
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 5) //why would you need this
 	build_path = /obj/item/organ/appendix
 	category = list("other")
 
@@ -88,7 +88,7 @@
 	name = "Eyes"
 	id = "eyes"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/eyes
 	category = list("other")
 
@@ -96,7 +96,7 @@
 	name = "Ears"
 	id = "ears"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/ears
 	category = list("other")
 
@@ -104,6 +104,6 @@
 	name = "Tongue"
 	id = "tongue"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/instabitaluri = 10)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue
 	category = list("other")

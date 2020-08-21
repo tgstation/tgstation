@@ -180,7 +180,7 @@
 	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 /datum/tgs_api/v3210/ChatChannelInfo()
-	return list()
+	return list() // :omegalul:
 
 /datum/tgs_api/v3210/ChatBroadcast(message, list/channels)
 	if(channels)

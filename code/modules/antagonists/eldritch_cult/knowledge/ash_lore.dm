@@ -158,7 +158,7 @@
 	desc = "Gives AOE spell that causes heavy bleeding and blood loss."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
-	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave,/datum/eldritch_knowledge/spell/flame_birth)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/entropic_plume,/datum/eldritch_knowledge/spell/flame_birth)
 
 /datum/eldritch_knowledge/final/ash_final
 	name = "Ashlord's rite"

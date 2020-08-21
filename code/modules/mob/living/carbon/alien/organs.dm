@@ -132,7 +132,7 @@
 		owner.Paralyze(100)
 
 	owner.jitteriness += 30
-	owner.confused += 30
+	owner.add_confusion(30)
 	owner.stuttering += 30
 
 	recent_queen_death = 1

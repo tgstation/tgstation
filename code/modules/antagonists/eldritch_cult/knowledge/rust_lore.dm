@@ -79,7 +79,7 @@
 	gain_text = "Let the blade guide you through the flesh."
 	desc = "Your blade of choice will now add toxin to enemies bloodstream."
 	cost = 2
-	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/entropic_plume)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = PATH_RUST
 
@@ -89,12 +89,12 @@
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
 
-/datum/eldritch_knowledge/spell/rust_wave
-	name = "Wave of Rust"
-	desc = "You can now send a projectile that converts an area into rust."
+/datum/eldritch_knowledge/spell/entropic_plume
+	name = "Entropic Plume"
+	desc = "You can now send a befuddling plume that blinds, poisons and makes enemies strike each other. Also converts the area into rust."
 	gain_text = "Messenger's of hope fear the rustbringer!"
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
+	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_RUST
 

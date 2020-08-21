@@ -1,6 +1,6 @@
 /datum/surgery/advanced/wing_reconstruction
 	name = "Wing Reconstruction"
-	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Instabitaluri."
+	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Synthflesh."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -15,7 +15,7 @@
 	name = "start wing reconstruction"
 	implements = list(TOOL_HEMOSTAT = 85, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	time = 200
-	chems_needed = list(/datum/reagent/medicine/c2/instabitaluri)
+	chems_needed = list(/datum/reagent/medicine/c2/synthflesh)
 	require_all_chems = FALSE
 
 /datum/surgery_step/wing_reconstruction/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

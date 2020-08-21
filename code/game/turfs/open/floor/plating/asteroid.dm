@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	/// Terrain that can spawn in the tunnel, weighted list
 	var/list/terrain_spawn_list
 	/// If the tunnel should keep being created
-	var/sanity = 1
+	var/sanity = TRUE
 	/// Cave direction to move
 	var/forward_cave_dir = 1
 	/// Backwards cave direction for tracking
@@ -318,8 +318,8 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			if(i > 3 && prob(20))
 				if(isarea(tunnel.loc))
 					var/area/A = tunnel.loc
-					if(!A.tunnel_allowed)
-						sanity = 0
+					if(!(A.area_flags & TUNNELS_ALLOWED))
+						sanity = FALSE
 						break
 				var/stored_flags = 0
 				if(tunnel.flags_1 & NO_RUINS_1)
@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		return
 	if(isarea(T.loc))
 		var/area/A = T.loc
-		if(!A.tunnel_allowed)
+		if(!(A.area_flags & TUNNELS_ALLOWED))
 			sanity = 0
 			return
 	if(choose_turf_type)
@@ -372,13 +372,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		return
 	var/area/A = loc
 	if(prob(30))
-		if(!A.mob_spawn_allowed)
+		if(!(A.area_flags & MOB_SPAWN_ALLOWED))
 			return
 		var/randumb = pickweight(mob_spawn_list)
 		if(!randumb)
 			return
 		while(randumb == SPAWN_MEGAFAUNA)
-			if(A.megafauna_spawn_allowed && megafauna_spawn_list && megafauna_spawn_list.len) //this is danger. it's boss time.
+			if((A.area_flags & MEGAFAUNA_SPAWN_ALLOWED) && megafauna_spawn_list && megafauna_spawn_list.len) //this is danger. it's boss time.
 				var/maybe_boss = pickweight(megafauna_spawn_list)
 				if(megafauna_spawn_list[maybe_boss])
 					randumb = maybe_boss
@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	if(prob(12))
 		if(isarea(loc))
 			var/area/A = loc
-			if(!A.flora_allowed)
+			if(!(A.area_flags & FLORA_ALLOWED))
 				return
 		var/randumb = pickweight(flora_spawn_list)
 		if(!randumb)
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	if(prob(1))
 		if(isarea(loc))
 			var/area/A = loc
-			if(!A.flora_allowed)
+			if(!(A.area_flags & FLORA_ALLOWED))
 				return
 		var/randumb = pickweight(terrain_spawn_list)
 		if(!randumb)
