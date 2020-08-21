@@ -46,8 +46,8 @@ at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap/proc/CanReachInside(mob/user)
 	if(!isliving(user))
 		return FALSE
-	var/mob/living/L = user
-	if((L.mobility_flags & MOBILITY_STAND) && ishuman(L)) //I dont think monkeys can crawl on command.
+	var/mob/living/living_user = user
+	if((living_user.mobility_flags & MOBILITY_STAND) && ishuman(living_user)) //I dont think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 
