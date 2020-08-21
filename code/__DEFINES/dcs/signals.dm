@@ -660,9 +660,6 @@
 /// Called on mobs when they step in blood. (blood_amount, blood_state, list/blood_DNA)
 #define COMSIG_STEP_ON_BLOOD "step_on_blood"
 
-/// Call on items to test if they're bloody or not
-#define COMSIG_IS_BLOODY "is_bloody"
-
 //Mood
 
 ///called when you send a mood event from anywhere in the code.
