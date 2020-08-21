@@ -1688,3 +1688,7 @@
 /// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
 /mob/living/proc/is_face_visible()
 	return TRUE
+
+/// Whether or not this mob will escape from storages while being picked up/held.
+/mob/living/proc/will_escape_storage()
+	return FALSE

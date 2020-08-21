@@ -75,13 +75,11 @@
 	release()
 
 /obj/item/clothing/head/mob_holder/on_found(mob/finder)
-	if(held_mob)
-		for(var/i in held_mob.faction)
-			if(i == "hostile")
-				to_chat(finder, "<span class='warning'>\A [held_mob.name] pops out! </span>")
-				finder.visible_message("<span class='warning'>\A [held_mob.name] pops out of the container [finder] is opening!</span>", ignored_mobs = finder)
-				release(TRUE, FALSE)
-				return
+	if(held_mob?.will_escape_storage())
+		to_chat(finder, "<span class='warning'>\A [held_mob.name] pops out! </span>")
+		finder.visible_message("<span class='warning'>\A [held_mob.name] pops out of the container [finder] is opening!</span>", ignored_mobs = finder)
+		release(TRUE, FALSE)
+		return
 
 /obj/item/clothing/head/mob_holder/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
