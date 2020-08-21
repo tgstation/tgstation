@@ -118,6 +118,6 @@
 		return
 	var/all_reagents_text
 	for(var/i in reagentlist)
-		var/datum/reagent/R = i
-		all_reagents_text += " - [initial(R.name)]\n"
+		var/datum/reagent/reagent = i
+		all_reagents_text += " - [initial(reagent.name)]\n"
 	return "<span class='notice'>[prefix_text]\n[all_reagents_text]</span>"
