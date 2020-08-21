@@ -117,7 +117,7 @@
 		var/mob/living/silicon/borg = target
 		borg.adjustBruteLoss(melee_damage_lower)
 	return ..()
-		
+
 /mob/living/simple_animal/hostile/swarmer/MiddleClickOn(atom/A)
 	. = ..()
 	if(!LAZYLEN(dronelist))
@@ -203,7 +203,7 @@
 	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
-	SSexplosions.lowobj += target
+	SSexplosions.low_mov_atom += target
 
 /**
   * Called when a swarmer attempts to teleport a living entity away
@@ -224,9 +224,9 @@
 
 	if(!do_mob(src, target, 30))
 		return
-		
+
 	teleport_target(target)
-		
+
 /mob/living/simple_animal/hostile/swarmer/proc/teleport_target(mob/living/target)
 	var/turf/open/floor/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
 
