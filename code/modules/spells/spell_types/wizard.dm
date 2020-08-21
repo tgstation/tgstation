@@ -239,7 +239,7 @@
 	invocation = "NOT THE BEES"
 	summon_amt = 9
 	action_icon_state = "bee"
-	cooldown_min = 200
+	cooldown_min = 20 SECONDS
 
 	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 	cast_sound = 'sound/voice/moth/scream_moth.ogg'
