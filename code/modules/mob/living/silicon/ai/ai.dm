@@ -243,23 +243,25 @@
 	set_core_display_icon(ai_core_icon)
 
 /mob/living/silicon/ai/Stat()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	stat(null, text("System integrity: [(health+100)/2]%"))
+	stat(null, text("System integrity: [(health+100) * 0.5]%"))
 	if(isturf(loc)) //only show if we're "in" a core
-		stat(null, text("Backup Power: [battery/2]%"))
+		stat(null, text("Backup Power: [battery * 0.5]%"))
 	stat(null, text("Connected cyborgs: [connected_robots.len]"))
-	for(var/mob/living/silicon/robot/R in connected_robots)
+	for(var/r in connected_robots)
+		var/mob/living/silicon/robot/connected_robot = r
 		var/robot_status = "Nominal"
-		if(R.shell)
+		if(connected_robot.shell)
 			robot_status = "AI SHELL"
-		else if(R.stat || !R.client)
+		else if(connected_robot.stat == DEAD || !connected_robot.client)
 			robot_status = "OFFLINE"
-		else if(!R.cell || R.cell.charge <= 0)
+		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
-		stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-		Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]"))
+		stat(null, text("[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
+		Module: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"))
 	stat(null, text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_alerts()
@@ -1018,7 +1020,4 @@
 	. = eyeobj.zMove(dir, feedback)
 
 /mob/living/silicon/ai/is_malf()
-	if(is_special_character(src))
-		return TRUE
-
-	return FALSE
+	return is_special_character(src)

@@ -196,7 +196,8 @@
 		client.eye = card
 
 /mob/living/silicon/pai/Stat()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
 

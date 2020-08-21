@@ -19,5 +19,6 @@
 	src.laws.show_laws(who)
 
 /mob/living/silicon/ai/lawsync()
-	for(var/mob/living/silicon/robot/R in connected_robots)
-		R.lawsync()
+	for(var/r in connected_robots)
+		var/mob/living/silicon/robot/connected_robot = r
+		connected_robot.lawsync()

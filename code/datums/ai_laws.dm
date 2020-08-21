@@ -216,8 +216,8 @@
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/default/asimov
-			inherent = templaws.inherent
+			var/datum/ai_laws/templaws = /datum/ai_laws/default/asimov
+			inherent = initial(templaws.inherent)
 		if(1)
 			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
 			inherent = templaws.inherent

@@ -28,7 +28,7 @@
 
 
 /mob/living/silicon/robot/lawsync()
-	if(!connected_ai || !connected_ai.laws)
+	if(!connected_ai?.laws)
 		return
 
 	laws_sanity_check()
@@ -40,7 +40,7 @@
 		if(!lawupdate)
 			return
 
-		laws.zeroth = connected_ai.laws.zeroth_borg ? connected_ai.laws.zeroth_borg : connected_ai.laws.zeroth
+		laws.zeroth = connected_ai.laws.zeroth_borg || connected_ai.laws.zeroth
 
 		laws.hacked = connected_ai.laws.hacked
 

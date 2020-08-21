@@ -311,7 +311,8 @@
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
 /mob/living/silicon/robot/Stat()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(cell)
 		stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
@@ -1087,7 +1088,4 @@
 		heal_bodypart_damage(repairs, repairs - 1)
 
 /mob/living/silicon/robot/is_malf()
-	if(is_special_character(connected_ai))
-		return TRUE
-
-	return FALSE
+	return is_special_character(connected_ai)

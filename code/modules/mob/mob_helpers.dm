@@ -302,8 +302,8 @@
 	if(!istype(M))
 		return FALSE
 	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext unless you're a malfunctioning AI in a shell
-		var/mob/living/silicon/robot/R = M
-		return (R.deployed && R.laws?.zeroth == MALF_LAW)
+		var/mob/living/silicon/robot/robot = M
+		return robot.deployed && robot.laws?.zeroth == MALF_LAW
 	if(isAI(M))
 		var/mob/living/silicon/ai/A = M
 		return A.laws?.zeroth == MALF_LAW
