@@ -37,6 +37,8 @@
   * user - the person inserting the item
   */
 /datum/component/food_storage/proc/try_inserting_food(datum/source, obj/item/inserted_item, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(istype(inserted_item, /obj/item/storage) || istype(inserted_item, /obj/item/reagent_containers/food/snacks))
 		return
 
@@ -62,6 +64,8 @@
   *	user - the person removing the item.
   */
 /datum/component/food_storage/proc/try_destroying_food(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(user.a_intent != INTENT_GRAB)
 		return
 
