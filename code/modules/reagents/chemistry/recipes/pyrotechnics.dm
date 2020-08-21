@@ -181,7 +181,7 @@
 	var/location = get_turf(holder.my_atom)
 	// 100 created volume = 8 heavy range & 14 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 10 heavy range & 24 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, min(round(created_volume / 12), 10), min(round(created_volume / 7), 1), 24) // Don't emp the station mr chemist, I like my time dialiation how it is
+	empulse(location, min(round(created_volume / 12), 10), min(round(created_volume / 7), 24), 1) // Don't emp the station mr chemist, I like my time dialiation how it is
 	holder.clear_reagents()
 
 
