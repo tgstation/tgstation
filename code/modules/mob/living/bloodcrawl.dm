@@ -20,7 +20,8 @@
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
 
-/obj/effect/dummy/phased_mob/slaughter/proc/deleteself()
+/obj/effect/dummy/phased_mob/slaughter/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
+	SIGNAL_HANDLER
 	qdel(src)
 
 
