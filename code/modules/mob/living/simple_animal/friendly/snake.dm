@@ -120,7 +120,7 @@
     if(key || stat)
         return
     var/pod_ask = alert("Become a snake of Asclepius?", "Are you a true pacifist?", "Yes", "No")
-    if(pod_ask == "No" || !src || QDELETED(src))
+    if(pod_ask == "No" || QDELETED(src))
         return
     if(key)
         to_chat(user, "<span class='warning'>Someone else already took this snake!</span>")
