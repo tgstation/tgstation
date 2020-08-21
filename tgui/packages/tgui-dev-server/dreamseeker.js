@@ -52,21 +52,28 @@ DreamSeeker.getInstancesByPids = async pids => {
   }
   if (pidsToResolve.length > 0) {
     try {
-      const command = 'netstat -a -n -o';
-      const { stdout } = await promisify(exec)(command);
+      const command = 'netstat -ano | findstr LISTENING';
+      const { stdout } = await promisify(exec)(command, {
+        // Max buffer of 1MB (default is 200KB)
+        maxBuffer: 1024 * 1024,
+      });
       // Line format:
       // proto addr mask mode pid
-      const entries = stdout
-        .split('\r\n')
-        .filter(line => line.includes('LISTENING'))
-        .map(line => {
-          const words = line.match(/\S+/g);
-          return {
-            addr: words[1],
-            pid: parseInt(words[4], 10),
-          };
-        })
-        .filter(entry => pidsToResolve.includes(entry.pid));
+      const entries = [];
+      const lines = stdout.split('\r\n');
+      for (let line of lines) {
+        const words = line.match(/\S+/g);
+        if (!words || words.length === 0) {
+          continue;
+        }
+        const entry = {
+          addr: words[1],
+          pid: parseInt(words[4], 10),
+        };
+        if (pidsToResolve.includes(entry.pid)) {
+          entries.push(entry);
+        }
+      }
       const len = entries.length;
       logger.log('found', len, plural('instance', len));
       for (let entry of entries) {
@@ -77,7 +84,12 @@ DreamSeeker.getInstancesByPids = async pids => {
       }
     }
     catch (err) {
-      logger.error(err);
+      if (err.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
+        logger.error(err.message, err.code);
+      }
+      else {
+        logger.error(err);
+      }
       return [];
     }
   }
