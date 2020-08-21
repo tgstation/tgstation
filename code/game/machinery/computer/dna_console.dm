@@ -595,10 +595,9 @@
 			// GUARD CHECK - Only search occupant for this specific ref, since your
 			//  can only CRISPR existing mutations in a target
 			var/datum/mutation/human/targetmut = get_mut_by_ref(bref, search_flags)
-			var/sequence = GET_GENE_STRING(targetmut.type, scanner_occupant.dna)
+			//var/sequence = GET_GENE_STRING(targetmut.type, scanner_occupant.dna)
 
-			/* DEBUG SECTION: Dump Strings: /* <- Add a / before this * to turn this off
-			*/
+			/* DEBUG SECTION: Dump Strings:
 			for (var/M in subtypesof(/datum/mutation/human))
 				var/truegenes = GET_SEQUENCE(M)
 				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(M)
@@ -611,7 +610,7 @@
 
 				to_chat(usr,"<span class='notice'>"+HM.name+" : "+truegenes+" : "+newString+"</span>")
 			to_chat(usr,"<span class='warning'>"+targetmut.name+" : "+sequence+"</span>")
-			// */
+			*/
 
 
 
