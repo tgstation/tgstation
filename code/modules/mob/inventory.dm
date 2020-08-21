@@ -327,9 +327,9 @@
 
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
-	for(var/obj/item/I in contents)
-		if(I.item_flags & IN_INVENTORY)
-			items += I
+	for(var/obj/item/item_contents in contents)
+		if(item_contents.item_flags & IN_INVENTORY)
+			items += item_contents
 	items -= held_items
 	return items
 
