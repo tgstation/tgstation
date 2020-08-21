@@ -295,7 +295,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
 			if(length(empty_indexes) == 0 || !mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM)) //Can't sign with no arms!
-				to_chat(src, "<span class='notice'>You can't sign with your hands full!</span.?>")
+				to_chat(src, "<span class='warning'>You can't sign with your hands full!</span.?>")
+				return FALSE
+			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
+				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands cuffed!</span.?>")
+				return FALSE
+			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED))
+				to_chat(src, "<span class='warning'>You can't sign in this state!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
@@ -357,23 +363,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/mob/living/carbon/human/H = src
 	if(HAS_TRAIT(src, TRAIT_MUTE))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	if(is_muzzled())
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	if(!IsVocal())
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 
 
@@ -437,9 +443,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else if(message_mods[MODE_SING])
 		. = verb_sing
 	else if(stuttering)
-		. = "stammers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "shakily signs"
+		else
+			. = "stammers"
 	else if(derpspeech)
-		. = "gibbers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "incoherently signs"
+		else
+			. = "gibbers"
 	else
 		. = ..()
 

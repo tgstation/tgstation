@@ -9,7 +9,10 @@
 
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
-		return 0
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			return ..()
+		else
+			return 0
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)
