@@ -479,8 +479,6 @@
 					if(S.ckey)
 						C.player_spiders = TRUE
 					C.directive = S.directive
-					C.poison_type = S.poison_type
-					C.poison_per_bite = S.poison_per_bite
 					C.faction = S.faction.Copy()
 					S.fed--
 					UpdateButtonIcon(TRUE)
