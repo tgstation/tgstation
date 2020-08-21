@@ -144,13 +144,9 @@ Regenerative extracts:
 	var/turf/open/T
 
 /obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user)
-	if(ismegafauna(target))
-		to_chat(user, "<span class='warning'>[target] resists being teleported by [src]!</span>")
-		return
+	do_teleport(target, T, channel = TELEPORT_CHANNEL_QUANTUM) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 	target.visible_message("<span class='warning'>[src] disappears in a shower of sparks!</span>","<span class='danger'>The milky goo teleports you somewhere it remembers!</span>")
-	do_sparks(5,FALSE,target)
-	target.forceMove(T)
-	do_sparks(5,FALSE,target)
+
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
 	. = ..()

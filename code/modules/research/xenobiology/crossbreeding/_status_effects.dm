@@ -85,8 +85,7 @@
 		return
 	owner.visible_message("<span class='warning'>[owner] disappears in a flurry of sparks!</span>",
 		"<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
-	do_sparks(3, TRUE, owner)
-	owner.forceMove(target.loc)
+	do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 
 /obj/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."

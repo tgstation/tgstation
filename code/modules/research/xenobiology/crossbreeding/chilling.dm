@@ -149,8 +149,8 @@ Chilling extracts:
 /obj/item/slimecross/chilling/bluespace/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !isliving(target) || active)
 		return
-	if(ismegafauna(target))
-		to_chat(user, "<span class='warning'>[target] is it too powerful to link with [src]!</span>")
+	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
+		to_chat(user, "<span class='warning'>[target] resists being linked with [src]!</span>")
 		return
 	if(target in allies)
 		allies -= target
