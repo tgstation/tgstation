@@ -69,8 +69,7 @@
 	. = ..()
 	if(!isliving(usr))
 		return TRUE
-	var/mob/living/user = usr
-	fire(user)
+	fire(usr)
 
 /obj/effect/proc_holder/tentacle_slap/fire(mob/living/carbon/user)
 	var/message
