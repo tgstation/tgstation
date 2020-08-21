@@ -1,0 +1,4 @@
+author: "Radacitus"
+delete-after: True
+changes: 
+  - rscadd: "Added a chemical recipe for Stabilizing Plasma"
