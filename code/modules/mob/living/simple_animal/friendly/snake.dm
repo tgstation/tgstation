@@ -75,8 +75,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius
     name = "Asclepius's snake"
+    desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Its bites are rumored to have healing properties."
     poison_type = /datum/reagent/medicine/omnizine //while using godblood instead of omnizine here would be flavorful, doing that would also allow the snake to pump you with up to 150u of godblood (it has an OD threshold of 150u), which would basically leave you set for the rest of the round
-    desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain [poison_type.name]."
     gold_core_spawnable = NO_SPAWN //only obtainable from the rod of ascelpius and/or adminbus
     melee_damage_lower = 0 //do no harm
     melee_damage_upper = 0
@@ -90,7 +90,7 @@
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/Initialize()
     . = ..()
     var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-    H.add_hud_to(owner)
+    H.add_hud_to(src)
     notify_ghosts("A controllable snake of Asclepius has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Snake Created")
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/ListTargets(atom/the_target)
