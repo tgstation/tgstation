@@ -6,7 +6,7 @@
 	var/flora_density = 0
 	///Chance of having a mob from the fauna types list spawn
 	var/fauna_density = 0
-	///list of objects that can be spawned when the turf spawns flora
+	///list of type paths of objects that can be spawned when the turf spawns flora
 	var/list/flora_types = list(/obj/structure/flora/grass/jungle)
 	///list of type paths of mobs that can be spawned when the turf spawns fauna
 	var/list/fauna_types = list()
