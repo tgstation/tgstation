@@ -139,7 +139,7 @@
 
 
 /obj/singularity_act()
-	SSexplosions.highobj += src
+	SSexplosions.high_mov_atom += src
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2

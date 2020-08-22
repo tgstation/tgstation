@@ -45,10 +45,11 @@
 	desc = "A red pitchfork, it looks like the work of the devil."
 	force = 19
 	throwforce = 24
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_power = 6
+	light_color = COLOR_SOFT_RED
 
-/obj/item/pitchfork/demonic/Initialize()
-	. = ..()
-	set_light(3,6,COLOR_SOFT_RED)
 
 /obj/item/pitchfork/demonic/ComponentInitialize()
 	. = ..()

@@ -30,6 +30,8 @@
 	anchored = TRUE
 	emulate_door_bumps = TRUE
 	COOLDOWN_DECLARE(mecha_bump_smash)
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = 2
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.

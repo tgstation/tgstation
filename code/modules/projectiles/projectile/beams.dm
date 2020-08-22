@@ -3,19 +3,22 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
-	light_range = 2
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 1
 	light_color = COLOR_SOFT_RED
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20
 	bare_wound_bonus = 10
+
 
 /obj/projectile/beam/laser
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -111,7 +114,7 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		if(isobj(target))
-			SSexplosions.medobj += target
+			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
 

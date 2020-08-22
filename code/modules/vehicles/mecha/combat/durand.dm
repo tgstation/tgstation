@@ -12,18 +12,19 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	var/obj/durand_shield/shield
 
+
 /obj/vehicle/sealed/mecha/combat/durand/Initialize()
-	shield = new/obj/durand_shield
-	shield.chassis = src
-	shield.layer = layer + 0.1
+	. = ..()
+	shield = new /obj/durand_shield(loc, src, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
 	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
-	. = ..()
+
 
 /obj/vehicle/sealed/mecha/combat/durand/Destroy()
 	if(shield)
-		qdel(shield)
-	. = ..()
+		QDEL_NULL(shield)
+	return ..()
+
 
 /obj/vehicle/sealed/mecha/combat/durand/generate_actions()
 	. = ..()
@@ -43,7 +44,7 @@
 	. = ..()
 	if(shield)
 		shield.forceMove(loc)
-		shield.dir = dir
+		shield.setDir(dir)
 
 /obj/vehicle/sealed/mecha/combat/durand/forceMove(turf/T)
 	. = ..()
@@ -59,11 +60,9 @@
 ///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
 /obj/vehicle/sealed/mecha/combat/durand/proc/relay(datum/source, mob/owner, list/signal_args)
 	if(!shield) //if the shield somehow got deleted
-		shield = new/obj/durand_shield
-		shield.chassis = src
-		shield.layer = layer + 0.1 //Make sure it stays on top
-		shield.forceMove(loc)
-	shield.dir = dir
+		stack_trace("Durand triggered relay without a shield")
+		shield = new /obj/durand_shield(loc, src, layer)
+	shield.setDir(dir)
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_TRIGGER, owner, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
@@ -141,18 +140,31 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	max_integrity = 10000
 	obj_integrity = 10000
 	anchored = TRUE
-	var/obj/vehicle/sealed/mecha/combat/durand/chassis ///Our link back to the durand
-	var/switching = FALSE ///To keep track of things during the animation
+	light_system = MOVABLE_LIGHT
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 5
+	light_color = LIGHT_COLOR_ELECTRIC_CYAN
+	light_on = FALSE
+	///Our link back to the durand
+	var/obj/vehicle/sealed/mecha/combat/durand/chassis
+	///To keep track of things during the animation
+	var/switching = FALSE
 	var/currentuser
 
-/obj/durand_shield/Initialize()
+
+/obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
 	. = ..()
+	chassis = _chassis
+	layer = _layer
+	setDir(_dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
+
 
 /obj/durand_shield/Destroy()
 	if(chassis)
 		chassis.shield = null
-	. = ..()
+		chassis = null
+	return ..()
 
 /**
   *Handles activating and deactivating the shield. This proc is called by a signal sent from the mech's action button
@@ -183,6 +195,8 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		var/datum/action/button = chassis.occupant_actions[O][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
 		button.UpdateButtonIcon()
+
+	set_light_on(chassis.defense_mode)
 
 	if(chassis.defense_mode)
 		invisibility = 0
