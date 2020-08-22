@@ -109,11 +109,12 @@
 			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
 			return TRUE
 		to_chat(user, "<span class='notice'>You begin to loosen the barrel of [src]...</span>")
-		if(live_ammo > 0) //If it it has any live ammo inside....
-			afterattack(user, user)	//...you learn an important lesson about firearms safety.
-			return TRUE
 		I.play_tool_sound(src)
 		if(!I.use_tool(src, user, 3 SECONDS))
+			return TRUE
+		if(live_ammo > 0) //If it has any live ammo inside....
+			user.visible_message("<span class='warning'>[src] goes off!</span>") //...you learn an important lesson about firearms safety.
+			process_fire(user, user, FALSE)	
 			return TRUE
 		magazine.caliber = "357"
 		fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
@@ -124,11 +125,12 @@
 			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
 			return TRUE
 		to_chat(user, "<span class='notice'>You begin to tighten the barrel of [src]...</span>")
-		if(live_ammo > 0)
-			afterattack(user, user)
-			return TRUE
 		I.play_tool_sound(src)
-		if(!I.use_tool(src, user, 30))
+		if(!I.use_tool(src, user, 3 SECONDS))
+			return TRUE
+		if(live_ammo > 0)
+			user.visible_message("<span class='warning'>[src] goes off!</span>")
+			process_fire(user, user, FALSE)	
 			return TRUE
 		magazine.caliber = "38"
 		fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
