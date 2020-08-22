@@ -207,7 +207,7 @@
 		chassis.cut_overlay(droid_overlay)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M)
 	..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
 	M.add_overlay(droid_overlay)
@@ -236,7 +236,7 @@
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
 			log_message("Deactivated.", LOG_MECHA)
 		chassis.add_overlay(droid_overlay)
-		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
+		send_byjax(chassis.occupants,"exosuit.browser", "[REF(src)]", get_equip_info())
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/process()
@@ -410,7 +410,7 @@
 			return units
 		else
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Unit is full.</span>")
-			return NONE
+			return 0
 	else
 		to_chat(user, "[icon2html(src, user)]<span class='warning'>[fuel] traces in target minimal! [P] cannot be used as fuel.</span>")
 		return

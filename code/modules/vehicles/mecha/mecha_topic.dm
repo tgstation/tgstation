@@ -151,9 +151,9 @@
 	<div class='wr'>
 	<div class='header'>Equipment</div>
 	<div class='links'>"}
-	for(var/X in equipment)
-		var/obj/item/mecha_parts/mecha_equipment/W = X
-		. += "[W.name] [W.detachable?"<a href='?src=[REF(W)];detach=1'>Detach</a><br>":"\[Non-removable\]<br>"]"
+	for(var/e in equipment)
+		var/obj/item/mecha_parts/mecha_equipment/equipment = e
+		. += "[equipment.name] [equipment.detachable ? "<a href='?src=[REF(equipment)];detach=1'>Detach</a><br>" : "\[Non-removable\]<br>"]"
 	. += {"<b>Available equipment slots:</b> [max_equip-LAZYLEN(equipment)]
 	</div>
 	</div>"}
@@ -295,7 +295,7 @@
 
 		//Here ID access stuff goes to die.
 		if(href_list["finish_req_access"])
-			(mecha_flags &= ~ADDING_ACCESS_POSSIBLE)
+			mecha_flags &= ~ADDING_ACCESS_POSSIBLE
 			usr << browse(null,"window=exosuit_add_access")
 			return
 
@@ -356,7 +356,7 @@
 
 	//Toggles ID upload.
 	if (href_list["toggle_id_upload"])
-		(mecha_flags ^= ADDING_ACCESS_POSSIBLE)
+		mecha_flags ^= ADDING_ACCESS_POSSIBLE
 		send_byjax(usr,"exosuit.browser","t_id_upload","[(mecha_flags & ADDING_ACCESS_POSSIBLE)?"L":"Unl"]ock ID upload panel")
 		return
 
@@ -365,7 +365,7 @@
 		if(construction_state)
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Maintenance protocols in effect</span>")
 			return
-		(mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE)
+		mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE
 		send_byjax(usr,"exosuit.browser","t_maint_access","[(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)?"Forbid":"Permit"] maintenance protocols")
 		return
 

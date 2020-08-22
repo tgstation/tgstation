@@ -1,10 +1,10 @@
 //////////////////////MECHA ACTIONS\\\\\\\\\\\\\\\\\\\\\
 
 /obj/vehicle/sealed/mecha/generate_action_type()
-	var/datum/action/vehicle/sealed/mecha/E = ..()
-	. = E
-	if(istype(E))
-		E.chassis = src
+	. = ..()
+	if(istype(., /datum/action/vehicle/sealed/mecha))
+		var/datum/action/vehicle/sealed/mecha/mecha = .
+		mecha.chassis = src
 
 
 /datum/action/vehicle/sealed/mecha
@@ -48,9 +48,10 @@
 		return
 
 	var/list/available_equipment = list()
-	for(var/obj/item/mecha_parts/mecha_equipment/M in chassis.equipment)
-		if(M.selectable)
-			available_equipment += M
+	for(var/e in chassis.equipment)
+		var/obj/item/mecha_parts/mecha_equipment/equipment = m
+		if(equipment.selectable)
+			available_equipment += equipment
 
 	if(available_equipment.len == 0)
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='warning'>No equipment available!</span>")
@@ -63,20 +64,21 @@
 		UpdateButtonIcon()
 		return
 	var/number = 0
-	for(var/A in available_equipment)
+	for(var/equipment in available_equipment)
 		number++
-		if(A == chassis.selected)
-			if(available_equipment.len == number)
-				chassis.selected = null
-				to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to no equipment.</span>")
-				button_icon_state = "mech_cycle_equip_off"
-			else
-				chassis.selected = available_equipment[number+1]
-				to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to [chassis.selected].</span>")
-				button_icon_state = "mech_cycle_equip_on"
-			send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
-			UpdateButtonIcon()
-			return
+		if(equipment != chassis.selected)
+			continue
+		if(available_equipment.len == number)
+			chassis.selected = null
+			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to no equipment.</span>")
+			button_icon_state = "mech_cycle_equip_off"
+		else
+			chassis.selected = available_equipment[number+1]
+			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You switch to [chassis.selected].</span>")
+			button_icon_state = "mech_cycle_equip_on"
+		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
+		UpdateButtonIcon()
+		return
 
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights
@@ -106,7 +108,9 @@
 /datum/action/vehicle/sealed/mecha/mech_view_stats/Trigger()
 	if(!owner || !chassis || !locate(owner) in chassis.occupants)
 		return
-	owner << browse(chassis.get_stats_html(), "window=exosuit")
+	var/datum/browser/popup = new(owner , "exosuit")
+	popup.set_content(chassis.get_stats_html())
+	popup.open()
 
 
 /datum/action/vehicle/sealed/mecha/strafe
@@ -132,9 +136,8 @@
 
 	for(var/O in occupants)
 		var/mob/living/occupant = O
-		if(LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe))
-			var/datum/action/action = occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/strafe]
-			action.UpdateButtonIcon()
+		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
+		action?.UpdateButtonIcon()
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.

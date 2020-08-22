@@ -17,7 +17,6 @@
   * Or are used to call action() on equipped gear
   * Cooldown for gear is on the mech because exploits
   */
-
 /obj/vehicle/sealed/mecha
 	name = "mecha"
 	desc = "Exosuit"
@@ -47,7 +46,7 @@
 	///Modifiers for directional armor
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	///if we cant use our equipment(such as due to EMP)
-	var/equipment_disabled = 0
+	var/equipment_disabled = FALSE
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/cell/cell
 	/// Keeps track of the mech's scanning module
@@ -250,10 +249,10 @@
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
 	for(var/occupant in occupants)
-		var/mob/mobocc
-		SEND_SOUND(mobocc, sound('sound/items/timer.ogg', volume=50))
-		to_chat(mobocc, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
-		mobocc.update_mouse_pointer()
+		var/mob/mob_occupant
+		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
+		to_chat(mob_occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
+		mob_occupant.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
 	..()
@@ -653,7 +652,7 @@
 	if(strafe)
 		for(var/D in return_drivers())
 			var/mob/driver = D
-			if(driver.client.keys_held["Alt"])
+			if(driver.client?.keys_held["Alt"])
 				return
 		setDir(olddir)
 
@@ -673,7 +672,8 @@
 		use_power(phasing_energy_drain)
 		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		return
-	if(..()) //mech was thrown/door/whatever
+	. = ..()
+	if(.) //mech was thrown/door/whatever
 		return
 	if(bumpsmash) //Need a pilot to push the PUNCH button.
 		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
@@ -682,12 +682,12 @@
 			if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
 				step(src,dir)
 	if(isobj(obstacle))
-		var/obj/O = obstacle
-		if(!O.anchored && O.move_resist <= move_force)
+		var/obj/obj_obstacle = obstacle
+		if(!obj_obstacle.anchored && obj_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
 	else if(ismob(obstacle))
-		var/mob/M = obstacle
-		if(M.move_resist <= move_force)
+		var/mob/mob_obstacle = obstacle
+		if(mob_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
 
 
@@ -830,7 +830,7 @@
 	AI.remote_control = src
 	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	if(interaction == AI_MECH_HACK)
-		AI.can_shunt = 0 //ONE AI ENTERS. NO AI LEAVES.
+		AI.can_shunt = FALSE //ONE AI ENTERS. NO AI LEAVES.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
 		"<span class='notice'>You have been uploaded to a mech's onboard computer.</span>")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
@@ -890,8 +890,8 @@
 		return
 	log_message("[M] tries to move into [src].", LOG_MECHA)
 	if(dna_lock && M.has_dna())
-		var/mob/living/carbon/C = M
-		if(C.dna.unique_enzymes != dna_lock)
+		var/mob/living/carbon/entering_carbon = M
+		if(entering_carbon.dna.unique_enzymes != dna_lock)
 			to_chat(M, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return

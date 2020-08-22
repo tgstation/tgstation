@@ -11,8 +11,6 @@
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	. = ..()
 
-/obj/vehicle/sealed/mecha/combat/generate_actions()
-	. = ..()
 
 /obj/vehicle/sealed/mecha/combat/proc/max_ammo() //Max the ammo stored for Nuke Ops mechs, or anyone else that calls this
 	for(var/obj/item/I in equipment)

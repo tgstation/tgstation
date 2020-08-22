@@ -35,8 +35,8 @@
 	if(defense_mode && !use_power(100))	//Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
 		for(var/O in occupants)
 			var/mob/living/occupant = O
-			if(LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode))
-				var/datum/action/action = occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
+			if(action)
 				action.Trigger()
 				break
 
@@ -52,8 +52,8 @@
 
 /obj/vehicle/sealed/mecha/combat/durand/mob_exit(mob/M, silent, randomstep, forced)
 	if(defense_mode)
-		if(LAZYACCESSASSOC(occupant_actions, M, /datum/action/vehicle/sealed/mecha/mech_defense_mode))
-			var/datum/action/action = occupant_actions[M][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, M, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
+		if(action)
 			action.Trigger(FALSE)
 	return ..()
 
@@ -176,8 +176,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
   * * signal_args: whether it's forced
   */
 /obj/durand_shield/proc/activate(datum/source, mob/owner, list/signal_args)
+	SIGNAL_HANDLER
 	currentuser = owner
-	if(!chassis || !chassis.occupants)
+	if(!chassis?.occupants)
 		return
 	if(switching && !signal_args[1])
 		return
@@ -191,8 +192,8 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		chassis.log_message("User has toggled defense mode -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	else
 		chassis.log_message("defense mode state changed -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
-	for(var/O in chassis.occupants)
-		var/datum/action/button = chassis.occupant_actions[O][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+	for(var/occupant in chassis.occupants)
+		var/datum/action/button = chassis.occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
 		button.UpdateButtonIcon()
 

@@ -167,7 +167,7 @@
 		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
 		for(var/occus in occupants)
 			var/mob/living/occupant = occus
-			occupant?.update_mouse_pointer()
+			occupant.update_mouse_pointer()
 	if(!equipment_disabled && occupants) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -178,7 +178,7 @@
 		log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
 		take_damage(5, BURN, 0, 1)
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))

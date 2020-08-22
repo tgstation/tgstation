@@ -26,7 +26,7 @@
 		return FALSE
 	var/newtonian_target = turn(chassis.dir,180)
 	. = ..()//start the cooldown early because of sleeps
-	for(var/i=1 to projectiles_per_shot)
+	for(var/i in 1 to projectiles_per_shot)
 		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
 			break
 		var/spread = 0
@@ -153,12 +153,12 @@
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
 
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
-	if(!..())
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/vehicle/sealed/mecha/mecha)
+	. = ..()
+	if(!.)
+		return
+	if(!istype(mecha, /obj/vehicle/sealed/mecha/combat/honker))
 		return FALSE
-	if(istype(M))
-		return TRUE
-	return FALSE
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, params)

@@ -1,5 +1,5 @@
 ///Called when a mech melee attacks an atom
-/atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/M)
+/atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
 	return
 
 /turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/M)
