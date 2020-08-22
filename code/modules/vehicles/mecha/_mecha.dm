@@ -501,6 +501,7 @@
 				cookedalive.IgniteMob()
 
 /obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	var/list/speech_bubble_recipients = get_hearers_in_view(7,src)
 	for(var/mob/M in speech_bubble_recipients)
 		if(M.client)
@@ -512,6 +513,7 @@
 ////////////////////////////
 
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, params)
+	SIGNAL_HANDLER
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled)
@@ -1064,7 +1066,7 @@
 			mmi.mecha = null
 			mmi.update_icon()
 			L.mobility_flags = NONE
-		icon_state = initial(icon_state)+"-open"
+		update_icon()
 		setDir(dir_in)
 	return ..()
 

@@ -81,7 +81,7 @@
 	if(patient)
 		to_chat(user, "[icon2html(src, user)]<span class='warning'>The sleeper is already occupied!</span>")
 		return
-	return 1
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/go_out()
 	if(!patient)
@@ -109,7 +109,10 @@
 		return "[output] [temp]"
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
-	..()
+	if(..())
+		return
+	if(!(usr in chassis.occupants))
+		return
 	if(href_list["eject"])
 		go_out()
 	if(href_list["view_stats"])

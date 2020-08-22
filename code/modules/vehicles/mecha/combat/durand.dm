@@ -59,6 +59,7 @@
 
 ///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
 /obj/vehicle/sealed/mecha/combat/durand/proc/relay(datum/source, mob/owner, list/signal_args)
+	SIGNAL_HANDLER
 	if(!shield) //if the shield somehow got deleted
 		stack_trace("Durand triggered relay without a shield")
 		shield = new /obj/durand_shield(loc, src, layer)
