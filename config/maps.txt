@@ -40,6 +40,6 @@ endmap
 map multiz_debug
 endmap
 
-map shipmap
+map shipstation
 	votable
 endmap
