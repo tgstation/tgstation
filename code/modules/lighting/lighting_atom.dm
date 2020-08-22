@@ -41,25 +41,36 @@
 			light = new/datum/light_source(src, .)
 
 
-// Should always be used to change the opacity of an atom.
-// It notifies (potentially) affected light sources so they can update (if needed).
+/**
+  * Updates the atom's opacity value.
+  *
+  * This exists to act as a hook for associated behavior.
+  * It notifies (potentially) affected light sources so they can update (if needed).
+  */
 /atom/proc/set_opacity(new_opacity)
 	if (new_opacity == opacity)
 		return
-
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, new_opacity)
+	. = opacity
 	opacity = new_opacity
-	var/turf/T = loc
-	if (!isturf(T))
+
+
+/atom/movable/set_opacity(new_opacity)
+	. = ..()
+	if(isnull(.) || !isturf(loc))
 		return
 
-	if (new_opacity == TRUE)
-		T.has_opaque_atom = TRUE
-		T.reconsider_lights()
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
 	else
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
+		RemoveElement(/datum/element/light_blocking)
+
+
+/turf/set_opacity(new_opacity)
+	. = ..()
+	if(isnull(.))
+		return
+	recalculate_directional_opacity()
 
 
 /atom/movable/Moved(atom/OldLoc, Dir)

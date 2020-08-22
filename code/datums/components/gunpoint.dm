@@ -74,6 +74,8 @@
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
+	SIGNAL_HANDLER
+
 	if(A != target)
 		return
 	var/mob/living/shooter = parent
@@ -84,6 +86,8 @@
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+	SIGNAL_HANDLER
+
 	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
@@ -106,11 +110,15 @@
 
 ///Cancel the holdup if the shooter moves out of sight or out of range of the target
 /datum/component/gunpoint/proc/check_deescalate()
+	SIGNAL_HANDLER
+
 	if(!can_see(parent, target, GUNPOINT_SHOOTER_STRAY_RANGE - 1))
 		cancel()
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	var/mob/living/shooter = parent
 	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
 	target.remove_status_effect(STATUS_EFFECT_HELDUP)
@@ -147,6 +155,8 @@
 
 ///Shooter canceled their shot, either by dropping/equipping their weapon, leaving sight/range, or clicking on the alert
 /datum/component/gunpoint/proc/cancel()
+	SIGNAL_HANDLER
+
 	var/mob/living/shooter = parent
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
 		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)
@@ -156,6 +166,8 @@
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	var/mob/living/shooter = parent
 	if(attacker == shooter)
 		return // somehow this wasn't checked for months but no one tried punching themselves to initiate the shot, amazing
