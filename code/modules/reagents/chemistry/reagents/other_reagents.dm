@@ -361,7 +361,7 @@
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
-	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
+	M.IgniteMob()			//Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 150)
@@ -1282,7 +1282,7 @@
 	name = "Stimulum"
 	description = "An unstable experimental gas that greatly increases the energy of those that inhale it, while dealing increasing toxin damage over time."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
 
@@ -1305,7 +1305,7 @@
 	name = "Nitryl"
 	description = "A highly reactive gas that makes you feel faster."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 
@@ -1321,7 +1321,7 @@
 	name = "Freon"
 	description = "A powerful heat adsorbant."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 
@@ -1333,6 +1333,23 @@
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 	return ..()
 
+/datum/reagent/hypernoblium
+	name = "Hyper-Noblium"
+	description = "A suppresive gas that stops gas reactions on those who inhale it."
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	color = "90560B"
+	taste_description = "searingly cold"
+
+/datum/reagent/hypernoblium/on_mob_metabolize(mob/living/L)
+	. = ..()
+	if(isplasmaman(L))
+		ADD_TRAIT(L, TRAIT_NOFIRE, type)
+
+/datum/reagent/hypernoblium/on_mob_end_metabolize(mob/living/L)
+	if(isplasmaman(L))
+		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
+	return ..()
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 

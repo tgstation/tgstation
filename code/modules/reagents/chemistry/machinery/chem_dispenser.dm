@@ -157,11 +157,11 @@
 	if(beaker)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += beaker
+				SSexplosions.high_mov_atom += beaker
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += beaker
+				SSexplosions.med_mov_atom += beaker
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += beaker
+				SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/chem_dispenser/handle_atom_del(atom/A)
 	..()
@@ -387,7 +387,7 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		user.put_in_hands(beaker)
+		try_put_in_hand(beaker, user)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker

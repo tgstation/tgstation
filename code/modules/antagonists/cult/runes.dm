@@ -417,7 +417,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			actual_selected_rune.handle_portal("lava")
 		else
 			var/area/A = get_area(T)
-			if(A.map_name == "Space")
+			if(initial(A.name) == "Space")
 				actual_selected_rune.handle_portal("space", T)
 		if(movesuccess)
 			target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")

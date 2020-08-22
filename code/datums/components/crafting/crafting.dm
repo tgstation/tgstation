@@ -3,6 +3,8 @@
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
+	SIGNAL_HANDLER
+
 	var/datum/hud/H = user.hud_used
 	var/obj/screen/craft/C = new()
 	C.icon = H.ui_style
@@ -107,18 +109,17 @@
 		return
 
 	for(var/atom/movable/AM in range(radius_range, a))
-		if(AM.flags_1 & HOLOGRAM_1)
+		if((AM.flags_1 & HOLOGRAM_1)  || (blacklist && (AM.type in blacklist)))
 			continue
 		. += AM
 
-/datum/component/personal_crafting/proc/get_surroundings(atom/a)
+
+/datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
-	for(var/obj/item/I in get_environment(a))
-		if(I.flags_1 & HOLOGRAM_1)
-			continue
+	for(var/obj/item/I in get_environment(a,blacklist))
 		if(.["instances"][I.type])
 			.["instances"][I.type] += I
 		else
@@ -169,14 +170,14 @@
 	return TRUE
 
 /datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
-	var/list/contents = get_surroundings(a)
+	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."
-			contents = get_surroundings(a)
+			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
 				return ", missing component."
 			if(!check_tools(a, R, contents))
@@ -313,6 +314,8 @@
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(user == parent)
 		ui_interact(user)
 
@@ -345,7 +348,7 @@
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
 
-		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
@@ -366,7 +369,7 @@
 		if(R.name == "") //This is one of the invalid parents that sneaks in
 			continue
 
-		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
 		if(isnull(crafting_recipes[R.category]))

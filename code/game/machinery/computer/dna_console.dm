@@ -251,6 +251,10 @@
 	if(!ui)
 		ui = new(user, src, "DnaConsole")
 		ui.open()
+		
+/obj/machinery/computer/scan_consolenew/ui_assets()
+	. = ..() || list()
+	. += get_asset_datum(/datum/asset/simple/genetics)
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()

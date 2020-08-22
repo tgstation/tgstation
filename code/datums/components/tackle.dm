@@ -63,11 +63,15 @@
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
+	SIGNAL_HANDLER
+
 	tackle = TT
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
+	SIGNAL_HANDLER
+
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
 
@@ -140,6 +144,8 @@
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!tackling || !tackle)
 		return
 
@@ -175,7 +181,7 @@
 			user.Knockdown(30)
 			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+				addtimer(CALLBACK(T, /mob/living/carbon/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message("<span class='warning'>[user] lands a passable [tackle_word] on [target], sending them both tumbling!</span>", "<span class='userdanger'>You land a passable [tackle_word] on [target], sending you both tumbling!</span>", target)
@@ -452,6 +458,8 @@
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)
+	SIGNAL_HANDLER
+
 	if(!tackling)
 		return
 

@@ -335,7 +335,7 @@
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
 	if(target && emote_taunt.len && prob(taunt_chance))
-		emote("[pick(emote_taunt)] at [target].")
+		manual_emote("[pick(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
 
 
@@ -456,7 +456,7 @@
 		EscapeConfinement()
 		var/dir_to_target = get_dir(targets_from, target)
 		var/dir_list = list()
-		if(dir_to_target in GLOB.diagonals) //it's diagonal, so we need two directions to hit
+		if(ISDIAGONALDIR(dir_to_target)) //it's diagonal, so we need two directions to hit
 			for(var/direction in GLOB.cardinals)
 				if(direction & dir_to_target)
 					dir_list += direction

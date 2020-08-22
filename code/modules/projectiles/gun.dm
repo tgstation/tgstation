@@ -18,7 +18,8 @@
 	throw_range = 5
 	force = 5
 	item_flags = NEEDS_PERMIT
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb_continuous = list("strikes", "hits", "bashes")
+	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -645,6 +646,8 @@
 	..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(ismob(thing))
 		var/mob/lad = thing
 		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)

@@ -210,7 +210,7 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist(mob/living/user)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
 	go_out()
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/process()
@@ -301,6 +301,9 @@
 		return
 	if(reagents.total_volume<=0)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
+		return
+	if(HAS_TRAIT(chassis.occupant, TRAIT_PACIFISM))
+		occupant_message("<span class=\"alert\">The [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 		return
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]

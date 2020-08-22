@@ -52,6 +52,7 @@
 	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
+	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -1027,6 +1028,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
+
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1037,6 +1039,7 @@
 
 	if(!density)
 		return TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
 	sleep(1)
@@ -1069,19 +1072,19 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src, doorClose, 30, TRUE)
+
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
-		SSexplosions.medobj += killthis
-
+		SSexplosions.med_mov_atom += killthis
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
@@ -1213,6 +1216,8 @@
 
 
 /obj/machinery/door/airlock/proc/on_break()
+	SIGNAL_HANDLER
+
 	if(!panel_open)
 		panel_open = TRUE
 	wires.cut_all()

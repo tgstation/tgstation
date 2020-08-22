@@ -463,7 +463,7 @@ Difficulty: Hard
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			if(isobj(A))
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += A
 			else
 				SSexplosions.medturf += A
 		DestroySurroundings()

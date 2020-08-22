@@ -273,7 +273,7 @@ Difficulty: Very Hard
 	. = ..()
 	if(isturf(target) || isobj(target))
 		if(isobj(target))
-			SSexplosions.medobj += target
+			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
 

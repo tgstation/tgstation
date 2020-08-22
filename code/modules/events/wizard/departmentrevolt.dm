@@ -18,19 +18,19 @@
 			jobs_to_revolt = list("Assistant")
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("white")
-			jobs_to_revolt = list("Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist")
-			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Geneti", "Viro", "Psych")
+			jobs_to_revolt = GLOB.medical_positions
+			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 		if("yellow")
-			jobs_to_revolt = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+			jobs_to_revolt = GLOB.engineering_positions
 			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 		if("purple")
-			jobs_to_revolt = list("Research Director","Scientist", "Roboticist")
-			nation_name = pick("Sci", "Griffa", "Explosi", "Mecha", "Xeno")
+			jobs_to_revolt = GLOB.science_positions
+			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno")
 		if("brown")
-			jobs_to_revolt = list("Quartermaster", "Cargo Technician", "Shaft Miner")
+			jobs_to_revolt = GLOB.supply_positions
 			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("whatevercolorrepresentstheservicepeople") //the few, the proud, the technically aligned
-			jobs_to_revolt = list("Bartender", "Cook", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
+			jobs_to_revolt = GLOB.service_positions.Copy() - list("Assistant", "Prisoner")
 			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
 	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
