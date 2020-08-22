@@ -103,8 +103,8 @@ This component is used in vat growing to swab for microbiological samples which 
 
 	to_chat(user, "<span class='nicegreen'>You manage to collect a microbiological sample from [target]!</span>")
 
-	var/obj/item/I = parent
-	I.update_icon()
+	var/obj/item/parent_item = parent
+	parent_item.update_icon()
 
 ///Checks if the swabbing component can swab the specific object or nots
 /datum/component/swabbing/proc/can_swab(atom/target)
