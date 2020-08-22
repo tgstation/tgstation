@@ -101,10 +101,6 @@
 	return ..()
 
 /obj/item/gun/ballistic/revolver/detective/wrench_act(mob/living/user, obj/item/I)
-//	var/live_ammo = get_ammo(FALSE, FALSE) //Find the amount of live bullets in the gun.
-//	if(magazine.ammo_count() && live_ammo == 0) //It's not empty, but has no live ammo.
-//		to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
-//		return TRUE
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You need to hold [src] to modify its barrel.</span>")
 		return TRUE
@@ -113,7 +109,7 @@
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
 	if(magazine.ammo_count()) //If it has any ammo inside....
-		user.visible_message("<span class='warning'>[src] goes off!</span>") //...you learn an important lesson about firearms safety.
+		user.visible_message("<span class='danger'>[src]'s hammer drops while you're handling it!</span>") //...you learn an important lesson about firearms safety.
 		process_fire(user, user, FALSE, skip_missfire_check = TRUE)
 		user.dropItemToGround(src)
 		return TRUE
