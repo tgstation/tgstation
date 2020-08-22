@@ -92,46 +92,37 @@
 						"Black Panther" = "detective_panther"
 						)
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(magazine && magazine.caliber != initial(magazine.caliber))
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, skip_missfire_check = FALSE)
+	if(magazine && magazine.caliber != initial(magazine.caliber) && !skip_missfire_check) //skip_missfire_check is to reduce redundacy of a round "misfiring" when it's already misfiring from wrench_act
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-			playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
-			to_chat(user, "<span class='userdanger'>[src] blows up in your face!</span>")
-			user.take_bodypart_damage(0,20)
+			to_chat(user, "<span class='userdanger'>[src] misfires catastropically!</span>")
 			user.dropItemToGround(src)
-			return FALSE
+			return ..(user, user, FALSE)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/detective/wrench_act(mob/living/user, obj/item/I)
-	var/live_ammo = get_ammo(FALSE, FALSE)
+//	var/live_ammo = get_ammo(FALSE, FALSE) //Find the amount of live bullets in the gun.
+//	if(magazine.ammo_count() && live_ammo == 0) //It's not empty, but has no live ammo.
+//		to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
+//		return TRUE
+	if(!user.is_holding(src))
+		to_chat(user, "<span class='notice'>You need to hold [src] to modify its barrel.</span>")
+		return TRUE
+	to_chat(user, "<span class='notice'>You begin to loosen the barrel of [src]...</span>")
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	if(magazine.ammo_count()) //If it has any ammo inside....
+		user.visible_message("<span class='warning'>[src] goes off!</span>") //...you learn an important lesson about firearms safety.
+		process_fire(user, user, FALSE, skip_missfire_check = TRUE)
+		user.dropItemToGround(src)
+		return TRUE
 	if(magazine.caliber == "38")
-		if(magazine.ammo_count() && live_ammo == 0) //It's not empty, but has no live ammo.
-			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
-			return TRUE
-		to_chat(user, "<span class='notice'>You begin to loosen the barrel of [src]...</span>")
-		I.play_tool_sound(src)
-		if(!I.use_tool(src, user, 3 SECONDS))
-			return TRUE
-		if(live_ammo > 0) //If it has any live ammo inside....
-			user.visible_message("<span class='warning'>[src] goes off!</span>") //...you learn an important lesson about firearms safety.
-			process_fire(user, user, FALSE)	
-			return TRUE
 		magazine.caliber = "357"
 		fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 		desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
 		to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
-		if(magazine.ammo_count() && live_ammo == 0)
-			to_chat(user, "<span class='notice'>Empty the chambers first.</span>")
-			return TRUE
-		to_chat(user, "<span class='notice'>You begin to tighten the barrel of [src]...</span>")
-		I.play_tool_sound(src)
-		if(!I.use_tool(src, user, 3 SECONDS))
-			return TRUE
-		if(live_ammo > 0)
-			user.visible_message("<span class='warning'>[src] goes off!</span>")
-			process_fire(user, user, FALSE)	
-			return TRUE
 		magazine.caliber = "38"
 		fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 		desc = initial(desc)
