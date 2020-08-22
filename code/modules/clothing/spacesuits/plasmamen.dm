@@ -45,8 +45,10 @@
 	tint = 2
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
 	resistance_flags = FIRE_PROOF
-	var/brightness_on = 4 //luminosity when the light is on
-	var/on = FALSE
+	light_system = MOVABLE_LIGHT
+	light_range = 4
+	light_on = FALSE
+	var/helmet_on = FALSE
 	var/smile = FALSE
 	var/smile_color = "#FF0000"
 	var/visor_icon = "envisor"
@@ -68,9 +70,9 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
 	if(weldingvisortoggle(user))
-		if(on)
+		if(helmet_on)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
-			on = FALSE
+			helmet_on = FALSE
 			playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 			update_icon()
 		else
@@ -114,19 +116,19 @@
 		return TRUE
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
-	on = !on
-	icon_state = "[initial(icon_state)][on ? "-light":""]"
+	helmet_on = !helmet_on
+	icon_state = "[initial(icon_state)][helmet_on ? "-light":""]"
 	inhand_icon_state = icon_state
 	user.update_inv_head() //So the mob overlay updates
 
-	if(on)
+	if(helmet_on)
 		if(!up)
 			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
-			set_light(0)
+			set_light_on(FALSE)
 		else
-			set_light(brightness_on)
+			set_light_on(TRUE)
 	else
-		set_light(0)
+		set_light_on(FALSE)
 
 	for(var/X in actions)
 		var/datum/action/A=X
