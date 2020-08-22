@@ -15,4 +15,6 @@
 	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
 	view_range = 10
 	designate_time = 50
+	x_offset = -9
+	y_offset = -8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
