@@ -109,6 +109,8 @@
 #define FACTOR_GAS_VISIBLE_MAX				20
 /// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP				0.25
+/// The total visible states
+#define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
 //REACTIONS
 //return values for reactions (bitflags)

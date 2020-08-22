@@ -318,48 +318,32 @@
 		I.dropped(src, silent)
 	return TRUE
 
-//Outdated but still in use apparently. This should at least be a human proc.
-//Daily reminder to murder this - Remie.
-/mob/living/proc/get_equipped_items(include_pockets = FALSE)
-	return
+/**
+ * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
 
-/mob/living/carbon/get_equipped_items(include_pockets = FALSE)
+/mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
-	if(back)
-		items += back
-	if(head)
-		items += head
-	if(wear_mask)
-		items += wear_mask
-	if(wear_neck)
-		items += wear_neck
+	for(var/obj/item/item_contents in contents)
+		if(item_contents.item_flags & IN_INVENTORY)
+			items += item_contents
+	items -= held_items
 	return items
+
+/**
+ * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
 
 /mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	var/list/items = ..()
-	if(belt)
-		items += belt
-	if(ears)
-		items += ears
-	if(glasses)
-		items += glasses
-	if(gloves)
-		items += gloves
-	if(shoes)
-		items += shoes
-	if(wear_id)
-		items += wear_id
-	if(wear_suit)
-		items += wear_suit
-	if(w_uniform)
-		items += w_uniform
-	if(include_pockets)
-		if(l_store)
-			items += l_store
-		if(r_store)
-			items += r_store
-		if(s_store)
-			items += s_store
+	if(!include_pockets)
+		items -= list(l_store, r_store, s_store)
 	return items
 
 /mob/living/proc/unequip_everything()

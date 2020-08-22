@@ -144,6 +144,8 @@
 		current_button.button_icon_state = button_icon_state
 
 /datum/action/proc/OnUpdatedIcon()
+	SIGNAL_HANDLER
+
 	UpdateButtonIcon()
 
 //Presets for item actions
@@ -293,39 +295,10 @@
 
 /// Toggle the action icon for the space suit thermal regulator
 /datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
+	SIGNAL_HANDLER
+
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
-
-/datum/action/item_action/toggle_unfriendly_fire
-	name = "Toggle Friendly Fire \[ON\]"
-	desc = "Toggles if the club's blasts cause friendly fire."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "vortex_ff_on"
-
-/datum/action/item_action/toggle_unfriendly_fire/Trigger()
-	if(..())
-		UpdateButtonIcon()
-
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE, force)
-	if(istype(target, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/H = target
-		if(H.friendly_fire_check)
-			button_icon_state = "vortex_ff_off"
-			name = "Toggle Friendly Fire \[OFF\]"
-		else
-			button_icon_state = "vortex_ff_on"
-			name = "Toggle Friendly Fire \[ON\]"
-	..()
-
-/datum/action/item_action/synthswitch
-	name = "Change Synthesizer Instrument"
-	desc = "Change the type of instrument your synthesizer is playing as."
-
-/datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/instrument/piano_synth))
-		var/obj/item/instrument/piano_synth/synth = target
-		return synth.selectInstrument()
-	return ..()
 
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"

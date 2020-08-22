@@ -21,7 +21,7 @@
 	desc = "A great place for storing knowledge."
 	anchored = FALSE
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
@@ -210,7 +210,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
-	attack_verb = list("bashed", "whacked", "educated")
+	attack_verb_continuous = list("bashes", "whacks", "educates")
+	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound =  'sound/items/handling/book_pickup.ogg'

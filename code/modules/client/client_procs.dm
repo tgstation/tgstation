@@ -89,20 +89,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
-	// Keypress passthrough
-	if(href_list["__keydown"])
-		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
-		if(keycode)
-			keyDown(keycode)
-		return
-	if(href_list["__keyup"])
-		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
-		if(keycode)
-			keyUp(keycode)
-		return
-
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -124,8 +112,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
-		if("chat")
-			return chatOutput.Topic(href, href_list)
 
 	switch(href_list["action"])
 		if("openLink")
@@ -207,7 +193,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-	chatOutput = new /datum/chat_output(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -215,6 +200,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+
+	// Instantiate tgui panel
+	tgui_panel = new(src)
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
@@ -320,7 +308,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		set_macros()
 		update_movement_keys()
 
-	chatOutput.start() // Starts the chat
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login)
 		spawn()

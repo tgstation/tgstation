@@ -351,7 +351,7 @@
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
-	container_resist(user)
+	container_resist_act(user)
 
 /obj/structure/closet/attack_hand(mob/living/user)
 	. = ..()
@@ -396,14 +396,14 @@
 		return 0
 	return 1
 
-/obj/structure/closet/container_resist(mob/living/user)
+/obj/structure/closet/container_resist_act(mob/living/user)
 	if(opened)
 		return
 	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc
-		AM.relay_container_resist(user, src)
+		AM.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
 		open()
@@ -496,14 +496,14 @@
 				req_access += pick(get_all_accesses())
 
 /obj/structure/closet/contents_explosion(severity, target)
-	for(var/atom/A in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += A
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += A
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/closet/singularity_act()
 	dump_contents()

@@ -204,6 +204,22 @@ Class Procs:
 			L.update_mobility()
 	occupant = null
 
+/**
+ * Puts passed object in to user's hand
+ *
+ * Puts the passed object in to the users hand if they are adjacent.
+ * If the user is not adjacent then place the object on top of the machine.
+ *
+ * Vars:
+ * * object (obj) The object to be moved in to the users hand.
+ * * user (mob/living) The user to recive the object
+ */
+/obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
+	if(!issilicon(user) && in_range(src, user))
+		user.put_in_hands(object)
+	else
+		object.forceMove(drop_location())
+
 /obj/machinery/proc/can_be_occupant(atom/movable/am)
 	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
 
@@ -260,6 +276,11 @@ Class Procs:
 
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
+
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
+			if(user.is_blind())
+				to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+				return FALSE
 
 		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
 			var/mob/living/carbon/H = L
@@ -402,6 +423,7 @@ Class Procs:
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 			component_parts.Cut()
+			circuit = null
 	return ..()
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -577,14 +599,15 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/zap_act(power, zap_flags, shocked_objects)
-	. = ..()
+/obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power/2000, BURN, "energy")
+		take_damage(power * 0.0005, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)
+		power -= power * 0.0005
+	return ..()
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -603,3 +626,25 @@ Class Procs:
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
+
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices5
+ * The length of the generated name can be set by passing in an int
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * Returns (string) The generated name
+ */
+/obj/machinery/proc/assign_random_name(len=5)
+	var/list/new_name = list()
+	// machine id's should be fun random chars hinting at a larger world
+	for(var/i = 1 to len)
+		switch(rand(1,3))
+			if(1)
+				new_name += ascii2text(rand(65, 90)) // A - Z
+			if(2)
+				new_name += ascii2text(rand(97,122)) // a - z
+			if(3)
+				new_name += ascii2text(rand(48, 57)) // 0 - 9
+	return new_name.Join()

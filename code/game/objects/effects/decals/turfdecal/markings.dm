@@ -180,3 +180,21 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+/obj/effect/turf_decal/gas/oxygen
+	icon_state = "o2"
+
+/obj/effect/turf_decal/gas/nitrogen
+	icon_state = "n2"
+
+/obj/effect/turf_decal/gas/air
+	icon_state = "air"
+
+/obj/effect/turf_decal/gas/nitrous_oxide
+	icon_state = "n2o"
+
+/obj/effect/turf_decal/gas/carbon_dioxide
+	icon_state = "co2"
+
+/obj/effect/turf_decal/gas/plasma
+	icon_state = "plasma"

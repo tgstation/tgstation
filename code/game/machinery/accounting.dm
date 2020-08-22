@@ -9,9 +9,9 @@
 	var/obj/item/card/id/inserted_id
 
 /obj/machinery/accounting/Destroy()
-	. = ..()
 	if(inserted_id)
 		remove_card()
+	return ..()
 
 /obj/machinery/accounting/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))

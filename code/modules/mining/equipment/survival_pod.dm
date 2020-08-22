@@ -135,6 +135,8 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "table"
 	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
