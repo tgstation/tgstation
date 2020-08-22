@@ -1180,11 +1180,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
 
 /obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
-	var/turf/T = get_turf(src)
-	if(T)
-		qdel(src)
-		new/obj/machinery/destabilized_crystal(T)
-		explosion(T,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
+	var/turf/turf_loc = get_turf(src)
+	if(!turf_loc)
+		return
+	explosion(turf_loc,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
+	new/obj/machinery/destabilized_crystal(turf_loc)
+	qdel(src)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

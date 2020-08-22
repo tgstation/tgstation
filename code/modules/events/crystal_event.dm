@@ -1,7 +1,26 @@
-GLOBAL_LIST_INIT(crystal_invasion_waves, list("small wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=1),
-"medium wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=1),
-"big wave" = list(/obj/structure/crystal_portal/small=5, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=2, /obj/structure/crystal_portal/huge=1),
-"huge wave" = list(/obj/structure/crystal_portal/small=7, /obj/structure/crystal_portal/medium=5, /obj/structure/crystal_portal/big=3, /obj/structure/crystal_portal/huge=2)))
+GLOBAL_LIST_INIT(crystal_invasion_waves, list(
+	"small wave" = list(
+		/obj/structure/crystal_portal/small=4,
+		/obj/structure/crystal_portal/medium=1
+		),
+	"medium wave" = list(
+		/obj/structure/crystal_portal/small=4,
+		/obj/structure/crystal_portal/medium=3,
+		/obj/structure/crystal_portal/big=1
+		),
+	"big wave" = list(
+		/obj/structure/crystal_portal/small=5,
+		/obj/structure/crystal_portal/medium=3,
+		/obj/structure/crystal_portal/big=2,
+		/obj/structure/crystal_portal/huge=1
+		),
+	"huge wave" = list(
+		/obj/structure/crystal_portal/small=7,
+		/obj/structure/crystal_portal/medium=5,
+		/obj/structure/crystal_portal/big=3,
+		/obj/structure/crystal_portal/huge=2
+		),
+	))
 GLOBAL_LIST_EMPTY(crystal_portals)
 GLOBAL_LIST_EMPTY(destabilized_crystals)
 
@@ -19,6 +38,7 @@ This section is for the event controller
 /datum/round_event/crystal_invasion
 	startWhen = 10
 	announceWhen = 1
+	endWhen = 30 MINUTES
 	///Is the name of the wave, used to check wich wave will be generated
 	var/wave_name
 	///Max number of portals that can spawn per type of wave
@@ -51,8 +71,8 @@ This section is for the event controller
 		if("huge wave")
 			portal_numbers = rand(11, 15)
 		else
-			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
+			CRASH("Wave name of [wave_name] not recognised.")
 
 	var/list/sm_crystal = list()
 	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
@@ -62,6 +82,7 @@ This section is for the event controller
 	if(sm_crystal == null)
 		log_game("No engine found, killing the crystal invasion event.")
 		kill()
+		return
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
 	crystal.destabilize(portal_numbers)
 
@@ -75,7 +96,8 @@ This section is for the event controller
 ///Pick a location from the generic_event_spawns list that are present on the maps and call the spawn anomaly and portal procs
 /datum/round_event/crystal_invasion/proc/spawn_portals()
 	var/list/spawners = list()
-	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
+	for(var/es in GLOB.generic_event_spawns)
+		var/obj/effect/landmark/event_spawn/temp = es
 		if(is_station_level(temp.z))
 			spawners += temp
 	for(var/i in 1 to portal_numbers)
@@ -87,7 +109,7 @@ This section is for the event controller
 ///Spawn an anomaly randomly in a different location than spawn_portal()
 /datum/round_event/crystal_invasion/proc/spawn_anomaly(list/spawners)
 	if(!spawners.len)
-		message_admins("No landmarks on the station, aborting")
+		CRASH("No landmarks on the station map, aborting")
 		return
 	var/obj/spawner = pick(spawners)
 	var/obj/effect/anomaly/flux/A = new(spawner.loc)
@@ -96,7 +118,7 @@ This section is for the event controller
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
 	if(!spawners.len)
-		message_admins("No landmarks on the station, aborting")
+		CRASH("No landmarks on the station map, aborting")
 		return
 
 	var/pick_portal = pickweight(wave_type)
@@ -109,7 +131,8 @@ This section is for the event controller
 						cause a \[REDACTED] class event we assume you have 10 more minutes before total crystal annihilation", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 	var/list/spawners = list()
-	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
+	for(var/es in GLOB.generic_event_spawns)
+	var/obj/effect/landmark/event_spawn/temp = es
 		if(is_station_level(temp.z))
 			spawners += temp
 	for(var/i in 1 to 8)
@@ -143,23 +166,24 @@ This section is for the destabilized SM
 /obj/machinery/destabilized_crystal/Destroy()
 	GLOB.destabilized_crystals -= src
 	if(is_zk)
-		priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourself!","Alarm")
+		priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
 	return..()
 
 /obj/machinery/destabilized_crystal/process()
-	if(active)
-		if(prob(75))
-			radiation_pulse(src, 250, 6)
-		var/turf/T = loc
-		var/datum/gas_mixture/env = T.return_air()
-		var/datum/gas_mixture/removed
-		var/gasefficency = 0.5
-		removed = env.remove(gasefficency * env.total_moles())
-		removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
-		removed.gases[/datum/gas/bz][MOLES] += 15.5
-		removed.gases[/datum/gas/miasma][MOLES] += 5.5
-		env.merge(removed)
-		air_update_turf()
+	if(!active)
+		return
+	if(prob(75))
+		radiation_pulse(src, 250, 6)
+	var/turf/loc_turf = loc
+	var/datum/gas_mixture/env = loc_turf.return_air()
+	var/datum/gas_mixture/removed
+	var/gasefficency = 0.5
+	removed = env.remove(gasefficency * env.total_moles())
+	removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
+	removed.gases[/datum/gas/bz][MOLES] += 15.5
+	removed.gases[/datum/gas/miasma][MOLES] += 5.5
+	env.merge(removed)
+	air_update_turf()
 
 ///This proc announces that the event is concluding with the worst scenario
 /obj/machinery/destabilized_crystal/proc/zk_event_announcement()
@@ -198,7 +222,7 @@ This section is for the destabilized SM
 		if(!injector.filled)
 			to_chat(user, "<span class='notice'>\The [W] is empty!</span>")
 			return
-		to_chat(user, "<span class='notice'>You carefully begin inject \the [src] with \the [W]... please don't move untill all the steps are finished</span>")
+		to_chat(user, "<span class='notice'>You carefully begin injecting \the [src] with \the [W]... take care not to move untill all the steps are finished!</span>")
 		if(!W.use_tool(src, user, 5 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>Seems that \the [src] internal resonance is fading with the fluid!</span>")
@@ -221,8 +245,8 @@ This section is for the destabilized SM
 	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
 						kill the remaining crystal monsters and go back to work")
 	sound_to_playing_players('sound/misc/notice2.ogg')
-	var/turf/T = get_turf(src)
-	new/obj/machinery/power/supermatter_crystal(T)
+	var/turf/loc_turf = get_turf(src)
+	new/obj/machinery/power/supermatter_crystal(loc_turf)
 	for(var/Portal in GLOB.crystal_portals)
 		qdel(Portal)
 	qdel(src)
@@ -255,6 +279,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 		if(filled)
 			return
 		to_chat(user, "<span class='notice'>You refill the [src]</span>")
+		playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 		filled = TRUE
 		qdel(W)
 
@@ -295,6 +320,8 @@ This section is for the crystal portals variations
 	. = ..()
 	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 	GLOB.crystal_portals += src
+	mob_types = typelist("crystal_portal mob_types", mob_types)
+	faction = typelist("crystal_portal faction", faction)
 
 /obj/structure/crystal_portal/Destroy()
 	GLOB.crystal_portals -= src
@@ -319,9 +346,9 @@ This section is for the crystal portals variations
 	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(W, /obj/item/anomaly_neutralizer))
-		to_chat(user, "<span class='notice'>You start closing the [src]</span>")
+		to_chat(user, "<span class='notice'>You start closing \the [src]...</span>")
 		if(W.use_tool(src, user, 5.5 SECONDS, volume = 100))
-			to_chat(user, "<span class='notice'>You you successfully close the [src]</span>")
+			to_chat(user, "<span class='notice'>You successfully close \the [src]!</span>")
 			closed = TRUE
 			qdel(src)
 
