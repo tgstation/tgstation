@@ -68,7 +68,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/inducer,
 		/obj/item/plunger,
-		/obj/item/airlock_painter
+		/obj/item/airlock_painter,
 		/obj/item/pipe_painter
 		))
 
