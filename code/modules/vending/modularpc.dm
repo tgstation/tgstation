@@ -15,7 +15,8 @@
 					/obj/item/computer_hardware/battery = 8,
 					/obj/item/stock_parts/cell/computer = 8,
 					/obj/item/computer_hardware/processor_unit = 4,
-					/obj/item/computer_hardware/processor_unit/small = 4)
+					/obj/item/computer_hardware/processor_unit/small = 4,
+					/obj/item/computer_hardware/sensorpackage = 4)
 	premium = list(/obj/item/computer_hardware/card_slot = 2,
 		           /obj/item/computer_hardware/ai_slot = 2,
 		           /obj/item/computer_hardware/printer/mini = 2,

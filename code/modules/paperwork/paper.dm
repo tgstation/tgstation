@@ -11,41 +11,6 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-/**
- * This is a custom ui state.  All it really does is keep track of pen
- * being used and if they are editing it or not.  This way we can keep
- * the data with the ui rather than on the paper
- */
-/datum/ui_state/default/paper_state
-	/// What edit mode we are in and who is
-	/// writing on it right now
-	var/edit_mode = MODE_READING
-	/// Setup for writing to a sheet
-	var/pen_color = "black"
-	var/pen_font = ""
-	var/is_crayon = FALSE
-	/// Setup for stamping a sheet
-	// Why not the stamp obj?  I have no idea
-	// what happens to states out of scope so
-	// don't want to put instances in this
-	var/stamp_icon_state = ""
-	var/stamp_name = ""
-	var/stamp_class = ""
-
-/datum/ui_state/default/paper_state/proc/copy_from(datum/ui_state/default/paper_state/from)
-	switch(from.edit_mode)
-		if(MODE_READING)
-			edit_mode = MODE_READING
-		if(MODE_WRITING)
-			edit_mode = MODE_WRITING
-			pen_color = from.pen_color
-			pen_font = from.pen_font
-			is_crayon = from.is_crayon
-		if(MODE_STAMPING)
-			edit_mode = MODE_STAMPING
-			stamp_icon_state = from.stamp_icon_state
-			stamp_class = from.stamp_class
-			stamp_name = from.stamp_name
 
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
@@ -82,24 +47,8 @@
 	var/list/stamps			/// Positioning for the stamp in tgui
 	var/list/stamped		/// Overlay info
 
-	/// This REALLY should be a componenet.  Basicly used during, april fools
-	/// to honk at you
-	var/rigged = 0
-	var/spam_flag = 0
-
 	var/contact_poison // Reagent ID to transfer on contact
 	var/contact_poison_volume = 0
-
-	// Ok, so WHY are we caching the ui's?
-	// Since we are not using autoupdate we
-	// need some way to update the ui's of
-	// other people looking at it and if
-	// its been updated.  Yes yes, lame
-	// but canot be helped.  However by
-	// doing it this way, we can see
-	// live updates and have multipule
-	// people look at it
-	var/list/viewing_ui = list()
 
 	/// When the sheet can be "filled out"
 	/// This is an associated list
@@ -107,8 +56,9 @@
 	var/field_counter = 1
 
 /obj/item/paper/Destroy()
-	close_all_ui()
 	stamps = null
+	stamped = null
+	form_fields = null
 	stamped = null
 	. = ..()
 
@@ -164,7 +114,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.incapacitated() || !usr.is_literate())
+	if(!usr.can_read(src) || usr.incapacitated(TRUE, TRUE) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -182,18 +132,6 @@
 	user.visible_message("<span class='suicide'>[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
 	return (BRUTELOSS)
 
-/// ONLY USED FOR APRIL FOOLS
-/obj/item/paper/proc/reset_spamflag()
-	spam_flag = FALSE
-
-/obj/item/paper/attack_self(mob/user)
-	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		if(!spam_flag)
-			spam_flag = TRUE
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
-	. = ..()
-
 /obj/item/paper/proc/clearpaper()
 	info = ""
 	stamps = null
@@ -201,28 +139,39 @@
 	cut_overlays()
 	update_icon_state()
 
-/obj/item/paper/examine_more(mob/user)
-	ui_interact(user)
-	return list("<span class='notice'><i>You try to read [src]...</i></span>")
+/obj/item/paper/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !isobserver(user))
+		. += "<span class='warning'>You're too far away to read it!</span>"
+		return
+	if(user.can_read(src))
+		ui_interact(user)
+		return
+	. += "<span class='warning'>You cannot read it!</span>"
+
+/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+		// Are we on fire?  Hard ot read if so
+	if(resistance_flags & ON_FIRE)
+		return UI_CLOSE
+	if(!in_range(user,src))
+		return UI_CLOSE
+	if(user.incapacitated(TRUE, TRUE) || (isobserver(user) && !isAdminGhostAI(user)))
+		return UI_UPDATE
+	// Even harder to read if your blind...braile? humm
+	// .. or if you cannot read
+	if(!user.can_read(src))
+		return UI_CLOSE
+	if(in_contents_of(/obj/machinery/door/airlock))
+		return UI_INTERACTIVE
+	return ..()
+
+
 
 /obj/item/paper/can_interact(mob/user)
-	if(!..())
-		return FALSE
-	// Are we on fire?  Hard ot read if so
-	if(resistance_flags & ON_FIRE)
-		return FALSE
-	// Even harder to read if your blind...braile? humm
-	if(user.is_blind())
-		return FALSE
-	// checks if the user can read.
-	return user.can_read(src)
+	if(in_contents_of(/obj/machinery/door/airlock))
+		return TRUE
+	return ..()
 
-/**
- * This creates the ui, since we are using a custom state but not much else
- * just makes it easyer to make it.
- */
-/obj/item/paper/proc/create_ui(mob/user, datum/ui_state/default/paper_state/state)
-	ui_interact(user, state = state)
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
@@ -246,48 +195,22 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))
-		close_all_ui()
+		SStgui.close_uis(src)
 		return
 
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
-
-		var/datum/ui_state/default/paper_state/state = new
-		state.edit_mode = MODE_WRITING
-		// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
-		// TODO:  Convert all writing stuff to one type, /obj/item/art_tool maybe?
-		state.is_crayon = istype(P, /obj/item/toy/crayon);
-		if(state.is_crayon)
-			var/obj/item/toy/crayon/PEN = P
-			state.pen_font = CRAYON_FONT
-			state.pen_color = PEN.paint_color
-		else
-			var/obj/item/pen/PEN = P
-			state.pen_font = PEN.font
-			state.pen_color = PEN.colour
-
-		create_ui(user, state)
+		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-
-		var/datum/ui_state/default/paper_state/state = new
-		state.edit_mode = MODE_STAMPING	// we are read only becausse the sheet is full
-		state.stamp_icon_state = P.icon_state
-
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		state.stamp_class = sheet.icon_class_name(P.icon_state)
-
 		to_chat(user, "<span class='notice'>You ready your stamp over the paper! </span>")
-
-		create_ui(user, state)
+		ui_interact(user)
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
 		// cut paper?  the sky is the limit!
-		var/datum/ui_state/default/paper_state/state = new
-		state.edit_mode = MODE_READING
-		create_ui(user, state)	// The other ui will be created with just read mode outside of this
+		ui_interact(user)	// The other ui will be created with just read mode outside of this
 
 	return ..()
 
@@ -302,68 +225,64 @@
 		get_asset_datum(/datum/asset/spritesheet/simple/paper),
 	)
 
-/obj/item/paper/ui_interact(mob/user, datum/tgui/ui,
-		datum/ui_state/default/paper_state/state)
-	// Update the state
-	ui = ui || SStgui.get_open_ui(user, src)
-	if(ui && state)
-		var/datum/ui_state/default/paper_state/current_state = ui.state
-		current_state.copy_from(state)
+/obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
 	// Update the UI
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PaperSheet", name)
-		state = new
-		ui.set_state(state)
-		ui.set_autoupdate(FALSE)
-		viewing_ui[user] = ui
 		ui.open()
 
-/obj/item/paper/ui_close(mob/user)
-	/// close the editing window and change the mode
-	viewing_ui[user] = null
-	. = ..()
 
-// Again, we have to do this as autoupdate is off
-/obj/item/paper/proc/update_all_ui()
-	for(var/datum/tgui/ui in viewing_ui)
-		ui.process(force = TRUE)
+/obj/item/paper/ui_static_data(mob/user)
+	. = list()
+	.["text"] = info
+	.["max_length"] = MAX_PAPER_LENGTH
+	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
+	.["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
+	.["stamps"] = stamps
 
-// Again, we have to do this as autoupdate is off
-/obj/item/paper/proc/close_all_ui()
-	for(var/datum/tgui/ui in viewing_ui)
-		ui.close()
-	viewing_ui = list()
+
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
-
-	var/datum/tgui/ui = viewing_ui[user]
-	var/datum/ui_state/default/paper_state/state = ui.state
-
-	// Should all this go in static data and just do a forced update?
-	data["text"] = info
-	data["max_length"] = MAX_PAPER_LENGTH
-	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling?
-	data["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
-	data["stamps"] = stamps
-
-	data["edit_mode"] = state.edit_mode
-	data["edit_usr"] = "[ui.user]";
-
-	// pen info for editing
-	data["is_crayon"] = state.is_crayon
-	data["pen_font"] = state.pen_font
-	data["pen_color"] = state.pen_color
-	// stamping info for..stamping
-	data["stamp_class"] = state.stamp_class
-
+	var/obj/O = user.get_active_held_item()
+	if(istype(O, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/PEN = O
+		data["pen_font"] = CRAYON_FONT
+		data["pen_color"] = PEN.paint_color
+		data["edit_mode"] = MODE_WRITING
+		data["is_crayon"] = TRUE
+		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
+	else if(istype(O, /obj/item/pen))
+		var/obj/item/pen/PEN = O
+		data["pen_font"] = PEN.font
+		data["pen_color"] = PEN.colour
+		data["edit_mode"] = MODE_WRITING
+		data["is_crayon"] = FALSE
+		data["stamp_class"] = "FAKE"
+		data["stamp_icon_state"] = "FAKE"
+	else if(istype(O, /obj/item/stamp))
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		data["stamp_icon_state"] = O.icon_state
+		data["stamp_class"] = sheet.icon_class_name(O.icon_state)
+		data["edit_mode"] = MODE_STAMPING
+		data["pen_font"] = "FAKE"
+		data["pen_color"] = "FAKE"
+		data["is_crayon"] = FALSE
+	else
+		data["edit_mode"] = MODE_READING
+		data["pen_font"] = "FAKE"
+		data["pen_color"] = "FAKE"
+		data["is_crayon"] = FALSE
+		data["stamp_icon_state"] = "FAKE"
+		data["stamp_class"] = "FAKE"
 	data["field_counter"] = field_counter
 	data["form_fields"] = form_fields
 
 	return data
 
-/obj/item/paper/ui_act(action, params, datum/tgui/ui, datum/ui_state/default/paper_state/state)
+/obj/item/paper/ui_act(action, params,datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
@@ -371,34 +290,33 @@
 			var/stamp_x = text2num(params["x"])
 			var/stamp_y = text2num(params["y"])
 			var/stamp_r = text2num(params["r"])	// rotation in degrees
-
+			var/stamp_icon_state = params["stamp_icon_state"]
+			var/stamp_class = params["stamp_class"]
 			if (isnull(stamps))
-				stamps = new/list()
+				stamps = list()
 			if(stamps.len < MAX_PAPER_STAMPS)
 				// I hate byond when dealing with freaking lists
-				stamps += list(list(state.stamp_class, stamp_x,  stamp_y,stamp_r))	/// WHHHHY
+				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r)	/// WHHHHY
 
 				/// This does the overlay stuff
 				if (isnull(stamped))
-					stamped = new/list()
+					stamped = list()
 				if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
-					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[state.stamp_icon_state]")
+					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
 					stampoverlay.pixel_x = rand(-2, 2)
 					stampoverlay.pixel_y = rand(-3, 2)
 					add_overlay(stampoverlay)
-					LAZYADD(stamped, state.stamp_icon_state)
+					LAZYADD(stamped, stamp_icon_state)
 
-				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [state.stamp_name]!</span>", "<span class='notice'>You stamp [src] with [state.stamp_name]!</span>")
+				update_static_data(usr,ui)
+				ui.user.visible_message("<span class='notice'>[ui.user] stamps [src] with [stamp_class]!</span>", "<span class='notice'>You stamp [src] with [stamp_class]!</span>")
 			else
 				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
-
-			update_all_ui()
 			. = TRUE
 
 		if("save")
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
-			var/list/fields = params["form_fields"]
 			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
 
 			if(paper_len > MAX_PAPER_LENGTH)
@@ -414,14 +332,10 @@
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
 					info = in_paper
-
-			for(var/key in fields)
-				form_fields[key] = fields[key];
+					update_static_data(usr,ui)
 
 
-			update_all_ui()
 			update_icon()
-
 			. = TRUE
 
 /**

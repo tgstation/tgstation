@@ -5,7 +5,7 @@
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
-	opacity = 0
+	opacity = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	CanAtmosPass = ATMOS_PASS_PROC
@@ -207,13 +207,14 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/zap_act(power)
-	. = ..()
+/obj/structure/blob/zap_act(power, zap_flags)
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
-			take_damage(power/400, BURN, "energy")
+			take_damage(power * 0.0025, BURN, "energy")
 	else
-		take_damage(power/400, BURN, "energy")
+		take_damage(power * 0.0025, BURN, "energy")
+	power -= power * 0.0025 //You don't get to do it for free
+	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
 	..()

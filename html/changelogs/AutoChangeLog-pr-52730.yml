@@ -1,6 +1,0 @@
-author: "Bumtickley00"
-delete-after: True
-changes: 
-  - bugfix: "Medicated sutures no longer yield more polypyr than it takes to make them when ground"
-  - tweak: "Aloe cream now automatically repeats when healing"
-  - spellcheck: "Aloe cream is no longer referred to as \"medical stack\" in the description"

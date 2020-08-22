@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes foreigner quirk giving galactic uncommon to felinids"

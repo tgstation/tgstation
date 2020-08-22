@@ -512,6 +512,8 @@
   * * overlay_list: signal var passing the overlay list of the mob
   */
 /datum/mafia_controller/proc/display_votes(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
 	if(phase != MAFIA_PHASE_VOTING)
 		return
 	var/v = get_vote_count(player_role_lookup[source],"Day")

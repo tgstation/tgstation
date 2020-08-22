@@ -78,6 +78,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 //mob traits
 #define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
+#define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -246,7 +247,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define GENERIC_ITEM_TRAIT "generic_item"
-#define UNCONSCIOUS_BLIND "unconscious_blind"
+#define UNCONSCIOUS_TRAIT "unconscious"
 #define EYE_DAMAGE "eye_damage"
 #define EAR_DAMAGE "ear_damage"
 #define GENETIC_MUTATION "genetic"

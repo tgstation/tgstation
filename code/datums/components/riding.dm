@@ -34,6 +34,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+
 	var/atom/movable/AM = parent
 	restore_position(M)
 	unequip_buckle_inhands(M)
@@ -41,6 +43,8 @@
 		qdel(src)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
+	SIGNAL_HANDLER
+
 	var/atom/movable/movable_parent = parent
 	handle_vehicle_offsets(movable_parent.dir)
 
@@ -58,6 +62,8 @@
 	directional_vehicle_layers["[dir]"] = layer
 
 /datum/component/riding/proc/vehicle_moved(datum/source, dir)
+	SIGNAL_HANDLER
+
 	var/atom/movable/movable_parent = parent
 	if (isnull(dir))
 		dir = movable_parent.dir
@@ -67,6 +73,8 @@
 	handle_vehicle_layer(dir)
 
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	vehicle_moved(source, new_dir)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
@@ -238,6 +246,8 @@
 	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/human/H = parent
 	if(H.a_intent == INTENT_DISARM && (target in H.buckled_mobs))
 		force_dismount(target)

@@ -693,7 +693,7 @@
 			return FALSE
 
 		visible_message("<span class='notice'>[src] performs CPR on [target.name]!</span>", "<span class='notice'>You perform CPR on [target.name].</span>")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
@@ -1158,21 +1158,6 @@
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)
 
-/mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(istype(bp, /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
-				return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
-	var/active_item = get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message("<span class='warning'>[src.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
-
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
@@ -1224,9 +1209,6 @@
 
 /mob/living/carbon/human/species/android
 	race = /datum/species/android
-
-/mob/living/carbon/human/species/corporate
-	race = /datum/species/corporate
 
 /mob/living/carbon/human/species/dullahan
 	race = /datum/species/dullahan

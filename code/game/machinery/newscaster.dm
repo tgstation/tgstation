@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1)
+/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1, update_alert = TRUE)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			FC.messages += newMsg
 			break
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.newsAlert(channel_name)
+		NEWSCASTER.newsAlert(channel_name, update_alert)
 	lastAction ++
 	newMsg.creationTime = lastAction
 
@@ -495,7 +495,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
-		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 /obj/machinery/newscaster/Topic(href, href_list)
@@ -841,14 +840,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 	alert = FALSE
 	update_icon()
 
-/obj/machinery/newscaster/proc/newsAlert(channel)
+/obj/machinery/newscaster/proc/newsAlert(channel, update_alert = TRUE)
 	if(channel)
-		say("Breaking news from [channel]!")
+		if(update_alert)
+			say("Breaking news from [channel]!")
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_icon()
 		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
-		playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
-	else
+
+	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
@@ -861,7 +862,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bapped")
+	attack_verb_continuous = list("baps")
+	attack_verb_simple = list("bap")
 	resistance_flags = FLAMMABLE
 	var/screen = 0
 	var/pages = 0

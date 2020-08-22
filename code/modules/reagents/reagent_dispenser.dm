@@ -77,8 +77,8 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/zap_act(zap_flags)
-	..() //extend the zap
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags)
+	. = ..() //extend the zap
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
