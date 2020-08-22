@@ -369,6 +369,9 @@
 		var/mob/living/silicon/ai/AI
 		for(var/crew in occupants)
 			if(isAI(crew))
+				if(AI)
+					crew.gib()
+					continue
 				AI = crew
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)

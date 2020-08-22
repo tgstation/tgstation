@@ -199,12 +199,12 @@
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/M in occupants)
-		var/mob/living/occu = M
-		if(isAI(occu))
-			occu.gib() //No wreck, no AI to recover
+		var/mob/living/occupant = M
+		if(isAI(occupant))
+			occupant.gib() //No wreck, no AI to recover
 		else
-			occu.forceMove(loc)
-			occu.SetSleeping(destruction_sleep_duration)
+			occupant.forceMove(loc)
+			occupant.SetSleeping(destruction_sleep_duration)
 	if(LAZYLEN(equipment))
 		for(var/E in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/equip = E
