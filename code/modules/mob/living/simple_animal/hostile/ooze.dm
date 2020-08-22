@@ -254,6 +254,7 @@
 
 ///On owner death dump the current vored mob
 /datum/action/consume/proc/on_owner_death()
+	SIGNAL_HANDLER
 	stop_consuming()
 
 
