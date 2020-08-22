@@ -232,12 +232,13 @@
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
-	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOES, .proc/unequip_shoes)
+	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOECOVER, .proc/unequip_shoecover)
+	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, .proc/equip_shoecover)
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(ishuman(wielder))
 		// Monkeys get no bloody feet :(
-		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !wielder.shoes)
+		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !is_obscured())
 			wielder.remove_overlay(SHOES_LAYER)
 			wielder.overlays_standing[SHOES_LAYER] = bloody_feet
 			wielder.apply_overlay(SHOES_LAYER)
@@ -279,7 +280,12 @@
 
 	..()
 
-/datum/component/bloodysoles/feet/proc/unequip_shoes(datum/source)
+/datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source)
+	SIGNAL_HANDLER
+
+	update_icon()
+
+/datum/component/bloodysoles/feet/proc/equip_shoecover(datum/source)
 	SIGNAL_HANDLER
 
 	update_icon()
