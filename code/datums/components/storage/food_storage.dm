@@ -105,14 +105,17 @@
 	if(do_after(user, 10 SECONDS, target = parent))
 		remove_item(user)
 
-/** Removes the stored item, putting it in the user's hands, or on the ground, then updates the reference.
-  *
-  * Returns the result of put_in_hands - TRUE if placed in hands, FALSE if placed on the ground.
+/**
+  * Removes the stored item, putting it in user's hands or on the ground, then updates the reference.
   */
 /datum/component/food_storage/proc/remove_item(mob/user)
-	. = user.put_in_hands(stored_item)
+	if(user.put_in_hands(stored_item))
+		user.visible_message("<span class='warning'>[user.name] slowly pulls [stored_item.name] out of \the [parent].</span>", \
+							"<span class='warning'>You slowly pull [stored_item.name] out of \the [parent].</span>")
+	else
+		stored_item.visible_message("<span class='warning'>[stored_item.name] falls out of \the [parent].</span>")
+
 	update_stored_item()
-	return
 
 /** Checks for stored items when the food is eaten.
   *
@@ -149,11 +152,7 @@
 		update_stored_item() //make sure if the item was changed, the reference changes as well
 
 	if(!QDELETED(stored_item) && discovered)
-		if(remove_item(user)) //the moment when you slowly pull out whatever you just bit into in your food
-			user.visible_message("<span class='warning'>[target.name] slowly pulls [stored_item.name] out of \the [parent].</span>", \
-								"<span class='warning'>You slowly pull [stored_item.name] out of \the [parent].</span>")
-		else
-			stored_item.visible_message("<span class='warning'>[stored_item.name] falls out of \the [parent].</span>")
+		INVOKE_ASYNC(src, .proc/remove_item, user)
 
 /** Updates the reference of the stored item.
   *

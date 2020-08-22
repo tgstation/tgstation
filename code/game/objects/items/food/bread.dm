@@ -9,9 +9,6 @@
 /obj/item/food/bread/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
-
-/obj/item/food/bread/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/breadslice

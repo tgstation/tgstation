@@ -341,7 +341,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/reagent_containers/food/snacks/store/ComponentInitialize()
+/obj/item/reagent_containers/food/snacks/store/Initialize()
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
