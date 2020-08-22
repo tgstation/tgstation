@@ -37838,7 +37838,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bQa" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/effect/turf_decal/gas/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bQb" = (
@@ -39085,7 +39085,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bSX" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/effect/turf_decal/gas/plasma,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bSY" = (
@@ -40509,7 +40509,7 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bWf" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/gas/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bWg" = (
@@ -42425,14 +42425,14 @@
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "cbt" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/gas/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "cbu" = (
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "cbv" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/gas/oxygen,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "cbw" = (
@@ -42440,8 +42440,8 @@
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "cbx" = (
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/gas/air,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "cby" = (

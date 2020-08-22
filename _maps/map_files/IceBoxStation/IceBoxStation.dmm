@@ -40951,7 +40951,7 @@
 /turf/open/floor/plasteel/white/corner,
 /area/engine/atmos)
 "bUU" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/effect/turf_decal/gas/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bUV" = (
@@ -42342,7 +42342,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bYU" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/effect/turf_decal/gas/plasma,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bYV" = (
@@ -43480,7 +43480,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ccB" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/gas/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "ccC" = (
@@ -45707,14 +45707,14 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "clT" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/gas/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "clU" = (
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "clV" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/gas/oxygen,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "clW" = (
@@ -49170,8 +49170,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cBP" = (
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/gas/air,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "cBR" = (
