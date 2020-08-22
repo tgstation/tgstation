@@ -13,8 +13,8 @@
 	shuttlePortId = "station_custom"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_lavaland" = 1)
 	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
-	view_range = 10
+	view_range = 6
 	designate_time = 50
 	x_offset = -9
-	y_offset = -8
+	y_offset = 11
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
