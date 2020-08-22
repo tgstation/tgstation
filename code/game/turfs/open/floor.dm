@@ -149,6 +149,7 @@
 	break_tile()
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
+	message_admins(air.temperature)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
@@ -156,6 +157,7 @@
 	var/old_icon = icon_regular_floor
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
+	message_admins(air.temperature)
 	W.icon_regular_floor = old_icon
 	W.setDir(old_dir)
 	W.update_icon()

@@ -264,8 +264,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 	update_visuals()
 
-	if((!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) && !our_excited_group)
-		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
+//	if((!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) && !our_excited_group)
+	//	SSair.remove_from_active(src) //This will kill any connected excited group, be careful
 
 	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
 //////////////////////////SPACEWIND/////////////////////////////
@@ -450,7 +450,7 @@ It also meant that fires would never settle, as the superconductors would just s
 
 My current implementation is not built to support heat leaking through floors, as that is dumb, and would slow shit down a lot
 **/
-
+/*
 /turf/proc/disperse_directions()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(src, direction)
@@ -516,3 +516,4 @@ My current implementation is not built to support heat leaking through floors, a
 	return TRUE
 
 /turf/open/temperature_share_with_conductor(turf/open/sharer, turf/open/with)
+*/
