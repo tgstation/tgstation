@@ -962,7 +962,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
 
-/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
 	var/theme_name
@@ -1101,6 +1101,33 @@
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/choice_beacon/ingredient
+	name = "ingredient delivery beacon"
+	desc = "Summon a box of ingredients to help you get started cooking."
+	icon_state = "gangtool-white"
+
+/obj/item/choice_beacon/ingredient/generate_display_names()
+	var/static/list/ingredients
+	if(!ingredients)
+		ingredients = list()
+		var/list/templist = list(/obj/item/storage/box/ingredients/wildcard,
+							/obj/item/storage/box/ingredients/fiesta,
+							/obj/item/storage/box/ingredients/italian,
+							/obj/item/storage/box/ingredients/vegetarian,
+							/obj/item/storage/box/ingredients/american,
+							/obj/item/storage/box/ingredients/fruity,
+							/obj/item/storage/box/ingredients/sweets,
+							/obj/item/storage/box/ingredients/delights,
+							/obj/item/storage/box/ingredients/grains,
+							/obj/item/storage/box/ingredients/carnivore,
+							/obj/item/storage/box/ingredients/exotic
+							)
+		for(var/V in templist)
+			var/obj/item/storage/box/ingredients/A = V
+			ingredients[initial(A.theme_name)] = A
+	return ingredients
+
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
