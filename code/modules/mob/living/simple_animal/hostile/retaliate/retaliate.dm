@@ -34,7 +34,7 @@
 			var/obj/vehicle/sealed/mecha/M = A
 			if(LAZYLEN(M.occupants))
 				enemies |= M
-				enemies.Add(M.occupants)
+				enemies |= M.occupants
 
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
 		if(faction_check_mob(H) && !attack_same && !H.attack_same)

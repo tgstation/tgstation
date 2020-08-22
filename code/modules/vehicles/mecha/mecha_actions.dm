@@ -49,7 +49,7 @@
 
 	var/list/available_equipment = list()
 	for(var/e in chassis.equipment)
-		var/obj/item/mecha_parts/mecha_equipment/equipment = m
+		var/obj/item/mecha_parts/mecha_equipment/equipment = e
 		if(equipment.selectable)
 			available_equipment += equipment
 
