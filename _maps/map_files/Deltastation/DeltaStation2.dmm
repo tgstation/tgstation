@@ -22855,7 +22855,7 @@
 /area/crew_quarters/theatre)
 "aVi" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/food/baguette,
 /obj/item/toy/crayon/spraycan/mimecan{
 	charges = 5
 	},
@@ -93572,9 +93572,6 @@
 /area/maintenance/port)
 "dCa" = (
 /obj/structure/table/reinforced,
-/obj/item/radio/intercom{
-	pixel_y = -32
-	},
 /obj/item/assembly/igniter{
 	pixel_x = 6;
 	pixel_y = 6
@@ -111843,9 +111840,9 @@
 /obj/structure/closet/secure_closet/freezer/kitchen{
 	req_access = null
 	},
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,

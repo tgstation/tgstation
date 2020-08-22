@@ -297,6 +297,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE
+	base_icon_state = "defibpaddles"
 
 	var/revivecost = 1000
 	var/cooldown = FALSE
@@ -304,7 +305,6 @@
 	var/obj/item/defibrillator/defib
 	var/req_defib = TRUE
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
-	var/base_icon_state = "defibpaddles"
 	var/wielded = FALSE // track wielded status on item
 
 /obj/item/shockpaddles/ComponentInitialize()
