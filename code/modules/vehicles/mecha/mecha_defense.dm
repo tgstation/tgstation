@@ -370,7 +370,8 @@
 		for(var/crew in occupants)
 			if(isAI(crew))
 				if(AI)
-					crew.gib()
+					var/mob/living/silicon/ai/unlucky_ais = crew
+					unlucky_ais.gib()
 					continue
 				AI = crew
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
