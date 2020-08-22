@@ -277,7 +277,7 @@
 		if(RCD_AIRLOCK)
 			for(var/obj/machinery/door/D in src)
 				if(!D.sub_door)
-					to_chat(user, "<span class='notice'>There is another door here!</span>"))
+					to_chat(user, "<span class='notice'>There is another door here!</span>")
 					return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, "<span class='notice'>You build a windoor.</span>")
