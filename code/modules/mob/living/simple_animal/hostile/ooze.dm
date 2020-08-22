@@ -65,11 +65,11 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(R.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
 		if(istype(reagent, /datum/reagent/consumable))
-			var/datum/reagent/consumable/consumable = R
+			var/datum/reagent/consumable/consumable = reagent
 			nutrition_change += consumption_amount * consumable.nutriment_factor
-		reagents.remove_reagent(REAGENTS_EFFECT_MULTIPLIER.type, consumption_amount)
+		reagents.remove_reagent(reagent.type, consumption_amount)
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
@@ -91,7 +91,7 @@
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/eaten_atom)
 	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
-	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [A].</span>")
+	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(eaten_atom)
 
@@ -391,7 +391,7 @@
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
-/obj/item/Destroy()
+/obj/item/mending_globule/Destroy()
 	. = ..()
 	bodypart = null
 

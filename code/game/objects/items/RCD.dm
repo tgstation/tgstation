@@ -1014,7 +1014,7 @@ RLD
 	icon_state = "plumberer_sci"
 	has_ammobar = TRUE
 
-/obj/item/construction/plumbing/research/proc/set_plumbing_designs()
+/obj/item/construction/plumbing/research/set_plumbing_designs()
 	plumbing_design_types = list(
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
