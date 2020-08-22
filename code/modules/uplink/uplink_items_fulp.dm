@@ -41,7 +41,7 @@
 			describing the secrets of saber fighting, force lightning and force push."
 	item = /obj/item/storage/box/syndicate/bundle_sith
 	cost = 19
-	restricted_roles = list("Chaplain", "Curator")
+	restricted_roles = list("Chaplain", "Curator", "Tiger Co. Infiltrator")
 
 /datum/uplink_item/role_restricted/laser_tag_kit_red
 	name = "X-TREME Laser Tag Kit (RADICAL RED)"
@@ -90,3 +90,100 @@
 			This is a cheap knockoff Space-China budget version that holds 2 charges, and regains 1 charge every 30 seconds."
 	item = /obj/item/card/emag/budget
 	cost = 6
+
+/datum/uplink_item/race_restricted/diginoslip
+	name = "No-Slip Digitigrade Shoes"
+	desc = "Simple as that - Robust shoes for lizardmen aiming to control the galaxy. \
+		Now nothing can stop you, our friend. \
+		No longer the soap will ruin your villainous plans. \
+		No longer the clown will HONK you with banana by-products!"
+	cost = 2
+	item = /obj/item/clothing/shoes/digicombat/noslip
+	restricted_species = list("lizard")
+
+/obj/item/clothing/shoes/digicombat/noslip
+	desc = "Robust combat boots especially for lizardmen. Perfect for walking over piled human corpses. This pair of shoes is specifically designed to prevent slipping on wet surfaces."
+	clothing_flags = NOSLIP
+
+////////////// INFILTRATION GAMEMODE ITEMS //////////////
+#define INFILTRATION_FACTIONS list("Syndicate Infiltrator", "Cybersun Infiltrator", "Gorlex Infiltrator", "Tiger Co. Infiltrator", "MI13 Infiltrator")
+//This define exists for midround spawned infiltrators and dynamic mode.
+
+/datum/uplink_item/role_restricted/cybersunsuit
+	name = "Cybersun Hardsuit"
+	desc = "A long forgotten hardsuit made by Cybersun industries. \
+			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
+			to survive assault from a toolbox or shotgun. \
+			Not to mention, it doesn't slow you down and contains an integrated jetpack that runs on standard tanks."
+	item = /obj/item/clothing/suit/space/hardsuit/cybersun
+	cost = 10
+	cant_discount = FALSE
+	restricted_roles = list("Cybersun Infiltrator")
+
+/datum/uplink_item/role_restricted/gorlex
+	cant_discount = FALSE
+	restricted_roles = list("Gorlex Infiltrator")
+
+/datum/uplink_item/role_restricted/gorlex/glovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and electrically insulated, however unlike the regular Combat Gloves these use nanotechnology \
+			to teach the martial art of krav maga to the wearer."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 5 //Same as nuke ops.
+
+/datum/uplink_item/role_restricted/gorlex/flukeop
+	name = "Nuclear Operative Bundle"
+	desc = "A starting kit for wannabe nuclear operatives. \
+	Comes with a tactical duffelbag filled with: \
+	blood-red hardsuit, micro-bomb implant, night vision googles, bowman headset, combat gloves and Makarov pistol."
+	item = /obj/item/storage/backpack/duffelbag/syndie/flukeop
+	cost = 15 //Would cost 18
+	cant_discount = TRUE
+
+/obj/item/storage/backpack/duffelbag/syndie/flukeop/PopulateContents()
+	new /obj/item/clothing/suit/space/hardsuit/syndi(src) //8 TC
+	new /obj/item/storage/box/syndie_kit/imp_microbomb(src) //2 TC
+	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/radio/headset/syndicate/alt(src)
+	new /obj/item/clothing/gloves/combat(src) //1 TC?
+	new /obj/item/gun/ballistic/automatic/pistol(src) //7 TC
+
+/datum/uplink_item/role_restricted/tiger //That's where crazy stuff begins
+	cant_discount = FALSE
+	restricted_roles = list("Tiger Co. Infiltrator")
+
+/datum/uplink_item/role_restricted/tiger/macrobomb
+	name = "Macrobomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			Upon death, releases a massive explosion that will wipe out everything nearby."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
+	cost = 11 //Yes, nukies get it for 20, but let our dude infiltrate the station and finish his objectives first.
+
+/datum/uplink_item/role_restricted/tiger/manhacks
+	name = "Viscerator Delivery Grenade"
+	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred \
+			any non-operatives in the area."
+	item = /obj/item/grenade/spawnergrenade/manhacks
+	cost = 4
+
+/datum/uplink_item/race_restricted/plasmemesuit
+	name = "Surplus Envirosuit"
+	desc = "We heard that plasmamen don't have their own cool stations filled with plasma on Nanotrasen territory. \
+		So we decided to let you get one set from our storage, just in case you don't want to use your space suit 24/7. \
+		This box is designed to store any kind of EVA equipment in it, as long as it is not too big.\
+		Comes with standard plasmaman uniform, helmet and special lightweight version of plasmamen' EVA suit."
+	cost = 4
+	item = /obj/item/storage/box/syndie_kit/plasmeme
+	restricted_species = list("plasmaman")
+	restricted_roles = INFILTRATION_FACTIONS
+
+/datum/uplink_item/stealthy_tools/adv_mulligan
+	name = "Advanced Mulligan"
+	desc = "An advanced form of toxin created in one of our laboratories using \
+	technology created with help of changeling operatives. \
+	This item allows you to change your appearance, race and DNA to completely different one. \
+	To use it - stab another person with it and then inject yourself, you will transform into the person you stabbed earlier. \n \
+	Be aware that it can't be used more than once on yourself."
+	item = /obj/item/adv_mulligan
+	cost = 7
+	restricted_roles = INFILTRATION_FACTIONS
