@@ -113,7 +113,6 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/spawn_anomaly(list/spawners)
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
-		return
 	var/obj/spawner = pick(spawners)
 	var/obj/effect/anomaly/flux/A = new(spawner.loc)
 	A.is_from_zk_event = TRUE
@@ -122,7 +121,6 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
-		return
 
 	var/pick_portal = pickweight(wave_type)
 	var/obj/spawner = pick(spawners)
