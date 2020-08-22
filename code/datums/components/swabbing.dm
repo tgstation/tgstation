@@ -121,5 +121,4 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Handle any special icon cases on the item itself
 /datum/component/swabbing/proc/handle_icon(datum/source)
-	if(UpdateIcons)
-		UpdateIcons.Invoke(swabbed_items)
+	UpdateIcons?.Invoke(swabbed_items)
