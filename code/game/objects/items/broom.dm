@@ -37,6 +37,8 @@
   * * user - The user which is wielding the broom
   */
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
 
@@ -48,6 +50,8 @@
   * * user - The user which is unwielding the broom
   */
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
@@ -65,6 +69,8 @@
   * * moving - Boolean argument declaring if the sweep is from generated from movement or not
   */
 /obj/item/pushbroom/proc/sweep(mob/user, atom/A, moving = TRUE)
+	SIGNAL_HANDLER
+
 	var/turf/target = moving ? user.loc : (isturf(A) ? A : A.loc)
 	if (!isturf(target))
 		return

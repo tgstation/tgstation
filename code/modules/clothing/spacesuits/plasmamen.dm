@@ -145,6 +145,13 @@
 	icon_state = "warden_envirohelm"
 	inhand_icon_state = "warden_envirohelm"
 
+/obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
+	name = "head of security's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Head of Security. A pair of gold stripes are added to differentiate them from other members of security."
+	icon_state = "hos_envirohelm"
+	inhand_icon_state = "hos_envirohelm"
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75, "wound" = 10)
+
 /obj/item/clothing/head/helmet/space/plasmaman/prisoner
 	name = "prisoner's plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet for prisoners."
@@ -163,12 +170,6 @@
 	icon_state = "paramedic_envirohelm"
 	inhand_icon_state = "paramedic_envirohelm"
 
-/obj/item/clothing/head/helmet/space/plasmaman/genetics
-	name = "geneticist's plasma envirosuit helmet"
-	desc = "A plasmaman envirohelmet designed for geneticists."
-	icon_state = "geneticist_envirohelm"
-	inhand_icon_state = "geneticist_envirohelm"
-
 /obj/item/clothing/head/helmet/space/plasmaman/viro
 	name = "virology plasma envirosuit helmet"
 	desc = "The helmet worn by the safest people on the station, those who are completely immune to the monstrosities they create."
@@ -180,6 +181,12 @@
 	desc = "A plasmaman envirosuit designed for chemists, two orange stripes going down it's face."
 	icon_state = "chemist_envirohelm"
 	inhand_icon_state = "chemist_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
+	name = "chief medical officer's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Chief Medical Officer. A light grey design is applied to differentiate them from other medical staff."
+	icon_state = "cmo_envirohelm"
+	inhand_icon_state = "cmo_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/science
 	name = "science plasma envirosuit helmet"
@@ -193,6 +200,18 @@
 	icon_state = "roboticist_envirohelm"
 	inhand_icon_state = "roboticist_envirohelm"
 
+/obj/item/clothing/head/helmet/space/plasmaman/genetics
+	name = "geneticist's plasma envirosuit helmet"
+	desc = "A plasmaman envirohelmet designed for geneticists."
+	icon_state = "geneticist_envirohelm"
+	inhand_icon_state = "geneticist_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/research_director
+	name = "research director's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Research Director. A light brown design is applied to differentiate them from other scientists."
+	icon_state = "rd_envirohelm"
+	inhand_icon_state = "rd_envirohelm"
+
 /obj/item/clothing/head/helmet/space/plasmaman/engineering
 	name = "engineering plasma envirosuit helmet"
 	desc = "A space-worthy helmet specially designed for engineer plasmamen, the usual purple stripes being replaced by engineering's orange."
@@ -205,6 +224,14 @@
 	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by engineering's blue."
 	icon_state = "atmos_envirohelm"
 	inhand_icon_state = "atmos_envirohelm"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 100, "acid" = 75)
+
+/obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
+	name = "chief engineer's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Chief Engineer. An expensive, element resistant white and green carapace design is applied to protect the plasmaman inside."
+	icon_state = "ce_envirohelm"
+	inhand_icon_state = "ce_envirohelm"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 10, "fire" = 100, "acid" = 75)
 
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
 	name = "cargo plasma envirosuit helmet"
@@ -266,3 +293,34 @@
 	inhand_icon_state = "clown_envirohelm"
 	visor_icon = "clown_envisor"
 	smile_state = "clown_smile"
+
+/obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
+	name = "head of personnel's envirosuit helmet"
+	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
+	icon_state = "hop_envirohelm"
+	inhand_icon_state = "hop_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/captain
+	name = "captain's plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Captain. Embarrassingly enough, it looks way too much like the Head of Personnel's design save for the gold stripes. I mean, come on. Gold stripes can fix anything."
+	icon_state = "captain_envirohelm"
+	inhand_icon_state = "captain_envirohelm"
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75, "wound" = 10)
+
+/obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
+	name = "CentCom commander plasma envirosuit helmet"
+	desc = "A special containment helmet designed for the Higher Central Command Staff. Not many of these exist, as CentCom does not usually employ plasmamen to higher staff positions due to their complications."
+	icon_state = "commander_envirohelm"
+	inhand_icon_state = "commander_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/centcom_official
+	name = "CentCom official plasma envirosuit helmet"
+	desc = "A special containment helmet designed for CentCom Staff. They sure do love their green."
+	icon_state = "official_envirohelm"
+	inhand_icon_state = "official_envirohelm"
+
+/obj/item/clothing/head/helmet/space/plasmaman/centcom_intern
+	name = "CentCom intern plasma envirosuit helmet"
+	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
+	icon_state = "intern_envirohelm"
+	inhand_icon_state = "intern_envirohelm"

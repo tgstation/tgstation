@@ -111,7 +111,7 @@
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		if(isobj(target))
-			SSexplosions.medobj += target
+			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
 

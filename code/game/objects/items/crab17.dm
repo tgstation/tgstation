@@ -86,6 +86,7 @@
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	SSeconomy.market_crashing = TRUE
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -156,6 +157,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, 0,0,1, flame_range = 2)
+	SSeconomy.market_crashing = FALSE
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
