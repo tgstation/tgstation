@@ -1,8 +1,7 @@
-#define MAX_TABLE_MESSES 12 // how many things can we knock off a table at once?
+/// how many things can we knock off a table at once by diving into it?
+#define MAX_TABLE_MESSES 12
 
 /**
-  *#tackle.dm
-  *
   * For when you want to throw a person at something and have fun stuff happen
   *
   * This component is made for carbon mobs (really, humans), and allows its parent to throw themselves and perform tackles. This is done by enabling throw mode, then clicking on your
@@ -10,7 +9,7 @@
   *	  roll to see how badly you just messed yourself up. If, along your journey, you hit a table, you'll slam onto it and send up to MAX_TABLE_MESSES (8) /obj/items on the table flying,
   *	  and take a bit of extra damage and stun for each thing launched.
   *
-  * There are 2 """skill rolls""" involved here, which are handled and explained in sack() and rollTackle() (for roll 1, carbons), and splat() (for roll 2, walls and solid objects)
+  * There are 2 separate """skill rolls""" involved here, which are handled and explained in [rollTackle()][/datum/component/tackler/proc/rollTackle] (for roll 1, carbons), and [splat()][/datum/component/tackler/proc/splat] (for roll 2, walls and solid objects)
 */
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -108,7 +107,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
-	var/leap_word = isfelinid(user) ? "pounce" : "leap" ///If cat, "pounce" instead of "leap".
+	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, A, 7))
 		user.visible_message("<span class='warning'>[user] [leap_word]s at [A]!</span>", "<span class='danger'>You [leap_word] at [A]!</span>")
 	else
@@ -124,8 +123,6 @@
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /**
- * sack()
- *
  * sack() is called when you actually smack into something, assuming we're mid-tackle. First it deals with smacking into non-carbons, in two cases:
  * * If it's a non-carbon mob, we don't care, get out of here and do normal thrown-into-mob stuff
  * * Else, if it's something dense (walls, machinery, structures, most things other than the floor), go to [/datum/component/tackler/proc/splat] and get ready for some high grade shit
@@ -158,7 +155,7 @@
 	var/mob/living/carbon/target = hit
 	var/mob/living/carbon/human/T = target
 	var/mob/living/carbon/human/S = user
-	var/tackle_word = isfelinid(user) ? "pounce" : "tackle" ///If cat, "pounce" instead of "tackle".
+	var/tackle_word = isfelinid(user) ? "pounce" : "tackle" //If cat, "pounce" instead of "tackle".
 
 	var/roll = rollTackle(target)
 	tackling = FALSE
@@ -232,8 +229,6 @@
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
 /**
-  * rollTackle()
-  *
   * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
   *
   * The base roll is between (-3, 3), with negative numbers favoring the target, and positive numbers favoring the tackler. The target and the tackler are both assessed for
@@ -318,16 +313,14 @@
 
 
 /**
-  * splat()
-  *
   * This is where we handle diving into dense atoms, generally with effects ranging from bad to REALLY bad. This works as a percentile roll that is modified in two steps as detailed below. The higher
   *	the roll, the more severe the result.
   *
-  * Mod 1: Speed
+  * Mod 1: Speed-
   *	* Base tackle speed is 1, which is what normal gripper gloves use. For other sources with higher speed tackles, like dolphin and ESPECIALLY rocket gloves, we obey Newton's laws and hit things harder.
   *	* For every unit of speed above 1, move the lower bound of the roll up by 15. Unlike Mod 2, this only serves to raise the lower bound, so it can't be directly counteracted by anything you can control.
   *
-  * Mod 2: Misc
+  * Mod 2: Misc-
   *	-Flat modifiers, these take whatever you rolled and add/subtract to it, with the end result capped between the minimum from Mod 1 and 100. Note that since we can't roll higher than 100 to start with,
   *		wearing a helmet should be enough to remove any chance of permanently paralyzing yourself and dramatically lessen knocking yourself unconscious, even with rocket gloves. Will expand on maybe
   *	* Wearing a helmet: -6
@@ -335,6 +328,7 @@
   *	* Clumsy: +6
   *
   * Effects: Below are the outcomes based off your roll, in order of increasing severity
+  *
   *	* 1-67: Knocked down for a few seconds and a bit of brute and stamina damage
   *	* 68-85: Knocked silly, gain some confusion as well as the above
   *	* 86-92: Cranial trauma, get a concussion and more confusion, plus more damage
@@ -509,7 +503,7 @@
 			if(messes.len >= MAX_TABLE_MESSES)
 				break
 
-	/// for telling HOW big of a mess we just made
+	// for telling HOW big of a mess we just made
 	var/HOW_big_of_a_miss_did_we_just_make = ""
 	if(messes.len)
 		if(messes.len < MAX_TABLE_MESSES / 4)
