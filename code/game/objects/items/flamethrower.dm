@@ -215,10 +215,7 @@
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
 	if(air_transfer.gases[/datum/gas/plasma])
-		if(air_transfer.gases[/datum/gas/plasma])
-			air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
-	else
-		air_transfer.temperature += 15000
+		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
