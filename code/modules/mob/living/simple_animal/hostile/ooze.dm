@@ -209,9 +209,6 @@
 	if(!.)
 		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	if(!ooze.pulling)
-		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
-		return FALSE
 	if(!isliving(ooze.pulling))
 		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
 		return FALSE
