@@ -5,6 +5,10 @@
 	///Desc, shown by science goggles
 	var/desc = "White fluid that tastes like salty coins and milk"
 
+///Returns a short description of the cell line
+/datum/micro_organism/proc/GetDetails(show_growth)
+	return "<span class='notice'>[desc]</span>"
+
 ///A "mob" cell. Can grow into a mob in a growing vat.
 /datum/micro_organism/cell_line
 	///Our growth so far, needs to get up to 100
@@ -21,11 +25,6 @@
 	var/growth_rate = 4
 	///Resulting atoms from growing this cell line. List is assoc atom type || amount
 	var/list/resulting_atoms = list()
-
-
-///Returns a short description of the cell line
-/datum/micro_organism/proc/GetDetails(show_needs)
-	return "<span class='notice'>[desc]</span>\n"
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
@@ -104,9 +103,9 @@
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
-///Overriden to show more info like needs, supplementary and supressive reagents
+///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/GetDetails(show_needs)
-	. = ..()
+	. += "<span class='notice'>[desc] - growth progress: [growth]%</span>\n"
 	if(show_needs)
 		. += ReturnReagentText("It requires:", required_reagents)
 		. += ReturnReagentText("It likes:", supplementary_reagents)

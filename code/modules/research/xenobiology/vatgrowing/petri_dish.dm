@@ -17,7 +17,9 @@
 	if(!sample)
 		return
 	. += "<span class='notice'>You can see the following micro-organisms:</span>"
-	. += sample.GetAllDetails(user.research_scanner) //Get just the names nicely parsed.
+	for(var/i in sample.micro_organisms)
+		var/datum/micro_organism/MO = i
+		. += MO.GetDetails()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()

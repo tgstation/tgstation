@@ -53,8 +53,12 @@
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine(mob/user)
 	. = ..()
-	if(biological_sample)
-		. += "<span class='notice'>It seems to have a sample in it!</span>"
+	if(!biological_sample)
+		return
+	. += "<span class='notice'>It seems to have a sample in it!</span>"
+	for(var/i in biological_sample.micro_organisms)
+		var/datum/micro_organism/MO = i
+		. += MO.GetDetails(user.research_scanner)
 
 /obj/machinery/plumbing/growing_vat/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	. = ..()

@@ -47,7 +47,9 @@ This component is used in vat growing to swab for microbiological samples which 
 		examine_list += "<span class='notice'>You can see the following micro-organisms:</span>\n"
 		for(var/i in swabbed_items)
 			var/datum/biological_sample/samp = i
-			examine_list += samp.GetAllDetails(user.research_scanner) //Get just the names nicely parsed.
+			for(var/organism in samp.micro_organisms)
+				var/datum/micro_organism/MO = organism
+				examine_list += MO.GetDetails()
 
 ///Ran when you attack an object, tries to get a swab of the object. if a swabbable surface is found it will run behavior and hopefully
 /datum/component/swabbing/proc/try_to_swab(datum/source, atom/target, mob/user, params)

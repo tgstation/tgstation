@@ -7,14 +7,6 @@
 	///Picked from a specific group of colors, limited to a specific group.
 	var/sample_color = COLOR_SAMPLE_YELLOW
 
-///Gets info from each of it's micro_organisms.
-/datum/biological_sample/proc/GetAllDetails(show_needs)
-	var/list/info = list()
-	for(var/i in micro_organisms)
-		var/datum/micro_organism/MO = i
-		info += MO.GetDetails(show_needs)
-	return info.Join()
-
 ///Generate a sample from a specific weighted list, and a specific amount of cell line with a chance for a virus
 /datum/biological_sample/proc/GenerateSample(cell_line_define, virus_define, cell_line_amount, virus_chance)
 	sample_color = pick(GLOB.xeno_sample_colors)
