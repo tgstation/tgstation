@@ -1054,7 +1054,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
-	limited_stock = 2
 
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -2034,5 +2033,4 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
-
 
