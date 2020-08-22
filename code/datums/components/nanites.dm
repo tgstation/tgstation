@@ -4,7 +4,7 @@
 	var/mob/living/host_mob
 	var/nanite_volume = 100		//amount of nanites in the system, used as fuel for nanite programs
 	var/max_nanites = 500		//maximum amount of nanites in the system
-	var/regen_rate = 0.5		//nanites generated per second
+	var/regen_rate = 0.6		//nanites generated per second
 	var/safety_threshold = 50	//how low nanites will get before they stop processing/triggering
 	var/cloud_id = 0 			//0 if not connected to the cloud, 1-100 to set a determined cloud backup to draw from
 	var/cloud_active = TRUE		//if false, won't sync to the cloud
@@ -15,7 +15,7 @@
 	var/list/datum/nanite_program/protocol/protocols = list() ///Separate list of protocol programs, to avoid looping through the whole programs list when cheking for conflicts
 	var/start_time = 0 ///Timestamp to when the nanites were first inserted in the host
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
-	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
+	var/diagnostics = FALSE //if TRUE, displays program list when scanned by nanite scanners
 
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
@@ -360,7 +360,7 @@
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Program List:</span>")
 		if(!diagnostics)
-			to_chat(user, "<span class='alert'>Diagnostics Disabled</span>")
+			to_chat(user, "<span class='alert'>Diagnostics Unavailable</span>")
 		else
 			for(var/X in programs)
 				var/datum/nanite_program/NP = X

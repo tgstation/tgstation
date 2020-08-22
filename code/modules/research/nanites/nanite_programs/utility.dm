@@ -89,20 +89,19 @@
 	. = ..()
 	nanites.stealth = FALSE
 
-/datum/nanite_program/reduced_diagnostics
-	name = "Reduced Diagnostics"
-	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
-	Doing so saves some power, slightly increasing their replication speed."
+/datum/nanite_program/enhanced_diagnostics
+	name = "Enhanced Diagnostics"
+	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners."
 	rogue_types = list(/datum/nanite_program/toxic)
-	use_rate = -0.1
+	use_rate = 0.1
 
-/datum/nanite_program/reduced_diagnostics/enable_passive_effect()
-	. = ..()
-	nanites.diagnostics = FALSE
-
-/datum/nanite_program/reduced_diagnostics/disable_passive_effect()
+/datum/nanite_program/enhanced_diagnostics/enable_passive_effect()
 	. = ..()
 	nanites.diagnostics = TRUE
+
+/datum/nanite_program/enhanced_diagnostics/disable_passive_effect()
+	. = ..()
+	nanites.diagnostics = FALSE
 
 /datum/nanite_program/relay
 	name = "Relay"

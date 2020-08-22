@@ -67,12 +67,11 @@
 	program_type = /datum/nanite_program/stealth
 	category = list("Utility Nanites")
 
-/datum/design/nanites/reduced_diagnostics
-	name = "Reduced Diagnostics"
-	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
-	Doing so saves some power, slightly increasing their replication speed."
-	id = "red_diag_nanites"
-	program_type = /datum/nanite_program/reduced_diagnostics
+/datum/design/nanites/enhanced_diagnostics
+	name = "Enhanced Diagnostics"
+	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners."
+	id = "enh_diag_nanites"
+	program_type = /datum/nanite_program/enhanced_diagnostics
 	category = list("Utility Nanites")
 
 /datum/design/nanites/access
