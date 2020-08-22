@@ -238,7 +238,7 @@
 			return
 		SSshuttle.emergency.setTimer(timer*10)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer/10)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
