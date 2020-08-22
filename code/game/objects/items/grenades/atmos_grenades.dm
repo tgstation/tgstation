@@ -30,8 +30,8 @@
 	ex_flame = 2
 
 /obj/item/grenade/gas_crystal/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T) //Inbuilt admin procs already handle null users
+	var/turf/turf_loc = get_turf(src)
+	log_grenade(user, turf_loc) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)
@@ -49,33 +49,33 @@
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-	for(var/turf/T in view(freeze_range,loc))
-		if(isopenturf(T))
-			var/turf/open/F = T
-			if(F.air.temperature > 260 && F.air.temperature < 370)
-				F.atmos_spawn_air("Nitrogen = 100; TEMP = 273")
-			if(F.air.temperature > 370)
-				F.atmos_spawn_air("Nitrogen = 250; TEMP = 30")
-				F.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
-			if(F.air.gases[/datum/gas/plasma])
-				F.air.gases[/datum/gas/plasma][MOLES] -= F.air.gases[/datum/gas/plasma][MOLES] * 0.5
-			F.air.gases[/datum/gas/nitrogen][MOLES] += 50
-			F.air_update_turf()
-			for(var/mob/living/carbon/L in T)
-				L.adjustStaminaLoss(stamina_damage)
-				L.adjust_bodytemperature(-150)
+	for(var/turf/turf_loc in view(freeze_range,loc))
+		if(isopenturf(turf_loc))
+			var/turf/open/floor_loc = turf_loc
+			if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
+				floor_loc.atmos_spawn_air("Nitrogen = 100; TEMP = 273")
+			if(floor_loc.air.temperature > 370)
+				floor_loc.atmos_spawn_air("Nitrogen = 250; TEMP = 30")
+				floor_loc.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
+			if(floor_loc.air.gases[/datum/gas/plasma])
+				floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.5
+			floor_loc.air.gases[/datum/gas/nitrogen][MOLES] += 50
+			floor_loc.air_update_turf()
+			for(var/mob/living/carbon/live_mob in turf_loc)
+				live_mob.adjustStaminaLoss(stamina_damage)
+				live_mob.adjust_bodytemperature(-150)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/roinneil_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-	for(var/turf/T in view(refill_range,loc))
-		if(isopenturf(T))
-			var/turf/open/F = T
-			F.air.gases[/datum/gas/nitrogen][MOLES] += 400
-			F.air.gases[/datum/gas/oxygen][MOLES] += 100
-			F.air_update_turf()
+	for(var/turf/turf_loc in view(refill_range,loc))
+		if(isopenturf(turf_loc))
+			var/turf/open/floor_loc = turf_loc
+			floor_loc.air.gases[/datum/gas/nitrogen][MOLES] += 400
+			floor_loc.air.gases[/datum/gas/oxygen][MOLES] += 100
+			floor_loc.air_update_turf()
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/cymar_crystal/prime(mob/living/lanced_by)

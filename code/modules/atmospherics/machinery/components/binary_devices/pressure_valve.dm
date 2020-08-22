@@ -115,7 +115,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/atmosinit()
-	..()
+	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 
