@@ -14,13 +14,18 @@
 	required_organs = list(/obj/item/organ/liver)
 	bypasses_immunity = TRUE
 
+
 /datum/disease/parasite/stage_act()
 	. = ..()
-	var/mob/living/carbon/C = affected_mob
-	var/obj/item/organ/liver/L = C.getorgan(/obj/item/organ/liver)
-	if(!L)
-		src.cure()
-		C.visible_message("<span class='notice'><B>[C]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B></span>")
+	if(!.)
+		return
+
+	var/obj/item/organ/liver/affected_liver = affected_mob.getorgan(/obj/item/organ/liver)
+	if(!affected_liver)
+		affected_mob.visible_message("<span class='notice'><B>[affected_mob]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B></span>")
+		cure()
+		return FALSE
+
 	switch(stage)
 		if(1)
 			if(prob(5))
@@ -42,9 +47,9 @@
 						to_chat(affected_mob, "<span class='warning'>You feel like your body's shedding weight rapidly!</span>")
 					affected_mob.adjust_nutrition(-12)
 				else
-					var/turf/T = get_turf(C)
 					to_chat(affected_mob, "<span class='warning'>You feel much, MUCH lighter!</span>")
 					affected_mob.vomit(20, TRUE)
-					L.Remove(C)
-					L.forceMove(T)
-					src.cure()
+					affected_liver.Remove(affected_mob)
+					affected_liver.forceMove(get_turf(affected_mob))
+					cure()
+					return FALSE

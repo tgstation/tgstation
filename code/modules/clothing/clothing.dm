@@ -358,8 +358,8 @@
 			to_chat(M, "<span class='warning'>[src] start[p_s()] to fall apart!</span>")
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
-/obj/item/clothing/proc/update_clothes_damaged_state()
-	return
+/obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
+	damaged_clothes = damaged_state
 
 /obj/item/clothing/update_overlays()
 	. = ..()
@@ -458,6 +458,8 @@ BLIND     // can't see anything
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)
+	SIGNAL_HANDLER
+
 	if(!istype(L))
 		return
 	if(prob(0.2))

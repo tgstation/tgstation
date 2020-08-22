@@ -136,22 +136,23 @@
 	unit_name = "rapid pipe dispenser"
 	export_types = list(/obj/item/pipe_dispenser)
 
-/datum/export/singulo //failsafe in case someone decides to ship a live singularity to CentCom without the corresponding bounty
-	cost = 1
-	unit_name = "singularity"
-	export_types = list(/obj/singularity)
-	include_subtypes = FALSE
+//artisanal exports for the mom and pops
+/datum/export/soap
+	cost = 75
+	unit_name = "soap"
+	export_types = list(/obj/item/soap)
 
-/datum/export/singulo/total_printout(datum/export_report/ex, notes = TRUE)
-	. = ..()
-	if(. && notes)
-		. += " ERROR: Invalid object detected."
+/datum/export/soap/homemade
+	cost = 30
+	unit_name = "artisanal soap"
+	export_types = list(/obj/item/soap/homemade)
 
-/datum/export/singulo/tesla //see above
-	unit_name = "energy ball"
-	export_types = list(/obj/singularity/energy_ball)
+/datum/export/soap/omega
+	cost = 7000
+	unit_name = "omega soap"
+	export_types = list(/obj/item/soap/omega)
 
-/datum/export/singulo/tesla/total_printout(datum/export_report/ex, notes = TRUE)
-	. = ..()
-	if(. && notes)
-		. += " ERROR: Unscheduled energy ball delivery detected."
+/datum/export/candle
+	cost = 25
+	unit_name = "candle"
+	export_types = list(/obj/item/candle)

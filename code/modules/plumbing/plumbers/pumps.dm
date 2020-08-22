@@ -9,9 +9,6 @@
 	idle_power_usage = 10
 	active_power_usage = 1000
 
-	rcd_cost = 30
-	rcd_delay = 40
-
 	///units we pump per process (2 seconds)
 	var/pump_power = 2
 	///set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try

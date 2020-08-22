@@ -19,7 +19,6 @@
 	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
-	opacity = FALSE //Ripley has a window
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment
@@ -174,7 +173,7 @@
 	output += "</div>"
 	return output
 
-/obj/mecha/working/ripley/relay_container_resist(mob/living/user, obj/O)
+/obj/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
 	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
 	if(do_after(user, 300, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
