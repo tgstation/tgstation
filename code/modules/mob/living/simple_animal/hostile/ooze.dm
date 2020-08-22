@@ -330,7 +330,8 @@
 		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/globules/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/ooze) || ranged_ability_user.stat)
 		remove_ranged_ability()
