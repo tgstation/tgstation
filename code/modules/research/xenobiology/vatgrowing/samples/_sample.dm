@@ -1,11 +1,11 @@
 ///This datum is a simple holder for the micro_organisms in a sample.
 /datum/biological_sample
-	///List of all micro_organisms in the sample
+	///List of all micro_organisms in the sample. These are instantiated
 	var/list/micro_organisms = list()
 	///Prevents someone from stacking too many layers onto a swabber
 	var/sample_layers = 1
 	///Picked from a specific group of colors, limited to a specific group.
-	var/sample_color = SAMPLE_YELLOW
+	var/sample_color = COLOR_SAMPLE_YELLOW
 
 ///Gets info from each of it's micro_organisms.
 /datum/biological_sample/proc/GetAllDetails(show_needs)

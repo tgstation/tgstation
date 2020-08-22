@@ -930,7 +930,7 @@ RLD
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
-	plumbing_design_types  = GLOB.plumbing_constructables_default
+	set_plumbing_designs()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
@@ -949,6 +949,26 @@ RLD
 	blueprint = name_to_type[choice]
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
+
+///Set the list of designs this plumbing rcd can make
+/obj/item/construction/plumbing/proc/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/bottler = 50,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/fermenter = 30,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/pill_press = 20,
+	/obj/machinery/plumbing/liquid_pump = 35,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/sender = 20
+)
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
@@ -994,9 +1014,20 @@ RLD
 	icon_state = "plumberer_sci"
 	has_ammobar = TRUE
 
-/obj/item/construction/plumbing/Initialize(mapload)
-	. = ..()
-	plumbing_design_types  = GLOB.plumbing_constructables_research
+/obj/item/construction/plumbing/research/proc/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/growing_vat = 20
+)
+
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

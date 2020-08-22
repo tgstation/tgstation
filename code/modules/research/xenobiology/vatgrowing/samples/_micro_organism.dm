@@ -9,17 +9,17 @@
 /datum/micro_organism/cell_line
 	///Our growth so far, needs to get up to 100
 	var/growth = 0
-	///All the reagents required for letting this organism grow into whatever it should become
+	///All the reagent types required for letting this organism grow into whatever it should become
 	var/list/required_reagents
-	///Reagents that further speed up growth, but aren't needed.  Assoc list of reagent datum || bonus growth per tick
+	///Reagent types that further speed up growth, but aren't needed.  Assoc list of reagent datum type || bonus growth per tick
 	var/list/supplementary_reagents
-	///Reagents that surpress growth. Assoc list of reagent datum || lost growth per tick
+	///Reagent types that surpress growth. Assoc list of reagent datum type || lost growth per tick
 	var/list/suppressive_reagents
 	///This var modifies how much this micro_organism is affected by viruses. Higher is more slowdown
 	var/virus_suspectibility = 1
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
 	var/growth_rate = 4
-	///Resulting atoms from growing this cell line. List is assoc atom || amount
+	///Resulting atoms from growing this cell line. List is assoc atom type || amount
 	var/list/resulting_atoms = list()
 
 

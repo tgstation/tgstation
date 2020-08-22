@@ -86,10 +86,10 @@ at the cost of risking a vicious bite.**/
 			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
 			cube.Expand()
 			return
-		var/obj/item/reagent_containers/RG = I
-		if(RG.is_open_container())
-			RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-			to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+		var/obj/item/reagent_containers/reagent_container = I
+		if(reagent_container.is_open_container())
+			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
+			to_chat(user, "<span class='notice'>You fill [reagent_container] from [src].</span>")
 			return
 	if(hidden_item)
 		to_chat(user, "<span class='warning'>There is already something inside [src].</span>")

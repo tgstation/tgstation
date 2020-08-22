@@ -7,35 +7,37 @@ This component is used in vat growing to swab for microbiological samples which 
 	///The current datums on the swab
 	var/list/swabbed_items
 	///Can we swab objs?
-	var/CanSwabObj
+	var/can_swab_objs
 	///Can we swab turfs?
-	var/CanSwabTurf
+	var/can_swab_turfs
 	///Can we swab mobs?
-	var/CanSwabMob
+	var/can_swab_mobs
 	///Callback for update_icon()
-	var/datum/callback/UpdateIcons
+	var/datum/callback/update_icons
 	///Callback for update_overlays()
-	var/datum/callback/UpdateOverlays
+	var/datum/callback/update_overlays
 
-/datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, datum/callback/UpdateIcons, datum/callback/UpdateOverlays, swab_time = 1 SECONDS, max_items = 3)
+/datum/component/swabbing/Initialize(can_swab_objs = TRUE, can_swab_turfs = TRUE, can_swab_mobs = FALSE, datum/callback/update_icons, datum/callback/update_overlays, swab_time = 1 SECONDS, max_items = 3)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/TryToSwab)
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_to_swab)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/handle_overlays)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/handle_icon)
 
-	src.CanSwabObj = CanSwabObj
-	src.CanSwabTurf = CanSwabTurf
-	src.CanSwabMob = CanSwabMob
-	src.UpdateIcons = UpdateIcons
-	src.UpdateOverlays = UpdateOverlays
+	src.can_swab_objs = can_swab_objs
+	src.can_swab_turfs = can_swab_turfs
+	src.can_swab_mobs = can_swab_mobs
+	src.update_icons = update_icons
+	src.update_overlays = update_overlays
 
 /datum/component/swabbing/Destroy()
 	. = ..()
 	for(var/swabbed in swabbed_items)
 		qdel(swabbed)
+	QDEL_NULL(update_icons)
+	QDEL_NULL(update_overlays)
 
 
 ///Changes examine based on your sample
@@ -48,7 +50,7 @@ This component is used in vat growing to swab for microbiological samples which 
 			examine_list += samp.GetAllDetails(user.research_scanner) //Get just the names nicely parsed.
 
 ///Ran when you attack an object, tries to get a swab of the object. if a swabbable surface is found it will run behavior and hopefully
-/datum/component/swabbing/proc/TryToSwab(datum/source, atom/target, mob/user, params)
+/datum/component/swabbing/proc/try_to_swab(datum/source, atom/target, mob/user, params)
 	set waitfor = FALSE //This prevents do_after() from making this proc not return it's value.
 
 	if(istype(target, /obj/structure/table))//help how do i do this less shitty
@@ -109,16 +111,16 @@ This component is used in vat growing to swab for microbiological samples which 
 ///Checks if the swabbing component can swab the specific object or nots
 /datum/component/swabbing/proc/can_swab(atom/target)
 	if(isobj(target))
-		return CanSwabObj
+		return can_swab_objs
 	if(isturf(target))
-		return CanSwabTurf
+		return can_swab_turfs
 	if(ismob(target))
-		return CanSwabMob
+		return can_swab_mobs
 
 ///Handle any special overlay cases on the item itself
 /datum/component/swabbing/proc/handle_overlays(datum/source, list/overlays)
-	UpdateOverlays?.Invoke(overlays, swabbed_items)
+	update_overlays?.Invoke(overlays, swabbed_items)
 
 ///Handle any special icon cases on the item itself
 /datum/component/swabbing/proc/handle_icon(datum/source)
-	UpdateIcons?.Invoke(swabbed_items)
+	update_icons?.Invoke(swabbed_items)

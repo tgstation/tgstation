@@ -230,6 +230,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobspore/independent
+	gold_core_spawnable = FALSE
 	independent = TRUE
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak

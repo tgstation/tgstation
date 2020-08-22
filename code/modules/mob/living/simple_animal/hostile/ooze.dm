@@ -43,10 +43,10 @@
 		return ..()
 	eat_atom(I)
 
-/mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/A)
-	if(!check_edible(A))
+/mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/attacked_target)
+	if(!check_edible(attacked_target))
 		return ..()
-	eat_atom(A)
+	eat_atom(attacked_target)
 
 /mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
 	if(!check_edible(A))
@@ -64,23 +64,23 @@
 
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
-		var/datum/reagent/R = i
+		var/datum/reagent/reagent = i
 		var/consumption_amount = min(reagents.get_reagent_amount(R.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
-		if(istype(R, /datum/reagent/consumable))
+		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = R
 			nutrition_change += consumption_amount * consumable.nutriment_factor
-		reagents.remove_reagent(R.type, consumption_amount)
+		reagents.remove_reagent(REAGENTS_EFFECT_MULTIPLIER.type, consumption_amount)
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
 		adjustBruteLoss(0.5)
 
 ///Returns whether or not the supplied movable atom is edible.
-/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/AM)
-	if(ismob(AM))
+/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/potential_food)
+	if(ismob(potential_food))
 		return FALSE
-	if(istype(AM, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/meal = AM
+	if(istype(potential_food, /obj/item/reagent_containers/food))
+		var/obj/item/reagent_containers/food/meal = potential_food
 		return (meal.foodtype & MEAT) //Dont forget to add edible component compat here later
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
@@ -89,11 +89,11 @@
 	updateNutritionDisplay()
 
 ///Tries to transfer the atoms reagents then delete it
-/mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/A)
-	A.reagents.trans_to(src, A.reagents.total_volume, transfered_by = src)
-	src.visible_message("<span class='warning>[src] eats [A]!</span>", "<span class='notice'>You eat [A].</span>")
+/mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/eaten_atom)
+	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
+	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [A].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	qdel(A)
+	qdel(eaten_atom)
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
@@ -127,6 +127,11 @@
 	boost.Grant(src)
 	consume = new
 	consume.Grant(src)
+
+/mob/living/simple_animal/hostile/ooze/gelatinous/Destroy()
+	. = ..()
+	QDEL_NULL(boost)
+	QDEL_NULL(consume)
 
 ///If this mob gets resisted by something, its trying to escape consumption.
 /mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
@@ -202,6 +207,11 @@
 /datum/action/consume/New(Target)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/on_owner_deletion)
+
+/datum/action/consume/proc/on_owner_deletion()
+	. = ..()
+	stop_consuming() //Shit out the vored mob before u go go
 
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger()
@@ -286,13 +296,17 @@
 	gel_cocoon = new
 	gel_cocoon.Grant(src)
 
+/mob/living/simple_animal/hostile/ooze/grapes/Destroy()
+	. = ..()
+	QDEL_NULL(gel_cocoon)
+	QDEL_NULL(globules)
 
-/mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/AM)
-	if(ismob(AM))
+/mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/potential_food)
+	if(ismob(potential_food))
 		return FALSE
 	var/foodtype
-	if(istype(AM, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/meal = AM
+	if(istype(potential_food, /obj/item/reagent_containers/food))
+		var/obj/item/reagent_containers/food/meal = potential_food
 		foodtype = meal.foodtype
 	return foodtype & MEAT || foodtype & VEGETABLES //Dont forget to add edible component compat here later
 
@@ -377,6 +391,10 @@
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
+/obj/item/Destroy()
+	. = ..()
+	bodypart = null
+
 /obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob, obj/item/bodypart/part)
 	. = ..()
 	if(!istype(part))
@@ -414,11 +432,8 @@
 	if(!.)
 		return
 	var/mob/living/simple_animal/hostile/ooze/grapes/ooze = owner
-	if(!ooze.pulling)
-		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
-		return FALSE
 	if(!iscarbon(ooze.pulling))
-		to_chat(src, "<span class='warning'>This creature is not advanced enough to be assisted with a cocoon!</span>")
+		to_chat(src, "<span class='warning'>You need to be pulling an intelligent enough creature to assist it with a cocoon!</span>")
 		return FALSE
 	owner.visible_message("<span class='nicegreen>[ooze] starts attempting to put [target] into a gel cocoon!</span>", "<span class='notice'>You start attempting to put [target] into a gel cocoon.</span>")
 	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
