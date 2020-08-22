@@ -197,21 +197,6 @@
 	diag_hud_set_mechstat()
 	update_icon()
 
-/obj/vehicle/sealed/mecha/update_icon_state()
-	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
-		icon_state = silicon_icon_state
-	else if(LAZYLEN(occupants))
-		icon_state = initial(icon_state)
-	else
-		icon_state = initial(icon_state)+ "-open"
-
-
-/obj/vehicle/sealed/mecha/get_cell()
-	return cell
-
-/obj/vehicle/sealed/mecha/rust_heretic_act()
-	take_damage(500,  BRUTE)
-
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/M in occupants)
 		var/mob/living/occu = M
@@ -247,6 +232,21 @@
 
 	GLOB.mechas_list -= src //global mech list
 	return ..()
+
+/obj/vehicle/sealed/mecha/update_icon_state()
+	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
+		icon_state = silicon_icon_state
+	else if(LAZYLEN(occupants))
+		icon_state = initial(icon_state)
+	else
+		icon_state = initial(icon_state)+ "-open"
+
+
+/obj/vehicle/sealed/mecha/get_cell()
+	return cell
+
+/obj/vehicle/sealed/mecha/rust_heretic_act()
+	take_damage(500,  BRUTE)
 
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
