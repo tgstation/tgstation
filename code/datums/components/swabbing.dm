@@ -17,7 +17,7 @@ This component is used in vat growing to swab for microbiological samples which 
 	///Callback for update_overlays()
 	var/datum/callback/UpdateOverlays
 
-/datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, datum/callback/UpdateIcons, datum/callback/UpdateOverlays, swab_time = 10, max_items = 3)
+/datum/component/swabbing/Initialize(CanSwabObj = TRUE, CanSwabTurf = TRUE, CanSwabMob = FALSE, datum/callback/UpdateIcons, datum/callback/UpdateOverlays, swab_time = 1 SECONDS, max_items = 3)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
