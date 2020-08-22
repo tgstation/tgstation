@@ -436,7 +436,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()
-	if (z > 6)
+	if (z > 6 && !istype(get_area(src), /area/shuttle/shipstation))
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 
