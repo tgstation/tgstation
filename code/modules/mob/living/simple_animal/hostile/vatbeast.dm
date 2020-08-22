@@ -81,7 +81,8 @@
 		add_ranged_ability(user, "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>", TRUE)
 
 /obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/vatbeast) || ranged_ability_user.stat)
