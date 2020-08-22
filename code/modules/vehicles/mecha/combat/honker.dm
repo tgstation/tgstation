@@ -15,7 +15,7 @@
 	max_equip = 3
 	var/squeak = TRUE
 
-/obj/vehicle/sealed/mecha/combat/honker/get_stats_part()
+/obj/vehicle/sealed/mecha/combat/honker/get_stats_part(mob/user)
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
@@ -39,7 +39,7 @@
 					"}
 	return output
 
-/obj/vehicle/sealed/mecha/combat/honker/get_stats_html()
+/obj/vehicle/sealed/mecha/combat/honker/get_stats_html(mob/user)
 	var/output = {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -82,7 +82,7 @@
 						</head>
 						<body>
 						<div id='content'>
-						[src.get_stats_part()]
+						[src.get_stats_part(user)]
 						</div>
 						<div id='eq_list'>
 						[src.get_equipment_list()]

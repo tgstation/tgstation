@@ -3,7 +3,7 @@
 ///// Rendering stats window ///////
 ////////////////////////////////////
 
-/obj/vehicle/sealed/mecha/proc/get_stats_html()
+/obj/vehicle/sealed/mecha/proc/get_stats_html(mob/user)
 	. = {"<html>
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -36,7 +36,7 @@
 			</head>
 			<body>
 				<div id='content'>
-					[get_stats_part()]
+					[get_stats_part(user)]
 				</div></div>
 				<div id='eq_list'>
 					[get_equipment_list()]
@@ -52,7 +52,7 @@
 		</html>"}
 
 ///Returns the status of the mech.
-/obj/vehicle/sealed/mecha/proc/get_stats_part()
+/obj/vehicle/sealed/mecha/proc/get_stats_part(mob/user)
 	var/integrity = obj_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = 0
@@ -74,17 +74,17 @@
 		<b>Cabin pressure: </b>[internal_tank?"[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa":"N/A"]<br>
 		<b>Cabin temperature: </b> [internal_tank?"[return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C":"N/A"]<br>
 		[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":""]<br>"}
-	. += "[get_actions()]<br>"
+	. += "[get_actions(user)]<br>"
 
 ///Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.
-/obj/vehicle/sealed/mecha/proc/get_actions()
+/obj/vehicle/sealed/mecha/proc/get_actions(mob/user)
 	. = ""
-	// . += "[defense_action.owner ? "<b>Defense Mode: </b> [defense_mode ? "Enabled" : "Disabled"]<br>" : ""]"
-	// . += "[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]"
-	// . += "[smoke_action.owner ? "<b>Smoke: </b> [smoke]<br>" : ""]"
-	// . += "[zoom_action.owner ? "<b>Zoom: </b> [zoom_mode ? "Enabled" : "Disabled"]<br>" : ""]"
-	// . += "[switch_damtype_action.owner ? "<b>Damtype: </b> [damtype]<br>" : ""]"
-	// . += "[phasing_action.owner ? "<b>Phase Modulator: </b> [phasing ? "Enabled" : "Disabled"]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_defense_mode) ? "<b>Defense Mode: </b> [defense_mode ? "Enabled" : "Disabled"]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_overload_mode) ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_smoke) ? "<b>Smoke Charges remaining: </b> [smoke_charges]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_zoom) ? "<b>Zoom: </b> [zoom_mode ? "Enabled" : "Disabled"]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_switch_damtype) ? "<b>Damtype: </b> [damtype]<br>" : ""]"
+	. += "[LAZYACCESSASSOC(occupant_actions, user, /datum/action/vehicle/sealed/mecha/mech_toggle_phasing) ? "<b>Phase Modulator: </b> [phasing ? "Enabled" : "Disabled"]<br>" : ""]"
 
 ///HTML for internal damage.
 /obj/vehicle/sealed/mecha/proc/report_internal_damage()

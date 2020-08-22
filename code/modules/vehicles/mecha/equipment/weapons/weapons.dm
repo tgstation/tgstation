@@ -129,7 +129,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M)
 	if(..()) //combat mech
 		return TRUE
-	else if(LAZYLEN(M.equipment) < M.max_equip && istype(M))//Dupe?
+	else if(LAZYLEN(M.equipment) < M.max_equip)
 		return TRUE
 	return FALSE
 
