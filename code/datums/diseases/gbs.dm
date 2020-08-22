@@ -13,7 +13,10 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/gbs/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if(prob(5))
@@ -27,5 +30,4 @@
 			to_chat(affected_mob, "<span class='userdanger'>Your body feels as if it's trying to rip itself apart!</span>")
 			if(prob(50))
 				affected_mob.gib()
-		else
-			return
+				return FALSE
