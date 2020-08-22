@@ -105,6 +105,7 @@ This section is for the event controller
 			spawners += temp
 	for(var/i in 1 to portal_numbers)
 		spawn_portal(GLOB.crystal_invasion_waves[wave_name], spawners)
+	for(var/i in 1 to 6)
 		spawn_anomaly(spawners)
 
 	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 15 MINUTES)
@@ -114,8 +115,7 @@ This section is for the event controller
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
 	var/obj/spawner = pick(spawners)
-	var/obj/effect/anomaly/flux/A = new(spawner.loc)
-	A.is_from_zk_event = TRUE
+	new/obj/effect/anomaly/flux(spawner.loc)
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
