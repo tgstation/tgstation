@@ -14,7 +14,7 @@
 
 ///Called when TRAIT_KNOCKEDOUT is removed from the mob.
 /mob/living/proc/on_knockedout_trait_loss(datum/source)
-	if(stat < DEAD)
+	if(stat <= UNCONSCIOUS)
 		update_stat()
 
 

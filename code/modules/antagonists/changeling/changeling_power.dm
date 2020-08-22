@@ -13,7 +13,7 @@
 	var/req_dna = 0  //amount of dna needed to use this ability. Changelings always have atleast 1
 	var/req_human = 0 //if you need to be human to use this ability
 	var/req_absorbs = 0 //similar to req_dna, but only gained from absorbing, not DNA sting
-	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
+	var/req_stat = CONSCIOUS // CONSCIOUS, SOFT_CRIT, UNCONSCIOUS, HARD_CRIT, or DEAD
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 	var/active = FALSE//used by a few powers that toggle
 

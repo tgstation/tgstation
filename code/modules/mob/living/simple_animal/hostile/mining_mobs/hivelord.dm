@@ -187,12 +187,21 @@
 	robust_searching = 1
 	var/can_infest_dead = FALSE
 
+
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(loc))
-		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == UNCONSCIOUS || (can_infest_dead && H.stat == DEAD))
-				infest(H)
-	..()
+	. = ..()
+	if(stat == DEAD || !isturf(loc))
+		return
+	for(var/mob/living/carbon/human/victim in range(src, 1)) //Only for corpse right next to/on same tile
+		switch(victim.stat)
+			if(UNCONSCIOUS, HARD_CRIT)
+				infest(victim)
+				return //This will qdelete the legion.
+			if(DEAD)
+				if(can_infest_dead)
+					infest(victim)
+					return //This will qdelete the legion.
+
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")

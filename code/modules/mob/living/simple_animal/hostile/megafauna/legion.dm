@@ -165,14 +165,18 @@
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
+
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/L = target
-		if(L.stat == UNCONSCIOUS)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.infest(L)
+	if(!. || !ishuman(target))
+		return
+	var/mob/living/living_target = target
+	switch(living_target.stat)
+		if(UNCONSCIOUS, HARD_CRIT)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/legion = new(loc)
+			legion.infest(living_target)
+
 
 ///Resets the charge buffs.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()

@@ -181,14 +181,15 @@
 			spawned_mobs -= i
 			continue
 		// Anyone in crit, automatically reap
-		var/mob/living/M = i
-		if(M.InCritical() || M.stat == DEAD)
-			ctf_dust_old(M)
+		var/mob/living/living_participant = i
+		if(HAS_TRAIT(living_participant, TRAIT_CRITICAL_CONDITION) || living_participant.stat == DEAD)
+			ctf_dust_old(living_participant)
 		else
 			// The changes that you've been hit with no shield but not
 			// instantly critted are low, but have some healing.
-			M.adjustBruteLoss(-5)
-			M.adjustFireLoss(-5)
+			living_participant.adjustBruteLoss(-5)
+			living_participant.adjustFireLoss(-5)
+
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
