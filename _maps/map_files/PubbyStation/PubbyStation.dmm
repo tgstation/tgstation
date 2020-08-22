@@ -30315,13 +30315,13 @@
 /obj/machinery/door/window/eastleft{
 	name = "Petting Garden"
 	},
-/mob/living/simple_animal/pet/dog/corgi/puppy,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/medbay/zone2)
 "bzG" = (
@@ -33182,8 +33182,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFL" = (
@@ -33729,8 +33729,8 @@
 /area/medical/virology)
 "bGP" = (
 /obj/structure/window/reinforced,
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bGQ" = (
@@ -48655,8 +48655,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dZK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
@@ -49483,11 +49483,11 @@
 /turf/closed/wall,
 /area/crew_quarters/heads/hor)
 "fSJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "fTY" = (
@@ -50046,10 +50046,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "gOV" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "gPV" = (
@@ -51102,6 +51102,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"jwZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "jxl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -51432,6 +51443,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"kfY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "kgR" = (
 /obj/structure/toilet{
 	dir = 4
@@ -51975,11 +51993,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/mob/living/simple_animal/butterfly,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 5
 	},
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/science/genetics)
 "lhu" = (
@@ -55509,17 +55527,6 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
-"sxS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/airlock/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/department/engine)
 "syn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
@@ -56221,9 +56228,9 @@
 /area/maintenance/department/engine)
 "tTE" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "tUf" = (
@@ -82162,7 +82169,7 @@ npE
 nSj
 cXW
 qyF
-qyF
+kfY
 bQU
 bva
 bva
@@ -86272,7 +86279,7 @@ bKy
 bLI
 bjc
 bjc
-aLw
+jwZ
 bPB
 bQo
 cCF
