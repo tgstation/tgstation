@@ -1184,7 +1184,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!turf_loc)
 		return
 	explosion(turf_loc,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
-	new/obj/machinery/destabilized_crystal(turf_loc)
+	. = new/obj/machinery/destabilized_crystal(turf_loc)
 	qdel(src)
 
 /obj/overlay/psy

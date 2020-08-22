@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(crystal_invasion_waves, list(
 		),
 	))
 GLOBAL_LIST_EMPTY(crystal_portals)
-GLOBAL_LIST_EMPTY(destabilized_crystals)
 
 /*
 This section is for the event controller
@@ -33,18 +32,22 @@ This section is for the event controller
 	weight = 8
 	min_players = 35
 	max_occurrences = 1
-	earliest_start = 35 MINUTES
+	earliest_start = 25 MINUTES
 
 /datum/round_event/crystal_invasion
 	startWhen = 10
 	announceWhen = 1
-	endWhen = 30 MINUTES
+	endWhen = 25 MINUTES
 	///Is the name of the wave, used to check wich wave will be generated
 	var/wave_name
 	///Max number of portals that can spawn per type of wave
 	var/portal_numbers
 	///Check if this is the first wave or not
 	var/spawned = FALSE
+	///Store the destabilized crystal
+	var/obj/machinery/destabilized_crystal/dest_crystal
+	///Check if the event will end badly
+	var/is_zk_scenario = TRUE
 
 /datum/round_event/crystal_invasion/start()
 	choose_wave_type()
@@ -84,7 +87,7 @@ This section is for the event controller
 		kill()
 		return
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
-	crystal.destabilize(portal_numbers)
+	dest_crystal = crystal.destabilize(portal_numbers)
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
@@ -132,14 +135,54 @@ This section is for the event controller
 	sound_to_playing_players('sound/misc/notice1.ogg')
 	var/list/spawners = list()
 	for(var/es in GLOB.generic_event_spawns)
-	var/obj/effect/landmark/event_spawn/temp = es
+		var/obj/effect/landmark/event_spawn/temp = es
 		if(is_station_level(temp.z))
 			spawners += temp
-	for(var/i in 1 to 8)
+	for(var/i in 1 to rand(10, 15))
 		spawn_portal(GLOB.crystal_invasion_waves["small wave"], spawners)
 
-	for(var/C in GLOB.destabilized_crystals)
-		addtimer(CALLBACK(C, /obj/machinery/destabilized_crystal/proc/zk_event_announcement), 10 MINUTES)
+/datum/round_event/crystal_invasion/tick()
+	if(dest_crystal.is_stabilized == TRUE)
+		processing = FALSE
+		is_zk_scenario = FALSE
+		end()
+
+/datum/round_event/crystal_invasion/end()
+	if(is_zk_scenario == TRUE)
+		processing = FALSE
+		zk_event_announcement()
+	else
+		restore()
+	kill()
+
+/datum/round_event/crystal_invasion/proc/zk_event_announcement()
+	dest_crystal.active = FALSE
+	priority_announce("WARNING - The crystal has reached critical instability point. ZK-Event inbound, please do not panic, anyone who panics will \
+						be terminated on the spot. Have a nice day", "Alert")
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	addtimer(CALLBACK(src, .proc/do_zk_event), 10 SECONDS)
+
+/datum/round_event/crystal_invasion/proc/do_zk_event()
+	var/list/spawners = list()
+	for(var/es in GLOB.generic_event_spawns)
+		var/obj/effect/landmark/event_spawn/temp = es
+		if(is_station_level(temp.z))
+			spawners += temp
+	for(var/i in 1 to rand(15, 25))
+		spawn_portal(GLOB.crystal_invasion_waves["huge wave"], spawners)
+	explosion(dest_crystal.loc, 15, 26, 33, 35, 1, 1) //a bit smaller than max supermatter explosion
+	priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
+	qdel(dest_crystal)
+
+/datum/round_event/crystal_invasion/proc/restore()
+	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
+						kill the remaining crystal monsters and go back to work")
+	sound_to_playing_players('sound/misc/notice2.ogg')
+	var/turf/loc_turf = get_turf(dest_crystal.loc)
+	new/obj/machinery/power/supermatter_crystal(loc_turf)
+	for(var/Portal in GLOB.crystal_portals)
+		qdel(Portal)
+	qdel(dest_crystal)
 
 /*
 This section is for the destabilized SM
@@ -156,18 +199,8 @@ This section is for the destabilized SM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	///If not active the crystal will not emit radiations and gases
 	var/active = TRUE
-	///Check if the crew managed to stop the ZK-class event
-	var/is_zk = FALSE
-
-/obj/machinery/destabilized_crystal/Initialize()
-	. = ..()
-	GLOB.destabilized_crystals += src
-
-/obj/machinery/destabilized_crystal/Destroy()
-	GLOB.destabilized_crystals -= src
-	if(is_zk)
-		priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
-	return..()
+	///Check if the crew managed to stop the ZK-class event by stabilizing the crystal
+	var/is_stabilized = FALSE
 
 /obj/machinery/destabilized_crystal/process()
 	if(!active)
@@ -186,33 +219,8 @@ This section is for the destabilized SM
 	air_update_turf()
 
 ///This proc announces that the event is concluding with the worst scenario
-/obj/machinery/destabilized_crystal/proc/zk_event_announcement()
-	active = FALSE
-	priority_announce("WARNING - The crystal has reached critical instability point. ZK-Event inbound, please do not panic, anyone who panics will \
-						be terminated on the spot. Have a nice day", "Alert")
-	sound_to_playing_players('sound/machines/alarm.ogg')
-	addtimer(CALLBACK(src, .proc/do_zk_event), 10 SECONDS)
 
 ///This proc actually manages the end of the event
-/obj/machinery/destabilized_crystal/proc/do_zk_event()
-	var/list/spawners = list()
-	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
-		if(QDELETED(temp))
-			continue
-		if(is_station_level(temp.loc.z))
-			spawners += temp
-
-	if(!spawners.len)
-		message_admins("No landmarks on the station, aborting")
-		return MAP_ERROR
-
-	var/obj/spawner = pick_n_take(spawners)
-	var/pick_portal = pickweight(GLOB.crystal_invasion_waves["huge wave"])
-	for(var/i in 10 to 15)
-		new pick_portal(spawner.loc)
-	explosion(src, 15, 18, 30, 30)
-	is_zk = TRUE
-	qdel(src)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
@@ -238,18 +246,9 @@ This section is for the destabilized SM
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 		injector.filled = FALSE
 		active = FALSE
-		restore()
+		is_stabilized = TRUE
 
 ///Restore the Destabilized Crystal as it was before
-/obj/machinery/destabilized_crystal/proc/restore()
-	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
-						kill the remaining crystal monsters and go back to work")
-	sound_to_playing_players('sound/misc/notice2.ogg')
-	var/turf/loc_turf = get_turf(src)
-	new/obj/machinery/power/supermatter_crystal(loc_turf)
-	for(var/Portal in GLOB.crystal_portals)
-		qdel(Portal)
-	qdel(src)
 
 /*
 This section is for the crystal stabilizer item and the crystal from the closed portals
