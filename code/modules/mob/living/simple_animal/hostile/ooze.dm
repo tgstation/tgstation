@@ -452,8 +452,9 @@
 	var/mob/living/carbon/inhabitant
 
 /obj/structure/gel_cocoon/Destroy()
-	dump_inhabitant(FALSE)
-	. = ..()
+	if(inhabitant)
+		dump_inhabitant(FALSE)
+	return ..()
 
 /obj/structure/gel_cocoon/container_resist_act(mob/living/user)
 	. = ..()
