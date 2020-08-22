@@ -91,8 +91,10 @@
 
 /datum/nanite_program/reduced_diagnostics
 	name = "Reduced Diagnostics"
-	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners."
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
 	rogue_types = list(/datum/nanite_program/toxic)
+	use_rate = -0.1
 
 /datum/nanite_program/reduced_diagnostics/enable_passive_effect()
 	. = ..()
