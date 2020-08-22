@@ -131,7 +131,7 @@
 ///If this mob gets resisted by something, its trying to escape consumption.
 /mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
 	. = ..()
-	if(!do_after(user, 60)) //6 second struggle
+	if(!do_after(user, 6 SECONDS)) //6 second struggle
 		return FALSE
 	consume.stop_consuming()
 
