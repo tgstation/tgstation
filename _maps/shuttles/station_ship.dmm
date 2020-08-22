@@ -1536,14 +1536,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "pL" = (
-/obj/machinery/computer/shuttle/white_ship{
-	desc = "Used to control the Ship.";
-	dir = 8;
-	name = "Ship Console";
-	shuttleId = "station"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
+	},
+/obj/machinery/computer/shuttle/shipstation{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
@@ -2497,14 +2494,19 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "Gj" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	name = "Exit"
+	},
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
+	callTime = 150;
+	can_move_docking_ports = 1;
 	dheight = 1;
 	dwidth = 25;
 	height = 19;
 	id = "station";
-	name = "Ship Station";
+	name = "NTSS \"Friendship\"";
+	port_direction = 8;
 	preferred_direction = 4;
 	width = 32
 	},
@@ -2939,15 +2941,8 @@
 	pixel_y = -24;
 	req_access_txt = "19"
 	},
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	desc = "Used to designate a precise transit location for the Ship.";
-	dir = 8;
-	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_lavaland" = 1);
-	name = "Ship Navigation Computer";
-	shuttleId = "station";
-	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral);
-	x_offset = -2;
-	y_offset = -8
+/obj/machinery/computer/camera_advanced/shuttle_docker/shipstation{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
@@ -3491,7 +3486,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	name = "Mining"
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)

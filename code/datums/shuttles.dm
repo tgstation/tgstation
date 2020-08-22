@@ -640,4 +640,4 @@
 	port_id = "station"
 	can_be_bought = FALSE
 	suffix = "ship"
-	name = "Ship Station"
+	name = "NTSS \"Friendship\""
