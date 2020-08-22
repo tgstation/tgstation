@@ -69,7 +69,7 @@
 
 /datum/design/nanites/enhanced_diagnostics
 	name = "Enhanced Diagnostics"
-	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners."
+	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners. This program has safeguards in place to make it immune to corruption from EMPs and shocks."
 	id = "enh_diag_nanites"
 	program_type = /datum/nanite_program/enhanced_diagnostics
 	category = list("Utility Nanites")

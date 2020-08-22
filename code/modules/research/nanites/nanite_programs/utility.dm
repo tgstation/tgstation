@@ -91,8 +91,9 @@
 
 /datum/nanite_program/enhanced_diagnostics
 	name = "Enhanced Diagnostics"
-	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners."
+	desc = "Adds additional diagnostic routines to the nanites, allowing them to communicate their program list to portable scanners. This program has safeguards in place to make it immune to corruption from EMPs and shocks."
 	rogue_types = list(/datum/nanite_program/toxic)
+	program_flags = NANITE_SHOCK_IMMUNE | NANITE_EMP_IMMUNE
 	use_rate = 0.1
 
 /datum/nanite_program/enhanced_diagnostics/enable_passive_effect()
