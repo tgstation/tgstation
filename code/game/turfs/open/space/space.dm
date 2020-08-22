@@ -57,7 +57,7 @@
 	if(requires_activation)
 		SSair.add_to_active(src)
 
-	if (light_power && light_range)
+	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
 
 	if (opacity)

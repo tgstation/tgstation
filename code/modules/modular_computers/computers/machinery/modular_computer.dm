@@ -123,11 +123,11 @@
 	if(cpu)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += cpu
+				SSexplosions.high_mov_atom += cpu
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += cpu
+				SSexplosions.med_mov_atom += cpu
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += cpu
+				SSexplosions.low_mov_atom += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components

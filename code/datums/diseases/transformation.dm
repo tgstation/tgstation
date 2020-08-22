@@ -29,23 +29,28 @@
 	D.new_form = D.new_form
 	return D
 
+
 /datum/disease/transformation/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(1)
-			if (prob(stage_prob) && stage1)
+			if (stage1 && prob(stage_prob))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (prob(stage_prob) && stage2)
+			if (stage2 && prob(stage_prob))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (prob(stage_prob*2) && stage3)
+			if (stage3 && prob(stage_prob * 2))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (prob(stage_prob*2) && stage4)
+			if (stage4 && prob(stage_prob * 2))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
+
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
@@ -125,8 +130,12 @@
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 		M.ventcrawler = VENTCRAWLER_ALWAYS
 
+
 /datum/disease/transformation/jungle_fever/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if(prob(2))
@@ -138,6 +147,7 @@
 		if(4)
 			if(prob(3))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
+
 
 /datum/disease/transformation/jungle_fever/cure()
 	remove_monkey(affected_mob.mind)
@@ -172,8 +182,12 @@
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = "Cyborg"
 
+
 /datum/disease/transformation/robot/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(3)
 			if (prob(8))
@@ -204,8 +218,12 @@
 	new_form = /mob/living/carbon/alien/humanoid/hunter
 	bantype = ROLE_ALIEN
 
+
 /datum/disease/transformation/xeno/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(3)
 			if (prob(4))
@@ -232,8 +250,12 @@
 	stage5	= list("<span class='danger'>You have become a slime.</span>")
 	new_form = /mob/living/simple_animal/slime/random
 
+
 /datum/disease/transformation/slime/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(1)
 			if(ishuman(affected_mob) && affected_mob.dna)
@@ -244,6 +266,7 @@
 				var/mob/living/carbon/human/human = affected_mob
 				if(human.dna.species.id != "slime" && affected_mob.dna.species.id != "stargazer" && affected_mob.dna.species.id != "lum")
 					human.set_species(/datum/species/jelly/slime)
+
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"
@@ -260,8 +283,11 @@
 	stage5	= list("<span class='danger'>AUUUUUU!!!</span>")
 	new_form = /mob/living/simple_animal/pet/dog/corgi
 
+
 /datum/disease/transformation/corgi/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
 	switch(stage)
 		if(3)
 			if (prob(8))
@@ -269,6 +295,7 @@
 		if(4)
 			if (prob(20))
 				affected_mob.say(pick("Bark!", "AUUUUUU"), forced = "corgi transformation")
+
 
 /datum/disease/transformation/morph
 	name = "Gluttony's Blessing"
@@ -305,8 +332,12 @@
 	stage5	= list("<span class='danger'>You have become a Gondola.</span>")
 	new_form = /mob/living/simple_animal/pet/gondola
 
+
 /datum/disease/transformation/gondola/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if (prob(5))
@@ -324,6 +355,7 @@
 			if (prob(20))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 			if (prob(2))
-				to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")
-				var/obj/item/I = affected_mob.get_active_held_item()
-				affected_mob.dropItemToGround(I)
+				var/obj/item/held_item = affected_mob.get_active_held_item()
+				if(held_item)
+					to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")
+					affected_mob.dropItemToGround(held_item)

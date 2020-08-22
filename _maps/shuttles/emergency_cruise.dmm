@@ -818,7 +818,7 @@
 	pixel_x = -6;
 	pixel_y = -4
 	},
-/obj/item/reagent_containers/food/snacks/baguette{
+/obj/item/food/baguette{
 	pixel_x = 3;
 	pixel_y = 10
 	},
