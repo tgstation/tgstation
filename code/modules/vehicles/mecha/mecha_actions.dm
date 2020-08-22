@@ -22,7 +22,7 @@
 /datum/action/vehicle/sealed/mecha/mech_eject/Trigger()
 	if(!owner)
 		return
-	if(!chassis || !(owner in chassis.occupants)
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.container_resist_act(owner)
 

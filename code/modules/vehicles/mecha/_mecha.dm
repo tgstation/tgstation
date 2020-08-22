@@ -176,6 +176,8 @@
 	add_cabin()
 	if(enclosed)
 		add_airtank()
+		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -573,8 +575,15 @@
 
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
+	SIGNAL_HANDLER
 	if(stepsound)
 		playsound(src,stepsound,40,1)
+
+/obj/vehicle/sealed/mecha/proc/disconnect_air()
+	SIGNAL_HANDLER
+	if(internal_tank.disconnect()) // Something moved us and broke connection
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Air port connection has been severed!</span>")
+		log_message("Lost connection to gas port.", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
 	. = ..()
@@ -658,13 +667,6 @@
 				return
 		setDir(olddir)
 
-/obj/vehicle/sealed/mecha/Move(newloc, direction, olddir)
-	. = ..()
-	if(.)
-		play_stepsound()
-	if(internal_tank?.disconnect()) // Something moved us and broke connection
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Air port connection has been severed!</span>")
-		log_message("Lost connection to gas port.", LOG_MECHA)
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
@@ -948,7 +950,6 @@
 	H.update_mouse_pointer()
 	add_fingerprint(H)
 	log_message("[H] moved in as pilot.", LOG_MECHA)
-	update_icon()
 	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
