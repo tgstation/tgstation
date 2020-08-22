@@ -149,7 +149,7 @@
 	var/entered_dirs = 0
 	var/exited_dirs = 0
 
-	/// List of shoe types that have made footprints here.
+	/// List of shoe or other clothing that covers feet types that have made footprints here.
 	var/list/shoe_types = list()
 
 	/// List of species that have made footprints here.
@@ -205,8 +205,9 @@
 	if((shoe_types.len + species_types.len) > 0)
 		. += "You recognise the footprints as belonging to:"
 		for(var/sole in shoe_types)
-			var/obj/item/clothing/shoes/shoe = sole
-			. += "[icon2html(initial(shoe.icon), user, initial(shoe.icon_state))] Some <B>[initial(shoe.name)]</B>."
+			var/obj/item/clothing/item = sole
+			var/article = initial(item.gender) == PLURAL ? "Some" : "A"
+			. += "[icon2html(initial(item.icon), user, initial(item.icon_state))] [article] <B>[initial(item.name)]</B>."
 		for(var/species in species_types)
 			// god help me
 			if(species == "unknown")
