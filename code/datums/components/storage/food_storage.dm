@@ -16,14 +16,15 @@
 	/// The stored item was found out somehow.
 	var/discovered = FALSE
 
-/datum/component/food_storage/Initialize(_initial_volume = 10, _minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
+/datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/try_removing_item)
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
 
-	if(_initial_volume) //initial volume should not be 0
-		initial_volume =  _initial_volume
+	var/atom/food = parent
+	initial_volume = food.reagents.total_volume
+
 	minimum_weight_class = _minimum_weight_class
 	bad_chance_of_discovery = _bad_chance
 	good_chance_of_discovery = _good_chance
@@ -34,7 +35,7 @@
   *
   * Arguments
   *	inserted_item - the item being placed into the food
-  * user - the person inserting the item
+  *	user - the person inserting the item
   */
 /datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -164,15 +165,18 @@
   */
 /datum/component/food_storage/proc/update_stored_item()
 	var/atom/food = parent
-	if(food?.contents.len) //if there's an item in the food
-		for(var/obj/item/i in food.contents) //search the food's contents for a replacement item
-			if(istype(i, /obj/item/reagent_containers/food/snacks))
-				continue
-			if(QDELETED(i))
-				continue
+	if(!food?.contents.len) //if there's no items in the food or food is deleted somehow
+		stored_item = null
+		return FALSE
 
-			stored_item = i //we found something to replace it
-			return TRUE
+	for(var/obj/item/i in food.contents) //search the food's contents for a replacement item
+		if(istype(i, /obj/item/reagent_containers/food/snacks))
+			continue
+		if(QDELETED(i))
+			continue
+
+		stored_item = i //we found something to replace it
+		return TRUE
 
 	//if there's nothing else in the food, or we found nothing valid
 	stored_item = null

@@ -343,7 +343,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/store/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/food_storage, reagents?.total_volume)
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/reagent_containers/food/snacks/MouseDrop(atom/over)
 	var/turf/T = get_turf(src)
