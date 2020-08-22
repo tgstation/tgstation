@@ -335,6 +335,16 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	strip_delay = 80
 
+/obj/item/clothing/head/helmet/elder_atmosian
+	name = "Elder Atmosian Helmet"
+	desc = "A superb helmet made with the thoughest and rarest materials avaiable to man."
+	icon_state = "knight_greyscale"
+	inhand_icon_state = "knight_greyscale"
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+
 //monkey sentience caps
 
 /obj/item/clothing/head/helmet/monkey_sentience
