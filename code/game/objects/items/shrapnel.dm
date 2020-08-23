@@ -16,7 +16,7 @@
 	sharpness = SHARP_NONE
 
 /obj/item/shrapnel/bullet // bullets
-	name = "bullet"
+	name = BULLET
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	embedding = null // embedding vars are taken from the projectile itself
