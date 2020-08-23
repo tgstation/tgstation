@@ -112,7 +112,9 @@
 /obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
 	if(QDELETED(src))
 		return
-	atmos_spawn_air("plasma=50;TEMP=[exposed_temperature]")
+	if(custom_materials[/datum/material/plasma])
+		var/plasma_amount = round(custom_materials[/datum/material/plasma]/MINERAL_MATERIAL_AMOUNT)
+		atmos_spawn_air("plasma=[plasma_amount*10];TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
