@@ -1251,7 +1251,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(!card.registered_account)
 				to_chat(usr,"<span class='warning'>[dude] does not have an ID card with an account!</span>", confidential = TRUE)
 				return
-			var/new_cost = input("How much pay are we docking?","BUDGET CUTS") as num|null
+			if(card.registered_account.account_balance == 0)
+				to_chat(usr, "<span class='warning'>ID Card lacks any funds. No pay to dock.</span>")
+				return
+			var/new_cost = input("How much pay are we docking? Current balance: [card.registered_account.account_balance] credits.","BUDGET CUTS") as num|null
 			if(!new_cost)
 				return
 			if(!(card.registered_account.has_money(new_cost)))
