@@ -6211,7 +6211,7 @@
 /area/engine/atmospherics_engine)
 "apP" = (
 /obj/structure/table/wood,
-/obj/item/circuitboard/computer/arcade,
+/obj/effect/spawner/lootdrop/arcade_boards,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
