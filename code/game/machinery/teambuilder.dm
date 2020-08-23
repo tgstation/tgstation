@@ -1,5 +1,5 @@
 /**
-  *
+  * Simple admin tool that enables players to be assigned to a VERY SHITTY, very visually distinct team, quickly and affordably.
   */
 /obj/machinery/teambuilder
 	name = "Teambuilding Machine"
@@ -8,7 +8,10 @@
 	icon_state = "lpad-idle"
 	density = FALSE
 	can_buckle = FALSE
+	resistance_flags = INDESTRUCTIBLE // Just to be safe.
+	///What color is your mob set to when crossed?
 	var/team_color = "#ffffff"
+	///What radio station is your radio set to when crossed (And human)?
 	var/team_radio = FREQ_COMMON
 
 /obj/machinery/teambuilder/examine_more(mob/user)
