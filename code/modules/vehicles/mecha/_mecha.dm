@@ -942,9 +942,8 @@
 	. = FALSE
 	if(!(H?.client))
 		return
-	if(ishuman(H))
-		if(!Adjacent(H))
-			return
+	if(ishuman(H) && !Adjacent(H))
+		return
 	add_occupant(H)
 	H.forceMove(src)
 	H.update_mouse_pointer()
