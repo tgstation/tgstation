@@ -121,7 +121,6 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
-
 	var/pick_portal = pickweight(wave_type)
 	var/obj/spawner = pick(spawners)
 	new pick_portal(spawner.loc)
@@ -140,6 +139,10 @@ This section is for the event controller
 		spawn_portal(GLOB.crystal_invasion_waves["small wave"], spawners)
 
 /datum/round_event/crystal_invasion/tick()
+	if(dest_crystal == null)
+		processing = FALSE
+		message_admins("Deleted Destabilized crystal, aborting")
+		kill()
 	if(dest_crystal.is_stabilized == TRUE)
 		processing = FALSE
 		is_zk_scenario = FALSE
@@ -170,7 +173,7 @@ This section is for the event controller
 		spawn_portal(GLOB.crystal_invasion_waves["huge wave"], spawners)
 	explosion(dest_crystal.loc, 15, 26, 33, 35, 1, 1) //a bit smaller than max supermatter explosion
 	priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
-	qdel(dest_crystal)
+	QDEL_NULL(dest_crystal)
 
 /datum/round_event/crystal_invasion/proc/restore()
 	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
@@ -180,7 +183,7 @@ This section is for the event controller
 	new/obj/machinery/power/supermatter_crystal(loc_turf)
 	for(var/Portal in GLOB.crystal_portals)
 		qdel(Portal)
-	qdel(dest_crystal)
+	QDEL_NULL(dest_crystal)
 
 /*
 This section is for the destabilized SM
@@ -340,7 +343,7 @@ This section is for the crystal portals variations
 		return ..()
 
 /obj/structure/crystal_portal/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
+	if((W.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(W, /obj/item/anomaly_neutralizer))
 		to_chat(user, "<span class='notice'>You start closing \the [src]...</span>")
