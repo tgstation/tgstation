@@ -115,9 +115,13 @@
 	if(!law_list.len)
 		return "None"
 
-	for(var/laws in GLOB.lawset_laws)
-		if(compare_list(law_list, laws)
-			return lawset_datum.name
+	var/lawset_name = ""
+
+	for(var/i = 1, i <= GLOB.lawset_law_lists.len, i++)
+		lawset_name = GLOB.lawset_law_lists[i]
+
+		if(compare_list(law_list, GLOB.lawset_law_lists[lawset_name]))
+			return lawset_name
 
 	return "Custom"
 
