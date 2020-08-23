@@ -260,7 +260,7 @@
 /datum/quirk/GCSL
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
-	value = 1
+	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
 //Adds tongue & gloves
@@ -279,3 +279,13 @@
 /datum/quirk/GCSL/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
+//Short lol
+/datum/quirk/short
+	name = "Short"
+	desc = "Due to either being a child or from some medical defect, you are not as stanced as you'd hope you'd be."
+	value = 0
+	medical_record_text = "Patient is short."
+
+/datum/quirk/short/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.resize = 0.85

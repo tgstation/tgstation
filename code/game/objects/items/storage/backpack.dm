@@ -37,6 +37,16 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 12
 
+/obj/item/storage/backpack/invis
+	name = "clear backpack"
+	desc = "It's there I swear just believe me."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "backpack_invis"
+	inhand_icon_state = "backpack_invis"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+	resistance_flags = FIRE_PROOF
+
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
 	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."

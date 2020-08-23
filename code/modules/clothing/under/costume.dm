@@ -359,3 +359,12 @@ obj/item/clothing/under/costume/servicesuit
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/stranger
+	name = "stolen suit of armor"
+	desc = "If the King finds out you stole this you're FUCKED."
+	icon_state = "stranger"
+	inhand_icon_state = "stranger"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	can_adjust = FALSE
+	resistance_flags = NONE

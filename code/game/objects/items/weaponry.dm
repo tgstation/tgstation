@@ -817,7 +817,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 		if(4)
 			force = 10
-			light_color = "#3BED64"
+			light_color = "#119e34"
 			var/mob/living/carbon/human/L = target
 			wound_bonus = -10
 			bare_wound_bonus = 0
