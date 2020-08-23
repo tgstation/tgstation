@@ -27810,6 +27810,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmO" = (
@@ -28461,7 +28462,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bok" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
