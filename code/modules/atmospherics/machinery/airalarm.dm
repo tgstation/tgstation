@@ -103,8 +103,8 @@
 		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
-		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -129,8 +129,8 @@
 		/datum/gas/freon			= new/datum/tlv/no_checks,
 		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
-		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -155,8 +155,8 @@
 		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
-		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -548,8 +548,8 @@
 						/datum/gas/freon,
 						/datum/gas/hydrogen,
 						/datum/gas/healium,
-						/datum/gas/hydrogen_pluoxide,
-						/datum/gas/halocarbon_29,
+						/datum/gas/proto_nitrate,
+						/datum/gas/cyrion_b,
 						/datum/gas/halon,
 						/datum/gas/hexane,
 					),

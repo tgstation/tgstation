@@ -25,8 +25,8 @@
 		/datum/gas/freon,
 		/datum/gas/hydrogen,
 		/datum/gas/healium,
-		/datum/gas/hydrogen_pluoxide,
-		/datum/gas/halocarbon_29,
+		/datum/gas/proto_nitrate,
+		/datum/gas/cyrion_b,
 		/datum/gas/halon,
 		/datum/gas/hexane,
 	)

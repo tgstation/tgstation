@@ -179,21 +179,21 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/hydrogen_pluoxide
-	id = "hydrogen_pluoxide"
+/datum/gas/proto_nitrate
+	id = "proto_nitrate"
 	specific_heat = 30
-	name = "Hydrogen Pluoxide"
+	name = "Proto Nitrate"
 	dangerous = TRUE
-	gas_overlay = "hydrogen_pluoxide"
+	gas_overlay = "proto_nitrate"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/halocarbon_29
-	id = "halocarbon_29"
+/datum/gas/cyrion_b
+	id = "cyrion_b"
 	specific_heat = 350
-	name = "Halocarbon 29"
+	name = "Cyrion B"
 	dangerous = TRUE
-	gas_overlay = "halocarbon_29"
+	gas_overlay = "cyrion_b"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 

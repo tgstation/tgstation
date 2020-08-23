@@ -14,16 +14,16 @@
 	var/stamina_damage = 30
 	var/freeze_range = 4
 
-/obj/item/grenade/gas_crystal/hydrogen_pluoxide_crystal
-	name = "Hydrogen Pluoxide crystal"
-	desc = "A crystal made from the Hydrogen Pluoxide gas, you can see the liquid gases inside."
-	icon_state = "hydrogen_pluoxide_crystal"
+/obj/item/grenade/gas_crystal/proto_nitrate_crystal
+	name = "Proto Nitrate crystal"
+	desc = "A crystal made from the Proto Nitrate gas, you can see the liquid gases inside."
+	icon_state = "proto_nitrate_crystal"
 	var/refill_range = 5
 
-/obj/item/grenade/gas_crystal/halocarbon_29_crystal
-	name = "Halocarbon 29 crystal"
-	desc = "A crystal made from the Halocarbon 29 Gas, you can see the liquid plasma inside."
-	icon_state = "halocarbon_29_crystal"
+/obj/item/grenade/gas_crystal/cyrion_b_crystal
+	name = "Cyrion B crystal"
+	desc = "A crystal made from the Cyrion B Gas, you can see the liquid plasma inside."
+	icon_state = "cyrion_b_crystal"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
@@ -66,7 +66,7 @@
 				live_mob.adjust_bodytemperature(-150)
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/hydrogen_pluoxide_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/proto_nitrate_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -78,7 +78,7 @@
 			floor_loc.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/halocarbon_29_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/cyrion_b_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)

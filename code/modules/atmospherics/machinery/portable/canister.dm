@@ -67,8 +67,8 @@
 		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
-		"hydrogen_pluoxide" = /obj/machinery/portable_atmospherics/canister/hydrogen_pluoxide,
-		"halocarbon_29" = /obj/machinery/portable_atmospherics/canister/halocarbon_29,
+		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
+		"cyrion_b" = /obj/machinery/portable_atmospherics/canister/cyrion_b,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
 		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	)
@@ -208,20 +208,20 @@
 	gas_type = /datum/gas/healium
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/hydrogen_pluoxide
-	name = "hydrogen_pluoxide canister"
-	desc = "Hydrogen Pluoxide, react differently with various gases"
-	icon_state = "hydrogen_pluoxide"
-	base_icon_state = "hydrogen_pluoxide"
-	gas_type = /datum/gas/hydrogen_pluoxide
+/obj/machinery/portable_atmospherics/canister/proto_nitrate
+	name = "proto_nitrate canister"
+	desc = "Proto Nitrate, react differently with various gases"
+	icon_state = "proto_nitrate"
+	base_icon_state = "proto_nitrate"
+	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/halocarbon_29
-	name = "halocarbon_29 canister"
-	desc = "Halocarbon 29, highly toxic"
-	icon_state = "halocarbon_29"
-	base_icon_state = "halocarbon_29"
-	gas_type = /datum/gas/halocarbon_29
+/obj/machinery/portable_atmospherics/canister/cyrion_b
+	name = "cyrion_b canister"
+	desc = "Cyrion B, highly toxic"
+	icon_state = "cyrion_b"
+	base_icon_state = "cyrion_b"
+	gas_type = /datum/gas/cyrion_b
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/halon
