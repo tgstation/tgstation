@@ -1415,6 +1415,18 @@
 					/obj/item/clothing/head/helmet/monkey_sentience)
 	crate_name = "monkey mind magnification crate"
 
+/datum/supply_pack/science/cytology
+	name = "Cytology supplies crate"
+	desc = "Did out of control specimens pulverize xenobiology? Here is some more supplies for further testing."
+	cost = 1500
+	contains = list(/obj/structure/microscope,
+					/obj/item/biopsy_tool,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/swab,
+					/obj/item/construction/plumbing/research)
+	crate_name = "cytology supplies crate"
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
