@@ -53,7 +53,6 @@
 #define METAL_HYDROGEN_RESEARCH_MAX_AMOUNT	3000
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
-#define FUSION_ENERGY_THRESHOLD				1e9 	//Amount of energy it takes to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
 #define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
 #define INSTABILITY_GAS_POWER_FACTOR 		0.003
@@ -64,5 +63,5 @@
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
 #define FUSION_RAD_MAX						1500
 #define FUSION_RAD_COEFFICIENT				(-1000)
-#define FUSION_INSTABILITY_ENDOTHERMALITY   3
+#define FUSION_INSTABILITY_ENDOTHERMALITY   2
 #define FUSION_MAXIMUM_TEMPERATURE			1e8

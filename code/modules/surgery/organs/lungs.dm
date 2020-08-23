@@ -367,7 +367,7 @@
 	// Hexane
 		var/hexane_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/hexane][MOLES])
 		if(hexane_pp > gas_stimulation_min)
-			H.hallucination += 10
+			H.hallucination += 50
 			H.reagents.add_reagent(/datum/reagent/hexane,5)
 			if(prob(33))
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
