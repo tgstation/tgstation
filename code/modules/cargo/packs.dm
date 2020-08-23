@@ -2038,7 +2038,7 @@
 	cost = 5000
 	contains = list(/mob/living/simple_animal/pet/dog/bullterrier,
 					/obj/item/clothing/neck/petcollar)
-	crate_name = "pug crate"
+	crate_name = "bull terrier crate"
 
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
