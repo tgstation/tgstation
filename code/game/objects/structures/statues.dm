@@ -449,8 +449,7 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
-
-	var/list/bump_saturation = list(1,0,0, 0,1,0, 0,0,1, 0,0.1,0)
+	var/static/list/bump_saturation = list(1,0,0, 0,1,0, 0,0,1, 0,0.1,0)
 
 /obj/structure/statue/custom/proc/set_visuals(atom/movable/model)
 	content_ma = new
@@ -459,7 +458,6 @@
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
 	content_ma.color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //strip color
-	//var/static/list/bump_saturation = list(hh,hs,hv, sh,ss,sv, vh,vs,vv, ch,cs,cv)
 	content_ma.filters = filter(type="color",color=bump_saturation,space=FILTER_COLOR_HSV)
 	update_icon()
 
