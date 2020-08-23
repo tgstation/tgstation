@@ -48,3 +48,47 @@
 		return FALSE
 	to_chat(user, "<span class='notice'>You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\".</span>")
 	return FALSE
+
+/// Borg Built-in tablet interface
+/obj/item/modular_computer/tablet/integrated
+	icon_state = "tablet-red"
+	comp_light_luminosity = 0 //tablet light button actually enables/disables the borg lamp
+	has_variants = FALSE
+	///Ref to the borg we're installed in. Set by the borg during our creation.
+	var/mob/living/silicon/robot/borgo
+	///IC log that borgs can view in their personal management app
+	var/list/borglog
+
+//Makes the light settings reflect the borg's headlamp settings
+/obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
+	. = ..()
+	.["light_on"] = borgo?.lamp_enabled
+	.["comp_light_color"] = borgo?.lamp_color
+
+
+//Overrides the ui_act to make the flashlight controls link to the borg instead
+/obj/item/modular_computer/tablet/integrated/ui_act(action, params)
+	switch(action)
+		if("PC_toggle_light")
+			if(!borgo)
+				return FALSE
+			borgo.toggle_headlamp()
+			return TRUE
+
+		if("PC_light_color")
+			if(!borgo)
+				return FALSE
+			var/mob/user = usr
+			var/new_color
+			while(!new_color)
+				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
+				if(!new_color)
+					return
+				to_chat(world, "DEBUG -- hex2num color value is [color_hex2num(new_color)]")
+				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
+					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
+					new_color = null
+			borgo.lamp_color = new_color
+			borgo.toggle_headlamp(FALSE, TRUE)
+			return TRUE
+	return ..()

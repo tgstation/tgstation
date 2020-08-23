@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, NoticeBox, Section, ProgressBar, LabeledList } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, NoticeBox, Section, ProgressBar, LabeledList, Table, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosBorgUI = (props, context) => {
@@ -20,7 +20,7 @@ export const NtosBorgUIContent = (props, context) => {
   const {
     charge,
     maxcharge,
-    integrety,
+    integrity,
     modDisable,
     cover,
     locomotion,
@@ -30,9 +30,9 @@ export const NtosBorgUIContent = (props, context) => {
     wireLaw,
   } = data;
   const borgName = data.name || [];
-  const borgType = data.type || [];
+  const borgType = data.designation || [];
   const masterAI = data.masterAI || [];
-  const laws = data.laws || [];
+  const laws = data.Laws || [];
   const borgLog = data.borgLog || [];
   return (
     <Flex
@@ -47,22 +47,22 @@ export const NtosBorgUIContent = (props, context) => {
       <Flex
         direction={"row"}>
       <Flex.Item
-        width="33%">
+        width="30%">
           <Section
             title="Configuration"
             fill={1}>
             <LabeledList>
               <LabeledList.Item
                 label="Unit">
-                {borgName}
+                {borgName.slice(0,17)}
               </LabeledList.Item>
               <LabeledList.Item
                 label="Type">
                 {borgType}
               </LabeledList.Item>
               <LabeledList.Item
-                label="Master AI">
-                {masterAI}
+                label="AI">
+                {masterAI.slice(0,17)}
               </LabeledList.Item>
             </LabeledList>
           </Section>
@@ -72,13 +72,17 @@ export const NtosBorgUIContent = (props, context) => {
           <Section
             title="Status">
             Charge:
+            <Button
+              content="Power Alert"
+              disabled={charge}
+              onClick={() => act('alertPower')} />
             <ProgressBar
               value={charge / maxcharge}>
               <AnimatedNumber value={charge} />
             </ProgressBar>
             Chassis Integrity:
             <ProgressBar
-              value={integrety / 100}>
+              value={integrity / 100}>
             </ProgressBar>
           </Section>
           <Flex
@@ -127,7 +131,7 @@ export const NtosBorgUIContent = (props, context) => {
               </LabeledList.Item>
               <LabeledList.Item
               label="Camera"
-              color={wireCamera=="FALT"?"red":"green"}>
+              color={wireCamera=="FAULT"?"red":"green"}>
                 {wireCamera}
               </LabeledList.Item>
               <LabeledList.Item
@@ -145,7 +149,6 @@ export const NtosBorgUIContent = (props, context) => {
               color={cover=="UNLOCKED"?"red":"green"}>
                 <Button.Confirm
                   content={cover}
-                  tooltip={"test"}
                   disabled={cover=="UNLOCKED"}
                   onClick={() => act('coverunlock')} />
               </LabeledList.Item>
@@ -153,10 +156,11 @@ export const NtosBorgUIContent = (props, context) => {
           </Section>
       </Flex.Item>
       </Flex>
-      <Flex.Item>
+      <Flex.Item
+        height={21}>
           <Section
           title="Laws"
-          fill={1}
+          fill
             buttons={(
               <Fragment>
                 <Button
@@ -168,13 +172,13 @@ export const NtosBorgUIContent = (props, context) => {
               </Fragment>
             )}>
           <NtosWindow.Content scrollable>
-          <LabeledList>
+          <Table>
             {laws.map(law => (
-              <LabeledList.Item>
+              <Table.Row>
               {law}
-              </LabeledList.Item>
+              </Table.Row>
             ))}
-          </LabeledList>
+          </Table>
           </NtosWindow.Content>
           </Section>
       </Flex.Item>

@@ -9,15 +9,27 @@
 	usage_flags = PROGRAM_TABLET
 	size = 5
 	tgui_id = "NtosBorgUI"
-	///Log for things that happen to a borg
-	var/list/borglog
-	var/DEBUG_VAR1 = TRUE
+	///A typed reference to the computer, specifying the borg tablet type
+	var/obj/item/modular_computer/tablet/integrated/tablet
+
+/datum/computer_file/program/borgUI/run_program(mob/living/user)
+	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
+		to_chat(user, "<span class='warning'>A warning flashes across /the [computer]: Device Incompatible.</span>")
+		return FALSE
+	if(..())
+		tablet = computer
+		return TRUE
+	return FALSE
 
 /datum/computer_file/program/borgUI/ui_data(mob/user)
 	var/list/data = get_header_data()
 	if(!iscyborg(user))
 		return data
 	var/mob/living/silicon/robot/borgo = user
+
+	data["name"] = borgo.name
+	data["designation"] = borgo.designation //Borgo module type
+	data["masterAI"] = borgo.connected_ai //Master AI
 
 	var/charge = 0
 	var/maxcharge = 1
@@ -45,12 +57,9 @@
 		return data
 	var/mob/living/silicon/robot/borgo = user
 
-	data["name"] = borgo.name
-	data["designation"] = borgo.designation //Borgo module type
-	data["masterAI"] = borgo.connected_ai //Master AI
-	var/list/laws = borgo.laws.get_law_list(TRUE, TRUE, DEBUG_VAR1)
-	data["Laws"] = list(laws)
-	data["borgLog"] = list(borglog)
+	//var/list/laws = borgo.laws.get_law_list(TRUE, TRUE, DEBUG_VAR1)
+	data["Laws"] = borgo.laws.get_law_list(TRUE, TRUE, FALSE)
+	data["borgLog"] = list(tablet.borglog)
 	return data
 
 /datum/computer_file/program/borgUI/ui_act(action, params)
@@ -58,4 +67,13 @@
 		return
 
 	to_chat(world, "DEBUG -- [action]")
+	switch(action)
+		if("coverunlock")
+			tablet.borgo.locked = FALSE
+			tablet.borgo.update_icons()
 
+		if("lawchannel")
+			tablet.borgo.set_autosay()
+
+		if("lawstate")
+			tablet.borgo.checklaws()

@@ -68,16 +68,6 @@
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
-/obj/screen/robot/lamp
-	name = "headlamp"
-	icon_state = "lamp0"
-
-/obj/screen/robot/lamp/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.control_headlamp()
-
 /obj/screen/robot/thrusters
 	name = "ion thrusters"
 	icon_state = "ionpulse0"
@@ -138,18 +128,17 @@
 	using.hud = src
 	static_inventory += using
 
-//Sec/Med HUDs
-	using = new /obj/screen/ai/sensors()
-	using.screen_loc = ui_borg_sensor
+//Borg Integrated Tablet
+	using = new /obj/screen/robot/modPC()
+	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
 
-//Headlamp control
-	using = new /obj/screen/robot/lamp()
-	using.screen_loc = ui_borg_lamp
+//Alerts
+	using = new /obj/screen/robot/alerts()
+	using.screen_loc = ui_borg_alerts
 	using.hud = src
 	static_inventory += using
-	mymobR.lamp_button = using
 
 //Thrusters
 	using = new /obj/screen/robot/thrusters()
@@ -282,6 +271,36 @@
 						else
 							return
 					screenmob.client.screen += I
+
+			if(R.modularInterface)
+				R.modularInterface.screen_loc = ui_borg_tablet
+				screenmob.client.screen += R.modularInterface
 		else
 			for(var/obj/item/I in R.held_items)
 				screenmob.client.screen -= I
+
+			if(R.modularInterface)
+				screenmob.client.screen -= R.modularInterface
+
+/obj/screen/robot/modPC
+	name = "Modular Interface"
+	icon_state = "template"
+
+/obj/screen/robot/modPC/Click()
+	if(..())
+		return
+	var/mob/living/silicon/robot/borgo = usr
+	if(!istype(borgo))
+		return
+	borgo.modularInterface.interact(borgo)
+
+/obj/screen/robot/alerts
+	name = "Alert Panel"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "alerts"
+
+/obj/screen/robot/alerts/Click()
+	if(..())
+		return
+	var/mob/living/silicon/robot/borgo = usr
+	borgo.robot_alerts()

@@ -1,11 +1,3 @@
-/mob/living/silicon/robot/verb/cmd_show_laws()
-	set category = "Robot Commands"
-	set name = "Show Laws"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	show_laws()
-
 /mob/living/silicon/robot/deadchat_lawchange()
 	if(lawupdate)
 		return

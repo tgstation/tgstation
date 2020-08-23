@@ -29,6 +29,7 @@ export const NtosMain = (props, context) => {
     light_on,
     comp_light_color,
     removable_media = [],
+    cardholder,
     login = [],
   } = data;
   return (
@@ -58,6 +59,7 @@ export const NtosMain = (props, context) => {
             </Button>
           </Section>
         )}
+        {!!cardholder && (
         <Section
           title="User Login"
           buttons={(
@@ -77,6 +79,7 @@ export const NtosMain = (props, context) => {
             </Table.Row>
           </Table>
         </Section>
+        )}
         {!!removable_media.length && (
           <Section title="Media Eject">
             <Table>

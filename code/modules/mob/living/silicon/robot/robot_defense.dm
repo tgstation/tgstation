@@ -214,13 +214,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
 			return
-		if(lamp_cooldown <= world.time)
+		if(lamp_functional)
 			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
 			return
-		lamp_cooldown = 0
+		lamp_functional = TRUE
 		qdel(W)
 		to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 		return

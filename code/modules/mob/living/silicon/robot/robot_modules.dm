@@ -229,7 +229,7 @@
 	R.set_anchored(FALSE)
 	R.notransform = FALSE
 	R.updatehealth()
-	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
+	R.update_icons()
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()

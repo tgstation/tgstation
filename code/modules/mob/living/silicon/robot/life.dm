@@ -12,7 +12,6 @@
 		if(low_power_mode)
 			if(cell && cell.charge)
 				low_power_mode = 0
-				update_headlamp()
 		else if(stat == CONSCIOUS)
 			use_power()
 
@@ -20,12 +19,13 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		to_chat(world, "DEBUG -- lamp power is currently [lamp_enabled * round(hex2num(lamp_color)/100)]")
+		var/amt = clamp(lamp_enabled * round(hex2num(lamp_color)/100),1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
 		low_power_mode = 1
-		update_headlamp()
+		toggle_headlamp(TRUE)
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_robot_hud_updates()
