@@ -394,7 +394,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
+/mob/living/carbon/human/proc/Robotize(delete_items = FALSE, transfer_after = TRUE, connect_to_ai = TRUE)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -411,7 +411,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
+	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc, connect_to_ai)
 
 	R.gender = gender
 	R.invisibility = 0

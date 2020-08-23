@@ -10,21 +10,23 @@ GLOBAL_LIST_INIT(lawset_laws, get_lawset_laws())
 
 		.["[lawset]"] = list()
 
-		.["[lawset]"]["hacked"] = list()
+		.["[lawset]"][LAW_ZEROTH] = lawset_datum.zeroth
 
-		.["[lawset]"]["hacked"] = lawset_datum.hacked
+		.["[lawset]"][LAW_HACKED] = list()
 
-		.["[lawset]"]["ion"] = list()
+		.["[lawset]"][LAW_HACKED] = lawset_datum.hacked
 
-		.["[lawset]"]["ion"] = lawset_datum.ion
+		.["[lawset]"][LAW_ION] = list()
 
-		.["[lawset]"]["inherent"] = list()
+		.["[lawset]"][LAW_ION] = lawset_datum.ion
 
-		.["[lawset]"]["inherent"] = lawset_datum.inherent
+		.["[lawset]"][LAW_INHERENT] = list()
 
-		.["[lawset]"]["supplied"] = list()
+		.["[lawset]"][LAW_INHERENT] = lawset_datum.inherent
 
-		.["[lawset]"]["supplied"] = lawset_datum.supplied
+		.["[lawset]"][LAW_SUPPLIED] = list()
+
+		.["[lawset]"][LAW_SUPPLIED] = lawset_datum.supplied
 
 GLOBAL_LIST_INIT(lawset_law_lists, get_lawset_law_lists())
 

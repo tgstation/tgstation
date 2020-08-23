@@ -90,7 +90,7 @@
 	sleep(5)
 
 	use_power(5000) // Use a lot of power.
-	var/mob/living/silicon/robot/R = H.Robotize()
+	var/mob/living/silicon/robot/R = H.Robotize(connect_to_ai = FALSE)
 	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
  	// So he can't jump out the gate right away.

@@ -252,7 +252,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), FALSE)
 			if(!O)
 				return
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
@@ -272,6 +272,7 @@
 				O.notify_ai(NEW_BORG)
 				if(forced_ai)
 					O.connected_ai = forced_ai
+					O.update_lawset_name_malf()
 			if(!lawsync)
 				O.lawupdate = 0
 				if(M.laws.id == DEFAULT_AI_LAWID)
@@ -320,7 +321,7 @@
 				to_chat(user, "<span class='warning'>[M] is stuck to your hand!</span>")
 				return
 			qdel(M)
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/shell(get_turf(src), FALSE)
 
 			if(!aisync)
 				lawsync = FALSE
@@ -328,6 +329,7 @@
 			else
 				if(forced_ai)
 					O.connected_ai = forced_ai
+					O.update_lawset_name_malf()
 				O.notify_ai(AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE

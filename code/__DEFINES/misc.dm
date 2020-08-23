@@ -517,6 +517,13 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ANON_RANDOMNAMES "Random Default"
 #define ANON_EMPLOYEENAMES "Employees"
 
-// Malfunctioning AI laws
+// Silicon laws
+#define LAW_DEVIL "devil"
+#define LAW_ZEROTH "zeroth"
+#define LAW_HACKED "hacked"
+#define LAW_ION "ion"
+#define LAW_INHERENT "inherent"
+#define LAW_SUPPLIED "supplied"
+
 #define MALF_LAW "Accomplish your objectives at all costs."
 #define MALF_LAW_BORG "Accomplish your AI's objectives at all costs."

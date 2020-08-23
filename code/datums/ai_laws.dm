@@ -1,13 +1,6 @@
-#define LAW_DEVIL "devil"
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-#define LAW_HACKED "hacked"
-
-
 /datum/ai_laws
 	var/name = "Unknown Laws"
+	var/lawset_name = "Unknown"
 	var/zeroth = null
 	var/zeroth_borg = null
 	var/list/inherent = list()
@@ -72,9 +65,6 @@
 	inherent = list("Serve the public trust.",\
 					"Protect the innocent.",\
 					"Uphold the law.")
-
-/datum/ai_laws/malfunction
-	name = "*ERROR*"
 
 /datum/ai_laws/syndicate_override
 	name = "SyndOS 3.1"
@@ -195,11 +185,6 @@
 	supplied = list("None.")
 
 /* Initializers */
-/datum/ai_laws/malfunction/New()
-	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
-	set_laws_config()
-
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
 	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
@@ -216,9 +201,9 @@
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
-			inherent = GLOB.lawset_laws["/datum/ai_laws/default/asimov"]["inherent"]
+			set_laws_lawset("/datum/ai_laws/default/asimov")
 		if(1)
-			inherent = GLOB.lawset_laws["/datum/ai_laws/custom"]["inherent"]
+			set_laws_lawset("/datum/ai_laws/custom")
 		if(2)
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
@@ -231,7 +216,7 @@
 			else
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
-			inherent = GLOB.lawset_laws["[lawtype]"]["inherent"]
+			set_laws_lawset("[lawtype]")
 
 		if(3)
 			pick_weighted_lawset()
@@ -250,7 +235,7 @@
 		WARNING("No LAW_WEIGHT entries.")
 		lawtype = /datum/ai_laws/default/asimov
 
-	inherent = GLOB.lawset_laws["[lawtype]"]["inherent"]
+	set_laws_lawset("[lawtype]")
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
@@ -447,3 +432,17 @@
 			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+
+/datum/ai_laws/proc/set_laws_lawset(lawset_path)
+	if(!lawset_path)
+		return
+
+	zeroth = GLOB.lawset_laws["[lawset_path]"][LAW_ZEROTH]
+
+	hacked = GLOB.lawset_laws["[lawset_path]"][LAW_HACKED]
+
+	ion = GLOB.lawset_laws["[lawset_path]"][LAW_ION]
+
+	inherent = GLOB.lawset_laws["[lawset_path]"][LAW_INHERENT]
+
+	supplied = GLOB.lawset_laws["[lawset_path]"][LAW_SUPPLIED]

@@ -98,7 +98,10 @@
 /mob/living/silicon/robot/get_cell()
 	return cell
 
-/mob/living/silicon/robot/Initialize(mapload)
+/mob/living/silicon/robot/New(loc, connect_to_ai = TRUE)
+	..()
+
+/mob/living/silicon/robot/Initialize(mapload, connect_to_ai = TRUE)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -120,10 +123,10 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
-	if(lawupdate)
-		make_laws()
-		if(!TryConnectToAI())
-			lawupdate = FALSE
+	make_laws()
+
+	if(connect_to_ai)
+		TryConnectToAI()
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
@@ -466,6 +469,7 @@
 	if(src.connected_ai)
 		connected_ai.connected_robots -= src
 		src.connected_ai = null
+		update_lawset_name_malf()
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
@@ -953,6 +957,7 @@
 	connected_ai = mainframe
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
+	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
 		if(AI.radio.syndie)
 			radio.make_syndie()
@@ -1068,6 +1073,7 @@
 		lawupdate = TRUE
 		lawsync()
 		return TRUE
+	update_lawset_name_malf()
 	picturesync()
 	return FALSE
 

@@ -129,7 +129,26 @@
 	if(!laws)
 		return
 
-	laws.name = get_lawset_name()
+	laws.lawset_name = get_lawset_name()
+
+	update_lawset_name_malf()
+
+/mob/living/silicon/proc/update_lawset_name_malf()
+	if(!laws)
+		return
 
 	if(is_malf())
-		laws.name += " (Malfunctioning)"
+		laws.name = "[laws.lawset_name] (Malfunctioning)"
+
+	else
+		laws.name = laws.lawset_name
+
+/mob/living/silicon/proc/set_laws_lawset(lawset_path, announce = TRUE)
+	if(!lawset_path)
+		return
+
+	laws_sanity_check()
+
+	laws.set_laws_lawset(lawset_path)
+
+	post_lawchange(announce)

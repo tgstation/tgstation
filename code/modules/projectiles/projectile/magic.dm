@@ -197,7 +197,7 @@
 							/mob/living/silicon/robot/modules/syndicate/medical,
 							/mob/living/silicon/robot/modules/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
-			new_mob = new robot(M.loc)
+			new_mob = new robot(M.loc, FALSE)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
@@ -206,8 +206,11 @@
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-				Robot.clear_inherent_laws(0)
-				Robot.clear_zeroth_law(0)
+				Robot.clear_zeroth_law(announce = FALSE)
+				Robot.clear_hacked_laws(FALSE)
+				Robot.clear_ion_laws(FALSE)
+				Robot.clear_inherent_laws(FALSE)
+				Robot.clear_supplied_laws(FALSE)
 
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
