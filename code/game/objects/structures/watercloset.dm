@@ -405,6 +405,8 @@
 /obj/structure/sink/process()
 	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
 		reagents.add_reagent(dispensedreagent, 1)
+	else
+		return PROCESS_KILL
 
 /obj/structure/sink/proc/drop_materials()
 	if(buildstacktype)

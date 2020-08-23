@@ -140,7 +140,8 @@
 		soundloop.stop()
 		handle_mist()
 		update_icon()
-		return
+	if(reagents.total_volume == reagents.maximum_volume)
+		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal(drop_location(), 3)

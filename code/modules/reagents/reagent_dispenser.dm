@@ -250,7 +250,7 @@
 	. = ..()
 	if(reagents)
 		if(reagents.total_volume)
-			var/mutable_appearance/tank_color = mutable_appearance('icons/obj/objects.dmi', "tank_chem_overlay")
+			var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
 			tank_color.color = mix_color_from_reagents(reagents.reagent_list)
 			add_overlay(tank_color)
 		else
