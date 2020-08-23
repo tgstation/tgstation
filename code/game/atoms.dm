@@ -1170,19 +1170,19 @@
 		return TRUE
 	switch(tool_type)
 		if(TOOL_CROWBAR)
-			crowbar_act(user, I)
+			. = crowbar_act(user, I)
 		if(TOOL_MULTITOOL)
-			multitool_act(user, I)
+			. = multitool_act(user, I)
 		if(TOOL_SCREWDRIVER)
-			screwdriver_act(user, I)
+			. = screwdriver_act(user, I)
 		if(TOOL_WRENCH)
-			wrench_act(user, I)
+			. = wrench_act(user, I)
 		if(TOOL_WIRECUTTER)
-			wirecutter_act(user, I)
+			. = wirecutter_act(user, I)
 		if(TOOL_WELDER)
-			welder_act(user, I)
+			. = welder_act(user, I)
 		if(TOOL_ANALYZER)
-			analyzer_act(user, I)
+			. = analyzer_act(user, I)
 	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
 		return TRUE
 
