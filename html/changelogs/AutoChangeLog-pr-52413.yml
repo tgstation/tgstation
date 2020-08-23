@@ -1,5 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - rscadd: "Smooth movable lighting system implemented. Projectiles, sparks, thrown flashlights or moving mobs with lights should be much smoother and less laggy."
-  - balance: "Light sources no longer stack in range, though they still do in intensity."

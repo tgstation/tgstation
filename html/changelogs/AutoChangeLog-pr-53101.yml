@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Invasive spreading on plant trays now correctly updates the tray's name with the new plant's species."

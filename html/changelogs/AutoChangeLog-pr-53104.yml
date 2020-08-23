@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Plants mutated via wild mutation now spawn at the correct size based on the mutated seed's potency."
