@@ -877,7 +877,7 @@
 	result = /obj/structure/statue/elder_atmosian
 	time = 6 SECONDS
 	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
-				/obj/item/grenade/gas_crystal/raynar_crystal = 1,
-				/obj/item/grenade/gas_crystal/roinneil_crystal = 1,
-				/obj/item/grenade/gas_crystal/cymar_crystal = 1,)
+				/obj/item/grenade/gas_crystal/healium_crystal = 1,
+				/obj/item/grenade/gas_crystal/hydrogen_pluoxide_crystal = 1,
+				/obj/item/grenade/gas_crystal/halocarbon_29_crystal = 1,)
 	category = CAT_MISC

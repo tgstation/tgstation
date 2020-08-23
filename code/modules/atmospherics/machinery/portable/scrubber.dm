@@ -24,11 +24,11 @@
 		/datum/gas/water_vapor,
 		/datum/gas/freon,
 		/datum/gas/hydrogen,
-		/datum/gas/raynar,
-		/datum/gas/roinneil,
-		/datum/gas/cymar,
+		/datum/gas/healium,
+		/datum/gas/hydrogen_pluoxide,
+		/datum/gas/halocarbon_29,
 		/datum/gas/halon,
-		/datum/gas/sivana,
+		/datum/gas/hexane,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()

@@ -7,23 +7,23 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/item/grenade/gas_crystal/raynar_crystal
-	name = "Raynar crystal"
-	desc = "A crystal made from the Raynar gas, it's cold to the touch."
-	icon_state = "raynar_crystal"
+/obj/item/grenade/gas_crystal/healium_crystal
+	name = "Healium crystal"
+	desc = "A crystal made from the Healium gas, it's cold to the touch."
+	icon_state = "healium_crystal"
 	var/stamina_damage = 30
 	var/freeze_range = 4
 
-/obj/item/grenade/gas_crystal/roinneil_crystal
-	name = "Roinneil crystal"
-	desc = "A crystal made from the Roinneil gas, you can see the liquid gases inside."
-	icon_state = "roinneil_crystal"
+/obj/item/grenade/gas_crystal/hydrogen_pluoxide_crystal
+	name = "Hydrogen Pluoxide crystal"
+	desc = "A crystal made from the Hydrogen Pluoxide gas, you can see the liquid gases inside."
+	icon_state = "hydrogen_pluoxide_crystal"
 	var/refill_range = 5
 
-/obj/item/grenade/gas_crystal/cymar_crystal
-	name = "Cymar crystal"
-	desc = "A crystal made from the Cymar Gas, you can see the liquid plasma inside."
-	icon_state = "cymar_crystal"
+/obj/item/grenade/gas_crystal/halocarbon_29_crystal
+	name = "Halocarbon 29 crystal"
+	desc = "A crystal made from the Halocarbon 29 Gas, you can see the liquid plasma inside."
+	icon_state = "halocarbon_29_crystal"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
@@ -45,7 +45,7 @@
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/gas_crystal/raynar_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/healium_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -66,7 +66,7 @@
 				live_mob.adjust_bodytemperature(-150)
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/roinneil_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/hydrogen_pluoxide_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
@@ -78,7 +78,7 @@
 			floor_loc.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/cymar_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/halocarbon_29_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)

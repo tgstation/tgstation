@@ -170,30 +170,30 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 700
 
-/datum/gas/raynar
-	id = "raynar"
+/datum/gas/healium
+	id = "healium"
 	specific_heat = 10
-	name = "Raynar"
+	name = "Healium"
 	dangerous = TRUE
-	gas_overlay = "raynar"
+	gas_overlay = "healium"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/roinneil
-	id = "roinneil"
+/datum/gas/hydrogen_pluoxide
+	id = "hydrogen_pluoxide"
 	specific_heat = 30
-	name = "Roinneil"
+	name = "Hydrogen Pluoxide"
 	dangerous = TRUE
-	gas_overlay = "roinneil"
+	gas_overlay = "hydrogen_pluoxide"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/cymar
-	id = "cymar"
+/datum/gas/halocarbon_29
+	id = "halocarbon_29"
 	specific_heat = 350
-	name = "Cymar"
+	name = "Halocarbon 29"
 	dangerous = TRUE
-	gas_overlay = "cymar"
+	gas_overlay = "halocarbon_29"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
@@ -206,12 +206,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/sivana
-	id = "sivana"
+/datum/gas/hexane
+	id = "hexane"
 	specific_heat = 5
-	name = "Sivana"
+	name = "Hexane"
 	dangerous = TRUE
-	gas_overlay = "sivana"
+	gas_overlay = "hexane"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 

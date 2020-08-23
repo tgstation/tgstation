@@ -111,11 +111,11 @@
 						/datum/gas/stimulum,
 						/datum/gas/freon,
 						/datum/gas/hypernoblium,
-						/datum/gas/raynar,
-						/datum/gas/roinneil,
-						/datum/gas/cymar,
+						/datum/gas/healium,
+						/datum/gas/hydrogen_pluoxide,
+						/datum/gas/halocarbon_29,
 						/datum/gas/halon,
-						/datum/gas/sivana
+						/datum/gas/hexane
 						)
 
 	//Partial pressures in our breath
@@ -331,33 +331,33 @@
 
 		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
 
-	// Raynar
-		var/raynar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/raynar][MOLES])
-		if(raynar_pp > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/raynar)
-			H.reagents.add_reagent(/datum/reagent/raynar,max(0, 1 - existing))
+	// Healium
+		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
+		if(healium_pp > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
+			H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
 			H.adjustOxyLoss(-5)
 			H.adjustFireLoss(-7)
 			H.adjustToxLoss(-7)
 			H.adjustBruteLoss(-10)
-		gas_breathed = breath_gases[/datum/gas/raynar][MOLES]
-		breath_gases[/datum/gas/raynar][MOLES]-=gas_breathed
+		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
+		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
 
-	// Roinneil
+	// Hydrogen Pluoxide
 		// Inert
-	// Cymar
-		var/cymar_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/cymar][MOLES])
-		if(cymar_pp > gas_stimulation_min)
+	// Halocarbon 29
+		var/halocarbon_29_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/halocarbon_29][MOLES])
+		if(halocarbon_29_pp > gas_stimulation_min)
 			H.adjustBruteLoss(25)
 			H.adjustOxyLoss(5)
 			H.adjustFireLoss(8)
 			H.adjustToxLoss(8)
-		gas_breathed = breath_gases[/datum/gas/cymar][MOLES]
-		breath_gases[/datum/gas/cymar][MOLES]-=gas_breathed
+		gas_breathed = breath_gases[/datum/gas/halocarbon_29][MOLES]
+		breath_gases[/datum/gas/halocarbon_29][MOLES]-=gas_breathed
 
 	// Halon
 
-	// Sivana
+	// Hexane
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

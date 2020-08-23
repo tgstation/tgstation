@@ -102,11 +102,11 @@
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
-		/datum/gas/raynar			= new/datum/tlv/dangerous,
-		/datum/gas/roinneil			= new/datum/tlv/dangerous,
-		/datum/gas/cymar			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
+		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/sivana			= new/datum/tlv/dangerous
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -128,11 +128,11 @@
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
 		/datum/gas/freon			= new/datum/tlv/no_checks,
 		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
-		/datum/gas/raynar			= new/datum/tlv/dangerous,
-		/datum/gas/roinneil			= new/datum/tlv/dangerous,
-		/datum/gas/cymar			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
+		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/sivana			= new/datum/tlv/dangerous
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
@@ -154,11 +154,11 @@
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
-		/datum/gas/raynar			= new/datum/tlv/dangerous,
-		/datum/gas/roinneil			= new/datum/tlv/dangerous,
-		/datum/gas/cymar			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen_pluoxide			= new/datum/tlv/dangerous,
+		/datum/gas/halocarbon_29			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
-		/datum/gas/sivana			= new/datum/tlv/dangerous
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -547,11 +547,11 @@
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
 						/datum/gas/hydrogen,
-						/datum/gas/raynar,
-						/datum/gas/roinneil,
-						/datum/gas/cymar,
+						/datum/gas/healium,
+						/datum/gas/hydrogen_pluoxide,
+						/datum/gas/halocarbon_29,
 						/datum/gas/halon,
-						/datum/gas/sivana,
+						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1

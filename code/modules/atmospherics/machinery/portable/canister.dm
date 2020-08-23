@@ -66,11 +66,11 @@
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
 		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
-		"raynar" = /obj/machinery/portable_atmospherics/canister/raynar,
-		"roinneil" = /obj/machinery/portable_atmospherics/canister/roinneil,
-		"cymar" = /obj/machinery/portable_atmospherics/canister/cymar,
+		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
+		"hydrogen_pluoxide" = /obj/machinery/portable_atmospherics/canister/hydrogen_pluoxide,
+		"halocarbon_29" = /obj/machinery/portable_atmospherics/canister/halocarbon_29,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
-		"sivana" = /obj/machinery/portable_atmospherics/canister/sivana
+		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -200,44 +200,44 @@
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/raynar
-	name = "raynar canister"
-	desc = "Raynar, causes deep sleep"
-	icon_state = "raynar"
-	base_icon_state = "raynar"
-	gas_type = /datum/gas/raynar
+/obj/machinery/portable_atmospherics/canister/healium
+	name = "Healium canister"
+	desc = "Healium, causes deep sleep"
+	icon_state = "healium"
+	base_icon_state = "healium"
+	gas_type = /datum/gas/healium
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/roinneil
-	name = "roinneil canister"
-	desc = "Roinneil, uses high temperatures to have different reaction with various gases"
-	icon_state = "roinneil"
-	base_icon_state = "roinneil"
-	gas_type = /datum/gas/roinneil
+/obj/machinery/portable_atmospherics/canister/hydrogen_pluoxide
+	name = "hydrogen_pluoxide canister"
+	desc = "Hydrogen Pluoxide, react differently with various gases"
+	icon_state = "hydrogen_pluoxide"
+	base_icon_state = "hydrogen_pluoxide"
+	gas_type = /datum/gas/hydrogen_pluoxide
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/cymar
-	name = "cymar canister"
-	desc = "Cymar, highly toxic"
-	icon_state = "cymar"
-	base_icon_state = "cymar"
-	gas_type = /datum/gas/cymar
+/obj/machinery/portable_atmospherics/canister/halocarbon_29
+	name = "halocarbon_29 canister"
+	desc = "Halocarbon 29, highly toxic"
+	icon_state = "halocarbon_29"
+	base_icon_state = "halocarbon_29"
+	gas_type = /datum/gas/halocarbon_29
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "halon canister"
-	desc = "Halon, remove oxigen from high temperature fires and cool down the area"
+	desc = "Halon, remove oxygen from high temperature fires and cool down the area"
 	icon_state = "halon"
 	base_icon_state = "halon"
 	gas_type = /datum/gas/halon
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/sivana
-	name = "sivana canister"
-	desc = "sivana, highly flammable"
-	icon_state = "sivana"
-	base_icon_state = "sivana"
-	gas_type = /datum/gas/sivana
+/obj/machinery/portable_atmospherics/canister/hexane
+	name = "hexane canister"
+	desc = "hexane, highly flammable"
+	icon_state = "hexane"
+	base_icon_state = "hexane"
+	gas_type = /datum/gas/hexane
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/fusion_test

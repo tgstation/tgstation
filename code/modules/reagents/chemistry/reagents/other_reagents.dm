@@ -1351,19 +1351,19 @@
 		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
 	return ..()
 
-/datum/reagent/raynar
-	name = "Raynar"
+/datum/reagent/healium
+	name = "Healium"
 	description = "A Powerful sleeping agent with healing properties"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "rubbery"
 
-/datum/reagent/raynar/on_mob_metabolize(mob/living/L)
+/datum/reagent/healium/on_mob_metabolize(mob/living/L)
 	. = ..()
 	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
 
-/datum/reagent/raynar/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
 	return ..()
 
