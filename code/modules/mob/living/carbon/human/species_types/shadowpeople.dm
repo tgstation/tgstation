@@ -221,8 +221,7 @@
 			M.visible_message("<span class='danger'>[M]'s lights burn out!</span>")
 			M.mecha_flags &= ~HAS_LIGHTS
 		M.set_light_on(FALSE)
-		for(var/O in M.occupants)
-			var/mob/living/occupant = O
+		for(var/occupant in M.occupants)
 			M.remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 		for(var/obj/item/O in AM.GetAllContents())
 			if(O.light_range && O.light_power)

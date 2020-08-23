@@ -133,8 +133,7 @@
 	to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
 	log_message("Toggled strafing mode [strafe?"on":"off"].", LOG_MECHA)
 
-	for(var/O in occupants)
-		var/mob/living/occupant = O
+	for(var/occupant in occupants)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
 		action?.UpdateButtonIcon()
 
@@ -161,13 +160,11 @@
 		chassis.leg_overload_mode = !chassis.leg_overload_mode
 	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
-	if(chassis.leg_overload_mode)
-		chassis.leg_overload_mode = 1
-		chassis.movedelay = min(1, round(chassis.movedelay/2))
+	if(!chassis.leg_overload_mode)
+		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='danger'>You enable leg actuators overload.</span>")
 	else
-		chassis.leg_overload_mode = 0
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>You disable leg actuators overload.</span>")
