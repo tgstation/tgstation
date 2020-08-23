@@ -10,7 +10,7 @@
 	can_buckle = FALSE
 	resistance_flags = INDESTRUCTIBLE // Just to be safe.
 	///What color is your mob set to when crossed?
-	var/team_color = "#ffffff"
+	var/team_color = COLOR_WHITE
 	///What radio station is your radio set to when crossed (And human)?
 	var/team_radio = FREQ_COMMON
 
