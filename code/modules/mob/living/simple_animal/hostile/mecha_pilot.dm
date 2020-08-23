@@ -201,9 +201,9 @@
 	if(!.)
 		return
 	if(!mecha)
-		for(var/obj/vehicle/sealed/mecha/combat/C in range(src,vision_range))
-			if(is_valid_mecha(C))
-				target = C //Let's nab it!
+		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
+			if(is_valid_mecha(mecha_in_range))
+				target = mecha_in_range //Let's nab it!
 				minimum_distance = 1
 				ranged = 0
 				break
