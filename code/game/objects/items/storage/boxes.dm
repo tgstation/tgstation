@@ -1108,7 +1108,8 @@
 	icon_state = "gangtool-white"
 
 /obj/item/choice_beacon/ingredient/generate_display_names()
-	var/list/ingredients
+	var/static/list/ingredients
+	if(!ingredients)
 		ingredients = list()
 		var/list/templist = list(/obj/item/storage/box/ingredients/wildcard,
 							/obj/item/storage/box/ingredients/fiesta,
@@ -1122,7 +1123,7 @@
 							/obj/item/storage/box/ingredients/carnivore,
 							/obj/item/storage/box/ingredients/exotic
 							)
-		for(var/V in subtypesof(/obj/item/storage/box/ingredients))
+		for(var/V in templist)
 			var/obj/item/storage/box/ingredients/A = V
 			ingredients[initial(A.theme_name)] = A
 	return ingredients
