@@ -197,7 +197,8 @@
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/handle_automated_action()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if(!mecha)
 		for(var/obj/vehicle/sealed/mecha/combat/C in range(src,vision_range))
