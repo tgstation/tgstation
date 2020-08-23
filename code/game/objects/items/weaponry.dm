@@ -406,8 +406,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 1 // HEADSTRONG WE'RE HEADSTRONG
-	throwforce = 1
+	force = 5
+	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
@@ -420,8 +420,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	force = 1 // I WILL NOT BOW I WILL NOT BREAK! I WILL NOT FALL I WILL NOT FADE!
-	throwforce = 1
+	force = 3
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -445,8 +445,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 1
-	throwforce = 1
+	force = 3
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -530,7 +530,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
 	icon_state = "tailclub"
-	force = 4 // why are you using a club do you even roleplay
+	force = 14
 	throwforce = 1 // why are you throwing a club do you even weapon
 	throw_speed = 1
 	throw_range = 1
@@ -555,8 +555,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
 	icon_state = "skateboard"
 	inhand_icon_state = "skateboard"
-	force = 1 // ALL IS LOST BUT I'M NOT GIVING IN
-	throwforce = 1
+	force = 12
+	throwforce = 4
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("smacks", "whacks", "slams", "smashes")
 	attack_verb_simple = list("smack", "whack", "slam", "smash")
@@ -592,16 +592,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
 /obj/item/melee/baseball_bat
-	name = "toy baseball bat"
-	desc = "What for? A baseball hasn't even been included in this place."
+	name = "baseball bat"
+	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "baseball_bat"
 	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 1 // I CAN'T ESCAPE MYSELF SO MANY TIMES I'VE LIED
-	wound_bonus = 0
-	throwforce = 1
+	force = 10
+	wound_bonus = -10
+	throwforce = 12
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
