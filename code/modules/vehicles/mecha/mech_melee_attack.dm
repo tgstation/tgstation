@@ -9,7 +9,7 @@
 			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 			mecha_attacker.visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 							"<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			if(prob(hardness + M.force) && mecha_attacker.force > 20)
+			if(prob(hardness + mecha_attacker.force) && mecha_attacker.force > 20)
 				dismantle_wall(1)
 				playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 			else
@@ -57,7 +57,7 @@
 		switch(mecha_attacker.damtype)
 			if(BRUTE)
 				Unconscious(20)
-				take_overall_damage(rand(M.force/2, mecha_attacker.force))
+				take_overall_damage(rand(mecha_attacker.force/2, mecha_attacker.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 			if(BURN)
 				take_overall_damage(0, rand(mecha_attacker.force * 0.5, mecha_attacker.force))
@@ -70,7 +70,7 @@
 		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
 		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-		log_combat(user, src, "attacked", M, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+		log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	else
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
