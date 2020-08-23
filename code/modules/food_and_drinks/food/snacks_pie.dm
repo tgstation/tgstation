@@ -130,7 +130,7 @@
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
+	tastes = list("pie" = 1, "meat" = 1, ACID = 1)
 	foodtype = GRAIN | MEAT
 	value = FOOD_EXOTIC
 
