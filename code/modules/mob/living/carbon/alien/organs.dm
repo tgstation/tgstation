@@ -161,7 +161,7 @@
 
 /obj/item/organ/alien/acid
 	name = "acid gland"
-	icon_state = "acid"
+	icon_state = ACID
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = "acidgland"
 	alien_powers = list(/obj/effect/proc_holder/alien/acid)

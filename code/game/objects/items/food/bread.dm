@@ -70,7 +70,7 @@
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 35, /datum/reagent/consumable/nutriment/vitamin = 15)
-	tastes = list("bread" = 10, "acid" = 10)
+	tastes = list("bread" = 10, ACID = 10)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/bread/xenomeat/Initialize()

@@ -386,7 +386,7 @@
 	icon_state = "hardware_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
 	bonus_reagents = list(/datum/reagent/toxin/acid = 15, /datum/reagent/fuel/oil = 15)
-	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
+	tastes = list(ACID = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
 	value = FOOD_EXOTIC
 
@@ -395,7 +395,7 @@
 	desc = "A slice of electronic boards and some acid."
 	icon_state = "hardware_cake_slice"
 	filling_color = "#00FFFF"
-	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
+	tastes = list(ACID = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
 
 /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
