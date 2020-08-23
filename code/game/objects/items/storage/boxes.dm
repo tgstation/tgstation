@@ -962,7 +962,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
 
-/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef used to spawn with, it shouldn't actually exist.
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
 	var/theme_name
