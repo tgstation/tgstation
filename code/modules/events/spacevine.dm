@@ -126,7 +126,7 @@
 	return 1
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
-	if(I && I.damtype == FIRE)
+	if(I && I.damtype == BURN)
 		. = 0
 	else
 		. = expected_damage

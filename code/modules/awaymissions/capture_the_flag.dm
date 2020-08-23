@@ -463,7 +463,7 @@
 	projectile_type = /obj/projectile/beam/ctf/red
 
 /obj/projectile/beam/ctf/red
-	icon_state = LASER
+	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 // BLUE TEAM GUNS

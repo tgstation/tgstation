@@ -227,7 +227,7 @@
 			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
 			playsound(loc, acti_sound, 50, TRUE)
 			force = 15
-			damtype = FIRE
+			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)

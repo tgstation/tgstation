@@ -1,6 +1,6 @@
 /obj/projectile/magic
 	name = "bolt"
-	icon_state = ENERGY
+	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
@@ -113,7 +113,7 @@
 
 /obj/projectile/magic/door
 	name = "bolt of door creation"
-	icon_state = ENERGY
+	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE

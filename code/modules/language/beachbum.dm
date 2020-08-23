@@ -4,7 +4,7 @@
 	key = "u"
 	space_chance = 85
 	default_priority = 90
-	syllables = list("cowabunga", RAD, "radical", "dudes", "bogus", "weeed", "every",
+	syllables = list("cowabunga", "rad", "radical", "dudes", "bogus", "weeed", "every",
 					"dee", "dah", "woah", "surf", "blazed", "high", "heinous", "day",
 					"brah", "bro", "blown", "catch", "body", "beach", "oooo", "twenty",
 					"shiz", "phiz", "wizz", "pop", "chill", "awesome", "dude", "it",
