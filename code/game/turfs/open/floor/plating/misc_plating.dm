@@ -191,7 +191,6 @@
 	icon = 'icons/turf/floors/ice_turf.dmi'
 	icon_state = "unsmooth"
 	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
@@ -215,12 +214,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_ICE)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_ICE)
 
-/turf/open/floor/plating/ice/colder
-	temperature = 140
-
-/turf/open/floor/plating/ice/temperate
-	temperature = 255.37
-
 /turf/open/floor/plating/ice/break_tile()
 	return
 
@@ -237,7 +230,6 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
@@ -259,11 +251,8 @@
 	icon = 'icons/turf/floors/snow_turf.dmi'
 	icon_state = "smooth"
 
-/turf/open/floor/plating/snowed/colder
-	temperature = 140
-
 /turf/open/floor/plating/snowed/temperatre
-	temperature = 255.37
+	initial_gas_mix = ""o2=22;n2=82;TEMP=255.37""
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

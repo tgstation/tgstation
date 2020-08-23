@@ -4,7 +4,6 @@
 	name = "\proper space"
 	intact = 0
 
-	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 

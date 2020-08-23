@@ -272,16 +272,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 	///Copies all gas info from the turf into the gas list along with temperature
-	///Returns: 1 if we are mutable, 0 otherwise
+	///Returns: TRUE if we are mutable, FALSE otherwise
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
-
-	//acounts for changes in temperature
-	var/turf/model_parent = model.parent_type
-	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
-		temperature = model.temperature
-
-	return 1
+	return TRUE
 
 	///Copies variables from a particularly formatted string.
 	///Returns: 1 if we are mutable, 0 otherwise

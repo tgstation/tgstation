@@ -81,10 +81,10 @@
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
-	var/turf/L = loc
-	if(isturf(L))
-		return L.temperature
-	return 0
+	var/turf/open/L = loc
+	if(isopenturf(L))
+		return L.GetTemperature()
+	return INFINITY
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.

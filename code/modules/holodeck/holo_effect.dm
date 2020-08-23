@@ -61,7 +61,6 @@
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(3, 1, T)
 		s.start()
-		T.temperature = 5000
 		T.hotspot_expose(50000,50000,1)
 
 
