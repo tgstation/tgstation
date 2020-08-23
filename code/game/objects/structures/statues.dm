@@ -6,11 +6,13 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
-	var/oreAmount = 5
-	var/material_drop_type = /obj/item/stack/sheet/metal
-	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	/// Beauty component mood modifier
+	var/impressiveness = 15
+	/// Art component subtype added to this statue
 	var/art_type = /datum/component/art
+	/// Abstract root type
+	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize()
 	. = ..()
@@ -37,12 +39,12 @@
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(material_drop_type)
-			var/drop_amt = oreAmount
-			if(!disassembled)
-				drop_amt -= 2
-			if(drop_amt > 0)
-				new material_drop_type(get_turf(src), drop_amt)
+		var/amount_mod = disassembled ? 0 : -2
+		for(var/mat in custom_materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(mat)
+			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
+			if(amount > 0)
+				new custom_material.sheet_type(drop_location(),amount)
 	qdel(src)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
@@ -51,11 +53,9 @@
 /obj/structure/statue/uranium
 	max_integrity = 300
 	light_range = 2
-	material_drop_type = /obj/item/stack/sheet/mineral/uranium
-	var/last_event = 0
-	var/active = null
+	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
-
+	abstract_type = /obj/structure/statue/uranium
 
 /obj/structure/statue/uranium/nuke
 	name = "statue of a nuclear fission explosive"
@@ -67,39 +67,14 @@
 	desc = "This statue has a sickening green colour."
 	icon_state = "eng"
 
-/obj/structure/statue/uranium/attackby(obj/item/W, mob/user, params)
-	radiate()
-	return ..()
-
-/obj/structure/statue/uranium/Bumped(atom/movable/AM)
-	radiate()
-	..()
-
-/obj/structure/statue/uranium/attack_hand(mob/user)
-	radiate()
-	. = ..()
-
-/obj/structure/statue/uranium/attack_paw(mob/user)
-	radiate()
-	. = ..()
-
-/obj/structure/statue/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(src, 30)
-			last_event = world.time
-			active = null
-			return
-	return
-
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
 	max_integrity = 200
-	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/plasma
 
 /obj/structure/statue/plasma/scientist
 	name = "statue of a scientist"
@@ -137,7 +112,7 @@
 /obj/structure/statue/plasma/proc/PlasmaBurn(exposed_temperature)
 	if(QDELETED(src))
 		return
-	atmos_spawn_air("plasma=[oreAmount*10];TEMP=[exposed_temperature]")
+	atmos_spawn_air("plasma=50;TEMP=[exposed_temperature]")
 	deconstruct(FALSE)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
@@ -148,9 +123,10 @@
 
 /obj/structure/statue/gold
 	max_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/gold
 	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
+	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/gold
 
 /obj/structure/statue/gold/hos
 	name = "statue of the head of security"
@@ -176,9 +152,10 @@
 
 /obj/structure/statue/silver
 	max_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/silver
 	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
+	custom_materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/silver
 
 /obj/structure/statue/silver/md
 	name = "statue of a medical officer"
@@ -204,9 +181,10 @@
 
 /obj/structure/statue/diamond
 	max_integrity = 1000
-	material_drop_type = /obj/item/stack/sheet/mineral/diamond
 	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
+	custom_materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
 	name = "statue of THE captain."
@@ -224,43 +202,22 @@
 
 /obj/structure/statue/bananium
 	max_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	var/limiting_spam = FALSE
+	custom_materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bananium
 
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"
 	icon_state = "clown"
 
-/obj/structure/statue/bananium/Bumped(atom/movable/AM)
-	honk()
-	..()
-
-/obj/structure/statue/bananium/attackby(obj/item/W, mob/user, params)
-	honk()
-	return ..()
-
-/obj/structure/statue/bananium/attack_hand(mob/user)
-	honk()
-	. = ..()
-
-/obj/structure/statue/bananium/attack_paw(mob/user)
-	honk()
-	..()
-
-/obj/structure/statue/bananium/proc/honk()
-	if(!limiting_spam)
-		limiting_spam = TRUE
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-		addtimer(VARSET_CALLBACK(src, limiting_spam, FALSE), 2 SECONDS)
-
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
 	max_integrity = 50
-	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
 	impressiveness = 15
+	custom_materials = list(/datum/material/sandstone=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/sandstone
 
 /obj/structure/statue/sandstone/assistant
 	name = "statue of an assistant"
@@ -278,7 +235,8 @@
 
 /obj/structure/statue/snow
 	max_integrity = 50
-	material_drop_type = /obj/item/stack/sheet/mineral/snow
+	custom_materials = list(/datum/material/snow=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/snow
 
 /obj/structure/statue/snow/snowman
 	name = "snowman"
@@ -293,7 +251,8 @@
 ///////////////////////////////bronze///////////////////////////////////
 
 /obj/structure/statue/bronze
-	material_drop_type = /obj/item/stack/tile/bronze
+	custom_materials = list(/datum/material/bronze=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bronze
 
 /obj/structure/statue/bronze/marx
 	name = "\improper Karl Marx bust"
@@ -307,6 +266,207 @@
 	name = "Elder Atmosian"
 	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
 	icon_state = "eng"
-	material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	//material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	max_integrity = 1000
 	impressiveness = 100
+
+/obj/item/chisel
+	name = "chisel"
+	desc = "breaking and making art since 4000 BC"
+	icon = 'icons/obj/statue.dmi'
+	icon_state = "chisel"
+	inhand_icon_state = "screwdriver_nuke"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
+	force = 5
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	custom_materials = list(/datum/material/iron=75)
+	attack_verb_continuous = list("stabs")
+	attack_verb_simple = list("stab")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	tool_behaviour = TOOL_SCREWDRIVER
+	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
+	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
+	item_flags = EYE_STAB
+	sharpness = SHARP_POINTY
+
+	/// Block we're currently carving in
+	var/obj/structure/carving_block/prepared_block
+	/// The thing it will look like
+	var/atom/movable/current_target
+	/// Currently chosen preset statue type
+	var/current_preset_type
+	/// If tracked user moves we stop sculpting
+	var/mob/living/tracked_user
+	/// Currently sculpting
+	var/sculpting = FALSE
+/*
+ Hit the block to start
+ Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+ Hit block again to start sculpting.
+ Moving interrupts
+*/
+/obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(sculpting)
+		return
+	if(istype(A,/obj/structure/carving_block))
+		if(A == prepared_block && (current_target || current_preset_type))
+			start_sculpting(user)
+		else if(!prepared_block)
+			set_block(A,user)
+		else if(A == prepared_block)
+			show_generic_statues_prompt(user)
+		return TRUE
+	else if(prepared_block) //We're aiming at something next to us with block prepared
+		set_target(A,user)
+		return TRUE
+
+// We aim at something distant.
+/obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag && !sculpting && prepared_block && ismovable(target))
+		set_target(target,user)
+
+/obj/item/chisel/proc/start_sculpting(user)
+	sculpting = TRUE
+	if(do_after(user,30 SECONDS, target = prepared_block))
+		if(!QDELETED(prepared_block))
+			create_statue()
+	sculpting = FALSE
+
+/obj/item/chisel/proc/set_block(obj/structure/carving_block/B,mob/living/user)
+	prepared_block = B
+	tracked_user = user
+	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
+	to_chat(user,"<span class='notice'>You prepare to work on [B].</span>")
+
+/obj/item/chisel/dropped(mob/user, silent)
+	. = ..()
+	break_sculpting()
+
+/obj/item/chisel/proc/break_sculpting()
+	SIGNAL_HANDLER
+	sculpting = FALSE
+	prepared_block = null
+	current_target = null
+	current_preset_type = null
+	if(tracked_user)
+		UnregisterSignal(tracked_user,COMSIG_MOVABLE_MOVED)
+		tracked_user = null
+
+/obj/item/chisel/proc/set_target(atom/movable/target,mob/living/user)
+	if(!is_viable_target(target))
+		to_chat(user,"You won't be able to carve that.")
+		return
+	current_target = target
+	to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [current_target].</span>")
+
+/obj/item/chisel/proc/create_statue()
+	if(current_preset_type)
+		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(prepared_block))
+		preset_statue.set_custom_materials(prepared_block.custom_materials)
+		QDEL_NULL(prepared_block)
+	else if(!QDELETED(current_target))
+		var/obj/structure/statue/custom/new_statue = new(get_turf(prepared_block))
+		new_statue.set_visuals(current_target)
+		new_statue.set_custom_materials(prepared_block.custom_materials)
+		new_statue.name = "statue of [current_target]"
+		new_statue.desc = "statue depicting [current_target]"
+		QDEL_NULL(prepared_block)
+	current_target = null
+	current_preset_type = null
+
+
+/obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)
+	var/list/choices = list()
+	for(var/statue_path in prepared_block.get_possible_statues())
+		var/obj/structure/statue/S = statue_path
+		choices[statue_path] = image(icon=initial(S.icon),icon_state=initial(S.icon_state))
+	var/choice = show_radial_menu(user, prepared_block , choices, require_near = TRUE)
+	if(choice)
+		current_preset_type = choice
+		var/obj/structure/statue/S = choice
+		to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [initial(S.name)].</span>")
+		current_target = null
+
+/obj/item/chisel/proc/is_viable_target(atom/movable/AM)
+	//Only things on turfs
+	if(!isturf(AM.loc))
+		return FALSE
+	//No big icon things
+	var/icon/thing_icon = icon(AM.icon, AM.icon_state)
+	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
+		return FALSE
+	return TRUE
+
+/obj/structure/carving_block
+	name = "block"
+	desc = "ready for sculpting."
+	icon = 'icons/obj/statue.dmi'
+	icon_state = "block"
+	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
+	density = TRUE
+
+	//Table of required materials for each non-abstract statue type
+	var/static/list/statue_costs
+
+/// Returns a list of preset statues carvable from this block depending on the custom materials
+/obj/structure/carving_block/proc/get_possible_statues()
+	. = list()
+	if(!statue_costs)
+		statue_costs = build_statue_cost_table()
+	statue_loop:
+		for(var/statue_path in statue_costs)
+			var/list/carving_cost = statue_costs[statue_path]
+			for(var/required_material in carving_cost)
+				if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
+					continue statue_loop
+			. += statue_path
+
+/obj/structure/proc/build_statue_cost_table()
+	. = list()
+	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
+		var/obj/structure/statue/S = new statue_type()
+		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+			continue
+		.[S.type] = S.custom_materials
+		qdel(S)
+
+
+/obj/structure/statue/custom
+	name = "custom statue"
+	icon_state = "base"
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER //Added keep together in case targets has weird layering
+	material_flags = MATERIAL_COLOR
+	/// primary statue overlay
+	var/mutable_appearance/content_ma
+
+	var/list/bump_saturation = list(1,0,0, 0,1,0, 0,0,1, 0,0.1,0)
+
+/obj/structure/statue/custom/proc/set_visuals(atom/movable/model)
+	content_ma = new
+	content_ma.appearance = model.appearance
+	content_ma.pixel_x = 0
+	content_ma.pixel_y = 0
+	content_ma.alpha = 255
+	content_ma.color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //strip color
+	//var/static/list/bump_saturation = list(hh,hs,hv, sh,ss,sv, vh,vs,vv, ch,cs,cv)
+	content_ma.filters = filter(type="color",color=bump_saturation,space=FILTER_COLOR_HSV)
+	update_icon()
+
+/obj/structure/statue/custom/proc/refresh_visual()
+	content_ma.filters = filter(type="color",color=bump_saturation,space=FILTER_COLOR_HSV)
+	update_icon()
+
+/obj/structure/statue/custom/update_overlays()
+	. = ..()
+	if(content_ma)
+		. += content_ma
