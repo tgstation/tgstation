@@ -376,7 +376,8 @@ function update_mc(global_mc_data, coords_entry, ht) {
 
 function remove_mc() {
 	removeStatusTab("MC");
-	tab_change("Status");
+	if(current_tab == "MC")
+		tab_change("Status");
 }
 function remove_spells() {
 	for(let s = 0; s < spell_tabs.length; s++){

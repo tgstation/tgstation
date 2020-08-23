@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(statpanels)
 					if(A.IsObscured())
 						continue
 					if(length(turfitems) < 30) // only create images for the first 30 items on the turf, for performance reasons
-						var/icon/atom_image = getFlatIcon(A)
+						var/icon/atom_image = getFlatIcon(A, no_anim = TRUE)
 						C << browse_rsc(atom_image, "[REF(A)].png")
 						turfitems[++turfitems.len] = list("[A.name]", REF(A), "[REF(A)].png")
 					else
