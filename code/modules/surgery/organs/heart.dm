@@ -166,9 +166,7 @@
 				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
-				H.adjustBruteLoss(-cursed_heart.heal_brute)
-				H.adjustFireLoss(-cursed_heart.heal_burn)
-				H.adjustOxyLoss(-cursed_heart.heal_oxy)
+				H.heal_overall_damage(brute = cursed_heart.heal_brute, burn = cursed_heart.heal_burn, oxy = cursed_heart.heal_oxy)
 
 
 /datum/client_colour/cursed_heart_blood

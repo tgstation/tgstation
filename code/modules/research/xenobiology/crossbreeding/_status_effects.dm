@@ -169,10 +169,7 @@
 	alert_type = /obj/screen/alert/status_effect/clone_decay
 
 /datum/status_effect/slime_clone_decay/tick()
-	owner.adjustToxLoss(1, 0)
-	owner.adjustOxyLoss(1, 0)
-	owner.adjustBruteLoss(1, 0)
-	owner.adjustFireLoss(1, 0)
+	owner.take_overall_damage(toxin = 1, brute = 1, burn = 1, oxy = 1, updating_health = FALSE)
 	owner.color = "#007BA7"
 
 /obj/screen/alert/status_effect/bloodchill

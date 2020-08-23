@@ -1095,10 +1095,8 @@
 	taste_description = "acid"
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(3.33)
-	M.adjustFireLoss(3.33)
-	M.adjustToxLoss(3.33)
-	..()
+	M.take_overall_damage(brute = 3.33, fire = 3.33, toxin = 3.33, updating_health = FALSE)
+	return ..() || TRUE
 
 /datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	..()
@@ -2321,16 +2319,10 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-10, FALSE)
-		M.adjustToxLoss(-2, FALSE)
-		M.adjustOxyLoss(-2, FALSE)
-		M.adjustBruteLoss(-2, FALSE)
-		M.adjustFireLoss(-2, FALSE)
+		M.heal_overall_damage(toxin = 2, oxy = 2, brute = 2, burn = 2, updating_health = FALSE)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
 			M.blood_volume += 3
 	else
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
-		M.adjustToxLoss(2, FALSE)
-		M.adjustFireLoss(2, FALSE)
-		M.adjustOxyLoss(2, FALSE)
-		M.adjustBruteLoss(2, FALSE)
-	..()
+		M.take_overall_damage(toxin = 2, burn = 2, oxy = 2, brute = 2, updating_health = FALSE)
+	return ..() || TRUE

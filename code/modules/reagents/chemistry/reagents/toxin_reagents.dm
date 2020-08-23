@@ -21,7 +21,7 @@
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM, 0)
 		. = TRUE
-	..()
+	return ..() || .
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -482,16 +482,14 @@
 			if(4)
 				if(prob(75))
 					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
-					M.adjustBruteLoss(2*REM, 0)
-					. = 1
-	..()
+					M.adjustBruteLoss(2*REM, FALSE)
+					. = TRUE
+	return ..() || .
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustToxLoss(2*REM, 0)
-	..()
-	. = 1
+	var/amount_to_damage = (2*REM)
+	M.take_overall_damage(brute = amount_to_damage, required_status = BODYPART_ORGANIC, oxy = amount_to_damage, toxin = amount_to_damage, updating_health = FALSE)
+	return ..() || TRUE
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
@@ -520,12 +518,12 @@
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
-	. = 1
+	. = TRUE
 	if(prob(15))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
 		M.reagents.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
-		..()
+		return ..() || .
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
@@ -588,21 +586,21 @@
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, FALSE)
 		. = 1
 	if(prob(15))
 		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, FALSE)
 		. = 1
 	if(prob(15))
 		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, FALSE)
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 		M.reagents.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
-	..()
+	return ..() || .
 
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"

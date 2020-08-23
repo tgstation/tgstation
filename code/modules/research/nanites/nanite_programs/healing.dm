@@ -26,8 +26,7 @@
 			if(L.heal_damage(0.5/parts.len, 0.5/parts.len, null, BODYPART_ORGANIC))
 				host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-0.5, TRUE)
-		host_mob.adjustFireLoss(-0.5, TRUE)
+		host_mob.heal_overall_damage(brute = 0.5, burn = 0.5)
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
@@ -131,8 +130,7 @@
 		if(update)
 			host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-1, TRUE)
-		host_mob.adjustFireLoss(-1, TRUE)
+	host_mob.heal_overall_damage(brute = 1, burn = 1)
 
 /datum/nanite_program/purging_advanced
 	name = "Selective Blood Purification"
@@ -166,8 +164,7 @@
 		if(update)
 			host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-2, TRUE)
-		host_mob.adjustFireLoss(-2, TRUE)
+		host_mob.heal_overall_damage(brute = 2, burn = 2)
 
 /datum/nanite_program/brain_heal_advanced
 	name = "Neural Reimaging"
