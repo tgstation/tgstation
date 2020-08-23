@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixes shuttle catastrophe working when shuttle docked or is flying to centcom"
