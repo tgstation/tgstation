@@ -114,9 +114,9 @@
 		return TRUE
 	if(magazine.ammo_count()) //If it has any ammo inside....
 		user.visible_message("<span class='danger'>[src]'s hammer drops while you're handling it!</span>") //...you learn an important lesson about firearms safety.
-		var/drop_the_gun_it_actually_fired = chambered.BB ? TRUE : FALSE
+		var/drop_the_gun_it_actually_fired = chambered.BB ? TRUE : FALSE //Is a live round chambered?
 		process_fire(user, user, FALSE, skip_missfire_check = TRUE)
-		if(drop_the_gun_it_actually_fired) //We do it like this instead of directly checking chambered.BB because process_fire will cycle the chamber.
+		if(drop_the_gun_it_actually_fired) //We do it like this instead of directly checking chambered.BB here because process_fire will cycle the chamber.
 			user.dropItemToGround(src)
 		return TRUE
 	if(magazine.caliber == "38")
