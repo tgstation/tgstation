@@ -263,9 +263,10 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	our_air.react(src)
 
 	update_visuals()
-
-//	if((!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) && !our_excited_group)
-	//	SSair.remove_from_active(src) //This will kill any connected excited group, be careful
+	var/check = !our_excited_group
+	//check &= (!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE)))
+	if(check)
+		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
 
 	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
 //////////////////////////SPACEWIND/////////////////////////////

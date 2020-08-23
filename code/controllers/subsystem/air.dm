@@ -190,9 +190,9 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/T = currentrun[currentrun.len]
+		//var/turf/T = currentrun[currentrun.len]
 		currentrun.len--
-		T.super_conduct()
+		//T.super_conduct()
 		if(MC_TICK_CHECK)
 			return
 
