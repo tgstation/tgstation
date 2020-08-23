@@ -106,7 +106,7 @@
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
 	. += "<span class='notice'>[desc] - growth progress: [growth]%</span>\n"
-	if(show_needs)
+	if(show_details)
 		. += return_reagent_text("It requires:", required_reagents)
 		. += return_reagent_text("It likes:", supplementary_reagents)
 		. += return_reagent_text("It hates:", suppressive_reagents)
