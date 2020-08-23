@@ -381,6 +381,8 @@
 			log_message("Reagent processing started.", LOG_MECHA)
 		return
 	if (href_list["show_reagents"])
+		if(!(usr in occupants))
+			return
 		usr << browse(get_reagents_page(),"window=msyringegun")
 	if (href_list["purge_reagent"])
 		var/reagent = href_list["purge_reagent"]
