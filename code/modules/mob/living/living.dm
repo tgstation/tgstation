@@ -792,7 +792,7 @@
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc)
+	else if(loc != get_turf(src))
 		loc.container_resist_act(src)
 
 	else if(mobility_flags & MOBILITY_MOVE)

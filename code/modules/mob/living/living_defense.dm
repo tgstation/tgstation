@@ -68,34 +68,35 @@
 		else
 				return 0
 
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
+	if(isitem(AM))
+		var/obj/item/thrown_item = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-		var/dtype = BRUTE
-		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
 		if(nosell_hit)
 			skipcatch = TRUE
 			hitpush = FALSE
 
-		dtype = I.damtype
-		if(!blocked)
-			if(I.thrownby)
-				log_combat(I.thrownby, src, "threw and hit", I)
-			if(!nosell_hit)
-				visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
-								"<span class='userdanger'>You're hit by [I]!</span>")
-				if(!I.throwforce)
-					return
-				var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-				apply_damage(I.throwforce, dtype, zone, armor, sharpness=I.get_sharpness(), wound_bonus=(nosell_hit * CANT_WOUND))
+		if(blocked)
+			return TRUE
 
-		else
-			return 1
-	else
-		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
-	..()
+		if(thrown_item.thrownby)
+			log_combat(thrown_item.thrownby, src, "threw and hit", thrown_item)
+		if(nosell_hit)
+			return ..()
+		visible_message("<span class='danger'>[src] is hit by [thrown_item]!</span>", \
+						"<span class='userdanger'>You're hit by [thrown_item]!</span>")
+		if(!thrown_item.throwforce)
+			return
+		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration)
+		apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+		if(QDELETED(src)) //Damage can delete the mob.
+			return
+		return ..()
 
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+	return ..()
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
