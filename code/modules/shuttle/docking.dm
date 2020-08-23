@@ -100,6 +100,11 @@
 
 	// remove any stragglers just in case, and clear the list
 	remove_ripples()
+
+	var/should_project = !istype(old_turfs[1], /turf/open/space/transit)
+	if (should_project)
+		new /obj/shuttle_projector(null, new_dock, old_dock, FALSE)
+
 	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)

@@ -516,6 +516,9 @@
 	for(var/t in turfs)
 		ripples += new /obj/effect/abstract/ripple(t, animate_time)
 
+	var/obj/docking_port/stationary/current_dock = get_docked()
+	new /obj/shuttle_projector(null, current_dock, S1, TRUE, animate_time)
+
 /obj/docking_port/mobile/proc/remove_ripples()
 	QDEL_LIST(ripples)
 
