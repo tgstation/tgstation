@@ -30,7 +30,7 @@
 	qdel(other_sample)
 	return TRUE
 
-///Call HandleGrowth on all our microorganisms.
-/datum/biological_sample/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
+///Call handle_growth on all our microorganisms.
+/datum/biological_sample/proc/handle_growth(var/obj/machinery/plumbing/growing_vat/vat)
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
-		return organism.HandleGrowth(vat)
+		return organism.handle_growth(vat)

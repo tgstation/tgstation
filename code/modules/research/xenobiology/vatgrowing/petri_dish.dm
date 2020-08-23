@@ -19,7 +19,7 @@
 	. += "<span class='notice'>You can see the following micro-organisms:</span>"
 	for(var/i in sample.micro_organisms)
 		var/datum/micro_organism/MO = i
-		. += MO.GetDetails()
+		. += MO.get_details()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()

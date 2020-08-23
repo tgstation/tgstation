@@ -18,7 +18,7 @@
 		return
 	if(!biological_sample)
 		return
-	if(biological_sample.HandleGrowth(src))
+	if(biological_sample.handle_growth(src))
 		if(!prob(10))
 			return
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
@@ -58,7 +58,7 @@
 	. += "<span class='notice'>It seems to have a sample in it!</span>"
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
-		. += MO.GetDetails(user.research_scanner)
+		. += MO.get_details(user.research_scanner)
 
 /obj/machinery/plumbing/growing_vat/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	. = ..()
