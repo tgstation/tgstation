@@ -98,7 +98,7 @@ Class Procs:
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
-	var/machine_stat = 0
+	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
@@ -178,6 +178,15 @@ Class Procs:
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
+
+
+///Called when we want to change the value of the machine_stat variable. Holds bitflags.
+/obj/machinery/proc/set_machine_stat(new_value)
+	if(new_value == machine_stat)
+		return
+	. = machine_stat
+	machine_stat = new_value
+
 
 /obj/machinery/emp_act(severity)
 	. = ..()
@@ -440,7 +449,7 @@ Class Procs:
 	SHOULD_CALL_PARENT(1)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		machine_stat |= BROKEN
+		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_icon()
 		return TRUE

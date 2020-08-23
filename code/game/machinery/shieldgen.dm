@@ -199,7 +199,7 @@
 				return
 			coil.use(1)
 			obj_integrity = max_integrity
-			machine_stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 

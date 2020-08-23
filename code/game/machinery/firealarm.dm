@@ -226,7 +226,7 @@
 						if(buildstage == 1)
 							if(machine_stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
-								machine_stat &= ~BROKEN
+								set_machine_stat(machine_stat & ~BROKEN)
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/electronics/firealarm(user.loc)

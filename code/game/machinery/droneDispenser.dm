@@ -216,7 +216,7 @@
 			"<span class='notice'>[user] fixes [src]!</span>",
 			"<span class='notice'>You restore [src] to operation.</span>")
 
-		machine_stat &= ~BROKEN
+		set_machine_stat(machine_stat & ~BROKEN)
 		obj_integrity = max_integrity
 		update_icon()
 	else
