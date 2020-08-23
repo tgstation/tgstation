@@ -59,5 +59,7 @@
 
 /// list of ghosts who want to play mafia, every time someone enters the list it checks to see if enough are in
 GLOBAL_LIST_EMPTY(mafia_signup)
+/// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
+GLOBAL_LIST_EMPTY(mafia_bad_signup)
 /// the current global mafia game running.
 GLOBAL_VAR(mafia_game)

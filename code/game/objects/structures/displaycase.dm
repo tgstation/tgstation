@@ -190,7 +190,8 @@
 		if (!Adjacent(user))
 			return
 		if (user.a_intent == INTENT_HELP)
-			user.examinate(src)
+			if(!user.is_blind())
+				user.examinate(src)
 			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")

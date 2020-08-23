@@ -55,6 +55,7 @@
 #define SPIDER_WEB	/datum/mutation/human/webbing
 #define MARTYRDOM	/datum/mutation/human/martyrdom
 #define HARS		/datum/mutation/human/headless
+#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

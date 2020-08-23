@@ -14,11 +14,11 @@
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
-	opacity = 0
-	canSmoothWith = list()
-	smooth = SMOOTH_FALSE
-	/// The amount of time it takes to create a venus human trap, in deciseconds
-	var/growth_time = 1200
+	opacity = FALSE
+	canSmoothWith = null
+	smoothing_flags = NONE
+	/// The amount of time it takes to create a venus human trap.
+	var/growth_time = 120 SECONDS
 
 /obj/structure/alien/resin/flower_bud_enemy/Initialize()
 	. = ..()
@@ -37,7 +37,7 @@
   * Spawns a venus human trap, then qdels itself.
   *
   * Displays a message, spawns a human venus trap, then qdels itself.
-  */	
+  */
 /obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
@@ -103,7 +103,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
 	pull_vines()
-	
+
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()
 	if(isliving(target))
@@ -125,7 +125,7 @@
 		for(var/obj/O in T)
 			if(O.density)
 				return
-	
+
 	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
 	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
 	vines += newVine
@@ -140,7 +140,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
-	if(.)
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	humanize_plant(user)
 

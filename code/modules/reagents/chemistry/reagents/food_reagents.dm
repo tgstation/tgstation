@@ -95,6 +95,9 @@
 
 	data = taste_amounts
 
+/datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
+	return data
+
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
@@ -119,9 +122,9 @@
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/O, reac_volume)
 	if(holder && holder.chem_temp >= fry_temperature)
-		if(isitem(O) && !istype(O, /obj/item/reagent_containers/food/snacks/deepfryholder))
+		if(isitem(O) && !istype(O, /obj/item/food/deepfryholder))
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
+			var/obj/item/food/deepfryholder/F = new(O.drop_location(), O)
 			F.fry(volume)
 			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
@@ -311,7 +314,7 @@
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
 			victim.blind_eyes(3) // 6 seconds
-			victim.confused = max(M.confused, 5) // 10 seconds
+			victim.set_confusion(max(M.get_confusion(), 5)) // 10 seconds
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
@@ -676,17 +679,37 @@
 		. = TRUE
 	..()
 
+
 /datum/reagent/consumable/tinlux
 	name = "Tinea Luxor"
 	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
+	//Lazy list of mobs affected by the luminosity of this reagent.
+	var/list/mobs_affected
 
 /datum/reagent/consumable/tinlux/expose_mob(mob/living/M)
-	M.set_light(2)
+	add_reagent_light(M)
 
 /datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	M.set_light(-2)
+	remove_reagent_light(M)
+
+/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
+	SIGNAL_HANDLER
+	remove_reagent_light(source)
+
+/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
+	LAZYSET(mobs_affected, living_holder, mob_light_obj)
+	RegisterSignal(living_holder, COMSIG_PARENT_QDELETING, .proc/on_living_holder_deletion)
+
+/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
+	UnregisterSignal(living_holder, COMSIG_PARENT_QDELETING)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
+	LAZYREMOVE(mobs_affected, living_holder)
+	if(mob_light_obj)
+		qdel(mob_light_obj)
+
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"

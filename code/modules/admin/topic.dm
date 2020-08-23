@@ -238,7 +238,7 @@
 			return
 		SSshuttle.emergency.setTimer(timer*10)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer/10)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
@@ -2103,9 +2103,21 @@
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
 				bans = json_decode(response["body"])
-				dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
+
+				//Ignore bans from non-whitelisted sources, if a whitelist exists
+				var/list/valid_sources
+				if(CONFIG_GET(string/centcom_source_whitelist))
+					valid_sources = splittext(CONFIG_GET(string/centcom_source_whitelist), ",")
+					dat += "<center><b>Bans detected for [ckey]</b></center>"
+				else
+					//Ban count is potentially inaccurate if they're using a whitelist
+					dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
+
 				for(var/list/ban in bans)
+					if(valid_sources && !(ban["sourceName"] in valid_sources))
+						continue
 					dat += "<b>Server: </b> [sanitize(ban["sourceName"])]<br>"
+					dat += "<b>RP Level: </b> [sanitize(ban["sourceRoleplayLevel"])]<br>"
 					dat += "<b>Type: </b> [sanitize(ban["type"])]<br>"
 					dat += "<b>Banned By: </b> [sanitize(ban["bannedBy"])]<br>"
 					dat += "<b>Reason: </b> [sanitize(ban["reason"])]<br>"
@@ -2321,6 +2333,12 @@
 		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
 			return
 		usr.nominate_heart(heart_recepient)
+
+	else if(href_list["force_war"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
+		button.force_war()
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

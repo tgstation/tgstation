@@ -360,7 +360,7 @@
 		if("green")
 			set_light(2,2, LIGHT_COLOR_GREEN)
 		if("red")
-			set_light(2,2, LIGHT_COLOR_RED)
+			set_light(2,2, COLOR_SOFT_RED)
 
 /obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
 	. = ..()

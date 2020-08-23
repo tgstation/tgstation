@@ -239,7 +239,7 @@
 	select_look(owner)
 	return 1
 
-/datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
+/datum/action/item_action/chameleon/change/proc/emp_randomise(amount = EMP_RANDOMISE_TIME)
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
@@ -672,6 +672,10 @@
 	chameleon_action.chameleon_name = "Neck Accessory"
 	chameleon_action.initialize_disguises()
 
+/obj/item/clothing/neck/chameleon/Destroy()
+	qdel(chameleon_action)
+	return ..()
+
 /obj/item/clothing/neck/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -681,3 +685,166 @@
 /obj/item/clothing/neck/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/datum/action/item_action/chameleon/change/skillchip
+	/// Skillchip that this chameleon action is imitating.
+	var/obj/item/skillchip/skillchip_mimic
+	/// When we can next modify this skillchip
+	COOLDOWN_DECLARE(usable_cooldown)
+	var/cooldown = 5 MINUTES
+	var/is_active = TRUE
+
+/datum/action/item_action/chameleon/change/skillchip/Destroy()
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+	QDEL_NULL(skillchip_mimic)
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/proc/set_active(active = TRUE)
+	is_active = active
+	UpdateButtonIcon()
+
+/datum/action/item_action/chameleon/change/skillchip/Grant(mob/M)
+	. = ..()
+
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		START_PROCESSING(SSfastprocess, src)
+
+/datum/action/item_action/chameleon/change/skillchip/Remove(mob/M)
+	STOP_PROCESSING(SSfastprocess, src)
+
+	return ..()
+
+/// Completely override the functionality of the initialize_disguises() proc. No longer uses chameleon_blacklist and uses skillchip flags and vars instead.
+/datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	if(button)
+		button.name = "Change [chameleon_name] Function"
+
+	if(!ispath(chameleon_type, /obj/item/skillchip))
+		CRASH("Attempted to initialise [src] disguise list with incompatible item path [chameleon_type].")
+
+	var/obj/item/skillchip/target_chip = target
+
+	if(!istype(target_chip))
+		CRASH("Attempted to initialise [src] disguise list, but it is attached to incorrect item type [target_chip].")
+
+	for(var/chip_type in typesof(chameleon_type))
+		var/obj/item/skillchip/skillchip = chip_type
+		if((chip_type == initial(skillchip.abstract_parent_type)) \
+			|| (target_chip.slot_use < initial(skillchip.slot_use)) \
+			|| (initial(skillchip.skillchip_flags) & SKILLCHIP_CHAMELEON_INCOMPATIBLE) \
+			|| (initial(skillchip.item_flags) & ABSTRACT) \
+			|| !initial(skillchip.icon_state))
+			continue
+		var/chameleon_item_name = "[initial(skillchip.name)] ([initial(skillchip.icon_state)])"
+		chameleon_list[chameleon_item_name] = skillchip
+
+/datum/action/item_action/chameleon/change/skillchip/update_item(obj/item/skillchip/picked_item)
+	if(istype(picked_item))
+		target.name = initial(picked_item.skill_name)
+		target.desc = initial(picked_item.skill_description)
+		target.icon_state = initial(picked_item.skill_icon)
+
+/datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, picked_item)
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1] seconds!</span>")
+		return ..()
+
+	var/obj/item/skillchip/new_chip = new picked_item(target, FALSE)
+
+	// Do a bit of a sanity check.
+	if(!istype(new_chip))
+		stack_trace("Chameleon skillchip [src] attempted to change into non-skillchip item [picked_item].")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Remove the existing chip first, if it exists.
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+		QDEL_NULL(skillchip_mimic)
+
+	// This chip should technically have 0 slot use before doing these checks. With skillchip_mimic removed, any checks
+	// will probably end up using the 2-slot chameleon chip that is holding new_chip.
+	new_chip.slot_use = 0
+
+	var/incompatibility_msg = new_chip.has_mob_incompatibility(user)
+	if(incompatibility_msg)
+		to_chat(user, "<span class='notice'>The chameleon skillchip fails to load the new skillchip's data. The following thought fills your mind: [incompatibility_msg]</span>")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	var/mob/living/carbon/target_mob = user
+
+	// Should never happen. Our target isn't the right mob type.
+	if(!istype(target_mob))
+		stack_trace("Chameleon skillchip [src] attempted to mimic [new_chip], but target [target_mob] is not of the correct type.")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Should doubly never happen, would imply the chameleon chip is in a qdel'd or null brain.
+	var/obj/item/organ/brain/brain = target_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		stack_trace("Chameleon skillchip [src] attempted to mimic [new_chip], but it appears this chip is in non-existent brain: [brain]")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Bypass the usual channels and directly call on_implant.
+	skillchip_mimic = new_chip
+	skillchip_mimic.on_implant(brain)
+
+	// Let's update the slot size we deleted earlier. We're going to make it match the parent chip, as it'll end up
+	// feeding calls through itself to this chip.
+
+	var/obj/item/skillchip/target_chip = target
+
+	if(!istype(target_chip))
+		CRASH("Attempted to initialise [src] disguise list, but it is attached to incorrect item type [target_chip].")
+
+	skillchip_mimic.slot_use = target_chip.slot_use
+
+	var/activate_msg = skillchip_mimic.try_activate_skillchip(FALSE, FALSE)
+
+	// Couldn't activate the chip for some reason.
+	// Can still be activated later on, or a new chip type selected. So let's not start processing or cooldowns.
+	if(activate_msg)
+		to_chat(user, "<span class='notice'>Your skillchip can't activate! Your mind fills with the following thought: [activate_msg]</span>")
+		return ..()
+
+	// All set, start processing and cooldowns and inform the user of the recharge time.
+	COOLDOWN_START(src, usable_cooldown, cooldown)
+	START_PROCESSING(SSfastprocess, src)
+
+	to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown * 0.1] seconds.</span>")
+
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/IsAvailable()
+	if(!is_active)
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		return FALSE
+
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+
+	if(COOLDOWN_FINISHED(src, usable_cooldown))
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+
+	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
+
+/**
+  * Clears the currently mimic'd skillchip, if any exists.
+  */
+/datum/action/item_action/chameleon/change/skillchip/proc/clear_mimic_chip()
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+		QDEL_NULL(skillchip_mimic)

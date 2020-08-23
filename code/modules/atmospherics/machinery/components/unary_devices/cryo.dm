@@ -97,11 +97,11 @@
 	if(beaker)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += beaker
+				SSexplosions.high_mov_atom += beaker
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += beaker
+				SSexplosions.med_mov_atom += beaker
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += beaker
+				SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
 	..()
@@ -234,8 +234,7 @@
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
-				beaker.reagents.expose(occupant, VAPOR)
+				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25, method = VAPOR) // Transfer reagents.
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
@@ -303,7 +302,7 @@
 		..(user)
 		return occupant
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \

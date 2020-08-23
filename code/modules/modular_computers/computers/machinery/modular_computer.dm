@@ -74,30 +74,6 @@
 		add_overlay("bsod")
 		add_overlay("broken")
 
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_id()
-	set name = "Eject ID"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_id()
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_disk()
-	set name = "Eject Data Disk"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_disk()
-
-/obj/machinery/modular_computer/proc/eject_card()
-	set name = "Eject Intellicard"
-	set category = "Object"
-	set src in view(1)
-
-	if(cpu)
-		cpu.eject_card()
-
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)
 		cpu.AltClick(user)
@@ -135,7 +111,7 @@
 		return
 	. = ..()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
+/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
@@ -147,11 +123,11 @@
 	if(cpu)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += cpu
+				SSexplosions.high_mov_atom += cpu
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += cpu
+				SSexplosions.med_mov_atom += cpu
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += cpu
+				SSexplosions.low_mov_atom += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
