@@ -439,12 +439,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	reaction_loop:
 		for(var/r in reactions)
+			var/garbage = NO_REACTION
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
-			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
-				continue
 
 			for(var/id in min_reqs)
 				if (id == "TEMP" || id == "ENER")
@@ -452,13 +450,22 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 
+			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
+			|| (min_reqs["ENER"] && THERMAL_ENERGY(src) < min_reqs["ENER"]))
+				continue
+
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 
-			. |= reaction.react(src, holder)
-			if (. & STOP_REACTIONS)
+			garbage = reaction.react(src, holder)
+
+			if(garbage)
+				garbage_collect() //Collect each reaction so some fuck doesn't STEAL ALL MY BZ YOU MOTHERFUCKE
+
+			. |= garbage
+
+			if (garbage & STOP_REACTIONS)
 				break
-	if(.)
-		garbage_collect()
+
 
 ///Takes the amount of the gas you want to PP as an argument
 ///So I don't have to do some hacky switches/defines/magic strings
