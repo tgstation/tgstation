@@ -95,9 +95,14 @@
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, skip_missfire_check = FALSE)
 	if(magazine && magazine.caliber != initial(magazine.caliber) && !skip_missfire_check) //skip_missfire_check is to reduce redundacy of a round "misfiring" when it's already misfiring from wrench_act
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-			to_chat(user, "<span class='userdanger'>[src] misfires catastropically!</span>")
+			var/shot_hand = ""
+			if(user.get_item_for_held_index(1) == /obj/item/gun/ballistic/revolver/detective)
+				shot_hand = "BODY_ZONE_L_ARM"
+			else if(user.get_item_for_held_index(2) == /obj/item/gun/ballistic/revolver/detective)
+				shot_hand = "BODY_ZONE_R_ARM"
+			to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
 			user.dropItemToGround(src)
-			return ..(user, user, FALSE)
+			return ..(user, user, FALSE, null, shot_hand)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/detective/wrench_act(mob/living/user, obj/item/I)
