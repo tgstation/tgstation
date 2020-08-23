@@ -18,9 +18,11 @@
 
 /obj/machinery/teambuilder/Crossed(atom/movable/AM, oldloc)
 	. = ..()
-	if(isliving(AM) && !AM.color && team_color)
+	if(AM.color)
+		return
+	if(isliving(AM) && team_color)
 		AM.color = team_color
-	if(ishuman(AM) && !AM.color && team_radio)
+	if(ishuman(AM) && team_radio)
 		var/mob/living/carbon/human/human = AM
 		var/obj/item/radio/Radio = human.ears
 		if(!Radio)
