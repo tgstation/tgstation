@@ -195,5 +195,5 @@
 	name = "Tiny Freighter"
 
 /area/shuttle/shipstation
-	name = "NTSS 'Friendship'"
+	name = "NTSS 'Companionship'"
 	requires_power = TRUE
