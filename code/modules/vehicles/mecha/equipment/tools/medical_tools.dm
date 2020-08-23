@@ -109,7 +109,8 @@
 		return "[output] [temp]"
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/Topic(href,href_list)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!(usr in chassis.occupants))
 		return
