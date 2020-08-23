@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	update_icon()
 
 /obj/machinery/announcement_system/update_icon_state()
-	if(is_operational())
+	if(is_operational)
 		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
 	else
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return str
 
 /obj/machinery/announcement_system/proc/announce(message_type, user, rank, list/channels)
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	var/message

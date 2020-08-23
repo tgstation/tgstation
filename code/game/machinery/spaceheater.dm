@@ -70,7 +70,7 @@
 		. += "sheater-open"
 
 /obj/machinery/space_heater/process()
-	if(!on || !is_operational())
+	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
 		return PROCESS_KILL

@@ -61,7 +61,7 @@
 
 /obj/machinery/autolathe/ui_interact(mob/user)
 	. = ..()
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	if(shocked && !(machine_stat & NOPOWER))

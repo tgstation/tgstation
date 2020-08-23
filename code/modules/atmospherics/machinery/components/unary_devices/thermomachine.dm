@@ -45,7 +45,7 @@
 
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(on && is_operational())
+	else if(on && is_operational)
 		icon_state = icon_state_on
 	else
 		icon_state = icon_state_off
