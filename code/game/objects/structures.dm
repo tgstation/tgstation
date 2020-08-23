@@ -5,7 +5,7 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	layer = BELOW_OBJ_LAYER
 	flags_ricochet = RICOCHET_HARD
-	ricochet_chance_mod = 0.5
+	receive_ricochet_chance_mod = 0.6
 
 	var/climb_time = 20
 	var/climb_stun = 20
@@ -16,7 +16,7 @@
 
 /obj/structure/Initialize()
 	if (!armor)
-		armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+		armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	. = ..()
 	if(smoothing_flags)
 		QUEUE_SMOOTH(src)
@@ -131,4 +131,4 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1)
+	take_damage(500, BRUTE, MELEE, 1)

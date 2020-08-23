@@ -120,7 +120,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/ex_act(severity, target)
-	return 0
+	return
 
 /obj/effect/immovablerod/singularity_act()
 	return
@@ -145,7 +145,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			if(isturf(clong))
 				SSexplosions.medturf += clong
 			if(isobj(clong))
-				SSexplosions.medobj += clong
+				SSexplosions.med_mov_atom += clong
 
 	else if(isliving(clong))
 		penetrate(clong)

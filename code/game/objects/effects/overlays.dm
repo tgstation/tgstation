@@ -50,8 +50,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	vis_flags = NONE
-	var/unused = 0 //When detected to be unused it gets set to world.time, after a while it gets removed
-	var/cache_expiration = 2 MINUTES // overlays which go unused for 2 minutes get cleaned up
+	///When detected to be unused it gets set to world.time, after a while it gets removed
+	var/unused = 0
+	///overlays which go unused for this amount of time get cleaned up
+	var/cache_expiration = 2 MINUTES
 
 /obj/effect/overlay/atmos_excited
 	name = "excited group"
@@ -64,3 +66,14 @@
 
 	layer = ATMOS_GROUP_LAYER
 	plane = ATMOS_GROUP_PLANE
+
+/obj/effect/overlay/light_visible
+	name = ""
+	icon = 'icons/effects/light_overlays/light_32.dmi'
+	icon_state = "light"
+	layer = O_LIGHTING_VISUAL_LAYER
+	plane = O_LIGHTING_VISUAL_PLANE
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 0
+	vis_flags = NONE

@@ -57,7 +57,7 @@
 	dream_sequence(dream_fragments)
 
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments)
-	if(stat != UNCONSCIOUS || InCritical())
+	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
 		dreaming = FALSE
 		return
 	var/next_message = dream_fragments[1]

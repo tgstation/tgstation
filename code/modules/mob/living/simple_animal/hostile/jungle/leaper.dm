@@ -20,7 +20,7 @@
 	pixel_x = -16
 	layer = LARGE_MOB_LAYER
 	speed = 10
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	var/hopping = FALSE
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
@@ -128,7 +128,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize()
 	. = ..()
-	verbs -= /mob/living/verb/pulled
+	remove_verb(src, /mob/living/verb/pulled)
 
 /mob/living/simple_animal/hostile/jungle/leaper/CtrlClickOn(atom/A)
 	face_atom(A)

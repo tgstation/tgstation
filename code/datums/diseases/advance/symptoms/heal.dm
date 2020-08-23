@@ -269,10 +269,11 @@
 		return power
 	if(M.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
-	if(M.stat == UNCONSCIOUS)
-		return power * 0.9
-	if(M.stat == SOFT_CRIT)
-		return power * 0.5
+	switch(M.stat)
+		if(UNCONSCIOUS, HARD_CRIT)
+			return power * 0.9
+		if(SOFT_CRIT)
+			return power * 0.5
 	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE
@@ -339,7 +340,7 @@
 	. = 0
 	var/mob/living/M = A.affected_mob
 	if(M.fire_stacks < 0)
-		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, 0)
+		M.set_fire_stacks(min(M.fire_stacks + 1 * absorption_coeff, 0))
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)

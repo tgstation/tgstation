@@ -105,6 +105,11 @@
 	if(!zone_override)
 		zone_override = shooter.zone_selected
 
+	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
+	var/original_damage = shell.BB.damage
+	var/original_wb = shell.BB.wound_bonus
+	var/original_bwb = shell.BB.bare_wound_bonus
+
 	for(var/i in 1 to num_pellets)
 		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
 		if(distro)
@@ -115,6 +120,9 @@
 
 		RegisterSignal(shell.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
 		RegisterSignal(shell.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+		shell.BB.damage = original_damage
+		shell.BB.wound_bonus = original_wb
+		shell.BB.bare_wound_bonus = original_bwb
 		pellets += shell.BB
 		if(!shell.throw_proj(target, targloc, shooter, params, spread))
 			return

@@ -41,15 +41,18 @@
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
 	heldname = sanitize_name(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	log_game("[key_name(user)] have set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]")
 
-/obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 		var/oldname = R.real_name
+		var/oldkeyname = key_name(R)
 		R.custom_name = heldname
 		R.updatename()
 		if(oldname == R.real_name)
 			R.notify_ai(RENAME, oldname, R.real_name)
+		log_game("[key_name(user)] have used a cyborg reclassification board to rename [oldkeyname] to [key_name(R)] at [loc_name(user)]")
 
 /obj/item/borg/upgrade/restart
 	name = "cyborg emergency reboot module"
@@ -220,9 +223,9 @@
 		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
+		var/obj/item/mop/advanced/cyborg/mop = new /obj/item/mop/advanced/cyborg(R.module)
+		R.module.basic_modules += mop
+		R.module.add_module(mop, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -233,6 +236,27 @@
 		var/obj/item/mop/cyborg/M = new (R.module)
 		R.module.basic_modules += M
 		R.module.add_module(M, FALSE, TRUE)
+
+/obj/item/borg/upgrade/prt
+	name = "janitor cyborg plating repair tool"
+	desc = "A tiny heating device to repair burnt and damaged hull platings with."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/janitor)
+	module_flags = BORG_MODULE_JANITOR
+
+/obj/item/borg/upgrade/prt/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		var/obj/item/cautery/prt/P = new (R.module)
+		R.module.basic_modules += P
+		R.module.add_module(P, FALSE, TRUE)
+
+/obj/item/borg/upgrade/prt/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/cautery/prt/P in R.module.modules)
+			R.module.remove_module(P, TRUE)
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -625,11 +649,11 @@
 	name = "borg module picker (Standard)"
 	desc = "Allows you to to turn a cyborg into a standard cyborg."
 	icon_state = "cyborg_upgrade3"
-	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
+	var/obj/item/robot_module/new_module = null
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if(.)
+	if(. && new_module)
 		R.module.transform_to(new_module)
 
 /obj/item/borg/upgrade/transform/clown
