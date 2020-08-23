@@ -32,7 +32,7 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 	///What direction will the mech face when entered/powered on? Defaults to South.
-	var/dir_in = 2
+	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
