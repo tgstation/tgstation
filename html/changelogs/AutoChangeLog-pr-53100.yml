@@ -1,0 +1,5 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - tweak: "Waving a picket sign now animates the user and displays a runechat emote."
+  - tweak: "You can wave picket signs less often, making them less spamable."
