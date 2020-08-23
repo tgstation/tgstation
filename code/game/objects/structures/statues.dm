@@ -412,7 +412,7 @@
 	desc = "ready for sculpting."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "block"
-	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
 
 	//Table of required materials for each non-abstract statue type
@@ -446,7 +446,7 @@
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_TOGETHER //Added keep together in case targets has weird layering
-	material_flags = MATERIAL_COLOR
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
 
