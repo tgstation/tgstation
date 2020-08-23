@@ -216,11 +216,9 @@
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/default/asimov
-			inherent = templaws.inherent
+			inherent = GLOB.lawset_laws["/datum/ai_laws/default/asimov"]["inherent"]
 		if(1)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
-			inherent = templaws.inherent
+			inherent = GLOB.lawset_laws["/datum/ai_laws/custom"]["inherent"]
 		if(2)
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
@@ -233,8 +231,7 @@
 			else
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
-			var/datum/ai_laws/templaws = new lawtype()
-			inherent = templaws.inherent
+			inherent = GLOB.lawset_laws["[lawtype]"]["inherent"]
 
 		if(3)
 			pick_weighted_lawset()
@@ -253,8 +250,7 @@
 		WARNING("No LAW_WEIGHT entries.")
 		lawtype = /datum/ai_laws/default/asimov
 
-	var/datum/ai_laws/templaws = new lawtype()
-	inherent = templaws.inherent
+	inherent = GLOB.lawset_laws["[lawtype]"]["inherent"]
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
