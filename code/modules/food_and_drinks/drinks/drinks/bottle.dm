@@ -511,70 +511,7 @@
 	icon_state = "moonshinebottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
 
-////////////////////////// MOLOTOV ///////////////////////
-/obj/item/reagent_containers/food/drinks/bottle/molotov
-	name = "molotov cocktail"
-	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
-	icon_state = "vodkabottle"
-	list_reagents = list()
-	var/list/accelerants = list(	/datum/reagent/consumable/ethanol, /datum/reagent/fuel, /datum/reagent/clf3, /datum/reagent/phlogiston,
-							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
-	var/active = 0
-
-/obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
-	..()
-	var/obj/item/reagent_containers/food/drinks/bottle/B = locate() in contents
-	if(B)
-		icon_state = B.icon_state
-		B.reagents.copy_to(src,100)
-		if(!B.isGlass)
-			desc += " You're not sure if making this out of a carton was the brightest idea."
-			isGlass = FALSE
-	return
-
-/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/firestarter = 0
-	for(var/datum/reagent/R in reagents.reagent_list)
-		for(var/A in accelerants)
-			if(istype(R,A))
-				firestarter = 1
-				break
-	if(firestarter && active)
-		hit_atom.fire_act()
-		new /obj/effect/hotspot(get_turf(hit_atom))
-	..()
-
-/obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature() && !active)
-		active = TRUE
-		log_bomber(user, "has primed a", src, "for detonation")
-
-		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		if(!isGlass)
-			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
-
-/obj/item/reagent_containers/food/drinks/bottle/molotov/proc/explode()
-	if(!active)
-		return
-	if(get_turf(src))
-		var/atom/target = loc
-		for(var/i in 1 to 2)
-			if(istype(target, /obj/item/storage))
-				target = target.loc
-		SplashReagents(target)
-		target.fire_act()
-	qdel(src)
-
-/obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
-	if(active)
-		if(!isGlass)
-			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
-			return
-		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		active = 0
-
+////////////////////////// REST IN PEACE MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."

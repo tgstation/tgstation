@@ -3,15 +3,15 @@
 	icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "toy spear"
-	desc = "A toy recreation of a normal spear made on space stations. You probably shouldn't have made it shitty on purpose if you wanted a real weapon..."
-	force = 1 // YUM YUM YUM YUM I EAT DICK ALL DAY YUM YUM YUM YUM
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	throwforce = 1
+	throwforce = 20
 	throw_speed = 4
 	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
-	armour_penetration = 0
+	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
@@ -21,14 +21,14 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/war_cry = "AAAAARGH!!!"
 	var/icon_prefix = "spearglass"
-	wound_bonus = 0
-	bare_wound_bonus = 0
+	wound_bonus = -15
+	bare_wound_bonus = 15
 
 /obj/item/spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=1, force_wielded=1, icon_wielded="[icon_prefix]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -41,7 +41,7 @@
 	var/obj/item/shard/tip = locate() in parts_list
 	if(tip)
 		if (istype(tip, /obj/item/shard/plasma))
-			throwforce = 0
+			throwforce = 21
 			icon_prefix = "spearplasma"
 			AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
 		update_icon()
@@ -168,13 +168,13 @@
 	icon_state = "bone_spear0"
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 1
-	throwforce = 1
-	armour_penetration = 1				//Enhanced armor piercing
+	force = 12
+	throwforce = 22
+	armour_penetration = 15				//Enhanced armor piercing
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=1, force_wielded=1, icon_wielded="bone_spear1")
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="bone_spear1")
 
 /obj/item/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear0"
