@@ -210,7 +210,6 @@
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/on_owner_deletion)
 
 /datum/action/consume/proc/on_owner_deletion()
-	. = ..()
 	stop_consuming() //Shit out the vored mob before u go go
 
 ///Try to consume the pulled mob
