@@ -269,8 +269,7 @@
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))
 				return TRUE
-			for(var/O in M.occupants)
-				var/mob/living/occupant = O
+			for(var/occupant in M.occupants)
 				if(CanAttack(occupant))
 					return TRUE
 			return FALSE
