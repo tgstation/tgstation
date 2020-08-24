@@ -1,7 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - balance: "Various blob reagents have received changes.  Distributed Neurons and Networked Fibers have been nerfed, while the rest have been buffed or stayed the same."
-  - balance: "Blob spores can no longer damage the environment.  This change does not affect blob zombies."
-  - balance: "Reflective blobs are now capable of taking more damage."
-  - balance: "Reroll Strain now offers a blob 5 choices, up from 3."
