@@ -1821,12 +1821,12 @@
 	taste_description = "bitterness"
 
 /datum/reagent/baldium/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if((methods & (TOUCH|VAPOR)) && M && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
-		H.hairstyle = "Bald"
-		H.facial_hairstyle = "Shaved"
-		H.update_hair()
+	if((methods & (TOUCH|VAPOR)) && ishuman(M))
+		var/mob/living/carbon/human/exposed_human = M
+		to_chat(exposed_human, "<span class='danger'>Your hair is falling out in clumps!</span>")
+		exposed_human.hairstyle = "Bald"
+		exposed_human.facial_hairstyle = "Shaved"
+		exposed_human.update_hair()
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
