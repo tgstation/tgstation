@@ -789,7 +789,7 @@
 /area/awaymission/wildwest/gov)
 "dd" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/store/bread/creamcheese,
+/obj/item/food/bread/creamcheese,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},

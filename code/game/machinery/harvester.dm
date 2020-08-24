@@ -168,7 +168,7 @@
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
 
-/obj/machinery/harvester/container_resist(mob/living/user)
+/obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
 		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 			"<span class='notice'>You climb out of [src]!</span>")
@@ -178,11 +178,11 @@
 
 /obj/machinery/harvester/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
-		container_resist(user)
+		container_resist_act(user)
 
-/obj/machinery/harvester/relaymove(mob/user)
+/obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/harvester/examine(mob/user)
 	. = ..()

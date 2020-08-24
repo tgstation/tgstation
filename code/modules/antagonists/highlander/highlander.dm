@@ -29,7 +29,9 @@
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
-	owner.current.set_species(/datum/species/human)
+	var/mob/living/carbon/human/humanlander = owner.current
+	if(ishuman(humanlander) && humanlander.dna.species.outfit_important_for_life) //things that cannot live with the scottish kilt will be owned
+		humanlander.set_species(/datum/species/human)
 	give_equipment()
 	. = ..()
 

@@ -131,7 +131,7 @@ Class Procs:
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -204,6 +204,22 @@ Class Procs:
 			L.update_mobility()
 	occupant = null
 
+/**
+ * Puts passed object in to user's hand
+ *
+ * Puts the passed object in to the users hand if they are adjacent.
+ * If the user is not adjacent then place the object on top of the machine.
+ *
+ * Vars:
+ * * object (obj) The object to be moved in to the users hand.
+ * * user (mob/living) The user to recive the object
+ */
+/obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
+	if(!issilicon(user) && in_range(src, user))
+		user.put_in_hands(object)
+	else
+		object.forceMove(drop_location())
+
 /obj/machinery/proc/can_be_occupant(atom/movable/am)
 	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
 
@@ -260,6 +276,11 @@ Class Procs:
 
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
 			return FALSE
+
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT)
+			if(user.is_blind())
+				to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+				return FALSE
 
 		if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
 			var/mob/living/carbon/H = L
@@ -334,14 +355,14 @@ Class Procs:
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
-		take_damage(4, BRUTE, "melee", 1)
+		take_damage(4, BRUTE, MELEE, 1)
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
 	if(!arm)
 		return
-	if(arm.disabled)
+	if(arm.bodypart_disabled)
 		return
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
@@ -582,7 +603,7 @@ Class Procs:
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power * 0.0005, BURN, "energy")
+		take_damage(power * 0.0005, BURN, ENERGY)
 		if(prob(40))
 			emp_act(EMP_LIGHT)
 		power -= power * 0.0005
@@ -604,4 +625,26 @@ Class Procs:
 	AM.pixel_y = -8 + (round( . / 3)*8)
 
 /obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1)
+	take_damage(500, BRUTE, MELEE, 1)
+
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices5
+ * The length of the generated name can be set by passing in an int
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * Returns (string) The generated name
+ */
+/obj/machinery/proc/assign_random_name(len=5)
+	var/list/new_name = list()
+	// machine id's should be fun random chars hinting at a larger world
+	for(var/i = 1 to len)
+		switch(rand(1,3))
+			if(1)
+				new_name += ascii2text(rand(65, 90)) // A - Z
+			if(2)
+				new_name += ascii2text(rand(97,122)) // a - z
+			if(3)
+				new_name += ascii2text(rand(48, 57)) // 0 - 9
+	return new_name.Join()

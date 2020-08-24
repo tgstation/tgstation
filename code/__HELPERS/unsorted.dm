@@ -359,7 +359,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		x = world.maxx
 	else if(direction & WEST)
 		x = 1
-	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
+	if(ISDIAGONALDIR(direction)) //let's make sure it's accurately-placed for diagonals
 		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
 		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
 	return locate(x,y,A.z)
@@ -461,17 +461,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 		current = get_step_towards(current, target_turf)
 		while(current != target_turf)
 			if(steps > length)
-				return 0
-			if(current.opacity)
-				return 0
-			for(var/thing in current)
-				var/atom/A = thing
-				if(A.opacity)
-					return 0
+				return FALSE
+			if(IS_OPAQUE_TURF(current))
+				return FALSE
 			current = get_step_towards(current, target_turf)
 			steps++
+	return TRUE
 
-	return 1
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
@@ -1383,8 +1379,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		REMOVE_TRAIT(the_atom2,trait,source)
 
 /proc/get_random_food()
-	var/list/blocked = list(/obj/item/reagent_containers/food/snacks/store/bread,
-		/obj/item/reagent_containers/food/snacks/breadslice,
+	var/list/blocked = list(/obj/item/food/bread,
+		/obj/item/food/breadslice,
 		/obj/item/reagent_containers/food/snacks/store/cake,
 		/obj/item/reagent_containers/food/snacks/cakeslice,
 		/obj/item/reagent_containers/food/snacks/store,
@@ -1398,10 +1394,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
-		/obj/item/reagent_containers/food/snacks/deepfryholder,
+		/obj/item/food/deepfryholder,
 		/obj/item/reagent_containers/food/snacks/clothing,
 		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/food/bread,
 		/obj/item/reagent_containers/food/snacks/grown/nettle
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)

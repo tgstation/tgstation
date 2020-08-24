@@ -14,7 +14,7 @@
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
 	throwforce = 7
 	var/throw_stun_chance = 35
@@ -68,6 +68,8 @@
 	return ..()
 
 /obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
 	if(istype(I,/obj/item/conversion_kit) && convertible)
 		var/turf/T = get_turf(src)
 		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)

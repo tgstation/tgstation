@@ -1184,9 +1184,9 @@
 /area/security/prison)
 "acY" = (
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
-/obj/item/reagent_containers/food/snacks/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
@@ -5250,18 +5250,14 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "alT" = (
-/obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
+/obj/structure/closet,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/maintenance/starboard/fore)
 "alU" = (
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "alV" = (
-/obj/effect/decal/cleanable/vomit,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alW" = (
@@ -5798,8 +5794,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "ane" = (
@@ -7656,10 +7651,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "arM" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arN" = (
@@ -9579,13 +9571,11 @@
 /area/maintenance/starboard/fore)
 "awE" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awF" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awG" = (
@@ -12002,7 +11992,7 @@
 	name = "theatre RC";
 	pixel_x = -32
 	},
-/obj/item/reagent_containers/food/snacks/baguette,
+/obj/item/food/baguette,
 /obj/item/toy/dummy,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -15936,6 +15926,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aKW" = (
@@ -20538,10 +20529,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
-"aWB" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "aWC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -24810,10 +24797,6 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
-"bgt" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bgu" = (
 /obj/machinery/button/door{
 	id = "qm_warehouse";
@@ -26148,8 +26131,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bji" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bjj" = (
@@ -27717,6 +27699,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmO" = (
@@ -28368,7 +28351,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bok" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -29083,10 +29065,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bqg" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
-/area/maintenance/starboard)
+/area/maintenance/starboard/fore)
 "bqh" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -33642,6 +33623,7 @@
 	req_access_txt = "26"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bAX" = (
@@ -35123,8 +35105,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEF" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEH" = (
@@ -37790,9 +37771,13 @@
 "bMq" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/table/glass,
-/obj/item/slime_scanner,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/glasses/science,
+/obj/item/biopsy_tool{
+	pixel_x = -16
+	},
+/obj/structure/microscope{
+	pixel_x = -1;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bMr" = (
@@ -37875,7 +37860,7 @@
 /area/maintenance/starboard/aft)
 "bMC" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bMD" = (
@@ -38972,13 +38957,12 @@
 /turf/closed/wall,
 /area/science/misc_lab)
 "bPO" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/cytology,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "bPP" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -39744,12 +39728,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bSq" = (
-/obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bSs" = (
@@ -41565,8 +41545,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bXZ" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bYa" = (
@@ -41697,9 +41676,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bYs" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/under/color/lightpurple,
-/obj/item/stack/spacecash/c200,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bYt" = (
@@ -43043,12 +43020,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cda" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/maintenance/starboard/aft)
 "cdb" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -43670,14 +43645,8 @@
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cgt" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "cgu" = (
-/obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgw" = (
@@ -44428,8 +44397,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
 "cjI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cjJ" = (
@@ -47836,6 +47804,7 @@
 /area/maintenance/disposal)
 "cAK" = (
 /obj/machinery/light/small,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cAL" = (
@@ -51166,6 +51135,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"gYE" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "gZK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -51313,6 +51286,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"hGN" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating/icemoon,
+/area/icemoon/surface/outdoors)
 "hGO" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -52929,6 +52906,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"mDj" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "mEX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -54601,11 +54582,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
-"ryM" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "rzl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -55233,6 +55209,12 @@
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"tte" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/aft)
 "tti" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -55476,6 +55458,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"ufp" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "uga" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -56332,6 +56318,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"wIi" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/aft)
 "wJU" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/purple,
@@ -69766,7 +69758,7 @@ boP
 asU
 asU
 asU
-asU
+hGN
 alU
 atJ
 amC
@@ -71315,7 +71307,7 @@ alU
 auZ
 bsU
 axf
-amC
+alV
 alU
 aol
 aBI
@@ -73879,7 +73871,7 @@ aom
 amC
 apP
 amC
-arN
+amC
 amC
 amC
 amC
@@ -74939,7 +74931,7 @@ bbO
 aPA
 bdM
 aPz
-bgt
+bji
 bhS
 bgw
 aPz
@@ -75196,7 +75188,7 @@ bbN
 aPA
 bdL
 aPz
-bgt
+aSg
 bhR
 bgw
 aZE
@@ -75422,8 +75414,8 @@ boP
 ali
 amC
 alU
-arN
-atU
+amC
+arM
 alU
 atU
 amC
@@ -77539,7 +77531,7 @@ bLv
 bPS
 alv
 bSo
-bPS
+gYE
 bCq
 bVD
 bWy
@@ -77806,7 +77798,7 @@ bZl
 bCq
 bHE
 bCq
-cda
+cAA
 cgF
 bCq
 bCq
@@ -78316,7 +78308,7 @@ bVE
 bWz
 bHE
 bHE
-bLu
+cjI
 bCq
 bLu
 bCq
@@ -79080,7 +79072,7 @@ boP
 bLv
 bQa
 bHE
-bHE
+bSs
 bCq
 bHE
 bLv
@@ -79300,7 +79292,7 @@ aPK
 aSm
 aTI
 aPK
-aWB
+bji
 akj
 soQ
 aYf
@@ -79594,7 +79586,7 @@ boP
 bLv
 bHE
 bHE
-bSs
+bHE
 bCq
 bHE
 bLv
@@ -79850,8 +79842,8 @@ asU
 asU
 bCq
 bHE
-alT
-bLu
+bHE
+cjI
 bCq
 bHE
 bLv
@@ -80616,7 +80608,7 @@ bCq
 bHD
 bJe
 bCq
-bLu
+cjI
 bHE
 bHE
 bHE
@@ -81127,7 +81119,7 @@ bwe
 bAJ
 ccu
 bCq
-bHE
+ufp
 bJf
 bCq
 boP
@@ -81154,14 +81146,14 @@ bCq
 bUt
 bCq
 bJf
-bLu
-bRg
+bHE
+cjI
 bCq
 tgF
 bPZ
 ccd
 bCq
-swV
+wIi
 cqL
 bJe
 bLv
@@ -81928,7 +81920,7 @@ ccu
 bQa
 bHE
 bHE
-bHE
+ufp
 ccw
 ccw
 chB
@@ -96835,7 +96827,7 @@ bzs
 bAw
 bAw
 bAw
-bAw
+bXZ
 bzs
 bzs
 boP
@@ -97006,9 +96998,15 @@ boP
 boP
 boP
 boP
-rKp
-anf
 aqv
+asU
+alO
+alO
+alO
+bqg
+auC
+alP
+auD
 anf
 anf
 anf
@@ -97343,7 +97341,7 @@ bAw
 bAw
 bAw
 bzs
-bAw
+mDj
 bAw
 bAw
 bAw
@@ -98371,8 +98369,8 @@ bAw
 bAw
 bAw
 bAw
-caK
 bAw
+bXZ
 bzs
 bAw
 ciF
@@ -99577,7 +99575,7 @@ boP
 boP
 boP
 apC
-anf
+awF
 anf
 alP
 apE
@@ -101641,7 +101639,7 @@ anf
 alP
 awL
 anf
-anf
+awF
 apE
 aBF
 aBF
@@ -101898,7 +101896,7 @@ anf
 alP
 awK
 anf
-awD
+anf
 apE
 anf
 anf
@@ -102207,7 +102205,7 @@ bJN
 bMq
 bNp
 bMi
-bPJ
+bPO
 bJN
 bEm
 bEm
@@ -102402,7 +102400,7 @@ boP
 boP
 boP
 alP
-aoP
+awF
 alP
 alP
 apE
@@ -102755,7 +102753,7 @@ mtK
 mtK
 cmn
 cmn
-cmn
+cda
 cOT
 boP
 boP
@@ -103774,8 +103772,8 @@ pxV
 hBY
 cmr
 tkC
-bNB
-ryM
+bYs
+cOe
 kZR
 cNW
 cOe
@@ -103944,7 +103942,7 @@ boP
 boP
 boP
 alP
-anf
+bqg
 apE
 anf
 anf
@@ -104204,7 +104202,7 @@ alP
 aoQ
 alP
 aqE
-arA
+alT
 asB
 atG
 auL
@@ -104794,7 +104792,7 @@ eyF
 bTl
 bTl
 bQZ
-cgt
+cOe
 cvO
 cOT
 boP
@@ -105051,7 +105049,7 @@ bTl
 bTl
 ceQ
 bQZ
-cOe
+bYs
 cvO
 cOT
 boP
@@ -106335,7 +106333,7 @@ cbV
 bQZ
 cOe
 ceS
-cae
+tte
 cNW
 jVl
 ciL
@@ -107347,7 +107345,7 @@ cNW
 bMC
 cOe
 jHt
-bPO
+nXU
 nXU
 bSm
 nXU
@@ -108616,7 +108614,7 @@ boP
 boP
 boP
 bZi
-bqg
+bEF
 brG
 brG
 cNR

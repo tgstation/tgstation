@@ -66,7 +66,7 @@
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist(mob/living/user)
+/obj/machinery/dna_scannernew/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return
@@ -114,7 +114,7 @@
 
 	return TRUE
 
-/obj/machinery/dna_scannernew/relaymove(mob/user)
+/obj/machinery/dna_scannernew/relaymove(mob/living/user, direction)
 	if(user.stat || locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
