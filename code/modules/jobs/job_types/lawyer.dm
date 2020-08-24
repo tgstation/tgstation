@@ -42,5 +42,8 @@
 	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
 	J.lawyers++
 	if(J.lawyers>1)
-		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+		if(H.jumpsuit_style == PREF_SKIRT)
+			uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit/skirt
+		else
+			uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple
