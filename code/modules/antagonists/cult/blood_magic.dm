@@ -194,11 +194,11 @@
 	button_icon_state = "equip" //this is the same icon that summon equipment uses, but eh, I'm not a spriter
 
 /datum/action/innate/cult/blood_spell/dagger/Activate()
-	var/turf/onwer_turf = get_turf(owner)
+	var/turf/owner_turf = get_turf(owner)
 	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
 		"<span class='cultitalic'>Your plea for aid is answered, and light begins to shimmer and take form within your hand!</span>")
-	var/obj/item/melee/cultblade/dagger/summoned_blade = new (onwer_turf)
+	var/obj/item/melee/cultblade/dagger/summoned_blade = new (owner_turf)
 	if(owner.put_in_hands(summoned_blade))
 		to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
 	else
