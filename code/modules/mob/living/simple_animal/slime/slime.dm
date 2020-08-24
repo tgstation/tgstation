@@ -101,6 +101,7 @@
 	. = ..()
 	set_nutrition(700)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	add_cell_sample()
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -496,3 +497,6 @@
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))
+
+/mob/living/simple_animal/slime/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

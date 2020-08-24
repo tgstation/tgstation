@@ -328,7 +328,7 @@
 			FindTarget()
 
 
-/mob/living/simple_animal/hostile/proc/AttackingTarget()
+/mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
 	return target.attack_animal(src)
