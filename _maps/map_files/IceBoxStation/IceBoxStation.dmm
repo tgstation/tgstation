@@ -5257,7 +5257,7 @@
 /turf/closed/wall,
 /area/maintenance/port/fore)
 "alV" = (
-/obj/effect/decal/cleanable/vomit,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alW" = (
@@ -16019,6 +16019,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aKW" = (
@@ -29157,10 +29158,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bqg" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
-/area/maintenance/starboard)
+/area/maintenance/starboard/fore)
 "bqh" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -33716,6 +33716,7 @@
 	req_access_txt = "26"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bAX" = (
@@ -47904,6 +47905,7 @@
 /area/maintenance/disposal)
 "cAK" = (
 /obj/machinery/light/small,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cAL" = (
@@ -51214,6 +51216,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"gYE" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "gZK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -51361,6 +51367,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"hGN" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating/icemoon,
+/area/icemoon/surface/outdoors)
 "hGO" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -52967,6 +52977,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"mDj" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "mEX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -55212,6 +55226,12 @@
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"tte" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/aft)
 "tti" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -55455,6 +55475,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"ufp" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "uga" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -56303,6 +56327,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"wIi" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/aft)
 "wJU" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/purple,
@@ -69737,7 +69767,7 @@ boP
 asU
 asU
 asU
-asU
+hGN
 alU
 atJ
 amC
@@ -71286,7 +71316,7 @@ alU
 auZ
 bsU
 axf
-amC
+alV
 alU
 aol
 aBI
@@ -77510,7 +77540,7 @@ bLv
 bPS
 alv
 bSo
-bPS
+gYE
 bCq
 bVD
 bWy
@@ -81098,7 +81128,7 @@ bwe
 bAJ
 ccu
 bCq
-bHE
+ufp
 bJf
 bCq
 boP
@@ -81132,7 +81162,7 @@ tgF
 bPZ
 ccd
 bCq
-swV
+wIi
 cqL
 bJe
 bLv
@@ -81899,7 +81929,7 @@ ccu
 bQa
 bHE
 bHE
-bHE
+ufp
 ccw
 ccw
 chB
@@ -96981,7 +97011,7 @@ asU
 alO
 alO
 alO
-anf
+bqg
 auC
 alP
 auD
@@ -97314,7 +97344,7 @@ bAw
 bAw
 bAw
 bzs
-bAw
+mDj
 bAw
 bAw
 bAw
@@ -103915,7 +103945,7 @@ boP
 boP
 boP
 alP
-anf
+bqg
 apE
 anf
 anf
@@ -106306,7 +106336,7 @@ cbV
 bQZ
 cOe
 ceS
-cae
+tte
 cNW
 jVl
 ciL
@@ -108587,7 +108617,7 @@ boP
 boP
 boP
 bZi
-bqg
+bEF
 brG
 brG
 cNR

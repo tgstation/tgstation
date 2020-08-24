@@ -4145,6 +4145,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ajg" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -23081,6 +23082,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bcd" = (
@@ -35757,9 +35759,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "bHO" = (
@@ -42166,6 +42166,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXC" = (
@@ -47653,8 +47654,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "ckz" = (
@@ -48291,10 +48291,10 @@
 "clZ" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/blood/gibs/old,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cma" = (
@@ -68056,7 +68056,7 @@
 /area/science/xenobiology)
 "hvt" = (
 /obj/structure/kitchenspike_frame,
-/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "hxH" = (
@@ -71003,6 +71003,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
+"moO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plasteel/white,
+/area/medical/abandoned)
 "mpe" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -71956,6 +71961,10 @@
 	icon_state = "wood-broken3"
 	},
 /area/quartermaster/qm)
+"okv" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "okP" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -75518,7 +75527,7 @@
 /area/security/prison)
 "tTw" = (
 /obj/structure/chair/stool,
-/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "tXK" = (
@@ -77176,7 +77185,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "wHc" = (
@@ -92334,7 +92343,7 @@ tOc
 ckR
 cmh
 cnj
-tTw
+cjt
 ckP
 ckP
 ckP
@@ -98013,7 +98022,7 @@ gDK
 mci
 xpZ
 rMb
-hYF
+moO
 iHk
 nWN
 iHk
@@ -98692,7 +98701,7 @@ aio
 aks
 alJ
 amY
-aRG
+okv
 aRG
 aqQ
 dne

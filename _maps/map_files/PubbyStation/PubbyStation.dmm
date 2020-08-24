@@ -12823,10 +12823,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFO" = (
-/obj/effect/decal/cleanable/vomit/old,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aFP" = (
@@ -15156,6 +15156,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aML" = (
@@ -16133,6 +16134,7 @@
 	},
 /area/maintenance/department/crew_quarters/bar)
 "aPz" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -32705,6 +32707,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel/dark,
 /area/medical/exam_room)
 "bEK" = (
@@ -34205,7 +34208,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHR" = (
-/obj/effect/decal/cleanable/vomit/old,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHS" = (
@@ -48544,6 +48547,7 @@
 /obj/structure/urinal{
 	pixel_y = 32
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "dNr" = (
@@ -52943,6 +52947,10 @@
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"nvG" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
 "nwg" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -53050,6 +53058,12 @@
 	dir = 1
 	},
 /area/hallway/secondary/exit/departure_lounge)
+"nGx" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/department/engine)
 "nIm" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
@@ -53506,6 +53520,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
+"orc" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	luminosity = 2
+	},
+/area/maintenance/department/science)
 "ory" = (
 /obj/machinery/light{
 	dir = 4
@@ -53551,6 +53571,10 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
+"otM" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "ous" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/loading_area{
@@ -54102,6 +54126,12 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"pzm" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/security/brig)
 "pAb" = (
 /obj/machinery/power/emitter,
 /obj/machinery/light{
@@ -55632,6 +55662,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"sYG" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "sYY" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -56315,6 +56349,10 @@
 "ulY" = (
 /turf/open/floor/engine,
 /area/engine/engineering)
+"umd" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 "ume" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -70785,7 +70823,7 @@ aaa
 crb
 crg
 cru
-crv
+nvG
 bZY
 crT
 csi
@@ -73527,7 +73565,7 @@ lcU
 sGr
 hiw
 wYu
-ajD
+sYG
 jsf
 ajD
 rLi
@@ -75597,7 +75635,7 @@ gjN
 aiu
 apB
 aiu
-aBa
+pzm
 oTC
 ait
 aaa
@@ -83641,7 +83679,7 @@ lHX
 nDo
 bva
 sij
-bDi
+umd
 ydf
 ihj
 ssx
@@ -84139,7 +84177,7 @@ bPy
 bQl
 bQW
 bva
-bSw
+nGx
 bPC
 bUc
 bva
@@ -95619,7 +95657,7 @@ ajt
 alQ
 mnG
 alb
-alb
+otM
 aiS
 anY
 apt
@@ -103666,7 +103704,7 @@ aht
 bwm
 ikB
 iVJ
-izF
+orc
 typ
 bwm
 aht
