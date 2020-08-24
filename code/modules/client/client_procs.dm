@@ -1001,6 +1001,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/list/verblist = list()
 	verb_tabs.Cut()
 	for(var/verb_to_init in (verbs + mob?.verbs))
+		if(!verb_to_init)
+			continue
 		if(verb_to_init:hidden)
 			continue
 		if(!istext(verb_to_init:category))
