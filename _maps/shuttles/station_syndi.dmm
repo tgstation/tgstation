@@ -940,7 +940,9 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/syndicate3)
 "KG" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/north{
+	cell_type = /obj/item/stock_parts/cell/high/plus
+	},
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 1
