@@ -1220,3 +1220,46 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 
 	var/icon/I = getFlatIcon(thing)
 	return icon2html(I, target)
+
+GLOBAL_LIST_EMPTY(transformation_animation_objects)
+
+/atom/movable/proc/transformation_animation(result_appearance,time = 3 SECONDS,transform_overlay=FALSE,reset_after=TRUE)
+	var/list/transformation_objects = GLOB.transformation_animation_objects[src] || list()
+	//Disappearing part
+	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
+	filters += top_part_filter
+	animate(filters[length(filters)],y=-32,time=time)
+	//Appearing part
+	var/obj/effect/overlay/ugh = new
+	ugh.appearance = result_appearance
+	ugh.appearance_flags |= KEEP_TOGETHER | KEEP_APART
+	ugh.vis_flags = VIS_INHERIT_ID
+	ugh.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
+	animate(ugh.filters[1],y=-32,time=time)
+	transformation_objects += ugh
+	//Transform effect thing - todo make appearance passed in
+	if(transform_overlay)
+		var/obj/transform_effect = new
+		transform_effect.icon ='icons/effects/effects.dmi'
+		transform_effect.icon_state = "transform_effect"
+		transform_effect.vis_flags = VIS_INHERIT_ID
+		transform_effect.pixel_y = 16
+		transform_effect.alpha = 255
+		transformation_objects += transform_effect
+		animate(transform_effect,pixel_y=-16,time=time)
+		animate(alpha=0)
+
+	GLOB.transformation_animation_objects[src] = transformation_objects
+	for(var/A in transformation_objects)
+		vis_contents += A
+	if(reset_after)
+		addtimer(CALLBACK(src,.proc/reset_transformation_animation),time)
+
+/atom/movable/proc/reset_transformation_animation()
+	var/list/transformation_objects = GLOB.transformation_animation_objects[src]
+	for(var/A in transformation_objects)
+		vis_contents -= A
+		qdel(A)
+	transformation_objects.Cut()
+	GLOB.transformation_animation_objects -= src
+	filters = null
