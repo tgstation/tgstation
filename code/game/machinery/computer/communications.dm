@@ -48,7 +48,7 @@
 		return
 	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
-	if(!is_station_level(z) && !is_reserved_level(z)) //Can only use in transit and on SS13
+	if(!is_station_level(z) && !is_reserved_level(z) && !is_centcom_level(z) && !istype(get_area(src), /area/shuttle/shipstation)) //Can only use in transit, centcom and on SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	usr.set_machine(src)
@@ -436,7 +436,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()
-	if (z > 6)
+	if (z > 6 && !istype(get_area(src), /area/shuttle/shipstation))
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 
