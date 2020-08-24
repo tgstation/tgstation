@@ -16,7 +16,8 @@
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)
 		return
-
+	if(!gibbed)
+		logevent("FATAL -- SYSTEM HALT")
 	. = ..()
 
 	locked = FALSE //unlock cover

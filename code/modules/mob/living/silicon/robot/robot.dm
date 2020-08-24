@@ -170,6 +170,7 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 	create_modularInterface()
+	logevent("System brought online.")
 
 /mob/living/silicon/robot/proc/create_modularInterface()
 	modularInterface = new/obj/item/modular_computer/tablet/integrated(src)
@@ -506,6 +507,7 @@
 	else if(.)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
 	update_mobility()
+	logevent("System lockdown [lockcharge?"triggered":"released"].")
 
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
@@ -835,6 +837,7 @@
 		resize = 0.5
 		hasExpanded = FALSE
 		update_transform()
+	logevent("Chassis configuration has been reset.")
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
@@ -1079,10 +1082,29 @@
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
 
+/mob/living/silicon/robot/post_lawchange(announce = TRUE)
+	..()
+	logevent("Law update processed.")
+
+/**
+  * Records an IC event log entry in the cyborg's internal tablet.
+  *
+  * Creates an entry in the borglog list of the cyborg's internal tablet, listing the current
+  * in-game time followed by the message given. These logs can be seen by the cyborg in their
+  * BorgUI tablet app. By design, logging fails if the cyborg is dead.
+  *
+  * Arguments:
+  * arg1: a string containing the message to log.
+ */
 /mob/living/silicon/robot/proc/logevent(var/string = "")
 	if(!string)
+		return
+	if(stat == DEAD) //Dead borgs log no longer
 		return
 	if(!modularInterface)
 		stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. A new one has been created.")
 		create_modularInterface()
-	modularInterface.borglog += string
+	modularInterface.borglog += "[station_time_timestamp()] - [string]"
+	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
+	var/datum/computer_file/program/borgUI/program = hard_drive.find_file_by_name("borgUI")
+	program.force_full_update()

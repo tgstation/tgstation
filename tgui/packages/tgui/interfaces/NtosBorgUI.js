@@ -1,21 +1,46 @@
 import { classes } from 'common/react';
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, Icon, NoticeBox, Section, ProgressBar, LabeledList, Table, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosBorgUI = (props, context) => {
+  const [tab, setTab] = useSharedState(context, 'tab', 1);
   return (
     <NtosWindow
       width={700}
       height={500}
       theme="ntos">
-      <NtosBorgUIContent/>
+      <br></br>
+      <br></br>
+      <Tabs>
+        <Tabs.Tab
+          icon="list"
+          lineHeight="23px"
+          selected={tab === 1}
+          onClick={() => setTab(1)}>
+          Status
+        </Tabs.Tab>
+        <Tabs.Tab
+          icon="list"
+          lineHeight="23px"
+          selected={tab === 2}
+          onClick={() => setTab(2)}>
+          Logs
+        </Tabs.Tab>
+      </Tabs>
+      {tab === 1 && (
+          <NtosBorgUIContent_one/>
+        )}
+        {tab === 2 && (
+          <NtosBorgUIContent_two/>
+      )}
+      
     </NtosWindow>
   );
 };
 
-export const NtosBorgUIContent = (props, context) => {
+export const NtosBorgUIContent_one = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     charge,
@@ -38,12 +63,6 @@ export const NtosBorgUIContent = (props, context) => {
     <Flex
       direction={"column"}
       hight="100%">
-      <Flex
-        direction={"row"}>
-        <Flex.Item>
-        <br></br><br></br>
-        </Flex.Item>
-      </Flex>
       <Flex
         direction={"row"}>
       <Flex.Item
@@ -185,3 +204,24 @@ export const NtosBorgUIContent = (props, context) => {
     </Flex>
   );
 };
+
+export const NtosBorgUIContent_two = (props, context) => {
+  const { act, data } = useBackend(context);
+  const borgLog = data.borgLog || [];
+  return (
+    <Section
+      background_color="black"
+      height={34}>
+      <NtosWindow.Content scrollable>
+      <Table>
+        {borgLog.map(log => (
+          <Table.Row>
+          <font color="green">{log}</font>
+          </Table.Row>
+        ))}
+      </Table>
+      </NtosWindow.Content>
+    </Section>
+  );
+};
+

@@ -57,7 +57,7 @@
 	///Ref to the borg we're installed in. Set by the borg during our creation.
 	var/mob/living/silicon/robot/borgo
 	///IC log that borgs can view in their personal management app
-	var/list/borglog
+	var/list/borglog = list()
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
@@ -84,7 +84,6 @@
 				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
 				if(!new_color)
 					return
-				to_chat(world, "DEBUG -- hex2num color value is [color_hex2num(new_color)]")
 				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
 					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
 					new_color = null

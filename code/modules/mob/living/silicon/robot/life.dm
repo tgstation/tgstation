@@ -19,8 +19,7 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		to_chat(world, "DEBUG -- lamp power is currently [lamp_enabled * round(hex2num(lamp_color)/100)]")
-		var/amt = clamp(lamp_enabled * round(hex2num(lamp_color)/100),1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		var/amt = clamp(lamp_enabled * round(color_hex2num(lamp_color)/100),1,cell.charge) //Lamp will use a max of 7 charge, depending on brightness of color. If lamp is off, borg systems consume 1 point of charge, or the rest of the cell if it's lower than that.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()

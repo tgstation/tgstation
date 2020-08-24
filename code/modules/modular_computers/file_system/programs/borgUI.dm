@@ -69,11 +69,26 @@
 	to_chat(world, "DEBUG -- [action]")
 	switch(action)
 		if("coverunlock")
-			tablet.borgo.locked = FALSE
-			tablet.borgo.update_icons()
+			if(tablet.borgo.locked)
+				tablet.borgo.locked = FALSE
+				tablet.borgo.update_icons()
+				if(tablet.borgo.emagged)
+					tablet.borgo.logevent("ChÃ¥vÃis cover lock has been [tablet.borgo.locked ? "engaged" : "released"]")
+				else
+					tablet.borgo.logevent("Chassis cover lock has been [tablet.borgo.locked ? "engaged" : "released"]")
 
 		if("lawchannel")
 			tablet.borgo.set_autosay()
 
 		if("lawstate")
 			tablet.borgo.checklaws()
+
+/**
+  * Forces a full update of the UI, if currently open.
+  *
+  * Forces an update that includes refreshing ui_static_data. Called by
+  * law changes and borg log additions.
+  */
+/datum/computer_file/program/borgUI/proc/force_full_update()
+	if(tablet)
+		SStgui.get_open_ui(tablet.borgo, computer)?.send_full_update()
