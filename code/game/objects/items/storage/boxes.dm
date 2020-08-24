@@ -1108,7 +1108,7 @@
 	icon_state = "gangtool-white"
 
 /obj/item/choice_beacon/ingredient/generate_display_names()
-	var/list/ingredients
+	var/list/ingredients = list()
 	for(var/V in subtypesof(/obj/item/storage/box/ingredients))
 		var/obj/item/storage/box/ingredients/A = V
 		ingredients[initial(A.theme_name)] = A
