@@ -521,13 +521,13 @@
 			else if(research && M.client)
 				filled = TRUE
 				pref = "filled"
-				for(var/datum/disease/advance/disease in M.diseases)
-					for(var/datum/symptom/symp in disease.symptoms)
-						if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
-							CRISPRCharge = TRUE
-				suff = (CRISPRCharge ? "with CRISPR charge" : "")
 			else
 				pref = "expended"
+			for(var/datum/disease/advance/disease in M.diseases)
+				for(var/datum/symptom/symp in disease.symptoms)
+					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
+						CRISPRCharge = TRUE
+			suff = (CRISPRCharge ? "with CRISPR charge" : "")
 			log_msg += "([mutation])"
 		name = "[pref] [name] [suff]"
 		log_attack("[log_msg] [loc_name(user)]")
