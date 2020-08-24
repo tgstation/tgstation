@@ -214,6 +214,15 @@
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
 			disintegrate(I, I)
+		else if(istype(I, /obj/item/gun))
+			var/obj/item/gun/G = AM
+			if(G.gun_light?.on)
+				disintegrate(G.gun_light, G)
+		else if(istype(I, /obj/item/clothing/head/helmet))
+			var/obj/item/clothing/head/helmet/H = I
+			if(H.attached_light?.on)
+				disintegrate(H.attached_light, H)
+
 
 	else if(ismecha(AM))
 		var/obj/mecha/M = AM
