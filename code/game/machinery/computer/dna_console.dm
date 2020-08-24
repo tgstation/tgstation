@@ -620,7 +620,7 @@
 			// Prompt for modifier string
 			var/newSequenceInput = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
 			// Drop out if the string is the wrong length
-			if(!(length(newSequenceInput)==32))
+			if(length(newSequenceInput) != 32)
 				return
 
 			//Generate the original and new gene sequences from the CRISPR string
