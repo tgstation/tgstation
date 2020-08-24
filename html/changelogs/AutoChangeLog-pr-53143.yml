@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - rscdel: "Removed the get red/blue secret documents traitor objective"
