@@ -575,7 +575,7 @@
 
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
-			if(!(scanner_occupant == connected_scanner.occupant))
+			if(scanner_occupant != connected_scanner.occupant)
 				return
 
 			//GUARD CHECK
