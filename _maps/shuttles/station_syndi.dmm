@@ -14,18 +14,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "bv" = (
-/obj/machinery/power/emitter/welded{
-	desc = "A heavy duty autocannon loaded with large penetrator slugs, pierces through ships hulls. Operate like you would an emitter.;
-	dir = 4;
-	fire_delay = 1000;
-	icon = 'icons/obj/turrets.dmi';
-	icon_state = "protoemitter";
-	icon_state_on = "protoemitter_+a";
-	icon_state_underpowered = "protoemitter_+u";
-	name = "Penetrator Cannon";
-	projectile_sound = 'sound/weapons/gun/sniper/shot.ogg';
-	projectile_type = /obj/projectile/bullet/p50/penetrator/shuttle
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -36,7 +24,21 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/machinery/power/emitter/prototype{
+	active_power_usage = 0;
+	anchored = 1;
+	desc = "A heavy duty autocannon loaded with large penetrator slugs, pierces through ships hulls. Operate like you would an emitter.";
+	dir = 4;
+	fire_delay = 1000;
+	flags_1 = 160;
+	idle_power_usage = 0;
+	maximum_fire_delay = 1000;
+	minimum_fire_delay = 1000;
+	name = "Penetrator Cannon";
+	projectile_sound = 'sound/weapons/gun/sniper/shot.ogg';
+	projectile_type = /obj/projectile/bullet/p50/penetrator/shuttle;
+	welded = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "bP" = (
@@ -44,32 +46,6 @@
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
-"cF" = (
-/obj/machinery/power/emitter/welded{
-	desc = "An entire rocket factory compacted into a portable package, launches HE rockets in the direction it's facing, and operates as an emitter would.";
-	dir = 4;
-	fire_delay = 3000;
-	icon = 'icons/obj/turrets.dmi';
-	icon_state = "protoemitter";
-	icon_state_on = "protoemitter_+a";
-	icon_state_underpowered = "protoemitter_+u";
-	name = "Rocket Tube";
-	projectile_sound = 'sound/weapons/gun/general/rocket_launch.ogg';
-	projectile_type = /obj/item/ammo_casing/caseless/rocket
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "eU" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -300,11 +276,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "lf" = (
-/obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/machinery/door/window/survival_pod{
+	dir = 8;
+	req_access_txt = "150"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "mr" = (
@@ -524,11 +502,6 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
-"ve" = (
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "vs" = (
@@ -774,7 +747,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "DO" = (
@@ -841,7 +816,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/structure/cable,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "FM" = (
@@ -908,18 +885,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "HL" = (
-/obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "IC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "II" = (
@@ -1000,6 +974,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
+/obj/machinery/door/window/survival_pod{
+	dir = 8;
+	req_access_txt = "150"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Pc" = (
@@ -1030,7 +1008,7 @@
 	},
 /obj/item/clothing/suit/space/hardsuit/syndi/elite,
 /obj/item/tank/internals/emergency_oxygen/double,
-/obj/item/melee/transforming/energy/sword/saber/purple,
+/obj/item/clothing/mask/gas/sechailer/swat,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "PY" = (
@@ -1040,6 +1018,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "QF" = (
@@ -1258,6 +1237,34 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Wm" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/power/emitter/prototype{
+	active_power_usage = 0;
+	anchored = 1;
+	desc = "An entire rocket factory compacted into a portable package, launches HE rockets in the direction it's facing, and operates as an emitter would.";
+	dir = 4;
+	fire_delay = 3000;
+	flags_1 = 160;
+	idle_power_usage = 0;
+	maximum_fire_delay = 3000;
+	minimum_fire_delay = 3000;
+	name = "Rocket Tube";
+	projectile_sound = 'sound/weapons/gun/general/rocket_launch.ogg';
+	projectile_type = /obj/projectile/bullet/a84mm_he;
+	welded = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "WJ" = (
@@ -1681,15 +1688,15 @@ ZY
 Xq
 EB
 Ag
-ve
-lf
+pZ
+pS
 Ku
 "}
 (20,1,1) = {"
 Pn
 Ku
 Fr
-pS
+lf
 Ku
 Ku
 EB
@@ -1705,7 +1712,7 @@ Pn
 (21,1,1) = {"
 Ub
 Ku
-cF
+Wm
 bv
 Ku
 gl
@@ -1715,7 +1722,7 @@ Cb
 PB
 Ku
 bv
-cF
+Wm
 Ku
 Ub
 "}
