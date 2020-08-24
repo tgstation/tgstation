@@ -111,7 +111,7 @@
 	movement_type = FLYING
 	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = FALSE
@@ -232,7 +232,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobspore/independent
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = HOSTILE_SPAWN
 	independent = TRUE
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
@@ -243,7 +243,6 @@
 	melee_damage_upper = 2
 	death_cloud_size = 0
 	is_weak = TRUE
-	gold_core_spawnable = NO_SPAWN
 
 /////////////////
 // BLOBBERNAUT //
