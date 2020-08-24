@@ -81,7 +81,7 @@
 						break
 			if(LAZYLEN(say_log))
 				for(var/spoken_memory in say_log)
-					if(recent_speech.len >= 3)//up to 3 recent lines of speech
+					if(recent_speech.len >= 3) //up to 3 recent lines of speech
 						break
 					recent_speech[spoken_memory] = say_log[spoken_memory]
 			if(recent_speech.len)
