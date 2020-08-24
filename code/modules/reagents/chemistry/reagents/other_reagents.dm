@@ -1788,14 +1788,14 @@
 	taste_description = "sourness"
 
 /datum/reagent/barbers_aid/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if((methods & (TOUCH|VAPOR)) && M && ishuman(M) && !HAS_TRAIT(M, TRAIT_BALD))
-		var/mob/living/carbon/human/H = M
+	if((methods & (TOUCH|VAPOR)) && ishuman(M) && !HAS_TRAIT(M, TRAIT_BALD))
+		var/mob/living/carbon/human/exposed_human = M
 		var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 		var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
-		to_chat(H, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
-		H.hairstyle = picked_hair
-		H.facial_hairstyle = picked_beard
-		H.update_hair()
+		to_chat(exposed_human, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
+		exposed_human.hairstyle = picked_hair
+		exposed_human.facial_hairstyle = picked_beard
+		exposed_human.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
