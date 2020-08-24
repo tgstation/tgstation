@@ -45,7 +45,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	food_type = list(/obj/item/reagent_containers/food/snacks/deadmouse) //mmmm, mice
 	tame_chance = 25
-	bonus_tame_chance = 15
+	bonus_tame_chance = 15 
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
 	. = ..()
