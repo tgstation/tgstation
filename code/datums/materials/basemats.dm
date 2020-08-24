@@ -351,7 +351,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "Otherworld Crystal"
 	desc = "An unkown crystal from an unkown dimension"
 	color = "#6d7e8e"
-	strength_modifier = 1.5
+	strength_modifier = 0.95
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = FALSE)
 	sheet_type = /obj/item/stack/sheet/otherworld_crystal
 	value_per_unit = 0.25
