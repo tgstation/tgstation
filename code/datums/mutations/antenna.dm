@@ -81,10 +81,9 @@
 						break
 			if(LAZYLEN(say_log))
 				for(var/spoken_memory in say_log)
-					if(recent_speech.len >= 3)//up to 3 random lines of speech, favoring more recent speech
+					if(recent_speech.len >= 3)//up to 3 recent lines of speech
 						break
-					if(prob(50))
-						recent_speech[spoken_memory] = say_log[spoken_memory]
+					recent_speech[spoken_memory] = say_log[spoken_memory]
 			if(recent_speech.len)
 				to_chat(user, "<span class='boldnotice'>You catch some drifting memories of their past conversations...</span>")
 				for(var/spoken_memory in recent_speech)
