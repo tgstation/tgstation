@@ -4,6 +4,7 @@
     "map_file": "OmegaStation.dmm",
     "shuttles": {
 	    "emergency": "emergency_omega",
+		"whiteship": "whiteship_omega",
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_delta"
     }
