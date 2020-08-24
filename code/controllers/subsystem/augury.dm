@@ -9,7 +9,8 @@ SUBSYSTEM_DEF(augury)
 	var/list/observers_given_action = list()
 
 /datum/controller/subsystem/augury/stat_entry(msg)
-	return ..("W:[watchers.len]|D:[doombringers.len]")
+	msg = "W:[watchers.len]|D:[length(doombringers)]"
+	return ..()
 
 /datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
