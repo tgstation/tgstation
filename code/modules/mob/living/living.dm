@@ -792,7 +792,7 @@
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc)
+	else if(loc != get_turf(src))
 		loc.container_resist_act(src)
 
 	else if(mobility_flags & MOBILITY_MOVE)
@@ -1097,7 +1097,7 @@
 
 	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
 
-	var/blocked = getarmor(null, "rad")
+	var/blocked = getarmor(null, RAD)
 
 	if(amount > RAD_BURN_THRESHOLD)
 		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)

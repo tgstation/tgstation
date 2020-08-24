@@ -20,6 +20,11 @@
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
 
+/obj/effect/dummy/phased_mob/slaughter/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
+	SIGNAL_HANDLER
+	qdel(src)
+
+
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -117,6 +122,7 @@
 				victim.visible_message("<span class='warning'>[target] violently expels [victim]!</span>")
 				victim.exit_blood_effect(target)
 				found_bloodpool = TRUE
+				break
 
 		if(!found_bloodpool)
 			// Fuck it, just eject them, thanks to some split second cleaning
@@ -168,6 +174,7 @@
 		return
 	forceMove(B.loc)
 	client.eye = src
+	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN, B)
 	visible_message("<span class='boldwarning'>[src] rises out of the pool of blood!</span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
@@ -175,5 +182,4 @@
 		for(var/obj/item/bloodcrawl/BC in C)
 			BC.flags_1 = null
 			qdel(BC)
-	QDEL_NULL(holder)
 	return TRUE

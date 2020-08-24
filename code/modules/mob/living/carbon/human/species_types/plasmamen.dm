@@ -137,6 +137,24 @@
 		if("Clown")
 			O = new /datum/outfit/plasmaman/clown
 
+		if("Captain")
+			O = new /datum/outfit/plasmaman/captain
+
+		if("Head of Personnel")
+			O = new /datum/outfit/plasmaman/head_of_personnel
+
+		if("Head of Security")
+			O = new /datum/outfit/plasmaman/head_of_security
+
+		if("Chief Engineer")
+			O = new /datum/outfit/plasmaman/chief_engineer
+
+		if("Chief Medical Officer")
+			O = new /datum/outfit/plasmaman/chief_medical_officer
+
+		if("Research Director")
+			O = new /datum/outfit/plasmaman/research_director
+
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
@@ -196,4 +214,3 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-

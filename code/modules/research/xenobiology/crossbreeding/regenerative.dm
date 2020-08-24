@@ -23,11 +23,11 @@ Regenerative extracts:
 		to_chat(user, "<span class='warning'>[src] will not work on the dead!</span>")
 		return
 	if(H != user)
-		user.visible_message("<span class='notice'>[user] crushes the [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
-			"<span class='notice'>You squeeze the [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
+		user.visible_message("<span class='notice'>[user] crushes [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!</span>",
+			"<span class='notice'>You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
-			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
+		user.visible_message("<span class='notice'>[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
+			"<span class='notice'>You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
 	core_effect_before(H, user)
 	H.revive(full_heal = TRUE, admin_revive = FALSE)
 	core_effect(H, user)
@@ -144,10 +144,11 @@ Regenerative extracts:
 	var/turf/open/T
 
 /obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user)
-	target.visible_message("<span class='warning'>[src] disappears in a shower of sparks!</span>","<span class='danger'>The milky goo teleports you somewhere it remembers!</span>")
-	do_sparks(5,FALSE,target)
-	target.forceMove(T)
-	do_sparks(5,FALSE,target)
+	var/turf/old_location = get_turf(target)
+	if(do_teleport(target, T, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
+		old_location.visible_message("<span class='warning'>[target] disappears in a shower of sparks!</span>")
+		to_chat(target, "<span class='danger'>The milky goo teleports you somewhere it remembers!</span>")
+
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
 	. = ..()

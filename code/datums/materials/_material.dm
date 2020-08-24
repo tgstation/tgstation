@@ -23,7 +23,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.

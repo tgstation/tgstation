@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "some really dangerous \"you're fucked\" events don't trigger on ghost roles..."
+  - admin: "and some events have been forbidden from centcom. stop messing with my events on the OOC zlevel!"

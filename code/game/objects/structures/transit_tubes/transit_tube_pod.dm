@@ -58,14 +58,14 @@
 		empty_pod()
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
-	for(var/atom/movable/AM in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += AM
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += AM
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += AM
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
