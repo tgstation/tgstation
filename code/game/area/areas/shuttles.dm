@@ -193,3 +193,7 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+/area/shuttle/shipstation
+	name = "NTSS 'Companionship'"
+	requires_power = TRUE
