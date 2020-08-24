@@ -129,6 +129,9 @@
 /obj/structure/ladder/attack_paw(mob/user)
 	return use(user)
 
+/obj/structure/ladder/attack_alien(mob/user)
+	return use(user)
+
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)
 	return use(user)
 

@@ -67,7 +67,9 @@
 		/obj/item/construction/rcd,
 		/obj/item/pipe_dispenser,
 		/obj/item/inducer,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/airlock_painter,
+		/obj/item/pipe_painter
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -732,5 +734,6 @@
 		/obj/item/graft,
 		/obj/item/secateurs,
 		/obj/item/geneshears,
-		/obj/item/shovel/spade
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
 		))

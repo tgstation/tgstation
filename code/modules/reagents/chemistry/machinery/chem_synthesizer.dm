@@ -23,9 +23,7 @@
 	switch(action)
 		if("ejectBeaker")
 			if(beaker)
-				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
+				try_put_in_hand(beaker, usr)
 				beaker = null
 				. = TRUE
 		if("input")

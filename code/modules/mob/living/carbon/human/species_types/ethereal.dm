@@ -39,24 +39,36 @@
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
 	var/drain_time = 0 //used to keep ethereals from spam draining power sources
+	var/obj/effect/dummy/lighting_obj/ethereal_light
+
+
+/datum/species/ethereal/Destroy(force)
+	if(ethereal_light)
+		QDEL_NULL(ethereal_light)
+	return ..()
+
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	.=..()
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		default_color = "#" + H.dna.features["ethcolor"]
-		r1 = GETREDPART(default_color)
-		g1 = GETGREENPART(default_color)
-		b1 = GETBLUEPART(default_color)
-		spec_updatehealth(H)
-		RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
-		RegisterSignal(C, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
+	. = ..()
+	if(!ishuman(C))
+		return
+	var/mob/living/carbon/human/ethereal = C
+	default_color = "#[ethereal.dna.features["ethcolor"]]"
+	r1 = GETREDPART(default_color)
+	g1 = GETGREENPART(default_color)
+	b1 = GETBLUEPART(default_color)
+	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
+	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
+	ethereal_light = ethereal.mob_light()
+	spec_updatehealth(ethereal)
+
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	.=..()
-	C.set_light(0)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
+	QDEL_NULL(ethereal_light)
+	return ..()
+
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)
@@ -66,16 +78,18 @@
 
 	return randname
 
+
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
-	.=..()
+	. = ..()
 	if(H.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(H.health, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
-		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
+		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
+		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = copytext_char(current_color, 2)
 	else
-		H.set_light(0)
+		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 

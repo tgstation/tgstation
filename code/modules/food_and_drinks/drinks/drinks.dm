@@ -67,7 +67,7 @@
  */
 /obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(isGlass && !custom_materials)
-		custom_materials = list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5) //sets it to glass so, later on, it gets picked up by the glass catch
+		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
