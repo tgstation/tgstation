@@ -75,6 +75,10 @@
 		ingredients[initial(A.theme_name)] = A
 	return ingredients
 
+/obj/item/choice_beacon/ingredient/spawn_option(obj/choice,mob/living/M)
+	new choice(get_turf(M))
+	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!</b> Message ends.\"</span>")
+
 /obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "fruit"
@@ -238,6 +242,10 @@
 			var/atom/A = V
 			hero_item_list[initial(A.name)] = A
 	return hero_item_list
+
+/obj/item/choice_beacon/hero/spawn_option(obj/choice,mob/living/M)
+	new choice(get_turf(M))
+	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'History Comes Alive branded' Costume Set, exactly as shown in the hit show!</b> Message ends.\"</span>")
 
 
 /obj/item/storage/box/hero
