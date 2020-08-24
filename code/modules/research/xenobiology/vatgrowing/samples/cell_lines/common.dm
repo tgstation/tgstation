@@ -378,7 +378,9 @@
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
-	new pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow)(get_turf(vat))
+	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow))
+
+	new selected_mob(get_turf(vat))
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
@@ -392,7 +394,7 @@
 	desc = "Overly fleshy clown bits"
 
 	required_reagents = list(/datum/reagent/consumable/banana)
-	supplementary_reagents = list(/datum/reagent/consumable/protein = 4)
+	supplementary_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 1)
 
