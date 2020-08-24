@@ -1000,12 +1000,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	var/list/verblist = list()
 	verb_tabs.Cut()
-	for(var/verb in (verbs + mob?.verbs))
-		if(verb:hidden)
+	for(var/verb_to_init in (verbs + mob?.verbs))
+		if(verb_to_init:hidden)
 			continue
-		if(!istext(verb:category))
+		if(!istext(verb_to_init:category))
 			continue
-		verb_tabs |= verb:category
-		verblist[++verblist.len] = list(verb:category, verb:name)
+		verb_tabs |= verb_to_init:category
+		verblist[++verblist.len] = list("[verb_to_init:category]", "[verb_to_init:name]")
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
 	verbs_init = TRUE
