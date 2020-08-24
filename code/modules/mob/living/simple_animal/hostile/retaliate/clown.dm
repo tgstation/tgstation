@@ -292,6 +292,9 @@
 	attack_verb_simple = "awkwardly flail at"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow
+	speed = 20
+
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
 	name = "Something that was once a clown"
 	desc = "A grotesque bulging figure far mutated from it's original state."
@@ -306,3 +309,6 @@
 	attack_verb_simple = "bounce off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 	attack_reagent = /datum/reagent/toxin/mindbreaker
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow
+	speed = 50
