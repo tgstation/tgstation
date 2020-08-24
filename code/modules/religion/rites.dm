@@ -68,7 +68,7 @@
 						"... We call upon you, in the face of adversity...",
 						"... to complete us, removing that which is undesirable...")
 	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
-	favor_cost = 500
+	favor_cost = 1000
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
