@@ -28,10 +28,9 @@
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE
-		var/mob/living/L = target
-		ADD_TRAIT(L, TRAIT_NO_TELEPORT, "implant")
-		return TRUE
-	return FALSE
+	var/mob/living/living_target = target
+	ADD_TRAIT(living_target, TRAIT_NO_TELEPORT, "implant")
+	return TRUE
 
 /obj/item/implant/exile/noteleport/removed(mob/target, silent = FALSE, special = FALSE)
 	if(..() && isliving(target))
