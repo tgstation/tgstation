@@ -74,7 +74,8 @@
 	dir = 8;
 	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1, "syndicate_shipstation" = 1);
 	name = "Syndicate Destroyer Navigation Computer";
-	resistance_flags = 243
+	resistance_flags = 243;
+	whitelist_turfs = /turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral/random/volcanic, /turf/closed/mineral/random/high_chance/volcanic
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5

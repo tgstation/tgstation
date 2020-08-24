@@ -12,7 +12,7 @@
 	lock_override = NONE
 	shuttlePortId = "station_custom"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "whiteship_lavaland" = 1)
-	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral/random/volcanic, /turf/closed/mineral/random/high_chance/volcanic)
 	view_range = 6
 	designate_time = 50
 	x_offset = -9
