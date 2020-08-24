@@ -15,44 +15,43 @@
 		return .
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
-		name = "snake"
-		desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
-		icon_state = "snake"
-		icon_living = "snake"
-		icon_dead = "snake_dead"
-		speak_emote = list("hisses")
-		health = 20
-		maxHealth = 20
-		poison_per_bite = 5
-		attack_verb_continuous = "bites"
-		attack_verb_simple = "bite"
-		melee_damage_lower = 5
-		melee_damage_upper = 6
-		response_help_continuous = "pets"
-		response_help_simple = "pet"
-		response_disarm_continuous = "shoos"
-		response_disarm_simple = "shoo"
-		response_harm_continuous = "steps on"
-		response_harm_simple = "step on"
-		faction = list("hostile")
-		ventcrawler = VENTCRAWLER_ALWAYS
-		density = FALSE
-		pass_flags = PASSTABLE | PASSMOB
-		mob_size = MOB_SIZE_SMALL
-		mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
-		gold_core_spawnable = FRIENDLY_SPAWN
-		obj_damage = 0
-		environment_smash = ENVIRONMENT_SMASH_NONE
-		food_type = list(/obj/item/reagent_containers/food/snacks/deadmouse) //mmmm, mice
-		tame_chance = 25
-		bonus_tame_chance = 15
-
+	name = "snake"
+	desc = "A slithery snake. These legless reptiles are the bane of mice and adventurers alike."
+	icon_state = "snake"
+	icon_living = "snake"
+	icon_dead = "snake_dead"
+	speak_emote = list("hisses")
+	health = 20
+	maxHealth = 20
+	poison_per_bite = 5
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	melee_damage_lower = 5
+	melee_damage_upper = 6
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "steps on"
+	response_harm_simple = "step on"
+	faction = list("hostile")
+	ventcrawler = VENTCRAWLER_ALWAYS
+	density = FALSE
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
+	gold_core_spawnable = FRIENDLY_SPAWN
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	food_type = list(/obj/item/reagent_containers/food/snacks/deadmouse) //mmmm, mice
+	tame_chance = 25
+	bonus_tame_chance = 15
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
 	. = oview(vision_range, targets_from) //get list of things in vision range
 	var/list/living_mobs = list()
 	var/list/mice = list()
-	for (var/HM in .)
+	for(var/HM in .)
 		//Yum a tasty mouse
 		if(istype(HM, /mob/living/simple_animal/mouse))
 			mice += HM
@@ -66,12 +65,12 @@
 	return mice
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/AttackingTarget()
-		if(istype(target, /mob/living/simple_animal/mouse) && melee_damage_upper > 0) //asclepius's snakes are pacifists
-				visible_message("<span class='notice'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
-				QDEL_NULL(target)
-				adjustBruteLoss(-2)
-		else
-				return ..()
+	if(istype(target, /mob/living/simple_animal/mouse) && melee_damage_upper > 0) //asclepius's snakes are pacifists
+		visible_message("<span class='notice'>[name] consumes [target] in a single gulp!</span>", "<span class='notice'>You consume [target] in a single gulp!</span>")
+		QDEL_NULL(target)
+		adjustBruteLoss(-2)
+	else
+		return ..()
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius
 	name = "Asclepius's snake"
@@ -95,9 +94,9 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/ListTargets(atom/the_target)
 	var/list/patients = list()
-	for (var/mob/living/living_in_oview in oview(vision_range, targets_from)) //get list of things in vision range
+	for(var/mob/living/living_in_oview in oview(vision_range, targets_from)) //get list of things in vision range
 		//can I heal you?
-		if(!living_in_oview.reagents || (living_in_oview.health >= living_in_oview.maxHealth)) //yeah, clone damage and such will make the snake be obsessed with one target, but eh, even divine doctors ain't perfect
+		if(!living_in_oview.reagents || (living_in_oview.health >= living_in_oview.maxHealth)) //yeah, clone damage, robotic limbs, and such will still cause the snake to bite people it can't fully heal, but eh, even divine doctors can be dentheads sometimes
 			continue
 		if(careful && poison_type.overdose_threshold && living_in_oview.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite))) //if they're already full of our reagent, let's not remain obsessed with them
 			continue
