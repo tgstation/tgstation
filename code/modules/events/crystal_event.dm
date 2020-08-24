@@ -303,7 +303,7 @@ This section is for the crystal portals variations
 	desc = "this shouldn't be here"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "anom"
-	color = "#B2FFFE"
+	color = COLOR_SILVER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	///Max amount of mobs that a portal can spawn in any given time
@@ -360,7 +360,7 @@ This section is for the crystal portals variations
 /obj/structure/crystal_portal/small
 	name = "Small Portal"
 	desc = "A small portal to an unkown dimension!"
-	color = "#B2FFFE"
+	color = COLOR_BRIGHT_BLUE
 	max_mobs = 3
 	spawn_time = 200
 	mob_types = list(
@@ -371,7 +371,7 @@ This section is for the crystal portals variations
 /obj/structure/crystal_portal/medium
 	name = "Medium Portal"
 	desc = "A medium portal to an unkown dimension!"
-	color = "#93F3B2"
+	color = COLOR_GREEN
 	max_mobs = 5
 	spawn_time = 180
 	mob_types = list(
@@ -383,7 +383,7 @@ This section is for the crystal portals variations
 /obj/structure/crystal_portal/big
 	name = "Big Portal"
 	desc = "A big portal to an unkown dimension!"
-	color = "#F4F48A"
+	color = COLOR_RED
 	max_mobs = 8
 	spawn_time = 160
 	mob_types = list(
@@ -396,7 +396,7 @@ This section is for the crystal portals variations
 /obj/structure/crystal_portal/huge
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
-	color = "#F97575"
+	color = COLOR_BLACK
 	max_mobs = 12
 	spawn_time = 140
 	mob_types = list(

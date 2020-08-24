@@ -350,12 +350,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/otherworld_crystal
 	name = "Otherworld Crystal"
 	desc = "An unkown crystal from an unkown dimension"
-	color = "#6d7e8e"
+	color = COLOR_YELLOW
 	strength_modifier = 0.95
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = FALSE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/otherworld_crystal
 	value_per_unit = 0.25
 	beauty_modifier = 0.4
+	alpha = 150
 
 //I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand
