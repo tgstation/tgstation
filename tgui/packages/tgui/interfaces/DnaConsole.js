@@ -655,7 +655,7 @@ const MutationInfo = (props, context) => {
               })} />
             <Button
               icon="syringe"
-              disabled={!isInjectorReady || !mutation.Active}
+              disabled={!mutation.Active}
               content="CRISPR"
               onClick={() => act('crispr', {
                 mutref: mutation.ByondRef,
