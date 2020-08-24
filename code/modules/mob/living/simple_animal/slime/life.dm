@@ -148,7 +148,7 @@
 					to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
 					set_stat(UNCONSCIOUS)
 					powerlevel = 0
-					rabid = 0
+					rabid = FALSE
 					update_mobility()
 					regenerate_icons()
 			if(UNCONSCIOUS, HARD_CRIT)
