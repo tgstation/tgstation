@@ -48,7 +48,7 @@
 	var/ricochets = 0
 	/// how many times we can ricochet max
 	var/ricochets_max = 0
-	/// 0-100, the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
+	/// 0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
 	var/ricochet_chance = 0
 	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
 	var/ricochet_decay_chance = 0.7
@@ -380,7 +380,7 @@
 	//Returns null if nothing at all was found.
 
 /obj/projectile/proc/check_ricochet(atom/A)
-	var/chance = ricochet_chance * A.ricochet_chance_mod
+	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS
 	if(prob(chance))
