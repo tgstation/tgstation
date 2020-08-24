@@ -100,7 +100,7 @@
 			continue
 		if(careful && poison_type.overdose_threshold && living_in_oview.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite))) //if they're already full of our reagent, let's not remain obsessed with them
 			continue
-	patients += living_in_oview
+		patients += living_in_oview
 	return patients
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/tamed()
