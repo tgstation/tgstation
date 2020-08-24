@@ -604,43 +604,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
 
-/datum/objective/steal/exchange
-	name = "exchange"
-	martyr_compatible = 0
-
-/datum/objective/steal/exchange/admin_edit(mob/admin)
-	return
-
-/datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
-	target = otheragent
-	if(faction == "red")
-		targetinfo = new/datum/objective_item/unique/docs_blue
-	else if(faction == "blue")
-		targetinfo = new/datum/objective_item/unique/docs_red
-	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
-	steal_target = targetinfo.targetitem
-
-
-/datum/objective/steal/exchange/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Acquire [targetinfo.name] held by [target.name], the [target.assigned_role] and syndicate agent"
-	else
-		explanation_text = "Free Objective"
-
-
-/datum/objective/steal/exchange/backstab
-	name = "prevent exchange"
-
-/datum/objective/steal/exchange/backstab/set_faction(faction)
-	if(faction == "red")
-		targetinfo = new/datum/objective_item/unique/docs_red
-	else if(faction == "blue")
-		targetinfo = new/datum/objective_item/unique/docs_blue
-	explanation_text = "Do not give up or lose [targetinfo.name]."
-	steal_target = targetinfo.targetitem
-
-
 /datum/objective/download
 	name = "download"
 

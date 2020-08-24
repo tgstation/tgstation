@@ -16,10 +16,9 @@ SUBSYSTEM_DEF(explosions)
 
 	var/cost_throwturf = 0
 
-	var/cost_lowobj = 0
-	var/cost_medobj = 0
-	var/cost_highobj = 0
-
+	var/cost_low_mov_atom = 0
+	var/cost_med_mov_atom = 0
+	var/cost_high_mov_atom = 0
 
 	var/list/lowturf = list()
 	var/list/medturf = list()
@@ -28,9 +27,9 @@ SUBSYSTEM_DEF(explosions)
 
 	var/list/throwturf = list()
 
-	var/list/lowobj = list()
-	var/list/medobj = list()
-	var/list/highobj = list()
+	var/list/low_mov_atom = list()
+	var/list/med_mov_atom = list()
+	var/list/high_mov_atom = list()
 
 	var/list/explosions = list()
 
@@ -44,9 +43,9 @@ SUBSYSTEM_DEF(explosions)
 	msg += "HT:[round(cost_highturf,1)]|"
 	msg += "FT:[round(cost_flameturf,1)]||"
 
-	msg += "LO:[round(cost_lowobj,1)]|"
-	msg += "MO:[round(cost_medobj,1)]|"
-	msg += "HO:[round(cost_highobj,1)]|"
+	msg += "LO:[round(cost_low_mov_atom,1)]|"
+	msg += "MO:[round(cost_med_mov_atom,1)]|"
+	msg += "HO:[round(cost_high_mov_atom,1)]|"
 
 	msg += "TO:[round(cost_throwturf,1)]"
 
@@ -58,9 +57,9 @@ SUBSYSTEM_DEF(explosions)
 	msg += "HT:[highturf.len]|"
 	msg += "FT:[flameturf.len]||"
 
-	msg += "LO:[lowobj.len]|"
-	msg += "MO:[medobj.len]|"
-	msg += "HO:[highobj.len]|"
+	msg += "LO:[low_mov_atom.len]|"
+	msg += "MO:[med_mov_atom.len]|"
+	msg += "HO:[high_mov_atom.len]|"
 
 	msg += "TO:[throwturf.len]"
 
@@ -72,7 +71,7 @@ SUBSYSTEM_DEF(explosions)
 #define SSEX_OBJ "obj"
 
 /datum/controller/subsystem/explosions/proc/is_exploding()
-	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || lowobj.len || medobj.len || highobj.len)
+	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
 /datum/controller/subsystem/explosions/proc/wipe_turf(turf/T)
 	lowturf -= T
@@ -304,16 +303,17 @@ SUBSYSTEM_DEF(explosions)
 				var/atom/A = I
 				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
-				if(!QDELETED(A))
-					switch(dist)
-						if(EXPLODE_DEVASTATE)
-							SSexplosions.highobj += A
-						if(EXPLODE_HEAVY)
-							SSexplosions.medobj += A
-						if(EXPLODE_LIGHT)
-							SSexplosions.lowobj += A
+			for(var/thing in items)
+				var/atom/movable/movable_thing = thing
+				if(QDELETED(movable_thing))
+					continue
+				switch(dist)
+					if(EXPLODE_DEVASTATE)
+						SSexplosions.high_mov_atom += movable_thing
+					if(EXPLODE_HEAVY)
+						SSexplosions.med_mov_atom += movable_thing
+					if(EXPLODE_LIGHT)
+						SSexplosions.low_mov_atom += movable_thing
 		switch(dist)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += T
@@ -425,30 +425,27 @@ SUBSYSTEM_DEF(explosions)
 		var/list/low_turf = lowturf
 		lowturf = list()
 		for(var/thing in low_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
-				T.ex_act(EXPLODE_LIGHT)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_LIGHT)
+			turf_thing.ex_act(EXPLODE_LIGHT)
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
 		var/list/med_turf = medturf
 		medturf = list()
 		for(var/thing in med_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
-				T.ex_act(EXPLODE_HEAVY)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_HEAVY)
+			turf_thing.ex_act(EXPLODE_HEAVY)
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
 		var/list/high_turf = highturf
 		highturf = list()
 		for(var/thing in high_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
-				T.ex_act(EXPLODE_DEVASTATE)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_DEVASTATE)
+			turf_thing.ex_act(EXPLODE_DEVASTATE)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -467,31 +464,34 @@ SUBSYSTEM_DEF(explosions)
 		currentpart = SSEXPLOSIONS_THROWS
 
 		timer = TICK_USAGE_REAL
-		var/list/high_obj = highobj
-		highobj = list()
-		for(var/thing in high_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_DEVASTATE)
-		cost_highobj = MC_AVERAGE(cost_highobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_high_mov_atom = high_mov_atom
+		high_mov_atom = list()
+		for(var/thing in local_high_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_DEVASTATE)
+		cost_high_mov_atom = MC_AVERAGE(cost_high_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
-		var/list/med_obj = medobj
-		medobj = list()
-		for(var/thing in med_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_HEAVY)
-		cost_medobj = MC_AVERAGE(cost_medobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_med_mov_atom = med_mov_atom
+		med_mov_atom = list()
+		for(var/thing in local_med_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_HEAVY)
+		cost_med_mov_atom = MC_AVERAGE(cost_med_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
-		var/list/low_obj = lowobj
-		lowobj = list()
-		for(var/thing in low_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_LIGHT)
-		cost_lowobj = MC_AVERAGE(cost_lowobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_low_mov_atom = low_mov_atom
+		low_mov_atom = list()
+		for(var/thing in local_low_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_LIGHT)
+		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 
 	if (currentpart == SSEXPLOSIONS_THROWS)

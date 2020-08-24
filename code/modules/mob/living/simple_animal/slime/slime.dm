@@ -210,10 +210,11 @@
 		else
 			. += "You can evolve!"
 
-	if(stat == UNCONSCIOUS)
-		. += "You are knocked out by high levels of BZ!"
-	else
-		. += "Power Level: [powerlevel]"
+	switch(stat)
+		if(HARD_CRIT, UNCONSCIOUS)
+			. += "You are knocked out by high levels of BZ!"
+		else
+			. += "Power Level: [powerlevel]"
 
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -419,7 +420,7 @@
 	if (stat == DEAD)
 		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
 	else
-		if (stat == UNCONSCIOUS) // Slime stasis
+		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
 			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
 		if (getBruteLoss())
 			. += "<span class='warning'>"

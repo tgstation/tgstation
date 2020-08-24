@@ -129,6 +129,8 @@
 	icon_state = "plastitanium_window"
 	opacity = FALSE
 	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
+	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 
 /turf/closed/indestructible/opsglass/Initialize()

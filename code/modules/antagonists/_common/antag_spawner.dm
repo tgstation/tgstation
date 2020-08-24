@@ -249,7 +249,6 @@
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
 	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
-	S.holder = holder
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
