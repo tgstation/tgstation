@@ -247,7 +247,8 @@
 		if(isturf(loc)) //only show if we're "in" a core
 			. += text("Backup Power: [battery/2]%")
 		. += text("Connected cyborgs: [connected_robots.len]")
-		for(var/mob/living/silicon/robot/R in connected_robots)
+		for(var/r in connected_robots)
+			var/mob/living/silicon/robot/R = r
 			var/robot_status = "Nominal"
 			if(R.shell)
 				robot_status = "AI SHELL"
