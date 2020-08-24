@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Gripper glove tackles now disable throw mode when you hit something (whether it's a person, a window, or whatever)"
-  - bugfix: "You can no longer suffer head wounds from bad rolls on tackling other people, but you can if you hit an object/wall"
-  - balance: "Tackling solid objects/walls is now slightly less prone to maim you"

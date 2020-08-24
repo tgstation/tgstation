@@ -46,6 +46,10 @@
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
 	add_verb(src, /mob/living/proc/lay_down)
+	add_cell_sample()
+
+/mob/living/simple_animal/pet/cat/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/cat/update_mobility()
 	..()
@@ -80,6 +84,8 @@
 	unique_pet = TRUE
 	held_state = "original"
 
+/mob/living/simple_animal/pet/cat/original/add_cell_sample()
+	return
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -260,6 +266,9 @@
 	deathmessage = "loses its false life and collapses!"
 	deathsound = "bodyfall"
 	held_state = "cak"
+
+/mob/living/simple_animal/pet/cat/cak/add_cell_sample()
+	return
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

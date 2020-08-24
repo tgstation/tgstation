@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "shuttle navigation consoles can no longer dock at tiles that the shuttle is on"

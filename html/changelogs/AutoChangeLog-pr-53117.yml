@@ -1,7 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - refactor: "Refactored health status procs to improve quality and allow easier reaction to change events."
-  - tweak: "You can use the normal say verb while on crit, and it will be automatically converted into a whisper in soft crit, or just not work while unconscious, without risk of accidentally succumbing."
-  - tweak: "You can only whisper-succumb by explicitly whispering while in hard crit. Use the succumb verb otherwise."
-  - tweak: "Martyrdom mutation works only when on hard critical, the owner will no longer die by taking a nap."

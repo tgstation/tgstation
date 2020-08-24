@@ -31,6 +31,8 @@ SUBSYSTEM_DEF(processing)
 		if (MC_TICK_CHECK)
 			return
 
+
+///This proc is called on a datum if it is being processed in a subsystem. If you override this do not call parent, as it will return PROCESS_KILL. This is done to prevent objects that dont override process() from staying in the processing list
 /datum/proc/process()
 	set waitfor = 0
 	return PROCESS_KILL

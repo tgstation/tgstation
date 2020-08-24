@@ -931,7 +931,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/proc/embedded(atom/embedded_target)
+/obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
 	return
 
 /obj/item/proc/unembedded()
