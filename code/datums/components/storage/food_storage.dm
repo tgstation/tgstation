@@ -29,6 +29,12 @@
 	bad_chance_of_discovery = _bad_chance
 	good_chance_of_discovery = _good_chance
 
+/datum/component/food_storage/Destroy(force, silent)
+	if(stored_item)
+		stored_item.forceMove(stored_item.drop_location())
+		stored_item = null
+	. = ..()
+
 /** Begins the process of inserted an item.
   *
   * Clicking on the food storage with an item on disarm intent will begin a do_after, which if successful inserts the item.
@@ -44,7 +50,7 @@
 		return
 
 	if(inserted_item.w_class > minimum_weight_class)
-		to_chat(user, "<span class='warning'>[inserted_item.name] won't fit in \the [parent].</span>")
+		to_chat(user, "<span class='warning'>\The [inserted_item.name] won't fit in \the [parent].</span>")
 		return
 
 	if(!QDELETED(stored_item))
@@ -147,7 +153,7 @@
 		to_chat(target, "<span class='warning'>It feels like there's something in \the [parent]...!</span>")
 
 	else if(prob(bad_chance_of_discovery)) //finding the item, BY biting it
-		target.log_message("[key_name(user)] just fed [key_name(target)] a/an [stored_item] which was hidden in [parent] at [AREACOORD(target)]", LOG_ATTACK)
+		user.log_message("[key_name(user)] just fed [key_name(target)] a/an [stored_item] which was hidden in [parent] at [AREACOORD(target)]", LOG_ATTACK)
 		discovered = stored_item.on_accidental_consumption(target, user, parent)
 		update_stored_item() //make sure if the item was changed, the reference changes as well
 
