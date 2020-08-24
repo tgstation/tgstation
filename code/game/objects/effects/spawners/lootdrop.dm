@@ -43,6 +43,15 @@
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 		)
 
+/obj/effect/spawner/lootdrop/arcade_boards
+	name = "arcade board spawner"
+	lootdoubles = FALSE
+	loot = list()
+
+/obj/effect/spawner/lootdrop/arcade_boards/Initialize(mapload)
+	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
+	return ..()
+
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"

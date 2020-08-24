@@ -8,13 +8,13 @@ Behavior that's still missing from this component that original food items had t
 	Drying component (jerky etc)
 	Customizable component (custom pizzas etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
-	Dunkable component (Dunking things into reagent containers to absorb a specific amount of reagents)
 
 	Misc:
 	Something for cakes (You can store things inside)
 
 */
 /datum/component/edible
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	///Amount of reagents taken per bite
 	var/bite_consumption = 2
 	///Amount of bites taken so far
@@ -31,10 +31,22 @@ Behavior that's still missing from this component that original food items had t
 	var/list/eatverbs
 	///Callback to be ran for when you take a bite of something
 	var/datum/callback/after_eat
+	///Callback to be ran for when you take a bite of something
+	var/datum/callback/on_consume
 	///Last time we checked for food likes
 	var/last_check_time
 
-/datum/component/edible/Initialize(list/initial_reagents, food_flags = NONE, foodtypes = NONE, volume = 50, eat_time = 30, list/tastes, list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"), bite_consumption = 2, datum/callback/after_eat)
+/datum/component/edible/Initialize(list/initial_reagents,
+								food_flags = NONE,
+								foodtypes = NONE,
+								volume = 50,
+								eat_time = 30,
+								list/tastes,
+								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
+								bite_consumption = 2,
+								datum/callback/after_eat,
+								datum/callback/on_consume)
+
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -42,6 +54,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
@@ -52,6 +65,7 @@ Behavior that's still missing from this component that original food items had t
 	src.eatverbs = eatverbs
 	src.junkiness = junkiness
 	src.after_eat = after_eat
+	src.on_consume = on_consume
 
 	var/atom/owner = parent
 
@@ -64,6 +78,35 @@ Behavior that's still missing from this component that original food items had t
 				owner.reagents.add_reagent(rid, amount, tastes.Copy())
 			else
 				owner.reagents.add_reagent(rid, amount)
+
+/datum/component/edible/InheritComponent(datum/component/C,
+	i_am_original,
+	list/initial_reagents,
+	food_flags = NONE,
+	foodtypes = NONE,
+	volume = 50,
+	eat_time = 30,
+	list/tastes,
+	list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
+	bite_consumption = 2,
+	datum/callback/after_eat,
+	datum/callback/on_consume
+	)
+
+	. = ..()
+	src.bite_consumption = bite_consumption
+	src.food_flags = food_flags
+	src.foodtypes = foodtypes
+	src.eat_time = eat_time
+	src.eatverbs = eatverbs
+	src.junkiness = junkiness
+	src.after_eat = after_eat
+	src.on_consume = on_consume
+
+/datum/component/edible/Destroy(force, silent)
+	QDEL_NULL(after_eat)
+	QDEL_NULL(on_consume)
+	return ..()
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -89,6 +132,13 @@ Behavior that's still missing from this component that original food items had t
 
 	return TryToEat(user, user)
 
+/datum/component/edible/proc/OnFried(fry_object)
+	SIGNAL_HANDLER
+	var/atom/our_atom = parent
+	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
+	qdel(our_atom)
+	return COMSIG_FRYING_HANDLED
+
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
 
@@ -100,6 +150,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
+		on_consume?.Invoke(eater, feeder)
 		if(isturf(parent))
 			var/turf/T = parent
 			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)

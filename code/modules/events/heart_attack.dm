@@ -10,6 +10,8 @@
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
 		if(!H.client || H.stat == DEAD || H.InCritical() || !H.can_heartattack() || H.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in H.diseases) || H.undergoing_cardiac_arrest())
 			continue
+		if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
+			continue
 		if(H.satiety <= -60) //Multiple junk food items recently
 			heart_attack_contestants[H] = 3
 		else
