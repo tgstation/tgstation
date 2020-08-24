@@ -1,0 +1,1783 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"aE" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"bv" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/power/emitter/prototype{
+	anchored = 1;
+	desc = "A heavy duty autocannon loaded with large penetrator slugs, pierces through ships hulls. Operate like you would an emitter.";
+	dir = 4;
+	flags_1 = 160;
+	name = "Penetrator Cannon";
+	projectile_sound = 'sound/weapons/gun/sniper/shot.ogg';
+	projectile_type = /obj/projectile/bullet/p50/penetrator/shuttle;
+	welded = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"bP" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"eU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"fh" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"fC" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"fR" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate3{
+	desc = "Used to designate a precise transit location for the Syndicate Destroyer.";
+	dir = 8;
+	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1, "syndicate_shipstation" = 1);
+	name = "Syndicate Destroyer Navigation Computer";
+	resistance_flags = 243;
+	whitelist_turfs = /turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral/random/volcanic, /turf/closed/mineral/random/high_chance/volcanic
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"gk" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"gl" = (
+/obj/machinery/button/door{
+	id = "destroyerexterior";
+	name = "Window Blast Door Control";
+	pixel_x = -5;
+	pixel_y = 6;
+	req_access_txt = "150"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Shuttle turret control";
+	pixel_y = -3;
+	req_access = null;
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"hI" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"hL" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"hT" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"iD" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"iF" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"iM" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	pixel_y = 5
+	},
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"iV" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/assembly/flash/handheld,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"jr" = (
+/obj/machinery/vending/snack/random{
+	extended_inventory = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"jF" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Weapons Bay";
+	req_access_txt = "150"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"jH" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"kl" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"kY" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"le" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"lf" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 8;
+	req_access_txt = "150"
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"mr" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"na" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"nD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"nX" = (
+/obj/machinery/door/airlock/external{
+	name = "Exit";
+	req_access_txt = "150"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/docking_port/mobile{
+	dheight = 2;
+	dwidth = 9;
+	height = 15;
+	id = "syndiedestroyer";
+	name = "Syndicate Destroyer";
+	port_direction = 4;
+	preferred_direction = 4;
+	width = 24
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"oF" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"oO" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = null;
+	name = "Bridge";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"oT" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"pt" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"pS" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"pZ" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"qo" = (
+/obj/machinery/sleeper/syndie{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"qX" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/utility{
+	pixel_y = -7
+	},
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"sM" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"th" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"tG" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"tM" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"ul" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"un" = (
+/obj/structure/closet/syndicate/personal,
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"vd" = (
+/obj/machinery/door/airlock/external{
+	name = "Exit";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"vs" = (
+/obj/machinery/vending/wallmed{
+	pixel_x = 26
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"wb" = (
+/obj/machinery/vending/boozeomat/syndicate_access,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"wX" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"xg" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/syndicatespace{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"xD" = (
+/obj/machinery/sleeper/syndie{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"yf" = (
+/obj/structure/window/plasma/reinforced,
+/obj/structure/table/reinforced,
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"yI" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"zr" = (
+/obj/structure/cable,
+/obj/structure/closet/crate/radiation,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50;
+	pixel_y = -5
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 50;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 50;
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"zu" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ab" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ae" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ag" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Av" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"AP" = (
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"BD" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"BL" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/trimline/red/filled/end,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Cb" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ce" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"CS" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Df" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"DO" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"DY" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"EB" = (
+/obj/structure/grille,
+/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "destroyerexterior"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/syndicate3)
+"EF" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Fd" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Fr" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"FM" = (
+/obj/structure/closet/syndicate/personal,
+/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Gh" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"GJ" = (
+/obj/machinery/computer/camera_advanced/syndie,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"GQ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ha" = (
+/obj/structure/window/plasma/reinforced,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"HL" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"IC" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"II" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"JB" = (
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/obj/machinery/vending/engineering,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ka" = (
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Kd" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ku" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/caravan/syndicate3)
+"KG" = (
+/obj/machinery/power/apc/auto_name/north{
+	cell_type = /obj/item/stock_parts/cell/high/plus
+	},
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ld" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Nu" = (
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"NV" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 8;
+	req_access_txt = "150"
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Pc" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Engineering Bay";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Pn" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"PB" = (
+/obj/structure/closet/syndicate/personal,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/item/clothing/suit/space/hardsuit/syndi/elite,
+/obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/clothing/mask/gas/sechailer/swat,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"PY" = (
+/obj/machinery/door/poddoor{
+	id = "destroyerexterior"
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"QF" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"QQ" = (
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Rq" = (
+/obj/structure/closet/secure_closet/engineering_welding,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Rv" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Rz" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"RC" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"RK" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"RO" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Sc" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/caravan/syndicate3)
+"Sd" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Sk" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Sx" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/storage/toolbox/syndicate{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"SF" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/syndicatespace{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"SR" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Tb" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Ub" = (
+/turf/template_noop,
+/area/template_noop)
+"Uf" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/stack/cable_coil,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"UF" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/ntnet_relay,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"VL" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"VW" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Wb" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Wm" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/power/emitter/prototype{
+	anchored = 1;
+	desc = "An entire rocket factory compacted into a portable package, launches HE rockets in the direction it's facing, and operates as an emitter would.";
+	dir = 4;
+	flags_1 = 160;
+	name = "Rocket Tube";
+	projectile_sound = 'sound/weapons/gun/general/rocket_launch.ogg';
+	projectile_type = /obj/projectile/bullet/a84mm_he;
+	welded = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"WJ" = (
+/obj/machinery/door/airlock/external{
+	name = "Exit";
+	req_access_txt = "150"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"WY" = (
+/obj/machinery/computer/shuttle/caravan/syndicate3{
+	dir = 8;
+	name = "Syndicate Destroyer Console";
+	possible_destinations = "caravansyndicate3_custom;caravansyndicate3_ambush;caravansyndicate3_listeningpost;syndicate_shipstation";
+	resistance_flags = 243
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Xq" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Yj" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 50;
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/plastitanium{
+	amount = 50;
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Yo" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Yw" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"Zo" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"ZY" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+
+(1,1,1) = {"
+Ub
+Ub
+Pn
+fC
+fC
+Pn
+Ub
+Ub
+Ub
+Pn
+gk
+gk
+Pn
+Ub
+Ub
+"}
+(2,1,1) = {"
+Ub
+Pn
+Ku
+Sc
+Sc
+Ku
+Pn
+Ub
+Pn
+Ku
+Sc
+Sc
+Ku
+Pn
+Ub
+"}
+(3,1,1) = {"
+Ub
+Ku
+DO
+Yj
+Sx
+qX
+Ku
+Ku
+Ku
+RK
+FM
+FM
+FM
+Ku
+Ub
+"}
+(4,1,1) = {"
+Ub
+Ku
+KG
+af
+Gh
+kY
+Ku
+fh
+Cb
+hI
+Zo
+Zo
+BL
+Ku
+Ub
+"}
+(5,1,1) = {"
+Ub
+Ku
+JB
+EF
+sM
+th
+Pc
+hL
+Ld
+tM
+FM
+FM
+FM
+Ku
+Ub
+"}
+(6,1,1) = {"
+Ub
+iD
+Ku
+zr
+Ld
+Rq
+EB
+ul
+Ld
+Yo
+wX
+un
+Ku
+tG
+Ub
+"}
+(7,1,1) = {"
+Ub
+Ub
+Ku
+VW
+sM
+na
+Ku
+Ag
+Ld
+Ld
+tM
+FM
+Ku
+Ub
+Ub
+"}
+(8,1,1) = {"
+Ub
+Ub
+Ku
+Sd
+Rz
+kl
+Ku
+Ag
+Ld
+pZ
+pS
+FM
+Ku
+Ub
+Ub
+"}
+(9,1,1) = {"
+Ub
+Ub
+Ku
+Ku
+Ku
+Ku
+Ku
+Kd
+Ld
+oT
+Ku
+Ku
+Ku
+Ub
+Ub
+"}
+(10,1,1) = {"
+Ub
+Ub
+WJ
+GQ
+vd
+nD
+Cb
+II
+Ld
+tM
+vd
+GQ
+nX
+Ub
+Ub
+"}
+(11,1,1) = {"
+Ub
+Ub
+Ku
+Ku
+Ku
+AP
+Av
+Av
+Av
+BD
+Ku
+Ku
+Ku
+Ub
+Ub
+"}
+(12,1,1) = {"
+Ub
+Ub
+Ku
+wb
+yf
+aE
+SF
+SF
+SF
+Sk
+RC
+oF
+Ku
+Ub
+Ub
+"}
+(13,1,1) = {"
+Ub
+bP
+Ku
+zu
+Ha
+hT
+ZY
+ZY
+ZY
+mr
+iF
+Wb
+Ku
+VL
+Ub
+"}
+(14,1,1) = {"
+Ub
+Ku
+jr
+Tb
+le
+aE
+xg
+xg
+xg
+Sk
+Wb
+Wb
+qo
+Ku
+Ub
+"}
+(15,1,1) = {"
+Pn
+Ku
+iM
+Ab
+CS
+hT
+ZY
+ZY
+ZY
+mr
+Wb
+vs
+xD
+Ku
+Pn
+"}
+(16,1,1) = {"
+Ku
+Ku
+Ku
+Ku
+Ku
+Ka
+SF
+SF
+SF
+Yw
+Ku
+Ku
+Ku
+Ku
+Ku
+"}
+(17,1,1) = {"
+Ku
+RO
+Cb
+eU
+EB
+Rv
+ZY
+ZY
+ZY
+Fd
+EB
+nD
+Cb
+Uf
+Ku
+"}
+(18,1,1) = {"
+Ku
+GJ
+Ld
+jH
+jF
+QF
+DY
+DY
+DY
+SR
+jF
+Ag
+Ld
+Nu
+Ku
+"}
+(19,1,1) = {"
+Ku
+HL
+IC
+jH
+EB
+Ae
+ZY
+ZY
+ZY
+Xq
+EB
+Ag
+pZ
+pS
+Ku
+"}
+(20,1,1) = {"
+Pn
+Ku
+Fr
+lf
+Ku
+Ku
+EB
+oO
+EB
+Ku
+Ku
+NV
+Df
+Ku
+Pn
+"}
+(21,1,1) = {"
+Ub
+Ku
+Wm
+bv
+Ku
+gl
+Cb
+Cb
+Cb
+PB
+Ku
+bv
+Wm
+Ku
+Ub
+"}
+(22,1,1) = {"
+Ub
+Pn
+PY
+PY
+Ku
+iV
+pt
+Ce
+yI
+UF
+Ku
+PY
+PY
+Pn
+Ub
+"}
+(23,1,1) = {"
+Ub
+Ub
+Ub
+Ub
+iD
+Ku
+fR
+WY
+QQ
+Ku
+tG
+Ub
+Ub
+Ub
+Ub
+"}
+(24,1,1) = {"
+Ub
+Ub
+Ub
+Ub
+Ub
+Pn
+EB
+EB
+EB
+Pn
+Ub
+Ub
+Ub
+Ub
+Ub
+"}

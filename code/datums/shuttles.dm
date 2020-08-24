@@ -635,3 +635,13 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/shipstation
+	port_id = "station"
+	can_be_bought = FALSE
+	suffix = "ship"
+	name = "NTSS 'Friendship'"
+
+/datum/map_template/shuttle/shipstation/syndicate
+	suffix = "syndi"
+	name = "Syndicate Destroyer"
