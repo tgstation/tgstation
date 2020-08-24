@@ -119,6 +119,23 @@ li a:hover:not(.active) {
   min-height: 0;
   white-space: pre-wrap;
 }
+.link {
+  display: inline;
+  background: none;
+  border: none;
+  padding: 7px 14px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 2px 2px;
+}
+.dark .link {
+	color: #abc6ec;
+}
+.link:hover {
+  text-decoration: underline;
+}
 </style>
 <ul id="menu" class="button-container">
 </ul>
@@ -158,7 +175,6 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 		}
 	});
 }
-
 if(!Array.prototype.includes) {
 	Array.prototype.includes = function(thing) {
 		for(let i = 0; i < this.length; i++) {
@@ -167,7 +183,15 @@ if(!Array.prototype.includes) {
 		return false;
 	}
 }
-
+/* document.addEventListener("mousedown", function(e){
+ var shiftPressed=0;
+ var evt = e?e:window.event;
+ shiftPressed=evt.shiftKey;
+  if (shiftPressed) {
+   return false;
+  }
+ return true;
+}); */
 let status_tab_parts = ["loading..."];
 let current_tab = null;
 let mc_tab_parts = [["loading...", ""]];
@@ -623,10 +647,22 @@ function draw_listedturf() {
 			img.src = part[2];
 			table.appendChild(img);
 		}
-		let a = document.createElement("a");
-		a.href = "?src=" + part[1] + ";statpanel_item_click=1";
-		a.textContent = part[0];
-		table.appendChild(a);
+		let b = document.createElement("div");
+		let clickcatcher = "";
+		b.className = "link";
+		b.onmousedown = function(e) {
+			e.preventDefault();
+			clickcatcher = "?src=" + part[1] + ";statpanel_item_click=1";
+			if(e.shiftKey){
+				 clickcatcher += ";statpanel_item_shiftclick=1";
+			}
+			if(e.ctrlKey){
+				clickcatcher += ";statpanel_item_ctrlclick=1";
+			}
+			window.location.href = clickcatcher;
+		}
+		b.textContent = part[0];
+		table.appendChild(b);
 		table.appendChild(document.createElement("br"));
 	}
 	document.getElementById("statcontent").appendChild(table);
