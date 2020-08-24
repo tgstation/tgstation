@@ -1,0 +1,7 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The robotic limbs of androids now have the damage reduction values that normal augmented limbs do."
+  - balance: "The amount of favor received per point of cell charge for a cell sacrificed to the Technophile chaplain sect has been multiplied by 10 (1 point of favor per 3,000 points of cell charge -> 1 point of favor per 300 points of cell charge)."
+  - balance: "The amount of favor required to perform the Rite of Synthetic Conversion has been multiplied by 2 (500 points of favor ->1,000 points of favor)."
+  - balance: "The amount of time required to perform the Rite of Synthetic Conversion has been reduced from 1 minute to 30 seconds."
