@@ -606,16 +606,6 @@
 			// GUARD CHECK - Only search occupant for this specific ref, since your
 			//  can only CRISPR existing mutations in a target
 			var/datum/mutation/human/targetmut = get_mut_by_ref(bref, search_flags)
-			/* DEBUG SECTION: Dump Strings:
-			for (var/M in subtypesof(/datum/mutation/human))
-				var/truegenes = GET_SEQUENCE(M)
-				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(M)
-				var/newString
-				for(var/i=1 to length(truegenes))
-					newString = (i%2==0 ? truegenes[i-1] : sequence[i])
-				to_chat(usr,"<span class='notice'>"+HM.name+" : "+truegenes+" : "+newString+"</span>")
-			to_chat(usr,"<span class='warning'>"+targetmut.name+" : "+sequence+"</span>")
-			*/
 
 			// Prompt for modifier string
 			var/newSequenceInput = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
@@ -645,9 +635,6 @@
 						oldSequence+=newpair
 				else
 					return //drop out, no pair
-			//logging for debug
-			//to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
-			//to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
 
 			//decrement CRISPR charge
 			CRISPRcharges--
@@ -659,10 +646,9 @@
 					var/truegenes = GET_SEQUENCE(M)
 					if (newSequence == truegenes)
 						matchedDna = M
-				var/datum/disease/advance/random/ranDisease = new /datum/disease/advance/random(3,3)
+				var/datum/disease/advance/random/ranDisease = new /datum/disease/advance/random(2,2)
 				ranDisease.try_infect(scanner_occupant, FALSE)
 				// This needs a check - what if the usr already has this mutation in their DNA? Do we just lose the slot? YES.
-				///datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
 				var/mutation_data[0]
 				var/resultDna = ACIDFLESH
 				if(matchedDna)
