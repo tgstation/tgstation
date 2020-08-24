@@ -71,7 +71,7 @@
 
 /datum/reagent/clf3/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(istype(M))
-		if(methods & ~(INGEST|INJECT))
+		if(methods & (TOUCH|VAPOR|PATCH))
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
@@ -195,7 +195,7 @@
 
 /datum/reagent/napalm/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(istype(M))
-		if(methods & ~(INGEST|INJECT))
+		if(methods & (TOUCH|VAPOR|PATCH))
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane
