@@ -34,13 +34,13 @@ map icebox
 	votable
 endmap
 
+map shipstation
+	maxplayers 40
+	votable
+endmap
+
 map runtimestation
 endmap
 
 map multiz_debug
-endmap
-
-map shipstation
-	maxplayers 40
-	votable
 endmap
