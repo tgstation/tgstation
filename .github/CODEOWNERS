@@ -25,6 +25,10 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Jared-Fogle
+
+/code/modules/unit_tests/ @Jared-Fogle
+
 # Jordie0608
 
 /SQL/ @Jordie0608
