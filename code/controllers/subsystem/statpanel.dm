@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(statpanels)
 						continue
 					if(A.invisibility > M.see_invisible)
 						continue
-					if(overrides.len && (A in overrides))
+					if(A in overrides)
 						continue
 					if(A.IsObscured())
 						continue
