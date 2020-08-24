@@ -1,0 +1,4 @@
+author: "Thebleh"
+delete-after: True
+changes: 
+  - bugfix: "RCDs can build doors over firelocks again"
