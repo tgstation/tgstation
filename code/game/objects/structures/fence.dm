@@ -15,13 +15,14 @@
 	desc = "A chain link fence. Not as effective as a wall, but generally it keeps people out."
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 9999
 
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "straight"
 
-	var/cuttable = TRUE
+	var/cuttable = FALSE
 	var/hole_size= NO_HOLE
-	var/invulnerable = FALSE
+	var/invulnerable = TRUE
 
 /obj/structure/fence/Initialize()
 	. = ..()
