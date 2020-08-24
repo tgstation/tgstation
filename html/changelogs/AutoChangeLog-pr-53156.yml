@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "border firelocks will now be opaque after closing, regular now wont be opaque on spawn"
