@@ -152,7 +152,7 @@ The console is located at computer/gulag_teleporter.dm
 	strip_occupant()
 	var/mob/living/carbon/human/prisoner = occupant
 	if(!isplasmaman(prisoner) && jumpsuit_type)
-		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type
+		var/suit_or_skirt = prisoner.jumpsuit_style == PREF_SKIRT ? jumpskirt_type : jumpsuit_type //Check player prefs for jumpsuit or jumpskirt toggle, then give appropriate prison outfit.
 		prisoner.equip_to_appropriate_slot(new suit_or_skirt)
 	if(shoes_type)
 		prisoner.equip_to_appropriate_slot(new shoes_type)
