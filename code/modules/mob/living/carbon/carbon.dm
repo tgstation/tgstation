@@ -681,7 +681,7 @@
 				severity = 9
 			if(-INFINITY to -95)
 				severity = 10
-		if(!InFullCritical())
+		if(stat != HARD_CRIT)
 			var/visionseverity = 4
 			switch(health)
 				if(-8 to -4)
@@ -804,17 +804,19 @@
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
 			return
-		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
+		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
+			set_stat(HARD_CRIT)
+		else if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 			set_stat(UNCONSCIOUS)
+		else if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
+			set_stat(SOFT_CRIT)
 		else
-			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				set_stat(SOFT_CRIT)
-			else
-				set_stat(CONSCIOUS)
+			set_stat(CONSCIOUS)
 		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
+
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()

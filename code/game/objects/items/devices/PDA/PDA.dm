@@ -752,7 +752,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		L = get(src, /mob/living/silicon)
 
-	if(L && L.stat != UNCONSCIOUS)
+	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend

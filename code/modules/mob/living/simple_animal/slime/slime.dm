@@ -200,18 +200,22 @@
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
+
 /mob/living/simple_animal/slime/Stat()
-	if(..())
+	. = ..()
+	if(!.)
+		return
 
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(is_adult)
-				stat(null, "You can reproduce!")
-			else
-				stat(null, "You can evolve!")
+	if(!docile)
+		stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(is_adult)
+			stat(null, "You can reproduce!")
+		else
+			stat(null, "You can evolve!")
 
-		if(stat == UNCONSCIOUS)
+	switch(stat)
+		if(HARD_CRIT, UNCONSCIOUS)
 			stat(null,"You are knocked out by high levels of BZ!")
 		else
 			stat(null,"Power Level: [powerlevel]")
@@ -420,7 +424,7 @@
 	if (stat == DEAD)
 		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
 	else
-		if (stat == UNCONSCIOUS) // Slime stasis
+		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
 			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
 		if (getBruteLoss())
 			. += "<span class='warning'>"

@@ -510,7 +510,7 @@
 		if(target.stat == DEAD || !target.on_fire)
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
-		if(target.InCritical())
+		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION))
 			target.death()
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())

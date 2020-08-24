@@ -339,13 +339,14 @@
 				msg += "[t_He] [t_has] a holy aura about [t_him].\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
 
-		if(stat == UNCONSCIOUS)
-			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
-		else
-			if(HAS_TRAIT(src, TRAIT_DUMB))
-				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-			if(InCritical())
+		switch(stat)
+			if(UNCONSCIOUS, HARD_CRIT)
+				msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
+			if(SOFT_CRIT)
 				msg += "[t_He] [t_is] barely conscious.\n"
+			if(CONSCIOUS)
+				if(HAS_TRAIT(src, TRAIT_DUMB))
+					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 		if(getorgan(/obj/item/organ/brain))
 			if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"

@@ -250,7 +250,7 @@
 			return TRUE
 		if(SOFT_CRIT)
 			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
 			to_chat(src, "<span class='warning'>You're already dead!</span>")
