@@ -25,7 +25,9 @@
 	return dat
 
 /obj/item/implant/exile/noteleport/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	if(..() && isliving(target))
+	. = ..()
+	if(!. || !isliving(target))
+		return FALSE
 		var/mob/living/L = target
 		ADD_TRAIT(L, TRAIT_NO_TELEPORT, "implant")
 		return TRUE
