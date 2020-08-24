@@ -24,7 +24,7 @@ RLD
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
@@ -925,16 +925,22 @@ RLD
 	var/list/name_to_type = list()
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
+	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
+	var/list/plumbing_design_types
+
+/obj/item/construction/plumbing/Initialize(mapload)
+	. = ..()
+	set_plumbing_designs()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
-		for(var/A in GLOB.plumbing_constructables)
+		for(var/A in plumbing_design_types)
 			var/obj/machinery/plumbing/M = A
 
 			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
 			name_to_type[initial(M.name)] = M
-			machinery_data["cost"][A] = GLOB.plumbing_constructables[A]
+			machinery_data["cost"][A] = plumbing_design_types[A]
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -943,6 +949,26 @@ RLD
 	blueprint = name_to_type[choice]
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
+
+///Set the list of designs this plumbing rcd can make
+/obj/item/construction/plumbing/proc/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/bottler = 50,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/fermenter = 30,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/pill_press = 20,
+	/obj/machinery/plumbing/liquid_pump = 35,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/sender = 20
+)
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
@@ -981,6 +1007,27 @@ RLD
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
 		create_machine(A, user)
+
+/obj/item/construction/plumbing/research
+	name = "research plumbing constructor"
+	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
+	icon_state = "plumberer_sci"
+	has_ammobar = TRUE
+
+/obj/item/construction/plumbing/research/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/growing_vat = 20
+)
+
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

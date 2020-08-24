@@ -16,7 +16,7 @@
 	aggro_vision_range = 18
 	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station (entirely), we'll make sure they can smash minerals fine below.
 	harm_intent_damage = 0 //Punching elites gets you nowhere
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	var/chosen_attack = 1
@@ -54,7 +54,7 @@
 		M.gets_drilled()
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
-		M.take_damage(50, BRUTE, "melee", 1)
+		M.take_damage(50, BRUTE, MELEE, 1)
 
 //Elites can't talk (normally)!
 /mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -90,7 +90,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE
 	icon = 'icons/obj/lavaland/tumor.dmi'
 	icon_state = "tumor"

@@ -209,7 +209,8 @@
 		return
 	var/power = GET_MUTATION_POWER(src)
 
-	glowth.set_light(range * power, glow, glow_color)
+	glowth.set_light_range_power_color(range * power, glow, glow_color)
+
 
 /// Returns the color for the glow effect
 /datum/mutation/human/glow/proc/glow_color()
@@ -434,7 +435,7 @@
 /datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != UNCONSCIOUS)
+	if(new_stat != HARD_CRIT)
 		return
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 

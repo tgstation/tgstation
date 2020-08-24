@@ -259,8 +259,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(!GLOB.the_gateway)
 			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
 		if(GLOB.the_gateway.target)
-			to_chat(user,"<span class='warning'>Home gateway already in use!</span>")
-			return
+			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)
 	else
 		deactivate()

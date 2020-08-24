@@ -1,0 +1,5 @@
+author: "ATHATH and Rohesie"
+delete-after: True
+changes: 
+  - rscadd: "Slavers (and particularly strict employers) have begun using anti-teleportation implants to keep their slaves (and wagies, respectively) from using teleporters to escape their grasp."
+  - rscadd: "The staff (and sec force) of the currently-disabled (on /tg/) space hotel ruin now spawn with anti-teleportation implants."

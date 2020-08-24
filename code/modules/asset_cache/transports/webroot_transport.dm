@@ -43,10 +43,10 @@
 	return "[url][get_asset_suffex(asset_cache_item)]"
 
 /datum/asset_transport/webroot/proc/get_asset_suffex(datum/asset_cache_item/asset_cache_item)
-	var/base = ""
+	var/base = "[copytext(asset_cache_item.hash, 1, 3)]/"
 	var/filename = "asset.[asset_cache_item.hash][asset_cache_item.ext]"
 	if (length(asset_cache_item.namespace))
-		base = "namespaces/[asset_cache_item.namespace]/"
+		base = "namespaces/[copytext(asset_cache_item.namespace, 1, 3)]/[asset_cache_item.namespace]/"
 		if (!asset_cache_item.namespace_parent)
 			filename = "[asset_cache_item.name]"
 	return base + filename
