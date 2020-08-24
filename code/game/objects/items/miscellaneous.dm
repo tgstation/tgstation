@@ -67,7 +67,6 @@
 	name = "ingredient delivery beacon"
 	desc = "Summon a box of ingredients to help you get started cooking."
 	icon_state = "gangtool-white"
-	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please enjoy your Sophronia Broadcasting's Plasteel Chef branded Ingredients Box, exactly as shown in the hit show!</b> Message ends.\"</span>")
 
 /obj/item/choice_beacon/ingredient/generate_display_names()
 	var/list/ingredients = list()
