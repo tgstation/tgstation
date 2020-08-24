@@ -34,6 +34,11 @@ map icebox
 	votable
 endmap
 
+map shipstation
+	maxplayers 40
+	votable
+endmap
+
 map runtimestation
 endmap
 
