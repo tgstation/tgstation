@@ -93,7 +93,7 @@
 						)
 	var/skip_357_missfire_check = FALSE
 
-/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, skip_missfire_check = FALSE)
+/obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(magazine && magazine.caliber != initial(magazine.caliber) && chambered.BB && !skip_357_missfire_check)
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
