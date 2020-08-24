@@ -49,7 +49,6 @@
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
-	opacity = TRUE
 	density = TRUE
 
 //see also turf/AfterChange for adjacency shennanigans
@@ -219,6 +218,7 @@
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	CanAtmosPass = ATMOS_PASS_PROC
+	glass = FALSE
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
