@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - rscadd: "disposable sentry gun deployment system, a toolbox that transforms into a turret when attacked with a wrench"
