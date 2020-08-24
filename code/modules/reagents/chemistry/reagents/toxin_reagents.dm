@@ -289,10 +289,9 @@
 
 /datum/reagent/toxin/plantbgone/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if((methods & VAPOR) && iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			var/damage = min(round(0.4*reac_volume, 0.1),10)
-			C.adjustToxLoss(damage)
+		var/mob/living/carbon/exposed_carbon = M
+		if(!exposed_carbon.wear_mask)
+			exposed_carbon.adjustToxLoss(min(round(0.4 * reac_volume, 0.1), 10))
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"

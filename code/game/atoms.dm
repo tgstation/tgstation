@@ -484,7 +484,7 @@
   * Arguments:
   * - [reagents][/list]: The list of reagents the atom is being exposed to.
   * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
-  * - methods: How the atom is being exposed to the reagents.
+  * - methods: How the atom is being exposed to the reagents. Bitflags.
   * - volume_modifier: Volume multiplier.
   * - show_message: Whether to display anything to mobs when they are exposed.
   */
