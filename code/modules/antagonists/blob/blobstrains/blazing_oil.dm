@@ -14,15 +14,15 @@
 	reagent = /datum/reagent/blob/blazing_oil
 
 /datum/blobstrain/reagent/blazing_oil/extinguish_reaction(obj/structure/blob/B)
-	B.take_damage(1.5, BURN, "energy")
+	B.take_damage(1.5, BURN, ENERGY)
 
 /datum/blobstrain/reagent/blazing_oil/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage_type == BURN && damage_flag != "energy")
+	if(damage_type == BURN && damage_flag != ENERGY)
 		for(var/turf/open/T in range(1, B))
 			var/obj/structure/blob/C = locate() in T
 			if(!(C && C.overmind && C.overmind.blobstrain.type == B.overmind.blobstrain.type) && prob(80))
 				new /obj/effect/hotspot(T)
-	if(damage_flag == "fire")
+	if(damage_flag == FIRE)
 		return 0
 	return ..()
 

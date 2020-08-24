@@ -14,7 +14,7 @@
 	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()) || !get_organs())
+	if(owner.stat <= HARD_CRIT || !get_organs())
 		return FALSE
 	return ..()
 
@@ -250,7 +250,7 @@
 	desc = "You put your right leg in, your right leg out. In, out, in, out, \
 		shake it all about. And apparently then it detaches.\n\
 		The hokey pokey has certainly changed a lot since space colonisation."
-	// alternative spellings of 'pokey' are availible
+	// alternative spellings of 'pokey' are available
 	icon_state = "default_human_r_leg"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")

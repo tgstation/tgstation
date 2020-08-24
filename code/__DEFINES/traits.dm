@@ -80,6 +80,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
 #define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
 #define TRAIT_INCAPACITATED		"incapacitated"
+#define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
 #define TRAIT_EMOTEMUTE			"emotemute"
@@ -279,6 +280,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BUCKLED_TRAIT "buckled" //trait associated to being buckled
 #define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
 #define RESTING_TRAIT "resting" //trait associated to resting
+#define STAT_TRAIT "stat" //trait associated to a stat value or range of
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

@@ -3,13 +3,44 @@
 //Damage and status effect defines
 
 //Damage defines //TODO: merge these down to reduce on defines
+/// Physical fracturing and warping of the material.
 #define BRUTE		"brute"
-#define BURN		"fire"
+/// Scorching and charring of the material.
+#define BURN		"burn"
+/// Poisoning. Mostly caused by reagents.
 #define TOX			"toxin"
+/// Suffocation.
 #define OXY			"oxygen"
+/// Cellular degredation. Rare and difficult to treat.
 #define CLONE		"clone"
+/// Exhaustion and nonlethal damage.
 #define STAMINA 	"stamina"
+/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
 #define BRAIN		"brain"
+
+//Damage flag defines //
+/// Involves a melee attack or a thrown object.
+#define MELEE		"melee"
+/// Involves a solid projectile.
+#define BULLET		"bullet"
+/// Involves a laser.
+#define LASER		"laser"
+/// Involves an EMP or energy-based projectile.
+#define ENERGY		"energy"
+/// Involves a shockwave, usually from an explosion.
+#define BOMB		"bomb"
+/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+#define BIO			"bio"
+/// Involves ionizing radiation.
+#define RAD			"rad"
+/// Involves fire or temperature extremes.
+#define FIRE		"fire"
+/// Involves corrosive substances.
+#define ACID		"acid"
+/// Involves magic.
+#define MAGIC		"magic"
+/// Involved in checking the likelyhood of applying a wound to a mob.
+#define WOUND		"wound"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 	            	(1<<0)
