@@ -275,10 +275,11 @@
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
-			for(var/obj/machinery/door/D in src)
-				if(!D.sub_door)
-					to_chat(user, "<span class='notice'>There is another door here!</span>")
-					return FALSE
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				to_chat(user, "<span class='notice'>There is another door here!</span>")
+				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, "<span class='notice'>You build a windoor.</span>")
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
