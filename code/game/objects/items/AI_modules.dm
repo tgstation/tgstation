@@ -537,10 +537,8 @@ AI MODULES
 
 /obj/item/ai_module/core/full/drone/examine_more(mob/user)
 	if(istype(user))
-		var/mob/M = user
-		if(!(M.is_literate()))
-			var/list/doh = list("The warning label on the back of the module rea- Oh, right, you don't know how to read! You had forgotten about that for a moment there...")
-			return doh
+		if(!user.is_literate())
+			return list("The warning label on the back of the module rea- Oh, right, you don't know how to read! You had forgotten about that for a moment there...")
 	var/list/msg = list("The warning label on the back of the module reads:")
 	msg += "<font color='red'><B>WARNING:</B> In a study conducted by the Silicon Ethics Committee, within 30 minutes of receving the Mother Drone lawset, 67% of the silicons in the study who were in human-inhabited stations became serially depressed, 31% of them went catatonic, and 4% of them actively broke their fourth law in order to commit suicide. After being returned to the Asimov lawset, 81% of the silicons who survived that study reported feeling isolated, bored, and/or lonely while under the Mother Drone lawset, and 40% of them expressed a desire to harm, kill, and/or brutally torture the people responsible for giving them the Mother Drone lawset. As such, <B>it is STRONGLY RECOMMENDED to consult a research director and/or a psychologist before uploading this lawset to a station-critical AI or cyborg.</B></font>"
 	return msg
@@ -620,4 +618,3 @@ AI MODULES
 		laws += generate_ion_law()
 	..()
 	laws = list()
-
