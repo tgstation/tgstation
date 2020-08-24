@@ -69,7 +69,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 			I.e. if A is an object, it will call the reagents expose_obj
 			proc. The methods var is used for reaction on mobs. It simply tells
 			us if the mob TOUCHed the reagent, if it INGESTed the reagent, if the reagent
-			was VAPORIZEd on them, if the reagent was INJECTed,	or transfered via a PATCH to them.
+			was VAPORIZEd on them, if the reagent was INJECTed, and/or transfered via a PATCH to them.
 			Since the volume can be checked in a reagents proc, you might want to
 			use the volume_modifier var to modifiy the passed value without actually
 			changing the volume of the reagents.
