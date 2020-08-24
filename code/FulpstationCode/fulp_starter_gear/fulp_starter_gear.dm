@@ -22,7 +22,6 @@
 	icon = 'icons/Fulpicons/Surreal_stuff/sec_radio.dmi'
 	icon_state = "sec_radio"
 	desc = "A sophisticated full range station bounced radio. Preconfigured with a radio frequency for emergency security use in the event of telecom disruption. You can use a Security ID to reset its frequency to the emergency security channel."
-	freerange = TRUE //Can access the full spectrum
 	subspace_switchable = TRUE
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
@@ -34,7 +33,7 @@
 	. = ..()
 	if(!random_static_channel)
 		random_static_channel = pick(rand(MIN_FREE_FREQ, MIN_FREQ-2), rand(MAX_FREQ+2, MAX_FREE_FREQ)) //No public frequencies
-		random_static_channel = sanitize_frequency(random_static_channel, freerange) //Make sure the pick is valid
+		random_static_channel = sanitize_frequency(random_static_channel, TRUE) //Make sure the pick is valid
 	var/list/comparison_frequency_list = list(FREQ_SYNDICATE, FREQ_CTF_RED, FREQ_CTF_BLUE, FREQ_CENTCOM, FREQ_SUPPLY, FREQ_SERVICE, FREQ_SCIENCE, FREQ_COMMAND, FREQ_MEDICAL, FREQ_ENGINEERING, FREQ_SECURITY, FREQ_STATUS_DISPLAYS, FREQ_ATMOS_ALARMS, FREQ_ATMOS_CONTROL)
 	for(var/comparison_frequency in comparison_frequency_list) //No taken frequencies
 		if(random_static_channel == comparison_frequency)
@@ -42,7 +41,7 @@
 	if(random_static_channel >= MIN_FREQ && random_static_channel <= MAX_FREQ)
 		random_static_channel = pick(rand(MAX_FREQ+2, MAX_FREE_FREQ)) //Fail safe reroll
 
-	frequency = sanitize_frequency(random_static_channel, freerange)
+	frequency = sanitize_frequency(random_static_channel, TRUE)
 	set_frequency(frequency)
 
 
@@ -60,7 +59,7 @@
 
 	if(check_access(I))
 		to_chat(user, "<span class='notice'>ID authenticated. Unit reset to security emergency frequency.</span>") //If we swipe it with Sec access, we return to the default emergency signal.
-		frequency = sanitize_frequency(random_static_channel, freerange)
+		frequency = sanitize_frequency(random_static_channel, TRUE)
 		set_frequency(frequency)
 		sec_radio_sound()
 
