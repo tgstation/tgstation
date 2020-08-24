@@ -306,7 +306,7 @@
 	if(chem in spray_chems)
 		var/datum/reagents/holder = new()
 		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
-		holder.trans_to(occupant, 10, method = VAPOR)
+		holder.trans_to(occupant, 10, methods = VAPOR)
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
