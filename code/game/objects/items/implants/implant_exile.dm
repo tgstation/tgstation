@@ -33,11 +33,12 @@
 	return TRUE
 
 /obj/item/implant/exile/noteleport/removed(mob/target, silent = FALSE, special = FALSE)
-	if(..() && isliving(target))
-		var/mob/living/L = target
-		REMOVE_TRAIT(L, TRAIT_NO_TELEPORT, "implant")
-		return TRUE
-	return FALSE
+	. = ..()
+	if(!. || !isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
+	REMOVE_TRAIT(living_target, TRAIT_NO_TELEPORT, "implant")
+	return TRUE
 
 /obj/item/implanter/exile
 	name = "implanter (exile)"
