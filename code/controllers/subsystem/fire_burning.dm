@@ -8,8 +8,8 @@ SUBSYSTEM_DEF(fire_burning)
 	var/list/processing = list()
 
 /datum/controller/subsystem/fire_burning/stat_entry(msg)
-	return ..()
 	msg = "P:[length(processing)]"
+	return ..()
 
 
 /datum/controller/subsystem/fire_burning/fire(resumed = 0)
