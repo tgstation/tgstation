@@ -1397,6 +1397,8 @@ nobiliumsuppression = INFINITY
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
+		"TEMP" = 100,
+		"MAX_TEMP" = T0C
 	)
 
 /datum/gas_reaction/pluox_formation/react(datum/gas_mixture/air, datum/holder)
