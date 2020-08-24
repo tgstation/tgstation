@@ -1221,7 +1221,7 @@ nobiliumsuppression = INFINITY
 	var/turf/open/location = isturf(holder) ? holder : null
 	if(cached_gases[/datum/gas/plasma][MOLES] < 10)
 		var produced_amount = min(5, cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
-		if(cached_gases[/datum/gas/plasma][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.1 <0)
+		if(cached_gases[/datum/gas/plasma][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.1 < 0)
 			return NO_REACTION
 		cached_gases[/datum/gas/plasma][MOLES] -= produced_amount
 		cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.1
@@ -1354,7 +1354,7 @@ nobiliumsuppression = INFINITY
 	var/temperature = air.temperature
 	if(cached_gases[/datum/gas/hydrogen][MOLES] > 150)
 		var produced_amount = min(5, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
-		if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount <0)
+		if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0)
 			return NO_REACTION
 		cached_gases[/datum/gas/hydrogen][MOLES] -= produced_amount
 		cached_gases[/datum/gas/proto_nitrate][MOLES] += produced_amount * 0.5
@@ -1397,7 +1397,7 @@ nobiliumsuppression = INFINITY
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
-		"TEMP" = 100,
+		"TEMP" = 50,
 		"MAX_TEMP" = T0C
 	)
 
@@ -1407,7 +1407,7 @@ nobiliumsuppression = INFINITY
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var produced_amount = min(5, cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/oxygen][MOLES])
-	if(cached_gases[/datum/gas/carbon_dioxide][MOLES] - produced_amount <0 || cached_gases[/datum/gas/oxygen][MOLES] - produced_amount * 0.5 <0 || cached_gases[/datum/gas/tritium][MOLES] - produced_amount * 0.01 <0)
+	if(cached_gases[/datum/gas/carbon_dioxide][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/oxygen][MOLES] - produced_amount * 0.5 < 0 || cached_gases[/datum/gas/tritium][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= produced_amount
 	cached_gases[/datum/gas/oxygen][MOLES] -= produced_amount * 0.5
@@ -1416,7 +1416,7 @@ nobiliumsuppression = INFINITY
 	cached_gases[/datum/gas/pluoxium][MOLES] += produced_amount
 	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.01
-	energy_released += produced_amount * 2500
+	energy_released += produced_amount * 250
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
