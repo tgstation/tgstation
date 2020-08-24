@@ -129,6 +129,9 @@
 	/// State of tgui view, i.e. which tab is currently active, or which genome we're currently looking at.
 	var/list/list/tgui_view_state = list()
 
+	///Counter for CRISPR charges
+	var/CRISPRcharges = 0
+
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
 
@@ -174,6 +177,8 @@
 					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
 				else
 					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
+				if(A.CRISPRCharge)
+					CRISPRcharges++
 			qdel(I)
 			return
 
@@ -573,6 +578,10 @@
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
+			//GUARD CHECK
+			//Make sure there's charges available
+			if(CRISPRcharges == 0)
+				return
 			var/search_flags = 0
 
 			// Only continue if applying to occupant - all replacements in-vitro
@@ -639,6 +648,9 @@
 			//logging for debug
 			//to_chat(usr,"<span class='warning'>   "+oldSequence+"</span>")
 			//to_chat(usr,"<span class='warning'>   "+newSequence+"</span>")
+
+			//decrement CRISPR charge
+			CRISPRcharges--
 
 			//Apply sequence
 			if(newSequence)
