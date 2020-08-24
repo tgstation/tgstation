@@ -124,7 +124,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
+	if(!(method & INGEST) || !iscarbon(A))
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -190,7 +190,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
-	if(method != VAPOR)
+	if(!(method & VAPOR))
 		return
 
 	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
@@ -337,7 +337,7 @@
 	var/conversion_amount
 
 /datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, method=INJECT, trans_volume)
-	if(method != INJECT || !iscarbon(A))
+	if(!(method & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
@@ -417,7 +417,7 @@
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH, VAPOR))
+		if(method & (PATCH|TOUCH|VAPOR))
 			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 			for(var/i in carbies.all_wounds)

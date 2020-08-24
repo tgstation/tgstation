@@ -43,7 +43,7 @@
 		return
 	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
+	if(((method & VAPOR) && prob(min(33, reac_volume))) || (method & (INGEST|PATCH|INJECT)))
 		M.randmuti()
 		if(prob(98))
 			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
@@ -103,7 +103,7 @@
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
-	if(method == TOUCH || method == VAPOR)
+	if(method & (TOUCH|VAPOR))
 		M.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
@@ -210,7 +210,7 @@
 
 /datum/reagent/toxin/zombiepowder/expose_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.adjustOxyLoss(0.5*REM, 0)
-	if(method == INGEST)
+	if(method & INGEST)
 		var/datum/reagent/toxin/zombiepowder/Z = L.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
 		if(istype(Z))
 			Z.fakedeath_active = TRUE
@@ -288,7 +288,7 @@
 		SV.on_chem_effect(src)
 
 /datum/reagent/toxin/plantbgone/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == VAPOR)
+	if(method & VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!C.wear_mask) // If not wearing a mask
@@ -584,7 +584,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+	if(method & (TOUCH|VAPOR))
 		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
@@ -845,10 +845,10 @@
 	if(!istype(C))
 		return
 	reac_volume = round(reac_volume,0.1)
-	if(method == INGEST)
+	if(method & INGEST)
 		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
 		return
-	if(method == INJECT)
+	if(method & INJECT)
 		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, reac_volume)

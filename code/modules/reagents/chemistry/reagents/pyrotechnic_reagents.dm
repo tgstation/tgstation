@@ -71,7 +71,7 @@
 
 /datum/reagent/clf3/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST && method != INJECT)
+		if(method & ~(INGEST|INJECT))
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
@@ -195,7 +195,7 @@
 
 /datum/reagent/napalm/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST && method != INJECT)
+		if(method & ~(INGEST|INJECT))
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane
@@ -311,7 +311,7 @@
 	O.extinguish()
 
 /datum/reagent/firefighting_foam/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method in list(VAPOR, TOUCH))
+	if(method & (TOUCH|VAPOR))
 		M.adjust_fire_stacks(-reac_volume)
 		M.ExtinguishMob()
 	..()

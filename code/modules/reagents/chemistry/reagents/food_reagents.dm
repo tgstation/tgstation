@@ -25,7 +25,7 @@
 	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == INGEST)
+	if(method & INGEST)
 		if (quality && !HAS_TRAIT(M, TRAIT_AGEUSIA))
 			switch(quality)
 				if (DRINK_NICE)
@@ -134,12 +134,12 @@
 	var/boiling = FALSE
 	if(holder && holder.chem_temp >= fry_temperature)
 		boiling = TRUE
-	if(method != VAPOR && method != TOUCH) //Directly coats the mob, and doesn't go into their bloodstream
+	if(!(method & (VAPOR|TOUCH))) //Directly coats the mob, and doesn't go into their bloodstream
 		return ..()
 	if(!boiling)
 		return TRUE
 	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
-	if(method == TOUCH)
+	if(method & TOUCH)
 		oil_damage *= 1 - M.get_permeability_protection()
 	var/FryLoss = round(min(38, oil_damage * reac_volume))
 	if(!HAS_TRAIT(M, TRAIT_OIL_FRIED))
@@ -304,7 +304,7 @@
 		return
 
 	var/mob/living/carbon/victim = M
-	if(method == TOUCH || method == VAPOR)
+	if(method & (TOUCH|VAPOR))
 		var/pepper_proof = victim.is_pepper_proof()
 
 		//check for protection
@@ -319,7 +319,7 @@
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
-	if(method == INGEST)
+	if(method & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
 				to_chat(M, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]</span>")
@@ -589,7 +589,7 @@
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-  if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+  if(iscarbon(M) && (method & (TOUCH|VAPOR|PATCH)))
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
       var/datum/surgery/S = s
@@ -618,14 +618,8 @@
 	if(!istype(M))
 		return
 	var/unprotected = FALSE
-	switch(method)
-		if(INGEST)
-			unprotected = TRUE
-		if(INJECT)
-			unprotected = FALSE
-		else	//Touch or vapor
-			if(!M.is_mouth_covered() && !M.is_eyes_covered())
-				unprotected = TRUE
+	if((method & INGEST) || ((method & (TOUCH|PATCH|VAPOR)) && !M.is_mouth_covered() && !M.is_eyes_covered()))
+		unprotected = TRUE
 	if(unprotected)
 		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
 			to_chat(M, "<span class='notice'>Your eye sockets feel wet.</span>")
@@ -741,7 +735,7 @@
 	taste_description = "pure electricity"
 
 /datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
-	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
+	if((method & (INGEST|INJECT|PATCH)) && iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))

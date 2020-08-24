@@ -447,7 +447,7 @@
 	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(method == INGEST)
+	if(method & INGEST)
 		taste(source)
 
 	var/touch_protection = (method == VAPOR) ? get_permeability_protection() : 0
