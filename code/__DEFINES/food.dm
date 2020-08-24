@@ -39,4 +39,4 @@
 #define FOOD_MEAT_MUTANT_RARE 200
 
 
-#define IS_EDIBLE(O) istype(O, /obj/item/reagent_containers/food/snacks) || O.GetComponent(/datum/component/edible)
+#define IS_EDIBLE(O) (istype(O, /obj/item/reagent_containers/food/snacks) || O.GetComponent(/datum/component/edible))
