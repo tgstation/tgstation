@@ -88,6 +88,7 @@ This section is for the event controller
 		return
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
 	dest_crystal = crystal.destabilize(portal_numbers)
+	RegisterSignal(dest_crystal, COMSIG_PARENT_QDELETING, .proc/on_dest_crystal_qdel)
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
@@ -156,6 +157,7 @@ This section is for the event controller
 		restore()
 	kill()
 
+///This proc announces that the event is concluding with the worst scenario
 /datum/round_event/crystal_invasion/proc/zk_event_announcement()
 	dest_crystal.active = FALSE
 	priority_announce("WARNING - The crystal has reached critical instability point. ZK-Event inbound, please do not panic, anyone who panics will \
@@ -163,6 +165,7 @@ This section is for the event controller
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	addtimer(CALLBACK(src, .proc/do_zk_event), 10 SECONDS)
 
+///This proc actually manages the end of the event
 /datum/round_event/crystal_invasion/proc/do_zk_event()
 	var/list/spawners = list()
 	for(var/es in GLOB.generic_event_spawns)
@@ -175,6 +178,7 @@ This section is for the event controller
 	priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
 	QDEL_NULL(dest_crystal)
 
+///Restore the Destabilized Crystal as it was before
 /datum/round_event/crystal_invasion/proc/restore()
 	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
 						kill the remaining crystal monsters and go back to work")
@@ -184,6 +188,13 @@ This section is for the event controller
 	for(var/Portal in GLOB.crystal_portals)
 		qdel(Portal)
 	QDEL_NULL(dest_crystal)
+
+///Handle the dest_crystal var to be null if the destabilized crystal is deleted by a badmin before the end of the event
+/datum/round_event/crystal_invasion/proc/on_dest_crystal_qdel()
+	UnregisterSignal(dest_crystal, COMSIG_PARENT_QDELETING)
+	processing = FALSE
+	dest_crystal = null
+	kill()
 
 /*
 This section is for the destabilized SM
@@ -219,10 +230,6 @@ This section is for the destabilized SM
 	env.merge(removed)
 	air_update_turf()
 
-///This proc announces that the event is concluding with the worst scenario
-
-///This proc actually manages the end of the event
-
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
 		return
@@ -248,8 +255,6 @@ This section is for the destabilized SM
 		injector.filled = FALSE
 		active = FALSE
 		is_stabilized = TRUE
-
-///Restore the Destabilized Crystal as it was before
 
 /*
 This section is for the crystal stabilizer item and the crystal from the closed portals
