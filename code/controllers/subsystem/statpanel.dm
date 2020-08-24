@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(statpanels)
 	var/encoded_global_data
 	var/mc_data_encoded
 
-/datum/controller/subsystem/statpanels/fire(resumed = 0)
+/datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
 		var/datum/map_config/cached = SSmapping.next_map_config
 		var/round_time = world.time - SSticker.round_start_time
@@ -38,8 +38,9 @@ SUBSYSTEM_DEF(statpanels)
 			list("Failsafe Controller:", Failsafe ? "Defcon: [Failsafe.defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration])" : "ERROR", "\ref[Failsafe]"),
 			list("","")
 		)
-		for(var/datum/controller/subsystem/SS in Master.subsystems)
-			mc_data[++mc_data.len] = list("\[[SS.state_letter()]][SS.name]", SS.stat_entry(), "\ref[SS]")
+		for(var/ss in Master.subsystems)
+			var/datum/controller/subsystem/sub_system = ss
+			mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
 		mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
 		mc_data_encoded = url_encode(json_encode(mc_data))
 		src.currentrun = GLOB.clients.Copy()

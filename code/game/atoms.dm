@@ -1533,7 +1533,7 @@
 	. = ..()
 	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
-		var/client/C = usr?.client
-		if(!C)
+		if(!usr?.client)
 			return
-		C.Click(src)
+		var/client/usr_client = usr.client
+		usr_client.Click(src)
