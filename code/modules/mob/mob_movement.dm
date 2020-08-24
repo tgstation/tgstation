@@ -250,7 +250,6 @@
 				if (locate(/obj/effect/blessing, stepTurf))
 					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
 					return
-
 				L.forceMove(stepTurf)
 			L.setDir(direct)
 	return TRUE

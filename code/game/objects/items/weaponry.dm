@@ -591,6 +591,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
+/obj/item/melee/baseball_bat/Initialize()
+	. = ..()
+	if(prob(1))
+		name = "cricket bat"
+		desc = "You've got red on you."
+		icon_state = "baseball_bat_brit"
+		inhand_icon_state = "baseball_bat_brit"
+
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
@@ -817,7 +825,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 		if(4)
 			force = 10
-			light_color = "#3BED64"
+			light_color = "#119e34"
 			var/mob/living/carbon/human/L = target
 			wound_bonus = -10
 			bare_wound_bonus = 0

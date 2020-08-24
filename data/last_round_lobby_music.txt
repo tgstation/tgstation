@@ -78,3 +78,6 @@ config/title_music/sounds/The artichoke king.ogg
 config/title_music/sounds/The Stand.ogg
 config/title_music/sounds/The artichoke king.ogg
 config/title_music/sounds/Staring at my spaceship.ogg
+config/title_music/sounds/Corpse Party.ogg
+config/title_music/sounds/Raceway.ogg
+config/title_music/sounds/Define Me.ogg
