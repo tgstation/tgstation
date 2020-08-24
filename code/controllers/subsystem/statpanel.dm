@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(statpanels)
 		if(length(proc_holders))
 			proc_holders_encoded = url_encode(json_encode(proc_holders))
 		C << output("[url_encode(json_encode(C.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
-		if(C.mob && C.mob.listed_turf)
+		if(C.mob?.listed_turf)
 			var/mob/M = C.mob
 			if(!M.TurfAdjacent(M.listed_turf))
 				C << output("", "statbrowser:remove_listedturf")
@@ -91,8 +91,9 @@ SUBSYSTEM_DEF(statpanels)
 				for(var/image/I in C.images)
 					if(I.loc && I.loc.loc == M.listed_turf && I.override)
 						overrides += I.loc
-				for(var/atom/A in M.listed_turf)
-					if(!A.mouse_opacity)
+				for(var/a in M.listed_turf)
+					var/atom/movable/A = a
+					if(A.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 						continue
 					if(A.invisibility > M.see_invisible)
 						continue
