@@ -91,6 +91,8 @@
 						"The Peacemaker" = "detective_peacemaker",
 						"Black Panther" = "detective_panther"
 						)
+	
+	/// Used to avoid some redundancy on a revolver loaded with 357 regarding misfiring while being wrenched.
 	var/skip_357_missfire_check = FALSE
 
 /obj/item/gun/ballistic/revolver/detective/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
