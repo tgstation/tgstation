@@ -88,6 +88,13 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
+	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
+		if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
+			to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+			icon_state = icon_plating
+			burnt = FALSE
+			broken = FALSE
+
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
