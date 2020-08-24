@@ -51,10 +51,9 @@
 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	var/obj/new_item = new choice()
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	new choice(pod)
 	pod.explosionSize = list(0,0,0,0)
-	new_item.forceMove(pod)
 	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -215,6 +214,16 @@
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/random
+	theme_name = "random"
+	desc = "This box should not exist, contact the proper authorities."
+
+/obj/item/storage/box/ingredients/random/Initialize()
+	.=..()
+	var/chosen_box = pick(subtypesof(/obj/item/storage/box/ingredients) - /obj/item/storage/box/ingredients/random)
+	new chosen_box(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
