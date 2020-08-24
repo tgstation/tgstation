@@ -169,6 +169,10 @@
 	if(!I || !user)
 		return 0
 
+	if(user.a_intent == INTENT_GRAB && I.isEmbedHarmless())
+		I.tryEmbed(user)
+		return
+
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
