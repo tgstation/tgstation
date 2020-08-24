@@ -3621,7 +3621,6 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 9
 	},
-/obj/item/nuke_core/supermatter_sliver,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Mz" = (
