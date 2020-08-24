@@ -48,7 +48,7 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.container_resist(chassis.occupant)
+	chassis.container_resist_act(chassis.occupant)
 
 /datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
@@ -112,11 +112,10 @@
 		return
 	chassis.lights = !chassis.lights
 	if(chassis.lights)
-		chassis.set_light(chassis.lights_power)
 		button_icon_state = "mech_lights_on"
 	else
-		chassis.set_light(-chassis.lights_power)
 		button_icon_state = "mech_lights_off"
+	chassis.set_light_on(chassis.lights)
 	chassis.occupant_message("<span class='notice'>Toggled lights [chassis.lights?"on":"off"].</span>")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()

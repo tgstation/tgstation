@@ -71,7 +71,7 @@
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
-	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
 /datum/mutation/human/paranoia/on_life()
 	if(prob(5) && owner.stat == CONSCIOUS)
@@ -209,7 +209,8 @@
 		return
 	var/power = GET_MUTATION_POWER(src)
 
-	glowth.set_light(range * power, glow, glow_color)
+	glowth.set_light_range_power_color(range * power, glow, glow_color)
+
 
 /// Returns the color for the glow effect
 /datum/mutation/human/glow/proc/glow_color()
@@ -270,7 +271,7 @@
 	desc = "The user's skin will randomly combust, but is generally a lot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
-	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
+	text_lose_indication = "<span class='notice'>You feel a lot cooler.</span>"
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
@@ -295,7 +296,7 @@
 	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
-	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
+	text_lose_indication = "<span class='notice'>The space around you settles back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and abuse
 	instability = 10
 	synchronizer_coeff = 1
@@ -325,7 +326,7 @@
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
-	text_lose_indication = "<span class'notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
+	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
 
@@ -367,7 +368,7 @@
 	desc = "Subject suffers from muscle spasms."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You flinch.</span>"
-	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
+	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
 	difficulty = 16
 
 /datum/mutation/human/spastic/on_acquiring()
@@ -385,7 +386,7 @@
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
-	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
+	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
 	difficulty = 16
 
 /datum/mutation/human/extrastun/on_acquiring()
@@ -402,6 +403,8 @@
 
 ///Triggers on moved(). Randomly makes the owner trip
 /datum/mutation/human/extrastun/proc/on_move()
+	SIGNAL_HANDLER
+
 	if(prob(99.5)) //The brawl mutation
 		return
 	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
@@ -415,7 +418,7 @@
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
 	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
-	text_lose_indication = "<span class'notice'>Your internal organs feel at ease.</span>"
+	text_lose_indication = "<span class='notice'>Your internal organs feel at ease.</span>"
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
@@ -430,6 +433,8 @@
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
 /datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+	SIGNAL_HANDLER
+
 	if(new_stat != UNCONSCIOUS)
 		return
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
@@ -495,5 +500,7 @@
 
 
 /datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+	SIGNAL_HANDLER
+
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH

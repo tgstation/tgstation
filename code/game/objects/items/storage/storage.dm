@@ -19,14 +19,14 @@
 	return FALSE
 
 /obj/item/storage/contents_explosion(severity, target)
-	for(var/atom/A in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += A
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += A
+				SSexplosions.low_mov_atom += thing
 
 /obj/item/storage/canStrip(mob/who)
 	. = ..()

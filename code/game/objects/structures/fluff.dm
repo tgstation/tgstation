@@ -7,7 +7,7 @@
 	icon_state = "minibar"
 	anchored = TRUE
 	density = FALSE
-	opacity = 0
+	opacity = FALSE
 	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
@@ -261,4 +261,4 @@
 	deconstructible = FALSE
 
 /obj/structure/fluff/hedge/opaque //useful for mazes and such
-	opacity = 1
+	opacity = TRUE

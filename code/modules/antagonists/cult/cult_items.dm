@@ -93,6 +93,8 @@
 	throw_speed = 1
 	throw_range = 3
 	sharpness = SHARP_EDGED
+	light_system = MOVABLE_LIGHT
+	light_range = 4
 	light_color = COLOR_RED
 	attack_verb_continuous = list("cleaves", "slashes", "tears", "lacerates", "hacks", "rips", "dices", "carves")
 	attack_verb_simple = list("cleave", "slash", "tear", "lacerate", "hack", "rip", "dice", "carve")
@@ -113,11 +115,11 @@
 
 /obj/item/cult_bastard/Initialize()
 	. = ..()
-	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
 	AddComponent(/datum/component/butchering, 50, 80)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
 
 /obj/item/cult_bastard/examine(mob/user)
 	. = ..()
@@ -341,7 +343,8 @@
 	icon_state = "cult_helmet"
 	inhand_icon_state = "cult_helmet"
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
-	brightness_on = 0
+	light_system = NO_LIGHT_SUPPORT
+	light_range = 0
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
@@ -453,12 +456,16 @@
 	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
+///how many times can the shuttle be cursed?
+#define MAX_SHUTTLE_CURSES 3
+
 /obj/item/shuttle_curse
 	name = "cursed orb"
-	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	desc = "You peer within this smokey orb and glimpse terrible fates befalling the emergency escape shuttle. "
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
-	var/static/curselimit = 0
+	///how many times has the shuttle been cursed so far?
+	var/static/totalcurses = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -466,8 +473,9 @@
 		user.Paralyze(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
-	if(curselimit > 1)
-		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
+	if(totalcurses >= MAX_SHUTTLE_CURSES)
+		to_chat(user, "<span class='warning'>You try to shatter the orb, but it remains as solid as a rock!</span>")
+		to_chat(user, "<span class='danger'><span class='big'>It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.</span></span>")
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		to_chat(user, "<span class='warning'>Nar'Sie is already on this plane, there is no delaying the end of all things.</span>")
@@ -489,10 +497,9 @@
 		SSshuttle.emergency.setTimer(timer)
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
+		totalcurses++
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
-		qdel(src)
-		sleep(20)
 		var/static/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death.",
@@ -505,7 +512,15 @@
 		var/message = pick_n_take(curses)
 		message += " The shuttle will be delayed by three minutes."
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
-		curselimit++
+		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.</span></span>")
+		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed one more time.</span></span>")
+		else
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.</span></span>")
+		qdel(src)
+
+#undef MAX_SHUTTLE_CURSES
 
 /obj/item/cult_shift
 	name = "veil shifter"
@@ -564,7 +579,7 @@
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
 	w_class = WEIGHT_CLASS_SMALL
-	brightness_on = 1
+	light_range = 1
 	icon_state = "torch"
 	inhand_icon_state = "torch"
 	color = "#ff0000"
@@ -647,10 +662,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/cult_spear/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/cult_spear/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/cult_spear/update_icon_state()

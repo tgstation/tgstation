@@ -159,7 +159,7 @@
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
-	SSexplosions.highobj += src
+	SSexplosions.high_mov_atom += src
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2

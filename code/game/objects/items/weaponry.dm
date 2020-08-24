@@ -609,6 +609,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
+/obj/item/melee/baseball_bat/Initialize()
+	. = ..()
+	if(prob(1))
+		name = "cricket bat"
+		desc = "You've got red on you."
+		icon_state = "baseball_bat_brit"
+		inhand_icon_state = "baseball_bat_brit"
+
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
@@ -732,6 +740,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /// Stage 1: The mistake is made
 /obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
+	SIGNAL_HANDLER
+
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
 	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
@@ -900,10 +910,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/vibro_weapon/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/vibro_weapon/update_icon_state()
