@@ -94,16 +94,14 @@
     notify_ghosts("A controllable snake of Asclepius has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Snake Created")
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/ListTargets(atom/the_target)
-    . = oview(vision_range, targets_from) //get list of things in vision range
-    var/list/patients = list()
-    for (var/HM in .)
-        //are you a creature?
-        if(isliving(HM))
-            var/mob/living/L = HM
-            //can I heal you?
-            if(L.reagents && (L.health < L.maxHealth)) //yeah, clone damage and such will make the snake be obsessed with one target, but eh, even divine doctors ain't perfect
-                if(!(careful && poison_type.overdose_threshold && L.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite)))) //if they're already full of our reagent, let's not remain obsessed with them
-                    patients += L
+	var/list/patients = list()
+	for (var/mob/living/living_in_oview in oview(vision_range, targets_from)) //get list of things in vision range
+		//can I heal you?
+		if(!living_in_oview.reagents || (living_in_oview.health >= living_in_oview.maxHealth)) //yeah, clone damage and such will make the snake be obsessed with one target, but eh, even divine doctors ain't perfect
+			continue
+		if(careful && poison_type.overdose_threshold && living_in_oview.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite))) //if they're already full of our reagent, let's not remain obsessed with them
+			continue
+	patients += living_in_oview
     return patients
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/tamed()
