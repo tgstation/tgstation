@@ -1,11 +1,12 @@
 /turf
 	//used for temperature calculations
-	var/thermal_conductivity = 0.05
+	var/thermal_conductivity = 1
 	var/heat_capacity = 1
-	var/temperature_archived
 
-	///list of open turfs adjacent to us
+	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs
+	///bitfield of dirs in which an open, gasmoving turf exists. Used by semiclosed turfs like windows to do superconduction
+	var/atmos_open_turfs = NONE
 	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
@@ -95,11 +96,11 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/open/return_analyzable_air()
 	return return_air()
 
-/turf/temperature_expose()
-	if(temperature > heat_capacity)
+/turf/temperature_expose(air, exposed_temperature, exposed_volume)
+	if(exposed_temperature >= heat_capacity)
 		to_be_destroyed = TRUE
-	if(temperature > max_fire_temperature_sustained)
-		max_fire_temperature_sustained = temperature
+	if(to_be_destroyed && exposed_temperature > max_fire_temperature_sustained)
+		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
 		burn_tile()
 		var/chance_of_deletion
@@ -117,13 +118,9 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature, exposed_volume)
 	..()
 
-/turf/proc/archive()
-	temperature_archived = temperature
-
-/turf/open/archive()
+/turf/open/proc/archive()
 	air.archive()
 	archived_cycle = SSair.times_fired
-	temperature_archived = temperature
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
@@ -263,9 +260,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	our_air.react(src)
 
 	update_visuals()
-	var/check = !our_excited_group
-	//check &= (!(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE)))
-	if(check)
+	if(!consider_superconductivity() && !our_excited_group) //If nothing of interest is happening, kill the active turf
 		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
 
 	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
@@ -451,11 +446,10 @@ It also meant that fires would never settle, as the superconductors would just s
 
 My current implementation is not built to support heat leaking through floors, as that is dumb, and would slow shit down a lot
 **/
-/*
+
 /turf/proc/disperse_directions()
 	for(var/direction in GLOB.cardinals)
-		var/turf/T = get_step(src, direction)
-		if(atmos_supeconductivity & direction)
+		if(direction & atmos_open_turfs && !(atmos_supeconductivity & direction))
 			. |= direction
 
 /turf/open/proc/conductivity_directions()
@@ -464,21 +458,9 @@ My current implementation is not built to support heat leaking through floors, a
 		if(!(T in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
 
-/turf/proc/neighbor_conduct_with_src(turf/open/other)
-	if(!other.blocks_air) //Solid but neighbor is open
-		other.temperature_share_open_to_solid(src)
-	temperature_expose(null, temperature, null)
-
-/turf/open/neighbor_conduct_with_src(turf/other)
-
-	if(!other.blocks_air) //Both tiles are open
-		var/turf/open/T = other
-		T.air.temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-	else //Open but neighbor is solid
-		temperature_share_open_to_solid(other)
-	SSair.add_to_active(src, 0)
-
 /turf/open/proc/conduct_around()
+	if(archived_cycle < SSair.times_fired)
+		archive()
 	var/conductivity_directions = conductivity_directions()
 	if(conductivity_directions)
 		//Conduct with tiles around me
@@ -490,31 +472,31 @@ My current implementation is not built to support heat leaking through floors, a
 				if(!neighbor.thermal_conductivity)
 					continue
 
-				if(archived_cycle < SSair.times_fired)
-					neighbor.archive()
+				neighbor.super_conduct(air)
 
-				neighbor.neighbor_conduct_with_src(air)
-
-//If you're closed we share based of the connected turf, if you're open we share to you, and you share to everyone else
-/turf/proc/super_conduct(datum/gas_mixture/open_mix)
+/turf/proc/super_conduct(datum/gas_mixture/mix)
+	temperature_expose(null, mix.temperature, null)
 	var/disperse_directions = disperse_directions()
-	var/list/effected = list()
 	for(var/direction in GLOB.cardinals)
 		if(disperse_directions & direction)
-			effected += get_step(src,direction)
-	var/total = 4 //4 sides my friend
-	for(var/t in effected)
-		var/turf/T = t
+			var/turf/open/T = get_step(src,direction)
+			if(T.archived_cycle < SSair.times_fired)
+				T.archive()
+			if(!T.air.gases)
+				continue
+			T.air.temperature_share(mix, thermal_conductivity)
+			SSair.add_to_active(T, 0)
 
+/turf/open/super_conduct(datum/gas_mixture/mix)
+	if(archived_cycle < SSair.times_fired)
+		archive()
+	air.temperature_share(mix, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+	SSair.add_to_active(src, 0)
+	..(air)
 
-
-/turf/open/super_conduct(datum/gas_mixture/open_mix)
-	var/disperse_directions = disperse_directions()
-
-/turf/open/consider_superconductivity(starting)
-	if(air.heat_capacity() < M_CELL_WITH_RATIO || air.temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant. //This isn't a constant, reconsider life choices
+//Returns true if there's a significant amount of temp on the turf, and it's capable of moving heat
+/turf/open/proc/consider_superconductivity(starting)
+	if(air.heat_capacity() < M_CELL_WITH_RATIO || air.temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant. //This isn't a constant, reconsider life choices
 		return FALSE
+	SSair.active_super_conductivity += src
 	return TRUE
-
-/turf/open/temperature_share_with_conductor(turf/open/sharer, turf/open/with)
-*/

@@ -46,21 +46,22 @@
 /turf/proc/ImmediateCalculateAdjacentTurfs()
 	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
+	atmos_open_turfs = NONE
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
 		if(!isopenturf(T))
 			continue
-		if(!(blocks_air || T.blocks_air) && ((direction & (UP|DOWN))? (canvpass && CANVERTICALATMOSPASS(T, src)) : (canpass && CANATMOSPASS(T, src))) )
-			LAZYINITLIST(atmos_adjacent_turfs)
-			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = TRUE
-			T.atmos_adjacent_turfs[src] = TRUE
+		if(!(blocks_air || T.blocks_air))
+			if(((direction & (UP|DOWN))? (canvpass && CANVERTICALATMOSPASS(T, src)) : (canpass && CANATMOSPASS(T, src))) )
+				LAZYINITLIST(atmos_adjacent_turfs)
+				LAZYINITLIST(T.atmos_adjacent_turfs)
+				atmos_adjacent_turfs[T] = TRUE
+				T.atmos_adjacent_turfs[src] = TRUE
+			else
+				atmos_open_turfs |= direction //If we're a semi closed turf like a window, I want a bitflag in our direction
+				CLEAR_FROM_ATMOS_ADJACENT_TURFS(T)
 		else
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= T
-			if (T.atmos_adjacent_turfs)
-				T.atmos_adjacent_turfs -= src
-			UNSETEMPTY(T.atmos_adjacent_turfs)
+			CLEAR_FROM_ATMOS_ADJACENT_TURFS(T)
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
 

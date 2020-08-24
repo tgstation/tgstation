@@ -190,9 +190,9 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		//var/turf/T = currentrun[currentrun.len]
+		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
-		//T.super_conduct()
+		T.conduct_around()
 		if(MC_TICK_CHECK)
 			return
 
@@ -226,6 +226,7 @@ SUBSYSTEM_DEF(air)
 	var/fire_count = times_fired
 	if (!resumed)
 		src.currentrun = active_turfs.Copy()
+		active_super_conductivity.Cut() //Clear the superconduction list so we can enter into it later
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)

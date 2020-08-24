@@ -286,6 +286,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])
+		temperature_archived = temperature
 		gas -= "TEMP"
 	gases.Cut()
 	for(var/id in gas)
@@ -434,8 +435,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(reactions))
 		return
 	reaction_results = new
-	var/temp = temperature
-	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
 		for(var/r in reactions)
@@ -450,7 +449,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 
-			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
+			if((min_reqs["TEMP"] && temperature < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && THERMAL_ENERGY(src) < min_reqs["ENER"]))
 				continue
 

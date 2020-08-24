@@ -252,7 +252,7 @@
 	icon_state = "smooth"
 
 /turf/open/floor/plating/snowed/temperatre
-	initial_gas_mix = ""o2=22;n2=82;TEMP=255.37""
+	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

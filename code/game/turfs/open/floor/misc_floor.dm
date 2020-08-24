@@ -155,6 +155,14 @@
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
 
+/turf/open/floor/bronze/lavaland
+	planetary_atmos = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/bronze/icemoon
+	planetary_atmos = TRUE
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/floor/white
 	name = "white floor"
 	desc = "A tile in a pure white color."
@@ -168,7 +176,6 @@
 	name = "plastic floor"
 	desc = "Cheap, lightweight flooring. Melts easily."
 	icon_state = "plastic"
-	thermal_conductivity = 0.1
 	heat_capacity = 900
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
