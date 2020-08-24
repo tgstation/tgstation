@@ -172,8 +172,9 @@
 /mob/living/carbon/restrained(ignore_grab)
 	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
+
 /mob/living/carbon/proc/canBeHandcuffed()
-	return 0
+	return FALSE
 
 
 /mob/living/carbon/show_inv(mob/user)
@@ -933,22 +934,55 @@
 /mob/living/carbon/fakefireextinguish()
 	remove_overlay(FIRE_LAYER)
 
+
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
 	var/r_arm_index_next = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/O = new X()
-		O.owner = src
-		bodyparts.Remove(X)
-		bodyparts.Add(O)
-		if(O.body_part == ARM_LEFT)
-			l_arm_index_next += 2
-			O.held_index = l_arm_index_next //1, 3, 5, 7...
-			hand_bodyparts += O
-		else if(O.body_part == ARM_RIGHT)
-			r_arm_index_next += 2
-			O.held_index = r_arm_index_next //2, 4, 6, 8...
-			hand_bodyparts += O
+	for(var/bodypart_path in bodyparts)
+		var/obj/item/bodypart/bodypart_instance = new bodypart_path()
+		bodypart_instance.owner = src
+		bodyparts.Remove(bodypart_path)
+		add_bodypart(bodypart_instance)
+		switch(bodypart_instance.body_part)
+			if(ARM_LEFT)
+				l_arm_index_next += 2
+				bodypart_instance.held_index = l_arm_index_next //1, 3, 5, 7...
+				hand_bodyparts += bodypart_instance
+			if(ARM_RIGHT)
+				r_arm_index_next += 2
+				bodypart_instance.held_index = r_arm_index_next //2, 4, 6, 8...
+				hand_bodyparts += bodypart_instance
+
+
+///Proc to hook behavior on bodypart additions.
+/mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
+	bodyparts += new_bodypart
+
+	switch(new_bodypart.body_part)
+		if(LEG_LEFT, LEG_RIGHT)
+			set_num_legs(num_legs + 1)
+			if(!new_bodypart.bodypart_disabled)
+				set_usable_legs(usable_legs + 1)
+		if(ARM_LEFT, ARM_RIGHT)
+			set_num_hands(num_hands + 1)
+			if(!new_bodypart.bodypart_disabled)
+				set_usable_hands(usable_hands + 1)
+
+
+///Proc to hook behavior on bodypart removals.
+/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
+	bodyparts -= old_bodypart
+
+	switch(old_bodypart.body_part)
+		if(LEG_LEFT, LEG_RIGHT)
+			set_num_legs(num_legs - 1)
+			if(!old_bodypart.bodypart_disabled)
+				set_usable_legs(usable_legs - 1)
+		if(ARM_LEFT, ARM_RIGHT)
+			set_num_hands(num_hands - 1)
+			if(!old_bodypart.bodypart_disabled)
+				set_usable_hands(usable_hands - 1)
+
 
 /mob/living/carbon/do_after_coefficent()
 	. = ..()

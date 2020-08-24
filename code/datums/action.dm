@@ -468,6 +468,7 @@
 	else
 		Remove(owner)
 
+
 /datum/action/item_action/cult_dagger/Trigger()
 	for(var/obj/item/H in owner.held_items) //In case we were already holding another dagger
 		if(istype(H, /obj/item/melee/cultblade/dagger))
@@ -478,11 +479,16 @@
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
+		return
+	if(!isliving(owner))
+		to_chat(owner, "<span class='warning'>You lack the necessary living force for this action.</span>")
+		return
+	var/mob/living/living_owner = owner
+	if (living_owner.usable_hands <= 0)
+		to_chat(living_owner, "<span class='warning'>You dont have any usable hands!</span>")
 	else
-		if (owner.get_num_arms() <= 0)
-			to_chat(owner, "<span class='warning'>You dont have any usable hands!</span>")
-		else
-			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
+		to_chat(living_owner, "<span class='warning'>Your hands are full!</span>")
+
 
 ///MGS BOX!
 /datum/action/item_action/agent_box

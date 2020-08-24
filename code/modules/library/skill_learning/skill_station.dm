@@ -44,7 +44,7 @@
 	if(working)
 		. += "working"
 
-/obj/machinery/skill_station/relaymove(mob/user)
+/obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
 /obj/machinery/skill_station/open_machine()

@@ -362,7 +362,7 @@ Class Procs:
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
 	if(!arm)
 		return
-	if(arm.disabled)
+	if(arm.bodypart_disabled)
 		return
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)

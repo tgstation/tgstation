@@ -14,8 +14,14 @@
 	unique_name = TRUE
 	can_be_shoved_into = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
-					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
+	bodyparts = list(
+		/obj/item/bodypart/chest/monkey,
+		/obj/item/bodypart/head/monkey,
+		/obj/item/bodypart/l_arm/monkey,
+		/obj/item/bodypart/r_arm/monkey,
+		/obj/item/bodypart/r_leg/monkey,
+		/obj/item/bodypart/l_leg/monkey,
+		)
 	hud_type = /datum/hud/monkey
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
@@ -119,6 +125,8 @@
 	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
+	if(num_hands < 2)
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
