@@ -299,14 +299,16 @@
 
 	/// Block we're currently carving in
 	var/obj/structure/carving_block/prepared_block
-	/// The thing it will look like
-	var/atom/movable/current_target
-	/// Currently chosen preset statue type
-	var/current_preset_type
 	/// If tracked user moves we stop sculpting
 	var/mob/living/tracked_user
 	/// Currently sculpting
 	var/sculpting = FALSE
+
+/obj/item/chisel/Destroy()
+	prepared_block = null
+	tracked_user = null
+	return ..()
+
 /*
  Hit the block to start
  Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
@@ -318,7 +320,7 @@
 	if(sculpting)
 		return
 	if(istype(A,/obj/structure/carving_block))
-		if(A == prepared_block && (current_target || current_preset_type))
+		if(A == prepared_block && (prepared_block.current_target || prepared_block.current_preset_type))
 			start_sculpting(user)
 		else if(!prepared_block)
 			set_block(A,user)
@@ -326,27 +328,44 @@
 			show_generic_statues_prompt(user)
 		return TRUE
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		set_target(A,user)
+		prepared_block.set_target(A,user)
 		return TRUE
 
 // We aim at something distant.
 /obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag && !sculpting && prepared_block && ismovable(target))
-		set_target(target,user)
+	if(!proximity_flag && !sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
+		prepared_block.set_target(target,user)
 
-/obj/item/chisel/proc/start_sculpting(user)
+/obj/item/chisel/proc/start_sculpting(mob/living/user)
+	to_chat(user,"<span class='notice'>You start sculpting [prepared_block].</span>",type=MESSAGE_TYPE_INFO)
 	sculpting = TRUE
-	if(do_after(user,30 SECONDS, target = prepared_block))
-		if(!QDELETED(prepared_block))
-			create_statue()
-	sculpting = FALSE
+	//How long whole process takes
+	var/sculpting_time = 30 SECONDS
+	//Single interruptible progress period
+	var/sculpting_period = round(sculpting_time / world.icon_size) //this is just so it reveals pixels line by line for each.
+	var/interrupted = FALSE
+	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
+
+	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block )
+	while(remaining_time > 0 && !interrupted)
+		if(do_after(user,sculpting_period, target = prepared_block, progress = FALSE))
+			remaining_time -= sculpting_period
+			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
+			total_progress_bar.update(sculpting_time - remaining_time)
+		else
+			interrupted = TRUE
+	total_progress_bar.end_progress()
+	if(!interrupted && !QDELETED(prepared_block))
+		prepared_block.create_statue()
+		to_chat(user,"<span class='notice'>The statue is finished!</span>",type=MESSAGE_TYPE_INFO)
+	break_sculpting()
 
 /obj/item/chisel/proc/set_block(obj/structure/carving_block/B,mob/living/user)
 	prepared_block = B
 	tracked_user = user
 	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
-	to_chat(user,"<span class='notice'>You prepare to work on [B].</span>")
+	to_chat(user,"<span class='notice'>You prepare to work on [B].</span>",type=MESSAGE_TYPE_INFO)
 
 /obj/item/chisel/dropped(mob/user, silent)
 	. = ..()
@@ -355,35 +374,12 @@
 /obj/item/chisel/proc/break_sculpting()
 	SIGNAL_HANDLER
 	sculpting = FALSE
+	if(prepared_block && prepared_block.completion == 0)
+		prepared_block.reset_target()
 	prepared_block = null
-	current_target = null
-	current_preset_type = null
 	if(tracked_user)
 		UnregisterSignal(tracked_user,COMSIG_MOVABLE_MOVED)
 		tracked_user = null
-
-/obj/item/chisel/proc/set_target(atom/movable/target,mob/living/user)
-	if(!is_viable_target(target))
-		to_chat(user,"You won't be able to carve that.")
-		return
-	current_target = target
-	to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [current_target].</span>")
-
-/obj/item/chisel/proc/create_statue()
-	if(current_preset_type)
-		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(prepared_block))
-		preset_statue.set_custom_materials(prepared_block.custom_materials)
-		QDEL_NULL(prepared_block)
-	else if(!QDELETED(current_target))
-		var/obj/structure/statue/custom/new_statue = new(get_turf(prepared_block))
-		new_statue.set_visuals(current_target)
-		new_statue.set_custom_materials(prepared_block.custom_materials)
-		new_statue.name = "statue of [current_target]"
-		new_statue.desc = "statue depicting [current_target]"
-		QDEL_NULL(prepared_block)
-	current_target = null
-	current_preset_type = null
-
 
 /obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)
 	var/list/choices = list()
@@ -392,20 +388,12 @@
 		choices[statue_path] = image(icon=initial(S.icon),icon_state=initial(S.icon_state))
 	var/choice = show_radial_menu(user, prepared_block , choices, require_near = TRUE)
 	if(choice)
-		current_preset_type = choice
+		prepared_block.current_preset_type = choice
+		var/image/chosen_looks = choices[choice]
+		prepared_block.current_target = chosen_looks.appearance
 		var/obj/structure/statue/S = choice
-		to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [initial(S.name)].</span>")
-		current_target = null
+		to_chat(user,"<span class='notice'>You decide to sculpt [prepared_block] into [initial(S.name)].</span>",type=MESSAGE_TYPE_INFO)
 
-/obj/item/chisel/proc/is_viable_target(atom/movable/AM)
-	//Only things on turfs
-	if(!isturf(AM.loc))
-		return FALSE
-	//No big icon things
-	var/icon/thing_icon = icon(AM.icon, AM.icon_state)
-	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
-		return FALSE
-	return TRUE
 
 /obj/structure/carving_block
 	name = "block"
@@ -415,8 +403,93 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
 
+	/// The thing it will look like - Unmodified resulting statue appearance
+	var/current_target
+	/// Currently chosen preset statue type
+	var/current_preset_type
 	//Table of required materials for each non-abstract statue type
 	var/static/list/statue_costs
+	/// statue completion from 0 to 1.0
+	var/completion = 0
+	/// Greyscaled target with cutout filter
+	var/mutable_appearance/target_appearance_with_filters
+	/// Cutout filter for main block sprite
+	var/partial_uncover_filter
+	/// HSV color filters parameters
+	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
+
+/obj/structure/carving_block/Destroy()
+	current_target = null
+	target_appearance_with_filters = null
+	return ..()
+
+/obj/structure/carving_block/proc/set_target(atom/movable/target,mob/living/user)
+	if(!is_viable_target(target))
+		to_chat(user,"You won't be able to carve that.")
+		return
+	current_target = target.appearance
+	var/mutable_appearance/ma = current_target
+	to_chat(user,"<span class='notice'>You decide to sculpt [src] into [ma.name].</span>",type=MESSAGE_TYPE_INFO)
+
+/obj/structure/carving_block/proc/reset_target()
+	current_target = null
+	current_preset_type = null
+	target_appearance_with_filters = null
+
+/obj/structure/carving_block/update_overlays()
+	. = ..()
+	if(target_appearance_with_filters)
+		//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
+		var/mutable_appearance/clone = new(target_appearance_with_filters)
+		. += clone
+
+/obj/structure/carving_block/proc/is_viable_target(atom/movable/target)
+	//Only things on turfs
+	if(!isturf(target.loc))
+		return FALSE
+	//No big icon things
+	var/icon/thing_icon = icon(target.icon, target.icon_state)
+	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
+		return FALSE
+	return TRUE
+
+/obj/structure/carving_block/proc/create_statue()
+	if(current_preset_type)
+		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(src))
+		preset_statue.set_custom_materials(custom_materials)
+		qdel(src)
+	else if(current_target)
+		var/obj/structure/statue/custom/new_statue = new(get_turf(src))
+		new_statue.set_visuals(current_target)
+		new_statue.set_custom_materials(custom_materials)
+		var/mutable_appearance/ma = current_target
+		new_statue.name = "statue of [ma.name]"
+		new_statue.desc = "statue depicting [ma.name]"
+		qdel(src)
+
+/obj/structure/carving_block/proc/set_completion(value)
+	if(!current_target)
+		return
+	if(!target_appearance_with_filters)
+		target_appearance_with_filters = new(current_target)
+		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
+		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
+	completion = value
+	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
+	switch(value)
+		if(0)
+			//delete uncovered and reset filters
+			filters -= partial_uncover_filter
+			target_appearance_with_filters = null
+		else
+			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
+			if(partial_uncover_filter)
+				filters -= partial_uncover_filter
+			partial_uncover_filter = filter(type="alpha",icon=white,y=-mask_offset)
+			filters += partial_uncover_filter
+			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
+	update_icon()
+
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
 /obj/structure/carving_block/proc/get_possible_statues()
@@ -440,7 +513,6 @@
 		.[S.type] = S.custom_materials
 		qdel(S)
 
-
 /obj/structure/statue/custom
 	name = "custom statue"
 	icon_state = "base"
@@ -449,20 +521,19 @@
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	/// primary statue overlay
 	var/mutable_appearance/content_ma
-	var/static/list/bump_saturation = list(1,0,0, 0,1,0, 0,0,1, 0,0.1,0)
+	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
-/obj/structure/statue/custom/proc/set_visuals(atom/movable/model)
+/obj/structure/statue/custom/Destroy()
+	content_ma = null
+	return ..()
+
+/obj/structure/statue/custom/proc/set_visuals(model_appearance)
 	content_ma = new
-	content_ma.appearance = model.appearance
+	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
-	content_ma.color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)) //strip color
-	content_ma.filters = filter(type="color",color=bump_saturation,space=FILTER_COLOR_HSV)
-	update_icon()
-
-/obj/structure/statue/custom/proc/refresh_visual()
-	content_ma.filters = filter(type="color",color=bump_saturation,space=FILTER_COLOR_HSV)
+	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_icon()
 
 /obj/structure/statue/custom/update_overlays()
