@@ -22,13 +22,13 @@
 			var/shove_dir = get_dir(M, src)
 			if(!Move(get_step(src, shove_dir), shove_dir))
 				log_combat(M, src, "shoved", "failing to move it")
-				visible_message("<span class='danger'>[M.name] shoves [src]!</span>",
-					"<span class='danger'>You shove [src]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
+				M.visible_message("<span class='danger'>[M.name] shoves [src]!</span>",
+					"<span class='danger'>You shove [src]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
 				to_chat(src, "<span class='userdanger'>You're shoved by [M.name]!</span>")
 				return TRUE
 			log_combat(M, src, "shoved", "pushing it")
-			visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
-				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
+			M.visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
+				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
 			return TRUE
 
