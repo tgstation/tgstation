@@ -81,11 +81,6 @@
 		release(TRUE, FALSE)
 		return
 
-/obj/item/clothing/head/mob_holder/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NODROP))
-		return
-	release()
-
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
 	if(!isdrone(L))
