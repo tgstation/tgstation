@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "Lawyers with jumpskirt preference will now actually spawn with a lawyer jumpskirt."

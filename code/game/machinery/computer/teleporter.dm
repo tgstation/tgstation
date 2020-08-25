@@ -159,12 +159,12 @@
 		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
 		target = target_station.teleporter_hub
 		target_station.linked_stations |= power_station
-		target_station.machine_stat &= ~NOPOWER
+		target_station.set_machine_stat(target_station.machine_stat & ~NOPOWER)
 		if(target_station.teleporter_hub)
-			target_station.teleporter_hub.machine_stat &= ~NOPOWER
+			target_station.teleporter_hub.set_machine_stat(target_station.teleporter_hub.machine_stat & ~NOPOWER)
 			target_station.teleporter_hub.update_icon()
 		if(target_station.teleporter_console)
-			target_station.teleporter_console.machine_stat &= ~NOPOWER
+			target_station.teleporter_console.set_machine_stat(target_station.teleporter_console.machine_stat & ~NOPOWER)
 			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)

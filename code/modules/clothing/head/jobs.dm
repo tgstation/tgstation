@@ -31,7 +31,7 @@
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return(FIRELOSS)
 
-/obj/item/clothing/head/chefhat/relaymove(mob/user, direction)
+/obj/item/clothing/head/chefhat/relaymove(mob/living/user, direction)
 	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc

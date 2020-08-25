@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - code_imp: "Added defines for the damage flags. Please use them!"

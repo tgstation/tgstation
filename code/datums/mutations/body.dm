@@ -435,7 +435,7 @@
 /datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != UNCONSCIOUS)
+	if(new_stat != HARD_CRIT)
 		return
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
