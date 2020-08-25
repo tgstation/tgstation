@@ -162,16 +162,6 @@
 	foodtype = GRAIN
 
 
-/obj/item/reagent_containers/food/snacks/customizable/bread
-	name = "bread"
-	ingMax = 6
-	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/custom
-	slices_num = 5
-	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "tofubread"
-	foodtype = GRAIN
-
-
 /obj/item/reagent_containers/food/snacks/customizable/cake
 	name = "cake"
 	ingMax = 6
@@ -230,43 +220,6 @@
 	icon_state = "bowl"
 
 
-/obj/item/reagent_containers/food/snacks/customizable/sandwich
-	name = "toast"
-	desc = "A timeless classic."
-	ingredients_placement = INGREDIENTS_STACK
-	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "breadslice"
-	var/finished = 0
-	foodtype = GRAIN
-
-/obj/item/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)
-	icon_state = BASE.icon_state
-	..()
-
-/obj/item/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/breadslice)) //we're finishing the custom food.
-		var/obj/item/reagent_containers/food/snacks/breadslice/BS = I
-		if(finished)
-			return
-		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
-		finished = 1
-		name = "[customname] sandwich"
-		BS.reagents.trans_to(src, BS.reagents.total_volume, transfered_by = user)
-		ingMax = ingredients.len //can't add more ingredients after that
-		var/mutable_appearance/TOP = mutable_appearance(icon, "[BS.icon_state]")
-		TOP.pixel_y = 2 * ingredients.len + 3
-		add_overlay(TOP)
-		if(istype(BS, /obj/item/reagent_containers/food/snacks/breadslice/custom))
-			var/mutable_appearance/filling = new(icon, "[initial(BS.icon_state)]_filling")
-			filling.color = BS.filling_color
-			filling.pixel_y = 2 * ingredients.len + 3
-			add_overlay(filling)
-		qdel(BS)
-		return
-	else
-		..()
-
-
 /obj/item/reagent_containers/food/snacks/customizable/soup
 	name = "soup"
 	desc = "A bowl with liquid and... stuff in it."
@@ -279,6 +232,17 @@
 	. = ..()
 	eatverb = pick("slurp","sip","inhale","drink")
 
+/obj/item/reagent_containers/food/snacks/customizable/poutine
+	name = "poutine"
+	desc = "Fries covered in cheese curds and gravy."
+	icon_state = "poutine"
+	ingMax = 8
+	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/poutine
+	trash = /obj/item/trash/plate
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
+	filling_color = "#FFD700"
+	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
+	foodtype = VEGETABLES | GRAIN | FRIED
 
 
 

@@ -1,0 +1,70 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+
+.Dropdown {
+  position: relative;
+}
+
+.Dropdown__control {
+  position: relative;
+  display: inline-block;
+  font-family: Verdana, sans-serif;
+  font-size: base.em(12px);
+  width: base.em(100px);
+  line-height: base.em(17px);
+  user-select: none;
+}
+
+.Dropdown__arrow-button {
+  float: right;
+  padding-left: 0.5em;
+  border-left: base.em(1px) solid #000;
+  border-left: base.em(1px) solid rgba(0, 0, 0, 0.25);
+}
+
+.Dropdown__menu {
+  position: absolute;
+  overflow-y: auto;
+  z-index: 5;
+  width: base.em(100px);
+  max-height: base.em(200px);
+  overflow-y: scroll;
+  border-radius: 0 0 base.em(2px) base.em(2px);
+  color: #fff;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.Dropdown__menu-noscroll {
+  position: absolute;
+  overflow-y: auto;
+  z-index: 5;
+  width: base.em(100px);
+  max-height: base.em(200px);
+  border-radius: 0 0 base.em(2px) base.em(2px);
+  color: #fff;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.Dropdown__menuentry {
+  padding: base.em(2px) base.em(4px);
+  font-family: Verdana, sans-serif;
+  font-size: base.em(12px);
+  line-height: base.em(17px);
+  transition: background-color 100ms;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0ms;
+  }
+}
+
+.Dropdown__over {
+  top: auto;
+  bottom: 100%
+}

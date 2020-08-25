@@ -19,7 +19,7 @@
 		/datum/reagent/water = 5,
 		/obj/item/reagent_containers/food/snacks/spiderling = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+	result = /obj/item/reagent_containers/food/snacks/chewable/spiderlollipop
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
@@ -102,7 +102,7 @@
 				/datum/reagent/consumable/blackpepper = 1,
 				/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/baguette
+	result = /obj/item/food/baguette
 	subcategory = CAT_MISCFOOD
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
@@ -111,7 +111,7 @@
 	name = "Slime toast"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+		/obj/item/food/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
 	subcategory = CAT_MISCFOOD
@@ -120,7 +120,7 @@
 	name = "Jellied toast"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+		/obj/item/food/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
 	subcategory = CAT_MISCFOOD
@@ -128,7 +128,7 @@
 /datum/crafting_recipe/food/butteredtoast
 	name = "Buttered Toast"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/butteredtoast
@@ -138,7 +138,7 @@
 	name = "Two bread"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/wine = 5,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2
+		/obj/item/food/breadslice/plain = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/twobread
 	subcategory = CAT_MISCFOOD
@@ -332,4 +332,25 @@
 		/obj/item/reagent_containers/food/snacks/meat/rawcrab = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/crab_rangoon
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/poutine
+	name = "Poutine"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/datum/reagent/consumable/gravy = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/customizable/poutine
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/royalcheese
+	name = "Royal Cheese"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cheesewheel = 1,
+		/obj/item/clothing/head/crown = 1,
+		/datum/reagent/medicine/strange_reagent = 5,
+		/datum/reagent/toxin/mutagen = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/royalcheese
 	subcategory = CAT_MISCFOOD

@@ -13,6 +13,7 @@
 #define PINEAPPLE	(1<<12)
 #define BREAKFAST	(1<<13)
 #define CLOTH 		(1<<14)
+#define GRILLED		(1<<15)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
@@ -23,3 +24,16 @@
 #define FOOD_IN_CONTAINER (1<<0)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
+
+#define FOOD_WORTHLESS 0
+#define FOOD_JUNK 6
+#define FOOD_FAST 40
+#define FOOD_RARE 80
+#define FOOD_EXOTIC 150
+#define FOOD_LEGENDARY 1000
+#define FOOD_ILLEGAL 1000
+
+#define FOOD_MEAT_NORMAL 5
+#define FOOD_MEAT_HUMAN 50
+#define FOOD_MEAT_MUTANT 100
+#define FOOD_MEAT_MUTANT_RARE 200

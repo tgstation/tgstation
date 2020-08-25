@@ -7,9 +7,9 @@
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	item_state = "spaceold"
+	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
@@ -28,7 +28,7 @@
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
-	item_state = "s_suit"
+	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -36,7 +36,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	slowdown = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
@@ -61,6 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
+		update_hud_icon(user)		// update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -75,22 +76,28 @@
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
-	if(!cell)
-		user.update_spacesuit_hud_icon("missing")
-	else
-		var/cell_percent = cell.charge / cell.maxcharge
-		if(cell_percent > 0.6)
-			user.update_spacesuit_hud_icon("high")
-		else if(cell_percent > 0.20)
-			user.update_spacesuit_hud_icon("mid")
-		else if(cell_percent > 0.01 && cell.charge > THERMAL_REGULATOR_COST)
-			user.update_spacesuit_hud_icon("low")
-		else
-			user.update_spacesuit_hud_icon("empty")
 
-		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-			user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
-			cell.charge -= THERMAL_REGULATOR_COST
+	// Do nothing if thermal regulators are off
+	if(!thermal_on)
+		return
+
+	// If we got here, thermal regulators are on. If there's no cell, turn them
+	// off
+	if(!cell)
+		toggle_spacesuit()
+		update_hud_icon(user)
+		return
+
+	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
+	if(!cell.use(THERMAL_REGULATOR_COST))
+		toggle_spacesuit()
+		update_hud_icon(user)
+		return
+
+	// If we got here, it means thermals are on, the cell is in and the cell has
+	// just had enough charge subtracted from it to power the thermal regulator
+	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
+	update_hud_icon(user)
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
@@ -116,18 +123,16 @@
 // Show the status of the suit and the cell
 /obj/item/clothing/suit/space/examine(mob/user)
 	. = ..()
-	if(!in_range(src, user) && !isobserver(user))
-		return
-
-	. += "The thermal regulator is [thermal_on ? "on" : "off"] and the temperature is set to \
-		[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
-	. += "The power meeter shows [cell ? "[round(cell.charge / cell.maxcharge * 100)]%" : "!invalid!"] charge remaining."
-	if(cell_cover_open)
-		. += "The cell cover is open exposing the cell and setting knobs."
-		if(!cell)
-			. += "The slot for a cell is empty."
-		else
-			. += "\The [cell] is firmly in place."
+	if(in_range(src, user) || isobserver(user))
+		. += "The thermal regulator is [thermal_on ? "on" : "off"] and the temperature is set to \
+			[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
+		. += "The power meter shows [cell ? "[round(cell.percent(), 0.1)]%" : "!invalid!"] charge remaining."
+		if(cell_cover_open)
+			. += "The cell cover is open exposing the cell and setting knobs."
+			if(!cell)
+				. += "The slot for a cell is empty."
+			else
+				. += "\The [cell] is firmly in place."
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
@@ -159,24 +164,23 @@
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
+	if(!user || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return ..()
 	toggle_spacesuit_cell(user)
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return
 	return ..()
 
-// Remove suit when using the suit on its self
+// Remove the cell when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)
 	remove_cell(user)
 
-/// Remove the cell from the suit if the over is open
+/// Remove the cell from the suit if the cell cover is open
 /obj/item/clothing/suit/space/proc/remove_cell(mob/user)
 	if(cell_cover_open && cell)
 		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
@@ -191,10 +195,16 @@
 	to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
 
 /// Toggle the space suit's thermal regulator status
-/obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/user)
+/obj/item/clothing/suit/space/proc/toggle_spacesuit()
+	// If we're turning thermal protection on, check for valid cell and for enough
+	// charge that cell. If it's too low, we shouldn't bother with setting the
+	// thermal protection value and should just return out early.
+	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
+		return
+
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] the thermal regulator on \the [src].</span>")
+	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
 // let emags override the temperature settings
 /obj/item/clothing/suit/space/emag_act(mob/user)
@@ -203,6 +213,32 @@
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE)
+
+// update the HUD icon
+/obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
+	var/mob/living/carbon/human/human = user
+
+	if(!cell)
+		human.update_spacesuit_hud_icon("missing")
+		return
+
+	var/cell_percent = cell.percent()
+
+	// Check if there's enough charge to trigger a thermal regulator tick and
+	// if there is, whethere the cell's capacity indicates high, medium or low
+	// charge based on it.
+	if(cell.charge >= THERMAL_REGULATOR_COST)
+		if(cell_percent > 60)
+			human.update_spacesuit_hud_icon("high")
+			return
+		if(cell_percent > 20)
+			human.update_spacesuit_hud_icon("mid")
+			return
+		human.update_spacesuit_hud_icon("low")
+		return
+
+	human.update_spacesuit_hud_icon("empty")
+	return
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)

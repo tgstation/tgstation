@@ -13,6 +13,8 @@
 	var/obj/mecha/chassis = null
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
+	/// Bitflag. Used by exosuit fabricator to assign sub-categories based on which exosuits can equip this.
+	var/mech_flags = NONE
 	var/salvageable = 1
 	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates

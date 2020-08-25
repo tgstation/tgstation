@@ -65,7 +65,7 @@
 		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
 		return FALSE
 
-	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
+	user.visible_message("<span class='alertalien'>[user] lays an egg!</span>")
 	new /obj/structure/alien/egg(user.loc)
 	return TRUE
 

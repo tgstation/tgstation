@@ -4,15 +4,6 @@
 # In the event that multiple org members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
-# ChangelingRain
-
-/code/__DEFINES/clockcult.dm @ChangelingRain
-/code/game/gamemodes/blob/ @ChangelingRain
-/code/game/gamemodes/clock_cult/ @ChangelingRain
-/code/game/gamemodes/miniantags/revenant/ @ChangelingRain
-/code/game/objects/effects/temporary_visuals/ @ChangelingRain
-/code/modules/reagents/chemistry/reagents/blob_reagents.dm @ChangelingRain
-
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
@@ -23,9 +14,6 @@
 
 # Cyberboss
 
-/code/__DATASTRUCTURES/globals.dm @Cyberboss
-/code/__DEFINES/server_tools.config.dm @Cyberboss
-/code/__DEFINES/server_tools.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
@@ -35,13 +23,11 @@
 /code/datums/holocall.dm @Cyberboss
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
-/code/modules/server_tools/ @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
-# duncathan
+# Jared-Fogle
 
-/code/__DEFINES/atmospherics.dm @duncathan
-/code/modules/atmospherics/ @duncathan
+/code/modules/unit_tests/ @Jared-Fogle
 
 # Jordie0608
 
@@ -53,7 +39,6 @@
 
 /SQL/database_changelog.txt @MrStonedOne
 /code/__DEFINES/MC.dm @MrStonedOne
-/code/__DEFINES/tick.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
 /code/controllers/failsafe.dm @MrStonedOne
@@ -62,31 +47,33 @@
 
 # ninjanomnom
 
+/code/__DEFINES/dcs/ @ninjanomnom
+/code/controllers/subsystem/dcs.dm @ninjanomnom
 /code/controllers/subsystem/shuttle.dm @ninjanomnom
+/code/datums/components/ @ninjanomnom
+/code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
 
 # ShizCalev
 
 /_maps/ @ShizCalev
-/icons/ @ShizCalev
 /sound/ @ShizCalev
 
 # stylemistake
 
+/code/__DEFINES/chat.dm @stylemistake
+/code/__DEFINES/tgui.dm @stylemistake
+/code/controllers/subsystem/chat.dm @stylemistake
+/code/controllers/subsystem/tgui.dm @stylemistake
+/code/modules/tgchat @stylemistake
+/code/modules/tgui @stylemistake
+/code/modules/tgui_panel @stylemistake
 /tgui @stylemistake
-/tgui-next @stylemistake
-
-# Qustinnus
-/code/datums/components/mood.dm @Qustinnus
-/code/datums/mood_events/ @Qustinnus
-/code/__DEFINES/mobs.dm @Qustinnus
 
 # Multiple Owners
 
-/code/__DEFINES/components.dm @Cyberboss @ninjanomnom
-/code/controllers/subsystem/air.dm @duncathan @MrStonedOne
-/code/datums/components/ @Cyberboss @ninjanomnom
-
+/icons/ @Twaticus @ShizCalev
+/code/controllers/subsystem/air.dm @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

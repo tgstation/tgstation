@@ -27,24 +27,24 @@
 		add_overlay(I)
 
 /obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
-		reagents.add_reagent(reagent_id, potency)						   //processes
+	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive
+		reagents.add_reagent(reagent_id, potency)
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
 		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
 		return
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!</span>")
+		to_chat(user, "<span class='warning'>The [name] is already active!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
-	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
+	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/fuel/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
+	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10,/datum/reagent/plasma_oxide = 8, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
@@ -65,6 +65,16 @@
 	if(!O.plunger_act(src, user, reinforced))
 		return ..()
 
+/obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
+	. = ..()
+	if(tt.target_zone != BODY_ZONE_HEAD)
+		return
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/H = hit_atom
+		if(!H.wear_mask)
+			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
+
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
@@ -72,3 +82,5 @@
 
 	reinforced = TRUE
 	plunge_mod = 0.8
+
+	custom_premium_price = 1200

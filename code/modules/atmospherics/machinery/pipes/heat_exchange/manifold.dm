@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
@@ -38,8 +38,6 @@
 			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 	update_layer()
-	update_alpha()
-
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
 	piping_layer = 1

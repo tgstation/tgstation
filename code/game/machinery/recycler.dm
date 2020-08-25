@@ -98,11 +98,7 @@
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat
-	if(istype(AM0, /obj/item))
-		to_eat = AM0.GetAllContents()
-	else
-		to_eat = list(AM0)
+	var/list/to_eat = AM0.GetAllContents()
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
@@ -156,7 +152,7 @@
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
 			return
-		materials.insert_item(I, multiplier = (amount_produced / 100))
+		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
 		materials.retrieve_all()
 
 

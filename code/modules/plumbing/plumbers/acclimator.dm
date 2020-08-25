@@ -26,9 +26,6 @@
 	*/
 	var/emptying = FALSE
 
-	ui_x = 320
-	ui_y = 271
-
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/acclimator, bolt)
@@ -65,10 +62,10 @@
 		if(HEATING)
 			icon_state += "_hot"
 
-/obj/machinery/plumbing/acclimator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/acclimator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "acclimator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemAcclimator", name)
 		ui.open()
 
 /obj/machinery/plumbing/acclimator/ui_data(mob/user)
@@ -91,15 +88,15 @@
 	switch(action)
 		if("set_target_temperature")
 			var/target = text2num(params["temperature"])
-			target_temperature = CLAMP(target, 0, 1000)
+			target_temperature = clamp(target, 0, 1000)
 		if("set_allowed_temperature_difference")
 			var/target = text2num(params["temperature"])
-			allowed_temperature_difference = CLAMP(target, 0, 1000)
+			allowed_temperature_difference = clamp(target, 0, 1000)
 		if("toggle_power")
 			enabled = !enabled
 		if("change_volume")
 			var/target = text2num(params["volume"])
-			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
+			reagents.maximum_volume = clamp(round(target), 1, buffer)
 
 #undef COOLING
 #undef HEATING

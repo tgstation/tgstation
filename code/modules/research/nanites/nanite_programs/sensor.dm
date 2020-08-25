@@ -110,14 +110,14 @@
 	var/spent = FALSE
 
 /datum/nanite_program/sensor/crit/check_event()
-	if(host_mob.InCritical())
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
+	if(HAS_TRAIT(host_mob, TRAIT_CRITICAL_CONDITION))
+		if(spent)
+			return FALSE
+		spent = TRUE
+		return TRUE
+	spent = FALSE
+	return FALSE
+
 
 /datum/nanite_program/sensor/crit/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/crit/rule = new(target)
@@ -236,7 +236,6 @@
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
 	desc = "Sends a signal when the nanites hear a determined word or sentence."
-	var/spent = FALSE
 
 /datum/nanite_program/sensor/voice/register_extra_settings()
 	. = ..()
@@ -256,10 +255,10 @@
 	if(!sentence.get_value())
 		return
 	if(inclusive.get_value())
-		if(findtextEx(hearing_args[HEARING_RAW_MESSAGE], sentence))
+		if(findtext(hearing_args[HEARING_RAW_MESSAGE], sentence.get_value()))
 			send_code()
 	else
-		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
+		if(lowertext(hearing_args[HEARING_RAW_MESSAGE]) == lowertext(sentence.get_value()))
 			send_code()
 
 /datum/nanite_program/sensor/species

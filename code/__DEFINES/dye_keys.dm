@@ -28,3 +28,5 @@
 #define DYE_CMO "cmo"
 #define DYE_REDCOAT "redcoat"
 #define DYE_CLOWN "clown"
+#define DYE_CHAP "chap"
+#define DYE_CENTCOM "centcom"

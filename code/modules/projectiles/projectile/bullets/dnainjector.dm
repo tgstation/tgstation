@@ -4,6 +4,7 @@
 	var/obj/item/dnainjector/injector
 	damage = 5
 	hitsound_wall = "shatter"
+	embedding = null
 
 /obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
@@ -15,8 +16,8 @@
 					return BULLET_ACT_HIT
 			else
 				blocked = 100
-				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
-									   "<span class='userdanger'>You were protected against \the [src]!</span>")
+				target.visible_message("<span class='danger'>\The [src] is deflected!</span>", \
+									   "<span class='userdanger'>You are protected against \the [src]!</span>")
 	return ..()
 
 /obj/projectile/bullet/dnainjector/Destroy()

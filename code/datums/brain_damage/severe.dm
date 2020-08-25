@@ -165,7 +165,7 @@
 		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
-	if(HAS_TRAIT(owner, TRAIT_BLIND))
+	if(owner.is_blind())
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -190,12 +190,12 @@
 			if(!high_stress)
 				to_chat(owner, "<span class='warning'>You can't stop shaking...</span>")
 				owner.dizziness += 20
-				owner.confused += 20
+				owner.add_confusion(20)
 				owner.Jitter(20)
 			else
 				to_chat(owner, "<span class='warning'>You feel weak and scared! If only you weren't alone...</span>")
 				owner.dizziness += 20
-				owner.confused += 20
+				owner.add_confusion(20)
 				owner.Jitter(20)
 				owner.adjustStaminaLoss(50)
 
@@ -264,3 +264,37 @@
 	..()
 	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
+
+/datum/brain_trauma/severe/hypnotic_trigger
+	name = "Hypnotic Trigger"
+	desc = "Patient has a trigger phrase set in their subconscious that will trigger a suggestible trance-like state."
+	scan_desc = "oneiric feedback loop"
+	gain_text = "<span class='warning'>You feel odd, like you just forgot something important.</span>"
+	lose_text = "<span class='notice'>You feel like a weight was lifted from your mind.</span>"
+	random_gain = FALSE
+	var/trigger_phrase = "Nanotrasen"
+
+/datum/brain_trauma/severe/hypnotic_trigger/New(phrase)
+	..()
+	if(phrase)
+		trigger_phrase = phrase
+
+/datum/brain_trauma/severe/hypnotic_trigger/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
+	..()
+	owner.remove_status_effect(/datum/status_effect/trance)
+
+/datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
+	if(!owner.can_hear())
+		return
+	if(owner == hearing_args[HEARING_SPEAKER])
+		return
+
+	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
+
+	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
+		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
+		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='hypnophrase'>*********</span>")
+
+/datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
+	to_chat(owner, "<span class='warning'>The words trigger something deep within you, and you feel your consciousness slipping away...</span>")
+	owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)

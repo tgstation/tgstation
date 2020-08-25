@@ -82,8 +82,8 @@
 			words = "[invocation]"
 
 		switch(invocation_type)
-			if("shout")
+			if(INVOCATION_SHOUT)
 				user.say(words, forced = "spell")
 				playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
-			if("whisper")
+			if(INVOCATION_WHISPER)
 				user.whisper(words, forced = "spell")

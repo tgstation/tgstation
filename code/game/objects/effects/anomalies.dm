@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal
+	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -17,7 +17,10 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan)
+	/// Do we drop a core when we're neutralized?
+	var/drops_core = TRUE
+
+/obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
@@ -26,8 +29,9 @@
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
 
-	aSignal = new(src)
-	aSignal.name = "[name] core"
+	src.drops_core = drops_core
+
+	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
 	aSignal.anomaly_type = type
 
@@ -55,6 +59,8 @@
 	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -71,8 +77,10 @@
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
-	for(var/atom/movable/O in src)
-		O.forceMove(drop_location())
+	if(drops_core)
+		aSignal.forceMove(drop_location())
+		aSignal = null
+	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
 
@@ -88,6 +96,7 @@
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/grav
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -102,11 +111,16 @@
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
 		if(!O.anchored)
+			if(isturf(O.loc))
+				var/turf/T = O.loc
+				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+					continue
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/Crossed(atom/movable/AM)
+	. = ..()
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/Bump(atom/A)
@@ -142,6 +156,7 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -153,6 +168,7 @@
 		mobShock(M)
 
 /obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+	. = ..()
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/Bump(atom/A)
@@ -180,6 +196,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -252,6 +269,7 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -276,11 +294,17 @@
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
+	var/datum/action/innate/slime/reproduce/A = new
+	A.Grant(S)
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_PAI, null, null, 100, S, POLL_IGNORE_PYROSLIME)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, null, 100, S, POLL_IGNORE_PYROSLIME)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key
+		S.mind.special_role = ROLE_PYROCLASTIC_SLIME
+		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
+		if (policy)
+			to_chat(S, policy)
 		log_game("[key_name(S.key)] was made into a slime by pyroclastic anomaly at [AREACOORD(T)].")
 
 /////////////////////
@@ -289,6 +313,7 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
+	aSignal = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
@@ -307,7 +332,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else
-			O.ex_act(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += O
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
@@ -326,7 +351,13 @@
 	if(prob(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
-				O.ex_act(ex_act_force)
+				switch(ex_act_force)
+					if(EXPLODE_DEVASTATE)
+						SSexplosions.high_mov_atom += O
+					if(EXPLODE_HEAVY)
+						SSexplosions.med_mov_atom += O
+					if(EXPLODE_LIGHT)
+						SSexplosions.low_mov_atom += O
 			else
 				step_towards(O,src)
 		for(var/mob/living/M in T.contents)
@@ -334,4 +365,10 @@
 
 	//Damaging the turf
 	if( T && prob(turf_removal_chance) )
-		T.ex_act(ex_act_force)
+		switch(ex_act_force)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += T
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += T
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += T

@@ -53,6 +53,12 @@
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
+/datum/export/stack/licenseplate
+	cost = 25
+	unit_name = "license plate"
+	export_types = list(/obj/item/stack/license_plates/filled)
+
+
 // Common materials.
 // For base materials, see materials.dm
 
@@ -77,6 +83,17 @@
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
+/datum/export/stack/cloth
+	cost = 5
+	message = "rolls of cloth"
+	export_types = list(/obj/item/stack/sheet/cloth)
+
+/datum/export/stack/durathread
+	cost = 70
+	message = "rolls of durathread"
+	export_types = list(/obj/item/stack/sheet/durathread)
+
+
 /datum/export/stack/cardboard
 	cost = 2
 	message = "of cardboard"
@@ -92,6 +109,22 @@
 	cost = 0.2
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
+
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
+/datum/export/stack/pizza
+	cost = 12
+	unit_name = "of sheetza"
+	export_types = list(/obj/item/stack/sheet/pizza)
+
+/datum/export/stack/meat
+	cost = 8
+	unit_name = "of meat"
+	export_types = list(/obj/item/stack/sheet/meat)
+
 
 // Weird Stuff
 

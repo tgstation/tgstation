@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - tweak: "Turn night mode off or on when the APC is locked"

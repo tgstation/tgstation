@@ -21,11 +21,15 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	held_state = "fox"
+	pet_bonus = TRUE
+	pet_bonus_emote = "pants and yaps happily!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 //Captain fox
-/mob/living/simple_animal/pet/fox/Renault
+/mob/living/simple_animal/pet/fox/renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
 	gender = FEMALE

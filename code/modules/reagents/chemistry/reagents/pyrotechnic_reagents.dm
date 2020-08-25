@@ -6,7 +6,7 @@
 	color = "#550000"
 	taste_description = "sweet tasting metal"
 
-/datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
+/datum/reagent/thermite/expose_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.AddComponent(/datum/component/thermite, reac_volume)
 
@@ -28,6 +28,12 @@
 	color = "#FFFF00"
 	taste_description = "metal"
 
+	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(myseed && chems.has_reagent(type, 1))
+		myseed.adjust_instability(-1)
+
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -43,7 +49,7 @@
 	..()
 	return TRUE
 
-/datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
+/datum/reagent/clf3/expose_turf(turf/T, reac_volume)
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
@@ -63,7 +69,7 @@
 		if(prob(reac_volume))
 			W.ScrapeAway()
 
-/datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/clf3/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
@@ -152,7 +158,7 @@
 	taste_description = "burning"
 	self_consuming = TRUE
 
-/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/phlogiston/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
@@ -174,11 +180,20 @@
 	taste_description = "burning"
 	self_consuming = TRUE
 
+	// why, just why
+/datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
+
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
 	..()
 
-/datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/napalm/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
@@ -198,7 +213,7 @@
 		M.adjust_bodytemperature(-15)
 	..()
 
-/datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
+/datum/reagent/cryostylane/expose_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
@@ -272,7 +287,7 @@
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
 
-/datum/reagent/firefighting_foam/reaction_turf(turf/open/T, reac_volume)
+/datum/reagent/firefighting_foam/expose_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
 
@@ -292,10 +307,10 @@
 			G.react(src)
 			qdel(hotspot)
 
-/datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)
+/datum/reagent/firefighting_foam/expose_obj(obj/O, reac_volume)
 	O.extinguish()
 
-/datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/firefighting_foam/expose_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method in list(VAPOR, TOUCH))
 		M.adjust_fire_stacks(-reac_volume)
 		M.ExtinguishMob()

@@ -5,7 +5,7 @@
 	var/list/swarm_members = list()
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
@@ -23,6 +23,8 @@
 	return ..()
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
 	if(!other_swarm)
 		return
@@ -32,6 +34,8 @@
 	other_swarm.swarm_members |= src
 
 /datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
 	if(!other_swarm || !(other_swarm in swarm_members))
 		return

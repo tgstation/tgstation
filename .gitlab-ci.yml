@@ -1,0 +1,11 @@
+build:
+    stage: build
+    rules:
+      - if: $CI_MERGE_REQUEST_IID || $CI_COMMIT_REF_NAME == "master"
+        changes:
+          - tgui/**/*.js
+          - tgui/**/*.scss
+        when: always
+    image: node:lts
+    script:
+        - tgui/bin/tgui --ci

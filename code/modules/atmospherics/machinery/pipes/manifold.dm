@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
@@ -43,4 +43,3 @@
 			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 	update_layer()
-	update_alpha()

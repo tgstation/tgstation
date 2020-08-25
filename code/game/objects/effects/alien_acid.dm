@@ -4,7 +4,7 @@
 	desc = "Burbling corrosive stuff."
 	icon_state = "acid"
 	density = FALSE
-	opacity = 0
+	opacity = FALSE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -53,6 +53,7 @@
 		return 0
 
 /obj/effect/acid/Crossed(AM as mob|obj)
+	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.movement_type & FLYING)

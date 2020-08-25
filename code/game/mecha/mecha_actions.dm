@@ -6,9 +6,11 @@
 	if(enclosed)
 		internals_action.Grant(user, src)
 	cycle_action.Grant(user, src)
-	lights_action.Grant(user, src)
+	if(haslights)
+		lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
-	strafing_action.Grant(user, src)
+	if(canstrafe)
+		strafing_action.Grant(user, src)
 
 
 /obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
@@ -16,9 +18,11 @@
 		eject_action.Remove(user)
 	internals_action.Remove(user)
 	cycle_action.Remove(user)
-	lights_action.Remove(user)
+	if(haslights)
+		lights_action.Remove(user)
 	stats_action.Remove(user)
-	strafing_action.Remove(user)
+	if(canstrafe)
+		strafing_action.Remove(user)
 
 
 /datum/action/innate/mecha
@@ -44,7 +48,7 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.container_resist(chassis.occupant)
+	chassis.container_resist_act(chassis.occupant)
 
 /datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
@@ -108,11 +112,10 @@
 		return
 	chassis.lights = !chassis.lights
 	if(chassis.lights)
-		chassis.set_light(chassis.lights_power)
 		button_icon_state = "mech_lights_on"
 	else
-		chassis.set_light(-chassis.lights_power)
 		button_icon_state = "mech_lights_off"
+	chassis.set_light_on(chassis.lights)
 	chassis.occupant_message("<span class='notice'>Toggled lights [chassis.lights?"on":"off"].</span>")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()
@@ -211,10 +214,10 @@
 		chassis.log_message("Toggled zoom mode.", LOG_MECHA)
 		chassis.occupant_message("<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
 		if(chassis.zoom_mode)
-			owner.client.change_view(12)
+			owner.client.view_size.setTo(4.5)
 			SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg',volume=50))
 		else
-			owner.client.change_view(CONFIG_GET(string/default_view)) //world.view - default mob view size
+			owner.client.view_size.resetToDefault() //Let's not let this stack shall we?
 		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype
@@ -226,14 +229,14 @@
 		return
 	var/new_damtype
 	switch(chassis.damtype)
-		if("tox")
-			new_damtype = "brute"
+		if(TOX)
+			new_damtype = BRUTE
 			chassis.occupant_message("<span class='notice'>Your exosuit's hands form into fists.</span>")
-		if("brute")
-			new_damtype = "fire"
+		if(BRUTE)
+			new_damtype = BURN
 			chassis.occupant_message("<span class='notice'>A torch tip extends from your exosuit's hand, glowing red.</span>")
-		if("fire")
-			new_damtype = "tox"
+		if(BURN)
+			new_damtype = TOX
 			chassis.occupant_message("<span class='notice'>A bone-chillingly thick plasteel needle protracts from the exosuit's palm.</span>")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"

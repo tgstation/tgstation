@@ -58,7 +58,7 @@
 /obj/structure/table/wood{
 	layer = 3.3
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-05";
 	pixel_y = 4
 	},
@@ -161,9 +161,9 @@
 /area/holodeck/rec_center/bunker)
 "az" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/matches{
-	pixel_x = -4;
-	pixel_y = 8
+/obj/item/lighter{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -294,7 +294,7 @@
 /area/holodeck/rec_center/winterwonderland)
 "aT" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-05";
 	pixel_y = 10
 	},
@@ -305,13 +305,11 @@
 /area/holodeck/rec_center/lounge)
 "aU" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-l"
 	},
 /area/holodeck/rec_center/lounge)
 "aV" = (
 /turf/open/floor/holofloor{
-	dir = 9;
 	icon_state = "stairs-r"
 	},
 /area/holodeck/rec_center/lounge)
@@ -633,7 +631,7 @@
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "bS" = (
-/obj/item/storage/bag/easterbasket{
+/obj/item/storage/basket/easter{
 	name = "picnic basket";
 	pixel_y = 6
 	},
@@ -1678,19 +1676,19 @@
 /obj/item/melee/chainofcommand{
 	name = "chain whip"
 	},
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "ez" = (
 /obj/structure/table/wood,
 /obj/item/scythe,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eA" = (
 /obj/structure/table/wood,
 /obj/item/tailclub,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/thunderdome1218)
 "eB" = (
@@ -2407,7 +2405,7 @@
 /turf/open/floor/circuit,
 /area/ctf)
 "gm" = (
-/obj/structure/table/reinforced,
+/obj/structure/table/reinforced/ctf,
 /turf/open/floor/plasteel/bluespace,
 /area/ctf)
 "gn" = (
@@ -2451,9 +2449,9 @@
 /turf/open/floor/plasteel,
 /area/ctf)
 "gt" = (
-/obj/structure/kitchenspike,
-/turf/open/floor/plasteel/dark,
-/area/ctf)
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/start)
@@ -2920,11 +2918,11 @@
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hE" = (
-/obj/item/twohanded/ctf/blue,
+/obj/item/ctf/blue,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hF" = (
-/obj/item/twohanded/ctf/red,
+/obj/item/ctf/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hG" = (
@@ -3615,7 +3613,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jq" = (
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
@@ -4002,7 +4000,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "ke" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -4090,7 +4088,7 @@
 	dwidth = 25;
 	height = 50;
 	id = "emergency_syndicate";
-	name = "Syndicate Auxillary Shuttle Dock";
+	name = "Syndicate Auxiliary Shuttle Dock";
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -4105,7 +4103,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "kk" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -4229,7 +4227,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kB" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/firealarm{
@@ -4252,7 +4250,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -4261,7 +4259,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -4302,13 +4300,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "kJ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/airalarm{
@@ -4768,7 +4766,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "lQ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/machinery/firealarm{
@@ -4799,7 +4797,7 @@
 "lS" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
-/area/centcom/supplypod/flyMeToTheMoon)
+/area/centcom/supplypod/supplypod_temp_holding)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -4882,7 +4880,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/supply)
 "mc" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -5191,7 +5189,7 @@
 "mK" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/stack/cable_coil,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/green{
@@ -5206,7 +5204,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "mL" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -5218,7 +5216,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "mM" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -5656,7 +5654,7 @@
 	pixel_y = -24
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/stack/cable_coil,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/tile/neutral{
@@ -6008,7 +6006,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = -6;
 	pixel_y = 12
@@ -6176,7 +6174,7 @@
 /area/centcom/supply)
 "ot" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light{
@@ -6221,7 +6219,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "oy" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
@@ -6583,7 +6581,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "ph" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/machinery/light{
@@ -6817,7 +6815,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "pw" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -6853,11 +6851,7 @@
 /area/centcom/ferry)
 "py" = (
 /obj/machinery/smartfridge,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "pz" = (
 /turf/open/space/basic,
@@ -6892,23 +6886,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
-"pE" = (
-/obj/machinery/plantgenes/seedvault,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/centcom/holding)
 "pF" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Auxillary Dock";
+	name = "Auxiliary Dock";
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
@@ -7055,7 +7035,7 @@
 /area/centcom/ferry)
 "pS" = (
 /obj/structure/table,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pT" = (
@@ -7157,13 +7137,13 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "qd" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "qe" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light_switch{
@@ -7262,7 +7242,7 @@
 /area/centcom/ferry)
 "ql" = (
 /obj/structure/dresser,
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/plaque/static_plaque/golden/captain{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -7608,7 +7588,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
 "rc" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -7653,6 +7633,7 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/carp/cayenne,
+/obj/structure/bed/dogbed/cayenne,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "rh" = (
@@ -7693,7 +7674,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "rl" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -7804,7 +7785,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "rt" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/newscaster{
@@ -7829,7 +7810,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "rv" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/machinery/light{
@@ -7989,7 +7970,7 @@
 /turf/open/floor/grass,
 /area/centcom/control)
 "rL" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -8744,7 +8725,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
 "tn" = (
@@ -8988,7 +8969,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tJ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -9027,7 +9008,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "tO" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -9054,7 +9035,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/evac)
 "tS" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9440,7 +9421,7 @@
 /area/centcom/ferry)
 "uP" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/crowbar/power,
 /obj/item/wrench,
 /obj/item/hand_labeler,
@@ -9491,7 +9472,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "uT" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -9521,7 +9502,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "uV" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -10447,7 +10428,7 @@
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "xi" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/delivery,
@@ -10517,7 +10498,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "xp" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -10529,7 +10510,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "xq" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -10548,7 +10529,7 @@
 /turf/open/floor/plating,
 /area/centcom/evac)
 "xs" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -11146,7 +11127,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "zd" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light{
@@ -11165,7 +11146,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "ze" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/structure/sign/directions/engineering{
 	pixel_y = 24
 	},
@@ -11173,7 +11154,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zf" = (
-/obj/structure/closet/secure_closet/ertEngi,
+/obj/structure/closet/secure_closet/ert_engi,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -11222,7 +11203,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "zj" = (
-/obj/structure/closet/secure_closet/ertCom,
+/obj/structure/closet/secure_closet/ert_com,
 /obj/structure/sign/directions/command{
 	pixel_y = 24
 	},
@@ -11636,7 +11617,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Am" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/red{
@@ -11657,7 +11638,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "Ap" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -11891,7 +11872,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "Ba" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -11959,7 +11940,7 @@
 /area/centcom/holding)
 "Bs" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Bu" = (
@@ -12271,11 +12252,7 @@
 /area/wizard_station)
 "BV" = (
 /obj/machinery/chem_dispenser/drinks/beer,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "BY" = (
 /obj/item/toy/figure/syndie,
@@ -12520,7 +12497,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cw" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/power/apc{
@@ -12558,7 +12535,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cy" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light,
@@ -12579,7 +12556,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "Cz" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -12621,7 +12598,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "CB" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
 	dir = 1;
 	pixel_y = -24
@@ -12632,7 +12609,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CC" = (
-/obj/structure/closet/secure_closet/ertMed,
+/obj/structure/closet/secure_closet/ert_med,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
@@ -12668,14 +12645,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CF" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "CG" = (
-/obj/structure/closet/secure_closet/ertSec,
+/obj/structure/closet/secure_closet/ert_sec,
 /obj/structure/sign/directions/security{
 	dir = 1;
 	pixel_y = -24
@@ -12972,7 +12949,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
 "Df" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -13340,7 +13317,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "DV" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -13349,7 +13326,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "DW" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -13611,11 +13588,7 @@
 /area/wizard_station)
 "ED" = (
 /obj/machinery/vending/boozeomat,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "EE" = (
 /obj/structure/closet/crate/bin,
@@ -13834,7 +13807,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Fb" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -13935,7 +13908,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Fs" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -13949,7 +13922,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Fu" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -14034,7 +14007,7 @@
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "FG" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/red,
@@ -14114,7 +14087,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "FQ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -14196,7 +14169,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Gg" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -14210,7 +14183,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Gh" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/red{
@@ -14219,7 +14192,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gi" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/red{
@@ -14232,7 +14205,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gj" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/red,
@@ -14261,7 +14234,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gn" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -14271,7 +14244,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Go" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -14284,7 +14257,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Gp" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/green{
@@ -14532,7 +14505,7 @@
 /area/tdome/tdomeobserve)
 "GL" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/lawyers_badge{
@@ -14556,7 +14529,7 @@
 /area/tdome/tdomeobserve)
 "GO" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/item/clothing/accessory/medal/silver{
@@ -14831,7 +14804,7 @@
 /area/tdome/tdomeobserve)
 "Hr" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/plaque/static_plaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal/gold{
@@ -14857,7 +14830,7 @@
 /area/tdome/tdomeobserve)
 "Ht" = (
 /obj/structure/table/wood,
-/obj/structure/sign/plaques/thunderdome{
+/obj/structure/plaque/static_plaque/thunderdome{
 	pixel_y = -32
 	},
 /obj/item/clothing/accessory/medal{
@@ -15223,7 +15196,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "HZ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral,
@@ -15313,7 +15286,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Ig" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -16119,7 +16092,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "JZ" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/machinery/firealarm{
@@ -16151,7 +16124,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "Kc" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -16990,7 +16963,7 @@
 /turf/open/floor/grass,
 /area/centcom/holding)
 "Ms" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/wood,
@@ -17088,11 +17061,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Nd" = (
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "Nh" = (
 /obj/structure/table/wood,
@@ -17155,7 +17124,7 @@
 /area/centcom/holding)
 "NE" = (
 /turf/open/floor/plasteel,
-/area/centcom/supplypod/podStorage)
+/area/centcom/supplypod/pod_storage)
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -17436,9 +17405,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (
@@ -17517,11 +17486,7 @@
 /area/centcom/supplypod)
 "QT" = (
 /obj/machinery/chem_dispenser/drinks,
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/wood_wall.dmi';
-	icon_state = "wood";
-	smooth = 1
-	},
+/turf/closed/indestructible/wood,
 /area/centcom/holding)
 "QW" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
@@ -17598,6 +17563,10 @@
 /obj/machinery/door/window/westleft,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"Rz" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/circuit/red,
+/area/ctf)
 "RA" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -18216,6 +18185,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Yd" = (
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/plasteel/dark,
+/area/ctf)
 "Yf" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chawanmushi,
@@ -18331,13 +18304,17 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "Zs" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Zu" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/floor/plasteel/dark,
+/area/ctf)
 "Zx" = (
 /mob/living/simple_animal/bot/medbot{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
@@ -36822,11 +36799,11 @@ ll
 pF
 qa
 pZ
+pZ
+sh
+sh
+pZ
 rg
-sh
-sh
-pZ
-pZ
 Qd
 wo
 tZ
@@ -43776,7 +43753,7 @@ aa
 aa
 aa
 Nd
-pE
+PY
 NJ
 SW
 PY
@@ -49356,7 +49333,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 aa
 aa
 aa
@@ -49888,7 +49865,7 @@ aa
 aa
 aa
 aa
-aa
+gt
 aa
 aa
 aa
@@ -56787,6 +56764,7 @@ aa
 aa
 fZ
 gb
+gl
 gh
 gh
 gh
@@ -56794,8 +56772,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gl
 gw
 fZ
 gk
@@ -56817,6 +56794,7 @@ gl
 gk
 fZ
 gb
+gl
 gh
 gh
 gh
@@ -56824,8 +56802,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gl
 gw
 fZ
 aa
@@ -57044,15 +57021,15 @@ aa
 aa
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+hj
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 gk
@@ -57074,15 +57051,15 @@ gl
 gk
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+hj
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 aa
@@ -57301,15 +57278,15 @@ aa
 aa
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+Zu
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 gk
@@ -57331,15 +57308,15 @@ gl
 gk
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+Zu
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 aa
@@ -57558,15 +57535,15 @@ aa
 aa
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+hj
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 gk
@@ -57588,15 +57565,15 @@ gl
 gk
 fZ
 gb
+gl
 gh
-gt
 gh
-gt
+hj
+hj
+hj
 gh
-gt
 gh
-gt
-gh
+gl
 gw
 fZ
 aa
@@ -57815,6 +57792,7 @@ aa
 aa
 fZ
 gb
+gl
 gh
 gh
 gh
@@ -57822,8 +57800,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gl
 gw
 fZ
 gk
@@ -57845,6 +57822,7 @@ gl
 gk
 fZ
 gb
+gl
 gh
 gh
 gh
@@ -57852,8 +57830,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gl
 gw
 fZ
 aa
@@ -62991,9 +62968,9 @@ fZ
 fZ
 fZ
 fZ
-gh
-gh
-gh
+Yd
+Yd
+Yd
 fZ
 fZ
 aa
@@ -81973,6 +81950,7 @@ aa
 aa
 fZ
 ge
+gq
 gh
 gh
 gh
@@ -81980,8 +81958,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gq
 gz
 fZ
 hf
@@ -82003,6 +81980,7 @@ gq
 hf
 fZ
 ge
+gq
 gh
 gh
 gh
@@ -82010,8 +81988,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gq
 gz
 fZ
 aa
@@ -82230,15 +82207,15 @@ aa
 aa
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+hB
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 hf
@@ -82260,15 +82237,15 @@ gq
 hf
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+hB
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 aa
@@ -82487,15 +82464,15 @@ aa
 aa
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+Rz
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 hf
@@ -82517,15 +82494,15 @@ gq
 hf
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+Rz
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 aa
@@ -82744,15 +82721,15 @@ aa
 aa
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+hB
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 hf
@@ -82774,15 +82751,15 @@ gq
 hf
 fZ
 ge
+gq
 gh
-gt
 gh
-gt
+hB
+hB
+hB
 gh
-gt
 gh
-gt
-gh
+gq
 gz
 fZ
 aa
@@ -83001,6 +82978,7 @@ aa
 aa
 fZ
 ge
+gq
 gh
 gh
 gh
@@ -83008,8 +82986,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gq
 gz
 fZ
 hf
@@ -83031,6 +83008,7 @@ gq
 hf
 fZ
 ge
+gq
 gh
 gh
 gh
@@ -83038,8 +83016,7 @@ gh
 gh
 gh
 gh
-gh
-gh
+gq
 gz
 fZ
 aa

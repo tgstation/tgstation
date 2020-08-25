@@ -8,14 +8,16 @@
 	icon_state_unpowered = null
 	icon_state_menu = null
 	hardware_flag = 0
+	max_bays = 4
 
 	var/obj/machinery/modular_computer/machinery_computer = null
 
 /obj/item/modular_computer/processor/Destroy()
-	. = ..()
 	if(machinery_computer && (machinery_computer.cpu == src))
 		machinery_computer.cpu = null
+		machinery_computer.UnregisterSignal(src, COMSIG_ATOM_UPDATED_ICON)
 	machinery_computer = null
+	. = ..()
 
 /obj/item/modular_computer/processor/New(comp)
 	..()
@@ -54,24 +56,6 @@
 	..()
 	machinery_computer.update_icon()
 	return
-
-/obj/item/modular_computer/processor/add_verb(path)
-	switch(path)
-		if(MC_CARD)
-			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_id
-		if(MC_SDD)
-			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_disk
-		if(MC_AI)
-			machinery_computer.verbs += /obj/machinery/modular_computer/proc/eject_card
-
-/obj/item/modular_computer/processor/remove_verb(path)
-	switch(path)
-		if(MC_CARD)
-			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_id
-		if(MC_SDD)
-			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
-		if(MC_AI)
-			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card
 
 /obj/item/modular_computer/processor/attack_ghost(mob/user)
 	ui_interact(user)

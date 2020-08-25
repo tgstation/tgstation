@@ -10,8 +10,8 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
-	name = "Long-To-Short-Range-Bluespace-Transciever"
-	desc = "The LTSRBT is a compact teleportation machine for recieving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
+	name = "Long-To-Short-Range-Bluespace-Transceiver"
+	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
 	icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
@@ -22,17 +22,17 @@
 	var/power_efficiency = 1
 	/// Power used per teleported which gets divided by power_efficiency.
 	var/power_usage_per_teleport = 10000
-	/// The time it takes for the machine to recharge before being able to send or recieve items.
+	/// The time it takes for the machine to recharge before being able to send or receive items.
 	var/recharge_time = 0
 	/// Current recharge progress.
 	var/recharge_cooldown = 0
 	/// Base recharge time which is used to get recharge_time.
 	var/base_recharge_time = 100
-	/// Current /datum/blackmarket_purchase being recieved.
-	var/recieving
+	/// Current /datum/blackmarket_purchase being received.
+	var/receiving
 	/// Current /datum/blackmarket_purchase being sent to the target uplink.
 	var/transmitting
-	/// Queue for purchases that the machine should recieve and send.
+	/// Queue for purchases that the machine should receive and send.
 	var/list/datum/blackmarket_purchase/queue = list()
 
 /obj/machinery/ltsrbt/Initialize()
@@ -61,10 +61,10 @@
 	if(!power_efficiency)
 		power_efficiency = 1
 
-/// Adds /datum/blackmarket_purchase to queue unless the machine is free, then it sets the purchase to be instantly recieved
+/// Adds /datum/blackmarket_purchase to queue unless the machine is free, then it sets the purchase to be instantly received
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/blackmarket_purchase/purchase)
-	if(!recharge_cooldown && !recieving && !transmitting)
-		recieving = purchase
+	if(!recharge_cooldown && !receiving && !transmitting)
+		receiving = purchase
 		return
 	queue += purchase
 
@@ -77,8 +77,8 @@
 		return
 
 	var/turf/T = get_turf(src)
-	if(recieving)
-		var/datum/blackmarket_purchase/P = recieving
+	if(receiving)
+		var/datum/blackmarket_purchase/P = receiving
 
 		if(!P.item || ispath(P.item))
 			P.item = P.entry.spawn_item(T)
@@ -92,7 +92,7 @@
 		sparks.attach(P.item)
 		sparks.start()
 
-		recieving = null
+		receiving = null
 		transmitting = P
 
 		recharge_cooldown = recharge_time
@@ -112,4 +112,4 @@
 		return
 
 	if(queue.len)
-		recieving = pick_n_take(queue)
+		receiving = pick_n_take(queue)

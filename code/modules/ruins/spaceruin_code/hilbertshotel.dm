@@ -1,6 +1,7 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
 GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
+// Someone for the love of god kill whoever indented this with spaces
 /obj/item/hilbertshotel
     name = "Hilbert's Hotel"
     desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
@@ -197,7 +198,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	name = "hotel wall"
 	desc = "A wall designed to protect the security of the hotel's guests."
 	icon_state = "hotelwall"
-	canSmoothWith = list(/turf/closed/indestructible/hotelwall)
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_HOTEL_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_HOTEL_WALLS)
 	explosion_block = INFINITY
 
 /turf/open/indestructible/hotelwood
@@ -221,9 +223,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/obj/item/hilbertshotel/parentSphere
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
-    . = ..()
-    A.forceMove(get_turf(parentSphere))
-    do_sparks(3, FALSE, get_turf(A))
+	. = ..()
+	if(parentSphere && A.forceMove(get_turf(parentSphere)))
+		do_sparks(3, FALSE, get_turf(A))
 
 /turf/closed/indestructible/hoteldoor
     name = "Hotel Door"
@@ -282,22 +284,22 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
         user.reset_perspective(parentSphere)
         user.set_machine(src)
-        var/datum/action/peepholeCancel/PHC = new
+        var/datum/action/peephole_cancel/PHC = new
         user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
         PHC.Grant(user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
     if(get_dist(get_turf(src), get_turf(user)) >= 2)
         user.unset_machine()
-        for(var/datum/action/peepholeCancel/PHC in user.actions)
+        for(var/datum/action/peephole_cancel/PHC in user.actions)
             PHC.Trigger()
 
-/datum/action/peepholeCancel
+/datum/action/peephole_cancel
     name = "Cancel View"
     desc = "Stop looking through the bluespace peephole."
     button_icon_state = "cancel_peephole"
 
-/datum/action/peepholeCancel/Trigger()
+/datum/action/peephole_cancel/Trigger()
     . = ..()
     to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
     owner.reset_perspective()
@@ -305,19 +307,17 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     qdel(src)
 
 /area/hilbertshotel
-    name = "Hilbert's Hotel Room"
-    icon_state = "hilbertshotel"
-    requires_power = FALSE
-    has_gravity = TRUE
-    noteleport = TRUE
-    hidden = TRUE
-    unique = FALSE
-    dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-    ambientsounds = list('sound/ambience/servicebell.ogg')
-    var/roomnumber = 0
-    var/obj/item/hilbertshotel/parentSphere
-    var/datum/turf_reservation/reservation
-    var/turf/storageTurf
+	name = "Hilbert's Hotel Room"
+	icon_state = "hilbertshotel"
+	requires_power = FALSE
+	has_gravity = TRUE
+	area_flags = NOTELEPORT | HIDDEN_AREA
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambientsounds = list('sound/ambience/servicebell.ogg')
+	var/roomnumber = 0
+	var/obj/item/hilbertshotel/parentSphere
+	var/datum/turf_reservation/reservation
+	var/turf/storageTurf
 
 /area/hilbertshotel/Entered(atom/movable/AM)
     . = ..()
@@ -386,9 +386,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     name = "Hilbert's Hotel Storage Room"
     icon_state = "hilbertshotel"
     requires_power = FALSE
+    area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
     has_gravity = TRUE
-    noteleport = TRUE
-    hidden = TRUE
 
 /obj/item/abstracthotelstorage
     anchored = TRUE

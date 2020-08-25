@@ -16,7 +16,7 @@
 		value = text2num(value)
 	if(!value || !isnum(value))
 		return
-	src.value = CLAMP(value, min, max)
+	src.value = clamp(value, min, max)
 
 /datum/nanite_extra_setting/number/get_copy()
 	return new /datum/nanite_extra_setting/number(value, min, max, unit)

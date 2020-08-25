@@ -100,19 +100,12 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	loot = list()
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup, /obj/item/reagent_containers/food/snacks/grown/ash_flora)//use lavaland plants to feed the lavaland monster
 	tame_chance = 10
 	bonus_tame_chance = 5
 	var/saddled = FALSE
-
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
-	if(isliving(whomst))
-		var/mob/living/fren = whomst
-		friends = fren
-		faction = fren.faction.Copy()
-	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
@@ -242,5 +235,5 @@
 /obj/item/saddle
 	name = "saddle"
 	desc = "This saddle will solve all your problems with being killed by lava beasts!"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "saddle"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"

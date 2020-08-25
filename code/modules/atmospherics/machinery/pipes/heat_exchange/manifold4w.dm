@@ -7,7 +7,7 @@
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of heat-exchanging pipes."
 
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 
 	device_type = QUATERNARY
 
@@ -36,8 +36,6 @@
 			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
 	update_layer()
-	update_alpha()
-
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer1
 	piping_layer = 1

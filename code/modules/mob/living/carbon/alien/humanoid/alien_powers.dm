@@ -78,7 +78,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
 		to_chat(user, "<span class='warning'>There's already a weed node here!</span>")
 		return 0
-	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	user.visible_message("<span class='alertalien'>[user] plants some alien weeds!</span>")
 	new/obj/structure/alien/weeds/node(user.loc)
 	return 1
 
@@ -228,9 +228,9 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!</span>", "<span class='alertalien'>You spit neurotoxin.</span>")
-	var/obj/projectile/bullet/neurotoxin/A = new /obj/projectile/bullet/neurotoxin(user.loc)
-	A.preparePixelProjectile(target, user, params)
-	A.fire()
+	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(user.loc)
+	neurotoxin.preparePixelProjectile(target, user, params)
+	neurotoxin.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
 

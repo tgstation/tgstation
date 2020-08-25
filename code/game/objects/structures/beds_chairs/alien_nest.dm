@@ -6,8 +6,8 @@
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
 	max_integrity = 120
-	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = null
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
@@ -69,8 +69,8 @@
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
-	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
+	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 

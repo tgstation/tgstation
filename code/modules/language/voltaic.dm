@@ -2,10 +2,6 @@
 /datum/language/voltaic
 	name = "Voltaic"
 	desc = "A sparky language made by manipulating electrical discharge."
-	speech_verb = "crackles"
-	ask_verb = "pops"
-	exclaim_verb = "thunders"
-	sing_verb = "synthesizes"
 	key = "v"
 	space_chance = 20
 	syllables = list(

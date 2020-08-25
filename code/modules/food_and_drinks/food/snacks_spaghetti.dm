@@ -27,6 +27,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	cooked_type = null
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/pasta
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/spaghetti/pastatomato
 	name = "spaghetti"
@@ -40,6 +41,7 @@
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/spaghetti/copypasta
 	name = "copypasta"
@@ -53,47 +55,52 @@
 	filling_color = "#DC143C"
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti
 	name = "spaghetti and meatballs"
 	desc = "Now that's a nic'e meatball!"
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	cooked_type = null
-	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
+	tastes = list("pasta" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/spaghetti/spesslaw
 	name = "spesslaw"
 	desc = "A lawyers favourite."
 	icon_state = "spesslaw"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 3)
 	cooked_type = null
-	tastes = list("pasta" = 1, "tomato" = 1, "meat" = 1)
+	tastes = list("pasta" = 1, "meat" = 1)
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/chowmein
 	name = "chow mein"
 	desc = "A nice mix of noodles and fried vegetables."
 	icon_state = "chowmein"
 	trash = /obj/item/trash/plate
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	cooked_type = null
 	tastes = list("noodle" = 1, "tomato" = 1)
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/beefnoodle
 	name = "beef noodle"
 	desc = "Nutritious, beefy and noodly."
 	icon_state = "beefnoodle"
 	trash = /obj/item/reagent_containers/glass/bowl
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/liquidgibs = 3)
 	cooked_type = null
 	tastes = list("noodle" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/spaghetti/butternoodles
 	name = "butter noodles"
@@ -104,3 +111,4 @@
 	cooked_type = null
 	tastes = list("noodle" = 1, "butter" = 1)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_FAST

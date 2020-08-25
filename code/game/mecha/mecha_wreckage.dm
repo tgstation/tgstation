@@ -9,7 +9,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE
 	anchored = FALSE
-	opacity = 0
+	opacity = FALSE
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
 	var/salvage_num = 5
 	var/list/crowbar_salvage = list()
@@ -147,7 +147,8 @@
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
-	parts = list(/obj/item/mecha_parts/part/ripley_torso,
+	parts = list(
+				/obj/item/mecha_parts/part/ripley_torso,
 				/obj/item/mecha_parts/part/ripley_left_arm,
 				/obj/item/mecha_parts/part/ripley_right_arm,
 				/obj/item/mecha_parts/part/ripley_left_leg,
@@ -157,15 +158,15 @@
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
 
-/obj/structure/mecha_wreckage/ripley/firefighter
-	name = "\improper Firefighter wreckage"
-	icon_state = "firefighter-broken"
-	parts = list(/obj/item/mecha_parts/part/ripley_torso,
-				/obj/item/mecha_parts/part/ripley_left_arm,
-				/obj/item/mecha_parts/part/ripley_right_arm,
-				/obj/item/mecha_parts/part/ripley_left_leg,
-				/obj/item/mecha_parts/part/ripley_right_leg,
-				/obj/item/clothing/suit/fire)
+/obj/structure/mecha_wreckage/clarke
+	name = "\improper Clarke wreckage"
+	icon_state = "clarke-broken"
+	parts = list(
+				/obj/item/mecha_parts/part/clarke_torso,
+				/obj/item/mecha_parts/part/clarke_head,
+				/obj/item/mecha_parts/part/clarke_left_arm,
+				/obj/item/mecha_parts/part/clarke_right_arm,
+				/obj/item/stack/conveyor)
 
 /obj/structure/mecha_wreckage/ripley/deathripley
 	name = "\improper Death-Ripley wreckage"
@@ -177,7 +178,6 @@
 	icon_state = "honker-broken"
 	desc = "All is right in the universe."
 	parts = list(
-				/obj/item/mecha_parts/chassis/honker,
 				/obj/item/mecha_parts/part/honker_torso,
 				/obj/item/mecha_parts/part/honker_head,
 				/obj/item/mecha_parts/part/honker_left_arm,
@@ -199,6 +199,14 @@
 /obj/structure/mecha_wreckage/phazon
 	name = "\improper Phazon wreckage"
 	icon_state = "phazon-broken"
+	parts = list(
+		/obj/item/mecha_parts/part/phazon_torso,
+		/obj/item/mecha_parts/part/phazon_head,
+		/obj/item/mecha_parts/part/phazon_left_arm,
+		/obj/item/mecha_parts/part/phazon_right_arm,
+		/obj/item/mecha_parts/part/phazon_left_leg,
+		/obj/item/mecha_parts/part/phazon_right_leg)
+
 
 
 /obj/structure/mecha_wreckage/odysseus

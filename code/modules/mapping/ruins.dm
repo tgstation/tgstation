@@ -11,8 +11,14 @@
 
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
-			if(!(istype(new_area, allowed_areas)) || check.flags_1 & NO_RUINS_1)
-				valid = FALSE
+			valid = FALSE // set to false before we check
+			if(check.flags_1 & NO_RUINS_1)
+				break
+			for(var/type in allowed_areas)
+				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
+					valid = TRUE
+					break
+			if(!valid)
 				break
 
 		if(!valid)
@@ -52,7 +58,7 @@
 	return center
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -66,7 +72,7 @@
 	var/list/ruins = potentialRuins.Copy()
 
 	var/list/forced_ruins = list()		//These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
-	var/list/ruins_availible = list()	//we can try these in the current pass
+	var/list/ruins_available = list()	//we can try these in the current pass
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
@@ -77,8 +83,8 @@
 			forced_ruins[R] = -1
 		if(R.unpickable)
 			continue
-		ruins_availible[R] = R.placement_weight
-	while(budget > 0 && (ruins_availible.len || forced_ruins.len))
+		ruins_available[R] = R.placement_weight
+	while(budget > 0 && (ruins_available.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z	//If set we won't pick z level and use this one instead.
@@ -95,8 +101,8 @@
 				forced = TRUE
 				break
 		else //Otherwise just pick random one
-			current_pick = pickweight(ruins_availible)
-		
+			current_pick = pickweight(ruins_available)
+
 		var/placement_tries = forced_turf ? 1 : PLACEMENT_TRIES //Only try once if we target specific turf
 		var/failed_to_place = TRUE
 		var/target_z = 0
@@ -131,21 +137,21 @@
 			forced = FALSE
 
 		if(failed_to_place)
-			for(var/datum/map_template/ruin/R in ruins_availible)
+			for(var/datum/map_template/ruin/R in ruins_available)
 				if(R.id == current_pick.id)
-					ruins_availible -= R
+					ruins_available -= R
 			log_world("Failed to place [current_pick.name] ruin.")
 		else
 			budget -= current_pick.cost
 			if(!current_pick.allow_duplicates)
-				for(var/datum/map_template/ruin/R in ruins_availible)
+				for(var/datum/map_template/ruin/R in ruins_available)
 					if(R.id == current_pick.id)
-						ruins_availible -= R
+						ruins_available -= R
 			if(current_pick.never_spawn_with)
 				for(var/blacklisted_type in current_pick.never_spawn_with)
-					for(var/possible_exclusion in ruins_availible)
+					for(var/possible_exclusion in ruins_available)
 						if(istype(possible_exclusion,blacklisted_type))
-							ruins_availible -= possible_exclusion
+							ruins_available -= possible_exclusion
 			if(current_pick.always_spawn_with)
 				for(var/v in current_pick.always_spawn_with)
 					for(var/ruin_name in SSmapping.ruins_templates) //Because we might want to add space templates as linked of lava templates.
@@ -165,9 +171,9 @@
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 
-		//Update the availible list
-		for(var/datum/map_template/ruin/R in ruins_availible)
+		//Update the available list
+		for(var/datum/map_template/ruin/R in ruins_available)
 			if(R.cost > budget)
-				ruins_availible -= R
-	
+				ruins_available -= R
+
 	log_world("Ruin loader finished with [budget] left to spend.")

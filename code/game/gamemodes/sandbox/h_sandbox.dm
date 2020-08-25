@@ -1,7 +1,7 @@
 GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /mob/proc/CanBuild()
-	sandbox = new/datum/hSB
+	sandbox = new/datum/h_sandbox
 	sandbox.owner = src.ckey
 	if(src.client.holder)
 		sandbox.admin = 1
@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	if(sandbox)
 		sandbox.update()
 
-/datum/hSB
+/datum/h_sandbox
 	var/owner = null
 	var/admin = 0
 
@@ -24,10 +24,10 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
-		/obj/item/smallDelivery, /obj/projectile,
+		/obj/item/small_delivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
 
-/datum/hSB/proc/update()
+/datum/h_sandbox/proc/update()
 	var/static/list/hrefs = list(
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
-/datum/hSB/Topic(href, href_list)
+/datum/h_sandbox/Topic(href, href_list)
 	if(!usr || !src || !(src.owner == usr.ckey))
 		if(usr)
 			usr << browse(null,"window=sandbox")

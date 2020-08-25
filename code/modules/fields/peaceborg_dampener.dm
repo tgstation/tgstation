@@ -21,10 +21,10 @@
 	var/list/obj/projectile/staging
 	use_host_turf = TRUE
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/New()
+/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	tracked = list()
 	staging = list()
-	..()
+	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
 	return ..()

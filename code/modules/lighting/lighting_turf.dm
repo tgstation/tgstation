@@ -1,14 +1,3 @@
-/turf
-	var/dynamic_lighting = TRUE
-	luminosity           = 1
-
-	var/tmp/lighting_corners_initialised = FALSE
-
-	var/tmp/list/datum/light_source/affecting_lights       // List of light sources affecting this turf.
-	var/tmp/atom/movable/lighting_object/lighting_object // Our lighting object.
-	var/tmp/list/datum/lighting_corner/corners
-	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
-
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
 	var/datum/light_source/L
@@ -74,6 +63,8 @@
 
 	totallums = (totallums - minlum) / (maxlum - minlum)
 
+	totallums += dynamic_lumcount
+
 	return CLAMP01(totallums)
 
 // Returns a boolean whether the turf is on soft lighting.
@@ -86,21 +77,42 @@
 
 	return !lighting_object.luminosity
 
-// Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
-/turf/proc/recalc_atom_opacity()
-	has_opaque_atom = opacity
-	if (!has_opaque_atom)
-		for (var/atom/A in src.contents) // Loop through every movable atom on our tile PLUS ourselves (we matter too...)
-			if (A.opacity)
-				has_opaque_atom = TRUE
-				break
 
-/turf/Exited(atom/movable/Obj, atom/newloc)
-	. = ..()
+///Proc to add movable sources of opacity on the turf and let it handle lighting code.
+/turf/proc/add_opacity_source(atom/movable/new_source)
+	LAZYADD(opacity_sources, new_source)
+	if(opacity)
+		return
+	recalculate_directional_opacity()
 
-	if (Obj && Obj.opacity)
-		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
-		reconsider_lights()
+
+///Proc to remove movable sources of opacity on the turf and let it handle lighting code.
+/turf/proc/remove_opacity_source(atom/movable/old_source)
+	LAZYREMOVE(opacity_sources, old_source)
+	if(opacity) //Still opaque, no need to worry on updating.
+		return
+	recalculate_directional_opacity()
+
+
+///Calculate on which directions this turfs block view.
+/turf/proc/recalculate_directional_opacity()
+	. = directional_opacity
+	if(opacity)
+		directional_opacity = ALL_CARDINALS
+		if(. != directional_opacity)
+			reconsider_lights()
+		return
+	directional_opacity = NONE
+	for(var/am in opacity_sources)
+		var/atom/movable/opacity_source = am
+		if(opacity_source.flags_1 & ON_BORDER_1)
+			directional_opacity |= opacity_source.dir
+		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
+			directional_opacity = ALL_CARDINALS
+			break
+	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
+		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
+
 
 /turf/proc/change_area(area/old_area, area/new_area)
 	if(SSlighting.initialized)
@@ -109,16 +121,6 @@
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
-
-/turf/proc/get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return null
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-	if (has_opaque_atom)
-		return null // Since this proc gets used in a for loop, null won't be looped though.
-
-	return corners
 
 /turf/proc/generate_missing_corners()
 	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
@@ -132,5 +134,3 @@
 			continue
 
 		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])
-
-

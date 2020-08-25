@@ -32,8 +32,9 @@ SUBSYSTEM_DEF(idlenpcpool)
 	while(currentrun.len)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
-		if (!SA)
+		if (QDELETED(SA))
 			GLOB.simple_animals[AI_IDLE] -= SA
+			log_world("Found a null in simple_animals list!")
 			continue
 
 		if(!SA.ckey)

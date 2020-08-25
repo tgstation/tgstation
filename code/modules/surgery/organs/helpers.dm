@@ -17,10 +17,10 @@
 /mob/proc/getorganszone(zone)
 	return
 /**
-  * Get an organ relating to a specific slot
+  * Returns a list of all organs in specified slot
   *
   * Arguments:
-  * * slot Slot to get the organ from
+  * * slot Slot to get the organs from
   */
 /mob/proc/getorganslot(slot)
 	return

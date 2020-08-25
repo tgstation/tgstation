@@ -16,9 +16,8 @@ Buildable meters
 	throwforce = 7
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
-	item_state = "buildpipe"
+	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
-	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
 
@@ -120,7 +119,7 @@ Buildable meters
 
 /obj/item/pipe/trinary/flippable/fixed_dir()
 	. = dir
-	if(dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(dir))
 		. = turn(dir, 45)
 
 /obj/item/pipe/attack_self(mob/user)
@@ -192,7 +191,7 @@ Buildable meters
 	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
-	item_state = "buildpipe"
+	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 

@@ -9,7 +9,7 @@
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
@@ -104,6 +104,9 @@
 					var/obj/structure/falsewall/F = new (loc)
 					transfer_fingerprints_to(F)
 					qdel(src)
+			else if(state == GIRDER_REINF)
+				to_chat(user, "<span class='warning'>You can't finish a reinforced girder with regular metal. You need a plasteel sheet for that.</span>")
+				return
 			else
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
@@ -134,38 +137,41 @@
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
+			else if(state == GIRDER_REINF)
+				if(S.get_amount() < 1)
+					return
+				to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
+				if(do_after(user, 50*platingmodifier, target = src))
+					if(S.get_amount() < 1)
+						return
+					S.use(1)
+					to_chat(user, "<span class='notice'>You fully reinforce the wall.</span>")
+					var/turf/T = get_turf(src)
+					T.PlaceOnTop(/turf/closed/wall/r_wall)
+					transfer_fingerprints_to(T)
+					qdel(src)
+				return
 			else
-				if(state == GIRDER_REINF)
+				if(S.get_amount() < 1)
+					return
+				to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
+				if(do_after(user, 60*platingmodifier, target = src))
 					if(S.get_amount() < 1)
 						return
-					to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
-					if(do_after(user, 50*platingmodifier, target = src))
-						if(S.get_amount() < 1)
-							return
-						S.use(1)
-						to_chat(user, "<span class='notice'>You fully reinforce the wall.</span>")
-						var/turf/T = get_turf(src)
-						T.PlaceOnTop(/turf/closed/wall/r_wall)
-						transfer_fingerprints_to(T)
-						qdel(src)
-					return
-				else
-					if(S.get_amount() < 1)
-						return
-					to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
-					if(do_after(user, 60*platingmodifier, target = src))
-						if(S.get_amount() < 1)
-							return
-						S.use(1)
-						to_chat(user, "<span class='notice'>You reinforce the girder.</span>")
-						var/obj/structure/girder/reinforced/R = new (loc)
-						transfer_fingerprints_to(R)
-						qdel(src)
-					return
+					S.use(1)
+					to_chat(user, "<span class='notice'>You reinforce the girder.</span>")
+					var/obj/structure/girder/reinforced/R = new (loc)
+					transfer_fingerprints_to(R)
+					qdel(src)
+				return
 
-		if(S.sheettype && S.sheettype != "runed")
+		if(S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
+				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
+				if(!falsewall_type)
+					to_chat(user, "<span class='warning'>You can't seem to figure out how to make a false wall with [S]!</span>")
+					return
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
 					return
@@ -174,8 +180,7 @@
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>")
-					var/F = text2path("/obj/structure/falsewall/[M]")
-					var/obj/structure/FW = new F (loc)
+					var/obj/structure/falsewall/FW = new falsewall_type (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 			else
@@ -189,7 +194,16 @@
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(text2path("/turf/closed/wall/mineral/[M]"))
+					if(S.walltype)
+						T.PlaceOnTop(S.walltype)
+					else
+						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
+						var/list/material_list = list()
+						if(S.material_type)
+							material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							newturf.set_custom_materials(material_list)
+
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -285,7 +299,7 @@
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSGRILLE)
 

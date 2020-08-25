@@ -439,13 +439,13 @@
 		update_body()
 	else
 		ADD_TRAIT(src, TRAIT_HUSK, source)
-	
+
 /mob/living/proc/cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
 	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, source)
 	if(stat != DEAD)
 		tod = null
-	update_stat()
+
 
 /mob/living/proc/fakedeath(source, silent = FALSE)
 	if(stat == DEAD)
@@ -455,12 +455,62 @@
 	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
 	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
 	tod = station_time_timestamp()
-	update_stat()
 
+
+///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
 	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
 
+///Ignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/ignore_slowdown(source)
 	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
+
+///Ignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/add_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYADDASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYADDASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()
+
+///Unignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/remove_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYREMOVEASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()
+
+/// Gets the amount of confusion on the mob.
+/mob/living/proc/get_confusion()
+	var/datum/status_effect/confusion/confusion = has_status_effect(STATUS_EFFECT_CONFUSION)
+	return confusion ? confusion.strength : 0
+
+/// Set the confusion of the mob. Confusion will make the mob walk randomly.
+/mob/living/proc/set_confusion(new_confusion)
+	new_confusion = max(new_confusion, 0)
+
+	if (new_confusion)
+		var/datum/status_effect/confusion/confusion_status = has_status_effect(STATUS_EFFECT_CONFUSION) || apply_status_effect(STATUS_EFFECT_CONFUSION)
+		confusion_status.set_strength(new_confusion)
+	else
+		remove_status_effect(STATUS_EFFECT_CONFUSION)
+
+/// Add confusion to the mob. Confusion will make the mob walk randomly.
+/// Shorthand for set_confusion(confusion + x).
+/mob/living/proc/add_confusion(confusion_to_add)
+	set_confusion(get_confusion() + confusion_to_add)

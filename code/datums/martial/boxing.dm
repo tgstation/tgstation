@@ -27,7 +27,7 @@
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/armor_block = D.run_armor_check(affecting, MELEE)
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, TRUE, -1)
 
@@ -45,10 +45,7 @@
 			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")
 			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(100)
-			D.forcesay(GLOB.hit_appends)
 			log_combat(A, D, "knocked out (boxing) ")
-		else if(!(D.mobility_flags & MOBILITY_STAND))
-			D.forcesay(GLOB.hit_appends)
 	return 1
 
 /obj/item/clothing/gloves/boxing

@@ -1,24 +1,25 @@
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
-		return 0
+		return FALSE
 	if(!(lube&SLIDE_ICE))
 		log_combat(src, (O ? O : get_turf(src)), "slipped on the", null, ((lube & SLIDE) ? "(LUBE)" : null))
 	return loc.handle_slip(src, knockdown_amount, O, lube, paralyze, force_drop)
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
 	if(!isturf(loc))
-		return 0
+		return FALSE
 
 	// Do we have a jetpack implant (and is it on)?
 	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot(ORGAN_SLOT_THRUSTERS)
-	if(istype(T) && movement_dir && T.allow_thrust(0.01))
-		return 1
+	if(istype(T) && movement_dir && T.on)
+		return TRUE
 
 	var/obj/item/tank/jetpack/J = get_jetpack()
-	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
-		return 1
+	if(istype(J) && (movement_dir || J.stabilizers) && J.on)
+		return TRUE
+
+	if(..())
+		return TRUE
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
@@ -29,3 +30,43 @@
 			adjust_nutrition(-(HUNGER_FACTOR/10))
 			if(m_intent == MOVE_INTENT_RUN)
 				adjust_nutrition(-(HUNGER_FACTOR/10))
+
+
+/mob/living/carbon/set_usable_legs(new_value)
+	. = ..()
+	if(isnull(.))
+		return
+	if(. == 0)
+		if(usable_legs != 0) //From having no usable legs to having some.
+			REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	else if(usable_legs == 0 && !(movement_type & (FLYING | FLOATING))) //From having usable legs to no longer having them.
+		ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		if(!usable_hands)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+
+
+/mob/living/carbon/set_usable_hands(new_value)
+	. = ..()
+	if(isnull(.))
+		return
+	if(. == 0)
+		if(usable_hands != 0) //From having no usable hands to having some.
+			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	else if(usable_hands == 0) //From having usable hands to no longer having them.
+		if(!usable_legs && !(movement_type & (FLYING | FLOATING)))
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+
+
+/mob/living/carbon/setMovetype(newval)
+	. = ..()
+	if(isnull(.))
+		return
+	if(. & !(FLYING | FLOATING))
+		if(movement_type & (FLYING | FLOATING)) //From not flying to flying.
+			REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	else if(!(movement_type & (FLYING | FLOATING)) && !usable_legs) //From flying to no longer flying.
+		ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+		if(!usable_hands)
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)

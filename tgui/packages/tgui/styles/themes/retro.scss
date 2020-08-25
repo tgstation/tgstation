@@ -1,0 +1,56 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #000000,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #E8E4C9,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0,
+);
+
+// A fat warning to anyone who wants to use this: this only half works.
+// It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
+.theme-retro {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': #E8E4C9,
+    'color-disabled': #363636,
+    'color-selected': #9d0808,
+    'color-caution': #be6209,
+    'color-danger': #9a9d00,
+  ));
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'background-color': rgba(0, 0, 0, 0.5),
+  ));
+  @include meta.load-css('../components/Section.scss');
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #585337,
+  ));
+
+  .Button {
+    font-family: monospace;
+    color: #161613;
+    border: base.em(2px) outset #E8E4C9;
+    outline: base.em(1px) solid #161613;
+  }
+
+  .Layout__content {
+    background-image: none;
+  }
+}

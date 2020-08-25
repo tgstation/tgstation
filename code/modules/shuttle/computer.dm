@@ -33,7 +33,6 @@
 
 	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/shuttle/Topic(href, href_list)
@@ -58,8 +57,8 @@
 				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
 		if(!(href_list["move"] in params2list(possible_destinations)))
-			log_admin("[usr] attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
-			message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
+			log_admin("[usr] attempted to forge a target location through a href exploit on [src] with target location \"[href_list["move"]]\"")
+			message_admins("[ADMIN_FULLMONTY(usr)] attempted to forge a target location through a href exploit on [src]")
 			return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)

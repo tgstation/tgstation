@@ -26,7 +26,7 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desceration" ,50, TRUE, -1)
+				playsound(loc, "desecration" ,50, TRUE, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -113,6 +113,12 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 
+/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
+	if(burn_paper_product_attackby_check(I, user))
+		return
+	return ..()
+
+
 /obj/item/paperslip/Initialize()
 	. = ..()
 	pixel_x = rand(-5, 5)
@@ -124,6 +130,6 @@
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "cutterblade"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

@@ -17,9 +17,11 @@
 #define ROLE_ALIEN				"Xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"Cultist"
+#define ROLE_HERETIC			"Heretic"
 #define ROLE_BLOB				"Blob"
 #define ROLE_NINJA				"Space Ninja"
 #define ROLE_MONKEY				"Monkey"
+#define ROLE_MONKEY_HELMET		"Monkey Mind Magnification Helmet"
 #define ROLE_ABDUCTOR			"Abductor"
 #define ROLE_REVENANT			"Revenant"
 #define ROLE_DEVIL				"Devil"
@@ -28,13 +30,18 @@
 #define ROLE_OVERTHROW			"Syndicate Mutineer"		//Role removed, left here for safety.
 #define ROLE_HIVE				"Hivemind Host"				//Role removed, left here for safety.
 #define ROLE_OBSESSED				"Obsessed"
+#define ROLE_SPACE_DRAGON		"Space Dragon"
 #define ROLE_SENTIENCE			"Sentience Potion Spawn"
+#define ROLE_PYROCLASTIC_SLIME 	"Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER		"Mind Transfer Potion"
 #define ROLE_POSIBRAIN			"Posibrain"
 #define ROLE_DRONE				"Drone"
 #define ROLE_DEATHSQUAD			"Deathsquad"
 #define ROLE_LAVALAND			"Lavaland"
 #define ROLE_INTERNAL_AFFAIRS	"Internal Affairs Agent"
+#define ROLE_FAMILIES			"Familes Antagonists"
+#define ROLE_SYNDICATE_CYBERSUN			"Cybersun Space Syndicate"		//Ghost role syndi from Forgottenship ruin
+#define ROLE_SYNDICATE_CYBERSUN_CAPTAIN	"Cybersun Space Syndicate Captain"		//Forgottenship captain syndie
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -53,12 +60,15 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_OBSESSED,
+	ROLE_SPACE_DRAGON,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
-	ROLE_SENTIENCE
+	ROLE_SENTIENCE,
+	ROLE_FAMILIES = /datum/game_mode/gang,
+	ROLE_HERETIC = /datum/game_mode/heretics
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

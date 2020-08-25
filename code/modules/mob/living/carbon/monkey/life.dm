@@ -50,7 +50,7 @@
 	return ..()
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
-	if(abs(BODYTEMP_NORMAL - breath.temperature) > 50)
+	if(abs(get_body_temp_normal() - breath.temperature) > 50)
 		switch(breath.temperature)
 			if(-INFINITY to 120)
 				adjustFireLoss(3)
@@ -69,7 +69,7 @@
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the enviroment and natural stabilization
+	// this balances body temp to the environment and natural stabilization
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))

@@ -25,7 +25,7 @@
 	lock_override = NONE
 	shuttlePortId = "whiteship_custom"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1)
-	view_range = 18
+	view_range = 10
 	x_offset = -6
 	y_offset = -10
 	designate_time = 100
@@ -36,7 +36,7 @@
 	shuttleId = "whiteship_pod"
 	shuttlePortId = "whiteship_pod_custom"
 	jumpto_ports = list("whiteship_pod_home" = 1)
-	view_range = 7
+	view_range = 0
 	x_offset = -2
 	y_offset = 0
 	designate_time = 0

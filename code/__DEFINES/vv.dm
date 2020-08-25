@@ -75,6 +75,7 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
+#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
@@ -82,6 +83,7 @@
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
+#define VV_HK_RADIATE "radiate"
 
 // /obj
 #define VV_HK_OSAY "osay"
@@ -124,3 +126,6 @@
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"
+
+// paintings
+#define VV_HK_REMOVE_PAINTING "remove_painting"

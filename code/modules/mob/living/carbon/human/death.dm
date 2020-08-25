@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-h")
 
@@ -28,7 +29,9 @@
 
 	dizziness = 0
 	jitteriness = 0
-
+	if(client && !suiciding && !(client in GLOB.dead_players_during_shift))
+		GLOB.dead_players_during_shift += client
+		GLOB.deaths_during_shift++
 	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		if(M.occupant == src)

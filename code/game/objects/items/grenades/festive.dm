@@ -30,9 +30,10 @@
 	force = 6
 	hitsound = 'sound/items/welder.ogg'
 	name = "lit [initial(name)]"
-	attack_verb = list("burnt")
+	attack_verb_continuous = list("burns")
+	attack_verb_simple = list("burn")
 	set_light(l_range = 2, l_power = 2)
-	damtype = "fire"
+	damtype = BURN
 	START_PROCESSING(SSobj, src)
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_icon()
@@ -65,7 +66,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "flare"
+	inhand_icon_state = "flare"
 	throw_speed = 3
 	throw_range = 7
 	det_time = 30
@@ -84,19 +85,19 @@
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
 	prime()
 
-obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
+/obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 	if(active)
 		return
 	if(det_time)
 		det_time -= 10
-		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].")
+		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].</span>")
 		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
 		icon_state = initial(icon_state) + "_[det_time]"
 		update_icon()
 	else
-		to_chat(user, "<span class='danger'>You've already removed all of the fuse!")
+		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
 
-obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
+/obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T)
 	if(user)
@@ -108,7 +109,8 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 	icon_state = initial(icon_state) + "_active"
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/firecracker/prime()
+/obj/item/grenade/firecracker/prime(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)
 	qdel(src)

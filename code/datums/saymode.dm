@@ -86,7 +86,7 @@
 	return FALSE
 
 
-/datum/saymode/binary //everything that uses .b (silicons, drones, blobbernauts/spores, swarmers)
+/datum/saymode/binary //everything that uses .b (silicons, drones, swarmers)
 	key = MODE_KEY_BINARY
 	mode = MODE_BINARY
 
@@ -94,10 +94,6 @@
 	if(isswarmer(user))
 		var/mob/living/simple_animal/hostile/swarmer/S = user
 		S.swarmer_chat(message)
-		return FALSE
-	if(isblobmonster(user))
-		var/mob/living/simple_animal/hostile/blob/B = user
-		B.blob_chat(message)
 		return FALSE
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
@@ -141,3 +137,14 @@
 			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
 				to_chat(M, msg)
 		return FALSE
+
+/datum/saymode/mafia
+	key = "j"
+
+/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
+	var/datum/mafia_controller/MF = GLOB.mafia_game
+	var/datum/mafia_role/R = MF.player_role_lookup[user]
+	if(!R || R.team != "mafia")
+		return TRUE
+	MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>","mafia")
+	return FALSE

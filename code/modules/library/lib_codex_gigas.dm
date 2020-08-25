@@ -71,7 +71,7 @@
 		return FALSE
 	if(action == "search")
 		SStgui.close_uis(src)
-		addtimer(CALLBACK(src, .proc/perform_research, usr, currentName), 0)
+		INVOKE_ASYNC(src, .proc/perform_research, usr, currentName)
 		currentName = ""
 		currentSection = PRE_TITLE
 		return FALSE
@@ -91,11 +91,10 @@
 		currentSection = SUFFIX
 	return currentSection != oldSection
 
-/obj/item/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/book/codex_gigas/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "codex_gigas", name, 450, 450, master_ui, state)
+		ui = new(user, src, "CodexGigas", name)
 		ui.open()
 
 /obj/item/book/codex_gigas/ui_data(mob/user)
