@@ -1350,6 +1350,7 @@
 /area/shuttle/shipstation)
 "kp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
+/obj/effect/landmark/start/chaplain,
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "kH" = (
@@ -2087,7 +2088,6 @@
 	pixel_x = -26;
 	req_access_txt = "27"
 	},
-/obj/structure/closet/crate/coffin,
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "tM" = (
@@ -2108,7 +2108,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "tN" = (
-/obj/effect/landmark/start/chaplain,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
 "uh" = (
