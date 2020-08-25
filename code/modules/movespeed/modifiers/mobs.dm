@@ -111,3 +111,7 @@
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
 	flags = IGNORE_NOSLOW
+
+/datum/movespeed_modifier/minebot_speedupgrade  //Fulp-exclusive
+	variable = TRUE
+	multiplicative_slowdown = -1

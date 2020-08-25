@@ -52,6 +52,9 @@
 		new /datum/data/mining_equipment("Minebot Melee Upgrade",		/obj/item/mine_bot_upgrade,											400),
 		new /datum/data/mining_equipment("Minebot Armor Upgrade",		/obj/item/mine_bot_upgrade/health,									400),
 		new /datum/data/mining_equipment("Minebot Cooldown Upgrade",	/obj/item/borg/upgrade/modkit/cooldown/minebot,						600),
+		new /datum/data/mining_equipment("Minebot Lava-Proofing Upgrade",	/obj/item/mine_bot_upgrade/lavaproof,				     		750), //Fulp
+		new /datum/data/mining_equipment("Minebot Speed Upgrade",		/obj/item/mine_bot_upgrade/speed,									750), //Fulp
+		new /datum/data/mining_equipment("Minebot Renaming Board",	 	/obj/item/mine_bot_upgrade/renaming,								200), //Fulp
 		new /datum/data/mining_equipment("Minebot AI Upgrade",			/obj/item/slimepotion/slime/sentience/mining,						1000),
 		new /datum/data/mining_equipment("KA Minebot Passthrough",		/obj/item/borg/upgrade/modkit/minebot_passthrough,					100),
 		new /datum/data/mining_equipment("KA White Tracer Rounds",		/obj/item/borg/upgrade/modkit/tracer,								100),

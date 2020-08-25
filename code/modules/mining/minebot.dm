@@ -3,7 +3,7 @@
 #define MINEDRONE_ATTACK 2
 
 /mob/living/simple_animal/hostile/mining_drone
-	name = "\improper Nanotrasen minebot"
+	name = "Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
 	icon = 'icons/mob/aibots.dmi'
@@ -12,9 +12,11 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
+	weather_immunities = list("ash")  //Now, Minebots are ash-proof! This can be overridden by the Lava-Proof Upgrade, which adds Lava immunity. Fulp
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	maxbodytemp = INFINITY
 	move_to_delay = 10
 	health = 125
 	maxHealth = 125
@@ -31,16 +33,21 @@
 	speak_emote = list("states")
 	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
 						  /obj/item/stack/ore/plasma, /obj/item/stack/ore/uranium, /obj/item/stack/ore/iron,
-						  /obj/item/stack/ore/bananium, /obj/item/stack/ore/titanium)
+						  /obj/item/stack/ore/bananium, /obj/item/stack/ore/titanium, /obj/item/stack/ore/bluespace_crystal)
 	healable = 0
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
+	var/lava_proof = 0  //For the Lava-Proofing upgrade. I know it's a bit hacky, but it's the only way I managed to make it work. More details below. Fulp
+	var/gpstag = "Nanotrasen Minebot"  //Minebots now appear on the GPS! Fulp
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
+	name = "[name] #[rand(1,999)]"
+	gpstag = name
+	AddComponent(/datum/component/gps, gpstag)  //Gives a GPS signal to the Minebot! Fulp
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
@@ -112,7 +119,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/death()
-	DropOre(0)
+	DropOre()
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/M in stored_gun.modkits)
 			M.uninstall(stored_gun)
@@ -279,10 +286,11 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		to_chat(user, "<span class='warning'>[src] already has a combat upgrade installed!</span>")
+		to_chat(user, "<span class='warning'>[M] already has a combat upgrade installed!</span>")
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
+	to_chat(user, "<span class='notice'>You apply the combat upgrade on [M].</span>")
 	qdel(src)
 
 //Health
@@ -292,11 +300,75 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
-		to_chat(user, "<span class='warning'>[src] already has reinforced armor!</span>")
+		to_chat(user, "<span class='warning'>[M] already has reinforced armor!</span>")
 		return
 	M.maxHealth += 45
 	M.updatehealth()
+	to_chat(user, "<span class='notice'>You apply the reinforced armor on [M].</span>")
 	qdel(src)
+
+//Lava-Proofing  --  Fulp-Exclusive
+
+/obj/item/mine_bot_upgrade/lavaproof
+	name = "minebot lava-proofing upgrade"
+
+/obj/item/mine_bot_upgrade/lavaproof/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if (M.lava_proof != 0)  //I know this is a bit hacky, but I've tried to use the same technique as the other upgrades, and it somehow just didn't want to work. I've tried several methods, but this is the only one that doesn't accept the upgrade twice. Might have to do with the fact that it's a list in weather_immunities.
+		to_chat(user, "<span class='warning'>[M] already has lava-proof plating installed!</span>")
+		return
+	M.weather_immunities = list("lava", "ash")
+	M.lava_proof = 1  //Should be pretty straight-forward.
+	to_chat(user, "<span class='notice'>You apply the lava-proof plating on [M].</span>")
+	qdel(src)
+
+//Speed  --  Fulp-exclusive
+
+/obj/item/mine_bot_upgrade/speed
+	name = "minebot speed upgrade"
+
+/obj/item/mine_bot_upgrade/speed/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	if(M.cached_multiplicative_slowdown != 3)  //Checks for the current slowdown of the Minebot, to see if it's not different from the default value, which is 3.
+		to_chat(user, "<span class='warning'>[M] already has a speed upgrade installed!</span>")
+		return
+	M.add_movespeed_modifier(/datum/movespeed_modifier/minebot_speedupgrade)  //This makes it so a normal miner would still go twice as fast, but this would still be a significant speed upgrade for the Minebots, going from a slowdown of 3 to a slowdown of 2.
+	to_chat(user, "<span class='notice'>You apply the speed upgrade on [M].</span>")
+	qdel(src)
+
+//Name Change  -- Fulp-exclusive
+
+/obj/item/mine_bot_upgrade/renaming
+	name = "minebot renaming board"
+	desc = "A Minebot upgrade that allows you to rename your Minebot!"
+	icon_state = "door_electronics"
+	icon = 'icons/obj/module.dmi'
+
+	var/being_used = FALSE
+
+/obj/item/mine_bot_upgrade/renaming/attack(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+	. = ..()
+	if(being_used || !istype(M, /mob/living/simple_animal/hostile/mining_drone))
+		return
+	being_used = TRUE
+
+	to_chat(user, "<span class='notice'>You start changing your Minebot's name...</span>")
+
+	var/new_name = stripped_input(user, "What would you like your Minebot's new name to be?", "Input a name", M.real_name, MAX_NAME_LEN)
+
+	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name || !M.Adjacent(user))
+		being_used = FALSE
+		return
+
+	M.visible_message("<span class='notice'><span class='name'>[M]</span> has a new name, <span class='name'>[new_name]</span>.</span>", "<span class='notice'>Your old name of <span class='name'>[M.real_name]</span> fades away, and your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
+	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], renaming them into [new_name].")
+	M.GetComponent(/datum/component/gps, M.gpstag)
+	M.gpstag = "[new_name] - Minebot"  //For some reason, this doesn't update the name in the GPS list, neither does it change anything when I check the variables in-game. Weird. I'll try to figure out a way to fix this eventually, will probably have to be in another PR if nobody helps me out with it.
+
+	// pass null as first arg to not update records or ID/PDA
+	M.fully_replace_character_name(null, new_name)
+
+	qdel(src)
+
+//Hopefully people will be happy with these new upgrades - GoldenAlpharex, 08/06/2020 (06/08/2020 if you're an American) 
 
 //AI
 
