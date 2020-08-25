@@ -23,7 +23,9 @@
 
 	var/obj/item/trash_item = new trash()
 
-	var/mob/living/mob_location = edible_component.parent.loc //The foods location
+	var/atom/edible_object = edible_component.parent
+
+	var/mob/living/mob_location = edible_object.loc //The foods location
 
 	if(istype(mob_location))
 		mob_location.put_in_hands(trash_item)

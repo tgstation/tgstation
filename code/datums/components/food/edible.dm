@@ -274,7 +274,6 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
 	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
-	var/atom/owner = parent
 	on_consume?.Invoke(eater, feeder)
 
 	if(isturf(parent))
