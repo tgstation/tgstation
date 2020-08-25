@@ -389,10 +389,10 @@
 							/datum/reagent/clf3 = 1)//since this is also chemistry it's worth near nothing
 
 	suppressive_reagents = list(//generics you would regularly put in a vat kill abberant residue
-						/datum/reagent/consumable/nutriment/peptides = -10
-						/datum/reagent/consumable/nutriment/protein = -5,
-						/datum/reagent/consumable/nutriment = -4
-						/datum/reagent/liquidgibs = -3,
+						/datum/reagent/consumable/nutriment/peptides = -6,
+						/datum/reagent/consumable/nutriment/protein = -4,
+						/datum/reagent/consumable/nutriment = -3,
+						/datum/reagent/liquidgibs = -2
 						)
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/netherworld = 1)
