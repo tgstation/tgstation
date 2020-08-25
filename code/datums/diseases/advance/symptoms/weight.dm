@@ -48,6 +48,6 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
 		else
-			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food. But not literally. Like, you're so hungry you WOULD kill someone for a bite of food, but you won't. Because that's wrong.", "Hunger cramps seize you...")]</i></span>")
 			M.overeatduration = max(M.overeatduration - 100, 0)
 			M.adjust_nutrition(-100)
