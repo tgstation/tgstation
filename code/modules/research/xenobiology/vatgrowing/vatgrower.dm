@@ -14,7 +14,7 @@
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/plumbing/growing_vat/process()
-	if(!is_operational())
+	if(!is_operational
 		return
 	if(!biological_sample)
 		return
