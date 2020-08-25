@@ -190,21 +190,21 @@
 
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(isethereal(AM))
+		if(isethereal(L))
 			AM.emp_act(EMP_LIGHT)
 
-		else if(iscyborg(AM))
-			var/mob/living/silicon/robot/borg = AM
+		else if(iscyborg(L))
+			var/mob/living/silicon/robot/borg = L
 			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-		else if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
+		else if(ishuman(L))
+			var/mob/living/carbon/human/H = L
 			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
 				light_item_check(O, H)
 		else
-			for(var/obj/item/O in AM.GetAllContents())
-				light_item_check(O, AM)
+			for(var/obj/item/O in L.GetAllContents())
+				light_item_check(O, L)
 		if(L.pulling)
 			light_item_check(L.pulling, L.pulling)
 
@@ -220,8 +220,8 @@
 		M.set_light(-M.lights_power)
 		if(M.occupant)
 			M.lights_action.Remove(M.occupant)
-		for(var/obj/item/O in AM.GetAllContents())
-			light_item_check(O, AM)
+		for(var/obj/item/O in M.GetAllContents())
+			light_item_check(O, M)
 
 	else if(istype(AM, /obj/machinery/light))
 		var/obj/machinery/light/L = AM
@@ -229,14 +229,14 @@
 			return
 		disintegrate(L.drop_light_tube(), L)
 
-
+///checks if the item has an active light, and destroy the light source if it does.
 /obj/item/light_eater/proc/light_item_check(obj/item/I, atom/A)
 	if(!isitem(I))
 		return
 	if(I.light_range && I.light_power)
 		disintegrate(I, A)
 	else if(istype(I, /obj/item/gun))
-		var/obj/item/gun/G = AM
+		var/obj/item/gun/G = I
 		if(G.gun_light?.on)
 			disintegrate(G.gun_light, A)
 	else if(istype(I, /obj/item/clothing/head/helmet))
