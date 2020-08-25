@@ -30,7 +30,7 @@
 	mind.active = TRUE
 
 	var/mob/living/carbon/human/devil = create_event_devil()
-	Mind.transfer_to(devil)
+	mind.transfer_to(devil)
 	add_devil(devil, ascendable = FALSE)
 
 	spawned_mobs += devil
