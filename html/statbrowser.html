@@ -7,7 +7,7 @@
 <style>
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: 13px !important;
+	font-size: 12px !important;
 	margin: 5px !important;
 	padding: 2px !important;
 }
@@ -25,7 +25,6 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #333;
 }
 
@@ -65,9 +64,7 @@ li a:hover:not(.active) {
   padding: 7px 14px;
   text-align: center;
   text-decoration: none;
-  position: sticky;
-  top: 0;
-  font-size: 13px;
+  font-size: 12px;
   margin: 2px 2px;
   cursor: pointer;
   border-radius: 10%;
@@ -294,7 +291,6 @@ function verbs_cat_check(cat) {
 	if(!verbs){
 		for(let m = 0; m < verb_tabs.length; m++){
 			verbcat = verb_tabs[m];
-			verb_tabs.pop(verbcat);
 			removeStatusTab(verbcat);
 		}
 		return;
@@ -305,10 +301,10 @@ function verbs_cat_check(cat) {
 		if(verbcat != cat) continue;
 		if(verbcat == cat){
 			verbs_in_cat++;
+			break; // we only need one
 		}
 	}
 	if(verbs_in_cat < 1) {
-		verb_tabs.pop(cat);
 		removeStatusTab(cat);
 		if(current_tab == cat)
 			tab_change("Status");
@@ -334,8 +330,8 @@ function add_verb_list(v) {
 		}
 		} else if(part[0]) {
 			verb_tabs.push(part[0]);
-			createStatusTab(part[0]);
 			verbs.push(part);
+			createStatusTab(part[0]);
 		}
 	}
 }
@@ -344,11 +340,7 @@ function remove_verb_list(v) {
 	let to_remove = JSON.parse(v);
 	for(let i = 0; i < to_remove.length; i++) {
 		let part = to_remove[i];
-		if(verb_tabs.includes(part[0])){
-			verbs.pop(part);
-		} else {
-			verbs.pop(part); // its not in a tab, just pop it from our verbs if we had it in there
-		}
+		verbs.pop(part);
 	}
 	check_verbs();
 	verbs.sort();
@@ -711,7 +703,12 @@ function draw_tickets() {
 		let td2 = document.createElement("td");
 		if(part[2]) {
 			let a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket" ;
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
+			a.textContent = part[1];
+			td2.appendChild(a);
+		} else if(part[3]){
+			let a = document.createElement("a");
+			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
