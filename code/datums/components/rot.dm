@@ -38,6 +38,70 @@
 		qdel(src)
 		return
 
+
+	if(C.reagents.has_reagent(/datum/reagent/teslium, 5))
+		C.reagents.remove_reagent(/datum/reagent/teslium, 5)
+		var/total_burn	= 0
+		var/total_brute	= 0
+		var/tplus = world.time - C.timeofdeath	//length of time spent dead
+		var/tlimit = 9000
+		var/obj/item/organ/heart = C.getorgan(/obj/item/organ/heart)
+		var/HALFWAYCRITDEATH = ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+
+
+		C.visible_message("<span class='warning'>[C]'s body convulses a bit.</span>")
+		C.electrocute_act(0, C)
+		playsound(C, "sparks", 50, 1)
+		playsound(C, 'sound/machines/defib_zap.ogg', 75, 1, -1)
+		total_brute	= C.getBruteLoss()
+		total_burn	= C.getFireLoss()
+		if(isliving(C.pulledby))		//CLEAR!
+			var/mob/living/M = C.pulledby
+			if(M.electrocute_act(30, C))
+				M.emote("scream")
+
+		if (C.suiciding)
+			return
+		if (C.hellbound)
+			return
+		if (tplus > tlimit)
+			return
+		if (!heart)
+			return
+		if (heart.organ_flags & ORGAN_FAILING)
+			return
+		if (total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || HAS_TRAIT(C, TRAIT_HUSK))
+			return
+		if(C.get_ghost())
+			return
+
+		var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
+		if(BR)
+			if(BR.organ_flags & ORGAN_FAILING)
+				return
+			if(BR.brain_death)
+				return
+			if(BR.suicided || BR.brainmob?.suiciding)
+				return
+
+		if (C.health > HALFWAYCRITDEATH)
+			C.adjustOxyLoss(C.health - HALFWAYCRITDEATH, 0)
+		else
+			var/overall_damage = total_brute + total_burn + C.getToxLoss() + C.getOxyLoss()
+			var/mobhealth = C.health
+			C.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (C.getOxyLoss() / overall_damage), 0)
+			C.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (C.getToxLoss() / overall_damage), 0)
+			C.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
+			C.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
+		C.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
+		C.set_heartattack(FALSE)
+		C.revive()
+		C.emote("gasp")
+		C.Jitter(100)
+		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
+
+		return
+
 	// Wait a bit before decaying
 	if(world.time - C.timeofdeath < 2 MINUTES)
 		return

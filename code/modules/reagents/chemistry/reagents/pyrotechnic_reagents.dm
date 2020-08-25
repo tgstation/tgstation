@@ -243,11 +243,12 @@
 	var/shock_timer = 0
 
 /datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
-	shock_timer++
-	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
-		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, TRUE)
+	if(M.stat != DEAD)
+		shock_timer++
+		if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
+			shock_timer = 0
+			M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
+			playsound(M, "sparks", 50, TRUE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
