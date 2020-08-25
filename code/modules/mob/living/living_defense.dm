@@ -76,6 +76,10 @@
 	else
 		playsound_local(src, 'sound/misc/ui_toggleoffcombat.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above
 
+///Getter for possibly extending behavior in the future
+/mob/living/proc/in_combat_mode()
+	return combat_mode
+
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))
 		var/obj/item/thrown_item = AM
