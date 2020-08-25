@@ -1268,7 +1268,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			SEND_SOUND(target, 'sound/machines/buzz-sigh.ogg')
 		if(ADMIN_PUNISHMENT_BREAD)
 			var/mutable_appearance/bread_appearance = mutable_appearance('icons/obj/food/burgerbread.dmi',"bread")
-			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=TRUE,reset_after=TRUE)
+			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
+			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
 
 	punish_log(target, punishment)
