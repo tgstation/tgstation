@@ -1,0 +1,4 @@
+author: "Jay Smith & Michael Trauf"
+delete-after: True
+changes: 
+  - balance: "The Portable Chemical Mixer no longer requires an anomaly core."
