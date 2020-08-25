@@ -153,15 +153,17 @@
 /datum/status_effect/wound/blunt/on_remove()
 	. = ..()
 	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
-	var/mob/living/carbon/C = owner
-	C.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+	var/mob/living/carbon/wound_owner = owner
+	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/blunt/proc/on_swap_hands()
-	var/mob/living/carbon/C = owner
-	if(C.get_active_hand() == linked_limb)
-		C.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/wound_owner = owner
+	if(wound_owner.get_active_hand() == linked_limb)
+		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
 	else
-		C.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/blunt/nextmove_modifier()
 	var/mob/living/carbon/C = owner

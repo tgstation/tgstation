@@ -48,13 +48,13 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 /proc/get_cached_actionspeed_modifier(modtype)
 	if(!ispath(modtype, /datum/actionspeed_modifier))
 		CRASH("[modtype] is not a actionspeed modification typepath.")
-	var/datum/actionspeed_modifier/M = modtype
-	if(initial(M.variable))
+	var/datum/actionspeed_modifier/actionspeed_mod = modtype
+	if(initial(actionspeed_mod.variable))
 		CRASH("[modtype] is a variable modifier, and can never be cached.")
-	M = GLOB.actionspeed_modification_cache[modtype]
-	if(!M)
-		M = GLOB.actionspeed_modification_cache[modtype] = new modtype
-	return M
+	actionspeed_mod = GLOB.actionspeed_modification_cache[modtype]
+	if(!actionspeed_mod)
+		actionspeed_mod = GLOB.actionspeed_modification_cache[modtype] = new modtype
+	return actionspeed_mod
 
 ///Add a action speed modifier to a mob. If a variable subtype is passed in as the first argument, it will make a new datum. If ID conflicts, it will overwrite the old ID.
 /mob/proc/add_actionspeed_modifier(datum/actionspeed_modifier/type_or_datum, update = TRUE)
@@ -172,6 +172,4 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 
 /// Checks if a action speed modifier is valid and not missing any data
 /proc/actionspeed_data_null_check(datum/actionspeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.
-	. = TRUE
-	if(M.multiplicative_slowdown)
-		. = FALSE
+	. = !(M.multiplicative_slowdown)
