@@ -174,12 +174,12 @@
 				if(GRAB_NECK)
 					log_combat(user, src, "attempted to strangle", addition="kill grab")
 			if(!do_mob(user, src, grab_upgrade_time))
-				return 0
+				return FALSE
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
-				return 0
+				return FALSE
 			if(user.a_intent != INTENT_GRAB)
 				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
-				return 0
+				return FALSE
 		user.setGrabState(user.grab_state + 1)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
@@ -213,7 +213,7 @@
 				if(!buckled && !density)
 					Move(user.loc)
 		user.set_pull_offsets(src, grab_state)
-		return 1
+		return TRUE
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
@@ -425,7 +425,7 @@
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
-	return 0
+	return FALSE
 
 //to damage the clothes worn by a mob
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)

@@ -158,7 +158,6 @@
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
-	return 0
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)

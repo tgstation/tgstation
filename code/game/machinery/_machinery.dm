@@ -266,12 +266,12 @@ Class Procs:
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
-		return 0
+		return FALSE
 	if(use_power == 1)
 		use_power(idle_power_usage,power_channel)
 	else if(use_power >= 2)
 		use_power(active_power_usage,power_channel)
-	return 1
+	return TRUE
 
 
 ///Called when we want to change the value of the `is_operational` variable. Boolean.
@@ -370,11 +370,11 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 	if(!can_interact(usr))
-		return 1
+		return TRUE
 	if(!usr.canUseTopic(src))
-		return 1
+		return TRUE
 	add_fingerprint(usr)
-	return 0
+	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -513,8 +513,8 @@ Class Procs:
 		I.play_tool_sound(src, 50)
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)

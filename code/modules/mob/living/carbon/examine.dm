@@ -24,9 +24,9 @@
 
 	if (back)
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
-	var/appears_dead = 0
+	var/appears_dead = FALSE
 	if (stat == DEAD)
-		appears_dead = 1
+		appears_dead = TRUE
 		if(getorgan(/obj/item/organ/brain))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
 		else if(get_bodypart(BODY_ZONE_HEAD))

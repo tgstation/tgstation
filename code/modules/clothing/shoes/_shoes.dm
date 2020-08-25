@@ -3,7 +3,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	var/chained = 0
+	var/chained = FALSE
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET

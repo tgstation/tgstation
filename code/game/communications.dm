@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	if(range)
 		start_point = get_turf(source)
 		if(!start_point)
-			return 0
+			return
 
 	//Send the data
 	for(var/current_filter in filter_list)

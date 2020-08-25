@@ -98,7 +98,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = 0
+	set waitfor = FALSE
 	if(moving)
 		return
 

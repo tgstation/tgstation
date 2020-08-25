@@ -91,7 +91,7 @@
 						"The Peacemaker" = "detective_peacemaker",
 						"Black Panther" = "detective_panther"
 						)
-	
+
 	/// Used to avoid some redundancy on a revolver loaded with 357 regarding misfiring while being wrenched.
 	var/skip_357_missfire_check = FALSE
 
@@ -250,7 +250,7 @@
 	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfeit!</span>")
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
-	clumsy_check = 0
+	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) || (user.mind && user.mind.assigned_role == "Clown"))

@@ -149,7 +149,7 @@
 		if((organ_flags & ORGAN_FAILING))
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
-			return 0
+			return FALSE
 		if(allow_thrust(0.01))
 			on = TRUE
 			ion_trail.start()

@@ -789,7 +789,7 @@
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(aiRestorePowerRoutine)

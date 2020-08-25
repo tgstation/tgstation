@@ -141,14 +141,14 @@ All foods are distributed among various categories. Use common sense.
 					return FALSE
 
 				if(!do_mob(user, M))
-					return
+					return FALSE
 				log_combat(user, M, "fed", reagents.log_list())
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
 									"<span class='userdanger'>[user] forces you to eat [src]!</span>")
 
 			else
 				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
-				return
+				return FALSE
 
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
@@ -163,7 +163,7 @@ All foods are distributed among various categories. Use common sense.
 				checkLiked(fraction, M)
 				return TRUE
 
-	return 0
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
@@ -179,29 +179,28 @@ All foods are distributed among various categories. Use common sense.
 				. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/storage))
-		..() // -> item/attackby()
-		return 0
+	if(istype(W, /obj/item/storage))// -> item/attackby()
+		return ..()
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
-				return 0
+				return FALSE
 			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
-				return 0
+				return FALSE
 			if(contents.len >= 20)
 				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
-				return 0
+				return FALSE
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
-			return 0
+			return FALSE
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
 		return sharp && slice(sharp, W, user)
 	else
-		..()
+		return ..()
 
 //Called when you finish tablecrafting a snack.
 /obj/item/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)

@@ -300,7 +300,7 @@
 		else
 			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>", confidential = TRUE)
 	if(!istext(ckey))
-		return 0
+		return FALSE
 
 	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
@@ -319,7 +319,7 @@
 		if("Larva")
 			new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
 		else
-			return 0
+			return FALSE
 	if(!spawn_here)
 		SSjob.SendToLateJoin(new_xeno, FALSE)
 
@@ -327,7 +327,7 @@
 	var/msg = "<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>"
 	message_admins(msg)
 	admin_ticket_log(new_xeno, msg)
-	return 1
+	return TRUE
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
@@ -831,7 +831,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
 	set name = "Toggle Nuke"
 	set category = "Admin - Events"
-	set popup_menu = 0
+	set popup_menu = FALSE
 	if(!check_rights(R_DEBUG))
 		return
 

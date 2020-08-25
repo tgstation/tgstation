@@ -168,12 +168,13 @@
 	return ..()
 
 /datum/action/item_action/Trigger()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return FALSE
 	if(target)
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
-	return 1
+	return TRUE
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
@@ -315,7 +316,7 @@
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
@@ -384,7 +385,7 @@
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/hands_free
@@ -439,7 +440,7 @@
 /datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/I = target
 	if(!I.owner)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/organ_action/toggle/New(Target)
@@ -586,12 +587,12 @@
 
 /datum/action/innate/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(!active)
 		Activate()
 	else
 		Deactivate()
-	return 1
+	return TRUE
 
 /datum/action/innate/proc/Activate()
 	return

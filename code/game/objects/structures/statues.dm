@@ -227,7 +227,7 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	var/spam_flag = 0
+	var/spam_flag = FALSE
 
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"

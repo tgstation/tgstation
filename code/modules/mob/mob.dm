@@ -108,10 +108,10 @@
   */
 /mob/proc/Cell()
 	set category = "Admin"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!loc)
-		return 0
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -301,7 +301,7 @@
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
-			return 1
+			return TRUE
 
 	if(!W)
 		// Activate the item
@@ -309,7 +309,7 @@
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
+	return FALSE
 
 /**
   * Try to equip an item to a slot on the mob
@@ -369,7 +369,7 @@
   */
 /mob/proc/equip_to_appropriate_slot(obj/item/W, swap=FALSE)
 	if(!istype(W))
-		return 0
+		return FALSE
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -386,9 +386,9 @@
 
 	for(var/slot in slot_priority)
 		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE, swap)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 /**
   * Reset the attached clients perspective (viewpoint)
   *
@@ -801,7 +801,7 @@
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
-	return 0
+	return FALSE
 
 /**
   * Output an update to the stat panel for the client
@@ -1083,11 +1083,11 @@
 
 ///can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 ///can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
@@ -1147,7 +1147,7 @@
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
-		return 0
+		return FALSE
 
 	log_played_names(ckey,newname)
 
@@ -1170,7 +1170,7 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
-	return 1
+	return TRUE
 
 ///Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)

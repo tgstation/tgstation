@@ -78,13 +78,13 @@
 	. = automatic
 
 /atom/proc/IsAutoclickable()
-	. = 1
+	return 1
 
 /obj/screen/IsAutoclickable()
-	. = 0
+	return 0
 
 /obj/screen/click_catcher/IsAutoclickable()
-	. = 1
+	return 1
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/L = params2list(params)

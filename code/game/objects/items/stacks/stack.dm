@@ -369,8 +369,8 @@
 		return source.energy < cost
 	if(amount < 1)
 		qdel(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/stack/proc/add(amount)
 	if (is_cyborg)

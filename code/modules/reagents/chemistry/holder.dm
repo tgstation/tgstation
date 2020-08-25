@@ -371,7 +371,7 @@
 				if(can_overdose)
 					if(R.overdose_threshold)
 						if(R.volume >= R.overdose_threshold && !R.overdosed)
-							R.overdosed = 1
+							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					if(R.addiction_threshold)
@@ -582,7 +582,6 @@
 
 	while(reaction_occurred)
 	update_total()
-	return 0
 
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -625,7 +624,6 @@
 		else
 			total_volume += R.volume
 
-	return 0
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
@@ -635,7 +633,6 @@
 		del_reagent(R.type)
 	if(my_atom)
 		my_atom.on_reagent_change(CLEAR_REAGENTS)
-	return 0
 
 /**
   * Applies the relevant expose_ proc for every reagent in this holder
@@ -817,17 +814,14 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 		if (R.type == reagent)
 			if(!amount)
 				if(needs_metabolizing && !R.metabolizing)
-					return 0
+					return FALSE
 				return R
 			else
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !R.metabolizing)
-						return 0
+						return FALSE
 					return R
-				else
-					return 0
-
-	return 0
+	return FALSE
 
 /// Get the amount of this reagent
 /datum/reagents/proc/get_reagent_amount(reagent)
@@ -836,7 +830,6 @@ Needs matabolizing takes into consideration if the chemical is matabolizing when
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
-
 	return 0
 
 /// Get a comma separated string of every reagent name in this holder

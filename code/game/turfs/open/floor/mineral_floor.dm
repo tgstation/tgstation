@@ -24,8 +24,9 @@
 
 
 /turf/open/floor/mineral/update_icon()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)
@@ -226,12 +227,12 @@
 /turf/open/floor/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
-			active = 1
+			active = TRUE
 			radiation_pulse(src, 10)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
-			active = 0
+			active = FALSE
 			return
 
 // ALIEN ALLOY

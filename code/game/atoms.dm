@@ -1469,7 +1469,7 @@
 		T = get_turf(src)
 
 	if(!T)
-		return 0
+		return FALSE
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
