@@ -147,7 +147,11 @@ Behavior that's still missing from this component that original food items had t
 
 	set waitfor = FALSE
 
+	if(QDELETED(parent))
+		return
+
 	var/atom/owner = parent
+
 
 	if(feeder.a_intent == INTENT_HARM)
 		return
