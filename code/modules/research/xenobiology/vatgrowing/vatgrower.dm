@@ -79,6 +79,6 @@
 	base_overlay.appearance_flags = RESET_COLOR
 	base_overlay.color = reagentcolor
 	. += base_overlay
-	if(biological_sample && is_operational())
+	if(biological_sample && is_operational)
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
