@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -121,7 +121,7 @@
 	ready = TRUE
 	update_icon()
 
-/obj/machinery/implantchair/container_resist(mob/living/user)
+/obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
@@ -134,7 +134,7 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/implantchair/relaymove(mob/user)
+/obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")

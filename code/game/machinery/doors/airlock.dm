@@ -52,6 +52,7 @@
 	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
+	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -66,7 +67,6 @@
 	var/aiHacking = FALSE
 	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/obj/machinery/door/airlock/closeOther
-	var/justzap = FALSE
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
@@ -97,7 +97,7 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	wires = new /datum/wires/airlock(src)
+	wires = set_wires()
 	if(frequency)
 		set_frequency(frequency)
 
@@ -305,21 +305,13 @@
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
-		if(isElectrified())
-			if(!justzap)
-				if(shock(user, 100))
-					justzap = TRUE
-					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
-					return
-			else
+		if(isElectrified() && shock(user, 100))
+			return
+		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
+			var/mob/living/carbon/C = user
+			if(!C.wearing_shock_proof_gloves())
+				new /datum/hallucination/shock(C)
 				return
-		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
-			var/mob/living/carbon/human/H = user
-			if(H.gloves)
-				var/obj/item/clothing/gloves/G = H.gloves
-				if(G.siemens_coefficient)//not insulated
-					new /datum/hallucination/shock(H)
-					return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			if(cyclelinkedairlock.operating)
@@ -329,9 +321,7 @@
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
-	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)
-		return TRUE
-	return FALSE
+	return (secondsElectrified != MACHINE_NOT_ELECTRIFIED)
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != 1) && !isAllPowerCut())
@@ -721,9 +711,9 @@
 			attack_ai(user)
 
 /obj/machinery/door/airlock/attack_animal(mob/user)
-	. = ..()
-	if(isElectrified())
-		shock(user, 100)
+	if(isElectrified() && shock(user, 100))
+		return
+	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
 	return attack_hand(user)
@@ -733,9 +723,8 @@
 	if(.)
 		return
 	if(!(issilicon(user) || isAdminGhostAI(user)))
-		if(isElectrified())
-			if(shock(user, 100))
-				return
+		if(isElectrified() && shock(user, 100))
+			return
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
@@ -791,9 +780,8 @@
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
-		if(isElectrified())
-			if(shock(user, 75))
-				return
+		if(isElectrified() && shock(user, 75))
+			return
 	add_fingerprint(user)
 
 	if(panel_open)
@@ -970,7 +958,7 @@
 								"<span class='hear'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
-					machine_stat &= ~BROKEN
+					set_machine_stat(machine_stat & ~BROKEN)
 					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
@@ -997,9 +985,9 @@
 		return
 	if(hasPower())
 		if(forced)
-			if(isElectrified())
-				shock(user,100)//it's like sticking a forck in a power socket
-				return
+			var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
+			if(check_electrified && shock(user,100))
+				return //it's like sticking a fork in a power socket
 
 			if(!density)//already open
 				return
@@ -1009,6 +997,9 @@
 				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
 				if(do_after(user, time_to_open, TRUE, src))
+					if(check_electrified && shock(user,100))
+						prying_so_hard = FALSE
+						return
 					open(2)
 					if(density && !open(2))
 						to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
@@ -1037,6 +1028,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
+
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1047,6 +1039,7 @@
 
 	if(!density)
 		return TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
 	sleep(1)
@@ -1079,19 +1072,19 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src, doorClose, 30, TRUE)
+
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
-		SSexplosions.medobj += killthis
-
+		SSexplosions.med_mov_atom += killthis
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
@@ -1177,9 +1170,8 @@
 		loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(isElectrified())
+	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
-		shock(user, 100) //Mmm, fried xeno!
 		return
 	if(!density) //Already open
 		return ..()
@@ -1224,6 +1216,8 @@
 
 
 /obj/machinery/door/airlock/proc/on_break()
+	SIGNAL_HANDLER
+
 	if(!panel_open)
 		panel_open = TRUE
 	wires.cut_all()
@@ -1248,7 +1242,7 @@
 		add_hiddenprint(user)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	if((damage_amount >= obj_integrity) && (damage_flag == "bomb"))
+	if((damage_amount >= obj_integrity) && (damage_flag == BOMB))
 		flags_1 |= NODECONSTRUCT_1  //If an explosive took us out, don't drop the assembly
 	. = ..()
 	if(obj_integrity < (0.75 * max_integrity))
@@ -1477,6 +1471,16 @@
 		close()
 	else
 		open()
+
+/**
+  *	Generates the airlock's wire layout based on the current area the airlock resides in.
+  *
+  * Returns a new /datum/wires/ with the appropriate wire layout based on the airlock_wires
+  * of the area the airlock is in.
+  */
+/obj/machinery/door/airlock/proc/set_wires()
+	var/area/source_area = get_area(src)
+	return new source_area.airlock_wires(src)
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

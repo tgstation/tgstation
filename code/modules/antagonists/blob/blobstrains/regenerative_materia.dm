@@ -2,11 +2,13 @@
 /datum/blobstrain/reagent/regenerative_materia
 	name = "Regenerative Materia"
 	description = "will do toxin damage and cause targets to believe they are fully healed."
-	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed."
+	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed.  Core regenerates much faster."
 	color = "#A88FB7"
 	complementary_color = "#AF7B8D"
 	message_living = ", and you feel <i>alive</i>"
 	reagent = /datum/reagent/blob/regenerative_materia
+	core_regen = 20
+	point_rate = 3
 
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"

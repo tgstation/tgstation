@@ -28,8 +28,14 @@
 	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
+	/// List of action speed modifiers applying to this mob
+	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	/// The calculated mob action speed slowdown based on the modifiers list
+	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
-	var/list/datum/action/actions = list()
+	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
 
@@ -156,7 +162,7 @@
 	  * Spells that do not transfer from one mob to another and can not be lost in mindswap.
 	  * obviously do not live in the mind
 	  */
-	var/list/mob_spell_list = list()
+	var/list/mob_spell_list
 
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)

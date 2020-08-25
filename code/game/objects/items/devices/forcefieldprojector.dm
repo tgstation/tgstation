@@ -36,6 +36,9 @@
 		return
 	if(get_dist(T,src) > field_distance_limit)
 		return
+	if (get_turf(src) == T)
+		to_chat(user, "<span class='warning'>Target is too close, aborting!</span>")
+		return
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='warning'>[src] cannot sustain any more forcefields!</span>")
 		return
@@ -85,7 +88,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	var/obj/item/forcefield_projector/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)

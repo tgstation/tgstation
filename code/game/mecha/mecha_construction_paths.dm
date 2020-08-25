@@ -41,7 +41,7 @@
 
 // Default proc to generate mech steps.
 // Override if the mech needs an entirely custom process (See HONK mech)
-// Otherwise override specific steps as needed (Ripley, firefighter, Phazon)
+// Otherwise override specific steps as needed (Ripley, Clarke, Phazon)
 /datum/component/construction/mecha/proc/get_steps()
 	return get_frame_steps() + get_circuit_steps() + (circuit_weapon ? get_circuit_weapon_steps() : list()) + get_stockpart_steps() + get_inner_plating_steps() + get_outer_plating_steps()
 

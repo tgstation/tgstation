@@ -1360,3 +1360,47 @@
 		/obj/item/stack/wrapping_paper/small=1
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/skillchips
+	name = "box of skillchips"
+	desc = "Contains one copy of every skillchip"
+
+/obj/item/storage/box/skillchips/PopulateContents()
+	var/list/skillchips = subtypesof(/obj/item/skillchip)
+
+	for(var/skillchip in skillchips)
+		new skillchip(src)
+
+/obj/item/storage/box/skillchips/science
+	name = "box of science job skillchips"
+	desc = "Contains spares of every science job skillchip."
+
+/obj/item/storage/box/skillchips/science/PopulateContents()
+	new/obj/item/skillchip/job/roboticist(src)
+	new/obj/item/skillchip/job/roboticist(src)
+
+/obj/item/storage/box/skillchips/engineering
+	name = "box of engineering job skillchips"
+	desc = "Contains spares of every engineering job skillchip."
+
+/obj/item/storage/box/skillchips/engineering/PopulateContents()
+	new/obj/item/skillchip/job/engineer(src)
+	new/obj/item/skillchip/job/engineer(src)
+
+/obj/item/storage/box/swab
+	name = "box of microbiological swabs"
+	desc = "Contains a number of sterile swabs for collecting microbiological samples."
+	illustration = "swab"
+
+/obj/item/storage/box/swab/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/swab(src)
+
+/obj/item/storage/box/petridish
+	name = "box of petridishes"
+	desc = "This box purports to contain a number of high rim petridishes."
+	illustration = "petridish"
+
+/obj/item/storage/box/petridish/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/petri_dish(src)

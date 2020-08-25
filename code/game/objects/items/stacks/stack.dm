@@ -38,6 +38,8 @@
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
 	var/absorption_rate
+	/// Amount of matter for RCD
+	var/matter_amount = 0
 
 
 /obj/item/stack/on_grind()
@@ -257,10 +259,6 @@
 			var/obj/structure/window/W = O
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
-
-		else if(istype(O, /obj/item/restraints/handcuffs/cable))
-			var/obj/item/cuffs = O
-			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged

@@ -480,7 +480,7 @@
 /datum/centcom_podlauncher/ui_close() //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	qdel(src)
 
-/datum/centcom_podlauncher/proc/updateCursor(var/launching, var/turf_picking) //Update the mouse of the user
+/datum/centcom_podlauncher/proc/updateCursor(launching, turf_picking) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!
 		return
 	if (launching || turf_picking) //If the launching param is true, we give the user new mouse icons.
@@ -650,7 +650,7 @@
 	qdel(selector) //Delete the selector effect
 	. = ..()
 
-/datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
+/datum/centcom_podlauncher/proc/supplypod_punish_log(list/whoDyin)
 	var/podString = effectBurst ? "5 pods" : "a pod"
 	var/whomString = ""
 	if (LAZYLEN(whoDyin))

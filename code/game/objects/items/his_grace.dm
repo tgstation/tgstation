@@ -14,7 +14,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
-	attack_verb = list("robusted")
+	attack_verb_continuous = list("robusts")
+	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
@@ -69,7 +70,7 @@
 	else
 		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
-/obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
+/obj/item/his_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
 		user.visible_message("<span class='warning'>[user] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>")
@@ -136,6 +137,8 @@
 	move_gracefully()
 
 /obj/item/his_grace/proc/move_gracefully()
+	SIGNAL_HANDLER
+
 	if(!awakened)
 		return
 	var/static/list/transforms
@@ -252,3 +255,4 @@
 	if(istype(master))
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
+		master.client?.give_award(/datum/award/achievement/misc/ascension, master)

@@ -9,11 +9,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 
 	force = 10
-	attack_verb = list("beaten")
+	attack_verb_continuous = list("beats")
+	attack_verb_simple = list("beat")
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
 	throwforce = 7
 	var/throw_stun_chance = 35
@@ -67,6 +68,8 @@
 	return ..()
 
 /obj/item/melee/baton/proc/convert(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
 	if(istype(I,/obj/item/conversion_kit) && convertible)
 		var/turf/T = get_turf(src)
 		var/obj/item/melee/classic_baton/B = new /obj/item/melee/classic_baton (T)
@@ -224,7 +227,7 @@
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
-	L.confused = max(confusion_amt, L.confused)
+	L.set_confusion(max(confusion_amt, L.get_confusion()))
 	L.stuttering = max(8, L.stuttering)
 	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 

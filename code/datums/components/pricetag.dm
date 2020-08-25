@@ -13,9 +13,13 @@
 	RegisterSignal(parent, list(COMSIG_ITEM_SPLIT_PROFIT, COMSIG_ITEM_SPLIT_PROFIT_DRY), .proc/return_ratio)
 
 /datum/component/pricetag/proc/Unwrapped()
+	SIGNAL_HANDLER
+
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
-/datum/component/pricetag/proc/split_profit(var/item_value)
+/datum/component/pricetag/proc/split_profit(item_value)
+	SIGNAL_HANDLER
+
 	var/price = item_value
 	if(price)
 		var/adjusted_value = price*(profit_ratio/100)

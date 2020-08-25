@@ -74,6 +74,10 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	carp_randomify(rarechance)
 	update_icons()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/carp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
 	if(random_color)
@@ -163,6 +167,9 @@
 	tame_chance = 0
 	bonus_tame_chance = 0
 
+/mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
+	return
+
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
 	name = "Mega Space Carp"
@@ -195,6 +202,10 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -222,15 +233,30 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
+	real_name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
-	AIStatus = AI_OFF
 	rarechance = 10
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
+	pet_bonus = TRUE
+	pet_bonus_emote = "bloops happily!"
+
+/mob/living/simple_animal/hostile/carp/cayenne/lia
+	name = "Lia"
+	real_name = "Lia"
+	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
+	faction = list("neutral")
+	health = 200
+	icon_dead = "magicarp_dead"
+	icon_gib = "magicarp_gib"
+	icon_living = "magicarp"
+	icon_state = "magicarp"
+	maxHealth = 200
+	random_color = FALSE
 
 #undef REGENERATION_DELAY
