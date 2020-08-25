@@ -17,7 +17,6 @@
 	var/vote_description = ""
 
 	var/list/voted //List of ID's that already voted.
-	var/cooldown //To prevent paper spam
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
 /obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
