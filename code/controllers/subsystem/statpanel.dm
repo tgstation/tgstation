@@ -47,19 +47,23 @@ SUBSYSTEM_DEF(statpanels)
 		src.currentrun = GLOB.clients.Copy()
 
 	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/client/C = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
-		var/ping_str = url_encode("Ping: [round(C.lastping, 1)]ms (Average: [round(C.avgping, 1)]ms)")
-		var/other_str = url_encode(json_encode(C.mob.get_status_tab_items()))
-		C << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
-		if(C.holder)
-			var/turf/T = get_turf(C.eye)
-			var/coord_entry = url_encode(COORD(T))
-			C << output("[mc_data_encoded];[coord_entry];[url_encode(C.holder.href_token)]", "statbrowser:update_mc")
-			var/list/L = GLOB.ahelp_tickets.stat_entry()
-			C << output("[url_encode(json_encode(L))];", "statbrowser:update_tickets")
-			if(length(GLOB.sdql2_queries))
+		var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
+		var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
+		target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
+		if(!target.holder)
+			target << output("", "statbrowser:remove_admin_tabs")
+		else
+			var/turf/eye_turf = get_turf(target.eye)
+			var/coord_entry = url_encode(COORD(eye_turf))
+			target << output("[mc_data_encoded];[coord_entry];[url_encode(target.holder.href_token)]", "statbrowser:update_mc")
+			var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
+			target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
+			if(!length(GLOB.sdql2_queries))
+				target << output("", "statbrowser:remove_sqdl2")
+			else
 				var/list/sqdl2A = list()
 				sqdl2A[++sqdl2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
 				var/list/sqdl2B = list()
@@ -67,49 +71,47 @@ SUBSYSTEM_DEF(statpanels)
 					var/datum/sdql2_query/Q = i
 					sqdl2B = Q.generate_stat()
 				sqdl2A += sqdl2B
-				C << output(url_encode(json_encode(sqdl2A)), "statbrowser:update_sqdl2")
-			else
-				C << output("", "statbrowser:remove_sqdl2")
-		else
-			C << output("", "statbrowser:remove_admin_tabs")
-		var/list/proc_holders = C.mob.get_proc_holders()
-		C.spell_tabs.Cut()
-		for(var/I in proc_holders)
-			var/list/item = I
-			C.spell_tabs |= item[1]
+				target << output(url_encode(json_encode(sqdl2A)), "statbrowser:update_sqdl2")
+		var/list/proc_holders = target.mob.get_proc_holders()
+		target.spell_tabs.Cut()
+		for(var/phl in proc_holders)
+			var/list/proc_holder_list = phl
+			target.spell_tabs |= proc_holder_list[1]
 		var/proc_holders_encoded = ""
 		if(length(proc_holders))
 			proc_holders_encoded = url_encode(json_encode(proc_holders))
-		C << output("[url_encode(json_encode(C.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
-		if(C.mob?.listed_turf)
-			var/mob/M = C.mob
-			if(!M.TurfAdjacent(M.listed_turf))
-				C << output("", "statbrowser:remove_listedturf")
-				M.listed_turf = null
+		target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+		if(target.mob?.listed_turf)
+			var/mob/target_mob = target.mob
+			if(!target_mob.TurfAdjacent(target_mob.listed_turf))
+				target << output("", "statbrowser:remove_listedturf")
+				target_mob.listed_turf = null
 			else
 				var/list/overrides = list()
 				var/list/turfitems = list()
-				for(var/image/I in C.images)
-					if(I.loc && I.loc.loc == M.listed_turf && I.override)
-						overrides += I.loc
-				for(var/a in M.listed_turf)
-					var/atom/movable/A = a
-					if(A.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
+				for(var/img in target.images)
+					var/image/target_image = img
+					if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 						continue
-					if(A.invisibility > M.see_invisible)
+					overrides += target_image.loc
+				for(var/tc in target_mob.listed_turf)
+					var/atom/movable/turf_content = tc
+					if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 						continue
-					if(A in overrides)
+					if(turf_content.invisibility > target_mob.see_invisible)
 						continue
-					if(A.IsObscured())
+					if(turf_content in overrides)
+						continue
+					if(turf_content.IsObscured())
 						continue
 					if(length(turfitems) < 30) // only create images for the first 30 items on the turf, for performance reasons
-						if(!(REF(A) in cached_images))
-							C << browse_rsc(getFlatIcon(A, no_anim = TRUE), "[REF(A)].png")
-							cached_images += REF(A)
-						turfitems[++turfitems.len] = list("[A.name]", REF(A), "[REF(A)].png")
+						if(!(REF(turf_content) in cached_images))
+							target << browse_rsc(getFlatIcon(turf_content, no_anim = TRUE), "[REF(turf_content)].png")
+							cached_images += REF(turf_content)
+						turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), "[REF(turf_content)].png")
 					else
-						turfitems[++turfitems.len] = list("[A.name]", REF(A))
+						turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 				turfitems = url_encode(json_encode(turfitems))
-				C << output("[turfitems];", "statbrowser:update_listedturf")
+				target << output("[turfitems];", "statbrowser:update_listedturf")
 		if(MC_TICK_CHECK)
 			return
