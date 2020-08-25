@@ -1,3 +1,4 @@
+#ifdef NTNET_SERVICE
 /datum/ntnet_service
 	var/name = "Unidentified Network Service"
 	var/id
@@ -36,3 +37,4 @@
 
 /datum/ntnet_service/proc/ntnet_intercept(datum/netdata/data, datum/ntnet/net, datum/component/ntnet_interface/sender)
 	return
+#endif

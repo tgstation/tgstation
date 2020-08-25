@@ -1,20 +1,18 @@
 /datum/netdata				//this requires some thought later on but for now it's fine.
-	var/network_id
-
-	var/autopasskey = TRUE
-
-	var/list/recipient_ids = list()
+	var/datum/ntnet/network
 	var/sender_id
+	var/list/recipient_ids
 	var/broadcast = FALSE			//Whether this is a broadcast packet.
-
 	var/list/data = list()
+	var/passkey = null
 
-	var/list/passkey
-
-/datum/netdata/proc/standard_format_data(primary, secondary, passkey)
-	data["data"] = primary
-	data["data_secondary"] = secondary
-	data["encrypted_passkey"] = passkey
+/datum/netdata/Destroy()
+	network = null
+	sender_id = null
+	recipient_ids = null
+	data = null
+	passkey = null
+	return ..()
 
 /datum/netdata/proc/json_to_data(json)
 	data = json_decode(json)
@@ -32,7 +30,7 @@
 /datum/netdata/proc/json_list_generation()
 	. = list()
 	. |= json_list_generation_netlog()
-	.["network_id"] = network_id
+	.["network_id"] = network.network_id
 
 /datum/netdata/proc/json_list_generation_netlog()
 	. = list()
