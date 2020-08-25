@@ -109,3 +109,22 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
 	new /obj/item/multitool(src)
+
+/obj/structure/closet/mini_fridge
+	name = "grimy mini-fridge"
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+	icon_state = "mini_fridge"
+	icon_welded = "welded_small"
+	max_mob_size = MOB_SIZE_SMALL
+	storage_capacity = 7
+
+/obj/structure/closet/mini_fridge/PopulateContents()
+	. = ..()
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(50))
+		new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
+	if(prob(40))
+		new /obj/item/reagent_containers/food/snacks/pizzaslice/moldy(src)
+	else if(prob(30))
+		new /obj/item/reagent_containers/food/snacks/syndicake(src)

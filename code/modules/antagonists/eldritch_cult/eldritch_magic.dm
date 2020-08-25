@@ -132,27 +132,28 @@
 		if(tar.anti_magic_check())
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
-	var/mob/living/carbon/C2 = user
+	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(20)
-		C2.adjustBruteLoss(-20)
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(20)
+		carbon_user.adjustBruteLoss(-20)
 	if(iscarbon(target))
-		var/mob/living/carbon/C1 = target
-		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
+		var/mob/living/carbon/carbon_target = target
+		for(var/bp in carbon_user.bodyparts)
+			var/obj/item/bodypart/bodypart = bp
 			for(var/i in bodypart.wounds)
 				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
-				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
+				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
 				if(!target_bodypart)
 					continue
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(target_bodypart)
 
-		C1.blood_volume -= 20
-		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			C2.blood_volume += 20
+		carbon_target.blood_volume -= 20
+		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
+			carbon_user.blood_volume += 20
 		return ..()
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
@@ -357,7 +358,7 @@
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BURN, "melee", 1)
+			M.take_damage(45, BURN, MELEE, 1)
 		sleep(1.5)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
@@ -510,7 +511,7 @@
 		if(target.stat == DEAD || !target.on_fire)
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
-		if(target.InCritical())
+		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION))
 			target.death()
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())

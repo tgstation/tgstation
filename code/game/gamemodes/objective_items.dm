@@ -173,16 +173,6 @@
 	excludefromjob = list("Chief Engineer","Station Engineer","Atmospheric Technician")
 
 //Unique Objectives
-/datum/objective_item/unique/docs_red
-	name = "the \"Red\" secret documents."
-	targetitem = /obj/item/documents/syndicate/red
-	difficulty = 10
-
-/datum/objective_item/unique/docs_blue
-	name = "the \"Blue\" secret documents."
-	targetitem = /obj/item/documents/syndicate/blue
-	difficulty = 10
-
 /datum/objective_item/special/New()
 	..()
 	if(TargetExists())

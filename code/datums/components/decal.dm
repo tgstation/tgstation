@@ -59,11 +59,15 @@
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
 /datum/component/decal/proc/late_update_icon(atom/source)
+	SIGNAL_HANDLER
+
 	if(source && istype(source))
 		source.update_icon()
 		UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 /datum/component/decal/proc/apply_overlay(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
 	overlay_list += pic
 
 /datum/component/decal/proc/remove(atom/thing)
@@ -74,6 +78,8 @@
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
 /datum/component/decal/proc/rotate_react(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(old_dir == new_dir)
 		return
 	remove()
@@ -81,9 +87,13 @@
 	apply()
 
 /datum/component/decal/proc/clean_react(datum/source, clean_types)
+	SIGNAL_HANDLER
+
 	if(clean_types & cleanable)
 		qdel(src)
 		return TRUE
 
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += description

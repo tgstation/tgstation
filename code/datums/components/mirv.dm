@@ -22,6 +22,8 @@
 	UnregisterSignal(parent, list(COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/mirv/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	do_shrapnel(firer, target)
 
 /datum/component/mirv/proc/do_shrapnel(mob/firer, atom/target)

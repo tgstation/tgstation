@@ -12,7 +12,7 @@
 	set name = "Fix chat"
 	set category = "OOC"
 	var/action
-	log_tgui(src, "tgui_panel: Started fix_chat.")
+	log_tgui(src, "tgui_panel: Started fixing.")
 	// Not initialized
 	if(!tgui_panel || !istype(tgui_panel))
 		log_tgui(src, "tgui_panel: datum is missing")
