@@ -59,6 +59,7 @@
 				M.desc = "It's toast."
 		qdel(src)
 	else
+		SSmobs.cheeserats -= src // remove play controlled mouse also
 		..(gibbed)
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
