@@ -242,26 +242,26 @@
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
-	if(!stat)
-		. += text("System integrity: [(health+100)/2]%")
-		if(isturf(loc)) //only show if we're "in" a core
-			. += text("Backup Power: [battery/2]%")
-		. += text("Connected cyborgs: [connected_robots.len]")
-		for(var/r in connected_robots)
-			var/mob/living/silicon/robot/R = r
-			var/robot_status = "Nominal"
-			if(R.shell)
-				robot_status = "AI SHELL"
-			else if(R.stat || !R.client)
-				robot_status = "OFFLINE"
-			else if(!R.cell || R.cell.charge <= 0)
-				robot_status = "DEPOWERED"
-			//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
-			. += text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-			Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]")
-		. += text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]") //Count of total AI shells
-	else
+	if(stat != CONSCIOUS)
 		. += text("Systems nonfunctional")
+		return
+	. += text("System integrity: [(health + 100) * 0.5]%")
+	if(isturf(loc)) //only show if we're "in" a core
+		. += text("Backup Power: [battery * 0.5]%")
+	. += text("Connected cyborgs: [length(connected_robots)]")
+	for(var/r in connected_robots)
+		var/mob/living/silicon/robot/connected_robot = r
+		var/robot_status = "Nominal"
+		if(connected_robot.shell)
+			robot_status = "AI SHELL"
+		else if(connected_robot.stat != CONSCIOUS || !connected_robot.client)
+			robot_status = "OFFLINE"
+		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
+			robot_status = "DEPOWERED"
+		//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
+		. += text("[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
+		Module: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]")
+	. += text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]") //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
