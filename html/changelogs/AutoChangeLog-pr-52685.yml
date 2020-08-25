@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The Summon Equipment spell, which formerly asked you to choose between its two possible effects whenever you casted it, has been split into the Summon Combat Equipment and Summon Ritual Dagger spells."
+  - bugfix: "Summon Combat Equipment can now only be used on cultists, as its description implies."

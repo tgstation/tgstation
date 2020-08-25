@@ -374,14 +374,14 @@
 	mob_name = "hotel staff member"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
+	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel. Remember, the customer is always right!"
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
 	outfit = /datum/outfit/hotelstaff
 	short_desc = "You are a staff member of a top-of-the-line space hotel!"
-	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and make sure the manager doesn't fire you."
-	important_info = "DON'T leave the hotel"
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests, advertise the hotel, and make sure the manager doesn't fire you."
+	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
 	assignedrole = "Hotel Staff"
 
 /datum/outfit/hotelstaff
@@ -390,7 +390,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
-	implants = list(/obj/item/implant/mindshield)
+	implants = list(/obj/item/implant/mindshield, /obj/item/implant/exile/noteleport)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
@@ -400,7 +400,7 @@
 	flavour_text = "You have been assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff."
 	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
-	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests. Using non-lethal force instead of lethal force is heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Security"
