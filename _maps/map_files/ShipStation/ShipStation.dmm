@@ -49,6 +49,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"aF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/arrows/white,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aK" = (
 /obj/structure/toilet{
 	dir = 8
@@ -657,10 +662,10 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "s"
 	},
-/obj/effect/turf_decal/stripes/end{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/end{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "gU" = (
@@ -759,11 +764,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "k"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "ib" = (
@@ -1144,6 +1149,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"mh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mine/sound,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "mm" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -1211,11 +1221,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"mV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/west,
-/turf/open/floor/carpet/black,
-/area/library)
 "mX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -1223,6 +1228,11 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"nb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/carpet/black,
+/area/library)
 "ne" = (
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -1370,11 +1380,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "d"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "oB" = (
@@ -1382,11 +1392,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "e"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "oC" = (
@@ -2565,11 +2575,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "o"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "yn" = (
@@ -3090,11 +3100,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "3"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Co" = (
@@ -3315,16 +3325,21 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"Ey" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "EG" = (
 /obj/effect/turf_decal/plaque{
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "c"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "EI" = (
@@ -3590,6 +3605,12 @@
 /obj/structure/table/reinforced,
 /obj/item/screwdriver/power,
 /obj/item/storage/toolbox/electrical,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"Hg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Hk" = (
@@ -3863,11 +3884,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "p"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Jf" = (
@@ -4859,11 +4880,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"Sj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "Sn" = (
 /obj/item/stack/sheet/mineral/titanium,
 /turf/open/floor/plasteel/dark/airless,
@@ -4883,11 +4899,11 @@
 /turf/open/floor/plasteel,
 /area/maintenance/central)
 "Sv" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Sx" = (
@@ -5004,11 +5020,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"Tx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mine/sound,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "TD" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -5036,12 +5047,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/engine/engineering)
-"TS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel,
 /area/engine/engineering)
 "Ub" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -5143,6 +5148,11 @@
 	},
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"UQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "US" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
@@ -5179,11 +5189,11 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "a"
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Vc" = (
@@ -5543,6 +5553,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"YY" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/r_wall/rust,
+/area/maintenance/central)
 "Zb" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -5555,10 +5569,10 @@
 	icon = 'icons/effects/crayondecal.dmi';
 	icon_state = "2"
 	},
-/obj/effect/turf_decal/stripes/end{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/end{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Zo" = (
@@ -30534,7 +30548,7 @@ aj
 pm
 ji
 xb
-TS
+Hg
 xb
 xb
 pq
@@ -31821,7 +31835,7 @@ AL
 Ls
 WE
 xb
-Sj
+Ey
 xb
 dc
 aj
@@ -33864,7 +33878,7 @@ Fj
 mI
 mI
 mI
-wK
+YY
 wK
 wK
 yu
@@ -34375,9 +34389,9 @@ Uh
 aR
 oB
 Fj
-aR
-aR
-aR
+aF
+aF
+UQ
 tD
 Dp
 JV
@@ -34632,9 +34646,9 @@ Uh
 aR
 Sv
 Fj
-aR
-aR
-aR
+aF
+aF
+UQ
 tD
 JV
 HI
@@ -37721,7 +37735,7 @@ jr
 HI
 ak
 OO
-Tx
+mh
 OO
 bJ
 bJ
@@ -40811,7 +40825,7 @@ bJ
 OT
 kM
 tB
-mV
+nb
 GX
 jM
 SW
