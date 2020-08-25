@@ -294,6 +294,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/slow
 	speed = 20
+	move_to_delay = 60
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
 	name = "Something that was once a clown"
@@ -312,3 +313,4 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow
 	speed = 50
+	move_to_delay = 120
