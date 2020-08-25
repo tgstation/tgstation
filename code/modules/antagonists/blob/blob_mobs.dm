@@ -100,8 +100,8 @@
 	verb_yell = "psychically screams"
 	melee_damage_lower = 2
 	melee_damage_upper = 4
-	obj_damage = 20
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	obj_damage = 0
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
@@ -166,6 +166,8 @@
 	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
+	obj_damage = 20 //now that it has a corpse to puppet, it can properly attack structures
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
