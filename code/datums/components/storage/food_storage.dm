@@ -46,7 +46,8 @@
 /datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(istype(inserted_item, /obj/item/storage) || istype(inserted_item, /obj/item/reagent_containers/food/snacks))
+	// No matryoshka-ing food storage
+	if(istype(inserted_item, /obj/item/storage) || IS_EDIBLE(inserted_item))
 		return
 
 	if(inserted_item.w_class > minimum_weight_class)
