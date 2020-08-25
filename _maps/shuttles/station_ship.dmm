@@ -990,7 +990,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/shipstation)
 "fh" = (
-/obj/effect/landmark/start/librarian,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
