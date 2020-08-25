@@ -16,11 +16,15 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound =  'sound/items/handling/weldingtool_pickup.ogg'
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 0.75
 	light_color = LIGHT_COLOR_FIRE
+	light_on = FALSE
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -28,12 +32,12 @@
 	wound_bonus = 10
 	bare_wound_bonus = 15
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
-	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
+	///Whether the welding tool is on or off.
+	var/welding = FALSE
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
-	var/light_intensity = 2 //how powerful the emitted light is when used.
 	var/burned_fuel_for = 0	//when fuel was last removed
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
@@ -47,7 +51,7 @@
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddElement(/datum/element/tool_flash, light_intensity)
+	AddElement(/datum/element/tool_flash, light_range)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -70,7 +74,7 @@
 	switch(welding)
 		if(0)
 			force = 3
-			damtype = "brute"
+			damtype = BRUTE
 			update_icon()
 			if(!can_off_process)
 				STOP_PROCESSING(SSobj, src)
@@ -78,7 +82,7 @@
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
 			force = 15
-			damtype = "fire"
+			damtype = BURN
 			++burned_fuel_for
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 				use(1)
@@ -158,15 +162,15 @@
 				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
 				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
+
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
 		message_admins("[ADMIN_LOOKUPFLW(user)] activated a rigged welder at [AREACOORD(user)].")
 		explode()
 	switched_on(user)
-	if(welding)
-		set_light(light_intensity)
 
 	update_icon()
+
 
 // Ah fuck, I can't believe you've done this
 /obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
@@ -194,10 +198,19 @@
 		return FALSE
 
 
+//Toggles the welding value.
+/obj/item/weldingtool/proc/set_welding(new_value)
+	if(welding == new_value)
+		return
+	. = welding
+	welding = new_value
+	set_light_on(welding)
+
+
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
-		set_light(0)
+		set_light_on(FALSE)
 		switched_on(user)
 		update_icon()
 		return 0
@@ -208,13 +221,13 @@
 	if(!status)
 		to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
 		return
-	welding = !welding
+	set_welding(!welding)
 	if(welding)
 		if(get_fuel() >= 1)
 			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
 			playsound(loc, acti_sound, 50, TRUE)
 			force = 15
-			damtype = "fire"
+			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)
@@ -228,11 +241,10 @@
 
 //Switches the welder off
 /obj/item/weldingtool/proc/switched_off(mob/user)
-	welding = 0
-	set_light(0)
+	set_welding(FALSE)
 
 	force = 3
-	damtype = "brute"
+	damtype = BRUTE
 	hitsound = "swing_hit"
 	update_icon()
 
@@ -335,7 +347,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	toolspeed = 0.1
-	light_intensity = 0
+	light_system = NO_LIGHT_SUPPORT
+	light_range = 0
 	change_icons = 0
 
 /obj/item/weldingtool/abductor/process()
@@ -360,7 +373,7 @@
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	change_icons = 0
 	can_off_process = 1
-	light_intensity = 1
+	light_range = 1
 	toolspeed = 0.5
 	var/last_gen = 0
 	var/nextrefueltick = 0

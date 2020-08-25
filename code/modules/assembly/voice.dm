@@ -15,7 +15,7 @@
 	verb_exclaim = "beeps"
 	var/listening = FALSE
 	var/recorded = "" //the activation message
-	var/mode = 1
+	var/mode = INCLUSIVE_MODE
 	var/static/list/modes = list("inclusive",
 								 "exclusive",
 								 "recognizer",
@@ -63,24 +63,28 @@
 				send_pulse()
 
 /obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
-	. = FALSE
+	if (recorded == "")
+		return FALSE
+
 	switch(mode)
 		if(INCLUSIVE_MODE)
 			if(findtext(raw_message, recorded))
-				. = TRUE
+				return TRUE
 		if(EXCLUSIVE_MODE)
 			if(raw_message == recorded)
-				. = TRUE
+				return TRUE
 		if(RECOGNIZER_MODE)
 			if(speaker.GetVoice() == recorded)
-				. = TRUE
+				return TRUE
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
-				. = TRUE
+				return TRUE
+
+	return FALSE
 
 /obj/item/assembly/voice/proc/send_pulse()
 	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
-	playsound(src, 'licensed_sound/Sampling-Plus-1.0/whirthunk.ogg', 30)
+	playsound(src, 'sound/effects/whirthunk.ogg', 30)
 	addtimer(CALLBACK(src, .proc/pulse), 2 SECONDS)
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)

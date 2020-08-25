@@ -62,24 +62,22 @@
 /datum/disease/proc/admin_details()
 	return "[src.name] : [src.type]"
 
+
+///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act()
-	var/cure = has_cure()
-
-	if(carrier && !cure)
-		return
-
-	stage = min(stage, max_stages)
-
-	if(!cure)
-		if(prob(stage_prob))
-			update_stage(min(stage + 1,max_stages))
-	else
+	if(has_cure())
 		if(prob(cure_chance))
 			update_stage(max(stage - 1, 1))
 
-	if(disease_flags & CURABLE)
-		if(cure && prob(cure_chance))
+		if(disease_flags & CURABLE && prob(cure_chance))
 			cure()
+			return FALSE
+
+	else if(prob(stage_prob))
+		update_stage(min(stage + 1, max_stages))
+
+	return !carrier
+
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
