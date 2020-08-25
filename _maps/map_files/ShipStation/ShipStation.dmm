@@ -1211,6 +1211,11 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"mV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/carpet/black,
+/area/library)
 "mX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -3139,11 +3144,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered)
-"CK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "CN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -3218,11 +3218,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"Dy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mine/sound,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "DA" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel/dark/airless,
@@ -4864,6 +4859,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"Sj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "Sn" = (
 /obj/item/stack/sheet/mineral/titanium,
 /turf/open/floor/plasteel/dark/airless,
@@ -5004,6 +5004,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"Tx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mine/sound,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "TD" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -5031,6 +5036,12 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
+/area/engine/engineering)
+"TS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "Ub" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -5454,12 +5465,6 @@
 /obj/item/stack/sheet/mineral/titanium,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
-"Yc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/landmark/start/station_engineer,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "Yr" = (
 /obj/effect/loot_site_spawner,
 /obj/effect/decal/cleanable/dirt,
@@ -30529,7 +30534,7 @@ aj
 pm
 ji
 xb
-Yc
+TS
 xb
 xb
 pq
@@ -31816,7 +31821,7 @@ AL
 Ls
 WE
 xb
-CK
+Sj
 xb
 dc
 aj
@@ -37716,7 +37721,7 @@ jr
 HI
 ak
 OO
-Dy
+Tx
 OO
 bJ
 bJ
@@ -40806,7 +40811,7 @@ bJ
 OT
 kM
 tB
-Mm
+mV
 GX
 jM
 SW
