@@ -14,7 +14,7 @@
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/plumbing/growing_vat/process()
-	if(!is_operational())
+	if(!is_operational)
 		return
 	if(!biological_sample)
 		return
@@ -79,6 +79,6 @@
 	base_overlay.appearance_flags = RESET_COLOR
 	base_overlay.color = reagentcolor
 	. += base_overlay
-	if(biological_sample && is_operational())
+	if(biological_sample && is_operational)
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
