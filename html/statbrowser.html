@@ -651,6 +651,9 @@ function draw_listedturf() {
 			if(e.ctrlKey){
 				clickcatcher += ";statpanel_item_ctrlclick=1";
 			}
+			if(e.altKey) {
+				clickcatcher += ";statpanel_item_altclick=1";
+			}
 			window.location.href = clickcatcher;
 		}
 		b.textContent = part[0];
