@@ -147,7 +147,7 @@
 	human_user.adjustToxLoss(-4, FALSE)
 	human_user.adjustOxyLoss(-2, FALSE)
 	human_user.adjustStaminaLoss(-20)
-	living_user.AdjustAllImmobility(-10)
+	human_user.AdjustAllImmobility(-10)
 
 /**
   * #Rust spread datum
