@@ -71,6 +71,121 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/proc/zoom_out()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
+/obj/item/tcgcard/update_icon_state()
+	. = ..()
+	if(!flipped)
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		name = template.name
+		desc = template.desc
+		icon_state = template.icon_state
+
+	else
+		name = "Trading Card"
+		desc = "It's the back of a trading card... no peeking!"
+		icon_state = "cardback"
+
+/obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/tcgcard))
+		var/obj/item/tcgcard/second_card = I
+		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
+		new_deck.flipped = flipped
+		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
+		user.transferItemToLoc(src, new_deck)
+		new_deck.update_icon_state()
+	return ..()
+
+/**
+  * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
+  * The "top" card of the deck will always be the bottom card in the stack for our purposes.
+  */
+/obj/item/tcgcard_deck
+	name = "Trading Card Pile"
+	desc = "A stack of TCG cards."
+	icon = DEFAULT_TCG_DMI_ICON
+	icon_state = "deck_up"
+	obj_flags = UNIQUE_RENAME
+	var/flipped = FALSE
+	var/static/radial_draw = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw")
+	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
+	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
+
+/obj/item/tcgcard_deck/Initialize()
+	. = ..()
+	LoadComponent(/datum/component/storage/concrete/tcg)
+
+/obj/item/tcgcard_deck/update_icon_state()
+	. = ..()
+	if(flipped)
+		icon_state = "deck_down"
+	else
+		icon_state = "deck_up"
+
+/obj/item/tcgcard_deck/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>\The [src] has [contents.len] cards inside.</span>"
+
+/obj/item/tcgcard_deck/attack_hand(mob/user)
+	var/list/choices = list(
+		"Draw" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw"),
+		"Shuffle" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle"),
+		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
+		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Draw")
+			draw_card(user)
+		if("Shuffle")
+			shuffle_deck(user)
+		if("Pickup")
+			user.put_in_hands(src)
+		if("Flip")
+			flipped = !flipped
+			contents = reverseRange(contents)
+			update_icon_state()
+		if(null)
+			return
+
+/obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/tcgcard_deck/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/tcgcard))
+		if(contents.len >= 30)
+			to_chat(user, "<span class='notice'>This pile has too many cards for a regular deck!</span>")
+			return FALSE
+		var/obj/item/tcgcard/new_card = I
+		new_card.flipped = flipped
+		user.transferItemToLoc(new_card, src)
+
+/obj/item/tcgcard_deck/proc/draw_card(mob/user)
+	if(!contents.len)
+		CRASH("A TCG deck was created with no cards inside of it.")
+		qdel(src)
+	var/obj/item/tcgcard/drawn_card = contents[contents.len]
+	user.put_in_hands(drawn_card)
+	drawn_card.flipped = flipped //If it's a face down deck, it'll be drawn face down, if it's a face up pile you'll draw it face up.
+	drawn_card.update_icon_state()
+	user.visible_message("<span class='notice'>[user] draws a card from \the [src]!</span>", \
+					"<span class='notice'>You draw a card from \the [src]!</span>")
+	if(contents.len == 1)
+		user.transferItemToLoc(contents[contents.len], drop_location())
+		qdel(src)
+
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user)
+	if(!contents)
+		return
+	contents = shuffle(contents)
+	user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
+					"<span class='notice'>You shuffle \the [src]!</span>")
+
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
