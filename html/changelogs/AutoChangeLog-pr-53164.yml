@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - code_imp: "Reagent exposure methods are now bitflags. There have been some additional changes to reflect and take advantage of this."
