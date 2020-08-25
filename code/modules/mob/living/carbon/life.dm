@@ -1,5 +1,4 @@
 /mob/living/carbon/Life()
-	set invisibility = 0
 
 	if(notransform)
 		return

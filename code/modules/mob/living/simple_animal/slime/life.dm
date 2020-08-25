@@ -8,7 +8,6 @@
 
 
 /mob/living/simple_animal/slime/Life()
-	set invisibility = 0
 	if (notransform)
 		return
 	if(..())
