@@ -137,7 +137,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	//get the first 30 items in contents
 	var/list/items = loc.contents - src
-	var/list/affecting = items.Copy(1, MAX_CONVEYOR_ITEMS_MOVE + 1)//Lists start at 1 lol
+	if(!LAZYLEN(items))//Dont do anything at all if theres nothing there but the conveyor
+		return
+	var/list/affecting = list()
+	if(length(items) > MAX_CONVEYOR_ITEMS_MOVE)
+		affecting = items.Copy(1, MAX_CONVEYOR_ITEMS_MOVE + 1)//Lists start at 1 lol
+	else
+		affecting = items
 	conveying = TRUE
 
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)//Movement effect
