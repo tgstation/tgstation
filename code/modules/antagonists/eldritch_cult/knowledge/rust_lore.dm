@@ -58,6 +58,7 @@
 	living_user.adjustToxLoss(-2, FALSE)
 	living_user.adjustOxyLoss(-0.5, FALSE)
 	living_user.adjustStaminaLoss(-2)
+	living_user.AdjustAllImmobility(-5)
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
@@ -146,7 +147,7 @@
 	human_user.adjustToxLoss(-4, FALSE)
 	human_user.adjustOxyLoss(-2, FALSE)
 	human_user.adjustStaminaLoss(-20)
-
+	living_user.AdjustAllImmobility(-10)
 
 /**
   * #Rust spread datum
