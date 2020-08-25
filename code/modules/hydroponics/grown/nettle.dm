@@ -39,7 +39,7 @@
 	icon_state = "nettle"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5

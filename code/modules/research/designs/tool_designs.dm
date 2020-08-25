@@ -113,6 +113,24 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/plumbing_rcd_sci
+	name = "Research Plumbing Constructor"
+	id = "plumbing_rcd_sci"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
+	build_path = /obj/item/construction/plumbing/research
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/biopsy_tool
+	name = "Biopsy Tool"
+	id = "biopsy_tool"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
+	build_path = /obj/item/biopsy_tool
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
 /////////////////////////////////////////

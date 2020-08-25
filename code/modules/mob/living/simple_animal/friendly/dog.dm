@@ -24,6 +24,10 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+/mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
+	add_cell_sample()
+
 /mob/living/simple_animal/pet/dog/Life()
 	..()
 
@@ -98,6 +102,9 @@
 	var/shaved = FALSE
 	var/nofur = FALSE 		//Corgis that have risen past the material plane of existence.
 
+/mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /mob/living/simple_animal/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
 	QDEL_NULL(inventory_back)
@@ -128,9 +135,25 @@
 	collar_type = "pug"
 	held_state = "pug"
 
+/mob/living/simple_animal/pet/dog/pug/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
 	desc = "This dog can tell someting smells around here, and that something is CRIME!"
+
+/mob/living/simple_animal/pet/dog/bullterrier
+	name = "\improper bull terrier"
+	real_name = "bull terrier"
+	desc = "It's a bull terrier."
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "bullterrier"
+	icon_living = "bullterrier"
+	icon_dead = "bullterrier_dead"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
+	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "bullterrier"
+	held_state = "bullterrier"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"

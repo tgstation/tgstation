@@ -125,6 +125,7 @@
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
 	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

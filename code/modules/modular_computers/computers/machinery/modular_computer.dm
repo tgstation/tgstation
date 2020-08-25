@@ -100,13 +100,13 @@
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
-	machine_stat |= NOPOWER
+	set_machine_stat(machine_stat | NOPOWER)
 	update_icon()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
-		machine_stat &= ~NOPOWER
+		set_machine_stat(machine_stat & ~NOPOWER)
 		update_icon()
 		return
 	. = ..()

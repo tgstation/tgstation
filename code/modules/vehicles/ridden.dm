@@ -58,22 +58,20 @@
 		inserted_key = null
 	return ..()
 
-/obj/vehicle/ridden/driver_move(mob/user, direction)
+/obj/vehicle/ridden/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		if(message_cooldown < world.time)
 			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
 	if(legs_required)
-		var/how_many_legs = user.get_num_legs()
-		if(how_many_legs < legs_required)
+		if(user.usable_legs < legs_required)
 			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_legs ? " your leg[how_many_legs > 1 ? "s" : null]" : "out legs"]...</span>")
+				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_legs ? " your leg[user.usable_legs > 1 ? "s" : null]" : "out legs"]...</span>")
 				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	if(arms_required)
-		var/how_many_arms = user.get_num_arms()
-		if(how_many_arms < arms_required)
+		if(user.usable_hands < arms_required)
 			if(fall_off_if_missing_arms)
 				unbuckle_mob(user, TRUE)
 				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
@@ -84,7 +82,7 @@
 				return FALSE
 
 			if(message_cooldown < world.time)
-				to_chat(user, "<span class='warning'>You can't seem to manage that with[how_many_arms ? " your arm[how_many_arms > 1 ? "s" : null]" : "out arms"]...</span>")
+				to_chat(user, "<span class='warning'>You can't seem to manage that with[user.usable_hands ? " your arm[user.usable_hands > 1 ? "s" : null]" : "out arms"]...</span>")
 				message_cooldown = world.time + 5 SECONDS
 			return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)

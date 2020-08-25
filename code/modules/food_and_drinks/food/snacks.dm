@@ -221,7 +221,7 @@ All foods are distributed among various categories. Use common sense.
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
 			var/amount = bonus_reagents[r_id]
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
 				reagents.add_reagent(r_id, amount, tastes)
 			else
 				reagents.add_reagent(r_id, amount)

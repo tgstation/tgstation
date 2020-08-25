@@ -28,7 +28,7 @@
 	power_channel = AREA_USAGE_EQUIP	//drains power from the EQUIPMENT channel
 	max_integrity = 160		//the turret's health
 	integrity_failure = 0.5
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
 	/// Scan range of the turret for locating targets
 	var/scan_range = 7
@@ -739,7 +739,7 @@
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
@@ -749,6 +749,9 @@
 		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
+
+/obj/machinery/porta_turret/syndicate/pod/toolbox
+	max_integrity = 100
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")

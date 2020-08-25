@@ -42,7 +42,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 		lit = TRUE
 		icon_state = "match_lit"
-		damtype = "fire"
+		damtype = BURN
 		force = 3
 		hitsound = 'sound/items/welder.ogg'
 		inhand_icon_state = "cigon"
@@ -57,7 +57,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		lit = FALSE
 		burnt = TRUE
-		damtype = "brute"
+		damtype = BRUTE
 		force = initial(force)
 		icon_state = "match_burnt"
 		inhand_icon_state = "cigoff"
@@ -189,7 +189,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb_continuous = list("burns", "sings")
 	attack_verb_simple = list("burn", "sing")
 	hitsound = 'sound/items/welder.ogg'
-	damtype = "fire"
+	damtype = BURN
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
@@ -621,7 +621,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 	custom_price = 55
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 0.6
 	light_color = LIGHT_COLOR_FIRE
+	light_on = FALSE
 	var/lit = 0
 	var/fancy = TRUE
 	var/overlay_state
@@ -667,22 +671,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		. = "<span class='rose'>With a single flick of [user.p_their()] wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/lighter/proc/set_lit(new_lit)
+	if(lit == new_lit)
+		return
 	lit = new_lit
 	if(lit)
 		force = 5
-		damtype = "fire"
+		damtype = BURN
 		hitsound = 'sound/items/welder.ogg'
 		attack_verb_continuous = list("burns", "sings")
 		attack_verb_simple = list("burn", "sing")
-		set_light(1)
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
 		force = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
-		set_light(0)
 		STOP_PROCESSING(SSobj, src)
+	set_light_on(lit)
 	update_icon()
 
 /obj/item/lighter/extinguish()

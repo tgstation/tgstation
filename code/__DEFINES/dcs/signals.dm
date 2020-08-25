@@ -173,6 +173,8 @@
 #define COMSIG_ATOM_SET_LIGHT_COLOR "atom_set_light_color"
 ///Called right before the atom changes the value of light_on to a different one, from base atom/set_light_on(): (new_value)
 #define COMSIG_ATOM_SET_LIGHT_ON "atom_set_light_on"
+///Called right before the atom changes the value of light_flags to a different one, from base atom/set_light_flags(): (new_value)
+#define COMSIG_ATOM_SET_LIGHT_FLAGS "atom_set_light_flags"
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
@@ -274,6 +276,14 @@
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 ///from base of atom/movable/setGrabState(): (newstate)
 #define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
+///Called when the movable tries to change its dynamic light color setting, from base atom/movable/lighting_overlay_set_color(): (color)
+#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_RANGE "movable_light_overlay_set_color"
+///Called when the movable tries to change its dynamic light power setting, from base atom/movable/lighting_overlay_set_power(): (power)
+#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_POWER "movable_light_overlay_set_power"
+///Called when the movable tries to change its dynamic light range setting, from base atom/movable/lighting_overlay_set_range(): (range)
+#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_COLOR "movable_light_overlay_set_range"
+///Called when the movable tries to toggle its dynamic light LIGHTING_ON status, from base atom/movable/lighting_overlay_toggle_on(): (new_state)
+#define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 
 // /mob signals
 
@@ -362,6 +372,9 @@
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
+
+///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
+#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
@@ -588,6 +601,7 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
+
 // /obj/mecha signals
 
 ///sent from mecha action buttons to the mecha they're linked to
@@ -740,6 +754,10 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"
 ///(obj/item/insertion_candidate, mob/user, silent) - returns bool
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"
+
+// /datum/component/swabbing signals
+#define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples"						///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.
+	#define COMPONENT_SWAB_FOUND (1<<0)
 
 // /datum/component/two_handed signals
 

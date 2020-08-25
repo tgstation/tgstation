@@ -89,17 +89,12 @@
 	protocol_class = NANITE_PROTOCOL_REPLICATION
 	var/boost = 3
 
+
 /datum/nanite_program/protocol/offline/check_conditions()
-	var/is_offline = FALSE
-	if(nanites.host_mob.stat >= UNCONSCIOUS) //DEAD or UNCONSCIOUS
-		is_offline = TRUE
-	if(nanites.host_mob.InCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOSOFTCRIT))
-		is_offline = TRUE
-	if(nanites.host_mob.InFullCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOHARDCRIT))
-		is_offline = TRUE
-	if(!is_offline)
+	if(nanites.host_mob.stat == CONSCIOUS)
 		return FALSE
 	return ..()
+
 
 /datum/nanite_program/protocol/offline/active_effect()
 	nanites.adjust_nanites(null, boost)
