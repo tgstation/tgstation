@@ -17,6 +17,7 @@
 	var/vote_description = ""
 
 	var/list/voted //List of ID's that already voted.
+	var/cooldown //To prevent paper spam
 
 /obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I,/obj/item/card/id))
@@ -171,38 +172,41 @@
 		else
 			results[text] += 1
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
+	if(cooldown > world.time || !can_interact(user))
+		return
+	else
+		var/obj/item/paper/P = new(drop_location())
+		var/list/tally = list()
+		tally += {"
+			<style>
+				.vote_box_content{
+					max-width:250px;
+					display:inline-block;
+					overflow:hidden;
+					text-overflow:ellipsis;
+					white-space:nowrap;
+					vertical-align:bottom
+				}
+				.vote_box_content br {
+					display: none;
+				}
+				.vote_box_content hr {
+					display: none;
+				}
+			</style>
+			"}
 
-	var/obj/item/paper/P = new(drop_location())
-	var/list/tally = list()
-	tally += {"
-		<style>
-			.vote_box_content{
-				max-width:250px;
-				display:inline-block;
-				overflow:hidden;
-				text-overflow:ellipsis;
-				white-space:nowrap;
-				vertical-align:bottom
-			}
-			.vote_box_content br {
-				display: none;
-			}
-			.vote_box_content hr {
-				display: none;
-			}
-		</style>
-		"}
+		tally += "<h1>Voting Results:</h1><hr><ol>"
+		for(var/option in results)
+			tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
+		tally += "</ol>"
 
-	tally += "<h1>Voting Results:</h1><hr><ol>"
-	for(var/option in results)
-		tally += "<li>\"<div class='vote_box_content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
-	tally += "</ol>"
-
-	P.info = tally.Join()
-	P.name = "Voting Results"
-	P.update_icon()
-	user.put_in_hands(P)
-	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
+		P.info = tally.Join()
+		P.name = "Voting Results"
+		P.update_icon()
+		user.put_in_hands(P)
+		to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
+		cooldown = world.time + 600
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"
