@@ -1,5 +1,0 @@
-author: "uomo91"
-delete-after: True
-changes: 
-  - bugfix: "To change the ammo type the detective's revolver can fire you must now use a wrench instead of a screwdriver, removing the need to take out or destroy its firing pin, and you must be holding it to do so."
-  - bugfix: "When the detective's revolver misfires from using 357 ammo, the chambered round will actually be spent now."
