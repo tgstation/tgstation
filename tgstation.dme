@@ -578,6 +578,7 @@
 #include "code\datums\elements\update_icon_updates_onmob.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\elements\food\dunkable.dm"
+#include "code\datums\elements\food\food_trash.dm"
 #include "code\datums\elements\food\processable.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
