@@ -666,6 +666,39 @@
 	icon_state = "mood5"
 	screen_loc = ui_mood
 
+/obj/screen/combattoggle
+	name = "toggle combat mode"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "combat_off"
+	///Mut appearance for flashy border
+	var/mutable_appearance/flashy
+
+/obj/screen/combattoggle/Click()
+	if(iscarbon(usr))
+		var/mob/living/owner = usr
+		owner.toggle_combat_mode()
+		update_icon_state()
+
+
+/obj/screen/combattoggle/update_icon_state()
+	. = ..()
+	var/mob/living/user = hud?.mymob
+	if(!istype(user) || !user.client)
+		return
+	icon_state = user.combat_mode ? "combat" : "combat_off" //Treats the combat_mode
+
+/obj/screen/combattoggle/update_overlays()
+	. = ..()
+	var/mob/living/user = hud?.mymob
+	if(!istype(user) || !user.client)
+		return
+
+	if(user.combat_mode)
+		if(!flashy)
+			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
+			flashy.color = "#C62727"
+		. += flashy
+
 /obj/screen/splash
 	icon = 'icons/blank_title.png'
 	icon_state = ""

@@ -68,6 +68,13 @@
 		else
 				return 0
 
+/mob/living/proc/toggle_combat_mode()
+	combat_mode = !combat_mode
+	client?.show_popup_menus = !combat_mode //No right click menu in combat mode.
+	if(combat_mode)
+		playsound_local(src, 'sound/misc/ui_togglecombat.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
+	else
+		playsound_local(src, 'sound/misc/ui_toggleoffcombat.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))

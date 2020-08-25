@@ -111,11 +111,6 @@
 	using.hud = src
 	static_inventory += using
 
-	action_intent = new /obj/screen/act_intent/segmented
-	action_intent.icon_state = mymob.a_intent
-	action_intent.hud = src
-	static_inventory += action_intent
-
 	using = new /obj/screen/mov_intent
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
@@ -231,6 +226,11 @@
 	using.screen_loc = ui_above_intent
 	using.hud = src
 	hotkeybuttons += using
+
+	using = new /obj/screen/combattoggle()
+	using.icon = ui_style
+	using.screen_loc = ui_combat_toggle
+	static_inventory += using
 
 	using = new /obj/screen/human/toggle()
 	using.icon = ui_style

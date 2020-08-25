@@ -97,6 +97,9 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(modifiers["right"])
+		RightClickOn(A)
+		return
 
 	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
@@ -376,6 +379,15 @@
 /atom/proc/CtrlShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
 	return
+
+/mob/proc/RightClickOn(atom/A)
+	A.RightClick(src)
+	return
+
+/atom/proc/RightClick(mob/user)
+	SEND_SIGNAL(src, COMSIG_CLICK_RIGHT)
+	return
+
 
 /*
 	Misc helpers
