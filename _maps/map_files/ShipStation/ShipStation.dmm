@@ -3139,6 +3139,11 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered)
+"CK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "CN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -3213,6 +3218,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"Dy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mine/sound,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "DA" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/plasteel/dark/airless,
@@ -5444,6 +5454,12 @@
 /obj/item/stack/sheet/mineral/titanium,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
+"Yc" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "Yr" = (
 /obj/effect/loot_site_spawner,
 /obj/effect/decal/cleanable/dirt,
@@ -30513,7 +30529,7 @@ aj
 pm
 ji
 xb
-Tt
+Yc
 xb
 xb
 pq
@@ -31800,7 +31816,7 @@ AL
 Ls
 WE
 xb
-xb
+CK
 xb
 dc
 aj
@@ -37700,7 +37716,7 @@ jr
 HI
 ak
 OO
-JV
+Dy
 OO
 bJ
 bJ

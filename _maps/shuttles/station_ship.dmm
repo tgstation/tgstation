@@ -1991,6 +1991,7 @@
 /area/shuttle/shipstation)
 "sH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "sL" = (
@@ -4571,7 +4572,7 @@ KQ
 hv
 QJ
 CV
-CV
+bT
 uh
 yO
 eO
@@ -4640,7 +4641,7 @@ CY
 Lz
 hW
 CV
-bT
+CV
 sH
 yO
 Dj
