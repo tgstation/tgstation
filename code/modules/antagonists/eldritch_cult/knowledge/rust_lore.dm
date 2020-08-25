@@ -207,7 +207,7 @@
 	for(var/turfie in spiral_range_turfs(max_dist,centre,FALSE))
 		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
-		for(var/T in getline(turfie,centre))
-			if(get_dist(turfie,T) <= 1)
+		for(var/line_turfie_owo in getline(turfie,centre))
+			if(get_dist(turfie,line_turfie_owo) <= 1)
 				edge_turfs += turfie
 		CHECK_TICK
