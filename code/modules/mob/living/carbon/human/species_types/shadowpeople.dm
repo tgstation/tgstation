@@ -201,27 +201,15 @@
 		else if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
-				if(O.light_range && O.light_power)
-					disintegrate(O, AM)
+				light_item_check(O, H)
 		else
 			for(var/obj/item/O in AM.GetAllContents())
-				if(O.light_range && O.light_power)
-					disintegrate(O, AM)
-		if(L.pulling && L.pulling.light_range && isitem(L.pulling))
-			disintegrate(L.pulling, L.pulling)
+				light_item_check(O, AM)
+		if(L.pulling)
+			light_item_check(L.pulling, L.pulling)
 
 	else if(isitem(AM))
-		var/obj/item/I = AM
-		if(I.light_range && I.light_power)
-			disintegrate(I, I)
-		else if(istype(I, /obj/item/gun))
-			var/obj/item/gun/G = AM
-			if(G.gun_light?.on)
-				disintegrate(G.gun_light, G)
-		else if(istype(I, /obj/item/clothing/head/helmet))
-			var/obj/item/clothing/head/helmet/H = I
-			if(H.attached_light?.on)
-				disintegrate(H.attached_light, H)
+		light_item_check(AM, AM)
 
 
 	else if(ismecha(AM))
@@ -233,15 +221,28 @@
 		if(M.occupant)
 			M.lights_action.Remove(M.occupant)
 		for(var/obj/item/O in AM.GetAllContents())
-			if(O.light_range && O.light_power)
-				disintegrate(O, M)
+			light_item_check(O, AM)
 
 	else if(istype(AM, /obj/machinery/light))
 		var/obj/machinery/light/L = AM
 		if(L.status == 1)
 			return
-		disintegrate(L.drop_light_tube(), AM)
+		disintegrate(L.drop_light_tube(), L)
 
+
+/obj/item/light_eater/proc/light_item_check(obj/item/I, atom/A)
+	if(!isitem(I))
+		return
+	if(I.light_range && I.light_power)
+		disintegrate(I, A)
+	else if(istype(I, /obj/item/gun))
+		var/obj/item/gun/G = AM
+		if(G.gun_light?.on)
+			disintegrate(G.gun_light, A)
+	else if(istype(I, /obj/item/clothing/head/helmet))
+		var/obj/item/clothing/head/helmet/H = I
+		if(H.attached_light?.on)
+			disintegrate(H.attached_light, A)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
 	if(istype(O, /obj/item/pda))
