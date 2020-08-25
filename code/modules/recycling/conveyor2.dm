@@ -156,7 +156,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		//Give this a chance to yield if the server is busy
 		stoplag()
 		if(!QDELETED(A) && (A.loc == loc))
-			A.ConveyorMove(movedir)
+			if(iseffect(A) || isdead(A))
+				continue
+			if(isliving(A))
+				var/mob/living/zoommob = A
+				if((zoommob.movement_type & FLYING) && !zoommob.stat)
+					continue
+			if(!anchored && has_gravity())
+				step(A, movedir)
 	conveying = FALSE
 
 // attack with item, place item on conveyor

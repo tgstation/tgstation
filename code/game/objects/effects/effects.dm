@@ -47,9 +47,6 @@
 	qdel(src)
 	return 0
 
-/obj/effect/ConveyorMove()
-	return
-
 /obj/effect/abstract/ex_act(severity, target)
 	return
 
