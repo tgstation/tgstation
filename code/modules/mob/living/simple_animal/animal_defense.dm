@@ -124,7 +124,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE)
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -149,7 +149,7 @@
 	..()
 	if(QDELETED(src))
 		return
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armor = getarmor(null, BOMB)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			if(prob(bomb_armor))

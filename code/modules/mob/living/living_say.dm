@@ -82,9 +82,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	var/static/list/crit_allowed_modes = list(WHISPER_MODE = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
-	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
-
 	var/ic_blocked = FALSE
 	if(client && !forced && CHAT_FILTER_CHECK(message))
 		//The filter doesn't act on the sanitized message, but the raw message.
@@ -104,44 +101,33 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	var/datum/saymode/saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	var/in_critical = InCritical()
 
 	if(!message)
 		return
+
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		if(client)
-			client.cmd_admin_say(message)
+		client?.cmd_admin_say(message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		if(client)
-			client.dsay(message)
+		client?.dsay(message)
 		return
 
-	if(stat == DEAD)
-		say_dead(original_message)
-		return
+	switch(stat)
+		if(SOFT_CRIT)
+			message_mods[WHISPER_MODE] = MODE_WHISPER
+		if(UNCONSCIOUS)
+			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+				return
+		if(HARD_CRIT)
+			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+				return
+		if(DEAD)
+			say_dead(original_message)
+			return
 
 	if(check_emote(original_message, forced) || !can_speak_basic(original_message, ignore_spam, forced))
 		return
-
-	if(in_critical) //There are cheaper ways to do this, but they're less flexible, and this isn't ran all that often
-		var/end = TRUE
-		for(var/index in message_mods)
-			if(crit_allowed_modes[index])
-				end = FALSE
-				break
-		if(end)
-			return
-	else if(stat == UNCONSCIOUS)
-		var/end = TRUE
-		for(var/index in message_mods)
-			if(unconscious_allowed_modes[index])
-				end = FALSE
-				break
-		if(end)
-			return
-
 
 	language = message_mods[LANGUAGE_EXTENSION]
 
@@ -156,12 +142,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	var/fullcrit = InFullCritical()
-	if((InCritical() && !fullcrit) || message_mods[WHISPER_MODE] == MODE_WHISPER)
+	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		message_range = 1
-		message_mods[WHISPER_MODE] = MODE_WHISPER
-		src.log_talk(message, LOG_WHISPER)
-		if(fullcrit)
+		log_talk(message, LOG_WHISPER)
+		if(stat == HARD_CRIT)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length_char(message)
@@ -171,7 +155,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			message_mods[WHISPER_MODE] = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
-		src.log_talk(message, LOG_SAY, forced_by=forced)
+		log_talk(message, LOG_SAY, forced_by=forced)
 
 	message = treat_message(message) // unfortunately we still need this
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
@@ -243,7 +227,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
 	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
+	if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
 		create_chat_message(speaker, message_language, raw_message, spans)
 
 	// Recompose message for AI hrefs, language incomprehension.

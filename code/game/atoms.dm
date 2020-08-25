@@ -288,7 +288,7 @@
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
-	if((P.flag in list("bullet", "bomb")) && P.ricochet_incidence_leeway)
+	if((P.flag in list(BULLET, BOMB)) && P.ricochet_incidence_leeway)
 		if((a_incidence_s < 90 && a_incidence_s < 90 - P.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > P.ricochet_incidence_leeway))
 			return
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
@@ -653,7 +653,7 @@
   * Default behaviour is to send a warning that the user can't move while buckled as long
   * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
   */
-/atom/proc/relaymove(mob/user)
+/atom/proc/relaymove(mob/living/user, direction)
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")

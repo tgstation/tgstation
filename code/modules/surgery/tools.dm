@@ -393,7 +393,7 @@
 
 	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
-	if(patient.stat == DEAD || patient.stat == UNCONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
+	if(patient.stat >= UNCONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
 		amputation_speed_mod = 0.5
 	else if(patient.jitteriness >= 1)
 		amputation_speed_mod = 1.5

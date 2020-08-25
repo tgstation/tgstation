@@ -159,10 +159,10 @@
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
+	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
 	empulse(owner, 2, 5)
-	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
 		qdel(src)
@@ -182,31 +182,32 @@
 	health_cost = 12
 
 /datum/action/innate/cult/blood_spell/equipment
-	name = "Summon Equipment"
-	desc = "Allows you to summon a ritual dagger, or empowers your hand to summon combat gear onto a cultist you touch, including cult armor, a cult bola, and a cult sword."
+	name = "Summon Combat Equipment"
+	desc = "Empowers your hand to summon combat gear onto a cultist you touch, including cult armor, a cult bola, and a cult sword. Not recommended for use before the blood cult's presence has been revealed."
 	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
 
-/datum/action/innate/cult/blood_spell/equipment/Activate()
-	var/choice = alert(owner,"Choose your equipment type",,"Combat Equipment","Ritual Dagger","Cancel")
-	if(choice == "Ritual Dagger")
-		var/turf/T = get_turf(owner)
-		owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
-			"<span class='cultitalic'>Red light begins to shimmer and take form within your hand!</span>")
-		var/obj/O = new /obj/item/melee/cultblade/dagger(T)
-		if(owner.put_in_hands(O))
-			to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
-		else
-			owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
-				 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
-		SEND_SOUND(owner, sound('sound/effects/magic.ogg',0,1,25))
-		charges--
-		desc = base_desc
-		desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
-		if(charges<=0)
-			qdel(src)
-	else if(choice == "Combat Equipment")
-		..()
+/datum/action/innate/cult/blood_spell/dagger
+	name = "Summon Ritual Dagger"
+	desc = "Allows you to summon a ritual dagger, in case you've lost the dagger that was given to you."
+	invocation = "Wur d'dai leev'mai k'sagan!" //where did I leave my keys, again?
+	button_icon_state = "equip" //this is the same icon that summon equipment uses, but eh, I'm not a spriter
+
+/datum/action/innate/cult/blood_spell/dagger/Activate()
+	var/turf/owner_turf = get_turf(owner)
+	owner.whisper(invocation, language = /datum/language/common)
+	owner.visible_message("<span class='warning'>[owner]'s hand glows red for a moment.</span>", \
+		"<span class='cultitalic'>Your plea for aid is answered, and light begins to shimmer and take form within your hand!</span>")
+	var/obj/item/melee/cultblade/dagger/summoned_blade = new (owner_turf)
+	if(owner.put_in_hands(summoned_blade))
+		to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
+	else
+		owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
+			 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
+	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
+	charges--
+	if(charges <= 0)
+		qdel(src)
 
 /datum/action/innate/cult/blood_spell/horror
 	name = "Hallucinations"
@@ -511,7 +512,7 @@
 /obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscultist(user) && iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
-		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
+		if(C.canBeHandcuffed())
 			CuffAttack(C, user)
 		else
 			user.visible_message("<span class='cultitalic'>This victim doesn't have enough arms to complete the restraint!</span>")
@@ -666,14 +667,14 @@
 	return TRUE
 
 
-//Armor: Gives the target a basic cultist combat loadout
+//Armor: Gives the target (cultist) a basic cultist combat loadout
 /obj/item/melee/blood_magic/armor
 	name = "Arming Aura"
 	desc = "Will equipt cult combat gear onto a cultist on contact."
 	color = "#33cc33" // green
 
 /obj/item/melee/blood_magic/armor/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(iscarbon(target) && proximity)
+	if(iscarbon(target) && iscultist(target) && proximity)
 		uses--
 		var/mob/living/carbon/C = target
 		C.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [C]!</span>")

@@ -219,7 +219,7 @@
 	return override_allow_spacemove || AM.has_gravity()
 
 /datum/component/riding/proc/account_limbs(mob/living/M)
-	if(M.get_num_legs() < 2 && !slowed)
+	if(M.usable_legs < 2 && !slowed)
 		vehicle_move_delay = vehicle_move_delay + slowvalue
 		slowed = TRUE
 	else if(slowed)
@@ -302,7 +302,7 @@
 			return
 	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
-		if(!carbonuser.get_num_arms())
+		if(!carbonuser.usable_hands)
 			Unbuckle(user)
 			to_chat(user, "<span class='warning'>You can't grab onto [AM] with no hands!</span>")
 			return

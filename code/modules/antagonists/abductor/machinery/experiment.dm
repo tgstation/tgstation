@@ -34,7 +34,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/relaymove(mob/user)
+/obj/machinery/abductor/experiment/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
 	if(message_cooldown <= world.time)

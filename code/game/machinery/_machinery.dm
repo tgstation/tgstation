@@ -77,9 +77,6 @@ Class Procs:
    process_atmos()
       Called by the 'air subsystem' once per atmos tick for each machine that is listed in its 'atmos_machines' list.
 
-   is_operational()
-		Returns 0 if the machine is unpowered, broken or undergoing maintenance, something else if not
-
 	Compiled by Aygar
 */
 
@@ -98,7 +95,7 @@ Class Procs:
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 
-	var/machine_stat = 0
+	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
@@ -107,6 +104,8 @@ Class Procs:
 	var/active_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
+	///A combination of factors such as having power, not being broken and so on. Boolean.
+	var/is_operational = TRUE
 	var/wire_compatible = FALSE
 
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
@@ -131,7 +130,7 @@ Class Procs:
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -178,6 +177,25 @@ Class Procs:
 
 /obj/machinery/proc/process_atmos()//If you dont use process why are you here
 	return PROCESS_KILL
+
+
+///Called when we want to change the value of the machine_stat variable. Holds bitflags.
+/obj/machinery/proc/set_machine_stat(new_value)
+	if(new_value == machine_stat)
+		return
+	. = machine_stat
+	machine_stat = new_value
+	on_set_machine_stat(.)
+
+
+///Called when the value of `machine_stat` changes, so we can react to it.
+/obj/machinery/proc/on_set_machine_stat(old_value)
+	if(old_value & (NOPOWER|BROKEN|MAINT))
+		if(!(machine_stat & (NOPOWER|BROKEN|MAINT))) //From off to on.
+			set_is_operational(TRUE)
+	else if(machine_stat & (NOPOWER|BROKEN|MAINT)) //From on to off.
+		set_is_operational(FALSE)
+
 
 /obj/machinery/emp_act(severity)
 	. = ..()
@@ -255,8 +273,20 @@ Class Procs:
 		use_power(active_power_usage,power_channel)
 	return 1
 
-/obj/machinery/proc/is_operational()
-	return !(machine_stat & (NOPOWER|BROKEN|MAINT))
+
+///Called when we want to change the value of the `is_operational` variable. Boolean.
+/obj/machinery/proc/set_is_operational(new_value)
+	if(new_value == is_operational)
+		return
+	. = is_operational
+	is_operational = new_value
+	on_set_is_operational(.)
+
+
+///Called when the value of `is_operational` changes, so we can react to it.
+/obj/machinery/proc/on_set_is_operational(old_value)
+	return
+
 
 /obj/machinery/can_interact(mob/user)
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
@@ -355,14 +385,14 @@ Class Procs:
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
-		take_damage(4, BRUTE, "melee", 1)
+		take_damage(4, BRUTE, MELEE, 1)
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
 	if(!arm)
 		return
-	if(arm.disabled)
+	if(arm.bodypart_disabled)
 		return
 	var/damage = damage_deflection / 10
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
@@ -403,7 +433,7 @@ Class Procs:
 	return
 
 /obj/machinery/proc/default_pry_open(obj/item/I)
-	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -440,7 +470,7 @@ Class Procs:
 	SHOULD_CALL_PARENT(1)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		machine_stat |= BROKEN
+		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_icon()
 		return TRUE
@@ -603,7 +633,7 @@ Class Procs:
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power * 0.0005, BURN, "energy")
+		take_damage(power * 0.0005, BURN, ENERGY)
 		if(prob(40))
 			emp_act(EMP_LIGHT)
 		power -= power * 0.0005
@@ -625,7 +655,7 @@ Class Procs:
 	AM.pixel_y = -8 + (round( . / 3)*8)
 
 /obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1)
+	take_damage(500, BRUTE, MELEE, 1)
 
 /**
  * Generate a name devices
