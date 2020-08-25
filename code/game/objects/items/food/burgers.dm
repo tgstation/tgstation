@@ -5,6 +5,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bun" = 2, "beef patty" = 4)
 	foodtypes = GRAIN | MEAT //lettuce doesn't make burger a vegetable.
+	eat_time = 15 //Quick snack
 
 /obj/item/food/burger/plain
 	name = "burger"
