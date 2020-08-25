@@ -37,8 +37,8 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.13+](https://nodejs.org/en/download/)
-- [Yarn v1.19+](https://yarnpkg.com/en/docs/install) (optional)
+- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Yarn v1.22.4+](https://yarnpkg.com/en/docs/install) (optional)
 - [Git Bash](https://git-scm.com/downloads)
   or [MSys2](https://www.msys2.org/) (optional)
 
@@ -105,6 +105,14 @@ You can double-click these batch files to achieve the same thing:
 > game just by using Dream Maker.
 
 ## Troubleshooting
+
+**Development server is crashing**
+
+Make sure path to your working directory does not contain spaces or special
+unicode characters. If so, move codebase to a location which does not contain
+spaces or unicode characters.
+
+This is a known issue with Yarn Berry, and fix is going to happen someday.
 
 **Development server doesn't find my BYOND cache!**
 
