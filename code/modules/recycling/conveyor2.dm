@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 				var/mob/living/zoommob = A
 				if((zoommob.movement_type & FLYING) && !zoommob.stat)
 					continue
-			if(!anchored && has_gravity())
+			if(!A.anchored && A.has_gravity())
 				step(A, movedir)
 	conveying = FALSE
 
