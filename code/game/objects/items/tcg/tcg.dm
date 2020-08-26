@@ -90,8 +90,11 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
+		second_card.zoom_out()
 		user.transferItemToLoc(src, new_deck)
+		zoom_out()
 		new_deck.update_icon_state()
+		user.put_in_hands(new_deck)
 	return ..()
 
 /**
@@ -116,7 +119,13 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard_deck/update_icon_state()
 	. = ..()
 	if(flipped)
-		icon_state = "deck_down"
+		switch(contents.len)
+			if(1 to 10)
+				icon_state = "deck_tcg_low"
+			if(11 to 20)
+				icon_state = "deck_tcg_half"
+			if(21 to INFINITY)
+				icon_state = "deck_tcg_full"
 	else
 		icon_state = "deck_up"
 
@@ -142,9 +151,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		if("Pickup")
 			user.put_in_hands(src)
 		if("Flip")
-			flipped = !flipped
-			contents = reverseRange(contents)
-			update_icon_state()
+			flip_deck()
 		if(null)
 			return
 
@@ -158,17 +165,19 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard_deck/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/tcgcard))
-		if(contents.len >= 30)
+		if(contents.len > 30)
 			to_chat(user, "<span class='notice'>This pile has too many cards for a regular deck!</span>")
 			return FALSE
 		var/obj/item/tcgcard/new_card = I
 		new_card.flipped = flipped
 		user.transferItemToLoc(new_card, src)
 
+/obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
+	shuffle_deck(user)
+
 /obj/item/tcgcard_deck/proc/draw_card(mob/user)
 	if(!contents.len)
 		CRASH("A TCG deck was created with no cards inside of it.")
-		qdel(src)
 	var/obj/item/tcgcard/drawn_card = contents[contents.len]
 	user.put_in_hands(drawn_card)
 	drawn_card.flipped = flipped //If it's a face down deck, it'll be drawn face down, if it's a face up pile you'll draw it face up.
@@ -179,12 +188,22 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		user.transferItemToLoc(contents[contents.len], drop_location())
 		qdel(src)
 
-/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user)
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
 	if(!contents)
 		return
 	contents = shuffle(contents)
-	user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
-					"<span class='notice'>You shuffle \the [src]!</span>")
+	if(visable)
+		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
+						"<span class='notice'>You shuffle \the [src]!</span>")
+
+/obj/item/tcgcard_deck/proc/flip_deck()
+	flipped = !flipped
+	contents = reverseRange(contents)
+	for(var/a in 1 to contents.len)
+		var/obj/item/tcgcard/nu_card = contents[a]
+		nu_card.zoom_in()
+		nu_card.flipped = flipped
+	update_icon_state()
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
