@@ -402,6 +402,7 @@
 #include "code\datums\components\bane.dm"
 #include "code\datums\components\beauty.dm"
 #include "code\datums\components\beetlejuice.dm"
+#include "code\datums\components\bloodysoles.dm"
 #include "code\datums\components\butchering.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\chasm.dm"

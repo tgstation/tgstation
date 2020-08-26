@@ -1,0 +1,7 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue where the Shuttle Console UI could become unusable."
+  - bugfix: "Fixed an issue where certain shuttle statuses did not properly show on the Shuttle Console UI."
+  - bugfix: "Fixed an issue where Syndicate Shuttle Consoles did not restrict nuclear operatives properly."
+  - bugfix: "Fixed an issue where Labor Shuttle Consoles did not restrict crew properly."
