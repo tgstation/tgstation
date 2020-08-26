@@ -363,15 +363,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/spooky_camera
-	name = "Camera Obscura"
-	result = /obj/item/camera/spooky
-	time = 15
-	reqs = list(/obj/item/camera = 1,
-				/datum/reagent/water/holywater = 10)
-	parts = list(/obj/item/camera = 1)
-	category = CAT_MISC
-
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
@@ -393,6 +384,35 @@
 	reqs = list(/obj/item/organ/tail/cat = 1,
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/mixedbouquet
+	name = "Mixed bouquet"
+	result = /obj/item/bouquet
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/poppy/lily =2,
+				/obj/item/grown/sunflower = 2,
+				/obj/item/reagent_containers/food/snacks/grown/poppy/geranium = 2)
+	category = CAT_MISC
+
+/datum/crafting_recipe/sunbouquet
+	name = "Sunflower bouquet"
+	result = /obj/item/bouquet/sunflower
+	reqs = list(/obj/item/grown/sunflower = 6)
+	category = CAT_MISC
+
+/datum/crafting_recipe/poppybouquet
+	name = "Poppy bouquet"
+	result = /obj/item/bouquet/poppy
+	reqs = list (/obj/item/reagent_containers/food/snacks/grown/poppy = 6)
+	category = CAT_MISC
+
+/datum/crafting_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/camera/spooky
+	time = 15
+	reqs = list(/obj/item/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/camera = 1)
+	category = CAT_MISC
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
