@@ -49,7 +49,9 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
-	log_tgui(user, "new [interface] fancy [user.client.prefs.tgui_fancy]")
+	log_tgui(user,
+		"new [interface] fancy [user.client.prefs.tgui_fancy]",
+		src_object = src_object)
 	src.user = user
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
@@ -245,11 +247,9 @@
 		return
 	// Validate ping
 	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
-		log_tgui(user, \
-			"Error: Zombie window detected, killing it with fire.\n" \
-			+ "window_id: [window.id]\n" \
-			+ "opened_at: [opened_at]\n" \
-			+ "world.time: [world.time]")
+		log_tgui(user, "Error: Zombie window detected, closing.",
+			window = window,
+			src_object = src_object)
 		close(can_be_suspended = FALSE)
 		return
 	// Update through a normal call to ui_interact
@@ -282,8 +282,12 @@
 /datum/tgui/proc/on_message(type, list/payload, list/href_list)
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
+		var/act_type = copytext(type, 5)
+		log_tgui(user, "Action: [act_type] [href_list["payload"]]",
+			window = window,
+			src_object = src_object)
 		process_status()
-		if(src_object.ui_act(copytext(type, 5), payload, src, state))
+		if(src_object.ui_act(act_type, payload, src, state))
 			SStgui.update_uis(src_object)
 		return FALSE
 	switch(type)
