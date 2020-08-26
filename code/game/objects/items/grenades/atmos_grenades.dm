@@ -11,13 +11,16 @@
 	name = "Healium crystal"
 	desc = "A crystal made from the Healium gas, it's cold to the touch."
 	icon_state = "healium_crystal"
+	///Amount of stamina damage mobs will take if in range
 	var/stamina_damage = 30
+	///Range of the grenade that will cool down and affect mobs
 	var/freeze_range = 4
 
 /obj/item/grenade/gas_crystal/proto_nitrate_crystal
 	name = "Proto Nitrate crystal"
 	desc = "A crystal made from the Proto Nitrate gas, you can see the liquid gases inside."
 	icon_state = "proto_nitrate_crystal"
+	///Range of the grenade air refilling
 	var/refill_range = 5
 
 /obj/item/grenade/gas_crystal/cyrion_b_crystal

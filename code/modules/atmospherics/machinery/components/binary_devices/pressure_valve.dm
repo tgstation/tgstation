@@ -6,11 +6,15 @@
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 
+	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
-
+	///Frequency for radio signaling
 	var/frequency = 0
+	///ID for radio signaling
 	var/id = null
+	///Connection to the radio processing
 	var/datum/radio_frequency/radio_connection
+	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
 
 	construction_type = /obj/item/pipe/directional
