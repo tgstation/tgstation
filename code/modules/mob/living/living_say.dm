@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			deaf_type = 2
 
 
-		if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)))
 			create_chat_message(speaker, message_language, raw_message, spans)
 
 		if(HAS_TRAIT(src, TRAIT_BLIND))
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
-		show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
+		show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlighting = speaker == src)
 		return message
 
 	else
