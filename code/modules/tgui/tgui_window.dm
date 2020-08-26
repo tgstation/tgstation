@@ -179,8 +179,8 @@
 	if(!client)
 		return
 	if(can_be_suspended && can_be_suspended())
-		log_tgui(client, "Suspending",
-			context = "[id]/close",
+		log_tgui(client,
+			context = "[id]/close (suspending)",
 			window = src)
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
