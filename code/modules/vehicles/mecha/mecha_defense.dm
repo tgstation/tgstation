@@ -160,13 +160,8 @@
 		return
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
-<<<<<<< HEAD:code/modules/vehicles/mecha/mecha_defense.dm
-		take_damage(30 / severity, BURN, "energy", 1)
-	log_message("Mech hit by EMP", LOG_MECHA, color="red")
-=======
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
->>>>>>> master:code/game/mecha/mecha_defense.dm
 
 	if(istype(src, /obj/vehicle/sealed/mecha/combat))
 		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'

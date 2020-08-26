@@ -24,7 +24,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_1 = HEAR_1
 	max_integrity = 300
-	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	movedelay = 1 SECONDS
 	anchored = TRUE
 	emulate_door_bumps = TRUE

@@ -84,24 +84,24 @@
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		mecha_attacker.do_attack_animation(src)
-		if(mecha_attacker.damtype == "brute")
+		if(mecha_attacker.damtype == BRUTE)
 			step_away(src, mecha_attacker, 15)
 		var/obj/item/bodypart/temp = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
 		if(temp)
 			var/update = 0
 			var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
 			switch(mecha_attacker.damtype)
-				if("brute")
+				if(BRUTE)
 					if(mecha_attacker.force > 35) // durand and other heavy mechas
 						Unconscious(20)
 					else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 						Knockdown(40)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-				if("fire")
+				if(FIRE)
 					update |= temp.receive_damage(0, dmg)
 					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-				if("tox")
+				if(TOX)
 					mecha_attacker.mech_toxin_damage(src)
 				else
 					return
