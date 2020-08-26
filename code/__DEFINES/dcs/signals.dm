@@ -373,6 +373,9 @@
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 
+///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
+#define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
+
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
 ///sent when a mob/login() finishes: (client)
@@ -751,6 +754,10 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"
 ///(obj/item/insertion_candidate, mob/user, silent) - returns bool
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"
+
+// /datum/component/swabbing signals
+#define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples"						///Called when you try to swab something using the swabable component, includes a mutable list of what has been swabbed so far so it can be modified.
+	#define COMPONENT_SWAB_FOUND (1<<0)
 
 // /datum/component/two_handed signals
 

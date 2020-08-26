@@ -11,6 +11,7 @@
 	idle_power_usage = 0
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
+	processing_flags = NONE
 /// The mount's defib
 	var/obj/item/defibrillator/defib
 /// if true, and a defib is loaded, it can't be removed without unlocking the clamps
@@ -178,11 +179,25 @@
 	idle_power_usage = 1
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
+
+/obj/machinery/defibrillator_mount/charging/Initialize()
+	. = ..()
+	if(is_operational)
+		begin_processing()
+
+
+/obj/machinery/defibrillator_mount/charging/on_set_is_operational(old_value)
+	if(old_value) //Turned off
+		end_processing()
+	else //Turned on
+		begin_processing()
+
+
 /obj/machinery/defibrillator_mount/charging/process()
 	var/obj/item/stock_parts/cell/C = get_cell()
-	if(!C)
+	if(!C || !is_operational)
 		return PROCESS_KILL
-	if(C.charge < C.maxcharge && is_operational())
+	if(C.charge < C.maxcharge)
 		use_power(100)
 		C.give(80)
 		update_icon()

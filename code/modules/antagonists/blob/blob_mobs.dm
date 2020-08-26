@@ -12,7 +12,7 @@
 	speak_emote = null //so we use verb_yell/verb_say/etc
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	maxbodytemp = 360
+	maxbodytemp = INFINITY
 	unique_name = 1
 	a_intent = INTENT_HARM
 	see_in_dark = 8
@@ -115,6 +115,8 @@
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/mob/living/carbon/human/oldguy
 	var/is_zombie = FALSE
+	///Whether or not this is a fragile spore from Distributed Neurons
+	var/is_weak = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
 	. = ..()
@@ -123,11 +125,12 @@
 		factory.spores += src
 		if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
 			notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
+		add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == DEAD)
+			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
 	if(factory && z != factory.z)
@@ -225,6 +228,13 @@
 		color = initial(color)//looks better.
 		add_overlay(blob_head_overlay)
 
+/mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/hostile/blob/blobspore/independent
+	gold_core_spawnable = FALSE
+	independent = TRUE
+
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
 	health = 15
@@ -232,6 +242,8 @@
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	death_cloud_size = 0
+	is_weak = TRUE
+	gold_core_spawnable = NO_SPAWN
 
 /////////////////
 // BLOBBERNAUT //
@@ -260,6 +272,13 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/blobbernaut
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())

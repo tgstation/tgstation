@@ -219,7 +219,7 @@
 		else
 			. += "<span class='notice'>\The [src] indicates that the brain is active.</span>"
 
-/obj/item/mmi/relaymove(mob/user)
+/obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
 /obj/item/mmi/proc/brain_check(mob/user)

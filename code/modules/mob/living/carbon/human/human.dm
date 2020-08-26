@@ -1158,10 +1158,6 @@
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)
 
-/mob/living/carbon/human/do_after_coefficent()
-	. = ..()
-	. *= physiology.do_after_speed
-
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 	dna?.species.spec_updatehealth(src)
