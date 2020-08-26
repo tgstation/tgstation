@@ -1733,3 +1733,7 @@
 		return
 	. = usable_hands
 	usable_hands = new_value
+
+/// Whether or not this mob will escape from storages while being picked up/held.
+/mob/living/proc/will_escape_storage()
+	return FALSE
