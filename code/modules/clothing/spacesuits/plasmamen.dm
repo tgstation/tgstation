@@ -180,7 +180,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/chemist
 	name = "chemistry plasma envirosuit helmet"
-	desc = "A plasmaman envirosuit designed for chemists, two orange stripes going down it's face."
+	desc = "A plasmaman envirosuit designed for chemists, two orange stripes going down its face."
 	icon_state = "chemist_envirohelm"
 	inhand_icon_state = "chemist_envirohelm"
 
@@ -223,7 +223,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
 	name = "atmospherics plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by engineering's blue."
+	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by atmos' blue."
 	icon_state = "atmos_envirohelm"
 	inhand_icon_state = "atmos_envirohelm"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 10, FIRE = 100, ACID = 75)
@@ -262,7 +262,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/curator
 	name = "curator's plasma envirosuit helmet"
-	desc = "A slight modification on a tradiational voidsuit helmet, this helmet was Nano-Trasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historian and old-styled plasmamen alike."
+	desc = "A slight modification on a traditional voidsuit helmet, this helmet was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historians and old-school plasmamen alike."
 	icon_state = "prototype_envirohelm"
 	inhand_icon_state = "prototype_envirohelm"
 	actions_types = list(/datum/action/item_action/toggle_welding_screen/plasmaman)
@@ -271,7 +271,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
 	name = "botany plasma envirosuit helmet"
-	desc = "A green and blue envirohelmet designating it's wearer as a botanist. While not specially designed for it, it would protect against minor planet-related injuries."
+	desc = "A green and blue envirohelmet designating its wearer as a botanist. While not specifically designed for it, it would protect against minor plant-related injuries."
 	icon_state = "botany_envirohelm"
 	inhand_icon_state = "botany_envirohelm"
 
