@@ -31,6 +31,11 @@
 	if(!canconsume(M, user))
 		return FALSE
 
+	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		to_chat(M, "<span class='notice'>You are unable to swallow [src] without a stomach.</span>")
+		return FALSE
+
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
 		if(self_delay)
@@ -49,8 +54,7 @@
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
-	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
+	reagents.trans_to(belly, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)
 	return TRUE
 

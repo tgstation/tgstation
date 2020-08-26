@@ -35,17 +35,18 @@
 	if(damage < low_threshold)
 		return
 
-	var/datum/reagent/Nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	var/datum/reagent/nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
+	if(!nutri)
+		return
 
-	if(Nutri)
-		if(prob((damage/40) * Nutri.volume * Nutri.volume))
-			body.vomit(damage)
-			to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+	if(prob((damage/40) * nutri.volume * nutri.volume))
+		body.vomit(damage)
+		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+		return
 
-	else if(Nutri && damage > high_threshold)
-		if(prob((damage/10) * Nutri.volume * Nutri.volume))
-			body.vomit(damage)
-			to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+	if(damage > high_threshold && prob((damage/10) * nutri.volume * nutri.volume))
+		body.vomit(damage)
+		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.inherent_traits)
