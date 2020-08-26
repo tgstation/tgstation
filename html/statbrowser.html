@@ -86,13 +86,13 @@ li a:hover:not(.active) {
 }
 .button:hover {
 	border-color: #FFFFFE;
-    background-color: black;
-    color: white;
+	background-color: black;
+	color: white;
 }
 .dark button:hover {
 	border-color: #252524;
-    background-color: white;
-    color: #252525;
+	background-color: white;
+	color: #252525;
 }
 .button:active, .button.active {
   text-decoration: underline;
@@ -786,22 +786,22 @@ function draw_verbs(cat){
 }
 
 function create_theme_button() {
-    let B = document.createElement("BUTTON");
-    B.onclick = function() {toggle_theme()};
-    B.id = "Theme";
-    B.textContent = "Theme";
-    B.className = "button Theme";
-    permanent_tabs.push("Theme");
-    menu.appendChild(B);
+	let B = document.createElement("BUTTON");
+	B.onclick = function() {toggle_theme()};
+	B.id = "Theme";
+	B.textContent = "Theme";
+	B.className = "button Theme";
+	permanent_tabs.push("Theme");
+	menu.appendChild(B);
 }
 
 function toggle_theme() {
 	if(theme == "light"){
-    	theme = "dark";
-        set_dark_theme();
-    } else {
-    	theme = "light";
-        set_light_theme();
+		theme = "dark";
+		set_dark_theme();
+	} else {
+		theme = "light";
+		set_light_theme();
 }
 }
 
@@ -841,16 +841,16 @@ function set_style_sheet(sheet) {
 		window.location.href = "byond://winset?map.focus=true";
 	});
   window.addEventListener("load", function() {
-      create_theme_button();
-      let darkmodeCookie = getCookie('darkmode');
-      if(darkmodeCookie === 'true') {
-          set_dark_theme();
-      } else {
-          set_light_theme();
+	  create_theme_button();
+	  let darkmodeCookie = getCookie('darkmode');
+	  if(darkmodeCookie === 'true') {
+		  set_dark_theme();
+	  } else {
+		  set_light_theme();
 	  }
-      if(!current_tab) {
+	  if(!current_tab) {
 		  addPermanentTab("Status");
-          tab_change("Status");
+		  tab_change("Status");
 	  }
   });
 
