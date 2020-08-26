@@ -11,7 +11,8 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 5
-	attack_verb = list("bashed", "carried")
+	attack_verb_continuous = list("bashes", "carries")
+	attack_verb_simple = list("bash", "carry")
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
@@ -114,9 +115,9 @@
 		update_icon()
 		return
 	else if(user.client)
-		container_resist(user)
+		container_resist_act(user)
 
-/obj/item/pet_carrier/container_resist(mob/living/user)
+/obj/item/pet_carrier/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)

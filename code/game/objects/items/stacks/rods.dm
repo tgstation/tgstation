@@ -20,7 +20,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=1000)
 	max_amount = 50
-	attack_verb = list("hit", "bludgeoned", "whacked")
+	attack_verb_continuous = list("hits", "bludgeons", "whacks")
+	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	embedding = list()
 	novariants = TRUE

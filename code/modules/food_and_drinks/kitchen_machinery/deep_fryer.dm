@@ -29,7 +29,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
+	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
@@ -89,7 +89,7 @@ God bless America.
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
-	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
+	if(istype(I, /obj/item/food/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
@@ -101,7 +101,7 @@ God bless America.
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
+			frying = new/obj/item/food/deepfryholder(src, I)
 			icon_state = "fryer_on"
 			fry_loop.start()
 

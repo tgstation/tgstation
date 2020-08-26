@@ -319,8 +319,9 @@
 	return max(S.potency*(rate + 0.01), 0.1)
 
 /datum/plant_gene/trait/glow/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	..()
-	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
+	. = ..()
+	G.light_system = MOVABLE_LIGHT
+	G.AddComponent(/datum/component/overlay_lighting, glow_range(G.seed), glow_power(G.seed), glow_color)
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
@@ -456,7 +457,7 @@
 		var/mob/living/L = target
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
-			G.reagents.trans_to(L, injecting_amount, method = INJECT)
+			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
@@ -506,6 +507,10 @@
 			HY.pestlevel = 0 // Reset
 			HY.update_icon()
 			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
+			if(HY.myseed)
+				HY.name = "[initial(HY.name)] ([HY.myseed.plantname])"
+			else
+				HY.name = initial(HY.name)
 
 /**
   * A plant trait that causes the plant's food reagents to ferment instead.

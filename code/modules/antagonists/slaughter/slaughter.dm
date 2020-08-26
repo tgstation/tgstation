@@ -39,13 +39,15 @@
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
 
-/mob/living/simple_animal/hostile/imp/slaughter/Initialize()
+/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/slaughter/bloodpool)//Bloodpool is the blood pool we spawn in
 	..()
 	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
+	if(bloodpool)
+		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/slaughter/.proc/deleteself)
 
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))

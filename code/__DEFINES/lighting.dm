@@ -1,3 +1,13 @@
+///Object doesn't use any of the light systems. Should be changed to add a light source to the object.
+#define NO_LIGHT_SUPPORT 0
+///Light made with the lighting datums, applying a matrix.
+#define STATIC_LIGHT 1
+///Light made by masking the lighting darkness plane.
+#define MOVABLE_LIGHT 2
+
+///Is a movable light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
+#define LIGHT_ATTACHED (1<<0)
+
 //Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
 /// frequency, in 1/10ths of a second, of the lighting process
 #define LIGHTING_INTERVAL       5

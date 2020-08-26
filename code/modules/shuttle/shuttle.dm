@@ -708,6 +708,26 @@
 	else
 		return "00:00"
 
+/**
+  * Gets shuttle location status in a form of string for tgui interfaces
+  */
+/obj/docking_port/mobile/proc/get_status_text_tgui()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	var/docked_at = dockedAt?.name || "Unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		if(timeLeft() > 1 HOURS)
+			return "Hyperspace"
+		else
+			var/obj/docking_port/stationary/dst
+			if(mode == SHUTTLE_RECALL)
+				dst = previous
+			else
+				dst = destination
+			return "In transit towards [dst?.name || "unknown location"]"
+	else if(mode == SHUTTLE_RECHARGING)
+		return "[docked_at], recharging [getTimerStr()]"
+	else
+		return docked_at
 
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
@@ -726,7 +746,6 @@
 		return "[docked_at], recharging [getTimerStr()]"
 	else
 		return docked_at
-
 
 /obj/docking_port/mobile/proc/getDbgStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()

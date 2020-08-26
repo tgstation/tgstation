@@ -44,7 +44,7 @@
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 200
-	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 
 	var/stage = 1
 	var/fixture_type = "tube"
@@ -750,11 +750,12 @@
 	update()
 
 /obj/machinery/light/zap_act(power, zap_flags)
-	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
+	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE)
+	. = ..()
+	if(explosive)
 		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
-	else
-		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
