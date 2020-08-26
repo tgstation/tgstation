@@ -40,7 +40,7 @@
 	return
 
 /turf/closed/indestructible/oldshuttle
-	name = "strange shuttle wall"
+	name = "tent wall placeholder"
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
 
