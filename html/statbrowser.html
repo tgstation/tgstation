@@ -196,7 +196,7 @@ let href_token = null;
 let spells = [];
 let spell_tabs = [];
 let verb_tabs = [];
-let verbs = [];
+let verbs = [["", ""]]; // list with a list inside
 let inner = "";
 let tickets = [];
 let sqdl2 = [];
@@ -229,8 +229,12 @@ function createStatusTab(name) {
 function removeStatusTab(name) {
 	if(!document.getElementById(name) || permanent_tabs.includes(name))
 		return;
-	if(verb_tabs.includes(name))
-		verb_tabs.pop(name);
+	if(verb_tabs.includes(name)){
+		let index = verb_tabs.indexOf(name); // array of strings
+		if(index > -1){
+		verb_tabs.splice(index, 1)
+		}
+	}
 	menu.removeChild(document.getElementById(name));
 	if(document.getElementById(name)) // repeat for duplicates
 		removeStatusTab(name);
@@ -243,8 +247,12 @@ function addPermanentTab(name) {
 }
 
 function removePermanentTab(name) {
-	if(permanent_tabs.includes(name))
-		permanent_tabs.pop(name);
+	if(permanent_tabs.includes(name)){
+		let index = permanent_tabs.indexOf(name);
+		if(index > -1) {
+		permanent_tabs.splice(index, 1)
+		}
+	}
 	removeStatusTab(name);
 
 }
@@ -259,52 +267,52 @@ function add_verb(v) {
 	cat = to_add[0];
 	if(verb_tabs.includes(cat)){ // we have the category already
 		verbs.push(to_add); // add it to verb list and we done
-	} else if(cat.length > 0) { // we don't have the category
+	} else if(cat.trim() != "") { // we don't have the category
 		verb_tabs.push(cat);
+		verbs.push(to_add); // add verb
 		createStatusTab(cat); // create the category
-		verbs.push(to_add) // add verb
 	}
 	if(current_tab == cat) {
 		draw_verbs(cat); // redraw if we added a verb to the tab we're currently in
 	}
 }
 function remove_verb(v) {
-	let to_remove = JSON.parse(v); // to_remove = [verb:category, verb:name]
-	verbs.pop(to_remove); // remove it from verbs
-	if(current_tab == to_remove[0]) // redraw
-		draw_verbs(current_tab);
-	check_verbs();
+	let verb_to_remove = v; // to_remove = [verb:category, verb:name]
+	for(let i = verbs.length - 1; i >= 0; i--){
+		let part_to_remove = verbs[i];
+		if(part_to_remove[1] == verb_to_remove[1]){
+			verbs.splice(i, 1)
+		}
+	}
 }
 
 function check_verbs() {
-	let cat = "";
-	for(let v = 0; v < verb_tabs.length; v++){
-		cat = verb_tabs[v];
-		verbs_cat_check(cat);
+	for(let v = verb_tabs.length - 1; v >= 0; v--){
+		verbs_cat_check(verb_tabs[v]);
 	}
-	checkStatusTab(); // removes any empty status tabs
+	//checkStatusTab(); // removes any empty status tabs
 }
 
 function verbs_cat_check(cat) {
 	let verbs_in_cat = 0;
 	let verbcat = "";
-	if(!verbs){
-		for(let m = 0; m < verb_tabs.length; m++){
-			verbcat = verb_tabs[m];
-			removeStatusTab(verbcat);
-		}
+	if(!verb_tabs.includes(cat)){
+		removeStatusTab(cat);
 		return;
 	}
 	for(let v = 0; v < verbs.length; v++){
-		let verb = verbs[v];
-		verbcat = verb[0];
-		if(verbcat != cat) continue;
-		if(verbcat == cat){
-			verbs_in_cat++;
+		let part = verbs[v];
+		verbcat = part[0];
+		if(verbcat != cat || verbcat.trim() == ""){
+		continue;
+		}
+		else{
+			verbs_in_cat = 1;
+			window.alert(verbcat + " Is equal to " + cat);
 			break; // we only need one
 		}
 	}
-	if(verbs_in_cat < 1) {
+	if(verbs_in_cat != 1) {
 		removeStatusTab(cat);
 		if(current_tab == cat)
 			tab_change("Status");
@@ -312,10 +320,9 @@ function verbs_cat_check(cat) {
 }
 
 function wipe_verbs() {
-	verbs = [];
+	verbs = [["", ""]];
 	verb_tabs = [];
-	check_verbs();
-	verb_tabs = permanent_tabs;
+	checkStatusTab(); // remove all empty verb tabs
 }
 
 function add_verb_list(v) {
@@ -339,16 +346,19 @@ function add_verb_list(v) {
 function remove_verb_list(v) {
 	let to_remove = JSON.parse(v);
 	for(let i = 0; i < to_remove.length; i++) {
-		let part = to_remove[i];
-		verbs.pop(part);
+		remove_verb(to_remove[i]);
 	}
 	check_verbs();
 	verbs.sort();
+	if(verb_tabs.includes(current_tab))
+		draw_verbs(current_tab);
 }
+
 // passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
 // example (IC, Say)
 function init_verbs(c, v) {
 	wipe_verbs(); // remove all verb categories so we can replace them
+	checkStatusTab(); // remove all status tabs
 	verb_tabs = JSON.parse(c);
 	verb_tabs.sort(); // sort it
 	let do_update = false;
@@ -363,7 +373,6 @@ function init_verbs(c, v) {
 	if(v) {
 		verbs = JSON.parse(v);
 		verbs.sort(); // sort them
-		check_verbs();
 		if(do_update) {
 			draw_verbs(current_tab);
 		}
@@ -503,7 +512,7 @@ function draw_debug() {
 	}
 	document.getElementById("statcontent").appendChild(table1);
 	let header2 = document.createElement("div");
-	header2.innerHTML = "Verbs: Category | Name";
+	header2.innerHTML = "Verbs:<br> Category | Name";
 	document.getElementById("statcontent").appendChild(header2);
 	let table2 = document.createElement("table");
 	for(let v = 0; v < verbs.length; v++) {
@@ -754,10 +763,18 @@ function draw_verbs(cat){
 	let table = document.createElement("newdiv");
 	table.className = "grid-container";
 	let command = ""; // typecast name to string
-	for(let i = 0; i < verbs.length; i++) {
+	verbs.sort();
+	verbs.reverse(); // sort verbs backwards before we draw
+	for(let i = verbs.length - 1; i >= 0; i--) {
 		let part = verbs[i]; // should be a list containing category and command
 		if(!part[1]) continue;
-		if(part[0] != cat) continue;
+		if(part[0] != cat){
+			continue;
+		}
+		if(part[0].trim() == ""){
+			verbs.splice(i, 1);
+			continue;
+		}
 		command = part[1];
 		let a = document.createElement("a");
 		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
