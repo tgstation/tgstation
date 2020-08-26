@@ -51,8 +51,9 @@
 		log_combat(user, M, "fed", reagents.log_list())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.trans_to(belly, gulp_size, transfered_by = user, methods = INGEST)
-	checkLiked(min(gulp_size/reagents.total_volume, 1), M)
+	checkLiked(fraction, M)
 
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(iscarbon(M))

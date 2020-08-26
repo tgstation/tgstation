@@ -161,10 +161,11 @@ All foods are distributed among various categories. Use common sense.
 
 	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
+	var/fraction = min(bitesize / reagents.total_volume, 1)
 	reagents.trans_to(belly, bitesize, transfered_by = user, methods = INGEST)
 	bitecount++
 	On_Consume(M)
-	checkLiked(min(bitesize / belly.reagents.total_volume, 1), M)
+	checkLiked(fraction, M)
 
 	return TRUE
 
