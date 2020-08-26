@@ -19,34 +19,40 @@
 	var/disgust_metabolism = 1
 
 /obj/item/organ/stomach/on_life()
-	var/mob/living/carbon/human/H = owner
-	var/datum/reagent/Nutri
-
 	..()
-	if(istype(H))
+
+	//Manage species digestion
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			H.dna.species.handle_digestion(H)
-		handle_disgust(H)
+			humi.dna.species.handle_digestion(humi)
+
+	//digest food
+	var/mob/living/carbon/body = owner
+	reagents.metabolize(body, can_overdose=TRUE)
+	handle_disgust(body)
 
 	if(damage < low_threshold)
 		return
 
-	Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
+	var/datum/reagent/Nutri = locate(/datum/reagent/consumable/nutriment) in reagents.reagent_list
 
 	if(Nutri)
 		if(prob((damage/40) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+			body.vomit(damage)
+			to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 	else if(Nutri && damage > high_threshold)
 		if(prob((damage/10) * Nutri.volume * Nutri.volume))
-			H.vomit(damage)
-			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+			body.vomit(damage)
+			to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
+	if(!H)
+		return
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)

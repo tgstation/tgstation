@@ -703,6 +703,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
 
 
+///////////
+//Stomach//
+///////////
+
+/mob/living/carbon/get_fullness()
+	var/fullness = nutrition
+
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly) //nothing to see here if we do not have a stomach
+		return fullness
+
+	for(var/datum/reagent/bits in belly.reagents.reagent_list)
+		if(istype(bits, /datum/reagent/consumable))
+			var/datum/reagent/consumable/goodbit = bits
+			fullness += goodbit.nutriment_factor * goodbit.volume / goodbit.metabolization_rate
+			continue
+		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
+
+	return fullness
+
 /////////
 //LIVER//
 /////////

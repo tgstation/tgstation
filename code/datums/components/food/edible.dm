@@ -159,9 +159,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(!CanConsume(eater, feeder))
 		return
-	var/fullness = eater.nutrition + 10 //The theoretical fullness of the person eating if they were to eat this
-	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
-		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
 
@@ -213,10 +211,13 @@ Behavior that's still missing from this component that original food items had t
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(owner.reagents.total_volume)
+	var/atom/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		belly = eater
+	if(belly.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
-		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, method = INGEST)
+		var/fraction = min(bite_consumption / belly.reagents.total_volume, 1)
+		owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, method = INGEST)
 		bitecount++
 		On_Consume(eater)
 		checkLiked(fraction, eater)
