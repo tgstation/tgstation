@@ -134,10 +134,10 @@ li a:hover:not(.active) {
   text-decoration: underline;
 }
 </style>
-<ul id="menu" class="button-container">
-</ul>
 </head>
 <body>
+<ul id="menu" class="button-container"></ul>
+<div id="statcontent"></div>
 <script>
 var decoder = decodeURIComponent || unescape;
 // browser passthrough code copy pasted here
@@ -841,19 +841,17 @@ document[addEventListenerKey]("click", function(e) {
 	window.location.href = "byond://winset?map.focus=true";
 });
 
-window[addEventListenerKey]("load", function() {
-	create_theme_button();
-	var darkmodeCookie = getCookie('darkmode');
-	if(darkmodeCookie === 'true') {
-		set_dark_theme();
-	} else {
-		set_light_theme();
-	}
-	if(!current_tab) {
-		addPermanentTab("Status");
-		tab_change("Status");
-	}
-});
+create_theme_button();
+var darkmodeCookie = getCookie('darkmode');
+if(darkmodeCookie === 'true') {
+	set_dark_theme();
+} else {
+	set_light_theme();
+}
+if(!current_tab) {
+	addPermanentTab("Status");
+	tab_change("Status");
+}
 
 function create_debug(){
 	if(!document.getElementById("Debug Stat Panel")) {
@@ -876,7 +874,5 @@ function getCookie(cname) {
 	return '';
 }
 </script>
-<div id="statcontent">
-</div>
 </body>
 </html>
