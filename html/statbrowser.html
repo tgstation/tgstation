@@ -229,10 +229,12 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
-	if(name == "Status" || name == "MC")
+	if(name == "Status" || name == "MC") {
 		if(name == "Status")
 			B.style.order = 1;
-		else B.style.order = 2;
+		else
+			B.style.order = 2;
+	}
 	//END ORDERING
 	menu.appendChild(B);
 }
@@ -251,8 +253,8 @@ function removeStatusTab(name) {
 }
 
 function addPermanentTab(name) {
- if(!permanent_tabs.includes(name))
-	permanent_tabs.push(name);
+	if(!permanent_tabs.includes(name))
+		permanent_tabs.push(name);
 	createStatusTab(name);
 }
 
@@ -313,7 +315,7 @@ function verbs_cat_check(cat) {
 		var part = verbs[v];
 		verbcat = part[0];
 		if(verbcat != cat || verbcat.trim() == ""){
-		continue;
+			continue;
 		}
 		else{
 			verbs_in_cat = 1;
@@ -342,7 +344,7 @@ function add_verb_list(v) {
 			verbs.push(part);
 			if(current_tab == part[0]) {
 				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
-		}
+			}
 		} else if(part[0]) {
 			verb_tabs.push(part[0]);
 			verbs.push(part);
@@ -423,11 +425,13 @@ function remove_spells() {
 
 function init_spells() {
 	var cat = "";
-	for(var i = 0; i < spell_tabs.length; i++)
+	for(var i = 0; i < spell_tabs.length; i++) {
 		cat = spell_tabs[i];
-		if(cat.length > 0)
+		if(cat.length > 0) {
 			verb_tabs.push(cat);
 			createStatusTab(cat);
+		}
+	}
 }
 
 function check_spells() {
@@ -460,7 +464,9 @@ function update_spells(t, s) {
 		if(do_update) {
 			draw_spells(current_tab);
 		}
-	} if(!s) remove_spells();
+	} else {
+		remove_spells();
+	}
 }
 
 function tab_change(tab) {
@@ -489,7 +495,7 @@ function tab_change(tab) {
 	}else if(tab == turfname) {
 		draw_listedturf();
 	} else {
-	document.getElementById("statcontent").innerHTML = "loading...";
+		document.getElementById("statcontent").innerHTML = "loading...";
 	}
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
 }
@@ -551,9 +557,10 @@ function draw_debug() {
 
 }
 function draw_status() {
-	if(!document.getElementById("Status"))
+	if(!document.getElementById("Status")) {
 		createStatusTab("Status");
 		current_tab = "Status";
+	}
 	document.getElementById("statcontent").innerHTML = inner;
 	for(var i = 0; i < status_tab_parts.length; i++) {
 		if(status_tab_parts[i].trim() == "") {
@@ -595,36 +602,40 @@ function draw_mc() {
 }
 function update_tickets(T){
 	tickets = JSON.parse(T);
-	if(!verb_tabs.includes("Tickets"))
+	if(!verb_tabs.includes("Tickets")) {
 		verb_tabs.push("Tickets");
 		addPermanentTab("Tickets");
+	}
 	if(current_tab == "Tickets")
 		draw_tickets();
 }
 function update_sqdl2(S) {
 	sqdl2 = JSON.parse(S);
-	if(sqdl2.length > 0 && !verb_tabs.includes("SQDL2"))
+	if(sqdl2.length > 0 && !verb_tabs.includes("SQDL2")) {
 		verb_tabs.push("SQDL2");
 		addPermanentTab("SQDL2");
+	}
 	if(current_tab == "SQDL2")
 		draw_sqdl2();
 }
 
 function remove_sqdl2() {
-	if(sqdl2)
+	if(sqdl2) {
 		sqdl2 = [];
 		removePermanentTab("SQDL2");
 		if(current_tab == "SQDL2")
 			tab_change("Status");
+	}
 	checkStatusTab();
 }
 
 function remove_tickets() {
-	if(tickets)
+	if(tickets) {
 		tickets = [];
 		removePermanentTab("Tickets");
 		if(current_tab == "Tickets")
 			tab_change("Status");
+	}
 	checkStatusTab();
 }
 // removes MC, Tickets and MC tabs.
@@ -810,7 +821,7 @@ function toggle_theme() {
 	} else {
 		theme = "light";
 		set_light_theme();
-}
+	}
 }
 
 function set_light_theme() {
