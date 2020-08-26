@@ -22,6 +22,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
+	processing_flags = NONE
 
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
@@ -90,6 +91,8 @@
 		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
 		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+	if(is_operational)
+		begin_processing()
 	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -106,10 +109,16 @@
 		Recharging <b>[recharge_amount]</b> power units per interval.\n\
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
 
+
+/obj/machinery/chem_dispenser/on_set_is_operational(old_value)
+	if(old_value) //Turned off
+		end_processing()
+	else //Turned on
+		begin_processing()
+
+
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
-		if(!is_operational())
-			return
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
 			use_power(250*recharge_amount)
@@ -223,7 +232,7 @@
 		return
 	switch(action)
 		if("amount")
-			if(!is_operational() || QDELETED(beaker))
+			if(!is_operational || QDELETED(beaker))
 				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
@@ -231,7 +240,7 @@
 				work_animation()
 				. = TRUE
 		if("dispense")
-			if(!is_operational() || QDELETED(cell))
+			if(!is_operational || QDELETED(cell))
 				return
 			var/reagent_name = params["reagent"]
 			if(!recording_recipe)
@@ -251,7 +260,7 @@
 				recording_recipe[reagent_name] += amount
 			. = TRUE
 		if("remove")
-			if(!is_operational() || recording_recipe)
+			if(!is_operational || recording_recipe)
 				return
 			var/amount = text2num(params["amount"])
 			if(beaker && (amount in beaker.possible_transfer_amounts))
@@ -262,7 +271,7 @@
 			replace_beaker(usr)
 			. = TRUE
 		if("dispense_recipe")
-			if(!is_operational() || QDELETED(cell))
+			if(!is_operational || QDELETED(cell))
 				return
 			var/list/chemicals_to_dispense = saved_recipes[params["recipe"]]
 			if(!LAZYLEN(chemicals_to_dispense))
@@ -288,19 +297,19 @@
 					recording_recipe[key] += dispense_amount
 			. = TRUE
 		if("clear_recipes")
-			if(!is_operational())
+			if(!is_operational)
 				return
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
 				saved_recipes = list()
 			. = TRUE
 		if("record_recipe")
-			if(!is_operational())
+			if(!is_operational)
 				return
 			recording_recipe = list()
 			. = TRUE
 		if("save_recording")
-			if(!is_operational())
+			if(!is_operational)
 				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
@@ -319,7 +328,7 @@
 				recording_recipe = null
 				. = TRUE
 		if("cancel_recording")
-			if(!is_operational())
+			if(!is_operational)
 				return
 			recording_recipe = null
 			. = TRUE

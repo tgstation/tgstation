@@ -16,7 +16,7 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.adjustPests(rand(2,3))
 
-/datum/reagent/blood/expose_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/blood/expose_mob(mob/living/L, methods=TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
@@ -24,14 +24,14 @@
 			if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((method == TOUCH || method == VAPOR) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			if((methods & (TOUCH|VAPOR)) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				L.ContactContractDisease(D)
 			else //ingest, patch or inject
 				L.ForceContractDisease(D)
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == /datum/reagent/blood && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
+		if(C.get_blood_id() == /datum/reagent/blood && ((methods & INJECT) || ((methods & INGEST) && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -105,8 +105,8 @@
 	color = "#C81040" // rgb: 200, 16, 64
 	taste_description = "slime"
 
-/datum/reagent/vaccine/expose_mob(mob/living/L, method=TOUCH, reac_volume)
-	if(islist(data) && (method == INGEST || method == INJECT))
+/datum/reagent/vaccine/expose_mob(mob/living/L, methods=TOUCH, reac_volume)
+	if(islist(data) && (methods & (INGEST|INJECT)))
 		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
@@ -193,10 +193,10 @@
  *	Water reaction to a mob
  */
 
-/datum/reagent/water/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
+/datum/reagent/water/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with water can help put them out!
 	if(!istype(M))
 		return
-	if(method == TOUCH)
+	if(methods & TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	..()
@@ -232,7 +232,7 @@
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
 	..()
 
-/datum/reagent/water/holywater/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/water/holywater/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(iscultist(M))
 		to_chat(M, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
 	..()
@@ -316,10 +316,10 @@
  *	Water reaction to a mob
  */
 
-/datum/reagent/hydrogen_peroxide/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
+/datum/reagent/hydrogen_peroxide/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
 	if(!istype(M))
 		return
-	if(method == TOUCH)
+	if(methods & TOUCH)
 		M.adjustFireLoss(2, 0) // burns
 	..()
 
@@ -329,8 +329,8 @@
 	taste_description = "suffering"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //1u/tick
 
-/datum/reagent/fuel/unholywater/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/fuel/unholywater/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		M.reagents.add_reagent(type,reac_volume/4)
 		return
 	return ..()
@@ -400,9 +400,9 @@
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
 
-/datum/reagent/spraytan/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/spraytan/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))
-		if(method == PATCH || method == VAPOR)
+		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
 				switch(N.skin_tone)
@@ -459,9 +459,8 @@
 
 
 
-		if(method == INGEST)
-			if(show_message)
-				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
+		if((methods & INGEST) && show_message)
+			to_chat(M, "<span class='notice'>That tasted horrible.</span>")
 	..()
 
 
@@ -685,8 +684,8 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 	taste_description = "slime"
 
-/datum/reagent/aslimetoxin/expose_mob(mob/living/L, method=TOUCH, reac_volume)
-	if(method != TOUCH)
+/datum/reagent/aslimetoxin/expose_mob(mob/living/L, methods=TOUCH, reac_volume)
+	if(methods & ~TOUCH)
 		L.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 
 /datum/reagent/gluttonytoxin
@@ -696,7 +695,7 @@
 	can_synth = FALSE
 	taste_description = "decay"
 
-/datum/reagent/gluttonytoxin/expose_mob(mob/living/L, method=TOUCH, reac_volume)
+/datum/reagent/gluttonytoxin/expose_mob(mob/living/L, methods=TOUCH, reac_volume)
 	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
@@ -905,8 +904,8 @@
 	color = "#D0EFEE" // space cleaner but lighter
 	taste_description = "bitterness"
 
-/datum/reagent/space_cleaner/sterilizine/expose_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
-	if(method in list(TOUCH, VAPOR, PATCH))
+/datum/reagent/space_cleaner/sterilizine/expose_mob(mob/living/carbon/C, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR|PATCH))
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
 			S.speed_modifier = max(0.2, S.speed_modifier)
@@ -926,7 +925,7 @@
 		C.blood_volume += 0.5
 	..()
 
-/datum/reagent/iron/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/iron/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(M.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
 		if(holder && holder.chem_temp < 100) // COLD iron.
 			M.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
@@ -948,7 +947,7 @@
 	taste_description = "expensive yet reasonable metal"
 	material = /datum/material/silver
 
-/datum/reagent/silver/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/silver/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(M.has_bane(BANE_SILVER))
 		M.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
 	..()
@@ -1006,8 +1005,8 @@
 	taste_description = "fizzling blue"
 	material = /datum/material/bluespace
 
-/datum/reagent/bluespace/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/bluespace/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		do_teleport(M, get_turf(M), (reac_volume / 5), asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //4 tiles per crystal
 	..()
 
@@ -1046,8 +1045,8 @@
 	glass_name = "glass of welder fuel"
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 
-/datum/reagent/fuel/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/fuel/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+	if(methods & (TOUCH|VAPOR))
 		M.adjust_fire_stacks(reac_volume / 10)
 		return
 	..()
@@ -1080,8 +1079,8 @@
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
 
-/datum/reagent/space_cleaner/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/space_cleaner/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		M.wash(clean_types)
 
 /datum/reagent/space_cleaner/ez_clean
@@ -1096,9 +1095,9 @@
 	M.adjustToxLoss(3.33)
 	..()
 
-/datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/space_cleaner/ez_clean/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	..()
-	if((method == TOUCH || method == VAPOR) && !issilicon(M))
+	if((methods & (TOUCH|VAPOR)) && !issilicon(M))
 		M.adjustBruteLoss(1.5)
 		M.adjustFireLoss(1.5)
 
@@ -1137,8 +1136,8 @@
 	can_synth = FALSE
 	taste_description = "sludge"
 
-/datum/reagent/nanomachines/expose_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+/datum/reagent/nanomachines/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
@@ -1148,8 +1147,8 @@
 	can_synth = FALSE
 	taste_description = "sludge"
 
-/datum/reagent/xenomicrobes/expose_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+/datum/reagent/xenomicrobes/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
@@ -1159,8 +1158,8 @@
 	can_synth = FALSE
 	taste_description = "slime"
 
-/datum/reagent/fungalspores/expose_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+/datum/reagent/fungalspores/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/snail
@@ -1170,8 +1169,8 @@
 	taste_description = "goo"
 	can_synth = FALSE //special orange man request
 
-/datum/reagent/snail/expose_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+/datum/reagent/snail/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -1264,8 +1263,8 @@
 		var/temp = holder ? holder.chem_temp : T20C
 		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
-/datum/reagent/nitrous_oxide/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == VAPOR)
+/datum/reagent/nitrous_oxide/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & VAPOR)
 		M.drowsyness += max(round(reac_volume, 1), 2)
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/M)
@@ -1693,10 +1692,10 @@
 	taste_description = "acid"
 
 
-/datum/reagent/acetone_oxide/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people kills people!
+/datum/reagent/acetone_oxide/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people kills people!
 	if(!istype(M))
 		return
-	if(method == TOUCH)
+	if(methods & TOUCH)
 		M.adjustFireLoss(2, FALSE) // burns,
 		M.adjust_fire_stacks((reac_volume / 10))
 	..()
@@ -1773,8 +1772,8 @@
 /datum/reagent/hair_dye/proc/UpdateColor()
 	color = pick(potential_colors)
 
-/datum/reagent/hair_dye/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/hair_dye/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.hair_color = pick(potential_colors)
@@ -1788,16 +1787,15 @@
 	color = "#A86B45" //hair is brown
 	taste_description = "sourness"
 
-/datum/reagent/barbers_aid/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
-		if(M && ishuman(M) && !HAS_TRAIT(M, TRAIT_BALD))
-			var/mob/living/carbon/human/H = M
-			var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
-			var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
-			to_chat(H, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
-			H.hairstyle = picked_hair
-			H.facial_hairstyle = picked_beard
-			H.update_hair()
+/datum/reagent/barbers_aid/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if((methods & (TOUCH|VAPOR)) && ishuman(M) && !HAS_TRAIT(M, TRAIT_BALD))
+		var/mob/living/carbon/human/exposed_human = M
+		var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
+		var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
+		to_chat(exposed_human, "<span class='notice'>Hair starts sprouting from your scalp.</span>")
+		exposed_human.hairstyle = picked_hair
+		exposed_human.facial_hairstyle = picked_beard
+		exposed_human.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -1806,8 +1804,8 @@
 	color = "#7A4E33" //hair is dark browmn
 	taste_description = "sourness"
 
-/datum/reagent/concentrated_barbers_aid/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/concentrated_barbers_aid/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		if(M && ishuman(M) && !HAS_TRAIT(M, TRAIT_BALD))
 			var/mob/living/carbon/human/H = M
 			to_chat(H, "<span class='notice'>Your hair starts growing at an incredible speed!</span>")
@@ -1822,14 +1820,13 @@
 	color = "#ecb2cf"
 	taste_description = "bitterness"
 
-/datum/reagent/baldium/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
-		if(M && ishuman(M))
-			var/mob/living/carbon/human/H = M
-			to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
-			H.hairstyle = "Bald"
-			H.facial_hairstyle = "Shaved"
-			H.update_hair()
+/datum/reagent/baldium/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if((methods & (TOUCH|VAPOR)) && ishuman(M))
+		var/mob/living/carbon/human/exposed_human = M
+		to_chat(exposed_human, "<span class='danger'>Your hair is falling out in clumps!</span>")
+		exposed_human.hairstyle = "Bald"
+		exposed_human.facial_hairstyle = "Shaved"
+		exposed_human.update_hair()
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
@@ -1944,7 +1941,7 @@
 	can_synth = FALSE
 	taste_description = "brains"
 
-/datum/reagent/romerol/expose_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
+/datum/reagent/romerol/expose_mob(mob/living/carbon/human/H, methods=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
 	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/nodamage/ZI = new()
@@ -2113,8 +2110,8 @@
 	taste_description = "inner peace"
 	can_synth = FALSE
 
-/datum/reagent/tranquility/expose_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+/datum/reagent/tranquility/expose_mob(mob/living/L, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
 
 
@@ -2167,8 +2164,8 @@
 	yuck_cycle = 0 // reset vomiting
 	return ..()
 
-/datum/reagent/yuck/on_transfer(atom/A, method=TOUCH, trans_volume)
-	if(method == INGEST || !iscarbon(A))
+/datum/reagent/yuck/on_transfer(atom/A, methods=TOUCH, trans_volume)
+	if((methods & INGEST) || !iscarbon(A))
 		return ..()
 
 	A.reagents.remove_reagent(type, trans_volume)

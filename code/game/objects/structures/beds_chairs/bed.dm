@@ -179,7 +179,7 @@
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
 	anchored = TRUE
-	
+
 /obj/structure/bed/dogbed/lia
 	desc = "Seems kind of... fishy."
 	name = "Lia's bed"
@@ -212,3 +212,13 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
+
+/obj/structure/bed/maint/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

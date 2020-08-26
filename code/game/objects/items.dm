@@ -204,9 +204,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		item_flags |= FORCE_STRING_OVERRIDE
 
 	if(!hitsound)
-		if(damtype == "fire")
+		if(damtype == BURN)
 			hitsound = 'sound/items/welder.ogg'
-		if(damtype == "brute")
+		if(damtype == BRUTE)
 			hitsound = "swing_hit"
 
 /obj/item/Destroy()
@@ -931,7 +931,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/proc/embedded(atom/embedded_target)
+/obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
 	return
 
 /obj/item/proc/unembedded()

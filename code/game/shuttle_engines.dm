@@ -9,7 +9,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
 	max_integrity = 500
-	armor = list("melee" = 100, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70) //default + ignores melee
+	armor = list(MELEE = 100, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70) //default + ignores melee
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/shuttle/engine

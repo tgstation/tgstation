@@ -60,6 +60,8 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
 	del_on_death = 1
 	deathmessage = "explodes with a sharp pop!"
+	light_system = MOVABLE_LIGHT
+	light_range = 3
 	light_color = LIGHT_COLOR_CYAN
 	hud_type = /datum/hud/swarmer
 	speech_span = SPAN_ROBOT
@@ -69,12 +71,16 @@
 	var/max_resources = 100
 	///List used for player swarmers to keep track of their drones
 	var/list/mob/living/simple_animal/hostile/swarmer/melee/dronelist
+	///Bitflags to store boolean conditions, such as whether the light is on or off.
+	var/swarmer_flags = NONE
+
 
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	. = ..()
 	verbs -= /mob/living/verb/pulled
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -374,20 +380,25 @@
   * Proc used to allow a swarmer to toggle its  light on and off.  If a swarmer has any drones, change their light settings to match their master's.
   */
 /mob/living/simple_animal/hostile/swarmer/proc/toggle_light()
-	if(!light_range)
-		set_light(3)
+	if(swarmer_flags & SWARMER_LIGHT_ON)
+		swarmer_flags = ~SWARMER_LIGHT_ON
+		set_light_on(FALSE)
 		if(!mind)
 			return
 		for(var/d in dronelist)
 			var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
-			drone.set_light(3)
-	else
-		set_light(0)
-		if(!mind)
-			return
-		for(var/d in dronelist)
-			var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
-			drone.set_light(0)
+			drone.swarmer_flags = ~SWARMER_LIGHT_ON
+			drone.set_light_on(FALSE)
+		return
+	swarmer_flags |= SWARMER_LIGHT_ON
+	set_light_on(TRUE)
+	if(!mind)
+		return
+	for(var/d in dronelist)
+		var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
+		drone.swarmer_flags |= SWARMER_LIGHT_ON
+		drone.set_light_on(TRUE)
+
 
 /**
   * Proc which is used for swarmer comms

@@ -1,0 +1,5 @@
+author: "Donkie"
+delete-after: True
+changes: 
+  - rscadd: "Footprints and bloody shoes major update. Hardsuits and bare feet can now get bloody as well. Improved blood spreading behaviour."
+  - bugfix: "Shoes will no longer get bloody while wearing something that covers them."

@@ -186,7 +186,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/screen = 0
@@ -733,7 +733,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				obj_integrity = max_integrity
-				machine_stat &= ~BROKEN
+				set_machine_stat(machine_stat & ~BROKEN)
 				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
@@ -768,7 +768,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else
-		take_damage(5, BRUTE, "melee")
+		take_damage(5, BRUTE, MELEE)
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
