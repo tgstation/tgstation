@@ -139,10 +139,24 @@ li a:hover:not(.active) {
 <ul id="menu" class="button-container"></ul>
 <div id="statcontent"></div>
 <script>
+// Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
-// browser passthrough code copy pasted here
 var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
+if(!Array.prototype.includes) {
+	Array.prototype.includes = function(thing) {
+		for(var i = 0; i < this.length; i++) {
+			if(this[i] == thing) return true;
+		}
+		return false;
+	}
+}
+if (!String.prototype.trim) {
+	String.prototype.trim = function () {
+		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+	};
+}
 
+// Browser passthrough code ---------------------------------------------------
 if (window.location) {
 	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
 	document[addEventListenerKey]("keydown", function(e) {
@@ -174,14 +188,6 @@ if (window.location) {
 		}
 	});
 }
-if(!Array.prototype.includes) {
-	Array.prototype.includes = function(thing) {
-		for(var i = 0; i < this.length; i++) {
-			if(this[i] == thing) return true;
-		}
-		return false;
-	}
-}
 /* document.addEventListener("mousedown", function(e){
  var shiftPressed=0;
  var evt = e?e:window.event;
@@ -191,6 +197,8 @@ if(!Array.prototype.includes) {
   }
  return true;
 }); */
+
+// Status panel implementation ------------------------------------------------
 var status_tab_parts = ["loading..."];
 var current_tab = null;
 var mc_tab_parts = [["loading...", ""]];
