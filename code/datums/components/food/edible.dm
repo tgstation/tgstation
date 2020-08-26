@@ -216,19 +216,21 @@ Behavior that's still missing from this component that original food items had t
 		belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
 	else
 		belly = eater
-	if(belly && belly.reagents.total_volume)
-		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
-		var/fraction = min(bite_consumption / belly.reagents.total_volume, 1)
-		owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, methods = INGEST)
-		bitecount++
-		On_Consume(eater)
-		checkLiked(fraction, eater)
+	if(!belly || !belly.reagents.total_volume)
+		return
 
-		//Invoke our after eat callback if it is valid
-		if(after_eat)
-			after_eat.Invoke(eater, feeder)
+	SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
+	var/fraction = min(bite_consumption / belly.reagents.total_volume, 1)
+	owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, methods = INGEST)
+	bitecount++
+	On_Consume(eater)
+	checkLiked(fraction, eater)
 
-		return TRUE
+	//Invoke our after eat callback if it is valid
+	if(after_eat)
+		after_eat.Invoke(eater, feeder)
+
+	return TRUE
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)
