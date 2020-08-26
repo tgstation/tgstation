@@ -1441,6 +1441,66 @@
 			"cardsubtype": "Weapon",
 			"series": "coreset2020",
 			"rarity": "epic"
+		},
+		{
+			"id": "nuclear_option",
+			"name": "The Nuclear Option",
+			"desc": "The Gorlex Marauders are well known for their nuclear weapons, and their nuke first, second, third and fourth policy with regards to deploying them.",
+			"rules": "Destroy the active battlefield card. Deal 2 damage to all creatures on both battlefields.",
+			"icon_state": "nuclear_option",
+			"power": "0",
+			"resolve": "0",
+			"faction": "Syndicate",
+			"summoncost": "3",
+			"cardtype": "Event",
+			"cardsubtype": "Instant",
+			"series": "coreset2020",
+			"rarity": "rare"
+		},
+		{
+			"id": "bepis",
+			"name": "B.E.P.I.S. Chamber",
+			"desc": "Created as an automated investment machine for a venture capitalism company, the B.E.P.I.S. ended up in the hands of Nanotrasen's research division after bankrupting the original creators... and 27 other corporations.",
+			"rules": "Flip a coin. If heads, gain 2 mana. If tails, lose 2 mana. If below two mana, lose two mana in your next play phase.",
+			"icon_state": "bepis",
+			"power": "0",
+			"resolve": "0",
+			"faction": "Science",
+			"summoncost": "2",
+			"cardtype": "Event",
+			"cardsubtype": "Instant",
+			"series": "coreset2020",
+			"rarity": "common"
+		},
+		{
+			"id": "weekend_at_bernies",
+			"name": "Weekend at Nanotrasen's",
+			"desc": "Holy shit! We just accidentally killed the Captain! Here, uhh... oh god, stuff him in that wheelchair over there, before anyone comes in. Yeah, yeah! Get his sunglasses, cover his face. Oh my god, oh my god, oh my god. No one will be able to tell, he looks sorta fine, right? Right?",
+			"rules": "Return a creature card from your graveyard to the battlefield.",
+			"icon_state": "weekend_at_bernies",
+			"power": "0",
+			"resolve": "0",
+			"faction": "Medical",
+			"summoncost": "3",
+			"cardtype": "Event",
+			"cardsubtype": "Instant",
+			"series": "coreset2020",
+			"rarity": "uncommon"
+		},
+		{
+			"id": "disco_inferno",
+			"name": "Disco Inferno",
+			"desc": "(Burn baby burn) burn that mother down y'all\n(Burn baby burn) Disco Inferno\n(Burn baby burn) burn that mother down",
+			"rules": "For 2 mana: Activate this card (permanent tap). While active, all active creatures take 3 damage during the first play phase of each turn.",
+			"icon_state": "disco_inferno",
+			"power": "0",
+			"resolve": "0",
+			"faction": "Science",
+			"summoncost": "4",
+			"cardtype": "Battlefield",
+			"cardsubtype": "Shuttle",
+			"series": "coreset2020",
+			"rarity": "uncommon"
 		}
 	]
 }
