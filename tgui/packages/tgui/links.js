@@ -27,7 +27,7 @@ export const captureExternalLinks = () => {
     // Normalize the URL
     let url = hrefAttr;
     if (url.toLowerCase().startsWith('www')) {
-      url = 'http://' + url;
+      url = 'https://' + url;
     }
     // Open the link
     Byond.topic({
