@@ -220,7 +220,7 @@ Behavior that's still missing from this component that original food items had t
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 
 	SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
-	var/fraction = min(bite_consumption / reagents.total_volume, 1)
+	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, methods = INGEST)
 	bitecount++
 	On_Consume(eater)
