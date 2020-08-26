@@ -1208,7 +1208,6 @@
 "dv" = (
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1219,6 +1218,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "dw" = (
@@ -17393,8 +17393,8 @@
 	},
 /area/holodeck/rec_center/medical)
 "MY" = (
-/obj/effect/holodeck_effect/mobspawner/pet,
 /obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/holodeck_effect/mobspawner/pet,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "MZ" = (
@@ -18054,7 +18054,6 @@
 /area/centcom/holding)
 "Qx" = (
 /obj/item/clothing/suit/chaplainsuit/bishoprobe,
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -18065,6 +18064,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "QA" = (
@@ -19048,7 +19048,6 @@
 /area/centcom/supplypod/loading/four)
 "VR" = (
 /obj/item/toy/figure/chaplain,
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -19059,6 +19058,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "VV" = (
@@ -19206,7 +19206,6 @@
 /area/holodeck/rec_center/bunker)
 "WU" = (
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat,
-/obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -19217,6 +19216,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/table/wood/fancy,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "WY" = (
@@ -72569,7 +72569,7 @@ bn
 bl
 bl
 bn
-bD
+bl
 NQ
 bj
 Zw
@@ -72820,7 +72820,7 @@ ap
 bj
 bl
 bn
-bD
+bl
 ca
 bD
 bl
@@ -74361,7 +74361,7 @@ aB
 ap
 bj
 bn
-MY
+ZH
 bn
 bl
 cD
