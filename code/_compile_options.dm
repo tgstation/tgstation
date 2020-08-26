@@ -8,7 +8,7 @@
 	This stops the atmos system from initing and running
 	It also prevents gasmixtures from being added to/removed from
 	If a removal is attempted, it instead copys as expected
-	It also immediatly qdels hotspots, so no fire allowrd
+	It also immediatly qdels hotspots, so no fire allowed
 */
 #define HALT_ATMOS
 
