@@ -14,6 +14,10 @@
 	req_access = list( )
 
 /obj/machinery/computer/shuttle/labor/one_way/ui_act(action, params)
+	if(!allowed(usr))
+		to_chat(usr, "<span class='danger'>Access denied.</span>")
+		return
+
 	switch(action)
 		if("move")
 			var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
