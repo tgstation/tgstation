@@ -1627,13 +1627,6 @@
 	if(isnull(.))
 		return
 
-	// If our stat changed, update whether or not we can succumb
-	if (. != stat)
-		if (CAN_SUCCUMB(src))
-			throw_alert("succumb", /obj/screen/alert/succumb)
-		else
-			clear_alert("succumb")
-
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)
