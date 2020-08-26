@@ -115,7 +115,7 @@
 		inv.update_icon()
 
 	if(wear_mask)
-		if(!(ITEM_SLOT_MASK in check_obscured_slots()))
+		if(!(ITEM_SLOT_MASK & check_obscured_slots()))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
@@ -129,7 +129,7 @@
 		inv.update_icon()
 
 	if(wear_neck)
-		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
+		if(!(ITEM_SLOT_NECK & check_obscured_slots()))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 
