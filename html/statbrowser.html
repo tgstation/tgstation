@@ -142,6 +142,7 @@ li a:hover:not(.active) {
 // Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
 var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
+var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
 if(!Array.prototype.includes) {
 	Array.prototype.includes = function(thing) {
 		for(var i = 0; i < this.length; i++) {
@@ -224,7 +225,7 @@ function createStatusTab(name) {
 	var B = document.createElement("BUTTON");
 	B.onclick = function() {tab_change(name)};
 	B.id = name;
-	B.textContent = name;
+	B[textContentKey] = name;
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
@@ -498,7 +499,7 @@ function draw_debug() {
 	var wipeverbstabs = document.createElement("div");
 	var link = document.createElement("a");
 	link.onclick = function() {wipe_verbs()};
-	link.textContent = "Wipe All Verbs";
+	link[textContentKey] = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
 	var text = document.createElement("div");
@@ -509,10 +510,10 @@ function draw_debug() {
 		var part = verb_tabs[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1.textContent = part;
+		td1[textContentKey] = part;
 		var a = document.createElement("a");
 		a.onclick = function() {removeStatusTab(part)};
-		a.textContent = " Devare Tab " + part;
+		a[textContentKey] = " Devare Tab " + part;
 		td1.appendChild(a);
 		tr.appendChild(td1);
 		table1.appendChild(tr);
@@ -526,9 +527,9 @@ function draw_debug() {
 		var part2 = verbs[v];
 		var trr = document.createElement("tr");
 		var tdd1 = document.createElement("td");
-		tdd1.textContent = part2[0];
+		tdd1[textContentKey] = part2[0];
 		var tdd2 = document.createElement("td");
-		tdd2.textContent = part2[1];
+		tdd2[textContentKey] = part2[1];
 		trr.appendChild(tdd1);
 		trr.appendChild(tdd2);
 		table2.appendChild(trr);
@@ -542,7 +543,7 @@ function draw_debug() {
 		var part3 = permanent_tabs[i];
 		var trrr = document.createElement("tr");
 		var tddd1 = document.createElement("td");
-		tddd1.textContent = part3;
+		tddd1[textContentKey] = part3;
 		trrr.appendChild(tddd1);
 		table3.appendChild(trrr);
 	}
@@ -576,15 +577,15 @@ function draw_mc() {
 		var part = mc_tab_parts[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1.textContent = part[0];
+		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
 			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
-			a.textContent = part[1];
+			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
-			td2.textContent = part[1];
+			td2[textContentKey] = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -672,7 +673,7 @@ function draw_listedturf() {
 			}
 			window.location.href = clickcatcher;
 		}
-		b.textContent = part[0];
+		b[textContentKey] = part[0];
 		table.appendChild(b);
 		table.appendChild(document.createElement("br"));
 	}
@@ -692,15 +693,15 @@ function draw_sqdl2(){
 		var part = sqdl2[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1.textContent = part[0];
+		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
-			a.textContent = part[1];
+			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
-			td2.textContent = part[1];
+			td2[textContentKey] = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -718,20 +719,20 @@ function draw_tickets() {
 		var part = tickets[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1.textContent = part[0];
+		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
 			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
-			a.textContent = part[1];
+			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else if(part[3]){
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
-			a.textContent = part[1];
+			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
-			td2.textContent = part[1];
+			td2[textContentKey] = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -748,15 +749,15 @@ function draw_spells(cat) {
 		if(part[0] != cat) continue;
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1.textContent = part[1];
+		td1[textContentKey] = part[1];
 		var td2 = document.createElement("td");
 		if(part[3]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
-			a.textContent = part[2];
+			a[textContentKey] = part[2];
 			td2.appendChild(a);
 		} else {
-			td2.textContent = part[2];
+			td2[textContentKey] = part[2];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -785,7 +786,7 @@ function draw_verbs(cat){
 		command = part[1];
 		var a = document.createElement("a");
 		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
-		a.textContent = command;
+		a[textContentKey] = command;
 		a.className = "grid-item";
 		table.appendChild(a);
 	}
@@ -796,7 +797,7 @@ function create_theme_button() {
 	var B = document.createElement("BUTTON");
 	B.onclick = function() {toggle_theme()};
 	B.id = "Theme";
-	B.textContent = "Theme";
+	B[textContentKey] = "Theme";
 	B.className = "button Theme";
 	permanent_tabs.push("Theme");
 	menu.appendChild(B);
