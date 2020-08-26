@@ -129,7 +129,7 @@
 			return
 	. = ..()
 	if(istype(target, /obj/vehicle/sealed/mecha))
-		var/obj/mecha/M = target
+		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 /mob/living/simple_animal/hostile/space_dragon/Move()
