@@ -55,14 +55,15 @@
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
-		"Mining Tool" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
+		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "spade"),
 		"Retractor" = image(icon = 'icons/obj/surgery.dmi', icon_state = "retractor"),
 		"Hemostat" = image(icon = 'icons/obj/surgery.dmi', icon_state = "hemostat"),
 		"Cautery" = image(icon = 'icons/obj/surgery.dmi', icon_state = "cautery"),
 		"Drill" = image(icon = 'icons/obj/surgery.dmi', icon_state = "drill"),
 		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
-		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw")
+		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
+		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter")
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -82,7 +83,7 @@
 			tool_behaviour = TOOL_WELDER
 		if("Analyzer")
 			tool_behaviour = TOOL_ANALYZER
-		if("Mining Tool")
+		if("Pickaxe")
 			tool_behaviour = TOOL_MINING
 		if("Shovel")
 			tool_behaviour = TOOL_SHOVEL
@@ -98,3 +99,5 @@
 			tool_behaviour = TOOL_SCALPEL
 		if("Saw")
 			tool_behaviour = TOOL_SAW
+		if("Bonesetter")
+			tool_behaviour = TOOL_BONESET

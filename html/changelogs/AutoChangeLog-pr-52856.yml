@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "pistols missing sprites when loaded no longer do that"

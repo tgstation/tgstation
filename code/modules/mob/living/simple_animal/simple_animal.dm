@@ -658,7 +658,7 @@
 		M.forceMove(get_turf(src))
 		return ..()
 
-/mob/living/simple_animal/relaymove(mob/user, direction)
+/mob/living/simple_animal/relaymove(mob/living/user, direction)
 	if (stat == DEAD)
 		return
 	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
@@ -702,3 +702,7 @@
 	if (AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[old_z] -= src
 		toggle_ai(initial(AIStatus))
+
+///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
+/mob/living/simple_animal/proc/add_cell_sample()
+	return

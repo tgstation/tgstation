@@ -62,12 +62,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	machine_stat |= EMPED
+	set_machine_stat(machine_stat | EMPED)
 	addtimer(CALLBACK(src, .proc/unemp), 600)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
-	machine_stat &= ~EMPED
+	set_machine_stat(machine_stat & ~EMPED)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/toggle_disable()
@@ -186,7 +186,6 @@
 
 	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
