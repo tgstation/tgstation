@@ -19,7 +19,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 12
+#define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
 #define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
 #define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 
