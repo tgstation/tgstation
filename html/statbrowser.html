@@ -141,9 +141,11 @@ li a:hover:not(.active) {
 <script>
 var decoder = decodeURIComponent || unescape;
 // browser passthrough code copy pasted here
-if(document.addEventListener && window.location) { // hey maybe some bozo is still using mega-outdated IE
+var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
+
+if (window.location) {
 	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
-	document.addEventListener("keydown", function(e) {
+	document[addEventListenerKey]("keydown", function(e) {
 		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
 			return;
 		if(e.defaultPrevented)
@@ -158,7 +160,7 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 			}
 		}
 	});
-	document.addEventListener("keyup", function(e) {
+	document[addEventListenerKey]("keyup", function(e) {
 		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
 			return;
 		if(e.defaultPrevented)
@@ -204,7 +206,7 @@ var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
 var turfname = "";
 var theme = "light";
-const menu = document.querySelector('#menu');
+var menu = document.querySelector('#menu');
 
 function createStatusTab(name) {
 	if(document.getElementById(name) || name.trim() == "")
@@ -835,23 +837,23 @@ function set_style_sheet(sheet) {
 	head.appendChild(sheetElement);
 }
 
+document[addEventListenerKey]("click", function(e) {
+	window.location.href = "byond://winset?map.focus=true";
+});
 
-  document.addEventListener("click", function(e) {
-		window.location.href = "byond://winset?map.focus=true";
-	});
-  window.addEventListener("load", function() {
-	  create_theme_button();
-	  var darkmodeCookie = getCookie('darkmode');
-	  if(darkmodeCookie === 'true') {
-		  set_dark_theme();
-	  } else {
-		  set_light_theme();
-	  }
-	  if(!current_tab) {
-		  addPermanentTab("Status");
-		  tab_change("Status");
-	  }
-  });
+window[addEventListenerKey]("load", function() {
+	create_theme_button();
+	var darkmodeCookie = getCookie('darkmode');
+	if(darkmodeCookie === 'true') {
+		set_dark_theme();
+	} else {
+		set_light_theme();
+	}
+	if(!current_tab) {
+		addPermanentTab("Status");
+		tab_change("Status");
+	}
+});
 
 function create_debug(){
 	if(!document.getElementById("Debug Stat Panel")) {
