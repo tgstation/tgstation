@@ -59,7 +59,7 @@ li a:hover:not(.active) {
 }
 .button {
 	background-color: #FFFFFF;
-	border-color: #FFFFFE;
+	border: none;
 	color: black;
 	padding: 7px 14px;
 	text-align: center;
@@ -73,7 +73,6 @@ li a:hover:not(.active) {
 }
 .dark button {
 	background-color: #252525;
-	border-color: #252524;
 	color: white;
 }
 .button.Theme {
@@ -85,12 +84,10 @@ li a:hover:not(.active) {
 	order: 10000;
 }
 .button:hover {
-	border-color: #FFFFFE;
 	background-color: black;
 	color: white;
 }
 .dark button:hover {
-	border-color: #252524;
 	background-color: white;
 	color: #252525;
 }
@@ -137,6 +134,7 @@ li a:hover:not(.active) {
 </head>
 <body>
 <ul id="menu" class="button-container"></ul>
+<hr>
 <div id="statcontent"></div>
 <script>
 // Polyfills and compatibility ------------------------------------------------
