@@ -142,7 +142,7 @@ li a:hover:not(.active) {
 var decoder = decodeURIComponent || unescape;
 // browser passthrough code copy pasted here
 if(document.addEventListener && window.location) { // hey maybe some bozo is still using mega-outdated IE
-	let anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
+	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
 	document.addEventListener("keydown", function(e) {
 		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
 			return;
@@ -151,7 +151,7 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 		if(e.which) {
 			if(!anti_spam[e.which]) {
 				anti_spam[e.which] = true;
-				let href = "?__keydown=" + e.which;
+				var href = "?__keydown=" + e.which;
 				if(e.ctrlKey === false) href += "&ctrlKey=0"
 				else if(e.ctrlKey === true) href += "&ctrlKey=1"
 				window.location.href = href;
@@ -165,7 +165,7 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 			return;
 		if(e.which) {
 			anti_spam[e.which] = false;
-			let href = "?__keyup=" + e.which;
+			var href = "?__keyup=" + e.which;
 			if(e.ctrlKey === false) href += "&ctrlKey=0"
 			else if(e.ctrlKey === true) href += "&ctrlKey=1"
 			window.location.href = href;
@@ -174,7 +174,7 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 }
 if(!Array.prototype.includes) {
 	Array.prototype.includes = function(thing) {
-		for(let i = 0; i < this.length; i++) {
+		for(var i = 0; i < this.length; i++) {
 			if(this[i] == thing) return true;
 		}
 		return false;
@@ -189,21 +189,21 @@ if(!Array.prototype.includes) {
   }
  return true;
 }); */
-let status_tab_parts = ["loading..."];
-let current_tab = null;
-let mc_tab_parts = [["loading...", ""]];
-let href_token = null;
-let spells = [];
-let spell_tabs = [];
-let verb_tabs = [];
-let verbs = [["", ""]]; // list with a list inside
-let inner = "";
-let tickets = [];
-let sqdl2 = [];
-let permanent_tabs = []; // tabs that won't be cleared by wipes
-let turfcontents = [];
-let turfname = "";
-let theme = "light";
+var status_tab_parts = ["loading..."];
+var current_tab = null;
+var mc_tab_parts = [["loading...", ""]];
+var href_token = null;
+var spells = [];
+var spell_tabs = [];
+var verb_tabs = [];
+var verbs = [["", ""]]; // list with a list inside
+var inner = "";
+var tickets = [];
+var sqdl2 = [];
+var permanent_tabs = []; // tabs that won't be cleared by wipes
+var turfcontents = [];
+var turfname = "";
+var theme = "light";
 const menu = document.querySelector('#menu');
 
 function createStatusTab(name) {
@@ -211,7 +211,7 @@ function createStatusTab(name) {
 		return;
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
 		return;
-	let B = document.createElement("BUTTON");
+	var B = document.createElement("BUTTON");
 	B.onclick = function() {tab_change(name)};
 	B.id = name;
 	B.textContent = name;
@@ -230,7 +230,7 @@ function removeStatusTab(name) {
 	if(!document.getElementById(name) || permanent_tabs.includes(name))
 		return;
 	if(verb_tabs.includes(name)){
-		let index = verb_tabs.indexOf(name); // array of strings
+		var index = verb_tabs.indexOf(name); // array of strings
 		if(index > -1){
 		verb_tabs.splice(index, 1)
 		}
@@ -248,7 +248,7 @@ function addPermanentTab(name) {
 
 function removePermanentTab(name) {
 	if(permanent_tabs.includes(name)){
-		let index = permanent_tabs.indexOf(name);
+		var index = permanent_tabs.indexOf(name);
 		if(index > -1) {
 		permanent_tabs.splice(index, 1)
 		}
@@ -257,13 +257,13 @@ function removePermanentTab(name) {
 
 }
 function checkStatusTab() {
-	for(let i=0; i < menu.children.length; i++)
+	for(var i=0; i < menu.children.length; i++)
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			removeStatusTab(menu.children[i].id);
 }
 function add_verb(v) {
-	let to_add = JSON.parse(v);
-	let cat = "";
+	var to_add = JSON.parse(v);
+	var cat = "";
 	cat = to_add[0];
 	if(verb_tabs.includes(cat)){ // we have the category already
 		verbs.push(to_add); // add it to verb list and we done
@@ -277,9 +277,9 @@ function add_verb(v) {
 	}
 }
 function remove_verb(v) {
-	let verb_to_remove = v; // to_remove = [verb:category, verb:name]
-	for(let i = verbs.length - 1; i >= 0; i--){
-		let part_to_remove = verbs[i];
+	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
+	for(var i = verbs.length - 1; i >= 0; i--){
+		var part_to_remove = verbs[i];
 		if(part_to_remove[1] == verb_to_remove[1]){
 			verbs.splice(i, 1)
 		}
@@ -287,28 +287,27 @@ function remove_verb(v) {
 }
 
 function check_verbs() {
-	for(let v = verb_tabs.length - 1; v >= 0; v--){
+	for(var v = verb_tabs.length - 1; v >= 0; v--){
 		verbs_cat_check(verb_tabs[v]);
 	}
 	//checkStatusTab(); // removes any empty status tabs
 }
 
 function verbs_cat_check(cat) {
-	let verbs_in_cat = 0;
-	let verbcat = "";
+	var verbs_in_cat = 0;
+	var verbcat = "";
 	if(!verb_tabs.includes(cat)){
 		removeStatusTab(cat);
 		return;
 	}
-	for(let v = 0; v < verbs.length; v++){
-		let part = verbs[v];
+	for(var v = 0; v < verbs.length; v++){
+		var part = verbs[v];
 		verbcat = part[0];
 		if(verbcat != cat || verbcat.trim() == ""){
 		continue;
 		}
 		else{
 			verbs_in_cat = 1;
-			window.alert(verbcat + " Is equal to " + cat);
 			break; // we only need one
 		}
 	}
@@ -326,10 +325,10 @@ function wipe_verbs() {
 }
 
 function add_verb_list(v) {
-	let to_add = JSON.parse(v); // list of a list with category and verb inside it
+	var to_add = JSON.parse(v); // list of a list with category and verb inside it
 	to_add.sort(); // sort what we're adding
-	for(let i = 0; i < to_add.length; i++) {
-		let part = to_add[i];
+	for(var i = 0; i < to_add.length; i++) {
+		var part = to_add[i];
 		if(verb_tabs.includes(part[0])){
 			verbs.push(part);
 			if(current_tab == part[0]) {
@@ -344,8 +343,8 @@ function add_verb_list(v) {
 }
 
 function remove_verb_list(v) {
-	let to_remove = JSON.parse(v);
-	for(let i = 0; i < to_remove.length; i++) {
+	var to_remove = JSON.parse(v);
+	for(var i = 0; i < to_remove.length; i++) {
 		remove_verb(to_remove[i]);
 	}
 	check_verbs();
@@ -361,9 +360,9 @@ function init_verbs(c, v) {
 	checkStatusTab(); // remove all status tabs
 	verb_tabs = JSON.parse(c);
 	verb_tabs.sort(); // sort it
-	let do_update = false;
-	let cat = "";
-	for(let i = 0; i < verb_tabs.length; i++){
+	var do_update = false;
+	var cat = "";
+	for(var i = 0; i < verb_tabs.length; i++){
 		cat = verb_tabs[i];
 		createStatusTab(cat); // create a category if the verb doesn't exist yet
 	}
@@ -381,10 +380,10 @@ function init_verbs(c, v) {
 
 function update(global_data, ping_entry, other_entries) {
 	status_tab_parts = [ping_entry];
-	let parsed = JSON.parse(global_data);
-	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	var parsed = JSON.parse(global_data);
+	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
 	parsed = JSON.parse(other_entries);
-	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
 	if(current_tab == "Status")
 		draw_status();
 	else if(current_tab == "Debug Stat Panel")
@@ -408,14 +407,14 @@ function remove_mc() {
 		tab_change("Status");
 }
 function remove_spells() {
-	for(let s = 0; s < spell_tabs.length; s++){
+	for(var s = 0; s < spell_tabs.length; s++){
 		removeStatusTab(spell_tabs[s]);
 	}
 }
 
 function init_spells() {
-	let cat = "";
-	for(let i = 0; i < spell_tabs.length; i++)
+	var cat = "";
+	for(var i = 0; i < spell_tabs.length; i++)
 		cat = spell_tabs[i];
 		if(cat.length > 0)
 			verb_tabs.push(cat);
@@ -423,14 +422,14 @@ function init_spells() {
 }
 
 function check_spells() {
-	for(let v = 0; v < spell_tabs.length; v++)
+	for(var v = 0; v < spell_tabs.length; v++)
 		spell_cat_check(spell_tabs[v]);
 }
 function spell_cat_check(cat) {
-	let spells_in_cat = 0;
-	let spellcat = "";
-	for(let s = 0; s < spells.length; s++){
-		let spell = spells[s];
+	var spells_in_cat = 0;
+	var spellcat = "";
+	for(var s = 0; s < spells.length; s++){
+		var spell = spells[s];
 		spellcat = spell[0];
 		if(spellcat == cat){
 			spells_in_cat++;
@@ -442,7 +441,7 @@ function spell_cat_check(cat) {
 }
 function update_spells(t, s) {
 	spell_tabs = JSON.parse(t);
-	let do_update = false;
+	var do_update = false;
 	if(spell_tabs.includes(current_tab)) {
 		do_update = true;
 	}
@@ -462,8 +461,8 @@ function tab_change(tab) {
 	current_tab = tab;
 	if(document.getElementById(tab))
 		document.getElementById(tab).className = "button active"; // make current button active
-	let spell_tabs_thingy = (spell_tabs.includes(tab));
-	let verb_tabs_thingy = (verb_tabs.includes(tab));
+	var spell_tabs_thingy = (spell_tabs.includes(tab));
+	var verb_tabs_thingy = (verb_tabs.includes(tab));
 	if(tab == "Status") {
 		draw_status();
 	} else if(tab == "MC") {
@@ -488,53 +487,53 @@ function tab_change(tab) {
 
 function draw_debug() {
 	document.getElementById("statcontent").innerHTML = "";
-	let wipeverbstabs = document.createElement("div");
-	let link = document.createElement("a");
+	var wipeverbstabs = document.createElement("div");
+	var link = document.createElement("a");
 	link.onclick = function() {wipe_verbs()};
 	link.textContent = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
-	let text = document.createElement("div");
+	var text = document.createElement("div");
 	text.innerHTML = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
-	let table1 = document.createElement("table");
-	for(let i=0; i < verb_tabs.length ; i++) {
-		let part = verb_tabs[i];
-		let tr = document.createElement("tr");
-		let td1 = document.createElement("td");
+	var table1 = document.createElement("table");
+	for(var i=0; i < verb_tabs.length ; i++) {
+		var part = verb_tabs[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
 		td1.textContent = part;
-		let a = document.createElement("a");
+		var a = document.createElement("a");
 		a.onclick = function() {removeStatusTab(part)};
-		a.textContent = " Delete Tab " + part;
+		a.textContent = " Devare Tab " + part;
 		td1.appendChild(a);
 		tr.appendChild(td1);
 		table1.appendChild(tr);
 	}
 	document.getElementById("statcontent").appendChild(table1);
-	let header2 = document.createElement("div");
+	var header2 = document.createElement("div");
 	header2.innerHTML = "Verbs:<br> Category | Name";
 	document.getElementById("statcontent").appendChild(header2);
-	let table2 = document.createElement("table");
-	for(let v = 0; v < verbs.length; v++) {
-		let part2 = verbs[v];
-		let trr = document.createElement("tr");
-		let tdd1 = document.createElement("td");
+	var table2 = document.createElement("table");
+	for(var v = 0; v < verbs.length; v++) {
+		var part2 = verbs[v];
+		var trr = document.createElement("tr");
+		var tdd1 = document.createElement("td");
 		tdd1.textContent = part2[0];
-		let tdd2 = document.createElement("td");
+		var tdd2 = document.createElement("td");
 		tdd2.textContent = part2[1];
 		trr.appendChild(tdd1);
 		trr.appendChild(tdd2);
 		table2.appendChild(trr);
 	}
 	document.getElementById("statcontent").appendChild(table2);
-	let text3 = document.createElement("div");
+	var text3 = document.createElement("div");
 	text3.innerHTML = "Permanent Tabs:";
 	document.getElementById("statcontent").appendChild(text3);
-	let table3 = document.createElement("table");
-	for(let i=0; i < permanent_tabs.length ; i++) {
-		let part3 = permanent_tabs[i];
-		let trrr = document.createElement("tr");
-		let tddd1 = document.createElement("td");
+	var table3 = document.createElement("table");
+	for(var i=0; i < permanent_tabs.length ; i++) {
+		var part3 = permanent_tabs[i];
+		var trrr = document.createElement("tr");
+		var tddd1 = document.createElement("td");
 		tddd1.textContent = part3;
 		trrr.appendChild(tddd1);
 		table3.appendChild(trrr);
@@ -547,11 +546,11 @@ function draw_status() {
 		createStatusTab("Status");
 		current_tab = "Status";
 	document.getElementById("statcontent").innerHTML = inner;
-	for(let i = 0; i < status_tab_parts.length; i++) {
+	for(var i = 0; i < status_tab_parts.length; i++) {
 		if(status_tab_parts[i].trim() == "") {
 			document.getElementById("statcontent").appendChild(document.createElement("br"));
 		} else {
-			let div = document.createElement("div");
+			var div = document.createElement("div");
 			div.innerHTML = status_tab_parts[i];
 			document.getElementById("statcontent").appendChild(div);
 		}
@@ -564,15 +563,15 @@ function draw_status() {
 
 function draw_mc() {
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("table");
-	for(let i = 0; i < mc_tab_parts.length; i++) {
-		let part = mc_tab_parts[i];
-		let tr = document.createElement("tr");
-		let td1 = document.createElement("td");
+	var table = document.createElement("table");
+	for(var i = 0; i < mc_tab_parts.length; i++) {
+		var part = mc_tab_parts[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
 		td1.textContent = part[0];
-		let td2 = document.createElement("td");
+		var td2 = document.createElement("td");
 		if(part[2]) {
-			let a = document.createElement("a");
+			var a = document.createElement("a");
 			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
 			a.textContent = part[1];
 			td2.appendChild(a);
@@ -640,16 +639,16 @@ function update_listedturf(TC) {
 
 function draw_listedturf() {
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("table");
-	for(let i = 0; i < turfcontents.length; i++) {
-		let part = turfcontents[i];
+	var table = document.createElement("table");
+	for(var i = 0; i < turfcontents.length; i++) {
+		var part = turfcontents[i];
 		if(part[2]) {
-			let img = document.createElement("img");
+			var img = document.createElement("img");
 			img.src = part[2];
 			table.appendChild(img);
 		}
-		let b = document.createElement("div");
-		let clickcatcher = "";
+		var b = document.createElement("div");
+		var clickcatcher = "";
 		b.className = "link";
 		b.onmousedown = function(e) {
 			e.preventDefault();
@@ -680,15 +679,15 @@ function remove_listedturf() {
 }
 function draw_sqdl2(){
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("table");
-	for(let i = 0; i < sqdl2.length; i++) {
-		let part = sqdl2[i];
-		let tr = document.createElement("tr");
-		let td1 = document.createElement("td");
+	var table = document.createElement("table");
+	for(var i = 0; i < sqdl2.length; i++) {
+		var part = sqdl2[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
 		td1.textContent = part[0];
-		let td2 = document.createElement("td");
+		var td2 = document.createElement("td");
 		if(part[2]) {
-			let a = document.createElement("a");
+			var a = document.createElement("a");
 			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
 			a.textContent = part[1];
 			td2.appendChild(a);
@@ -704,22 +703,22 @@ function draw_sqdl2(){
 
 function draw_tickets() {
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("table");
+	var table = document.createElement("table");
 	if(!tickets)
 		return;
-	for(let i = 0; i < tickets.length; i++) {
-		let part = tickets[i];
-		let tr = document.createElement("tr");
-		let td1 = document.createElement("td");
+	for(var i = 0; i < tickets.length; i++) {
+		var part = tickets[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
 		td1.textContent = part[0];
-		let td2 = document.createElement("td");
+		var td2 = document.createElement("td");
 		if(part[2]) {
-			let a = document.createElement("a");
+			var a = document.createElement("a");
 			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
 			a.textContent = part[1];
 			td2.appendChild(a);
 		} else if(part[3]){
-			let a = document.createElement("a");
+			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
 			a.textContent = part[1];
 			td2.appendChild(a);
@@ -735,16 +734,16 @@ function draw_tickets() {
 
 function draw_spells(cat) {
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("table");
-	for(let i = 0; i < spells.length; i++) {
-		let part = spells[i];
+	var table = document.createElement("table");
+	for(var i = 0; i < spells.length; i++) {
+		var part = spells[i];
 		if(part[0] != cat) continue;
-		let tr = document.createElement("tr");
-		let td1 = document.createElement("td");
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
 		td1.textContent = part[1];
-		let td2 = document.createElement("td");
+		var td2 = document.createElement("td");
 		if(part[3]) {
-			let a = document.createElement("a");
+			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
 			a.textContent = part[2];
 			td2.appendChild(a);
@@ -760,13 +759,13 @@ function draw_spells(cat) {
 
 function draw_verbs(cat){
 	document.getElementById("statcontent").innerHTML = "";
-	let table = document.createElement("newdiv");
+	var table = document.createElement("newdiv");
 	table.className = "grid-container";
-	let command = ""; // typecast name to string
+	var command = ""; // typecast name to string
 	verbs.sort();
 	verbs.reverse(); // sort verbs backwards before we draw
-	for(let i = verbs.length - 1; i >= 0; i--) {
-		let part = verbs[i]; // should be a list containing category and command
+	for(var i = verbs.length - 1; i >= 0; i--) {
+		var part = verbs[i]; // should be a list containing category and command
 		if(!part[1]) continue;
 		if(part[0] != cat){
 			continue;
@@ -776,7 +775,7 @@ function draw_verbs(cat){
 			continue;
 		}
 		command = part[1];
-		let a = document.createElement("a");
+		var a = document.createElement("a");
 		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
 		a.textContent = command;
 		a.className = "grid-item";
@@ -786,7 +785,7 @@ function draw_verbs(cat){
 }
 
 function create_theme_button() {
-	let B = document.createElement("BUTTON");
+	var B = document.createElement("BUTTON");
 	B.onclick = function() {toggle_theme()};
 	B.id = "Theme";
 	B.textContent = "Theme";
@@ -823,11 +822,11 @@ function set_dark_theme() {
 }
 function set_style_sheet(sheet) {
 	if(document.getElementById("goonStyle")) {
-		let currentSheet = document.getElementById("goonStyle");
+		var currentSheet = document.getElementById("goonStyle");
 		currentSheet.parentElement.removeChild(currentSheet);
 	}
-	let head  = document.getElementsByTagName('head')[0];
-	let sheetElement = document.createElement("link");
+	var head  = document.getElementsByTagName('head')[0];
+	var sheetElement = document.createElement("link");
 	sheetElement.id = "goonStyle";
 	sheetElement.rel = "stylesheet";
 	sheetElement.type = "text/css";
@@ -842,7 +841,7 @@ function set_style_sheet(sheet) {
 	});
   window.addEventListener("load", function() {
 	  create_theme_button();
-	  let darkmodeCookie = getCookie('darkmode');
+	  var darkmodeCookie = getCookie('darkmode');
 	  if(darkmodeCookie === 'true') {
 		  set_dark_theme();
 	  } else {
