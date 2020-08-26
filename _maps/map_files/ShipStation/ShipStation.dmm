@@ -927,7 +927,7 @@
 	dir = 6
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "hn" = (
 /turf/open/floor/engine/airless,
 /area/ruin/unpowered)
@@ -1525,7 +1525,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1913,10 +1913,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
-"nU" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "nY" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -2368,11 +2364,6 @@
 "qG" = (
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/exit/departure_lounge)
-"qH" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "qM" = (
 /turf/closed/wall/r_wall/rust,
 /area/hallway/secondary/exit/departure_lounge)
@@ -2499,7 +2490,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "rS" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall/rust,
@@ -2692,7 +2683,7 @@
 	dir = 10
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "sX" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced,
 /turf/open/floor/plating,
@@ -3093,7 +3084,7 @@
 /obj/structure/transit_tube/curved/flipped,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "vw" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 4
@@ -3465,7 +3456,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "xW" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -3625,7 +3616,7 @@
 /obj/structure/transit_tube/horizontal,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "yM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -4430,7 +4421,7 @@
 	dir = 9
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Ey" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/station_engineer,
@@ -5525,7 +5516,7 @@
 	dir = 5
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Ma" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/plasteel/dark/airless,
@@ -5794,7 +5785,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "NM" = (
 /obj/structure/transit_tube/horizontal{
 	dir = 1
@@ -5824,7 +5815,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "NS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -6209,7 +6200,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Qs" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -6244,7 +6235,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "QS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -6263,7 +6254,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Rj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -6440,7 +6431,7 @@
 	dir = 5
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Sy" = (
 /obj/structure/table/reinforced,
 /obj/item/transfer_valve{
@@ -7388,7 +7379,7 @@
 	dir = 9
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "Zl" = (
 /obj/effect/turf_decal/plaque{
 	icon = 'icons/effects/crayondecal.dmi';
@@ -27267,7 +27258,7 @@ bJ
 bJ
 nv
 nv
-nv
+dv
 nv
 nv
 nv
@@ -27522,10 +27513,10 @@ aj
 aj
 WV
 WV
-nv
-nv
-nv
-nv
+dv
+dv
+NG
+dv
 nv
 nv
 nv
@@ -27781,7 +27772,7 @@ RW
 aj
 nv
 nv
-nv
+qf
 nv
 nv
 nv
@@ -28038,7 +28029,7 @@ RW
 aj
 nv
 nv
-nv
+qf
 nv
 nv
 nv
@@ -28293,10 +28284,10 @@ ue
 Gm
 RW
 WV
-nv
-nv
-nv
-nv
+dv
+dv
+NG
+dv
 nv
 nv
 nv
@@ -28552,7 +28543,7 @@ RW
 aj
 nv
 nv
-nv
+dv
 nv
 nv
 nv
@@ -28809,7 +28800,7 @@ dB
 aj
 nv
 nv
-nU
+dv
 nv
 nv
 nv
@@ -29064,11 +29055,11 @@ RW
 Ch
 RW
 aj
-nU
-qH
+dv
+qf
 NG
-qH
-nU
+qf
+dv
 nv
 nv
 nv
@@ -29323,11 +29314,11 @@ RW
 aj
 nv
 nv
-nU
+dv
 nv
 nv
 nv
-nU
+dv
 nv
 nv
 nv
@@ -29583,9 +29574,9 @@ rQ
 NQ
 rQ
 Sx
-nU
-qH
-nU
+dv
+qf
+dv
 nv
 nv
 nv
@@ -29841,7 +29832,7 @@ Qo
 QG
 Zb
 nv
-qH
+qf
 nv
 nv
 nv
@@ -30098,7 +30089,7 @@ Qo
 Rd
 LT
 nv
-qH
+qf
 nv
 nv
 nv
@@ -30355,7 +30346,7 @@ Qo
 QG
 Zb
 nv
-qH
+qf
 nv
 nv
 nv
@@ -30612,7 +30603,7 @@ Qo
 Rd
 LT
 nv
-qH
+qf
 nv
 nv
 nv
@@ -30869,7 +30860,7 @@ Qo
 QG
 Zb
 nv
-qH
+qf
 nv
 nv
 nv
@@ -31126,7 +31117,7 @@ Qo
 Rd
 LT
 nv
-qH
+qf
 nv
 nv
 nv
@@ -31382,9 +31373,9 @@ Qo
 Qo
 Qo
 Ev
-nU
-qH
-nU
+dv
+qf
+dv
 nv
 nv
 nv
@@ -31636,11 +31627,11 @@ RW
 WV
 nv
 nv
-nU
+dv
 nv
 nv
 nv
-nU
+dv
 nv
 nv
 nv
@@ -31891,11 +31882,11 @@ aj
 aj
 aj
 WV
-nU
-qH
+dv
+qf
 NG
-qH
-nU
+qf
+dv
 nv
 nv
 nv
@@ -32150,7 +32141,7 @@ bJ
 nv
 nv
 nv
-nU
+dv
 nv
 nv
 nv
@@ -42151,7 +42142,7 @@ aR
 Fj
 aR
 aq
-nU
+dv
 yK
 nv
 bJ
@@ -42411,7 +42402,7 @@ aq
 nv
 yK
 nv
-nU
+dv
 nv
 bJ
 bJ
@@ -42665,10 +42656,10 @@ aR
 aR
 aR
 aq
-nU
+dv
 yK
-nU
-nU
+dv
+dv
 nv
 Gt
 bJ
@@ -42925,7 +42916,7 @@ qG
 nv
 yK
 nv
-nU
+dv
 nv
 nv
 sd
@@ -42941,7 +42932,7 @@ BT
 Gt
 nv
 nv
-nv
+dv
 nv
 nv
 nv
@@ -43159,9 +43150,9 @@ nv
 nv
 nv
 nv
+dv
 nv
-nv
-nv
+dv
 qM
 vM
 vM
@@ -43181,10 +43172,10 @@ vM
 qG
 nv
 lw
-nU
-nU
+dv
+dv
 nv
-nU
+dv
 Gt
 vV
 dT
@@ -43196,10 +43187,10 @@ AM
 AM
 Lv
 cF
-nv
-nv
-nv
-nv
+dv
+dv
+NG
+dv
 nv
 nv
 nv
@@ -43415,9 +43406,9 @@ nv
 nv
 nv
 nv
-nv
-nv
-nv
+dv
+qf
+dv
 dv
 qM
 vU
@@ -43436,8 +43427,8 @@ SC
 SC
 CE
 qG
-nU
-nU
+dv
+dv
 vu
 xV
 xV
@@ -43455,7 +43446,7 @@ rU
 BT
 nv
 nv
-nv
+qf
 nv
 nv
 nv
@@ -43673,7 +43664,7 @@ nv
 nv
 nv
 nv
-nv
+qf
 nv
 dv
 sm
@@ -43693,11 +43684,11 @@ wr
 wr
 wr
 sm
-nU
+dv
+dv
 nv
-nv
-nv
-nU
+dv
+dv
 Gt
 Gt
 OT
@@ -43712,7 +43703,7 @@ bO
 BT
 nv
 nv
-nv
+qf
 nv
 nv
 nv
@@ -43930,7 +43921,7 @@ nv
 nv
 nv
 nv
-nv
+qf
 nv
 dv
 sx
@@ -43951,9 +43942,9 @@ LA
 LA
 sx
 nv
+dv
 nv
-nv
-nv
+dv
 nv
 sd
 bJ
@@ -43967,10 +43958,10 @@ rV
 Ii
 KS
 gZ
-nv
-nv
-nv
-nv
+dv
+dv
+qf
+dv
 nv
 nv
 nv
@@ -44186,9 +44177,9 @@ nv
 nv
 nv
 nv
-nv
-nv
-nv
+dv
+qf
+dv
 dv
 um
 wu
@@ -44207,13 +44198,13 @@ YP
 Jg
 wu
 uT
-nv
-nv
-nv
-nv
-nv
-nv
-nv
+dv
+NG
+qf
+NG
+qf
+dv
+dv
 bJ
 bJ
 bJ
@@ -44226,7 +44217,7 @@ Gt
 Gt
 nv
 nv
-nv
+qf
 nv
 nv
 nv
@@ -44444,7 +44435,7 @@ nv
 nv
 nv
 nv
-nv
+qf
 nv
 dv
 dv
@@ -44465,9 +44456,9 @@ sx
 nv
 nv
 nv
+dv
 nv
-nv
-nv
+dv
 nv
 nv
 nv
@@ -44483,7 +44474,7 @@ Gt
 nv
 nv
 nv
-nv
+dv
 nv
 nv
 nv
@@ -44701,10 +44692,10 @@ nv
 nv
 nv
 nv
+qf
 nv
 nv
-nv
-nv
+dv
 nv
 sx
 Bk
@@ -44712,7 +44703,7 @@ sx
 Bk
 sx
 nv
-nv
+dv
 nv
 sx
 Bk
@@ -44958,19 +44949,19 @@ nv
 nv
 nv
 nv
-nv
-nv
-nv
-nv
-nv
+qf
+qf
+qf
+qf
+dv
 sx
 BX
 sx
 Bk
 sx
-nv
-nv
-nv
+qf
+qf
+qf
 sx
 Bk
 sx
@@ -45218,7 +45209,7 @@ nv
 nv
 nv
 nv
-nv
+dv
 nv
 sx
 Bk
@@ -45226,7 +45217,7 @@ sx
 Bk
 sx
 nv
-nv
+dv
 nv
 sx
 Bk
