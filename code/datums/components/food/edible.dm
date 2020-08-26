@@ -211,10 +211,12 @@ Behavior that's still missing from this component that original food items had t
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	var/atom/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!belly)
+	var/atom/belly
+	if(istype(eater, /mob/living/carbon))
+		belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
+	else
 		belly = eater
-	if(belly.reagents.total_volume)
+	if(belly && belly.reagents.total_volume)
 		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
 		var/fraction = min(bite_consumption / belly.reagents.total_volume, 1)
 		owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, methods = INGEST)
