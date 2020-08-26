@@ -239,10 +239,9 @@ function createStatusTab(name) {
 function removeStatusTab(name) {
 	if(!document.getElementById(name) || permanent_tabs.includes(name))
 		return;
-	if(verb_tabs.includes(name)){
-		var index = verb_tabs.indexOf(name); // array of strings
-		if(index > -1){
-		verb_tabs.splice(index, 1)
+	for (var i = verb_tabs.length - 1; i >= 0; --i) {
+		if (verb_tabs[i] == name) {
+			verb_tabs.splice(i, 1);
 		}
 	}
 	menu.removeChild(document.getElementById(name));
@@ -257,15 +256,14 @@ function addPermanentTab(name) {
 }
 
 function removePermanentTab(name) {
-	if(permanent_tabs.includes(name)){
-		var index = permanent_tabs.indexOf(name);
-		if(index > -1) {
-		permanent_tabs.splice(index, 1)
+	for (var i = permanent_tabs.length - 1; i >= 0; --i) {
+		if (permanent_tabs[i] == name) {
+			permanent_tabs.splice(i, 1);
 		}
 	}
 	removeStatusTab(name);
-
 }
+
 function checkStatusTab() {
 	for(var i=0; i < menu.children.length; i++)
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
