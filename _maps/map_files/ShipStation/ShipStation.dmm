@@ -922,10 +922,12 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "hm" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/space/basic,
+/area/space)
 "hn" = (
 /turf/open/floor/engine/airless,
 /area/ruin/unpowered)
@@ -1066,12 +1068,12 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ih" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
 	},
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/floor/plasteel/dark,
+/area/engine/engineering)
 "ij" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,
@@ -1709,10 +1711,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"mO" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "mP" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
@@ -1864,11 +1862,12 @@
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
 "nG" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
+/obj/effect/spawner/structure/window/hollow/plasma/reinforced/end{
+	dir = 8
 	},
-/turf/open/space,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "nH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2370,12 +2369,10 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/exit/departure_lounge)
 "qH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "qM" = (
 /turf/closed/wall/r_wall/rust,
 /area/hallway/secondary/exit/departure_lounge)
@@ -2499,13 +2496,10 @@
 	},
 /area/science/mixing)
 "rQ" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "rS" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall/rust,
@@ -2693,20 +2687,22 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "sU" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
 "sX" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "sY" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "sZ" = (
@@ -3086,14 +3082,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"vo" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
 "vs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -3787,13 +3775,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"zN" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
 "zQ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
@@ -4014,13 +3995,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria,
 /area/gateway)
-"Bb" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
 "Bd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -4455,8 +4429,8 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "Ey" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/station_engineer,
@@ -4551,14 +4525,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/gateway)
-"Fp" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
 "Fq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -5114,10 +5080,10 @@
 /area/engine/engineering)
 "IW" = (
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "IZ" = (
@@ -5554,12 +5520,12 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "LT" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "Ma" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/plasteel/dark/airless,
@@ -5824,12 +5790,11 @@
 /turf/open/floor/carpet/black,
 /area/library)
 "NG" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "NM" = (
 /obj/structure/transit_tube/horizontal{
 	dir = 1
@@ -5855,9 +5820,11 @@
 	},
 /area/gateway)
 "NQ" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
-/turf/closed/wall/r_wall/rust,
-/area/engine/engineering)
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "NS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -6165,10 +6132,10 @@
 /area/ruin/unpowered)
 "PY" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
 /obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -6239,11 +6206,10 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/unpowered)
 "Qo" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space)
 "Qs" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -6276,11 +6242,9 @@
 /area/science/mixing)
 "QG" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/turf/open/space,
-/area/space/nearstation)
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space)
 "QS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -6296,12 +6260,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Rd" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "Rj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -6473,12 +6435,12 @@
 /turf/open/floor/plasteel/recharge_floor,
 /area/hallway/primary/central)
 "Sx" = (
+/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "Sy" = (
 /obj/structure/table/reinforced,
 /obj/item/transfer_valve{
@@ -7421,12 +7383,12 @@
 /turf/closed/wall/r_wall/rust,
 /area/maintenance/central)
 "Zb" = (
-/obj/structure/lattice/catwalk,
+/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
+	dir = 9
 	},
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "Zl" = (
 /obj/effect/turf_decal/plaque{
 	icon = 'icons/effects/crayondecal.dmi';
@@ -28847,7 +28809,7 @@ dB
 aj
 nv
 nv
-nv
+nU
 nv
 nv
 nv
@@ -29102,11 +29064,11 @@ RW
 Ch
 RW
 aj
-nv
-nv
-nv
-nv
-nv
+nU
+qH
+NG
+qH
+nU
 nv
 nv
 nv
@@ -29361,11 +29323,11 @@ RW
 aj
 nv
 nv
+nU
 nv
 nv
 nv
-nv
-nv
+nU
 nv
 nv
 nv
@@ -29614,16 +29576,16 @@ bf
 bf
 bf
 PY
-RW
-dC
-nv
-nv
-nv
-nv
-nv
-nv
-nv
-nv
+ih
+nG
+Qo
+rQ
+NQ
+rQ
+Sx
+nU
+qH
+nU
 nv
 nv
 nv
@@ -29873,13 +29835,13 @@ Co
 Rw
 RW
 Go
+hm
+QG
+Qo
+QG
+Zb
 nv
-nv
-nv
-nv
-nv
-nv
-nv
+qH
 nv
 nv
 nv
@@ -30130,13 +30092,13 @@ nL
 Rw
 RW
 tE
+sU
+Rd
+Qo
+Rd
+LT
 nv
-nv
-nv
-nv
-nv
-nv
-nv
+qH
 nv
 nv
 nv
@@ -30385,15 +30347,15 @@ Bj
 iv
 Co
 sY
-qH
-NQ
+RW
+aj
 hm
-Bb
+QG
+Qo
+QG
+Zb
 nv
-nv
-nv
-nv
-nv
+qH
 nv
 nv
 nv
@@ -30644,13 +30606,13 @@ bf
 cO
 RW
 dC
-mO
+sU
 Rd
-mO
-ZI
-ZI
+Qo
+Rd
+LT
 nv
-nv
+qH
 nv
 nv
 nv
@@ -30901,13 +30863,13 @@ RW
 Rw
 RW
 Go
-nv
-Rd
+hm
+QG
 Qo
 QG
-ZI
+Zb
 nv
-nv
+qH
 nv
 nv
 nv
@@ -31159,12 +31121,12 @@ JA
 RW
 tE
 sU
-vo
-vo
-vo
+Rd
+Qo
+Rd
 LT
 nv
-nv
+qH
 nv
 nv
 nv
@@ -31416,13 +31378,13 @@ db
 bb
 bS
 Qo
-Fp
-zN
-Fp
+Qo
+Qo
+Qo
 Ev
-nv
-nv
-nv
+nU
+qH
+nU
 nv
 nv
 nv
@@ -31672,13 +31634,13 @@ Ch
 Ch
 RW
 WV
-nG
-Fp
-zN
-Fp
-LT
 nv
 nv
+nU
+nv
+nv
+nv
+nU
 nv
 nv
 nv
@@ -31929,11 +31891,11 @@ aj
 aj
 aj
 WV
-Zb
-vo
-vo
-vo
-Ev
+nU
+qH
+NG
+qH
+nU
 nv
 nv
 nv
@@ -32186,11 +32148,11 @@ GF
 aj
 bJ
 nv
-nG
-Fp
-zN
-Fp
-LT
+nv
+nv
+nU
+nv
+nv
 nv
 nv
 nv
@@ -32443,11 +32405,11 @@ pq
 aj
 bJ
 bJ
-ih
-Fp
-Fp
-Fp
-Ev
+nv
+nv
+nv
+nv
+nv
 nv
 nv
 nv
@@ -32700,11 +32662,11 @@ rq
 WV
 WV
 bJ
-nG
-rQ
-Sx
-rQ
-LT
+nv
+nv
+nv
+nv
+nv
 nv
 nv
 nv
@@ -32958,10 +32920,10 @@ IL
 WV
 bJ
 bJ
-NG
-Ev
-NG
-Ev
+nv
+nv
+nv
+nv
 nv
 nv
 nv
