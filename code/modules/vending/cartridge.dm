@@ -12,7 +12,8 @@
 					/obj/item/cartridge/signal/toxins = 10,
 					/obj/item/pda/heads = 10,
 					/obj/item/cartridge/captain = 3,
-					/obj/item/cartridge/quartermaster = 10)
+					/obj/item/cartridge/quartermaster = 10,
+					/obj/item/pdacase = 10)
 	refill_canister = /obj/item/vending_refill/cart
 	default_price = 250
 	extra_price = 500

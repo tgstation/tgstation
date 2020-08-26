@@ -81,6 +81,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
+	var/obj/item/pdacase = null //Used for PDA case
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -185,6 +186,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			overlay.icon_state = "pai_off_overlay"
 			. += new /mutable_appearance(overlay)
+	if(pdacase)
+		overlay.icon_state = "pda_case"
+		. += new /mutable_appearance(overlay)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -976,6 +980,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
+	else if(istype(C, /obj/item/pdacase))
+		if(istype(src, /obj/item/pda/curator))
+			to_chat(user, "<span class='warning'>\The [C] does not fit on \the [src]!</span>")
+			return
+		if(pdacase)
+			to_chat(user, "<span class='warning'>There is already \a [C] on \the [src]!</span>")
+		if(!user.transferItemToLoc(C, src))
+			return
+		pdacase = C
+		to_chat(user, "<span class='notice'>You slot \the [C] onto \the [src].</span>")
+		throwforce = 18 //How long until a powergaming HOP uses this.
+		update_icon()
 	else
 		return ..()
 
