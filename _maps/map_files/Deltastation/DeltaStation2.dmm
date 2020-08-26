@@ -87123,9 +87123,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dmf" = (
@@ -108126,9 +108124,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "eNA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "eRh" = (
@@ -111076,6 +111072,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"nJq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/surgery/room_b)
 "nLd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
@@ -113035,6 +113037,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"tyl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "tzj" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -113599,6 +113617,23 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"uTf" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "uTQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -114431,6 +114466,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "xAi" = (
@@ -162402,7 +162441,7 @@ dCO
 uxC
 wZq
 eNA
-dEe
+nJq
 xzY
 vFc
 dLo
@@ -162645,7 +162684,7 @@ dhq
 diJ
 dkv
 dma
-dnG
+uTf
 dnG
 dro
 dsN
@@ -163416,7 +163455,7 @@ cPv
 diM
 dkE
 dme
-dnD
+tyl
 dnG
 dro
 dsQ
