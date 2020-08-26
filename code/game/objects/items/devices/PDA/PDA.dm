@@ -990,7 +990,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return
 		pdacase = C
 		to_chat(user, "<span class='notice'>You slot \the [C] onto \the [src].</span>")
-		throwforce = 18 //How long until a powergaming HOP uses this.
+		throwforce = 14 //How long until a powergaming HOP uses this.
 		update_icon()
 	else
 		return ..()
