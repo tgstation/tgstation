@@ -37,7 +37,7 @@
 	var/list/disabled = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.disabled)
+		if(BP.bodypart_disabled)
 			disabled += BP
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
@@ -125,10 +125,11 @@
 	. += msg.Join("")
 
 	if(!appears_dead)
-		if(stat == UNCONSCIOUS)
-			. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
-		else if(InCritical())
-			. += "[t_His] breathing is shallow and labored."
+		switch(stat)
+			if(SOFT_CRIT)
+				. += "[t_His] breathing is shallow and labored."
+			if(UNCONSCIOUS, HARD_CRIT)
+				. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
 
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))

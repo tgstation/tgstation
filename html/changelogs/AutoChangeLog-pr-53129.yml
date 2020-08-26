@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - tweak: "when admins change the emergency shuttle timer, it gives a way more accurate estimate."
