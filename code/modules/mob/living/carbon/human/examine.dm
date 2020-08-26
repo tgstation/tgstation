@@ -19,7 +19,7 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//uniform
-	if(w_uniform && !(ITEM_SLOT_ICLOTHING & obscured))
+	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
 		//accessory
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
@@ -35,7 +35,7 @@
 	if(wear_suit)
 		. += "[t_He] [t_is] wearing [wear_suit.get_examine_string(user)]."
 		//suit/armor storage
-		if(s_store && !(ITEM_SLOT_SUITSTORE & obscured))
+		if(s_store && !(obscured & ITEM_SLOT_SUITSTORE))
 			. += "[t_He] [t_is] carrying [s_store.get_examine_string(user)] on [t_his] [wear_suit.name]."
 	//back
 	if(back)
@@ -48,7 +48,7 @@
 
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
-	if(gloves && !(ITEM_SLOT_GLOVES & obscured))
+	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
 		. += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands."
 	else if(FR && length(FR.blood_DNA))
 		if(num_hands)
@@ -68,25 +68,25 @@
 		. += "[t_He] [t_has] [belt.get_examine_string(user)] about [t_his] waist."
 
 	//shoes
-	if(shoes && !(ITEM_SLOT_FEET & obscured))
+	if(shoes && !(obscured & ITEM_SLOT_FEET))
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(ITEM_SLOT_MASK & obscured))
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
 		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
 
-	if(wear_neck && !(ITEM_SLOT_NECK & obscured))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	//eyes
-	if(!(ITEM_SLOT_EYES & obscured))
+	if(!(obscured & ITEM_SLOT_EYES))
 		if(glasses)
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, CULT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
 
 	//ears
-	if(ears && !(ITEM_SLOT_EARS & obscured))
+	if(ears && !(obscured & ITEM_SLOT_EARS))
 		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears."
 
 	//ID

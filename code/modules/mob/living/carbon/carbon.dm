@@ -191,12 +191,12 @@
 
 	var/obscured = check_obscured_slots()
 
-	if(ITEM_SLOT_NECK & obscured)
+	if(obscured & ITEM_SLOT_NECK)
 		dat += "<BR><B>Neck:</B> Obscured"
 	else
 		dat += "<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? (wear_neck) : "Nothing"]</A>"
 
-	if(ITEM_SLOT_MASK & obscured)
+	if(obscured & ITEM_SLOT_MASK)
 		dat += "<BR><B>Mask:</B> Obscured"
 	else
 		dat += "<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</a>"
@@ -1159,23 +1159,23 @@
 		update_inv_glasses()
 		. = TRUE
 
-	if(wear_mask && !(ITEM_SLOT_MASK & obscured) && wear_mask.wash(clean_types))
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
 		update_inv_wear_mask()
 		. = TRUE
 
-	if(ears && !(ITEM_SLOT_EARS & obscured) && ears.wash(clean_types))
+	if(ears && !(obscured & ITEM_SLOT_EARS) && ears.wash(clean_types))
 		update_inv_ears()
 		. = TRUE
 
-	if(wear_neck && !(ITEM_SLOT_NECK & obscured) && wear_neck.wash(clean_types))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK) && wear_neck.wash(clean_types))
 		update_inv_neck()
 		. = TRUE
 
-	if(shoes && !(ITEM_SLOT_FEET & obscured) && shoes.wash(clean_types))
+	if(shoes && !(obscured & ITEM_SLOT_FEET) && shoes.wash(clean_types))
 		update_inv_shoes()
 		. = TRUE
 
-	if(gloves && !(ITEM_SLOT_GLOVES & obscured) && gloves.wash(clean_types))
+	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && gloves.wash(clean_types))
 		update_inv_gloves()
 		. = TRUE
 
