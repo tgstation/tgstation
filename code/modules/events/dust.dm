@@ -22,7 +22,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/sandstorm
-	startWhen = TRUE
+	startWhen = 1
 	endWhen = 150 // ~5 min
 	announceWhen = FALSE
 	fakeable = FALSE
