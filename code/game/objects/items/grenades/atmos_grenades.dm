@@ -56,9 +56,9 @@
 		if(isopenturf(turf_loc))
 			var/turf/open/floor_loc = turf_loc
 			if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
-				floor_loc.atmos_spawn_air("Nitrogen = 100; TEMP = 273")
+				floor_loc.atmos_spawn_air("nitrogen=100;TEMP=273")
 			if(floor_loc.air.temperature > 370)
-				floor_loc.atmos_spawn_air("Nitrogen = 250; TEMP = 30")
+				floor_loc.atmos_spawn_air("nitrogen=250;TEMP=30")
 				floor_loc.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
 			if(floor_loc.air.gases[/datum/gas/plasma])
 				floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.5
