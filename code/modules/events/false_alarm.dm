@@ -25,7 +25,7 @@
 
 /datum/round_event/falsealarm
 	announceWhen = 0
-	endWhen = TRUE
+	endWhen = 1
 	fakeable = FALSE
 
 /datum/round_event/falsealarm/announce(fake)
