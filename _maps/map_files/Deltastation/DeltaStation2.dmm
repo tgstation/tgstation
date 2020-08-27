@@ -59126,7 +59126,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/crew_quarters/heads/captain/private)
+/area/maintenance/central/secondary)
 "cik" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
