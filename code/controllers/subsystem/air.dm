@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(air)
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
-	..(msg)
+	return ..()
 
 
 /datum/controller/subsystem/air/Initialize(timeofday)
