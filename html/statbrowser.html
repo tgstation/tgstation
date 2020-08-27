@@ -13,7 +13,7 @@ body {
 	padding: 2px !important;
 }
 body.dark {
-	background-color: #252525;
+	background-color: #131313;
 	color: #abc6ec;
 }
 
@@ -21,7 +21,7 @@ body.dark {
 	background-color: white;
 }
 .dark #menu {
-	background-color: #252525;
+	background-color: #131313;
 }
 
 a {
@@ -58,9 +58,6 @@ li a:hover:not(.active) {
 	background-color: #111;
 }
 
-.active {
-	background-color: #4CAF50;
-}
 .button-container {
 	display: inline-flex;
 	flex-wrap: wrap;
@@ -72,8 +69,9 @@ li a:hover:not(.active) {
 	white-space: pre-wrap;
 }
 .button {
-	background-color: #FFFFFF;
-	border-color: #FFFFFE;
+	background-color: #FFFFFE;
+	border-color: rgba(255, 255, 254, 0.5);
+	border-width: 1px;
 	color: black;
 	padding: 7px 14px;
 	text-align: center;
@@ -87,17 +85,17 @@ li a:hover:not(.active) {
 }
 .dark button {
 	background-color: #252525;
-	border-color: #252524;
+	border-color: rgba(37, 37, 36, 0.5);
 	color: white;
 }
 .button:hover {
-	border-color: #FFFFFE;
-	background-color: black;
+	border-color: rgba(255, 255, 254, 0.5);
+	background-color: #252525;
 	color: white;
 }
 .dark button:hover {
-	border-color: #252524;
-	background-color: white;
+	border-color: rgba(37, 37, 36, 0.5);
+	background-color: #FFFFFE;
 	color: #252525;
 }
 .button:active, .button.active {
