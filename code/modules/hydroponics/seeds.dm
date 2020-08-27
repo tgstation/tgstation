@@ -221,6 +221,8 @@
 			t_prod.seed.name = initial(new_prod.name)
 			t_prod.seed.desc = initial(new_prod.desc)
 			t_prod.seed.plantname = initial(new_prod.plantname)
+			t_prod.transform = initial(t_prod.transform)
+			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			t_amount++
 			if(t_prod.seed)
 				//t_prod.seed = new new_prod
@@ -563,7 +565,8 @@
 		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
 		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
 		if(R.can_add(src))
-			genes += R
+			if(!R.try_upgrade_gene(src))
+				genes += R
 		else
 			qdel(R)
 	reagents_from_genes()

@@ -21,13 +21,13 @@
 /datum/quirk/foreigner/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.add_blocked_language(/datum/language/common)
-	if(ishumanbasic(H) || isfelinid(H))
+	if(ishumanbasic(H))
 		H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.remove_blocked_language(/datum/language/common)
-	if(ishumanbasic(H) || isfelinid(H))
+	if(ishumanbasic(H))
 		H.remove_language(/datum/language/uncommon)
 
 /datum/quirk/vegetarian
@@ -232,6 +232,8 @@
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
 /datum/quirk/bald/proc/equip_hat(mob/user, obj/item/hat)
+	SIGNAL_HANDLER
+
 	if(istype(hat, /obj/item/clothing/head/wig))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/confident_mane) //Our head is covered, but also by a wig so we're happy.
 	else
@@ -239,4 +241,6 @@
 
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)

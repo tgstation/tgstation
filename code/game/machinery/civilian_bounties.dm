@@ -103,6 +103,7 @@
 		inserted_scan_id.registered_account.transfer_money(dept_account, curr_bounty.reward)
 		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
 		inserted_scan_id.registered_account.reset_bounty()
+		SSeconomy.civ_bounty_tracker++
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -154,6 +155,9 @@
 			if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
 				var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
 				to_chat(usr, "<span class='warning'>You already have an incomplete civilian bounty, try again in [curr_time] minutes to replace it!</span>")
+				return FALSE
+			if(!pot_acc.account_job)
+				to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
 				return FALSE
 			var/datum/bounty/crumbs = random_bounty(pot_acc.account_job.bounty_types) //It's a good scene from War Dogs (2016).
 			var/crumb_floor = (SSeconomy.inflation_value() * BOUNTY_MULTIPLIER)

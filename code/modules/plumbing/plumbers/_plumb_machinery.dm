@@ -16,11 +16,6 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 	///wheter we partake in rcd construction or not
-	var/rcd_constructable = TRUE
-	///cost of the plumbing rcd construction
-	var/rcd_cost = 15
-	///delay of constructing it throught the plumbing rcd
-	var/rcd_delay = 10
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
@@ -55,7 +50,7 @@
 		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
 	if(I.tool_start_check(user, amount=0))
 		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
-		if(I.use_tool(src, user, rcd_delay * 2, volume=50))
+		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
 			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
 			return TRUE
@@ -66,8 +61,6 @@
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
 	reagent_flags = TRANSPARENT | REFILLABLE
-	rcd_cost = 5
-	rcd_delay = 5
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt)
 	. = ..()
@@ -79,8 +72,6 @@
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 5
-	rcd_delay = 5
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt)
 	. = ..()
@@ -91,8 +82,6 @@
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
-	rcd_cost = 25
-	rcd_delay = 20
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt)
 	. = ..()

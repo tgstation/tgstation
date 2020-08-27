@@ -115,7 +115,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot_line(procsleft, angleused, turf/T)
 	if(procsleft <= 0)
 		return
-	new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
+	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
 	T = get_step(T, angleused)
 	procsleft = procsleft - 1
 	addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), 2)
@@ -125,7 +125,7 @@
 	var/turf/T = get_turf(target)
 	for(var/t in spiral_range_turfs(3, T))
 		if(get_dist(t, T) > 1)
-			new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
+			new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport(target)
 	ranged_cooldown = world.time + (cooldown_time * 2)
@@ -140,9 +140,9 @@
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, src)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
+		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	for(var/t in RANGE_TURFS(1, source))
-		new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
+		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	visible_message("<span class='hierophant_warning'>[src] fades out!</span>")
 	density = FALSE
@@ -157,7 +157,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares(target)
 	ranged_cooldown = world.time + cooldown_time
 	var/turf/T = get_turf(target)
-	new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
+	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
 	var/max_size = 2
 	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, 0, max_size), 2)
 
@@ -166,11 +166,11 @@
 		return
 	for(var/t in spiral_range_turfs(ring, T))
 		if(get_dist(t, T) == ring)
-			new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
+			new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, (ring + 1), max_size), 2)
 
 //The specific version of hiero's squares pandora uses
-/obj/effect/temp_visual/hierophant/blast/pandora
+/obj/effect/temp_visual/hierophant/blast/damaging/pandora
 	damage = 20
 	monster_damage_boost = FALSE
 

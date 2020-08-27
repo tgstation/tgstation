@@ -154,7 +154,7 @@
 	. = ..()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/relaymove(mob/user, direction)
+/obj/effect/dummy/chameleon/relaymove(mob/living/user, direction)
 	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 

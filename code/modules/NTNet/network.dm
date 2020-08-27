@@ -128,7 +128,7 @@
 		var/obj/machinery/ntnet_relay/n = i
 		if(zlevel && n.z != zlevel)
 			continue
-		if(n.is_operational())
+		if(n.is_operational)
 			return TRUE
 	return FALSE
 

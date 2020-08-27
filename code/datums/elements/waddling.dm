@@ -18,14 +18,19 @@
 	waddle_tracker -= source
 
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)
+	SIGNAL_HANDLER
+
 	if(target.incapacitated() || !(target.mobility_flags & MOBILITY_STAND))
 		return
 	Waddle(target)
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
+	SIGNAL_HANDLER
+
 	if(!COOLDOWN_FINISHED(src, waddle_tracker[target]))
 		return
 	COOLDOWN_START(src, waddle_tracker[target], 0.25 SECONDS)
+
 	animate(target, pixel_z = 4, time = 0)
 	var/prev_trans = matrix(target.transform)
 	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)

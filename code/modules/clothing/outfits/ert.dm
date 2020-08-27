@@ -95,7 +95,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/storage/backpack/ert/medical
 	belt = /obj/item/storage/belt/medical
-	r_hand = /obj/item/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/e_gun=1,\
@@ -131,11 +131,12 @@
 	back = /obj/item/storage/backpack/ert/engineer
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/rcd_ammo/large
-	r_hand = /obj/item/storage/firstaid/regular
+	l_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/e_gun=1,\
 		/obj/item/construction/rcd/loaded=1)
+
 
 /datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -192,7 +193,7 @@
 
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+	l_hand = /obj/item/nullrod/scythe/talking/chainsword
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,
 		/obj/item/gun/energy/e_gun=1)
@@ -283,7 +284,7 @@
 	name = "ERT Janitor - Heavy Duty"
 
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
+	l_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/lights/mixed=1,\
 		/obj/item/melee/baton/loaded=1,\
@@ -327,7 +328,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
-	r_hand = /obj/item/gun/ballistic/rifle/boltaction
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
@@ -350,7 +351,7 @@
 	belt = /obj/item/melee/baton/loaded
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
-	r_hand = /obj/item/megaphone
+	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
 
 /datum/outfit/centcom/ert/janitor/party
@@ -389,7 +390,7 @@
 	mask = /obj/item/clothing/mask/gas/atmos
 	head = /obj/item/clothing/head/hardhat/weldhat
 	suit = /obj/item/clothing/suit/hazardvest
-	r_hand = /obj/item/areaeditor/blueprints
+	l_hand = /obj/item/areaeditor/blueprints
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/stack/sheet/metal/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
@@ -416,7 +417,7 @@
 	head = /obj/item/clothing/head/coordinator
 	suit = /obj/item/clothing/suit/coordinator
 	belt = /obj/item/storage/belt/sabre
-	r_hand = /obj/item/toy/balloon
+	l_hand = /obj/item/toy/balloon
 	l_pocket = /obj/item/kitchen/knife
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/fireworks=3,\

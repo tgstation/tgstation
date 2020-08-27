@@ -1,0 +1,39 @@
+# External resources
+# Set this to the location of a .zip with the server's .rsc inside of it.
+# If you set this mutiple times, the server will rotate between the links.
+# To use this, the compile option PRELOAD_RSC must be set to 0 to keep byond from preloading resources
+
+EXTERNAL_RSC_URLS http://tgstation13.download/byond/tgstationv2.zip
+
+
+########################
+# Browser Asset Config #
+########################
+# Browser assets are any file included in interfaces. css, images, javascript, etc.
+# This handles configuring how we get these to the player so interfaces can access them.
+
+# Asset Transport
+# The normal way of getting assets to clients is to use the internal byond system. This can be slow and delay the opening of interface windows. It also doesn't allow the internal IE windows byond uses to cache anything.
+# You can instead have the server save them to a website via a folder within the game server that the web server can read. This could be a simple webserver or something backed by a CDN.
+# Valid values: simple, webroot. Simple is the default.
+#ASSET_TRANSPORT webroot
+
+
+# Simple asset transport configurable values.
+
+# Uncomment this to have the server passively send all browser assets to each client in the background. (instead of waiting for them to be needed)
+# This should be uncommented in production and commented in development
+#ASSET_SIMPLE_PRELOAD
+
+
+# Webroot asset transport configurable values.
+
+# Local folder to save assets to.
+# Assets will be saved in the format of asset.MD5HASH.EXT or in namespaces/hash/ as ASSET_FILE_NAME or asset.MD5HASH.EXT
+#ASSET_CDN_WEBROOT data/asset-store/
+
+# URL the folder from above can be accessed from.
+# for best results the webserver powering this should return a long cache validity time, as all assets sent via this transport use hash based urls
+# if you want to test this locally, you simpily run the `localhost-asset-webroot-server.py` python3 script to host assets stored in `data/asset-store/` via http://localhost:58715/
+#ASSET_CDN_URL http://localhost:58715/
+

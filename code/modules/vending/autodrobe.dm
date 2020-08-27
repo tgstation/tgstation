@@ -140,7 +140,11 @@
 				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 				   /obj/item/clothing/head/clownmitre = 1,
 				   /obj/item/skub = 1,
-				   /obj/item/clothing/suit/hooded/mysticrobe = 1)
+				   /obj/item/clothing/suit/hooded/mysticrobe = 1,
+				   /obj/item/clothing/under/dress/wedding_dress = 1,
+				   /obj/item/clothing/under/suit/tuxedo = 1,
+				   /obj/item/clothing/head/weddingveil = 1,
+				   /obj/item/storage/belt/cummerbund = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = 180
 	extra_price = 360

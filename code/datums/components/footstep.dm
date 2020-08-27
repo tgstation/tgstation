@@ -61,6 +61,8 @@
 	return T
 
 /datum/component/footstep/proc/play_simplestep()
+	SIGNAL_HANDLER
+
 	var/turf/open/T = prepare_step()
 	if(!T)
 		return
@@ -82,6 +84,8 @@
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range)
 
 /datum/component/footstep/proc/play_humanstep()
+	SIGNAL_HANDLER
+
 	if(HAS_TRAIT(parent, TRAIT_SILENT_FOOTSTEPS))
 		return
 	var/turf/open/T = prepare_step()

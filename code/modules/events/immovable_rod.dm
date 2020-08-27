@@ -151,7 +151,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			if(isturf(clong))
 				SSexplosions.medturf += clong
 			if(isobj(clong))
-				SSexplosions.medobj += clong
+				SSexplosions.med_mov_atom += clong
 
 	else if(isliving(clong))
 		penetrate(clong)
