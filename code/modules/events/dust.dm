@@ -24,7 +24,7 @@
 /datum/round_event/sandstorm
 	startWhen = 1
 	endWhen = 150 // ~5 min
-	announceWhen = FALSE
+	announceWhen = 0
 	fakeable = FALSE
 
 /datum/round_event/sandstorm/tick()
