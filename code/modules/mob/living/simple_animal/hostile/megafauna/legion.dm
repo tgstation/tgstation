@@ -165,14 +165,18 @@
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
+
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/L = target
-		if(L.stat == UNCONSCIOUS)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.infest(L)
+	if(!. || !ishuman(target))
+		return
+	var/mob/living/living_target = target
+	switch(living_target.stat)
+		if(UNCONSCIOUS, HARD_CRIT)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/legion = new(loc)
+			legion.infest(living_target)
+
 
 ///Resets the charge buffs.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
@@ -323,7 +327,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot

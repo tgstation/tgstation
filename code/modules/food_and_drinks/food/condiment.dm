@@ -90,7 +90,7 @@
 		M.visible_message("<span class='warning'>[user] fed [M] from [src].</span>", \
 			"<span class='warning'>[user] fed you from [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
-	reagents.trans_to(M, 10, transfered_by = user, method = INGEST)
+	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	return 1
 
