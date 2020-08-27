@@ -2,8 +2,9 @@
 	"": ["general area"],
 
 	"head": [
-		"left eyebrow",
-		"cheekbone",
+		"@pick(left_right)eyebrow",
+		"@pick(left_right)cheekbone",
+		"nose",
 		"neck",
 		"throat",
 		"jawline",
@@ -12,41 +13,69 @@
 
 	"chest": [
 		"upper chest",
-		"lower abdomen",
+		"@pick(upper_lower)abdomen",
 		"midsection",
 		"collarbone",
 		"lower back"
 	],
 
 	"l_arm": [
-		"outer left forearm",
-		"inner left wrist",
+		"@pick(inner_outer)left forearm",
+		"@pick(inner_outer)left wrist",
 		"left elbow",
 		"left bicep",
-		"left shoulder"
+		"left shoulder",
+		"left hand"
 	],
 
 	"r_arm": [
-		"outer right forearm",
-		"inner right wrist",
+		"@pick(inner_outer)right forearm",
+		"@pick(inner_outer)right wrist",
 		"right elbow",
 		"right bicep",
-		"right shoulder"
+		"right shoulder",
+		"right hand"
 	],
 
 	"l_leg": [
-		"inner left thigh",
-		"outer left calf",
-		"outer left hip",
+		"@pick(inner_outer)left thigh",
+		"@pick(free_move)left calf",
+		"@pick(free_move)left hip",
 		"left kneecap",
-		"lower left shin"
+		"@pick(free_move)left shin"
 	],
 
 	"r_leg": [
-		"inner right thigh",
-		"outer right calf",
-		"outer right hip",
+		"@pick(inner_outer)right thigh",
+		"@pick(free_move)right calf",
+		"@pick(free_move)right hip",
 		"right kneecap",
-		"lower right shin"
+		"@pick(free_move)right shin"
+	],
+
+
+	"inner_outer" : [
+		"inner ",
+		"outer ",
+		"",
+		""
+	],
+	"upper_lower" : [
+		"upper ",
+		"lower ",
+		"",
+		""
+	],
+	"free_move" : [
+		"inner ",
+		"outer ",
+		"upper ",
+		"lower ",
+		"",
+		""
+	],
+	"left_right" : [
+		"left ",
+		"right "
 	]
 }

@@ -419,7 +419,7 @@
 		return
 
 	var/used_amount = injection_amount/usage_ratio
-	reagents.trans_to(user,used_amount,multiplier=usage_ratio, method = INJECT)
+	reagents.trans_to(user,used_amount,multiplier=usage_ratio, methods = INJECT)
 	update_icon()
 	user.update_inv_back() //for overlays update
 

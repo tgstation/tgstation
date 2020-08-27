@@ -69,9 +69,9 @@
 		if(prob(reac_volume))
 			W.ScrapeAway()
 
-/datum/reagent/clf3/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/clf3/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST && method != INJECT)
+		if(methods & (TOUCH|VAPOR|PATCH))
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
@@ -158,7 +158,7 @@
 	taste_description = "burning"
 	self_consuming = TRUE
 
-/datum/reagent/phlogiston/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/phlogiston/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
@@ -193,9 +193,9 @@
 	M.adjust_fire_stacks(1)
 	..()
 
-/datum/reagent/napalm/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/napalm/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(istype(M))
-		if(method != INGEST && method != INJECT)
+		if(methods & (TOUCH|VAPOR|PATCH))
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane
@@ -310,8 +310,8 @@
 /datum/reagent/firefighting_foam/expose_obj(obj/O, reac_volume)
 	O.extinguish()
 
-/datum/reagent/firefighting_foam/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method in list(VAPOR, TOUCH))
+/datum/reagent/firefighting_foam/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		M.adjust_fire_stacks(-reac_volume)
 		M.ExtinguishMob()
 	..()

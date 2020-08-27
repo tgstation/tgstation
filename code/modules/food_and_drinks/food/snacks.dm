@@ -157,7 +157,7 @@ All foods are distributed among various categories. Use common sense.
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				reagents.trans_to(M, bitesize, transfered_by = user, method = INGEST)
+				reagents.trans_to(M, bitesize, transfered_by = user, methods = INGEST)
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
