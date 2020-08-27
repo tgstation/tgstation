@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "New rats can spawn for the king when some die."
