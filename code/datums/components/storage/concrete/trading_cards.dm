@@ -52,6 +52,8 @@
 			else
 				card.zoom_in()
 	. = ..()
+	if(!things.len)
+		qdel(parent)
 
 /datum/component/storage/concrete/tcg/proc/handle_empty_deck()
 	var/list/contents = contents()
