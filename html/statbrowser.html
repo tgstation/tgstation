@@ -11,16 +11,29 @@ body {
 	margin: 5px !important;
 	padding: 2px !important;
 }
+body.dark {
+	background-color: #252525;
+	color: #abc6ec;
+}
+
+#menu {
+	background-color: white;
+}
+.dark #menu {
+	background-color: #252525;
+}
+
 a {
 	color: black;
 	text-decoration: none
 }
-a:hover, .dark a:hover {
-	text-decoration: underline;
-}
 .dark a {
 	color: #abc6ec;
 }
+a:hover, .dark a:hover {
+	text-decoration: underline;
+}
+
 ul {
 	list-style-type: none;
 	margin: 0;
@@ -833,15 +846,9 @@ function toggle_theme() {
 
 function set_theme(which) {
 	if (which == "light") {
-		menu.style.backgroundColor = "white";
-		document.body.style.backgroundColor = "white";
-		document.body.style.color = "black";
 		document.body.className = "";
 		set_style_sheet("browserOutput_white");
 	} else if (which == "dark") {
-		menu.style.backgroundColor = "#252525";
-		document.body.style.backgroundColor = "#252525";
-		document.body.style.color = "#abc6ec";
 		document.body.className = "dark";
 		set_style_sheet("browserOutput");
 	}
