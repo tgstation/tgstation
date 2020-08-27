@@ -1140,6 +1140,7 @@
 	pixel_y = -3
 	},
 /obj/item/gun/energy/e_gun,
+/obj/item/clothing/suit/hooded/ablative,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/shipstation)
 "hv" = (
