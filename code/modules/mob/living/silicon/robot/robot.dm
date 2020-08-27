@@ -173,10 +173,10 @@
 	logevent("System brought online.")
 
 /mob/living/silicon/robot/proc/create_modularInterface()
-	modularInterface = new/obj/item/modular_computer/tablet/integrated(src)
+	if(!modularInterface)
+		modularInterface = new/obj/item/modular_computer/tablet/integrated(src, borgo = src)
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
-	modularInterface.borgo = src
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -667,6 +667,11 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
+/mob/living/silicon/robot/modules/syndicate/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new/obj/item/modular_computer/tablet/integrated/syndicate(src, src)
+	. = ..()
+
 /mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
@@ -1102,9 +1107,12 @@
 	if(stat == DEAD) //Dead borgs log no longer
 		return
 	if(!modularInterface)
-		stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. A new one has been created.")
+		stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
 	var/datum/computer_file/program/borgUI/program = hard_drive.find_file_by_name("borgUI")
+	if(!program)
+		stack_trace("Cyborg [src]. key [src.client] was somehow missing their self-manage app in their tablet. Please make a bug report.")
+		return
 	program.force_full_update()

@@ -42,6 +42,10 @@
 	has_variants = FALSE
 	device_theme = "syndicate"
 
+/obj/item/modular_computer/tablet/nukeops/Initialize()
+	. = ..()
+	set_light_color("#FF0000") //Syndicate likes it red
+
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
 	if(!enabled)
 		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
@@ -52,7 +56,8 @@
 /// Borg Built-in tablet interface
 /obj/item/modular_computer/tablet/integrated
 	icon_state = "tablet-red"
-	comp_light_luminosity = 0 //tablet light button actually enables/disables the borg lamp
+	has_light = FALSE //tablet light button actually enables/disables the borg lamp
+	comp_light_luminosity = 0
 	has_variants = FALSE
 	///Ref to the borg we're installed in. Set by the borg during our creation.
 	var/mob/living/silicon/robot/borgo
@@ -62,9 +67,13 @@
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
+	.["has_light"] = TRUE
 	.["light_on"] = borgo?.lamp_enabled
 	.["comp_light_color"] = borgo?.lamp_color
 
+/obj/item/modular_computer/tablet/integrated/Initialize(mapload, container_borg)
+	. = ..()
+	borgo = container_borg
 
 //Overrides the ui_act to make the flashlight controls link to the borg instead
 /obj/item/modular_computer/tablet/integrated/ui_act(action, params)
@@ -91,3 +100,11 @@
 			borgo.toggle_headlamp(FALSE, TRUE)
 			return TRUE
 	return ..()
+
+/obj/item/modular_computer/tablet/integrated/syndicate
+	device_theme = "syndicate"
+
+
+/obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
+	. = ..()
+	borgo.lamp_color = "#FF0000" //Syndicate likes it red

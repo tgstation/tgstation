@@ -59,7 +59,7 @@
 
 	//var/list/laws = borgo.laws.get_law_list(TRUE, TRUE, DEBUG_VAR1)
 	data["Laws"] = borgo.laws.get_law_list(TRUE, TRUE, FALSE)
-	data["borgLog"] = list(tablet.borglog)
+	data["borgLog"] = tablet.borglog
 	return data
 
 /datum/computer_file/program/borgUI/ui_act(action, params)
@@ -73,7 +73,7 @@
 				tablet.borgo.locked = FALSE
 				tablet.borgo.update_icons()
 				if(tablet.borgo.emagged)
-					tablet.borgo.logevent("ChÃ¥vÃis cover lock has been [tablet.borgo.locked ? "engaged" : "released"]")
+					tablet.borgo.logevent("ChÃ¥vÃis cover lock has been [tablet.borgo.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
 				else
 					tablet.borgo.logevent("Chassis cover lock has been [tablet.borgo.locked ? "engaged" : "released"]")
 
@@ -82,6 +82,13 @@
 
 		if("lawstate")
 			tablet.borgo.checklaws()
+
+		if("alertPower")
+			if(tablet.borgo.stat == CONSCIOUS)
+				if(!tablet.borgo.cell || !tablet.borgo.cell.charge)
+					tablet.borgo.visible_message("<span class='notice'>The power warning light on <span class='name'>[src]</span> flashes urgently.</span>", \
+						"You announce you are operating in low power mode.")
+					playsound(tablet.borgo, 'sound/machines/buzz-two.ogg', 50, FALSE)
 
 /**
   * Forces a full update of the UI, if currently open.
@@ -92,3 +99,4 @@
 /datum/computer_file/program/borgUI/proc/force_full_update()
 	if(tablet)
 		SStgui.get_open_ui(tablet.borgo, computer)?.send_full_update()
+		to_chat(world, "DEBUG -- tgui check: \"SStgui.get_open_ui(tablet.borgo, computer)\"")

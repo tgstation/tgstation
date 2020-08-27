@@ -65,9 +65,9 @@
 	if(R.mind)
 		R.mind.grab_ghost()
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
-		R.logevent("WARN -- System recovered from unexpected shutdown.")
 
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
+	R.logevent("WARN -- System recovered from unexpected shutdown.")
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"

@@ -51,12 +51,15 @@ export const NtosMain = (props, context) => {
               onClick={() => act('PC_toggle_light')}>
               Flashlight: {light_on ? 'ON' : 'OFF'}
             </Button>
-            <Button
+            {!device_theme === 'syndicate'
+            && (
+              <Button
               ml={1}
               onClick={() => act('PC_light_color')}>
               Color:
               <ColorBox ml={1} color={comp_light_color} />
-            </Button>
+              </Button>
+            )}
           </Section>
         )}
         {!!cardholder && (

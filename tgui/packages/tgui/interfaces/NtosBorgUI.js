@@ -194,7 +194,7 @@ export const NtosBorgUIContent_one = (props, context) => {
           <Table>
             {laws.map(law => (
               <Table.Row>
-              {law}
+                {law}
               </Table.Row>
             ))}
           </Table>
@@ -216,7 +216,7 @@ export const NtosBorgUIContent_two = (props, context) => {
       <Table>
         {borgLog.map(log => (
           <Table.Row>
-          <font color="green">{log}</font>
+            <font color="green">{log}</font>
           </Table.Row>
         ))}
       </Table>

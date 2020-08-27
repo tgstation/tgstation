@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				update_icons()
 				if(emagged)
 					to_chat(user, "<span class='notice'>The cover interface glitches out for a split second.</span>")
-					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]")
+					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
 				else
 					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 			else
