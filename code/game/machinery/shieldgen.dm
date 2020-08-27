@@ -31,14 +31,14 @@
 		if(2)
 			take_damage(50, BRUTE, ENERGY, 0)
 
-/obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = NONE)
+/obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
 			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
-/obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = NONE, sound_effect = 1, attack_dir)
+/obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)

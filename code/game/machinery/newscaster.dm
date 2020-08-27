@@ -737,7 +737,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	else
 		return ..()
 
-/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = NONE)
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(machine_stat & BROKEN)
