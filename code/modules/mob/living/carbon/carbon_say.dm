@@ -14,7 +14,7 @@
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			return ..()
 		else
-			return 0
+			return FALSE
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)
