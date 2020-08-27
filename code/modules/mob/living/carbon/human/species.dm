@@ -922,8 +922,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/replaced_item = H.get_item_by_slot(slot)
 
-	// if there's an item in the slot we want, only allow it if we're trying to swap and the item being replaced isn't NODROP, ABSTRACT, or DROPDEL
-	if(replaced_item && (!swap || (HAS_TRAIT(replaced_item, TRAIT_NODROP) || (replaced_item.item_flags & (ABSTRACT|DROPDEL)))))
+	// if there's an item in the slot we want, only allow past this if we're trying to swap and the item being replaced isn't NODROP or ABSTRACT
+	if(replaced_item && (!swap || (HAS_TRAIT(replaced_item, TRAIT_NODROP) || (replaced_item.item_flags & ABSTRACT))))
 		return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
