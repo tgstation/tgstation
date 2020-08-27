@@ -4,6 +4,7 @@
 <title>Stat Browser</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
 <style>
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -88,14 +89,6 @@ li a:hover:not(.active) {
 	background-color: #252525;
 	border-color: #252524;
 	color: white;
-}
-.button.Theme {
-	position: fixed;
-	top: auto;
-	bottom: 0px;
-	right: 0px;
-	float: right;
-	order: 10000;
 }
 .button:hover {
 	border-color: #FFFFFE;
@@ -229,7 +222,6 @@ var sqdl2 = [];
 var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
 var turfname = "";
-var theme = "light";
 var menu = document.querySelector('#menu');
 
 function createStatusTab(name) {
@@ -834,25 +826,6 @@ function draw_verbs(cat){
 	document.getElementById("statcontent").appendChild(table);
 }
 
-function create_theme_button() {
-	var B = document.createElement("BUTTON");
-	B.onclick = function() {toggle_theme()};
-	B.id = "Theme";
-	B[textContentKey] = "Theme";
-	B.className = "button Theme";
-	permanent_tabs.push("Theme");
-	menu.appendChild(B);
-}
-
-function toggle_theme() {
-	if(theme == "light"){
-		theme = "dark";
-	} else {
-		theme = "light";
-	}
-	set_theme(theme);
-}
-
 function set_theme(which) {
 	if (which == "light") {
 		document.body.className = "";
@@ -882,13 +855,6 @@ document[addEventListenerKey]("click", function(e) {
 	window.location.href = "byond://winset?map.focus=true";
 });
 
-create_theme_button();
-var darkmodeCookie = getCookie('darkmode');
-if(darkmodeCookie === 'true') {
-	set_theme("dark");
-} else {
-	set_theme("light");
-}
 if(!current_tab) {
 	addPermanentTab("Status");
 	addPermanentTab("Debug Stat Panel");
