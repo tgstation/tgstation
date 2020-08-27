@@ -212,23 +212,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+	if(!client)
+		return
+
+	var/deaf_message
+	var/deaf_type
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
-		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-		if(!client)
-			return
-
-
-		var/deaf_message
-		var/deaf_type
 		if(speaker != src)
-			if(!radio_freq) //Overrides deafness check
+			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
 				deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 				deaf_type = 1
+
 		else
 			deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 			deaf_type = 2
 
-
+		// Create map text prior to modifying message for goonchat, sign lang edition
 		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)))
 			create_chat_message(speaker, message_language, raw_message, spans)
 
@@ -242,12 +242,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return message
 
 	else
-		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-		if(!client)
-			return
-
-		var/deaf_message
-		var/deaf_type
 		if(speaker != src)
 			if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 				deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."

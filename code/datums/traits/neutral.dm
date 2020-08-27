@@ -246,14 +246,14 @@
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
 
 
-/datum/quirk/GCSL
+/datum/quirk/tongue_tied
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
 	value = 1
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
 //Adds tongue & gloves
-/datum/quirk/GCSL/on_spawn()
+/datum/quirk/tongue_tied/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
 	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
@@ -265,6 +265,6 @@
 	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
 	H.regenerate_icons()
 
-/datum/quirk/GCSL/post_add()
+/datum/quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
