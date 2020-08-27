@@ -29,18 +29,6 @@
 	. = ..()
 	handle_empty_deck()
 
-/datum/component/storage/concrete/tcg/proc/handle_empty_deck()
-	var/list/contents = contents()
-	//You can't have a deck of one card!
-	if(contents.len <= 1)
-		var/obj/item/tcgcard_deck/deck = parent
-		var/obj/item/tcgcard/card = contents[1]
-		card.forceMove(card.drop_location())
-		card.zoom_in()
-		card.flipped = deck.flipped
-		card.update_icon_state()
-		qdel(parent)
-
 /datum/component/storage/concrete/tcg/show_to(mob/M)
 	. = ..()
 	if(!parent_deck)
@@ -54,3 +42,15 @@
 		return
 	parent_deck.visible_message("<span class='notice'>\the [parent_deck] is shuffled after looking through it.</span>")
 	parent_deck.shuffle_deck(M, FALSE)
+
+/datum/component/storage/concrete/tcg/proc/handle_empty_deck()
+	var/list/contents = contents()
+	//You can't have a deck of one card!
+	if(contents.len <= 1)
+		var/obj/item/tcgcard_deck/deck = parent
+		var/obj/item/tcgcard/card = contents[1]
+		card.forceMove(card.drop_location())
+		card.flipped = deck.flipped
+		card.update_icon_state()
+		card.zoom_in()
+		qdel(parent)

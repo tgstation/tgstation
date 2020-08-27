@@ -90,9 +90,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
-		second_card.zoom_out()
+		second_card.zoom_in()
 		user.transferItemToLoc(src, new_deck)
-		zoom_out()
+		zoom_in()
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
 	return ..()
@@ -170,10 +170,12 @@ GLOBAL_LIST_EMPTY(cached_cards)
 			return FALSE
 		var/obj/item/tcgcard/new_card = I
 		new_card.flipped = flipped
-		user.transferItemToLoc(new_card, src)
+		new_card.forceMove(src)
+		new_card.zoom_in()
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
+	return ..()
 
 /obj/item/tcgcard_deck/proc/draw_card(mob/user)
 	if(!contents.len)
@@ -198,11 +200,14 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
-	contents = reverseRange(contents)
+	var/list/temp_deck = contents.Copy()
+	contents = reverseRange(temp_deck)
+	//Now flip the cards to their opposite positions.
 	for(var/a in 1 to contents.len)
 		var/obj/item/tcgcard/nu_card = contents[a]
 		nu_card.zoom_in()
 		nu_card.flipped = flipped
+		nu_card.update_icon_state()
 	update_icon_state()
 
 /obj/item/cardpack
