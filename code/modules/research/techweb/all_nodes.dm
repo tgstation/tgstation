@@ -56,7 +56,7 @@
 	starting_node = TRUE
 	display_name = "Basic Medical Equipment"
 	description = "Basic medical tools and equipment."
-	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat",
+	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat", "stethoscope", 
 					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
 
 /////////////////////////Biotech/////////////////////////

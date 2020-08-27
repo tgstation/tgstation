@@ -440,17 +440,17 @@
 
 /** Handles exposing a mob to reagents.
   *
-  * If the method is INGEST the mob tastes the reagents.
-  * If the method is VAPOR it incorporates permiability protection.
+  * If the methods include INGEST the mob tastes the reagents.
+  * If the methods include VAPOR it incorporates permiability protection.
   */
-/mob/living/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
+/mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(method == INGEST)
+	if(methods & INGEST)
 		taste(source)
 
-	var/touch_protection = (method == VAPOR) ? get_permeability_protection() : 0
+	var/touch_protection = (methods & VAPOR) ? get_permeability_protection() : 0
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
-		. |= R.expose_mob(src, method, reagents[R], show_message, touch_protection)
+		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)

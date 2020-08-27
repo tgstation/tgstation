@@ -178,28 +178,33 @@
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
 
-/obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
-	if(istype(mob) && mob.client)
-		if(!moving)
-			for(var/obj/structure/transit_tube/station/station in loc)
-				if(!station.pod_moving)
-					if(direction == turn(station.boarding_dir,180))
-						if(station.open_status == STATION_TUBE_OPEN)
-							mob.forceMove(loc)
-							update_icon()
-						else
-							station.open_animation()
 
-					else if(direction in station.tube_dirs)
-						setDir(direction)
-						station.launch_pod()
-				return
+/obj/structure/transit_tube_pod/relaymove(mob/living/user, direction)
+	if(!user.client || moving)
+		return
 
-			for(var/obj/structure/transit_tube/TT in loc)
-				if(dir in TT.tube_dirs)
-					if(TT.has_exit(direction))
-						setDir(direction)
-						return
+	for(var/obj/structure/transit_tube/station/station in loc)
+		if(station.pod_moving)
+			return
+		if(direction == turn(station.boarding_dir,180))
+			if(station.open_status == STATION_TUBE_OPEN)
+				user.forceMove(loc)
+				update_icon()
+			else
+				station.open_animation()
+		else if(direction in station.tube_dirs)
+			setDir(direction)
+			station.launch_pod()
+		return
+
+	for(var/obj/structure/transit_tube/transit_tube in loc)
+		if(!(dir in transit_tube.tube_dirs))
+			continue
+		if(!transit_tube.has_exit(direction))
+			continue
+		setDir(direction)
+		return
+
 
 /obj/structure/transit_tube_pod/return_temperature()
 	return air_contents.temperature

@@ -1044,7 +1044,7 @@
 	if(!do_after(src, 5, target = M))
 		return
 	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
-		if(M.get_num_arms() <= 0)
+		if(M.usable_hands == 0)
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")

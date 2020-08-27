@@ -48,7 +48,7 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if(!is_operational())
+	if(!is_operational)
 		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
 		return
 	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
@@ -169,16 +169,16 @@
 	if(panel_open == TRUE)
 		icon_state = "chamber_open"
 		return
-	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational()))
+	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
 		icon_state = "chamber_active_loaded"
 		return
-	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
 		icon_state = "chamber_loaded"
 		return
-	if(use_power == ACTIVE_POWER_USE && is_operational())
+	if(use_power == ACTIVE_POWER_USE && is_operational)
 		icon_state = "chamber_active"
 		return
-	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational()))
+	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
 		icon_state = "chamber"
 		return
 

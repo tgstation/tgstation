@@ -465,7 +465,7 @@
 
 /obj/machinery/computer/shuttle/pod
 	name = "pod control computer"
-	admin_controlled = 1
+	admin_controlled = TRUE
 	possible_destinations = "pod_asteroid"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"

@@ -107,12 +107,12 @@
 
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
-/obj/vehicle/relaymove(mob/user, direction)
+/obj/vehicle/relaymove(mob/living/user, direction)
 	if(is_driver(user))
 		return driver_move(user, direction)
 	return FALSE
 
-/obj/vehicle/proc/driver_move(mob/user, direction)
+/obj/vehicle/proc/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE

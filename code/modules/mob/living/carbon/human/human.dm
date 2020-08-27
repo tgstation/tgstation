@@ -21,6 +21,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	AddComponent(/datum/component/bloodysoles/feet)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1154,10 +1155,6 @@
 	stop_pulling()
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)
-
-/mob/living/carbon/human/do_after_coefficent()
-	. = ..()
-	. *= physiology.do_after_speed
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

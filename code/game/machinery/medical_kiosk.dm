@@ -59,7 +59,7 @@
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
-	if(is_operational())
+	if(is_operational)
 		icon_state = "kiosk_off"
 	else
 		icon_state = "kiosk"
