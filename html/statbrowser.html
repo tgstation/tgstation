@@ -825,29 +825,28 @@ function create_theme_button() {
 function toggle_theme() {
 	if(theme == "light"){
 		theme = "dark";
-		set_dark_theme();
 	} else {
 		theme = "light";
-		set_light_theme();
+	}
+	set_theme(theme);
+}
+
+function set_theme(which) {
+	if (which == "light") {
+		menu.style.backgroundColor = "white";
+		document.body.style.backgroundColor = "white";
+		document.body.style.color = "black";
+		document.body.className = "";
+		set_style_sheet("browserOutput_white");
+	} else if (which == "dark") {
+		menu.style.backgroundColor = "#252525";
+		document.body.style.backgroundColor = "#252525";
+		document.body.style.color = "#abc6ec";
+		document.body.className = "dark";
+		set_style_sheet("browserOutput");
 	}
 }
 
-function set_light_theme() {
-	menu.style.backgroundColor = "white";
-	document.body.style.backgroundColor = "white";
-	document.body.style.color = "black";
-	document.body.className = "";
-	set_style_sheet("browserOutput_white");
-}
-
-function set_dark_theme() {
-	menu.style.backgroundColor = "#252525";
-	document.body.style.backgroundColor = "#252525";
-	document.body.style.color = "#abc6ec";
-	document.body.className = "dark";
-	set_style_sheet("browserOutput");
-
-}
 function set_style_sheet(sheet) {
 	if(document.getElementById("goonStyle")) {
 		var currentSheet = document.getElementById("goonStyle");
@@ -870,9 +869,9 @@ document[addEventListenerKey]("click", function(e) {
 create_theme_button();
 var darkmodeCookie = getCookie('darkmode');
 if(darkmodeCookie === 'true') {
-	set_dark_theme();
+	set_theme("dark");
 } else {
-	set_light_theme();
+	set_theme("light");
 }
 if(!current_tab) {
 	addPermanentTab("Status");
