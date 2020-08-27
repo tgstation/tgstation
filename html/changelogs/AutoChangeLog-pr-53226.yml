@@ -1,0 +1,6 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "tgchat: External links starting with \"www\" now open properly and don't break the panel."
+  - admin: "Unthickened hrefs.log (no more ping hrefs)"
+  - admin: "Thickened tgui.log (logs actions, interacted object and mob location)"

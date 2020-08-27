@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - rscadd: "You can now print stethoscopes from autolathes and medical protolathes."

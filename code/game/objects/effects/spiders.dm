@@ -15,7 +15,7 @@
 
 
 /obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee")
+	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
 				damage_amount *= 2
@@ -243,7 +243,7 @@
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 
-/obj/structure/spider/cocoon/container_resist(mob/living/user)
+/obj/structure/spider/cocoon/container_resist_act(mob/living/user)
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT

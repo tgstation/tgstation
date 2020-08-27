@@ -232,7 +232,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/rezadone/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/rezadone/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	. = ..()
 	if(iscarbon(M))
 		var/mob/living/carbon/patient = M
@@ -326,9 +326,9 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/mine_salve/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/mine_salve/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
+		if(methods & (INGEST|VAPOR|INJECT))
 			M.adjust_nutrition(-5)
 			if(show_message)
 				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
@@ -766,13 +766,13 @@
 	if(chems.has_reagent(type, 1))
 		mytray.spawnplant()
 
-/datum/reagent/medicine/strange_reagent/expose_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/medicine/strange_reagent/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(M.stat != DEAD)
 		return ..()
 	if(M.suiciding || M.hellbound) //they are never coming back
 		M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
 		return
-	if(iscarbon(M) && method != INGEST) //simplemobs can still be splashed
+	if(iscarbon(M) && !(methods & INGEST)) //simplemobs can still be splashed
 		return ..()
 	var/amount_to_revive = round((M.getBruteLoss()+M.getFireLoss())/20)
 	if(M.getBruteLoss()+M.getFireLoss() >= 200 || HAS_TRAIT(M, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
@@ -1272,8 +1272,8 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/polypyr/expose_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || method == VAPOR)
+/datum/reagent/medicine/polypyr/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+	if(methods & (TOUCH|VAPOR))
 		if(M && ishuman(M) && reac_volume >= 0.5)
 			var/mob/living/carbon/human/H = M
 			H.hair_color = "92f"

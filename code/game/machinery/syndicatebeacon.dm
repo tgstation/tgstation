@@ -10,7 +10,6 @@
 	anchored = FALSE
 	density = TRUE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	machine_stat = 0
 	verb_say = "states"
 	var/cooldown = 0
 
@@ -129,6 +128,10 @@
 /obj/item/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
+
+/obj/item/sbeacondrop/emp
+	desc = "A label on it reads: <i>Warning: Activating this device will send a high-powered electromagnetic device to your location</i>."
+	droptype = /obj/machinery/syndicatebomb/emp
 
 /obj/item/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."

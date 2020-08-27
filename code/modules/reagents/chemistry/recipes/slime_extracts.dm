@@ -142,7 +142,7 @@
 		var/obj/item/reagent_containers/food/snacks/B = new chosen(T)
 		B.silver_spawned = TRUE
 		if(prob(5))//Fry it!
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/fried
+			var/obj/item/food/deepfryholder/fried
 			fried = new(T, B)
 			fried.fry() // actually set the name and colour it
 			B = fried
