@@ -224,7 +224,7 @@
 		var/refund = 0
 		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
 			refund += kill_refund
-		else if(L.InCritical() && prev_stat == CONSCIOUS) //you knocked them into critical
+		else if(HAS_TRAIT(L, TRAIT_CRITICAL_CONDITION) && prev_stat == CONSCIOUS) //you knocked them into critical
 			refund += crit_refund
 		if(L.stat != DEAD && prev_stat != DEAD)
 			refund += attack_refund

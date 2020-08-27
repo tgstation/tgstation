@@ -19,7 +19,7 @@
 
 /obj/item/clothing/under/plasmaman/enviroslacks
 	name = "enviroslacks"
-	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nano-Trasen for it's detectives, lawyers, and bar-tenders alike."
+	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its detectives, lawyers, and bartenders alike."
 	icon_state = "enviroslacks"
 	inhand_icon_state = "enviroslacks"
 
@@ -31,7 +31,7 @@
 
 /obj/item/clothing/under/plasmaman/curator
 	name = "curator's plasma envirosuit"
-	desc = "Made out of a modified voidsuit, this suit was Nano-Trasen's first solution to the *logistical problems* that come with employing plasmamen. Due to the modifications, the suit is no longer space-worthy. Despite their limitations, these suits are still in used by historian and old-styled plasmamen alike."
+	desc = "Made out of a modified voidsuit, this suit was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. Due to the modifications, the suit is no longer space-worthy. Despite their limitations, these suits are still in used by historian and old-styled plasmamen alike."
 	icon_state = "prototype_envirosuit"
 	inhand_icon_state = "prototype_envirosuit"
 
@@ -76,7 +76,7 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit spews out a tonne of space lube!</span>","<span class='warning'>Your suit spews out a tonne of space lube!</span>")
+			H.visible_message("<span class='warning'>[H]'s suit spews space lube everywhere!</span>","<span class='warning'>Your suit spews space lube everywhere!</span>")
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
 	return 0

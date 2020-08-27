@@ -1071,7 +1071,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_BLEED,
 									ADMIN_PUNISHMENT_PERFORATE,
 									ADMIN_PUNISHMENT_SCARIFY,
-									ADMIN_PUNISHMENT_SHOES
+									ADMIN_PUNISHMENT_SHOES,
+									ADMIN_PUNISHMENT_DOCK
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1238,6 +1239,32 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>[dude] does not have knottable shoes!</span>", confidential = TRUE)
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_DOCK)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/dude = target
+			var/obj/item/card/id/card = dude.get_idcard(TRUE)
+			if(!card)
+				to_chat(usr,"<span class='warning'>[dude] does not have an ID card on!</span>", confidential = TRUE)
+				return
+			if(!card.registered_account)
+				to_chat(usr,"<span class='warning'>[dude] does not have an ID card with an account!</span>", confidential = TRUE)
+				return
+			if(card.registered_account.account_balance == 0)
+				to_chat(usr, "<span class='warning'>ID Card lacks any funds. No pay to dock.</span>")
+				return
+			var/new_cost = input("How much pay are we docking? Current balance: [card.registered_account.account_balance] credits.","BUDGET CUTS") as num|null
+			if(!new_cost)
+				return
+			if(!(card.registered_account.has_money(new_cost)))
+				to_chat(usr, "<span class='warning'>ID Card lacked funds. Emptying account.</span>")
+				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
+				card.registered_account.account_balance = 0
+			else
+				card.registered_account.account_balance = card.registered_account.account_balance - new_cost
+				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
+			SEND_SOUND(target, 'sound/machines/buzz-sigh.ogg')
 
 	punish_log(target, punishment)
 
@@ -1351,24 +1378,24 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
 	if(!add_or_remove)
 		return
-	var/list/availible_traits = list()
+	var/list/available_traits = list()
 
 	switch(add_or_remove)
 		if("Add")
 			for(var/key in GLOB.traits_by_type)
 				if(istype(D,key))
-					availible_traits += GLOB.traits_by_type[key]
+					available_traits += GLOB.traits_by_type[key]
 		if("Remove")
 			if(!GLOB.trait_name_map)
 				GLOB.trait_name_map = generate_trait_name_map()
 			for(var/trait in D.status_traits)
 				var/name = GLOB.trait_name_map[trait] || trait
-				availible_traits[name] = trait
+				available_traits[name] = trait
 
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(available_traits)
 	if(!chosen_trait)
 		return
-	chosen_trait = availible_traits[chosen_trait]
+	chosen_trait = available_traits[chosen_trait]
 
 	var/source = "adminabuse"
 	switch(add_or_remove)

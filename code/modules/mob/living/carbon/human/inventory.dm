@@ -117,7 +117,6 @@
 				update_tint()
 			if(G.vision_correction)
 				clear_fullscreen("nearsighted")
-				clear_fullscreen("eye_damage")
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()
@@ -172,6 +171,10 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		I.equipped(src, slot, initial)
+
+		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
+		if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
+			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_SHOECOVER, I, slot, initial, redraw_mob, swap)
 
 	return not_handled //For future deeper overrides
 
@@ -260,6 +263,10 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_inv_s_store()
+
+	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
+	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
+		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
 
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))

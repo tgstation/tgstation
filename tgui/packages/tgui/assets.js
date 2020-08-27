@@ -25,7 +25,7 @@ export const loadStyleSheet = (url, attempt = 1) => {
   /** @type {HTMLLinkElement} */
   let node = fgLoadCss(url);
   node.addEventListener('load', () => {
-    if (!isStyleSheetReallyLoaded(url)) {
+    if (!isStyleSheetReallyLoaded(node, url)) {
       node.parentNode.removeChild(node);
       node = null;
       loadedStyleSheetByUrl[url] = null;
@@ -46,15 +46,22 @@ export const loadStyleSheet = (url, attempt = 1) => {
  * Checks whether the stylesheet was registered in the DOM
  * and is not empty.
  */
-const isStyleSheetReallyLoaded = url => {
+const isStyleSheetReallyLoaded = (node, url) => {
+  // Method #1 (works on IE10+)
+  const styleSheet = node.sheet;
+  if (styleSheet) {
+    return styleSheet.rules.length > 0;
+  }
+  // Method #2
   const styleSheets = document.styleSheets;
   const len = styleSheets.length;
   for (let i = 0; i < len; i++) {
     const styleSheet = styleSheets[i];
     if (styleSheet.href.includes(url)) {
-      return styleSheet.rules.length !== 0;
+      return styleSheet.rules.length > 0;
     }
   }
+  // All methods failed
   logger.warn(`Warning: stylesheet '${url}' was not found in the DOM`);
   return false;
 };

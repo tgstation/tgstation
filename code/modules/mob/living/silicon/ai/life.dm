@@ -74,7 +74,7 @@
 		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		else if(stat == UNCONSCIOUS)
+		else if(stat >= UNCONSCIOUS)
 			set_stat(CONSCIOUS)
 	diag_hud_set_status()
 

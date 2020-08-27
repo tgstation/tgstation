@@ -498,7 +498,7 @@
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
 					failed = TRUE //Disconnected client
-				if(!failed && L.stat == UNCONSCIOUS)
+				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
 					failed = TRUE //Unconscious
 				if(!failed && L.stat == DEAD)
