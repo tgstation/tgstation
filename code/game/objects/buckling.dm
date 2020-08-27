@@ -138,7 +138,7 @@
 
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated() || M.anchored)
+	if(!Adjacent(user) || !Adjacent(M) || !isturf(user.loc) || user.incapacitated() || M.anchored)
 		return FALSE
 
 	add_fingerprint(user)
