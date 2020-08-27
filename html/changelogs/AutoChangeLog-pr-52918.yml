@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Bees, if placed in a container, will pop out at the next person to open it"
