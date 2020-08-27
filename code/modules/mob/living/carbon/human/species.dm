@@ -920,9 +920,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-	var/num_arms = H.get_num_arms(FALSE)
-	var/num_legs = H.get_num_legs(FALSE)
-
 	var/obj/item/replaced_item = H.get_item_by_slot(slot)
 
 	// if there's an item in the slot we want, only allow it if we're trying to swap and the item being replaced isn't NODROP, ABSTRACT, or DROPDEL
@@ -957,11 +954,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(num_arms < 2)
+			if(H.num_arms < 2)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
-			if(num_legs < 2)
+			if(H.num_legs < 2)
 				return FALSE
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
