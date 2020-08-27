@@ -315,6 +315,26 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
 
+/// Gives the player the option to succumb while in critical condition
+/obj/screen/alert/succumb
+	name = "Succumb"
+	desc = "Shuffle off this mortal coil."
+	icon_state = "succumb"
+
+/obj/screen/alert/succumb/Click()
+	if (isobserver(usr))
+		return
+
+	var/mob/living/living_owner = owner
+	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
+	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+		return
+
+	if (length(last_whisper))
+		living_owner.say("#[last_whisper]")
+
+	living_owner.succumb(whispered = length(last_whisper) > 0)
+
 //ALIENS
 
 /obj/screen/alert/alien_tox

@@ -1,5 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - balance: "Electric bolts no longer explode shit."
-  - bugfix: "Electric bolts no longer lag the server as a result."

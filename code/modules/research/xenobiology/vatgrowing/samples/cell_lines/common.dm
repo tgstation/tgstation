@@ -374,4 +374,36 @@
 	. = ..()
 	qdel(vat)
 
+/datum/micro_organism/cell_line/clown/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
+	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
+	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
+
+	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow))
+
+	new selected_mob(get_turf(vat))
+
+/datum/micro_organism/cell_line/clown/bananaclown
+	desc = "Clown bits with banana chunks"
+
+	required_reagents = list(/datum/reagent/consumable/banana)
+	supplementary_reagents = list(/datum/reagent/medicine/coagulant/banana_peel = 4)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/banana = 1)
+
+/datum/micro_organism/cell_line/clown/fleshclown
+	desc = "Overly fleshy clown bits"
+
+	required_reagents = list(/datum/reagent/consumable/banana)
+	supplementary_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 1)
+
+/datum/micro_organism/cell_line/clown/longclown
+	desc = "long clown bits"
+
+	required_reagents = list(/datum/reagent/consumable/banana)
+	supplementary_reagents = list(/datum/reagent/consumable/laughter = 4)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
+
 #undef VAT_GROWTH_RATE

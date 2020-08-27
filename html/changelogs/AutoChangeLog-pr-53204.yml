@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes: 
-  - admin: "Admins will now hear a sound and get a screen flash when someone tries to rename the station."
