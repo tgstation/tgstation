@@ -1011,9 +1011,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
-/obj/effect/landmark/portal_exit{
-	id = "station"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -2690,6 +2687,7 @@
 /obj/machinery/camera{
 	dir = 8
 	},
+/obj/item/hand_tele,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Cu" = (
@@ -2777,6 +2775,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/item/hand_tele,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Dc" = (
