@@ -230,7 +230,7 @@
 		sprint += acceleration
 	cooldown = world.timeofday + 3
 
-	step(src, direct, min(round(step_size + sprint), max(world.icon_size, step_size)))
+	step(src, direction, min(round(step_size + sprint), max(world.icon_size, step_size)))
 
 /datum/action/innate/camera_off
 	name = "End Camera View"

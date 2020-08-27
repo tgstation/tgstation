@@ -144,8 +144,8 @@
 	automatic_movement()
 
 	if(current_size >= STAGE_TWO)
-		move()
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		step_size = 6
+		if(prob(event_chance)) //Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
 	dissipate()

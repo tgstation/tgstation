@@ -248,29 +248,12 @@
 
 	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
 
-	var/turf/target_oldturf = target.loc
-	var/shove_dir = get_dir(loc, target_oldturf)
-	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
-	var/mob/living/carbon/target_collateral_carbon
-	var/obj/structure/table/target_table
-	var/obj/machinery/disposal/bin/target_disposal_bin
-	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-
-	//Thank you based whoneedsspace
-	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
-
-	// If we can't shove the target into the carbon (such as if it's an alien), then just pretend nothing was there
-	if (!target_collateral_carbon?.can_be_shoved_into)
-		target_collateral_carbon = null
-
-	if(target_collateral_carbon)
-		shove_blocked = TRUE
-	else
-		target.Move(target_shove_turf, shove_dir)
-		if(get_turf(target) == target_oldturf)
-			target_table = locate(/obj/structure/table) in target_shove_turf.contents
-			target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
-			shove_blocked = TRUE
+	var/shove_dir = GET_PIXELDIR(src, target)
+	walk_for(target, shove_dir, 0, 8, until=0.2 SECONDS) // 16px per 0.1 seconds
+	target.shoved = TRUE
+	target.shover = src
+	addtimer(VARSET_CALLBACK(target, shoved, FALSE), 0.2 SECONDS)
+	addtimer(VARSET_CALLBACK(target, shover, null), 0.2 SECONDS)
 
 	if(target.IsKnockdown() && !target.IsParalyzed())
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
@@ -279,47 +262,6 @@
 		to_chat(src, "<span class='danger'>You kick [target.name] onto [target.p_their()] side!</span>")
 		addtimer(CALLBACK(target, /mob/living/proc/SetKnockdown, 0), SHOVE_CHAIN_PARALYZE)
 		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-
-	if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
-		var/directional_blocked = FALSE
-		if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
-			var/target_turf = get_turf(target)
-			for(var/obj/obj_content in target_turf)
-				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
-					directional_blocked = TRUE
-					break
-			if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
-				for(var/obj/obj_content in target_shove_turf)
-					if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
-						directional_blocked = TRUE
-						break
-		if((!target_table && !target_collateral_carbon && !target_disposal_bin) || directional_blocked)
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.visible_message("<span class='danger'>[name] shoves [target.name], knocking [target.p_them()] down!</span>",
-							"<span class='userdanger'>You're knocked down from a shove by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, "<span class='danger'>You shove [target.name], knocking [target.p_them()] down!</span>")
-			log_combat(src, target, "shoved", "knocking them down")
-		else if(target_table)
-			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-			target.visible_message("<span class='danger'>[name] shoves [target.name] onto \the [target_table]!</span>",
-							"<span class='userdanger'>You're shoved onto \the [target_table] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, "<span class='danger'>You shove [target.name] onto \the [target_table]!</span>")
-			target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-			log_combat(src, target, "shoved", "onto [target_table] (table)")
-		else if(target_collateral_carbon)
-			target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-			target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-			target.visible_message("<span class='danger'>[name] shoves [target.name] into [target_collateral_carbon.name]!</span>",
-				"<span class='userdanger'>You're shoved into [target_collateral_carbon.name] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, "<span class='danger'>You shove [target.name] into [target_collateral_carbon.name]!</span>")
-			log_combat(src, target, "shoved", "into [target_collateral_carbon.name]")
-		else if(target_disposal_bin)
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.forceMove(target_disposal_bin)
-			target.visible_message("<span class='danger'>[name] shoves [target.name] into \the [target_disposal_bin]!</span>",
-							"<span class='userdanger'>You're shoved into \the [target_disposal_bin] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, "<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>")
-			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
 	else
 		target.visible_message("<span class='danger'>[name] shoves [target.name]!</span>",
 						"<span class='userdanger'>You're shoved by [name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)

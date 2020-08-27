@@ -45,7 +45,7 @@
 
 /mob/living/carbon/human/Moved(atom/OldLoc, direct)
 	. = ..()
-	if(shoes && (mobility_flags & MOBILITY_STAND) && loc == NewLoc && has_gravity(loc))
+	if(shoes && (mobility_flags & MOBILITY_STAND) && loc == OldLoc && has_gravity(loc))
 		var/obj/item/clothing/shoes/S = shoes
 		S.step_action()
 

@@ -89,5 +89,11 @@
 	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
 	var/skillchip_complexity_modifier = 0
 
+	/// Shoving vars
+
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
+	/// Are they being shoved?
+	var/shoved = FALSE
+	/// Who is shoving them
+	var/mob/living/carbon/shover = null

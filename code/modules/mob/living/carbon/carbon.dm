@@ -1258,3 +1258,46 @@
 		return
 
 	brain.update_skillchips()
+
+/mob/living/carbon/Bump(atom/A)
+	. = ..()
+	if(shoved && shover)
+		walk(src, 0)
+		var/obj/structure/table/target_table = istype(A, /obj/structure/table) ? A : null
+		var/obj/machinery/disposal/bin/target_disposal_bin = istype(A, /obj/machinery/disposal/bin) ? A : null
+		var/mob/living/carbon/target_collateral_carbon = istype(A, /mob/living/carbon) ? A : null
+
+		// If we can't shove the target into the carbon (such as if it's an alien), then just pretend nothing was there
+		if (!target_collateral_carbon?.can_be_shoved_into)
+			target_collateral_carbon = null
+
+		if(!is_shove_knockdown_blocked() && !buckled)
+			if((!target_table && !target_collateral_carbon && !target_disposal_bin))
+				Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				visible_message("<span class='danger'>[shover.name] shoved [name], knocking [p_them()] down!</span>",
+								"<span class='userdanger'>You're knocked down from a shove by [shover.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, shover)
+				to_chat(shover, "<span class='danger'>You shove [name], knocking [p_them()] down!</span>")
+				log_combat(shover, src, "shoved", "knocking them down")
+			else if(target_table)
+				Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				visible_message("<span class='danger'>[shover.name] shoves [name] onto \the [target_table]!</span>",
+								"<span class='userdanger'>You're shoved onto \the [target_table] by [shover.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, shover)
+				to_chat(shover, "<span class='danger'>You shove [name] onto \the [target_table]!</span>")
+				throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+				log_combat(shover, src, "shoved", "onto [target_table] (table)")
+			else if(target_collateral_carbon)
+				Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				visible_message("<span class='danger'>[shover.name] shoves [name] into [target_collateral_carbon.name]!</span>",
+					"<span class='userdanger'>You're shoved into [target_collateral_carbon.name] by [shover.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, shover)
+				to_chat(shover, "<span class='danger'>You shove [name] into [target_collateral_carbon.name]!</span>")
+				log_combat(shover, src, "shoved", "into [target_collateral_carbon.name]")
+			else if(target_disposal_bin)
+				Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				forceMove(target_disposal_bin)
+				visible_message("<span class='danger'>[shover.name] shoves [name] into \the [target_disposal_bin]!</span>",
+								"<span class='userdanger'>You're shoved into \the [target_disposal_bin] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, shover)
+				to_chat(shover, "<span class='danger'>You shove [name] into \the [target_disposal_bin]!</span>")
+				log_combat(shover, src, "shoved", "into [target_disposal_bin] (disposal bin)")
+		shoved = FALSE
+		shover = null
