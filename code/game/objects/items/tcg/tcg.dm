@@ -155,6 +155,15 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		if(null)
 			return
 
+/obj/item/tcgcard_deck/Destroy()
+	for(var/card in 1 to contents.len)
+		var/obj/item/tcgcard/stored_card = contents[card]
+		stored_card.forceMove(drop_location())
+		stored_card.zoom_out()
+	. = ..()
+
+
+
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -194,6 +203,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	if(!contents)
 		return
 	contents = shuffle(contents)
+	if(user.active_storage)
+		user.active_storage.close(user)
 	if(visable)
 		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
 						"<span class='notice'>You shuffle \the [src]!</span>")

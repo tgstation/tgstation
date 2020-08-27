@@ -43,6 +43,16 @@
 	parent_deck.visible_message("<span class='notice'>\the [parent_deck] is shuffled after looking through it.</span>")
 	parent_deck.shuffle_deck(M, FALSE)
 
+/datum/component/storage/concrete/tcg/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found)
+	for(var/item in 1 to things.len)
+		if(istype(things[item], /obj/item/tcgcard))
+			var/obj/item/tcgcard/card = things[item]
+			if(isturf(target))
+				card.zoom_out()
+			else
+				card.zoom_in()
+	. = ..()
+
 /datum/component/storage/concrete/tcg/proc/handle_empty_deck()
 	var/list/contents = contents()
 	//You can't have a deck of one card!
