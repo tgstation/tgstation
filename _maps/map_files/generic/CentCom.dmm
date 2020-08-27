@@ -8464,7 +8464,9 @@
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "tb" = (
-/turf/open/floor/white,
+/turf/open/floor/holofloor{
+	icon_state = "pure_white"
+	},
 /area/holodeck/rec_center/photobooth)
 "tc" = (
 /obj/effect/spawner/structure/window/reinforced,
