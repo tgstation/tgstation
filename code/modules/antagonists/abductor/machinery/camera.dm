@@ -77,8 +77,8 @@
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
-	var/area/target = get_area(remote_eye)
-	if(target.area_flags & ABDUCTOR_PROOF)
+	var/area/target_area = get_area(remote_eye)
+	if(target_area.area_flags & ABDUCTOR_PROOF)
 		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
 		return
 
@@ -117,8 +117,8 @@
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
 
-	var/area/target = get_area(remote_eye)
-	if(target.area_flags & ABDUCTOR_PROOF)
+	var/area/target_area = get_area(remote_eye)
+	if(target_area.area_flags & ABDUCTOR_PROOF)
 		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
 		return
 
