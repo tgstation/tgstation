@@ -10,8 +10,8 @@ import { canPageAcceptType, createMainPage } from './model';
 const mainPage = createMainPage();
 
 export const initialState = {
-  version: 4,
-  currentPage: mainPage.id,
+  version: 5,
+  currentPageId: mainPage.id,
   scrollTracking: true,
   pages: [
     mainPage.id,
@@ -33,7 +33,6 @@ export const chatReducer = (state = initialState, action) => {
     // that it is a copy that comes straight from the web storage.
     for (let id of Object.keys(payload.pageById)) {
       const page = payload.pageById[id];
-      page.count = 0;
       page.unreadCount = 0;
     }
     return {
@@ -48,7 +47,7 @@ export const chatReducer = (state = initialState, action) => {
       scrollTracking,
     };
     if (scrollTracking) {
-      const pageId = state.currentPage;
+      const pageId = state.currentPageId;
       const page = {
         ...state.pageById[pageId],
         unreadCount: 0,
@@ -63,22 +62,29 @@ export const chatReducer = (state = initialState, action) => {
   if (type === updateMessageCount.type) {
     const countByType = payload;
     const pages = state.pages.map(id => state.pageById[id]);
+    const currentPage = state.pageById[state.currentPageId];
     const nextPageById = { ...state.pageById };
     for (let page of pages) {
-      let count = 0;
       let unreadCount = 0;
       for (let type of Object.keys(countByType)) {
-        if (canPageAcceptType(page, type)) {
-          count += countByType[type];
-          if (page.id !== state.currentPage || !state.scrollTracking) {
-            unreadCount += countByType[type];
-          }
+        // Message does not belong here
+        if (!canPageAcceptType(page, type)) {
+          continue;
         }
+        // Current page is scroll tracked
+        if (page === currentPage && state.scrollTracking) {
+          continue;
+        }
+        // This page received the same message which we can read
+        // on the current page.
+        if (page !== currentPage && canPageAcceptType(currentPage, type)) {
+          continue;
+        }
+        unreadCount += countByType[type];
       }
-      if (count > 0 || unreadCount > 0) {
+      if (unreadCount > 0) {
         nextPageById[page.id] = {
           ...page,
-          count: page.count + count,
           unreadCount: page.unreadCount + unreadCount,
         };
       }
@@ -91,7 +97,7 @@ export const chatReducer = (state = initialState, action) => {
   if (type === addChatPage.type) {
     return {
       ...state,
-      currentPage: payload.id,
+      currentPageId: payload.id,
       pages: [...state.pages, payload.id],
       pageById: {
         ...state.pageById,
@@ -107,7 +113,7 @@ export const chatReducer = (state = initialState, action) => {
     };
     return {
       ...state,
-      currentPage: pageId,
+      currentPageId: pageId,
       pageById: {
         ...state.pageById,
         [pageId]: page,
@@ -143,10 +149,8 @@ export const chatReducer = (state = initialState, action) => {
   }
   if (type === removeChatPage.type) {
     const { pageId } = payload;
-    const currentPage = state.currentPage;
     const nextState = {
       ...state,
-      currentPage,
       pages: [...state.pages],
       pageById: {
         ...state.pageById,
@@ -157,10 +161,10 @@ export const chatReducer = (state = initialState, action) => {
     if (nextState.pages.length === 0) {
       nextState.pages.push(mainPage.id);
       nextState.pageById[mainPage.id] = mainPage;
-      nextState.currentPage = mainPage.id;
+      nextState.currentPageId = mainPage.id;
     }
-    if (!nextState.currentPage || nextState.currentPage === pageId) {
-      nextState.currentPage = nextState.pages[0];
+    if (!nextState.currentPageId || nextState.currentPageId === pageId) {
+      nextState.currentPageId = nextState.pages[0];
     }
     return nextState;
   }

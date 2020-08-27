@@ -134,12 +134,11 @@
 GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //Bloody shoes/footprints
-#define MAX_SHOE_BLOODINESS			100
-#define BLOODY_FOOTPRINT_BASE_ALPHA	150
-#define BLOOD_GAIN_PER_STEP			100
-#define BLOOD_LOSS_PER_STEP			5
-#define BLOOD_LOSS_IN_SPREAD		20
-#define BLOOD_AMOUNT_PER_DECAL		20
+#define BLOODY_FOOTPRINT_BASE_ALPHA 20 /// Minimum alpha of footprints
+#define BLOOD_AMOUNT_PER_DECAL      50 /// How much blood a regular blood splatter contains
+#define BLOOD_ITEM_MAX              200 /// How much blood an item can have stuck on it
+#define BLOOD_POOL_MAX              300 /// How much blood a blood decal can contain
+#define BLOOD_FOOTPRINTS_MIN        5 /// How much blood a footprint need to at least contain
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
@@ -292,9 +291,15 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
-#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
-#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}

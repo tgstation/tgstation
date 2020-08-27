@@ -1,6 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "Baystation instruments are here!"
-  - refactor: "Existing instruments have been rolled into the new unified instruments system."
-  - refactor: "A sound subsystem has been added, SSsounds. Use it for persistent channel management."

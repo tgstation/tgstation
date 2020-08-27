@@ -99,6 +99,8 @@
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
+	SIGNAL_HANDLER
+
 	if(tile_covered || !use_overlays)
 		return
 
@@ -135,6 +137,8 @@
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
 /datum/component/plumbing/proc/disable()
+	SIGNAL_HANDLER
+
 	if(!active)
 		return
 
@@ -183,6 +187,8 @@
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/O, new_state)
+	SIGNAL_HANDLER
+
 	if(new_state)
 		enable()
 	else
@@ -229,6 +235,8 @@
 		net.add_plumber(P, opposite_dir)
 
 /datum/component/plumbing/proc/hide(atom/movable/AM, intact)
+	SIGNAL_HANDLER
+
 	tile_covered = intact
 	AM.update_icon()
 

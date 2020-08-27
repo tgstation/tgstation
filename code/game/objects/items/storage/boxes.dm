@@ -1387,6 +1387,7 @@
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
 
+<<<<<<< HEAD
 /obj/item/storage/box/plumbing
 	name = "box of plumbing supplies"
 	desc = "Contains a small supply of pipes, water recyclers, and metal to connect to the rest of the station."
@@ -1398,3 +1399,22 @@
 		/obj/item/stack/sheet/metal/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
+=======
+/obj/item/storage/box/swab
+	name = "box of microbiological swabs"
+	desc = "Contains a number of sterile swabs for collecting microbiological samples."
+	illustration = "swab"
+
+/obj/item/storage/box/swab/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/swab(src)
+
+/obj/item/storage/box/petridish
+	name = "box of petridishes"
+	desc = "This box purports to contain a number of high rim petridishes."
+	illustration = "petridish"
+
+/obj/item/storage/box/petridish/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/petri_dish(src)
+>>>>>>> upstream/master
