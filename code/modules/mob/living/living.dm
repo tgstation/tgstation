@@ -620,7 +620,7 @@
 	cure_husk()
 	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
-	ExtinguishMob()
+	extinguish_mob()
 	fire_stacks = 0
 	set_confusion(0)
 	dizziness = 0
@@ -1120,7 +1120,7 @@
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
-		on_fire = 1
+		on_fire = TRUE
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
@@ -1130,21 +1130,27 @@
 		return TRUE
 	return FALSE
 
-/mob/living/proc/ExtinguishMob()
-	if(on_fire)
-		on_fire = 0
-		fire_stacks = 0
-		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
-			qdel(F)
-		clear_alert("fire")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+/**
+ * Extinguish all fire on the mob
+ *
+ * This removes all fire stacks, fire effects, alerts, and moods
+ * Signals the extinguishing.
+ */
+/mob/living/proc/extinguish_mob()
+	fire_stacks = 0
+	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
+		qdel(F)
+	clear_alert("fire")
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+	if(on_fire) //Only signal if mob was on fire
+		on_fire = FALSE
 		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
-		update_fire()
+	update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
 	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
-	if(on_fire && fire_stacks <= 0)
-		ExtinguishMob()
+	if(fire_stacks <= 0)
+		extinguish_mob()
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()

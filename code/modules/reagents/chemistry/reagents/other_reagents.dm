@@ -197,8 +197,7 @@
 	if(!istype(M))
 		return
 	if(methods & TOUCH)
-		M.adjust_fire_stacks(-(reac_volume / 10))
-		M.ExtinguishMob()
+		M.extinguish_mob() // extinguish removes all fire stacks
 	..()
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)

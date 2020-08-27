@@ -1824,7 +1824,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	return TRUE
 
-/datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
+/datum/species/proc/extinguish_mob(mob/living/carbon/human/H)
 	return
 
 
