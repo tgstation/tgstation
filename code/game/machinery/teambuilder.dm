@@ -16,8 +16,7 @@
 
 /obj/machinery/teambuilder/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list("<span class='notice'><i>You see a hastily written note on the side, it says '1215-1217, PICK A SIDE'.</i></span>")
-	return msg
+	. += "<span class='notice'>You see a hastily written note on the side, it says '1215-1217, PICK A SIDE'.</span>"
 
 /obj/machinery/teambuilder/Crossed(atom/movable/AM, oldloc)
 	. = ..()
