@@ -389,6 +389,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	breakdown_cooldown = 0
 
 /datum/excited_group/proc/dismantle()
+	self_breakdown()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited = FALSE

@@ -253,6 +253,14 @@
 
 	addtimer(CALLBACK(src, .proc/update), 5)
 
+/obj/machinery/power/apc/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/heat_sensitive, 500, null)
+	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heat)
+
+/obj/machinery/power/apc/proc/heat(datum/source, datum/gas_mixture/mix, heat, volume)
+	take_damage(min(heat/1000, 10), BURN)
+
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
