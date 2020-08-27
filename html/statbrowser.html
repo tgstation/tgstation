@@ -413,7 +413,7 @@ function update_mc(global_mc_data, coords_entry, ht) {
 	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
 	href_token = ht;
 	if(!verb_tabs.includes("MC"))
-		verb_tabs.push("MC")
+		verb_tabs.push("MC");
 	createStatusTab("MC");
 	if(current_tab == "MC")
 		draw_mc();
@@ -502,7 +502,7 @@ function tab_change(tab) {
 	}else if(tab == turfname) {
 		draw_listedturf();
 	} else {
-		var statcontentdiv = document.getElementById("statcontent")
+		var statcontentdiv = document.getElementById("statcontent");
 		statcontentdiv[textContentKey] = "loading...";
 	}
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
@@ -568,7 +568,7 @@ function draw_debug() {
 
 }
 function draw_status() {
-	var statcontentdiv = document.getElementById("statcontent")
+	var statcontentdiv = document.getElementById("statcontent");
 	if(!document.getElementById("Status")) {
 		createStatusTab("Status");
 		current_tab = "Status";
@@ -741,7 +741,7 @@ function draw_sqdl2(){
 }
 
 function draw_tickets() {
-	var statcontentdiv = document.getElementById("statcontent")
+	var statcontentdiv = document.getElementById("statcontent");
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	if(!tickets)
@@ -773,7 +773,7 @@ function draw_tickets() {
 }
 
 function draw_spells(cat) {
-	var statcontentdiv = document.getElementById("statcontent")
+	var statcontentdiv = document.getElementById("statcontent");
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	for(var i = 0; i < spells.length; i++) {
@@ -799,7 +799,7 @@ function draw_spells(cat) {
 }
 
 function draw_verbs(cat){
-	var statcontentdiv = document.getElementById("statcontent")
+	var statcontentdiv = document.getElementById("statcontent");
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("newdiv");
 	table.className = "grid-container";
