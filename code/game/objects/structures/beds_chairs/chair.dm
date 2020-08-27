@@ -249,6 +249,9 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
+/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+	return ..()
+
 /obj/structure/chair/stool/bar
 	name = "bar stool"
 	desc = "It has some unsavory stains on it..."
