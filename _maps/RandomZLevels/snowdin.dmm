@@ -11332,7 +11332,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/obj/structure/sign/mining,
+/obj/effect/turf_decal/mining,
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/cave)
 "Ck" = (
