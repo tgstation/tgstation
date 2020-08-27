@@ -55936,8 +55936,6 @@
 "cbF" = (
 /obj/structure/closet/secure_closet/warden,
 /obj/item/clothing/under/rank/security/warden/grey,
-/obj/item/storage/box/flashbangs,
-/obj/item/storage/box/handcuffs,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
