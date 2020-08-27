@@ -543,7 +543,7 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/nitrylformation/init_reqs()
 	min_requirements = list(
 		/datum/gas/oxygen = 10,
-		/datum/gas/nitrogen = 20,
+		/datum/gas/nitrogen = 10,
 		/datum/gas/bz = 5,
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 60
 	)
@@ -556,9 +556,9 @@ nobiliumsuppression = INFINITY
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100), cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
 	var/energy_used = heat_efficency * NITRYL_FORMATION_ENERGY
 	ASSERT_GAS(/datum/gas/nitryl, air)
-	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency * 2 < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency * 2
+	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.05 //bz gets consumed to balance the nitryl production and not make it too common and/or easy
 	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency
