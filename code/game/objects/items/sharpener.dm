@@ -37,9 +37,10 @@
 		return
 	if(!(signal_out & COMPONENT_BLOCK_SHARPEN_APPLIED))
 		I.force = clamp(I.force + increment, 0, max)
+		I.wound_bonus = I.wound_bonus + increment
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
-	I.sharpness = SHARP_POINTY
+	I.sharpness = SHARP_EDGED
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]"
 	name = "worn out [name]"

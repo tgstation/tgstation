@@ -1,0 +1,8 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - tweak: "Execution and gunpoint shots now increase the wounding power of the shot as well as the damage, and apply their bonuses to each pellet fired rather than just one"
+  - tweak: "Piercing wounds make further wounds slightly easier to deal"
+  - balance: "Hellguns now cost 2250 credits instead of 2000"
+  - bugfix: "You can no longer punch yourself while holding someone up to trigger the charged shot"
+  - bugfix: "You can no longer purposely fail executions or gunpoints to spike the damage in a loaded round for later"
