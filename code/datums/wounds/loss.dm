@@ -1,6 +1,6 @@
 
 /datum/wound/loss
-	name = "Dismembered"
+	name = "Dismemberment Wound"
 	desc = "oof ouch!!"
 
 	sound_effect = 'sound/effects/dismember.ogg'
@@ -18,7 +18,9 @@
 
 	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 
-	if(outright)
+	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
+		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
+	else if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
 				occur_text = "is outright smashed to a gross pulp, severing it completely!"
