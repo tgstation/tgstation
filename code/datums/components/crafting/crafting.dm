@@ -3,8 +3,6 @@
 		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
-	SIGNAL_HANDLER
-
 	var/datum/hud/H = user.hud_used
 	var/obj/screen/craft/C = new()
 	C.icon = H.ui_style
@@ -19,30 +17,17 @@
 	var/list/categories = list(
 				CAT_WEAPONRY = list(
 					CAT_WEAPON,
-					CAT_AMMO,
-				),
+					CAT_AMMO),
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = CAT_NONE,
 				CAT_PRIMAL = CAT_NONE,
 				CAT_FOOD = list(
-					CAT_BREAD,
-					CAT_BURGER,
-					CAT_CAKE,
-					CAT_EGG,
-					CAT_ICE,
-					CAT_MEAT,
+					CAT_BAKING,
+					CAT_HEARTY,
 					CAT_MISCFOOD,
-					CAT_PASTRY,
-					CAT_PIE,
-					CAT_PIZZA,
-					CAT_SALAD,
-					CAT_SANDWICH,
-					CAT_SOUP,
-					CAT_SPAGHETTI,
 				),
 				CAT_DRINK = CAT_NONE,
-				CAT_CLOTHING = CAT_NONE,
-			)
+				CAT_CLOTHING = CAT_NONE)
 
 	var/cur_category = CAT_NONE
 	var/cur_subcategory = CAT_NONE
@@ -314,8 +299,6 @@
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(obj/screen/craft/image, location, control, params, user)
-	SIGNAL_HANDLER_DOES_SLEEP
-
 	if(user == parent)
 		ui_interact(user)
 
@@ -348,7 +331,7 @@
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
 
-		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
@@ -369,7 +352,7 @@
 		if(R.name == "") //This is one of the invalid parents that sneaks in
 			continue
 
-		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
 		if(isnull(crafting_recipes[R.category]))

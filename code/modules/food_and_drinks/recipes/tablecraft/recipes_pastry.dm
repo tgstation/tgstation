@@ -11,7 +11,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/plain
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 
 /datum/crafting_recipe/food/donut/chaos
@@ -257,7 +257,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/waffles
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 
 /datum/crafting_recipe/food/soylenviridians
@@ -267,7 +267,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/soylenviridians
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/soylentgreen
 	name = "Soylent green"
@@ -276,7 +276,7 @@
 		/obj/item/reagent_containers/food/snacks/meat/slab/human = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/soylentgreen
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 
 /datum/crafting_recipe/food/rofflewaffles
@@ -286,7 +286,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/rofflewaffles
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/pancakes
 	name = "Pancake"
@@ -294,7 +294,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pancakes
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/bbpancakes
 	name = "Blueberry pancake"
@@ -303,7 +303,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pancakes/blueberry
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/ccpancakes
 	name = "Chocolate chip pancake"
@@ -312,7 +312,7 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pancakes/chocolatechip
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
@@ -325,7 +325,7 @@
 		/obj/item/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket
-	subcategory = CAT_PASTRY
+	subcategory =  CAT_BAKING
 
 /datum/crafting_recipe/food/dankpocket
 	time = 15
@@ -335,7 +335,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/dankpocket
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/spicy
 	time = 15
@@ -346,7 +346,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/chili
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/teriyaki
 	time = 15
@@ -357,7 +357,7 @@
 		/datum/reagent/consumable/soysauce = 3
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/pizza
 	time = 15
@@ -368,7 +368,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/honk
 	time = 15
@@ -379,7 +379,7 @@
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/honk
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/berry
 	time = 15
@@ -389,7 +389,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/berry
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/donkpocket/gondola
 	time = 15
@@ -400,7 +400,7 @@
 		/datum/reagent/tranquility = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
@@ -412,7 +412,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/berrymuffin
 	name = "Berry muffin"
@@ -422,7 +422,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin/berry
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/booberrymuffin
 	name = "Booberry muffin"
@@ -433,7 +433,7 @@
 		/obj/item/ectoplasm = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/muffin/booberry
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
@@ -444,7 +444,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -456,7 +456,7 @@
 		/obj/item/reagent_containers/food/snacks/sausage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotdog
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/meatbun
 	name = "Meat bun"
@@ -467,17 +467,17 @@
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/food/bread/plain = 1
+		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/sugarcookie
 	time = 15
@@ -487,7 +487,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/fortunecookie
 	time = 15
@@ -500,7 +500,7 @@
 		/obj/item/paper = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fortunecookie
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/poppypretzel
 	time = 15
@@ -510,7 +510,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/poppypretzel
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/plumphelmetbiscuit
 	time = 15
@@ -520,7 +520,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/plumphelmetbiscuit
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/cracker
 	time = 15
@@ -530,7 +530,7 @@
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/cracker
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
@@ -540,7 +540,7 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chococornet
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/oatmealcookie
 	name = "Oatmeal cookie"
@@ -549,7 +549,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/oatmealcookie
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"
@@ -559,7 +559,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/raisincookie
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/cherrycupcake
 	name = "Cherry cupcake"
@@ -568,7 +568,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/cherries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/cherrycupcake
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/bluecherrycupcake
 	name = "Blue cherry cupcake"
@@ -577,7 +577,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/bluecherries = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/bluecherrycupcake
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
@@ -586,7 +586,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/honeybun
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/cannoli
 	name = "Cannoli"
@@ -596,4 +596,4 @@
 		/datum/reagent/consumable/sugar = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/cannoli
-	subcategory = CAT_PASTRY
+	subcategory = CAT_BAKING

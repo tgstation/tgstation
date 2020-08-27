@@ -14,7 +14,7 @@
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain/human = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/human
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/burger
 	name = "Burger"
@@ -24,7 +24,7 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/plain
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/corgiburger
 	name = "Corgi burger"
@@ -34,7 +34,7 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/corgi
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
@@ -43,7 +43,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/appendix
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
@@ -52,7 +52,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/brain
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/xenoburger
 	name = "Xeno burger"
@@ -61,7 +61,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/xeno
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
@@ -70,7 +70,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/bearger
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
@@ -80,7 +80,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/fish
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/tofuburger
 	name = "Tofu burger"
@@ -89,7 +89,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/tofu
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/ghostburger
 	name = "Ghost burger"
@@ -99,7 +99,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/ghost
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/clownburger
 	name = "Clown burger"
@@ -108,7 +108,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/clown
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/mimeburger
 	name = "Mime burger"
@@ -117,7 +117,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/mime
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/redburger
 	name = "Red burger"
@@ -127,7 +127,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/red
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/orangeburger
 	name = "Orange burger"
@@ -137,7 +137,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/orange
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/yellowburger
 	name = "Yellow burger"
@@ -147,7 +147,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/yellow
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/greenburger
 	name = "Green burger"
@@ -157,7 +157,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/green
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/blueburger
 	name = "Blue burger"
@@ -167,7 +167,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/blue
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/purpleburger
 	name = "Purple burger"
@@ -177,7 +177,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/purple
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/blackburger
 	name = "Black burger"
@@ -187,7 +187,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/black
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/whiteburger
 	name = "White burger"
@@ -197,7 +197,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/white
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/spellburger
 	name = "Spell burger"
@@ -206,7 +206,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/spell
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/spellburger2
 	name = "Spell burger"
@@ -215,7 +215,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/spell
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/bigbiteburger
 	name = "Big bite burger"
@@ -225,7 +225,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/bigbite
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/superbiteburger
 	name = "Super bite burger"
@@ -241,7 +241,7 @@
 
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/superbite
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/slimeburger
 	name = "Jelly burger"
@@ -250,7 +250,7 @@
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/jelly/slime
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/jellyburger
 	name = "Jelly burger"
@@ -259,7 +259,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/jelly/cherry
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
@@ -269,7 +269,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/fivealarm
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
@@ -278,7 +278,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/rat
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/baseballburger
 	name = "Home run baseball burger"
@@ -287,7 +287,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/baseball
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/baconburger
 	name = "Bacon Burger"
@@ -297,7 +297,7 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/baconburger
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/empoweredburger
 	name = "Empowered Burger"
@@ -307,7 +307,7 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/empoweredburger
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/crabburger
 	name = "Crab Burger"
@@ -317,7 +317,7 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/crab
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/cheeseburger
 	name = "Cheese Burger"
@@ -327,7 +327,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/cheese
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/soylentburger
 	name = "Soylent Burger"
@@ -337,7 +337,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/soylent
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/ribburger
 	name = "McRib"
@@ -347,7 +347,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/rib
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/mcguffin
 	name = "McGuffin"
@@ -357,7 +357,7 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/mcguffin
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY
 
 /datum/crafting_recipe/food/chickenburger
 	name = "Chicken Sandwich"
@@ -367,4 +367,4 @@
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/chicken
-	subcategory = CAT_BURGER
+	subcategory = CAT_HEARTY

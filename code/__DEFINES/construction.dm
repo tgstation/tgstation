@@ -76,6 +76,9 @@
 //tablecrafting defines
 #define CAT_NONE	""
 #define CAT_WEAPONRY	"Weaponry"
+#define CAT_BAKING	"Baking"
+#define CAT_HEARTY	"Hearty Meals"
+#define CAT_MISC	"Miscellanious food items"
 #define CAT_WEAPON	"Weapons"
 #define CAT_AMMO	"Ammunition"
 #define CAT_ROBOT	"Robots"

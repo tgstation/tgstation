@@ -10,7 +10,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/carrot = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/carrot
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/cheesecake
 	name = "Cheese cake"
@@ -19,7 +19,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/cheese
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/applecake
 	name = "Apple cake"
@@ -28,7 +28,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/apple = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/apple
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/orangecake
 	name = "Orange cake"
@@ -37,7 +37,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/orange
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/limecake
 	name = "Lime cake"
@@ -46,7 +46,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/citrus/lime = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/lime
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/lemoncake
 	name = "Lemon cake"
@@ -55,7 +55,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/lemon
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/chocolatecake
 	name = "Chocolate cake"
@@ -64,7 +64,7 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/chocolate
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/birthdaycake
 	name = "Birthday cake"
@@ -75,7 +75,7 @@
 		/datum/reagent/consumable/caramel = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/energycake
 	name = "Energy cake"
@@ -85,7 +85,7 @@
 	)
 	blacklist = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
@@ -94,7 +94,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/brain
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/slimecake
 	name = "Slime cake"
@@ -103,7 +103,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/slimecake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/pumpkinspicecake
 	name = "Pumpkin spice cake"
@@ -112,7 +112,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/pumpkin = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/pumpkinspice
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/holycake
 	name = "Angel food cake"
@@ -121,7 +121,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/holy_cake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/poundcake
 	name = "Pound cake"
@@ -129,7 +129,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 4
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/pound_cake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/hardwarecake
 	name = "Hardware cake"
@@ -139,7 +139,7 @@
 		/datum/reagent/toxin/acid = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/hardware_cake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/bscccake
 	name = "blackberry and strawberry chocolate cake"
@@ -149,7 +149,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/bscc
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/bscvcake
 	name = "blackberry and strawberry vanilla cake"
@@ -158,28 +158,28 @@
 		/obj/item/reagent_containers/food/snacks/grown/berries = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/bsvc
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/clowncake
 	name = "clown cake"
-	always_available = FALSE
+	always_availible = FALSE
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
 		/obj/item/reagent_containers/food/snacks/sundae = 2,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/clown_cake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/vanillacake
 	name = "vanilla cake"
-	always_available = FALSE
+	always_availible = FALSE
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
 		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 /datum/crafting_recipe/food/trumpetcake
 	name = "Spaceman's Cake"
@@ -190,7 +190,7 @@
 		/datum/reagent/consumable/berryjuice = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/trumpet
-	subcategory = CAT_CAKE
+	subcategory = CAT_BAKING
 
 
 /datum/crafting_recipe/food/cak
@@ -205,4 +205,4 @@
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
 	result = /mob/living/simple_animal/pet/cat/cak
-	subcategory = CAT_CAKE //Cat! Haha, get it? CAT? GET IT? We get it - Love Felines
+	subcategory = CAT_BAKING //Cat! Haha, get it? CAT? GET IT? We get it - Love Felines
