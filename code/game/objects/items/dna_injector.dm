@@ -500,7 +500,7 @@
 	var/doitanyway = FALSE
 	var/research = FALSE //Set to true to get expended and filled injectors for chromosomes
 	var/filled = FALSE
-	var/CRISPRCharge = FALSE // Look for viruses, look at symptoms, if research and Dormant DNA Activator or Viral Evolutionary Acceleration, set to true
+	var/crispr_charge = FALSE // Look for viruses, look at symptoms, if research and Dormant DNA Activator or Viral Evolutionary Acceleration, set to true
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
@@ -526,8 +526,8 @@
 			for(var/datum/disease/advance/disease in M.diseases)
 				for(var/datum/symptom/symp in disease.symptoms)
 					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
-						CRISPRCharge = TRUE
-			suff = (CRISPRCharge ? "with CRISPR charge" : "")
+						crispr_charge = TRUE
+			suff = (crispr_charge ? "with CRISPR charge" : "")
 			log_msg += "([mutation])"
 		name = "[pref] [name] [suff]"
 		log_attack("[log_msg] [loc_name(user)]")

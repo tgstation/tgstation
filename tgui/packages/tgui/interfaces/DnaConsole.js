@@ -564,6 +564,8 @@ const MutationInfo = (props, context) => {
     diskReadOnly,
     hasDisk,
     isInjectorReady,
+    isCrisprReady,
+    crisprCharges,
   } = data;
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
@@ -655,8 +657,8 @@ const MutationInfo = (props, context) => {
               })} />
             <Button
               icon="syringe"
-              disabled={!mutation.Active}
-              content="CRISPR"
+              disabled={!mutation.Active || !isCrisprReady}
+              content={`CRISPR [${crisprCharges}]`}
               onClick={() => act('crispr', {
                 mutref: mutation.ByondRef,
                 source: mutation.Source,
