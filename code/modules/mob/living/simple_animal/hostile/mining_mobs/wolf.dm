@@ -19,7 +19,6 @@
 	melee_damage_upper = 7.5
 	rapid_melee = 2 // every second attack
 	dodging = TRUE
-	dodge_prob = 50
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -31,7 +30,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/sinew/wolf = 2, /obj/item/stack/sheet/bone = 2)
 	loot = list()
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Message for when the wolf decides to start running away

@@ -89,6 +89,27 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 
+/obj/structure/closet/crate/maint
+
+/obj/structure/closet/crate/maint/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/lootdrop/maintenance(src)
+
+/obj/structure/closet/crate/trashcart/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+
+/obj/structure/closet/crate/trashcart/filled
+
+/obj/structure/closet/crate/trashcart/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(7,15))
+		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		if(prob(12))
+			new	/obj/item/storage/bag/trash/filled(src)
+	new /obj/effect/spawner/scatter/grime(loc)
+
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
 	name = "internals crate"

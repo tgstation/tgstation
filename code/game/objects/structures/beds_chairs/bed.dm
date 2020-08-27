@@ -185,10 +185,19 @@
 	name = "Cayenne's bed"
 	anchored = TRUE
 
+/obj/structure/bed/dogbed/lia
+	desc = "Seems kind of... fishy."
+	name = "Lia's bed"
+	anchored = TRUE
+
 /obj/structure/bed/dogbed/renault
 	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
 	name = "Renault's bed"
 	anchored = TRUE
+
+/obj/structure/bed/dogbed/mcgriff
+	desc = "McGriff's bed, because even crimefighters sometimes need a nap."
+	name = "McGriff's bed"
 
 /obj/structure/bed/dogbed/runtime
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
@@ -208,3 +217,13 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
+
+/obj/structure/bed/maint/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

@@ -2,7 +2,7 @@
 	var/amount = 0
 	var/maxamount = 3
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
-	var/datum/armor/added_armor = list("melee" = 10)
+	var/datum/armor/added_armor = list(MELEE = 10)
 	var/upgrade_name
 
 /datum/component/armor_plate/Initialize(_maxamount,obj/item/_upgrade_item,datum/armor/_added_armor)
@@ -32,6 +32,8 @@
 	upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
@@ -48,6 +50,8 @@
 			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(!istype(I,upgrade_item))
 		return
 	if(amount >= maxamount)
@@ -75,11 +79,15 @@
 
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
+	SIGNAL_HANDLER
+
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
 			new upgrade_item(get_turf(parent))
 
 /datum/component/armor_plate/proc/apply_mech_overlays(obj/mecha/mech, list/overlays)
+	SIGNAL_HANDLER
+
 	if(amount)
 		var/overlay_string = "ripley-g"
 		if(amount >= 3)

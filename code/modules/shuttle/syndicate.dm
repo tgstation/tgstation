@@ -12,25 +12,33 @@
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/machinery/computer/shuttle/syndicate/recall
-	name = "syndicate shuttle recall terminal"
-	desc = "Use this if your friends left you behind."
-	possible_destinations = "syndicate_away"
-
-
-/obj/machinery/computer/shuttle/syndicate/Topic(href, href_list)
-	if(href_list["move"])
-		var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
-		if(board.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
-			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare.</span>")
-			return 0
-		board.moved = TRUE
-	..()
-
 /obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
 	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
 		return FALSE
 	return ..()
+
+/obj/machinery/computer/shuttle/syndicate/ui_act(action, params)
+	if(!allowed(usr))
+		to_chat(usr, "<span class='danger'>Access denied.</span>")
+		return
+
+	switch(action)
+		if("move")
+			if(istype(src, /obj/machinery/computer/shuttle/syndicate/drop_pod))
+				if(!is_centcom_level(z))
+					to_chat(usr, "<span class='warning'>Pods are one way!</span>")
+					return
+			var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
+			if(board?.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
+				to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare.</span>")
+				return
+			board.moved = TRUE
+	return ..()
+
+/obj/machinery/computer/shuttle/syndicate/recall
+	name = "syndicate shuttle recall terminal"
+	desc = "Use this if your friends left you behind."
+	possible_destinations = "syndicate_away"
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
@@ -41,13 +49,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"
 	possible_destinations = null
-
-/obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
-	if(href_list["move"])
-		if(!is_centcom_level(z))
-			to_chat(usr, "<span class='warning'>Pods are one way!</span>")
-			return 0
-	..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate
 	name = "syndicate shuttle navigation computer"

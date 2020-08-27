@@ -102,7 +102,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = 40
+	var/clientfps = -1
+
+	var/sidestepper = TRUE
 
 	var/parallax
 
@@ -133,13 +135,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted_until
 	/// Agendered spessmen can choose whether to have a male or female bodytype
 	var/body_type
-
 	/// If we have persistent scars enabled
 	var/persistent_scars = TRUE
-	/// We have 5 slots for persistent scars, if enabled we pick a random one to load (empty by default) and scars at the end of the shift if we survived as our original person
-	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
-	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
-	var/scars_index = 1
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -604,6 +601,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>EDGE SLIDING:</b> <a href='?_src_=prefs;preference=sidestepper'>[sidestepper ? "ON" : "OFF"]</a><br>"
 
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
@@ -1537,10 +1536,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "Choose your desired fps.\n-1 means recommended value (currently:[RECOMMENDED_FPS])\n0 means world fps (currently:[world.fps])", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
-						clientfps = desiredfps
-						parent.fps = desiredfps
+						clientfps = sanitize_integer(desiredfps, -1, 1000, clientfps)
+						parent.fps = (clientfps < 0) ? RECOMMENDED_FPS : clientfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)
@@ -1721,12 +1720,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					persistent_scars = !persistent_scars
 
 				if("clear_scars")
-					to_chat(user, "<span class='notice'>All scar slots cleared. Please save character to confirm.</span>")
-					scars_list["1"] = ""
-					scars_list["2"] = ""
-					scars_list["3"] = ""
-					scars_list["4"] = ""
-					scars_list["5"] = ""
+					var/path = "data/player_saves/[user.ckey[1]]/[user.ckey]/scars.sav"
+					fdel(path)
+					to_chat(user, "<span class='notice'>All scar slots cleared.</span>")
 
 				if("hear_midis")
 					toggles ^= SOUND_MIDI
@@ -1767,6 +1763,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if ("sidestepper")
+					sidestepper = !sidestepper
+					if(isliving(parent.mob))
+						parent.mob.set_sidestep(sidestepper)
 
 				if("parallaxup")
 					parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
@@ -1904,6 +1905,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.jumpsuit_style = jumpsuit_style
 
+	character.can_sidestep = sidestepper
+
 	var/datum/species/chosen_species
 	chosen_species = pref_species.type
 	if(roundstart_checks && !(pref_species.id in GLOB.roundstart_races) && !(pref_species.id in (CONFIG_GET(keyed_list/roundstart_no_hard_check))))
@@ -1917,6 +1920,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
+	if("spines" in pref_species.default_features)
+		character.dna.species.mutant_bodyparts |= "spines"
 
 	if(icon_updates)
 		character.update_body()

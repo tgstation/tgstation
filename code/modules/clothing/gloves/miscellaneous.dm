@@ -23,7 +23,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
@@ -38,7 +38,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"
@@ -53,7 +53,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 20, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 20, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"
@@ -78,7 +78,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	permeability_coefficient = 0.05
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/black
 	name = "black envirogloves"
@@ -128,7 +128,7 @@
 	icon_state = "botanyplasma"
 	inhand_icon_state = "botanyplasma"
 	permeability_coefficient = 0.05
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/prototype
 	name = "prototype envirogloves"
@@ -145,3 +145,39 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
+
+/obj/item/clothing/gloves/color/plasmaman/head_of_personnel
+	name = "head of personnel's envirogloves"
+	desc = "Covers up those scandalous, bony hands. Appears to be an attempt at making a replica of the captain's gloves."
+	icon_state = "hopplasma"
+	inhand_icon_state = "hopplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/chief_engineer
+	name = "chief engineer's envirogloves"
+	icon_state = "ceplasma"
+	inhand_icon_state = "ceplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
+	name = "chief medical officer's envirogloves"
+	icon_state = "cmoplasma"
+	inhand_icon_state = "cmoplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/research_director
+	name = "research director's envirogloves"
+	icon_state = "rdplasma"
+	inhand_icon_state = "rdplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_commander
+	name = "CentCom commander envirogloves"
+	icon_state = "commanderplasma"
+	inhand_icon_state = "commanderplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_official
+	name = "CentCom official envirogloves"
+	icon_state = "officialplasma"
+	inhand_icon_state = "officialplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/centcom_intern
+	name = "CentCom intern envirogloves"
+	icon_state = "internplasma"
+	inhand_icon_state = "internplasma"

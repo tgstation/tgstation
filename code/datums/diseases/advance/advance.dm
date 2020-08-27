@@ -103,22 +103,28 @@
 	infect(infectee, make_copy)
 	return TRUE
 
+
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
-	..()
-	if(carrier || QDELETED(src)) // Could be cured in parent call.
+	. = ..()
+	if(!.)
 		return
 
-	if(symptoms && symptoms.len)
-		if(!processing)
-			processing = TRUE
-			for(var/datum/symptom/S in symptoms)
-				if(S.Start(src)) //this will return FALSE if the symptom is neutered
-					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
-				S.on_stage_change(src)
+	if(!length(symptoms))
+		return
 
-		for(var/datum/symptom/S in symptoms)
-			S.Activate(src)
+	if(!processing)
+		processing = TRUE
+		for(var/s in symptoms)
+			var/datum/symptom/symptom_datum = s
+			if(symptom_datum.Start(src)) //this will return FALSE if the symptom is neutered
+				symptom_datum.next_activation = world.time + rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS)
+			symptom_datum.on_stage_change(src)
+
+	for(var/s in symptoms)
+		var/datum/symptom/symptom_datum = s
+		symptom_datum.Activate(src)
+
 
 // Tell symptoms stage changed
 /datum/disease/advance/update_stage(new_stage)

@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
-	if((A && !A.blob_allowed) || !T || !is_station_level(T.z) || isspaceturf(T))
+	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isspaceturf(T))
 		return FALSE
 	return TRUE
 
@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		var/area/Ablob = get_area(T)
 
-		if(!Ablob.blob_allowed)
+		if(!(Ablob.area_flags & BLOBS_ALLOWED))
 			continue
 
 		if(!(ROLE_BLOB in L.faction))
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
-			if(!A.blob_allowed)
+			if(!(A.area_flags & BLOBS_ALLOWED))
 				continue
 			A.color = blobstrain.color
 			A.name = "blob"
@@ -252,19 +252,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
 
-/mob/camera/blob/Stat()
-	..()
-	if(statpanel("Status"))
-		if(blob_core)
-			stat(null, "Core Health: [blob_core.obj_integrity]")
-			stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-			stat(null, "Blobs to Win: [blobs_legit.len]/[blobwincount]")
-		if(free_strain_rerolls)
-			stat(null, "You have [free_strain_rerolls] Free Strain Reroll\s Remaining")
-		if(!placed)
-			if(manualplace_min_time)
-				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
-			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
+/mob/camera/blob/get_status_tab_items()
+	. = ..()
+	if(blob_core)
+		. += "Core Health: [blob_core.obj_integrity]"
+		. += "Power Stored: [blob_points]/[max_blob_points]"
+		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
+	if(free_strain_rerolls)
+		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
+	if(!placed)
+		if(manualplace_min_time)
+			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, _step_x, _step_y)
 	if(placed)

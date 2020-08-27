@@ -13,7 +13,7 @@
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && obj_integrity > 0)
-		if(tank_volume && (damage_flag == "bullet" || damage_flag == "laser"))
+		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
@@ -81,8 +81,8 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/zap_act(zap_flags)
-	..() //extend the zap
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags)
+	. = ..() //extend the zap
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
@@ -114,6 +114,15 @@
 		return
 	return ..()
 
+/obj/structure/reagent_dispensers/fueltank/large
+	name = "high capacity fuel tank"
+	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
+	icon_state = "fuel_high"
+	tank_volume = 5000
+
+/obj/structure/reagent_dispensers/fueltank/large/boom()
+	explosion(get_turf(src), 1, 2, 7, flame_range = 12)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "pepper spray refiller"

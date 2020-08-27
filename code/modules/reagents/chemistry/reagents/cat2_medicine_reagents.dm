@@ -123,8 +123,8 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/probital/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
+/datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
+	if(!(methods & INGEST) || !iscarbon(A))
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -189,8 +189,8 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
-	if(method != VAPOR)
+/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, methods=VAPOR, reac_volume)
+	if(!(methods & VAPOR))
 		return
 
 	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
@@ -336,8 +336,8 @@
 	overdose_threshold = 6
 	var/conversion_amount
 
-/datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, method=INJECT, trans_volume)
-	if(method != INJECT || !iscarbon(A))
+/datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
+	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
@@ -412,12 +412,12 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, methods=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH, VAPOR))
+		if(methods & (PATCH|TOUCH|VAPOR))
 			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 			for(var/i in carbies.all_wounds)

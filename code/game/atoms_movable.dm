@@ -3,6 +3,7 @@
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	// Movement related vars
 	step_size = 8
+	glide_size = 8
 	//PIXEL MOVEMENT VARS
 	/// stores fractional pixel movement in the x
 	var/fx
@@ -32,6 +33,11 @@
 	///whether we are already sidestepping or not
 	var/sidestep = FALSE
 
+	///whether or not we can sidestep
+	var/can_sidestep = FALSE
+
+	/// collider object
+	var/atom/movable/collider/slider/slider
 	//Misc
 	var/last_move = null
 	var/last_move_time = 0
@@ -59,7 +65,8 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+	var/movement_type = GROUND
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -81,6 +88,12 @@
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
 
+	///Lazylist to keep track on the sources of illumination.
+	var/list/affected_dynamic_lights
+	///Highest-intensity light affecting us, which determines our visibility.
+	var/affecting_dynamic_lumi = 0
+
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	set_sidestep(can_sidestep) // creates slider if there isn't one already
@@ -94,6 +107,10 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
+	if(light_system == MOVABLE_LIGHT)
+		AddComponent(/datum/component/overlay_lighting)
 
 
 /atom/movable/Destroy(force)
@@ -110,13 +127,8 @@
 			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
 
-		// If we have opacity, make sure to tell (potentially) affected light sources.
-		if(opacity && isturf(loc))
-			var/turf/turf_loc = loc
-			var/old_has_opaque_atom = turf_loc.has_opaque_atom
-			turf_loc.recalc_atom_opacity()
-			if(old_has_opaque_atom != turf_loc.has_opaque_atom)
-				turf_loc.reconsider_lights()
+	if(opacity)
+		RemoveElement(/datum/element/light_blocking)
 
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -147,6 +159,14 @@
 				SSvis_overlays.remove_vis_overlay(src, list(vs))
 				break
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+
+/atom/movable/proc/set_sidestep(val = 0)
+	can_sidestep = val
+	if(can_sidestep && !slider)
+		slider = new()
+	else if(!can_sidestep && slider)
+		qdel(slider)
+	return can_sidestep
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
@@ -249,10 +269,12 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
-	AM.pulledby = src
+	AM.set_pulledby(src)
 	setGrabState(state)
 	AM.step_size = step_size
 	AM.set_sidestep(TRUE)
+	if(!isliving(pulling))
+		pulling.set_sidestep(TRUE)
 	if(ismob(AM))
 		var/mob/M = AM
 		M.update_movespeed() // set the proper step_size
@@ -272,18 +294,24 @@
 	return can_sidestep
 
 /atom/movable/proc/stop_pulling()
-	if(!pulling)
-		return
-	pulling.pulledby = null
-	var/atom/movable/ex_pulled = pulling
-	pulling = null
-	setGrabState(0)
-	ex_pulled.step_size = initial(ex_pulled.step_size)
-	ex_pulled.set_sidestep(initial(ex_pulled.can_sidestep))
-	if(isliving(ex_pulled))
-		var/mob/living/L = ex_pulled
-		L.update_mobility()// mob gets up if it was lyng down in a chokehold
-		L.update_movespeed() // set their movespeed to the usual
+	if(pulling)
+		pulling.set_pulledby(null)
+		if(!isliving(pulling))
+			pulling.set_sidestep(initial(pulling.can_sidestep))
+		var/atom/movable/ex_pulled = pulling
+		setGrabState(GRAB_PASSIVE)
+		pulling = null
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
+			L.update_movespeed() // set their movespeed to the usual
+
+///Reports the event of the change in value of the pulledby variable.
+/atom/movable/proc/set_pulledby(new_pulledby)
+	if(new_pulledby == pulledby)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+	. = pulledby
+	pulledby = new_pulledby
 
 /atom/movable/proc/Move_Pulled(atom/A, params)
 	if(!check_pulling())
@@ -291,9 +319,8 @@
 	if(!Adjacent(A))
 		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
 		return
-	pulling.step_size = 1#INF
-	. = pulling.Move(get_turf(A), get_dir(pulling.loc, A))
-	pulling.step_size = 1 + .
+	pulling.step_size = 1 + pulling.Move(get_turf(A), get_dir(pulling.loc, A)) // 1 + pixels moved
+	pulling.step_size = step_size
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
@@ -381,17 +408,22 @@
 
 	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
 		handle_pulled_movement()
+		check_pulling()
 		return FALSE
 
 	var/atom/oldloc = loc
 
 	. = ..()
 	if(!. && can_sidestep && !sidestep)
+		//if this mob is able to slide when colliding, and is currently not attempting to slide
+		//mark that we are sliding
 		sidestep = TRUE
-		. = slider.slide(src, direct, step_x, step_y)
+		//call to the global slider object to determine what direction our slide will happen in (if any)
+		. = slider.slide(src, direct, _step_x, _step_y)
 		if(.)
-			direct = .
-			. = step(src, .)
+			//if slider was able to slide, step us in the direction indicated
+			. = step(src,.)
+		//mark that we are no longer sliding
 		sidestep = FALSE
 	last_move = direct
 	setDir(direct)
@@ -402,6 +434,8 @@
 			check_pulling()
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, step_x, step_y))
 			return FALSE
+	else // we still didn't move, something is blocking further movement
+		walk(src, NONE)
 
 /atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = 0)
 	if(vx == 0 && vy == 0)
@@ -583,103 +617,6 @@
 			return
 	A.Bumped(src)
 
-/**
-  * Moves the movable to the side of an obstacle
-  *
-  * Called by Bump
-  * Uses bounds to check for an opening on the left or right
-  * Shifts the object over accordingly, isn't applied to players.
-  * Only applies to clientless mobs and doesn't kick in on unanchored movables or other mobs.
-  * Arguments:
-  * * A - atom that we're going to try and sidestep
-  */
-/atom/movable/proc/handle_sidestep(atom/A)
-	if(sidestep || ismob(A)) // already sidestepping or bumped into a mob or a player
-		return
-	if(ismovable(A)) // additional checks for movables
-		var/atom/movable/AM = A
-		if(AM.sidestep) // is the thing we bumped sidestepping?
-			return
-	sidestep = TRUE
-	var/slide_dist = 8
-	if(pulledby && pulledby.step_size > slide_dist) // we're getting pulled by someone so let's slide over at their speed
-		slide_dist = pulledby.step_size
-	if(check_left(slide_dist)) // There is an opening on the left side of src
-		slide_left(maxspeed)
-	else if(check_right(slide_dist))
-		slide_right(maxspeed)
-	sidestep = FALSE
-
-
-///checks if the left side of src is clear
-/atom/movable/proc/check_left(slide_dist)
-	var/list/atoms
-	var/checkcount = 0
-
-	if(dir == EAST)
-		atoms = obounds(src, 1, slide_dist)
-	else if(dir == WEST)
-		atoms = obounds(src, -1, -slide_dist)
-	else if(dir == NORTH)
-		atoms = obounds(src, -slide_dist, 1)
-	else if(dir == SOUTH)
-		atoms = obounds(src, slide_dist, -1)
-
-	for(var/atom/A in atoms)
-		if(checkcount > 5)
-			break
-		checkcount++
-		if(!A.CanPass(src))
-			return FALSE
-
-	return TRUE
-
-///slides src to the left
-/atom/movable/proc/slide_left(slide_dist)
-	if(dir == EAST)
-		add_velocity(NORTH, slide_dist)
-	else if(dir == WEST)
-		add_velocity(SOUTH, slide_dist)
-	else if(dir == NORTH)
-		add_velocity(WEST, slide_dist)
-	else if(dir == SOUTH)
-		add_velocity(EAST, slide_dist)
-
-///checks if the right side of src is clear
-/atom/movable/proc/check_right(slide_dist)
-	var/list/atoms
-	var/checkcount = 0
-
-	if(dir == EAST)
-		atoms = obounds(src, 1, -slide_dist)
-	else if(dir == WEST)
-		atoms = obounds(src, -1, slide_dist)
-	else if(dir == NORTH)
-		atoms = obounds(src, slide_dist, 1)
-	else if(dir == SOUTH)
-		atoms = obounds(src, -slide_dist, -1)
-
-	for(var/atom/A in atoms)
-		if(checkcount > 5)
-			break
-		checkcount++
-		if(!A.CanPass(src))
-			return FALSE
-
-	return TRUE
-
-///slides src to the right
-/atom/movable/proc/slide_right(slide_dist)
-	if(dir == EAST)
-		add_velocity(SOUTH, slide_dist)
-	else if(dir == WEST)
-		add_velocity(NORTH, slide_dist)
-	else if(dir == NORTH)
-		add_velocity(EAST, slide_dist)
-	else if(dir == SOUTH)
-		add_velocity(WEST, slide_dist)
-
-
 /atom/movable/setDir(direct)
 	var/old_dir = dir
 	. = ..()
@@ -730,6 +667,7 @@
 	. = anchored
 	set_sidestep(!anchored) // can't sidestep when anchored, can sidestep when not anchored
 	anchored = anchorvalue
+	set_sidestep(!anchored)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/forceMove(atom/destination, _step_x=0, _step_y=0)
@@ -797,6 +735,9 @@
 		var/atom/thing = i
 		thing.Uncrossed(src)
 
+	if(pulledby || pulling)
+		check_pulling()
+
 	if(!loc) // I hope you know what you're doing
 		return TRUE
 
@@ -827,8 +768,14 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+
+///Proc to modify the movement_type and hook behavior associated with it changing.
 /atom/movable/proc/setMovetype(newval)
+	if(movement_type == newval)
+		return
+	. = movement_type
 	movement_type = newval
+
 
 /**
   * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -971,10 +918,10 @@
 		pulledby.stop_pulling()
 
 	throwing = TT
-	for(var/atom/movable/A in obounds()) // check if we hit something
-		if(A != thrower && A.density)
-			Bump(A)
-			return
+
+	if(TT.hitcheck())
+		return
+
 	if(spin)
 		SpinAnimation(5, 1)
 
@@ -1024,12 +971,12 @@
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, CONSIG_STORAGE_EXITED, master_storage)
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, COMISG_STORAGE_ENTERED, master_storage)
 
 /atom/movable/proc/get_spacemove_backup()
 	for(var/A in obounds(src, 16))
@@ -1048,7 +995,7 @@
 				return AM
 
 ///called when a mob resists while inside a container that is itself inside something.
-/atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
+/atom/movable/proc/relay_container_resist_act(mob/living/user, obj/O)
 	return
 
 
@@ -1060,20 +1007,26 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
+	var/turn_dir = 1
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
 		pixel_y_diff = 8
+		turn_dir = prob(50) ? -1 : 1
 	else if(direction & SOUTH)
 		pixel_y_diff = -8
+		turn_dir = prob(50) ? -1 : 1
 
 	if(direction & EAST)
 		pixel_x_diff = 8
 	else if(direction & WEST)
 		pixel_x_diff = -8
+		turn_dir = -1
 
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+	var/matrix/initial_transform = matrix(transform)
+	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -1084,21 +1037,21 @@
 		I.plane = GAME_PLANE
 
 		// Scale the icon.
-		I.transform *= 0.75
+		I.transform *= 0.4
 		// The icon should not rotate.
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 		// Set the direction of the icon animation.
 		var/direction = get_dir(src, A)
 		if(direction & NORTH)
-			I.pixel_y = -16
+			I.pixel_y = -12
 		else if(direction & SOUTH)
-			I.pixel_y = 16
+			I.pixel_y = 12
 
 		if(direction & EAST)
-			I.pixel_x = -16
+			I.pixel_x = -14
 		else if(direction & WEST)
-			I.pixel_x = 16
+			I.pixel_x = 14
 
 		if(!direction) // Attacked self?!
 			I.pixel_z = 16
@@ -1106,10 +1059,12 @@
 	if(!I)
 		return
 
-	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 10)
 
 	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -1256,7 +1211,22 @@
   * This exists to act as a hook for behaviour
   */
 /atom/movable/proc/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+	. = grab_state
 	grab_state = newstate
+	switch(.) //Previous state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(grab_state >= GRAB_NECK)
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+	switch(grab_state) //Current state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK)
+				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

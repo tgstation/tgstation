@@ -104,8 +104,6 @@
 	icon_state = "reality"
 	bound_width = 224
 	bound_height = 224
-	pixel_x = -96
-	pixel_y = -96
 	bound_x = -96
 	bound_y = -96
 	dissipate = 0

@@ -115,3 +115,6 @@
 /datum/movespeed_modifier/move_carefully
 	multiplicative_slowdown = INFINITY
 	priority = 100
+
+/datum/movespeed_modifier/metabolicboost
+	multiplicative_slowdown = -1.5

@@ -40,6 +40,15 @@
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 		)
 
+/obj/effect/spawner/lootdrop/arcade_boards
+	name = "arcade board spawner"
+	lootdoubles = FALSE
+	loot = list()
+
+/obj/effect/spawner/lootdrop/arcade_boards/Initialize(mapload)
+	loot += subtypesof(/obj/item/circuitboard/computer/arcade)
+	return ..()
+
 
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
@@ -118,6 +127,70 @@
 				/obj/item/coin/gold,
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
+
+/obj/effect/spawner/lootdrop/garbage_spawner
+	name = "garbage_spawner"
+	loot = list(/obj/effect/spawner/lootdrop/food_packaging = 56,
+				/obj/item/trash/can = 8,
+				/obj/item/shard = 8,
+				/obj/effect/spawner/lootdrop/botanical_waste = 8,
+				/obj/effect/spawner/lootdrop/cigbutt = 8,
+				/obj/item/reagent_containers/syringe = 5,
+				/obj/item/reagent_containers/food/snacks/deadmouse = 2,
+				/obj/item/light/tube/broken = 3,
+				/obj/item/light/tube/broken = 1,
+				/obj/item/trash/candle = 1)
+
+/obj/effect/spawner/lootdrop/cigbutt
+	name = "cigarette butt spawner"
+	loot = list(/obj/item/cigbutt = 65,
+				/obj/item/cigbutt/roach = 20,
+				/obj/item/cigbutt/cigarbutt = 15)
+
+/obj/effect/spawner/lootdrop/food_packaging
+	name = "food packaging spawner"
+	loot = list(/obj/item/trash/raisins = 20,
+				/obj/item/trash/cheesie = 10,
+				/obj/item/trash/candy = 10,
+				/obj/item/trash/chips = 10,
+				/obj/item/trash/sosjerky = 10,
+				/obj/item/trash/pistachios = 10,
+				/obj/item/trash/boritos = 8,
+				/obj/item/trash/can/food/beans = 6,
+				/obj/item/trash/popcorn = 5,
+				/obj/item/trash/energybar = 5,
+				/obj/item/trash/can/food/peaches/maint = 4,
+				/obj/item/trash/semki = 2)
+
+/obj/effect/spawner/lootdrop/botanical_waste
+	name = "botanical waste spawner"
+	loot = list(/obj/item/grown/bananapeel = 60,
+				/obj/item/grown/corncob = 30,
+				/obj/item/reagent_containers/food/snacks/grown/bungopit = 10)
+
+/obj/effect/spawner/lootdrop/refreshing_beverage
+	name = "good soda spawner"
+	loot = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 15,
+				/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 15,
+				/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 10,
+				/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 10,
+				/obj/item/reagent_containers/food/drinks/beer/light = 10,
+				/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 5,
+				/obj/item/reagent_containers/food/drinks/soda_cans/cola = 5)
+
+/obj/effect/spawner/lootdrop/maint_drugs
+	name = "maint drugs spawner"
+	loot = list(/obj/item/reagent_containers/food/drinks/bottle/hooch = 50,
+				/obj/item/clothing/mask/cigarette/rollie/cannabis = 15,
+				/obj/item/clothing/mask/cigarette/rollie/mindbreaker = 5,
+				/obj/item/reagent_containers/syringe = 15,
+				/obj/item/cigbutt/roach = 15)
 
 /obj/effect/spawner/lootdrop/grille_or_trash
 	name = "maint grille or trash spawner"

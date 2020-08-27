@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		to_chat(user, "On second thought, the element of surprise isn't so bad after all.")
 		return
 
-	var/war_declaration = "[user.real_name] has declared [user.p_their()] intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop [user.p_them()]."
+	var/war_declaration = "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
 
 	declaring_war = TRUE
 	var/custom_threat = alert(user, "Do you want to customize your declaration?", "Customize?", "Yes", "No")
@@ -61,6 +61,47 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
+	distribute_tc()
+
+	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
+	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
+
+	qdel(src)
+
+///Admin only proc to bypass checks and force a war declaration. Button on antag panel.
+/obj/item/nuclear_challenge/proc/force_war()
+	var/are_you_sure = alert(usr, "Are you sure you wish to force a war declaration?", "Declare war?", "Yes", "No")
+
+	if(are_you_sure != "Yes")
+		return
+
+	var/war_declaration = "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
+
+	var/custom_threat = alert(usr, "Do you want to customize the declaration?", "Customize?", "Yes", "No")
+
+	if(custom_threat == "Yes")
+		war_declaration = stripped_input(usr, "Insert your custom declaration", "Declaration")
+
+	if(!war_declaration)
+		to_chat(usr, "<span class='warning'>Invalid war declaration.</span>")
+		return
+
+	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/alarm.ogg')
+
+	for(var/V in GLOB.syndicate_shuttle_boards)
+		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
+		board.challenge = TRUE
+
+	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
+		D.jammed = TRUE
+
+	distribute_tc()
+
+	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
+
+	qdel(src)
+
+/obj/item/nuclear_challenge/proc/distribute_tc()
 	var/list/orphans = list()
 	var/list/uplinks = list()
 
@@ -73,7 +114,6 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			continue
 		uplinks += uplink
 
-
 	var/tc_to_distribute = CHALLENGE_TELECRYSTALS
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
@@ -82,7 +122,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)
-		var/TC = new /obj/item/stack/telecrystal(user.drop_location()[1], tc_per_nukie)
+		var/TC = new /obj/item/stack/telecrystal(L.drop_location()[1], tc_per_nukie)
 		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
 		tc_to_distribute -= tc_per_nukie
 
@@ -94,10 +134,6 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='notice'>You cough up a half-digested telecrystal!</span>")
 				break
 
-	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
-	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
-
-	qdel(src)
 
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)

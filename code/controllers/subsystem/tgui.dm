@@ -24,13 +24,14 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/packages/tgui/public/tgui.html')
+	basehtml = file2text('tgui/public/tgui.html')
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
 
-/datum/controller/subsystem/tgui/stat_entry()
-	..("P:[open_uis.len]")
+/datum/controller/subsystem/tgui/stat_entry(msg)
+	msg = "P:[length(open_uis)]"
+	return ..()
 
 /datum/controller/subsystem/tgui/fire(resumed = 0)
 	if(!resumed)
@@ -81,7 +82,8 @@ SUBSYSTEM_DEF(tgui)
 			window_found = TRUE
 			break
 	if(!window_found)
-		log_tgui(user, "Error: Pool exhausted")
+		log_tgui(user, "Error: Pool exhausted",
+			context = "SStgui/request_pooled_window")
 		return null
 	return window
 
@@ -93,7 +95,7 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  */
 /datum/controller/subsystem/tgui/proc/force_close_all_windows(mob/user)
-	log_tgui(user, "force_close_all_windows")
+	log_tgui(user, context = "SStgui/force_close_all_windows")
 	if(user.client)
 		user.client.tgui_windows = list()
 		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
@@ -109,7 +111,7 @@ SUBSYSTEM_DEF(tgui)
  * required window_id string
  */
 /datum/controller/subsystem/tgui/proc/force_close_window(mob/user, window_id)
-	log_tgui(user, "force_close_window")
+	log_tgui(user, context = "SStgui/force_close_window")
 	// Close all tgui datums based on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)

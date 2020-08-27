@@ -39,6 +39,12 @@
         obj_damage = 0
         environment_smash = ENVIRONMENT_SMASH_NONE
 
+/mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
+	. = ..()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/retaliate/poison/snake/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
 	. = oview((vision_range / PIXEL_TILE_SIZE), targets_from) //get list of things in vision range

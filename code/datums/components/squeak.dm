@@ -42,6 +42,8 @@
 		use_delay = use_delay_override
 
 /datum/component/squeak/proc/play_squeak()
+	SIGNAL_HANDLER
+
 	if(prob(squeak_chance))
 		var/turf/T = get_turf(parent)
 		if(T == last_played_turf && world.time < last_played + cooldown)
@@ -55,8 +57,11 @@
 
 /datum/component/squeak/proc/step_squeak()
 	play_squeak()
+	SIGNAL_HANDLER
 
 /datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
@@ -76,22 +81,32 @@
 		play_squeak()
 
 /datum/component/squeak/proc/use_squeak()
+	SIGNAL_HANDLER
+
 	if(last_use + use_delay < world.time)
 		last_use = world.time
 		play_squeak()
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	RegisterSignal(equipper, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
 
 // Disposal pipes related shit
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+	SIGNAL_HANDLER
+
 	//We don't need to worry about unregistering this signal as it will happen for us automaticaly when the holder is qdeleted
 	RegisterSignal(holder, COMSIG_ATOM_DIR_CHANGE, .proc/holder_dir_change)
 
 /datum/component/squeak/proc/holder_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()

@@ -173,16 +173,6 @@
 	excludefromjob = list("Chief Engineer","Station Engineer","Atmospheric Technician")
 
 //Unique Objectives
-/datum/objective_item/unique/docs_red
-	name = "the \"Red\" secret documents."
-	targetitem = /obj/item/documents/syndicate/red
-	difficulty = 10
-
-/datum/objective_item/unique/docs_blue
-	name = "the \"Blue\" secret documents."
-	targetitem = /obj/item/documents/syndicate/blue
-	difficulty = 10
-
 /datum/objective_item/special/New()
 	..()
 	if(TargetExists())
@@ -195,9 +185,9 @@
 	return ..()
 
 //Old ninja objectives.
-/datum/objective_item/special/pinpointer/nuke
+/datum/objective_item/special/pinpointer
 	name = "the captain's pinpointer."
-	targetitem = /obj/item/pinpointer
+	targetitem = /obj/item/pinpointer/nuke
 	difficulty = 10
 
 /datum/objective_item/special/aegun
