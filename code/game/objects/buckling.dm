@@ -142,6 +142,12 @@
 		return FALSE
 
 	add_fingerprint(user)
+	if (M != user)
+		M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
+					"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
+					"<span class='hear'>You hear metal clanking.</span>")
+		if(!do_after(user, 3 SECONDS, TRUE, M))
+			return FALSE
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
 		if(M == user)
@@ -150,8 +156,7 @@
 				"<span class='hear'>You hear metal clanking.</span>")
 		else
 			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
-				"<span class='warning'>[user] buckles you to [src]!</span>",\
-				"<span class='hear'>You hear metal clanking.</span>")
+				"<span class='warning'>[user] buckles you to [src]!</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
