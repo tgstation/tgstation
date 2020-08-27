@@ -924,15 +924,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/num_legs = H.get_num_legs(FALSE)
 
 	var/obj/item/replaced_item = H.get_item_by_slot(slot)
-	if(replaced_item && !swap)
+
+	// if there's an item in the slot we want, only allow it if we're trying to swap and the item being replaced isn't NODROP, ABSTRACT, or DROPDEL
+	if(replaced_item && (!swap || (HAS_TRAIT(replaced_item, TRAIT_NODROP) || (replaced_item.item_flags & (ABSTRACT|DROPDEL)))))
 		return FALSE
 
-	if(replaced_item && ((replaced_item.item_flags & ABSTRACT) || (replaced_item.item_flags & DROPDEL) || HAS_TRAIT(I, TRAIT_NODROP)))
-		return FALSE
-
-	// these slots aren't necessarily replacing anything, since they're just storage slots. We do their own swap checks below
-	if(!(slot in list(ITEM_SLOT_SUITSTORE, ITEM_SLOT_BACKPACK)) && !(I.slot_flags & slot) && !(I.w_class <= WEIGHT_CLASS_SMALL && (slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET))) // we can fit anything small or below in pockets
-		return FALSE
+	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
+	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down
+	if(!(I.slot_flags & slot))
+		var/excused = FALSE
+		// Anything that's small or smaller can fit into a pocket by default
+		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= WEIGHT_CLASS_SMALL)
+			excused = TRUE
+		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK)
+			excused = TRUE
+		if(!excused)
+			return FALSE
 
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
