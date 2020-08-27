@@ -474,8 +474,9 @@
 	. = ..()
 	if(!.)
 		return
-	if(!(world.time > last_teleport + cooldown))
-		return FALSE
+	if(world.time > last_teleport + cooldown)
+		return TRUE
+	return FALSE
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
