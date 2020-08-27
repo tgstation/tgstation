@@ -432,7 +432,7 @@
   * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
   *
   * Arguments:
-  * * It's the same ones on [receive_damage]
+  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
   */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0

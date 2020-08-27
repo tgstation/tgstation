@@ -1,9 +1,10 @@
 
 /*
-	Pierce
+	Piercing wounds
 */
 
 /datum/wound/pierce
+	name = "Piercing Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_PIERCE

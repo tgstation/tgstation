@@ -1,6 +1,6 @@
 
 /datum/wound/loss
-	name = "Dismembered"
+	name = "Dismemberment Wound"
 	desc = "oof ouch!!"
 
 	sound_effect = 'sound/effects/dismember.ogg'

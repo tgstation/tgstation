@@ -1,9 +1,10 @@
 
 /*
-	Cuts
+	Slashing wounds
 */
 
 /datum/wound/slash
+	name = "Slashing (Cut) Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_SLASH
