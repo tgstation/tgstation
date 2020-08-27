@@ -329,7 +329,7 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
-	if (!HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION) || HAS_TRAIT(src, TRAIT_NODEATH))
+	if (!CAN_SUCCUMB(src))
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -337,7 +337,6 @@
 	if(!whispered)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 	death()
-
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
@@ -1217,8 +1216,10 @@
 		A.action.Remove(src)
 
 /mob/living/proc/add_abilities_to_panel()
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
+		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
+	return L
 
 /mob/living/lingcheck()
 	if(mind)
@@ -1569,6 +1570,7 @@
 	. = ..()
 	if(isnull(.))
 		return
+
 	switch(.) //Previous stat.
 		if(CONSCIOUS)
 			if(stat >= UNCONSCIOUS)

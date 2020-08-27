@@ -55,11 +55,11 @@
 	biology = victim?.get_biological_state() || BIO_FLESH_BONE
 
 	if(biology == BIO_JUST_BONE)
-		description = pick(strings(BONE_SCAR_FILE, W.scar_keyword)) || "general disfigurement"
+		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
 	else // no specific support for flesh w/o bone scars since it's not really useful
-		description = pick(strings(FLESH_SCAR_FILE, W.scar_keyword)) || "general disfigurement"
+		description = pick_list(FLESH_SCAR_FILE, W.scar_keyword) || "general disfigurement"
 
-	precise_location = pick(strings(SCAR_LOC_FILE, limb.body_zone))
+	precise_location = pick_list_replacements(SCAR_LOC_FILE, limb.body_zone)
 	switch(W.severity)
 		if(WOUND_SEVERITY_MODERATE)
 			visibility = 2
@@ -117,7 +117,7 @@
 	var/msg = "[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
-			msg = "<span class='tinynotice'>[msg]</span>"
+			msg = "<span class='tinynoticeital'>[msg]</span>"
 		if(WOUND_SEVERITY_SEVERE)
 			msg = "<span class='smallnoticeital'>[msg]</span>"
 		if(WOUND_SEVERITY_CRITICAL)

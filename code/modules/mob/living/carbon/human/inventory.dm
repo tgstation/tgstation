@@ -83,27 +83,31 @@
 	if(!..()) //a check failed or the item has already found its slot
 		return
 
-	var/current_equip
+	var/obj/item/current_equip
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
 		if(ITEM_SLOT_BELT)
 			if (belt && swap)
+				belt.dropped(src, TRUE)
 				current_equip = belt
 			belt = I
 			update_inv_belt()
 		if(ITEM_SLOT_ID)
 			if (wear_id && swap)
+				wear_id.dropped(src, TRUE)
 				current_equip = wear_id
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
 		if(ITEM_SLOT_EARS)
 			if (ears && swap)
+				ears.dropped(src, TRUE)
 				current_equip = ears
 			ears = I
 			update_inv_ears()
 		if(ITEM_SLOT_EYES)
 			if (glasses && swap)
+				glasses.dropped(src, TRUE)
 				current_equip = glasses
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
@@ -118,16 +122,19 @@
 			update_inv_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if (gloves && swap)
+				gloves.dropped(src, TRUE)
 				current_equip = gloves
 			gloves = I
 			update_inv_gloves()
 		if(ITEM_SLOT_FEET)
 			if (shoes && swap)
+				shoes.dropped(src, TRUE)
 				current_equip = shoes
 			shoes = I
 			update_inv_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			if (wear_suit && swap)
+				wear_suit.dropped(src, TRUE)
 				current_equip = wear_suit
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
@@ -138,6 +145,7 @@
 			update_inv_wear_suit()
 		if(ITEM_SLOT_ICLOTHING)
 			if (w_uniform && swap)
+				w_uniform.dropped(src, TRUE)
 				current_equip = w_uniform
 			w_uniform = I
 			update_suit_sensors()
@@ -150,6 +158,7 @@
 			update_inv_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if (s_store && swap)
+				s_store.dropped(src, TRUE)
 				current_equip = s_store
 			s_store = I
 			update_inv_s_store()
