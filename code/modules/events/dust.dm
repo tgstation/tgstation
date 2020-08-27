@@ -7,7 +7,7 @@
 	alert_observers = FALSE
 
 /datum/round_event/space_dust
-	startWhen		= TRUE
+	startWhen		= 1
 	endWhen			= 2
 	fakeable = FALSE
 
