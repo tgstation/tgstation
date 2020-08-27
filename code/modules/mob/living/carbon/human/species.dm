@@ -920,7 +920,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
-<<<<<<< HEAD
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)
 
@@ -942,8 +941,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!excused)
 			return FALSE
 
-=======
->>>>>>> master
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
 			if(H.get_empty_held_indexes())
@@ -960,27 +957,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(ITEM_SLOT_OCLOTHING)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-<<<<<<< HEAD
 			if(num_arms < 2)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
 			if(num_legs < 2)
-=======
-			if(H.gloves && !swap)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
-				return FALSE
-			if(H.num_hands < 2)
-				return FALSE
-			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(ITEM_SLOT_FEET)
-			if(H.shoes && !swap)
-				return FALSE
-			if( !(I.slot_flags & ITEM_SLOT_FEET) )
-				return FALSE
-			if(H.num_legs < 2)
->>>>>>> master
 				return FALSE
 			if(DIGITIGRADE in species_traits)
 				if(!disable_warning)
