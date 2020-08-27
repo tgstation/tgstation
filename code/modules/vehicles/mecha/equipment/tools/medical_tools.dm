@@ -337,7 +337,7 @@
 								R += "[A.name] ([num2text(A.volume)]"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = source, method = INJECT)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = source, methods = INJECT)
 						M.take_bodypart_damage(2)
 						log_combat(source, M, "shot", "syringegun")
 					break
