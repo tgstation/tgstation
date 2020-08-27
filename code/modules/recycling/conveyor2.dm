@@ -155,13 +155,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		var/atom/movable/A = O
 		//Give this a chance to yield if the server is busy
 		stoplag()
-		if(!QDELETED(A) && (A.loc == loc))
-			if(iseffect(A) || isdead(A))
+		if(QDELETED(A) || (A.loc != loc))
+			continue
+		if(iseffect(A) || isdead(A))
+			continue
+		if(isliving(A))
+			var/mob/living/zoommob = A
+			if((zoommob.movement_type & FLYING) && !zoommob.stat)
 				continue
-			if(isliving(A))
-				var/mob/living/zoommob = A
-				if((zoommob.movement_type & FLYING) && !zoommob.stat)
-					continue
 			if(!A.anchored && A.has_gravity())
 				step(A, movedir)
 	conveying = FALSE
