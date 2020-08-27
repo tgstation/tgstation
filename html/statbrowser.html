@@ -510,13 +510,15 @@ function tab_change(tab) {
 	}else if(tab == turfname) {
 		draw_listedturf();
 	} else {
-		document.getElementById("statcontent").innerHTML = "loading...";
+		var statcontentdiv = document.getElementById("statcontent")
+		statcontentdiv[textContentKey] = "loading...";
 	}
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
 }
 
 function draw_debug() {
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
 	var wipeverbstabs = document.createElement("div");
 	var link = document.createElement("a");
 	link.onclick = function() {wipe_verbs()};
@@ -524,7 +526,7 @@ function draw_debug() {
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
 	var text = document.createElement("div");
-	text.innerHTML = "Verb Tabs:";
+	text[textContentKey] = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
 	var table1 = document.createElement("table");
 	for(var i=0; i < verb_tabs.length ; i++) {
@@ -543,7 +545,7 @@ function draw_debug() {
 	}
 	document.getElementById("statcontent").appendChild(table1);
 	var header2 = document.createElement("div");
-	header2.innerHTML = "Verbs:<br> Category | Name";
+	header2[textContentKey] = "Verbs:";
 	document.getElementById("statcontent").appendChild(header2);
 	var table2 = document.createElement("table");
 	for(var v = 0; v < verbs.length; v++) {
@@ -559,7 +561,7 @@ function draw_debug() {
 	}
 	document.getElementById("statcontent").appendChild(table2);
 	var text3 = document.createElement("div");
-	text3.innerHTML = "Permanent Tabs:";
+	text3[textContentKey] = "Permanent Tabs:";
 	document.getElementById("statcontent").appendChild(text3);
 	var table3 = document.createElement("table");
 	for(var i=0; i < permanent_tabs.length ; i++) {
@@ -574,17 +576,18 @@ function draw_debug() {
 
 }
 function draw_status() {
+	var statcontentdiv = document.getElementById("statcontent")
 	if(!document.getElementById("Status")) {
 		createStatusTab("Status");
 		current_tab = "Status";
 	}
-	document.getElementById("statcontent").innerHTML = inner;
+	statcontentdiv[textContentKey] = inner;
 	for(var i = 0; i < status_tab_parts.length; i++) {
 		if(status_tab_parts[i].trim() == "") {
 			document.getElementById("statcontent").appendChild(document.createElement("br"));
 		} else {
 			var div = document.createElement("div");
-			div.innerHTML = status_tab_parts[i];
+			div[textContentKey] = status_tab_parts[i];
 			document.getElementById("statcontent").appendChild(div);
 		}
 	}
@@ -595,7 +598,8 @@ function draw_status() {
 }
 
 function draw_mc() {
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	for(var i = 0; i < mc_tab_parts.length; i++) {
 		var part = mc_tab_parts[i];
@@ -675,7 +679,8 @@ function update_listedturf(TC) {
 }
 
 function draw_listedturf() {
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	for(var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
@@ -719,7 +724,8 @@ function remove_listedturf() {
 		tab_change("Status");
 }
 function draw_sqdl2(){
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	for(var i = 0; i < sqdl2.length; i++) {
 		var part = sqdl2[i];
@@ -743,7 +749,8 @@ function draw_sqdl2(){
 }
 
 function draw_tickets() {
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent")
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	if(!tickets)
 		return;
@@ -774,7 +781,8 @@ function draw_tickets() {
 }
 
 function draw_spells(cat) {
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent")
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
 	for(var i = 0; i < spells.length; i++) {
 		var part = spells[i];
@@ -799,7 +807,8 @@ function draw_spells(cat) {
 }
 
 function draw_verbs(cat){
-	document.getElementById("statcontent").innerHTML = "";
+	var statcontentdiv = document.getElementById("statcontent")
+	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("newdiv");
 	table.className = "grid-container";
 	var command = ""; // typecast name to string
@@ -882,6 +891,7 @@ if(darkmodeCookie === 'true') {
 }
 if(!current_tab) {
 	addPermanentTab("Status");
+	addPermanentTab("Debug Stat Panel");
 	tab_change("Status");
 }
 
