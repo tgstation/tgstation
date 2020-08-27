@@ -45,7 +45,6 @@
 
 /obj/effect/singularity_act()
 	qdel(src)
-	return
 
 /obj/effect/ConveyorMove()
 	return

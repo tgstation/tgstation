@@ -209,11 +209,10 @@
 	if (contractType == CONTRACT_REVIVE)
 		to_chat(user, "<span class='warning'>You are already alive, this contract would do nothing.</span>")
 		return FALSE
-	else
-		to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract.</span>")
-		if(fulfillContract(target.current, blood)<=0)
-			to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
-		return TRUE
+	to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract.</span>")
+	if(!fulfillContract(target.current, blood))
+		to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
+	return TRUE
 
 
 
@@ -262,7 +261,7 @@
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
 	to_chat(user, "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>")
 	SSblackbox.record_feedback("tally", "infernal contract", 1, contractType)
-	return FALSE
+	return TRUE
 
 /obj/item/paper/contract/infernal/proc/signIncorrectly(mob/living/carbon/human/user = target.current, blood = FALSE)
 	signed = TRUE
@@ -270,7 +269,7 @@
 
 /obj/item/paper/contract/infernal/power/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	if(!user.dna)
-		return TRUE
+		return FALSE
 	user.dna.add_mutation(HULK)
 	var/obj/item/organ/regenerative_core/organ = new /obj/item/organ/regenerative_core
 	organ.Insert(user)
@@ -278,7 +277,7 @@
 
 /obj/item/paper/contract/infernal/wealth/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind) // How in the hell could that happen?
-		return TRUE
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 	return ..()
 
@@ -318,20 +317,20 @@
 
 /obj/item/paper/contract/infernal/magic/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return TRUE
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 
 /obj/item/paper/contract/infernal/knowledge/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return TRUE
+		return FALSE
 	user.dna.add_mutation(XRAY)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/view_range(null))
 	return ..()
 
 /obj/item/paper/contract/infernal/friend/fulfillContract(mob/living/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return TRUE
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_friend(null))
 	return ..()

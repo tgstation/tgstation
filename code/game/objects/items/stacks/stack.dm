@@ -84,7 +84,7 @@
 	update_icon()
 
 /obj/item/stack/proc/get_main_recipes()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	return list()//empty list
 
 /obj/item/stack/proc/update_weight()
