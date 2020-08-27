@@ -40,8 +40,9 @@
 		target.verbs += verbs_list
 
 	var/list/output_list = list()
-	for(var/verb_to_add in verbs_list)
-		output_list[++output_list.len] = list(verb_to_add:category, verb_to_add:name)
+	for(var/thing in verbs_list)
+		var/procpath/verb_to_add = thing
+		output_list[++output_list.len] = list(verb_to_add.category, verb_to_add.name)
 	output_list = url_encode(json_encode(output_list))
 
 	target << output("[output_list];", "statbrowser:add_verb_list")
@@ -59,7 +60,6 @@
 		return
 
 	var/mob/mob_target = null
-
 	if(ismob(target))
 		mob_target = target
 		target = mob_target.client
@@ -88,8 +88,9 @@
 		target.verbs -= verbs_list
 
 	var/list/output_list = list()
-	for(var/verb_to_remove in verbs_list)
-		output_list[++output_list.len] = list(verb_to_remove:category, verb_to_remove:name)
+	for(var/thing in verbs_list)
+		var/procpath/verb_to_remove = thing
+		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
 	output_list = url_encode(json_encode(output_list))
 
 	target << output("[output_list];", "statbrowser:remove_verb_list")
