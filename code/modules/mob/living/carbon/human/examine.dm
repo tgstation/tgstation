@@ -141,7 +141,7 @@
 	var/list/disabled = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/body_part = X
-		if(body_part.disabled)
+		if(body_part.bodypart_disabled)
 			disabled += body_part
 		missing -= body_part.body_zone
 		for(var/obj/item/I in body_part.embedded_objects)
