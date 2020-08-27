@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/list/datum/newscaster/feed_message/messages = list()
 	var/locked = FALSE
 	var/author = ""
-	var/censored = TRUE
+	var/censored = FALSE
 	var/list/authorCensorTime = list()
 	var/list/DclassCensorTime = list()
 	var/authorCensor
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = 1, update_alert = TRUE)
+/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg

@@ -332,7 +332,7 @@
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
 	. = ..()
-	if(!.) //successful slime attack
+	if(!.) // slime attack failed
 		return
 	var/damage = rand(5, 25)
 	var/wound_mod = -45 // 25^1.4=90, 90-45=45

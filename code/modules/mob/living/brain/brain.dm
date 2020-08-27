@@ -58,7 +58,7 @@
 /mob/living/brain/can_be_revived()
 	if(!container || health <= HEALTH_THRESHOLD_DEAD)
 		return FALSE
-	return FALSE
+	return TRUE
 
 /mob/living/brain/fully_replace_character_name(oldname,newname)
 	..()

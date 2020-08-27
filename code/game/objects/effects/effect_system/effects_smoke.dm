@@ -245,7 +245,7 @@
 	if(lifetime<1)
 		return FALSE
 	if(!istype(M))
-		return TRUE
+		return FALSE
 	var/mob/living/carbon/C = M
 	if(C.internal != null || C.has_smoke_protection())
 		return FALSE
