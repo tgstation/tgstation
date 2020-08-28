@@ -238,6 +238,7 @@
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
 	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
+	cost = 1
 
 /datum/spellbook_entry/charge
 	name = "Charge"
