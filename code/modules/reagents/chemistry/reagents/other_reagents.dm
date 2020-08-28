@@ -162,10 +162,12 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
 			G.react(src)
 			qdel(hotspot)
-	//fixed
-	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
-	if(A)
-		A.acid_level = max(A.acid_level - reac_volume*50, 0)
+
+	// TODO: Desnowflake this.
+	var/datum/component/acid/turf_acid = T.GetComponent(/datum/component/acid)
+	if(turf_acid)
+		turf_acid.acid_power = (turf_acid.acid_power * turf_acid.acid_volume) / (turf_acid.acid_volume + (reac_volume * 50))
+		turf_acid.acid_volume = turf_acid.acid_volume + (reac_volume * 50)
 
 /*
  *	Water reaction to an object
@@ -173,7 +175,7 @@
 
 /datum/reagent/water/expose_obj(obj/O, reac_volume)
 	O.extinguish()
-	O.acid_level = 0
+	O.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O

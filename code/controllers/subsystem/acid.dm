@@ -13,25 +13,23 @@ SUBSYSTEM_DEF(acid)
 
 
 /datum/controller/subsystem/acid/fire(resumed = 0)
-	if (!resumed)
+	if(!resumed)
 		src.currentrun = processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while (currentrun.len)
-		var/obj/O = currentrun[currentrun.len]
+	while(currentrun.len)
+		var/datum/component/acid/acid = currentrun[currentrun.len]
 		currentrun.len--
-		if (!O || QDELETED(O))
-			processing -= O
-			if (MC_TICK_CHECK)
+		if(!acid || QDELETED(acid))
+			processing -= acid
+			if(MC_TICK_CHECK)
 				return
 			continue
 
-		if(O.acid_level && O.acid_processing())
-		else
-			O.update_icon()
-			processing -= O
+		if(acid.process() == PROCESS_KILL)
+			processing -= acid
 
-		if (MC_TICK_CHECK)
+		if(MC_TICK_CHECK)
 			return
