@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = FALSE
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
@@ -22,7 +22,7 @@
 			mmi.brainmob.suiciding = suicide_state
 
 /mob/living/carbon/human/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
@@ -250,7 +250,7 @@
 			return TRUE
 		if(SOFT_CRIT)
 			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
 			to_chat(src, "<span class='warning'>You're already dead!</span>")

@@ -195,11 +195,14 @@
 	else
 		client.eye = card
 
-/mob/living/silicon/pai/Stat()
-	. = ..()
-	if(!.)
+/mob/living/silicon/pai/get_status_tab_items()
+	. += ..()
+	if(stat)
+		. += text("Systems nonfunctional!")
 		return
-	stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
+	if(laws)
+		. += text("Lawset: [laws.name]")
+	. += text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]")
 
 /mob/living/silicon/pai/restrained(ignore_grab)
 	. = FALSE

@@ -180,7 +180,7 @@
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"
-	desc = "Keep those Plasmamen alive with two sets of Plasmaman outfits. Each set contains a plasmaman jumpsuit, internals tank, and helmet."
+	desc = "Keep those Plasmamen alive with two sets of Plasmaman outfits. Each set contains a plasmaman jumpsuit, gloves, internals tank, and helmet."
 	cost = 2000
 	contains = list(/obj/item/clothing/under/plasmaman,
 					/obj/item/clothing/under/plasmaman,
@@ -1415,6 +1415,18 @@
 					/obj/item/clothing/head/helmet/monkey_sentience)
 	crate_name = "monkey mind magnification crate"
 
+/datum/supply_pack/science/cytology
+	name = "Cytology supplies crate"
+	desc = "Did out of control specimens pulverize xenobiology? Here is some more supplies for further testing."
+	cost = 1500
+	contains = list(/obj/structure/microscope,
+					/obj/item/biopsy_tool,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/swab,
+					/obj/item/construction/plumbing/research)
+	crate_name = "cytology supplies crate"
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1626,6 +1638,20 @@
 	cost = 1000
 	contains = list(/obj/item/vending_refill/assist)
 	crate_name = "vendomat supply crate"
+
+/datum/supply_pack/service/wedding
+	name = "Wedding Crate"
+	desc = "Everything you need to host a wedding! Now you just need an officiant."
+	cost = 1500
+	contains = list(/obj/item/clothing/under/dress/wedding_dress,
+					/obj/item/clothing/under/suit/tuxedo,
+					/obj/item/storage/belt/cummerbund,
+					/obj/item/clothing/head/weddingveil,
+					/obj/item/bouquet,
+					/obj/item/bouquet/sunflower,
+					/obj/item/bouquet/poppy,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne)
+	crate_name = "wedding crate"
 
 /datum/supply_pack/service/emptycrate
 	name = "Empty Crate"
@@ -2031,6 +2057,14 @@
 	contains = list(/mob/living/simple_animal/pet/dog/pug,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
+
+/datum/supply_pack/critter/bullterrier
+	name = "Bull Terrier Crate"
+	desc = "Like a normal dog, but with a head the shape of an egg. Comes with a nice collar!"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/pet/dog/bullterrier,
+					/obj/item/clothing/neck/petcollar)
+	crate_name = "bull terrier crate"
 
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"

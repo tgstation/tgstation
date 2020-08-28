@@ -4,7 +4,7 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = FALSE
-	flag = "bullet"
+	flag = BULLET
 	hitsound_wall = "ricochet"
 	sharpness = SHARP_POINTY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect

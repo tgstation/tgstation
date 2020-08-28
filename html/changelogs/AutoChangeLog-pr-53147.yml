@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Admins can now spawn the Teambuilding machine for assign teams, like Red or Blue, quickly!"

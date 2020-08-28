@@ -61,7 +61,7 @@ Slimecrossing Weapons
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
@@ -100,7 +100,7 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
+		return FALSE
 	charge_tick = 0
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
@@ -108,7 +108,7 @@ Slimecrossing Weapons
 		M.blood_volume -= 20
 	if(charges == 1)
 		recharge_newshot()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/magic/bloodchill
 	projectile_type = /obj/projectile/magic/bloodchill

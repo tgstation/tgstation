@@ -45,7 +45,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/canmove = TRUE
 
-/obj/effect/dummy/phased_mob/creature/relaymove(mob/user, direction)
+/obj/effect/dummy/phased_mob/creature/relaymove(mob/living/user, direction)
 	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/phased_mob/creature/ex_act()

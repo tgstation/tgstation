@@ -24,9 +24,9 @@
 
 	if (back)
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
-	var/appears_dead = 0
+	var/appears_dead = FALSE
 	if (stat == DEAD)
-		appears_dead = 1
+		appears_dead = TRUE
 		if(getorgan(/obj/item/organ/brain))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
 		else if(get_bodypart(BODY_ZONE_HEAD))
@@ -37,7 +37,7 @@
 	var/list/disabled = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.disabled)
+		if(BP.bodypart_disabled)
 			disabled += BP
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
@@ -111,13 +111,13 @@
 			scar_severity += S.severity
 
 	switch(scar_severity)
-		if(1 to 2)
-			msg += "<span class='smallnoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
-		if(3 to 4)
-			msg += "<span class='notice'><i>[t_He] [t_has] several bad scars, you can look again to take a closer look...</i></span>\n"
-		if(5 to 6)
-			msg += "<span class='notice'><b><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></b></span>\n"
-		if(7 to INFINITY)
+		if(1 to 4)
+			msg += "<span class='tinynoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
+		if(5 to 8)
+			msg += "<span class='smallnoticeital'>[t_He] [t_has] several bad scars, you can look again to take a closer look...</span>\n"
+		if(9 to 11)
+			msg += "<span class='notice'><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></span>\n"
+		if(12 to INFINITY)
 			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
 
 	msg += "</span>"
@@ -125,10 +125,11 @@
 	. += msg.Join("")
 
 	if(!appears_dead)
-		if(stat == UNCONSCIOUS)
-			. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
-		else if(InCritical())
-			. += "[t_His] breathing is shallow and labored."
+		switch(stat)
+			if(SOFT_CRIT)
+				. += "[t_His] breathing is shallow and labored."
+			if(UNCONSCIOUS, HARD_CRIT)
+				. += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep."
 
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))

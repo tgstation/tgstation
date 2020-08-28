@@ -96,14 +96,14 @@
 			return
 
 		if(!target.can_track(usr))
-			U.tracking = 1
+			U.tracking = TRUE
 			if(!cameraticks)
 				to_chat(U, "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>")
 			cameraticks++
 			if(cameraticks > 9)
 				U.cameraFollow = null
 				to_chat(U, "<span class='warning'>Unable to reacquire, cancelling track...</span>")
-				tracking = 0
+				tracking = FALSE
 				return
 			else
 				sleep(10)
@@ -111,7 +111,7 @@
 
 		else
 			cameraticks = 0
-			U.tracking = 0
+			U.tracking = FALSE
 
 		if(U.eyeobj)
 			U.eyeobj.setLoc(get_turf(target))

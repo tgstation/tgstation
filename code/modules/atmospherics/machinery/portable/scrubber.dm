@@ -90,7 +90,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(is_operational())
+	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
 		update_icon()
@@ -171,7 +171,7 @@
 	icon_state = "scrubber:[on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
-	if((!anchored && !movable) || !is_operational())
+	if((!anchored && !movable) || !is_operational)
 		on = FALSE
 		update_icon()
 	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
