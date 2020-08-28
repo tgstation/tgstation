@@ -96,7 +96,7 @@
 	var/is_joker_ready = FALSE
 	/// Used for setting tgui data - Whether injectors are ready to be printed
 	var/is_injector_ready = FALSE
-	/// USed for setting tgui data - Is CRISPR ready?
+	/// Used for setting tgui data - Is CRISPR ready?
 	var/is_crispr_ready = FALSE
 	/// Used for setting tgui data - Wheher an enzyme pulse operation is ongoing
 	var/is_pulsing_rads = FALSE
