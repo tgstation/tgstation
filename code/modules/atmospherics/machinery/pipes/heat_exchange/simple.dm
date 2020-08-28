@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple
 	icon = 'icons/obj/atmospherics/pipes/he-simple.dmi'
-	icon_state = "pipe11-2"
+	icon_state = "pipe11-3"
 
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe."
@@ -28,10 +28,10 @@
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
 	update_layer()
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer1
-	piping_layer = 1
-	icon_state = "pipe11-1"
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2
+	piping_layer = 2
+	icon_state = "pipe11-2"
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer3
-	piping_layer = 3
-	icon_state = "pipe11-3"
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer4
+	piping_layer = 4
+	icon_state = "pipe11-4"
