@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	36
+#define SAVEFILE_VERSION_MAX	37
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -69,6 +69,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(key_bindings["ShiftQ"] == "quick_equip_suit_storage")
 			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
 
+	if(current_version < 37)
+		if(clientfps == 0)
+			clientfps = -1
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return
@@ -153,8 +156,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
-		
-		
+
+
 
 	//Sanitize
 	asaycolor		= sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
@@ -188,11 +191,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_keybindings(key_bindings)
-	
+
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
-		
+
 		for (var/slot in S.dir) //but first, update all current character slots.
 			if (copytext(slot, 1, 10) != "character")
 				continue

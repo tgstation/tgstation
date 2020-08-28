@@ -284,6 +284,8 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_COLOR "movable_light_overlay_set_range"
 ///Called when the movable tries to toggle its dynamic light LIGHTING_ON status, from base atom/movable/lighting_overlay_toggle_on(): (new_state)
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
+///called when the movable's glide size is updated: (new_glide_size)
+#define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 
 // /mob signals
 
