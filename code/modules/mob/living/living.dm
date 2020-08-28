@@ -1274,10 +1274,8 @@
 		A.action.Remove(src)
 
 /mob/living/proc/add_abilities_to_panel()
-	var/list/L = list()
 	for(var/obj/effect/proc_holder/A in abilities)
-		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
-	return L
+		statpanel("[A.panel]",A.get_panel_text(),A)
 
 /mob/living/lingcheck()
 	if(mind)

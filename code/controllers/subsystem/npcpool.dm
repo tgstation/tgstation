@@ -6,10 +6,9 @@ SUBSYSTEM_DEF(npcpool)
 
 	var/list/currentrun = list()
 
-/datum/controller/subsystem/npcpool/stat_entry(msg)
+/datum/controller/subsystem/npcpool/stat_entry()
 	var/list/activelist = GLOB.simple_animals[AI_ON]
-	msg = "NPCS:[length(activelist)]"
-	return ..()
+	..("NPCS:[activelist.len]")
 
 /datum/controller/subsystem/npcpool/fire(resumed = FALSE)
 

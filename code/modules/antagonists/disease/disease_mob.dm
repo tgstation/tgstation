@@ -87,16 +87,17 @@ the new instance inside the host to be updated to the template's stats.
 		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
 
-/mob/camera/disease/get_status_tab_items()
+/mob/camera/disease/Stat()
 	..()
-	if(freemove)
-		. += "Host Selection Time: [round((freemove_end - world.time)/10)]s"
-	else
-		. += "Adaptation Points: [points]/[total_points]"
-		. += "Hosts: [disease_instances.len]"
-		var/adapt_ready = next_adaptation_time - world.time
-		if(adapt_ready > 0)
-			. += "Adaptation Ready: [round(adapt_ready/10, 0.1)]s"
+	if(statpanel("Status"))
+		if(freemove)
+			stat("Host Selection Time: [round((freemove_end - world.time)/10)]s")
+		else
+			stat("Adaptation Points: [points]/[total_points]")
+			stat("Hosts: [disease_instances.len]")
+			var/adapt_ready = next_adaptation_time - world.time
+			if(adapt_ready > 0)
+				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
 
 
 /mob/camera/disease/examine(mob/user)

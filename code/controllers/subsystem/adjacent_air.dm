@@ -6,13 +6,12 @@ SUBSYSTEM_DEF(adjacent_air)
 	priority = FIRE_PRIORITY_ATMOS_ADJACENCY
 	var/list/queue = list()
 
-/datum/controller/subsystem/adjacent_air/stat_entry(msg)
+/datum/controller/subsystem/adjacent_air/stat_entry()
 #ifdef TESTING
-	msg = "P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]"
+	..("P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]")
 #else
-	msg = "P:[length(queue)]"
+	..("P:[length(queue)]")
 #endif
-	return ..()
 
 /datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))

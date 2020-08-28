@@ -18,7 +18,6 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
-	/client/proc/debugstatpanel,
 	/client/proc/fix_air				/*resets air in designated radius to its default atmos composition*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
@@ -260,36 +259,36 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank.rights
-		add_verb(src, GLOB.admin_verbs_default)
+		verbs += GLOB.admin_verbs_default
 		if(rights & R_BUILD)
-			add_verb(src, /client/proc/togglebuildmodeself)
+			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
-			add_verb(src, GLOB.admin_verbs_admin)
+			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
-			add_verb(src, GLOB.admin_verbs_ban)
+			verbs += GLOB.admin_verbs_ban
 		if(rights & R_FUN)
-			add_verb(src, GLOB.admin_verbs_fun)
+			verbs += GLOB.admin_verbs_fun
 		if(rights & R_SERVER)
-			add_verb(src, GLOB.admin_verbs_server)
+			verbs += GLOB.admin_verbs_server
 		if(rights & R_DEBUG)
-			add_verb(src, GLOB.admin_verbs_debug)
+			verbs += GLOB.admin_verbs_debug
 		if(rights & R_POSSESS)
-			add_verb(src, GLOB.admin_verbs_possess)
+			verbs += GLOB.admin_verbs_possess
 		if(rights & R_PERMISSIONS)
-			add_verb(src, GLOB.admin_verbs_permissions)
+			verbs += GLOB.admin_verbs_permissions
 		if(rights & R_STEALTH)
-			add_verb(src, /client/proc/stealth)
+			verbs += /client/proc/stealth
 		if(rights & R_ADMIN)
-			add_verb(src, GLOB.admin_verbs_poll)
+			verbs += GLOB.admin_verbs_poll
 		if(rights & R_SOUND)
-			add_verb(src, GLOB.admin_verbs_sounds)
+			verbs += GLOB.admin_verbs_sounds
 			if(CONFIG_GET(string/invoke_youtubedl))
-				add_verb(src, /client/proc/play_web_sound)
+				verbs += /client/proc/play_web_sound
 		if(rights & R_SPAWN)
-			add_verb(src, GLOB.admin_verbs_spawn)
+			verbs += GLOB.admin_verbs_spawn
 
 /client/proc/remove_admin_verbs()
-	remove_verb(src, list(
+	verbs.Remove(
 		GLOB.admin_verbs_default,
 		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
@@ -308,14 +307,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
-		))
+		)
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
 	set category = "Admin"
 
 	remove_admin_verbs()
-	add_verb(src, /client/proc/show_verbs)
+	verbs += /client/proc/show_verbs
 
 	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -325,7 +324,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Adminverbs - Show"
 	set category = "Admin"
 
-	remove_verb(src, /client/proc/show_verbs)
+	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>", confidential = TRUE)
@@ -360,7 +359,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
 		body.ghostize(1)
-		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -705,6 +703,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	holder.deactivate()
 
+
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadminned themselves.")
 	message_admins("[src] deadminned themselves.")
@@ -780,9 +779,3 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
-
-/client/proc/debugstatpanel()
-	set name = "Debug Stat Panel"
-	set category = "Debug"
-
-	src << output("", "statbrowser:create_debug")

@@ -45,7 +45,7 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
-	add_verb(src, /mob/living/proc/lay_down)
+	verbs += /mob/living/proc/lay_down
 	add_cell_sample()
 
 /mob/living/simple_animal/pet/cat/add_cell_sample()
