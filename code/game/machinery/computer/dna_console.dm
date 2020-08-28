@@ -585,12 +585,12 @@
 				return
 
 			//GUARD CHECK
-			//Make sure there's charges available
+			//Make sure there's charges available.
 			if(crispr_charges < 1)
 				return
 			var/search_flags = 0
 
-			// Only continue if applying to occupant - all replacements in-vitro
+			// Only continue if applying to occupant - all replacements in-vitro.
 			switch(params["source"])
 				if("occupant")
 					if(can_modify_occupant())
