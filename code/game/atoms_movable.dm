@@ -33,11 +33,6 @@
 	///whether we are already sidestepping or not
 	var/sidestep = FALSE
 
-	///whether or not we can sidestep
-	var/can_sidestep = FALSE
-
-	/// collider object
-	var/atom/movable/collider/slider/slider
 	//Misc
 	var/last_move = null
 	var/last_move_time = 0
@@ -271,8 +266,6 @@
 	pulling = AM
 	AM.set_pulledby(src)
 	setGrabState(state)
-	AM.step_size = step_size
-	AM.set_sidestep(TRUE)
 	if(!isliving(pulling))
 		pulling.set_sidestep(TRUE)
 	if(ismob(AM))
@@ -283,15 +276,6 @@
 			M.visible_message("<span class='warning'>[src] grabs [M] passively.</span>", \
 				"<span class='danger'>[src] grabs you passively.</span>")
 	return TRUE
-
-
-/atom/movable/proc/set_sidestep(val = 0)
-	can_sidestep = val
-	if(can_sidestep && !slider)
-		slider = new()
-	else if(!can_sidestep && slider)
-		qdel(slider)
-	return can_sidestep
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
@@ -418,11 +402,11 @@
 		//if this mob is able to slide when colliding, and is currently not attempting to slide
 		//mark that we are sliding
 		sidestep = TRUE
-		//call to the global slider object to determine what direction our slide will happen in (if any)
+		//call to the slider object to determine what direction our slide will happen in (if any)
 		. = slider.slide(src, direct, _step_x, _step_y)
 		if(.)
 			//if slider was able to slide, step us in the direction indicated
-			. = step(src,.)
+			. = step(src, ., 2)
 		//mark that we are no longer sliding
 		sidestep = FALSE
 	last_move = direct
