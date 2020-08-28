@@ -3652,9 +3652,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
+/obj/machinery/monkey_recycler,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Mf" = (
@@ -4371,6 +4369,13 @@
 /area/shuttle/shipstation)
 "XP" = (
 /obj/effect/landmark/start/lawyer,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"XQ" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/processor,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "XW" = (
@@ -5111,7 +5116,7 @@ Xk
 ZH
 nz
 yA
-yA
+XQ
 cB
 ed
 "}
