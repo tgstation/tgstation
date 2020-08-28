@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - tweak: "You can now remove items from food storage by clicking on them on grab intent."
+  - code_imp: "Componentizes food storage from food/snacks/store."
