@@ -437,6 +437,8 @@
 	if(!lawset_path)
 		return
 
+	name = GLOB.lawset_laws["[lawset_path]"][LAW_NAME]
+
 	zeroth = GLOB.lawset_laws["[lawset_path]"][LAW_ZEROTH]
 
 	hacked = GLOB.lawset_laws["[lawset_path]"][LAW_HACKED]
