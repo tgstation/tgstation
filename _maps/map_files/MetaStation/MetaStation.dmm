@@ -49227,6 +49227,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "coz" = (
@@ -52813,6 +52814,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "cxV" = (

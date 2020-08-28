@@ -29482,6 +29482,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
+/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "brl" = (
@@ -33956,6 +33957,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "bBR" = (
