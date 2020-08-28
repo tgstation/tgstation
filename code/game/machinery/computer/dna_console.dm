@@ -609,7 +609,7 @@
 			var/at_str = "AT"
 			var/cg_str = "CG"
 
-			// GUARD CHECK - Only search occupant for this specific ref, since your
+			// GUARD CHECK - Only search occupant for this specific ref, since you
 			//  can only CRISPR existing mutations in a target
 			var/datum/mutation/human/target_mutation = get_mut_by_ref(bref, search_flags)
 
