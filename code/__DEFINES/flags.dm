@@ -84,6 +84,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define BLOCK_SUICIDE				(1<<9)
 /// Can the Xenobio management console transverse this area by default?
 #define XENOBIOLOGY_COMPATIBLE		(1<<10)
+/// If Abductors are unable to teleport in with their observation console
+#define ABDUCTOR_PROOF				(1<<11)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -130,7 +132,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE			(1<<3)
 #define ZAP_MOB_STUN			(1<<4)
 
-#define ZAP_DEFAULT_FLAGS ALL
+#define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE 
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS NONE
 

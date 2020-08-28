@@ -22,8 +22,9 @@ SUBSYSTEM_DEF(machines)
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/controller/subsystem/machines/stat_entry()
-	..("M:[processing.len]|PN:[powernets.len]")
+/datum/controller/subsystem/machines/stat_entry(msg)
+	msg = "M:[length(processing)]|PN:[length(powernets)]"
+	return ..()
 
 
 /datum/controller/subsystem/machines/fire(resumed = 0)
