@@ -18,6 +18,10 @@
 
 	var/disgust_metabolism = 1
 
+/obj/item/organ/stomach/Initialize()
+	. = ..()
+	create_reagents(1000)
+
 /obj/item/organ/stomach/on_life()
 	..()
 
