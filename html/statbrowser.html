@@ -255,7 +255,7 @@ function createStatusTab(name) {
 	}
 	//END ORDERING
 	menu.appendChild(B);
-	under_menu.style.height = menu.clientHeight;
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function removeStatusTab(name) {
@@ -267,13 +267,13 @@ function removeStatusTab(name) {
 		}
 	}
 	menu.removeChild(document.getElementById(name));
-	under_menu.style.height = menu.clientHeight;
+	under_menu.style.height = menu.clientHeight + 'px';
 	if(document.getElementById(name)) // repeat for duplicates
 		removeStatusTab(name);
 }
 
 window.onresize = function () {
-	under_menu.style.height = menu.clientHeight;
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function addPermanentTab(name) {
