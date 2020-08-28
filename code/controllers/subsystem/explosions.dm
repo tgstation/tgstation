@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "TO:[throwturf.len]"
 
 	msg += "} "
-	..(msg)
+	return ..()
 
 
 #define SSEX_TURF "turf"

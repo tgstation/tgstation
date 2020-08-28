@@ -145,7 +145,7 @@
 
 /datum/eldritch_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
-	gain_text = "It rained blood, that's when i understood the gravekeeper's advice."
+	gain_text = "It rained blood, that's when i understood the Marchal's advice."
 	desc = "Your blade will now cause additional bleeding."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/summon/stalker)
@@ -162,7 +162,7 @@
 
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
-	gain_text = "Uncanny man, walks alone in the valley, I was able to call his aid."
+	gain_text = "Uncanny man, walks alone in the valley between the worlds , I was able to call his aid."
 	desc = "You can now summon a Raw Prophet using eyes, a left arm, right arm and a pool of blood. Raw prophets have increased seeing range, as well as Xray. But are very fragile and weak."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm,/obj/effect/decal/cleanable/blood)
@@ -172,7 +172,7 @@
 
 /datum/eldritch_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	gain_text = "I was able to combine my greed and desires to summon an eldritch beast i have not seen before."
+	gain_text = "I was able to combine my greed and desires to summon an eldritch beast i have not seen before. Ever shapeshifting mass of flesh, it well knew my goals."
 	desc = "You can now summon a Stalker using a knife, a flower, a pen and a piece of paper. Stalkers can shapeshift into harmeless animals and get close to the victim."
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/reagent_containers/food/snacks/grown/poppy,/obj/item/pen,/obj/item/paper)
@@ -182,7 +182,7 @@
 
 /datum/eldritch_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	gain_text = "I combined principle of hunger with desire of destruction. The eyeful lords have noticed me."
+	gain_text = "I combined principle of hunger with desire of destruction. The Nightwatcher has noticed me."
 	desc = "You can now summon an Ash Man by transmutating a pile of ash , a head and a book."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/ash,/obj/item/bodypart/head,/obj/item/book)
@@ -191,7 +191,7 @@
 
 /datum/eldritch_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	gain_text = "I combined principle of hunger with desire of corruption. The rusted hills call my name."
+	gain_text = "I combined principle of hunger with desire of corruption. The Rusted Hills call my name."
 	desc = "You can now summon a Rust Walker transmutating vomit pool, a head and a book."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/bodypart/head,/obj/item/book)
@@ -200,7 +200,7 @@
 
 /datum/eldritch_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
-	gain_text = "Our blood is all the same after all, the owl told me."
+	gain_text = "Our blood is all the same after all, the Marshal told me."
 	desc = "You gain a spell that drains enemies health and restores yours."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/blood_siphon
@@ -208,7 +208,7 @@
 
 /datum/eldritch_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
-	gain_text = "Man of this world. Hear me! For the time of the lord of arms has come!"
+	gain_text = "Man of this world. Hear me! For the time of the lord of arms has come! Emperor of Flesh guides my army!"
 	desc = "Bring 3 bodies onto a transmutation rune to either ascend as a terror of the night prime or you can summon a regular terror of the night."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
@@ -241,7 +241,7 @@
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,TRUE,10)
 			summoned.ghostize(0)
 			user.SetImmobilized(0)
-			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for lord of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			log_game("[user.real_name] ascended as [summoned.real_name]")
 			var/mob/living/carbon/carbon_user = user
 			var/datum/antagonist/heretic/ascension = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)

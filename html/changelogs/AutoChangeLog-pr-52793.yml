@@ -1,7 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - tweak: "All holodeck sims now 9x10,"
-  - tweak: "All stations can accommodate the enlarged holodecks"
-  - rscadd: "added skatepark sim"
-  - rscadd: "added space checkers sim"
