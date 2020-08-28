@@ -1,6 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes: 
-  - tweak: "A few tweaks have been made to DeltaStation's surgery atmos piping"
-  - rscadd: "Added a missing air alarm in DeltaStation's Surgery Room B"
-  - rscadd: "Added an air alarm in DeltaStation's surgery observation area"

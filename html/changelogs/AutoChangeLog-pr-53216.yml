@@ -1,0 +1,4 @@
+author: "Donkie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed regular pump on map icon north/south being misaligned by 1 pixel"
