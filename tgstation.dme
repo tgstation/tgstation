@@ -1626,7 +1626,6 @@
 #include "code\modules\atmospherics\machinery\components\binary_devices\circulator.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\dp_vent_pump.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\passive_gate.dm"
-#include "code\modules\atmospherics\machinery\components\binary_devices\pressure_valve.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\pump.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\valve.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\volume_pump.dm"
