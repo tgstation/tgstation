@@ -28,11 +28,6 @@
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
 		return FALSE
 
-	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!belly)
-		to_chat(M, "<span class='notice'>You are unable to drink [src] without a stomach.</span>")
-		return FALSE
-
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", \
 			"<span class='notice'>You swallow a gulp of [src].</span>")
@@ -52,7 +47,7 @@
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(belly, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, M)
 
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)

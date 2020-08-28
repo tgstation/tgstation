@@ -206,31 +206,26 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(!owner)
-		return FALSE
-
-	//Get the stomach, if they do not have one they cannot eat
-	var/obj/item/organ/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!belly)
-		to_chat(eater, "<span class='notice'>You are swallow [src] without a stomach.</span>")
+	if(!owner?.reagents)
 		return FALSE
 
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 
-	SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
-	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-	owner.reagents.trans_to(belly, bite_consumption, transfered_by = feeder, methods = INGEST)
-	bitecount++
-	On_Consume(eater)
-	checkLiked(fraction, eater)
+	if(owner.reagents.total_volume)
+		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
+		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+		bitecount++
+		On_Consume(eater)
+		checkLiked(fraction, eater)
 
-	//Invoke our after eat callback if it is valid
-	if(after_eat)
-		after_eat.Invoke(eater, feeder)
+		//Invoke our after eat callback if it is valid
+		if(after_eat)
+			after_eat.Invoke(eater, feeder)
 
-	return TRUE
+		return TRUE
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)

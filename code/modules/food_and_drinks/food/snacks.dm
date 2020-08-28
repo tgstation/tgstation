@@ -112,11 +112,6 @@ All foods are distributed among various categories. Use common sense.
 	if(!canconsume(M, user))
 		return FALSE
 
-	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!belly)
-		to_chat(M, "<span class='notice'>You are unable to eat [src] without a stomach.</span>")
-		return FALSE
-
 	var/fullness = M.get_fullness() + 10
 
 	if(M == user) //If you're eating it yourself.
@@ -162,7 +157,7 @@ All foods are distributed among various categories. Use common sense.
 	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 	var/fraction = min(bitesize / reagents.total_volume, 1)
-	reagents.trans_to(belly, bitesize, transfered_by = user, methods = INGEST)
+	reagents.trans_to(M, bitesize, transfered_by = user, methods = INGEST)
 	bitecount++
 	On_Consume(M)
 	checkLiked(fraction, M)
