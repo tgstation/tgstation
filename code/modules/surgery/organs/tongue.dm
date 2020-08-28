@@ -339,11 +339,11 @@
 
 /obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
 	..()
-	M.verb_ask = "asks"
-	M.verb_exclaim = "exclaims"
-	M.verb_whisper = "whispers"
-	M.verb_sing = "sings"
-	M.verb_yell = "yells"
+	M.verb_ask = initial(verb_ask)
+	M.verb_exclaim = initial(verb_exclaim)
+	M.verb_whisper = initial(verb_whisper)
+	M.verb_sing = initial(verb_sing)
+	M.verb_yell = initial(verb_yell)
 	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
