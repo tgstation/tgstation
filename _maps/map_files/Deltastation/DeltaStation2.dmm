@@ -59126,7 +59126,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/crew_quarters/heads/captain/private)
+/area/maintenance/central/secondary)
 "cik" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
@@ -59955,7 +59955,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cjN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -59967,8 +59967,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cjO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -59981,11 +59982,18 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cjP" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/central";
+	dir = 1;
+	name = "Central Maintenance APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cjQ" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
@@ -59993,7 +60001,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cjR" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral,
@@ -60571,7 +60579,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "cle" = (
 /obj/machinery/light{
 	dir = 8
