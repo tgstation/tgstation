@@ -1072,7 +1072,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_PERFORATE,
 									ADMIN_PUNISHMENT_SCARIFY,
 									ADMIN_PUNISHMENT_SHOES,
-									ADMIN_PUNISHMENT_DOCK
+									ADMIN_PUNISHMENT_DOCK,
+									ADMIN_PUNISHMENT_BREAD
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1265,8 +1266,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				card.registered_account.account_balance = card.registered_account.account_balance - new_cost
 				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
 			SEND_SOUND(target, 'sound/machines/buzz-sigh.ogg')
+		if(ADMIN_PUNISHMENT_BREAD)
+			var/mutable_appearance/bread_appearance = mutable_appearance('icons/obj/food/burgerbread.dmi',"bread")
+			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
+			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
 
 	punish_log(target, punishment)
+
+/proc/breadify(atom/movable/target)
+	var/obj/item/food/bread/plain/bread = new(get_turf(target))
+	target.forceMove(bread)
 
 /**
   * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense
