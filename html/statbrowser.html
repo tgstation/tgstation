@@ -181,10 +181,14 @@ if (window.location) {
 		if(e.which) {
 			if(!anti_spam[e.which]) {
 				anti_spam[e.which] = true;
-				var href = "?__keydown=" + e.which;
-				if(e.ctrlKey === false) href += "&ctrlKey=0"
-				else if(e.ctrlKey === true) href += "&ctrlKey=1"
-				window.location.href = href;
+				var key = String.fromCharCode(e.which);
+				if(key == "t")
+					window.location.href = "byond://winset?command=Say"
+				else if(key == "o")
+					window.location.href = "byond://winset?command=OOC"
+				else if(key == "m")
+					window.location.href = "byond://winset?command=Me"
+				window.location.href = "byond://winset?command=keyDown " + key;
 			}
 		}
 	});
@@ -195,10 +199,8 @@ if (window.location) {
 			return;
 		if(e.which) {
 			anti_spam[e.which] = false;
-			var href = "?__keyup=" + e.which;
-			if(e.ctrlKey === false) href += "&ctrlKey=0"
-			else if(e.ctrlKey === true) href += "&ctrlKey=1"
-			window.location.href = href;
+			var key = String.fromCharCode(e.which);
+			window.location.href = "byond://winset?command=keyUp " + key;
 		}
 	});
 }
