@@ -65,9 +65,15 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	. = ..()
 	zoom_out()
 
+/**
+  * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
+  */
 /obj/item/tcgcard/proc/zoom_in()
 	transform = matrix()
 
+/**
+  * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
+  */
 /obj/item/tcgcard/proc/zoom_out()
 	transform = matrix(0.3,0,0,0,0.3,0)
 
@@ -163,7 +169,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	. = ..()
 
 
-
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -186,6 +191,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	shuffle_deck(user)
 	return ..()
 
+/**
+  * The user draws a single card. The deck is then handled based on how many cards are left.
+  */
 /obj/item/tcgcard_deck/proc/draw_card(mob/user)
 	if(!contents.len)
 		CRASH("A TCG deck was created with no cards inside of it.")
@@ -195,10 +203,17 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	drawn_card.update_icon_state()
 	user.visible_message("<span class='notice'>[user] draws a card from \the [src]!</span>", \
 					"<span class='notice'>You draw a card from \the [src]!</span>")
-	if(contents.len == 1)
-		user.transferItemToLoc(contents[contents.len], drop_location())
+	if(contents.len <= 1)
+		var/obj/item/tcgcard/final_card = contents[1]
+		user.transferItemToLoc(final_card, drop_location())
+		final_card.zoom_out()
 		qdel(src)
 
+/**
+  * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
+  * *User: The person doing the shuffling, used in visable message and closing UI.
+  * *Visible: Will anyone need to hear the visable message about the shuffling?
+  */
 /obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
 	if(!contents)
 		return
@@ -209,6 +224,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
 						"<span class='notice'>You shuffle \the [src]!</span>")
 
+/**
+  * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
+  */
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
 	var/list/temp_deck = contents.Copy()
