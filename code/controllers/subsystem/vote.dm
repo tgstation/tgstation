@@ -62,28 +62,35 @@ SUBSYSTEM_DEF(vote)
 			if (!C || C.is_afk())
 				non_voters -= non_voter_ckey
 		if(non_voters.len > 0)
-			if(mode == "restart")
-				choices["Continue Playing"] += non_voters.len
-				if(choices["Continue Playing"] >= greatest_votes)
-					greatest_votes = choices["Continue Playing"]
-			else if(mode == "gamemode")
-				if(GLOB.master_mode in choices)
-					choices[GLOB.master_mode] += non_voters.len
-					if(choices[GLOB.master_mode] >= greatest_votes)
-						greatest_votes = choices[GLOB.master_mode]
-			else if(mode == "map")
-				for (var/non_voter_ckey in non_voters)
-					var/client/C = non_voters[non_voter_ckey]
-					if(C.prefs.preferred_map)
-						if(choices[C.prefs.preferred_map]) //No votes if the map isn't in the vote.
-							var/preferred_map = C.prefs.preferred_map
-							choices[preferred_map] += 1
-							greatest_votes = max(greatest_votes, choices[preferred_map])
-					else if(config.defaultmap)
-						if(choices[config.defaultmap]) //No votes if the map isn't in the vote.
-							var/default_map = config.defaultmap.map_name
-							choices[default_map] += 1
-							greatest_votes = max(greatest_votes, choices[default_map])
+			switch(mode)
+				if("restart")
+					choices["Continue Playing"] += non_voters.len
+					if(choices["Continue Playing"] >= greatest_votes)
+						greatest_votes = choices["Continue Playing"]
+				if("gamemode")
+					if(GLOB.master_mode in choices)
+						choices[GLOB.master_mode] += non_voters.len
+						if(choices[GLOB.master_mode] >= greatest_votes)
+							greatest_votes = choices[GLOB.master_mode]
+				if("map")
+					for (var/non_voter_ckey in non_voters)
+						var/client/C = non_voters[non_voter_ckey]
+						if(C.prefs.preferred_map)
+							if(choices[C.prefs.preferred_map]) //No votes if the map isn't in the vote.
+								var/preferred_map = C.prefs.preferred_map
+								choices[preferred_map] += 1
+								greatest_votes = max(greatest_votes, choices[preferred_map])
+						else if(config.defaultmap)
+							if(choices[config.defaultmap]) //No votes if the map isn't in the vote.
+								var/default_map = config.defaultmap.map_name
+								choices[default_map] += 1
+								greatest_votes = max(greatest_votes, choices[default_map])
+				if("transfer")
+					if(CONFIG_GET(flag/transfer_no_voters_continue))
+						choices["Continue Shift"] += non_voters.len
+						if(choices["Continue Shift"] >= greatest_votes)
+							greatest_votes = choices["Continue Shift"]
+
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
@@ -139,6 +146,33 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
 				SSmapping.map_voted = TRUE
+			if("transfer")
+				if(. == "Initiate Crew Transfer")
+					if(EMERGENCY_IDLE_OR_RECALLED)
+						/// The multiplier on the shuttle's timer
+						var/shuttle_time_mult = 1
+						/// Security level (for timer multiplier)
+						var/security_num = seclevel2num(get_security_level())
+						switch(security_num)
+							if(SEC_LEVEL_GREEN)
+								shuttle_time_mult = 2 // = ~20 minutes
+							if(SEC_LEVEL_BLUE)
+								shuttle_time_mult = 1.5 // = ~15 minutes
+							else
+								shuttle_time_mult = 1 // = ~10 minutes
+
+						SSshuttle.emergency.request(reason = "\nReason:\n\nCrew transfer vote successful, dispatching shuttle for shift transfer.", set_coefficient = shuttle_time_mult)
+
+						log_shuttle("A crew transfer vote has passed. The shuttle has been called, and recalling the shuttle ingame is disabled.")
+						message_admins("A crew transfer vote has passed. The shuttle has been called, and recalling the shuttle ingame is disabled. You can still manually manipulate the shuttle if you want.")
+						deadchat_broadcast("A crew transfer vote has passed. The shuttle is being dispatched.",  message_type = DEADCHAT_ANNOUNCEMENT)
+						SSblackbox.record_feedback("text", "shuttle_reason", 1, "Crew Transfer Vote")
+					else
+						message_admins("A crew transfer vote has passed, but the shuttle was already called. Recalling the shuttle ingame is disabled. You can still manually manipulate the shuttle if you want.")
+						to_chat(world, "<span style='boldannounce'>Crew transfer vote failed on account of shuttle being called.</span>")
+					SSshuttle.emergencyNoRecall = TRUE // Don't let one guy overrule democracy by recalling afterwards
+					SSautocrewtransfer.transfer_vote_successful = TRUE //any successful vote, even non-auto ones are marked
+
 	if(restart)
 		var/active_admins = FALSE
 		for(var/client/C in GLOB.admins)
@@ -164,13 +198,13 @@ SUBSYSTEM_DEF(vote)
 				return vote
 	return FALSE
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, forced = FALSE)
 	if(!Master.current_runlevel) //Server is still intializing.
 		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
 		return FALSE
 	var/admin = FALSE
 	var/ckey = ckey(initiator_key)
-	if(GLOB.admin_datums[ckey])
+	if(GLOB.admin_datums[ckey] || forced)
 		admin = TRUE
 
 	if(!mode)
@@ -200,6 +234,14 @@ SUBSYSTEM_DEF(vote)
 					if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps))
 						continue
 					choices.Add(VM.map_name)
+			if("transfer")
+				var/mob/dead/observer/caller = usr
+				//Observers/ghosts don't get to decide when a shuttle-call vote happens
+				if(!admin && istype(caller))
+					to_chat(usr, "<span class='warning'>[caller.started_as_observer? "You are not taking part in the round." : "You have died in the round."] If you think it should end, call a restart vote instead.</span>")
+					return FALSE
+
+				choices.Add("Initiate Crew Transfer", "Continue Shift")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -279,7 +321,7 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
 
-		. += "</li>"
+		. += "</li><li>"
 		//map
 		var/avmap = CONFIG_GET(flag/allow_vote_map)
 		if(trialmin || avmap)
@@ -289,7 +331,19 @@ SUBSYSTEM_DEF(vote)
 		if(trialmin)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_map'>[avmap ? "Allowed" : "Disallowed"]</a>)"
 
+		. += "</li><li>"
+		//crew transfer
+		var/avtransfer = CONFIG_GET(flag/allow_vote_transfer)
+		var/transfer_time = CONFIG_GET(number/transfer_time_min_allowed)
+		if(trialmin || (avtransfer && world.time - SSticker.round_start_time < transfer_time))
+			. += "<a href='?src=[REF(src)];vote=transfer'>Crew Transfer</a>"
+		else
+			. += "<font color='grey'>Crew Transfer ([avtransfer? "Too early into round" : "Disallowed"])</font>"
+
+		if(trialmin)
+			. += "\t(<a href='?src=[REF(src)];vote=toggle_transfer'>[avtransfer ? "Allowed" : "Disallowed"]</a>)"
 		. += "</li>"
+
 		//custom
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
@@ -324,6 +378,9 @@ SUBSYSTEM_DEF(vote)
 		if("toggle_map")
 			if(usr.client.holder && trialmin)
 				CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
+		if("toggle_transfer")
+			if(usr.client.holder && trialmin)
+				CONFIG_SET(flag/allow_vote_transfer, !CONFIG_GET(flag/allow_vote_transfer))
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
@@ -333,6 +390,9 @@ SUBSYSTEM_DEF(vote)
 		if("map")
 			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
 				initiate_vote("map",usr.key)
+		if("transfer")
+			if(CONFIG_GET(flag/allow_vote_transfer) || usr.client.holder)
+				initiate_vote("transfer",usr.key)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
@@ -379,3 +439,18 @@ SUBSYSTEM_DEF(vote)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
 			P.player_actions -= src
+
+/// Call an crew transfer vote from the server if a vote isn't running.
+/// returns TRUE if it successfully called a vote, FALSE if it failed.
+/datum/controller/subsystem/vote/proc/auto_transfer_vote()
+	//we won't call a vote if we shouldn't be able to leave
+	if(SSshuttle.emergencyNoEscape)
+		return FALSE
+
+	//we won't call a vote if a vote is running
+	if(mode)
+		return FALSE
+
+	message_admins("Auto crew transfer vote initiated.")
+	initiate_vote("transfer", "the server", TRUE)
+	return TRUE

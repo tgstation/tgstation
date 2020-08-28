@@ -268,6 +268,7 @@
 #include "code\controllers\subsystem\blackmarket.dm"
 #include "code\controllers\subsystem\chat.dm"
 #include "code\controllers\subsystem\communications.dm"
+#include "code\controllers\subsystem\crewtransfer.dm"
 #include "code\controllers\subsystem\dbcore.dm"
 #include "code\controllers\subsystem\dcs.dm"
 #include "code\controllers\subsystem\discord.dm"

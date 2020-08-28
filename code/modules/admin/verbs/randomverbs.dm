@@ -757,10 +757,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	SSshuttle.emergency.cancel()
+	log_admin("[key_name(usr)] admin-recalled the emergency shuttle[SSshuttle.emergencyNoRecall? ", even though it was set to be un-recallable" : ""].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-recalled the emergency shuttle[SSshuttle.emergencyNoRecall? ", even though it was set to be un-recallable" : ""].</span>")
+
+	SSshuttle.emergency.cancel(null, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Cancel Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-recalled the emergency shuttle.</span>")
 
 	return
 

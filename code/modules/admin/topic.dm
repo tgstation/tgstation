@@ -219,11 +219,11 @@
 					return
 				switch(SSshuttle.emergency.mode)
 					if(SHUTTLE_CALL)
-						SSshuttle.emergency.cancel()
-						log_admin("[key_name(usr)] sent the Emergency Shuttle back.")
-						message_admins("<span class='adminnotice'>[key_name_admin(usr)] sent the Emergency Shuttle back.</span>")
+						log_admin("[key_name(usr)] sent the Emergency Shuttle back[SSshuttle.emergencyNoRecall? ", even though it was set to be un-recallable" : ""].")
+						message_admins("<span class='adminnotice'>[key_name_admin(usr)] sent the Emergency Shuttle back[SSshuttle.emergencyNoRecall? ", even though it was set to be un-recallable" : ""].</span>")
+						SSshuttle.emergency.cancel(null, FALSE)
 					else
-						SSshuttle.emergency.cancel()
+						SSshuttle.emergency.cancel(null, FALSE)
 						log_admin("[key_name(usr)] called the Emergency Shuttle.")
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
 
