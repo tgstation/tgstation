@@ -18,7 +18,7 @@
 
 /obj/effect/proc_holder/Initialize(mob/living/owner)
 	. = ..()
-	owner = owner
+	src.owner = owner
 	if(has_action)
 		action = new base_action(src)
 
