@@ -496,6 +496,7 @@
 #include "code\datums\components\plumbing\filter.dm"
 #include "code\datums\components\plumbing\reaction_chamber.dm"
 #include "code\datums\components\plumbing\splitter.dm"
+#include "code\datums\components\storage\food_storage.dm"
 #include "code\datums\components\storage\storage.dm"
 #include "code\datums\components\storage\concrete\_concrete.dm"
 #include "code\datums\components\storage\concrete\bag_of_holding.dm"

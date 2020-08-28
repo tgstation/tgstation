@@ -1079,18 +1079,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
 				/// The glass shard that is spawned into the source item
-				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
+				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
 				playsound(M, "shatter", 25, TRUE)
 				qdel(src)
-				if(S)
-					S.contents += broken_glass //puts the glass back into the source item
-				else
+				if(QDELETED(S))
 					broken_glass.on_accidental_consumption(M, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
 				playsound(M, "shatter", 15, TRUE)
-				discover_after = FALSE
+			discover_after = FALSE
 
 		M.adjust_disgust(33)
 		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
@@ -1112,10 +1110,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	else
 		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
-
-	//Just in case - can't discover something that doesn't exist
-	if(QDELETED(src))
-		return FALSE
 
 	return discover_after
 
