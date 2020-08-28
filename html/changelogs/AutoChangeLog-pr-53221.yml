@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - refactor: "A bunch of 1 and 0 use the true/false define now and changed up a bunch of returns"
