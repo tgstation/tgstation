@@ -1,9 +1,10 @@
 
 /*
-	Pierce
+	Piercing wounds
 */
 
 /datum/wound/pierce
+	name = "Piercing Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_PIERCE
@@ -95,6 +96,7 @@
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult * 0.5
 	blood_flow -= blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
+	I.use(1)
 
 	if(blood_flow > 0)
 		try_treating(I, user)
@@ -131,7 +133,7 @@
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
 	threshold_minimum = 30
-	threshold_penalty = 15
+	threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
@@ -148,7 +150,7 @@
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
 	threshold_minimum = 50
-	threshold_penalty = 25
+	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
@@ -165,7 +167,7 @@
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
 	threshold_minimum = 100
-	threshold_penalty = 40
+	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (FLESH_WOUND | ACCEPTS_GAUZE | MANGLES_FLESH)
