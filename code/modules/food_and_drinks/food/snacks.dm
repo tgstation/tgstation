@@ -101,67 +101,67 @@ All foods are distributed among various categories. Use common sense.
 		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
-	if(!reagents)
-		return FALSE
-	if(!reagents.total_volume)
+	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		qdel(src)
 		return FALSE
-	if(!iscarbon(M))
-		return FALSE
-	if(!canconsume(M, user))
-		return FALSE
-
-	var/fullness = M.get_fullness() + 10
-
-	if(M == user) //If you're eating it yourself.
-		if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
-			to_chat(M, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
+	if(iscarbon(M))
+		if(!canconsume(M, user))
 			return FALSE
-		else if(fullness <= 50)
-			user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
-		else if(fullness > 50 && fullness < 150)
-			user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src].</span>", "<span class='notice'>You hungrily [eatverb] \the [src].</span>")
-		else if(fullness > 150 && fullness < 500)
-			user.visible_message("<span class='notice'>[user] [eatverb]s \the [src].</span>", "<span class='notice'>You [eatverb] \the [src].</span>")
-		else if(fullness > 500 && fullness < 600)
-			user.visible_message("<span class='notice'>[user] unwillingly [eatverb]s a bit of \the [src].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
-		else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-			user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
-			return FALSE
-		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
-	else
-		if(!isbrain(M)) //If you're feeding it to someone else.
-			if(fullness <= (600 * (1 + M.overeatduration / 1000)))
-				M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
-									"<span class='userdanger'>[user] attempts to feed you [src].</span>")
+
+		var/fullness = M.get_fullness() + 10
+
+		if(M == user)								//If you're eating it yourself.
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
+				to_chat(M, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
+				return FALSE
+			else if(fullness <= 50)
+				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
+			else if(fullness > 50 && fullness < 150)
+				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src].</span>", "<span class='notice'>You hungrily [eatverb] \the [src].</span>")
+			else if(fullness > 150 && fullness < 500)
+				user.visible_message("<span class='notice'>[user] [eatverb]s \the [src].</span>", "<span class='notice'>You [eatverb] \the [src].</span>")
+			else if(fullness > 500 && fullness < 600)
+				user.visible_message("<span class='notice'>[user] unwillingly [eatverb]s a bit of \the [src].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
+			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
+				return FALSE
+			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
+				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
+		else
+			if(!isbrain(M))		//If you're feeding it to someone else.
+				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
+					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
+										"<span class='userdanger'>[user] attempts to feed you [src].</span>")
+				else
+					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
+										"<span class='warning'>[user] cannot force any more of [src] down your throat!</span>")
+					return FALSE
+
+				if(!do_mob(user, M))
+					return FALSE
+				log_combat(user, M, "fed", reagents.log_list())
+				M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
+									"<span class='userdanger'>[user] forces you to eat [src]!</span>")
+
 			else
-				M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
-									"<span class='warning'>[user] cannot force any more of [src] down your throat!</span>")
+				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
 				return FALSE
 
-			if(!do_mob(user, M))
-				return
-			log_combat(user, M, "fed", reagents.log_list())
-			M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
-								"<span class='userdanger'>[user] forces you to eat [src]!</span>")
+		if(reagents)								//Handle ingestion of the reagent.
+			if(M.satiety > -200)
+				M.satiety -= junkiness
+			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+			if(reagents.total_volume)
+				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user, bitecount, bitesize)
+				var/fraction = min(bitesize / reagents.total_volume, 1)
+				reagents.trans_to(M, bitesize, transfered_by = user, methods = INGEST)
+				bitecount++
+				On_Consume(M)
+				checkLiked(fraction, M)
+				return TRUE
 
-		else
-			to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
-			return
-
-	if(M.satiety > -200)
-		M.satiety -= junkiness
-
-	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user, bitecount, bitesize)
-	var/fraction = min(bitesize / reagents.total_volume, 1)
-	reagents.trans_to(M, bitesize, transfered_by = user, methods = INGEST)
-	bitecount++
-	On_Consume(M)
-	checkLiked(fraction, M)
-	return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
@@ -177,29 +177,28 @@ All foods are distributed among various categories. Use common sense.
 				. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/storage))
-		..() // -> item/attackby()
-		return 0
+	if(istype(W, /obj/item/storage))// -> item/attackby()
+		return ..()
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = W
 		if(custom_food_type && ispath(custom_food_type))
 			if(S.w_class > WEIGHT_CLASS_SMALL)
 				to_chat(user, "<span class='warning'>[S] is too big for [src]!</span>")
-				return 0
+				return FALSE
 			if(!S.customfoodfilling || istype(W, /obj/item/reagent_containers/food/snacks/customizable) || istype(W, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(W, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
 				to_chat(user, "<span class='warning'>[src] can't be filled with [S]!</span>")
-				return 0
+				return FALSE
 			if(contents.len >= 20)
 				to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
-				return 0
+				return FALSE
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
-			return 0
+			return FALSE
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
 		return sharp && slice(sharp, W, user)
 	else
-		..()
+		return ..()
 
 //Called when you finish tablecrafting a snack.
 /obj/item/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)

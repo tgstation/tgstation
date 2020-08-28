@@ -386,43 +386,43 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent(/datum/reagent/water/holywater)
-			return 0
+			return FALSE
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/crate/coffin))
 		if(BANISH_FORMALDYHIDE)
 			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent(/datum/reagent/toxin/formaldehyde)
-			return 0
+			return FALSE
 		if(BANISH_RUNES)
 			if(body)
 				for(var/obj/effect/decal/cleanable/crayon/R in range(0,body))
 					if (R.name == "rune")
-						return 1
-			return 0
+						return TRUE
+			return FALSE
 		if(BANISH_CANDLES)
 			if(body)
 				var/count = 0
 				for(var/obj/item/candle/C in range(1,body))
 					count += C.lit
 				if(count>=4)
-					return 1
-			return 0
+					return TRUE
+			return FALSE
 		if(BANISH_DESTRUCTION)
 			if(body)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 		if(BANISH_FUNERAL_GARB)
 			if(ishuman(body))
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc/burial))
-					return 1
-				return 0
+					return TRUE
+				return FALSE
 			else
 				for(var/obj/item/clothing/under/misc/burial/B in range(0,body))
 					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
-						return 1
-				return 0
+						return TRUE
+				return FALSE
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
 	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")

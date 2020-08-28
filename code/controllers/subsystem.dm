@@ -23,7 +23,7 @@
 	var/priority = FIRE_PRIORITY_DEFAULT
 
 	/// [Subsystem Flags][SS_NO_INIT] to control binary behavior. Flags must be set at compile time or before preinit finishes to take full effect. (You can also restart the mc to force them to process again)
-	var/flags = 0
+	var/flags = NONE
 
 	/// This var is set to TRUE after the subsystem has been initialized.
 	var/initialized = FALSE
