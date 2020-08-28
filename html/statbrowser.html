@@ -227,7 +227,10 @@ function createStatusTab(name) {
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
 		return;
 	var B = document.createElement("BUTTON");
-	B.onclick = function() {tab_change(name)};
+	B.onclick = function() {
+		tab_change(name);
+		this.blur();
+	};
 	B.id = name;
 	B[textContentKey] = name;
 	B.className = "button";
