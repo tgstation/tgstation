@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(spacedrift)
 	return ..()
 
 
-/datum/controller/subsystem/spacedrift/fire(resumed = 0)
+/datum/controller/subsystem/spacedrift/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

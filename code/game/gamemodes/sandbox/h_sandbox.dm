@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	sandbox = new/datum/h_sandbox
 	sandbox.owner = src.ckey
 	if(src.client.holder)
-		sandbox.admin = 1
+		sandbox.admin = TRUE
 	add_verb(src, /mob/proc/sandbox_panel)
 
 /mob/proc/sandbox_panel()
@@ -14,7 +14,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/h_sandbox
 	var/owner = null
-	var/admin = 0
+	var/admin = FALSE
 
 	var/static/clothinfo = null
 	var/static/reaginfo = null

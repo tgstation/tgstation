@@ -68,11 +68,10 @@
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
-		return 0
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
-		return 0
+		return FALSE
 	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
 
 	if(environment_smash)
