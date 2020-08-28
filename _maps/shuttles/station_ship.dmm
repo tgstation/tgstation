@@ -1020,6 +1020,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "fP" = (
