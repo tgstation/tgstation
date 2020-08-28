@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/structure/sign/departments/science/alt,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/shipstation)
 "af" = (
 /obj/structure/chair/pew{
 	dir = 8
@@ -459,7 +463,23 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 1
 	},
-/obj/machinery/mecha_part_fabricator,
+/obj/structure/table,
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/glass{
+	amount = 40;
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/clothing/glasses/welding,
+/obj/item/stack/cable_coil,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "cB" = (
@@ -722,32 +742,13 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dP" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/obj/item/storage/box/monkeycubes{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/storage/box/syringes{
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "dQ" = (
@@ -834,7 +835,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 1
 	},
-/obj/machinery/space_heater,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "ec" = (
@@ -845,6 +845,9 @@
 /obj/machinery/camera,
 /obj/machinery/firealarm{
 	pixel_y = 26
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -1032,26 +1035,10 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "fQ" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/stack/cable_coil,
-/obj/item/clothing/glasses/welding,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/glass{
-	amount = 40;
-	pixel_x = 3;
-	pixel_y = -4
-	},
-/obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
+/obj/machinery/mecha_part_fabricator,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "gc" = (
@@ -1367,6 +1354,10 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"kJ" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/shipstation)
 "kK" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -1710,6 +1701,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 31
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2088,6 +2082,38 @@
 	},
 /turf/open/floor/carpet/black,
 /area/shuttle/shipstation)
+"tD" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
 "tM" = (
 /obj/machinery/button/door{
 	id = "stationship_windows";
@@ -2112,6 +2138,9 @@
 "uh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "ul" = (
@@ -2202,6 +2231,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"vq" = (
+/obj/structure/sign/departments/security,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/shipstation)
 "vt" = (
 /obj/structure/window/reinforced,
@@ -2335,14 +2368,17 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "xu" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2355,6 +2391,9 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 31
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -2430,6 +2469,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
+"yG" = (
+/obj/structure/sign/departments/botany,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/shipstation)
 "yN" = (
 /obj/structure/chair/pew/left{
 	dir = 8
@@ -2448,8 +2491,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
-/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "zh" = (
@@ -2593,6 +2636,10 @@
 	},
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"Bi" = (
+/obj/structure/sign/departments/engineering,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/shipstation)
 "Bp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
@@ -2786,6 +2833,9 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer3,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Df" = (
@@ -2931,6 +2981,12 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
+"Ev" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
 "Ew" = (
 /obj/machinery/computer/card,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -3016,14 +3072,6 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 50;
 	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 50;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 50;
-	pixel_y = -5
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3168,6 +3216,15 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"HK" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "HT" = (
@@ -3319,9 +3376,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
 /obj/machinery/rnd/production/circuit_imprinter/department,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3430,6 +3484,9 @@
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
+	},
+/obj/structure/sign/warning/enginesafety{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3584,6 +3641,19 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"Mc" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Mf" = (
@@ -3890,6 +3960,14 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
+"Sa" = (
+/obj/effect/landmark/start/station_engineer,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
 "Sf" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	dir = 8;
@@ -3931,11 +4009,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "SO" = (
-/obj/structure/cable,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "SP" = (
@@ -4000,6 +4078,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 1
 	},
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "TQ" = (
@@ -4061,12 +4144,18 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "UU" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "UY" = (
@@ -4236,6 +4325,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/shipstation)
+"WT" = (
+/obj/structure/sign/departments/psychology,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/shipstation)
 "WX" = (
 /obj/effect/landmark/start/cook,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
@@ -4360,6 +4453,10 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/foamtank,
+/obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "YZ" = (
@@ -4572,7 +4669,7 @@ KQ
 hv
 QJ
 CV
-bT
+Sa
 uh
 yO
 eO
@@ -4678,12 +4775,12 @@ ZH
 ZH
 ZH
 ZH
-ZH
+vq
 SA
 GA
 Ko
 ZH
-ZH
+Bi
 ZH
 BY
 ZH
@@ -4770,7 +4867,7 @@ ZH
 sO
 Hf
 XW
-ZH
+WT
 UJ
 it
 fa
@@ -4911,11 +5008,11 @@ ZH
 ZH
 aJ
 Iu
-ZH
+kJ
 pn
 Vw
 KX
-ZH
+kJ
 YL
 Be
 hy
@@ -4975,8 +5072,8 @@ ed
 ed
 dP
 xu
-OA
-KP
+HK
+Ev
 ZH
 Sr
 Iu
@@ -4998,8 +5095,8 @@ ed
 ZH
 ZH
 zS
-ZH
-ZH
+tD
+Mc
 ZH
 mc
 Iu
@@ -5115,7 +5212,7 @@ ZH
 Cn
 Lo
 Ie
-ZH
+ad
 FW
 bo
 Ul
@@ -5125,7 +5222,7 @@ mh
 nH
 fP
 AK
-ZH
+yG
 hh
 pT
 hE
