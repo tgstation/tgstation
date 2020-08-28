@@ -9,8 +9,8 @@
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 12px !important;
-	margin: 5px !important;
-	padding: 2px !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 body.dark {
 	background-color: #131313;
@@ -19,9 +19,16 @@ body.dark {
 
 #menu {
 	background-color: white;
+	position: fixed;
+	padding: 7px;
+	width: 100%;
 }
 .dark #menu {
 	background-color: #131313;
+}
+
+#statcontent {
+	padding: 0 7px 7px 7px;
 }
 
 a {
@@ -142,6 +149,7 @@ li a:hover:not(.active) {
 </head>
 <body>
 <ul id="menu" class="button-container"></ul>
+<div id="under_menu"></div>
 <div id="statcontent"></div>
 <script>
 // Polyfills and compatibility ------------------------------------------------
@@ -220,6 +228,7 @@ var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
 var turfname = "";
 var menu = document.querySelector('#menu');
+var under_menu = document.querySelector('#under_menu');
 
 function createStatusTab(name) {
 	if(document.getElementById(name) || name.trim() == "")
@@ -244,6 +253,7 @@ function createStatusTab(name) {
 	}
 	//END ORDERING
 	menu.appendChild(B);
+	under_menu.style.height = menu.clientHeight;
 }
 
 function removeStatusTab(name) {
@@ -255,8 +265,13 @@ function removeStatusTab(name) {
 		}
 	}
 	menu.removeChild(document.getElementById(name));
+	under_menu.style.height = menu.clientHeight;
 	if(document.getElementById(name)) // repeat for duplicates
 		removeStatusTab(name);
+}
+
+window.onresize = function () {
+	under_menu.style.height = menu.clientHeight;
 }
 
 function addPermanentTab(name) {
