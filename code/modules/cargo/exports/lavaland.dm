@@ -46,7 +46,6 @@
 						/obj/item/organ/vocal_cords/colossus,
 						/obj/machinery/anomalous_crystal,
 						/obj/item/mayhem,
-						/obj/item/blood_contract,
 						/obj/item/gun/magic/staff/spellblade)
 
 /datum/export/lavaland/megafauna/total_printout(datum/export_report/ex, notes = TRUE) //in the unlikely case a miner feels like selling megafauna loot

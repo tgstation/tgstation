@@ -176,7 +176,7 @@ class ChatRenderer {
       this.highlightColor = null;
       return;
     }
-    const allowedRegex = /^[a-z0-9_-\s]+$/ig;
+    const allowedRegex = /^[a-z0-9_\-\s]+$/ig;
     const lines = String(text)
       .split(',')
       .map(str => str.trim())
@@ -302,7 +302,7 @@ class ChatRenderer {
           logger.error('Error: message is missing text payload', message);
         }
         // Highlight text
-        if (this.highlightRegex) {
+        if (!message.avoidHighlighting && this.highlightRegex) {
           const highlighted = highlightNode(node,
             this.highlightRegex,
             text => (

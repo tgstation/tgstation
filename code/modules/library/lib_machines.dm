@@ -56,8 +56,8 @@
 				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
 					SELECT COUNT(id) FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 				"}, list("author" = author, "title" = title, "category" = category))
 				if(!query_library_count_books.warn_execute())
@@ -80,8 +80,8 @@
 					SELECT author, title, category, id
 					FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 					LIMIT :skip, :take
 				"}, list("author" = author, "title" = title, "category" = category, "skip" = booksperpage * search_page, "take" = booksperpage))

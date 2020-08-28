@@ -376,6 +376,7 @@
 			return
 		if(new_name)
 			created_name = new_name
+			log_game("[key_name(usr)] have set \"[new_name]\" as a cyborg shell name at [loc_name(usr)]")
 		else
 			created_name = ""
 

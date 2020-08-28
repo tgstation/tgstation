@@ -332,7 +332,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else
-			SSexplosions.medobj += O
+			SSexplosions.med_mov_atom += O
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
@@ -353,11 +353,11 @@
 			if(O.anchored)
 				switch(ex_act_force)
 					if(EXPLODE_DEVASTATE)
-						SSexplosions.highobj += O
+						SSexplosions.high_mov_atom += O
 					if(EXPLODE_HEAVY)
-						SSexplosions.medobj += O
+						SSexplosions.med_mov_atom += O
 					if(EXPLODE_LIGHT)
-						SSexplosions.lowobj += O
+						SSexplosions.low_mov_atom += O
 			else
 				step_towards(O,src)
 		for(var/mob/living/M in T.contents)

@@ -66,7 +66,7 @@
 	. = ..()
 
 /obj/machinery/stasis/proc/stasis_running()
-	return stasis_enabled && is_operational()
+	return stasis_enabled && is_operational
 
 /obj/machinery/stasis/update_icon_state()
 	if(machine_stat & BROKEN)

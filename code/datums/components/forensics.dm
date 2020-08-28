@@ -52,6 +52,8 @@
 	return TRUE
 
 /datum/component/forensics/proc/clean_act(datum/source, clean_types)
+	SIGNAL_HANDLER
+
 	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
 		wipe_fingerprints()
 		. = TRUE

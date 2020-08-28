@@ -42,18 +42,34 @@
 	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
 		update_blindness()
 
+
 /// proc that adds and removes blindness overlays when necessary
 /mob/proc/update_blindness()
-	if(stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND) || eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
-		if(stat == CONSCIOUS || stat == SOFT_CRIT)
-			throw_alert("blind", /obj/screen/alert/blind)
+	switch(stat)
+		if(CONSCIOUS, SOFT_CRIT)
+			if(HAS_TRAIT(src, TRAIT_BLIND) || eye_blind)
+				throw_alert("blind", /obj/screen/alert/blind)
+				do_set_blindness(TRUE)
+			else
+				do_set_blindness(FALSE)
+		if(UNCONSCIOUS, HARD_CRIT)
+			do_set_blindness(TRUE)
+		if(DEAD)
+			do_set_blindness(FALSE)
+
+
+///Proc that handles adding and removing the blindness overlays.
+/mob/proc/do_set_blindness(now_blind)
+	if(now_blind)
 		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		// You are blind why should you be able to make out details like color, only shapes near you
 		add_client_colour(/datum/client_colour/monochrome/blind)
-	else // CONSCIOUS no blind trait, no blindness
+	else
 		clear_alert("blind")
 		clear_fullscreen("blind")
 		remove_client_colour(/datum/client_colour/monochrome/blind)
+
+
 /**
   * Make the mobs vision blurry
   */

@@ -80,7 +80,7 @@
 	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
-	weapon.embedded(parent)
+	weapon.embedded(parent, part)
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/victim = parent
 
@@ -98,7 +98,7 @@
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 	if(damage > 0)
-		var/armor = victim.run_armor_check(limb.body_zone, "melee", "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",I.armour_penetration)
+		var/armor = victim.run_armor_check(limb.body_zone, MELEE, "Your armor has protected your [limb.name].", "Your armor has softened a hit to your [limb.name].",I.armour_penetration)
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, blocked=armor, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 /datum/component/embedded/Destroy()
@@ -157,6 +157,8 @@
 
 /// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/victim = parent
 	var/chance = jostle_chance
 	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
@@ -182,6 +184,8 @@
 
 /// Called when a carbon with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
 /datum/component/embedded/proc/ripOut(datum/source, obj/item/I, obj/item/bodypart/limb)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(I != weapon || src.limb != limb)
 		return
 	var/mob/living/carbon/victim = parent
@@ -203,6 +207,8 @@
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemove(to_hands)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
@@ -218,6 +224,8 @@
 
 /// Something deleted or moved our weapon while it was embedded, how rude!
 /datum/component/embedded/proc/weaponDeleted()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
 
