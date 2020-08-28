@@ -8,12 +8,13 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 30, ACID = 30)
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
+	processing_flags = NONE
 
 	var/autoeject = TRUE
 	var/volume = 100
@@ -45,6 +46,8 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
+	if(is_operational)
+		begin_processing()
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -150,7 +153,7 @@
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && !running_anim && is_operational())
+		if(on && !running_anim && is_operational)
 			icon_state = "pod-on"
 			running_anim = TRUE
 			run_anim(TRUE, occupant_overlay)
@@ -159,7 +162,7 @@
 			add_overlay(occupant_overlay)
 			add_overlay("cover-off")
 
-	else if(on && is_operational())
+	else if(on && is_operational)
 		icon_state = "pod-on"
 		add_overlay("cover-on")
 	else
@@ -167,7 +170,7 @@
 		add_overlay("cover-off")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_anim(anim_up, image/occupant_overlay)
-	if(!on || !occupant || !is_operational())
+	if(!on || !occupant || !is_operational)
 		running_anim = FALSE
 		return
 	cut_overlays()
@@ -184,14 +187,20 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
 
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
+	if(old_value) //Turned off
+		on = FALSE
+		end_processing()
+		update_icon()
+	else //Turned on
+		begin_processing()
+
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 
 	if(!on)
-		return
-	if(!is_operational())
-		on = FALSE
-		update_icon()
 		return
 	if(!occupant)
 		return
@@ -234,7 +243,7 @@
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25, method = VAPOR) // Transfer reagents.
+				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25, methods = VAPOR) // Transfer reagents.
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
 				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
@@ -278,7 +287,7 @@
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
@@ -391,7 +400,7 @@
 			if(SOFT_CRIT)
 				data["occupant"]["stat"] = "Conscious"
 				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS)
+			if(UNCONSCIOUS, HARD_CRIT)
 				data["occupant"]["stat"] = "Unconscious"
 				data["occupant"]["statstate"] = "average"
 			if(DEAD)

@@ -1,9 +1,10 @@
 
 /*
-	Cuts
+	Slashing wounds
 */
 
 /datum/wound/slash
+	name = "Slashing (Cut) Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_SLASH
@@ -140,29 +141,23 @@
 		suture(I, user)
 
 /datum/wound/slash/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB || !isfelinid(user) || !victim.can_inject(user, TRUE))
 		return FALSE
-
-	if(!isfelinid(user))
-		return FALSE
+	if(INTERACTING_WITH(user, victim))
+		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		return
+	if(user.is_mouth_covered())
+		to_chat(user, "<span class='warning'>Your mouth is covered, you can't lick [victim]'s wounds!</span>")
+		return
+	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
+		to_chat(user, "<span class='warning'>You can't lick wounds without a tongue!</span>") // f in chat
+		return
 
 	lick_wounds(user)
 	return TRUE
 
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/proc/lick_wounds(mob/living/carbon/human/user)
-	if(INTERACTING_WITH(user, victim))
-		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
-		return
-
-	if(user.is_mouth_covered())
-		to_chat(user, "<span class='warning'>Your mouth is covered, you can't lick [victim]'s wounds!</span>")
-		return
-
-	if(!user.getorganslot(ORGAN_SLOT_TONGUE))
-		to_chat(user, "<span class='warning'>You can't lick wounds without a tongue!</span>") // f in chat
-		return
-
 	// transmission is one way patient -> felinid since google said cat saliva is antiseptic or whatever, and also because felinids are already risking getting beaten for this even without people suspecting they're spreading a deathvirus
 	for(var/datum/disease/D in victim.diseases)
 		user.ForceContractDisease(D)
@@ -234,6 +229,7 @@
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	blood_flow -= blood_sutured
 	limb.heal_damage(I.heal_brute, I.heal_burn)
+	I.use(1)
 
 	if(blood_flow > minimum_flow)
 		try_treating(I, user)
@@ -268,7 +264,7 @@
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
 	minimum_flow = 2.75
-	clot_rate = 0.07
+	clot_rate = 0.06
 	max_per_type = 4
 	threshold_minimum = 50
 	threshold_penalty = 25

@@ -4274,6 +4274,7 @@
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "alQ" = (
@@ -4612,11 +4613,6 @@
 /area/maintenance/starboard/fore)
 "amD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -4624,6 +4620,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "amE" = (
@@ -6144,6 +6141,7 @@
 "apB" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apC" = (
@@ -6246,7 +6244,7 @@
 /area/engine/atmospherics_engine)
 "apP" = (
 /obj/structure/table/wood,
-/obj/item/circuitboard/computer/arcade,
+/obj/effect/spawner/lootdrop/arcade_boards,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7277,8 +7275,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "arW" = (
@@ -7770,16 +7767,13 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "asU" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asV" = (
@@ -9224,15 +9218,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "avq" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/crowbar/red,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "avr" = (
@@ -10823,8 +10813,6 @@
 /area/quartermaster/warehouse)
 "ayo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10835,6 +10823,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "ayp" = (
@@ -11138,8 +11127,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayT" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayU" = (
@@ -11437,8 +11425,7 @@
 /area/quartermaster/warehouse)
 "azr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/internals,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "azs" = (
@@ -11805,7 +11792,6 @@
 /area/maintenance/port/fore)
 "aAm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/vomit/old,
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -11813,6 +11799,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/small,
+/obj/effect/decal/cleanable/vomit,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "aAn" = (
@@ -12567,10 +12554,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aBN" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "aBO" = (
@@ -13171,10 +13155,9 @@
 /area/quartermaster/warehouse)
 "aCW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aCX" = (
@@ -30782,12 +30765,8 @@
 /area/engine/atmos)
 "bjo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/bot,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bjp" = (
@@ -56298,11 +56277,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"ccm" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "ccn" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole,
@@ -60810,12 +60784,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "clv" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "clw" = (
@@ -63602,6 +63572,7 @@
 "cry" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "crA" = (
@@ -65148,15 +65119,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cuH" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/clothing/shoes/jackboots,
-/obj/item/radio,
-/obj/item/storage/secure/briefcase,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cuI" = (
@@ -67424,10 +67389,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "cza" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "czb" = (
@@ -68374,15 +68336,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cAY" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/black,
-/obj/item/wrench,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/bot,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cAZ" = (
@@ -71660,7 +71619,7 @@
 	pixel_y = 7;
 	specialfunctions = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cGU" = (
@@ -72914,13 +72873,13 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
@@ -72943,35 +72902,17 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"cJD" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -73072,17 +73013,13 @@
 /area/maintenance/port)
 "cJM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -73793,20 +73730,6 @@
 /obj/structure/sign/warning/nosmoking,
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
-"cLo" = (
-/obj/machinery/computer/holodeck{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/crew_quarters/fitness/recreation)
 "cLp" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -73970,8 +73893,6 @@
 /area/maintenance/port)
 "cLC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -73985,6 +73906,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cLD" = (
@@ -74684,11 +74606,7 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
 "cNj" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cNk" = (
@@ -75031,13 +74949,13 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -75053,32 +74971,14 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"cOe" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -75106,12 +75006,20 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cOh" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
-	dir = 8
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -78074,8 +77982,20 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTU" = (
-/obj/machinery/chem_master,
 /obj/effect/turf_decal/delivery,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/structure/microscope{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/biopsy_tool{
+	pixel_x = 14;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTV" = (
@@ -79286,14 +79206,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cVT" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/white,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/dropper,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -79303,10 +79215,10 @@
 	pixel_x = 32;
 	receive_ore_updates = 1
 	},
-/obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cVU" = (
@@ -80465,15 +80377,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cYn" = (
-/obj/structure/closet/crate,
-/obj/item/storage/box/donkpockets,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -82724,6 +82634,12 @@
 /obj/item/storage/box/monkeycubes,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "dcv" = (
@@ -83184,9 +83100,7 @@
 /area/medical/medbay/central)
 "ddl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/item/retractor,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ddm" = (
@@ -83359,16 +83273,12 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "ddS" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/item/storage/bag/bio,
-/obj/item/storage/bag/bio,
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "ddT" = (
@@ -83387,9 +83297,21 @@
 /area/science/xenobiology)
 "ddV" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/slime_scanner,
 /obj/effect/turf_decal/delivery,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -6;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_y = 8
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "ddW" = (
@@ -83874,14 +83796,13 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "deY" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/three,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "deZ" = (
@@ -87176,9 +87097,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "dmf" = (
@@ -88811,7 +88730,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dpT" = (
-/obj/effect/decal/cleanable/vomit/old,
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -88823,6 +88741,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dpU" = (
@@ -91182,15 +91101,11 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dvQ" = (
-/obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weldingtool,
-/obj/item/assembly/voice,
-/obj/item/clothing/head/welding,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dvR" = (
@@ -93869,11 +93784,6 @@
 /area/maintenance/starboard/aft)
 "dCR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -93884,6 +93794,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dCS" = (
@@ -95213,6 +95124,7 @@
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -97194,9 +97106,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dJp" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/costume,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dJq" = (
@@ -98018,14 +97928,11 @@
 /area/maintenance/aft)
 "dLc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dLd" = (
@@ -98394,11 +98301,7 @@
 /area/maintenance/port/aft)
 "dLT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/crowbar/red,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dLU" = (
@@ -98686,14 +98589,13 @@
 /area/maintenance/aft)
 "dMy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dMz" = (
@@ -102793,12 +102695,8 @@
 /area/library/abandoned)
 "dUX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/item/flashlight,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dUY" = (
@@ -103417,11 +103315,11 @@
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "dWC" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/library/abandoned)
 "dWD" = (
@@ -105598,6 +105496,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "ebO" = (
@@ -106837,7 +106736,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "eeq" = (
@@ -108152,6 +108051,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"eKq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/open/floor/plasteel,
+/area/maintenance/port/aft)
 "eMd" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -108193,9 +108098,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "eNA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "eRh" = (
@@ -109549,6 +109452,17 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
+"jnF" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "joU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -109777,6 +109691,24 @@
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
+"jUo" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "jWa" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -110552,6 +110484,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"mbS" = (
+/obj/structure/grille,
+/turf/closed/wall/r_wall,
+/area/space)
 "mdG" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -111171,6 +111107,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"nJq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/surgery/room_b)
 "nLd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
@@ -111672,6 +111614,24 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"peO" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "pff" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -112020,6 +111980,24 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"qjg" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "qjp" = (
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
@@ -112149,6 +112127,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/library)
+"qxX" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "qyG" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -112854,6 +112836,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"sxV" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "sAm" = (
 /obj/machinery/light_switch{
 	pixel_x = 26
@@ -112945,6 +112931,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
+"sTz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "sTI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
@@ -112996,6 +112996,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"tbn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "tbR" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko,
@@ -113103,6 +113108,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"tyl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "tzj" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -113388,24 +113409,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"upk" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "upr" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -113667,6 +113670,23 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"uTf" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/surgery)
 "uTQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -114372,24 +114392,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
-"xaf" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "xdD" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
@@ -114499,6 +114501,10 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "xAi" = (
@@ -114547,6 +114553,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"xFT" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/holodeck{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/crew_quarters/fitness/recreation)
 "xGe" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -144426,7 +144446,7 @@ bUo
 bWD
 bYO
 caE
-ccm
+cNj
 ced
 cea
 ced
@@ -145147,7 +145167,7 @@ alf
 avr
 awp
 axK
-alg
+qxX
 aAb
 aBk
 aCv
@@ -145502,7 +145522,7 @@ djJ
 duE
 qdJ
 djF
-ceb
+tbn
 cjq
 dBZ
 cjq
@@ -147075,7 +147095,7 @@ dYu
 dZg
 ebR
 dLW
-ecQ
+eKq
 edl
 aad
 aaa
@@ -147204,7 +147224,7 @@ arB
 awv
 axQ
 alf
-aAd
+sTz
 aBs
 aDI
 aDI
@@ -147332,7 +147352,7 @@ dLW
 dLW
 dLW
 ecv
-dNt
+sxV
 edl
 aad
 aad
@@ -160642,7 +160662,7 @@ cAm
 cZX
 cIW
 cHW
-cHW
+dJp
 vTA
 cSR
 oKQ
@@ -162470,7 +162490,7 @@ dCO
 uxC
 wZq
 eNA
-dEe
+nJq
 xzY
 vFc
 dLo
@@ -162713,7 +162733,7 @@ dhq
 diJ
 dkv
 dma
-dnG
+uTf
 dnG
 dro
 dsN
@@ -163484,7 +163504,7 @@ cPv
 diM
 dkE
 dme
-dnD
+tyl
 dnG
 dro
 dsQ
@@ -172456,18 +172476,18 @@ ajr
 aad
 cuL
 aad
-cDS
-cFE
-cFE
-cFE
-cJD
-cuM
-cuM
-cOe
-bry
-bry
-bry
-cVk
+cDQ
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cVi
 aad
 cuL
 aad
@@ -172709,22 +172729,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mbS
 aad
 cuM
 aaa
-aaa
-aad
-aaa
-cuM
-cJE
-cLn
-cuL
-cOf
-cuM
-aaa
-aad
-aaa
+cDR
+cFG
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cTi
+cVj
 aaa
 cuM
 aad
@@ -172966,23 +172986,23 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mbS
 aad
 cuM
-cuM
-cuM
-cuM
-cuM
-cuM
-xaf
-cuM
-cuM
-upk
-cuM
-cuM
-cuM
-cuM
-cuM
+aaa
+cDQ
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cVi
+aaa
 cuM
 aad
 ajr
@@ -173223,26 +173243,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
-aad
-aad
-aad
-aad
+mbS
 aad
 cuM
-cJF
-cLo
-cMJ
-cOg
+aad
+cDQ
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cFF
+cVi
+aad
 cuM
 aad
-aad
-aad
-aad
-aad
-aad
-aaa
+mbS
 aaa
 aaa
 aaa
@@ -173480,26 +173500,26 @@ aaa
 aaa
 aaa
 aaa
+mbS
+nOg
+cuM
 aaa
-aaa
-ajr
-ajr
-aaa
-ajr
-aad
-cIo
-cJG
-cLp
-cMK
+cDS
+cFE
+cFE
+cFE
+jUo
+cuM
+cuM
 cOh
-cIo
-aad
+bry
+bry
+bry
+cVk
 aaa
-ajr
-ajr
-aaa
-aaa
-aaa
+cuM
+nOg
+mbS
 aaa
 aaa
 aaa
@@ -173596,6 +173616,1034 @@ aaa
 aaa
 "}
 (230,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+nOg
+cuM
+aaa
+aaa
+aad
+aaa
+cuM
+cJE
+cLn
+cuL
+cOf
+cuM
+aaa
+aad
+aaa
+aaa
+cuM
+nOg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(231,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+bbz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+mbS
+nOg
+cuM
+cuM
+cuM
+cuM
+cuM
+cuM
+qjg
+cuM
+cuM
+peO
+cuM
+cuM
+cuM
+cuM
+cuM
+cuM
+nOg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(232,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aab
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+nOg
+aad
+aad
+aad
+aad
+aad
+cuM
+cJF
+xFT
+cMJ
+cOg
+cuM
+aad
+aad
+aad
+aad
+aad
+nOg
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(233,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+ajr
+ajr
+aaa
+ajr
+aad
+cIo
+cJG
+cLp
+cMK
+jnF
+cuL
+aad
+aaa
+ajr
+ajr
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(234,1,1) = {"
 aaa
 aaa
 aaa
@@ -173852,1034 +174900,6 @@ aaa
 aaa
 aaa
 "}
-(231,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-bbz
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cuM
-cuM
-cuM
-cuM
-cuM
-cuM
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
-(232,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aab
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
-(233,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
-(234,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
 (235,1,1) = {"
 aaa
 aaa
@@ -175029,12 +175049,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cuM
+cuM
+cuM
+cuM
+cuM
+cuM
 aaa
 aaa
 aaa
@@ -175545,7 +175565,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa

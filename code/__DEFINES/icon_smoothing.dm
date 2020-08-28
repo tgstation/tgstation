@@ -47,7 +47,7 @@
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(24)			///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(25)			///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
 #define SMOOTH_GROUP_HOTEL_WALLS S_TURF(27)				///turf/closed/indestructible/hotelwall
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(28)			///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(29)				///turf/closed/indestructible/riveted/boss
@@ -96,7 +96,7 @@
 
 #define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65)				///obj/structure/fluff/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT	S_OBJ(67)			///obj/effect/decal/cleanable/dirt
 

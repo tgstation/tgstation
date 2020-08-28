@@ -1071,7 +1071,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_BLEED,
 									ADMIN_PUNISHMENT_PERFORATE,
 									ADMIN_PUNISHMENT_SCARIFY,
-									ADMIN_PUNISHMENT_SHOES
+									ADMIN_PUNISHMENT_SHOES,
+									ADMIN_PUNISHMENT_DOCK,
+									ADMIN_PUNISHMENT_BREAD
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1238,8 +1240,43 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>[dude] does not have knottable shoes!</span>", confidential = TRUE)
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_DOCK)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/dude = target
+			var/obj/item/card/id/card = dude.get_idcard(TRUE)
+			if(!card)
+				to_chat(usr,"<span class='warning'>[dude] does not have an ID card on!</span>", confidential = TRUE)
+				return
+			if(!card.registered_account)
+				to_chat(usr,"<span class='warning'>[dude] does not have an ID card with an account!</span>", confidential = TRUE)
+				return
+			if(card.registered_account.account_balance == 0)
+				to_chat(usr, "<span class='warning'>ID Card lacks any funds. No pay to dock.</span>")
+				return
+			var/new_cost = input("How much pay are we docking? Current balance: [card.registered_account.account_balance] credits.","BUDGET CUTS") as num|null
+			if(!new_cost)
+				return
+			if(!(card.registered_account.has_money(new_cost)))
+				to_chat(usr, "<span class='warning'>ID Card lacked funds. Emptying account.</span>")
+				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
+				card.registered_account.account_balance = 0
+			else
+				card.registered_account.account_balance = card.registered_account.account_balance - new_cost
+				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
+			SEND_SOUND(target, 'sound/machines/buzz-sigh.ogg')
+		if(ADMIN_PUNISHMENT_BREAD)
+			var/mutable_appearance/bread_appearance = mutable_appearance('icons/obj/food/burgerbread.dmi',"bread")
+			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
+			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
 
 	punish_log(target, punishment)
+
+/proc/breadify(atom/movable/target)
+	var/obj/item/food/bread/plain/bread = new(get_turf(target))
+	target.forceMove(bread)
 
 /**
   * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense

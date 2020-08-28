@@ -42,7 +42,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = TRUE
-	flag = "energy"
+	flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
 
 /obj/projectile/temp/basilisk/heated
@@ -108,7 +108,7 @@
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing

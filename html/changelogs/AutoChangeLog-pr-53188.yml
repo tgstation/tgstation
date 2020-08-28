@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Blob spores from gold slime core and hostile life reactions are now marked as being independent, meaning that they can now drag things, but can no longer freely walk through blob tiles."
+  - balance: "Independent blob spores and blobbernauts can now speak over blob chat like overmind-dependent blob mobs do."
+  - bugfix: "Blob spores can no longer damage the environment, for realzies this time. This change does not affect blob zombies."

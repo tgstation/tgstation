@@ -358,7 +358,7 @@
 
 /mob/camera/blob/proc/reroll_strain()
 	var/list/choices = list()
-	while (length(choices) < 4)
+	while (length(choices) < 6)
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 

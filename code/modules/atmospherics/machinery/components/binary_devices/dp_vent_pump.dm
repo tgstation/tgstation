@@ -42,7 +42,7 @@
 		var/image/cap = getpipeimage(icon, "dpvent_cap", dir, piping_layer = piping_layer)
 		add_overlay(cap)
 
-	if(!on || !is_operational())
+	if(!on || !is_operational)
 		icon_state = "vent_off"
 	else
 		icon_state = pump_direction ? "vent_out" : "vent_in"

@@ -192,7 +192,7 @@
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
-	var/uv_cooldown_length = 1 MINUTES
+	var/uv_cooldown_length = 30 SECONDS
 	/// How much sanitization to apply to the burn wound
 	var/uv_power = 1
 
@@ -325,7 +325,7 @@
 	if(.)
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
-		damtype = "fire"
+		damtype = BURN
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/flare/get_temperature()

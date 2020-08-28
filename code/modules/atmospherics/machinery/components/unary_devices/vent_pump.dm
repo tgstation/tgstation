@@ -59,7 +59,7 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!nodes[1] || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational)
 		if(icon_state == "vent_welded")
 			icon_state = "vent_off"
 			return
@@ -86,7 +86,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	..()
-	if(!is_operational())
+	if(!is_operational)
 		return
 	if(!nodes[1])
 		on = FALSE
@@ -159,8 +159,9 @@
 
 	var/area/vent_area = get_area(src)
 	if(!GLOB.air_vent_names[id_tag])
-		// If we do not have a name, assign one
-		name = "[assign_random_name()] [vent_area.name] Vent Pump" // matching case
+		// If we do not have a name, assign one.
+		// Produces names like "Port Quarter Solar vent pump hZ2l6".
+		name = "\proper [vent_area.name] vent pump [assign_random_name()]"
 		GLOB.air_vent_names[id_tag] = name
 
 	vent_area.air_vent_info[id_tag] = signal.data
@@ -178,7 +179,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(!is_operational())
+	if(!is_operational)
 		return
 	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
@@ -269,7 +270,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()
-	if(. && on && is_operational())
+	if(. && on && is_operational)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 

@@ -7,6 +7,7 @@
 	icon_state = "smoke0"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
+	processing_flags = NONE
 
 	var/efficiency = 10
 	var/on = FALSE
@@ -35,9 +36,12 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
+	if(is_operational)
+		begin_processing()
+
 
 /obj/machinery/smoke_machine/update_icon_state()
-	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
+	if((!is_operational) || (!on) || (reagents.total_volume == 0))
 		if (panel_open)
 			icon_state = "smoke0-o"
 		else
@@ -63,10 +67,16 @@
 		max_range += M.rating
 	max_range = max(3, max_range)
 
+
+/obj/machinery/smoke_machine/on_set_is_operational(old_value)
+	if(old_value) //Turned off
+		end_processing()
+	else //Turned on
+		begin_processing()
+
+
 /obj/machinery/smoke_machine/process()
 	..()
-	if(!is_operational())
-		return
 	if(reagents.total_volume == 0)
 		on = FALSE
 		update_icon()
