@@ -1,0 +1,10 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Sinks and showers can now have reagents piped into them."
+  - rscadd: "Using metal sheets on reagent dispensers will now produce a plumbing-enabled supply tank for station use."
+  - rscadd: "Added a new stock part, the water recycler, used in building showers and sinks from scratch."
+  - rscadd: "Hydroponics trays are now plumbing enabled. Water and nutrients will be sorted into their appropriate slots when piped in."
+  - tweak: "Sinks and showers now have internal water reservoirs, and start filled with water."
+  - tweak: "Showers and sinks must be constructed from a frame, then finished with a water recycler.
+remove: Hydroponics hoses have been removed in favor of actual plumbing between machines."
