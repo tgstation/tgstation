@@ -23,7 +23,6 @@
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
-	SIGNAL_HANDLER
 	var/datum/component/edible/edible_component = source
 
 	var/obj/item/trash_item = new trash()
