@@ -285,7 +285,9 @@ nobiliumsuppression = INFINITY
 /datum/gas_reaction/freonfire/init_reqs()
 	min_requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		/datum/gas/freon = MINIMUM_MOLE_COUNT
+		/datum/gas/freon = MINIMUM_MOLE_COUNT,
+		"TEMP" = FREON_LOWER_TEMPERATURE,
+		"MAX_TEMP" = FREON_MAXIMUM_BURN_TEMPERATURE
 		)
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
