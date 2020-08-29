@@ -1812,7 +1812,7 @@
 #include "code\modules\detectivework\footprints_and_rag.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\discord\accountlink.dm"
-#include "code\modules\discord\manipulation.dm"
+#include "code\modules\discord\discord_link_record.dm"
 #include "code\modules\discord\tgs_commands.dm"
 #include "code\modules\discord\toggle_notify.dm"
 #include "code\modules\economy\_economy.dm"
