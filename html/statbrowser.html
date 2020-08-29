@@ -296,21 +296,6 @@ function checkStatusTab() {
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			removeStatusTab(menu.children[i].id);
 }
-function add_verb(v) {
-	var to_add = JSON.parse(v);
-	var cat = "";
-	cat = to_add[0];
-	if(verb_tabs.includes(cat)){ // we have the category already
-		verbs.push(to_add); // add it to verb list and we done
-	} else if(cat.trim() != "") { // we don't have the category
-		verb_tabs.push(cat);
-		verbs.push(to_add); // add verb
-		createStatusTab(cat); // create the category
-	}
-	if(current_tab == cat) {
-		draw_verbs(cat); // redraw if we added a verb to the tab we're currently in
-	}
-}
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
 	for(var i = verbs.length - 1; i >= 0; i--){
@@ -365,6 +350,9 @@ function add_verb_list(v) {
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
 		if(verb_tabs.includes(part[0])){
+			if(verbs.includes(part)){
+				continue;
+			}
 			verbs.push(part);
 			if(current_tab == part[0]) {
 				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
