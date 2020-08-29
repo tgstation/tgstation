@@ -12,13 +12,18 @@
 	src.trash = trash
 	RegisterSignal(target, COMSIG_FOOD_CONSUMED, .proc/generate_trash)
 
-/datum/element/dunkable/Detach(datum/target)
+/datum/element/food_trash/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
 
 /datum/element/food_trash/proc/generate_trash(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
+	///cringy signal_handler shouldnt be needed if you dont want to return but oh well
+	INVOKE_ASYNC(src, ./proc/async_generate_trash, source)
+
+/datum/element/food_trash/async_generate_trash(datum/source)
+	SIGNAL_HANDLER
 	var/datum/component/edible/edible_component = source
 
 	var/obj/item/trash_item = new trash()
