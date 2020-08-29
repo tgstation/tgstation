@@ -1,0 +1,5 @@
+author: "Qustinnus, 4Dplanner"
+delete-after: True
+changes: 
+  - rscadd: "Adds map_generator datums, which will handle terrain generation for a specific area"
+  - rscadd: "Adds a jungle generator datum, which uses rust-g noise to generate 3 layers of perlin noise to make a somewhat coheisve and seamless jungle based on height humidity and heat."
