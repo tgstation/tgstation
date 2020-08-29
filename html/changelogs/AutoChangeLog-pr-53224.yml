@@ -1,0 +1,6 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "burgers now composition based"
+  - bugfix: "you can now grind bread again"
+  - rscadd: "you can now auto-eat things with edible component"

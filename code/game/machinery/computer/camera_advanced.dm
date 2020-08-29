@@ -211,7 +211,7 @@
 				user_image = image(icon,loc,icon_state,FLY_LAYER)
 				eye_user.client.images += user_image
 
-/mob/camera/ai_eye/remote/relaymove(mob/user,direct)
+/mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -219,7 +219,7 @@
 		sprint = initial
 
 	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direct))
+		var/turf/step = get_turf(get_step(src, direction))
 		if(step)
 			setLoc(step)
 

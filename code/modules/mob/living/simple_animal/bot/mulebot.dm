@@ -503,15 +503,15 @@
 
 	update_icon()
 
-/mob/living/simple_animal/bot/mulebot/Stat()
-	..()
-	if(statpanel("Status"))
-		if(cell)
-			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
-		else
-			stat(null, text("No Cell Inserted!"))
-		if(load)
-			stat("Current Load:", get_load_name())
+/mob/living/simple_animal/bot/mulebot/get_status_tab_items()
+	. = ..()
+	if(cell)
+		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+	else
+		. += text("No Cell Inserted!")
+	if(load)
+		. += "Current Load: [get_load_name()]"
+
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
@@ -751,7 +751,7 @@
 	bloodiness += 4
 
 // player on mulebot attempted to move
-/mob/living/simple_animal/bot/mulebot/relaymove(mob/user)
+/mob/living/simple_animal/bot/mulebot/relaymove(mob/living/user, direction)
 	if(user.incapacitated())
 		return
 	if(load == user)

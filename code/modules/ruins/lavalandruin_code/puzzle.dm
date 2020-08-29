@@ -296,7 +296,7 @@
 /obj/structure/puzzle_element/prison
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 50, ACID = 50)
 
-/obj/structure/puzzle_element/prison/relaymove(mob/user)
+/obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return
 
 /obj/item/prisoncube

@@ -931,8 +931,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			if(attack_type == PROJECTILE_ATTACK)
 				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-				return 1
+				return TRUE
 			else
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-				return 1
-	return 0
+				return TRUE
+	return FALSE

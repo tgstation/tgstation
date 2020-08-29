@@ -13,7 +13,7 @@
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
-	clumsy_check = 0
+	clumsy_check = FALSE
 	item_flags = NONE
 
 /obj/item/gun/energy/laser/retro

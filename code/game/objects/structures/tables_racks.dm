@@ -536,7 +536,7 @@
 	canSmoothWith = null
 	can_buckle = 1
 	buckle_lying = -1
-	buckle_requires_restraints = 1
+	buckle_requires_restraints = TRUE
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
@@ -632,7 +632,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) || user.get_num_legs() < 2)
+	if(!(user.mobility_flags & MOBILITY_STAND) || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

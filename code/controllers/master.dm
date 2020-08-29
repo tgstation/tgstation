@@ -39,7 +39,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	///Only run ticker subsystems for the next n ticks.
 	var/skip_ticks = 0
 
-	var/make_runtime = 0
+	var/make_runtime = FALSE
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 

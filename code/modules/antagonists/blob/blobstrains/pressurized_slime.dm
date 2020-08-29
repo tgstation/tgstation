@@ -3,7 +3,7 @@
 	name = "Pressurized Slime"
 	description = "will do low brute, oxygen, and stamina damage, and wet tiles under targets."
 	effectdesc = "will also wet tiles near blobs that are attacked or killed."
-	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them."
+	analyzerdescdamage = "Does low brute damage, low oxygen damage, drains stamina, and wets tiles under targets, extinguishing them.  Is resistant to brute attacks."
 	analyzerdesceffect = "When attacked or killed, lubricates nearby tiles, extinguishing anything on them."
 	color = "#AAAABB"
 	complementary_color = "#BBBBAA"
@@ -15,6 +15,8 @@
 /datum/blobstrain/reagent/pressurized_slime/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) || damage_type != BURN)
 		extinguisharea(B, damage)
+	if(damage_type == BRUTE)
+		return damage * 0.5
 	return ..()
 
 /datum/blobstrain/reagent/pressurized_slime/death_reaction(obj/structure/blob/B, damage_flag)
@@ -37,7 +39,7 @@
 	taste_description = "a sponge"
 	color = "#AAAABB"
 
-/datum/reagent/blob/pressurized_slime/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/pressurized_slime/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))

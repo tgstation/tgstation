@@ -79,9 +79,9 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return 0
+			return FALSE
 		if(has_buckled_mobs())
-			return 0
+			return FALSE
 		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
 		usr.put_in_hands(B)
@@ -179,7 +179,7 @@
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
 	anchored = TRUE
-	
+
 /obj/structure/bed/dogbed/lia
 	desc = "Seems kind of... fishy."
 	name = "Lia's bed"
@@ -212,3 +212,13 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
+
+/obj/structure/bed/maint/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

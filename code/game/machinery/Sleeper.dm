@@ -68,7 +68,7 @@
 	if (!state_open && user == occupant)
 		container_resist_act(user)
 
-/obj/machinery/sleeper/relaymove(mob/user)
+/obj/machinery/sleeper/relaymove(mob/living/user, direction)
 	if (!state_open)
 		container_resist_act(user)
 
@@ -89,7 +89,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(is_operational() && occupant)
+	if(is_operational && occupant)
 		open_machine()
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
@@ -185,7 +185,7 @@
 			if(SOFT_CRIT)
 				data["occupant"]["stat"] = "Conscious"
 				data["occupant"]["statstate"] = "average"
-			if(UNCONSCIOUS)
+			if(UNCONSCIOUS, HARD_CRIT)
 				data["occupant"]["stat"] = "Unconscious"
 				data["occupant"]["statstate"] = "average"
 			if(DEAD)
@@ -220,7 +220,7 @@
 			. = TRUE
 		if("inject")
 			var/chem = text2path(params["chem"])
-			if(!is_operational() || !mob_occupant || isnull(chem))
+			if(!is_operational || !mob_occupant || isnull(chem))
 				return
 			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
@@ -306,7 +306,7 @@
 	if(chem in spray_chems)
 		var/datum/reagents/holder = new()
 		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
-		holder.trans_to(occupant, 10, method = VAPOR)
+		holder.trans_to(occupant, 10, methods = VAPOR)
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		if(user)
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")

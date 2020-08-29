@@ -40,7 +40,7 @@ Behavior that's still missing from this component that original food items had t
 								food_flags = NONE,
 								foodtypes = NONE,
 								volume = 50,
-								eat_time = 30,
+								eat_time = 10,
 								list/tastes,
 								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 								bite_consumption = 2,
@@ -55,6 +55,9 @@ Behavior that's still missing from this component that original food items had t
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		var/obj/item/item = parent
+		item.grind_results = list() //Cursed but this is how snacks did it, grinding needs a refactor in the future.
+
 	else if(isturf(parent))
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatTurf)
 
@@ -144,7 +147,11 @@ Behavior that's still missing from this component that original food items had t
 
 	set waitfor = FALSE
 
+	if(QDELETED(parent))
+		return
+
 	var/atom/owner = parent
+
 
 	if(feeder.a_intent == INTENT_HARM)
 		return
@@ -203,6 +210,11 @@ Behavior that's still missing from this component that original food items had t
 
 	TakeBite(eater, feeder)
 
+	//If we're not force-feeding, try take another bite
+	if(eater == feeder)
+		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
+
+
 ///This function lets the eater take a bite and transfers the reagents to the eater.
 /datum/component/edible/proc/TakeBite(mob/living/eater, mob/living/feeder)
 
@@ -214,9 +226,9 @@ Behavior that's still missing from this component that original food items had t
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(owner.reagents.total_volume)
-		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder)
+		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, method = INGEST)
+		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 		bitecount++
 		On_Consume(eater)
 		checkLiked(fraction, eater)

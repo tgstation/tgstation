@@ -124,7 +124,7 @@
 	..()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
+	if(!is_operational || (last_alarm+FIREALARM_COOLDOWN > world.time))
 		return
 	last_alarm = world.time
 	var/area/A = get_area(src)
@@ -134,7 +134,7 @@
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
 /obj/machinery/firealarm/proc/reset(mob/user)
-	if(!is_operational())
+	if(!is_operational)
 		return
 	var/area/A = get_area(src)
 	A.firereset(src)
@@ -226,7 +226,7 @@
 						if(buildstage == 1)
 							if(machine_stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
-								machine_stat &= ~BROKEN
+								set_machine_stat(machine_stat & ~BROKEN)
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/electronics/firealarm(user.loc)

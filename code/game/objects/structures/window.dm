@@ -27,7 +27,7 @@
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	flags_ricochet = RICOCHET_HARD
-	ricochet_chance_mod = 0.4
+	receive_ricochet_chance_mod = 0.5
 
 
 /obj/structure/window/examine(mob/user)
@@ -64,6 +64,9 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
+	flags_1 |= ALLOW_DARK_PAINTS_1
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
@@ -99,9 +102,9 @@
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0	//full tile window, you can't move into it!
+		return FALSE	//full tile window, you can't move into it!
 	var/attempted_dir = get_dir(loc, target)
 	if(attempted_dir == dir)
 		return
@@ -120,10 +123,10 @@
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -227,8 +230,8 @@
 		if(get_dir(user,src) & dir)
 			for(var/obj/O in loc)
 				if(!O.CanPass(user, user.loc, 1))
-					return 0
-	return 1
+					return FALSE
+	return TRUE
 
 /obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -282,6 +285,14 @@
 	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(user)
+
+/obj/structure/window/proc/on_painted(is_dark_color)
+	SIGNAL_HANDLER
+
+	if (is_dark_color)
+		set_opacity(255)
+	else
+		set_opacity(initial(opacity))
 
 /obj/structure/window/Destroy()
 	density = FALSE
@@ -337,11 +348,11 @@
 
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
-		return 1
+		return TRUE
 	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/structure/window/GetExplosionBlock()
 	return reinf && fulltile ? real_explosion_block : 0
@@ -371,7 +382,7 @@
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
-	ricochet_chance_mod = 0.8
+	receive_ricochet_chance_mod = 1.1
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
@@ -683,7 +694,7 @@
 	explosion_block = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
-	ricochet_chance_mod = 0.9
+	receive_ricochet_chance_mod = 1.2
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)

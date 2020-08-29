@@ -25,7 +25,7 @@
 			dos_speed = NTNETSPEED_ETHERNET * 10
 	if(target && executed)
 		target.dos_overload += dos_speed
-		if(!target.is_operational())
+		if(!target.is_operational)
 			target.dos_sources.Remove(src)
 			target = null
 			error = "Connection to destination relay lost."

@@ -343,8 +343,8 @@
 		O.forceMove(T)
 	return 1
 
-/obj/structure/closet/relaymove(mob/user)
-	if(user.stat || !isturf(loc) || !isliving(user))
+/obj/structure/closet/relaymove(mob/living/user, direction)
+	if(user.stat || !isturf(loc))
 		return
 	if(locked)
 		if(message_cooldown <= world.time)
@@ -393,8 +393,8 @@
 /obj/structure/closet/Exit(atom/movable/AM)
 	open()
 	if(AM.loc == src)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
 	if(opened)
