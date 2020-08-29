@@ -574,7 +574,7 @@
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
 			busy = FALSE
-			return 1
+			return TRUE
 		busy = FALSE
 		O.wash(CLEAN_WASH)
 		O.acid_level = 0
