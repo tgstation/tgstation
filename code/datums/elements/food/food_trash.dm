@@ -20,7 +20,7 @@
 	SIGNAL_HANDLER
 
 	///cringy signal_handler shouldnt be needed if you dont want to return but oh well
-	INVOKE_ASYNC(src, ./proc/async_generate_trash, source)
+	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
 	SIGNAL_HANDLER
