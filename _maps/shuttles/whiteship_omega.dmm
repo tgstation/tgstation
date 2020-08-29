@@ -9,7 +9,7 @@
 "q" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/door/airlock{name = "Control Room"},/turf/open/floor/plasteel,/area/shuttle/abandoned)
 "s" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
 "t" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel,/area/shuttle/abandoned)
-"u" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 5; id = "whiteship"; launch_status = 0; name = "White Ship"; port_direction = 4; width = 10},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"u" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 10; id = "whiteship"; launch_status = 0; name = "White Ship"; port_direction = 4; width = 5},/turf/open/floor/plasteel,/area/shuttle/abandoned)
 "v" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/remains/human,/turf/open/floor/plasteel,/area/shuttle/abandoned)
 "y" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/computer/shuttle/white_ship{dir = 4},/turf/open/floor/plasteel,/area/shuttle/abandoned)
 "z" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/shuttle/abandoned)
