@@ -245,6 +245,8 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
+	data["edit_usr"] = "[user]"
+
 	var/obj/O = user.get_active_held_item()
 	if(istype(O, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/PEN = O

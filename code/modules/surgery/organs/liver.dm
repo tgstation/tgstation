@@ -14,6 +14,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
+	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
@@ -59,13 +60,7 @@
 #undef HAS_PAINFUL_TOXIN
 
 /obj/item/organ/liver/get_availability(datum/species/S)
-	return !(TRAIT_NOMETABOLISM in S.species_traits)
-
-/obj/item/organ/liver/fly
-	name = "insectoid liver"
-	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
-	desc = "A mutant liver designed to handle the unique diet of a flyperson."
-	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
+	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"

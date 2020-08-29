@@ -22,7 +22,7 @@
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
-	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
+	var/bodypart_disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
 	var/stam_damage_coeff = 0.75
 	var/brutestate = 0
@@ -87,6 +87,8 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
+	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/grasp_self])
+	var/obj/item/self_grasp/grasped_by
 
 
 /obj/item/bodypart/examine(mob/user)
@@ -101,7 +103,7 @@
 
 /obj/item/bodypart/Destroy()
 	if(owner)
-		owner.bodyparts -= src
+		owner.remove_bodypart(src)
 		owner = null
 	return ..()
 
@@ -159,12 +161,15 @@
 ///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()
 	if(!owner)
-		return
-	. = list()
+		return FALSE
+
+	var/list/bodypart_organs
 	for(var/i in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 		var/obj/item/organ/organ_check = i
 		if(check_zone(organ_check.zone) == body_zone)
-			. += organ_check
+			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
+
+	return bodypart_organs
 
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
@@ -367,6 +372,11 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
 
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && (get_damage() / max_damage * 50))
+		var/datum/wound/loss/dismembering = new
+		dismembering.apply_dismember(src, woundtype, outright=TRUE)
+		return
+
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -374,7 +384,7 @@
 		for(var/i in clothing)
 			var/obj/item/clothing/clothes_check = i
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			if(clothes_check.armor.getRating("wound"))
+			if(clothes_check.armor.getRating(WOUND))
 				bare_wound_bonus = 0
 				break
 
@@ -422,7 +432,7 @@
   * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
   *
   * Arguments:
-  * * It's the same ones on [receive_damage]
+  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
   */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
@@ -434,7 +444,7 @@
 		for(var/c in clothing)
 			var/obj/item/clothing/C = c
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			armor_ablation += C.armor.getRating("wound")
+			armor_ablation += C.armor.getRating(WOUND)
 			if(wounding_type == WOUND_SLASH)
 				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
@@ -487,7 +497,9 @@
 /obj/item/bodypart/proc/update_disabled()
 	if(!owner)
 		return
-	set_disabled(is_disabled())
+	if(!isnull(set_disabled(is_disabled()))) //set_disabled will return null when there's no change
+		owner.update_mobility()
+
 
 /obj/item/bodypart/proc/is_disabled()
 	if(!owner)
@@ -499,7 +511,7 @@
 		if(W.disabling)
 			return BODYPART_DISABLED_WOUND
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
-		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
+		. = bodypart_disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 
 		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
 			if(!last_maxed)
@@ -507,23 +519,24 @@
 				last_maxed = TRUE
 			if(!is_organic_limb() || stamina_dam >= max_damage)
 				return BODYPART_DISABLED_DAMAGE
-		else if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
+		else if(bodypart_disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 			last_maxed = FALSE
 			return BODYPART_NOT_DISABLED
 	else
 		return BODYPART_NOT_DISABLED
 	return BODYPART_NOT_DISABLED
 
+
 /obj/item/bodypart/proc/set_disabled(new_disabled)
-	if(disabled == new_disabled || !owner)
+	if(isnull(new_disabled) || bodypart_disabled == new_disabled || !owner)
 		return
-	disabled = new_disabled
-	if(disabled && owner.get_item_for_held_index(held_index))
+	. = bodypart_disabled
+	bodypart_disabled = new_disabled
+	if(bodypart_disabled && owner.get_item_for_held_index(held_index))
 		owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-	owner.update_mobility()
-	return TRUE //if there was a change.
+
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -768,6 +781,13 @@
 
 	if(owner.mobility_flags & ~MOBILITY_STAND)
 		bleed_rate *= 0.75
+
+	if(grasped_by)
+		bleed_rate *= 0.7
+
+	if(!bleed_rate)
+		QDEL_NULL(grasped_by)
+
 	return bleed_rate
 
 /**

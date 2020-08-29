@@ -474,7 +474,7 @@
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
 	subcategory = CAT_PASTRY

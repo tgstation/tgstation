@@ -74,6 +74,10 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	carp_randomify(rarechance)
 	update_icons()
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/carp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
 	if(random_color)
@@ -142,7 +146,7 @@
 /mob/living/simple_animal/hostile/carp/tamed()
 	. = ..()
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-2, 12), TEXT_WEST = list(2, 12)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -162,6 +166,9 @@
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
+
+/mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -195,6 +202,10 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -207,7 +218,7 @@
 		heal_overall_damage(4)
 	if(!rideable && src.mind)
 		can_buckle = TRUE
-		buckle_lying = FALSE
+		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
 		D.set_vehicle_dir_offsets(SOUTH, pixel_x, 0)

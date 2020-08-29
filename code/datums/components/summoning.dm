@@ -34,23 +34,29 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag)
 		return
 	do_spawn_mob(get_turf(target), user)
 
 /datum/component/summoning/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+	SIGNAL_HANDLER
+
 	do_spawn_mob(get_turf(target), attacker)
 
 /datum/component/summoning/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+	SIGNAL_HANDLER
+
 	do_spawn_mob(get_turf(target), firer)
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return
 	if(last_spawned_time > world.time)
-		return 0
+		return
 	if(!prob(spawn_chance))
-		return 0
+		return
 	last_spawned_time = world.time + spawn_delay
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
@@ -65,4 +71,6 @@
 	spawn_location.visible_message("<span class='danger'>[L] [spawn_text].</span>")
 
 /datum/component/summoning/proc/on_spawned_death(mob/killed, gibbed)
+	SIGNAL_HANDLER
+
 	spawned_mobs -= killed

@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
@@ -361,7 +361,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(..())
 		return
 
-	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational)
 		usr.unset_machine()
 		usr << browse(null, "window=id_com")
 		return
@@ -514,10 +514,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_open_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
@@ -531,10 +531,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_close_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -549,7 +549,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j

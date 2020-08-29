@@ -98,11 +98,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in sortNames(available)
 	if(!choice)
-		return 0
+		return
 	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
-			return 0
+			return
 	var/obj/item/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
 
@@ -590,12 +590,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/obj/machinery/power/emitter/E in GLOB.machines)
 		if(E.anchored)
-			E.active = 1
+			E.active = TRUE
 
 	for(var/obj/machinery/field/generator/F in GLOB.machines)
-		if(F.active == 0)
+		if(F.active == FALSE)
 			F.set_anchored(TRUE)
-			F.active = 1
+			F.active = TRUE
 			F.state = 2
 			F.power = 250
 			F.warming_up = 3

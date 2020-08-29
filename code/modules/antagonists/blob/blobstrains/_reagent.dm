@@ -27,7 +27,7 @@
 	can_synth = FALSE
 
 
-/datum/reagent/blob/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.

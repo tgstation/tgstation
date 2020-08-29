@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)

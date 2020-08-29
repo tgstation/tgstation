@@ -144,6 +144,8 @@
 		current_button.button_icon_state = button_icon_state
 
 /datum/action/proc/OnUpdatedIcon()
+	SIGNAL_HANDLER
+
 	UpdateButtonIcon()
 
 //Presets for item actions
@@ -166,12 +168,13 @@
 	return ..()
 
 /datum/action/item_action/Trigger()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return FALSE
 	if(target)
 		var/obj/item/I = target
 		I.ui_action_click(owner, src)
-	return 1
+	return TRUE
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
@@ -293,29 +296,10 @@
 
 /// Toggle the action icon for the space suit thermal regulator
 /datum/action/item_action/toggle_spacesuit/proc/toggle(obj/item/clothing/suit/space/suit)
+	SIGNAL_HANDLER
+
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
 	UpdateButtonIcon()
-
-/datum/action/item_action/toggle_unfriendly_fire
-	name = "Toggle Friendly Fire \[ON\]"
-	desc = "Toggles if the club's blasts cause friendly fire."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "vortex_ff_on"
-
-/datum/action/item_action/toggle_unfriendly_fire/Trigger()
-	if(..())
-		UpdateButtonIcon()
-
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE, force)
-	if(istype(target, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/H = target
-		if(H.friendly_fire_check)
-			button_icon_state = "vortex_ff_off"
-			name = "Toggle Friendly Fire \[OFF\]"
-		else
-			button_icon_state = "vortex_ff_on"
-			name = "Toggle Friendly Fire \[ON\]"
-	..()
 
 /datum/action/item_action/vortex_recall
 	name = "Vortex Recall"
@@ -332,7 +316,7 @@
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
-			return 0
+			return FALSE
 	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
@@ -401,7 +385,7 @@
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
 	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/hands_free
@@ -456,7 +440,7 @@
 /datum/action/item_action/organ_action/IsAvailable()
 	var/obj/item/organ/I = target
 	if(!I.owner)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/item_action/organ_action/toggle/New(Target)
@@ -485,6 +469,7 @@
 	else
 		Remove(owner)
 
+
 /datum/action/item_action/cult_dagger/Trigger()
 	for(var/obj/item/H in owner.held_items) //In case we were already holding another dagger
 		if(istype(H, /obj/item/melee/cultblade/dagger))
@@ -495,11 +480,16 @@
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
+		return
+	if(!isliving(owner))
+		to_chat(owner, "<span class='warning'>You lack the necessary living force for this action.</span>")
+		return
+	var/mob/living/living_owner = owner
+	if (living_owner.usable_hands <= 0)
+		to_chat(living_owner, "<span class='warning'>You dont have any usable hands!</span>")
 	else
-		if (owner.get_num_arms() <= 0)
-			to_chat(owner, "<span class='warning'>You dont have any usable hands!</span>")
-		else
-			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
+		to_chat(living_owner, "<span class='warning'>Your hands are full!</span>")
+
 
 ///MGS BOX!
 /datum/action/item_action/agent_box
@@ -597,12 +587,12 @@
 
 /datum/action/innate/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(!active)
 		Activate()
 	else
 		Deactivate()
-	return 1
+	return TRUE
 
 /datum/action/innate/proc/Activate()
 	return
