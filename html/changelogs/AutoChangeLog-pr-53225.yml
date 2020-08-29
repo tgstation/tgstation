@@ -1,0 +1,4 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "food trash element, for dumping trash when u eat food"
