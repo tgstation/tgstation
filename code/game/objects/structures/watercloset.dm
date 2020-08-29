@@ -426,27 +426,6 @@
 	name = "kitchen sink"
 	icon_state = "sink_alt"
 
-
-/obj/structure/sink/puddle	//splishy splashy ^_^
-	name = "puddle"
-	desc = "A puddle used for washing one's hands and face."
-	icon_state = "puddle"
-	resistance_flags = UNACIDABLE
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/sink/puddle/attack_hand(mob/M)
-	icon_state = "puddle-splash"
-	. = ..()
-	icon_state = "puddle"
-
-/obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
-	icon_state = "puddle-splash"
-	. = ..()
-	icon_state = "puddle"
-
-/obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
-	qdel(src)
-
 /obj/structure/sink/greyscale
 	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -479,6 +458,175 @@
 		qdel(src)
 		return
 	return ..()
+
+//Legacy sink and puddles, use the type legacysink for unlimited water sources like classic sinks.
+/obj/structure/legacysink
+	name = "sink"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "sink"
+	desc = "A sink used for washing one's hands and face."
+	anchored = TRUE
+	var/busy = FALSE 	//Something's being washed at the moment
+	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 1
+
+/obj/structure/legacysink/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(!user || !istype(user))
+		return
+	if(!iscarbon(user))
+		return
+	if(!Adjacent(user))
+		return
+
+	if(busy)
+		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
+		return
+	var/selected_area = parse_zone(user.zone_selected)
+	var/washing_face = 0
+	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
+		washing_face = 1
+	user.visible_message("<span class='notice'>[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...</span>", \
+						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
+	busy = TRUE
+
+	if(!do_after(user, 40, target = src))
+		busy = FALSE
+		return
+
+	busy = FALSE
+
+	if(washing_face)
+		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
+		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
+	else if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(!human_user.wash_hands(CLEAN_WASH))
+			to_chat(user, "<span class='warning'>Your hands are covered by something!</span>")
+			return
+	else
+		user.wash(CLEAN_WASH)
+
+	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
+						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
+
+/obj/structure/legacysink/attackby(obj/item/O, mob/living/user, params)
+	if(busy)
+		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
+		return
+
+	if(istype(O, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RG = O
+		if(RG.is_refillable())
+			if(!RG.reagents.holder_full())
+				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
+			return FALSE
+
+	if(istype(O, /obj/item/melee/baton))
+		var/obj/item/melee/baton/B = O
+		if(B.cell && B.cell.charge && B.turned_on)
+			flick("baton_active", src)
+			user.Paralyze(B.stun_time)
+			user.stuttering = B.stun_time/20
+			B.deductcharge(B.cell_hit_cost)
+			user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
+								"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
+			playsound(src, B.stun_sound, 50, TRUE)
+			return
+
+	if(istype(O, /obj/item/mop))
+		O.reagents.add_reagent(dispensedreagent, 5)
+		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
+		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
+		return
+
+	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		O.play_tool_sound(src)
+		deconstruct()
+		return
+
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		new /obj/item/reagent_containers/glass/rag(src.loc)
+		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
+		G.use(1)
+		return
+
+	if(istype(O, /obj/item/stack/ore/glass))
+		new /obj/item/stack/sheet/sandblock(loc)
+		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
+		O.use(1)
+		return
+
+	if(!istype(O))
+		return
+	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+		return
+
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
+		busy = TRUE
+		if(!do_after(user, 40, target = src))
+			busy = FALSE
+			return 1
+		busy = FALSE
+		O.wash(CLEAN_WASH)
+		O.acid_level = 0
+		create_reagents(5)
+		reagents.add_reagent(dispensedreagent, 5)
+		reagents.expose(O, TOUCH)
+		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
+							"<span class='notice'>You wash [O] using [src].</span>")
+		return 1
+	else
+		return ..()
+
+/obj/structure/legacysink/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	..()
+
+/obj/structure/legacysink/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+
+/obj/structure/legacysink/puddle	//splishy splashy ^_^
+	name = "puddle"
+	desc = "A puddle used for washing one's hands and face."
+	icon_state = "puddle"
+	resistance_flags = UNACIDABLE
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+/obj/structure/legacysink/puddle/attack_hand(mob/M)
+	icon_state = "puddle-splash"
+	. = ..()
+	icon_state = "puddle"
+
+/obj/structure/legacysink/puddle/attackby(obj/item/O, mob/user, params)
+	icon_state = "puddle-splash"
+	. = ..()
+	icon_state = "puddle"
+
+/obj/structure/legacysink/puddle/deconstruct(disassembled = TRUE)
+	qdel(src)
+
+/obj/structure/legacysink/greyscale
+	icon_state = "sink_greyscale"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	buildstacktype = null
+
+//End legacy sink
+
 
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
