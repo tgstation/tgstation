@@ -297,10 +297,6 @@
 /datum/wound/proc/on_stasis()
 	return
 
-/// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
-/datum/wound/proc/crush()
-	return
-
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
 /datum/wound/proc/drag_bleed_amount()
 	return
