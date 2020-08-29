@@ -138,3 +138,19 @@
 		qdel(N)
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
 
+/datum/emote/living/carbon/awrassle
+	key = "awrassle"
+	key_third_person = "awrassles"
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/awrassle/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/arm_wrassle/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your wrasslin' arm.</span>")
+	else
+		qdel(N)
+		to_chat(user, "<span class='warning'>You're incapable of wrasslin' in your current state.</span>")
+
