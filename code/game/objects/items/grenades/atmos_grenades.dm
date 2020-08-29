@@ -15,6 +15,8 @@
 	var/stamina_damage = 30
 	///Range of the grenade that will cool down and affect mobs
 	var/freeze_range = 4
+	///Amount of gas released if the state is optimal
+	var/gas_amount = 250
 
 /obj/item/grenade/gas_crystal/proto_nitrate_crystal
 	name = "Proto Nitrate crystal"
@@ -22,6 +24,10 @@
 	icon_state = "proto_nitrate_crystal"
 	///Range of the grenade air refilling
 	var/refill_range = 5
+	///Amount of Nitrogen gas released (close to the grenade)
+	var/n2_gas_amount = 400
+	///Amount of Oxygen gas released (close to the grenade)
+	var/o2_gas_amount = 100
 
 /obj/item/grenade/gas_crystal/cyrion_b_crystal
 	name = "Cyrion B crystal"
@@ -55,45 +61,19 @@
 	for(var/turf/turf_loc in view(freeze_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
-		var/distance_from_center = get_dist(turf_loc, loc)
+		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		switch(distance_from_center)
-			if(0)
-				if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
-					floor_loc.atmos_spawn_air("n2=100;TEMP=273")
-				if(floor_loc.air.temperature > 370)
-					floor_loc.atmos_spawn_air("n2=250;TEMP=30")
-					floor_loc.MakeSlippery(TURF_WET_PERMAFROST, 5 MINUTES)
-				if(floor_loc.air.gases[/datum/gas/plasma])
-					floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.5
-			if(1)
-				if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
-					floor_loc.atmos_spawn_air("n2=50;TEMP=273")
-				if(floor_loc.air.temperature > 370)
-					floor_loc.atmos_spawn_air("n2=150;TEMP=30")
-					floor_loc.MakeSlippery(TURF_WET_PERMAFROST, 3 MINUTES)
-				if(floor_loc.air.gases[/datum/gas/plasma])
-					floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.25
-			if(2)
-				if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
-					floor_loc.atmos_spawn_air("n2=25;TEMP=273")
-				if(floor_loc.air.temperature > 370)
-					floor_loc.atmos_spawn_air("n2=75;TEMP=30")
-					floor_loc.MakeSlippery(TURF_WET_PERMAFROST, 1 MINUTES)
-				if(floor_loc.air.gases[/datum/gas/plasma])
-					floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.15
-			else
-				if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
-					floor_loc.atmos_spawn_air("n2=15;TEMP=273")
-				if(floor_loc.air.temperature > 370)
-					floor_loc.atmos_spawn_air("n2=35;TEMP=30")
-					floor_loc.MakeSlippery(TURF_WET_WATER, 1 MINUTES)
-				if(floor_loc.air.gases[/datum/gas/plasma])
-					floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.05
+		if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
+			floor_loc.atmos_spawn_air("n2=[(gas_amount - 150) / distance_from_center];TEMP=273")
+		if(floor_loc.air.temperature > 370)
+			floor_loc.atmos_spawn_air("n2=[gas_amount / distance_from_center];TEMP=30")
+			floor_loc.MakeSlippery(TURF_WET_PERMAFROST, (5 / distance_from_center) MINUTES)
+		if(floor_loc.air.gases[/datum/gas/plasma])
+			floor_loc.air.gases[/datum/gas/plasma][MOLES] -= floor_loc.air.gases[/datum/gas/plasma][MOLES] * 0.5 / distance_from_center
 		floor_loc.air_update_turf()
 		for(var/mob/living/carbon/live_mob in turf_loc)
-			live_mob.adjustStaminaLoss(stamina_damage)
-			live_mob.adjust_bodytemperature(-150)
+			live_mob.adjustStaminaLoss(stamina_damage / distance_from_center)
+			live_mob.adjust_bodytemperature(-150 / distance_from_center)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/proto_nitrate_crystal/prime(mob/living/lanced_by)
@@ -103,21 +83,10 @@
 	for(var/turf/turf_loc in view(refill_range, loc))
 		if(!isopenturf(turf_loc))
 			continue
-		var/distance_from_center = get_dist(turf_loc, loc)
+		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		switch(distance_from_center)
-			if(0)
-				floor_loc.atmos_spawn_air("n2=400;TEMP=273")
-				floor_loc.atmos_spawn_air("o2=100;TEMP=273")
-			if(1)
-				floor_loc.atmos_spawn_air("n2=250;TEMP=273")
-				floor_loc.atmos_spawn_air("o2=65;TEMP=273")
-			if(2)
-				floor_loc.atmos_spawn_air("n2=125;TEMP=273")
-				floor_loc.atmos_spawn_air("o2=35;TEMP=273")
-			else
-				floor_loc.atmos_spawn_air("n2=75;TEMP=273")
-				floor_loc.atmos_spawn_air("o2=20;TEMP=273")
+		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];TEMP=273")
+		floor_loc.atmos_spawn_air("o2=[o2_gas_amount / distance_from_center];TEMP=273")
 		floor_loc.air_update_turf()
 	qdel(src)
 

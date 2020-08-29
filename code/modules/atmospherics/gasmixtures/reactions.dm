@@ -252,7 +252,7 @@ nobiliumsuppression = INFINITY
 			else
 				ASSERT_GAS(/datum/gas/carbon_dioxide, air)
 				ASSERT_GAS(/datum/gas/water_vapor, air)
-				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.05
+				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.75
 				cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -327,7 +327,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released)/new_heat_capacity
+			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
 /datum/gas_reaction/h2fire
 	priority = -3 //fire should ALWAYS be last, but tritium fires happen before plasma fires
@@ -694,9 +694,8 @@ nobiliumsuppression = INFINITY
 	var/list/cached_gases = air.gases
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = min(air.temperature / 2500, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/nitryl][MOLES])
-	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE * (heat_scale**2) - STIMULUM_FIRST_DROP * (heat_scale**3) + STIMULUM_SECOND_RISE * (heat_scale**4) - STIMULUM_ABSOLUTE_DROP * (heat_scale**5)
-
+	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
+	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 	ASSERT_GAS(/datum/gas/stimulum, air)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 ) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
