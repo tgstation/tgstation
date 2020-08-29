@@ -56,7 +56,7 @@
 	starting_node = TRUE
 	display_name = "Basic Medical Equipment"
 	description = "Basic medical tools and equipment."
-	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat", "stethoscope", 
+	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat", "stethoscope",
 					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
 
 /////////////////////////Biotech/////////////////////////
@@ -134,7 +134,7 @@
 	display_name = "Industrial Engineering"
 	description = "A refresher course on modern engineering technology."
 	prereq_ids = list("base")
-	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin", "scanner_gate",
+	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "w-recycler" , "emitter", "high_cell", "adv_matter_bin", "scanner_gate",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "welding_goggles", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "cell_charger", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine",
 	"oxygen_tank", "plasma_tank", "emergency_oxygen", "emergency_oxygen_engi", "plasmaman_tank_belt", "electrolyzer", "adv_electrolite")
