@@ -231,7 +231,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
 	name = "Lesser summon bees"
-	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location."
+	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
 	charge_max = 600
 	clothes_req = TRUE
 	invocation = "NOT THE BEES"
