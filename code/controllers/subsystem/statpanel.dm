@@ -94,6 +94,10 @@ SUBSYSTEM_DEF(statpanels)
 					if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 						continue
 					overrides += target_image.loc
+				if(!(REF(target_mob.listed_turf) in cached_images))
+					target << browse_rsc(getFlatIcon(target_mob.listed_turf, no_anim = TRUE), "[REF(target_mob.listed_turf)].png")
+					cached_images += REF(target_mob.listed_turf)
+				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf), "[REF(target_mob.listed_turf)].png")
 				for(var/tc in target_mob.listed_turf)
 					var/atom/movable/turf_content = tc
 					if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
