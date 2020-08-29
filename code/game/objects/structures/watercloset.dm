@@ -486,7 +486,7 @@
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
 	var/selected_area = parse_zone(user.zone_selected)
-	var/washing_face = 0
+	var/washing_face = FALSE
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = TRUE
 	user.visible_message("<span class='notice'>[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]...</span>", \
