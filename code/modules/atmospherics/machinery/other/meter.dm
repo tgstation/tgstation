@@ -32,11 +32,6 @@
 	name = "distribution loop gas flow meter"
 	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
-/obj/machinery/meter/atmos/distro_loop/layer3
-	name = "distribution loop gas flow meter"
-	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
-	target_layer = 3
-
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	target = null
