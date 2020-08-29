@@ -583,7 +583,7 @@
 		reagents.expose(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
-		return 1
+		return TRUE
 	else
 		return ..()
 
