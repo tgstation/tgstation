@@ -250,7 +250,9 @@
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return TRUE
 
-	if(!victim.can_inject(user, TRUE))
+	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
+	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
+	if(!victim.can_inject(user, TRUE, ignore_species = TRUE))
 		return TRUE
 
 	// lastly, treat them
