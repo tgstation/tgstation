@@ -90,6 +90,13 @@
 	name = "'Perfect Man' employee exhibit"
 	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal."
 
+/obj/structure/showcase/yendor
+	name = "wizard of yendor showcase"
+	desc = "A historical figure of great importance to wizards (of the wizard federation). He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "nim"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/structure/showcase/machinery/tv
 	name = "\improper Nanotrasen corporate newsfeed"
 	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
