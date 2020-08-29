@@ -33,7 +33,7 @@
 	},
 /area/ruin/powered)
 "j" = (
-/obj/structure/legacysink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
 	},

@@ -459,8 +459,8 @@
 		return
 	return ..()
 
-//Legacy sink and puddles, use the type legacysink for unlimited water sources like classic sinks.
-/obj/structure/legacysink
+//Legacy sink and puddles, use the type water_source for unlimited water sources like classic sinks.
+/obj/structure/water_source
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
@@ -471,7 +471,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 
-/obj/structure/legacysink/attack_hand(mob/living/user)
+/obj/structure/water_source/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
@@ -513,7 +513,7 @@
 	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
 						"<span class='notice'>You wash your [washing_face ? "face" : "hands"] using [src].</span>")
 
-/obj/structure/legacysink/attackby(obj/item/O, mob/living/user, params)
+/obj/structure/water_source/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
@@ -587,12 +587,12 @@
 	else
 		return ..()
 
-/obj/structure/legacysink/deconstruct()
+/obj/structure/water_source/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		drop_materials()
 	..()
 
-/obj/structure/legacysink/proc/drop_materials()
+/obj/structure/water_source/proc/drop_materials()
 	if(buildstacktype)
 		new buildstacktype(loc,buildstackamount)
 	else
@@ -600,27 +600,27 @@
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
-/obj/structure/legacysink/puddle	//splishy splashy ^_^
+/obj/structure/water_source/puddle	//splishy splashy ^_^
 	name = "puddle"
 	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/legacysink/puddle/attack_hand(mob/M)
+/obj/structure/water_source/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
 
-/obj/structure/legacysink/puddle/attackby(obj/item/O, mob/user, params)
+/obj/structure/water_source/puddle/attackby(obj/item/O, mob/user, params)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
 
-/obj/structure/legacysink/puddle/deconstruct(disassembled = TRUE)
+/obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
-/obj/structure/legacysink/greyscale
+/obj/structure/water_source/greyscale
 	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstacktype = null
