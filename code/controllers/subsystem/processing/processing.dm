@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(processing)
 	msg = "[stat_tag]:[length(processing)]"
 	return ..()
 
-/datum/controller/subsystem/processing/fire(resumed = 0)
+/datum/controller/subsystem/processing/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -34,5 +34,5 @@ SUBSYSTEM_DEF(processing)
 
 ///This proc is called on a datum if it is being processed in a subsystem. If you override this do not call parent, as it will return PROCESS_KILL. This is done to prevent objects that dont override process() from staying in the processing list
 /datum/proc/process()
-	set waitfor = 0
+	set waitfor = FALSE
 	return PROCESS_KILL

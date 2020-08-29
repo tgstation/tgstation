@@ -643,7 +643,7 @@
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
@@ -1482,10 +1482,10 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return FALSE
+		return 0
 	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
-			return FALSE
+			return 0
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity

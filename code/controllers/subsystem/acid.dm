@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(acid)
 	return ..()
 
 
-/datum/controller/subsystem/acid/fire(resumed = 0)
+/datum/controller/subsystem/acid/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

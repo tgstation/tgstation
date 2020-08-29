@@ -51,6 +51,64 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">29 August 2020</h2>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Blob spores from gold slime core and hostile life reactions are now marked as being independent, meaning that they can now drag things, but can no longer freely walk through blob tiles.</li>
+				<li class="balance">Independent blob spores and blobbernauts can now speak over blob chat like overmind-dependent blob mobs do.</li>
+				<li class="bugfix">Blob spores can no longer damage the environment, for realzies this time. This change does not affect blob zombies.</li>
+				<li class="rscdel">Removed an unused variable from tech nodes (and the unused proc that references it).</li>
+			</ul>
+			<h3 class="author">ArcaneMusic updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Admins can now spawn the Teambuilding machine for assign teams, like Red or Blue, quickly!</li>
+				<li class="rscadd">Sinks and showers can now have reagents piped into them.</li>
+				<li class="rscadd">Using metal sheets on reagent dispensers will now produce a plumbing-enabled supply tank for station use.</li>
+				<li class="rscadd">Added a new stock part, the water recycler, used in building showers and sinks from scratch.</li>
+				<li class="rscadd">Hydroponics trays are now plumbing enabled. Water and nutrients will be sorted into their appropriate slots when piped in.</li>
+				<li class="tweak">Sinks and showers now have internal water reservoirs, and start filled with water.</li>
+				<li class="tweak">Showers and sinks must be constructed from a frame, then finished with a water recycler. remove: Hydroponics hoses have been removed in favor of actual plumbing between machines.</li>
+			</ul>
+			<h3 class="author">Donkie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed regular pump on map icon north/south being misaligned by 1 pixel</li>
+			</ul>
+			<h3 class="author">EdgeLordExe updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Rust_spread will no longer lag servers into oblivion</li>
+				<li class="tweak">Changed a few flavour texts to better represent lore.</li>
+				<li class="bugfix">Rustbringer's oath now properly only heals while on rusted tiles.</li>
+			</ul>
+			<h3 class="author">Helianthus00 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Deltastation: made a maint area below the captain's office</li>
+			</ul>
+			<h3 class="author">Krysonism updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">granting a mob sentience, with the sentience potion  also tames it.</li>
+			</ul>
+			<h3 class="author">Melbert updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">You can now remove items from food storage by clicking on them on grab intent.</li>
+				<li class="code_imp">Componentizes food storage from food/snacks/store.</li>
+			</ul>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">A bunch of 1 and 0 use the true/false define now and changed up a bunch of returns</li>
+			</ul>
+			<h3 class="author">VexingRaven updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Plasmaman Supply Kit description now properly lists the envirosuit gloves it contains</li>
+			</ul>
+			<h3 class="author">Wayland-Smithy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">A vulnerability in the AI chamber anti-abduction foil lining has been fixed.</li>
+			</ul>
+			<h3 class="author">actioninja updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Automatic glide size adjustment for smoother movement</li>
+			</ul>
+
 			<h2 class="date">27 August 2020</h2>
 			<h3 class="author">ATHATH updated:</h3>
 			<ul class="changes bgimages16">
@@ -2721,49 +2779,6 @@
 			<h3 class="author">silicons updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">An explosion compressor has been added to science. It makes raw anomaly cores into proper anomaly cores using prepared TTVs of a specific required blast radius.</li>
-			</ul>
-
-			<h2 class="date">27 June 2020</h2>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Too much bone hurting juice REALLY hurts your bones, oof.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">the nanotransen research science division found that epinephrine has healing effects to people who drank lexorin</li>
-				<li class="bugfix">eye stabbing returns a normal attack if it fails instead of doing nothing</li>
-			</ul>
-
-			<h2 class="date">26 June 2020</h2>
-			<h3 class="author">Arkatos updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Portable Turret now uses tgui.</li>
-			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Nanotrasen now uses smaller fonts on ID's to show age and account information, requiring a closer look to read</li>
-			</ul>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed revenant's light overload ability not blowing lights in a square if there was another broken/burnt out/empty light in it.</li>
-				<li class="bugfix">Fixed showing a piece of paper to a camera not working if there was an AI that had died or has remote access disabled.</li>
-				<li class="bugfix">Bank cards will now still give you notifications if you're standing next to another player who has them disabled.</li>
-				<li class="bugfix">Fixed bronze golems' gong ability not working if there was a dead mob on screen.</li>
-				<li class="bugfix">Fixed bone golems' bonechill ability not working if there was any mobs that were undead, resistant to cold, or also golems on screen.</li>
-				<li class="bugfix">Fixed a scenario where you would be unable to offer someone an item if you already had a pending item offer with someone else standing near you.</li>
-			</ul>
-			<h3 class="author">WarlockD updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Suit cell charge on stat panel</li>
-				<li class="bugfix">Suit cell gauge works now</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The Nanite Host Scan program can now scan the host for wounds.</li>
-			</ul>
-			<h3 class="author">sergeirocks100 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Malt Liquor can now be obtained from your local Booze-O-Mat</li>
 			</ul>
 		</div>
 

@@ -45,10 +45,10 @@
 	var/turf/pos = get_turf(src)
 	for(var/turf/T in get_area_turfs(thearea.type))
 		if(!T.density && pos.z == T.z)
-			var/clear = 1
+			var/clear = TRUE
 			for(var/obj/O in T)
 				if(O.density)
-					clear = 0
+					clear = FALSE
 					break
 			if(clear)
 				L+=T
