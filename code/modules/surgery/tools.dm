@@ -506,4 +506,5 @@
 		return
 	if(!target.reagents || !target.reagents.total_volume)
 		return
-	target.reagents.trans_to(beaker, target.reagents.total_volume, transfered_by = user, remove_blacklisted = TRUE)
+	var/remove_amount = (2 * target.reagents.total_volume) / 8
+	target.reagents.trans_to(beaker, remove_amount, transfered_by = user, remove_blacklisted = TRUE)

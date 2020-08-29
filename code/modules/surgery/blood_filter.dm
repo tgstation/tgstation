@@ -14,8 +14,8 @@
 /datum/surgery_step/filter_blood
 	name = "Filter blood"
 	implements = list(/obj/item/blood_filter = 95)
-	repeatable = FALSE
-	time = 40
+	repeatable = TRUE
+	time = 25
 
 /datum/surgery/filter_blood/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_HUSK)) //You can filter the blood of a dead person just not husked
