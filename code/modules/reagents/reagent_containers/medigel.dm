@@ -79,6 +79,7 @@
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage. Diluted with granibitaluri."
 	icon_state = "brutegel"
 	current_skin = "brutegel"
+	worn_icon_state = "spraycan"
 	list_reagents = list(/datum/reagent/medicine/c2/libital = 24, /datum/reagent/medicine/granibitaluri = 36)
 
 /obj/item/reagent_containers/medigel/aiuri
