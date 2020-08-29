@@ -63,6 +63,8 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
 	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
+	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
+
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
@@ -220,30 +222,30 @@ Behavior that's still missing from this component that original food items had t
 
 	result = new microwaved_type(T)
 
-	if(istype(used_microwave))
-		setup_food_reagents(result, used_microwave.efficiency)
-	else
-		setup_food_reagents(result, 1)
+	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
+
+	SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, parent, efficiency)
 
 	SSblackbox.record_feedback("tally", "food_made", 1, result.type)
 
-///Corrects the reagents on the newly created food
-/datum/component/edible/proc/setup_food_reagents(obj/item/reagent_containers/food/snacks/result, cooking_efficiency = 1)
+///Corrects the reagents on the newly cooked food
+/datum/component/edible/proc/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
+	SIGNAL_HANDLER
 
 	var/atom/this_food = parent
 
-	result.reagents.clear_reagents()
+	this_food.reagents.clear_reagents()
 
-	if(this_food.reagents)
-		this_food.reagents.trans_to(result, this_food.reagents.total_volume)
+	if(source_item.reagents)
+		source_item.reagents.trans_to(this_food, source_item.reagents.total_volume)
 
 	if(initial_reagents && initial_reagents.len)
 		for(var/r_id in initial_reagents)
 			var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
-				result.reagents.add_reagent(r_id, amount, tastes)
+				this_food.reagents.add_reagent(r_id, amount, tastes)
 			else
-				result.reagents.add_reagent(r_id, amount)
+				this_food.reagents.add_reagent(r_id, amount)
 
 
 ///All the checks for the act of eating itself and
