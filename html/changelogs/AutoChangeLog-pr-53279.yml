@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Showers now preform a touch reaction, not a touch/vapor reaction with piped reagents."
+  - bugfix: "You can now build water recyclers in lathes, as intended."
