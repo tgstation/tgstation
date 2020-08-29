@@ -46,6 +46,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
 	inhand_icon_state = "electronic"
+	worn_icon_state = "light_replacer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
