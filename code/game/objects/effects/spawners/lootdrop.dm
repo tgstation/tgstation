@@ -231,9 +231,9 @@
 			/obj/item/reagent_containers/food/snacks/bearsteak,
 			/obj/item/reagent_containers/food/snacks/enchiladas,
 			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
-			/obj/item/reagent_containers/food/snacks/burger/bigbite,
-			/obj/item/reagent_containers/food/snacks/burger/superbite,
-			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
+			/obj/item/food/burger/bigbite,
+			/obj/item/food/burger/superbite,
+			/obj/item/food/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
