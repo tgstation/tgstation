@@ -27,7 +27,7 @@
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
-	var/active = 0
+	var/active = FALSE
 	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
@@ -55,7 +55,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	active = 0
+	active = FALSE
 	icon_state = "reactiveoff"
 	inhand_icon_state = "reactiveoff"
 	reactivearmor_cooldown = world.time + 200
@@ -70,12 +70,12 @@
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
-		return 0
+		return FALSE
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
-			return
+			return FALSE
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 		var/list/turfs = new/list()
@@ -95,8 +95,8 @@
 		H.forceMove(picked)
 		H.rad_act(rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Fire
 
@@ -106,11 +106,11 @@
 
 /obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
-		return 0
+		return FALSE
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</span>")
-			return
+			return FALSE
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
 		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -119,8 +119,8 @@
 				C.IgniteMob()
 		owner.fire_stacks = -20
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Stealth
 
@@ -130,7 +130,7 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
-		return 0
+		return FALSE
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</span>")
@@ -143,7 +143,7 @@
 		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
 		addtimer(VARSET_CALLBACK(owner, alpha, initial(owner.alpha)), 4 SECONDS)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
+		return TRUE
 
 //Tesla
 
@@ -189,11 +189,11 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
-		return 0
+		return FALSE
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The repulse generator is still recharging!</span>")
-			return 0
+			return FALSE
 		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)
@@ -206,7 +206,7 @@
 			thrown_items[A] = A
 
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
@@ -215,12 +215,12 @@
 
 /obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
-		return 0
+		return FALSE
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
-			return
+			return FALSE
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
 		owner.Paralyze(40)
@@ -241,8 +241,8 @@
 		H.forceMove(picked)
 		new /obj/structure/table(get_turf(owner))
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/armor/reactive/table/emp_act()
 	return

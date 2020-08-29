@@ -19,9 +19,9 @@
 	var/flags_ricochet = NONE
 
 	///When a projectile tries to ricochet off this atom, the projectile ricochet chance is multiplied by this
-	var/ricochet_chance_mod = 1
+	var/receive_ricochet_chance_mod = 1
 	///When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom
-	var/ricochet_damage_mod = 0.33
+	var/receive_ricochet_damage_coeff = 0.33
 
 	///Reagents holder
 	var/datum/reagents/reagents = null
@@ -484,12 +484,12 @@
   * Arguments:
   * - [reagents][/list]: The list of reagents the atom is being exposed to.
   * - [source][/datum/reagents]: The reagent holder the reagents are being sourced from.
-  * - method: How the atom is being exposed to the reagents.
+  * - methods: How the atom is being exposed to the reagents. Bitflags.
   * - volume_modifier: Volume multiplier.
   * - show_message: Whether to display anything to mobs when they are exposed.
   */
-/atom/proc/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, method, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
+/atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)
@@ -643,7 +643,7 @@
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
@@ -1482,10 +1482,10 @@
 		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
-		return FALSE
+		return 0
 	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
-			return FALSE
+			return 0
 
 	var/area/A = get_area(T)
 	if(A.has_gravity) // Areas which always has gravity
@@ -1534,3 +1534,21 @@
   */
 /atom/proc/attempt_charge(atom/sender, atom/target, extra_fees = 0)
 	return SEND_SIGNAL(sender, COMSIG_OBJ_ATTEMPT_CHARGE, target, extra_fees)
+
+///Passes Stat Browser Panel clicks to the game and calls client click on an atom
+/atom/Topic(href, list/href_list)
+	. = ..()
+	if(!usr?.client)
+		return
+	var/client/usr_client = usr.client
+	var/list/paramslist = list()
+	if(href_list["statpanel_item_shiftclick"])
+		paramslist["shift"] = "1"
+	if(href_list["statpanel_item_ctrlclick"])
+		paramslist["ctrl"] = "1"
+	if(href_list["statpanel_item_altclick"])
+		paramslist["alt"] = "1"
+	if(href_list["statpanel_item_click"])
+		// first of all make sure we valid
+		var/mouseparams = list2params(paramslist)
+		usr_client.Click(src, loc, null, mouseparams)

@@ -317,15 +317,12 @@
 	duration = 600
 
 /datum/status_effect/timecookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed *= 0.95
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
 	return ..()
 
 /datum/status_effect/timecookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed /= 0.95
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
+	return ..()
 
 /datum/status_effect/lovecookie
 	id = "lovecookie"

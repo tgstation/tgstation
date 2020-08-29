@@ -55,18 +55,18 @@
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter0"
-		return 0
+		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
 		icon_state = "meterX"
-		return 0
+		return FALSE
 
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)

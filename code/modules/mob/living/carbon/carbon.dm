@@ -13,6 +13,10 @@
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
+		qdel(wound)
+	for(var/scar in all_scars)
+		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
@@ -437,16 +441,17 @@
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
-		if(locate(/obj/item/assembly/health) in src)
-			stat(null, "Health: [health]")
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	if(vessel)
+		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
+	if(locate(/obj/item/assembly/health) in src)
+		. += "Health: [health]"
 
-	add_abilities_to_panel()
+/mob/living/carbon/get_proc_holders()
+	. = ..()
+	. += add_abilities_to_panel()
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -546,6 +551,7 @@
 		become_husk("burn")
 
 	med_hud_set_health()
+
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
@@ -865,7 +871,7 @@
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
-		return 0
+		return FALSE
 
 /mob/living/carbon/proc/can_defib()
 	if (suiciding)
@@ -983,20 +989,6 @@
 			if(!old_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands - 1)
 
-
-/mob/living/carbon/do_after_coefficent()
-	. = ..()
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
-	if(mood)
-		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(-INFINITY to SANITY_DISTURBED)
-				. *= 1.25
-			if(SANITY_NEUTRAL to INFINITY)
-				. *= 0.90
-
-	for(var/i in status_effects)
-		var/datum/status_effect/S = i
-		. *= S.interact_speed_modifier()
 
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)

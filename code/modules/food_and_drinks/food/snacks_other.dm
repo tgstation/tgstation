@@ -487,7 +487,7 @@
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(!reagents.trans_to(C, REAGENTS_METABOLISM, method = INGEST))
+				if(!reagents.trans_to(C, REAGENTS_METABOLISM, methods = INGEST))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
@@ -760,7 +760,7 @@
 /obj/item/reagent_containers/food/snacks/canned/attack(mob/living/M, mob/user, def_zone)
 	if (!is_drainable())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
-		return 0
+		return FALSE
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/canned/beans

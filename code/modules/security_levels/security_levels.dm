@@ -60,7 +60,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
-					pod.admin_controlled = 0
+					pod.admin_controlled = FALSE
 			if(SEC_LEVEL_DELTA)
 				minor_announce(CONFIG_GET(string/alert_delta), "Attention! Delta security level reached!",1)
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
@@ -73,7 +73,7 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
-					pod.admin_controlled = 0
+					pod.admin_controlled = FALSE
 		if(level >= SEC_LEVEL_RED)
 			for(var/obj/machinery/door/D in GLOB.machines)
 				if(D.red_alert_access)

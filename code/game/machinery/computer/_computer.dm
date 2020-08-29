@@ -25,8 +25,8 @@
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
@@ -118,5 +118,5 @@
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return
