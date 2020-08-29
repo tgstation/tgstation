@@ -888,7 +888,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
-		if((IS_HERETIC(potential_target)) || (IS_HERETIC_MONSTER(potential_target)))
+		if(IS_HERETIC(potential_target) || IS_HERETIC_MONSTER(potential_target))
 			continue
 		targets += potential_target
 	if(LAZYLEN(targets))
