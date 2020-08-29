@@ -22,7 +22,7 @@
 	///cringy signal_handler shouldnt be needed if you dont want to return but oh well
 	INVOKE_ASYNC(src, ./proc/async_generate_trash, source)
 
-/datum/element/food_trash/async_generate_trash(datum/source)
+/datum/element/food_trash/proc/async_generate_trash(datum/source)
 	SIGNAL_HANDLER
 	var/datum/component/edible/edible_component = source
 
