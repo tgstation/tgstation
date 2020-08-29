@@ -112,6 +112,18 @@
 	custom_price = 150
 	custom_premium_price = 300
 
+/obj/item/reagent_containers/hypospray/medipen/regulated
+	name = "regulated medipen"
+	desc = "An instant injection medipen which is filled with reagents authorized by command staff."
+	list_reagents = list()
+
+/obj/item/reagent_containers/hypospray/medipen/unregulated
+	name = "unregulated medipen"
+	desc = "An instant injection medipen which has had its authorization chip tampered with by a medipen refiller fitted with illegal technology."
+	icon_state = "syndipen"
+	inhand_icon_state = "tbpen"
+	list_reagents = list()
+
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.

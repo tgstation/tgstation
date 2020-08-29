@@ -31,7 +31,7 @@
 	if(!.)
 		return default_deconstruction_screwdriver(user, "mechpad-o", "mechpad", tool)
 
-/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/tool)
+/obj/machinery/plumbing/medipen_refiller/crowbar_act(mob/user, obj/item/tool)
 	..()
 	default_deconstruction_crowbar(tool)
 	return TRUE

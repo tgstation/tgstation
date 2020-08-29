@@ -3,6 +3,7 @@ import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
@@ -16,12 +17,14 @@ export const ChemReactionChamber = (props, context) => {
   ] = useLocalState(context, 'reagentQuantity', 1);
   const emptying = data.emptying;
   const reagents = data.reagents || [];
+  const locked = data.locked && !data.siliconUser;
   return (
     <Window
-      width={250}
-      height={225}
+      width={340}
+      height={340}
       resizable>
       <Window.Content scrollable>
+        <InterfaceLockNoticeBox />
         <Section
           title="Reagents"
           buttons={(
@@ -33,6 +36,7 @@ export const ChemReactionChamber = (props, context) => {
             </Box>
           )}>
           <LabeledList>
+            {!locked && (
             <tr className="LabledList__row">
               <td
                 colSpan="2"
@@ -42,7 +46,7 @@ export const ChemReactionChamber = (props, context) => {
                   value=""
                   placeholder="Reagent Name"
                   onInput={(e, value) => setReagentName(value)} />
-              </td>
+                </td>
               <td
                 className={classes([
                   "LabeledList__buttons",
@@ -65,11 +69,12 @@ export const ChemReactionChamber = (props, context) => {
                   })} />
               </td>
             </tr>
+            )}
             {map((amount, reagent) => (
               <LabeledList.Item
                 key={reagent}
                 label={reagent}
-                buttons={(
+                buttons={locked ? "" : (
                   <Button
                     icon="minus"
                     color="bad"

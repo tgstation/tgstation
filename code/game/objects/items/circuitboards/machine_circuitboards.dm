@@ -744,7 +744,7 @@
 /obj/item/circuitboard/machine/medipen_refiller
 	name = "Medipen Refiller (Machine Board)"
 	icon_state = "medical"
-	build_path = /obj/machinery/medipen_refiller
+	build_path = /obj/machinery/plumbing/medipen_refiller
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1)
 

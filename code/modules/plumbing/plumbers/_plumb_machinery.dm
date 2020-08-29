@@ -15,7 +15,16 @@
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-	///wheter we partake in rcd construction or not
+	/**
+	* list of set reagents that the machine allows in.
+	* reaction_chamber requires all before doing mixing, but specific_demand just tries to fill itself with these reagents.
+	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
+	*/
+	var/list/required_reagents = list()
+
+	/// access flags
+	req_access = list(ACCESS_CHEMISTRY)
+	var/locked = FALSE
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
