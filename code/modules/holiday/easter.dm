@@ -198,7 +198,7 @@
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/food/cake/plain = 1,
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche

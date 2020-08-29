@@ -35,6 +35,14 @@ Behavior that's still missing from this component that original food items had t
 	var/datum/callback/on_consume
 	///Last time we checked for food likes
 	var/last_check_time
+	///The initial reagents of this food when it is made
+	var/list/initial_reagents
+	///The initial volume of the foods reagents
+	var/volume
+	///The flavortext for taste (haha get it flavor text)
+	var/list/tastes = list()
+	///The type of atom this creates when the object is microwaved.
+	var/microwaved_type
 
 /datum/component/edible/Initialize(list/initial_reagents,
 								food_flags = NONE,
@@ -44,6 +52,7 @@ Behavior that's still missing from this component that original food items had t
 								list/tastes,
 								list/eatverbs = list("bite","chew","nibble","gnaw","gobble","chomp"),
 								bite_consumption = 2,
+								microwaved_type,
 								datum/callback/after_eat,
 								datum/callback/on_consume)
 
@@ -52,9 +61,13 @@ Behavior that's still missing from this component that original food items had t
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
+	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
+	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
+
 		var/obj/item/item = parent
 		item.grind_results = list() //Cursed but this is how snacks did it, grinding needs a refactor in the future.
 
@@ -69,18 +82,20 @@ Behavior that's still missing from this component that original food items had t
 	src.junkiness = junkiness
 	src.after_eat = after_eat
 	src.on_consume = on_consume
+	src.initial_reagents = initial_reagents
+	src.tastes = tastes
+	src.microwaved_type = microwaved_type
 
 	var/atom/owner = parent
 
 	owner.create_reagents(volume, INJECTABLE)
 
-	if(initial_reagents)
-		for(var/rid in initial_reagents)
-			var/amount = initial_reagents[rid]
-			if(tastes && tastes.len && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-				owner.reagents.add_reagent(rid, amount, tastes.Copy())
-			else
-				owner.reagents.add_reagent(rid, amount)
+	for(var/rid in initial_reagents)
+		var/amount = initial_reagents[rid]
+		if(tastes && tastes.len && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
+			owner.reagents.add_reagent(rid, amount, tastes.Copy())
+		else
+			owner.reagents.add_reagent(rid, amount)
 
 /datum/component/edible/InheritComponent(datum/component/C,
 	i_am_original,
@@ -141,6 +156,95 @@ Behavior that's still missing from this component that original food items had t
 	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
 	qdel(our_atom)
 	return COMSIG_FRYING_HANDLED
+
+///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
+/datum/component/edible/proc/OnProcessed(datum/source, atom/original_atom, list/chosen_processing_option)
+	SIGNAL_HANDLER
+
+	if(!original_atom.reagents)
+		return
+
+	var/atom/this_food = parent
+	var/reagents_for_slice = chosen_processing_option[TOOL_PROCESSING_AMOUNT]
+
+	this_food.create_reagents(volume) //Make sure we have a reagent container
+
+	original_atom.reagents.trans_to(this_food, reagents_for_slice)
+
+	if(original_atom.name != initial(original_atom.name))
+		this_food.name = "slice of [original_atom.name]"
+	if(original_atom.desc != initial(original_atom.desc))
+		this_food.desc = "[original_atom.desc]"
+
+///Called when food is crafted through a crafting recipe datum.
+/datum/component/edible/proc/OnCraft(datum/source, list/parts_list, datum/crafting_recipe/food/recipe)
+	SIGNAL_HANDLER
+
+	var/atom/this_food = parent
+
+	this_food.reagents.clear_reagents()
+
+	for(var/obj/item/crafted_part in this_food.contents)
+		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
+
+	if(istype(recipe))
+		contents_loop:
+			for(var/A in this_food.contents)
+				for(var/B in recipe.real_parts)
+					if(istype(A, B))
+						continue contents_loop
+				qdel(A)
+
+	if(initial_reagents && initial_reagents.len)
+		for(var/r_id in initial_reagents)
+			var/amount = initial_reagents[r_id] * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
+				this_food.reagents.add_reagent(r_id, amount, tastes)
+			else
+				this_food.reagents.add_reagent(r_id, amount)
+
+	SSblackbox.record_feedback("tally", "food_made", 1, type)
+
+/datum/component/edible/proc/OnMicrowaved(datum/source, obj/machinery/microwave/used_microwave)
+	SIGNAL_HANDLER
+
+	var/turf/T = get_turf(parent)
+
+	if(!microwaved_type)
+		new /obj/item/reagent_containers/food/snacks/badrecipe(T)
+		qdel(src)
+		return
+
+
+	var/obj/item/result
+
+	result = new microwaved_type(T)
+
+	if(istype(used_microwave))
+		setup_food_reagents(result, used_microwave.efficiency)
+	else
+		setup_food_reagents(result, 1)
+
+	SSblackbox.record_feedback("tally", "food_made", 1, result.type)
+
+///Corrects the reagents on the newly created food
+/datum/component/edible/proc/setup_food_reagents(obj/item/reagent_containers/food/snacks/result, cooking_efficiency = 1)
+
+	var/atom/this_food = parent
+
+	result.reagents.clear_reagents()
+
+	if(this_food.reagents)
+		this_food.reagents.trans_to(result, this_food.reagents.total_volume)
+
+	if(initial_reagents && initial_reagents.len)
+		for(var/r_id in initial_reagents)
+			var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
+			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
+				result.reagents.add_reagent(r_id, amount, tastes)
+			else
+				result.reagents.add_reagent(r_id, amount)
+
 
 ///All the checks for the act of eating itself and
 /datum/component/edible/proc/TryToEat(mob/living/eater, mob/living/feeder)
