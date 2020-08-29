@@ -601,11 +601,6 @@
 /obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
-/obj/structure/water_source/greyscale
-	icon_state = "sink_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	buildstacktype = null
-
 //End legacy sink
 
 
