@@ -63,7 +63,7 @@
 
 /obj/item/cautery/advanced
 	name = "searing tool"
-	desc = "It projects a high power laser used for medical application."
+	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery_a"
 	hitsound = 'sound/items/welder.ogg'
