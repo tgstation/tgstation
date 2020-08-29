@@ -459,17 +459,15 @@
 		return
 	return ..()
 
-//Legacy sink and puddles, use the type water_source for unlimited water sources like classic sinks.
+//Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
-	name = "sink"
+	name = "Water Source"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
-	desc = "A sink used for washing one's hands and face."
+	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 1
 
 /obj/structure/water_source/attack_hand(mob/living/user)
 	. = ..()
@@ -546,11 +544,6 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		O.play_tool_sound(src)
-		deconstruct()
-		return
-
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
 		new /obj/item/reagent_containers/glass/rag(src.loc)
@@ -560,7 +553,7 @@
 
 	if(istype(O, /obj/item/stack/ore/glass))
 		new /obj/item/stack/sheet/sandblock(loc)
-		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
+		to_chat(user, "<span class='notice'>You wet the sand and form it into a block.</span>")
 		O.use(1)
 		return
 
@@ -587,18 +580,6 @@
 	else
 		return ..()
 
-/obj/structure/water_source/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
-		drop_materials()
-	..()
-
-/obj/structure/water_source/proc/drop_materials()
-	if(buildstacktype)
-		new buildstacktype(loc,buildstackamount)
-	else
-		for(var/i in custom_materials)
-			var/datum/material/M = i
-			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/water_source/puddle	//splishy splashy ^_^
 	name = "puddle"
