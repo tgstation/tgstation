@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(time_track)
 
 	var/current_realtime = REALTIMEOFDAY
 	var/current_byondtime = world.time
+	//Number of real server ticks; world.time is internally multiplied by world.tick_lag by byond
 	var/current_tickcount = world.time/world.tick_lag
 
 	if (!first_run)
@@ -30,7 +31,7 @@ SUBSYSTEM_DEF(time_track)
 		time_dilation_avg_fast = MC_AVERAGE_FAST(time_dilation_avg_fast, time_dilation_current)
 		time_dilation_avg = MC_AVERAGE(time_dilation_avg, time_dilation_avg_fast)
 		time_dilation_avg_slow = MC_AVERAGE_SLOW(time_dilation_avg_slow, time_dilation_avg)
-		GLOB.glide_size_multiplier = (current_byondtime - last_tick_byond_time) / (current_realtime - last_tick_realtime)
+		//GLOB.glide_size_multiplier = (current_byondtime - last_tick_byond_time) / (current_realtime - last_tick_realtime)
 	else
 		first_run = FALSE
 	last_tick_realtime = current_realtime
