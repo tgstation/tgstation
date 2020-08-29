@@ -29,7 +29,7 @@
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
 	//head
-	if(head)
+	if(head && !(ITEM_SLOT_HEAD in obscured))
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
 	//suit/armor
 	if(wear_suit)
