@@ -347,22 +347,23 @@
 	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
+
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/exclamation_used = FALSE
-	var/question_mark_used = FALSE
 	var/mob/living/carbon/M = owner
-	for(var/i in 1 to length(message))
-		if(findtext("!", message[i]))
-			exclamation_used = TRUE
-		else if (findtext("?", message[i]))
-			question_mark_used = TRUE
+	new_message = message
+	if(findtext(message, "!"))
+		if(!findtext(message, "?"))
+			M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
 		else
-			new_message += message[i]
-	if(exclamation_used)
-		M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
-	if(question_mark_used)
-		M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
+			M.visible_message("<span class='notice'>[M] lowers one of [M.p_their()] eyebrows, raising the other.</span>")
+		new_message = replacetext(new_message, "!", "")
+
+	if(findtext(message, "?"))
+		if(!findtext(message, "!"))
+			M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
+		new_message = replacetext(new_message, "?", "")
 	speech_args[SPEECH_MESSAGE] = new_message
+
 

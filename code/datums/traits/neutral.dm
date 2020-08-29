@@ -249,7 +249,7 @@
 /datum/quirk/tongue_tied
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
-	value = 1
+	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
 //Adds tongue & gloves
