@@ -66,7 +66,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 

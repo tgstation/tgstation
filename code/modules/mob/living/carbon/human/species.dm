@@ -240,20 +240,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
 
-/**
-  * Checks if this carbon is allowed to be a certain job or rank.
-  *
-  * Override this locally if you want to define when this species qualifies for what rank if human authority is enforced.
-  * Arguments:
-  * * rank - Rank to be tested.
-  * * features - Features of a species that factors into rank qualifications, like a human with cat ears being unable to join command positions.
-  */
-/datum/species/proc/qualifies_for_rank(rank, list/features)
-	if(rank in GLOB.command_positions)
-		return 0
-	return 1
-
-
 /** regenerate_organs
   * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
   *
@@ -1185,7 +1171,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
@@ -1382,7 +1368,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.visible_message("<span class='warning'>[M] attempts to touch [H]!</span>", \
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
-		return 0
+		return
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 	switch(M.a_intent)
 		if("help")
@@ -1401,11 +1387,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
-			return 0
+			return FALSE
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>", \
 						"<span class='userdanger'>You block [I]!</span>")
-		return 0
+		return FALSE
 
 	var/hit_area
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
@@ -1428,14 +1414,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.send_item_attack_message(I, user, hit_area, affecting)
 
 	if(!I.force)
-		return 0 //item force is zero
+		return FALSE //item force is zero
 
-	var/bloody = 0
+	var/bloody = FALSE
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
-				bloody = 1
+				bloody = TRUE
 				var/turf/location = H.loc
 				if(istype(location))
 					H.add_splatter_floor(location)
