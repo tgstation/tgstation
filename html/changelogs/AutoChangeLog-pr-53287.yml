@@ -1,0 +1,7 @@
+author: "Helianthus00"
+delete-after: True
+changes: 
+  - rscadd: "Added 2 new subtypes of gas meter so that they work on layers 1 and 3"
+  - bugfix: "Deltastation: Fixes some broken gas meters to be on the correct layer"
+  - bugfix: "Icebox station: Fixes some broken gas meters to be on the correct layer, as well as relocating the random ones in maint to actual pipes"
+  - bugfix: "Pubbystation: Fixes some broken gas meters to be on the correct layer"
