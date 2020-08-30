@@ -7,6 +7,24 @@
   */
 #define DANGEROUS_DELTA_P 1000	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
+/atom/proc/is_wall_pressure_dangerous(/var/turf/target_wall)
+	var/pressure_greatest = 0
+	var/pressure_smallest = INFINITY 			//Freaking terrified to use INFINITY, man
+	for(var/t in RANGE_TURFS(2, target_wall))	//Begin processing the delta pressure across the wall.
+		var/turf/open/turf_adjacent = t
+		if(!istype(turf_adjacent))
+			continue
+		if(turf_adjacent.air.return_pressure() > pressure_greatest)
+			pressure_greatest = turf_adjacent.air.return_pressure()
+		if(turf_adjacent.air.return_pressure() < pressure_smallest)
+			pressure_smallest = turf_adjacent.air.return_pressure()
+
+	var/delta_p = (pressure_greatest - pressure_smallest)
+	if(delta_p > DANGEROUS_DELTA_P) 			//If the delta pressure is too high it is considered too dangerous to break this.
+		return TRUE
+	else
+		return FALSE
+
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
@@ -166,24 +184,13 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
-	var/pressure_greatest = 0
-	var/pressure_smallest = INFINITY 	//Freaking terrified to use INFINITY, man
-	for(var/t in RANGE_TURFS(2, src))	//Begin processing the delta pressure across the wall.
-		var/turf/open/turf_adjacent = t
-		if(!istype(turf_adjacent))
-			continue
-		if(turf_adjacent.air.return_pressure() > pressure_greatest)
-			pressure_greatest = turf_adjacent.air.return_pressure()
-		if(turf_adjacent.air.return_pressure() < pressure_smallest)
-			pressure_smallest = turf_adjacent.air.return_pressure()
-	var/delta_p = (pressure_greatest - pressure_smallest)
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
-		if (delta_p > DANGEROUS_DELTA_P) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
+		if (is_wall_pressure_dangerous(src))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+		else if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle) ))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -195,20 +202,9 @@
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
-	var/pressure_greatest = 0
-	var/pressure_smallest = INFINITY 	//Freaking terrified to use INFINITY, man
-	for(var/t in RANGE_TURFS(2, src))	//Begin processing the delta pressure across the wall.
-		var/turf/open/turf_adjacent = t
-		if(!istype(turf_adjacent))
-			continue
-		if(turf_adjacent.air.return_pressure() > pressure_greatest)
-			pressure_greatest = turf_adjacent.air.return_pressure()
-		if(turf_adjacent.air.return_pressure() < pressure_smallest)
-			pressure_smallest = turf_adjacent.air.return_pressure()
-	var/delta_p = pressure_greatest - pressure_smallest
 	for(var/turf/adj_turf in range(1, src))
 		var/area/adj_area = get_area(adj_turf)
-		if (delta_p > DANGEROUS_DELTA_P) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
+		if (is_wall_pressure_dangerous(src))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
