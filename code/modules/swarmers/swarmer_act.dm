@@ -5,6 +5,7 @@
   * Arguments:
   * * S - A reference to the swarmer doing the interaction
   */
+  #define DANGEROUS_DELTA_P 1000	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
@@ -206,7 +207,7 @@
 	var/delta_p = pressure_greatest - pressure_smallest
 	for(var/turf/adj_turf in range(1, src))
 		var/area/adj_area = get_area(adj_turf)
-		if (delta_p > 1000) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
+		if (delta_p > DANGEROUS_DELTA_P) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -260,4 +261,4 @@
 	to_chat(actor, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-
+#undef DANGEROUS_DELTA_P
