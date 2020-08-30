@@ -186,7 +186,7 @@
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
 	if(connected_ai)
-		connected_ai.connected_robots -= src
+		set_connected_ai(null)
 	if(shell)
 		GLOB.available_ai_shells -= src
 	else
@@ -471,10 +471,7 @@
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if(src.connected_ai)
-		connected_ai.connected_robots -= src
-		src.connected_ai = null
-		update_lawset_name_malf()
+	set_connected_ai(null)
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
@@ -967,7 +964,7 @@
 		builtInCamera.c_tag = real_name	//update the camera name too
 	mainframe = AI
 	deployed = TRUE
-	connected_ai = mainframe
+	set_connected_ai(mainframe)
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
@@ -1080,13 +1077,11 @@
 
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
-	connected_ai = select_active_ai_with_fewest_borgs(z)
+	set_connected_ai(select_active_ai_with_fewest_borgs(z))
 	if(connected_ai)
-		connected_ai.connected_robots += src
 		lawupdate = TRUE
 		lawsync()
 		return TRUE
-	update_lawset_name_malf()
 	picturesync()
 	return FALSE
 
@@ -1107,3 +1102,15 @@
 
 /mob/living/silicon/robot/is_malf()
 	return is_special_character(connected_ai)
+
+/mob/living/silicon/robot/proc/set_connected_ai(new_ai)
+	if(connected_ai == new_ai)
+		return
+	. = connected_ai
+	connected_ai = new_ai
+	update_lawset_name_malf()
+	if(.)
+		var/mob/living/silicon/ai/old_ai = .
+		old_ai.connected_robots -= src
+	if(connected_ai)
+		connected_ai.connected_robots |= src

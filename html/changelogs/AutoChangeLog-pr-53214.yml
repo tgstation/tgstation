@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - rscdel: "Removed an unused variable from tech nodes (and the unused proc that references it)."

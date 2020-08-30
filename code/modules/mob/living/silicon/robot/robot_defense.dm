@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	sleep(20)
 	to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
 	lawupdate = FALSE
-	connected_ai = null
+	set_connected_ai(null)
 	set_laws_lawset("/datum/ai_laws/syndicate_override")
 	if(user)
 		to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and [user.p_their()] commands.</span>")
