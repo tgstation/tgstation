@@ -216,10 +216,9 @@
 
 		if(ismecha(the_target))
 			var/obj/vehicle/sealed/mecha/M = the_target
-			if(LAZYLEN(M.occupants))//Just so we don't attack empty mechs
-				for(var/occupant in M.occupants)
-					if(CanAttack(occupant))
-						return TRUE
+			for(var/occupant in M.occupants)
+				if(CanAttack(occupant))
+					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
