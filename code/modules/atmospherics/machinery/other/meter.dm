@@ -18,6 +18,12 @@
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
 
+/obj/machinery/meter/atmos/layer1
+	target_layer = 1
+
+/obj/machinery/meter/atmos/layer3
+	target_layer = 3
+
 /obj/machinery/meter/atmos/atmos_waste_loop
 	name = "waste loop gas flow meter"
 	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
