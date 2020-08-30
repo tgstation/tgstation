@@ -116,8 +116,8 @@ This section is for the event controller
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
 	var/obj/spawner = pick(spawners)
-	var/obj/effect/anomaly/flux/A = new(L, 300, FALSE)
-	A.explosive = FALSE
+	var/obj/effect/anomaly/flux/spawned_anomaly = new(spawner.loc, 300, FALSE)
+	spawned_anomaly.explosive = FALSE
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
