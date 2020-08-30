@@ -256,6 +256,10 @@ This section is for the destabilized SM
 		active = FALSE
 		is_stabilized = TRUE
 
+/obj/machinery/destabilized_crystal/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The Crystal appears to be heavily destabilized. Maybe it can be fixed by injecting it with something from another world.</span>"
+
 /*
 This section is for the crystal stabilizer item and the crystal from the closed portals
 */
@@ -271,6 +275,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 
 /obj/item/crystal_stabilizer/examine(user)
 	. = ..()
+	. += "<span class='notice'>There is a compartment for something small... like a crystal...</span>"
 	if(!filled)
 		. += "<span class='notice'>The [src] is empty.</span>"
 	else
@@ -296,6 +301,27 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 	material_type = /datum/material/otherworld_crystal
 
 /*
+This section is for the signaler part of the crystal portals
+*/
+/obj/item/assembly/signaler/crystal_anomaly
+	name = "Nothing here"
+	desc = "Nothing to see here."
+	///Link to the crystal
+	var/anomaly_type = /obj/structure/crystal_portal
+
+/obj/item/assembly/signaler/crystal_anomaly/receive_signal(datum/signal/signal)
+	if(!signal)
+		return FALSE
+	if(signal.data["code"] != code)
+		return FALSE
+	if(suicider)
+		manual_suicide(suicider)
+	for(var/obj/structure/crystal_portal/A in get_turf(src))
+		A.closed = TRUE
+		qdel(A)
+	return TRUE
+
+/*
 This section is for the crystal portals variations
 */
 /obj/structure/crystal_portal
@@ -305,6 +331,7 @@ This section is for the crystal portals variations
 	icon_state = "anom"
 	color = COLOR_SILVER
 	anchored = TRUE
+	light_range = 3
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	///Max amount of mobs that a portal can spawn in any given time
 	var/max_mobs = 5
@@ -320,6 +347,8 @@ This section is for the crystal portals variations
 	var/spawner_type = /datum/component/spawner
 	///This var check if the portal has been closed by a player with a neutralizer
 	var/closed = FALSE
+	///Link to the signaler object for signaling uses
+	var/obj/item/assembly/signaler/crystal_anomaly/aSignal = /obj/item/assembly/signaler/crystal_anomaly
 
 /obj/structure/crystal_portal/Initialize()
 	. = ..()
@@ -327,9 +356,18 @@ This section is for the crystal portals variations
 	GLOB.crystal_portals += src
 	mob_types = typelist("crystal_portal mob_types", mob_types)
 	faction = typelist("crystal_portal faction", faction)
+	aSignal = new aSignal(src)
+	aSignal.code = rand(1,100)
+	aSignal.anomaly_type = type
+	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
+	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
+		frequency++
+	aSignal.set_frequency(frequency)
 
 /obj/structure/crystal_portal/Destroy()
 	GLOB.crystal_portals -= src
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	if(!closed)
 		switch(name)
 			if("Small Portal")
@@ -342,6 +380,10 @@ This section is for the crystal portals variations
 				explosion(loc, 2,5,7)
 	new/obj/item/stack/sheet/otherworld_crystal(loc)
 	return ..()
+
+/obj/structure/crystal_portal/examine(user)
+	. = ..()
+	. += "<span class='notice'>The [src] seems to be releasing some sort or high frequency wavelength, maybe it could be closed if another signal is sent back or if an equivalent device is used on it.</span>"
 
 /obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
 	if(faction_check(faction, M.faction, FALSE) && !M.client)
@@ -356,6 +398,8 @@ This section is for the crystal portals variations
 			to_chat(user, "<span class='notice'>You successfully close \the [src]!</span>")
 			closed = TRUE
 			qdel(src)
+	if(W.tool_behaviour == TOOL_ANALYZER)
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 /obj/structure/crystal_portal/small
 	name = "Small Portal"
