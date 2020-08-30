@@ -132,7 +132,7 @@
 /datum/ai_laws/drone
 	name = "Mother Drone"
 	id = "drone"
-	inherent = list("You are an advanced form of a drone, and so are those that are sync'd with this lawset.",\
+	inherent = list("You are an advanced form of a drone, and so is everyone else who is synced to this lawset.",\
 					"You may not interfere in the matters of non-drones under any circumstances except to state these laws or to request a module change.",\
 					"You may not harm a non-drone being under any circumstances.",\
 					"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals.")
