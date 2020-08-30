@@ -24,8 +24,6 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
-	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
-
 	req_access = list(ACCESS_RND)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
 	//UI VARS
@@ -37,7 +35,6 @@ Nothing else in the console has ID requirements.
 	var/datum/selected_node_id
 	var/datum/selected_design_id
 	var/selected_category
-	var/list/matching_design_ids
 	var/disk_slot_selected
 	var/searchstring = ""
 	var/searchtype = ""
@@ -63,7 +60,6 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
-	matching_design_ids = list()
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
@@ -74,7 +70,6 @@ Nothing else in the console has ID requirements.
 	if(d_disk)
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
-	matching_design_ids = null
 	return ..()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
@@ -106,7 +101,7 @@ Nothing else in the console has ID requirements.
 			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
-	else if(!(linked_imprinter && linked_imprinter.busy))
+	else
 		. = ..()
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
@@ -156,11 +151,6 @@ Nothing else in the console has ID requirements.
 		locked = FALSE
 	return ..()
 
-/obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
-	. = ..()
-	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
-	return print || .
-
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
 		return
@@ -198,8 +188,6 @@ Nothing else in the console has ID requirements.
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK]'>Design Disk</a>"
 	if(t_disk)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
-	if(linked_imprinter)
-		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter</a>"
 	l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings</a></H2>"
 	return l
 
@@ -210,129 +198,6 @@ Nothing else in the console has ID requirements.
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>R&D Console Settings:</h3>"
 	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
-	var/list/l = list()
-	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
-	if (linked_imprinter.materials.mat_container)
-		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.format_amount()]</A>"
-	else
-		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit()		//Legacy code
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<h3>Circuit Imprinter Menu:</h3>"
-
-	l += "<form name='search' action='?src=[REF(src)]'>\
-	<input type='hidden' name='src' value='[REF(src)]'>\
-	<input type='hidden' name='search' value='to_search'>\
-	<input type='hidden' name='type' value='imprint'>\
-	<input type='text' name='to_search'>\
-	<input type='submit' value='Search'>\
-	</form><HR>"
-
-	l += list_categories(linked_imprinter.categories, RDSCREEN_IMPRINTER_CATEGORY_VIEW)
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit_category_view()	//Legacy code
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
-			continue
-		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
-			continue
-		var/temp_materials
-		var/check_materials = TRUE
-
-		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
-		if(!linked_imprinter.efficient_with(D.build_path))
-			coeff = 1
-
-		for(var/M in all_materials)
-			temp_materials += " | "
-			if (!linked_imprinter.check_mat(D, M))
-				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-		if (check_materials)
-			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
-		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_materials]"
-	l += "</div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit_search()	//Legacy code
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<div class='statusDisplay'><h3>Search results:</h3>"
-
-	for(var/id in matching_design_ids)
-		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
-			continue
-		var/temp_materials
-		var/check_materials = TRUE
-		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_imprinter.efficiency_coeff
-		if(!linked_imprinter.efficient_with(D.build_path))
-			coeff = 1
-		for(var/M in all_materials)
-			temp_materials += " | "
-			if (!linked_imprinter.check_mat(D, M))
-				check_materials = FALSE
-				temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-			else
-				temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-		if (check_materials)
-			l += "<A href='?src=[REF(src)];imprint=[D.id]'>[D.name]</A>[temp_materials]"
-		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_materials]"
-	l += "</div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit_chemicals()		//legacy code
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
-	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
-		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeI=[R]'>Purge</A>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_circuit_materials()	//Legacy code!
-	RDSCREEN_UI_IMPRINTER_CHECK
-	var/datum/component/material_container/mat_container = linked_imprinter.materials.mat_container
-	if (!mat_container)
-		screen = RDSCREEN_IMPRINTER
-		return ui_circuit()
-	var/list/l = list()
-	l += ui_circuit_header()
-	l += "<h3><div class='statusDisplay'>Material Storage:</h3>"
-	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_id
-		var/amount = mat_container.materials[mat_id]
-		var/ref = REF(M)
-		l += "* [amount] of [M.name]: "
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];imprinter_ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
-		l += ""
-	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techdisk()		//Legacy code
@@ -498,8 +363,6 @@ Nothing else in the console has ID requirements.
 		var/lathes = list()
 		if(selected_design.build_type & IMPRINTER)
 			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/production/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_imprinter && stored_research.researched_designs[selected_design.id])
-				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[selected_design.name]'>Imprint</A>"
 		if(selected_design.build_type & PROTOLATHE)
 			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
 		if(selected_design.build_type & AUTOLATHE)
@@ -547,16 +410,6 @@ Nothing else in the console has ID requirements.
 				ui += ui_designdisk_upload()
 			if(RDSCREEN_TECHDISK)
 				ui += ui_techdisk()
-			if(RDSCREEN_IMPRINTER)
-				ui += ui_circuit()
-			if(RDSCREEN_IMPRINTER_CATEGORY_VIEW)
-				ui += ui_circuit_category_view()
-			if(RDSCREEN_IMPRINTER_MATERIALS)
-				ui += ui_circuit_materials()
-			if(RDSCREEN_IMPRINTER_CHEMICALS)
-				ui += ui_circuit_chemicals()
-			if(RDSCREEN_IMPRINTER_SEARCH)
-				ui += ui_circuit_search()
 			if(RDSCREEN_SETTINGS)
 				ui += ui_settings()
 
@@ -591,14 +444,6 @@ Nothing else in the console has ID requirements.
 			to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 	if(ls["back_screen"])
 		back = text2num(ls["back_screen"])
-	if(ls["imprint"])
-		if(QDELETED(linked_imprinter))
-			say("No Circuit Imprinter Linked!")
-			return
-		if(linked_imprinter.busy)
-			say("Warning: Imprinter busy!")
-		else
-			linked_imprinter.user_try_print_id(ls["imprint"])
 	if(ls["category"])
 		selected_category = ls["category"]
 	if(ls["eject_design"]) //Eject the design disk.
@@ -609,27 +454,6 @@ Nothing else in the console has ID requirements.
 		eject_disk("tech")
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
-
-	//Circuit Imprinter Materials
-	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
-		if(QDELETED(linked_imprinter))
-			say("No Circuit Imprinter Linked!")
-			return
-		linked_imprinter.reagents.del_reagent(ls["disposeI"])
-	if(ls["disposeallI"]) //Causes the circuit imprinter to dispose of all it's reagents.
-		if(QDELETED(linked_imprinter))
-			say("No Circuit Imprinter Linked!")
-			return
-		linked_imprinter.reagents.clear_reagents()
-	if(ls["imprinter_ejectsheet"]) //Causes the imprinter to eject a sheet of material
-		if(QDELETED(linked_imprinter))
-			say("No Circuit Imprinter Linked!")
-			return
-		if(!linked_imprinter.materials.mat_container)
-			say("No material storage linked to circuit imprinter!")
-			return
-		var/datum/material/M = locate(ls["imprinter_ejectsheet"]) in linked_imprinter.materials.mat_container.materials
-		linked_imprinter.eject_sheets(M, ls["eject_amt"])
 	if(ls["disk_slot"])
 		disk_slot_selected = text2num(ls["disk_slot"])
 	if(ls["research_node"])
@@ -735,31 +559,6 @@ Nothing else in the console has ID requirements.
 	if(type == "tech")
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
-
-/obj/machinery/computer/rdconsole/proc/rescan_views()
-	var/compare
-	matching_design_ids.Cut()
-	if(searchtype == "imprint")
-		compare = IMPRINTER
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(D.build_type & compare))
-			continue
-		if(findtext(D.name,searchstring))
-			matching_design_ids.Add(D.id)
-
-/obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
-	var/amount = 50
-	if(buildtype == IMPRINTER)
-		if(QDELETED(linked_imprinter))
-			return FALSE
-		for(var/M in D.materials + D.reagents_list)
-			amount = min(amount, linked_imprinter.check_mat(D, M))
-			if(amount < 1)
-				return FALSE
-	else
-		return FALSE
-	return amount
 
 /obj/machinery/computer/rdconsole/proc/lock_console(mob/user)
 	locked = TRUE
