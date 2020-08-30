@@ -85,8 +85,7 @@
 			continue
 		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];TEMP=273")
-		floor_loc.atmos_spawn_air("o2=[o2_gas_amount / distance_from_center];TEMP=273")
+		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];o2=[o2_gas_amount / distance_from_center];TEMP=273")
 		floor_loc.air_update_turf()
 	qdel(src)
 

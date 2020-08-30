@@ -547,7 +547,8 @@ nobiliumsuppression = INFINITY
 		/datum/gas/oxygen = 10,
 		/datum/gas/nitrogen = 10,
 		/datum/gas/bz = 5,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 60
+		"TEMP" = 1500,
+		"MAX_TEMP" = 10000
 	)
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
@@ -555,7 +556,7 @@ nobiliumsuppression = INFINITY
 	var/temperature = air.temperature
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100), cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
+	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
 	var/energy_used = heat_efficency * NITRYL_FORMATION_ENERGY
 	ASSERT_GAS(/datum/gas/nitryl, air)
 	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
@@ -793,13 +794,15 @@ nobiliumsuppression = INFINITY
 	var/ball_shot_angle = 180 * cos(cached_gases[/datum/gas/water_vapor][MOLES] / cached_gases[/datum/gas/nitryl][MOLES]) + 180
 	var/stim_used = min(STIM_BALL_GAS_AMOUNT / cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/stimulum][MOLES])
 	var/pluox_used = min(STIM_BALL_GAS_AMOUNT / cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/pluoxium][MOLES])
+	if ((cached_gases[/datum/gas/pluoxium][MOLES] - pluox_used < 0 ) || (cached_gases[/datum/gas/stimulum][MOLES] - stim_used < 0) || (cached_gases[/datum/gas/plasma][MOLES] - min(stim_used * pluox_used, 30) < 0)) //Shouldn't produce gas from nothing.
+		return NO_REACTION
 	var/energy_released = stim_used * STIMULUM_HEAT_SCALE//Stimulum has a lot of stored energy, and breaking it up releases some of it
 	location.fire_nuclear_particle(ball_shot_angle)
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] += 0.5 * pluox_used
 	cached_gases[/datum/gas/nitrogen][MOLES] += 2 * stim_used
 	cached_gases[/datum/gas/pluoxium][MOLES] -= pluox_used
 	cached_gases[/datum/gas/stimulum][MOLES] -= stim_used
-	cached_gases[/datum/gas/plasma][MOLES] -= min(stim_used * pluox_used, 10)
+	cached_gases[/datum/gas/plasma][MOLES] -= min(stim_used * pluox_used, 30)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
