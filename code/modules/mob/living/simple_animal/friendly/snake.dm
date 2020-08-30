@@ -95,8 +95,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/Initialize()
 	. = ..()
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	H.add_hud_to(src)
+	var/datum/atom_hud/medical_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	medical_hud.add_hud_to(src)
 	notify_ghosts("A controllable snake of Asclepius has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Snake Created")
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/asclepius/ListTargets(atom/the_target)
