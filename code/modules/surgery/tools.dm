@@ -75,18 +75,18 @@
 
 /obj/item/cautery/advanced/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_DRILL)
-		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
-		icon_state = "cautery_a"
-	else
+	if(tool_behaviour == TOOL_CAUTERY)
 		tool_behaviour = TOOL_DRILL
 		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
 		icon_state = "surgicaldrill_a"
+	else
+		tool_behaviour = TOOL_CAUTERY
+		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
+		icon_state = "cautery_a"
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
+	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
