@@ -79,7 +79,7 @@
 	if(can_be_seen(NewLoc))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
-		return 0
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/statue/Life()
@@ -144,7 +144,7 @@
 // Cannot talk
 
 /mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return 0
+	return
 
 // Turn to dust when gibbed
 
@@ -158,7 +158,7 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
-			return 0
+			return FALSE
 	return ..()
 
 // Don't attack your creator if there is one

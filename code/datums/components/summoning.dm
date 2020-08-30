@@ -52,11 +52,11 @@
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return
 	if(last_spawned_time > world.time)
-		return 0
+		return
 	if(!prob(spawn_chance))
-		return 0
+		return
 	last_spawned_time = world.time + spawn_delay
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)

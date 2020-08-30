@@ -230,12 +230,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
-		return 0
+		return FALSE
 	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, 0)) //Not chargecost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
-		return 0
+		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -258,7 +258,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-	return 1
+	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/mob/living/first_invoker = invokers[1]

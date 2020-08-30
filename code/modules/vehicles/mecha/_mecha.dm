@@ -657,6 +657,7 @@
 			playsound(src,turnsound,40,TRUE)
 		return TRUE
 
+	set_glide_size(DELAY_TO_GLIDE_SIZE(step_in))
 	//Otherwise just walk normally
 	. = step(src,direction, dir)
 

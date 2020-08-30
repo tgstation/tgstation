@@ -11,7 +11,7 @@
 
 /datum/eldritch_knowledge/spell/ashen_shift
 	name = "Ashen Shift"
-	gain_text = "Ash is all the same, how can one man master it all?"
+	gain_text = "The Nightwatcher was the first of them, his treason has started it all."
 	desc = "Short range jaunt that can help you escape from bad situations."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
@@ -20,7 +20,7 @@
 
 /datum/eldritch_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	gain_text = "Gates have opened, minds have flooded, I remain."
+	gain_text = "He well knew how to walk between the planes."
 	desc = "Empowers your mansus grasp to throw away enemies."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
@@ -58,7 +58,7 @@
 
 /datum/eldritch_knowledge/ash_mark
 	name = "Mark of ash"
-	gain_text = "Spread the famine."
+	gain_text = "Nightwatcher was a very particular man, always watching, in the night. In spite of his duty, he has tranced through the manse, with his blazing lantern."
 	desc = "Your sickly blade now applies ash mark on hit. Use your mansus grasp to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage decreases with how many times the mark has spread."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
@@ -73,7 +73,7 @@
 
 /datum/eldritch_knowledge/curse/blindness
 	name = "Curse of blindness"
-	gain_text = "Blind man walks through the world, unnoticed by the masses."
+	gain_text = "He walks through the world, unnoticed by the masses."
 	desc = "Curse someone with 2 minutes of complete blindness by sacrificing a pair of eyes, a screwdriver and a pool of blood, with an object that the victim has touched with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/screwdriver,/obj/effect/decal/cleanable/blood)
@@ -100,7 +100,7 @@
 
 /datum/eldritch_knowledge/ash_blade_upgrade
 	name = "Fiery blade"
-	gain_text = "May the sun burn the heretics."
+	gain_text = "He has swung and swung, the ash fell from the skies, his city... his people, all gone, and yet he was alive in his charred body."
 	desc = "Your blade of choice will now add firestacks."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/flame_birth)
@@ -162,7 +162,7 @@
 
 /datum/eldritch_knowledge/final/ash_final
 	name = "Ashlord's rite"
-	gain_text = "The forgotten lords have spoken! The lord of ash have come! Fear the fire!"
+	gain_text = "Nightwacher has found the ascension and shares it between the men! For I am one with the fire, WATCH ME RISE!"
 	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you create a wave of flames all around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
@@ -170,7 +170,7 @@
 	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 
 /datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashlord [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
 	var/mob/living/carbon/human/H = user

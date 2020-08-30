@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Quickswapping clothing now properly unequips the swapped-out clothing, removing any traits they granted while worn"

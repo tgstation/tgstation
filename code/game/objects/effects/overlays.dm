@@ -50,8 +50,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	vis_flags = NONE
-	var/unused = 0 //When detected to be unused it gets set to world.time, after a while it gets removed
-	var/cache_expiration = 2 MINUTES // overlays which go unused for 2 minutes get cleaned up
+	///When detected to be unused it gets set to world.time, after a while it gets removed
+	var/unused = 0
+	///overlays which go unused for this amount of time get cleaned up
+	var/cache_expiration = 2 MINUTES
 
 /obj/effect/overlay/atmos_excited
 	name = "excited group"

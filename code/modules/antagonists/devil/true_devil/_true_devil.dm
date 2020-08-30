@@ -119,7 +119,7 @@
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return FALSE
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -146,7 +146,7 @@
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return FALSE
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
