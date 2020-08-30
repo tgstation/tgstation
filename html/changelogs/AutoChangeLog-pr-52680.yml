@@ -1,6 +1,0 @@
-author: "EdgeLordExe"
-delete-after: True
-changes: 
-  - tweak: "Rust_spread will no longer lag servers into oblivion"
-  - tweak: "Changed a few flavour texts to better represent lore."
-  - bugfix: "Rustbringer's oath now properly only heals while on rusted tiles."

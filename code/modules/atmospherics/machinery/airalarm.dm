@@ -448,16 +448,16 @@
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((machine_stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -466,7 +466,7 @@
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
@@ -474,7 +474,7 @@
 	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
-	return 1
+	return TRUE
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)

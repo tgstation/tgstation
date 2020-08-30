@@ -9,7 +9,7 @@
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	pressure_resistance = 25
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	can_be_shoved_into = TRUE

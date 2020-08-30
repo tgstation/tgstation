@@ -43,8 +43,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-//	projectile_type = "/obj/projectile/practice"
-	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
+	clumsy_check = FALSE //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
@@ -68,7 +67,7 @@
 /obj/item/gun/energy/laser/practice/sc_laser
 	name = "Old laser"
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
-	clumsy_check = 0
+	clumsy_check = FALSE
 
 /*
  * Safe code hints

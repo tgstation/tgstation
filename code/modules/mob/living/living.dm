@@ -140,7 +140,7 @@
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
 				return TRUE
-			now_pushing = 1
+			now_pushing = TRUE
 			var/oldloc = loc
 			var/oldMloc = M.loc
 
@@ -160,7 +160,7 @@
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
-			now_pushing = 0
+			now_pushing = FALSE
 
 			if(!move_failed)
 				return TRUE
@@ -1132,7 +1132,7 @@
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
-		on_fire = 0
+		on_fire = FALSE
 		fire_stacks = 0
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)

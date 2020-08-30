@@ -32,10 +32,9 @@
 	return ..()
 
 /obj/effect/acid/process()
-	. = 1
 	if(!target)
 		qdel(src)
-		return 0
+		return FALSE
 
 	if(prob(5))
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -50,7 +49,8 @@
 	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
 	if(acid_level <= 0)
 		qdel(src)
-		return 0
+		return FALSE
+	return TRUE
 
 /obj/effect/acid/Crossed(AM as mob|obj)
 	. = ..()

@@ -218,7 +218,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+		return
 
 	var/atom/signal_sender = signal.data["user"]
 
