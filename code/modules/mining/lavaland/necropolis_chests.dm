@@ -287,7 +287,9 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
+	light_system = MOVABLE_LIGHT
 	light_range = 7
+	light_flags = LIGHT_ATTACHED
 	layer = ABOVE_ALL_MOB_LAYER
 	var/sight_flags = SEE_MOBS
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -600,12 +602,12 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/flightpotion/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/flightpotion/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		var/mob/living/carbon/C = M
 		var/holycheck = ishumanbasic(C)
 		if(reac_volume < 5 || !(holycheck || islizard(C) || (ismoth(C) && C.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
-			if(method == INGEST && show_message)
+			if((methods & INGEST) && show_message)
 				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 		if(C.dna.species.has_innate_wings)
@@ -661,7 +663,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30) //mostly bone bracer armor
+	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, BIO = 0, RAD = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
@@ -1029,13 +1031,11 @@
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
-	var/loot = rand(1,3)
+	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/blood_contract(src)
-		if(3)
 			new /obj/item/gun/magic/staff/spellblade(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
@@ -1059,50 +1059,6 @@
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
 	log_combat(user, null, "activated a bottle of mayhem", src)
-	qdel(src)
-
-/obj/item/blood_contract
-	name = "blood contract"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
-	color = "#FF0000"
-	desc = "Mark your target for death."
-	var/used = FALSE
-
-/obj/item/blood_contract/attack_self(mob/user)
-	if(used)
-		return
-	used = TRUE
-
-	var/list/da_list = list()
-	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
-		var/mob/living/L = I
-		da_list[L.real_name] = L
-
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
-
-	choice = da_list[choice]
-
-	if(!choice)
-		used = FALSE
-		return
-	if(!(isliving(choice)))
-		to_chat(user, "<span class='warning'>[choice] is already dead!</span>")
-		used = FALSE
-		return
-	if(choice == user)
-		to_chat(user, "<span class='warning'>You feel like writing your own name into a cursed death warrant would be unwise.</span>")
-		used = FALSE
-		return
-
-	var/mob/living/L = choice
-
-	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
-
-	var/datum/antagonist/blood_contract/A = new
-	L.mind.add_antag_datum(A)
-
-	log_combat(user, L, "took out a blood contract on", src)
 	qdel(src)
 
 //Colossus

@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	density = TRUE
 	state_open = TRUE
 	var/busy = FALSE
-	var/bloody_mess = 0
+	var/bloody_mess = FALSE
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
@@ -264,12 +264,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
-		chained = 0
+		chained = FALSE
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
 	..()
 
-/obj/machinery/washing_machine/relaymove(mob/user)
+/obj/machinery/washing_machine/relaymove(mob/living/user, direction)
 	container_resist_act(user)
 
 /obj/machinery/washing_machine/container_resist_act(mob/living/user)

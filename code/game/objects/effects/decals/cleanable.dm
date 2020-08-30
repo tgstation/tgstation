@@ -81,25 +81,11 @@
 
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
-/obj/effect/decal/cleanable/Crossed(atom/movable/O)
+/obj/effect/decal/cleanable/Crossed(atom/movable/AM)
 	..()
-	if(ishuman(O))
-		var/mob/living/carbon/human/H = O
-		if(H.shoes && blood_state && bloodiness)
-			var/obj/item/clothing/shoes/S = H.shoes
-			if(!S.can_be_bloody)
-				return
-			var/add_blood = 0
-			if(bloodiness >= BLOOD_GAIN_PER_STEP)
-				add_blood = BLOOD_GAIN_PER_STEP
-			else
-				add_blood = bloodiness
-			bloodiness -= add_blood
-			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
-			S.add_blood_DNA(return_blood_DNA())
-			S.blood_state = blood_state
-			update_icon()
-			H.update_inv_shoes()
+	if(iscarbon(AM) && blood_state && bloodiness > 0)
+		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
+		update_icon()
 
 /obj/effect/decal/cleanable/wash(clean_types)
 	..()

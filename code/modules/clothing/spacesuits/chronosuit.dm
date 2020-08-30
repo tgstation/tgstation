@@ -4,7 +4,7 @@
 	icon_state = "chronohelmet"
 	inhand_icon_state = "chronohelmet"
 	slowdown = 1
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, RAD = 90, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/obj/item/clothing/suit/space/chronos/suit
 
@@ -24,16 +24,16 @@
 	icon_state = "chronosuit"
 	inhand_icon_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle)
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, RAD = 90, FIRE = 100, ACID = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
 	var/obj/item/clothing/head/helmet/space/chronos/helmet
 	var/obj/effect/chronos_cam/camera
 	var/datum/action/innate/chrono_teleport/teleport_now = new
-	var/activating = 0
-	var/activated = 0
+	var/activating = FALSE
+	var/activated = FALSE
 	var/cooldowntime = 50 //deciseconds
-	var/teleporting = 0
+	var/teleporting = FALSE
 	var/phase_timer_id
 
 /obj/item/clothing/suit/space/chronos/Initialize()
@@ -96,7 +96,7 @@
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.set_anchored(FALSE)
-		teleporting = 0
+		teleporting = FALSE
 		for(var/obj/item/I in user.held_items)
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		if(camera)
@@ -204,7 +204,7 @@
 				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
-		activating = 0
+		activating = FALSE
 
 /obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
 	if(activated && (!teleporting || force))
@@ -213,8 +213,8 @@
 		var/hard_landing = teleporting && force
 		REMOVE_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		cooldown = world.time + cooldowntime * 1.5
-		activated = 0
-		activating = 0
+		activated = FALSE
+		activating = FALSE
 		finish_chronowalk()
 		if(user && ishuman(user))
 			teleport_now.Remove(user)
@@ -271,7 +271,7 @@
 	if(target_ui)
 		QDEL_NULL(target_ui)
 
-/obj/effect/chronos_cam/relaymove(mob/user, direction)
+/obj/effect/chronos_cam/relaymove(mob/living/user, direction)
 	if(!holder)
 		qdel(src)
 		return

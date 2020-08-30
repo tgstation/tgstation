@@ -68,7 +68,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(is_operational())
+	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
 		if(prob(100 / severity))

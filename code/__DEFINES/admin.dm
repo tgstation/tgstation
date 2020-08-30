@@ -103,6 +103,8 @@
 #define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
 #define ADMIN_PUNISHMENT_SCARIFY "Scarify"
 #define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
+#define ADMIN_PUNISHMENT_DOCK "Dock Pay"
+#define ADMIN_PUNISHMENT_BREAD "Bread"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2

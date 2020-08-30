@@ -14,13 +14,19 @@
 	unique_name = TRUE
 	can_be_shoved_into = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
-					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
+	bodyparts = list(
+		/obj/item/bodypart/chest/monkey,
+		/obj/item/bodypart/head/monkey,
+		/obj/item/bodypart/l_arm/monkey,
+		/obj/item/bodypart/r_arm/monkey,
+		/obj/item/bodypart/r_leg/monkey,
+		/obj/item/bodypart/l_leg/monkey,
+		)
 	hud_type = /datum/hud/monkey
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/lay_down)
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
@@ -43,6 +49,7 @@
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, 2)
+	AddComponent(/datum/component/bloodysoles/feet)
 
 /mob/living/carbon/monkey/Destroy()
 	SSmobs.cubemonkeys -= src
@@ -86,16 +93,16 @@
 		slow += ((283.222 - bodytemperature) / 10) * 1.75
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod, TRUE, slow)
 
-/mob/living/carbon/monkey/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
-			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling)
-				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
-				stat("Absorbed DNA", changeling.absorbedcount)
+/mob/living/carbon/monkey/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
+	. += "Move Mode: [m_intent]"
+	if(client && mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			. += ""
+			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
+			. += "Absorbed DNA: [changeling.absorbedcount]"
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
@@ -119,6 +126,8 @@
 	return FALSE
 
 /mob/living/carbon/monkey/canBeHandcuffed()
+	if(num_hands < 2)
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
