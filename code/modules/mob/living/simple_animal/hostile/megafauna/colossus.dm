@@ -697,7 +697,10 @@ Difficulty: Very Hard
 	if(isliving(target) && target != src)
 		var/mob/living/L = target
 		if(L.stat != DEAD)
-			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
+			if(client)
+				L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
+			else
+				L.heal_overall_damage(melee_damage_upper/5, melee_damage_upper/5) //much slower healing if there isn't a player behind the wheel
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 			visible_message("<span class='notice'>[src] mends the wounds of [target].</span>","<span class='notice'>You mend the wounds of [target].</span>")
 
