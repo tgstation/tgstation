@@ -441,7 +441,6 @@
 /obj/item/food/cake/brioche
 	name = "brioche cake"
 	desc = "A ring of sweet, glazed buns."
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brioche
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 
 /obj/item/food/cake/brioche/MakeProcessable()
