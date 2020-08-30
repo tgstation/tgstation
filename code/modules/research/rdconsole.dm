@@ -24,7 +24,6 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
-	var/obj/machinery/rnd/destructive_analyzer/linked_destroy	//Linked Destructive Analyzer
 	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
 	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
 
@@ -61,48 +60,15 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/rnd/D in oview(3,src))
-		if(D.linked_console != null || D.disabled || D.panel_open)
-			continue
-		if(istype(D, /obj/machinery/rnd/destructive_analyzer))
-			if(linked_destroy == null)
-				linked_destroy = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/production/protolathe))
-			if(linked_lathe == null)
-				var/obj/machinery/rnd/production/protolathe/P = D
-				if(!P.console_link)
-					continue
-				linked_lathe = D
-				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/production/circuit_imprinter))
-			if(linked_imprinter == null)
-				var/obj/machinery/rnd/production/circuit_imprinter/C = D
-				if(!C.console_link)
-					continue
-				linked_imprinter = D
-				D.linked_console = src
-
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
 	matching_design_ids = list()
-	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
 		stored_research.consoles_accessing -= src
-	if(linked_destroy)
-		linked_destroy.linked_console = null
-		linked_destroy = null
-	if(linked_lathe)
-		linked_lathe.linked_console = null
-		linked_lathe = null
-	if(linked_imprinter)
-		linked_imprinter.linked_console = null
-		linked_imprinter = null
 	if(t_disk)
 		t_disk.forceMove(get_turf(src))
 		t_disk = null
@@ -141,7 +107,7 @@ Nothing else in the console has ID requirements.
 			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
-	else if(!(linked_destroy && linked_destroy.busy) && !(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
+	else if(!(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
 		. = ..()
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
@@ -182,18 +148,6 @@ Nothing else in the console has ID requirements.
 			return FALSE
 	say("Not enough research points...")
 	return FALSE
-
-/obj/machinery/computer/rdconsole/on_deconstruction()
-	if(linked_destroy)
-		linked_destroy.linked_console = null
-		linked_destroy = null
-	if(linked_lathe)
-		linked_lathe.linked_console = null
-		linked_lathe = null
-	if(linked_imprinter)
-		linked_imprinter.linked_console = null
-		linked_imprinter = null
-	..()
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
@@ -246,8 +200,6 @@ Nothing else in the console has ID requirements.
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK]'>Design Disk</a>"
 	if(t_disk)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
-	if(linked_destroy)
-		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Destructive Analyzer</a>"
 	if(linked_lathe)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe</a>"
 	if(linked_imprinter)
@@ -261,20 +213,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_settings()
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>R&D Console Settings:</h3>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DEVICE_LINKING]'>Device Linkage Menu</A>"
 	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_device_linking()
-	var/list/l = list()
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings Menu</A><div class='statusDisplay'>"
-	l += "<h3>R&D Console Device Linkage Menu:</h3>"
-	l += "<A href='?src=[REF(src)];find_device=1'>Re-sync with Nearby Devices</A>"
-	l += "<h3>Linked Devices:</h3>"
-	l += linked_destroy? "* Destructive Analyzer <A href='?src=[REF(src)];disconnect=destroy'>Disconnect</A>" : "* No Destructive Analyzer Linked"
-	l += linked_lathe? "* Protolathe <A href='?src=[REF(src)];disconnect=lathe'>Disconnect</A>" : "* No Protolathe Linked"
-	l += linked_imprinter? "* Circuit Imprinter <A href='?src=[REF(src)];disconnect=imprinter'>Disconnect</A>" : "* No Circuit Imprinter Linked"
-	l += "</div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
@@ -577,77 +516,6 @@ Nothing else in the console has ID requirements.
 	l += "</div>"
 	return l
 
-/obj/machinery/computer/rdconsole/proc/ui_deconstruct()		//Legacy code
-	RDSCREEN_UI_DECONSTRUCT_CHECK
-	var/list/l = list()
-	if(!linked_destroy.loaded_item)
-		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
-	else
-		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-		l += "<table><tr><td>[icon2html(linked_destroy.loaded_item, usr)]</td><td><b>[linked_destroy.loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
-		l += "Select a node to boost by deconstructing this item. This item can boost:"
-
-		var/anything = FALSE
-		var/list/boostable_nodes = techweb_item_boost_check(linked_destroy.loaded_item)
-		for(var/id in boostable_nodes)
-			anything = TRUE
-			var/list/worth = boostable_nodes[id]
-			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
-
-			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-			if (stored_research.researched_nodes[N.id])  // already researched
-				l += "<span class='linkOff'>[N.display_name]</span>"
-				l += "This node has already been researched."
-			else if(!length(worth))  // reveal only
-				if (stored_research.hidden_nodes[N.id])
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be revealed."
-				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been revealed."
-			else  // boost by the difference
-				var/list/differences = list()
-				var/list/already_boosted = stored_research.boosted_nodes[N.id]
-				for(var/i in worth)
-					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : 0
-					var/amt = min(worth[i], N.research_costs[i]) - already_boosted_amount
-					if(amt > 0)
-						differences[i] = amt
-				if (length(differences))
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
-				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been boosted.</span>"
-			l += "</div>[RDSCREEN_NOBREAK]"
-
-		// point deconstruction and material reclamation use the same ID to prevent accidentally missing the points
-		var/list/point_values = techweb_item_point_check(linked_destroy.loaded_item)
-		if(point_values)
-			anything = TRUE
-			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-			if (stored_research.deconstructed_items[linked_destroy.loaded_item.type])
-				l += "<span class='linkOff'>Point Deconstruction</span>"
-				l += "This item's points have already been claimed."
-			else
-				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Point Deconstruction</A>"
-				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
-			l += "</div>[RDSCREEN_NOBREAK]"
-
-		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
-			var/list/materials = linked_destroy.loaded_item.custom_materials
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[LAZYLEN(materials)? "Material Reclamation" : "Destroy Item"]</A>"
-			for (var/M in materials)
-				l += "* [CallMaterialName(M)] x [materials[M]]"
-			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
-
-		if (!anything)
-			l += "Nothing!"
-
-		l += "</div>"
-	return l
-
 /obj/machinery/computer/rdconsole/proc/ui_techweb()
 	var/list/l = list()
 	if(ui_mode != RDCONSOLE_UI_MODE_LIST)
@@ -821,8 +689,6 @@ Nothing else in the console has ID requirements.
 				ui += ui_designdisk_upload()
 			if(RDSCREEN_TECHDISK)
 				ui += ui_techdisk()
-			if(RDSCREEN_DECONSTRUCT)
-				ui += ui_deconstruct()
 			if(RDSCREEN_PROTOLATHE)
 				ui += ui_protolathe()
 			if(RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
@@ -845,8 +711,6 @@ Nothing else in the console has ID requirements.
 				ui += ui_circuit_search()
 			if(RDSCREEN_SETTINGS)
 				ui += ui_settings()
-			if(RDSCREEN_DEVICE_LINKING)
-				ui += ui_device_linking()
 
 	for(var/i in 1 to length(ui))
 		if(!findtextEx(ui[i], RDSCREEN_NOBREAK))
@@ -877,9 +741,6 @@ Nothing else in the console has ID requirements.
 			unlock_console(usr)
 		else
 			to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
-	if(ls["find_device"])
-		SyncRDevices()
-		say("Resynced with nearby devices.")
 	if(ls["back_screen"])
 		back = text2num(ls["back_screen"])
 	if(ls["build"]) //Causes the Protolathe to build something.
@@ -900,26 +761,6 @@ Nothing else in the console has ID requirements.
 			linked_imprinter.user_try_print_id(ls["imprint"])
 	if(ls["category"])
 		selected_category = ls["category"]
-	if(ls["disconnect"]) //The R&D console disconnects with a specific device.
-		switch(ls["disconnect"])
-			if("destroy")
-				if(QDELETED(linked_destroy))
-					say("No Destructive Analyzer Linked!")
-					return
-				linked_destroy.linked_console = null
-				linked_destroy = null
-			if("lathe")
-				if(QDELETED(linked_lathe))
-					say("No Protolathe Linked!")
-					return
-				linked_lathe.linked_console = null
-				linked_lathe = null
-			if("imprinter")
-				if(QDELETED(linked_imprinter))
-					say("No Circuit Imprinter Linked!")
-					return
-				linked_imprinter.linked_console = null
-				linked_imprinter = null
 	if(ls["eject_design"]) //Eject the design disk.
 		eject_disk("design")
 		screen = RDSCREEN_MENU
@@ -928,12 +769,7 @@ Nothing else in the console has ID requirements.
 		eject_disk("tech")
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
-	if(ls["deconstruct"])
-		if(QDELETED(linked_destroy))
-			say("No Destructive Analyzer Linked!")
-			return
-		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
-			say("Destructive analysis failed!")
+
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
@@ -1045,15 +881,6 @@ Nothing else in the console has ID requirements.
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D
 		screen = RDSCREEN_DESIGNDISK
-	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
-		if(QDELETED(linked_destroy))
-			say("No Destructive Analyzer Linked!")
-			return
-		if(linked_destroy.busy)
-			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
-		else if(linked_destroy.loaded_item)
-			linked_destroy.unload_item()
-			screen = RDSCREEN_MENU
 	if(ls["view_node"])
 		selected_node_id = ls["view_node"]
 		screen = RDSCREEN_TECHWEB_NODEVIEW
