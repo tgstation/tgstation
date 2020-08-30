@@ -6,13 +6,13 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/AttackingTarget()
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents && poison_per_bite != 0)
-			if(careful && poison_type.overdose_threshold && L.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite)))
-				return .
-			L.reagents.add_reagent(poison_type, poison_per_bite)
-		return .
+	if(!. || !isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(poison_per_bite != 0 && living_target.reagents)
+		if(careful && poison_type.overdose_threshold && living_target.reagents.has_reagent(poison_type, (poison_type.overdose_threshold - poison_per_bite)))
+			return
+		living_target.reagents.add_reagent(poison_type, poison_per_bite)
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
 	name = "snake"
