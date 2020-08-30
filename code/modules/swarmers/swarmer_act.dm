@@ -7,7 +7,7 @@
   */
 #define DANGEROUS_DELTA_P 1000	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
-/atom/proc/is_wall_pressure_dangerous(/var/turf/target_wall)
+/atom/proc/return_wall_delta_p(/var/turf/target_wall)	//Finds the greatest difference in pressure across a closed turf.
 	var/pressure_greatest = 0
 	var/pressure_smallest = INFINITY 			//Freaking terrified to use INFINITY, man
 	for(var/t in RANGE_TURFS(2, target_wall))	//Begin processing the delta pressure across the wall.
@@ -19,11 +19,8 @@
 		if(turf_adjacent.air.return_pressure() < pressure_smallest)
 			pressure_smallest = turf_adjacent.air.return_pressure()
 
-	var/delta_p = (pressure_greatest - pressure_smallest)
-	if(delta_p > DANGEROUS_DELTA_P) 			//If the delta pressure is too high it is considered too dangerous to break this.
-		return TRUE
-	else
-		return FALSE
+	to_chat(world, "DEBUG: RETURNED DELTA P IS " + pressure_greatest - pressure_smallest " kPa")
+	return pressure_greatest - pressure_smallest
 
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
@@ -105,7 +102,7 @@
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
-		if (is_wall_pressure_dangerous(src))
+		if (return_wall_delta_p(src) > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -190,7 +187,7 @@
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
-		if (is_wall_pressure_dangerous(src))
+		if (return_wall_delta_p(src) > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -208,7 +205,7 @@
 	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
 	for(var/turf/adj_turf in range(1, src))
 		var/area/adj_area = get_area(adj_turf)
-		if (is_wall_pressure_dangerous(src))
+		if (return_wall_delta_p(src) > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
