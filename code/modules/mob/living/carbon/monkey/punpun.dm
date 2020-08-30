@@ -1,7 +1,9 @@
 /mob/living/carbon/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
 	unique_name = 0
+	/// If we had one of the rare names in a past life
 	var/ancestor_name
+	/// This does not represent how many rounds Pun Pun has survived, instead it increases each time he dies, and resets when he gibs
 	var/ancestor_chain = 1
 	var/relic_hat	//Note: these two are paths
 	var/relic_mask
@@ -16,7 +18,6 @@
 			name += " \Roman[ancestor_chain]"
 	else if(prob(5))
 		name = pick(rare_pet_monkey_names)
-	gender = pick(MALE, FEMALE)
 	. = ..()
 
 	//These have to be after the parent new to ensure that the monkey
