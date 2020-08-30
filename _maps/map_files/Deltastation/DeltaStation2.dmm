@@ -51177,12 +51177,12 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bTp" = (
-/obj/machinery/meter,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/machinery/meter/atmos/layer3,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bTq" = (
@@ -78921,10 +78921,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cVq" = (
-/obj/machinery/meter,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},

@@ -4741,7 +4741,6 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "akL" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 9
 	},
@@ -5774,7 +5773,6 @@
 /area/crew_quarters/fitness)
 "anb" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
 	},
@@ -6184,7 +6182,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aoa" = (
@@ -6711,6 +6708,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/machinery/meter/atmos/layer3,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apv" = (
@@ -13662,12 +13660,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"aFV" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/meter,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "aFW" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
@@ -20072,17 +20064,6 @@
 /obj/item/stack/package_wrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"aVC" = (
-/obj/machinery/meter,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "aVD" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -37102,10 +37083,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plating,
 /area/construction)
-"bKB" = (
-/obj/machinery/meter,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "bKD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
@@ -43342,13 +43319,13 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ceM" = (
-/obj/machinery/meter,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/machinery/meter/atmos/layer3,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ceO" = (
@@ -50816,6 +50793,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"fXZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/machinery/meter/atmos/layer3,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
 "fYd" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -52859,6 +52844,31 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"mhJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/meter/atmos/layer3,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"miW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/meter/atmos/layer3,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "mje" = (
 /obj/machinery/door/airlock{
 	name = "Private Restroom"
@@ -54563,6 +54573,12 @@
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"rrg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/machinery/meter/atmos/layer3,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "ruy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -54832,6 +54848,12 @@
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
 /area/medical/break_room)
+"smt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/machinery/meter/atmos/layer3,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "soQ" = (
 /obj/machinery/power/apc{
 	areastring = "/area/vacant_room/commissary";
@@ -73105,7 +73127,7 @@ asU
 bbV
 boP
 alU
-asK
+miW
 azF
 aAS
 aFP
@@ -78006,7 +78028,7 @@ aPG
 aPG
 aPG
 aPG
-aVC
+aSX
 gjl
 baS
 aZp
@@ -78262,7 +78284,7 @@ aPI
 aRb
 aRb
 aRb
-aRb
+rrg
 aWx
 gjl
 baS
@@ -79536,7 +79558,7 @@ ayH
 ayH
 ayH
 ayH
-aFV
+ayH
 ayH
 ayH
 aKy
@@ -81592,7 +81614,7 @@ aBi
 apV
 arF
 arF
-arF
+smt
 arF
 aue
 arP
@@ -89086,8 +89108,8 @@ bDO
 bFl
 bDO
 bHU
-hxs
-bKB
+mhJ
+bAw
 bLK
 bMM
 bOd
@@ -91599,7 +91621,7 @@ anc
 anc
 anc
 bkV
-anc
+fXZ
 anD
 aoI
 arj
