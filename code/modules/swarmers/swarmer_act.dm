@@ -19,6 +19,17 @@
 
 	return pressure_greatest - pressure_smallest
 
+/atom/proc/is_nearby_planetary_atmos(var/turf/target_turf)	//Runs through all adjacent open turfs and checks if any are planetary_atmos
+	var/is_planetary = FALSE
+	for(var/t in RANGE_TURFS(2, target_turf))
+		var/turf/open/turf_adjacent = t
+		if(!istype(turf_adjacent))
+			continue
+		if(turf_adjacent.planetary_atmos)
+			is_planetary = TRUE
+			break
+	return is_planetary
+
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
 	return TRUE //return TRUE/FALSE whether or not an AI swarmer should try this swarmer_act() again, NOT whether it succeeded.
@@ -103,7 +114,7 @@
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return FALSE
@@ -188,7 +199,7 @@
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle) ))
+		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle) ))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -206,7 +217,7 @@
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
+		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
