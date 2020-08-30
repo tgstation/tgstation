@@ -116,7 +116,8 @@ This section is for the event controller
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
 	var/obj/spawner = pick(spawners)
-	new/obj/effect/anomaly/flux(spawner.loc)
+	var/obj/effect/anomaly/flux/A = new(L, 300, FALSE)
+	A.explosive = FALSE
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
@@ -260,6 +261,29 @@ This section is for the destabilized SM
 	. = ..()
 	. += "<span class='notice'>The Crystal appears to be heavily destabilized. Maybe it can be fixed by injecting it with something from another world.</span>"
 
+/obj/machinery/destabilized_crystal/Bumped(atom/movable/AM)
+	if(isliving(AM))
+		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",\
+		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
+		"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+	else
+		return
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+	Consume(AM)
+
+/obj/machinery/destabilized_crystal/proc/Consume(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/user = AM
+		if(user.status_flags & GODMODE)
+			return
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
+		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
+		user.dust(force = TRUE)
+	for(var/obj/structure/crystal_portal/portals in GLOB.crystal_portals)
+		portals.spawn_time += 5 SECONDS
+	priority_announce("The sacrifice of a member of the station (we hope was the clown) has weakened the portals and the monsters generation is slowing down!")
+	sound_to_playing_players('sound/misc/notice2.ogg')
+
 /*
 This section is for the crystal stabilizer item and the crystal from the closed portals
 */
@@ -336,7 +360,7 @@ This section is for the crystal portals variations
 	///Max amount of mobs that a portal can spawn in any given time
 	var/max_mobs = 5
 	///Spawn time between each mobs
-	var/spawn_time = 1000
+	var/spawn_time
 	///Type of mob that the portal will spawn, if more than one type in the list will choose randomly
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	///Fluff text for each mob spawned
@@ -406,7 +430,7 @@ This section is for the crystal portals variations
 	desc = "A small portal to an unkown dimension!"
 	color = COLOR_BRIGHT_BLUE
 	max_mobs = 3
-	spawn_time = 200
+	spawn_time = 5 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug
@@ -416,8 +440,8 @@ This section is for the crystal portals variations
 	name = "Medium Portal"
 	desc = "A medium portal to an unkown dimension!"
 	color = COLOR_GREEN
-	max_mobs = 5
-	spawn_time = 180
+	max_mobs = 4
+	spawn_time = 10 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -428,8 +452,8 @@ This section is for the crystal portals variations
 	name = "Big Portal"
 	desc = "A big portal to an unkown dimension!"
 	color = COLOR_RED
-	max_mobs = 8
-	spawn_time = 160
+	max_mobs = 5
+	spawn_time = 10 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -441,8 +465,8 @@ This section is for the crystal portals variations
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
 	color = COLOR_BLACK
-	max_mobs = 12
-	spawn_time = 140
+	max_mobs = 6
+	spawn_time = 15 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -467,12 +491,6 @@ This section is for the crystal monsters variations
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
 	a_intent = INTENT_HARM
-	maxHealth = 25
-	health = 25
-	speed = 1.2
-	harm_intent_damage = 2.5
-	melee_damage_lower = 5
-	melee_damage_upper = 5
 	minbodytemp = 0
 	maxbodytemp = 1500
 	healable = 0 //they're crystals how would bruise packs help them??
@@ -482,7 +500,7 @@ This section is for the crystal monsters variations
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 10
 	robust_searching = 1
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	faction = list("crystal")
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -497,12 +515,26 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_minion"
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
-	maxHealth = 40
-	health = 40
-	speed = 1.5
-	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 10
+	maxHealth = 20
+	health = 20
+	speed = 0.8
+	harm_intent_damage = 11
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	move_force = MOVE_FORCE_WEAK
+	move_resist = MOVE_FORCE_WEAK
+	pull_force = MOVE_FORCE_WEAK
+	var/death_cloud_size = 2
+
+/mob/living/simple_animal/hostile/crystal_monster/minion/Destroy()
+	var/datum/effect_system/smoke_spread/chem/S = new
+	var/turf/location = get_turf(src)
+	create_reagents(3)
+	reagents.add_reagent(/datum/reagent/toxin/lexorin, 4)
+	S.attach(location)
+	S.set_up(reagents, death_cloud_size, location, silent = TRUE)
+	S.start()
+	return ..()
 
 /mob/living/simple_animal/hostile/crystal_monster/thug
 	name = "crystal thug"
@@ -511,12 +543,30 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_thug"
 	icon_living = "crystal_thug"
 	icon_dead = "crystal_thug"
-	maxHealth = 50
-	health = 50
-	speed = 1.3
-	harm_intent_damage = 9
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	maxHealth = 20
+	health = 20
+	speed = 0.9
+	harm_intent_damage = 11
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	move_force = MOVE_FORCE_NORMAL
+	move_resist = MOVE_FORCE_NORMAL
+	pull_force = MOVE_FORCE_NORMAL
+	dodging = TRUE
+	dodge_prob = 25
+	var/list/temp_turfs
+
+/mob/living/simple_animal/hostile/crystal_monster/thug/attackby(obj/item/O, mob/user, params)
+	for(var/turf/around_turfs in view(7, src))
+		if(!isopenturf(around_turfs) || isspaceturf(around_turfs))
+			continue
+		LAZYADD(temp_turfs, around_turfs)
+	if(prob(30))
+		var/turf/open/choosen_turf = pick(temp_turfs)
+		do_teleport(src, choosen_turf)
+	for(var/i in temp_turfs)
+		LAZYREMOVE(temp_turfs, i)
+	return ..()
 
 /mob/living/simple_animal/hostile/crystal_monster/recruit
 	name = "crystal recruit"
@@ -525,12 +575,24 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_recruit"
 	icon_living = "crystal_recruit"
 	icon_dead = "crystal_recruit"
-	maxHealth = 65
-	health = 65
+	maxHealth = 20
+	health = 20
 	speed = 1.2
 	harm_intent_damage = 11
 	melee_damage_lower = 20
 	melee_damage_upper = 35
+	move_force = MOVE_FORCE_STRONG
+	move_resist = MOVE_FORCE_STRONG
+	pull_force = MOVE_FORCE_STRONG
+	obj_damage = 100
+	environment_smash = ENVIRONMENT_SMASH_WALLS
+
+/mob/living/simple_animal/hostile/crystal_monster/recruit/Bump(atom/clong)
+	. = ..()
+	var/turf/turf_bump = clong
+	if(isturf(turf_bump))
+		turf_bump.Melt()
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
@@ -539,12 +601,40 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_killer"
 	icon_living = "crystal_killer"
 	icon_dead = "crystal_killer"
-	maxHealth = 80
-	health = 80
-	speed = 1.2
-	harm_intent_damage = 13
-	melee_damage_lower = 30
+	maxHealth = 35
+	health = 35
+	speed = 0.75
+	harm_intent_damage = 20
+	melee_damage_lower = 25
 	melee_damage_upper = 45
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
+	dodging = TRUE
+	dodge_prob = 35
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	projectiletype = /obj/projectile/temp/basilisk
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged = 1
+	ranged_message = "throws"
+	ranged_cooldown_time = 25
+
+/obj/projectile/temp/crystal_killer
+	name = "freezing blast"
+	icon_state = "ice_2"
+	color = COLOR_YELLOW
+	damage = 0
+	damage_type = BURN
+	nodamage = TRUE
+	flag = ENERGY
+	temperature = -75
+
+/mob/living/simple_animal/hostile/crystal_monster/killer/Bump(atom/clong)
+	. = ..()
+	var/turf/turf_bump = clong
+	if(isturf(turf_bump))
+		turf_bump.Melt()
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
@@ -553,9 +643,46 @@ This section is for the crystal monsters variations
 	icon_state = "crystal_boss"
 	icon_living = "crystal_boss"
 	icon_dead = "crystal_boss"
-	maxHealth = 150
-	health = 150
-	speed = 1
-	harm_intent_damage = 15
-	melee_damage_lower = 45
-	melee_damage_upper = 65
+	maxHealth = 300
+	health = 30
+	speed = 1.3
+	harm_intent_damage = 11
+	melee_damage_lower = 20
+	melee_damage_upper = 35
+	move_force = MOVE_FORCE_EXTREMELY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	pull_force = MOVE_FORCE_EXTREMELY_STRONG
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	projectiletype = /obj/projectile/magic/aoe/lightning
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged = 1
+	ranged_message = "throws"
+	ranged_cooldown_time = 25
+
+/mob/living/simple_animal/hostile/crystal_monster/boss/Bump(atom/clong)
+	. = ..()
+	if(isliving(clong))
+		var/mob/living/mob = clong
+		if(mob.stat >= HARD_CRIT)
+			mob.dust()
+			health += 35
+	if(isturf(clong))
+		var/turf/turf_bump = clong
+		turf_bump.Melt()
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
+
+/mob/living/simple_animal/hostile/crystal_monster/boss/AttackingTarget()
+	. = ..()
+	if(isliving(target))
+		var/mob/living/mob = target
+		if(mob.stat >= HARD_CRIT)
+			mob.dust()
+			health += 35
+	else if(isturf(target))
+		var/turf/turf_bump = target
+		turf_bump.Melt()
+	else
+		qdel(target)
+	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
+
+
