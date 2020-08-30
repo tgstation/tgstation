@@ -96,7 +96,7 @@
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
 	if(masterAI)
-		R.connected_ai = masterAI
+		R.set_connected_ai(masterAI)
 		R.lawsync()
 		R.lawupdate = 1
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
