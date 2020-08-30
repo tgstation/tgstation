@@ -450,8 +450,8 @@
 		if(L.stat != CONSCIOUS)
 			return FALSE
 	if (ismecha(the_target))
-		var/obj/mecha/M = the_target
-		if (M.occupant)
+		var/obj/vehicle/sealed/mecha/M = the_target
+		if(LAZYLEN(M.occupants))
 			return FALSE
 	return TRUE
 

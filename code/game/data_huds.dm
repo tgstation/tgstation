@@ -379,14 +379,14 @@
 /*~~~~~~~~~~~~~~~~~~~~
 	BIG STOMPY MECHS
 ~~~~~~~~~~~~~~~~~~~~~*/
-/obj/mecha/proc/diag_hud_set_mechhealth()
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechhealth()
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
 
 
-/obj/mecha/proc/diag_hud_set_mechcell()
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -397,7 +397,7 @@
 		holder.icon_state = "hudnobatt"
 
 
-/obj/mecha/proc/diag_hud_set_mechstat()
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -405,7 +405,7 @@
 	if(internal_damage)
 		holder.icon_state = "hudwarn"
 
-/obj/mecha/proc/diag_hud_set_mechtracking() //Shows tracking beacons on the mech
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechtracking() //Shows tracking beacons on the mech
 	var/image/holder = hud_list[DIAG_TRACK_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
