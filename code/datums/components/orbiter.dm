@@ -42,6 +42,14 @@
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
+	for(var/i in newcomp.orbiters)
+		var/mob/orbiter_mob = i
+		orbiter_mob.orbiting = src
+		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
+		UnregisterSignal(orbiter_mob, COMSIG_MOVABLE_MOVED)
+		RegisterSignal(orbiter_mob, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+		RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
+
 	orbiters += newcomp.orbiters
 
 /datum/component/orbiter/PostTransfer()
