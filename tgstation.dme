@@ -400,6 +400,7 @@
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\areabound.dm"
+#include "code\datums\components\arm_wrassle.dm"
 #include "code\datums\components\armor_plate.dm"
 #include "code\datums\components\art.dm"
 #include "code\datums\components\bane.dm"
