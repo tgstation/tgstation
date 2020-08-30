@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Pressure Valve (a device that allow gas flow in a pipenet if the input pressure is higher than the set pressure)"
