@@ -176,12 +176,13 @@
 	return ..()
 
 /datum/rust_spread/process()
+	var/spread_am = round(spread_per_sec * SSPROCESSING_DT)
 
-	if(edge_turfs.len < spread_per_tick)
+	if(edge_turfs.len < spread_am)
 		compile_turfs()
 
 	var/turf/T
-	for(var/i in 0 to round(spread_per_sec * SSPROCESSING_DT))
+	for(var/i in 0 to spread_am)
 		if(!edge_turfs.len)
 			continue
 		T = pick(edge_turfs)
