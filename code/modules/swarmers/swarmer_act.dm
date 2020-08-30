@@ -203,7 +203,7 @@
 			pressure_greatest = turf_adjacent.air.return_pressure()
 		if(turf_adjacent.air.return_pressure() < pressure_smallest)
 			pressure_smallest = turf_adjacent.air.return_pressure()
-	var/delta_p = (pressure_greatest - pressure_smallest)
+	var/delta_p = pressure_greatest - pressure_smallest
 	for(var/turf/adj_turf in range(1, src))
 		var/area/adj_area = get_area(adj_turf)
 		if (delta_p > 1000) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
