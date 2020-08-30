@@ -24,6 +24,7 @@
 	wires = new /datum/wires/rnd(src)
 
 /obj/machinery/rnd/Destroy()
+	stored_research = null
 	QDEL_NULL(wires)
 	return ..()
 

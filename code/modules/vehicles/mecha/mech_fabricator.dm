@@ -524,6 +524,7 @@
 		if("sync_rnd")
 			// Syncronises designs on interface with R&D techweb.
 			update_static_data(usr)
+			say("Successfully synchronized with R&D server.")
 			return
 		if("add_queue_set")
 			// Add all parts of a set to queue

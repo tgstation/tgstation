@@ -24,7 +24,6 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
-	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
 	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
 
 	req_access = list(ACCESS_RND)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
@@ -107,7 +106,7 @@ Nothing else in the console has ID requirements.
 			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
-	else if(!(linked_lathe && linked_lathe.busy) && !(linked_imprinter && linked_imprinter.busy))
+	else if(!(linked_imprinter && linked_imprinter.busy))
 		. = ..()
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
@@ -159,9 +158,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/user, obj/item/multitool/I)
 	. = ..()
-	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
 	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
-	return lathe || print || .
+	return print || .
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
@@ -200,8 +198,6 @@ Nothing else in the console has ID requirements.
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK]'>Design Disk</a>"
 	if(t_disk)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
-	if(linked_lathe)
-		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe</a>"
 	if(linked_imprinter)
 		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter</a>"
 	l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings</a></H2>"
@@ -214,142 +210,6 @@ Nothing else in the console has ID requirements.
 	var/list/l = list()
 	l += "<div class='statusDisplay'><h3>R&D Console Settings:</h3>"
 	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
-	var/list/l = list()
-	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe Menu</A>"
-	if(linked_lathe.materials.mat_container)
-		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.format_amount()]</A>"
-	else
-		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
-	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe_category_view()	//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/list/l = list()
-	l += ui_protolathe_header()
-	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
-			continue
-		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
-			continue
-		var/temp_material
-		var/c = 50
-		var/coeff = linked_lathe.efficiency_coeff
-		if(!linked_lathe.efficient_with(D.build_path))
-			coeff = 1
-
-		var/all_materials = D.materials + D.reagents_list
-		for(var/M in all_materials)
-			var/t = linked_lathe.check_mat(D, M)
-			temp_material += " | "
-			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-			c = min(c,t)
-
-		if (c >= 1)
-			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
-			if(c >= 5)
-				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
-			if(c >= 10)
-				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-			l += "[temp_material][RDSCREEN_NOBREAK]"
-		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
-		l += ""
-	l += "</div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe()		//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/list/l = list()
-	l += ui_protolathe_header()
-
-	l += "<form name='search' action='?src=[REF(src)]'>\
-	<input type='hidden' name='src' value='[REF(src)]'>\
-	<input type='hidden' name='search' value='to_search'>\
-	<input type='hidden' name='type' value='proto'>\
-	<input type='text' name='to_search'>\
-	<input type='submit' value='Search'>\
-	</form><HR>"
-
-	l += list_categories(linked_lathe.categories, RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
-
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe_search()		//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/list/l = list()
-	l += ui_protolathe_header()
-	for(var/id in matching_design_ids)
-		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
-			continue
-		var/temp_material
-		var/c = 50
-		var/all_materials = D.materials + D.reagents_list
-		var/coeff = linked_lathe.efficiency_coeff
-		if(!linked_lathe.efficient_with(D.build_path))
-			coeff = 1
-		for(var/M in all_materials)
-			var/t = linked_lathe.check_mat(D, M)
-			temp_material += " | "
-			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-			else
-				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-			c = min(c,t)
-
-		if (c >= 1)
-			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
-			if(c >= 5)
-				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
-			if(c >= 10)
-				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-			l += "[temp_material][RDSCREEN_NOBREAK]"
-		else
-			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
-		l += ""
-	l += "</div>"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/datum/component/material_container/mat_container = linked_lathe.materials.mat_container
-	if (!mat_container)
-		screen = RDSCREEN_PROTOLATHE
-		return ui_protolathe()
-	var/list/l = list()
-	l += ui_protolathe_header()
-	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
-	for(var/mat_id in mat_container.materials)
-		var/datum/material/M = mat_id
-		var/amount = mat_container.materials[mat_id]
-		var/ref = REF(M)
-		l += "* [amount] of [M.name]: "
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[ref];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
-		l += ""
-	l += "</div>[RDSCREEN_NOBREAK]"
-	return l
-
-/obj/machinery/computer/rdconsole/proc/ui_protolathe_chemicals()		//Legacy code
-	RDSCREEN_UI_LATHE_CHECK
-	var/list/l = list()
-	l += ui_protolathe_header()
-	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeallP=1'>Disposal All Chemicals in Storage</A>"
-	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
-		l += "[R.name]: [R.volume]"
-		l += "<A href='?src=[REF(src)];disposeP=[R]'>Purge</A>"
-	l += "</div>"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
@@ -642,8 +502,6 @@ Nothing else in the console has ID requirements.
 				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[selected_design.name]'>Imprint</A>"
 		if(selected_design.build_type & PROTOLATHE)
 			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_lathe && stored_research.researched_designs[selected_design.id])
-				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[selected_design.name]'>Construct</A>"
 		if(selected_design.build_type & AUTOLATHE)
 			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
 		if(selected_design.build_type & MECHFAB)
@@ -689,16 +547,6 @@ Nothing else in the console has ID requirements.
 				ui += ui_designdisk_upload()
 			if(RDSCREEN_TECHDISK)
 				ui += ui_techdisk()
-			if(RDSCREEN_PROTOLATHE)
-				ui += ui_protolathe()
-			if(RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
-				ui += ui_protolathe_category_view()
-			if(RDSCREEN_PROTOLATHE_MATERIALS)
-				ui += ui_protolathe_materials()
-			if(RDSCREEN_PROTOLATHE_CHEMICALS)
-				ui += ui_protolathe_chemicals()
-			if(RDSCREEN_PROTOLATHE_SEARCH)
-				ui += ui_protolathe_search()
 			if(RDSCREEN_IMPRINTER)
 				ui += ui_circuit()
 			if(RDSCREEN_IMPRINTER_CATEGORY_VIEW)
@@ -743,14 +591,6 @@ Nothing else in the console has ID requirements.
 			to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 	if(ls["back_screen"])
 		back = text2num(ls["back_screen"])
-	if(ls["build"]) //Causes the Protolathe to build something.
-		if(QDELETED(linked_lathe))
-			say("No Protolathe Linked!")
-			return
-		if(linked_lathe.busy)
-			say("Warning: Protolathe busy!")
-		else
-			linked_lathe.user_try_print_id(ls["build"], ls["amount"])
 	if(ls["imprint"])
 		if(QDELETED(linked_imprinter))
 			say("No Circuit Imprinter Linked!")
@@ -770,26 +610,6 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_MENU
 		say("Ejecting Technology Disk")
 
-	//Protolathe Materials
-	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
-		if(QDELETED(linked_lathe))
-			say("No Protolathe Linked!")
-			return
-		linked_lathe.reagents.del_reagent(ls["disposeP"])
-	if(ls["disposeallP"]) //Causes the protolathe to dispose of all it's reagents.
-		if(QDELETED(linked_lathe))
-			say("No Protolathe Linked!")
-			return
-		linked_lathe.reagents.clear_reagents()
-	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
-		if(QDELETED(linked_lathe))
-			say("No Protolathe Linked!")
-			return
-		if(!linked_lathe.materials.mat_container)
-			say("No material storage linked to protolathe!")
-			return
-		var/datum/material/M = locate(ls["ejectsheet"]) in linked_lathe.materials.mat_container.materials
-		linked_lathe.eject_sheets(M, ls["eject_amt"])
 	//Circuit Imprinter Materials
 	if(ls["disposeI"])  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		if(QDELETED(linked_imprinter))
@@ -845,14 +665,6 @@ Nothing else in the console has ID requirements.
 			var/datum/design/D = d_disk.blueprints[n]
 			say("Wiping design [D.name] from design disk.")
 			d_disk.blueprints[n] = null
-	if(ls["search"]) //Search for designs with name matching pattern
-		searchstring = ls["to_search"]
-		searchtype = ls["type"]
-		rescan_views()
-		if(searchtype == "proto")
-			screen = RDSCREEN_PROTOLATHE_SEARCH
-		else
-			screen = RDSCREEN_IMPRINTER_SEARCH
 	if(ls["updt_tech"]) //Uple the research holder with information from the technology disk.
 		if(QDELETED(t_disk))
 			say("No Technology Disk Inserted!")
@@ -927,9 +739,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/rescan_views()
 	var/compare
 	matching_design_ids.Cut()
-	if(searchtype == "proto")
-		compare = PROTOLATHE
-	else if(searchtype == "imprint")
+	if(searchtype == "imprint")
 		compare = IMPRINTER
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
@@ -945,13 +755,6 @@ Nothing else in the console has ID requirements.
 			return FALSE
 		for(var/M in D.materials + D.reagents_list)
 			amount = min(amount, linked_imprinter.check_mat(D, M))
-			if(amount < 1)
-				return FALSE
-	else if(buildtype == PROTOLATHE)
-		if(QDELETED(linked_lathe))
-			return FALSE
-		for(var/M in D.materials + D.reagents_list)
-			amount = min(amount, linked_lathe.check_mat(D, M))
 			if(amount < 1)
 				return FALSE
 	else
