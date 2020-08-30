@@ -147,6 +147,7 @@
 	add_fingerprint(usr)
 	to_chat(user, "<span class='notice'>You program the medipen refiller to use arbitrary reagents!</span>")
 	obj_flags |= EMAGGED
+	locked = FALSE
 
 /// refill procs
 /// refills medipen based on standard reagent lists
@@ -197,16 +198,27 @@
 /obj/machinery/plumbing/medipen_refiller/ui_act(action, params)
 	if(..())
 		return
-	if(locked)
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
-		return FALSE
 	. = TRUE
 	switch(action)
+		if("lock")
+			if(usr.has_unlimited_silicon_privilege)
+				if(obj_flags & EMAGGED)
+					to_chat(usr, "<span class='warning'>The medipen refiller does not respond to the command!</span>")
+				else
+					locked = !locked
+					update_icon()
+					. = TRUE
 		if("remove")
+			if(locked)
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				return FALSE
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
+			if(locked)
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				return FALSE
 			var/input_reagent = get_chem_id(params["chem"])
 			if(input_reagent && !required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])
