@@ -38,16 +38,16 @@
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
 					if(isturf(S.loc) || ishuman(S.loc))
 						movement_target = S
 						break
 			if(movement_target)
-				stop_automated_movement = 1
+				stop_automated_movement = TRUE
 				step_to(src,movement_target,1)
 				sleep(3)
 				step_to(src,movement_target,1)
@@ -359,7 +359,7 @@
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
-		return 0
+		return
 
 	var/valid = FALSE
 	if(ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))

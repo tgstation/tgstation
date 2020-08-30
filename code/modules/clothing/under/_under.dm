@@ -204,13 +204,13 @@
 		return
 	if(has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return
 	if(has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return
 	if(has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -235,8 +235,9 @@
 			H.update_suit_sensors()
 
 /obj/item/clothing/under/AltClick(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

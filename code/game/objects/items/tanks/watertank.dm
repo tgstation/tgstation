@@ -117,7 +117,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	slot_flags = 0
+	slot_flags = NONE
 
 	var/obj/item/watertank/tank
 
@@ -419,7 +419,7 @@
 		return
 
 	var/used_amount = injection_amount/usage_ratio
-	reagents.trans_to(user,used_amount,multiplier=usage_ratio, method = INJECT)
+	reagents.trans_to(user,used_amount,multiplier=usage_ratio, methods = INJECT)
 	update_icon()
 	user.update_inv_back() //for overlays update
 

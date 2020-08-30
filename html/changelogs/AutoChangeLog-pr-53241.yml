@@ -1,0 +1,4 @@
+author: "Donkie"
+delete-after: True
+changes: 
+  - code_imp: "Converted check_obscured_slots() output to bitfield instead of list"

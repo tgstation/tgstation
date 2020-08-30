@@ -35,15 +35,16 @@
 /obj/machinery/embedded_controller/proc/return_text()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
+	return
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	if(istype(signal) && program)
 		program.receive_signal(signal)
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
-	if(..())
-		return 0
+	. = ..()
+	if(.)
+		return
 
 	if(program)
 		program.receive_user_command(href_list["command"])

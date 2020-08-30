@@ -222,11 +222,11 @@
 /obj/item/modular_computer/process()
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
-		return 0
+		return
 
 	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
-		return 0
+		return
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.

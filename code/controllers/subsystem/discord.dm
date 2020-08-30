@@ -42,14 +42,14 @@ SUBSYSTEM_DEF(discord)
 	var/list/reverify_cache = list()
 	var/notify_file = file("data/notify.json")
 	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
-	var/enabled = 0
+	var/enabled = FALSE
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
 	// Check for if we are using TGS, otherwise return and disables firing
 	if(world.TgsAvailable())
-		enabled = 1 // Allows other procs to use this (Account linking, etc)
+		enabled = TRUE // Allows other procs to use this (Account linking, etc)
 	else
-		can_fire = 0 // We dont want excess firing
+		can_fire = FALSE // We dont want excess firing
 		return ..() // Cancel
 
 	try
