@@ -958,7 +958,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/actual_file_name
 	for(var/T in subtypesof(/obj/item))
 		var/obj/item/x = new T
-		if(!x.slot_flags)
+		if(!x.slot_flags || (x.item_flags & ABSTRACT))
 			continue
 		//Is there an explicit worn_icon to pick against the worn_icon_state? Easy street expected behavior.
 		if(x.worn_icon)
