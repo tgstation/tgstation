@@ -614,7 +614,9 @@ AI MODULES
 
 /obj/item/ai_module/core/full/damaged/install(datum/ai_laws/law_datum, mob/user)
 	laws += generate_ion_law()
-	while (prob(75))
+	var/counter = 1
+	while (prob(75) && counter < 9) //the number of laws (including the one before this while loop, which is why counter starts at 1) this module can add is capped at nine
 		laws += generate_ion_law()
+		counter += 1
 	..()
 	laws = list()
