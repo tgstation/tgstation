@@ -5,7 +5,7 @@
   * Arguments:
   * * S - A reference to the swarmer doing the interaction
   */
-#define DANGEROUS_DELTA_P 1000	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
+#define DANGEROUS_DELTA_P 250	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
 /atom/proc/return_wall_delta_p(var/turf/target_turf)	//Finds the greatest difference in pressure across a closed turf.
 	var/pressure_greatest = 0
@@ -14,10 +14,8 @@
 		var/turf/open/turf_adjacent = t
 		if(!istype(turf_adjacent))
 			continue
-		if(turf_adjacent.air.return_pressure() > pressure_greatest)
-			pressure_greatest = turf_adjacent.air.return_pressure()
-		if(turf_adjacent.air.return_pressure() < pressure_smallest)
-			pressure_smallest = turf_adjacent.air.return_pressure()
+		pressure_greatest = max(pressure_greatest, turf_adjacent.air.return_pressure())
+		pressure_smallest = min(pressure_smallest, turf_adjacent.air.return_pressure())
 
 	return pressure_greatest - pressure_smallest
 
