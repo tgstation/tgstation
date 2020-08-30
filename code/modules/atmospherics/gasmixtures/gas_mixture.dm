@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	garbage_collect()
 	sharer.garbage_collect()
-	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
+	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
 		var/their_moles
@@ -409,15 +409,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-	var/our_moles
-	TOTAL_MOLES(cached_gases, our_moles)
-	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
-		var/temp = temperature
-		var/sample_temp = sample.temperature
+	var/temp = temperature
+	var/sample_temp = sample.temperature
 
-		var/temperature_delta = abs(temp - sample_temp)
-		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-			return "temp"
+	var/temperature_delta = abs(temp - sample_temp)
+	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		return "temp"
 
 	return ""
 

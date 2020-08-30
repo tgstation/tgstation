@@ -1,6 +1,6 @@
 /turf
 	//used for temperature calculations
-	var/thermal_conductivity = 1
+	var/thermal_conductivity = 0.8
 	var/heat_capacity = 1
 
 	///list of turfs adjacent to us that air can flow onto
@@ -473,26 +473,29 @@ My current implementation is not built to support heat leaking through floors, a
 				if(!neighbor.thermal_conductivity)
 					continue
 
-				neighbor.super_conduct(air)
+				neighbor.super_conduct(air, src)
 
-/turf/proc/super_conduct(datum/gas_mixture/mix)
+/turf/proc/super_conduct(datum/gas_mixture/mix, turf/source)
 	temperature_expose(null, mix.temperature, null)
 	var/disperse_directions = disperse_directions()
 	for(var/direction in GLOB.cardinals)
 		if(disperse_directions & direction)
 			var/turf/open/T = get_step(src,direction)
+			if(T == source)
+				continue
+			if(T.air.total_moles() < MINIMUM_MOLES_DELTA_TO_MOVE)
+				continue
 			if(T.archived_cycle < SSair.times_fired)
 				T.archive()
-			if(!T.air.gases)
-				continue
 			T.air.temperature_share(mix, thermal_conductivity)
 			SSair.add_to_active(T, 0)
 
-/turf/open/super_conduct(datum/gas_mixture/mix)
+/turf/open/super_conduct(datum/gas_mixture/mix, turf/source)
 	if(archived_cycle < SSair.times_fired)
 		archive()
 	air.temperature_share(mix, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-	SSair.add_to_active(src, 0)
+	if(atmos_adjacent_turfs)
+		SSair.add_to_active(src, 0)
 	..(air)
 
 //Returns true if there's a significant amount of temp on the turf, and it's capable of moving heat

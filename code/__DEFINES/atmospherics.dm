@@ -62,7 +62,7 @@
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)
 /// Minimum temperature difference before group processing is suspended
-#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		1
+#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4
 /// Minimum temperature difference before the gas temperatures are just set to be equal
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+80)
@@ -74,7 +74,7 @@
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 /// a hack for now
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT	1
+#define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.7
 /// a hack to help make vacuums "cold", sacrificing realism for gameplay
 #define HEAT_CAPACITY_VACUUM				7000
 
