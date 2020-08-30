@@ -220,11 +220,6 @@
 /obj/structure/window/proc/check_state_and_anchored(checked_state, checked_anchored)
 	return check_state(checked_state) && check_anchored(checked_anchored)
 
-/obj/structure/window/mech_melee_attack(obj/mecha/M)
-	if(!can_be_reached())
-		return
-	..()
-
 /obj/structure/window/proc/can_be_reached(mob/user)
 	if(!fulltile)
 		if(get_dir(user,src) & dir)
