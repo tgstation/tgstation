@@ -22,9 +22,7 @@
 
 /obj/machinery/plumbing/medipen_refiller/Initialize()
 	. = ..()
-	create_reagents(100, TRANSPARENT)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += 100 * B.rating
+	RefreshParts()
 	AddComponent(/datum/component/plumbing/specific_demand)
 
 
@@ -40,15 +38,14 @@
 /obj/machinery/plumbing/medipen_refiller/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>The interface is broken!</span>")
+	else if(allowed(user))
+		locked = !locked
+		to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the medipen refiller's interface.</span>")
+		update_icon()
+		updateUsrDialog()
+		return TRUE
 	else
-		if(allowed(user))
-			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the medipen refiller's interface.</span>")
-			update_icon()
-			updateUsrDialog()
-			return TRUE
-		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 	return FALSE
 
 /obj/machinery/plumbing/medipen_refiller/AltClick(mob/user)
