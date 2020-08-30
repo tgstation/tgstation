@@ -164,9 +164,24 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
+	var/pressure_greatest = 0
+	var/pressure_smallest = INFINITY 	//Freaking terrified to use INFINITY, man
+	for(var/t in RANGE_TURFS(2, src))	//Begin processing the delta pressure across the wall.
+		var/turf/open/turf_adjacent = t
+		if(!istype(turf_adjacent))
+			continue
+		if(turf_adjacent.air.return_pressure() > pressure_greatest)
+			pressure_greatest = turf_adjacent.air.return_pressure()
+		if(turf_adjacent.air.return_pressure() < pressure_smallest)
+			pressure_smallest = turf_adjacent.air.return_pressure()
+	var/delta_p = (pressure_greatest - pressure_smallest)
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
-		if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+		if (delta_p > 1000) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
+			actor.target = null
+			return TRUE
+		else if(isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -178,13 +193,28 @@
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
+	var/pressure_greatest = 0
+	var/pressure_smallest = INFINITY 	//Freaking terrified to use INFINITY, man
+	for(var/t in RANGE_TURFS(2, src))	//Begin processing the delta pressure across the wall.
+		var/turf/open/turf_adjacent = t
+		if(!istype(turf_adjacent))
+			continue
+		if(turf_adjacent.air.return_pressure() > pressure_greatest)
+			pressure_greatest = turf_adjacent.air.return_pressure()
+		if(turf_adjacent.air.return_pressure() < pressure_smallest)
+			pressure_smallest = turf_adjacent.air.return_pressure()
+	var/delta_p = (pressure_greatest - pressure_smallest)
 	for(var/turf/adj_turf in range(1, src))
 		var/area/adj_area = get_area(adj_turf)
-		if(isspaceturf(adj_turf) || (!is_on_shuttle && (istype(adj_area, /area/shuttle) || istype(adj_area, /area/space))) || (is_on_shuttle && !istype(adj_area, /area/shuttle)))
+		if (delta_p > 1000) //If the delta pressure is too high it is considered too dangerous to break this. A difference of 1000 kPa is considered dangerous
+			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
+			actor.target = null
+			return TRUE
+		else if(isspaceturf(adj_turf) || (!is_on_shuttle && (istype(adj_area, /area/shuttle) || istype(adj_area, /area/space))) || (is_on_shuttle && !istype(adj_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		if(istype(adj_area, /area/engine/supermatter))
+		else if(istype(adj_area, /area/engine/supermatter))
 			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -229,3 +259,5 @@
 /obj/machinery/shieldwall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	to_chat(actor, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
+
+
