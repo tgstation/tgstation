@@ -42,10 +42,6 @@ Nothing else in the console has ID requirements.
 
 	var/research_control = TRUE
 
-/obj/machinery/computer/rdconsole/production
-	circuit = /obj/item/circuitboard/computer/rdconsole/production
-	research_control = FALSE
-
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
 		var/datum/material/material = ID
@@ -565,20 +561,3 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/unlock_console(mob/user)
 	locked = FALSE
-
-/obj/machinery/computer/rdconsole/robotics
-	name = "Robotics R&D Console"
-	req_access = null
-	req_access_txt = "29"
-
-/obj/machinery/computer/rdconsole/robotics/Initialize()
-	. = ..()
-	if(circuit)
-		circuit.name = "R&D Console - Robotics (Computer Board)"
-		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
-
-/obj/machinery/computer/rdconsole/core
-	name = "Core R&D Console"
-
-/obj/machinery/computer/rdconsole/experiment
-	name = "E.X.P.E.R.I-MENTOR R&D Console"

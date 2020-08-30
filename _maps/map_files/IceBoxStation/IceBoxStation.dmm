@@ -27286,7 +27286,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/bridge)
 "blP" = (
@@ -28355,7 +28355,7 @@
 /turf/closed/wall/r_wall,
 /area/science/genetics)
 "bop" = (
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "boq" = (
@@ -28674,7 +28674,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bpf" = (
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -32025,7 +32025,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -53899,7 +53899,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "pjA" = (
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{

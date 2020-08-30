@@ -928,7 +928,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/computer/rdconsole/robotics,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_sat_ext_as)
 "adg" = (
@@ -6883,7 +6883,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arS" = (
@@ -25896,7 +25896,7 @@
 	pixel_x = -25;
 	pixel_y = -8
 	},
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -25985,7 +25985,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpf" = (
@@ -28531,7 +28531,7 @@
 /area/medical/chemistry)
 "bvw" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -31937,7 +31937,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -37268,7 +37268,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
