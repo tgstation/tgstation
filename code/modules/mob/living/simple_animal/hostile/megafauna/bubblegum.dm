@@ -209,7 +209,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/organ/tongue))
-		user.client?.give_award(/datum/award/achievement/misc/frenching, user);
+		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
