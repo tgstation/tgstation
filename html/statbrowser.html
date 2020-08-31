@@ -182,12 +182,16 @@ if (window.location) {
 			if(!anti_spam[e.which]) {
 				anti_spam[e.which] = true;
 				var key = String.fromCharCode(e.which);
+				var x = event.x || event.clientX;
+				var y = event.y || event.clientY;
+				if(x || y) // if either of these exist this is happening after a click
+					return;
 				if(key == "t")
-					window.location.href = "byond://winset?command=Say"
+					window.location.href = "byond://winset?command=Say";
 				else if(key == "o")
-					window.location.href = "byond://winset?command=OOC"
+					window.location.href = "byond://winset?command=OOC";
 				else if(key == "m")
-					window.location.href = "byond://winset?command=Me"
+					window.location.href = "byond://winset?command=Me";
 				window.location.href = "byond://winset?command=keyDown " + key;
 			}
 		}
@@ -200,6 +204,10 @@ if (window.location) {
 		if(e.which) {
 			anti_spam[e.which] = false;
 			var key = String.fromCharCode(e.which);
+			var x = event.x || event.clientX;
+			var y = event.y || event.clientY;
+			if(x || y) // if either of these exist this is happening after a click
+				return;
 			window.location.href = "byond://winset?command=keyUp " + key;
 		}
 	});
@@ -338,6 +346,13 @@ function verbs_cat_check(cat) {
 	}
 }
 
+function findVerbindex(name, verblist) {
+	for(var i = 0; i < verblist.length; i++) {
+		var part = verblist[i];
+		if(part[1] == name)
+			return i;
+	}
+}
 function wipe_verbs() {
 	verbs = [["", ""]];
 	verb_tabs = [];
@@ -349,10 +364,9 @@ function add_verb_list(v) {
 	to_add.sort(); // sort what we're adding
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
+		if(findVerbindex(part[1], verbs))
+			continue;
 		if(verb_tabs.includes(part[0])){
-			if(verbs.includes(part)){
-				continue;
-			}
 			verbs.push(part);
 			if(current_tab == part[0]) {
 				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
@@ -393,7 +407,7 @@ function init_verbs(c, v) {
 		do_update = true;
 	}
 	if(v) {
-		verbs = JSON.parse(v);
+		add_verb_list(v);
 		verbs.sort(); // sort them
 		if(do_update) {
 			draw_verbs(current_tab);
@@ -811,6 +825,7 @@ function draw_verbs(cat){
 	var command = ""; // typecast name to string
 	verbs.sort();
 	verbs.reverse(); // sort verbs backwards before we draw
+	var duplicateindex;
 	for(var i = verbs.length - 1; i >= 0; i--) {
 		var part = verbs[i]; // should be a list containing category and command
 		if(!part[1]) continue;
