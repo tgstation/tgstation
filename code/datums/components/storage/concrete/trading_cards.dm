@@ -64,5 +64,8 @@
 		card.forceMove(card.drop_location())
 		card.flipped = deck.flipped
 		card.update_icon_state()
-		card.zoom_in()
+		if(isturf(card.drop_location()))
+			card.zoom_out()
+		else
+			card.zoom_in()
 		qdel(parent)
