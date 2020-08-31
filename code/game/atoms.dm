@@ -1183,6 +1183,8 @@
 			. = welder_act(user, I)
 		if(TOOL_ANALYZER)
 			. = analyzer_act(user, I)
+		if(TOOL_TABLET)
+			. = tablet_act(user, I)
 	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
 		return TRUE
 
@@ -1259,6 +1261,10 @@
 
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
+	return
+
+///Analyzer act
+/atom/proc/tablet_act(mob/living/user, obj/item/I)
 	return
 
 ///Generate a tag for this atom

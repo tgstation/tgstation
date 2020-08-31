@@ -11,6 +11,13 @@
 	device_type = MC_NET
 	var/static/ntnet_card_uid = 1
 
+
+/obj/item/computer_hardware/network_card/ComponentInitialize()
+
+	. = ..()
+
+
+/obj/item/computer_hardware
 /obj/item/computer_hardware/network_card/diagnostics(mob/user)
 	..()
 	to_chat(user, "NIX Unique ID: [identification_id]")

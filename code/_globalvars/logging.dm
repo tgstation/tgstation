@@ -1,6 +1,8 @@
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
 GLOBAL_VAR(world_game_log)
+GLOBAL_VAR(network_log)
+GLOBAL_PROTECT(network_log)
 GLOBAL_PROTECT(world_game_log)
 GLOBAL_VAR(world_runtime_log)
 GLOBAL_PROTECT(world_runtime_log)

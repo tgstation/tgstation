@@ -39,7 +39,7 @@
 	linked_devices = null
 	reverse_lookup = null
 	forward_lookup = null
-	SSnetworks.unregister_network(src)
+
 	return ..()
 
 /datum/ntnet/proc/find_by_hid(hid)
@@ -67,6 +67,7 @@
 	if(name)
 		reverse_lookup.Remove(hid)
 		forward_lookup.Remove(name)
+	device.network = null
 
 /datum/ntnet/proc/add_lookup(hardware_id, name)
 	if(linked_devices[hardware_id])
