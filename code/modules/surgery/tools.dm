@@ -429,7 +429,7 @@
 	name = "blood filter"
 	desc = "For filtering the blood."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "bloodfilter0" // CHANGE
+	icon_state = "bloodfilter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
@@ -440,71 +440,3 @@
 	attack_verb_simple = list("pumps", "siphons")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
-	var/obj/item/reagent_containers/beaker = null
-
-/obj/item/blood_filter/loaded/Initialize() //loaded subtype for mapping use
-	. = ..()
-	beaker = new /obj/item/reagent_containers/glass/beaker(src)
-	update_icon()
-
-/obj/item/blood_filter/Destroy()
-	if(beaker)
-		beaker.forceMove(drop_location())
-	return ..()
-
-/obj/item/blood_filter/examine(mob/user)
-	. = ..()
-	if(beaker)
-		. += "<span class='notice'>\The [src] has a [beaker] loaded.</span>"
-	else
-		. += "<span class='notice'>\The [src] is missing a beaker.</span>"
-
-/obj/item/blood_filter/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	replace_beaker(user)
-
-/obj/item/blood_filter/handle_atom_del(atom/A)
-	. = ..()
-	if(A == beaker)
-		beaker = null
-
-/obj/item/blood_filter/update_icon_state()
-	if(beaker)
-		icon_state = "bloodfilter1"
-	else
-		icon_state = "bloodfilter0"
-
-/obj/item/blood_filter/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(beaker)
-		if(!issilicon(user) && in_range(src, user))
-			user.put_in_hands(beaker)
-		else
-			beaker.forceMove(drop_location())
-		beaker = null
-	if(new_beaker)
-		beaker = new_beaker
-	update_icon()
-	return TRUE
-
-/obj/item/blood_filter/attackby(obj/item/object, mob/user, params)
-	if (!istype(object, /obj/item/reagent_containers))
-		return FALSE
-	var/obj/item/reagent_containers/new_beaker = object
-	if(!user.transferItemToLoc(new_beaker, src))
-		return TRUE
-	to_chat(user, "<span class='notice'>You add the [new_beaker] to [src].</span>")
-	replace_beaker(user, new_beaker)
-	update_icon()
-	return TRUE
-
-/obj/item/blood_filter/proc/act_filter_blood(mob/user, mob/living/carbon/target)
-	if(!beaker)
-		return
-	if(!target.reagents || !target.reagents.total_volume)
-		return
-	var/remove_amount = (2 * target.reagents.total_volume) / 8
-	target.reagents.trans_to(beaker, remove_amount, transfered_by = user, remove_blacklisted = TRUE)

@@ -79506,7 +79506,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -89861,6 +89860,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsO" = (
@@ -89908,7 +89908,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/blood_filter/loaded,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsR" = (

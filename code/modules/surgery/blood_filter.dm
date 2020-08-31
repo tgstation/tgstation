@@ -27,21 +27,13 @@
 		"<span class='notice'>[user] uses the [tool] to filtering your blood.</span>",
 		"<span class='notice'>[user] uses the [tool] on [target]'s chest.</span>")
 
-/datum/surgery_step/filter_blood/tool_check(mob/user, obj/item/tool)
-	if(!implement_type == TOOL_BLOODFILTER)
-		return FALSE
-	var/obj/item/blood_filter/filter = tool
-	if(!filter.beaker)
-		to_chat(user, "<span class='warning'>The [tool] is missing a beaker to operate properly.</span>")
-		return FALSE
-	return TRUE
-
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	if(target.reagents && target.reagents.total_volume)
+		for(var/datum/reagent/chem in target.reagents.reagent_list)
+			target.reagents.remove_reagent(chem.type, min(((2 * chem.volume) / 8), 10))
 	display_results(user, target, "<span class='notice'>The [tool] pings as it finishes filtering [target]'s blood.</span>",
 		"<span class='notice'>The [tool] pings as it stops pumping your blood.</span>",
 		"The [tool] pings as it stops pumping.")
-	var/obj/item/blood_filter/filter = tool
-	filter.act_filter_blood(user, target)
 	return ..()
 
 /datum/surgery_step/filter_blood/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
