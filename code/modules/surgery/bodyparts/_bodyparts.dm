@@ -87,6 +87,8 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
+	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/grasp_self])
+	var/obj/item/self_grasp/grasped_by
 
 
 /obj/item/bodypart/examine(mob/user)
@@ -159,12 +161,15 @@
 ///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()
 	if(!owner)
-		return
-	. = list()
+		return FALSE
+
+	var/list/bodypart_organs
 	for(var/i in owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 		var/obj/item/organ/organ_check = i
 		if(check_zone(organ_check.zone) == body_zone)
-			. += organ_check
+			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
+
+	return bodypart_organs
 
 /obj/item/bodypart/proc/consider_processing()
 	if(stamina_dam > DAMAGE_PRECISION)
@@ -367,6 +372,11 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
 
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && (get_damage() / max_damage * 50))
+		var/datum/wound/loss/dismembering = new
+		dismembering.apply_dismember(src, woundtype, outright=TRUE)
+		return
+
 	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -422,7 +432,7 @@
   * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
   *
   * Arguments:
-  * * It's the same ones on [receive_damage]
+  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
   */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
@@ -771,6 +781,13 @@
 
 	if(owner.mobility_flags & ~MOBILITY_STAND)
 		bleed_rate *= 0.75
+
+	if(grasped_by)
+		bleed_rate *= 0.7
+
+	if(!bleed_rate)
+		QDEL_NULL(grasped_by)
+
 	return bleed_rate
 
 /**

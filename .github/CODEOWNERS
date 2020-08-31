@@ -35,6 +35,11 @@
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
+# LemonInTheDark
+
+/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/modules/atmospherics/ @LemonInTheDark
+
 # MrStonedOne
 
 /SQL/database_changelog.txt @MrStonedOne
@@ -73,7 +78,7 @@
 # Multiple Owners
 
 /icons/ @Twaticus @ShizCalev
-/code/controllers/subsystem/air.dm @MrStonedOne
+/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

@@ -145,14 +145,25 @@
 // bones
 /datum/status_effect/wound/blunt
 
-/datum/status_effect/wound/blunt/interact_speed_modifier()
-	var/mob/living/carbon/C = owner
+/datum/status_effect/wound/blunt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	on_swap_hands()
 
-	if(C.get_active_hand() == linked_limb)
-		to_chat(C, "<span class='warning'>The [lowertext(linked_wound)] in your [linked_limb.name] slows your progress!</span>")
-		return linked_wound.interaction_efficiency_penalty
+/datum/status_effect/wound/blunt/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
+	var/mob/living/carbon/wound_owner = owner
+	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
-	return 1
+/datum/status_effect/wound/blunt/proc/on_swap_hands()
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/wound_owner = owner
+	if(wound_owner.get_active_hand() == linked_limb)
+		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
+	else
+		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/blunt/nextmove_modifier()
 	var/mob/living/carbon/C = owner

@@ -7,11 +7,11 @@
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
 
-	var/flipped = 0
+	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
 	icon_state = "[soft_type]soft"
-	flipped=0
+	flipped = FALSE
 	..()
 
 /obj/item/clothing/head/soft/verb/flipcap()
@@ -32,7 +32,7 @@
 /obj/item/clothing/head/soft/proc/flip(mob/user)
 	if(!user.incapacitated())
 		flipped = !flipped
-		if(src.flipped)
+		if(flipped)
 			icon_state = "[soft_type]soft_flipped"
 			to_chat(user, "<span class='notice'>You flip the hat backwards.</span>")
 		else

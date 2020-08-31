@@ -284,6 +284,8 @@
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_COLOR "movable_light_overlay_set_range"
 ///Called when the movable tries to toggle its dynamic light LIGHTING_ON status, from base atom/movable/lighting_overlay_toggle_on(): (new_state)
 #define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
+///called when the movable's glide size is updated: (new_glide_size)
+#define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 
 // /mob signals
 
@@ -420,6 +422,9 @@
 #define COMSIG_CARBON_EQUIP_HAT "carbon_equip_hat"
 ///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"
+///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+#define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
+#define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
 ///defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
 #define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
 ///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
@@ -437,6 +442,8 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE	"obj_hide"
+/// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
+#define COMSIG_OBJ_PAINTED "obj_painted"
 
 // /obj/machinery signals
 
@@ -601,11 +608,11 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
-
-// /obj/mecha signals
+// /obj/vehicle/sealed/mecha signals
 
 ///sent from mecha action buttons to the mecha they're linked to
-#define COMSIG_MECHA_ACTION_ACTIVATE "mecha_action_activate"
+#define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
+
 
 // /mob/living/carbon/human signals
 
@@ -652,8 +659,11 @@
 
 //Food
 
-///from base of obj/item/reagent_containers/food/snacks/attack() & Edible component: (mob/living/eater, mob/feeder)
+///from base of obj/item/reagent_containers/food/snacks/attack() & Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
+
+///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)
+#define COMSIG_FOOD_CONSUMED "food_consumed"
 
 #define COMSIG_ITEM_FRIED "item_fried"
 	#define COMSIG_FRYING_HANDLED (1<<0)
@@ -668,6 +678,9 @@
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
 #define COMSIG_GIBS_STREAK "gibs_streak"
+
+/// Called on mobs when they step in blood. (blood_amount, blood_state, list/blood_DNA)
+#define COMSIG_STEP_ON_BLOOD "step_on_blood"
 
 //Mood
 

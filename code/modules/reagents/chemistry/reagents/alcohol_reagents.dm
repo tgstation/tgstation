@@ -62,11 +62,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			O.visible_message("<span class='warning'>[O]'s ink is smeared by [name], but doesn't wash away!</span>")
 	return
 
-/datum/reagent/consumable/ethanol/expose_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/ethanol/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!isliving(M))
 		return
 
-	if(method in list(TOUCH, VAPOR, PATCH))
+	if(methods & (TOUCH|VAPOR|PATCH))
 		M.adjust_fire_stacks(reac_volume / 15)
 
 		if(iscarbon(M))

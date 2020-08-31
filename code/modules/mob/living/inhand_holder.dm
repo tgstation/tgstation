@@ -48,19 +48,21 @@
 	if(held_mob && isturf(loc))
 		release()
 
-/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
+/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
 	if(!held_mob)
 		if(del_on_release && !destroying)
 			qdel(src)
 		return FALSE
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
+		if(display_messages)
+			to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
 		L.dropItemToGround(src)
 	held_mob.forceMove(get_turf(held_mob))
 	held_mob.reset_perspective()
 	held_mob.setDir(SOUTH)
-	held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
+	if(display_messages)
+		held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
 	held_mob = null
 	if(del_on_release && !destroying)
 		qdel(src)
@@ -71,6 +73,13 @@
 
 /obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
+
+/obj/item/clothing/head/mob_holder/on_found(mob/finder)
+	if(held_mob?.will_escape_storage())
+		to_chat(finder, "<span class='warning'>\A [held_mob.name] pops out! </span>")
+		finder.visible_message("<span class='warning'>\A [held_mob.name] pops out of the container [finder] is opening!</span>", ignored_mobs = finder)
+		release(TRUE, FALSE)
+		return
 
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
@@ -90,10 +99,10 @@
 
 /obj/item/clothing/head/mob_holder/destructible/Destroy()
 	if(held_mob)
-		release(FALSE, TRUE)
+		release(FALSE, TRUE, TRUE)
 	return ..()
 
-/obj/item/clothing/head/mob_holder/release(del_on_release = TRUE, delete_mob = FALSE)
+/obj/item/clothing/head/mob_holder/destructible/release(del_on_release = TRUE, display_messages = TRUE, delete_mob = FALSE)
 	if(delete_mob && held_mob)
 		QDEL_NULL(held_mob)
 	return ..()

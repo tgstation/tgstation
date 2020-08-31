@@ -7,15 +7,15 @@
 	var/t_is = p_are()
 
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!")
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 
 	if (handcuffed)
 		. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
 	if (head)
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head. "
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured))
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
 		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	for(var/obj/item/I in held_items)
@@ -24,9 +24,9 @@
 
 	if (back)
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
-	var/appears_dead = 0
+	var/appears_dead = FALSE
 	if (stat == DEAD)
-		appears_dead = 1
+		appears_dead = TRUE
 		if(getorgan(/obj/item/organ/brain))
 			. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>"
 		else if(get_bodypart(BODY_ZONE_HEAD))
@@ -111,13 +111,13 @@
 			scar_severity += S.severity
 
 	switch(scar_severity)
-		if(1 to 2)
-			msg += "<span class='smallnoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
-		if(3 to 4)
-			msg += "<span class='notice'><i>[t_He] [t_has] several bad scars, you can look again to take a closer look...</i></span>\n"
-		if(5 to 6)
-			msg += "<span class='notice'><b><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></b></span>\n"
-		if(7 to INFINITY)
+		if(1 to 4)
+			msg += "<span class='tinynoticeital'>[t_He] [t_has] visible scarring, you can look again to take a closer look...</span>\n"
+		if(5 to 8)
+			msg += "<span class='smallnoticeital'>[t_He] [t_has] several bad scars, you can look again to take a closer look...</span>\n"
+		if(9 to 11)
+			msg += "<span class='notice'><i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i></span>\n"
+		if(12 to INFINITY)
 			msg += "<span class='notice'><b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b></span>\n"
 
 	msg += "</span>"

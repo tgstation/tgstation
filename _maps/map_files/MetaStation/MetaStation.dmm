@@ -1962,13 +1962,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
-"aeE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
 "aeF" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/structure/lattice/catwalk,
@@ -4619,12 +4612,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"ajY" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "ajZ" = (
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
@@ -5307,20 +5294,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"alo" = (
-/obj/machinery/camera{
-	c_tag = "Holodeck";
-	dir = 1
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "alp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
@@ -5990,15 +5963,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
-"amG" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "amH" = (
 /obj/machinery/door/airlock/external{
 	req_one_access_txt = "13,8"
@@ -6512,12 +6476,6 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"anN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "anO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
@@ -63437,13 +63395,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"dht" = (
-/obj/item/cigbutt,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "dhu" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/poster/contraband/random{
@@ -65075,10 +65026,9 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "dCi" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dCk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -68448,6 +68398,12 @@
 	},
 /turf/open/floor/wood,
 /area/vacant_room/office)
+"ijD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+	dir = 10
+	},
+/turf/closed/wall,
+/area/crew_quarters/fitness/recreation)
 "ilm" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -68583,6 +68539,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ixc" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/lootdrop/costume,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "ixg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -70892,6 +70854,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"mfN" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/fitness/recreation)
 "mha" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -72713,6 +72681,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"pvY" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Fore";
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "pwn" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -73253,6 +73230,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"qhy" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Aft";
+	dir = 1;
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "qif" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/morgue";
@@ -74843,6 +74830,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
+"sFe" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck Control";
+	dir = 1
+	},
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "sFv" = (
 /turf/closed/wall/r_wall,
 /area/science/explab)
@@ -75530,6 +75531,10 @@
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"tUa" = (
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "tXK" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
@@ -76205,6 +76210,11 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
+"vnL" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "vnZ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -116168,7 +116178,7 @@ aaa
 aaa
 aaa
 aeB
-afC
+aho
 afC
 afC
 aib
@@ -116952,7 +116962,7 @@ afD
 aqo
 arG
 asB
-dhB
+vnL
 dnR
 dnh
 axN
@@ -117453,6 +117463,7 @@ aaa
 aag
 aaa
 aeC
+pvY
 afD
 afD
 afD
@@ -117461,8 +117472,7 @@ afD
 afD
 afD
 afD
-afD
-afD
+qhy
 aqo
 arI
 atd
@@ -117709,22 +117719,22 @@ aaa
 aaa
 aai
 aaa
-aeE
-afC
-afC
-aho
-aic
-acQ
-acQ
-aln
-amE
-amE
-amE
-aqp
-dnh
-dnR
-aus
-dnS
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+arI
+atd
+atd
+atd
 dnh
 aAm
 oeK
@@ -117966,22 +117976,22 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-acP
-aid
-aiZ
-ajX
-alo
-acP
-dnz
-dnR
-dht
-dnh
-dnh
-dnh
-dnh
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+arI
+atd
+dnS
+atd
 dnh
 axQ
 ayR
@@ -118223,23 +118233,23 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaa
-acP
-aie
-aja
-ajY
-alp
-dtE
-anN
-dnS
-doh
-dnS
-dnS
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
+dnR
+aus
 dCi
-dnS
-dnS
+tUa
+dnh
 axO
 dnS
 axY
@@ -118480,18 +118490,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-acP
-acQ
-acQ
-acQ
-acP
-acP
-dnh
-dnh
-dnh
+aeC
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+afD
+aqo
 dnh
 dnh
 dnh
@@ -118737,19 +118747,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaa
-aaa
-aaa
-aaf
-dni
-amG
-amH
-anN
-dnS
-dhB
+ijD
+aho
+aho
+aho
+aic
+acQ
+acQ
+aln
+amE
+amE
+amE
+aqp
+ixc
 arI
 dnh
 dqu
@@ -118997,15 +119007,15 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-aaf
-dnh
-amH
+acP
+aid
+aiZ
+ajX
+sFe
+acP
 dnh
 apd
-dnS
+ape
 arK
 dnS
 dnh
@@ -119254,14 +119264,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaa
-aaf
-aaa
-ack
-dnh
-ape
+acP
+aie
+aja
+ahg
+alp
+mfN
+dnS
+dnS
 dnS
 arL
 ate
@@ -119511,14 +119521,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-ack
-dni
+acP
+acP
+acP
+acP
+acP
+acP
 bcO
+dnS
 dnS
 dnS
 dnS
@@ -119769,12 +119779,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
-aaf
-aaa
-aaf
-dnh
+amH
+dnS
+amH
+dnS
+dnS
 apg
 aqs
 arM
