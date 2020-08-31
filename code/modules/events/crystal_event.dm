@@ -37,7 +37,7 @@ This section is for the event controller
 /datum/round_event/crystal_invasion
 	startWhen = 10
 	announceWhen = 1
-	endWhen = 25 MINUTES
+	endWhen = 460
 	///Is the name of the wave, used to check wich wave will be generated
 	var/wave_name
 	///Max number of portals that can spawn per type of wave
@@ -109,7 +109,7 @@ This section is for the event controller
 	for(var/i in 1 to 6)
 		spawn_anomaly(spawners)
 
-	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 15 MINUTES)
+	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 10 MINUTES)
 
 ///Spawn an anomaly randomly in a different location than spawn_portal()
 /datum/round_event/crystal_invasion/proc/spawn_anomaly(list/spawners)
@@ -130,7 +130,7 @@ This section is for the event controller
 ///If after 10 minutes the crystal is not stabilized more portals are spawned and the event progress further
 /datum/round_event/crystal_invasion/proc/more_portals()
 	priority_announce("WARNING - Detected another spike from the destabilized crystal. More portals are spawning all around the station, the next spike could \
-						cause a \[REDACTED] class event we assume you have 10 more minutes before total crystal annihilation", "Alert")
+						cause a \[REDACTED] class event we assume you have five more minutes before total crystal annihilation", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 	var/list/spawners = list()
 	for(var/es in GLOB.generic_event_spawns)
@@ -141,18 +141,17 @@ This section is for the event controller
 		spawn_portal(GLOB.crystal_invasion_waves["small wave"], spawners)
 
 /datum/round_event/crystal_invasion/tick()
-	if(dest_crystal == null)
-		processing = FALSE
-		message_admins("Deleted Destabilized crystal, aborting")
-		kill()
 	if(dest_crystal.is_stabilized == TRUE)
 		processing = FALSE
 		is_zk_scenario = FALSE
-		end()
-
-/datum/round_event/crystal_invasion/end()
-	if(is_zk_scenario == TRUE)
+		finish_event()
+	if(activeFor == endWhen - 10)
 		processing = FALSE
+		finish_event()
+
+///Handles wich end the event shall have
+/datum/round_event/crystal_invasion/proc/finish_event()
+	if(is_zk_scenario == TRUE)
 		zk_event_announcement()
 	else
 		restore()
@@ -194,6 +193,7 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/on_dest_crystal_qdel()
 	UnregisterSignal(dest_crystal, COMSIG_PARENT_QDELETING)
 	processing = FALSE
+	message_admins("Deleted Destabilized crystal, aborting")
 	dest_crystal = null
 	kill()
 
@@ -214,12 +214,24 @@ This section is for the destabilized SM
 	var/active = TRUE
 	///Check if the crew managed to stop the ZK-class event by stabilizing the crystal
 	var/is_stabilized = FALSE
+	///Our sound loop
+	var/datum/looping_sound/destabilized_crystal/soundloop
+
+/obj/machinery/destabilized_crystal/Initialize()
+	. = ..()
+	soundloop = new(list(src), TRUE)
+
+/obj/machinery/destabilized_crystal/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/destabilized_crystal/process()
 	if(!active)
 		return
 	if(prob(75))
 		radiation_pulse(src, 250, 6)
+	if(prob(10))
+		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
 	var/datum/gas_mixture/removed
@@ -261,26 +273,29 @@ This section is for the destabilized SM
 	. = ..()
 	. += "<span class='notice'>The Crystal appears to be heavily destabilized. Maybe it can be fixed by injecting it with something from another world.</span>"
 
-/obj/machinery/destabilized_crystal/Bumped(atom/movable/AM)
-	if(isliving(AM))
-		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",\
-		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else
+/obj/machinery/destabilized_crystal/Bumped(atom/movable/movable_atom)
+	if(!isliving(movable_atom))
 		return
+	var/mob/living/user = movable_atom
+	if(isnull(user.mind))
+		return
+	movable_atom.visible_message("<span class='danger'>\The [movable_atom] slams into \the [src] inducing a resonance... [movable_atom.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",\
+	"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
+	"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
-	Consume(AM)
+	Consume(movable_atom)
 
-/obj/machinery/destabilized_crystal/proc/Consume(atom/movable/AM)
-	if(isliving(AM))
-		var/mob/living/user = AM
-		if(user.status_flags & GODMODE)
+/obj/machinery/destabilized_crystal/proc/Consume(atom/movable/movable_atom)
+	if(isliving(movable_atom))
+		var/mob/living/user = movable_atom
+		if(user.status_flags & GODMODE || isnull(user.mind))
 			return
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
-	for(var/obj/structure/crystal_portal/portals in GLOB.crystal_portals)
-		portals.spawn_time += 5 SECONDS
+	for(var/find_portal in GLOB.crystal_portals)
+		var/obj/structure/crystal_portal/portal = find_portal
+		portal.modify_component()
 	priority_announce("The sacrifice of a member of the station (we hope was the clown) has weakened the portals and the monsters generation is slowing down!")
 	sound_to_playing_players('sound/misc/notice2.ogg')
 
@@ -360,7 +375,7 @@ This section is for the crystal portals variations
 	///Max amount of mobs that a portal can spawn in any given time
 	var/max_mobs = 5
 	///Spawn time between each mobs
-	var/spawn_time
+	var/spawn_time = 0
 	///Type of mob that the portal will spawn, if more than one type in the list will choose randomly
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	///Fluff text for each mob spawned
@@ -372,7 +387,7 @@ This section is for the crystal portals variations
 	///This var check if the portal has been closed by a player with a neutralizer
 	var/closed = FALSE
 	///Link to the signaler object for signaling uses
-	var/obj/item/assembly/signaler/crystal_anomaly/aSignal = /obj/item/assembly/signaler/crystal_anomaly
+	var/obj/item/assembly/signaler/crystal_anomaly/a_signal = /obj/item/assembly/signaler/crystal_anomaly
 
 /obj/structure/crystal_portal/Initialize()
 	. = ..()
@@ -380,18 +395,18 @@ This section is for the crystal portals variations
 	GLOB.crystal_portals += src
 	mob_types = typelist("crystal_portal mob_types", mob_types)
 	faction = typelist("crystal_portal faction", faction)
-	aSignal = new aSignal(src)
-	aSignal.code = rand(1,100)
-	aSignal.anomaly_type = type
+	a_signal = new a_signal(src)
+	a_signal.code = rand(1,100)
+	a_signal.anomaly_type = type
 	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
 	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
 		frequency++
-	aSignal.set_frequency(frequency)
+	a_signal.set_frequency(frequency)
 
 /obj/structure/crystal_portal/Destroy()
 	GLOB.crystal_portals -= src
-	if(aSignal)
-		QDEL_NULL(aSignal)
+	if(a_signal)
+		QDEL_NULL(a_signal)
 	if(!closed)
 		switch(name)
 			if("Small Portal")
@@ -423,7 +438,11 @@ This section is for the crystal portals variations
 			closed = TRUE
 			qdel(src)
 	if(W.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(a_signal.frequency)], code [a_signal.code].</span>")
+
+/obj/structure/crystal_portal/proc/modify_component()
+	spawn_time += 5
+	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
 /obj/structure/crystal_portal/small
 	name = "Small Portal"
