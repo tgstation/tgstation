@@ -243,7 +243,7 @@ This section is for the destabilized SM
 		radiation_pulse(src, 250, 6)
 	if(prob(30))
 		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-	if(prob(15)
+	if(prob(15))
 		src.fire_nuclear_particle()
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
