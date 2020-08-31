@@ -210,7 +210,8 @@
 				"<span class='hear'>You hear metal clanking.</span>")
 		else
 			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
-				"<span class='warning'>[user] buckles you to [src]!</span>")
+				"<span class='warning'>[user] buckles you to [src]!</span>",\
+				"<span class='hear'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
