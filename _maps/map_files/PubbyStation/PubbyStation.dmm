@@ -4643,10 +4643,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-"alV" = (
-/obj/machinery/meter,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "alW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
@@ -38358,10 +38354,10 @@
 	},
 /area/maintenance/department/engine)
 "bSt" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer3{
 	dir = 10
 	},
+/obj/machinery/meter/atmos/layer3,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bSu" = (
@@ -38610,8 +38606,7 @@
 "bTf" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer3,
 /obj/machinery/atmospherics/components/binary/pump/on/layer1{
-	name = "Virology Waste to Space";
-	pixel_x = -1
+	name = "Virology Waste to Space"
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -38619,8 +38614,7 @@
 /area/maintenance/department/engine)
 "bTg" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer1{
-	name = "Virology Waste to Space";
-	pixel_x = -1
+	name = "Virology Waste to Space"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -41230,7 +41224,6 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZi" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -41387,6 +41380,7 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
 	dir = 5
 	},
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "bZS" = (
@@ -44123,8 +44117,7 @@
 "clM" = (
 /obj/machinery/atmospherics/components/binary/pump/on/layer1{
 	dir = 1;
-	name = "Tcomms Sat Waste";
-	pixel_x = -1
+	name = "Tcomms Sat Waste"
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
@@ -55701,13 +55694,13 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "sUP" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer3{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/machinery/meter/atmos/layer1,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -76508,7 +76501,7 @@ afU
 ajG
 akw
 all
-alV
+ajD
 aiu
 vCC
 apB
