@@ -80,7 +80,7 @@ Behavior that's still missing from this component that original food items had t
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
 	src.eat_time = eat_time
-	src.eatverbs = string_num_lists(eatverbs)
+	src.eatverbs = string_list(eatverbs)
 	src.junkiness = junkiness
 	src.after_eat = after_eat
 	src.on_consume = on_consume

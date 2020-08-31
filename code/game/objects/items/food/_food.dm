@@ -23,6 +23,9 @@
 
 /obj/item/food/Initialize()
 	. = ..()
+	food_reagents = string_num_lists(food_reagents)
+	tastes = string_num_lists(tastes)
+	eatverbs = string_list(eatverbs)
 	MakeEdible()
 	MakeProcessable()
 

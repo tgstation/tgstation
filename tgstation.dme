@@ -162,6 +162,7 @@
 #include "code\__HELPERS\sanitize_values.dm"
 #include "code\__HELPERS\shell.dm"
 #include "code\__HELPERS\stat_tracking.dm"
+#include "code\__HELPERS\string_list.dm"
 #include "code\__HELPERS\string_num_lists.dm"
 #include "code\__HELPERS\text.dm"
 #include "code\__HELPERS\time.dm"
