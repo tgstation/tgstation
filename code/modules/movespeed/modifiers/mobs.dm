@@ -114,3 +114,7 @@
 
 /datum/movespeed_modifier/metabolicboost
 	multiplicative_slowdown = -1.5
+	
+/datum/movespeed_modifier/assistant_borg_mountspeed
+	multiplicative_slowdown = -0.25
+	flags = IGNORE_NOSLOW
