@@ -57,7 +57,7 @@
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
 	if(M == user || !istype(M) || !isliving(user))
 		return
-	if(MODE_HUG)
+	if(mode == MODE_HUG)
 		if(isanimal(M))
 			M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 			return
@@ -68,7 +68,7 @@
 			user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
 					"<span class='notice'>You pet [M]!</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	else if(MODE_SHOCK)
+	else if(mode == MODE_SHOCK)
 		if(scooldown < world.time)
 			M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 			user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
