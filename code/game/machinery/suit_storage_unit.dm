@@ -50,6 +50,10 @@
 	/// How fast it charges cells in a suit
 	var/charge_rate = 500
 
+/obj/machinery/suit_storage_unit/Initialize()
+	. = ..()
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
+
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
@@ -201,14 +205,22 @@
 		new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/living/user)
-	var/static/list/items = list("suit", "helmet", "mask", "storage")
+/obj/machinery/suit_storage_unit/interact(mob/living/user)
+	var/static/list/items
+
+	if (!items)
+		items = list(
+			"suit" = create_silhouette_of(/obj/item/clothing/suit/space/eva),
+			"helmet" = create_silhouette_of(/obj/item/clothing/head/helmet/space/eva),
+			"mask" = create_silhouette_of(/obj/item/clothing/mask/breath),
+			"storage" = create_silhouette_of(/obj/item/tank/internals/oxygen),
+		)
 
 	. = ..()
 	if (.)
 		return
 
-	if (!check_interactable())
+	if (!check_interactable(user))
 		return
 
 	var/list/choices = list()
@@ -222,12 +234,21 @@
 			var/item = vars[item_key]
 			if (item)
 				choices[item_key] = item
+			else
+				// If the item doesn't exist, put a silhouette in its place
+				choices[item_key] = items[item_key]
 	else
 		choices["open"] = icon('icons/mob/radial.dmi', "radial_open")
 		choices["disinfect"] = icon('icons/mob/radial.dmi', "radial_disinfect")
 		choices["lock"] = icon('icons/mob/radial.dmi', "radial_lock")
 
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_interactable), require_near = TRUE)
+	var/choice = show_radial_menu(
+		user,
+		src,
+		choices,
+		custom_check = CALLBACK(src, .proc/check_interactable, user),
+	)
+
 	if (!choice)
 		return
 
@@ -257,12 +278,15 @@
 			var/obj/item/item_to_dispense = vars[choice]
 			if (item_to_dispense)
 				vars[choice] = null
-				user.put_in_hands(item_to_dispense)
+				try_put_in_hand(item_to_dispense, user)
 
 	attack_hand(user)
 
-/obj/machinery/suit_storage_unit/proc/check_interactable()
-	if (!state_open && !powered())
+/obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
+	if (state_open && !powered())
+		return FALSE
+
+	if (!state_open && !can_interact(user))
 		return FALSE
 
 	if (panel_open)
@@ -272,6 +296,12 @@
 		return FALSE
 
 	return TRUE
+
+/obj/machinery/suit_storage_unit/proc/create_silhouette_of(atom/item)
+	var/image/image = image(initial(item.icon), initial(item.icon_state))
+	image.alpha = 128
+	image.color = "#FF0000"
+	return image
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
 	if(!istype(user) || user.stat || !Adjacent(user) || !Adjacent(A) || !isliving(A))
