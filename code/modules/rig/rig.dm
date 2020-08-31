@@ -9,8 +9,8 @@
 /obj/item/rig/control
 	name = "RIG control module"
 	desc = "A special powered suit that protects against various environments. Wear it on your back, deploy it and activate it."
-	icon_state = "engi-control"
-	worn_icon_state = "engi-control"
+	icon_state = "control"
+	worn_icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
@@ -75,8 +75,8 @@
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
-	icon_state = "[theme]-control"
-	worn_icon_state = "[theme]-control"
+	icon_state = "[theme]-[icon_state]"
+	worn_icon_state = "[theme]-[worn_icon_state]"
 	wires = new /datum/wires/rig(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
@@ -110,8 +110,8 @@
 			piece.permeability_coefficient = permeability_coefficient
 			if(piece.siemens_coefficient > siemens_coefficient)
 				piece.siemens_coefficient = siemens_coefficient
-			piece.icon_state = "[theme]-[icon_state]"
-			piece.worn_icon_state = "[theme]-[icon_state]"
+			piece.icon_state = "[theme]-[piece.icon_state]"
+			piece.worn_icon_state = "[theme]-[piece.worn_icon_state]"
 	if(initial_modules.len)
 		for(var/obj/item/rig/module/module in initial_modules)
 			module = new module(src)
@@ -316,6 +316,7 @@
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/rig.dmi'
+	worn_icon_state = "helmet"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	flash_protect = FLASH_PROTECTION_NONE
 	resistance_flags = ACID_PROOF
@@ -340,6 +341,7 @@
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/rig.dmi'
+	worn_icon_state = "chestplate"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -364,6 +366,7 @@
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/rig.dmi'
+	worn_icon_state = "gauntlets"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	permeability_coefficient = 0.01
@@ -380,6 +383,7 @@
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/rig.dmi'
+	worn_icon_state = "boots"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	permeability_coefficient = 0.01
