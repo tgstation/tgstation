@@ -428,11 +428,19 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(L, src))
 		to_chat(L, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[L] shakes you to get you up!</span>")
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	else
-		L.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(L, src))
-		to_chat(L, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		to_chat(src, "<span class='notice'>[L] hugs you to make you feel better!</span>")
+		if(issilicon(L) && L.zone_selected = BODY_ZONE_HEAD)
+			L.visible_message("<span class='notice'>[L] playfully boops [src] on the head!</span>", \
+				"<span class='notice'>You playfully boop [src] on the head!</span>")
+			L.do_attack_animation(src, ATTACK_EFFECT_BOOP)
+			playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
+		else
+			L.visible_message("<span class='notice'>[L] hugs [src] to make [p_them()] feel better!</span>", \
+				null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(L, src))
+			to_chat(L, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			to_chat(src, "<span class='notice'>[L] hugs you to make you feel better!</span>")
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
@@ -468,6 +476,8 @@
 			// For craaaaaaaazy people
 			for(var/datum/brain_trauma/trauma in C.get_traumas())
 				trauma.on_hug(C, src)
+		else if(issilicon(L) && L.zone_selected = BODY_ZONE_HEAD) //it's annoying that we have to check for this again, but eh, what can ya do?
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/boop)
 		else
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
@@ -478,8 +488,6 @@
 	AdjustParalyzed(-60)
 	AdjustImmobilized(-60)
 	set_resting(FALSE)
-
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
 	if (incapacitated())
