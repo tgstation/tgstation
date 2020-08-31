@@ -40,7 +40,7 @@ Behavior that's still missing from this component that original food items had t
 	///The initial volume of the foods reagents
 	var/volume
 	///The flavortext for taste (haha get it flavor text)
-	var/list/tastes = list()
+	var/list/tastes
 	///The type of atom this creates when the object is microwaved.
 	var/microwaved_type
 
