@@ -79,4 +79,3 @@
 			H.visible_message("<span class='warning'>[H]'s suit spews space lube everywhere!</span>","<span class='warning'>Your suit spews space lube everywhere!</span>")
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
-	return 0

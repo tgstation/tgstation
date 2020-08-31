@@ -19,15 +19,15 @@
 
 	heat_protection = 0.5 // minor heat insulation
 
-	var/leaping = 0
+	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
-	unique_name = 1
+	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize()
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/lay_down)
 
 	create_bodyparts() //initialize bodyparts
 
@@ -74,11 +74,9 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/Stat()
-	..()
-
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
+/mob/living/carbon/alien/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)

@@ -2,7 +2,7 @@
 	name = "ridden vehicle"
 	can_buckle = TRUE
 	max_buckled_mobs = 1
-	buckle_lying = FALSE
+	buckle_lying = 0
 	default_driver_move = FALSE
 	var/legs_required = 2
 	var/arms_required = 1	//why not?

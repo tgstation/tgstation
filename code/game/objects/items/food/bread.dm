@@ -9,6 +9,7 @@
 /obj/item/food/bread/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'

@@ -39,7 +39,7 @@
 /mob/living/simple_animal/hostile/vatbeast/tamed()
 	. = ..()
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
 	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
 	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)

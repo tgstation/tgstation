@@ -514,10 +514,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_open_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
@@ -531,10 +531,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_close_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -549,7 +549,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j

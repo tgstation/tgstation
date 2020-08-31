@@ -15,9 +15,6 @@
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 
-/datum/species/human/felinid/qualifies_for_rank(rank, list/features)
-	return TRUE
-
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

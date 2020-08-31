@@ -257,7 +257,7 @@
 		else
 			if(the_event.timeout)
 				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
-			return 0 //Don't have to update the event.
+			return //Don't have to update the event.
 	var/list/params = args.Copy(4)
 	params.Insert(1, parent)
 	the_event = new type(arglist(params))
@@ -276,7 +276,7 @@
 		category = REF(category)
 	var/datum/mood_event/event = mood_events[category]
 	if(!event)
-		return 0
+		return
 
 	mood_events -= category
 	qdel(event)

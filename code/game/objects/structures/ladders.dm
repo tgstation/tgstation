@@ -84,39 +84,42 @@
 	user.forceMove(T)
 	if(AM)
 		user.start_pulling(AM)
+	
+	//reopening ladder radial menu ahead
+	T = get_turf(user)
+	var/obj/structure/ladder/ladder_structure = locate() in T
+	if (ladder_structure)
+		ladder_structure.use(user)
 
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)
 	if (!is_ghost && !in_range(src, user))
 		return
 
-	var/list/tool_list = list(
-		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
-		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
-		)
-
-	if (up && down)
-		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-		if (!is_ghost && !in_range(src, user))
-			return  // nice try
-		switch(result)
-			if("Up")
-				travel(TRUE, user, is_ghost, up)
-			if("Down")
-				travel(FALSE, user, is_ghost, down)
-			if("Cancel")
-				return
-	else if(up)
-		travel(TRUE, user, is_ghost, up)
-	else if(down)
-		travel(FALSE, user, is_ghost, down)
-	else
+	var/list/tool_list = list()
+	if (up)
+		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	if (down)
+		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+	if (!length(tool_list))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
+		return
+	
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, is_ghost), require_near = !is_ghost, tooltips = TRUE)
+	if (!is_ghost && !in_range(src, user))
+		return  // nice try
+	switch(result)
+		if("Up")
+			travel(TRUE, user, is_ghost, up)
+		if("Down")
+			travel(FALSE, user, is_ghost, down)
+		if("Cancel")
+			return
 
 	if(!is_ghost)
 		add_fingerprint(user)
 
-/obj/structure/ladder/proc/check_menu(mob/user)
-	if(user.incapacitated() || !user.Adjacent(src))
+/obj/structure/ladder/proc/check_menu(mob/user, is_ghost)
+	if(user.incapacitated() || (!user.Adjacent(src) && !is_ghost))
 		return FALSE
 	return TRUE
 

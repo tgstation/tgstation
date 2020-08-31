@@ -120,7 +120,7 @@
 	icon_state = "ushankadown"
 	inhand_icon_state = "ushankadown"
 	flags_inv = HIDEEARS|HIDEHAIR
-	var/earflaps = 1
+	var/earflaps = TRUE
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
@@ -128,15 +128,14 @@
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		src.icon_state = "ushankaup"
-		src.inhand_icon_state = "ushankaup"
-		earflaps = 0
+		icon_state = "ushankaup"
+		inhand_icon_state = "ushankaup"
 		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
-		src.icon_state = "ushankadown"
-		src.inhand_icon_state = "ushankadown"
-		earflaps = 1
+		icon_state = "ushankadown"
+		inhand_icon_state = "ushankadown"
 		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
+	earflaps = !earflaps
 
 /*
  * Pumpkin head

@@ -162,14 +162,14 @@
 
 /obj/effect/particle_effect/foam/proc/foam_mob(mob/living/L)
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(!istype(L))
-		return 0
+		return FALSE
 	var/fraction = 1/initial(reagent_divisor)
 	if(lifetime % reagent_divisor)
 		reagents.expose(L, VAPOR, fraction)
 	lifetime--
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
