@@ -825,7 +825,6 @@ function draw_verbs(cat){
 	var command = ""; // typecast name to string
 	verbs.sort();
 	verbs.reverse(); // sort verbs backwards before we draw
-	var duplicateindex;
 	for(var i = verbs.length - 1; i >= 0; i--) {
 		var part = verbs[i]; // should be a list containing category and command
 		if(!part[1]) continue;
