@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(tgui)
 	msg = "P:[length(open_uis)]"
 	return ..()
 
-/datum/controller/subsystem/tgui/fire(resumed = 0)
+/datum/controller/subsystem/tgui/fire(resumed = FALSE)
 	if(!resumed)
 		src.current_run = open_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)

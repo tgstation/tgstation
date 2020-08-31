@@ -54,8 +54,8 @@
 	if(reagents)
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
 	. = ..()

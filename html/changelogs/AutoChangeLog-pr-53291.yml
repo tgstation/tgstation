@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "The advanced fire extinguisher now has an inhand sprite, and no longer looks like a regular extinguisher."

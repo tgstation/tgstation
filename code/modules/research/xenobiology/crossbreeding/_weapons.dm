@@ -100,7 +100,7 @@ Slimecrossing Weapons
 /obj/item/gun/magic/bloodchill/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
+		return FALSE
 	charge_tick = 0
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
@@ -108,7 +108,7 @@ Slimecrossing Weapons
 		M.blood_volume -= 20
 	if(charges == 1)
 		recharge_newshot()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/magic/bloodchill
 	projectile_type = /obj/projectile/magic/bloodchill

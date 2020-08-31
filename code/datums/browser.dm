@@ -198,7 +198,7 @@
 	opentime = 0
 
 /datum/browser/modal/open(use_onclose)
-	set waitfor = 0
+	set waitfor = FALSE
 	opentime = world.time
 
 	if (stealfocus)
