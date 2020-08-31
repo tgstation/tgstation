@@ -8,17 +8,17 @@
 	size = 10
 	tgui_id = "NtosBountyConsole"
 	///cooldown var for printing paper sheets.
-	var/printer_ready = 0
+	var/when_printer_ready = 0
 	///The cargo account for grabbing the cargo account's credits.
 	var/static/datum/bank_account/cargocash
 
 /datum/computer_file/program/bounty/proc/print_paper()
-	new /obj/item/paper/bounty_printout(get_turf(computer))
+	new /obj/item/paper/bounty_printout(get_turf(src.computer))
+	when_printer_ready = world.time + PRINTER_TIMEOUT
 
 /datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
-	printer_ready = world.time + PRINTER_TIMEOUT
 	cargocash = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
 
@@ -41,7 +41,8 @@
 				cashmoney.claim()
 			return TRUE
 		if("Print")
-			if(printer_ready < world.time)
-				printer_ready = world.time + PRINTER_TIMEOUT
+			if(when_printer_ready <= world.time)
 				print_paper()
 				return
+			else
+				to_chat(computer.loc, "<span class='warning'>The printer is not ready to print yet!</span>")
