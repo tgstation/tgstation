@@ -1050,7 +1050,7 @@
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
-	if(bonus_ridespeed)
+	if(bonus_ridespeed && M.stat != DEAD)
 		add_movespeed_modifier(/datum/movespeed_modifier/assistant_borg_mountspeed)
 	return ..()
 
