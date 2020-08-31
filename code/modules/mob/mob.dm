@@ -474,7 +474,7 @@
 
 /mob/living/blind_examine_check(atom/examined_thing)
 	//need to be next to something and awake
-	if(!in_range(examined_thing, src) || incapacitated())
+	if(!Adjacent(examined_thing) || incapacitated())
 		to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
 		return FALSE
 
