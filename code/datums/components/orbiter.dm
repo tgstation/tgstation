@@ -32,7 +32,8 @@
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	master.orbiters = null
+	if(master.orbiters == src)
+		master.orbiters = null
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
@@ -44,14 +45,14 @@
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
-	for(var/i in newcomp.orbiters)
-		var/mob/orbiter_mob = i
-		orbiter_mob.orbiting = src
+	for(var/atom/movable/incoming_orbiter in newcomp.orbiters)
+		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
-		UnregisterSignal(orbiter_mob, COMSIG_MOVABLE_MOVED)
-		RegisterSignal(orbiter_mob, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
+		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
 	orbiters += newcomp.orbiters
+	newcomp.orbiters = null
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
