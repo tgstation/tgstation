@@ -239,7 +239,7 @@ Behavior that's still missing from this component that original food items had t
 	if(source_item.reagents)
 		source_item.reagents.trans_to(this_food, source_item.reagents.total_volume)
 
-	if(initial_reagents && initial_reagents.len)
+	if(length(initial_reagents))
 		for(var/r_id in initial_reagents)
 			var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
