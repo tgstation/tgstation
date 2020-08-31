@@ -45,7 +45,7 @@
 	name = "pocket protector"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
-	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your "admirable" needs. Microphone not included."
+	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
 
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
 	var/obj/screen/map_view/cam_screen
