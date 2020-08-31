@@ -29,7 +29,7 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/AltClick(mob/user)
 	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
+		target_pressure = ONE_ATMOSPHERE*50
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
@@ -94,7 +94,7 @@
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["max_pressure"] = round(ONE_ATMOSPHERE*50)
 	return data
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/ui_act(action, params)
@@ -108,13 +108,13 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = ONE_ATMOSPHERE*50
 				. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, ONE_ATMOSPHERE*50)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
