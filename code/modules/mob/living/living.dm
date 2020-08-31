@@ -1148,10 +1148,10 @@
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
-//Share fire evenly between two mobs
-//Called in help_shake_act() (for carbons), MobBump(), and Crossed()
-//returning TRUE means that the creature calling this proc set the creature that was fed into this proc as an argument on fire, and so a logged message needs to be sent
-//if the creature calling this proc manages to set ITSELF on fire, then this proc will handle the logging for that
+/// Share fire evenly between two mobs
+/// Called in help_shake_act() (for carbons), MobBump(), and Crossed()
+/// returning TRUE means that the creature calling this proc set the creature that was fed into this proc as an argument on fire, and so a logged message needs to be sent
+/// if the creature calling this proc manages to set ITSELF on fire, then this proc will handle the logging for that
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return FALSE
