@@ -95,6 +95,19 @@
 	. = ..()
 	eatverb = pick("bite","nibble","gnaw","gobble","chomp")
 
+
+/obj/item/reagent_containers/food/snacks/caramel_corn
+	name = "caramel corn"
+	desc = "Popping with caramel."
+	icon_state = "caramel_corn"
+	trash = /obj/item/trash/caramel_corn
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)
+	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+	filling_color = "#FFEFD5"
+	tastes = list("popcorn" = 3, "caramel" = 3)
+	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
+
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."

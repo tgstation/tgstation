@@ -667,6 +667,19 @@
 	foodtype = GRAIN | MEAT | VEGETABLES
 	value = FOOD_RARE
 
+/obj/item/reagent_containers/food/snacks/corndog
+	name = "corndog"
+	desc = "The busy man's hotdog."
+	icon_state = "corndog_stick"
+	bitesize = 3
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	filling_color = "#8B0000"
+	tastes = list("cornmeal" = 3, "meat" = 2)
+	trash = /obj/item/trash/corndog
+	foodtype = GRAIN | MEAT | FRIED
+	value = FOOD_RARE
+
 /obj/item/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."

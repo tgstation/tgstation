@@ -12,6 +12,15 @@
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/caramel_corn
+	name = "Caramel corn"
+	reqs = list(
+		/datum/reagent/consumable/caramel = 5,
+		/obj/item/reagent_containers/food/snacks/popcorn = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/caramel_corn
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/spiderlollipop
 	name = "Spider Lollipop"
 	reqs = list(/obj/item/stack/rods = 1,
