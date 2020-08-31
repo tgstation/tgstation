@@ -60,10 +60,9 @@
 		if(air1.release_gas_to(air2, air1.return_pressure()))
 			update_parents()
 			is_gas_flowing = TRUE
-			update_icon_nopipes()
 	else
 		is_gas_flowing = FALSE
-		update_icon_nopipes()
+	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
