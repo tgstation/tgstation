@@ -163,6 +163,12 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
+"bx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/item/assembly/timer,
@@ -366,6 +372,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"cI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/rnd/server,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/science/server)
 "cL" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -1517,6 +1528,11 @@
 /obj/effect/decal/cleanable/robot_debris/gib,
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"kE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/plaque,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "kG" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -1741,6 +1757,7 @@
 "mh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mine/sound,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "mi" = (
@@ -2348,6 +2365,9 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 10
 	},
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "pW" = (
@@ -3091,6 +3111,15 @@
 	},
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"uK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/command/glass{
+	name = "Server Access";
+	req_access_txt = "30"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/science/server)
 "uL" = (
 /obj/item/shard,
 /turf/open/floor/plating/airless{
@@ -3726,14 +3755,12 @@
 /area/science/mixing)
 "yH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/command{
-	name = "Teleport Access"
-	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/structure/cable,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "yI" = (
@@ -3775,6 +3802,13 @@
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
+"yW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/server)
 "yY" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -3901,6 +3935,7 @@
 "zH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/turf_decal/arrows/red,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "zL" = (
@@ -3975,6 +4010,9 @@
 	icon_state = "floorscorched1"
 	},
 /area/ruin/unpowered)
+"Aj" = (
+/turf/closed/wall/r_wall,
+/area/science/server)
 "Al" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -4108,6 +4146,14 @@
 	},
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"AS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/turf/open/floor/plasteel,
+/area/science/server)
 "AY" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/plasteel/dark/airless,
@@ -5093,6 +5139,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/central)
+"HY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/rnd/server,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/science/server)
 "HZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -5318,6 +5372,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
+"Jr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/science/server";
+	dir = 1;
+	name = "Research Division Server Room APC";
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel,
+/area/science/server)
 "Jt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
@@ -5519,6 +5584,22 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"Kw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel,
+/area/science/server)
 "Kx" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
@@ -5742,6 +5823,13 @@
 /obj/item/ammo_casing/c9mm,
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"Mj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/rdservercontrol{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/server)
 "Mk" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/structure/chair/stool,
@@ -5877,6 +5965,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/gateway)
+"MW" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "MY" = (
 /obj/item/ammo_casing/c9mm,
 /turf/open/floor/plasteel/dark/airless,
@@ -6050,6 +6146,13 @@
 /obj/structure/transit_tube/horizontal,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"Oh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/server)
 "Ol" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/arrows/red{
@@ -6297,6 +6400,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
+"PQ" = (
+/turf/closed/wall/r_wall/rust,
+/area/science/server)
 "PV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -6427,6 +6533,12 @@
 	icon_state = "floorscorched1"
 	},
 /area/science/mixing)
+"QF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/asteroid/line,
+/obj/effect/turf_decal/caution/stand_clear/red,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "QG" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -6454,6 +6566,8 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 6
 	},
+/obj/structure/rack,
+/obj/item/hand_tele,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "Rd" = (
@@ -30016,7 +30130,7 @@ bJ
 bJ
 dw
 xo
-fE
+kE
 CZ
 dw
 HR
@@ -31570,7 +31684,7 @@ aq
 aq
 aR
 HK
-zH
+QF
 hC
 hP
 LW
@@ -38002,7 +38116,7 @@ ax
 ax
 ax
 FU
-JV
+Mz
 OO
 bJ
 bJ
@@ -38259,7 +38373,7 @@ ak
 hy
 FC
 FC
-Cv
+MW
 OO
 bJ
 bJ
@@ -38516,7 +38630,7 @@ JV
 JV
 JV
 OO
-JV
+Mz
 OO
 bJ
 bJ
@@ -38773,7 +38887,7 @@ JV
 JV
 JV
 Cv
-HI
+Xo
 OO
 bJ
 bJ
@@ -39030,7 +39144,7 @@ JV
 JV
 OO
 OO
-JV
+Mz
 OO
 bJ
 bJ
@@ -39286,8 +39400,8 @@ ax
 ZJ
 MF
 OO
-JV
-jP
+Mz
+bx
 OO
 bJ
 bJ
@@ -39543,7 +39657,7 @@ aq
 OO
 OO
 OO
-JV
+Mz
 OO
 OO
 bJ
@@ -40057,7 +40171,7 @@ JV
 JV
 CG
 OO
-HI
+Xo
 OO
 bJ
 bJ
@@ -40314,7 +40428,7 @@ OO
 Cv
 OO
 OO
-JV
+Mz
 OO
 bJ
 bJ
@@ -40570,8 +40684,8 @@ Cv
 HI
 JV
 JV
-JV
-JV
+Mz
+Mz
 OO
 bJ
 bJ
@@ -40826,11 +40940,11 @@ aR
 aq
 OO
 FC
-FC
-OO
-OO
-OO
-bJ
+Aj
+uK
+PQ
+PQ
+PQ
 bJ
 bJ
 bJ
@@ -41083,11 +41197,11 @@ aR
 wz
 aR
 cn
-ax
-bJ
-bJ
-bJ
-bJ
+Aj
+Jr
+Oh
+yW
+PQ
 bJ
 bJ
 bJ
@@ -41340,11 +41454,11 @@ aR
 AG
 aR
 cG
-ax
-bJ
-bJ
-bJ
-bJ
+Aj
+AS
+Kw
+Mj
+Aj
 bJ
 bJ
 bJ
@@ -41597,11 +41711,11 @@ aR
 wz
 aR
 Xi
-aq
-bJ
-bJ
-bJ
-bJ
+PQ
+cI
+HY
+Aj
+Aj
 bJ
 nv
 nv
@@ -41854,10 +41968,10 @@ aR
 ax
 bd
 Ob
-aq
-bJ
-bJ
-bJ
+PQ
+PQ
+Aj
+Aj
 nv
 nv
 nv
