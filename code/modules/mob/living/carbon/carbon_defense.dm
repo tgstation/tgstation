@@ -430,7 +430,7 @@
 		to_chat(src, "<span class='notice'>[L] shakes you to get you up!</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	else
-		if(issilicon(L) && L.zone_selected = BODY_ZONE_HEAD)
+		if(issilicon(L) && L.zone_selected == BODY_ZONE_HEAD)
 			L.visible_message("<span class='notice'>[L] playfully boops [src] on the head!</span>", \
 				"<span class='notice'>You playfully boop [src] on the head!</span>")
 			L.do_attack_animation(src, ATTACK_EFFECT_BOOP)
@@ -476,7 +476,7 @@
 			// For craaaaaaaazy people
 			for(var/datum/brain_trauma/trauma in C.get_traumas())
 				trauma.on_hug(C, src)
-		else if(issilicon(L) && L.zone_selected = BODY_ZONE_HEAD) //it's annoying that we have to check for this again, but eh, what can ya do?
+		else if(issilicon(L) && L.zone_selected == BODY_ZONE_HEAD) //it's annoying that we have to check for this again, but eh, what can ya do?
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/boop)
 		else
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
