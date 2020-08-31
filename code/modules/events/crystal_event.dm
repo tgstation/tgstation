@@ -35,7 +35,7 @@ This section is for the event controller
 	earliest_start = 25 MINUTES
 
 /datum/round_event/crystal_invasion
-	startWhen = 10
+	startWhen = 5
 	announceWhen = 1
 	endWhen = 460
 	///Is the name of the wave, used to check wich wave will be generated
@@ -95,7 +95,7 @@ This section is for the event controller
 						anomaly from a portal by using the anomaly neutralizer, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
-	addtimer(CALLBACK(src, .proc/spawn_portals), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/spawn_portals), 3 SECONDS)
 
 ///Pick a location from the generic_event_spawns list that are present on the maps and call the spawn anomaly and portal procs
 /datum/round_event/crystal_invasion/proc/spawn_portals()
@@ -108,6 +108,17 @@ This section is for the event controller
 		spawn_portal(GLOB.crystal_invasion_waves[wave_name], spawners)
 	for(var/i in 1 to 6)
 		spawn_anomaly(spawners)
+
+	var/list/crystal_spawner_turfs = list()
+	for(var/turf/around_turf in range(6, dest_crystal.loc))
+		if(!isopenturf(around_turf) || isspaceturf(around_turf))
+			continue
+		var/turf/floor = around_turf
+		crystal_spawner_turfs += floor
+	for(var/i = 0, i < 6, i++)
+		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
+		var/turf/crystal_spawner_turf = pick_n_take(crystal_spawner_turfs)
+		new pick_portal(crystal_spawner_turf)
 
 	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 10 MINUTES)
 
@@ -230,8 +241,10 @@ This section is for the destabilized SM
 		return
 	if(prob(75))
 		radiation_pulse(src, 250, 6)
-	if(prob(10))
+	if(prob(30))
 		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+	if(prob(15)
+		src.fire_nuclear_particle()
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
 	var/datum/gas_mixture/removed
