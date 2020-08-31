@@ -1,6 +1,5 @@
 /obj/item/melee/transforming
 	sharpness = SHARP_EDGED
-	wound_bonus = 10
 	bare_wound_bonus = 20
 	var/active = FALSE
 	var/force_on = 30 //force when active
