@@ -54,21 +54,22 @@
 
 /datum/action/boss/Trigger()
 	. = ..()
-	if(.)
-		if(!istype(boss, boss_type))
-			return 0
-		if(!boss.atb)
-			return 0
-		if(boss.atb.points < boss_cost)
-			return 0
-		if(!boss.client)
-			if(needs_target && !boss.target)
-				return 0
-		if(boss)
-			if(say_when_triggered)
-				boss.say(say_when_triggered, forced = "boss action")
-			if(!boss.atb.spend(boss_cost))
-				return 0
+	if(!.)
+		return
+	if(!istype(boss, boss_type))
+		return
+	if(!boss.atb)
+		return
+	if(boss.atb.points < boss_cost)
+		return
+	if(!boss.client)
+		if(needs_target && !boss.target)
+			return
+	if(boss)
+		if(say_when_triggered)
+			boss.say(say_when_triggered, forced = "boss action")
+		if(!boss.atb.spend(boss_cost))
+			return
 
 //Example:
 /*

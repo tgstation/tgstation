@@ -22,8 +22,9 @@ SUBSYSTEM_DEF(overlays)
 	return ..()
 
 
-/datum/controller/subsystem/overlays/stat_entry()
-	..("Ov:[length(queue)]")
+/datum/controller/subsystem/overlays/stat_entry(msg)
+	msg = "Ov:[length(queue)]"
+	return ..()
 
 
 /datum/controller/subsystem/overlays/Shutdown()

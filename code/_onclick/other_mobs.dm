@@ -81,7 +81,7 @@
 */
 
 /mob/living/carbon/RestrainedClickOn(atom/A)
-	return 0
+	return
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
 	. = ..()

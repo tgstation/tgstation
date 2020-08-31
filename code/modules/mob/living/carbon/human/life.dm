@@ -19,14 +19,13 @@
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 /mob/living/carbon/human/Life()
-	set invisibility = 0
 	if (notransform)
 		return
 
 	. = ..()
 
 	if (QDELETED(src))
-		return 0
+		return FALSE
 
 	if(!IS_IN_STASIS(src))
 		if(.) //not dead
@@ -49,7 +48,7 @@
 	name = get_visible_name()
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)

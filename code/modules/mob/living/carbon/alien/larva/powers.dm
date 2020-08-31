@@ -57,7 +57,7 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
-		return 0
+		return
 	else
 		to_chat(user, "<span class='warning'>You are not fully grown!</span>")
-		return 0
+		return

@@ -8,10 +8,11 @@
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
 	if(!iscarbon(target))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = target
 	if(!C.get_bodypart(user.zone_selected)) //can only start if limb is missing
-		return 1
+		return TRUE
+	return FALSE
 
 
 

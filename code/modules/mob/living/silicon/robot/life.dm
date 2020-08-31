@@ -1,5 +1,4 @@
 /mob/living/silicon/robot/Life()
-	set invisibility = 0
 	if (src.notransform)
 		return
 
@@ -11,7 +10,7 @@
 	if(stat != DEAD)
 		if(low_power_mode)
 			if(cell && cell.charge)
-				low_power_mode = 0
+				low_power_mode = FALSE
 				update_headlamp()
 		else if(stat == CONSCIOUS)
 			use_power()
@@ -24,7 +23,7 @@
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
-		low_power_mode = 1
+		low_power_mode = TRUE
 		update_headlamp()
 	diag_hud_set_borgcell()
 

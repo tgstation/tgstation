@@ -30,10 +30,10 @@
 	var/obj/item/clothing/head/helmet/space/chronos/helmet
 	var/obj/effect/chronos_cam/camera
 	var/datum/action/innate/chrono_teleport/teleport_now = new
-	var/activating = 0
-	var/activated = 0
+	var/activating = FALSE
+	var/activated = FALSE
 	var/cooldowntime = 50 //deciseconds
-	var/teleporting = 0
+	var/teleporting = FALSE
 	var/phase_timer_id
 
 /obj/item/clothing/suit/space/chronos/Initialize()
@@ -96,7 +96,7 @@
 		user.animate_movement = FORWARD_STEPS
 		user.notransform = 0
 		user.set_anchored(FALSE)
-		teleporting = 0
+		teleporting = FALSE
 		for(var/obj/item/I in user.held_items)
 			REMOVE_TRAIT(I, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		if(camera)
@@ -204,7 +204,7 @@
 				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b></span>")
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
-		activating = 0
+		activating = FALSE
 
 /obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = FALSE)
 	if(activated && (!teleporting || force))
@@ -213,8 +213,8 @@
 		var/hard_landing = teleporting && force
 		REMOVE_TRAIT(src, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 		cooldown = world.time + cooldowntime * 1.5
-		activated = 0
-		activating = 0
+		activated = FALSE
+		activating = FALSE
 		finish_chronowalk()
 		if(user && ishuman(user))
 			teleport_now.Remove(user)

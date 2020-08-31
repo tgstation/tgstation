@@ -242,11 +242,11 @@
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
-	demand_connects = NORTH
+	demand_connects = SOUTH
 
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
-	supply_connects = NORTH
+	supply_connects = SOUTH
 
 ///input and output, like a holding tank
 /datum/component/plumbing/tank
