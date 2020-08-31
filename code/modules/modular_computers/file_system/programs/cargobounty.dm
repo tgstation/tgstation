@@ -14,15 +14,15 @@
 
 /datum/computer_file/program/bounty/proc/print_paper()
 	new /obj/item/paper/bounty_printout(get_turf(src.computer))
-	when_printer_ready = world.time + PRINTER_TIMEOUT
+	when_printer_ready = world.time + PRINTER_TIMEOUT		//Resets the print cooldown
 
-/datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)
+/datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)	//Cashes in the bounty if valid
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
 	cargocash = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
 
-/datum/computer_file/program/bounty/ui_data(mob/user)
+/datum/computer_file/program/bounty/ui_data(mob/user)		//Gets all bounties and displays them
 	var/list/data = get_header_data()
 	var/list/bountyinfo = list()
 	for(var/datum/bounty/B in GLOB.bounties_list)
@@ -31,7 +31,7 @@
 	data["bountydata"] = bountyinfo
 	return data
 
-/datum/computer_file/program/bounty/ui_act(action,params)
+/datum/computer_file/program/bounty/ui_act(action,params)	//When a button is clicked (claim or Print bounties)
 	if(..())
 		return
 	switch(action)
