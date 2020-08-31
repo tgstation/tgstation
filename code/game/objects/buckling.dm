@@ -189,9 +189,12 @@
 	add_fingerprint(user)
 
 	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
-	// we'll try it with a 3 second do_after delay.
+	// we'll try it with a 2 second do_after delay.
 	if(M != user && (get_turf(M) != get_turf(src)))
-		if(!do_after(user, 3 SECONDS, TRUE, M))
+		M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
+			"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
+			"<span class='hear'>You hear metal clanking.</span>")
+		if(!do_after(user, 2 SECONDS, TRUE, M))
 			return FALSE
 
 		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
@@ -206,9 +209,8 @@
 				"<span class='notice'>You buckle yourself to [src].</span>",\
 				"<span class='hear'>You hear metal clanking.</span>")
 		else
-			M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
-					"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
-					"<span class='hear'>You hear metal clanking.</span>")
+			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
+				"<span class='warning'>[user] buckles you to [src]!</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
