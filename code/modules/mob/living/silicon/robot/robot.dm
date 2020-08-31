@@ -69,6 +69,8 @@
 	var/ionpulse = FALSE // Jetpack-like effect.
 	var/ionpulse_on = FALSE // Jetpack-like effect.
 	var/datum/effect_system/trail_follow/ion/ion_trail // Ionpulse effect.
+	///Whether or not the cyborg gets bonus speed when ridden
+	var/bonus_ridespeed = FALSE
 
 	var/low_power_mode = 0 //whether the robot has no charge left.
 	var/datum/effect_system/spark_spread/spark_system // So they can initialize sparks whenever/N
@@ -215,7 +217,8 @@
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
-	"Service" = /obj/item/robot_module/butler)
+	"Service" = /obj/item/robot_module/butler, \
+	"Assistant" = /obj/item/robot_module/assistant)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
@@ -650,6 +653,9 @@
 /mob/living/silicon/robot/modules/janitor
 	set_module = /obj/item/robot_module/janitor
 	icon_state = "janitor"
+	
+/mob/living/silicon/robot/modules/assistant
+	set_module = /obj/item/robot_module/assistant
 
 /mob/living/silicon/robot/modules/syndicate
 	icon_state = "synd_sec"
@@ -880,6 +886,7 @@
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
+	bonus_ridespeed = module.bonus_ridespeed
 	updatename()
 
 
@@ -1043,6 +1050,8 @@
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
+	if(bonus_ridespeed)
+		add_movespeed_modifier(/datum/movespeed_modifier/assistant_borg_mountspeed)
 	return ..()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
@@ -1051,6 +1060,8 @@
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
+			if(bonus_ridespeed)
+				remove_movespeed_modifier(/datum/movespeed_modifier/assistant_borg_mountspeed)
 	return ..()
 
 /mob/living/silicon/robot/resist()

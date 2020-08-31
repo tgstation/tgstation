@@ -24,6 +24,8 @@
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
+	///Whether or not this module gets a speed bonus when being ridden
+	var/bonus_ridespeed = FALSE
 
 	var/did_feedback = FALSE
 
@@ -247,6 +249,19 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
+
+/obj/item/robot_module/assistant
+	name = "Assistant"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/epi,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher)
+	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
+	moduleselect_icon = "standard"
+	bonus_ridespeed = TRUE
+	hat_offset = -3
 
 /obj/item/robot_module/medical
 	name = "Medical"
