@@ -335,9 +335,9 @@
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
 				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
-				if (bodytemperature > dna.species.bodytemp_heat_damage_limit)
-					msg += "[t_He] [t_is] flushed and wheezing.\n"
-				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
+				if (bodytemperature > dna.species.bodytemp_heat_damage_limit && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
+					msg += "[t_He] [t_is] sweating.\n" //But what if they're a member of a species that can't sweat? Shouldn't we also check fo- *BLAM*
+				if (bodytemperature < dna.species.bodytemp_cold_damage_limit && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 					msg += "[t_He] [t_is] shivering.\n"
 
 			msg += "</span>"

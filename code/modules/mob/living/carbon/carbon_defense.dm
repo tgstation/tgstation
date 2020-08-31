@@ -412,55 +412,65 @@
 	if(should_stun)
 		Paralyze(60)
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
-		return
+/mob/living/carbon/proc/help_shake_act(mob/living/L)
 
-	if(M == src && check_self_for_injuries())
+	if(L.spreadFire(src)) //THROUGH THE FIRE AND THE FLAMES, WE CARRY OOOOOOOOOOOOOOOOOOOOOOON
+		log_game("[key_name(L)] help intent clicked on [key_name(src)] while [key_name(L)] was on fire, spreading the flames on [key_name(L)] to [key_name(src)].")
+
+	if(L == src && check_self_for_injuries())
 		return
 
 	if(!(mobility_flags & MOBILITY_STAND))
 		if(buckled)
-			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
+			to_chat(L, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return
-		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
-		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
+		L.visible_message("<span class='notice'>[L] shakes [src] trying to get [p_them()] up!</span>", \
+						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(L, src))
+		to_chat(L, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
+		to_chat(src, "<span class='notice'>[L] shakes you to get you up!</span>")
 	else
-		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		to_chat(src, "<span class='notice'>[M] hugs you to make you feel better!</span>")
+		L.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
+					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(L, src))
+		to_chat(L, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+		to_chat(src, "<span class='notice'>[L] hugs you to make you feel better!</span>")
 
-		// Warm them up with hugs
-		share_bodytemperature(M)
-		if(bodytemperature > M.bodytemperature)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.bodytemperature > bodytemperature)
+				if(HAS_TRAIT(src, TRAIT_LIKES_WARM_HUGS))
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/olafhug, src) // haha funny reference hug
+				else
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug) // warm hug
+			else
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // normal hug
+
+			// Let people know if they hugged someone really warm or really cold
+			if(C.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+				to_chat(src, "<span class='warning'>It feels like [C] is overheating as they hug you.</span>")
+			else if(C.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+				to_chat(src, "<span class='warning'>It feels like [C] is freezing as they hug you.</span>")
+
+			if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+				to_chat(C, "<span class='warning'>It feels like [src] is overheating as you hug them.</span>")
+			else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+				to_chat(C, "<span class='warning'>It feels like [src] is freezing as you hug them.</span>")
+
+			// Warm them up with hugs
+			share_bodytemperature(C)
+
+			if(HAS_TRAIT(C, TRAIT_FRIENDLY))
+				var/datum/component/mood/mood = C.GetComponent(/datum/component/mood)
+				if (mood.sanity >= SANITY_GREAT)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, C)
+				else if (mood.sanity >= SANITY_DISTURBED)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, C)
+
+			// For craaaaaaaazy people
+			for(var/datum/brain_trauma/trauma in C.get_traumas())
+				trauma.on_hug(C, src)
 		else
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M) // You got a warm hug
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 
-		// Let people know if they hugged someone really warm or really cold
-		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(src, "<span class='warning'>It feels like [M] is over heating as they hug you.</span>")
-		else if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(src, "<span class='warning'>It feels like [M] is freezing as they hug you.</span>")
-
-		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(M, "<span class='warning'>It feels like [src] is over heating as you hug them.</span>")
-		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(M, "<span class='warning'>It feels like [src] is freezing as you hug them.</span>")
-
-		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-			if (mood.sanity >= SANITY_GREAT)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
-			else if (mood.sanity >= SANITY_DISTURBED)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-		for(var/datum/brain_trauma/trauma in M.get_traumas())
-			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)

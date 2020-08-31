@@ -631,10 +631,7 @@
 			. = rand(-1000, 1000)
 	..() //Called afterwards because getting the mind after getting gibbed is sketchy
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
-	if(!istype(M))
-		return
-
+/mob/living/carbon/human/help_shake_act(mob/living/M)
 	if(src == M)
 		if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
 			to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
@@ -643,14 +640,11 @@
 				remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 			return
 		check_self_for_injuries()
-
-
 	else
 		if(wear_suit)
 			wear_suit.add_fingerprint(M)
 		else if(w_uniform)
 			w_uniform.add_fingerprint(M)
-
 		..()
 
 /mob/living/carbon/human/RestrainedClickOn(atom/A)

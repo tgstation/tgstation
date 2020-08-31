@@ -83,7 +83,9 @@
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
+	if(spreadFire(M))
+		var/mob/living/L = M
+		log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire.")
 
 	if(now_pushing)
 		return TRUE
@@ -1146,11 +1148,13 @@
 	if(on_fire && fire_stacks <= 0)
 		ExtinguishMob()
 
-//Share fire evenly between the two mobs
-//Called in MobBump() and Crossed()
+//Share fire evenly between two mobs
+//Called in help_shake_act() (for carbons), MobBump(), and Crossed()
+//returning TRUE means that the creature calling this proc set the creature that was fed into this proc as an argument on fire, and so a logged message needs to be sent
+//if the creature calling this proc manages to set ITSELF on fire, then this proc will handle the logging for that
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
-		return
+		return FALSE
 
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
@@ -1161,12 +1165,14 @@
 			fire_stacks /= 2
 			L.fire_stacks += fire_stacks
 			if(L.IgniteMob()) // Ignite them
-				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
+				return TRUE
 
 	else if(L.on_fire) // If they were on fire and we were not
 		L.fire_stacks /= 2
 		fire_stacks += L.fire_stacks
-		IgniteMob() // Ignite us
+		if(IgniteMob()) // Ignite us
+			log_game("[key_name(L)] touched [key_name(L)], setting themself on fire")
+	return FALSE
 
 //Mobs on Fire end
 

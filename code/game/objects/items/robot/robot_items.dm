@@ -40,114 +40,45 @@
 	var/ccooldown = 0
 	var/scooldown = 0
 	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
-	var/boop = FALSE
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/P = user
-		if(P.emagged&&shockallowed == 1)
-			if(mode < 3)
-				mode++
-			else
-				mode = 0
-		else if(mode < 1)
+		if(P.emagged && shockallowed == 1 && mode < 1)
 			mode++
-		else
-			mode = 0
-	switch(mode)
-		if(0)
-			to_chat(user, "Power reset. Hugs!")
-		if(1)
-			to_chat(user, "Power increased!")
-		if(2)
 			to_chat(user, "BZZT. Electrifying arms...")
-		if(3)
-			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
+		else
+			if(mode != 0)
+				to_chat(user, "Power reset. Hugs!")
+			mode = 0
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
-	if(M == user)
+	if(M == user || !istype(M) || !isliving(user))
 		return
 	switch(mode)
 		if(0)
-			if(M.health >= 0)
-				if(isanimal(M))
-					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
-					return
-				if(user.zone_selected == BODY_ZONE_HEAD)
-					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
-									"<span class='notice'>You playfully boop [M] on the head!</span>")
-					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
-					playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
-				else if(ishuman(M))
-					if(!(user.mobility_flags & MOBILITY_STAND))
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
-										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
-					else
-						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
-								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting)
-						M.set_resting(FALSE, TRUE)
-				else
-					user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
-							"<span class='notice'>You pet [M]!</span>")
+			if(isanimal(M))
+				M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+				return
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				C.help_shake_act(user)
+			else
+				user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+						"<span class='notice'>You pet [M]!</span>")
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(1)
-			if(M.health >= 0)
-				if(ishuman(M))
-					if(!(M.mobility_flags & MOBILITY_STAND))
-						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
-										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
-					else if(user.zone_selected == BODY_ZONE_HEAD)
-						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
-										"<span class='warning'>You bop [M] on the head!</span>")
-						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
-					else
-						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
-								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(M.resting)
-						M.set_resting(FALSE, TRUE)
-				else
-					user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
-							"<span class='warning'>You bop [M] on the head!</span>")
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
-		if(2)
 			if(scooldown < world.time)
-				if(M.health >= 0)
-					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
-						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
-							"<span class='danger'>You electrocute [M] with your touch!</span>")
-						M.update_mobility()
-					else
-						if(!iscyborg(M))
-							M.adjustFireLoss(10)
-							user.visible_message("<span class='userdanger'>[user] shocks [M]!</span>", \
-								"<span class='danger'>You shock [M]!</span>")
-						else
-							user.visible_message("<span class='userdanger'>[user] shocks [M]. It does not seem to have an effect</span>", \
-								"<span class='danger'>You shock [M] to no effect.</span>")
-					playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
-					user.cell.charge -= 500
-					scooldown = world.time + 20
-		if(3)
-			if(ccooldown < world.time)
-				if(M.health >= 0)
-					if(ishuman(M))
-						user.visible_message("<span class='userdanger'>[user] crushes [M] in [user.p_their()] grip!</span>", \
-							"<span class='danger'>You crush [M] in your grip!</span>")
-					else
-						user.visible_message("<span class='userdanger'>[user] crushes [M]!</span>", \
-								"<span class='danger'>You crush [M]!</span>")
-					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
-					M.adjustBruteLoss(15)
-					user.cell.charge -= 300
-					ccooldown = world.time + 10
+				M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
+				user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
+					"<span class='danger'>You electrocute [M] with your touch!</span>")
+				M.update_mobility()
+				playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
+				user.cell.charge -= 500
+				scooldown = world.time + 20
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = TRUE
-
-/obj/item/borg/cyborghug/medical
-	boop = TRUE
 
 /obj/item/borg/charger
 	name = "power connector"

@@ -267,7 +267,7 @@
 		/obj/item/bonesetter,
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
-		/obj/item/borg/cyborghug/medical,
+		/obj/item/borg/cyborghug,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/stack/medical/bone_gel/cyborg,
 		/obj/item/organ_storage,
@@ -461,6 +461,7 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
+		/obj/item/borg/cyborghug, //H U G
 		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
@@ -603,7 +604,7 @@
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam,
 		/obj/item/organ_storage)
-
+	emag_modules = list(/obj/item/borg/cyborghug) //truly, a weapon to surpass metal gear (note: this is NOT the PK borg version, and thus it CANNOT shock people)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

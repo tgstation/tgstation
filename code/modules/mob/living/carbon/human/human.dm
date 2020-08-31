@@ -216,7 +216,10 @@
 		MB.RunOver(src)
 
 	. = ..()
-	spreadFire(AM)
+	if(ismob(AM))
+		if(AM.spreadFire(src))
+			var/mob/living/L = AM
+			log_game("[key_name(L)] passed over [key_name(src)] while [key_name(L)] was on fire, spreading the flames on [key_name(L)] to [key_name(src)].")
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))

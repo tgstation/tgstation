@@ -3,26 +3,34 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
+/datum/mood_event/warmhug
+	description = "<span class='nicegreen'>Warm, cozy hugs are the best!</span>\n"
+	mood_change = 2
+	timeout = 2 MINUTES
+
+/datum/mood_event/olafhug
+	description = "<span class='nicegreen'>Hi, everyone. I'm Olaf, and I like warm hugs!</span>\n"
+	mood_change = 3
+	timeout = 2 MINUTES
+
+/datum/mood_event/olafhug/add_effects(mob/self)
+	description = "<span class='nicegreen'>Hi, everyone. I'm [self.name], and I like warm hugs!</span>\n"
+
 /datum/mood_event/betterhug
-	description = "<span class='nicegreen'>Someone was very nice to me.</span>\n"
+	description = "<span class='nicegreen'>Someone gave me a great hug!</span>\n"
 	mood_change = 3
 	timeout = 4 MINUTES
 
 /datum/mood_event/betterhug/add_effects(mob/friend)
-	description = "<span class='nicegreen'>[friend.name] was very nice to me.</span>\n"
+	description = "<span class='nicegreen'>[friend.name] gave me a great hug!</span>\n"
 
 /datum/mood_event/besthug
-	description = "<span class='nicegreen'>Someone is great to be around, they make me feel so happy!</span>\n"
+	description = "<span class='nicegreen'>Someone gave me an amazing hug!</span>\n"
 	mood_change = 5
 	timeout = 4 MINUTES
 
 /datum/mood_event/besthug/add_effects(mob/friend)
-	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
-
-/datum/mood_event/warmhug
-	description = "<span class='nicegreen'>Warm cozy hugs are the best!</span>\n"
-	mood_change = 1
-	timeout = 2 MINUTES
+	description = "<span class='nicegreen'>[friend.name] gave me an amazing hug!</span>\n"
 
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"

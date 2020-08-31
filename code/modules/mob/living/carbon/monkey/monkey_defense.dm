@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/monkey/help_shake_act(mob/living/M)
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.do_cpr(src)
