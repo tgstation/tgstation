@@ -235,8 +235,7 @@ Behavior that's still missing from this component that original food items had t
 
 	this_food.reagents.clear_reagents()
 
-	if(source_item.reagents)
-		source_item.reagents.trans_to(this_food, source_item.reagents.total_volume)
+	source_item.reagents?.trans_to(this_food, source_item.reagents.total_volume)
 
 	if(length(initial_reagents))
 		for(var/r_id in initial_reagents)
