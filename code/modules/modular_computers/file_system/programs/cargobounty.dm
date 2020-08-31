@@ -8,13 +8,13 @@
 	size = 10
 	tgui_id = "NtosBountyConsole"
 	///cooldown var for printing paper sheets.
-	var/when_printer_ready = 0
+	var/time_printer_ready = 0
 	///The cargo account for grabbing the cargo account's credits.
 	var/static/datum/bank_account/cargocash
 
 /datum/computer_file/program/bounty/proc/print_paper()
 	new /obj/item/paper/bounty_printout(get_turf(src.computer))
-	when_printer_ready = world.time + PRINTER_TIMEOUT		//Resets the print cooldown
+	time_printer_ready = world.time + PRINTER_TIMEOUT		//Resets the print cooldown
 
 /datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)	//Cashes in the bounty if valid
 	if(!GLOB.bounties_list.len)
@@ -41,7 +41,7 @@
 				cashmoney.claim()
 			return TRUE
 		if("Print")
-			if(when_printer_ready <= world.time)
+			if(time_printer_ready <= world.time)
 				print_paper()
 				return
 			else
