@@ -91,3 +91,10 @@
 		return TRUE
 
 	return ..()
+
+/datum/wires/robot/always_reveal_wire(color)
+	// Always reveal the reset module wire.
+	if(color == get_color_of_wire(WIRE_RESET_MODULE))
+		return TRUE
+
+	return ..()

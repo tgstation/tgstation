@@ -59984,7 +59984,7 @@
 "cjP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
-	areastring = "/area/maintenance/central";
+	areastring = "/area/maintenance/central/secondary";
 	dir = 1;
 	name = "Central Maintenance APC";
 	pixel_y = 23
