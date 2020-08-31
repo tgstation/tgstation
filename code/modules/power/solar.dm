@@ -15,12 +15,16 @@
 
 	var/id
 	var/obscured = FALSE
-	var/sunfrac = 0 //[0-1] measure of obscuration -- multipllier against power generation
-	var/azimuth_current = 0 //[0-360) degrees, which direction are we facing?
+	///[0-1] measure of obscuration -- multipllier against power generation
+	var/sunfrac = 0
+	///[0-360) degrees, which direction are we facing?
+	var/azimuth_current = 0
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
-	var/needs_to_turn = TRUE //do we need to turn next tick?
-	var/needs_to_update_solar_exposure = TRUE //do we need to call update_solar_exposure() next tick?
+	///do we need to turn next tick?
+	var/needs_to_turn = TRUE
+	///do we need to call update_solar_exposure() next tick?
+	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
@@ -120,6 +124,8 @@
 	azimuth_target = azimuth
 
 /obj/machinery/power/solar/proc/queue_update_solar_exposure()
+	SIGNAL_HANDLER
+
 	needs_to_update_solar_exposure = TRUE //updating right away would be wasteful if we're also turning later
 
 /obj/machinery/power/solar/proc/update_turn()
@@ -145,7 +151,7 @@
 		x_hit += target_x
 		y_hit += target_y
 		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
-		if(hit.opacity)
+		if(IS_OPAQUE_TURF(hit))
 			return
 		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) //edge of the map
 			break
@@ -454,6 +460,8 @@
 
 ///Ran every time the sun updates.
 /obj/machinery/power/solar_control/proc/timed_track()
+	SIGNAL_HANDLER
+
 	if(track == SOLAR_TRACK_TIMED)
 		azimuth_target += azimuth_rate
 		set_panels(azimuth_target)

@@ -11,18 +11,22 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
+	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	intact = 1
-	var/broken = 0
-	var/burnt = 0
+	intact = TRUE
+	var/broken = FALSE
+	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
 
 	tiled_dirt = TRUE
+
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
@@ -161,14 +165,19 @@
 	W.update_icon()
 	return W
 
-/turf/open/floor/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
-		return 1
-	if(..())
-		return 1
-	if(intact && istype(C, /obj/item/stack/tile))
-		try_replace_tile(C, user, params)
-	return 0
+/turf/open/floor/attackby(obj/item/object, mob/user, params)
+	if(!object || !user)
+		return TRUE
+	. = ..()
+	if(.)
+		return .
+	if(intact && istype(object, /obj/item/stack/tile))
+		try_replace_tile(object, user, params)
+		return TRUE
+	if(user.a_intent == INTENT_HARM && istype(object, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/sheets = object
+		return sheets.on_attack_floor(user, params)
+	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
 	if(intact && pry_tile(I, user))
@@ -191,8 +200,8 @@
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, force_plating)
 	if(broken || burnt)
-		broken = 0
-		burnt = 0
+		broken = FALSE
+		burnt = FALSE
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else
@@ -266,7 +275,10 @@
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
-			if(locate(/obj/machinery/door) in src)
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				to_chat(user, "<span class='notice'>There is another door here!</span>")
 				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, "<span class='notice'>You build a windoor.</span>")

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -121,7 +121,7 @@
 	ready = TRUE
 	update_icon()
 
-/obj/machinery/implantchair/container_resist(mob/living/user)
+/obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
@@ -134,7 +134,7 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/implantchair/relaymove(mob/user)
+/obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
@@ -164,11 +164,11 @@
 
 /obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
 	if(!istype(H))
-		return 0
+		return FALSE
 	H.set_species(/datum/species/human, 1)//lizards go home
 	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out
-	return 1
+	return TRUE
 
 
 /obj/machinery/implantchair/brainwash

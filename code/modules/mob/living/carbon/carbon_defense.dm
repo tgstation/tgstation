@@ -1,3 +1,5 @@
+#define SHAKE_ANIMATION_OFFSET 4
+
 /mob/living/carbon/get_eye_protection()
 	. = ..()
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
@@ -231,6 +233,131 @@
 		return affecting.body_zone
 	return dam_zone
 
+/**
+ * Attempt to disarm the target mob.
+ * Will shove the target mob back, and drop them if they're in front of something dense
+ * or another carbon.
+*/
+/mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	do_attack_animation(target, ATTACK_EFFECT_DISARM)
+	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+	if (ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		human_target.w_uniform?.add_fingerprint(src)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
+
+	var/turf/target_oldturf = target.loc
+	var/shove_dir = get_dir(loc, target_oldturf)
+	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+	var/mob/living/carbon/target_collateral_carbon
+	var/obj/structure/table/target_table
+	var/obj/machinery/disposal/bin/target_disposal_bin
+	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+
+	//Thank you based whoneedsspace
+	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
+
+	// If we can't shove the target into the carbon (such as if it's an alien), then just pretend nothing was there
+	if (!target_collateral_carbon?.can_be_shoved_into)
+		target_collateral_carbon = null
+
+	if(target_collateral_carbon)
+		shove_blocked = TRUE
+	else
+		target.Move(target_shove_turf, shove_dir)
+		if(get_turf(target) == target_oldturf)
+			target_table = locate(/obj/structure/table) in target_shove_turf.contents
+			target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
+			shove_blocked = TRUE
+
+	if(target.IsKnockdown() && !target.IsParalyzed())
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message("<span class='danger'>[name] kicks [target.name] onto [target.p_their()] side!</span>",
+						"<span class='userdanger'>You're kicked onto your side by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, "<span class='danger'>You kick [target.name] onto [target.p_their()] side!</span>")
+		addtimer(CALLBACK(target, /mob/living/proc/SetKnockdown, 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+
+	if(shove_blocked && !target.is_shove_knockdown_blocked() && !target.buckled)
+		var/directional_blocked = FALSE
+		if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
+			var/target_turf = get_turf(target)
+			for(var/obj/obj_content in target_turf)
+				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
+					directional_blocked = TRUE
+					break
+			if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
+				for(var/obj/obj_content in target_shove_turf)
+					if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == turn(shove_dir, 180) && obj_content.density)
+						directional_blocked = TRUE
+						break
+		if((!target_table && !target_collateral_carbon && !target_disposal_bin) || directional_blocked)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.visible_message("<span class='danger'>[name] shoves [target.name], knocking [target.p_them()] down!</span>",
+							"<span class='userdanger'>You're knocked down from a shove by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name], knocking [target.p_them()] down!</span>")
+			log_combat(src, target, "shoved", "knocking them down")
+		else if(target_table)
+			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] onto \the [target_table]!</span>",
+							"<span class='userdanger'>You're shoved onto \the [target_table] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] onto \the [target_table]!</span>")
+			target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+			log_combat(src, target, "shoved", "onto [target_table] (table)")
+		else if(target_collateral_carbon)
+			target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+			target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] into [target_collateral_carbon.name]!</span>",
+				"<span class='userdanger'>You're shoved into [target_collateral_carbon.name] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] into [target_collateral_carbon.name]!</span>")
+			log_combat(src, target, "shoved", "into [target_collateral_carbon.name]")
+		else if(target_disposal_bin)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.forceMove(target_disposal_bin)
+			target.visible_message("<span class='danger'>[name] shoves [target.name] into \the [target_disposal_bin]!</span>",
+							"<span class='userdanger'>You're shoved into \the [target_disposal_bin] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>")
+			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
+	else
+		target.visible_message("<span class='danger'>[name] shoves [target.name]!</span>",
+						"<span class='userdanger'>You're shoved by [name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, "<span class='danger'>You shove [target.name]!</span>")
+		var/target_held_item = target.get_active_held_item()
+		var/knocked_item = FALSE
+		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+			target_held_item = null
+		if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+			if(target_held_item)
+				target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
+					"<span class='warning'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
+			addtimer(CALLBACK(target, /mob/living/carbon/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+		else if(target_held_item)
+			target.dropItemToGround(target_held_item)
+			knocked_item = TRUE
+			target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!</span>",
+				"<span class='warning'>You drop \the [target_held_item]!</span>", null, COMBAT_MESSAGE_RANGE)
+		var/append_message = ""
+		if(target_held_item)
+			if(knocked_item)
+				append_message = "causing [target.p_them()] to drop [target_held_item]"
+			else
+				append_message = "loosening [target.p_their()] grip on [target_held_item]"
+		log_combat(src, target, "shoved", append_message)
+
+/mob/living/carbon/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
+			return TRUE
+	return FALSE
+
+/mob/living/carbon/proc/clear_shove_slowdown()
+	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
+	var/active_item = get_active_held_item()
+	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+		visible_message("<span class='warning'>[name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
@@ -344,9 +471,16 @@
 
 	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
+	// Shake animation
+	if (incapacitated())
+		var/direction = prob(50) ? -1 : 1
+		animate(src, pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_OUT)
+		animate(pixel_x = pixel_x - (SHAKE_ANIMATION_OFFSET * 2 * direction), time = 1)
+		animate(pixel_x = pixel_x + SHAKE_ANIMATION_OFFSET * direction, time = 1, easing = QUAD_EASING | EASE_IN)
+
 /// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
 /mob/living/carbon/proc/check_self_for_injuries()
-	if(stat == DEAD || stat == UNCONSCIOUS)
+	if(stat >= UNCONSCIOUS)
 		return
 
 	var/embeds = FALSE
@@ -500,3 +634,76 @@
 		var/obj/item/bodypart/limb = _limb
 		if (limb.status != BODYPART_ORGANIC)
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
+
+/mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+	if(user != src)
+		return ..()
+
+	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
+	if(!grasped_part?.get_bleed_rate())
+		return
+	var/starting_hand_index = active_hand_index
+	if(starting_hand_index == grasped_part.held_index)
+		to_chat(src, "<span class='danger'>You can't grasp your [grasped_part.name] with itself!</span>")
+		return
+
+	to_chat(src, "<span class='warning'>You try grasping at your [grasped_part.name], trying to stop the bleeding...</span>")
+	if(!do_after(src, 1.5 SECONDS))
+		to_chat(src, "<span class='danger'>You fail to grasp your [grasped_part.name].</span>")
+		return
+
+	var/obj/item/self_grasp/grasp = new
+	if(starting_hand_index != active_hand_index || !put_in_active_hand(grasp))
+		to_chat(src, "<span class='danger'>You fail to grasp your [grasped_part.name].</span>")
+		QDEL_NULL(grasp)
+		return
+	grasp.grasp_limb(grasped_part)
+
+/// an abstract item representing you holding your own limb to staunch the bleeding, see [/mob/living/carbon/proc/grabbedby] will probably need to find somewhere else to put this.
+/obj/item/self_grasp
+	name = "self-grasp"
+	desc = "Sometimes all you can do is slow the bleeding."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+	force = 0
+	throwforce = 0
+	slowdown = 1
+	item_flags = DROPDEL | ABSTRACT | NOBLUDGEON | SLOWS_WHILE_IN_HAND | HAND_ITEM
+	/// The bodypart we're staunching bleeding on, which also has a reference to us in [/obj/item/bodypart/var/grasped_by]
+	var/obj/item/bodypart/grasped_part
+	/// The carbon who owns all of this mess
+	var/mob/living/carbon/user
+
+/obj/item/self_grasp/Destroy()
+	if(user)
+		to_chat(user, "<span class='warning'>You stop holding onto your[grasped_part ? " [grasped_part.name]" : "self"].</span>")
+		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	if(grasped_part)
+		UnregisterSignal(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING))
+		grasped_part.grasped_by = null
+	grasped_part = null
+	user = null
+	return ..()
+
+/// The limb or the whole damn person we were grasping got deleted or dismembered, so we don't care anymore
+/obj/item/self_grasp/proc/qdel_void()
+	qdel(src)
+
+/// We've already cleared that the bodypart in question is bleeding in [the place we create this][/mob/living/carbon/proc/grabbedby], so set up the connections
+/obj/item/self_grasp/proc/grasp_limb(obj/item/bodypart/grasping_part)
+	user = grasping_part.owner
+	if(!istype(user))
+		stack_trace("[src] attempted to try_grasp() with [istype(user, /datum) ? user.type : isnull(user) ? "null" : user] user")
+		qdel(src)
+		return
+
+	grasped_part = grasping_part
+	grasped_part.grasped_by = src
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/qdel_void)
+	RegisterSignal(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING), .proc/qdel_void)
+
+	user.visible_message("<span class='danger'>[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding.</span>", "<span class='notice'>You grab hold of your [grasped_part.name] tightly.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	return TRUE
+
+#undef SHAKE_ANIMATION_OFFSET

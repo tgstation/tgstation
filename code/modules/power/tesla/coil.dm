@@ -8,7 +8,7 @@
 
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_requires_restraints = TRUE
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
@@ -102,14 +102,14 @@
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
-	desc = "Keep an area from being fried from Edison's Bane."
+	desc = "Keep an area from being fried."
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod0"
 	anchored = FALSE
 	density = TRUE
 
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_requires_restraints = TRUE
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/I, time = 20)

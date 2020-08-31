@@ -180,3 +180,9 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+/obj/effect/turf_decal/mining
+	icon_state = "mining"
+
+/obj/effect/turf_decal/mining/survival
+	icon_state = "survival"

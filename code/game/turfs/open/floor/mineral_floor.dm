@@ -24,8 +24,9 @@
 
 
 /turf/open/floor/mineral/update_icon()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)
@@ -147,7 +148,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
-	var/spam_flag = 0
+	var/sound_cooldown = 0
 
 /turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
 	.=..()
@@ -171,14 +172,14 @@
 		honk()
 
 /turf/open/floor/mineral/bananium/proc/honk()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-		spam_flag = world.time + 20
+		sound_cooldown = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, "clownstep", 50, TRUE)
-		spam_flag = world.time + 10
+		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -226,12 +227,12 @@
 /turf/open/floor/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
-			active = 1
+			active = TRUE
 			radiation_pulse(src, 10)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
-			active = 0
+			active = FALSE
 			return
 
 // ALIEN ALLOY

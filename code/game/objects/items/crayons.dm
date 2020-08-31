@@ -1,3 +1,5 @@
+#define DARK_COLOR_LIGHTNESS_THRESHOLD 0.25
+
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -428,7 +430,7 @@
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
-		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, method = TOUCH)
+		reagents.trans_to(t, ., volume_multiplier, transfered_by = user, methods = TOUCH)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -447,7 +449,7 @@
 		var/eaten = use_charges(user, 5, FALSE)
 		if(check_empty(user)) //Prevents divsion by zero
 			return
-		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user, method = INGEST)
+		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -671,7 +673,7 @@
 			H.lip_color = paint_color
 			H.update_body()
 		var/used = use_charges(user, 10, FALSE)
-		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, method = VAPOR)
+		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
 
 		return (OXYLOSS)
 
@@ -730,15 +732,20 @@
 
 		return
 
-	if(istype(target, /obj/structure/window))
+	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
+			var/list/rgb = hex2rgb(paint_color)
+			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+			var/color_is_dark = hsl[3] < DARK_COLOR_LIGHTNESS_THRESHOLD
+
+			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
+				to_chat(user, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
+				return FALSE
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255)
-				target.set_opacity(255)
-			else
-				target.set_opacity(initial(target.opacity))
+			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2)
-		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, method = VAPOR)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
@@ -829,6 +836,7 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
+#undef DARK_COLOR_LIGHTNESS_THRESHOLD
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION

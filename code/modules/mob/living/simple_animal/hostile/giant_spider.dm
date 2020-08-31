@@ -90,17 +90,17 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return 0
+		return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
-		return 1
+		return TRUE
 	key = user.key
 	if(directive)
 		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
-	return 1
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -244,15 +244,16 @@
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
-	if(!..()) //AIStatus is off
-		return 0
+	. = ..()
+	if(!.)//AIStatus is off
+		return FALSE
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = TRUE
 			Goto(pick(urange(20, src, 1)), move_to_delay)
 			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
 	stop_automated_movement = FALSE
@@ -449,13 +450,14 @@
 	button_icon_state = "lay_eggs"
 
 /datum/action/innate/spider/lay_eggs/IsAvailable()
-	if(..())
-		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-			return 0
-		var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-		if(S.fed)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		return FALSE
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	if(S.fed)
+		return TRUE
 
 /datum/action/innate/spider/lay_eggs/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))

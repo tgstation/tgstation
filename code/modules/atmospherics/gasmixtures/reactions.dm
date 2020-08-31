@@ -235,7 +235,7 @@ nobiliumsuppression = INFINITY
 			else
 				ASSERT_GAS(/datum/gas/carbon_dioxide,air)
 				ASSERT_GAS(/datum/gas/water_vapor,air)
-				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate
+				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.75
 				cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
