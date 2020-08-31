@@ -36,10 +36,9 @@
 	name = "hugging module"
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
-	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
-	var/ccooldown = 0
+	var/mode = 0 //0 = Hug, 1 = Shock
 	var/scooldown = 0
-	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/shockallowed = FALSE //Can this effectively be a stunarm if the borg who's using it is emagged? Only the hugging modules of PK borgs get this set to TRUE by default.
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(iscyborg(user))
