@@ -257,7 +257,7 @@
 			var/obj/item/item_to_dispense = vars[choice]
 			if (item_to_dispense)
 				vars[choice] = null
-				item_to_dispense.forceMove(loc)
+				user.put_in_hands(item_to_dispense)
 
 	attack_hand(user)
 
