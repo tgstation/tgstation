@@ -68,6 +68,7 @@
 
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
 	R.logevent("WARN -- System recovered from unexpected shutdown.")
+	R.logevent("System brought online.")
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"

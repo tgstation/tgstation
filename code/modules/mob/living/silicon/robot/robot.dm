@@ -174,7 +174,7 @@
 
 /mob/living/silicon/robot/proc/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new/obj/item/modular_computer/tablet/integrated(src, borgo = src)
+		modularInterface = new/obj/item/modular_computer/tablet/integrated(src, src)
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 

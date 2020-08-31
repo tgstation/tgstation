@@ -8,7 +8,7 @@ export const NtosBorgUI = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   return (
     <NtosWindow
-      width={700}
+      width={800}
       height={500}
       theme="ntos">
       <br></br>
@@ -42,6 +42,7 @@ export const NtosBorgUI = (props, context) => {
 
 export const NtosBorgUIContent_one = (props, context) => {
   const { act, data } = useBackend(context);
+  const [tab_two, setTab_two] = useSharedState(context, 'tab_two', 1);
   const {
     charge,
     maxcharge,
@@ -59,6 +60,7 @@ export const NtosBorgUIContent_one = (props, context) => {
   const masterAI = data.masterAI || [];
   const laws = data.Laws || [];
   const borgLog = data.borgLog || [];
+  const borgUpgrades = data.borgUpgrades || [];
   return (
     <Flex
       direction={"column"}
@@ -133,46 +135,91 @@ export const NtosBorgUIContent_one = (props, context) => {
           </Flex>
       </Flex.Item>
       <Flex.Item
-        width="33%">
-          <Section
-            title="Diagnostics"
-            fill={1}>
+        width="50%">
+          <Tabs>
+            <Tabs.Tab
+              icon="list"
+              lineHeight="23px"
+              selected={tab_two === 1}
+              onClick={() => setTab_two(1)}>
+              Actions
+            </Tabs.Tab>
+            <Tabs.Tab
+              icon="list"
+              lineHeight="23px"
+              selected={tab_two === 2}
+              onClick={() => setTab_two(2)}>
+              Upgrades
+            </Tabs.Tab>
+            <Tabs.Tab
+              icon="list"
+              lineHeight="23px"
+              selected={tab_two === 3}
+              onClick={() => setTab_two(3)}>
+              Diagnostics
+            </Tabs.Tab>
+          </Tabs>
+          {tab_two === 1 && (
+          <Section>
             <LabeledList>
               <LabeledList.Item
-              label="AI Connection"
-              color={wireAI=="FAULT"?"red":"green"}>
-                {wireAI}
-              </LabeledList.Item>
-              <LabeledList.Item
-              label="LawSync"
-              color={wireLaw=="FAULT"?"red":"green"}>
-                {wireLaw}
-              </LabeledList.Item>
-              <LabeledList.Item
-              label="Camera"
-              color={wireCamera=="FAULT"?"red":"green"}>
-                {wireCamera}
-              </LabeledList.Item>
-              <LabeledList.Item
-              label="Module Controller"
-              color={wireModule=="FAULT"?"red":"green"}>
-                {wireModule}
-              </LabeledList.Item>
-              <LabeledList.Item
-              label="Motor Controller"
-              color={locomotion=="ENABLED"?"green":"red"}>
-                {locomotion}
-              </LabeledList.Item>
-              <LabeledList.Item
-              label="Maintenance Cover"
-              color={cover=="UNLOCKED"?"red":"green"}>
-                <Button.Confirm
-                  content={cover}
-                  disabled={cover=="UNLOCKED"}
-                  onClick={() => act('coverunlock')} />
-              </LabeledList.Item>
+                label="Maintenance Cover">
+                  <Button.Confirm
+                    content="Unlock"
+                    disabled={cover=="UNLOCKED"}
+                    onClick={() => act('coverunlock')} />
+                </LabeledList.Item>
             </LabeledList>
           </Section>
+          )}
+          {tab_two === 2 && (
+          <Section>
+            <Table>
+              {borgUpgrades.map(upgrade => (
+                <Table.Row>
+                  {upgrade}
+                </Table.Row>
+              ))}
+            </Table>
+          </Section>
+          )}
+          {tab_two === 3 && ( 
+            <Section
+              fill={1}>
+              <LabeledList>
+                <LabeledList.Item
+                label="AI Connection"
+                color={wireAI=="FAULT"?'red': wireAI=="READY"?'yellow': 'green'}>
+                  {wireAI}
+                </LabeledList.Item>
+                <LabeledList.Item
+                label="LawSync"
+                color={wireLaw=="FAULT"?"red":"green"}>
+                  {wireLaw}
+                </LabeledList.Item>
+                <LabeledList.Item
+                label="Camera"
+                color={wireCamera=="FAULT"?'red': wireCamera=="DISABLED"?'yellow': 'green'}>
+                  {wireCamera}
+                </LabeledList.Item>
+                <LabeledList.Item
+                label="Module Controller"
+                color={wireModule=="FAULT"?"red":"green"}>
+                  {wireModule}
+                </LabeledList.Item>
+                <LabeledList.Item
+                label="Motor Controller"
+                color={locomotion=="FAULT"?'red': locomotion=="DISABLED"?'yellow': 'green'}>
+                  {locomotion}
+                </LabeledList.Item>
+                <LabeledList.Item
+                label="Maintenance Cover"
+                color={cover=="UNLOCKED"?"red":"green"}>
+                  {cover}
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          )}
       </Flex.Item>
       </Flex>
       <Flex.Item
