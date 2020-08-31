@@ -280,7 +280,7 @@
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
 
-	attack_hand(user)
+	interact(user)
 
 /obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
 	if (state_open && !powered())
