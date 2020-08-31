@@ -41,7 +41,7 @@
 	if(!parent_deck)
 		return
 	parent_deck.visible_message("<span class='notice'>\the [parent_deck] is shuffled after looking through it.</span>")
-	parent_deck.shuffle_deck(M, FALSE)
+	parent_deck.contents = shuffle(parent_deck.contents)
 
 /datum/component/storage/concrete/tcg/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found)
 	for(var/item in 1 to things.len)
