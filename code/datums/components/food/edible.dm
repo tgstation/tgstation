@@ -210,17 +210,17 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/OnMicrowaved(datum/source, obj/machinery/microwave/used_microwave)
 	SIGNAL_HANDLER
 
-	var/turf/T = get_turf(parent)
+	var/turf/parent_turf = get_turf(parent)
 
 	if(!microwaved_type)
-		new /obj/item/reagent_containers/food/snacks/badrecipe(T)
+		new /obj/item/reagent_containers/food/snacks/badrecipe(parent_turf)
 		qdel(src)
 		return
 
 
 	var/obj/item/result
 
-	result = new microwaved_type(T)
+	result = new microwaved_type(parent_turf)
 
 	var/efficiency = istype(used_microwave) ? used_microwave.efficiency : 1
 
