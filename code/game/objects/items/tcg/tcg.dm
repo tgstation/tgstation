@@ -101,6 +101,11 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		zoom_in()
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
+	if(istype(I, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/old_deck = I
+		flipped = old_deck.flipped
+		user.transferItemToLoc(src, old_deck)
+		zoom_in()
 	return ..()
 
 /**

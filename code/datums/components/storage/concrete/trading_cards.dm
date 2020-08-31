@@ -7,13 +7,10 @@
 	max_items = 30
 	max_combined_w_class = WEIGHT_CLASS_TINY * 30
 	///The deck that the card pile is using for FAIR PLAY.
-	var/obj/item/tcgcard_deck/parent_deck
 
 /datum/component/storage/concrete/tcg/Initialize()
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))
-	if(istype(parent, /obj/item/tcgcard_deck))
-		parent_deck = parent
 
 /datum/component/storage/concrete/tcg/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	if(istype(I, /obj/item/tcgcard))
@@ -31,17 +28,15 @@
 
 /datum/component/storage/concrete/tcg/show_to(mob/M)
 	. = ..()
-	if(!parent_deck)
-		return
-	M.visible_message("<span class='notice'>[M] starts to look through the contents of \the [parent_deck]!</span>", \
-					"<span class='notice'>You begin looking into the contents of \the [parent_deck]!</span>")
+	M.visible_message("<span class='notice'>[M] starts to look through the contents of \the [parent]!</span>", \
+					"<span class='notice'>You begin looking into the contents of \the [parent]!</span>")
 
 /datum/component/storage/concrete/tcg/close(mob/M)
 	. = ..()
-	if(!parent_deck)
-		return
-	parent_deck.visible_message("<span class='notice'>\the [parent_deck] is shuffled after looking through it.</span>")
-	parent_deck.contents = shuffle(parent_deck.contents)
+	var/list/card_contents = contents()
+	var/obj/temp_parent = parent
+	temp_parent.visible_message("<span class='notice'>\the [parent] is shuffled after looking through it.</span>")
+	card_contents = shuffle(card_contents)
 
 /datum/component/storage/concrete/tcg/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found)
 	for(var/item in 1 to things.len)
