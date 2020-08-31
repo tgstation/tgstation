@@ -23,9 +23,12 @@
 
 /obj/item/food/Initialize()
 	. = ..()
-	food_reagents = string_num_lists(food_reagents)
-	tastes = string_num_list(tastes)
-	eatverbs = string_lis(eatverbs)
+	if(food_reagents)
+		food_reagents = string_num_lists(food_reagents)
+	if(tastes)
+		tastes = string_num_list(tastes)
+	if(eatverbs)
+		eatverbs = string_list(eatverbs)
 	MakeEdible()
 	MakeProcessable()
 
@@ -45,4 +48,3 @@
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/MakeProcessable()
 	return
-
