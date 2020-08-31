@@ -201,6 +201,78 @@
 		new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
 
+/obj/machinery/suit_storage_unit/attack_hand(mob/living/user)
+	var/static/list/items = list("suit", "helmet", "mask", "storage")
+
+	. = ..()
+	if (.)
+		return
+
+	if (!check_interactable())
+		return
+
+	var/list/choices = list()
+
+	if (locked)
+		choices["unlock"] = icon('icons/mob/radial.dmi', "radial_unlock")
+	else if (state_open)
+		choices["close"] = icon('icons/mob/radial.dmi', "radial_close")
+
+		for (var/item_key in items)
+			var/item = vars[item_key]
+			if (item)
+				choices[item_key] = item
+	else
+		choices["open"] = icon('icons/mob/radial.dmi', "radial_open")
+		choices["disinfect"] = icon('icons/mob/radial.dmi', "radial_disinfect")
+		choices["lock"] = icon('icons/mob/radial.dmi', "radial_lock")
+
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_interactable), require_near = TRUE)
+	if (!choice)
+		return
+
+	switch (choice)
+		if ("open")
+			if (!state_open)
+				open_machine(drop = FALSE)
+				if (occupant)
+					dump_contents()
+		if ("close")
+			if (state_open)
+				close_machine()
+		if ("disinfect")
+			if (occupant && safeties)
+				return
+			else if (!helmet && !mask && !suit && !storage && !occupant)
+				return
+			else
+				if (occupant)
+					var/mob/living/mob_occupant = occupant
+					to_chat(mob_occupant, "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!</span>")
+				cook()
+		if ("lock", "unlock")
+			if (!state_open)
+				locked = !locked
+		else
+			var/obj/item/item_to_dispense = vars[choice]
+			if (item_to_dispense)
+				vars[choice] = null
+				item_to_dispense.forceMove(loc)
+
+	attack_hand(user)
+
+/obj/machinery/suit_storage_unit/proc/check_interactable()
+	if (!state_open && !powered())
+		return FALSE
+
+	if (panel_open)
+		return FALSE
+
+	if (uv)
+		return FALSE
+
+	return TRUE
+
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
 	if(!istype(user) || user.stat || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
@@ -429,44 +501,6 @@
 		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
-
-/obj/machinery/suit_storage_unit/ui_state(mob/user)
-	return GLOB.notcontained_state
-
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "SuitStorageUnit", name)
-		ui.open()
-
-/obj/machinery/suit_storage_unit/ui_data()
-	var/list/data = list()
-	data["locked"] = locked
-	data["open"] = state_open
-	data["safeties"] = safeties
-	data["uv_active"] = uv
-	data["uv_super"] = uv_super
-	if(helmet)
-		data["helmet"] = helmet.name
-	else
-		data["helmet"] = null
-	if(suit)
-		data["suit"] = suit.name
-	else
-		data["suit"] = null
-	if(mask)
-		data["mask"] = mask.name
-	else
-		data["mask"] = null
-	if(storage)
-		data["storage"] = storage.name
-	else
-		data["storage"] = null
-	if(occupant)
-		data["occupied"] = TRUE
-	else
-		data["occupied"] = FALSE
-	return data
 
 /obj/machinery/suit_storage_unit/ui_act(action, params)
 	if(..() || uv)
