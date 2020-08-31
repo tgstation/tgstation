@@ -26417,7 +26417,7 @@
 /area/hallway/secondary/entry)
 "bjX" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/mining,
+/obj/effect/turf_decal/mining,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel,

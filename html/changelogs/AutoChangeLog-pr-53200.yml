@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "By using a TCG card on another TCG card, you can create piles of cards in order to play against each other."
+  - rscadd: "Using a deck if tcg cards on a table allows you to shuffle, flip, and draw from the deck as well."

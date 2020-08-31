@@ -998,7 +998,7 @@
 	if(!anchored && has_gravity())
 		step(src, movedir)
 
-//Returns an atom's power cell, if it has one. Overload for individual items.
+///Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
 

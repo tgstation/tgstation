@@ -159,7 +159,7 @@
 
 /mob/living/simple_animal/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	if(message_mods[MODE_HEADSET])

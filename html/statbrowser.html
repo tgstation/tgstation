@@ -9,8 +9,8 @@
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 12px !important;
-	margin: 5px !important;
-	padding: 2px !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 body.dark {
 	background-color: #131313;
@@ -19,9 +19,16 @@ body.dark {
 
 #menu {
 	background-color: white;
+	position: fixed;
+	padding: 7px;
+	width: 100%;
 }
 .dark #menu {
 	background-color: #131313;
+}
+
+#statcontent {
+	padding: 0 7px 7px 7px;
 }
 
 a {
@@ -142,6 +149,7 @@ li a:hover:not(.active) {
 </head>
 <body>
 <ul id="menu" class="button-container"></ul>
+<div id="under_menu"></div>
 <div id="statcontent"></div>
 <script>
 // Polyfills and compatibility ------------------------------------------------
@@ -173,10 +181,14 @@ if (window.location) {
 		if(e.which) {
 			if(!anti_spam[e.which]) {
 				anti_spam[e.which] = true;
-				var href = "?__keydown=" + e.which;
-				if(e.ctrlKey === false) href += "&ctrlKey=0"
-				else if(e.ctrlKey === true) href += "&ctrlKey=1"
-				window.location.href = href;
+				var key = String.fromCharCode(e.which);
+				if(key == "t")
+					window.location.href = "byond://winset?command=Say"
+				else if(key == "o")
+					window.location.href = "byond://winset?command=OOC"
+				else if(key == "m")
+					window.location.href = "byond://winset?command=Me"
+				window.location.href = "byond://winset?command=keyDown " + key;
 			}
 		}
 	});
@@ -187,10 +199,8 @@ if (window.location) {
 			return;
 		if(e.which) {
 			anti_spam[e.which] = false;
-			var href = "?__keyup=" + e.which;
-			if(e.ctrlKey === false) href += "&ctrlKey=0"
-			else if(e.ctrlKey === true) href += "&ctrlKey=1"
-			window.location.href = href;
+			var key = String.fromCharCode(e.which);
+			window.location.href = "byond://winset?command=keyUp " + key;
 		}
 	});
 }
@@ -220,6 +230,7 @@ var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
 var turfname = "";
 var menu = document.querySelector('#menu');
+var under_menu = document.querySelector('#under_menu');
 
 function createStatusTab(name) {
 	if(document.getElementById(name) || name.trim() == "")
@@ -227,7 +238,10 @@ function createStatusTab(name) {
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
 		return;
 	var B = document.createElement("BUTTON");
-	B.onclick = function() {tab_change(name)};
+	B.onclick = function() {
+		tab_change(name);
+		this.blur();
+	};
 	B.id = name;
 	B[textContentKey] = name;
 	B.className = "button";
@@ -241,6 +255,7 @@ function createStatusTab(name) {
 	}
 	//END ORDERING
 	menu.appendChild(B);
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function removeStatusTab(name) {
@@ -252,8 +267,13 @@ function removeStatusTab(name) {
 		}
 	}
 	menu.removeChild(document.getElementById(name));
+	under_menu.style.height = menu.clientHeight + 'px';
 	if(document.getElementById(name)) // repeat for duplicates
 		removeStatusTab(name);
+}
+
+window.onresize = function () {
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function addPermanentTab(name) {
@@ -275,21 +295,6 @@ function checkStatusTab() {
 	for(var i=0; i < menu.children.length; i++)
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			removeStatusTab(menu.children[i].id);
-}
-function add_verb(v) {
-	var to_add = JSON.parse(v);
-	var cat = "";
-	cat = to_add[0];
-	if(verb_tabs.includes(cat)){ // we have the category already
-		verbs.push(to_add); // add it to verb list and we done
-	} else if(cat.trim() != "") { // we don't have the category
-		verb_tabs.push(cat);
-		verbs.push(to_add); // add verb
-		createStatusTab(cat); // create the category
-	}
-	if(current_tab == cat) {
-		draw_verbs(cat); // redraw if we added a verb to the tab we're currently in
-	}
 }
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
@@ -345,6 +350,9 @@ function add_verb_list(v) {
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
 		if(verb_tabs.includes(part[0])){
+			if(verbs.includes(part)){
+				continue;
+			}
 			verbs.push(part);
 			if(current_tab == part[0]) {
 				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in

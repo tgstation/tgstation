@@ -232,7 +232,7 @@
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
 "aN" = (
-/obj/item/reagent_containers/food/snacks/burger/baconburger{
+/obj/item/food/burger/baconburger{
 	pixel_y = 2
 	},
 /obj/structure/table/wood/fancy/black,
