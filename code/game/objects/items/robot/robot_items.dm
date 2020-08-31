@@ -32,52 +32,57 @@
 
 	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
+#define MODE_HUG    0
+#define MODE_SHOCK  1
+
 /obj/item/borg/cyborghug
 	name = "hugging module"
 	icon_state = "hugmodule"
 	desc = "For when a someone really needs a hug."
-	var/mode = 0 //0 = Hug, 1 = Shock
+	var/mode = MODE_HUG
 	var/scooldown = 0
 	var/shockallowed = FALSE //Can this effectively be a stunarm if the borg who's using it is emagged? Only the hugging modules of PK borgs get this set to TRUE by default.
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/P = user
-		if(P.emagged && shockallowed == 1 && mode < 1)
-			mode++
+		if(P.emagged && shockallowed == 1 && mode == MODE_HUG)
+			mode = MODE_SHOCK
 			to_chat(user, "BZZT. Electrifying arms...")
 		else
-			if(mode != 0)
+			if(mode != MODE_SHOCK)
 				to_chat(user, "Power reset. Hugs!")
-			mode = 0
+			mode = MODE_HUG
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
 	if(M == user || !istype(M) || !isliving(user))
 		return
-	switch(mode)
-		if(0)
-			if(isanimal(M))
-				M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
-				return
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				C.help_shake_act(user)
-			else
-				user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
-						"<span class='notice'>You pet [M]!</span>")
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-		if(1)
-			if(scooldown < world.time)
-				M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
-				user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
-					"<span class='danger'>You electrocute [M] with your touch!</span>")
-				M.update_mobility()
-				playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
-				user.cell.charge -= 500
-				scooldown = world.time + 20
+	if(MODE_HUG)
+		if(isanimal(M))
+			M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+			return
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.help_shake_act(user)
+		else
+			user.visible_message("<span class='notice'>[user] pets [M]!</span>", \
+					"<span class='notice'>You pet [M]!</span>")
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	else if(MODE_SHOCK)
+		if(scooldown < world.time)
+			M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
+			user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
+				"<span class='danger'>You electrocute [M] with your touch!</span>")
+			M.update_mobility()
+			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
+			user.cell.charge -= 500
+			scooldown = world.time + 20
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = TRUE
+
+#undef MODE_HUG
+#undef MODE_SHOCK
 
 /obj/item/borg/charger
 	name = "power connector"
