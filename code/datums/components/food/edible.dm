@@ -237,13 +237,12 @@ Behavior that's still missing from this component that original food items had t
 
 	source_item.reagents?.trans_to(this_food, source_item.reagents.total_volume)
 
-	if(length(initial_reagents))
-		for(var/r_id in initial_reagents)
-			var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
-				this_food.reagents.add_reagent(r_id, amount, tastes)
-			else
-				this_food.reagents.add_reagent(r_id, amount)
+	for(var/r_id in initial_reagents)
+		var/amount = initial_reagents[r_id] * cooking_efficiency * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
+		if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin || r_id == /datum/reagent/consumable/nutriment/protein)
+			this_food.reagents.add_reagent(r_id, amount, tastes)
+		else
+			this_food.reagents.add_reagent(r_id, amount)
 
 
 ///All the checks for the act of eating itself and
