@@ -84,8 +84,8 @@ Behavior that's still missing from this component that original food items had t
 	src.junkiness = junkiness
 	src.after_eat = after_eat
 	src.on_consume = on_consume
-	src.initial_reagents = string_num_lists(initial_reagents)
-	src.tastes = string_num_lists(tastes)
+	src.initial_reagents = string_num_list(initial_reagents)
+	src.tastes = string_num_list(tastes)
 	src.microwaved_type = microwaved_type
 
 	var/atom/owner = parent
@@ -191,9 +191,9 @@ Behavior that's still missing from this component that original food items had t
 
 	if(istype(recipe))
 		contents_loop:
-			for(var/A in this_food.contents)
-				for(var/B in recipe.real_parts)
-					if(istype(A, B))
+			for(var/content_object in this_food.contents)
+				for(var/recipe_object in recipe.real_parts)
+					if(istype(content_object, recipe_object))
 						continue contents_loop
 				qdel(A)
 
