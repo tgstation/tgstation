@@ -80,12 +80,12 @@ Behavior that's still missing from this component that original food items had t
 	src.food_flags = food_flags
 	src.foodtypes = foodtypes
 	src.eat_time = eat_time
-	src.eatverbs = eatverbs
+	src.eatverbs = string_num_lists(eatverbs)
 	src.junkiness = junkiness
 	src.after_eat = after_eat
 	src.on_consume = on_consume
-	src.initial_reagents = initial_reagents
-	src.tastes = tastes
+	src.initial_reagents = string_num_lists(initial_reagents)
+	src.tastes = string_num_lists(tastes)
 	src.microwaved_type = microwaved_type
 
 	var/atom/owner = parent
