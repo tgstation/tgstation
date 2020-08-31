@@ -2,10 +2,12 @@
 	filename = "borgUI"
 	filedesc = "borgUI"
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
-//	program_icon_state = "radarntos"
+	program_icon_state = "command"
 	requires_ntnet = FALSE
 	transfer_access = null
 	available_on_ntnet = FALSE
+	unsendable = TRUE
+	undeletable = TRUE
 	usage_flags = PROGRAM_TABLET
 	size = 5
 	tgui_id = "NtosBorgUI"
@@ -18,6 +20,8 @@
 		return FALSE
 	if(..())
 		tablet = computer
+		if(tablet.device_theme == "syndicate")
+			program_icon_state = "command_syndicate"
 		return TRUE
 	return FALSE
 
@@ -40,12 +44,12 @@
 	data["maxcharge"] = maxcharge //Cell max charge
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
 	data["modDisable"] = borgo.disabled_modules //Bitflag for number of disabled modules
-	data["sensors"] = borgo.sensors_on
+	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
 	data["printerPictures"] = borgo.aicamera.stored.len //Number of pictures taken
 	data["printerToner"] = borgo.toner //amount of toner
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
-	data["thrustersInstalled"] = borgo.ionpulse
-	data["thrustersStatus"] = borgo.ionpulse_on
+	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
+	data["thrustersStatus"] = "[borgo.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
 
 	//DEBUG -- Cover, TRUE for locked
 	data["cover"] = "[borgo.locked? "LOCKED":"UNLOCKED"]"
@@ -79,7 +83,6 @@
 
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
-	to_chat(world, "DEBUG -- [action]")
 	switch(action)
 		if("coverunlock")
 			if(borgo.locked)

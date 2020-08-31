@@ -17,6 +17,13 @@
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
+		if(istype(computer, /obj/item/modular_computer/tablet/integrated)) //If this is a borg's integrated tablet
+			var/obj/item/modular_computer/tablet/integrated/modularInterface = computer
+			to_chat(modularInterface.borgo,"<span class='danger'>sudo rm -rf /</span>")
+			sleep(20)
+			modularInterface.borgo.adjustFireLoss(200)
+			return
+
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		computer.enabled = FALSE
 		computer.update_icon()

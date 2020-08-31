@@ -55,7 +55,7 @@
 
 /// Borg Built-in tablet interface
 /obj/item/modular_computer/tablet/integrated
-	icon_state = "tablet-red"
+	icon_state = "tablet-silicon"
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
@@ -102,6 +102,7 @@
 	return ..()
 
 /obj/item/modular_computer/tablet/integrated/syndicate
+	icon_state = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
 
 

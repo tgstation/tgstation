@@ -6,11 +6,13 @@ import { NtosWindow } from '../layouts';
 
 export const NtosBorgUI = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const { act, data } = useBackend(context);
+  const { PC_device_theme } = data;
   return (
     <NtosWindow
       width={800}
       height={500}
-      theme="ntos">
+      theme={PC_device_theme}>
       <br></br>
       <br></br>
       <Tabs>
@@ -42,7 +44,7 @@ export const NtosBorgUI = (props, context) => {
 
 export const NtosBorgUIContent_one = (props, context) => {
   const { act, data } = useBackend(context);
-  const [tab_two, setTab_two] = useSharedState(context, 'tab_two', 1);
+  const [tab_sub, setTab_two] = useSharedState(context, 'tab_sub', 1);
   const {
     charge,
     maxcharge,
@@ -54,6 +56,12 @@ export const NtosBorgUIContent_one = (props, context) => {
     wireCamera,
     wireAI,
     wireLaw,
+    sensors,
+    printerPictures,
+    printerToner,
+    printerTonerMax,
+    thrustersInstalled,
+    thrustersStatus,
   } = data;
   const borgName = data.name || [];
   const borgType = data.designation || [];
@@ -140,27 +148,28 @@ export const NtosBorgUIContent_one = (props, context) => {
             <Tabs.Tab
               icon="list"
               lineHeight="23px"
-              selected={tab_two === 1}
+              selected={tab_sub === 1}
               onClick={() => setTab_two(1)}>
               Actions
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
               lineHeight="23px"
-              selected={tab_two === 2}
+              selected={tab_sub === 2}
               onClick={() => setTab_two(2)}>
               Upgrades
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
               lineHeight="23px"
-              selected={tab_two === 3}
+              selected={tab_sub === 3}
               onClick={() => setTab_two(3)}>
               Diagnostics
             </Tabs.Tab>
           </Tabs>
-          {tab_two === 1 && (
-          <Section>
+          {tab_sub === 1 && (
+          <Section
+            fill={1}>
             <LabeledList>
               <LabeledList.Item
                 label="Maintenance Cover">
@@ -169,11 +178,39 @@ export const NtosBorgUIContent_one = (props, context) => {
                     disabled={cover=="UNLOCKED"}
                     onClick={() => act('coverunlock')} />
                 </LabeledList.Item>
+                <LabeledList.Item
+                label="Sensor Overlay">
+                  <Button
+                    content={sensors}
+                    onClick={() => act('toggleSensors')} />
+                </LabeledList.Item>
+                <LabeledList.Item
+                label={"Stored Photos (" + printerPictures + ")"}>
+                  <Button
+                    content="Print"
+                    disabled={!printerPictures}
+                    onClick={() => act('printImage')} />
+                </LabeledList.Item>
+                <LabeledList.Item
+                  label="Printer Toner">
+                  <ProgressBar
+                    value={printerToner / printerTonerMax}>
+                  </ProgressBar>
+                </LabeledList.Item>
+                {!!thrustersInstalled && (
+                  <LabeledList.Item
+                    label="Toggle Thrusters">
+                    <Button
+                      content={thrustersStatus}
+                      onClick={() => act('toggleThrusters')} />
+                  </LabeledList.Item>
+                )}
             </LabeledList>
           </Section>
           )}
-          {tab_two === 2 && (
-          <Section>
+          {tab_sub === 2 && (
+          <Section
+            fill={1}>
             <Table>
               {borgUpgrades.map(upgrade => (
                 <Table.Row>
@@ -183,7 +220,7 @@ export const NtosBorgUIContent_one = (props, context) => {
             </Table>
           </Section>
           )}
-          {tab_two === 3 && ( 
+          {tab_sub === 3 && ( 
             <Section
               fill={1}>
               <LabeledList>
@@ -223,7 +260,7 @@ export const NtosBorgUIContent_one = (props, context) => {
       </Flex.Item>
       </Flex>
       <Flex.Item
-        height={21}>
+        height={18}>
           <Section
           title="Laws"
           fill

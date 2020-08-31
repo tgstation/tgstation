@@ -127,8 +127,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		B.action(src, user)
 		to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 		to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[D]</b>\"...Setup complete.\n----------------")
-		logevent("Hardware [D] detected and installed successfully.")
 		upgrades += B
+		logevent("Hardware [D] detected and installed successfully.")
 		qdel(D)
 		return
 
@@ -193,12 +193,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 				to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[U]</b>\"...Setup complete.\n----------------")
-				logevent("Hardware [U] installed successfully.")
 				if(U.one_use)
+					logevent("Firmware [U] run successfully.")
 					qdel(U)
 				else
 					U.forceMove(src)
 					upgrades += U
+					logevent("Hardware [U] installed successfully.")
+
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
 				U.forceMove(drop_location())
@@ -229,6 +231,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		qdel(W)
 		to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 		return
+
+	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+		if(!modularInterface)
+			stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. Please make a bug report.")
+			create_modularInterface()
+		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
+		if(modularInterface.install_component(floppy, user))
+			return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
