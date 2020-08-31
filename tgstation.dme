@@ -504,6 +504,7 @@
 #include "code\datums\components\storage\concrete\pockets.dm"
 #include "code\datums\components\storage\concrete\rped.dm"
 #include "code\datums\components\storage\concrete\stack.dm"
+#include "code\datums\components\storage\concrete\trading_cards.dm"
 #include "code\datums\components\storage\concrete\wallet.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
