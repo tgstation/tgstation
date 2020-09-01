@@ -119,7 +119,7 @@
 				for(var/thing in pod)
 					if(ismob(thing))
 						var/mob/mob_content = thing
-						if(mob_content.client)
+						if(mob_content.client && mob_content.stat < UNCONSCIOUS)
 							continue // Let the mobs with clients decide what they want to do themselves.
 					var/atom/movable/movable_content = thing
 					movable_content.forceMove(loc) //Everything else is moved out of.
