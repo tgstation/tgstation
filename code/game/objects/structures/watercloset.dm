@@ -473,8 +473,6 @@
 	. = ..()
 	if(.)
 		return
-	if(!user || !istype(user))
-		return
 	if(!iscarbon(user))
 		return
 	if(!Adjacent(user))
