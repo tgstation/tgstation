@@ -25344,7 +25344,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bht" = (
@@ -47408,7 +47408,7 @@
 /area/medical/pharmacy)
 "cjX" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -51356,7 +51356,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -55330,7 +55330,7 @@
 	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -71130,7 +71130,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 26
 	},
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/checker,
 /area/engine/storage_shared)
 "mIU" = (
@@ -77649,7 +77649,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "xgL" = (

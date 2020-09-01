@@ -34,8 +34,8 @@
 	/// Coefficient for the efficiency of material usage in item building. Based on the installed parts.
 	var/component_coeff = 1
 
-	/// Copy of the currently synced techweb.
-	var/datum/techweb/specialized/autounlocking/exofab/stored_research
+	/// Reference to the techweb.
+	var/datum/techweb/stored_research
 
 	/// Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
@@ -63,7 +63,7 @@
 								)
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	stored_research = new
+	stored_research = SSresearch.science_tech
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
@@ -420,21 +420,6 @@
 	return queued_parts
 
 /**
-  * Syncs machine with R&D servers.
-  *
-  * Requires an R&D Console visible within 7 tiles. Copies techweb research. Updates tgui's state data.
-  */
-/obj/machinery/mecha_part_fabricator/proc/sync()
-	for(var/obj/machinery/computer/rdconsole/RDC in orange(7,src))
-		RDC.stored_research.copy_research_to(stored_research)
-		update_static_data(usr)
-		say("Successfully synchronized with R&D server.")
-		return
-
-	say("Unable to connect to local R&D server.")
-	return
-
-/**
   * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
   *
   * Returns coefficient-modified resource cost for the given material component.
@@ -537,8 +522,9 @@
 
 	switch(action)
 		if("sync_rnd")
-			// Sync with R&D Servers
-			sync()
+			// Syncronises designs on interface with R&D techweb.
+			update_static_data(usr)
+			say("Successfully synchronized with R&D server.")
 			return
 		if("add_queue_set")
 			// Add all parts of a set to queue
