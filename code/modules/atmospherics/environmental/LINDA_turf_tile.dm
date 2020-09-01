@@ -496,7 +496,6 @@ My current implementation is not built to support heat leaking through floors, a
 	if(archived_cycle < SSair.times_fired)
 		archive()
 	air.temperature_share(mix, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-	if(atmos_adjacent_turfs)
-		SSair.add_to_active(src, 0)
+	SSair.add_to_active(src, 0)
 	..(air)
 
