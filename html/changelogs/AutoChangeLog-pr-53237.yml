@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Admin controlled shuttles will now redirect to an actual shuttle controls upon authorization request instead of always targeting CentCom ferry. Admin staff can now also alternatively unlock or relock the shuttle upon request."
+  - tweak: "Escape pods no longer start as admin controlled shuttles, they simply start locked until appropriate code level is set."
