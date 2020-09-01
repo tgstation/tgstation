@@ -30,7 +30,7 @@
 
 /obj/structure/flora/ash/proc/harvest(user)
 	if(harvested)
-		return 0
+		return FALSE
 
 	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
 	if(rand_harvested)
@@ -49,7 +49,7 @@
 	desc = harvested_desc
 	harvested = TRUE
 	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
-	return 1
+	return TRUE
 
 /obj/structure/flora/ash/proc/regrow()
 	icon_state = base_icon
@@ -107,6 +107,22 @@
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	regrowth_time_low = 3000
 	regrowth_time_high = 5400
+
+/obj/structure/flora/ash/pumpkin_patch
+	icon_state = "pumpkin-harvest"
+	name = "pumpkin patch vines"
+	desc = "Several pupmkins, a cluster of large and scary plants."
+	harvested_name = "pumpkinless patch vines"
+	harvested_desc = "Pumpkin patch vines without any pumpkins on them currently. They should regrow soon..."
+	needs_sharp_harvest = FALSE
+	harvest = /obj/item/reagent_containers/food/snacks/grown/pumpkin
+	harvest_amount_high = 4
+	harvest_time = 50
+	harvest_message_low = "You rip out a pumpkin from the pumpkin vines like a maniac."
+	harvest_message_med = "You delicately remove a few pumpkins from the pumpkin vines. but only a few of them are well grown."
+	harvest_message_high = "You masterfully harvest a few pumpkins from the pumpkin vines!"
+	regrowth_time_low = 1500
+	regrowth_time_high = 2000
 
 /obj/structure/flora/ash/stem_shroom
 	icon_state = "t_mushroom"

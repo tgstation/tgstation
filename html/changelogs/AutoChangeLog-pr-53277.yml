@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "When hacking cyborgs, the Module Reset wire is now far more obvious."

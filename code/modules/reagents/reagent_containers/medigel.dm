@@ -71,7 +71,7 @@
 	else
 		log_combat(user, M, "applied", src, reagents.log_list())
 		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
+		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = apply_type)
 	return
 
 /obj/item/reagent_containers/medigel/libital

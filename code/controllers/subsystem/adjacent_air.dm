@@ -9,12 +9,13 @@ SUBSYSTEM_DEF(adjacent_air)
 	can_fire = FALSE
 #endif
 
-/datum/controller/subsystem/adjacent_air/stat_entry()
+/datum/controller/subsystem/adjacent_air/stat_entry(msg)
 #ifdef TESTING
-	..("P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]")
+	msg = "P:[length(queue)], S:[GLOB.atmos_adjacent_savings[1]], T:[GLOB.atmos_adjacent_savings[2]]"
 #else
-	..("P:[length(queue)]")
+	msg = "P:[length(queue)]"
 #endif
+	return ..()
 
 #ifndef HALT_ATMOS
 /datum/controller/subsystem/adjacent_air/Initialize()

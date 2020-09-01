@@ -47,12 +47,12 @@
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [DisplayTimeText(time_to_wait)].</font>")
-		return 1
+		return TRUE
 	var/delay = FTPDELAY
 	if(holder)
 		delay *= ADMIN_FTPDELAY_MODIFIER
 	GLOB.fileaccess_timer = world.time + delay
-	return 0
+	return FALSE
 #undef FTPDELAY
 #undef ADMIN_FTPDELAY_MODIFIER
 
