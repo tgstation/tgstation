@@ -1,0 +1,6 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Dying people can gasp and deathgasp again"
+  - bugfix: "Borgs can deathgasp (and normal gasp I guess) while stunned again"
+  - bugfix: "The message for disembowelment now properly displays"
