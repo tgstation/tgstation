@@ -525,15 +525,15 @@
 			return FALSE
 
 	if(istype(O, /obj/item/melee/baton))
-		var/obj/item/melee/baton/B = O
-		if(B.cell && B.cell.charge && B.turned_on)
+		var/obj/item/melee/baton/baton = O
+		if(baton.cell && baton.cell.charge && baton.turned_on)
 			flick("baton_active", src)
-			user.Paralyze(B.stun_time)
-			user.stuttering = B.stun_time/20
-			B.deductcharge(B.cell_hit_cost)
-			user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \
-								"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")
-			playsound(src, B.stun_sound, 50, TRUE)
+			user.Paralyze(baton.stun_time)
+			user.stuttering = baton.stun_time * 0.05
+			baton.deductcharge(baton.cell_hit_cost)
+			user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!</span>", \
+								"<span class='userdanger'>You unwisely attempt to wash [baton] while it's still on.</span>")
+			playsound(src, baton.stun_sound, 50, TRUE)
 			return
 
 	if(istype(O, /obj/item/mop))
