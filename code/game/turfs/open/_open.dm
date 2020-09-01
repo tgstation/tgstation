@@ -167,7 +167,6 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
-
 /turf/open/Initalize_Atmos(times_fired)
 	excited = FALSE
 	update_visuals()
