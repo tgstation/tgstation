@@ -205,7 +205,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	return replacetextEx(., RDSCREEN_NOBREAK, "")
 
 /obj/machinery/rnd/destructive_analyzer/Topic(raw, ls)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(usr)
