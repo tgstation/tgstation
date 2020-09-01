@@ -405,6 +405,9 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
 
+//Returns true if there's a significant amount of temp on the turf, and it's capable of moving heat
+#define CONSIDER_SUPERCONDUCTIVITY(air) !(air.heat_capacity() < M_CELL_WITH_RATIO || air.temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"amethyst" = rgb(130,43,255), //supplymain
 		"blue" = rgb(0,0,255),

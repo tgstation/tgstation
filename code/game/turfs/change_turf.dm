@@ -135,7 +135,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return W
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
-	SSair.remove_from_active(src) //Turfs are fucking weird with refs, let's be safe yeah?
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
@@ -149,6 +148,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		SSair.add_to_active(newTurf)
 	else
 		if(ispath(path,/turf/closed))
+			SSair.remove_from_active(src) //Turfs are fucking weird with refs, let's be safe yeah?
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 

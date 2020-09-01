@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/temperature_expose(air, exposed_temperature, exposed_volume)
 	if(exposed_temperature >= heat_capacity)
 		to_be_destroyed = TRUE
-	if(to_be_destroyed && exposed_temperature > max_fire_temperature_sustained)
+	if(to_be_destroyed)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
 		burn_tile()
@@ -260,7 +260,9 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	our_air.react(src)
 
 	update_visuals()
-	if(!consider_superconductivity() && !our_excited_group) //If nothing of interest is happening, kill the active turf
+	if(CONSIDER_SUPERCONDUCTIVITY(air))
+		SSair.active_super_conductivity += src
+	else if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
 
 	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
@@ -483,7 +485,7 @@ My current implementation is not built to support heat leaking through floors, a
 			var/turf/open/T = get_step(src,direction)
 			if(T == source)
 				continue
-			if(T.air.total_moles() < MINIMUM_MOLES_DELTA_TO_MOVE)
+			if(!CONSIDER_SUPERCONDUCTIVITY(T.air))
 				continue
 			if(T.archived_cycle < SSair.times_fired)
 				T.archive()
@@ -498,9 +500,3 @@ My current implementation is not built to support heat leaking through floors, a
 		SSair.add_to_active(src, 0)
 	..(air)
 
-//Returns true if there's a significant amount of temp on the turf, and it's capable of moving heat
-/turf/open/proc/consider_superconductivity(starting)
-	if(air.heat_capacity() < M_CELL_WITH_RATIO || air.temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant. //This isn't a constant, reconsider life choices
-		return FALSE
-	SSair.active_super_conductivity += src
-	return TRUE

@@ -5,6 +5,7 @@
 #define SIPHONING	0
 #define RELEASING	1
 
+//MAKE THESE FASTER VENTS YOU BITCH ASS MOTHERFUCKER
 /obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map-2"
 

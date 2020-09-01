@@ -29,8 +29,7 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	temperature = 363.9
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "aj" = (
@@ -809,7 +808,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 351.9
+	.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bX" = (
@@ -817,7 +816,7 @@
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
-	temperature = 351.9
+	.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bY" = (
@@ -2248,8 +2247,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "eK" = (
@@ -2606,8 +2604,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fo" = (
@@ -2834,8 +2831,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fK" = (
@@ -3009,8 +3005,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "gg" = (
@@ -3151,8 +3146,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gC" = (
@@ -3376,8 +3370,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "he" = (
@@ -3387,8 +3380,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hf" = (
@@ -3419,8 +3411,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hi" = (
@@ -4726,8 +4717,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jM" = (
@@ -4760,8 +4750,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "jR" = (
@@ -6447,8 +6436,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mJ" = (
@@ -8080,8 +8068,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "pv" = (
@@ -8091,8 +8078,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "pw" = (
@@ -8103,8 +8089,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "px" = (
@@ -8379,8 +8364,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qb" = (
@@ -8607,8 +8591,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qA" = (
@@ -8618,8 +8601,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qB" = (
@@ -8629,8 +8611,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qC" = (
@@ -10710,8 +10691,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "uc" = (
@@ -11343,8 +11323,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "vm" = (
@@ -11534,8 +11513,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/research)
 "vI" = (
@@ -11814,8 +11792,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wk" = (
@@ -12953,8 +12930,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "yh" = (
@@ -12962,8 +12938,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yi" = (
@@ -12971,8 +12946,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yj" = (
@@ -12982,8 +12956,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yk" = (
@@ -12992,8 +12965,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yl" = (
@@ -13003,8 +12975,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ym" = (
@@ -13013,8 +12984,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yn" = (
@@ -13022,8 +12992,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yo" = (
@@ -13032,8 +13001,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yp" = (
@@ -13042,8 +13010,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yq" = (
@@ -13051,8 +13018,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yr" = (
@@ -13060,8 +13026,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yt" = (
@@ -13070,8 +13035,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yu" = (
@@ -13080,8 +13044,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yw" = (
@@ -13090,8 +13053,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yz" = (
@@ -13099,8 +13061,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yA" = (
@@ -13109,8 +13070,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yB" = (
@@ -13118,8 +13078,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yC" = (
@@ -13128,8 +13087,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yD" = (
@@ -13139,8 +13097,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yH" = (
@@ -13150,8 +13107,7 @@
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
+	name = "Cave Floor"
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "DJ" = (
