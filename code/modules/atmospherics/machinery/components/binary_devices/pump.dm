@@ -23,7 +23,6 @@
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
-	var/built = FALSE
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
