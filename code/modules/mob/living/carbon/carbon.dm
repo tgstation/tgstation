@@ -499,7 +499,7 @@
 			if(harm)
 				adjustBruteLoss(3)
 		else
-			if(belly && belly.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
+			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
 				if(T)
 					T.add_vomit_floor(src, VOMIT_PURPLE)
 			else

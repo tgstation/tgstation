@@ -34,7 +34,8 @@
 	//digest food
 	var/mob/living/carbon/body = owner
 	reagents.metabolize(body, can_overdose=TRUE)
-	handle_disgust(body)
+	if(body)
+		handle_disgust(body)
 
 	if(damage < low_threshold)
 		return
@@ -43,12 +44,12 @@
 	if(!nutri)
 		return
 
-	if(prob((damage/40) * nutri.volume * nutri.volume))
+	if(prob(damage * 0.025 * nutri.volume * nutri.volume))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 		return
 
-	if(damage > high_threshold && prob((damage/10) * nutri.volume * nutri.volume))
+	if(damage > high_threshold && prob(damage * 0.1 * nutri.volume * nutri.volume))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
@@ -56,8 +57,6 @@
 	return !(NOSTOMACH in S.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
-	if(!H)
-		return
 	if(H.disgust)
 		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)

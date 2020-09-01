@@ -15,7 +15,7 @@
 	name = "Filter blood"
 	implements = list(/obj/item/blood_filter = 95)
 	repeatable = TRUE
-	time = 25
+	time = 2.5 SECONDS
 
 /datum/surgery/filter_blood/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_HUSK)) //You can filter the blood of a dead person just not husked
@@ -28,9 +28,10 @@
 		"<span class='notice'>[user] uses the [tool] on [target]'s chest.</span>")
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(target.reagents && target.reagents.total_volume)
-		for(var/datum/reagent/chem in target.reagents.reagent_list)
-			target.reagents.remove_reagent(chem.type, min(((2 * chem.volume) / 8), 10))
+	if(target.reagents?.total_volume)
+		for(var/blood_chem in target.reagents.reagent_list)
+			var/datum/reagent/chem = blood_chem
+			target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 	display_results(user, target, "<span class='notice'>The [tool] pings as it finishes filtering [target]'s blood.</span>",
 		"<span class='notice'>The [tool] pings as it stops pumping your blood.</span>",
 		"The [tool] pings as it stops pumping.")

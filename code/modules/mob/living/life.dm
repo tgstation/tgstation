@@ -126,8 +126,10 @@
 /mob/living/proc/get_fullness()
 	var/fullness = nutrition
 	// we add the nutrition value of what we're currently digesting
-	for(var/datum/reagent/consumable/bits in reagents.reagent_list)
-		fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+	for(var/bile in reagents.reagent_list)
+		var/datum/reagent/consumable/bits = bile
+		if(bits)
+			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
 	return fullness
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..

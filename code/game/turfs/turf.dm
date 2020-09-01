@@ -568,11 +568,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	var/chemicals_lost = belly.reagents.total_volume / 10
 	if(purge)
-		chemicals_lost = (2 * belly.reagents.total_volume)/3				//For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
+		chemicals_lost = (2 * belly.reagents.total_volume) / 3 //For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
 	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
 	//clear the stomach of anything even not food
-	for(var/datum/reagent/R in belly.reagents.reagent_list)
-		belly.reagents.remove_reagent(R.type, min(R.volume, 10))
+	for(var/bile in belly.reagents.reagent_list)
+		var/datum/reagent/reagent = bile
+		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
