@@ -128,7 +128,7 @@ This section is for the event controller
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
 	var/obj/spawner = pick(spawners)
-	new/obj/effect/anomaly/flux(spawner.loc, 300, FALSE, FALSE)
+	new/obj/effect/anomaly/flux(spawner.loc, 30 SECONDS, FALSE, FALSE)
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
@@ -519,7 +519,7 @@ This section is for the crystal monsters variations
 	icon_dead = "crystal_minion"
 	gender = NEUTER
 	mob_biotypes = MOB_MINERAL|MOB_HUMANOID
-	turns_per_move = 5
+	turns_per_move = 1
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
 	a_intent = INTENT_HARM
@@ -539,6 +539,9 @@ This section is for the crystal monsters variations
 	deathmessage = "collapses into dust!"
 	del_on_death = 1
 	footstep_type = FOOTSTEP_MOB_SHOE
+	stop_automated_movement = FALSE
+	stop_automated_movement_when_pulled = FALSE
+	wander = TRUE
 
 /mob/living/simple_animal/hostile/crystal_monster/minion
 	name = "crystal minion"
@@ -588,14 +591,16 @@ This section is for the crystal monsters variations
 	dodge_prob = 25
 
 /mob/living/simple_animal/hostile/crystal_monster/thug/attackby(obj/item/O, mob/user, params)
-	var/list/temp_turfs = list()
-	for(var/turf/around_turfs in view(7, src))
-		if(!isopenturf(around_turfs) || isspaceturf(around_turfs))
-			continue
-		temp_turfs += around_turfs
 	if(prob(30))
-		var/turf/open/choosen_turf = pick(temp_turfs)
-		do_teleport(src, choosen_turf)
+		var/list/temp_turfs = list()
+		for(var/turf/around_turfs in view(7, src))
+			if(!isopenturf(around_turfs) || isspaceturf(around_turfs))
+				continue
+			temp_turfs += around_turfs
+		if(length(temp_turfs))
+			var/turf/open/choosen_turf = pick(temp_turfs)
+			do_teleport(src, choosen_turf)
+			return
 	return ..()
 
 /mob/living/simple_animal/hostile/crystal_monster/recruit
