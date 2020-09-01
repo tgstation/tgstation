@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
+/datum/controller/subsystem/air/proc/remove_from_active(turf/open/T, kill_excited = TRUE)
 	active_turfs -= T
 	if(currentpart == SSAIR_ACTIVETURFS)
 		currentrun -= T
@@ -264,7 +264,7 @@ SUBSYSTEM_DEF(air)
 	#endif
 	if(istype(T))
 		T.excited = 0
-		if(T.excited_group)
+		if(T.excited_group && kill_excited)
 			T.excited_group.garbage_collect()
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)

@@ -98,12 +98,6 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
-	if(pressure_checks&EXT_BOUND)
-		for(var/tile in us.atmos_adjacent_turfs)
-			var/turf/open/toCheck = tile
-			var/datum/gas_mixture/gas = toCheck.return_air()
-			environment_pressure += gas.return_pressure()
-		environment_pressure = environment_pressure / (length(us.atmos_adjacent_turfs) + 1)
 
 	if(pump_direction & RELEASING) // internal -> external
 		var/pressure_delta = 10000
@@ -119,7 +113,6 @@
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				loc.assume_air(removed)
-				message_admins("starting at [environment_pressure], target is [external_pressure_bound], adding [transfer_moles], ended at [environment.return_pressure()]")
 				air_update_turf()
 
 	else // external -> internal

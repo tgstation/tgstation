@@ -33,6 +33,7 @@
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
+	var/significant_share_ticker = 0
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
@@ -178,6 +179,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		our_excited_group.reset_cooldowns();\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
+		cached_ticker = 0;\
 	}
 #else
 #define LAST_SHARE_CHECK \
@@ -186,6 +188,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		our_excited_group.reset_cooldowns();\
 	} else if(last_share > MINIMUM_MOLES_DELTA_TO_MOVE) {\
 		our_excited_group.dismantle_cooldown = 0;\
+		cached_ticker = 0;\
 	}
 #endif
 
@@ -197,6 +200,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		archive()
 
 	current_cycle = fire_count
+	var/cached_ticker = significant_share_ticker
+	cached_ticker += 1
 
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
@@ -224,7 +229,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		//cache for sanic speed
 		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
 
-		if(our_excited_group && enemy_excited_group)
+		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //Checking enemy_tile.excited is to allow for flow after a turf freeze, I don't like the way it deals with excited groups but this is the best I've got
 			if(our_excited_group != enemy_excited_group)
 				//combine groups (this also handles updating the excited_group var of all involved turfs)
 				our_excited_group.merge_groups(enemy_excited_group)
@@ -233,7 +238,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 		else if(our_air.compare(enemy_air))
 			if(!enemy_tile.excited)
-				SSair.add_to_active(enemy_tile)
+				SSair.add_to_active(enemy_tile, !enemy_tile.excited_group)
 			var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
 			if(!our_excited_group)
 				EG.add_turf(src)
@@ -264,7 +269,10 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		SSair.active_super_conductivity += src
 	else if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 		SSair.remove_from_active(src) //This will kill any connected excited group, be careful
+	if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
+		SSair.remove_from_active(src, FALSE)
 
+	significant_share_ticker = cached_ticker //Save our changes
 	temperature_expose(our_air, our_air.temperature, CELL_VOLUME) //I should add some sanity checks to this thing
 //////////////////////////SPACEWIND/////////////////////////////
 
@@ -387,6 +395,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/turf/open/T = t
 		T.air.copy_from(A)
 		T.update_visuals()
+		if(!T.excited) //Because we only activate all these once every breakdown, in event of lag due to slow space + vent things, increase the wait time for breakdowns
+			SSair.add_to_active(T, FALSE)
 
 	breakdown_cooldown = 0
 
@@ -400,14 +410,17 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation
 		T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 		#endif
-	garbage_collect()
+	garbage_collect(TRUE)
 
-/datum/excited_group/proc/garbage_collect()
+/datum/excited_group/proc/garbage_collect(fromDismantle = FALSE)
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
+		if(fromDismantle)
+			if(!T.excited)
+				SSair.add_to_active(T, FALSE) //Poke everybody in the group, just in case
 	turf_list.Cut()
 	SSair.excited_groups -= src
 
