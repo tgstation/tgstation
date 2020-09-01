@@ -689,13 +689,14 @@
 				if(GLOB.mafia_signup[C.ckey])
 					GLOB.mafia_signup -= C.ckey
 					to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
-					return
+					return TRUE
 				else
 					GLOB.mafia_signup[C.ckey] = C
 					to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
 				if(phase == MAFIA_PHASE_SETUP)
 					check_signups()
 					try_autostart()
+				return TRUE
 			if("mf_spectate")
 				if(C.ckey in spectators)
 					to_chat(usr, "<span class='notice'>You will no longer get messages from the game.</span>")
@@ -703,6 +704,7 @@
 				else
 					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
 					spectators += C.ckey
+				return TRUE
 	if(user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)

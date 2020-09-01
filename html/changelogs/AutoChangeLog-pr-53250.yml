@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "The public can now exit the labor shuttle arrivals area on Box and Delta, without having to wait for the AI or sec to let them out."

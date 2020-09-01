@@ -113,20 +113,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		client?.dsay(message)
 		return
 
+
 	switch(stat)
 		if(SOFT_CRIT)
+			if(check_emote(original_message, forced))
+				return
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(check_emote(original_message, forced) || !(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
 				return
 		if(HARD_CRIT)
-			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(check_emote(original_message, forced) || !(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
 				return
 		if(DEAD)
 			say_dead(original_message)
 			return
 
-	if(check_emote(original_message, forced) || !can_speak_basic(original_message, ignore_spam, forced))
+	if(!can_speak_basic(original_message, ignore_spam, forced))
 		return
 
 	language = message_mods[LANGUAGE_EXTENSION]

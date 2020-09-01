@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/binary/pressure_valve
-	icon_state = "pvalve_map-2"
+	icon_state = "pvalve_map-3"
 	name = "pressure valve"
 	desc = "An activable valve that let gas pass through if the pressure on the input side is higher than the set pressure."
 
@@ -155,22 +155,22 @@
 		return FALSE
 
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/layer1
-	piping_layer = 1
-	icon_state= "pvalve_map-1"
+/obj/machinery/atmospherics/components/binary/pressure_valve/layer2
+	piping_layer = 2
+	icon_state= "pvalve_map-2"
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/layer3
-	piping_layer = 3
-	icon_state= "pvalve_map-3"
+/obj/machinery/atmospherics/components/binary/pressure_valve/layer4
+	piping_layer = 4
+	icon_state= "pvalve_map-4"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/on
 	on = TRUE
-	icon_state = "pvalve_on_map-2"
+	icon_state = "pvalve_on_map-3"
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer1
-	piping_layer = 1
-	icon_state= "pvalve_on_map-1"
+/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer2
+	piping_layer = 2
+	icon_state= "pvalve_on_map-2"
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer3
-	piping_layer = 3
-	icon_state= "pvalve_on_map-3"
+/obj/machinery/atmospherics/components/binary/pressure_valve/on/layer4
+	piping_layer = 4
+	icon_state= "pvalve_on_map-4"
