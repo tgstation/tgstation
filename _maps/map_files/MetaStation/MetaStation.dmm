@@ -75104,7 +75104,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "tgQ" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/structure/flora/junglebush/large{
 	pixel_y = 0
 	},

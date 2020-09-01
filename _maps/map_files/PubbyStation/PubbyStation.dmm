@@ -26709,7 +26709,7 @@
 /turf/open/floor/grass,
 /area/medical/medbay/zone2)
 "bqU" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = 6
 	},
@@ -43218,7 +43218,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "chk" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
@@ -51947,7 +51947,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/zone2)
 "llS" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
