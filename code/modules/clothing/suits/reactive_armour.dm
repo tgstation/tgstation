@@ -117,7 +117,7 @@
 			if(C != owner)
 				C.adjust_fire_stacks(8)
 				C.IgniteMob()
-		owner.adjust_fire_stacks(-20, set_stack=TRUE)
+		owner.set_fire_stacks(-20)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 	return FALSE
