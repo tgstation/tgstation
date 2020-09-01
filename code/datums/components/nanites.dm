@@ -1,3 +1,5 @@
+#define HARMONIC_REGEN_BOOST 0.1
+
 /datum/component/nanites
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
@@ -109,7 +111,7 @@
 
 /datum/component/nanites/process()
 	if(!IS_IN_STASIS(host_mob))
-		adjust_nanites(null, regen_rate)
+		adjust_nanites(null, regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0))
 		add_research()
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
@@ -316,14 +318,6 @@
 
 	return TRUE //yup i exist
 
-/datum/component/nanites/proc/get_data(list/nanite_data)
-	nanite_data["nanite_volume"] = nanite_volume
-	nanite_data["max_nanites"] = max_nanites
-	nanite_data["cloud_id"] = cloud_id
-	nanite_data["regen_rate"] = regen_rate
-	nanite_data["safety_threshold"] = safety_threshold
-	nanite_data["stealth"] = stealth
-
 /datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
 	SIGNAL_HANDLER
 
@@ -372,7 +366,7 @@
 
 	data["has_nanites"] = TRUE
 	data["nanite_volume"] = nanite_volume
-	data["regen_rate"] = regen_rate
+	data["regen_rate"] = regen_rate + (SSresearch.science_tech.researched_nodes["nanite_harmonic"] ? HARMONIC_REGEN_BOOST : 0)
 	data["safety_threshold"] = safety_threshold
 	data["cloud_id"] = cloud_id
 	data["cloud_active"] = cloud_active
@@ -425,3 +419,5 @@
 		id++
 		mob_programs += list(mob_program)
 	data["mob_programs"] = mob_programs
+
+#undef HARMONIC_REGEN_BOOST
