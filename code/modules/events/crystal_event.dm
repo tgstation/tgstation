@@ -110,12 +110,14 @@ This section is for the event controller
 		spawn_anomaly(spawners)
 
 	var/list/crystal_spawner_turfs = list()
-	for(var/turf/around_turf in range(6, dest_crystal.loc))
-		if(!isopenturf(around_turf) || isspaceturf(around_turf))
+	for(var/turf in RANGE_TURFS(6, dest_crystal.loc))
+		if(!isopenturf(turf) || isspaceturf(turf))
 			continue
-		var/turf/floor = around_turf
+		var/turf/floor = turf
 		crystal_spawner_turfs += floor
 	for(var/i = 0, i < 6, i++)
+		if(!length(crystal_spawner_turfs))
+			break
 		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
 		var/turf/crystal_spawner_turf = pick_n_take(crystal_spawner_turfs)
 		new pick_portal(crystal_spawner_turf)
@@ -242,9 +244,9 @@ This section is for the destabilized SM
 	if(prob(75))
 		radiation_pulse(src, 250, 6)
 	if(prob(30))
-		playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	if(prob(15))
-		src.fire_nuclear_particle()
+		fire_nuclear_particle()
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
 	var/datum/gas_mixture/removed
@@ -296,9 +298,9 @@ This section is for the destabilized SM
 	"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 	"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
-	Consume(movable_atom)
+	consume(movable_atom)
 
-/obj/machinery/destabilized_crystal/proc/Consume(atom/movable/movable_atom)
+/obj/machinery/destabilized_crystal/proc/consume(atom/movable/movable_atom)
 	if(isliving(movable_atom))
 		var/mob/living/user = movable_atom
 		if(user.status_flags & GODMODE || isnull(user.mind))
@@ -368,9 +370,9 @@ This section is for the signaler part of the crystal portals
 		return FALSE
 	if(suicider)
 		manual_suicide(suicider)
-	for(var/obj/structure/crystal_portal/A in get_turf(src))
-		A.closed = TRUE
-		qdel(A)
+	for(var/obj/structure/crystal_portal/portal in get_turf(src))
+		portal.closed = TRUE
+		qdel(portal)
 	return TRUE
 
 /*
@@ -559,13 +561,13 @@ This section is for the crystal monsters variations
 	var/death_cloud_size = 2
 
 /mob/living/simple_animal/hostile/crystal_monster/minion/Destroy()
-	var/datum/effect_system/smoke_spread/chem/S = new
-	var/turf/location = get_turf(src)
-	create_reagents(3)
-	reagents.add_reagent(/datum/reagent/toxin/lexorin, 4)
-	S.attach(location)
-	S.set_up(reagents, death_cloud_size, location, silent = TRUE)
-	S.start()
+	if(isturf(loc))
+		var/datum/effect_system/smoke_spread/chem/S = new
+		create_reagents(3)
+		reagents.add_reagent(/datum/reagent/toxin/lexorin, 4)
+		S.attach(loc)
+		S.set_up(reagents, death_cloud_size, loc, silent = TRUE)
+		S.start()
 	return ..()
 
 /mob/living/simple_animal/hostile/crystal_monster/thug
@@ -586,9 +588,9 @@ This section is for the crystal monsters variations
 	pull_force = MOVE_FORCE_NORMAL
 	dodging = TRUE
 	dodge_prob = 25
-	var/list/temp_turfs
 
 /mob/living/simple_animal/hostile/crystal_monster/thug/attackby(obj/item/O, mob/user, params)
+	var/list/temp_turfs
 	for(var/turf/around_turfs in view(7, src))
 		if(!isopenturf(around_turfs) || isspaceturf(around_turfs))
 			continue
@@ -596,8 +598,6 @@ This section is for the crystal monsters variations
 	if(prob(30))
 		var/turf/open/choosen_turf = pick(temp_turfs)
 		do_teleport(src, choosen_turf)
-	for(var/i in temp_turfs)
-		LAZYREMOVE(temp_turfs, i)
 	return ..()
 
 /mob/living/simple_animal/hostile/crystal_monster/recruit
@@ -621,8 +621,8 @@ This section is for the crystal monsters variations
 
 /mob/living/simple_animal/hostile/crystal_monster/recruit/Bump(atom/clong)
 	. = ..()
-	var/turf/turf_bump = clong
-	if(isturf(turf_bump))
+	if(isturf(clong))
+		var/turf/turf_bump = clong
 		turf_bump.Melt()
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 
@@ -663,8 +663,8 @@ This section is for the crystal monsters variations
 
 /mob/living/simple_animal/hostile/crystal_monster/killer/Bump(atom/clong)
 	. = ..()
-	var/turf/turf_bump = clong
-	if(isturf(turf_bump))
+	if(isturf(clong))
+		var/turf/turf_bump = clong
 		turf_bump.Melt()
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 
@@ -689,7 +689,7 @@ This section is for the crystal monsters variations
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "throws"
-	ranged_cooldown_time = 25
+	ranged_cooldown_time = 45
 
 /mob/living/simple_animal/hostile/crystal_monster/boss/Bump(atom/clong)
 	. = ..()
@@ -698,7 +698,7 @@ This section is for the crystal monsters variations
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
 			health += 35
-	if(isturf(clong))
+	else if(isturf(clong))
 		var/turf/turf_bump = clong
 		turf_bump.Melt()
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
@@ -710,11 +710,13 @@ This section is for the crystal monsters variations
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
 			health += 35
+		else
+			var/obj/item/bodypart/body_part = mob.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+			if(body_part)
+				body_part.drop_limb(FALSE, TRUE)
 	else if(isturf(target))
 		var/turf/turf_bump = target
 		turf_bump.Melt()
-	else
-		qdel(target)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
 
 
