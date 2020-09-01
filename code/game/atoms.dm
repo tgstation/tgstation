@@ -1168,25 +1168,26 @@
 		process_recipes(user, I, processing_recipes)
 	if(QDELETED(I))
 		return TRUE
-	switch(tool_type)
-		if(TOOL_CROWBAR)
-			. = crowbar_act(user, I)
-		if(TOOL_MULTITOOL)
-			. = multitool_act(user, I)
-		if(TOOL_SCREWDRIVER)
-			. = screwdriver_act(user, I)
-		if(TOOL_WRENCH)
-			. = wrench_act(user, I)
-		if(TOOL_WIRECUTTER)
-			. = wirecutter_act(user, I)
-		if(TOOL_WELDER)
-			. = welder_act(user, I)
-		if(TOOL_ANALYZER)
-			. = analyzer_act(user, I)
-		if(TOOL_TABLET)
-			. = tablet_act(user, I)
-	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
-		return TRUE
+	//E Skip the snowflake act cases for tools in case the signal processes it
+	if(signal_result & COMPONENT_BLOCK_TOOL_CHAIN)
+		switch(tool_type)
+			if(TOOL_CROWBAR)
+				. = crowbar_act(user, I)
+			if(TOOL_MULTITOOL)
+				. = multitool_act(user, I)
+			if(TOOL_SCREWDRIVER)
+				. = screwdriver_act(user, I)
+			if(TOOL_WRENCH)
+				. = wrench_act(user, I)
+			if(TOOL_WIRECUTTER)
+				. = wirecutter_act(user, I)
+			if(TOOL_WELDER)
+				. = welder_act(user, I)
+			if(TOOL_ANALYZER)
+				. = analyzer_act(user, I)
+	//Either the proc or the signal handled the tool's events in some way.
+	return . || (signal_result & COMPONENT_BLOCK_TOOL_ATTACK)
+
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/I, list/processing_recipes)
@@ -1261,10 +1262,6 @@
 
 ///Analyzer act
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
-	return
-
-///Analyzer act
-/atom/proc/tablet_act(mob/living/user, obj/item/I)
 	return
 
 ///Generate a tag for this atom

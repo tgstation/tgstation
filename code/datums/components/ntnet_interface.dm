@@ -133,11 +133,11 @@
 
 /datum/component/ntnet_interface/Initialize(network_name=null)			//Don't force ID unless you know what you're doing!
 	SSnetworks.register_interface(src, network_name)	// default to station
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_TABLET), .proc/OnTablet)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool)
 
 /datum/component/ntnet_interface/Destroy()
 	SSnetworks.unregister_interface(src)
-	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_TABLET))
+	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	return ..()
 
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
@@ -155,11 +155,29 @@
 /// Fuck it this is about networking, we are doing this with a tablet
 /datum/component/ntnet_interface/proc/OnTablet(datum/source, mob/user, obj/item/modular_computer/TABLET)
 	SIGNAL_HANDLER
+#if 0
+	if(!I.multitool_check_buffer(user, I))
+		return COMPONENT_BLOCK_TOOL_ATTACK
+	var/obj/item/multitool/M = I
+	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
+		if (silo == M.buffer)
+			to_chat(user, "<span class='warning'>[parent] is already connected to [silo]!</span>")
+			return COMPONENT_BLOCK_TOOL_ATTACK
+		if (silo)
+			silo.connected -= src
+			silo.updateUsrDialog()
+		else if (mat_container)
+			mat_container.retrieve_all()
+			qdel(mat_container)
+		silo = M.buffer
+		silo.connected += src
+		silo.updateUsrDialog()
+		mat_container = silo.GetComponent(/datum/component/material_container)
+		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
 
-	to_chat(user, "<span class='notice'>You wack the thing with your tablet  </span>")
-	return COMPONENT_BLOCK_TOOL_ATTACK
-
-
+#endif
+		to_chat(user, "<span class='notice'>You wack the thing with your tablet [parent] </span>")
+		return COMPONENT_BLOCK_TOOL_ATTACK
 /datum/component/ntnet_interface/proc/get_multitool(mob/user)
 	var/obj/item/multitool/P = null
 	// Let's double check

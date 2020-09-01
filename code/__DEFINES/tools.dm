@@ -6,7 +6,6 @@
 #define TOOL_WRENCH 		"wrench"
 #define TOOL_WELDER 		"welder"
 #define TOOL_ANALYZER		"analyzer"
-#define TOOL_TABLET			"tablet"
 #define TOOL_MINING			"mining"
 #define TOOL_SHOVEL			"shovel"
 #define TOOL_RETRACTOR	 	"retractor"

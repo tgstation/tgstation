@@ -16,8 +16,8 @@
 	comp_light_luminosity = 2.3 //Same as the PDA
 	var/has_variants = TRUE
 	var/finish_color = null
-	tool_behaviour = TOOL_TABLET
-	tool_act 
+
+	tool_act
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
