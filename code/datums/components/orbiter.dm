@@ -45,7 +45,8 @@
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
-	for(var/atom/movable/incoming_orbiter in newcomp.orbiters)
+	for(var/o in newcomp.orbiters)
+		var/atom/movable/incoming_orbiter = o
 		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
 		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
