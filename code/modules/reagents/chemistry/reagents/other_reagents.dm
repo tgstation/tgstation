@@ -728,12 +728,12 @@
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
+	O.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
 
 /datum/reagent/oxygen/expose_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
+		T.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
 	return
 
 /datum/reagent/copper
@@ -761,12 +761,12 @@
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
+	O.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
 
 /datum/reagent/nitrogen/expose_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
+		T.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
 	return
 
 /datum/reagent/hydrogen
@@ -1242,12 +1242,12 @@
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
+	O.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
 
 /datum/reagent/carbondioxide/expose_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
+		T.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
 	return
 
 /datum/reagent/nitrous_oxide
@@ -1262,12 +1262,12 @@
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
+	O.atmos_spawn_air("n2o=[reac_volume/30];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/expose_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		var/temp = holder ? holder.chem_temp : T20C
-		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
+		T.atmos_spawn_air("n2o=[reac_volume/30];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(methods & VAPOR)
