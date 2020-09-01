@@ -20,15 +20,13 @@
 	return pressure_greatest - pressure_smallest
 
 /atom/proc/is_nearby_planetary_atmos(var/turf/target_turf)	//Runs through all adjacent open turfs and checks if any are planetary_atmos
-	var/is_planetary = FALSE
+	. = FALSE
 	for(var/t in RANGE_TURFS(2, target_turf))
-		var/turf/open/turf_adjacent = t
-		if(!istype(turf_adjacent))
+		if(!isopenturf(t))
 			continue
+		var/turf/open/turf_adjacent = t
 		if(turf_adjacent.planetary_atmos)
-			is_planetary = TRUE
-			break
-	return is_planetary
+			return TRUE
 
 /atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
