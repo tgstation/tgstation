@@ -1,0 +1,10 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "More flavor texts to crystal event related devices and structures to help players on what to do"
+  - rscadd: "Ability to close the portals by using the combination of Analizer+Signaler"
+  - rscadd: "Crystal monsters have now different ability but similar health and damage"
+  - rscadd: "You can sacrifice someone to the crystal to increase the spawn delay by 5 seconds permanently"
+  - rscadd: "sound effects to the destabilized crystal"
+  - tweak: "spawned anomalies don't explode anymore"
+  - bugfix: "event will end in a reasonable time"
