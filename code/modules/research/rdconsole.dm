@@ -97,8 +97,8 @@ Nothing else in the console has ID requirements.
 			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
 		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
-	else
-		. = ..()
+		return
+	return ..()
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
