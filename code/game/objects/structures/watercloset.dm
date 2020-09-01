@@ -573,8 +573,8 @@
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return TRUE
-	else
-		return ..()
+
+	return ..()
 
 
 /obj/structure/water_source/puddle	//splishy splashy ^_^
