@@ -68,16 +68,6 @@
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
-/obj/screen/robot/thrusters
-	name = "ion thrusters"
-	icon_state = "ionpulse0"
-
-/obj/screen/robot/thrusters/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.toggle_ionpulse()
-
 /datum/hud/robot
 	ui_style = 'icons/mob/screen_cyborg.dmi'
 
@@ -117,14 +107,15 @@
 
 //End of module select
 
+	using = new /obj/screen/robot/lamp()
+	using.screen_loc = ui_borg_lamp
+	using.hud = src
+	static_inventory += using
+	mymobR.lamp_button = using
+
 //Photography stuff
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_borg_camera
-	using.hud = src
-	static_inventory += using
-
-	using = new /obj/screen/ai/image_view()
-	using.screen_loc = ui_borg_album
 	using.hud = src
 	static_inventory += using
 
@@ -139,13 +130,6 @@
 	using.screen_loc = ui_borg_alerts
 	using.hud = src
 	static_inventory += using
-
-//Thrusters
-	using = new /obj/screen/robot/thrusters()
-	using.screen_loc = ui_borg_thrusters
-	using.hud = src
-	static_inventory += using
-	mymobR.thruster_button = using
 
 //Intent
 	action_intent = new /obj/screen/act_intent/robot()
@@ -281,6 +265,20 @@
 
 			if(R.modularInterface)
 				screenmob.client.screen -= R.modularInterface
+
+/obj/screen/robot/lamp
+	name = "headlamp"
+	icon_state = "lamp_off"
+
+/obj/screen/robot/lamp/Click()
+	if(..())
+		return
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_headlamp()
+	if(R.lamp_enabled)
+		icon_state = "lamp_on"
+	else
+		icon_state = "lamp_off"
 
 /obj/screen/robot/modPC
 	name = "Modular Interface"

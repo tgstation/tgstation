@@ -21,7 +21,7 @@
 	if(..())
 		tablet = computer
 		if(tablet.device_theme == "syndicate")
-			program_icon_state = "command_syndicate"
+			program_icon_state = "command-syndicate"
 		return TRUE
 	return FALSE
 
@@ -108,6 +108,9 @@
 
 		if("toggleSensors")
 			borgo.toggle_sensors()
+
+		if("viewImage")
+			borgo.aicamera?.viewpictures(usr)
 
 		if("printImage")
 			var/obj/item/camera/siliconcam/robot_camera/borgcam = borgo.aicamera

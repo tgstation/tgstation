@@ -177,34 +177,38 @@ export const NtosBorgUIContent_one = (props, context) => {
                     content="Unlock"
                     disabled={cover=="UNLOCKED"}
                     onClick={() => act('coverunlock')} />
-                </LabeledList.Item>
-                <LabeledList.Item
+              </LabeledList.Item>
+              <LabeledList.Item
                 label="Sensor Overlay">
                   <Button
                     content={sensors}
                     onClick={() => act('toggleSensors')} />
-                </LabeledList.Item>
-                <LabeledList.Item
+              </LabeledList.Item>
+              <LabeledList.Item
                 label={"Stored Photos (" + printerPictures + ")"}>
+                  <Button
+                    content="View"
+                    disabled={!printerPictures}
+                    onClick={() => act('viewImage')} />
                   <Button
                     content="Print"
                     disabled={!printerPictures}
                     onClick={() => act('printImage')} />
-                </LabeledList.Item>
-                <LabeledList.Item
+              </LabeledList.Item>
+              <LabeledList.Item
                   label="Printer Toner">
                   <ProgressBar
                     value={printerToner / printerTonerMax}>
                   </ProgressBar>
+              </LabeledList.Item>
+              {!!thrustersInstalled && (
+                <LabeledList.Item
+                  label="Toggle Thrusters">
+                  <Button
+                    content={thrustersStatus}
+                    onClick={() => act('toggleThrusters')} />
                 </LabeledList.Item>
-                {!!thrustersInstalled && (
-                  <LabeledList.Item
-                    label="Toggle Thrusters">
-                    <Button
-                      content={thrustersStatus}
-                      onClick={() => act('toggleThrusters')} />
-                  </LabeledList.Item>
-                )}
+              )}
             </LabeledList>
           </Section>
           )}
