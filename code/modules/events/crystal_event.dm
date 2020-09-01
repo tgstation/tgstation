@@ -590,11 +590,11 @@ This section is for the crystal monsters variations
 	dodge_prob = 25
 
 /mob/living/simple_animal/hostile/crystal_monster/thug/attackby(obj/item/O, mob/user, params)
-	var/list/temp_turfs
+	var/list/temp_turfs = list()
 	for(var/turf/around_turfs in view(7, src))
 		if(!isopenturf(around_turfs) || isspaceturf(around_turfs))
 			continue
-		LAZYADD(temp_turfs, around_turfs)
+		temp_turfs += around_turfs
 	if(prob(30))
 		var/turf/open/choosen_turf = pick(temp_turfs)
 		do_teleport(src, choosen_turf)
