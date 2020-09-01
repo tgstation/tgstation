@@ -134,7 +134,7 @@
 /atom/movable/proc/post_unbuckle_mob(mob/living/M)
 
 /**
-  *	Simple helper proc that ruins a suite of checks to test whether it is possible or not to buckle the target mob to src.
+  * Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.
   *
   * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
   * Arguments:
@@ -174,7 +174,7 @@
 	return TRUE
 
 /**
-  *	Simple helper proc that ruins a suite of checks to test whether it is possible or not for user to buckle target mob to src.
+  * Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.
   *
   * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
   * Arguments:
