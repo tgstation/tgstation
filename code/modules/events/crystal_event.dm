@@ -110,12 +110,11 @@ This section is for the event controller
 		spawn_anomaly(spawners)
 
 	var/list/crystal_spawner_turfs = list()
-	for(var/turf in RANGE_TURFS(6, dest_crystal.loc))
-		if(!isopenturf(turf) || isspaceturf(turf))
+	for(var/range_turf in RANGE_TURFS(6, dest_crystal.loc))
+		if(!isopenturf(range_turf) || isspaceturf(range_turf))
 			continue
-		var/turf/floor = turf
-		crystal_spawner_turfs += floor
-	for(var/i = 0, i < 6, i++)
+		crystal_spawner_turfs += range_turf
+	for(var/i in 1 to 6)
 		if(!length(crystal_spawner_turfs))
 			break
 		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
@@ -129,8 +128,7 @@ This section is for the event controller
 	if(!spawners.len)
 		CRASH("No landmarks on the station map, aborting")
 	var/obj/spawner = pick(spawners)
-	var/obj/effect/anomaly/flux/spawned_anomaly = new(spawner.loc, 300, FALSE)
-	spawned_anomaly.explosive = FALSE
+	new/obj/effect/anomaly/flux(spawner.loc, 300, FALSE, FALSE)
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
