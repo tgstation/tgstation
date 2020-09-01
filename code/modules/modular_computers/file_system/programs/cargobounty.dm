@@ -13,7 +13,7 @@
 	var/static/datum/bank_account/cargocash
 
 /datum/computer_file/program/bounty/proc/print_paper()
-	new /obj/item/paper/bounty_printout(get_turf(src.computer))
+	new /obj/item/paper/bounty_printout(get_turf(computer))
 	time_printer_ready = world.time + PRINTER_TIMEOUT		//Resets the print cooldown
 
 /datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)	//Cashes in the bounty if valid
