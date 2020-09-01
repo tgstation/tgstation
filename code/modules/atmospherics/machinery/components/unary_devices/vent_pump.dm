@@ -5,7 +5,6 @@
 #define SIPHONING	0
 #define RELEASING	1
 
-//MAKE THESE FASTER VENTS YOU BITCH ASS MOTHERFUCKER
 /obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map-2"
 
@@ -93,10 +92,18 @@
 		on = FALSE
 	if(!on || welded)
 		return
-
+	var/turf/open/us = loc
+	if(!istype(us))
+		return
 	var/datum/gas_mixture/air_contents = airs[1]
-	var/datum/gas_mixture/environment = loc.return_air()
+	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
+	if(pressure_checks&EXT_BOUND)
+		for(var/tile in us.atmos_adjacent_turfs)
+			var/turf/open/toCheck = tile
+			var/datum/gas_mixture/gas = toCheck.return_air()
+			environment_pressure += gas.return_pressure()
+		environment_pressure = environment_pressure / (length(us.atmos_adjacent_turfs) + 1)
 
 	if(pump_direction & RELEASING) // internal -> external
 		var/pressure_delta = 10000
@@ -109,10 +116,10 @@
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
 				var/transfer_moles = (pressure_delta*environment.volume)/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				loc.assume_air(removed)
+				message_admins("starting at [environment_pressure], target is [external_pressure_bound], adding [transfer_moles], ended at [environment.return_pressure()]")
 				air_update_turf()
 
 	else // external -> internal

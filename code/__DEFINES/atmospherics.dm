@@ -57,7 +57,7 @@
 #define MINIMUM_AIR_RATIO_TO_MOVE					0.001
 /// Minimum amount of air that has to move before a group processing can be suspended (Round about 10)
 #define MINIMUM_AIR_TO_SUSPEND						(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)
-/// Either this must be active (round about 0.10398)
+/// Either this must be active (round about 0.1)
 #define MINIMUM_MOLES_DELTA_TO_MOVE					(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE)
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)
