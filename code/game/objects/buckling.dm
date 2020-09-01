@@ -143,13 +143,32 @@
   * * check_loc - Whether to do a proximity check or not. The proximity check looks for target.loc == src.loc.
   */
 /atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
+	// Make sure target is mob/living
 	if(!istype(target))
 		return FALSE
 
+	// No bucking you to yourself.
+	if(target == src)
+		return FALSE
+
+	// Check if this atom can have things buckled to it.
+	if(!can_buckle && !force)
+		return FALSE
+
+	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
 	if(check_loc && target.loc != loc)
 		return FALSE
 
-	if((!can_buckle && !force) || target.buckled || (LAZYLEN(buckled_mobs) >= max_buckled_mobs) || (buckle_requires_restraints && !target.restrained()) || target == src)
+	// Make sure the target isn't already buckled to something.
+	if(target.buckled)
+		return FALSE
+
+	// Make sure this atom can still have more things buckled to it.
+	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
+		return FALSE
+
+	// If the buckle requires restraints, make sure the target is actually restrained while ignoring grab restraint.
+	if(buckle_requires_restraints && !target.restrained(TRUE))
 		return FALSE
 
 	return TRUE
