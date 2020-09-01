@@ -31,6 +31,7 @@
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)
+				L.adjust_fire_stacks(-2.5)
 				L.extinguish_mob()
 
 /datum/reagent/blob/pressurized_slime
@@ -43,7 +44,7 @@
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		M.extinguish_mob() // Extinguish removed all fire stacks
+		M.adjust_fire_stacks(-(reac_volume / 10))
 	M.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)

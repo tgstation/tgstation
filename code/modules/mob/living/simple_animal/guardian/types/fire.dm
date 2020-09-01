@@ -41,5 +41,5 @@
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
-			M.fire_stacks = 7
+			M.adjust_fire_stacks(7, set_stack=TRUE)
 			M.IgniteMob()

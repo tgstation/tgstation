@@ -1137,18 +1137,32 @@
  * Signals the extinguishing.
  */
 /mob/living/proc/extinguish_mob()
+	if(!on_fire)
+		return
+	on_fire = FALSE
 	fire_stacks = 0
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
 	clear_alert("fire")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
-	if(on_fire) //Only signal if mob was on fire
-		on_fire = FALSE
-		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
+	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 	update_fire()
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
+/**
+ * Adjust the amount of fire stacks on a mob
+ *
+ * This modifies the firestacks on a mob, stacks are clamped between -20 and 20.
+ * If the fire stacks are reduced to 0 then we will extinguish the mob.
+ *
+ * Vars:
+ * * add_fire_stacks: int The amount to modify the fire stacks
+ * * set_stack: (optional)(default: false) Sets the fire stacks to the add_fire_stacks value instead of modifying it
+ */
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks, set_stack=FALSE) //Adjusting the amount of fire_stacks we have on person
+	if(!set_stack)
+		fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
+	else
+		fire_stacks = clamp(add_fire_stacks, -20, 20)
 	if(fire_stacks <= 0)
 		extinguish_mob()
 
@@ -1161,17 +1175,17 @@
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
 			var/firesplit = (fire_stacks + L.fire_stacks)/2
-			fire_stacks = firesplit
-			L.fire_stacks = firesplit
+			adjust_fire_stacks(firesplit, set_stack=TRUE)
+			L.adjust_fire_stacks(firesplit, set_stack=TRUE)
 		else // If they were not
-			fire_stacks /= 2
-			L.fire_stacks += fire_stacks
+			adjust_fire_stacks((fire_stacks / 2), set_stack=TRUE)
+			L.adjust_fire_stacks(fire_stacks)
 			if(L.IgniteMob()) // Ignite them
 				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	else if(L.on_fire) // If they were on fire and we were not
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
+		L.adjust_fire_stacks((L.fire_stacks / 2), set_stack=TRUE)
+		adjust_fire_stacks(L.fire_stacks)
 		IgniteMob() // Ignite us
 
 //Mobs on Fire end
