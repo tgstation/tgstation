@@ -171,22 +171,6 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return food_reagent_ids
 	return ..()
 
-///Random recipe for meme chem metalgen. Always requires wittel and resets every 3 days
-/datum/chemical_reaction/randomized/metalgen
-	persistent = TRUE
-	persistence_period = 3 //Resets every three days. It's the ultimate meme and is best not worn out
-	randomize_req_temperature = TRUE
-	possible_catalysts = list(/datum/reagent/wittel)
-	min_catalysts = 1
-	max_catalysts = 1
-	results = list(/datum/reagent/metalgen=20)
-
-/datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
-	switch(kind)
-		if(RNGCHEM_INPUT)
-			return GLOB.medicine_reagents
-	return ..()
-
 /obj/item/paper/secretrecipe
 	name = "old recipe"
 
