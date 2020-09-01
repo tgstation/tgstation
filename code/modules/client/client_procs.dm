@@ -998,10 +998,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(IsAdminAdvancedProcCall())
 		return
 	var/list/verblist = list()
-	var/list/verbstoprocess = verbs + mob?.verbs
-	for(var/AM in mob?.contents)
-		var/atom/movable/thing = AM
-		verbstoprocess += thing.verbs
+	var/list/verbstoprocess = verbs.Copy()
+	if(mob)
+		verbstoprocess += mob.verbs
+		for(var/AM in mob.contents)
+			var/atom/movable/thing = AM
+			verbstoprocess += thing.verbs
 	verb_tabs.Cut()
 	for(var/thing in verbstoprocess)
 		var/procpath/verb_to_init = thing
