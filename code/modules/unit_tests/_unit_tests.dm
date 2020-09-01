@@ -8,7 +8,7 @@
 
 /// Asserts that the two parameters passed are equal, fails otherwise
 /// Optionally allows an additional message in the case of a failure
-#define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [a] to be equal to [b].[message ? " [message]" : ""]") }
+#define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [isnull(a) ? "null" : a] to be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
 
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
@@ -23,6 +23,7 @@
 #include "metabolizing.dm"
 #include "outfit_sanity.dm"
 #include "plantgrowth_tests.dm"
+#include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
