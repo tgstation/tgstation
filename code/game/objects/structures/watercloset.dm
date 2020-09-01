@@ -515,13 +515,13 @@
 		return
 
 	if(istype(O, /obj/item/reagent_containers))
-		var/obj/item/reagent_containers/RG = O
-		if(RG.is_refillable())
-			if(!RG.reagents.holder_full())
-				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+		var/obj/item/reagent_containers/container = O
+		if(container.is_refillable())
+			if(!container.reagents.holder_full())
+				container.reagents.add_reagent(dispensedreagent, min(container.volume - container.reagents.total_volume, container.amount_per_transfer_from_this))
+				to_chat(user, "<span class='notice'>You fill [container] from [src].</span>")
 				return TRUE
-			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
+			to_chat(user, "<span class='notice'>\The [container] is full.</span>")
 			return FALSE
 
 	if(istype(O, /obj/item/melee/baton))
