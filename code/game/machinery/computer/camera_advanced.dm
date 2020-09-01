@@ -3,6 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
+	light_color = COLOR_SOFT_RED
 	var/list/z_lock = list() // Lock use to these z levels
 	var/lock_override = NONE
 	var/mob/camera/ai_eye/remote/eyeobj
@@ -13,7 +14,8 @@
 	var/list/actions = list()
 	///Should we supress any view changes?
 	var/should_supress_view_changes  = TRUE
-	light_color = LIGHT_COLOR_RED
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
@@ -81,7 +83,7 @@
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
-	if( (machine_stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.is_blind() || user.incapacitated() )
+	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
@@ -97,7 +99,7 @@
 		remove_eye_control(M)
 
 /obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
-	return TRUE
+	return can_interact(user)
 
 /obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
 	if(!isabductor(user))
@@ -108,15 +110,12 @@
 	. = ..()
 	if(.)
 		return
-	if(!is_operational()) //you cant use broken machine you chumbis
+	if(!can_use(user))
 		return
 	if(current_user)
 		to_chat(user, "<span class='warning'>The console is already in use!</span>")
 		return
 	var/mob/living/L = user
-
-	if(!can_use(user))
-		return
 	if(!eyeobj)
 		CreateEye()
 
@@ -212,7 +211,7 @@
 				user_image = image(icon,loc,icon_state,FLY_LAYER)
 				eye_user.client.images += user_image
 
-/mob/camera/ai_eye/remote/relaymove(mob/user,direct)
+/mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
 	var/initial = initial(sprint)
 	var/max_sprint = 50
 
@@ -220,7 +219,7 @@
 		sprint = initial
 
 	for(var/i = 0; i < max(sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(src, direct))
+		var/turf/step = get_turf(get_step(src, direction))
 		if(step)
 			setLoc(step)
 

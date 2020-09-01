@@ -78,7 +78,7 @@
 	apply_overlay(HANDS_LAYER)
 
 
-/mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
+/mob/living/carbon/update_fire(fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
 	if(on_fire || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
@@ -115,7 +115,7 @@
 		inv.update_icon()
 
 	if(wear_mask)
-		if(!(ITEM_SLOT_MASK in check_obscured_slots()))
+		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
@@ -129,7 +129,7 @@
 		inv.update_icon()
 
 	if(wear_neck)
-		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
+		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi')
 		update_hud_neck(wear_neck)
 

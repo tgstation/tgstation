@@ -6,6 +6,10 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
+	num_legs = 0 //Populated on init through list/bodyparts
+	usable_legs = 0 //Populated on init through list/bodyparts
+	num_hands = 0 //Populated on init through list/bodyparts
+	usable_hands = 0 //Populated on init through list/bodyparts
 	var/list/internal_organs		= list()	///List of [/obj/item/organ] in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs_slot= list() ///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/silent = 0 		///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
@@ -44,8 +48,14 @@
 	var/tinttotal = 0	/// Total level of visualy impairing items
 
 	///Gets filled up in [create_bodyparts()][/mob/living/carbon/proc/create_bodyparts]
-	var/list/bodyparts = list(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
-					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	var/list/bodyparts = list(
+		/obj/item/bodypart/chest,
+		/obj/item/bodypart/head,
+		/obj/item/bodypart/l_arm,
+		/obj/item/bodypart/r_arm,
+		/obj/item/bodypart/r_leg,
+		/obj/item/bodypart/l_leg,
+		)
 
 	var/list/hand_bodyparts = list() ///a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 
@@ -58,12 +68,10 @@
 	var/obj/halitem
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
-	var/cpr_time = 1 ///CPR cooldown.
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 ///Overall drunkenness
 	var/stam_regen_start_time = 0 ///used to halt stamina regen temporarily
-	var/stam_paralyzed = FALSE ///knocks you down
 
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
@@ -78,7 +86,8 @@
 	/// All of the scars a carbon has afflicted throughout their limbs
 	var/list/all_scars
 
-	/// Maximum number of skillchips slots we can support before they stop working
-	var/max_skillchip_slots = 2
-	/// Currently used skillchip slots
-	var/used_skillchip_slots = 0
+	/// Simple modifier for whether this mob can handle greater or lesser skillchip complexity. See /datum/mutation/human/biotechcompat/ for example.
+	var/skillchip_complexity_modifier = 0
+
+	/// Can other carbons be shoved into this one to make it fall?
+	var/can_be_shoved_into = FALSE

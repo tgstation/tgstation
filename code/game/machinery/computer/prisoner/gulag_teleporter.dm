@@ -6,6 +6,7 @@
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
+	light_color = COLOR_SOFT_RED
 
 	var/default_goal = 200
 	var/obj/machinery/gulag_teleporter/teleporter = null
@@ -13,7 +14,6 @@
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
 
-	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize()
 	. = ..()
@@ -123,7 +123,7 @@
 
 	for(var/direction in GLOB.cardinals)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, direction))
-		if(teleporterf && teleporterf.is_operational())
+		if(teleporterf?.is_operational)
 			return teleporterf
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/findbeacon()

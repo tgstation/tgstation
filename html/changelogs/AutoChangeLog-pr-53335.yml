@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - admin: "select equipment now includes basic plasmaman outfit"

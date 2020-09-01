@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector
-	icon_state = "inje_map-2"
+	icon_state = "inje_map-3"
 
 	name = "air injector"
 	desc = "Has a valve and pump attached to it."
@@ -47,7 +47,7 @@
 		// everything is already shifted so don't shift the cap
 		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
-	if(!nodes[1] || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
 	else
 		icon_state = "inje_on"
@@ -57,7 +57,7 @@
 
 	injecting = 0
 
-	if(!on || !is_operational())
+	if(!on || !is_operational)
 		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
@@ -74,7 +74,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 
-	if(on || injecting || !is_operational())
+	if(on || injecting || !is_operational)
 		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
@@ -179,30 +179,30 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()
-	if(. && on && is_operational())
+	if(. && on && is_operational)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
 // mapping
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer1
-	piping_layer = 1
-	icon_state = "inje_map-1"
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer3
-	piping_layer = 3
-	icon_state = "inje_map-3"
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
-	piping_layer = 1
-	icon_state = "inje_map-1"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
-	piping_layer = 3
-	icon_state = "inje_map-3"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE

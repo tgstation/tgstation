@@ -62,9 +62,9 @@
 
 
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	dissipate = FALSE
+	move_self = FALSE
+	grav_pull = TRUE
 
 /obj/singularity/academy/admin_investigate_setup()
 	return
@@ -221,7 +221,7 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)

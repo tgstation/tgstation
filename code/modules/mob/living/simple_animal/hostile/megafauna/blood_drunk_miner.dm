@@ -30,7 +30,7 @@ Difficulty: Medium
 	icon = 'icons/mob/broadMobs.dmi'
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	light_color = "#E4C7C5"
+	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3

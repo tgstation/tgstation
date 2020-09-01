@@ -1,12 +1,11 @@
 /datum/computer_file/program/supermatter_monitor
-	filename = "smmonitor"
-	filedesc = "Supermatter Monitoring"
+	filename = "ntcims"
+	filedesc = "NT CIMS"
 	ui_header = "smmon_0.gif"
 	program_icon_state = "smmon_0"
-	extended_desc = "This program connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
+	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_CONSTRUCTION
-	network_destination = "supermatter monitoring system"
 	size = 5
 	tgui_id = "NtosSupermatterMonitor"
 	var/last_status = SUPERMATTER_INACTIVE

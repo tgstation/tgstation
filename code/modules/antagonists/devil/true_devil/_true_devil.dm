@@ -18,8 +18,14 @@
 	status_flags = CANPUSH
 	mob_size = MOB_SIZE_LARGE
 	held_items = list(null, null)
-	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
-					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
+	bodyparts = list(
+		/obj/item/bodypart/chest/devil,
+		/obj/item/bodypart/head/devil,
+		/obj/item/bodypart/l_arm/devil,
+		/obj/item/bodypart/r_arm/devil,
+		/obj/item/bodypart/r_leg/devil,
+		/obj/item/bodypart/l_leg/devil,
+		)
 	hud_type = /datum/hud/devil
 	var/ascended = FALSE
 	var/mob/living/oldform
@@ -113,7 +119,7 @@
 		return ..() //flashes don't stop devils UNLESS it's their bane.
 
 /mob/living/carbon/true_devil/soundbang_act()
-	return 0
+	return FALSE
 
 /mob/living/carbon/true_devil/get_ear_protection()
 	return 2
@@ -123,8 +129,8 @@
 	var/weakness = check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone)
 	var/message_verb = ""
-	if(I.attack_verb && length(I.attack_verb))
-		message_verb = "[pick(I.attack_verb)]"
+	if(length(I.attack_verb_continuous))
+		message_verb = "[pick(I.attack_verb_continuous)]"
 	else if(I.force)
 		message_verb = "attacked"
 
@@ -140,13 +146,13 @@
 
 /mob/living/carbon/true_devil/singularity_act()
 	if(ascended)
-		return 0
+		return FALSE
 	return ..()
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
-		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
+		var/mob/living/simple_animal/hostile/imp/S = new(get_turf(loc))
 		S.key = user.key
 		var/datum/antagonist/imp/A = new()
 		S.mind.add_antag_datum(A)

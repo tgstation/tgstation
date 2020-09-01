@@ -44,7 +44,7 @@
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 200
-	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
 
 	var/stage = 1
 	var/fixture_type = "tube"
@@ -604,11 +604,11 @@
 	return TRUE
 
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-	set waitfor = 0
+/obj/machinery/light/proc/flicker(amount = rand(10, 20))
+	set waitfor = FALSE
 	if(flickering)
 		return
-	flickering = 1
+	flickering = TRUE
 	if(on && status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
@@ -618,7 +618,7 @@
 			sleep(rand(5, 15))
 		on = (status == LIGHT_OK)
 		update(0)
-	flickering = 0
+	flickering = FALSE
 
 // ai attack - make lights flicker, because why not
 
@@ -676,12 +676,20 @@
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 		else
-			to_chat(user, "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>")
-
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+			if(affecting?.receive_damage( 0, 5 ))			// 5 burn damage
 				H.update_damage_overlays()
-			return				// if burned, don't remove the light
+			if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
+				to_chat(user, "<span class='notice'>You feel like you're burning, but you can push through.</span>")
+				if(!do_after(user, 5 SECONDS, target = src))
+					return
+				if(affecting?.receive_damage( 0, 10 ))		// 10 more burn damage
+					H.update_damage_overlays()
+				to_chat(user, "<span class='notice'>You manage to remove the light [fitting], shattering it in process.</span>")
+				break_light_tube()
+			else
+				to_chat(user, "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>")
+				return
 	else
 		to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 	// create a light tube/bulb item and put it in the user's hand
@@ -742,15 +750,16 @@
 	update()
 
 /obj/machinery/light/zap_act(power, zap_flags)
-	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
+	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE)
+	. = ..()
+	if(explosive)
 		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
-	else
-		return ..()
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(FALSE)
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 

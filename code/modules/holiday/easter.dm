@@ -49,6 +49,8 @@
 	icon_prefix = "rabbit"
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
+	pet_bonus = TRUE
+	pet_bonus_emote = "hops around happily!"
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -172,7 +174,7 @@
 /datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/food/bread/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
@@ -232,7 +234,7 @@
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/food/bread/plain = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)

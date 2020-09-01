@@ -132,27 +132,28 @@
 		if(tar.anti_magic_check())
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
-	var/mob/living/carbon/C2 = user
+	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(20)
-		C2.adjustBruteLoss(-20)
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(20)
+		carbon_user.adjustBruteLoss(-20)
 	if(iscarbon(target))
-		var/mob/living/carbon/C1 = target
-		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
+		var/mob/living/carbon/carbon_target = target
+		for(var/bp in carbon_user.bodyparts)
+			var/obj/item/bodypart/bodypart = bp
 			for(var/i in bodypart.wounds)
 				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
-				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
+				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
 				if(!target_bodypart)
 					continue
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(target_bodypart)
 
-		C1.blood_volume -= 20
-		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			C2.blood_volume += 20
+		carbon_target.blood_volume -= 20
+		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
+			carbon_user.blood_volume += 20
 		return ..()
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
@@ -353,11 +354,11 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BURN, "melee", 1)
+			M.take_damage(45, BURN, MELEE, 1)
 		sleep(1.5)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
@@ -510,7 +511,7 @@
 		if(target.stat == DEAD || !target.on_fire)
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
-		if(target.InCritical())
+		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION))
 			target.death()
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
@@ -594,3 +595,75 @@
 	range = 10
 	invocation = "E'E'S"
 	action_background_icon_state = "bg_ecult"
+
+/obj/effect/temp_visual/dir_setting/entropic
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "entropic_plume"
+	duration = 3 SECONDS
+
+/obj/effect/temp_visual/dir_setting/entropic/setDir(dir)
+	. = ..()
+	switch(dir)
+		if(NORTH)
+			pixel_x = -64
+		if(SOUTH)
+			pixel_x = -64
+			pixel_y = -128
+		if(EAST)
+			pixel_y = -64
+		if(WEST)
+			pixel_y = -64
+			pixel_x = -128
+
+/obj/effect/temp_visual/glowing_rune
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "small_rune_1"
+	duration = 1 MINUTES
+	layer = LOW_SIGIL_LAYER
+
+/obj/effect/temp_visual/glowing_rune/Initialize()
+	. = ..()
+	pixel_y = rand(-6,6)
+	pixel_x = rand(-6,6)
+	icon_state = "small_rune_[rand(12)]"
+	update_icon()
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume
+	name = "Entropic Plume"
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
+	school = "illusion"
+	invocation = "'NTR'P'C PL'M'"
+	invocation_type = INVOCATION_WHISPER
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "entropic_plume"
+	charge_max = 300
+	cone_levels = 5
+	respect_density = TRUE
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/cast(list/targets,mob/user = usr)
+	. = ..()
+	new /obj/effect/temp_visual/dir_setting/entropic(get_step(user,user.dir), user.dir)
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_turf_cone_effect(turf/target_turf, level)
+	. = ..()
+	target_turf.rust_heretic_act()
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
+	. = ..()
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
+		return
+	victim.apply_status_effect(STATUS_EFFECT_AMOK)
+	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
+	if(iscarbon(victim))
+		var/mob/living/carbon/carbon_victim = victim
+		carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
+
+/obj/effect/proc_holder/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
+	if(current_level == cone_levels)
+		return 5
+	else if(current_level == cone_levels-1)
+		return 3
+	else
+		return 2

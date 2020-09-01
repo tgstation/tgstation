@@ -2,7 +2,7 @@
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
-	icon_state = "scrub_map-2"
+	icon_state = "scrub_map-3"
 
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
@@ -40,10 +40,10 @@
 			filter_types += gas_id2path(f)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/A = get_area(src)
-	if (A)
-		A.air_scrub_names -= id_tag
-		A.air_scrub_info -= id_tag
+	var/area/scrub_area = get_area(src)
+	if(scrub_area)
+		scrub_area.air_scrub_info -= id_tag
+		GLOB.air_scrub_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -51,7 +51,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
-	if(!on || welded || !is_operational() || !powered(power_channel))
+	if(!on || welded || !is_operational || !powered(power_channel))
 		return FALSE
 
 	var/amount = idle_power_usage
@@ -76,7 +76,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes[1] || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational)
 		icon_state = "scrub_off"
 		return
 
@@ -114,12 +114,14 @@
 		"sigtype" = "status"
 	))
 
-	var/area/A = get_area(src)
-	if(!A.air_scrub_names[id_tag])
-		name = "\improper [A.name] air scrubber #[A.air_scrub_names.len + 1]"
-		A.air_scrub_names[id_tag] = name
+	var/area/scrub_area = get_area(src)
+	if(!GLOB.air_scrub_names[id_tag])
+		// If we do not have a name, assign one
+		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
+		GLOB.air_scrub_names[id_tag] = name
 
-	A.air_scrub_info[id_tag] = signal.data
+	scrub_area.air_scrub_info[id_tag] = signal.data
+
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return TRUE
@@ -135,7 +137,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
-	if(welded || !is_operational())
+	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
 		on = FALSE
@@ -146,7 +148,7 @@
 			scrub(tile)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(var/turf/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
 		return FALSE
 	var/datum/gas_mixture/environment = tile.return_air()
@@ -215,8 +217,8 @@
 		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return 0
+	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+		return
 
 	var/atom/signal_sender = signal.data["user"]
 
@@ -283,7 +285,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	. = ..()
-	if(. && on && is_operational())
+	if(. && on && is_operational)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
@@ -306,25 +308,25 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
-	piping_layer = 1
-	icon_state = "scrub_map-1"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2
+	piping_layer = 2
+	icon_state = "scrub_map-2"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
-	piping_layer = 3
-	icon_state = "scrub_map-3"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer4
+	piping_layer = 4
+	icon_state = "scrub_map-4"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE
+	icon_state = "scrub_map_on-3"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2
+	piping_layer = 2
 	icon_state = "scrub_map_on-2"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
-	piping_layer = 1
-	icon_state = "scrub_map_on-1"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
-	piping_layer = 3
-	icon_state = "scrub_map_on-3"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
+	piping_layer = 4
+	icon_state = "scrub_map_on-4"
 
 #undef SIPHONING
 #undef SCRUBBING

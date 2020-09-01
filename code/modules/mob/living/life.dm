@@ -3,7 +3,6 @@
 
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
-	set invisibility = 0
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
@@ -118,8 +117,6 @@
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(confused)
-		confused = max(0, confused - 1)
 
 /mob/living/proc/handle_traits()
 	//Eyes
