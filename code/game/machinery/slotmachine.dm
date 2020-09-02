@@ -64,7 +64,7 @@
 	if(!.)
 		return .
 
-	money += SSMACHINES_DT / 2 //SPESSH MAJICKS
+	money += round(SSMACHINES_DT / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)

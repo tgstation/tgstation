@@ -137,8 +137,8 @@
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
 				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor.fire > 50 * delta_time) //obj with 100% fire armor still get slowly burned away.
-				O.armor = O.armor.setRating(fire = 50 * delta_time)
+			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+				O.armor = O.armor.setRating(fire = 50)
 			O.fire_act(10000, 1000 * delta_time)
 
 		else if (isliving(thing))
