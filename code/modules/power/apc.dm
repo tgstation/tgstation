@@ -255,12 +255,14 @@
 
 /obj/machinery/power/apc/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 500, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heat)
+	AddElement(/datum/element/atmos_sensitive)
 
-/obj/machinery/power/apc/proc/heat(datum/source, datum/gas_mixture/mix, heat, volume)
-	if(heat > 500)
-		take_damage(min(heat/100, 10), BURN)
+/obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > 500)
+
+/obj/machinery/power/apc/atmos_expose()
+	var/turf/open/spot = get_turf(src)
+	take_damage(min(spot.air.temperature/100, 10), BURN)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
@@ -1185,7 +1187,6 @@
 		update_icon()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	heat()
 	if(!area.requires_power)
 		return
 	if(failure_timer)

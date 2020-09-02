@@ -245,8 +245,7 @@
 
 /obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/TemperatureAct)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/mineral_door/transparent/plasma/welder_act(mob/living/user, obj/item/I)
 	return
@@ -259,6 +258,12 @@
 		TemperatureAct()
 	else
 		return ..()
+
+/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 300
+
+/obj/structure/mineral_door/transparent/plasma/atmos_expose()
+	TemperatureAct()
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
 	atmos_spawn_air("plasma=500;TEMP=1000")

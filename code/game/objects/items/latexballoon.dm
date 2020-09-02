@@ -13,8 +13,7 @@
 
 /obj/item/latexballon/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, T0C+100, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/burst)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/item/latexballon/proc/blow(obj/item/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
@@ -24,6 +23,12 @@
 	user.update_inv_hands()
 	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
 	air_contents = tank.remove_air_volume(3)
+
+/obj/item/latexballon/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > T0C+100)
+
+/obj/item/latexballon/atmos_expose()
+	burst()
 
 /obj/item/latexballon/proc/burst()
 	if (!air_contents || icon_state != "latexballon_blow")

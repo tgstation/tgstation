@@ -148,8 +148,7 @@
 
 /obj/structure/alien/weeds/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/alien/weeds/proc/expand()
 	var/turf/U = get_turf(src)
@@ -167,7 +166,10 @@
 		new /obj/structure/alien/weeds(T)
 	return TRUE
 
-/obj/structure/alien/weeds/proc/heated()
+/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 300
+
+/obj/structure/alien/weeds/atmos_expose()
 	take_damage(5, BURN, 0, 0)
 
 //Weed nodes
@@ -239,8 +241,7 @@
 
 /obj/structure/alien/egg/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 500, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
@@ -307,14 +308,16 @@
 						child.Leap(M)
 						break
 
+/obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 500
+
+/obj/structure/alien/egg/atmos_expose()
+	take_damage(5, BURN, 0, 0)
+
 /obj/structure/alien/egg/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)
-
-/obj/structure/alien/egg/proc/heated()
-	take_damage(5, BURN, 0, 0)
-
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	if(status == GROWN)

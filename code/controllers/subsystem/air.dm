@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(air)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
+	var/cost_atoms = 0
 	var/cost_turfs = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
@@ -30,7 +31,7 @@ SUBSYSTEM_DEF(air)
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
-
+	var/list/atom_process_list = list()
 
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_REBUILD_PIPENETS
@@ -49,6 +50,7 @@ SUBSYSTEM_DEF(air)
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
+	msg += "AO:[round(cost_atoms, 1)]"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
 	msg += "EG:[excited_groups.len]|"
@@ -145,6 +147,15 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
+		currentpart = SSAIR_PROCESS_ATOMS
+
+	if(currentpart == SSAIR_PROCESS_ATOMS)
+		timer = TICK_USAGE_REAL
+		process_atoms(resumed)
+		cost_atoms = MC_AVERAGE(cost_atoms, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
 
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
@@ -168,6 +179,18 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
 		pipenets_needing_rebuilt += atmos_machine
+
+/datum/controller/subsystem/air/proc/process_atoms(resumed = 0)
+	if(!resumed)
+		src.currentrun = atom_process_list.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/atom/to_talk_to = currentrun[currentrun.len]
+		currentrun.len--
+		to_talk_to.atmos_expose()
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1
@@ -473,6 +496,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	data["hotspots_size"] = hotspots.len
 	data["excited_size"] = excited_groups.len
 	data["conducting_size"] = active_super_conductivity.len
+	data["atoms"] = atom_process_list.len
 	data["frozen"] = can_fire
 	data["show_all"] = display_all_groups
 	data["fire_count"] = times_fired

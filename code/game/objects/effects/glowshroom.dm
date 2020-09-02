@@ -97,8 +97,7 @@
 
 /obj/structure/glowshroom/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /**
   * Causes glowshroom spreading across the floor/walls.
@@ -208,7 +207,10 @@
 	if(damage_type == BURN && damage_amount)
 		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/glowshroom/proc/heated()
+/obj/structure/glowshroom/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 300
+
+/obj/structure/glowshroom/atmos_expose()
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)

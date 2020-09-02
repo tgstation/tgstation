@@ -320,8 +320,7 @@
 
 /obj/machinery/light/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 0, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -770,8 +769,12 @@
 
 // called when heated
 
-/obj/machinery/light/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
-	if(prob(max(0, temperature - 673)))   //0% at <400C, 100% at >500C
+/obj/machinery/light/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 673
+
+/obj/machinery/light/atmos_expose()
+	var/turf/open/spot = get_turf(src)
+	if(prob(max(0, spot.air.temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
 
 // explode the light

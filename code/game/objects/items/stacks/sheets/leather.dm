@@ -142,8 +142,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 /obj/item/stack/sheet/wethide/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, drying_threshold_temperature, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /*
  * Leather SHeet
@@ -247,7 +246,10 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wethide/proc/heated()
+/obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > drying_threshold_temperature)
+
+/obj/item/stack/sheet/wethide/atmos_expose()
 	wetness--
 	if(wetness == 0)
 		new /obj/item/stack/sheet/leather(drop_location(), 1)

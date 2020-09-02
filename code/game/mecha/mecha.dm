@@ -152,8 +152,7 @@
 
 /obj/mecha/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, max_temperature, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/mecha/update_icon_state()
 	if(silicon_pilot && silicon_icon_state)

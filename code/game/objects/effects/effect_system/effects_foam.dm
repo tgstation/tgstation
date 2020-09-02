@@ -66,9 +66,6 @@
 	L.adjust_fire_stacks(-2)
 	L.ExtinguishMob()
 
-/obj/effect/particle_effect/foam/firefighting/heated()
-	return
-
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
 	metal = ALUMINUM_FOAM
@@ -97,8 +94,7 @@
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 0, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -194,14 +190,13 @@
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
+/obj/effect/particle_effect/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 475
 
-/obj/effect/particle_effect/foam/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
-	if(prob(max(0, temperature - 475))) //foam dissolves when heated
+/obj/effect/particle_effect/foam/atmos_expose()
+	var/turf/open/spot = get_turf(src)
+	if(prob(max(0, spot.air.temperature - 475)))   //0% at <400C, 100% at >500C
 		kill_foam()
-
-
-/obj/effect/particle_effect/foam/metal/heated()
-	return
 
 
 ///////////////////////////////////////////////

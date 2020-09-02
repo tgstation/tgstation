@@ -18,8 +18,7 @@
 
 /obj/structure/grille/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, T0C + 1500, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -253,9 +252,11 @@
 			return FALSE
 	return FALSE
 
-/obj/structure/grille/proc/heated()
-	if(!broken)
-		take_damage(1, BURN, 0, 0)
+/obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > T0C + 1500 && !broken
+
+/obj/structure/grille/atmos_expose()
+	take_damage(1, BURN, 0, 0)
 
 /obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isobj(AM))

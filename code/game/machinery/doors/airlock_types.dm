@@ -212,12 +212,17 @@
 
 /obj/machinery/door/airlock/plasma/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/PlasmaBurn)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > 300)
+
+/obj/machinery/door/airlock/plasma/atmos_expose()
+	PlasmaBurn()
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn()
 	atmos_spawn_air("plasma=500;TEMP=1000")

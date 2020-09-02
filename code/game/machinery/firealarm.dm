@@ -35,7 +35,7 @@
 
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/last_alarm = 0
+	COOLDOWN_DECLARE(last_alarm)
 	var/area/myarea = null
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
@@ -53,9 +53,7 @@
 
 /obj/machinery/firealarm/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, T0C + 200, BODYTEMP_COLD_DAMAGE_LIMIT)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
-	RegisterSignal(src, COMSIG_HEAT_COLD, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(myarea.firealarms, src)
@@ -124,14 +122,16 @@
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, TRUE)
 
-/obj/machinery/firealarm/proc/heated(datum/gas_mixture/mix)
-	if((last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !machine_stat)
-		alarm()
+/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && detecting && !machine_stat
+
+/obj/machinery/firealarm/atmos_expose()
+	alarm()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	if(!is_operational || (last_alarm+FIREALARM_COOLDOWN > world.time))
+	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))
 		return
-	last_alarm = world.time
+	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
 	var/area/A = get_area(src)
 	A.firealert(src)
 	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)

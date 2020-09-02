@@ -228,8 +228,7 @@
 
 /obj/structure/falsewall/plasma/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/burnbabyburn)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)
@@ -239,6 +238,12 @@
 		burnbabyburn()
 	else
 		return ..()
+
+/obj/structure/falsewall/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 300
+
+/obj/structure/falsewall/plasma/atmos_expose()
+	burnbabyburn()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
 	playsound(src, 'sound/items/welder.ogg', 100, TRUE)

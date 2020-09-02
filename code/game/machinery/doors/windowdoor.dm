@@ -39,8 +39,7 @@
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, T0C + (reinf ? 1600 : 800), null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
@@ -202,8 +201,13 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/door/window/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
-	take_damage(round(volume / 200), BURN, 0, 0)
+/obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
+
+/obj/machinery/door/window/atmos_expose()
+	var/turf/open/spot = get_turf(src)
+	take_damage(round(spot.air.temperature / 200), BURN, 0, 0)
+
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))

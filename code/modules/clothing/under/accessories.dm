@@ -216,11 +216,14 @@
 
 /obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
-/obj/item/clothing/accessory/medal/plasma/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
-	atmos_spawn_air("plasma=20;TEMP=[temperature]")
+/obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return (exposed_temperature > 300)
+
+/obj/item/clothing/accessory/medal/plasma/atmos_expose()
+	var/turf/open/spot = get_turf(src)
+	atmos_spawn_air("plasma=20;TEMP=[spot.air.temperature]")
 	visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 	qdel(src)
 

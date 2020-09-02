@@ -42,7 +42,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RAD_PROTECT_CONTENTS_1 (1 << 17)
 /// should this object be allowed to be contaminated
 #define RAD_NO_CONTAMINATE_1 (1 << 18)
-
+/// should this object be allowed to be contaminated
+#define ATMOS_IS_PROCESSING_1 (1 << 19)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
@@ -132,7 +133,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE			(1<<3)
 #define ZAP_MOB_STUN			(1<<4)
 
-#define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE 
+#define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS NONE
 

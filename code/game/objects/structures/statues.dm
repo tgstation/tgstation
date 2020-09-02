@@ -107,8 +107,7 @@
 
 /obj/structure/statue/plasma/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 300, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/PlasmaBurn)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
 	var/burn = FALSE
@@ -133,6 +132,12 @@
 		ignite(W.get_temperature())
 	else
 		return ..()
+
+/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > 300
+
+/obj/structure/statue/plasma/atmos_expose()
+	PlasmaBurn()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn(datum/source, datum/gas_mixture/mix, temperature, volume)
 	if(QDELETED(src))

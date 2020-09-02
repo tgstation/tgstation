@@ -69,8 +69,7 @@
 
 /obj/machinery/portable_atmospherics/canister/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/heat_sensitive, 0, null)
-	RegisterSignal(src, COMSIG_HEAT_HOT, .proc/heated)
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
@@ -321,10 +320,12 @@
 	else if(pressure >= 10)
 		. += "can-0"
 
-/obj/machinery/portable_atmospherics/canister/proc/heated(datum/source, datum/gas_mixture/mix, temperature, volume)
-	if(temperature > (temperature_resistance * mode))
-		take_damage(5, BURN, 0)
 
+/obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return exposed_temperature > temperature_resistance * mode
+
+/obj/machinery/portable_atmospherics/canister/atmos_expose()
+	take_damage(5, BURN, 0)
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

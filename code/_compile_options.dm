@@ -33,6 +33,7 @@
 #define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #define TRACK_MAX_SHARE	//Allows max share tracking, for use in the atmos debugging ui
 #endif //ifdef TESTING
+#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 
 //#define UNIT_TESTS			//If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 
