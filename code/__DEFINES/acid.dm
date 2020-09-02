@@ -4,6 +4,8 @@
 #define OBJ_ACID_DAMAGE_MAX		300
 /// Maximum acid volume that can be applied to an [/obj].
 #define OBJ_ACID_VOLUME_MAX		300
+/// Maximum acid volume that can be applied to a [/mob/living].
+#define MOB_ACID_VOLUME_MAX		1000
 /// Maximum acid volume that can be applied to a [/turf].
 #define TURF_ACID_VOLUME_MAX	12000
 

@@ -502,6 +502,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = ..()
+	if((acidpwr <= 0) || (acid_volume <= 0))
+		return FALSE
 
 	AddComponent(/datum/component/acid, acidpwr, acid_volume)
 	for(var/obj/O in src)

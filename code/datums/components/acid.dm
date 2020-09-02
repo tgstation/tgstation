@@ -6,24 +6,41 @@
   */
 /datum/component/acid
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	/// The strength of the acid on the parent object.
+	/// The strength of the acid on the parent [/atom].
 	var/acid_power
-	/// The volume of acid on the parent object.
+	/// The volume of acid on the parent [/atom].
 	var/acid_volume
-	/// The ambiant sound of acid eating away at the parent object.
-	var/datum/looping_sound/sizzle
+	/// The maximum volume of acid on the parent [/atom].
+	var/max_volume = INFINITY
+	/// The ambiant sound of acid eating away at the parent [/atom].
+	var/datum/looping_sound/acid/sizzle
 	/// Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.
 	var/parent_integrity = 30
+	///
+	var/datum/callback/process_effect
 
-/datum/component/acid/Initialize(_acid_power, _acid_volume)
+/datum/component/acid/Initialize(_acid_power, _acid_volume, _max_volume=null)
 	if((_acid_power) <= 0 || (_acid_volume <= 0))
+		WARNING("Acid component added with insufficient acid power ([_acid_power]) or acid volume ([_acid_power]).")
 		return COMPONENT_INCOMPATIBLE // Not enough acid.
 	if(!isatom(parent))
+		WARNING("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
 		return COMPONENT_INCOMPATIBLE // Incompatible type. TODO: Rework take_damage to the atom level and move this there.
+
 	if(isobj(parent))
-		var/obj/O = parent
-		if(O.resistance_flags & UNACIDABLE) // The parent object cannot have acid.
+		var/obj/parent_object = parent
+		if(parent_object.resistance_flags & UNACIDABLE) // The parent object cannot have acid.
+			WARNING("Acid component added to unacidable object [parent].")
 			return COMPONENT_INCOMPATIBLE
+
+		max_volume = OBJ_ACID_VOLUME_MAX
+		process_effect = CALLBACK(src, .proc/process_obj, parent)
+	else if(isliving(parent))
+		max_volume = MOB_ACID_VOLUME_MAX
+		process_effect = CALLBACK(src, .proc/process_mob, parent)
+	else if(isturf(parent))
+		max_volume = TURF_ACID_VOLUME_MAX
+		process_effect = CALLBACK(src, .proc/process_turf, parent)
 
 	acid_power = _acid_power
 	set_volume(_acid_volume)
@@ -31,12 +48,12 @@
 	var/atom/parent_atom = parent
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	parent_atom.update_icon()
-	sizzle = new/datum/looping_sound/acid(list(parent), TRUE)
+	sizzle = new(list(parent), TRUE)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	qdel(sizzle)
+	QDEL_NULL(sizzle)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELETED(parent))
 		var/atom/parent_atom = parent
@@ -66,56 +83,57 @@
 
 /// Sets the acid volume to a new value. Limits the acid volume by the amount allowed to exist on the parent atom.
 /datum/component/acid/proc/set_volume(new_volume)
-	if(isobj(parent))
-		new_volume = clamp(new_volume, 0, OBJ_ACID_VOLUME_MAX)
-	else if(isturf(parent))
-		new_volume = clamp(new_volume, 0, TURF_ACID_VOLUME_MAX)
-
-	acid_volume = new_volume
+	acid_volume = clamp(new_volume, 0, max_volume)
 	if(!acid_volume)
 		qdel(src)
 
 
-/// Handles the slow corrosion of the parent object.
+/// Handles the slow corrosion of the parent [/atom].
 /datum/component/acid/process()
-	if(isobj(parent))
-		var/obj/O = parent
-		if(!(O.resistance_flags & ACID_PROOF))
-			O.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX), BURN, ACID, 0)
-
-	else if(isturf(parent))
-		var/turf/T = parent
-		var/acid_used = min(acid_volume * 0.05, 20)
-		var/applied_targets = 0
-		for(var/a in T)
-			var/atom/acid_target = a
-			acid_target.acid_act(acid_power, acid_used)
-			applied_targets++
-
-		set_volume(acid_volume - (acid_used * applied_targets))
-
-		// Snowflake code for handling acid melting walls. TODO: Move integrity handling to the atom level so this can be desnowflaked.
-		if(acid_power >= ACID_POWER_MELT_TURF)
-			switch(parent_integrity--)
-				if(-INFINITY to 0)
-					T.visible_message("<span class='warning'>[T] collapses under its own weight into a puddle of goop and undigested debris!</span>")
-					T.acid_melt()
-				if(0 to 4)
-					T.visible_message("<span class='warning'>[T] begins to crumble under the acid!</span>")
-				if(4 to 8)
-					T.visible_message("<span class='warning'>[T] is struggling to withstand the acid!</span>")
-				if(8 to 16)
-					T.visible_message("<span class='warning'>[T] is being melted by the acid!</span>")
-				if(16 to 24)
-					T.visible_message("<span class='warning'>[T] is holding up against the acid!</span>")
-
-	else if(isliving(parent))
-		var/mob/living/L = parent
-		L.acid_act(acid_power, acid_volume) // TODO: Move integrity and damage handling to the atom level so this can go there.
-
+	process_effect?.InvokeAsync()
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))))
 
-/// Used to
+/// Handles processing on a [/obj].
+/datum/component/acid/proc/process_obj(obj/target)
+	if(target.resistance_flags & ACID_PROOF)
+		return
+	target.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX), BURN, ACID, 0)
+
+/// Handles processing on a [/mob/living].
+/datum/component/acid/proc/process_mob(mob/living/target)
+	target.acid_act(acid_power, acid_volume)
+
+/// Handles processing on a [/turf].
+/datum/component/acid/proc/process_turf(turf/target)
+	var/turf/T = parent
+	var/acid_used = min(acid_volume * 0.05, 20)
+	var/applied_targets = 0
+	for(var/A in T)
+		var/atom/acid_target = A
+		acid_target.acid_act(acid_power, acid_used)
+		applied_targets++
+
+	set_volume(acid_volume - (acid_used * applied_targets))
+
+	// Snowflake code for handling acid melting walls. TODO: Move integrity handling to the atom level so this can be desnowflaked.
+	if(acid_power < ACID_POWER_MELT_TURF)
+		return
+
+	switch(parent_integrity--)
+		if(-INFINITY to 0)
+			T.visible_message("<span class='warning'>[T] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+			T.acid_melt()
+		if(0 to 4)
+			T.visible_message("<span class='warning'>[T] begins to crumble under the acid!</span>")
+		if(4 to 8)
+			T.visible_message("<span class='warning'>[T] is struggling to withstand the acid!</span>")
+		if(8 to 16)
+			T.visible_message("<span class='warning'>[T] is being melted by the acid!</span>")
+		if(16 to 24)
+			T.visible_message("<span class='warning'>[T] is holding up against the acid!</span>")
+
+
+/// Used to maintain the acid overlay on the parent [/atom].
 /datum/component/acid/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
