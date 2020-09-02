@@ -567,7 +567,6 @@
 			return TRUE
 		busy = FALSE
 		O.wash(CLEAN_WASH)
-		O.acid_level = 0
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.expose(O, TOUCH)
