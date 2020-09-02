@@ -223,9 +223,9 @@
 		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
+		var/obj/item/mop/advanced/cyborg/mop = new /obj/item/mop/advanced/cyborg(R.module)
+		R.module.basic_modules += mop
+		R.module.add_module(mop, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -630,11 +630,11 @@
 	name = "borg module picker (Standard)"
 	desc = "Allows you to to turn a cyborg into a standard cyborg."
 	icon_state = "cyborg_upgrade3"
-	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
+	var/obj/item/robot_module/new_module = null
 
 /obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if(.)
+	if(. && new_module)
 		R.module.transform_to(new_module)
 
 /obj/item/borg/upgrade/transform/clown

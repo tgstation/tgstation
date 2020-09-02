@@ -123,8 +123,8 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/probital/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
+/datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
+	if(!(methods & INGEST) || !iscarbon(A))
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -189,8 +189,8 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
-	if(method != VAPOR)
+/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, methods=VAPOR, reac_volume)
+	if(!(methods & VAPOR))
 		return
 
 	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
@@ -336,8 +336,8 @@
 	overdose_threshold = 6
 	var/conversion_amount
 
-/datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, method=INJECT, trans_volume)
-	if(method != INJECT || !iscarbon(A))
+/datum/reagent/medicine/c2/syriniver/on_transfer(atom/A, methods=INJECT, trans_volume)
+	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
@@ -412,12 +412,12 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, methods=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH, VAPOR))
+		if(methods & (PATCH|TOUCH|VAPOR))
 			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 			for(var/i in carbies.all_wounds)
@@ -447,22 +447,21 @@
 */
 /datum/reagent/medicine/c2/penthrite
 	name = "Penthrite"
-	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
+	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. Mixing it with epinephrine or atropine will cause an explosion."
 	color = "#F5F5F5"
 	overdose_threshold = 50
 
-/datum/reagent/medicine/c2/penthrite/on_mob_add(mob/living/M)
+/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()
 	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
 	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
-
+	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
-	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //we cannot save someone below our lowered crit threshold.
 
 		H.adjustToxLoss(-2 * REM, 0)
 		H.adjustBruteLoss(-2 * REM, 0)
@@ -480,8 +479,8 @@
 		if(prob(33))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
 
-	if(H.health <= H.crit_threshold) //certain death above this threshold
-		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
+	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //certain death below this threshold
+		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
 		H.emote("scream")
 		H.set_heartattack(TRUE)
@@ -489,10 +488,10 @@
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/M)
-	M.crit_threshold = M.crit_threshold - HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
+	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H)

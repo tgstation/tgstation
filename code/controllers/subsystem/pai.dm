@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(pai)
 
 			if("submit")
 				if(candidate)
-					candidate.ready = 1
+					candidate.ready = TRUE
 					for(var/obj/item/paicard/p in pai_card_list)
 						if(!p.pai)
 							p.alertUpdate()
@@ -195,4 +195,4 @@ SUBSYSTEM_DEF(pai)
 	var/description
 	var/role
 	var/comments
-	var/ready = 0
+	var/ready = FALSE

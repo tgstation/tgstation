@@ -669,28 +669,28 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			//Direction works sometimes
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			//That's exactly what get_turf_pixel() does
 			if(get_turf_pixel(O) == locdir)
-				return 1
+				return TRUE
 
 		if(is_type_in_typecache(O, GLOB.WALLITEMS_EXTERNAL) && check_external)
 			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
-					return 1
+					return TRUE
 			else if(O.dir == dir)
-				return 1
+				return TRUE
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
@@ -976,13 +976,13 @@ B --><-- A
 
 /atom/proc/contains(atom/A)
 	if(!A)
-		return 0
+		return FALSE
 	for(var/atom/location = A.loc, location, location = location.loc)
 		if(location == src)
-			return 1
+			return TRUE
 
 /proc/flick_overlay_static(O, atom/A, duration)
-	set waitfor = 0
+	set waitfor = FALSE
 	if(!A || !O)
 		return
 	A.add_overlay(O)

@@ -5,7 +5,7 @@
 	var/mob/living/carbon/C = input("Select who to capture:","Capture who?",null) as null|mob in sortNames(oview(H))
 
 	if(QDELETED(C)||!(C in oview(H)))
-		return 0
+		return
 
 	if(!C.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 		to_chat(H, "<span class='warning'>[C.p_they(TRUE)] will bring no honor to your Clan!</span>")

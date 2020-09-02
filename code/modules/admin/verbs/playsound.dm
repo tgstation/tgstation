@@ -16,7 +16,7 @@
 	admin_sound.channel = CHANNEL_ADMIN
 	admin_sound.frequency = freq
 	admin_sound.wait = 1
-	admin_sound.repeat = 0
+	admin_sound.repeat = FALSE
 	admin_sound.status = SOUND_STREAM
 	admin_sound.volume = vol
 

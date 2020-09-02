@@ -12,7 +12,7 @@
 
 /datum/pai_candidate/proc/savefile_save(mob/user)
 	if(IsGuestKey(user.key))
-		return 0
+		return FALSE
 
 	var/savefile/F = new /savefile(src.savefile_path(user))
 
@@ -24,7 +24,7 @@
 
 	WRITE_FILE(F["version"], 1)
 
-	return 1
+	return TRUE
 
 // loads the savefile corresponding to the mob's ckey
 // if silent=true, report incompatible savefiles
