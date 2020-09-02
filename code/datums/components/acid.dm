@@ -16,7 +16,7 @@
 	var/datum/looping_sound/acid/sizzle
 	/// Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.
 	var/parent_integrity = 30
-	///
+	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
 /datum/component/acid/Initialize(_acid_power, _acid_volume, _max_volume=null)
