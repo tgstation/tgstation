@@ -1159,17 +1159,17 @@
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
 			var/firesplit = (fire_stacks + L.fire_stacks)/2
-			fire_stacks = firesplit
-			L.fire_stacks = firesplit
+			set_fire_stacks(firesplit)
+			L.set_fire_stacks(firesplit)
 		else // If they were not
-			fire_stacks /= 2
-			L.fire_stacks += fire_stacks
+			set_fire_stacks(fire_stacks / 2)
+			L.adjust_fire_stacks(fire_stacks)
 			if(L.IgniteMob()) // Ignite them
 				return TRUE
 
 	else if(L.on_fire) // If they were on fire and we were not
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
+		L.set_fire_stacks(L.fire_stacks / 2)
+		adjust_fire_stacks(L.fire_stacks)
 		if(IgniteMob()) // Ignite us
 			log_game("[key_name(L)] touched [key_name(L)], setting themself on fire")
 	return FALSE
