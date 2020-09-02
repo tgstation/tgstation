@@ -150,22 +150,22 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)//Movement effect
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
-	for(var/O in affecting)
-		if(!ismovable(O))	//This is like a third faster than for(var/atom/movable in affecting)
+	for(var/am in affecting)
+		if(!ismovable(am))	//This is like a third faster than for(var/atom/movable in affecting)
 			continue
-		var/atom/movable/A = O
+		var/atom/movable/movable_thing = am
 		//Give this a chance to yield if the server is busy
 		stoplag()
-		if(QDELETED(A) || (A.loc != loc))
+		if(QDELETED(movable_thing) || (movable_thing.loc != loc))
 			continue
-		if(iseffect(A) || isdead(A))
+		if(iseffect(movable_thing) || isdead(movable_thing))
 			continue
-		if(isliving(A))
-			var/mob/living/zoommob = A
+		if(isliving(movable_thing))
+			var/mob/living/zoommob = movable_thing
 			if((zoommob.movement_type & FLYING) && !zoommob.stat)
 				continue
-			if(!A.anchored && A.has_gravity())
-				step(A, movedir)
+			if(!movable_thing.anchored && movable_thing.has_gravity())
+				step(movable_thing, movedir)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
