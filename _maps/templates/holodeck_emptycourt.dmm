@@ -1,0 +1,203 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"e" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"h" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"j" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"s" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"y" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"D" = (
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"E" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"F" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"L" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+"X" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/holodeck/rec_center/court)
+
+(1,1,1) = {"
+X
+L
+L
+L
+L
+y
+y
+y
+y
+a
+"}
+(2,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(3,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(4,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(5,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(6,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(7,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(8,1,1) = {"
+e
+D
+D
+D
+D
+D
+D
+D
+D
+h
+"}
+(9,1,1) = {"
+j
+F
+F
+F
+F
+E
+E
+E
+E
+s
+"}
