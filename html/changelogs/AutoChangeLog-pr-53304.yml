@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixed runtime error introduced by Delta's new cap office maintenance APC."

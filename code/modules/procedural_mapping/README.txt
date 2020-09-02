@@ -1,5 +1,3 @@
-
-/*
 by RemieRichards
 
 //////////////////////////////
@@ -72,7 +70,6 @@ mapGeneratorModule
 		Existing Calls: place()
 
 
-
 ////////////////////////////
 // MAPPER FRIENDLY README //
 ////////////////////////////
@@ -140,7 +137,3 @@ Variable Breakdown (For Mappers):
 			CLUSTER_CHECK_ALL_ATOMS			20 //Don't let ANY atoms cluster same and different types
 
 			CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
-
-
-
-*/

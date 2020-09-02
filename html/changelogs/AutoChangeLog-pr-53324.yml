@@ -1,0 +1,6 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - bugfix: "Spectral Blade - Ghosts that orbit it or the holder are no longer forced to spectate it until the end of time. Huzzah!"
+  - bugfix: "For real. Not kidding. You can answer the call to aid someone with your spooky presence and then STOP ORBITING ON YOUR OWN AT ANY TIME just like any other object."
+  - bugfix: "Ghosts no longer receive a redundant orbit link when the Spectral Blade is raised."

@@ -42,7 +42,6 @@
 			if(WOUND_BURN)
 				occur_text = "is completely incinerated, falling to dust!"
 
-
 	var/msg = "<span class='bolddanger'>[victim]'s [dismembered_part.name] [occur_text]!</span>"
 
 	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")

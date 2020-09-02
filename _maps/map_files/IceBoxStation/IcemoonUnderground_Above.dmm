@@ -2650,7 +2650,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/obj/structure/sign/mining,
+/obj/effect/turf_decal/mining,
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored/rivers)
 "tn" = (
