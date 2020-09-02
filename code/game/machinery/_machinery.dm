@@ -525,7 +525,7 @@ Class Procs:
 	// The circuit should also be in component parts, so don't early return.
 	if(A == circuit)
 		circuit = null
-	if(A in component_parts)
+	if((A in component_parts) && !QDELETED(src))
 		component_parts.Remove(A)
 		RefreshParts()
 	return ..()
