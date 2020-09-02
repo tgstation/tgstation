@@ -85,7 +85,7 @@
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	if(spreadFire(M))
 		var/mob/living/L = M
-		log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire.")
+		log_game("[key_name(src)] bumped into [key_name(L)], setting [key_name(L)] on fire.")
 
 	if(now_pushing)
 		return TRUE
@@ -1198,7 +1198,7 @@
 		L.set_fire_stacks(L.fire_stacks / 2)
 		adjust_fire_stacks(L.fire_stacks)
 		if(IgniteMob()) // Ignite us
-			log_game("[key_name(L)] touched [key_name(L)], setting themself on fire")
+			log_game("[key_name(src)] touched [key_name(L)] (who was on fire), causing [key_name(src)] to catch on fire.")
 	return FALSE
 
 //Mobs on Fire end
