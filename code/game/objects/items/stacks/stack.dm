@@ -84,7 +84,7 @@
 	update_icon()
 
 /obj/item/stack/proc/get_main_recipes()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	return list()//empty list
 
 /obj/item/stack/proc/update_weight()
@@ -369,8 +369,8 @@
 		return source.energy < cost
 	if(amount < 1)
 		qdel(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/stack/proc/add(amount)
 	if (is_cyborg)

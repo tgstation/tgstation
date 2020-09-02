@@ -13,7 +13,6 @@
 	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
 	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
-	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 15
 	var/mopspeed = 15

@@ -27,6 +27,10 @@
 	if(phaser)
 		teleport = new
 		teleport.Grant(src)
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/netherworld/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
@@ -98,10 +102,11 @@
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.is_blind())
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.is_blind())
-					return M.occupant
+		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			for(var/O in M.occupants)
+				var/mob/mechamob = O
+				if(mechamob.client && !mechamob.is_blind())
+					return mechamob
 	return null
 
 /mob/living/simple_animal/hostile/netherworld/migo

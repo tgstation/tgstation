@@ -15,7 +15,7 @@
 	return ..()
 
 /datum/blobstrain/reagent/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
-	return 0
+	return FALSE
 
 /datum/blobstrain/reagent/energized_jelly/emp_reaction(obj/structure/blob/B, severity)
 	var/damage = rand(30, 50) - severity * rand(10, 15)

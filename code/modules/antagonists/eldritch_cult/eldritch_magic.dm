@@ -354,7 +354,7 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
@@ -652,7 +652,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
 		return
 	victim.apply_status_effect(STATUS_EFFECT_AMOK)
 	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))

@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	/// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
-	if(volume > 0) // to prevent division by zero
+	if(volume) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
@@ -132,12 +132,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
 
-	return 1
+	return TRUE
 
 	///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	return 1
+	return TRUE
 
 	///Proportionally removes amount of gas from the gas_mixture.
 	///Returns: gas_mixture with the gases removed

@@ -189,31 +189,30 @@
 /obj/item/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user, blood = 0)
 	if(!user.IsAdvancedToolUser() || !user.is_literate())
 		to_chat(user, "<span class='warning'>You don't know how to read or write!</span>")
-		return 0
+		return FALSE
 	if(user.mind != target)
 		to_chat(user, "<span class='warning'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign!</span>")
-		return 0
+		return FALSE
 	if(user.mind.soulOwner == owner)
 		to_chat(user, "<span class='warning'>This devil already owns your soul, you may not sell it to [owner.p_them()] again!</span>")
-		return 0
+		return FALSE
 	if(signed)
 		to_chat(user, "<span class='warning'>This contract has already been signed! It may not be signed again.</span>")
-		return 0
+		return FALSE
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='warning'>You do not possess a soul.</span>")
-		return 0
+		return FALSE
 	if(HAS_TRAIT(user, TRAIT_DUMB))
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
-		return 0
+		return FALSE
 	if (contractType == CONTRACT_REVIVE)
 		to_chat(user, "<span class='warning'>You are already alive, this contract would do nothing.</span>")
-		return 0
-	else
-		to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract.</span>")
-		if(fulfillContract(target.current, blood)<=0)
-			to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
-		return 1
+		return FALSE
+	to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract.</span>")
+	if(!fulfillContract(target.current, blood))
+		to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
+	return TRUE
 
 
 
@@ -221,7 +220,7 @@
 	if (target == M.mind && M.stat == DEAD && M.mind.soulOwner == M.mind)
 		if (cooldown)
 			to_chat(user, "<span class='warning'>Give [M] a chance to think through the contract, don't rush [M.p_them()]!</span>")
-			return 0
+			return
 		cooldown = TRUE
 		var/mob/living/carbon/human/H = M
 		var/mob/dead/observer/ghost = H.get_ghost()
@@ -265,12 +264,12 @@
 	return TRUE
 
 /obj/item/paper/contract/infernal/proc/signIncorrectly(mob/living/carbon/human/user = target.current, blood = FALSE)
-	signed = 1
+	signed = TRUE
 	update_text("your name", blood)
 
 /obj/item/paper/contract/infernal/power/fulfillContract(mob/living/carbon/human/user = target.current, blood = FALSE)
 	if(!user.dna)
-		return -1
+		return FALSE
 	user.dna.add_mutation(HULK)
 	var/obj/item/organ/regenerative_core/organ = new /obj/item/organ/regenerative_core
 	organ.Insert(user)
@@ -278,7 +277,7 @@
 
 /obj/item/paper/contract/infernal/wealth/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind) // How in the hell could that happen?
-		return -1
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_wealth(null))
 	return ..()
 
@@ -318,20 +317,20 @@
 
 /obj/item/paper/contract/infernal/magic/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return -1
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/robeless(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 
 /obj/item/paper/contract/infernal/knowledge/fulfillContract(mob/living/carbon/human/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return -1
+		return FALSE
 	user.dna.add_mutation(XRAY)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/view_range(null))
 	return ..()
 
 /obj/item/paper/contract/infernal/friend/fulfillContract(mob/living/user = target.current, blood = 0)
 	if(!istype(user) || !user.mind)
-		return -1
+		return FALSE
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_friend(null))
 	return ..()

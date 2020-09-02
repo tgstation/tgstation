@@ -13,13 +13,13 @@
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
 	throwforce = 0
-	var/recording = 0
-	var/playing = 0
+	var/recording = FALSE
+	var/playing = FALSE
 	var/playsleepseconds = 0
 	var/obj/item/tape/mytape
 	var/starting_tape_type = /obj/item/tape/random
-	var/open_panel = 0
-	var/canprint = 1
+	var/open_panel = FALSE
+	var/canprint = TRUE
 	var/list/icons_available = list()
 	var/icon_directory = 'icons/effects/icons.dmi'
 
@@ -47,13 +47,13 @@
 	else
 		if(!playing)
 			icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
-	
+
 	if(playing)
 		icons_available += list("Pause" = image(icon = icon_directory, icon_state = "pause"))
 	else
 		if(!recording)
 			icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
-	
+
 	if(canprint && !recording && !playing)
 		icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
 	if(mytape)
@@ -147,7 +147,7 @@
 			mytape.used_capacity++
 			used++
 			sleep(10)
-		recording = 0
+		recording = FALSE
 		update_icon()
 	else
 		to_chat(usr, "<span class='notice'>The tape is full.</span>")
@@ -161,13 +161,13 @@
 		return
 
 	if(recording)
-		recording = 0
+		recording = FALSE
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 		return
 	else if(playing)
-		playing = 0
+		playing = FALSE
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 	update_icon()
@@ -194,7 +194,7 @@
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
 		if(!mytape)
 			break
-		if(playing == 0)
+		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
 			break
@@ -211,7 +211,7 @@
 			playsleepseconds = 1
 		i++
 
-	playing = 0
+	playing = FALSE
 	update_icon()
 
 
@@ -222,7 +222,7 @@
 	if(mytape.ruined)
 		to_chat(user, "<span class='notice'>The tape inside the [src] appears to be broken.</span>")
 		return
-	
+
 	update_available_icons()
 	if(icons_available)
 		var/selection = show_radial_menu(user, src, icons_available, radius = 38, require_near = TRUE, tooltips = TRUE)
@@ -289,7 +289,7 @@
 	var/used_capacity = 0
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
-	var/ruined = 0
+	var/ruined = FALSE
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
@@ -306,12 +306,12 @@
 	//repeatedly
 	if(!ruined)
 		add_overlay("ribbonoverlay")
-	ruined = 1
+	ruined = TRUE
 
 
 /obj/item/tape/proc/fix()
 	cut_overlay("ribbonoverlay")
-	ruined = 0
+	ruined = FALSE
 
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)

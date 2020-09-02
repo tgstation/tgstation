@@ -751,12 +751,8 @@
 			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
 			shield_state = "broken"
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
-
-
-/obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
-	return ..()
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	. = ..()
