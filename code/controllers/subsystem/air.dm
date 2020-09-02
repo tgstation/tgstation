@@ -496,7 +496,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	data["hotspots_size"] = hotspots.len
 	data["excited_size"] = excited_groups.len
 	data["conducting_size"] = active_super_conductivity.len
-	data["atoms"] = atom_process_list.len
+	data["atoms_size"] = atom_process_list.len
 	data["frozen"] = can_fire
 	data["show_all"] = display_all_groups
 	data["fire_count"] = times_fired
