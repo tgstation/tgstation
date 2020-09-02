@@ -1,4 +1,0 @@
-author: "uomo91"
-delete-after: True
-changes: 
-  - bugfix: "The gulag teleporter will now give prison jumpskirts, if the player's preference is set to jumpskirt."

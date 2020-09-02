@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Click-dragging behaviour has been restored to normal. Players will no longer attempt to buckle things to other things except when they quite intend to."
