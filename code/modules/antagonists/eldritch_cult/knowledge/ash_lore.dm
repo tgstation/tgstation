@@ -21,7 +21,7 @@
 /datum/eldritch_knowledge/ashen_grasp
 	name = "Grasp of Ash"
 	gain_text = "He well knew how to walk between the planes."
-	desc = "Empowers your mansus grasp to garble the speech of your enemies."
+	desc = "Empowers your mansus grasp to blind opponents you touch with it."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
 	route = PATH_ASH
@@ -41,8 +41,10 @@
 				continue
 			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
 			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
-	C.stuttering += 5 //should last around 10 seconds
-	C.cultslurring += 5 //should also last around 10 seconds
+	to_chat(C, "<span class='danger'>Your eyes burn horrifically!</span>") //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
+	C.become_nearsighted(EYE_DAMAGE)
+	C.blind_eyes(10)
+	C.blur_eyes(20)
 	return
 
 /datum/eldritch_knowledge/ashen_eyes
