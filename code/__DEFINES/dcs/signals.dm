@@ -795,3 +795,7 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+
+// Acid signals
+///from [/datum/reagent/water/proc/expose_turf].
+#define COMSIG_ACID_DILUTE	"dilute_acid" // Used exclusively by water and subtypes to dilute the acid on an object. If someone gets a better idea on how to do this I'm all ears.

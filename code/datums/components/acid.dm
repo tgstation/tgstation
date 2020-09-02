@@ -64,6 +64,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(parent, COMSIG_ACID_DILUTE, .proc/on_dilute)
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
@@ -72,7 +73,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ATOM_ATTACK_HAND,
-		))
+		COMSIG_ACID_DILUTE))
 
 	if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_MOVABLE_CROSSED)
@@ -154,6 +155,14 @@
 		return NONE
 	qdel(src)
 	return TRUE // I know that returning booleans is bad form but this is how the proc handles it.
+
+/// Used exlusively by [/datum/reagent/water] and its subtypes to dilute the water on an atom.
+/datum/component/acid/proc/on_dilute(atom/parent_atom, _acid_power, _acid_volume)
+	SIGNAL_HANDLER
+
+	acid_power = ((acid_power * acid_volume) + (_acid_power * _acid_volume)) / (acid_volume + _acid_volume)
+	set_volume(acid_volume + _acid_volume)
+
 
 /// Handles searing the hand of anyone who tries to touch this without protection.
 /datum/component/acid/proc/on_attack_hand(atom/parent_atom, mob/living/carbon/user)

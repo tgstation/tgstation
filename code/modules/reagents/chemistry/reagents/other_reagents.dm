@@ -147,6 +147,10 @@
 /datum/reagent/water/expose_turf(turf/open/T, reac_volume)
 	if(!istype(T))
 		return
+
+	// This is almost certainly not the correct usage of signals and very much should be generalized.
+	SEND_SIGNAL(T, COMSIG_ACID_DILUTE, 0, reac_volume) // TODO: Make a robust pH system so that this can be handled generally.
+
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
@@ -162,12 +166,6 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
 			G.react(src)
 			qdel(hotspot)
-
-	// TODO: Desnowflake this.
-	var/datum/component/acid/turf_acid = T.GetComponent(/datum/component/acid)
-	if(turf_acid)
-		turf_acid.acid_power = (turf_acid.acid_power * turf_acid.acid_volume) / (turf_acid.acid_volume + (reac_volume * 50))
-		turf_acid.acid_volume = turf_acid.acid_volume + (reac_volume * 50)
 
 /*
  *	Water reaction to an object
