@@ -48,6 +48,8 @@ This section is for the event controller
 	var/obj/machinery/destabilized_crystal/dest_crystal
 	///Check if the event will end badly
 	var/is_zk_scenario = TRUE
+	///Ticks that have to pass before second wave
+	var/second_wave = 310
 
 /datum/round_event/crystal_invasion/start()
 	choose_wave_type()
@@ -114,14 +116,12 @@ This section is for the event controller
 		if(!isopenturf(range_turf) || isspaceturf(range_turf))
 			continue
 		crystal_spawner_turfs += range_turf
-	for(var/i in 1 to 6)
+	for(var/i in 1 to 4)
 		if(!length(crystal_spawner_turfs))
 			break
 		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
 		var/turf/crystal_spawner_turf = pick_n_take(crystal_spawner_turfs)
 		new pick_portal(crystal_spawner_turf)
-
-	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 10 MINUTES)
 
 ///Spawn an anomaly randomly in a different location than spawn_portal()
 /datum/round_event/crystal_invasion/proc/spawn_anomaly(list/spawners)
@@ -149,9 +149,11 @@ This section is for the event controller
 		if(is_station_level(temp.z))
 			spawners += temp
 	for(var/i in 1 to rand(10, 15))
-		spawn_portal(GLOB.crystal_invasion_waves["small wave"], spawners)
+		spawn_portal(GLOB.crystal_invasion_waves["medium wave"], spawners)
 
 /datum/round_event/crystal_invasion/tick()
+	if(activeFor == second_wave)
+		more_portals()
 	if(dest_crystal.is_stabilized == TRUE)
 		processing = FALSE
 		is_zk_scenario = FALSE
@@ -265,16 +267,16 @@ This section is for the destabilized SM
 			to_chat(user, "<span class='notice'>\The [W] is empty!</span>")
 			return
 		to_chat(user, "<span class='notice'>You carefully begin injecting \the [src] with \the [W]... take care not to move untill all the steps are finished!</span>")
-		if(!W.use_tool(src, user, 5 SECONDS, volume = 100))
+		if(!W.use_tool(src, user, 2 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>Seems that \the [src] internal resonance is fading with the fluid!</span>")
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
-		if(!W.use_tool(src, user, 6.5 SECONDS, volume = 100))
+		if(!W.use_tool(src, user, 2.5 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>The [src] is reacting violently with the fluid!</span>")
 		fire_nuclear_particle()
-		radiation_pulse(src, 2500, 6)
-		if(!W.use_tool(src, user, 7.5 SECONDS, volume = 100))
+		radiation_pulse(src, 1000, 6)
+		if(!W.use_tool(src, user, 3 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>The [src] has been restored and restabilized!</span>")
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
@@ -309,7 +311,7 @@ This section is for the destabilized SM
 	for(var/find_portal in GLOB.crystal_portals)
 		var/obj/structure/crystal_portal/portal = find_portal
 		portal.modify_component()
-	priority_announce("The sacrifice of a member of the station (we hope was the clown) has weakened the portals and the monsters generation is slowing down!")
+	priority_announce("The sacrifice of a crewmember (hopefully the clown) appears to have weakened the portals and slowed down the number of monsters coming through!")
 	sound_to_playing_players('sound/misc/notice2.ogg')
 
 /*
@@ -461,7 +463,7 @@ This section is for the crystal portals variations
 	name = "Small Portal"
 	desc = "A small portal to an unkown dimension!"
 	color = COLOR_BRIGHT_BLUE
-	max_mobs = 3
+	max_mobs = 2
 	spawn_time = 5 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
@@ -472,8 +474,8 @@ This section is for the crystal portals variations
 	name = "Medium Portal"
 	desc = "A medium portal to an unkown dimension!"
 	color = COLOR_GREEN
-	max_mobs = 4
-	spawn_time = 10 SECONDS
+	max_mobs = 3
+	spawn_time = 15 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -484,8 +486,8 @@ This section is for the crystal portals variations
 	name = "Big Portal"
 	desc = "A big portal to an unkown dimension!"
 	color = COLOR_RED
-	max_mobs = 5
-	spawn_time = 10 SECONDS
+	max_mobs = 4
+	spawn_time = 15 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -497,8 +499,8 @@ This section is for the crystal portals variations
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
 	color = COLOR_BLACK
-	max_mobs = 6
-	spawn_time = 15 SECONDS
+	max_mobs = 5
+	spawn_time = 20 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/minion,
 		/mob/living/simple_animal/hostile/crystal_monster/thug,
@@ -553,9 +555,9 @@ This section is for the crystal monsters variations
 	maxHealth = 20
 	health = 20
 	speed = 0.8
-	harm_intent_damage = 11
-	melee_damage_lower = 20
-	melee_damage_upper = 35
+	harm_intent_damage = 7
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	move_force = MOVE_FORCE_WEAK
 	move_resist = MOVE_FORCE_WEAK
 	pull_force = MOVE_FORCE_WEAK
@@ -582,8 +584,8 @@ This section is for the crystal monsters variations
 	health = 20
 	speed = 0.9
 	harm_intent_damage = 11
-	melee_damage_lower = 20
-	melee_damage_upper = 35
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	move_force = MOVE_FORCE_NORMAL
 	move_resist = MOVE_FORCE_NORMAL
 	pull_force = MOVE_FORCE_NORMAL
@@ -614,8 +616,8 @@ This section is for the crystal monsters variations
 	health = 20
 	speed = 1.2
 	harm_intent_damage = 11
-	melee_damage_lower = 20
-	melee_damage_upper = 35
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	move_force = MOVE_FORCE_STRONG
 	move_resist = MOVE_FORCE_STRONG
 	pull_force = MOVE_FORCE_STRONG
@@ -639,9 +641,9 @@ This section is for the crystal monsters variations
 	maxHealth = 35
 	health = 35
 	speed = 0.75
-	harm_intent_damage = 20
-	melee_damage_lower = 25
-	melee_damage_upper = 45
+	harm_intent_damage = 15
+	melee_damage_lower = 30
+	melee_damage_upper = 35
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -688,7 +690,7 @@ This section is for the crystal monsters variations
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	projectiletype = /obj/projectile/magic/aoe/lightning
+	projectiletype = /obj/projectile/magic/aoe/lightning/no_zap
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "throws"
