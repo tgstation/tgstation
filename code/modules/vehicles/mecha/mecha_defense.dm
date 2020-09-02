@@ -173,10 +173,10 @@
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
 
-/obj/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return exposed_temperature > max_temperature
 
-/obj/mecha/atmos_expose()
+/obj/vehicle/sealed/mecha/atmos_expose()
 	log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
 	take_damage(5, BURN, 0, 1)
 

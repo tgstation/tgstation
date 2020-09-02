@@ -110617,8 +110617,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable/layer3,
+/obj/effect/node/layer1,
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
@@ -110672,10 +110672,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
+/obj/structure/cable/layer3{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+/obj/effect/node/layer1{
 	dir = 8
 	},
 /obj/machinery/door/airlock/maintenance,
