@@ -15,7 +15,7 @@
 
 /datum/element/atmos_sensitive/Detach(datum/source, force)
 	var/atom/us = source
-	movement_trackers.Remove(movement_trackers[us]])
+	movement_trackers.Remove(us)
 	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		SSair.atom_process_list -= us
