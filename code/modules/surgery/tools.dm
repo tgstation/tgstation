@@ -61,6 +61,32 @@
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
 
+/obj/item/cautery/advanced
+	name = "searing tool"
+	desc = "It projects a high power laser used for medical applications."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery_a"
+	hitsound = 'sound/items/welder.ogg'
+	toolspeed = 0.7
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_color = COLOR_SOFT_RED
+
+
+/obj/item/cautery/advanced/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_CAUTERY)
+		tool_behaviour = TOOL_DRILL
+		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
+		icon_state = "surgicaldrill_a"
+	else
+		tool_behaviour = TOOL_CAUTERY
+		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
+		icon_state = "cautery_a"
+
+/obj/item/cautery/advanced/examine()
+	. = ..()
+	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -311,33 +337,6 @@
 /obj/item/retractor/advanced/examine()
 	. = ..()
 	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
-
-/obj/item/surgicaldrill/advanced
-	name = "searing tool"
-	desc = "It projects a high power laser used for medical application."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "surgicaldrill_a"
-	hitsound = 'sound/items/welder.ogg'
-	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
-	light_color = COLOR_SOFT_RED
-
-
-/obj/item/surgicaldrill/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_DRILL)
-		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
-		icon_state = "cautery_a"
-	else
-		tool_behaviour = TOOL_DRILL
-		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
-		icon_state = "surgicaldrill_a"
-
-/obj/item/surgicaldrill/advanced/examine()
-	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
 
 /obj/item/shears
 	name = "amputation shears"
