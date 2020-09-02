@@ -36,9 +36,9 @@
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	qdel(sizzle)
+	QDEL_NULL(sizzle)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	if(parent && !QDELETED(parent))
+	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_icon()
 	return ..()
@@ -51,10 +51,11 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /datum/component/acid/UnregisterFromParent()
-	UnregisterSignal(parent, list(	\
-		COMSIG_PARENT_EXAMINE,		\
-		COMSIG_COMPONENT_CLEAN_ACT,	\
-		COMSIG_ATOM_ATTACK_HAND		))
+	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_ATOM_ATTACK_HAND,
+		))
 
 	if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_MOVABLE_CROSSED)

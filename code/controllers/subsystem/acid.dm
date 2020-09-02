@@ -19,10 +19,10 @@ SUBSYSTEM_DEF(acid)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	while(currentrun.len)
-		var/datum/component/acid/acid = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/datum/component/acid/acid = currentrun[length(currentrun)]
 		currentrun.len--
-		if(!acid || QDELETED(acid))
+		if(QDELETED(acid))
 			processing -= acid
 			if(MC_TICK_CHECK)
 				return
