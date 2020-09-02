@@ -16,7 +16,7 @@
 	. = ..()
 	set_light(glow_range)
 
-/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
+/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)

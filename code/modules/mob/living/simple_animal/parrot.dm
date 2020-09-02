@@ -159,8 +159,8 @@
 
 /mob/living/simple_animal/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(. != 0)
-		return .
+	if(.)
+		return
 
 	if(message_mods[MODE_HEADSET])
 		if(ears)
@@ -175,7 +175,7 @@
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /*
  * Inventory
@@ -605,12 +605,12 @@
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null
-				return 1
+				return TRUE
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -633,8 +633,6 @@
 				item = null
 				continue
 			return item
-
-	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
 	for(var/obj/O in view(src))

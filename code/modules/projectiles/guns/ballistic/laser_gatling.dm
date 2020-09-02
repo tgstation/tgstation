@@ -12,7 +12,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/ballistic/minigun/gun
-	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
+	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
 	var/heat_diffusion = 1
@@ -34,9 +34,9 @@
 	if(src.loc == user)
 		if(!armed)
 			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-				armed = 1
+				armed = TRUE
 				if(!user.put_in_hands(gun))
-					armed = 0
+					armed = FALSE
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
@@ -84,7 +84,7 @@
 	if(!gun)
 		gun = new(src)
 	gun.forceMove(src)
-	armed = 0
+	armed = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
 	else
@@ -127,7 +127,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(FALSE)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else

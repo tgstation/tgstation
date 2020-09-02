@@ -404,7 +404,7 @@
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
-	if(. != 0)
+	if(.)
 		return
 
 	if(message_mods[MODE_HEADSET])
@@ -693,7 +693,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		patrol_target = nearest_beacon_loc
 		destination = next_destination
 	else
-		auto_patrol = 0
+		auto_patrol = FALSE
 		mode = BOT_IDLE
 		speak("Disengaging patrol mode.")
 
@@ -732,11 +732,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!!
-			auto_patrol = 0
+			bot_reset() //HOLD IT!!	//OBJECTION!!
+			auto_patrol = FALSE
 
 		if("patrolon")
-			auto_patrol = 1
+			auto_patrol = TRUE
 
 		if("summon")
 			bot_reset()
@@ -751,7 +751,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			ejectpairemote(user)
 	return
 
-//
+
 /mob/living/simple_animal/bot/proc/bot_control_message(command, user)
 	switch(command)
 		if("patroloff")
@@ -831,7 +831,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-	popup.open(use_onclose = 0)
+	popup.open(use_onclose = FALSE)
 	onclose(M,window_id,ref=src)
 	return
 

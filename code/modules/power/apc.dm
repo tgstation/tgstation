@@ -65,7 +65,7 @@
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = APC_COVER_CLOSED
-	var/shorted = 0
+	var/shorted = FALSE
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
@@ -75,7 +75,7 @@
 	var/chargecount = 0
 	var/locked = TRUE
 	var/coverlocked = TRUE
-	var/aidisabled = 0
+	var/aidisabled = FALSE
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
@@ -83,8 +83,8 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
+	powernet = FALSE		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/has_electronics = APC_ELECTRONICS_MISSING // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
@@ -94,7 +94,7 @@
 	var/longtermpower = 10
 	var/auto_name = FALSE
 	var/failure_timer = 0
-	var/force_update = 0
+	var/force_update = FALSE
 	var/emergency_lights = FALSE
 	var/nightshift_lights = FALSE
 	var/last_nightshift_switch = 0
@@ -1027,7 +1027,7 @@
 					L.no_emergency = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
-	return 1
+	return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational || failure_timer)
@@ -1182,7 +1182,7 @@
 		update()
 		queue_icon_update()
 		failure_timer--
-		force_update = 1
+		force_update = TRUE
 		return
 
 	lastused_light = area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT]
@@ -1400,22 +1400,22 @@
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
-		return 0
+		return FALSE
 	do_sparks(5, TRUE, src)
 	if(isalien(user))
-		return 0
+		return FALSE
 	if(electrocute_mob(user, src, src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val
 	else if(val == 3)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
