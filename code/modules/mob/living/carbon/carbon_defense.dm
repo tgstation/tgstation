@@ -415,7 +415,7 @@
 /mob/living/carbon/proc/help_shake_act(mob/living/L)
 
 	if(L.spreadFire(src)) //THROUGH THE FIRE AND THE FLAMES, WE CARRY OOOOOOOOOOOOOOOOOOOOOOON
-		log_game("[key_name(L)] help intent clicked on [key_name(src)] while [key_name(L)] was on fire, spreading the flames on [key_name(L)] to [key_name(src)].")
+		log_game("[key_name(L)] clicked on [key_name(src)] on help intent while [key_name(L)] was on fire, spreading the flames on [key_name(L)] to [key_name(src)].")
 
 	if(L == src && check_self_for_injuries())
 		return
