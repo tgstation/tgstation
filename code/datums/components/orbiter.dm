@@ -25,13 +25,15 @@
 		tracker = new(target, CALLBACK(src, .proc/move_react))
 
 /datum/component/orbiter/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 	var/atom/target = parent
 	target.orbiters = null
 	QDEL_NULL(tracker)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	master.orbiters = null
+	if(master.orbiters == src)
+		master.orbiters = null
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
@@ -39,10 +41,19 @@
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(!newcomp)
+		RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
+	for(var/o in newcomp.orbiters)
+		var/atom/movable/incoming_orbiter = o
+		incoming_orbiter.orbiting = src
+		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
+		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
+		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+
 	orbiters += newcomp.orbiters
+	newcomp.orbiters = null
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
@@ -58,7 +69,6 @@
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
-	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
@@ -94,7 +104,6 @@
 	if(!orbiters[orbiter])
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiters[orbiter],/matrix)) //This is ugly.
