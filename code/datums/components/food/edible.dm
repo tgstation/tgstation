@@ -157,7 +157,6 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")
-		on_consume?.Invoke(eater, feeder)
 		if(isturf(parent))
 			var/turf/T = parent
 			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
@@ -230,7 +229,8 @@ Behavior that's still missing from this component that original food items had t
 		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 		bitecount++
-		On_Consume(eater)
+		if(!owner.reagents.total_volume)
+			On_Consume(eater, feeder)
 		checkLiked(fraction, eater)
 
 		//Invoke our after eat callback if it is valid
@@ -283,18 +283,16 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 ///Delete the item when it is fully eaten
-/datum/component/edible/proc/On_Consume(mob/living/eater)
+/datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
+	SEND_SIGNAL(parent, COMSIG_FOOD_CONSUMED, eater, feeder)
 
-	var/atom/owner = parent
+	on_consume?.Invoke(eater, feeder)
 
-	if(!eater)
-		return
-	if(!owner.reagents.total_volume)
-		if(isturf(parent))
-			var/turf/T = parent
-			T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
-		else
-			qdel(parent)
+	if(isturf(parent))
+		var/turf/T = parent
+		T.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+	else
+		qdel(parent)
 
 ///Ability to feed food to puppers
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)

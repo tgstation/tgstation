@@ -121,7 +121,6 @@
 	A.wash(CLEAN_WASH)
 	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(A, TOUCH)
-	reagents.expose(A, VAPOR)
 	if(isliving(A))
 		check_heat(A)
 

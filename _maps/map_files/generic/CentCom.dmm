@@ -903,7 +903,7 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/dodgeball)
 "cD" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "cE" = (
@@ -8464,7 +8464,9 @@
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "tb" = (
-/turf/open/floor/white,
+/turf/open/floor/holofloor{
+	icon_state = "pure_white"
+	},
 /area/holodeck/rec_center/photobooth)
 "tc" = (
 /obj/effect/spawner/structure/window/reinforced,

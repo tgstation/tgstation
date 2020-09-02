@@ -50,7 +50,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!IS_HERETIC(user))
+	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
 		to_chat(user,"<span class='danger'>You feel a pulse of some alien intellect lash out at your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && user.mind && slot == ITEM_SLOT_NECK && IS_HERETIC(user) )
+	if(ishuman(user) && user.mind && slot == ITEM_SLOT_NECK && (IS_HERETIC(user) || IS_HERETIC_MONSTER(user)) )
 		ADD_TRAIT(user, trait, CLOTHING_TRAIT)
 		user.update_sight()
 
