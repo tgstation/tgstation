@@ -114,7 +114,7 @@
 			actor.target = null
 			return TRUE
 		//Check if breaking this door will expose the station to space/planetary atmos
-		else if(turf_in_range.s_nearby_planetary_atmos() || isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+		else if(turf_in_range.is_nearby_planetary_atmos() || isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return FALSE
