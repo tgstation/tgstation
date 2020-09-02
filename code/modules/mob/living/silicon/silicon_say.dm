@@ -31,7 +31,7 @@
 
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 	if(message_mods[MODE_HEADSET])
 		if(radio)

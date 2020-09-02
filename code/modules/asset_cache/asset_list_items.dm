@@ -262,7 +262,8 @@
 		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
 		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
 		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
-		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png'
+		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
+		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
 	)
 
 /datum/asset/spritesheet/simple/pills
