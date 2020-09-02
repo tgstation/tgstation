@@ -17,6 +17,8 @@
 			continue
 		if(H.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue
+		if(H.mind.special_role)
+			continue
 		if(!H.getorgan(/obj/item/organ/brain))
 			continue
 		H.gain_trauma(/datum/brain_trauma/special/obsessed)
