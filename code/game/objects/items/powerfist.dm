@@ -1,3 +1,7 @@
+#define POWERFIST_WOUNDPOWER_1
+#define POWERFIST_WOUNDPOWER_2
+#define POWERFIST_WOUNDPOWER_3
+
 /obj/item/melee/powerfist
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
@@ -97,7 +101,8 @@
 		target.visible_message("<span class='danger'>[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
 			"<span class='userdanger'>[user]'s punch strikes with force!</span>")
 		return
-	target.apply_damage(force * fisto_setting, BRUTE, wound_bonus = 10*fisto_setting-20)
+
+	target.apply_damage(force * fisto_setting, BRUTE, wound_bonus = CANT_WOUND)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	new /obj/effect/temp_visual/kinetic_blast(target.loc)
