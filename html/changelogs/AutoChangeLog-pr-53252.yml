@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Prevents fire from becoming permanent"
