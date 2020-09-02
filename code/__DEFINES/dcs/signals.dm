@@ -355,6 +355,8 @@
 ///from base of mob/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
+///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
+#define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
