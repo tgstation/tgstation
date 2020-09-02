@@ -252,9 +252,10 @@
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
-	var/mob/living/carbon/human/victim_human = victim
-	if(istype(victim_human) && !victim_human.can_inject(user, TRUE, ignore_species = TRUE))
-		return TRUE
+	if(ishuman(victim))
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+			return TRUE
 
 	// lastly, treat them
 	treat(I, user)
