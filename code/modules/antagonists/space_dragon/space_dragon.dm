@@ -33,7 +33,7 @@
 /datum/antagonist/space_dragon/roundend_report()
 	var/list/parts = list()
 	var/datum/objective/summon_carp/S = locate() in objectives
-	if(S.check_completion())
+	if(S.check_completion() && !CONFIG_GET(flag/disable_greentext))
 		parts += "<span class='redtext big'>The [name] has succeeded! Station space has been reclaimed by the space carp!</span>"
 	parts += printplayer(owner)
 	var/objectives_complete = TRUE
@@ -43,10 +43,11 @@
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
-	if(objectives_complete)
-		parts += "<span class='greentext big'>The [name] was successful!</span>"
-	else
-		parts += "<span class='redtext big'>The [name] has failed!</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(objectives_complete)
+			parts += "<span class='greentext big'>The [name] was successful!</span>"
+		else
+			parts += "<span class='redtext big'>The [name] has failed!</span>"
 	parts += "<span class='header'>The [name] was assisted by:</span>"
 	parts += printplayerlist(carp)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

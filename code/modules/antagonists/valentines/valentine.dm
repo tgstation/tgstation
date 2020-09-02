@@ -39,6 +39,7 @@
 				objectives_complete = FALSE
 				break
 
+	//Yes this isnt disabled by nogreentext config, but its not a *actual* antag
 	if(objectives_complete)
 		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] date</span>"
 	else

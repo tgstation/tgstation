@@ -182,11 +182,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
-
-	if(objectives.len == 0 || objectives_complete)
-		report += "<span class='greentext big'>The [name] was successful!</span>"
-	else
-		report += "<span class='redtext big'>The [name] has failed!</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(objectives.len == 0 || objectives_complete)
+			report += "<span class='greentext big'>The [name] was successful!</span>"
+		else
+			report += "<span class='redtext big'>The [name] has failed!</span>"
 
 	return report.Join("<br>")
 

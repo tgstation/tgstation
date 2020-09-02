@@ -154,15 +154,16 @@
 		for(var/o in objectives)
 			var/datum/objective/objective = o
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='greentext'>Success!</span>"]"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='redtext'>Fail.</span>"]"
 				cultiewin = FALSE
 			count++
-	if(ascended)
-		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
-	else
-		if(cultiewin)
+
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(ascended)
+			parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
+		else if(cultiewin)
 			parts += "<span class='greentext'>The heretic was successful!</span>"
 		else
 			parts += "<span class='redtext'>The heretic has failed.</span>"

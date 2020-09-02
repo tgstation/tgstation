@@ -603,14 +603,15 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				continue
 			alive_cops++
 
-	if(alive_gangsters > alive_cops)
-		if(!objective_failures)
-			report = "<span class='header greentext'>[highest_gang] won the round by completing their objective and having the most points!</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(alive_gangsters > alive_cops)
+			if(!objective_failures)
+				report = "<span class='header greentext'>[highest_gang] won the round by completing their objective and having the most points!</span>"
+			else
+				report = "<span class='header greentext'>[highest_gang] won the round by having the most points!</span>"
+		else if(alive_gangsters == alive_cops)
+			report = "<span class='header redtext'>Legend has it the police and the families are still duking it out to this day!</span>"
 		else
-			report = "<span class='header greentext'>[highest_gang] won the round by having the most points!</span>"
-	else if(alive_gangsters == alive_cops)
-		report = "<span class='header redtext'>Legend has it the police and the families are still duking it out to this day!</span>"
-	else
-		report = "<span class='header greentext'>The police put the boots to the families, medium style!</span>"
+			report = "<span class='header greentext'>The police put the boots to the families, medium style!</span>"
 
 	return "</div><div class='panel redborder'>[report]" // </div> at the front not the back because this proc is intended for normal text not a whole new panel

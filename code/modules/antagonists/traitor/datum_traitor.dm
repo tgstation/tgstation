@@ -275,9 +275,9 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='greentext'>Success!</span>"]"
 			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='redtext'>Fail.</span>"]"
 				traitorwin = FALSE
 			count++
 
@@ -295,6 +295,8 @@
 	if (contractor_hub)
 		result += contractor_round_end()
 
+	if(CONFIG_GET(flag/disable_greentext))
+		return result.Join("<br>")
 	if(traitorwin)
 		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
 	else

@@ -134,38 +134,38 @@
 
 	for(var/datum/mind/M in members)
 		result += "<b>[printplayer(M)]</b>"
-
-	switch(get_result())
-		if(FUGITIVE_RESULT_BADASS_HUNTER)//use defines
-			result += "<span class='greentext big'>Badass [capitalize(backstory)] Victory!</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, alive!</B>"
-		if(FUGITIVE_RESULT_POSTMORTEM_HUNTER)
-			result += "<span class='greentext big'>Postmortem [capitalize(backstory)] Victory!</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, but all of them died! Spooky!</B>"
-		if(FUGITIVE_RESULT_MAJOR_HUNTER)
-			result += "<span class='greentext big'>Major [capitalize(backstory)] Victory</span>"
-			result += "<B>The [backstory]s managed to capture every fugitive, dead or alive.</B>"
-		if(FUGITIVE_RESULT_HUNTER_VICTORY)
-			result += "<span class='greentext big'>[capitalize(backstory)] Victory</span>"
-			result += "<B>The [backstory]s managed to capture a fugitive, dead or alive.</B>"
-		if(FUGITIVE_RESULT_MINOR_HUNTER)
-			result += "<span class='greentext big'>Minor [capitalize(backstory)] Victory</span>"
-			result += "<B>All the [backstory]s died, but managed to capture a fugitive, dead or alive.</B>"
-		if(FUGITIVE_RESULT_STALEMATE)
-			result += "<span class='neutraltext big'>Bloody Stalemate</span>"
-			result += "<B>Everyone died, and no fugitives were recovered!</B>"
-		if(FUGITIVE_RESULT_MINOR_FUGITIVE)
-			result += "<span class='redtext big'>Minor Fugitive Victory</span>"
-			result += "<B>All the fugitives died, but none were recovered!</B>"
-		if(FUGITIVE_RESULT_FUGITIVE_VICTORY)
-			result += "<span class='redtext big'>Fugitive Victory</span>"
-			result += "<B>A fugitive survived, and no bodies were recovered by the [backstory]s.</B>"
-		if(FUGITIVE_RESULT_MAJOR_FUGITIVE)
-			result += "<span class='redtext big'>Major Fugitive Victory</span>"
-			result += "<B>All of the fugitives survived and avoided capture!</B>"
-		else //get_result returned null- either bugged or no fugitives showed
-			result += "<span class='neutraltext big'>Prank Call!</span>"
-			result += "<B>[capitalize(backstory)]s were called, yet there were no fugitives...?</B>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		switch(get_result())
+			if(FUGITIVE_RESULT_BADASS_HUNTER)//use defines
+				result += "<span class='greentext big'>Badass [capitalize(backstory)] Victory!</span>"
+				result += "<B>The [backstory]s managed to capture every fugitive, alive!</B>"
+			if(FUGITIVE_RESULT_POSTMORTEM_HUNTER)
+				result += "<span class='greentext big'>Postmortem [capitalize(backstory)] Victory!</span>"
+				result += "<B>The [backstory]s managed to capture every fugitive, but all of them died! Spooky!</B>"
+			if(FUGITIVE_RESULT_MAJOR_HUNTER)
+				result += "<span class='greentext big'>Major [capitalize(backstory)] Victory</span>"
+				result += "<B>The [backstory]s managed to capture every fugitive, dead or alive.</B>"
+			if(FUGITIVE_RESULT_HUNTER_VICTORY)
+				result += "<span class='greentext big'>[capitalize(backstory)] Victory</span>"
+				result += "<B>The [backstory]s managed to capture a fugitive, dead or alive.</B>"
+			if(FUGITIVE_RESULT_MINOR_HUNTER)
+				result += "<span class='greentext big'>Minor [capitalize(backstory)] Victory</span>"
+				result += "<B>All the [backstory]s died, but managed to capture a fugitive, dead or alive.</B>"
+			if(FUGITIVE_RESULT_STALEMATE)
+				result += "<span class='neutraltext big'>Bloody Stalemate</span>"
+				result += "<B>Everyone died, and no fugitives were recovered!</B>"
+			if(FUGITIVE_RESULT_MINOR_FUGITIVE)
+				result += "<span class='redtext big'>Minor Fugitive Victory</span>"
+				result += "<B>All the fugitives died, but none were recovered!</B>"
+			if(FUGITIVE_RESULT_FUGITIVE_VICTORY)
+				result += "<span class='redtext big'>Fugitive Victory</span>"
+				result += "<B>A fugitive survived, and no bodies were recovered by the [backstory]s.</B>"
+			if(FUGITIVE_RESULT_MAJOR_FUGITIVE)
+				result += "<span class='redtext big'>Major Fugitive Victory</span>"
+				result += "<B>All of the fugitives survived and avoided capture!</B>"
+			else //get_result returned null- either bugged or no fugitives showed
+				result += "<span class='neutraltext big'>Prank Call!</span>"
+				result += "<B>[capitalize(backstory)]s were called, yet there were no fugitives...?</B>"
 
 	result += "</div>"
 

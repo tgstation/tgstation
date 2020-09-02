@@ -576,16 +576,16 @@
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='greentext'>Success!</span>"]</b></span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = FALSE
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='redtext'>Fail.</span>"]"
 			count++
 
-	if(changelingwin)
-		parts += "<span class='greentext'>The changeling was successful!</span>"
-	else
-		parts += "<span class='redtext'>The changeling has failed.</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(changelingwin)
+			parts += "<span class='greentext'>The changeling was successful!</span>"
+		else
+			parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")
 

@@ -149,14 +149,15 @@
 /datum/team/abductor_team/roundend_report()
 	var/list/result = list()
 
-	var/won = TRUE
-	for(var/datum/objective/O in objectives)
-		if(!O.check_completion())
-			won = FALSE
-	if(won)
-		result += "<span class='greentext big'>[name] team fulfilled its mission!</span>"
-	else
-		result += "<span class='redtext big'>[name] team failed its mission.</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		var/won = TRUE
+		for(var/datum/objective/O in objectives)
+			if(!O.check_completion())
+				won = FALSE
+		if(won)
+			result += "<span class='greentext big'>[name] team fulfilled its mission!</span>"
+		else
+			result += "<span class='redtext big'>[name] team failed its mission.</span>"
 
 	result += "<span class='header'>The abductors of [name] were:</span>"
 	for(var/datum/mind/abductor_mind in members)

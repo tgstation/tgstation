@@ -126,15 +126,16 @@
 	var/objective_count = 1
 	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='greentext'>Success!</span>"]"
 		else
-			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			parts += "<B>Objective #[objective_count]</B>: [objective.explanation_text] [CONFIG_GET(flag/disable_greentext) ? "" : "<span class='redtext'>Fail.</span>"]"
 			win = FALSE
 		objective_count++
-	if(win)
-		parts += "<span class='greentext'>The blood brothers were successful!</span>"
-	else
-		parts += "<span class='redtext'>The blood brothers have failed!</span>"
+	if(!CONFIG_GET(flag/disable_greentext))
+		if(win)
+			parts += "<span class='greentext'>The blood brothers were successful!</span>"
+		else
+			parts += "<span class='redtext'>The blood brothers have failed!</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 

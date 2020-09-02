@@ -121,6 +121,9 @@
 	else
 		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
+	if(CONFIG_GET(flag/disable_greentext))
+		return report.Join("<br>")
+
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
