@@ -110,7 +110,7 @@
 							  /obj/item/reagent_containers/food/snacks/grown/corn,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
-		new randomFood(src)
+	new randomFood(src)
 
 /obj/item/storage/box/ingredients/fiesta
 	theme_name = "fiesta"
