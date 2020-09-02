@@ -19,9 +19,9 @@
 
 	return pressure_greatest - pressure_smallest
 
-/atom/proc/is_nearby_planetary_atmos(var/turf/target_turf)	//Runs through all adjacent open turfs and checks if any are planetary_atmos returns true if even one passes
+/turf/proc/is_nearby_planetary_atmos()	//Runs through all adjacent open turfs and checks if any are planetary_atmos returns true if even one passes
 	. = FALSE
-	for(var/t in RANGE_TURFS(2, target_turf))
+	for(var/t in RANGE_TURFS(2, src))
 		if(!isopenturf(t))
 			continue
 		var/turf/open/turf_adjacent = t
