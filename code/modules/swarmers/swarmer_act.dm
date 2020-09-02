@@ -109,12 +109,12 @@
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
 		//Check for dangerous pressure differences
-		if (return_turf_delta_p(turf_in_range) > DANGEROUS_DELTA_P)
+		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
 		//Check if breaking this door will expose the station to space/planetary atmos
-		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
+		else if(turf_in_range.s_nearby_planetary_atmos() || isspaceturf(turf_in_range) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return FALSE
@@ -196,11 +196,11 @@
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/turf_in_range in range(1, src))
 		var/area/turf_area = get_area(turf_in_range)
-		if (return_turf_delta_p(turf_in_range) > DANGEROUS_DELTA_P)
+		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle) ))
+		else if(turf_in_range.is_nearby_planetary_atmos() || isspaceturf(turf_area) || (!isonshuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (isonshuttle && !istype(turf_area, /area/shuttle) ))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -212,13 +212,14 @@
 
 /obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/is_on_shuttle = istype(get_area(src), /area/shuttle)
-	for(var/turf/turf_in_range in range(1, src))
+	for(var/t in RANGE_TURFS(1, src))
+		var/turf/turf_in_range = t
 		var/area/turf_area = get_area(turf_in_range)
-		if (return_turf_delta_p(turf_in_range) > DANGEROUS_DELTA_P)
+		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(is_nearby_planetary_atmos(turf_in_range) || isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
+		else if(turf_in_range.is_nearby_planetary_atmos() || isspaceturf(turf_in_range) || (!is_on_shuttle && (istype(turf_area, /area/shuttle) || istype(turf_area, /area/space))) || (is_on_shuttle && !istype(turf_area, /area/shuttle)))
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
