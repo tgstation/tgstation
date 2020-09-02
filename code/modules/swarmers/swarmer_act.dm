@@ -7,10 +7,10 @@
   */
 #define DANGEROUS_DELTA_P 250	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
-/turf/proc/return_turf_delta_p(var/turf/target_turf)	//Finds the greatest difference in pressure across a turf, only considers open turfs.
+/turf/proc/return_turf_delta_p()	//Finds the greatest difference in pressure across a turf, only considers open turfs.
 	var/pressure_greatest = 0
 	var/pressure_smallest = INFINITY 					//Freaking terrified to use INFINITY, man
-	for(var/t in RANGE_TURFS(2, target_turf))			//Begin processing the delta pressure across the wall.
+	for(var/t in RANGE_TURFS(2, src))			//Begin processing the delta pressure across the wall.
 		var/turf/open/turf_adjacent = t
 		if(!istype(turf_adjacent))
 			continue
