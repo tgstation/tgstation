@@ -235,3 +235,57 @@
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+
+/obj/item/megahorn
+	name = "Mega Bike Horn"
+	desc = "It is said that once this massive beast HONKs, the apocalypse follows."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "mega_horn"
+	inhand_icon_state = "bike_horn"
+	worn_icon_state = "horn"
+	hitsound = "sound/items/bikehorn.ogg"
+	attack_verb_continuous = list("HONKS")
+	attack_verb_simple = list("HONK")
+	w_class = WEIGHT_CLASS_HUGE //This dude's a chonker.
+	COOLDOWN_DECLARE(mega_horn_cooldown)
+	var/cooldown_length = 80 //malicious admin laughing engage
+
+/obj/item/megahorn/attack_self(mob/source, atom/target, params) //this is just the honkerblast adapted for handheld use
+	var/mob/living/carbon/human/H = source
+	if (HAS_TRAIT(H, TRAIT_CLUMSY)) //only clowns have the power
+		if(!COOLDOWN_FINISHED(src, mega_horn_cooldown))
+			return
+		playsound(src, 'sound/items/airhorn.ogg', 100, TRUE)
+		to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
+		for(var/mob/living/carbon/M in ohearers(6, source))
+			var/turf/turf_check = get_turf(M)
+			if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
+				continue
+			var/throw_target = get_edge_target_turf(source, get_dir(source, get_step_away(M, source)))
+			M.throw_at(throw_target, 6, 1)
+			var/recoiltarget = get_edge_target_turf(H, turn(H.dir, 180))
+			H.throw_at(recoiltarget, 6, 1) //recoil is a bitch
+			if(!M.can_hear())
+				continue
+			to_chat(M, "<font color='red' size='7'>HONK</font>")
+			M.SetSleeping(0)
+			M.stuttering += 20
+			var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				ears.adjustEarDamage(0, 30)
+			M.Paralyze(60)
+			if(prob(30))
+				M.Stun(200)
+				M.Unconscious(80)
+			else
+				M.Jitter(500)
+		COOLDOWN_START(src, mega_horn_cooldown, cooldown_length) //A generous amount of time to think about what you have done.
+
+		log_message("Honked from [src.name]. HONK!", LOG_ATTACK)
+		var/turf/T = get_turf(src)
+		message_admins("[ADMIN_LOOKUPFLW(source)] used a Mega Horn in [ADMIN_VERBOSEJMP(T)]")
+		log_game("[key_name(source)] used a Mega Horn in [AREACOORD(T)]")
+		return ..()
+	else
+		to_chat(source, "You have no clue how to use this thing...")
+		return
