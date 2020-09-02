@@ -72,10 +72,10 @@
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
-		return 0
+		return FALSE
 
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", \
@@ -92,7 +92,7 @@
 		log_combat(user, M, "fed", reagents.log_list())
 	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
-	return 1
+	return TRUE
 
 /obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
 	. = ..()

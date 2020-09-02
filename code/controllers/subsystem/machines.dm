@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(machines)
 	return ..()
 
 
-/datum/controller/subsystem/machines/fire(resumed = 0)
+/datum/controller/subsystem/machines/fire(resumed = FALSE)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.

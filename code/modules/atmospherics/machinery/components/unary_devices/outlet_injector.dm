@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector
-	icon_state = "inje_map-2"
+	icon_state = "inje_map-3"
 
 	name = "air injector"
 	desc = "Has a valve and pump attached to it."
@@ -185,24 +185,24 @@
 
 // mapping
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer1
-	piping_layer = 1
-	icon_state = "inje_map-1"
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/layer3
-	piping_layer = 3
-	icon_state = "inje_map-3"
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
-	piping_layer = 1
-	icon_state = "inje_map-1"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
-	piping_layer = 3
-	icon_state = "inje_map-3"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
 	frequency = FREQ_ATMOS_STORAGE

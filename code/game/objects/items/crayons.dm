@@ -1,3 +1,5 @@
+#define DARK_COLOR_LIGHTNESS_THRESHOLD 0.25
+
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -730,13 +732,18 @@
 
 		return
 
-	if(istype(target, /obj/structure/window))
+	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
+			var/list/rgb = hex2rgb(paint_color)
+			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+			var/color_is_dark = hsl[3] < DARK_COLOR_LIGHTNESS_THRESHOLD
+
+			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
+				to_chat(user, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
+				return FALSE
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255)
-				target.set_opacity(255)
-			else
-				target.set_opacity(initial(target.opacity))
+			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
 
@@ -829,6 +836,7 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
+#undef DARK_COLOR_LIGHTNESS_THRESHOLD
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION

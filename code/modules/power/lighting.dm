@@ -609,10 +609,10 @@
 
 
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
-	set waitfor = 0
+	set waitfor = FALSE
 	if(flickering)
 		return
-	flickering = 1
+	flickering = TRUE
 	if(on && status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
@@ -622,7 +622,7 @@
 			sleep(rand(5, 15))
 		on = (status == LIGHT_OK)
 		update(0)
-	flickering = 0
+	flickering = FALSE
 
 // ai attack - make lights flicker, because why not
 
@@ -763,7 +763,7 @@
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(FALSE)
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 

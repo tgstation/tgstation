@@ -21,7 +21,7 @@
 	var/require_all = 1
 
 	var/paintjob = "none"
-	var/glassdoor = 0
+	var/glassdoor = FALSE
 
 	var/doorname = "airlock"
 

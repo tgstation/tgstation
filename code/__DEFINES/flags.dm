@@ -42,8 +42,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RAD_PROTECT_CONTENTS_1 (1 << 17)
 /// should this object be allowed to be contaminated
 #define RAD_NO_CONTAMINATE_1 (1 << 18)
-/// should this object be allowed to be contaminated
-#define ATMOS_IS_PROCESSING_1 (1 << 19)
+/// Should this object be paintable with very dark colors?
+#define ALLOW_DARK_PAINTS_1 (1 << 19)
+/// Should this object be unpaintable?
+#define UNPAINTABLE_1 (1 << 20)
+/// Is this object currently processing in the atmos object list?
+#define ATMOS_IS_PROCESSING_1 (1 << 21)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)

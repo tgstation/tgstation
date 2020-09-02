@@ -198,3 +198,9 @@
 
 /obj/effect/turf_decal/gas/plasma
 	icon_state = "plasma"
+	
+/obj/effect/turf_decal/mining
+	icon_state = "mining"
+
+/obj/effect/turf_decal/mining/survival
+	icon_state = "survival"
