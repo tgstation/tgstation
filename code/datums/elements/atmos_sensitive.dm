@@ -1,21 +1,21 @@
-GLOBAL_LIST_EMPTY(trackers)
-//This component should be a way to facilitate registering objects for heat behavior
+//This element should be a way to facilitate registering objects for heat behavior
 //It adds the object to a list on SSair to be processed for so long as the object wants to be processed
 //And removes it as soon as the object is no longer interested
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
 /datum/element/atmos_sensitive
+	var/list/movement_trackers = list() //We need to keep a ref to these or they go poof
 
 /datum/element/atmos_sensitive/Attach(datum/target)
 	if(!isatom(target)) //How
 		return ELEMENT_INCOMPATIBLE
 	var/atom/to_track = target
-	GLOB.trackers[to_track] = new /datum/movement_detector(to_track, CALLBACK(src, .proc/reset_register))
+	movement_trackers[to_track] = new /datum/movement_detector(to_track, CALLBACK(src, .proc/reset_register))
 	to_track.RegisterSignal(get_turf(to_track), COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
 	return ..()
 
 /datum/element/atmos_sensitive/Detach(datum/source, force)
 	var/atom/us = source
-	GLOB.trackers.Remove(GLOB.trackers[us])
+	movement_trackers.Remove(movement_trackers[us]])
 	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		SSair.atom_process_list -= us
