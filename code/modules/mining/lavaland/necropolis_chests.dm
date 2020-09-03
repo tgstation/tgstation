@@ -875,7 +875,7 @@
 		var/atom/A = thing
 		A.transfer_observers_to(src)
 
-	for(var/i in orbiters?.orbiters)
+	for(var/i in orbiters?.orbiter_list)
 		if(!isobserver(i))
 			continue
 		var/mob/dead/observer/G = i
