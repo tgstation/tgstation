@@ -76,10 +76,9 @@
 	if(.) //if the mob isn't on fire anymore
 		return
 	if(fire_stacks > 0)
-		fire_stacks--
-		fire_stacks = max(0, fire_stacks)
+		adjust_fire_stacks(-1)
 	else
-		ExtinguishMob()
+		extinguish_mob()
 		return TRUE
 
 	//adjustFireLoss(3)

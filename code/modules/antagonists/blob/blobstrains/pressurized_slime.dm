@@ -32,7 +32,7 @@
 				O.extinguish()
 			for(var/mob/living/L in T)
 				L.adjust_fire_stacks(-2.5)
-				L.ExtinguishMob()
+				L.extinguish_mob()
 
 /datum/reagent/blob/pressurized_slime
 	name = "Pressurized Slime"
@@ -45,7 +45,6 @@
 	if(istype(location_turf) && prob(reac_volume))
 		location_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		exposed_mob.adjust_fire_stacks(-(reac_volume / 10))
-		exposed_mob.ExtinguishMob()
 	exposed_mob.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 	if(exposed_mob)
 		exposed_mob.apply_damage(0.4*reac_volume, OXY)
