@@ -826,7 +826,9 @@
 	if(isspaceturf(exposed_turf))
 		return
 
-	var/obj/effect/decal/cleanable/dirt/dirt_decal = (locate() in exposed_turf.contents) || new(exposed_turf)
+	var/obj/effect/decal/cleanable/dirt/dirt_decal = (locate() in exposed_turf.contents)
+	if(!dirt_decal)
+		dirt_decal = new(exposed_turf)
 
 /datum/reagent/chlorine
 	name = "Chlorine"
