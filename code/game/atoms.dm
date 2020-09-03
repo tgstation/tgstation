@@ -789,6 +789,7 @@
   */
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
+	return FALSE
 
 /**
   * Respond to an emag being used on our atom
@@ -993,7 +994,7 @@
   */
 /atom/proc/wash(clean_types)
 	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types))
+	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
 		. = TRUE
 
 	// Basically "if has washable coloration"

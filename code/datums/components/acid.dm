@@ -21,16 +21,16 @@
 
 /datum/component/acid/Initialize(_acid_power, _acid_volume, _max_volume=null)
 	if((_acid_power) <= 0 || (_acid_volume <= 0))
-		WARNING("Acid component added with insufficient acid power ([_acid_power]) or acid volume ([_acid_power]).")
+		stack_trace("Acid component added with insufficient acid power ([_acid_power]) or acid volume ([_acid_power]).")
 		return COMPONENT_INCOMPATIBLE // Not enough acid.
 	if(!isatom(parent))
-		WARNING("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
+		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
 		return COMPONENT_INCOMPATIBLE // Incompatible type. TODO: Rework take_damage to the atom level and move this there.
 
 	if(isobj(parent))
 		var/obj/parent_object = parent
 		if(parent_object.resistance_flags & UNACIDABLE) // The parent object cannot have acid.
-			WARNING("Acid component added to unacidable object [parent].")
+			stack_trace("Acid component added to unacidable object [parent].")
 			return COMPONENT_INCOMPATIBLE
 
 		max_volume = OBJ_ACID_VOLUME_MAX
@@ -106,16 +106,16 @@
 	target.acid_act(acid_power, acid_volume)
 
 /// Handles processing on a [/turf].
-/datum/component/acid/proc/process_turf(turf/target)
-	var/turf/T = parent
+/datum/component/acid/proc/process_turf(turf/target_turf)
 	var/acid_used = min(acid_volume * 0.05, 20)
 	var/applied_targets = 0
-	for(var/A in T)
-		var/atom/acid_target = A
-		acid_target.acid_act(acid_power, acid_used)
-		applied_targets++
+	for(var/am in target_turf)
+		var/atom/movable/target_movable = am
+		if(target_movable.acid_act(acid_power, acid_used))
+			applied_targets++
 
-	set_volume(acid_volume - (acid_used * applied_targets))
+	if(applied_targets)
+		set_volume(acid_volume - (acid_used * applied_targets))
 
 	// Snowflake code for handling acid melting walls. TODO: Move integrity handling to the atom level so this can be desnowflaked.
 	if(acid_power < ACID_POWER_MELT_TURF)
@@ -123,16 +123,16 @@
 
 	switch(parent_integrity--)
 		if(-INFINITY to 0)
-			T.visible_message("<span class='warning'>[T] collapses under its own weight into a puddle of goop and undigested debris!</span>")
-			T.acid_melt()
+			target_turf.visible_message("<span class='warning'>[target_turf] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+			target_turf.acid_melt()
 		if(0 to 4)
-			T.visible_message("<span class='warning'>[T] begins to crumble under the acid!</span>")
+			target_turf.visible_message("<span class='warning'>[target_turf] begins to crumble under the acid!</span>")
 		if(4 to 8)
-			T.visible_message("<span class='warning'>[T] is struggling to withstand the acid!</span>")
+			target_turf.visible_message("<span class='warning'>[target_turf] is struggling to withstand the acid!</span>")
 		if(8 to 16)
-			T.visible_message("<span class='warning'>[T] is being melted by the acid!</span>")
+			target_turf.visible_message("<span class='warning'>[target_turf] is being melted by the acid!</span>")
 		if(16 to 24)
-			T.visible_message("<span class='warning'>[T] is holding up against the acid!</span>")
+			target_turf.visible_message("<span class='warning'>[target_turf] is holding up against the acid!</span>")
 
 
 /// Used to maintain the acid overlay on the parent [/atom].
@@ -154,7 +154,7 @@
 	if(!(clean_types & CLEAN_TYPE_ACID))
 		return NONE
 	qdel(src)
-	return TRUE // I know that returning booleans is bad form but this is how the proc handles it.
+	return COMPONENT_CLEANED
 
 /// Used exlusively by [/datum/reagent/water] and its subtypes to dilute the water on an atom.
 /datum/component/acid/proc/on_dilute(atom/parent_atom, _acid_power, _acid_volume)
