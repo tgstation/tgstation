@@ -47685,7 +47685,6 @@
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/cigarette/cigar,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bNc" = (
@@ -89861,6 +89860,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsO" = (
