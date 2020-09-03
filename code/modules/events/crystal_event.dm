@@ -52,6 +52,15 @@ This section is for the event controller
 	var/second_wave = 310
 
 /datum/round_event/crystal_invasion/start()
+	var/list/sm_crystal = list()
+	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
+		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
+			continue
+		sm_crystal += temp
+	if(sm_crystal == null)
+		log_game("No engine found, killing the crystal invasion event.")
+		kill()
+		return
 	choose_wave_type()
 
 /datum/round_event/crystal_invasion/announce(fake)
