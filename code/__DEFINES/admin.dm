@@ -159,3 +159,6 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 #define GHOSTROLE_SILICONS			(1<<3)
 //ie mafia, ctf
 #define GHOSTROLE_MINIGAME			(1<<4)
+
+//Pocket Dimension
+GLOBAL_DATUM_INIT(pocket_dimension_customizer,/datum/pocket_dim_customizer,new)

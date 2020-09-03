@@ -222,6 +222,8 @@
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
 ///from base of turf/New(): (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
+///from base of turf/Enter(): (atom/moveable/source)
+#define COMSIG_TURF_BUMPED "turf_bump"
 
 // /atom/movable signals
 
@@ -800,3 +802,5 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+
+

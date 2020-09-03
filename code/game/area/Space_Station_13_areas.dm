@@ -1280,3 +1280,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/external/port/bow
 	name = "Port Bow External Hull Access"
+
+// Pocket Dimension
+/area/pocket_dimension

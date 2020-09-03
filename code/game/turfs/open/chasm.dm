@@ -13,12 +13,15 @@
 
 /turf/open/chasm/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	AddComponent(/datum/component/chasm, chasm_destination() )
 
 /// Lets people walk into chasms.
 /turf/open/chasm/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
 	return TRUE
+
+/turf/open/chasm/proc/chasm_destination()
+	return SSmapping.get_turf_below(src)
 
 /turf/open/chasm/proc/set_target(turf/target)
 	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
@@ -112,3 +115,18 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
+
+/turf/open/chasm/void
+	name = "endless void"
+	desc = "you feel as if you are watched."
+	baseturfs = /turf/open/chasm/void
+
+/turf/open/chasm/void/chasm_destination()
+	var/list/zlist = SSmapping.z_list.Copy()
+	var/list/numlist = list()
+	zlist -= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
+	zlist -= SSmapping.levels_by_trait(ZTRAIT_POCKETDIM)
+	for(var/X in zlist)
+		var/datum/space_level/level = X
+		numlist += level.z_value
+	return locate(loc.x,loc.y,pick(numlist))

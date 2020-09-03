@@ -277,6 +277,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
 				if((mover.movement_type & UNSTOPPABLE))
+					SEND_SIGNAL(src,COMSIG_TURF_BUMPED,thing)
 					mover.Bump(thing)
 					continue
 				else
@@ -287,6 +288,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
 		firstbump = src
 	if(firstbump)
+		SEND_SIGNAL(src,COMSIG_TURF_BUMPED,mover)
 		mover.Bump(firstbump)
 		return (mover.movement_type & UNSTOPPABLE)
 	return TRUE
