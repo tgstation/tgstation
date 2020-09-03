@@ -85,6 +85,7 @@
 	smoothing_flags = SMOOTH_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN,SMOOTH_GROUP_OPEN_GRASS)
 	canSmoothWith = null
+	layer = HIGH_TURF_LAYER
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
