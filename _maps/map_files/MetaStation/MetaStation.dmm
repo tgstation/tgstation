@@ -67666,6 +67666,13 @@
 /obj/effect/spawner/lootdrop/glowstick,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
+"gYQ" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "gZR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -68769,6 +68776,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "iYR" = (
@@ -98640,7 +98648,7 @@ pRp
 gOu
 loM
 vnZ
-cca
+gYQ
 rKS
 rKS
 rKS
