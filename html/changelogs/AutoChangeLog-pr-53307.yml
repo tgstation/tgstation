@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Skeletons and other boneheads can now treat their bone wounds with bone gel and slings without getting messages about their flesh being impenetrable."
