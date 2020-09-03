@@ -81,6 +81,10 @@
 	var/material_flags = NONE
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
+	///Material flags currently being utilized by this atom.
+	var/affecting_material_flags = NONE
+	///A lazylist of materials currently affecting this atom.
+	var/list/affecting_materials
 
 	var/datum/wires/wires = null
 
@@ -1428,23 +1432,54 @@
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
-///Sets the custom materials for an item.
-/atom/proc/set_custom_materials(list/materials, multiplier = 1)
-	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
-		for(var/i in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
-			custom_material.on_removed(src, material_flags) //Remove the current materials
-
+///Applies the effects of a set of materials to this atom.
+/atom/proc/apply_materials(list/materials, multiplier=1, flags=null)
 	if(!length(materials))
-		custom_materials = null
 		return
 
-	if(!(material_flags & MATERIAL_NO_EFFECTS))
-		for(var/x in materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
+	if(isnull(flags))
+		flags = material_flags
 
-	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+	for(var/mat in materials)
+		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
+		material.on_applied(src, materials[mat] * multiplier, flags)
+
+///Removes the effects of a set of materials from this atom.
+/atom/proc/unapply_materials(list/materials, flags=null)
+	if(!length(materials))
+		return
+
+	if(isnull(flags))
+		flags = material_flags
+
+	for(var/mat in materials)
+		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
+		material.on_removed(src, flags)
+
+/atom/proc/update_affecting_materials(_materials=list(), _multiplier=1, _flags=NONE)
+	if(affecting_materials)
+		unapply_materials(affecting_materials, affecting_material_flags) //Only runs if affecting materials existed at first.
+
+	_flags = material_flags | SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_AFFECTING_MATERIALS, _materials, _multiplier, _flags)
+	var/cached_modifier = material_modifier
+	var/list/cached_materials = custom_materials
+	for(var/mat in cached_materials)
+		_materials[mat] += cached_materials[mat] * cached_modifier
+
+	if(!length(_materials))
+		affecting_materials = null
+		return
+
+	if(!(_flags & MATERIAL_NO_EFFECTS))
+		apply_materials(_materials, _multiplier, _flags)
+
+	affecting_material_flags = _flags
+	affecting_materials = SSmaterials.FindOrCreateMaterialCombo(_materials, _multiplier)
+
+///Sets the custom materials for an item.
+/atom/proc/set_custom_materials(list/materials, multiplier = 1)
+	custom_materials = !length(materials) ? null : SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+	update_affecting_materials(list(), 1, material_flags)
 
 /**
   * Returns true if this atom has gravity for the passed in turf

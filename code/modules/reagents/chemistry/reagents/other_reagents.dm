@@ -2205,41 +2205,24 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 0 // oderless and tasteless
 
+#define METALGEN_MATERIAL_MULTIPLIER	100 // Applying 20u is equivalent to applying one sheet.
+
 /datum/reagent/metalgen
 	name = "Metalgen"
 	data = list("material"=null)
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
-	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	var/minumum_material_amount = 100
+	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/datum/reagent/metalgen/expose_obj(obj/O, volume)
-	metal_morph(O)
-	return
-
-/datum/reagent/metalgen/expose_turf(turf/T, volume)
-	metal_morph(T)
-	return
-
-///turn an object into a special material
-/datum/reagent/metalgen/proc/metal_morph(atom/A)
+/datum/reagent/metalgen/expose_atom(atom/exposed_atom, reac_volume)
 	var/metal_ref = data["material"]
-	if(!metal_ref)
+	if(!metal_ref || (reac_volume <= 0))
 		return
-	var/metal_amount = 0
 
-	for(var/B in A.custom_materials) //list with what they're made of
-		metal_amount += A.custom_materials[B]
+	exposed_atom.AddComponent(/datum/component/metalgen, list((metal_ref) = reac_volume), METALGEN_MATERIAL_MULTIPLIER, applied_material_flags)
 
-	if(!metal_amount)
-		metal_amount = minumum_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
-
-	var/list/metal_dat = list()
-	metal_dat[metal_ref] = metal_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
-
-	A.material_flags = applied_material_flags
-	A.set_custom_materials(metal_dat)
+#undef METALGEN_MATERIAL_MULTIPLIER
 
 /datum/reagent/gravitum
 	name = "Gravitum"

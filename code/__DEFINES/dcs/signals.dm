@@ -181,6 +181,8 @@
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 ///called on /living when someone starts pulling it (atom/movable/puller, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
+///frome base of [/atom/proc/update_affecting_materials]: (list/materials, multiplier, flags)
+#define COMSIG_ATOM_UPDATE_AFFECTING_MATERIALS	"atom_update_affecting_materials"
 
 /////////////////
 
