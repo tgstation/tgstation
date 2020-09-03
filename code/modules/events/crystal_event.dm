@@ -346,9 +346,9 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 		qdel(W)
 
 /obj/item/stack/sheet/otherworld_crystal
-	name = "Otherworld Crystals"
+	name = "otherworld crystals"
 	icon_state = "otherworld-crystal"
-	singular_name = "Otherworld Crystal"
+	singular_name = "otherworld crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	material_type = /datum/material/otherworld_crystal
 
