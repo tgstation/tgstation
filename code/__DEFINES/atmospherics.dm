@@ -350,6 +350,7 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+//layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define PIPING_LAYER_MIN 1
 #define PIPING_LAYER_MAX 5
 #define PIPING_LAYER_DEFAULT 3
