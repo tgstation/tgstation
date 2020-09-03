@@ -3,8 +3,6 @@
 	desc = "A special protolathe with a built in interface meant for departmental usage, with built in ExoSync receivers allowing it to print designs researched that match its ROM-encoded department type."
 	icon_state = "protolathe"
 	circuit = /obj/item/circuitboard/machine/protolathe/department
-	requires_console = FALSE
-	consoleless_interface = TRUE
 
 /obj/machinery/rnd/production/protolathe/department/engineering
 	name = "department protolathe (Engineering)"
