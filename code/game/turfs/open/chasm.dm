@@ -20,6 +20,7 @@
 	. = ..()
 	return TRUE
 
+///Override this proc to make the chasm lead to diffrent places.
 /turf/open/chasm/proc/chasm_destination()
 	return SSmapping.get_turf_below(src)
 
@@ -120,8 +121,11 @@
 	name = "endless void"
 	desc = "you feel as if you are watched."
 	baseturfs = /turf/open/chasm/void
+	var/destination
 
 /turf/open/chasm/void/chasm_destination()
+	if(destination)
+		return locate(loc.x,loc.y,destination)
 	var/list/zlist = SSmapping.z_list.Copy()
 	var/list/numlist = list()
 	zlist -= SSmapping.levels_by_trait(ZTRAIT_CENTCOM)
@@ -130,3 +134,8 @@
 		var/datum/space_level/level = X
 		numlist += level.z_value
 	return locate(loc.x,loc.y,pick(numlist))
+
+/turf/open/chasm/void/lavaland/chasm_destination()
+	///I know this isnt always lavaland but shut the fuck up ok?
+	var/list/lavland = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	return locate(loc.x,loc.y,lavland[1])
