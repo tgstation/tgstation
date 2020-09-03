@@ -49992,6 +49992,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/reagent_containers/glass/bottle/ethanol,
 /obj/item/reagent_containers/glass/bottle/ethanol,
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "cpV" = (
