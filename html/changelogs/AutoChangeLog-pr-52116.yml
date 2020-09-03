@@ -1,5 +1,0 @@
-author: "Angust"
-delete-after: True
-changes: 
-  - bugfix: "fixed space vines / kudzu growing slower from better (lower) production speed"
-  - balance: "random event space vines buffed to have 1-6 production instead of 5-10 to compensate"

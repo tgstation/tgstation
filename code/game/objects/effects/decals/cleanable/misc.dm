@@ -53,8 +53,9 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
-	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
-	smooth = SMOOTH_FALSE
+	smoothing_flags = NONE
+	smoothing_groups = list(SMOOTH_GROUP_CLEANABLE_DIRT)
+	canSmoothWith = list(SMOOTH_GROUP_CLEANABLE_DIRT, SMOOTH_GROUP_WALLS)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 
@@ -62,14 +63,14 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
-		smooth = SMOOTH_MORE
+		smoothing_flags = SMOOTH_CORNERS
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = ""
-		queue_smooth(src)
-	queue_smooth_neighbors(src)
+		QUEUE_SMOOTH(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	queue_smooth_neighbors(src)
+	QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/decal/cleanable/dirt/dust
@@ -158,6 +159,8 @@
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old"
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
+
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
@@ -238,78 +241,14 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paper_shreds"
 
-/obj/effect/decal/cleanable/fuel
-	name = "fuel puddle"
-	desc = "That can't be safe."
-	var/fuel_volume = 10
-	var/fuel_per_hotspot = 5
-	var/is_fuel_burning = FALSE
-	var/list/adjacent_turfs = list()
-	icon_state = "flour"
-	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#474646"
+/obj/effect/decal/cleanable/garbage
+	name = "decomposing garbage"
+	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "garbage"
+	layer = OBJ_LAYER //To display the decal over wires.
+	beauty = -150
 
-/obj/effect/decal/cleanable/fuel/Initialize(mapload, list/datum/disease/diseases)
+/obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()
-	for(var/turf/turf in range(1, src))//calculate this once and save it to a list so we dont recalculate it every time we make a hotspot later
-		adjacent_turfs |= turf
-
-/obj/effect/decal/cleanable/fuel/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+100 && !is_fuel_burning)
-		ignite_fuel_puddle()
-
-/obj/effect/decal/cleanable/fuel/fire_act(exposed_temperature, exposed_volume)
-	if(!is_fuel_burning)
-		ignite_fuel_puddle()
-	..()
-
-/obj/effect/decal/cleanable/fuel/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() && !is_fuel_burning)
-		log_bomber(user, "ignited a", src, "via deliberately heating it")
-		ignite_fuel_puddle()
-
-/// Initial "boom" of a gasoline explosion
-/obj/effect/decal/cleanable/fuel/proc/ignite_fuel_puddle()
-	if(is_fuel_burning)
-		return
-	if(fuel_volume <= 1 && !QDELETED(src))//tiny amounts of fuel don't burn
-		qdel(src)
-		return
-	if(fuel_volume >= 30)
-		explosion(loc, -1, -1, 2, flame_range = 4)
-		fuel_volume = 30
-	is_fuel_burning = TRUE
-	new /obj/effect/hotspot(loc)
-	fuel_volume -= fuel_per_hotspot
-	//replace this tee hee
-	addtimer(CALLBACK(src, /obj/effect/decal/cleanable/fuel.proc/slow_burn_fuel), 9)//9 is about the lifespan of a hotspot
-
-/// The steady flames that come after
-/obj/effect/decal/cleanable/fuel/proc/slow_burn_fuel()
-
-	//ignite nearby fuel before self deleting so you trails still work with low amounts of fuel
-	var/obj/effect/decal/cleanable/fuel/nearby_fuel
-	for(var/turf/turf in adjacent_turfs)
-		nearby_fuel = locate(/obj/effect/decal/cleanable/fuel, turf)
-		if(nearby_fuel && !nearby_fuel.is_fuel_burning)
-			nearby_fuel.ignite_fuel_puddle()
-
-	//delete the puddle once the fuel has all burned up up
-	if(fuel_volume <= 0 && !QDELETED(src))
-		qdel(src)
-		return
-
-	//continue to burn in place
-	new /obj/effect/hotspot(loc)
-	fuel_volume -= fuel_per_hotspot
-	addtimer(CALLBACK(src, /obj/effect/decal/cleanable/fuel.proc/slow_burn_fuel), 8)
-
-/obj/effect/decal/cleanable/fuel/attackby(atom/washer)
-	if(!is_fuel_burning)//dont try to scoop up burning fuel
-		..()
-
-/obj/effect/decal/cleanable/fuel/washed(atom/washer)
-	if(!is_fuel_burning)
-		..()
-		return
-	fuel_volume = 0//don't delete right away if burning to prevent addtimer + qdel jank
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)

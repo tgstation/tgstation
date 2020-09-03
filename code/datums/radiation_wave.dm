@@ -124,7 +124,7 @@
 			))
 		if(!can_contaminate || !can_contam || blacklisted[thing.type])
 			continue
-		if(thing.rad_flags & RAD_NO_CONTAMINATE || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+		if(thing.flags_1 & RAD_NO_CONTAMINATE_1 || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 			continue
 
 		if(contamination_strength > remaining_contam)

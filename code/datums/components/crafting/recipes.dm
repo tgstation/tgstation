@@ -10,7 +10,9 @@
 	var/list/chem_catalysts = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
-	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
+	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
+	/// Additonal requirements text shown in UI
+	var/additional_req_text
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -361,15 +363,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/spooky_camera
-	name = "Camera Obscura"
-	result = /obj/item/camera/spooky
-	time = 15
-	reqs = list(/obj/item/camera = 1,
-				/datum/reagent/water/holywater = 10)
-	parts = list(/obj/item/camera = 1)
-	category = CAT_MISC
-
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
@@ -391,6 +384,35 @@
 	reqs = list(/obj/item/organ/tail/cat = 1,
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/mixedbouquet
+	name = "Mixed bouquet"
+	result = /obj/item/bouquet
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/poppy/lily =2,
+				/obj/item/grown/sunflower = 2,
+				/obj/item/reagent_containers/food/snacks/grown/poppy/geranium = 2)
+	category = CAT_MISC
+
+/datum/crafting_recipe/sunbouquet
+	name = "Sunflower bouquet"
+	result = /obj/item/bouquet/sunflower
+	reqs = list(/obj/item/grown/sunflower = 6)
+	category = CAT_MISC
+
+/datum/crafting_recipe/poppybouquet
+	name = "Poppy bouquet"
+	result = /obj/item/bouquet/poppy
+	reqs = list (/obj/item/reagent_containers/food/snacks/grown/poppy = 6)
+	category = CAT_MISC
+
+/datum/crafting_recipe/spooky_camera
+	name = "Camera Obscura"
+	result = /obj/item/camera/spooky
+	time = 15
+	reqs = list(/obj/item/camera = 1,
+				/datum/reagent/water/holywater = 10)
+	parts = list(/obj/item/camera = 1)
+	category = CAT_MISC
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
@@ -494,9 +516,15 @@
 	result = /obj/structure/curtain
 	category = CAT_MISC
 
-/datum/crafting_recipe/extendohand
-	name = "Extendo-Hand"
+/datum/crafting_recipe/extendohand_r
+	name = "Extendo-Hand (Right Arm)"
 	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	result = /obj/item/extendohand
+	category = CAT_MISC
+
+/datum/crafting_recipe/extendohand_l
+	name = "Extendo-Hand (Left Arm)"
+	reqs = list(/obj/item/bodypart/l_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
 	category = CAT_MISC
 
@@ -768,7 +796,7 @@
 
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"
-	always_availible = FALSE
+	always_available = FALSE
 	reqs = list(
             /obj/item/stack/sheet/bone = 10,
             /datum/reagent/fuel/oil = 5)
@@ -777,7 +805,7 @@
 
 /datum/crafting_recipe/skull
 	name = "Skull Carving"
-	always_availible = FALSE
+	always_available = FALSE
 	reqs = list(
             /obj/item/stack/sheet/bone = 6,
             /datum/reagent/fuel/oil = 5)
@@ -786,7 +814,7 @@
 
 /datum/crafting_recipe/halfskull
 	name = "Cracked Skull Carving"
-	always_availible = FALSE
+	always_available = FALSE
 	reqs = list(
             /obj/item/stack/sheet/bone = 3,
             /datum/reagent/fuel/oil = 5)
@@ -795,7 +823,7 @@
 
 /datum/crafting_recipe/boneshovel
 	name = "Serrated Bone Shovel"
-	always_availible = FALSE
+	always_available = FALSE
 	reqs = list(
             /obj/item/stack/sheet/bone = 4,
             /datum/reagent/fuel/oil = 5,
@@ -835,3 +863,30 @@
            /obj/item/stack/sticky_tape = 1)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_MISC
+
+/datum/crafting_recipe/underwater_basket
+	name = "Underwater Basket (Bamboo)"
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 20
+	)
+	result = /obj/item/storage/basket
+	category = CAT_MISC
+	additional_req_text = " being underwater, underwater basketweaving mastery"
+
+/datum/crafting_recipe/underwater_basket/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
+		return FALSE
+	var/turf/T = get_turf(user)
+	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+		return TRUE
+	var/obj/machinery/shower/S = locate() in T
+	if(S?.on)
+		return TRUE
+
+//Same but with wheat
+/datum/crafting_recipe/underwater_basket/wheat
+	name = "Underwater Basket (Wheat)"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/grown/wheat = 50
+	)

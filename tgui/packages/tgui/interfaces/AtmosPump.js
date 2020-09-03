@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const AtmosPump = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={335}
+      height={115}>
       <Window.Content>
         <Section>
           <LabeledList>

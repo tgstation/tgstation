@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue that prevented AIs from tracking players in areas they have not yet viewed."

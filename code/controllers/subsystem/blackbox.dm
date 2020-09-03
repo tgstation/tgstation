@@ -69,9 +69,9 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("feedback")
+		if(NAMEOF(src, feedback))
 			return FALSE
-		if("sealed")
+		if(NAMEOF(src, sealed))
 			if(var_value)
 				return Seal()
 			return FALSE

@@ -8,7 +8,7 @@
 		if(ispAI(M))
 			return FALSE
 		return TRUE	//AI can do whatever it wants
-	if(IsAdminGhost(M))
+	if(isAdminGhostAI(M))
 		//Access can't stop the abuse
 		return TRUE
 	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))

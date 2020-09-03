@@ -6,8 +6,6 @@
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/robotics
 	light_color = LIGHT_COLOR_PINK
-	ui_x = 500
-	ui_y = 460
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	. = FALSE
@@ -23,11 +21,10 @@
 		return
 	return TRUE
 
-/obj/machinery/computer/robotics/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/robotics/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RoboticsControlConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "RoboticsControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/robotics/ui_data(mob/user)
@@ -38,7 +35,7 @@
 		var/mob/living/silicon/S = user
 		if(S.hack_software)
 			data["can_hack"] = TRUE
-	else if(IsAdminGhost(user))
+	else if(isAdminGhostAI(user))
 		data["can_hack"] = TRUE
 
 	data["cyborgs"] = list()
@@ -105,9 +102,9 @@
 				to_chat(usr, "<span class='danger'>Access Denied.</span>")
 		if("magbot")
 			var/mob/living/silicon/S = usr
-			if((istype(S) && S.hack_software) || IsAdminGhost(usr))
+			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
-				if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+				if(istype(R) && !R.emagged && (R.connected_ai == usr || isAdminGhostAI(usr)) && !R.scrambledcodes && can_control(usr, R))
 					log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)

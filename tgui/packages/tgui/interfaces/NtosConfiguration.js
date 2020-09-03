@@ -5,7 +5,6 @@ import { NtosWindow } from '../layouts';
 
 export const NtosConfiguration = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     PC_device_theme,
     power_usage,
@@ -15,9 +14,12 @@ export const NtosConfiguration = (props, context) => {
     disk_used,
     hardware = [],
   } = data;
-
   return (
-    <NtosWindow resizable theme={PC_device_theme}>
+    <NtosWindow
+      theme={PC_device_theme}
+      width={420}
+      height={630}
+      resizable>
       <NtosWindow.Content scrollable>
         <Section
           title="Power Supply"
@@ -73,8 +75,7 @@ export const NtosConfiguration = (props, context) => {
                       mr={1}
                       onClick={() => act('PC_toggle_component', {
                         name: component.name,
-                      })}
-                    />
+                      })} />
                   )}
                   <Box
                     inline

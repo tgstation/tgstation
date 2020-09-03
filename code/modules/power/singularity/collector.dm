@@ -23,8 +23,9 @@
 	var/drainratio = 1
 	var/powerproduction_drain = 0.001
 
-/obj/machinery/power/rad_collector/anchored
-	anchored = TRUE
+/obj/machinery/power/rad_collector/anchored/Initialize()
+	. = ..()
+	set_anchored(TRUE)
 
 /obj/machinery/power/rad_collector/anchored/delta //Deltastation's engine is shared by engineers and atmos techs
 	desc = "A device which uses Hawking Radiation and plasma to produce power. This model allows access by Atmospheric Technicians."
@@ -77,13 +78,14 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+/obj/machinery/power/rad_collector/set_anchored(anchorvalue)
 	. = ..()
-	if(. == SUCCESSFUL_UNFASTEN)
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
+	if(isnull(.))
+		return //no need to process if we didn't change anything.
+	if(anchorvalue)
+		connect_to_network()
+	else
+		disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank/internals/plasma))

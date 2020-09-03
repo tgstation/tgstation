@@ -5,7 +5,7 @@
 	desc = "Used to check and claim bounties offered by Nanotrasen"
 	icon_screen = "bounty"
 	circuit = /obj/item/circuitboard/computer/bounty
-	light_color = "#E2853D"//orange
+	light_color = COLOR_BRIGHT_ORANGE
 	var/printer_ready = 0 //cooldown var
 	var/static/datum/bank_account/cargocash
 
@@ -32,12 +32,12 @@
 		<ul><li>Reward: [B.reward_string()]</li>
 		<li>Completed: [B.completion_string()]</li></ul>"}
 
-/obj/machinery/computer/bounty/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/bounty/ui_interact(mob/user, datum/tgui/ui)
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "CargoBountyConsole", name, 750, 600, master_ui, state)
+		ui = new(user, src, "CargoBountyConsole", name)
 		ui.open()
 
 /obj/machinery/computer/bounty/ui_data(mob/user)

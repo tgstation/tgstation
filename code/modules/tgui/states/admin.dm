@@ -2,6 +2,9 @@
  * tgui state: admin_state
  *
  * Checks that the user is an admin, end-of-story.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 GLOBAL_DATUM_INIT(admin_state, /datum/ui_state/admin_state, new)

@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - balance: "Resource and Factory Blobs can only be placed on station where they count towards critical mass."

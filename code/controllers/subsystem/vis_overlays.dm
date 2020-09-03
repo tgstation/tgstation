@@ -51,13 +51,14 @@ SUBSYSTEM_DEF(vis_overlays)
 	thing.vis_contents += overlay
 
 	if(!isatom(thing)) // Automatic rotation is not supported on non atoms
-		return
+		return overlay
 
 	if(!thing.managed_vis_overlays)
 		thing.managed_vis_overlays = list(overlay)
 		RegisterSignal(thing, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_vis_overlay)
 	else
 		thing.managed_vis_overlays += overlay
+	return overlay
 
 /datum/controller/subsystem/vis_overlays/proc/_create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 	var/obj/effect/overlay/vis/overlay = new
@@ -81,6 +82,8 @@ SUBSYSTEM_DEF(vis_overlays)
 		UnregisterSignal(thing, COMSIG_ATOM_DIR_CHANGE)
 
 /datum/controller/subsystem/vis_overlays/proc/rotate_vis_overlay(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(old_dir == new_dir)
 		return
 	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)

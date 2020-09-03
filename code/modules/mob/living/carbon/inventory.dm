@@ -49,26 +49,30 @@
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
-	var/current_equip
+	var/obj/item/current_equip
 	switch(slot)
 		if(ITEM_SLOT_BACK)
 			if (back && swap)
+				back.dropped(src, TRUE)
 				current_equip = back
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
 			if (wear_mask && swap)
+				wear_mask.dropped(src, TRUE)
 				current_equip = wear_mask
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
 			if (head && swap)
+				head.dropped(src, TRUE)
 				current_equip = head
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
 			if (wear_neck && swap)
+				wear_neck.dropped(src, TRUE)
 				current_equip = wear_neck
 			wear_neck = I
 			update_inv_neck(I)
@@ -197,7 +201,8 @@
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
 		return
 	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[src] tries to hand over [I] but it's stuck to them....", \
-						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
+		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
 		return
+	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
+					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)

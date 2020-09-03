@@ -14,21 +14,16 @@
 
 	flags_ricochet = RICOCHET_HARD
 
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_WALLS)
+
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
-
-	canSmoothWith = list(
-	/turf/closed/wall,
-	/turf/closed/wall/r_wall,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced,
-	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust)
-	smooth = SMOOTH_TRUE
 
 	var/list/dent_decals
 
@@ -105,24 +100,6 @@
 	else
 		add_dent(WALL_DENT_HIT)
 
-/turf/closed/wall/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	switch(M.damtype)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-			M.visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
-							"<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			if(prob(hardness + M.force) && M.force > 20)
-				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-			else
-				add_dent(WALL_DENT_HIT)
-		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-		if(TOX)
-			playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-			return FALSE
-
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user)
@@ -141,12 +118,12 @@
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
 	if(!arm)
 		return
-	if(arm.disabled)
+	if(arm.bodypart_disabled)
 		return
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		hulk_recoil(arm)
+		hulk_recoil(arm, user)
 		dismantle_wall(1)
 
 	else
@@ -158,17 +135,22 @@
 	return TRUE
 
 /**
-  *Deals damage back to the hulk.
+  *Deals damage back to the hulk's arm.
   *
   *When a hulk manages to break a wall using their hulk smash, this deals back damage to the arm used.
   *This is in its own proc just to be easily overridden by other wall types. Default allows for three
   *smashed walls per arm. Also, we use CANT_WOUND here because wounds are random. Wounds are applied
-  *by hulk code based on arm damage and checked after an attack completes.
+  *by hulk code based on arm damage and checked when we call break_an_arm().
   *Arguments:
   **arg1 is the arm to deal damage to.
+  **arg2 is the hulk
  */
-/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm)
-	arm.receive_damage(brute = 20, blocked = 0, wound_bonus = CANT_WOUND)
+/turf/closed/wall/proc/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 20)
+	arm.receive_damage(brute = damage, blocked = 0, wound_bonus = CANT_WOUND)
+	var/datum/mutation/human/hulk/smasher = locate(/datum/mutation/human/hulk) in hulkman.dna.mutations
+	if(!smasher || !damage) //sanity check but also snow and wood walls deal no recoil damage, so no arm breaky
+		return
+	smasher.break_an_arm(arm)
 
 /turf/closed/wall/attack_hand(mob/user)
 	. = ..()
@@ -311,6 +293,8 @@
 	add_overlay(dent_decals)
 
 /turf/closed/wall/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/closed/wall/rust)
 
 

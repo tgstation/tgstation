@@ -64,6 +64,8 @@ export class FakeTerminal extends Component {
 export const SyndContractor = (props, context) => {
   return (
     <NtosWindow
+      width={500}
+      height={600}
       theme="syndicate"
       resizable>
       <NtosWindow.Content scrollable>
@@ -241,7 +243,7 @@ export const StatusPane = (props, context) => {
         <Grid.Column size={0.85}>
           <LabeledList>
             <LabeledList.Item
-              label="TC Availible"
+              label="TC Available"
               buttons={(
                 <Button
                   content="Claim"
@@ -303,7 +305,7 @@ const ContractsTab = (props, context) => {
   return (
     <Fragment>
       <Section
-        title="Availible Contracts"
+        title="Available Contracts"
         buttons={(
           <Button
             content="Call Extraction"
@@ -392,10 +394,7 @@ const HubTab = (props, context) => {
             buttons={(
               <Fragment>
                 {limited && (
-                  <Box
-                    inline
-                    bold
-                    mr={1}>
+                  <Box inline bold mr={1}>
                     {item.limited} remaining
                   </Box>
                 )}

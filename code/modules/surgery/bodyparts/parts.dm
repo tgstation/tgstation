@@ -11,11 +11,10 @@
 	stam_damage_coeff = 1
 	max_stamina_damage = 120
 	var/obj/item/cavity_item
-	specific_locations = list("upper chest", "lower abdomen", "midsection", "collarbone", "lower back")
 	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
-	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+	if(owner.stat <= HARD_CRIT || !get_organs())
 		return FALSE
 	return ..()
 
@@ -61,7 +60,8 @@
 		be possessed by the devil? This arm appears to be possessed by no \
 		one though."
 	icon_state = "default_human_l_arm"
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
 	max_stamina_damage = 50
 	body_zone = BODY_ZONE_L_ARM
@@ -72,33 +72,39 @@
 	held_index = 1
 	px_x = -6
 	px_y = 0
-	specific_locations = list("outer left forearm", "inner left wrist", "left elbow", "left bicep", "left shoulder")
 
 /obj/item/bodypart/l_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_ARM))
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
+
 /obj/item/bodypart/l_arm/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(. == BODYPART_NOT_DISABLED)
+		if(bodypart_disabled != BODYPART_NOT_DISABLED)
+			owner.set_usable_hands(owner.usable_hands + 1)
+	else if(bodypart_disabled == BODYPART_NOT_DISABLED)
+		owner.set_usable_hands(owner.usable_hands - 1)
+	switch(bodypart_disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+				if(held_index)
+					owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
-		if(L)
-			L.update_icon()
+		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_icon()
+
 
 /obj/item/bodypart/l_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -127,7 +133,8 @@
 	desc = "Over 87% of humans are right handed. That figure is much lower \
 		among humans missing their right arm."
 	icon_state = "default_human_r_arm"
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	max_damage = 50
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
@@ -138,33 +145,39 @@
 	px_x = 6
 	px_y = 0
 	max_stamina_damage = 50
-	specific_locations = list("outer right forearm", "inner right wrist", "right elbow", "right bicep", "right shoulder")
 
 /obj/item/bodypart/r_arm/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_ARM))
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
+
 /obj/item/bodypart/r_arm/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(. == BODYPART_NOT_DISABLED)
+		if(bodypart_disabled != BODYPART_NOT_DISABLED)
+			owner.set_usable_hands(owner.usable_hands + 1)
+	else if(bodypart_disabled == BODYPART_NOT_DISABLED)
+		owner.set_usable_hands(owner.usable_hands - 1)
+	switch(bodypart_disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+				if(held_index)
+					owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
-		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
-		if(R)
-			R.update_icon()
+		var/obj/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
+		hand_screen_object?.update_icon()
+
 
 /obj/item/bodypart/r_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
@@ -193,7 +206,8 @@
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
 		luck. In this instance, it probably would not have helped."
 	icon_state = "default_human_l_leg"
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
@@ -201,25 +215,32 @@
 	px_x = -2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner left thigh", "outer left calf", "outer left hip", " left kneecap", "lower left shin")
 
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
+
 /obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(. == BODYPART_NOT_DISABLED)
+		if(bodypart_disabled != BODYPART_NOT_DISABLED)
+			owner.set_usable_legs(owner.usable_legs + 1)
+	else if(bodypart_disabled == BODYPART_NOT_DISABLED)
+		owner.set_usable_legs(owner.usable_legs - 1)
+	switch(bodypart_disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -251,9 +272,10 @@
 	desc = "You put your right leg in, your right leg out. In, out, in, out, \
 		shake it all about. And apparently then it detaches.\n\
 		The hokey pokey has certainly changed a lot since space colonisation."
-	// alternative spellings of 'pokey' are availible
+	// alternative spellings of 'pokey' are available
 	icon_state = "default_human_r_leg"
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
@@ -261,25 +283,32 @@
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner right thigh", "outer right calf", "outer right hip", "right kneecap", "lower right shin")
 
 /obj/item/bodypart/r_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_R_LEG))
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
+
 /obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
-	if(!.)
+	if(isnull(.))
 		return
-	if(disabled == BODYPART_DISABLED_DAMAGE)
-		if(owner.stat < UNCONSCIOUS)
-			owner.emote("scream")
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		if(owner.stat < DEAD)
-			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	if(. == BODYPART_NOT_DISABLED)
+		if(bodypart_disabled != BODYPART_NOT_DISABLED)
+			owner.set_usable_legs(owner.usable_legs + 1)
+	else if(bodypart_disabled == BODYPART_NOT_DISABLED)
+		owner.set_usable_legs(owner.usable_legs - 1)
+	switch(bodypart_disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			if(owner.stat < UNCONSCIOUS)
+				owner.emote("scream")
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		if(BODYPART_DISABLED_PARALYSIS)
+			if(owner.stat < DEAD)
+				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"

@@ -1,19 +1,36 @@
 {
   "private": true,
-  "name": "tgui",
-  "version": "3.0.0",
+  "name": "tgui-workspace",
+  "version": "4.2.0",
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-    "build": "eslint packages && cd packages/tgui && npx webpack --mode=production",
-    "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
-    "analyze": "cd packages/tgui && npx webpack --mode=production --env.analyze=1",
-    "lint": "eslint packages"
-  },
   "dependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-transform-jscript": "^7.2.0",
+    "@babel/preset-env": "^7.6.2",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2",
-    "eslint-plugin-react": "^7.17.0"
+    "babel-loader": "^8.0.6",
+    "babel-plugin-inferno": "^6.1.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "common": "workspace:*",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.4.0",
+    "eslint-plugin-react": "^7.17.0",
+    "extract-css-chunks-webpack-plugin": "^4.6.0",
+    "file-loader": "^6.0.0",
+    "inferno": "^7.4.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "pnp-webpack-plugin": "^1.6.4",
+    "sass": "^1.22.12",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.0.0",
+    "terser-webpack-plugin": "^3.0.6",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.40.2",
+    "webpack-build-notifier": "^2.0.0",
+    "webpack-bundle-analyzer": "^3.5.1",
+    "webpack-cli": "^3.3.12"
   }
 }

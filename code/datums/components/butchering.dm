@@ -23,6 +23,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(user.a_intent != INTENT_HARM)
 		return
 	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
@@ -71,7 +73,7 @@
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
-			var/datum/wound/brute/cut/critical/screaming_through_a_slit_throat = new
+			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
 			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
@@ -122,6 +124,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 
 /datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
+	SIGNAL_HANDLER
+
 	if(!istype(L))
 		return
 	var/obj/machinery/recycler/eater = parent

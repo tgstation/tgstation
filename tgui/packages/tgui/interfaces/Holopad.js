@@ -9,7 +9,10 @@ export const Holopad = (props, context) => {
     calling,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={440}
+      height={245}
+      resizable>
       {!!calling && (
         <Modal
           fontSize="36px"

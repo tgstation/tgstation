@@ -1,6 +1,43 @@
-# merger hooks, run tools/hooks/install.bat or install.sh to set up
-*.dmm merge=dmm
-*.dmi merge=dmi
+* text=auto
 
-# force changelog merging to use union
-html/changelog.html merge=union
+## Enforce text mode and LF line breaks
+*.bat text eol=lf
+*.css text eol=lf
+*.css text eol=lf
+*.dm text eol=lf
+*.dme text eol=lf
+*.dmf text eol=lf
+*.htm text eol=lf
+*.html text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.jsx text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.scss text eol=lf
+*.sh text eol=lf
+*.sql text eol=lf
+*.svg text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.txt text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
+## Enforce binary mode
+*.bmp binary
+*.dll binary
+*.dmb binary
+*.exe binary
+*.gif binary
+*.jpg binary
+*.png binary
+*.so binary
+
+## Merger hooks, run tools/hooks/install.bat or install.sh to set up
+*.dmm text eol=lf merge=dmm
+*.dmi binary merge=dmi
+
+## Force changelog merging to use union
+html/changelog.html text eol=lf merge=union

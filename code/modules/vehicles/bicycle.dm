@@ -11,7 +11,7 @@
 	D.vehicle_move_delay = 0
 
 
-/obj/vehicle/ridden/bicycle/zap_act(zap_str, zap_flags, shocked_targets) // :::^^^)))
+/obj/vehicle/ridden/bicycle/zap_act(power, zap_flags) // :::^^^)))
 	//This didn't work for 3 years because none ever tested it I hate life
 	name = "fried bicycle"
 	desc = "Well spent."

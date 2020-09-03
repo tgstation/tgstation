@@ -145,7 +145,7 @@
 			if("Clown")
 				heirloom_type = /obj/item/bikehorn/golden
 			if("Mime")
-				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+				heirloom_type = /obj/item/food/baguette
 			if("Janitor")
 				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
 			if("Cook")
@@ -248,14 +248,19 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
+/datum/quirk/family_heirloom/remove()
+	if(quirk_holder) // if the holder is still exists lets remove moods
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+
 /datum/quirk/frail
 	name = "Frail"
-	desc = "Your bones might as well be made of glass! You suffer wounds much more easily than most."
+	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
 	value = -2
-	mob_trait = TRAIT_EASYLIMBDISABLE
+	mob_trait = TRAIT_EASYLIMBWOUND
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
-	medical_record_text = "Patient has unusually frail bones, recommend calcium-rich diet."
+	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
 	hardcore_value = 4
 
 /datum/quirk/heavy_sleeper
@@ -509,6 +514,8 @@
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/mind_check = A
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
@@ -516,6 +523,8 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	SIGNAL_HANDLER
+
 	if(prob(75))
 		return
 	var/msg

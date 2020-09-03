@@ -3,20 +3,23 @@ import { Icon, ProgressBar, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const directionToIcon = {
-  "north": 0,
-  "northeast": 45,
-  "east": 90,
-  "southeast": 135,
-  "south": 180,
-  "southwest": 225,
-  "west": 270,
-  "northwest": 315,
+  north: 0,
+  northeast: 45,
+  east: 90,
+  southeast: 135,
+  south: 180,
+  southwest: 225,
+  west: 270,
+  northwest: 315,
 };
 
 export const BluespaceLocator = (props, context) => {
   const [tab, setTab] = useSharedState(context, "tab", "implant");
   return (
-    <Window resizable>
+    <Window
+      width={300}
+      height={300}
+      resizable>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -43,9 +46,7 @@ export const BluespaceLocator = (props, context) => {
 
 const TeleporterBeacons = (props, context) => {
   const { data } = useBackend(context);
-
   const { telebeacons } = data;
-
   return (
     telebeacons.map(beacon => (
       <SignalLocator
@@ -59,9 +60,7 @@ const TeleporterBeacons = (props, context) => {
 
 const TrackingImplants = (props, context) => {
   const { data } = useBackend(context);
-
   const { trackimplants } = data;
-
   return (
     trackimplants.map(implant => (
       <SignalLocator
@@ -75,15 +74,12 @@ const TrackingImplants = (props, context) => {
 
 const SignalLocator = (props, context) => {
   const { data } = useBackend(context);
-
   const { trackingrange } = data;
-
   const {
     name,
     direction,
     distance,
   } = props;
-
   return (
     <ProgressBar
       mb={1}

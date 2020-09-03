@@ -1,10 +1,8 @@
 /mob/living/silicon/robot/Life()
-	set invisibility = 0
 	if (src.notransform)
 		return
 
 	..()
-	adjustOxyLoss(-10) //we're a robot!
 	handle_robot_hud_updates()
 	handle_robot_cell()
 
@@ -12,7 +10,7 @@
 	if(stat != DEAD)
 		if(low_power_mode)
 			if(cell && cell.charge)
-				low_power_mode = 0
+				low_power_mode = FALSE
 				update_headlamp()
 		else if(stat == CONSCIOUS)
 			use_power()
@@ -25,7 +23,7 @@
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
-		low_power_mode = 1
+		low_power_mode = TRUE
 		update_headlamp()
 	diag_hud_set_borgcell()
 
@@ -78,10 +76,9 @@
 	if(.) //if the mob isn't on fire anymore
 		return
 	if(fire_stacks > 0)
-		fire_stacks--
-		fire_stacks = max(0, fire_stacks)
+		adjust_fire_stacks(-1)
 	else
-		ExtinguishMob()
+		extinguish_mob()
 		return TRUE
 
 	//adjustFireLoss(3)
@@ -94,10 +91,9 @@
 		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_mobility()
-	if(stat || buckled || lockcharge)
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		mobility_flags &= ~MOBILITY_MOVE
 	else
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	update_transform()
 	update_action_buttons_icon()
-

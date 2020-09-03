@@ -1,11 +1,10 @@
 import { useBackend } from '../backend';
-import { Section, LabeledList, Button, NumberInput } from '../components';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
 export const PortablePump = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     direction,
     holding,
@@ -14,9 +13,10 @@ export const PortablePump = (props, context) => {
     min_pressure,
     max_pressure,
   } = data;
-
   return (
-    <Window>
+    <Window
+      width={300}
+      height={315}>
       <Window.Content>
         <PortableBasicInfo />
         <Section

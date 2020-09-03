@@ -2,7 +2,7 @@ import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Flex, Icon, Input, Section, Table, Tabs, NoticeBox, NumberInput } from '../components';
+import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -15,7 +15,10 @@ export const Biogenerator = (props, context) => {
     processing,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={550}
+      height={380}
+      resizable>
       {!!processing && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />

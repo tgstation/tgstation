@@ -1,16 +1,13 @@
 
 /datum/computer_file/program/robocontrol
-	filename = "robocontrol"
-	filedesc = "Bot Remote Controller"
+	filename = "botkeeper"
+	filedesc = "Botkeeper"
 	program_icon_state = "robot"
 	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
 	transfer_access = ACCESS_ROBOTICS
 	requires_ntnet = TRUE
-	network_destination = "robotics control network"
 	size = 12
 	tgui_id = "NtosRoboControl"
-	ui_x = 550
-	ui_y = 550
 	///Number of simple robots on-station.
 	var/botcount = 0
 	///Used to find the location of the user for the purposes of summoning robots.
@@ -80,7 +77,7 @@
 				return
 			if(id_card)
 				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
-				card_slot.try_eject(TRUE, current_user)
+				card_slot.try_eject(current_user)
 			else
 				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
 	return

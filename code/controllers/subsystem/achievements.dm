@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(achievements)
 
 /datum/controller/subsystem/achievements/Shutdown()
 	save_achievements_to_db()
-	
+
 /datum/controller/subsystem/achievements/proc/save_achievements_to_db()
 	var/list/cheevos_to_save = list()
 	for(var/ckey in GLOB.player_details)
@@ -45,7 +45,8 @@ SUBSYSTEM_DEF(achievements)
 		if(!PD || !PD.achievements)
 			continue
 		cheevos_to_save += PD.achievements.get_changed_data()
-	
+	if(!length(cheevos_to_save))
+		return
 	SSdbcore.MassInsert(format_table_name("achievements"),cheevos_to_save,duplicate_key = TRUE)
 
 //Update the metadata if any are behind
@@ -68,6 +69,6 @@ SUBSYSTEM_DEF(achievements)
 			continue
 		if(!current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
 			to_update += list(A.get_metadata_row())
-	
+
 	if(to_update.len)
 		SSdbcore.MassInsert(format_table_name("achievement_metadata"),to_update,duplicate_key = TRUE)

@@ -54,8 +54,8 @@
 	if(reagents)
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
 	. = ..()
@@ -73,14 +73,15 @@
 			msg += seed.get_analyzer_text()
 		var/reag_txt = ""
 		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			msg += "<br><span class='info'>*Plant Reagents:*</span>"
+			msg += "<br><span class='info'>*Plant Reagents*</span>"
+			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
 			var/chem_cap = 0
-			for(var/reagent_id in seed.reagents_add)
-				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
-				var/amt = reagents.get_reagent_amount(reagent_id)
-				chem_cap += seed.reagents_add[reagent_id]
+			for(var/reagent_id in reagents.reagent_list)
+				var/datum/reagent/R  = reagent_id
+				var/amt = R.volume
+				chem_cap += R.volume
 				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
-			if(chem_cap > 1)
+			if(chem_cap > 100)
 				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
 
 		if(reag_txt)

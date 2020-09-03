@@ -54,12 +54,14 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
+	///Overrides what addiction this chemicals feeds into, allowing you to have multiple chems that treat a single addiction.
+	var/addiction_type
 	/// above this amount addictions start
 	var/addiction_threshold = 0
 	/// increases as addiction gets worse
 	var/addiction_stage = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
-	var/overdosed = 0
+	var/overdosed = FALSE
 	///if false stops metab in liverless mobs
 	var/self_consuming = FALSE
 	///affects how far it travels when sprayed
@@ -74,7 +76,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 
 /datum/reagent/New()
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
+
+	if(!addiction_type)
+		addiction_type = type
 
 	if(material)
 		material = SSmaterials.GetMaterialRef(material)
@@ -88,16 +94,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
-		return 0
-	if(method == VAPOR) //smoke, foam, spray
+		return FALSE
+	if(methods & VAPOR) //smoke, foam, spray
 		if(M.reagents)
 			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
-	return 1
+	return TRUE
 
 /// Applies this reagent to an [/obj]
 /datum/reagent/proc/expose_obj(obj/O, volume)
@@ -115,7 +121,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 
 ///Called after a reagent is transfered
-/datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume)
+/datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	return
 
 
@@ -204,6 +210,11 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
 		return
+
+/// Should return a associative list where keys are taste descriptions and values are strength ratios
+/datum/reagent/proc/get_taste_description(mob/living/taster)
+	return list("[taste_description]" = 1)
+
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

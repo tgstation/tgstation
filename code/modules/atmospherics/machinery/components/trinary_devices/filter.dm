@@ -14,9 +14,6 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
-	ui_x = 390
-	ui_y = 187
-
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
@@ -59,12 +56,12 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
-	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational()
+	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
 	icon_state = "filter_[on_state ? "on" : "off"][flipped ? "_f" : ""]"
 
 /obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
-	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational())
+	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational)
 		return
 
 	//Early return
@@ -121,11 +118,10 @@
 	set_frequency(frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AtmosFilter", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosFilter", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
@@ -174,51 +170,51 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
 	. = ..()
-	if(. && on && is_operational())
+	if(. && on && is_operational)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
 // mapping
 
-/obj/machinery/atmospherics/components/trinary/filter/layer1
-	piping_layer = 1
-	icon_state = "filter_off_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/layer3
-	piping_layer = 3
-	icon_state = "filter_off_map-3"
+/obj/machinery/atmospherics/components/trinary/filter/layer2
+	piping_layer = 2
+	icon_state = "filter_off_map-2"
+/obj/machinery/atmospherics/components/trinary/filter/layer4
+	piping_layer = 4
+	icon_state = "filter_off_map-4"
 
 /obj/machinery/atmospherics/components/trinary/filter/on
 	on = TRUE
 	icon_state = "filter_on"
 
-/obj/machinery/atmospherics/components/trinary/filter/on/layer1
-	piping_layer = 1
-	icon_state = "filter_on_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/on/layer3
-	piping_layer = 3
-	icon_state = "filter_on_map-3"
+/obj/machinery/atmospherics/components/trinary/filter/on/layer2
+	piping_layer = 2
+	icon_state = "filter_on_map-2"
+/obj/machinery/atmospherics/components/trinary/filter/on/layer4
+	piping_layer = 4
+	icon_state = "filter_on_map-4"
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
 
-/obj/machinery/atmospherics/components/trinary/filter/flipped/layer1
-	piping_layer = 1
-	icon_state = "filter_off_f_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/flipped/layer3
-	piping_layer = 3
-	icon_state = "filter_off_f_map-3"
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer2
+	piping_layer = 2
+	icon_state = "filter_off_f_map-2"
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer4
+	piping_layer = 4
+	icon_state = "filter_off_f_map-4"
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped/on
 	on = TRUE
 	icon_state = "filter_on_f"
 
-/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer1
-	piping_layer = 1
-	icon_state = "filter_on_f_map-1"
-/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer3
-	piping_layer = 3
-	icon_state = "filter_on_f_map-3"
+/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer2
+	piping_layer = 2
+	icon_state = "filter_on_f_map-2"
+/obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer4
+	piping_layer = 4
+	icon_state = "filter_on_f_map-4"
 
 /obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
 	on = TRUE

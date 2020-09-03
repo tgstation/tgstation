@@ -111,7 +111,7 @@
 			var/turf/t = pick_n_take(tentacle_loc)
 			new /obj/effect/temp_visual/goliath_tentacle/broodmother(t, src)
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/tentacle_patch(var/target)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/tentacle_patch(target)
 	ranged_cooldown = world.time + 15
 	var/tturf = get_turf(target)
 	if(!isturf(tturf))
@@ -119,7 +119,7 @@
 	visible_message("<span class='warning'>[src] digs its tentacles under [target]!</span>")
 	new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(tturf, src)
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/spawn_children(var/target)
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/spawn_children(target)
 	ranged_cooldown = world.time + 40
 	visible_message("<span class='boldwarning'>The ground churns behind [src]!</span>")
 	for(var/i in 1 to 2)
@@ -246,7 +246,7 @@
 /obj/item/crusher_trophy/broodmother_tongue/on_mark_detonation(mob/living/target, mob/living/user)
 	if(rand(1, 100) <= bonus_value && target.stat != DEAD)
 		new /obj/effect/temp_visual/goliath_tentacle/broodmother/patch(get_turf(target), user)
-		
+
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
 	if(!isliving(user))
 		return
@@ -257,10 +257,10 @@
 	else if("lava" in living_user.weather_immunities)
 		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
 		return
-	living_user.weather_immunities |= "lava"
+	LAZYOR(living_user.weather_immunities, "lava")
 	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
 	addtimer(CALLBACK(src, .proc/remove_lavaproofing, living_user), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
-	
+
 /obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/user)
-	user.weather_immunities -= "lava"
+	LAZYREMOVE(user.weather_immunities, "lava")

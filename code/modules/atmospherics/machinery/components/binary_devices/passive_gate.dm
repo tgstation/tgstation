@@ -7,7 +7,7 @@ Passive gate is similar to the regular pump except:
 */
 
 /obj/machinery/atmospherics/components/binary/passive_gate
-	icon_state = "passgate_map-2"
+	icon_state = "passgate_map-3"
 
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power."
@@ -25,9 +25,6 @@ Passive gate is similar to the regular pump except:
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
-
-	ui_x = 335
-	ui_y = 115
 
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -85,11 +82,10 @@ Passive gate is similar to the regular pump except:
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AtmosPump", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosPump", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_data()
@@ -157,10 +153,10 @@ Passive gate is similar to the regular pump except:
 		return FALSE
 
 
-/obj/machinery/atmospherics/components/binary/passive_gate/layer1
-	piping_layer = 1
-	icon_state = "passgate_map-1"
+/obj/machinery/atmospherics/components/binary/passive_gate/layer2
+	piping_layer = 2
+	icon_state = "passgate_map-2"
 
-/obj/machinery/atmospherics/components/binary/passive_gate/layer3
-	piping_layer = 3
-	icon_state = "passgate_map-3"
+/obj/machinery/atmospherics/components/binary/passive_gate/layer4
+	piping_layer = 4
+	icon_state = "passgate_map-4"

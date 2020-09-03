@@ -25,13 +25,15 @@
 		tracker = new(target, CALLBACK(src, .proc/move_react))
 
 /datum/component/orbiter/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 	var/atom/target = parent
 	target.orbiters = null
 	QDEL_NULL(tracker)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	master.orbiters = null
+	if(master.orbiters == src)
+		master.orbiters = null
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
@@ -39,10 +41,19 @@
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(!newcomp)
+		RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
+	for(var/o in newcomp.orbiters)
+		var/atom/movable/incoming_orbiter = o
+		incoming_orbiter.orbiting = src
+		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
+		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
+		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+
 	orbiters += newcomp.orbiters
+	newcomp.orbiters = null
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
@@ -58,6 +69,7 @@
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
 	var/matrix/initial_transform = matrix(orbiter.transform)
@@ -78,6 +90,13 @@
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
 
+	if(ismob(orbiter))
+		var/mob/orbiter_mob = orbiter
+		orbiter_mob.updating_glide_size = FALSE
+	if(ismovable(parent))
+		var/atom/movable/movable_parent = parent
+		orbiter.glide_size = movable_parent.glide_size
+
 	orbiter.forceMove(get_turf(parent))
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
@@ -92,6 +111,12 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+
+	if(ismob(orbiter))
+		var/mob/orbiter_mob = orbiter
+		orbiter_mob.updating_glide_size = TRUE
+		orbiter_mob.glide_size = 8
+
 	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
@@ -118,9 +143,16 @@
 
 
 /datum/component/orbiter/proc/orbiter_move_react(atom/movable/orbiter, atom/oldloc, direction)
+	SIGNAL_HANDLER
+
 	if(orbiter.loc == get_turf(parent))
 		return
 	end_orbit(orbiter)
+
+/datum/component/orbiter/proc/orbiter_glide_size_update(datum/source, target)
+	for(var/orbiter in orbiters)
+		var/atom/movable/movable_orbiter = orbiter
+		movable_orbiter.glide_size = target
 
 /////////////////////
 

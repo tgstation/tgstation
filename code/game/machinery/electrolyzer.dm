@@ -10,11 +10,10 @@
 	name = "space electrolyzer"
 	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/electrolyzer
-	ui_x = 400
-	ui_y = 305
-	use_power = NO_POWER_USE		/// We don't use area power, we always use the cell
+	/// We don't use area power, we always use the cell
+	use_power = NO_POWER_USE
 	///used to check if there is a cell in the machine
 	var/obj/item/stock_parts/cell/cell
 	///check if the machine is on or off
@@ -65,7 +64,7 @@
 		. += "electrolyzer-open"
 
 /obj/machinery/electrolyzer/process()
-	if(!is_operational() && on)
+	if(!is_operational && on)
 		on = FALSE
 	if(!on)
 		return PROCESS_KILL
@@ -143,11 +142,13 @@
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/electrolyzer/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/electrolyzer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Electrolyzer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Electrolyzer", name)
 		ui.open()
 
 /obj/machinery/electrolyzer/ui_data()
