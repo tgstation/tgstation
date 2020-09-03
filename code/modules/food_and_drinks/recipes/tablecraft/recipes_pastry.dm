@@ -458,6 +458,15 @@
 	result = /obj/item/reagent_containers/food/snacks/hotdog
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/corndog
+	name = "Corn dog"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/hotdog = 1,
+		/obj/item/popsicle_stick = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/corndog
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/meatbun
 	name = "Meat bun"
 	reqs = list(
