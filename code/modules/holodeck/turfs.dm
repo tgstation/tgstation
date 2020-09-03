@@ -27,7 +27,6 @@
 	gender = PLURAL
 	name = "lush grass"
 	icon_state = "grass"
-	icon = 'icons/turf/floors/grass.dmi'
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
