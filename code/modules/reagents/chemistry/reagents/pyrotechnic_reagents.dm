@@ -42,6 +42,7 @@
 	color = "#FFC8C8"
 	metabolization_rate = 4
 	taste_description = "burning"
+	penetrates_skin = NONE
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -72,12 +73,11 @@
 			target_wall.ScrapeAway()
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if(istype(exposed_mob))
-		if(methods & (TOUCH|VAPOR|PATCH))
-			exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
-			exposed_mob.IgniteMob()
-			if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
-				new /obj/effect/hotspot(exposed_mob.loc)
+	. = ..()
+	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
+	exposed_mob.IgniteMob()
+	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
+		new /obj/effect/hotspot(exposed_mob.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"
@@ -161,11 +161,11 @@
 	self_consuming = TRUE
 
 /datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
 	exposed_mob.adjustFireLoss(burndmg, 0)
 	exposed_mob.IgniteMob()
-	..()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/exposed_mob)
 	exposed_mob.adjust_fire_stacks(1)
@@ -181,6 +181,7 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 	self_consuming = TRUE
+	penetrates_skin = NONE
 
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -196,6 +197,7 @@
 	..()
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	if(istype(exposed_mob) && (methods & (TOUCH|VAPOR|PATCH)))
 		exposed_mob.adjust_fire_stacks(min(reac_volume/4, 20))
 
@@ -315,6 +317,6 @@
 	exposed_obj.extinguish()
 
 /datum/reagent/firefighting_foam/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.extinguish_mob() //All stacks are removed
-	..()

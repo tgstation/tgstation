@@ -234,11 +234,13 @@
 
 /datum/reagent/medicine/rezadone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(iscarbon(exposed_mob))
-		var/mob/living/carbon/patient = exposed_mob
-		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
-			patient.cure_husk("burn")
-			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
+	if(!iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/patient = exposed_mob
+	if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+		patient.cure_husk("burn")
+		patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
@@ -327,20 +329,23 @@
 	return TRUE
 
 /datum/reagent/medicine/mine_salve/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
-	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
-		if(methods & (INGEST|VAPOR|INJECT))
-			exposed_mob.adjust_nutrition(-5)
-			if(show_message)
-				to_chat(exposed_mob, "<span class='warning'>Your stomach feels empty and cramps!</span>")
-		else
-			var/mob/living/carbon/exposed_carbon = exposed_mob
-			for(var/s in exposed_carbon.surgeries)
-				var/datum/surgery/surgery = s
-				surgery.speed_modifier = max(0.1, surgery.speed_modifier)
+	. = ..()
+	if(!iscarbon(exposed_mob) || (exposed_mob.stat == DEAD))
+		return
 
-			if(show_message)
-				to_chat(exposed_carbon, "<span class='danger'>You feel your injuries fade away to nothing!</span>" )
-	..()
+	if(methods & (INGEST|VAPOR|INJECT))
+		exposed_mob.adjust_nutrition(-5)
+		if(show_message)
+			to_chat(exposed_mob, "<span class='warning'>Your stomach feels empty and cramps!</span>")
+
+	if(methods & (PATCH|TOUCH))
+		var/mob/living/carbon/exposed_carbon = exposed_mob
+		for(var/s in exposed_carbon.surgeries)
+			var/datum/surgery/surgery = s
+			surgery.speed_modifier = max(0.1, surgery.speed_modifier)
+
+		if(show_message)
+			to_chat(exposed_carbon, "<span class='danger'>You feel your injuries fade away to nothing!</span>" )
 
 /datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
@@ -1270,10 +1275,10 @@
 	taste_description = "numbing bitterness"
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
+	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
 	M.adjustBruteLoss(-0.35, 0)
-	..()
-	. = 1
+	return TRUE
 
 /datum/reagent/medicine/polypyr/expose_mob(mob/living/carbon/human/exposed_human, methods=TOUCH, reac_volume)
 	. = ..()

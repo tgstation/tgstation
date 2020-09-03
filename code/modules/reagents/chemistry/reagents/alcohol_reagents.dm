@@ -63,20 +63,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!isliving(exposed_mob))
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	if(methods & (TOUCH|VAPOR|PATCH))
-		exposed_mob.adjust_fire_stacks(reac_volume / 15)
+	exposed_mob.adjust_fire_stacks(reac_volume / 15)
 
-		if(iscarbon(exposed_mob))
-			var/mob/living/carbon/exposed_carbon = exposed_mob
-			var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+	if(!iscarbon(exposed_mob))
+		return
 
-			for(var/s in exposed_carbon.surgeries)
-				var/datum/surgery/surgery = s
-				surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
-	return ..()
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+
+	for(var/s in exposed_carbon.surgeries)
+		var/datum/surgery/surgery = s
+		surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

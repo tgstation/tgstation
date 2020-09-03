@@ -190,6 +190,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
+	. = ..()
 	if(!(methods & VAPOR))
 		return
 
@@ -197,8 +198,6 @@
 	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
 	if(reac_volume >= metabolization_rate)
 		exposed_mob.extinguish_mob()
-
-	return ..()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M)
 	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
@@ -413,24 +412,26 @@
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
-	if(iscarbon(exposed_mob))
-		var/mob/living/carbon/carbies = exposed_mob
-		if (carbies.stat == DEAD)
-			show_message = 0
-		if(methods & (PATCH|TOUCH|VAPOR))
-			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			for(var/i in carbies.all_wounds)
-				var/datum/wound/iter_wound = i
-				iter_wound.on_synthflesh(reac_volume)
-			carbies.adjustToxLoss((harmies+burnies)*0.66)
-			if(show_message)
-				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
-				carbies.cure_husk("burn")
-				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
-	..()
+	. = ..()
+	if(!iscarbon(exposed_mob))
+		return TRUE
+	var/mob/living/carbon/carbies = exposed_mob
+	if(carbies.stat == DEAD)
+		show_message = 0
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return TRUE
+	var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+	var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_synthflesh(reac_volume)
+	carbies.adjustToxLoss((harmies+burnies)*0.66)
+	if(show_message)
+		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
+		carbies.cure_husk("burn")
+		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	return TRUE
 
 /******ORGAN HEALING******/

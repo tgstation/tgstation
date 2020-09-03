@@ -25,19 +25,20 @@
 	holder.remove_reagent(type, metabolization_rate)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if((methods & INGEST) && quality && !HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
-		switch(quality)
-			if (DRINK_NICE)
-				SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
-			if (DRINK_GOOD)
-				SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
-			if (DRINK_VERYGOOD)
-				SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
-			if (DRINK_FANTASTIC)
-				SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
-			if (FOOD_AMAZING)
-				SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
-	return ..()
+	. = ..()
+	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
+		return
+	switch(quality)
+		if (DRINK_NICE)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+		if (DRINK_GOOD)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+		if (DRINK_VERYGOOD)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+		if (DRINK_FANTASTIC)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+		if (FOOD_AMAZING)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -124,6 +125,7 @@
 	taste_description = "oil"
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
+	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
@@ -138,18 +140,13 @@
 	fry_target.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
 /datum/reagent/consumable/cooking_oil/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	if(!istype(exposed_mob))
+	. = ..()
+	if(!(methods & (VAPOR|TOUCH)) || isnull(holder) || (holder.chem_temp < fry_temperature)) //Directly coats the mob, and doesn't go into their bloodstream
 		return
-	var/boiling = FALSE
-	if(holder && holder.chem_temp >= fry_temperature)
-		boiling = TRUE
-	if(!(methods & (VAPOR|TOUCH))) //Directly coats the mob, and doesn't go into their bloodstream
-		return ..()
-	if(!boiling)
-		return TRUE
+
 	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
 	if(methods & TOUCH)
-		oil_damage *= 1 - exposed_mob.get_permeability_protection()
+		oil_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, oil_damage * reac_volume))
 	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
 		exposed_mob.visible_message("<span class='warning'>The boiling oil sizzles as it covers [exposed_mob]!</span>", \
@@ -311,8 +308,10 @@
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
+	penetrates_skin = NONE
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	if(!ishuman(exposed_mob) && !ismonkey(exposed_mob))
 		return
 
@@ -355,11 +354,10 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
+	penetrates_skin = NONE
 
 /datum/reagent/consumable/sodiumchloride/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	if(!istype(exposed_mob))
-		return
-	SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
 	if(exposed_mob.has_bane(BANE_SALT))
 		exposed_mob.mind.disrupt_spells(-200)
 
@@ -607,12 +605,14 @@
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-  if(iscarbon(exposed_mob) && (methods & (TOUCH|VAPOR|PATCH)))
-    var/mob/living/carbon/exposed_carbon = exposed_mob
-    for(var/s in exposed_carbon.surgeries)
-      var/datum/surgery/surgery = s
-      surgery.speed_modifier = max(0.6, surgery.speed_modifier)
-  ..()
+	. = ..()
+	if(!iscarbon(exposed_mob) || !(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	for(var/s in exposed_carbon.surgeries)
+		var/datum/surgery/surgery = s
+		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -633,20 +633,17 @@
 	taste_description = "bitterness"
 
 /datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if(!istype(exposed_mob))
+	. = ..()
+	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
 		return
-	var/unprotected = FALSE
-	if((methods & INGEST) || ((methods & (TOUCH|PATCH|VAPOR)) && !exposed_mob.is_mouth_covered() && !exposed_mob.is_eyes_covered()))
-		unprotected = TRUE
-	if(unprotected)
-		if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
-			to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
-		else
-			if(!exposed_mob.eye_blurry)
-				to_chat(exposed_mob, "<span class='warning'>Tears well up in your eyes!</span>")
-			exposed_mob.blind_eyes(2)
-			exposed_mob.blur_eyes(5)
-	..()
+
+	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
+		to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
+	else
+		if(!exposed_mob.eye_blurry)
+			to_chat(exposed_mob, "<span class='warning'>Tears well up in your eyes!</span>")
+		exposed_mob.blind_eyes(2)
+		exposed_mob.blur_eyes(5)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
 	..()

@@ -99,19 +99,19 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
-		return NONE
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_RADIATION))
-		return NONE
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_WEAK))
 		qdel(src)
-		return NONE
+		return COMPONENT_CLEANED
 
 	strength = max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(src)
-		return NONE
+		return COMPONENT_CLEANED
 
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM

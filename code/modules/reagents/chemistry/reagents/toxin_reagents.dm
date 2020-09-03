@@ -39,9 +39,7 @@
 	taste_mult = 0.9
 
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/exposed_mob, methods=TOUCH, reac_volume)
-	if(!..())
-		return
-	if(!exposed_mob.has_dna() || HAS_TRAIT(exposed_mob, TRAIT_GENELESS) || HAS_TRAIT(exposed_mob, TRAIT_BADDNA))
+	if(!(. = ..()) || !exposed_mob.has_dna() || HAS_TRAIT(exposed_mob, TRAIT_GENELESS) || HAS_TRAIT(exposed_mob, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT)))
 		exposed_mob.randmuti()
@@ -51,7 +49,6 @@
 			exposed_mob.easy_randmut(POSITIVE)
 		exposed_mob.updateappearance()
 		exposed_mob.domutcheck()
-	..()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
@@ -73,6 +70,7 @@
 	color = "#8228A0"
 	toxpwr = 3
 	material = /datum/material/plasma
+	penetrates_skin = NONE
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -105,10 +103,10 @@
 		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.adjust_fire_stacks(reac_volume / 5)
 		return
-	..()
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
@@ -198,6 +196,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	penetrates_skin = NONE
 	var/fakedeath_active = FALSE
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
@@ -211,6 +210,7 @@
 	..()
 
 /datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
 	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
 		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
@@ -270,6 +270,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 	taste_mult = 1
+	penetrates_skin = NONE
 
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -291,10 +292,12 @@
 		SV.on_chem_effect(src)
 
 /datum/reagent/toxin/plantbgone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if((methods & VAPOR) && iscarbon(exposed_mob))
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(!exposed_carbon.wear_mask)
-			exposed_carbon.adjustToxLoss(min(round(0.4 * reac_volume, 0.1), 10))
+	. = ..()
+	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
+		return
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	if(!exposed_carbon.wear_mask)
+		exposed_carbon.adjustToxLoss(min(round(0.4 * reac_volume, 0.1), 10))
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -324,7 +327,7 @@
 		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	..()
+	. = ..()
 	if(exposed_mob.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		exposed_mob.adjustToxLoss(damage)
@@ -583,10 +586,7 @@
 	color = "#C8C8C8"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
-
-/datum/reagent/toxin/itching_powder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if(methods & (TOUCH|VAPOR))
-		exposed_mob.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
+	penetrates_skin = TOUCH|VAPOR
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -843,6 +843,7 @@
 		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+	. = ..()
 	if(!istype(exposed_carbon))
 		return
 	reac_volume = round(reac_volume,0.1)
