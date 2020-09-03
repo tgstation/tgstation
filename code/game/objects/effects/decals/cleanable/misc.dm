@@ -281,6 +281,7 @@
 	is_fuel_burning = TRUE
 	new /obj/effect/hotspot(loc)
 	fuel_volume -= fuel_per_hotspot
+	//replace this tee hee
 	addtimer(CALLBACK(src, /obj/effect/decal/cleanable/fuel.proc/slow_burn_fuel), 9)//9 is about the lifespan of a hotspot
 
 /// The steady flames that come after
