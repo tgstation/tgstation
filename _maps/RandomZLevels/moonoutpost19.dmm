@@ -5336,7 +5336,6 @@
 "lv" = (
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lw" = (
@@ -5347,7 +5346,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lx" = (
@@ -5359,7 +5357,6 @@
 /obj/item/clothing/under/suit/waiter,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lA" = (
@@ -5499,7 +5496,6 @@
 /obj/item/gun/ballistic/shotgun/sc_pump,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lW" = (
@@ -5620,7 +5616,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mn" = (
@@ -5635,7 +5630,6 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mo" = (
@@ -5650,7 +5644,6 @@
 /obj/item/storage/fancy/egg_box,
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
-	.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mp" = (
