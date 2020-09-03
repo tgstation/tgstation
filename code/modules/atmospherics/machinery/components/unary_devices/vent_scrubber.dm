@@ -72,6 +72,8 @@
 	if(showpipe)
 		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(welded)
 		icon_state = "scrub_welded"
