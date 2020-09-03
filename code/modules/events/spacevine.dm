@@ -575,16 +575,14 @@
 	if(!i && prob(100/severity))
 		qdel(src)
 
-/obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return TRUE
 
-/obj/structure/spacevine/atmos_expose()
-	var/turf/open/sit_on = get_turf(src)
-	var/volume = sit_on.air.return_volume()
-	var/temperature = sit_on.air.temperature
+/obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	var/volume = air.return_volume()
 	var/override = 0
 	for(var/datum/spacevine_mutation/SM in mutations)
-		override += SM.process_temperature(src, temperature, volume)
+		override += SM.process_temperature(src, exposed_temperature, volume)
 	if(!override)
 		qdel(src)
 

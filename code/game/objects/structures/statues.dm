@@ -133,10 +133,10 @@
 	else
 		return ..()
 
-/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
 
-/obj/structure/statue/plasma/atmos_expose()
+/obj/structure/statue/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	PlasmaBurn()
 
 /obj/structure/statue/plasma/proc/PlasmaBurn(datum/source, datum/gas_mixture/mix, temperature, volume)

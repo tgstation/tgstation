@@ -186,9 +186,9 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/atom/to_talk_to = currentrun[currentrun.len]
+		var/atom/talk_to = currentrun[currentrun.len]
 		currentrun.len--
-		to_talk_to.atmos_expose()
+		talk_to.process_exposure()
 		if(MC_TICK_CHECK)
 			return
 

@@ -166,10 +166,10 @@
 		new /obj/structure/alien/weeds(T)
 	return TRUE
 
-/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
 
-/obj/structure/alien/weeds/atmos_expose()
+/obj/structure/alien/weeds/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0, 0)
 
 //Weed nodes
@@ -308,10 +308,10 @@
 						child.Leap(M)
 						break
 
-/obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 500
 
-/obj/structure/alien/egg/atmos_expose()
+/obj/structure/alien/egg/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/alien/egg/obj_break(damage_flag)

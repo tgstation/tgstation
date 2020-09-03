@@ -810,7 +810,7 @@
 
 // heat sensitivity component
 
-//from /turf/open/temperature_expose(air, exposed_temperature, exposed_volume): (datum/component/heat_sensitivity)
+//from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature): (datum/component/heat_sensitivity)
 #define COMSIG_TURF_EXPOSE "turf_expose"
 //from /datum/component/heat_sensitive/proc/check_requirements(): (atom)
 #define COMSIG_HEAT_HOT "hot_expose"

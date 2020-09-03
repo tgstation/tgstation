@@ -1504,7 +1504,7 @@
 	return
 
 ///Used my the atmos_sensitive component to register onto atmos flow over our turf
-/atom/proc/atmos_expose()
+/atom/proc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	return
 
 /**

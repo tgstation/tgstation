@@ -252,10 +252,10 @@
 			return FALSE
 	return FALSE
 
-/obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + 1500 && !broken
 
-/obj/structure/grille/atmos_expose()
+/obj/structure/grille/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(1, BURN, 0, 0)
 
 /obj/structure/grille/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

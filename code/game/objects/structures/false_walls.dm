@@ -239,10 +239,10 @@
 	else
 		return ..()
 
-/obj/structure/falsewall/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/falsewall/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
 
-/obj/structure/falsewall/plasma/atmos_expose()
+/obj/structure/falsewall/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	burnbabyburn()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)

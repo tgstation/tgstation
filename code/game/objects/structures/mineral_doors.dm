@@ -259,10 +259,10 @@
 	else
 		return ..()
 
-/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
 
-/obj/structure/mineral_door/transparent/plasma/atmos_expose()
+/obj/structure/mineral_door/transparent/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	TemperatureAct()
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()

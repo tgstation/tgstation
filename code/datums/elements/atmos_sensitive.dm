@@ -3,32 +3,34 @@
 //And removes it as soon as the object is no longer interested
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
 /datum/element/atmos_sensitive
-	var/list/movement_trackers = list() //We need to keep a ref to these or they go poof
+	element_flags = ELEMENT_DETACH
 
 /datum/element/atmos_sensitive/Attach(datum/target)
 	if(!isatom(target)) //How
 		return ELEMENT_INCOMPATIBLE
 	var/atom/to_track = target
-	movement_trackers[to_track] = new /datum/movement_detector(to_track, CALLBACK(src, .proc/reset_register))
 	to_track.RegisterSignal(get_turf(to_track), COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
+	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	return ..()
 
 /datum/element/atmos_sensitive/Detach(datum/source, force)
 	var/atom/us = source
-	movement_trackers.Remove(us)
 	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		SSair.atom_process_list -= us
 		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
 	return ..()
 
-/datum/element/atmos_sensitive/proc/reset_register(atom/tracked, mover, oldloc)
-	var/atom/old = oldloc
-	tracked.UnregisterSignal(get_turf(old), COMSIG_TURF_EXPOSE)
-	tracked.RegisterSignal(get_turf(tracked), COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
+/datum/element/atmos_sensitive/proc/handle_move(datum/source, atom/movable/oldloc, direction, forced)
+	var/atom/microchipped_lad = source
+	if(!istype(microchipped_lad))
+		return
+	microchipped_lad.UnregisterSignal(oldloc, COMSIG_TURF_EXPOSE)
+	if(istype(microchipped_lad.loc, /turf/open))
+		microchipped_lad.RegisterSignal(microchipped_lad.loc, COMSIG_TURF_EXPOSE, /atom/proc/check_atmos_process)
 
-/atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(should_atmos_process(air, exposed_temperature, exposed_volume))
+/atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
+	if(should_atmos_process(air, exposed_temperature))
 		if(flags_1 & ATMOS_IS_PROCESSING_1)
 			return
 		SSair.atom_process_list += src
@@ -37,5 +39,18 @@
 		SSair.atom_process_list -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
-/atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/atom/proc/process_exposure()
+	var/turf/open/spot = loc
+	if(!istype(spot)) //If you end up in a locker or a wall reconsider your life decisions
+		SSair.atom_process_list -= src
+		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		return
+	var/temp = spot.air.temperature
+	if(!should_atmos_process(spot.air, temp)) //Temp and such can move without the tile becoming active. If that ever changes...
+		SSair.atom_process_list -= src
+		flags_1 &= ~ATMOS_IS_PROCESSING_1
+		return
+	atmos_expose(spot.air, temp)
+
+/atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return FALSE

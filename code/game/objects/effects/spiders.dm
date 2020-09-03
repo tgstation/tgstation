@@ -25,10 +25,10 @@
 				damage_amount *= 0.25
 	. = ..()
 
-/obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
 
-/obj/structure/spider/atmos_expose()
+/obj/structure/spider/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb

@@ -333,12 +333,11 @@
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
-/obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
 
-/obj/structure/window/atmos_expose()
-	var/turf/open/sit_on = get_turf(src)
-	take_damage(round(sit_on.air.return_volume() / 100), BURN, 0, 0)
+/obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null

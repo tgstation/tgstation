@@ -84,10 +84,10 @@
 	if (sterile)
 		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
-/obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 300)
 
-/obj/item/clothing/mask/facehugger/atmos_expose()
+/obj/item/clothing/mask/facehugger/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)

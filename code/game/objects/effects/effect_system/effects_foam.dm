@@ -190,12 +190,11 @@
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
-/obj/effect/particle_effect/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/particle_effect/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 475
 
-/obj/effect/particle_effect/foam/atmos_expose()
-	var/turf/open/spot = get_turf(src)
-	if(prob(max(0, spot.air.temperature - 475)))   //0% at <400C, 100% at >500C
+/obj/effect/particle_effect/foam/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(prob(max(0, exposed_temperature - 475)))   //0% at <400C, 100% at >500C
 		kill_foam()
 
 

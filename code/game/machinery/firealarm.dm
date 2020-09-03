@@ -122,10 +122,10 @@
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
 	playsound(src, "sparks", 50, TRUE)
 
-/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && detecting && !machine_stat
 
-/obj/machinery/firealarm/atmos_expose()
+/obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	alarm()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)

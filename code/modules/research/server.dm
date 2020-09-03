@@ -24,7 +24,6 @@
 	SSresearch.servers |= src
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -80,7 +79,7 @@
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/turf/open/L = loc
-	if(isopenturf(L))
+	if(isopenturf(L) && L.air)
 		return L.GetTemperature()
 	return INFINITY
 

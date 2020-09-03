@@ -223,12 +223,11 @@
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive)
 
-/obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return (exposed_temperature > 300)
+/obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
 
-/obj/item/clothing/accessory/medal/plasma/atmos_expose()
-	var/turf/open/spot = get_turf(src)
-	atmos_spawn_air("plasma=20;TEMP=[spot.air.temperature]")
+/obj/item/clothing/accessory/medal/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
 	visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
 	qdel(src)
 

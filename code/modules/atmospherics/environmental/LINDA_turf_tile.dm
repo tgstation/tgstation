@@ -97,7 +97,10 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/open/return_analyzable_air()
 	return return_air()
 
-/turf/temperature_expose(air, exposed_temperature, exposed_volume)
+/turf/open/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature >= heat_capacity || to_be_destroyed
+
+/turf/open/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(exposed_temperature >= heat_capacity)
 		to_be_destroyed = TRUE
 	if(to_be_destroyed)
@@ -115,8 +118,11 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			to_be_destroyed = FALSE
 			max_fire_temperature_sustained = 0
 
-/turf/open/temperature_expose(air, exposed_temperature, exposed_volume)
-	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature, exposed_volume)
+/turf/temperature_expose(datum/gas_mixture/air, exposed_temperature)
+	check_atmos_process(null, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
+
+/turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
+	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature)
 	..()
 
 /turf/open/proc/archive()

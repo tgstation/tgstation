@@ -257,12 +257,11 @@
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive)
 
-/obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 500)
 
-/obj/machinery/power/apc/atmos_expose()
-	var/turf/open/spot = get_turf(src)
-	take_damage(min(spot.air.temperature/100, 10), BURN)
+/obj/machinery/power/apc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(min(exposed_temperature/100, 10), BURN)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()

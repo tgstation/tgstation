@@ -246,10 +246,10 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)
 
-/obj/item/stack/sheet/wethide/atmos_expose()
+/obj/item/stack/sheet/wethide/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	wetness--
 	if(wetness == 0)
 		new /obj/item/stack/sheet/leather(drop_location(), 1)

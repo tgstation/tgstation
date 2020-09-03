@@ -24,10 +24,10 @@
 	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
 	air_contents = tank.remove_air_volume(3)
 
-/obj/item/latexballon/should_atmos_process(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/latexballon/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C+100)
 
-/obj/item/latexballon/atmos_expose()
+/obj/item/latexballon/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	burst()
 
 /obj/item/latexballon/proc/burst()
