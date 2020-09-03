@@ -7,7 +7,7 @@
 
 	var/new_pb = !CONFIG_GET(flag/panic_bunker)
 	CONFIG_SET(flag/panic_bunker, new_pb)
-
+	SSserver_maint.UpdateHubStatus()
 	log_admin("[key_name(usr)] has toggled the Panic Bunker, it is now [new_pb ? "on" : "off"]")
 	message_admins("[key_name_admin(usr)] has toggled the Panic Bunker, it is now [new_pb ? "enabled" : "disabled"].")
 	if (new_pb && !SSdbcore.Connect())

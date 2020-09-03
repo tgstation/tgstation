@@ -284,6 +284,8 @@ GLOBAL_VAR(restart_counter)
 
 	if (!GLOB.enter_allowed)
 		features += "closed"
+	if (CONFIG_GET(flag/panic_bunker))
+		features += "closed to new accounts"
 
 	var/s = ""
 	var/hostedby

@@ -14,7 +14,8 @@ SUBSYSTEM_DEF(server_maint)
 	world.hub_password = "" //quickly! before the hubbies see us.
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
-	if (CONFIG_GET(flag/hub))
+	//If we are set to go on the hub and the panic bunker is not on
+	if ( CONFIG_GET(flag/hub) && !CONFIG_GET(flag/panic_bunker) )
 		world.update_hub_visibility(TRUE)
 	return ..()
 
@@ -88,14 +89,22 @@ SUBSYSTEM_DEF(server_maint)
 	if(tgsversion)
 		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
 
-
+/**
+  * Update our hub status
+  *
+  * This toggles the server between being on and off the hub according to the following things
+  * * If the panic bunker is on, we go off the hub
+  * * If the clients are greater than the maximum hub population config, we go off the hub
+  * * Otherwise we go on the hub
+  *
+  * This is called in Client New and Destroy and in the panic bunker toggle verb
+  */
 /datum/controller/subsystem/server_maint/proc/UpdateHubStatus()
-	if(!CONFIG_GET(flag/hub) || !CONFIG_GET(number/max_hub_pop))
-		return FALSE //no point, hub / auto hub controls are disabled
-
 	var/max_pop = CONFIG_GET(number/max_hub_pop)
-
-	if(GLOB.clients.len > max_pop)
+	var/bunker = CONFIG_GET(flag/panic_bunker)
+	if( bunker )
+		world.update_hub_visibility(FALSE)
+	else if(GLOB.clients.len > max_pop)
 		world.update_hub_visibility(FALSE)
 	else
 		world.update_hub_visibility(TRUE)
