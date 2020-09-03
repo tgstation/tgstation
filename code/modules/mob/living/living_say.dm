@@ -113,6 +113,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		client?.dsay(message)
 		return
 
+	// dead is the only state you can never emote
+	if(stat != DEAD && check_emote(original_message, forced))
+		return
+
 	switch(stat)
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
@@ -126,7 +130,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			say_dead(original_message)
 			return
 
-	if(check_emote(original_message, forced) || !can_speak_basic(original_message, ignore_spam, forced))
+	if(!can_speak_basic(original_message, ignore_spam, forced))
 		return
 
 	language = message_mods[LANGUAGE_EXTENSION]
