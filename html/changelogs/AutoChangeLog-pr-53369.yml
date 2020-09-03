@@ -1,5 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - bugfix: "Alt clicking items in the listed turf tab doesn't open up a popup"
-  - bugfix: "Toggle suit sensors button missing"

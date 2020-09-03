@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "pressure valve max trigger pressure settings increased"
-  - bugfix: "pressure valve no more over pressurize output"
