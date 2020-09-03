@@ -545,6 +545,10 @@ This section is for the crystal monsters variations
 	stop_automated_movement_when_pulled = FALSE
 	wander = TRUE
 
+/mob/living/simple_animal/hostile/crystal_monster/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE, INNATE_TRAIT)
+
 /mob/living/simple_animal/hostile/crystal_monster/minion
 	name = "crystal minion"
 	desc = "A monster made of crystals similar to the Supermatter ones."
@@ -694,7 +698,7 @@ This section is for the crystal monsters variations
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "throws"
-	ranged_cooldown_time = 45
+	ranged_cooldown_time = 55
 
 /mob/living/simple_animal/hostile/crystal_monster/boss/Bump(atom/clong)
 	. = ..()
