@@ -70,8 +70,9 @@
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
 	icon_state = "grass"
+	icon = 'icons/turf/floors/grass_smooth.dmi'
 	floor_tile = /obj/item/stack/tile/grass
-	broken_states = list("sand")
+	broken_states = list("dirt")
 	flags_1 = NONE
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
@@ -81,10 +82,18 @@
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN,SMOOTH_GROUP_OPEN_GRASS)
+	canSmoothWith = null
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
-	update_icon()
+	spawniconchange()
+
+/turf/open/floor/grass/proc/spawniconchange()
+	var/matrix/M = new
+	M.Translate(-9, -9)
+	transform = M
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if((C.tool_behaviour == TOOL_SHOVEL) && params)
@@ -121,6 +130,9 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/grass/snow/spawniconchange()
+	return
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -168,6 +180,8 @@
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
 
+/turf/open/floor/grass/fakebasalt/spawniconchange()
+	return
 
 /turf/open/floor/carpet
 	name = "carpet"

@@ -272,12 +272,32 @@
 	name = "grass"
 	desc = "A patch of grass."
 	icon_state = "grass"
-	broken_states = list("sand")
+	icon = 'icons/turf/floors/grass.dmi'
+	broken_states = list("dirt")
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/grass/Initialize()
+	. = ..()
+	icon_state = "[initial(icon_state)][rand(0,3)]"
+	icon_plating = icon_state
+	icon_regular_floor = icon_state
+
 /turf/open/floor/plating/grass/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/plating/sandy_dirt
+	gender = PLURAL
+	name = "dirt"
+	desc = "Upon closer examination, it's still dirt."
+	icon = 'icons/turf/floors/grass.dmi'
+	icon_state = "dirt"
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
