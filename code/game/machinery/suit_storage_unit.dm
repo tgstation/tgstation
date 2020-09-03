@@ -254,7 +254,8 @@
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
 				mob_occupant.adjustFireLoss(rand(10, 16))
-			mob_occupant.emote("scream")
+			if(ishuman(mob_occupant))
+				mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
 		uv_cycles = initial(uv_cycles)
