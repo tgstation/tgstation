@@ -82,7 +82,7 @@
 		playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
 		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
-	..()
+	return ..()
 
 /obj/item/organ/appendix/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."

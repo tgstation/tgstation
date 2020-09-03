@@ -23,7 +23,7 @@
 	create_reagents(1000)
 
 /obj/item/organ/stomach/on_life()
-	..()
+	. = ..()
 
 	//Manage species digestion
 	if(istype(owner, /mob/living/carbon/human))
@@ -113,7 +113,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(2)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate)
-	..()
+	return ..()
 
 /obj/item/organ/stomach/plasmaman
 	name = "digestive crystal"
@@ -132,7 +132,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(2)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate)
-	..()
+	return ..()
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
