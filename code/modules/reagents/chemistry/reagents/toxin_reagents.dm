@@ -38,19 +38,19 @@
 	taste_description = "slime"
 	taste_mult = 0.9
 
-/datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/M, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/exposed_mob, methods=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna() || HAS_TRAIT(M, TRAIT_GENELESS) || HAS_TRAIT(M, TRAIT_BADDNA))
+	if(!exposed_mob.has_dna() || HAS_TRAIT(exposed_mob, TRAIT_GENELESS) || HAS_TRAIT(exposed_mob, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT)))
-		M.randmuti()
+		exposed_mob.randmuti()
 		if(prob(98))
-			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			exposed_mob.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.easy_randmut(POSITIVE)
-		M.updateappearance()
-		M.domutcheck()
+			exposed_mob.easy_randmut(POSITIVE)
+		exposed_mob.updateappearance()
+		exposed_mob.domutcheck()
 	..()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
@@ -88,23 +88,25 @@
 		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 		holder.del_reagent(type)
 
-/datum/reagent/toxin/plasma/expose_obj(obj/O, reac_volume)
-	if((!O) || (!reac_volume))
+/datum/reagent/toxin/plasma/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if((!exposed_obj) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
-		O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+		exposed_obj.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
-/datum/reagent/toxin/plasma/expose_turf(turf/open/T, reac_volume)
-	if(!istype(T))
+/datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf))
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
-		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
-/datum/reagent/toxin/plasma/expose_mob(mob/living/M, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(methods & (TOUCH|VAPOR))
-		M.adjust_fire_stacks(reac_volume / 5)
+		exposed_mob.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
 
@@ -208,12 +210,12 @@
 	L.cure_fakedeath(type)
 	..()
 
-/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/L, methods=TOUCH, reac_volume)
-	L.adjustOxyLoss(0.5*REM, 0)
+/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/Z = L.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-		if(istype(Z))
-			Z.fakedeath_active = TRUE
+		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+		if(istype(zombiepowder))
+			zombiepowder.fakedeath_active = TRUE
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
@@ -277,19 +279,20 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 6))
 		mytray.adjustWeeds(-rand(4,8))
 
-/datum/reagent/toxin/plantbgone/expose_obj(obj/O, reac_volume)
-	if(istype(O, /obj/structure/alien/weeds))
-		var/obj/structure/alien/weeds/alien_weeds = O
+/datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(istype(exposed_obj, /obj/structure/alien/weeds))
+		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
 		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
-	else if(istype(O, /obj/structure/glowshroom)) //even a small amount is enough to kill it
-		qdel(O)
-	else if(istype(O, /obj/structure/spacevine))
-		var/obj/structure/spacevine/SV = O
+	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
+		qdel(exposed_obj)
+	else if(istype(exposed_obj, /obj/structure/spacevine))
+		var/obj/structure/spacevine/SV = exposed_obj
 		SV.on_chem_effect(src)
 
-/datum/reagent/toxin/plantbgone/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if((methods & VAPOR) && iscarbon(M))
-		var/mob/living/carbon/exposed_carbon = M
+/datum/reagent/toxin/plantbgone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	if((methods & VAPOR) && iscarbon(exposed_mob))
+		var/mob/living/carbon/exposed_carbon = exposed_mob
 		if(!exposed_carbon.wear_mask)
 			exposed_carbon.adjustToxLoss(min(round(0.4 * reac_volume, 0.1), 10))
 
@@ -320,11 +323,11 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjustPests(-rand(1,2))
 
-/datum/reagent/toxin/pestkiller/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	..()
-	if(M.mob_biotypes & MOB_BUG)
+	if(exposed_mob.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
-		M.adjustToxLoss(damage)
+		exposed_mob.adjustToxLoss(damage)
 
 /datum/reagent/toxin/pestkiller/organic
 	name = "Natural Pest Killer"
@@ -581,9 +584,9 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/itching_powder/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/itching_powder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(methods & (TOUCH|VAPOR))
-		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
+		exposed_mob.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -839,29 +842,31 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1.5))
 		mytray.adjustWeeds(-rand(1,2))
 
-/datum/reagent/toxin/acid/expose_mob(mob/living/carbon/C, methods=TOUCH, reac_volume)
-	if(!istype(C))
+/datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+	if(!istype(exposed_carbon))
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(methods & INGEST)
-		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		exposed_carbon.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
 		return
 	if(methods & INJECT)
-		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
+		exposed_carbon.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, reac_volume)
+	exposed_carbon.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/expose_obj(obj/O, reac_volume)
-	if(ismob(O.loc)) //handled in human acid_act()
+/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(ismob(exposed_obj.loc)) //handled in human acid_act()
 		return
 	reac_volume = round(reac_volume,0.1)
-	O.acid_act(acidpwr, reac_volume)
+	exposed_obj.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/expose_turf(turf/T, reac_volume)
-	if (!istype(T))
+/datum/reagent/toxin/acid/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if (!istype(exposed_turf))
 		return
 	reac_volume = round(reac_volume,0.1)
-	T.acid_act(acidpwr, reac_volume)
+	exposed_turf.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

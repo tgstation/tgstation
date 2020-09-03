@@ -64,7 +64,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(parent, COMSIG_ACID_DILUTE, .proc/on_dilute)
+	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
@@ -73,7 +73,7 @@
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ACID_DILUTE))
+		COMSIG_ATOM_EXPOSE_REAGENT))
 
 	if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_MOVABLE_CROSSED)
@@ -156,12 +156,16 @@
 	qdel(src)
 	return COMPONENT_CLEANED
 
-/// Used exlusively by [/datum/reagent/water] and its subtypes to dilute the water on an atom.
-/datum/component/acid/proc/on_dilute(atom/parent_atom, _acid_power, _acid_volume)
+/// Handles water diluting the acid on the object.
+/datum/component/acid/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
 	SIGNAL_HANDLER
 
-	acid_power = ((acid_power * acid_volume) + (_acid_power * _acid_volume)) / (acid_volume + _acid_volume)
-	set_volume(acid_volume + _acid_volume)
+	if(!istype(exposing_reagent, /datum/reagent/water))
+		return NONE
+
+	acid_power /= (acid_volume / (acid_volume + reac_volume))
+	set_volume(acid_volume + reac_volume)
+	return NONE
 
 
 /// Handles searing the hand of anyone who tries to touch this without protection.

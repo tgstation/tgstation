@@ -161,10 +161,21 @@
 //from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
 #define CONSIG_STORAGE_EXITED "storage_exited"
 
-///from base of atom/expose_reagents():
+///from base of atom/expose_reagents(): (/list, /datum/reagents, methods, volume_modifier, show_message)
 #define COMSIG_ATOM_EXPOSE_REAGENTS "atom_expose_reagents"
 	/// Prevents the atom from being exposed to reagents if returned on [COMPONENT_ATOM_EXPOSE_REAGENTS]
 	#define COMPONENT_NO_EXPOSE_REAGENTS (1<<0)
+///from base of [/datum/reagent/proc/expose_atom]: (/datum/reagent, reac_volume)
+#define COMSIG_ATOM_EXPOSE_REAGENT	"atom_expose_reagent"
+///from base of [/datum/reagent/proc/expose_atom]: (/atom, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_ATOM	"reagent_expose_atom"
+///from base of [/datum/reagent/proc/expose_atom]: (/obj, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_OBJ	"reagent_expose_obj"
+///from base of [/datum/reagent/proc/expose_atom]: (/mob/living, reac_volume, methods, show_message, touch_protection, /mob/camera/blob) // ovemind arg is only used by blob reagents.
+#define COMSIG_REAGENT_EXPOSE_MOB	"reagent_expose_mob"
+///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
+#define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
+
 ///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
 #define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
 ///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
@@ -802,7 +813,3 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
-
-// Acid signals
-///from [/datum/reagent/water/proc/expose_turf].
-#define COMSIG_ACID_DILUTE	"dilute_acid" // Used exclusively by water and subtypes to dilute the acid on an object. If someone gets a better idea on how to do this I'm all ears.

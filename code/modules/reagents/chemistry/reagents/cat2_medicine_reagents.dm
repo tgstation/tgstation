@@ -189,16 +189,16 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, methods=VAPOR, reac_volume)
+/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
 	if(!(methods & VAPOR))
 		return
 
-	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	M.adjust_fire_stacks(-reac_volume / 2)
+	exposed_mob.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
 	if(reac_volume >= metabolization_rate)
-		M.ExtinguishMob()
+		exposed_mob.ExtinguishMob()
 
-	..()
+	return ..()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M)
 	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
@@ -412,9 +412,9 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, methods=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M))
-		var/mob/living/carbon/carbies = M
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+	if(iscarbon(exposed_mob))
+		var/mob/living/carbon/carbies = exposed_mob
 		if (carbies.stat == DEAD)
 			show_message = 0
 		if(methods & (PATCH|TOUCH|VAPOR))
@@ -427,7 +427,7 @@
 			if(show_message)
 				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
+			if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
 				carbies.cure_husk("burn")
 				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()
