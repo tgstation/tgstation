@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	name = "old recipe"
 
 	///List of possible recipes we could display
-	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce)
 	///The one we actually end up displaying
 	var/recipe_id = null
 
