@@ -273,18 +273,21 @@
 	desc = "A patch of grass."
 	icon_state = "grass"
 	icon = 'icons/turf/floors/grass.dmi'
-	broken_states = list("dirt")
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN,SMOOTH_GROUP_OPEN_GRASS)
+	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS,SMOOTH_GROUP_OPEN_GRASS)
+	layer = HIGH_TURF_LAYER
 
 /turf/open/floor/plating/grass/Initialize()
 	. = ..()
-	icon_state = "[initial(icon_state)][rand(0,3)]"
-	icon_plating = icon_state
-	icon_regular_floor = icon_state
+	var/matrix/M = new
+	M.Translate(-9, -9)
+	transform = M
 
 /turf/open/floor/plating/grass/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -293,8 +296,7 @@
 	gender = PLURAL
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
-	icon = 'icons/turf/floors/grass.dmi'
-	icon_state = "dirt"
+	icon_state = "sand"
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND

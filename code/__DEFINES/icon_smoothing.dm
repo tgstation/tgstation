@@ -28,8 +28,8 @@
 #define SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS S_TURF(3)	///turf/open/transparent/glass
 
 #define SMOOTH_GROUP_OPEN_FLOOR S_TURF(4)				///turf/open/floor
-#define SMOOTH_GROUP_OPEN_GRASS S_TURF(5)				///turf/open/floor/grass
 
+#define SMOOTH_GROUP_FLOOR_GRASS S_TURF(5)				///turf/open/floor/plating/grass
 #define SMOOTH_GROUP_FLOOR_ASH S_TURF(6)				///turf/open/floor/plating/ashplanet/ash
 #define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(7)			///turf/open/floor/plating/ashplanet/rocky
 #define SMOOTH_GROUP_FLOOR_ICE S_TURF(8)				///turf/open/floor/plating/ice
