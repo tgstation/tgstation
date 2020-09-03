@@ -254,7 +254,7 @@
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
 				mob_occupant.adjustFireLoss(rand(10, 16))
-			if(!iscyborg(mob_occupant))
+			if(iscarbon(mob_occupant))
 				mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, .proc/cook), 50)
 	else
