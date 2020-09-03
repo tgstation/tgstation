@@ -40,7 +40,12 @@
 		for(var/mob/living/nearby_mob in orange(get_turf(exposed_mob), 1))
 			if(ROLE_BLOB in nearby_mob.faction) //no friendly fire
 				continue
-			var/aoe_volume = ..(nearby_mob, TOUCH, initial_volume, 0, nearby_mob.get_permeability_protection(), overmind)
+			exposed_mob = nearby_mob
+			methods = TOUCH
+			reac_volume = initial_volume
+			show_message = FALSE
+			touch_protection = nearby_mob.get_permeability_protection()
+			var/aoe_volume = ..()
 			nearby_mob.apply_damage(0.4*aoe_volume, BRUTE, wound_bonus=CANT_WOUND)
 		if(exposed_mob)
 			exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
