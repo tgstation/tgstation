@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "Bookshelves do not show shelves inside anymore when you crowbar them out."
