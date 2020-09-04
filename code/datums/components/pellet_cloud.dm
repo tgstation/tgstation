@@ -281,9 +281,7 @@
 	var/obj/projectile/P = projectile_type
 	var/proj_name = initial(P.name)
 
-	var/num = 0
 	for(var/atom/target in targets_hit)
-		num++
 		var/num_hits = targets_hit[target]
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
