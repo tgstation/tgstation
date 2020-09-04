@@ -198,6 +198,19 @@
 	SSmobs.cheeserats -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/rat/death(gibbed)
+	SSmobs.cheeserats -= src // remove rats on death
+	return ..()
+
+/mob/living/simple_animal/hostile/rat/revive(full_heal = FALSE, admin_revive = FALSE)
+	var/cap = CONFIG_GET(number/ratcap)
+	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
+		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		return FALSE
+	. = ..()
+	if(.)
+		SSmobs.cheeserats += src
+
 /mob/living/simple_animal/hostile/rat/examine(mob/user)
 	. = ..()
 	if(istype(user,/mob/living/simple_animal/hostile/rat))

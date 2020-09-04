@@ -213,14 +213,14 @@
 
 
 	else if(ismecha(AM))
-		var/obj/mecha/M = AM
-		if(M.haslights)
+		var/obj/vehicle/sealed/mecha/M = AM
+		if(M.mecha_flags & HAS_LIGHTS)
 			M.visible_message("<span class='danger'>[M]'s lights burn out!</span>")
-			M.haslights = FALSE
-		M.set_light(-M.lights_power)
-		if(M.occupant)
-			M.lights_action.Remove(M.occupant)
-		for(var/obj/item/O in M.GetAllContents())
+			M.mecha_flags &= ~HAS_LIGHTS
+		M.set_light_on(FALSE)
+		for(var/occupant in M.occupants)
+			M.remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
+		for(var/obj/item/O in AM.GetAllContents())
 			light_item_check(O, M)
 
 	else if(istype(AM, /obj/machinery/light))

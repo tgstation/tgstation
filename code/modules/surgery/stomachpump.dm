@@ -15,8 +15,6 @@
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/stomach/S = target.getorganslot(ORGAN_SLOT_STOMACH)
-	if(target.stat != DEAD)	//shamelessly lifted off the revival surgery but we're looking for the same critera here, a dead, non-husked, revivable patient.
-		return FALSE
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
 	if(!S)

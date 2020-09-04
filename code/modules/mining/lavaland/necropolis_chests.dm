@@ -602,12 +602,12 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/flightpotion/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/flightpotion/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		var/mob/living/carbon/C = M
 		var/holycheck = ishumanbasic(C)
 		if(reac_volume < 5 || !(holycheck || islizard(C) || (ismoth(C) && C.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
-			if(method == INGEST && show_message)
+			if((methods & INGEST) && show_message)
 				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 		if(C.dna.species.has_innate_wings)
@@ -853,7 +853,7 @@
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
+		source = user, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
 
 	summon_cooldown = world.time + 600
 

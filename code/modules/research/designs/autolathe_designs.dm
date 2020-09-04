@@ -495,6 +495,15 @@
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
 
+/datum/design/blood_filter
+	name = "Blood Filter"
+	id = "blood_filter"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver = 500)
+	build_path = /obj/item/blood_filter
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"
@@ -557,6 +566,15 @@
 	build_path = /obj/item/hemostat
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/stethoscope
+	name = "Stethoscope"
+	id = "stethoscope"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/clothing/neck/stethoscope
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/beaker
 	name = "Beaker"

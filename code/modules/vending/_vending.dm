@@ -920,7 +920,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for(var/datum/data/vending_product/R in shuffle(product_records))
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -933,13 +933,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_item = new dump_path(loc)
 		break
 	if(!throw_item)
-		return 0
+		return FALSE
 
 	pre_throw(throw_item)
 
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
-	return 1
+	return TRUE
 /**
   * A callback called before an item is tossed out
   *

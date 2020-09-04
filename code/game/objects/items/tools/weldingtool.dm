@@ -213,8 +213,8 @@
 		set_light_on(FALSE)
 		switched_on(user)
 		update_icon()
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 //Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
@@ -336,7 +336,7 @@
 	max_fuel = 10
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
-	change_icons = 0
+	change_icons = FALSE
 
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
@@ -349,7 +349,7 @@
 	toolspeed = 0.1
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
-	change_icons = 0
+	change_icons = FALSE
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)

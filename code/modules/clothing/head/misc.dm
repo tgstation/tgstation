@@ -474,3 +474,9 @@
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
 	inhand_icon_state = "JackFrostHat"
+
+/obj/item/clothing/head/weddingveil
+	name = "wedding veil"
+	desc = "A gauzy white veil."
+	icon_state = "weddingveil"
+	inhand_icon_state = "weddingveil"

@@ -409,7 +409,7 @@ GENE SCANNER
 		if(M.reagents.reagent_list.len)
 			render_list += "<span class='notice ml-1'>Subject contains the following reagents:</span>\n"
 			for(var/datum/reagent/R in M.reagents.reagent_list)
-				render_list += "<span class='notice ml-2'>[round(R.volume, 0.001)] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
+				render_list += "<span class='notice ml-2'>[round(R.volume, 0.001)] units of [R.name][R.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject contains no reagents.</span>\n"
 		if(M.reagents.addiction_list.len)

@@ -13,6 +13,10 @@
 	QDEL_LIST(internal_organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
+		qdel(wound)
+	for(var/scar in all_scars)
+		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
@@ -185,14 +189,14 @@
 	<HR>
 	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "Nothing"]</A>"}
 
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 
-	if(ITEM_SLOT_NECK in obscured)
+	if(obscured & ITEM_SLOT_NECK)
 		dat += "<BR><B>Neck:</B> Obscured"
 	else
 		dat += "<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? (wear_neck) : "Nothing"]</A>"
 
-	if(ITEM_SLOT_MASK in obscured)
+	if(obscured & ITEM_SLOT_MASK)
 		dat += "<BR><B>Mask:</B> Obscured"
 	else
 		dat += "<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</a>"
@@ -285,7 +289,7 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	fire_stacks -= 5
+	adjust_fire_stacks(-5)
 	Paralyze(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
@@ -294,7 +298,7 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message("<span class='danger'>[src] successfully extinguishes [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
-		ExtinguishMob()
+		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -437,16 +441,17 @@
 			var/turf/target = get_turf(loc)
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
-		if(locate(/obj/item/assembly/health) in src)
-			stat(null, "Health: [health]")
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
+	if(vessel)
+		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
+	if(locate(/obj/item/assembly/health) in src)
+		. += "Health: [health]"
 
-	add_abilities_to_panel()
+/mob/living/carbon/get_proc_holders()
+	. = ..()
+	. += add_abilities_to_panel()
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -485,22 +490,43 @@
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
+
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
 			if(harm)
 				adjustBruteLoss(3)
-		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
-			if(T)
-				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
-			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
+				if(T)
+					T.add_vomit_floor(src, VOMIT_PURPLE)
+			else
+				if(T)
+					T.add_vomit_floor(src, VOMIT_TOXIC, purge) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (T?.is_blocked_turf())
 			break
 	return TRUE
+
+/**
+ * Expel the reagents you just tried to ingest
+ *
+ * When you try to ingest reagents but you do not have a stomach
+ * you will spew the reagents on the floor.
+ *
+ * Vars:
+ * * bite: /atom the reagents to expel
+ * * amount: int The amount of reagent
+ */
+/mob/living/carbon/proc/expel_ingested(var/atom/bite, amount)
+	visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
+					"<span class='userdanger'>You are unable to keep the [bite] down without a stomach!</span>")
+
+	var/turf/floor = get_turf(src)
+	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
+	bite.reagents.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -546,6 +572,7 @@
 		become_husk("burn")
 
 	med_hud_set_health()
+
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	else
@@ -865,7 +892,7 @@
 /mob/living/carbon/can_be_revived()
 	. = ..()
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
-		return 0
+		return FALSE
 
 /mob/living/carbon/proc/can_defib()
 	if (suiciding)
@@ -918,7 +945,7 @@
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
-/mob/living/carbon/ExtinguishMob()
+/mob/living/carbon/extinguish_mob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes
@@ -983,20 +1010,6 @@
 			if(!old_bodypart.bodypart_disabled)
 				set_usable_hands(usable_hands - 1)
 
-
-/mob/living/carbon/do_after_coefficent()
-	. = ..()
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood) //Currently, only carbons or higher use mood, move this once that changes.
-	if(mood)
-		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(-INFINITY to SANITY_DISTURBED)
-				. *= 1.25
-			if(SANITY_NEUTRAL to INFINITY)
-				. *= 0.90
-
-	for(var/i in status_effects)
-		var/datum/status_effect/S = i
-		. *= S.interact_speed_modifier()
 
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)
@@ -1160,30 +1173,30 @@
 		. = TRUE
 
 	// Check and wash stuff that can be covered
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
 	if(glasses && is_eyes_covered(FALSE, TRUE, TRUE) && glasses.wash(clean_types))
 		update_inv_glasses()
 		. = TRUE
 
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured) && wear_mask.wash(clean_types))
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
 		update_inv_wear_mask()
 		. = TRUE
 
-	if(ears && !(ITEM_SLOT_EARS in obscured) && ears.wash(clean_types))
+	if(ears && !(obscured & ITEM_SLOT_EARS) && ears.wash(clean_types))
 		update_inv_ears()
 		. = TRUE
 
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured) && wear_neck.wash(clean_types))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK) && wear_neck.wash(clean_types))
 		update_inv_neck()
 		. = TRUE
 
-	if(shoes && !(ITEM_SLOT_FEET in obscured) && shoes.wash(clean_types))
+	if(shoes && !(obscured & ITEM_SLOT_FEET) && shoes.wash(clean_types))
 		update_inv_shoes()
 		. = TRUE
 
-	if(gloves && !(ITEM_SLOT_GLOVES in obscured) && gloves.wash(clean_types))
+	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && gloves.wash(clean_types))
 		update_inv_gloves()
 		. = TRUE
 

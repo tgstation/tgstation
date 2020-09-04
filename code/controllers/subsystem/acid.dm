@@ -7,11 +7,12 @@ SUBSYSTEM_DEF(acid)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/acid/stat_entry()
-	..("P:[processing.len]")
+/datum/controller/subsystem/acid/stat_entry(msg)
+	msg = "P:[length(processing)]"
+	return ..()
 
 
-/datum/controller/subsystem/acid/fire(resumed = 0)
+/datum/controller/subsystem/acid/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 

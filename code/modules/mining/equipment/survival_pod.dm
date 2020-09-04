@@ -265,20 +265,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_ABSTRACT
 
-//Signs
-/obj/structure/sign/mining
-	name = "\improper Nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "ntpod"
-	buildable_sign = FALSE
-
-/obj/structure/sign/mining/survival
-	name = "shelter sign"
-	desc = "A high visibility sign designating a safe shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival"
-
 //Fluff
 /obj/structure/tubes
 	icon_state = "tubes"
