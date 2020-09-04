@@ -53,7 +53,7 @@
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	if(sizzel)
+	if(sizzle)
 		QDEL_NULL(sizzle)
 	if(process_effect)
 		QDEL_NULL(process_effect)
