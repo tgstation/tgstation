@@ -35,6 +35,7 @@
 #include "surgeries.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
+#include "pills.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
