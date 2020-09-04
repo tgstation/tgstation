@@ -54,6 +54,7 @@
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
 	QDEL_NULL(sizzle)
+	QDEL_NULL(process_effect)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
