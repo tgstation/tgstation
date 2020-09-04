@@ -766,13 +766,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		return TRUE
 
 /mob/living/carbon/proc/liver_failure()
-	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
+	end_metabolization(keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+
+/**
+ * Ends metabolization on the mob
+ *
+ * This stop all reagents in the body and organs from metabolizing
+ * Vars:
+ * * keep_liverless (bool)(optional)(default:TRUE) Will keep working without a liver
+ */
+/mob/living/carbon/proc/end_metabolization(keep_liverless = TRUE)
+	reagents.end_metabolization(src, keep_liverless = keep_liverless)
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly)
+		belly.reagents.end_metabolization(src, keep_liverless = keep_liverless)
 
 /////////////
 //CREMATION//
