@@ -725,19 +725,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /mob/living/carbon/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	. = ..()
-	if(!.)
-		var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
-		if(!belly)
-			return
-		. = belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
+	if(.)
+		return
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		return FALSE
+	. = belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
 
 /mob/living/carbon/remove_reagent(reagent, amount, safety)
 	. = ..()
-	if(!.)
-		var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
-		if(!belly)
-			return
-		. = belly.reagents.remove_reagent(reagent, amount, safety)
+	if(.)
+		return
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		return FALSE
+	. = belly.reagents.remove_reagent(reagent, amount, safety)
 
 /mob/living/carbon/get_reagent_amount(reagent)
 	. = ..()
