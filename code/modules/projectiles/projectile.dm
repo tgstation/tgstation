@@ -186,8 +186,10 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		hit_limb = L.check_limb_hit(def_zone)
-	if(SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb) & COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
-		return BULLET_ACT_HIT
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
+
+	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
+		return
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
