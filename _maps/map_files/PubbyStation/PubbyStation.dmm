@@ -928,7 +928,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/computer/rdconsole/robotics,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_sat_ext_as)
 "adg" = (
@@ -6883,7 +6883,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arS" = (
@@ -12039,7 +12039,6 @@
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes,
 /obj/item/lighter,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aEp" = (
@@ -25583,9 +25582,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bom" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -25896,7 +25893,7 @@
 	pixel_x = -25;
 	pixel_y = -8
 	},
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -25985,7 +25982,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpf" = (
@@ -26709,7 +26706,7 @@
 /turf/open/floor/grass,
 /area/medical/medbay/zone2)
 "bqU" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = 6
 	},
@@ -28531,7 +28528,7 @@
 /area/medical/chemistry)
 "bvw" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -31937,7 +31934,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -36167,6 +36164,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bMP" = (
@@ -37268,7 +37266,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -43218,7 +43216,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "chk" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
@@ -48031,8 +48029,7 @@
 	pixel_y = 2
 	},
 /obj/item/pen{
-	pixel_x = 8;
-	pixel_y = 0
+	pixel_x = 8
 	},
 /obj/item/reagent_containers/dropper{
 	pixel_x = -1;
@@ -51457,7 +51454,6 @@
 "ktM" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -51947,7 +51943,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/zone2)
 "llS" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -52216,7 +52212,6 @@
 /obj/machinery/requests_console{
 	department = "Genetics";
 	name = "Genetics Requests Console";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -54395,8 +54390,7 @@
 	pixel_y = 11
 	},
 /obj/item/storage/box/monkeycubes{
-	pixel_x = -6;
-	pixel_y = 0
+	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -54632,9 +54626,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/piratepad_control/civilian{
-	dir = 2
-	},
+/obj/machinery/computer/piratepad_control/civilian,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -55296,7 +55288,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,

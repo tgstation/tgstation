@@ -38777,7 +38777,7 @@
 /area/bridge)
 "byo" = (
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -39292,7 +39292,7 @@
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "bzj" = (
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
@@ -47685,7 +47685,6 @@
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/cigarette/cigar,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bNc" = (
@@ -83422,7 +83421,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "deh" = (
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -89861,6 +89860,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsO" = (
@@ -90646,7 +90646,7 @@
 /area/crew_quarters/heads/hor)
 "duM" = (
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -94781,7 +94781,7 @@
 /obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32
 	},
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
