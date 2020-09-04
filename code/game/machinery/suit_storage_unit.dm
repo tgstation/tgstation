@@ -300,7 +300,7 @@
 /obj/machinery/suit_storage_unit/proc/create_silhouette_of(atom/item)
 	var/image/image = image(initial(item.icon), initial(item.icon_state))
 	image.alpha = 128
-	image.color = "#FF0000"
+	image.color = COLOR_RED
 	return image
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
