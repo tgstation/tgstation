@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/items = locturf.contents - src - locturf.lighting_object
 	if(!LAZYLEN(items))//Dont do anything at all if theres nothing there but the conveyor
 		return
-	var/list/affecting = list()
+	var/list/affecting
 	if(length(items) > MAX_CONVEYOR_ITEMS_MOVE)
 		affecting = items.Copy(1, MAX_CONVEYOR_ITEMS_MOVE + 1)//Lists start at 1 lol
 	else
