@@ -24,7 +24,7 @@
 /obj/item/food/Initialize()
 	. = ..()
 	if(food_reagents)
-		food_reagents = string_num_lists(food_reagents)
+		food_reagents = string_num_list(food_reagents)
 	if(tastes)
 		tastes = string_num_list(tastes)
 	if(eatverbs)
