@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Zipper noises are no longer played on the lobby screen when a character joins with a random-colored jumpsuit."

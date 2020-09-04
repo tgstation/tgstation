@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - tweak: "The \"Fit Viewport\" verb and preference now take into account a 300px minimum width for the chat, in case widescreen is combined with a narrow window."
