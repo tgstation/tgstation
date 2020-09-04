@@ -27,6 +27,7 @@
 #include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
+#include "reagent_mod_procs.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "siunit.dm"
