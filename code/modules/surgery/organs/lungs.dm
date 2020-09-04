@@ -328,54 +328,6 @@
 			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
 		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
 
-	// Miasma
-		if (breath_gases[/datum/gas/miasma])
-			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
-
-			//Miasma sickness
-			if(prob(0.5 * miasma_pp))
-				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(min(round(max(miasma_pp/2, 1), 1), 6), min(round(max(miasma_pp, 1), 1), 8))
-				//tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level) //
-				miasma_disease.name = "Unknown"//^each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
-				miasma_disease.try_infect(owner)
-
-			// Miasma side effects
-			switch(miasma_pp)
-				if(0.25 to 5)
-					// At lower pp, give out a little warning
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
-					if(prob(5))
-						to_chat(owner, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-				if(5 to 15)
-					//At somewhat higher pp, warning becomes more obvious
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
-				if(15 to 30)
-					//Small chance to vomit. By now, people have internals on anyway
-					if(prob(5))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				if(30 to INFINITY)
-					//Higher chance to vomit. Let the horror start
-					if(prob(15))
-						to_chat(owner, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-						SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-						owner.vomit()
-				else
-					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-			// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
-			// Then again, this is a purely hypothetical scenario and hardly reachable
-			owner.adjust_disgust(0.1 * miasma_pp)
-
-			breath_gases[/datum/gas/miasma][MOLES]-=gas_breathed
-
-		// Clear out moods when no miasma at all
-		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()
 

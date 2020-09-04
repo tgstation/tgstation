@@ -146,14 +146,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = -10
 	rarity = 200
 
-/datum/gas/miasma
-	id = "miasma"
-	specific_heat = 20
-	name = "Miasma"
-	gas_overlay = "miasma"
-	moles_visible = MOLES_GAS_VISIBLE * 60
-	rarity = 250
-
 /datum/gas/freon
 	id = "freon"
 	specific_heat = 600

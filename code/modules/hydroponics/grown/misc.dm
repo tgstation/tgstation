@@ -42,28 +42,6 @@
 	genes = list()
 	mutatelist = list()
 
-/obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
-	if(istype(I, /obj/machinery/hydroponics))
-		if(!I.myseed)
-			START_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/seeds/starthistle/corpse_flower/process()
-	var/obj/machinery/hydroponics/parent = loc
-	if(parent.age < maturation) // Start a little before it blooms
-		return
-
-	var/turf/open/T = get_turf(parent)
-	if(abs(ONE_ATMOSPHERE - T.return_air().return_pressure()) > (potency/10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
-		return
-
-	var/datum/gas_mixture/stank = new
-	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*7*MIASMA_CORPSE_MOLES // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
-	T.assume_air(stank)
-	T.air_update_turf()
-
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle
 	name = "pack of galaxythistle seeds"
