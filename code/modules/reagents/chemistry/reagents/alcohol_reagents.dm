@@ -2283,5 +2283,4 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/e_tank/on_mob_life(mob/living/carbon/C)
 	C.adjustStaminaLoss(-2*REM, 0)
-	to_chat(C, "<span class='danger'>You feel your energy restored!</span>")
 	..()
