@@ -103,7 +103,7 @@ This section is for the event controller
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
-						anomaly from a portal by using the anomaly neutralizer, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
+						crystal from a portal by using the anomaly neutralizer, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
 	addtimer(CALLBACK(src, .proc/spawn_portals), 3 SECONDS)
