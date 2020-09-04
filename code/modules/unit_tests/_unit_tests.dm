@@ -22,6 +22,7 @@
 #include "medical_wounds.dm"
 #include "metabolizing.dm"
 #include "outfit_sanity.dm"
+#include "pills.dm"
 #include "plantgrowth_tests.dm"
 #include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
@@ -29,13 +30,13 @@
 #include "resist.dm"
 #include "say.dm"
 #include "siunit.dm"
+#include "stomach.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
-#include "pills.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
