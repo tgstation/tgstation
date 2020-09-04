@@ -53,8 +53,10 @@
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	QDEL_NULL(sizzle)
-	QDEL_NULL(process_effect)
+	if(sizzel)
+		QDEL_NULL(sizzle)
+	if(process_effect)
+		QDEL_NULL(process_effect)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
@@ -94,7 +96,7 @@
 /// Handles the slow corrosion of the parent [/atom].
 /datum/component/acid/process()
 	process_effect?.InvokeAsync()
-	if(QDELETING(src))
+	if(QDELING(src))
 		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))))
 
