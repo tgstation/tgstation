@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - rscdel: "R&D Consoles are no longer required to operate other machinery including mechfabs, omni-protolathes, omni-imprinters and the destructive analyzer. These consoles have been removed and replaced with basic modular computers."
-  - rscdel: "The destructive analyzer has lost its material reclaimation feature. It now only destroys items and unlocks techweb nodes."

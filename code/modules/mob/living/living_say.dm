@@ -113,17 +113,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		client?.dsay(message)
 		return
 
+	// dead is the only state you can never emote
+	if(stat != DEAD && check_emote(original_message, forced))
+		return
 
 	switch(stat)
 		if(SOFT_CRIT)
-			if(check_emote(original_message, forced))
-				return
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			if(check_emote(original_message, forced) || !(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
 				return
 		if(HARD_CRIT)
-			if(check_emote(original_message, forced) || !(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
 				return
 		if(DEAD)
 			say_dead(original_message)

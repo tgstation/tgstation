@@ -3800,7 +3800,6 @@
 /obj/structure/chair/stool,
 /obj/machinery/camera{
 	c_tag = "Prison Visitation";
-	dir = 2;
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/trimline/red/warning{
@@ -11170,7 +11169,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -11509,7 +11507,6 @@
 "azT" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azU" = (
@@ -12758,7 +12755,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -13718,7 +13714,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plating,
@@ -15722,7 +15717,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel,
@@ -16166,7 +16160,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plating,
@@ -17911,7 +17904,6 @@
 	pixel_y = 15
 	},
 /obj/item/stack/cable_coil{
-	pixel_x = 0;
 	pixel_y = 18
 	},
 /obj/machinery/requests_console{
@@ -19501,7 +19493,6 @@
 	pixel_x = -8
 	},
 /obj/item/assembly/prox_sensor{
-	pixel_x = 0;
 	pixel_y = 12
 	},
 /obj/machinery/light{
@@ -20211,9 +20202,7 @@
 /obj/item/clothing/gloves/color/fyellow{
 	pixel_y = 6
 	},
-/obj/item/clothing/gloves/color/fyellow{
-	pixel_x = 0
-	},
+/obj/item/clothing/gloves/color/fyellow,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23590,9 +23579,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/disposal/delivery_chute{
-	dir = 2
-	},
+/obj/machinery/disposal/delivery_chute,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -25011,8 +24998,7 @@
 	pixel_y = 9
 	},
 /obj/item/cartridge/quartermaster{
-	pixel_x = 9;
-	pixel_y = 0
+	pixel_x = 9
 	},
 /obj/item/cartridge/quartermaster{
 	pixel_x = 5;
@@ -25959,8 +25945,7 @@
 /area/quartermaster/sorting)
 "biI" = (
 /obj/machinery/firealarm{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -26653,8 +26638,7 @@
 "bku" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/firealarm{
-	pixel_x = -31;
-	pixel_y = 0
+	pixel_x = -31
 	},
 /obj/machinery/light{
 	dir = 8
@@ -38120,7 +38104,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "0";
 	req_one_access_txt = "25;28"
 	},
 /obj/machinery/navbeacon/wayfinding,
@@ -44333,7 +44316,6 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Service Deliveries";
-	req_access_txt = "0";
 	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
 	},
 /obj/structure/disposalpipe/segment,
@@ -49992,6 +49974,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/item/reagent_containers/glass/bottle/ethanol,
 /obj/item/reagent_containers/glass/bottle/ethanol,
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "cpV" = (
@@ -60286,8 +60269,7 @@
 "cSF" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/machinery/camera{
-	c_tag = "Mining Dock";
-	dir = 2
+	c_tag = "Mining Dock"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -62662,7 +62644,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Laser Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /turf/open/floor/plating,
@@ -68330,8 +68311,6 @@
 	dir = 8
 	},
 /obj/structure/sink{
-	dir = 2;
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /mob/living/simple_animal/mouse/brown/tom,
@@ -72670,7 +72649,6 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -76331,7 +76309,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
