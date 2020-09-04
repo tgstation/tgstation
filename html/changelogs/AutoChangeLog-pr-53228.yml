@@ -1,7 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - tweak: "The stomach is now needed to eat food or drink"
-  - tweak: "Vomiting now empties the stomach only,"
-  - rscadd: "New surgery to filter the blood of reagents and the tool that is needed"
-  - tweak: "Stomach pump surgery is now do able on the living"
