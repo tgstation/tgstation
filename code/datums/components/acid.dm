@@ -94,6 +94,8 @@
 /// Handles the slow corrosion of the parent [/atom].
 /datum/component/acid/process()
 	process_effect?.InvokeAsync()
+	if(QDELETING(src))
+		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))))
 
 /// Handles processing on a [/obj].
