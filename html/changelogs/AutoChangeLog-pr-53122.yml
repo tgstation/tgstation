@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Being polled as a ghost for things like imaginary friends will now show the player's real name, rather than their displayed name."
