@@ -568,3 +568,7 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/e_tank
+	results = list(/datum/reagent/consumable/ethanol/e_tank = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/pina_colada = 2, /datum/reagent/teslium = 1) //Megaman Starforce 3 has a recipe and it seems to just be an energy drink pina colada.

@@ -2268,3 +2268,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
+
+/datum/reagent/consumable/ethanol/e_tank
+	name = "E Tank"
+	description = "A weirdly named energy drink. Tastes tropical and refills your energy instantly!"
+	boozepwr = 75 //robots may not feel it but this is STRONG
+	color = "#5555FF"
+	quality = DRINK_FANTASTIC //atleast its a good drink
+	taste_description = "tropical energy"
+	glass_icon_state = "etank"
+	glass_name = "E Tank"
+	glass_desc = "A weirdly named energy drink can. Tastes tropical and refills your energy instantly!"
+
+/datum/reagent/consumable/ethanol/e_tank/expose_mob(mob/living/M, methods=INGEST, reac_volume, show_message = 1) //thanks synthflesh for being one of the few things in the game with this proc
+	if(iscarbon(M)) //robots cant drink this (yet)
+		var/mob/living/carbon/carbies = M
+		if (carbies.stat == DEAD)
+			show_message = 0
+		if(methods)
+			M.adjustStaminaLoss(-2*reac_volume*REM, 0) //a full drinking glass is a full stamina heal
+			if(show_message)
+				to_chat(carbies, "<span class='danger'>You feel your energy restored!</span>")
+	..()
+	return TRUE
