@@ -96,7 +96,7 @@
 /// Handles the slow corrosion of the parent [/atom].
 /datum/component/acid/process()
 	process_effect?.InvokeAsync()
-	if(QDELING(src))
+	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
 	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))))
 
