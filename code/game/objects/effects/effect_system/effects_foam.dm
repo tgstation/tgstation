@@ -64,7 +64,6 @@
 	if(!istype(L))
 		return
 	L.adjust_fire_stacks(-2)
-	L.ExtinguishMob()
 
 /obj/effect/particle_effect/foam/metal
 	name = "aluminium foam"
@@ -326,7 +325,7 @@
 				U.update_icon()
 				U.visible_message("<span class='danger'>[U] sealed shut!</span>")
 		for(var/mob/living/L in O)
-			L.ExtinguishMob()
+			L.extinguish_mob()
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
