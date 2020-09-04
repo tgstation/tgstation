@@ -22,14 +22,14 @@
 /datum/component/acid/Initialize(_acid_power, _acid_volume, _max_volume=null)
 	if((_acid_power) <= 0 || (_acid_volume <= 0))
 		stack_trace("Acid component added with insufficient acid power ([_acid_power]) or acid volume ([_acid_power]).")
-		return COMPONENT_INCOMPATIBLE // Not enough acid.
+		return COMPONENT_INCOMPATIBLE // Not enough acid or the acid's too weak, either one.
 	if(!isatom(parent))
 		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /atom subtype.")
 		return COMPONENT_INCOMPATIBLE // Incompatible type. TODO: Rework take_damage to the atom level and move this there.
 
 	if(isobj(parent))
 		var/obj/parent_object = parent
-		if(parent_object.resistance_flags & UNACIDABLE) // The parent object cannot have acid.
+		if(parent_object.resistance_flags & UNACIDABLE) // The parent object cannot have acid. Should never happen, will happen.
 			stack_trace("Acid component added to unacidable object [parent].")
 			return COMPONENT_INCOMPATIBLE
 
@@ -176,7 +176,7 @@
 	if(!istype(user))
 		return NONE
 	if((parent_atom == user) || (parent_atom.loc == user))
-		return NONE // So we people can take their own clothes off.
+		return NONE // So people can take their own clothes off.
 	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
 		return NONE
 	if(user.gloves?.resistance_flags & (UNACIDABLE|ACID_PROOF))
