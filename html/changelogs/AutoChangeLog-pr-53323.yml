@@ -1,0 +1,4 @@
+author: "Jack7D1"
+delete-after: True
+changes: 
+  - bugfix: "Swarmers can no longer break walls with large pressure differences across them."
