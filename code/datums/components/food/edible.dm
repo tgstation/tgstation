@@ -165,9 +165,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(!CanConsume(eater, feeder))
 		return
-	var/fullness = eater.nutrition + 10 //The theoretical fullness of the person eating if they were to eat this
-	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
-		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	. = COMPONENT_ITEM_NO_ATTACK //Point of no return I suppose
 

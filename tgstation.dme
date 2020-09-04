@@ -3052,6 +3052,7 @@
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\surgery\amputation.dm"
+#include "code\modules\surgery\blood_filter.dm"
 #include "code\modules\surgery\bone_mending.dm"
 #include "code\modules\surgery\brain_surgery.dm"
 #include "code\modules\surgery\burn_dressing.dm"
