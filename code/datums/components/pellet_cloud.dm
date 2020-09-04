@@ -143,7 +143,6 @@
 	SIGNAL_HANDLER_DOES_SLEEP
 
 	var/atom/A = parent
-	testing("blast triggerer [punishable_triggerer]")
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
 		handle_martyrs(punishable_triggerer) // note that we can modify radius in this proc
@@ -152,8 +151,7 @@
 		if(triggered_mine.shred_triggerer && istype(punishable_triggerer)) // free shrapnel for the idiot who stepped on it if we're a mine that shreds the triggerer
 			pellet_delta += radius // so they don't count against the later total
 			for(var/i in 1 to radius)
-				testing("spawn extra pellet")
-				pew(punishable_triggerer)
+				pew(punishable_triggerer, TRUE)
 
 	if(radius < 1)
 		return
@@ -260,11 +258,11 @@
 		finalize()
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
-/datum/component/pellet_cloud/proc/pew(atom/target, spread=0)
+/datum/component/pellet_cloud/proc/pew(atom/target, landmine_victim)
 	var/obj/projectile/P = new projectile_type(get_turf(parent))
 
 	//Shooting Code:
-	P.spread = spread
+	P.spread = 0
 	P.original = target
 	P.fired_from = parent
 	P.firer = parent // don't hit ourself that would be really annoying
@@ -275,6 +273,8 @@
 	RegisterSignal(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
 	pellets += P
 	P.fire()
+	if(landmine_victim)
+		P.process_hit(get_turf(target), target)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
@@ -285,7 +285,6 @@
 	for(var/atom/target in targets_hit)
 		num++
 		var/num_hits = targets_hit[target]
-		testing("Target [target] (#[num]): [num_hits] pellets")
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))

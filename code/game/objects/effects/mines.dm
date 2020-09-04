@@ -15,6 +15,7 @@
 /obj/effect/mine/Initialize()
 	. = ..()
 	if(arm_delay)
+		armed = FALSE
 		icon_state = "uglymine-inactive"
 		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
 
@@ -49,7 +50,11 @@
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
+	if(triggerer)
+		visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
+	else
+		visible_message("<span class='danger'>[icon2html(src, viewers(src))] [src] detonates!</span>")
+
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -220,7 +225,11 @@
 	var/shred_triggerer = FALSE
 
 /obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	return
+
+/obj/effect/mine/shrapnel/triggermine(atom/movable/AM)
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+	return ..()
 
 /obj/effect/mine/shrapnel/sting
 	name = "stinger mine"
@@ -230,13 +239,14 @@
 	name = "\improper AP mine"
 	desc = "A defensive landmine filled with 'AP shrapnel', good for defending cramped spaces without breaching hulls. The AP stands for 'Asset Protection', though it's still plenty nasty against any fool who sets it off."
 	shrapnel_type = /obj/projectile/bullet/pellet/capmine
+	shrapnel_magnitude = 4
 	shred_triggerer = TRUE
 	arm_delay = 3 SECONDS
 
 
 /obj/item/minespawner
 	name = "landmine deployment device"
-	desc = ""
+	desc = "When activated, will deploy an Asset Protection landmine after 3 seconds passes, perfect for high ranking NT officers looking to cover their assets from afar."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
 
