@@ -423,3 +423,18 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+
+/obj/item/blood_filter
+	name = "blood filter"
+	desc = "For filtering the blood."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bloodfilter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("pumps", "siphons")
+	attack_verb_simple = list("pumps", "siphons")
+	tool_behaviour = TOOL_BLOODFILTER
+	toolspeed = 1

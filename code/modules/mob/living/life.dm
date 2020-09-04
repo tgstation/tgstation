@@ -115,6 +115,23 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 
+/**
+ * Get the fullness of the mob
+ *
+ * This returns a value form 0 upwards to represent how full the mob is.
+ * The value is a total amount of consumable reagents in the body combined
+ * with the total amount of nutrition they have.
+ * This does not have an upper limit.
+ */
+/mob/living/proc/get_fullness()
+	var/fullness = nutrition
+	// we add the nutrition value of what we're currently digesting
+	for(var/bile in reagents.reagent_list)
+		var/datum/reagent/consumable/bits = bile
+		if(bits)
+			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+	return fullness
+
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 
