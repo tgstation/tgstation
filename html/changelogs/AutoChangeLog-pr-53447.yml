@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscdel: "Icons have temporarily been removed from the alt click menu citing significant performance concerns. They will be brought back soon."
