@@ -1,0 +1,5 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "Suit storage units now use a radial menu."
+  - tweak: "Suit storage units now put the items in your hand, rather than on the ground."
