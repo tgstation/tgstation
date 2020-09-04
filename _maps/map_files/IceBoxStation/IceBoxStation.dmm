@@ -49971,7 +49971,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/blood_filter,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "ddy" = (
