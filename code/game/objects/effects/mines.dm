@@ -7,12 +7,33 @@
 	icon_state = "uglymine"
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
+	/// Can be set to FALSE if we want a short 'coming online' delay, then set to TRUE. Can still be set off by damage
+	var/armed = TRUE
+	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
+	var/arm_delay
+
+/obj/effect/mine/Initialize()
+	. = ..()
+	if(arm_delay)
+		icon_state = "uglymine-inactive"
+		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
+
+/obj/effect/mine/examine(mob/user)
+	. = ..()
+	if(!armed)
+		. += "\t<span class='information'>It appears to be inactive...</span>"
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
+/obj/effect/mine/proc/now_armed()
+	armed = TRUE
+	icon_state = "uglymine"
+	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
+	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>")
+
 /obj/effect/mine/Crossed(atom/movable/AM)
-	if(triggered || !isturf(loc))
+	if(triggered || !isturf(loc) || !armed)
 		return
 	. = ..()
 
@@ -25,16 +46,17 @@
 	. = ..()
 	triggermine()
 
-/obj/effect/mine/proc/triggermine(mob/victim)
+/obj/effect/mine/proc/triggermine(atom/movable/triggerer)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off [icon2html(src, viewers(src))] [src]!</span>")
+	visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	mineEffect(victim)
+	if(ismob(triggerer))
+		mineEffect(triggerer)
 	triggered = TRUE
-	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
+	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED, triggerer)
 	qdel(src)
 
 /obj/effect/mine/explosive
@@ -50,18 +72,6 @@
 /obj/effect/mine/stun
 	name = "stun mine"
 	var/stun_time = 80
-
-/obj/effect/mine/shrapnel
-	name = "shrapnel mine"
-	var/shrapnel_type = /obj/projectile/bullet/shrapnel
-	var/shrapnel_magnitude = 3
-
-/obj/effect/mine/shrapnel/mineEffect(mob/victim)
-	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
-
-/obj/effect/mine/shrapnel/sting
-	name = "stinger mine"
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
@@ -197,3 +207,60 @@
 	sleep(duration)
 	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")
+
+
+/// These mines spawn pellet_clouds around them when triggered
+/obj/effect/mine/shrapnel
+	name = "shrapnel mine"
+	/// The type of projectiles we're shooting out of this
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	/// Broadly, how many pellets we're spawning, the total is n! - (n-1)! pellets, so don't set it too high. For reference, 15 is probably pushing it at MAX
+	var/shrapnel_magnitude = 3
+	/// If TRUE, we spawn extra pellets to eviscerate the person who stepped on it, otherwise it just spawns a ring of pellets around the tile we're on (making setting it off an offensive move)
+	var/shred_triggerer = FALSE
+
+/obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+
+/obj/effect/mine/shrapnel/sting
+	name = "stinger mine"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
+
+/obj/effect/mine/shrapnel/capspawn
+	name = "\improper AP mine"
+	desc = "A defensive landmine filled with 'AP shrapnel', good for defending cramped spaces without breaching hulls. The AP stands for 'Asset Protection', though it's still plenty nasty against any fool who sets it off."
+	shrapnel_type = /obj/projectile/bullet/pellet/capmine
+	shred_triggerer = TRUE
+	arm_delay = 3 SECONDS
+
+
+/obj/item/minespawner
+	name = "landmine deployment device"
+	desc = ""
+	icon = 'icons/obj/device.dmi'
+	icon_state = "beacon"
+
+	var/mine_type = /obj/effect/mine/shrapnel/capspawn
+	var/active = FALSE
+
+/obj/item/minespawner/attack_self(mob/user)
+	. = ..()
+	if(active)
+		return
+	if(iscarbon(user))
+		var/mob/living/carbon/user_human = user
+		user_human.throw_mode_on()
+
+	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
+	to_chat(user, "<span class='warning'>You arm \the [src], causing it to shake! It will deploy in 3 seconds.</span>")
+	active = TRUE
+	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
+
+
+/obj/item/minespawner/proc/deploy_mine()
+	do_alert_animation()
+	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
+	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
+	visible_message("<span class='danger'>\The [src] releases a puff of smoke, revealing \a [new_mine]!</span>")
+	new /obj/effect/particle_effect/smoke(get_turf(src))
+	qdel(src)

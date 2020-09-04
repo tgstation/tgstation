@@ -21,6 +21,7 @@
 	icon_state = "s-casing"
 	embedding = null // embedding vars are taken from the projectile itself
 
+
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
 	damage = 14
@@ -62,17 +63,18 @@
 	ricochets_max = 6
 	ricochet_chance = 110
 
-/obj/projectile/bullet/pellet/stingball/breaker
-	name = "breakbang pellet"
-	damage = 10
-	wound_bonus = 40
-	sharpness = SHARP_NONE
 
-/obj/projectile/bullet/pellet/stingball/shred
-	name = "shredbang pellet"
-	damage = 10
-	wound_bonus = 30
+/obj/projectile/bullet/pellet/capmine
+	name = "\improper AP shrapnel shard"
+	range = 7
+	damage = 8
+	stamina = 8
 	sharpness = SHARP_EDGED
+	wound_bonus = 5
+	bare_wound_bonus = 5
+	ricochets_max = 2
+	ricochet_chance = 140
+	shrapnel_type = /obj/item/shrapnel/stingball
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds
