@@ -74,7 +74,7 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
+	if(has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -146,7 +146,7 @@
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
+		if(has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return FALSE
 		adjustOxyLoss(1)
 
@@ -346,7 +346,7 @@
 			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 				O.on_life()
 	else
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+		if(has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
@@ -722,6 +722,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
 
 	return fullness
+
+/mob/living/carbon/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+	. = ..()
+	if(!.)
+		var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+		if(!belly)
+			return
+		. = belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
+
+/mob/living/carbon/remove_reagent(reagent, amount, safety)
+	. = ..()
+	if(!.)
+		var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+		if(!belly)
+			return
+		. = belly.reagents.remove_reagent(reagent, amount, safety)
+
+/mob/living/carbon/get_reagent_amount(reagent)
+	. = ..()
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		return
+	. += belly.reagents.get_reagent_amount(reagent)
 
 /////////
 //LIVER//

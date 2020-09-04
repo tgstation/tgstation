@@ -50,7 +50,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type, ignore_stomach = TRUE)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)
 	return TRUE
 
