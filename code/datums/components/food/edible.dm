@@ -189,13 +189,16 @@ Behavior that's still missing from this component that original food items had t
 	for(var/obj/item/crafted_part in this_food.contents)
 		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
 
-	if(istype(recipe))
-		contents_loop:
-			for(var/content_object in this_food.contents)
-				for(var/recipe_object in recipe.real_parts)
-					if(istype(content_object, recipe_object))
-						continue contents_loop
-				qdel(A)
+	var/list/objects_to_delete = list()
+
+	// Remove all non recipe objects from the contents
+	for(var/content_object in this_food.contents)
+		for(var/recipe_object in recipe.real_parts)
+			if(istype(content_object, recipe_object))
+				continue
+		objects_to_delete += content_object
+
+	QDEL_LIST(objects_to_delete)
 
 	for(var/r_id in initial_reagents)
 		var/amount = initial_reagents[r_id] * CRAFTED_FOOD_BASE_REAGENT_MODIFIER
