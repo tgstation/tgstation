@@ -195,7 +195,7 @@
   * * [/turf/open/space/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
-	//SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
