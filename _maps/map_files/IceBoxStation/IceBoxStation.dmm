@@ -51723,6 +51723,7 @@
 /area/medical/chemistry)
 "jtR" = (
 /obj/effect/landmark/start/research_director,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "juq" = (
