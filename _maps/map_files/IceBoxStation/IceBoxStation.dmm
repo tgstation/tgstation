@@ -54831,7 +54831,7 @@
 	dir = 4;
 	name = "Misc Research APC";
 	pixel_x = 25;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
