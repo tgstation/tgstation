@@ -57,11 +57,54 @@ This section is for the event controller
 		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
 			continue
 		sm_crystal += temp
-	if(sm_crystal == null)
+	if(!length(sm_crystal))
 		log_game("No engine found, killing the crystal invasion event.")
 		kill()
 		return
-	choose_wave_type()
+
+	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
+	dest_crystal = crystal.destabilize(portal_numbers)
+	RegisterSignal(dest_crystal, COMSIG_PARENT_QDELETING, .proc/on_dest_crystal_qdel)
+
+/*
+
+*/
+	var/list/center_finder = list()
+	for(var/es in GLOB.generic_event_spawns)
+		var/obj/effect/landmark/event_spawn/temp = es
+		if(is_station_level(temp.z))
+			center_finder += temp
+	if(!center_finder.len)
+		kill()
+		CRASH("No landmarks on the station map, aborting")
+	var/obj/center = pick(center_finder)
+	var/turf/center_turf = center.loc
+	var/area/center_area = get_area(center_turf)
+
+	explosion(center_turf,0,3,5,7,7)
+
+	center_portal = new/obj/structure/crystal_portal/huge(center_turf)
+
+	for(var/turf/turf_loc in RANGE_TURFS(5, center_turf))
+		var/distance_from_center = max(get_dist(turf_loc, center_turf), 1)
+		if(prob(250 / distance_from_center))
+			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
+				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
+			else
+				turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
+
+	var/list/portal_spawner_turfs = list()
+	for(var/range_turf in RANGE_TURFS(10, center_turf))
+		if(!isopenturf(range_turf) || isspaceturf(range_turf) || isturf(center_turf))
+			continue
+		portal_spawner_turfs += range_turf
+
+	for(var/i in 1 to 20)
+		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
+		var/turf/portal_spawner_turf = pick_n_take(portal_spawner_turfs)
+		new pick_portal(portal_spawner_turf)
+
+//	choose_wave_type()
 
 /datum/round_event/crystal_invasion/announce(fake)
 	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert")
@@ -93,7 +136,7 @@ This section is for the event controller
 		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
 			continue
 		sm_crystal += temp
-	if(sm_crystal == null)
+	if(!length(sm_crystal))
 		log_game("No engine found, killing the crystal invasion event.")
 		kill()
 		return
@@ -218,6 +261,10 @@ This section is for the event controller
 	message_admins("Deleted Destabilized crystal, aborting")
 	dest_crystal = null
 	kill()
+
+/turf/open/indestructible/crystal_floor
+
+/turf/closed/indestructible/crystal_wall
 
 /*
 This section is for the destabilized SM
