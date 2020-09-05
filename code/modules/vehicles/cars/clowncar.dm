@@ -206,5 +206,8 @@
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
 	DumpMobs()
+	return ..()
+
+/obj/vehicle/sealed/car/clowncar/obj_destruction()
 	explosion(loc, 0, 1, 2, 3 , 0)
 	return ..()
