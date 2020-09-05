@@ -58,11 +58,12 @@
 	living_user.adjustToxLoss(-2, FALSE)
 	living_user.adjustOxyLoss(-0.5, FALSE)
 	living_user.adjustStaminaLoss(-2)
+	living_user.AdjustAllImmobility(-5)
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
 	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
-	gain_text = "Lords of the depths help those in dire need at a cost."
+	gain_text = "Rusted Hills help those in dire need at a cost."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
@@ -101,7 +102,7 @@
 /datum/eldritch_knowledge/armor
 	name = "Armorer's ritual"
 	desc = "You can now create eldritch armor using a table and a gas mask."
-	gain_text = "For I am the heir to the throne of doom."
+	gain_text = "Rusted Hills have welcomed Blacksmith with their generosity."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/flesh_ghoul)
 	required_atoms = list(/obj/structure/table,/obj/item/clothing/mask/gas)
@@ -110,7 +111,7 @@
 /datum/eldritch_knowledge/essence
 	name = "Priest's ritual"
 	desc = "You can now transmute a tank of water into a bottle of eldritch water."
-	gain_text = "This is an old recipe, i got it from an owl."
+	gain_text = "Old recipe, the Owl has whispered it to me."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/spell/ashen_shift)
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank)
@@ -119,7 +120,7 @@
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
-	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
+	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come! Rusted Hills YELL MY NAME!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
@@ -137,15 +138,16 @@
 
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
 	. = ..()
-	if(!finished)
+	var/turf/user_loc_turf = get_turf(user)
+	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user) || !finished)
 		return
 	var/mob/living/carbon/human/human_user = user
-	human_user.adjustBruteLoss(-3, FALSE)
-	human_user.adjustFireLoss(-3, FALSE)
-	human_user.adjustToxLoss(-3, FALSE)
-	human_user.adjustOxyLoss(-1, FALSE)
-	human_user.adjustStaminaLoss(-10)
-
+	human_user.adjustBruteLoss(-4, FALSE)
+	human_user.adjustFireLoss(-4, FALSE)
+	human_user.adjustToxLoss(-4, FALSE)
+	human_user.adjustOxyLoss(-2, FALSE)
+	human_user.adjustStaminaLoss(-20)
+	human_user.AdjustAllImmobility(-10)
 
 /**
   * #Rust spread datum
@@ -157,29 +159,37 @@
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
+	var/turf/centre
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/indestructible,/turf/closed/indestructible,/turf/open/space,/turf/open/lava,/turf/open/chasm))
 	var/spread_per_tick = 6
 
 
 /datum/rust_spread/New(loc)
 	. = ..()
-	var/turf/turf_loc = get_turf(loc)
-	turf_loc.rust_heretic_act()
-	turfs += turf_loc
+	centre = get_turf(loc)
+	centre.rust_heretic_act()
+	turfs += centre
 	START_PROCESSING(SSprocessing,src)
-
 
 /datum/rust_spread/Destroy(force, ...)
 	STOP_PROCESSING(SSprocessing,src)
 	return ..()
 
 /datum/rust_spread/process()
-	compile_turfs()
+
+	if(edge_turfs.len < spread_per_tick)
+		compile_turfs()
+
 	var/turf/T
 	for(var/i in 0 to spread_per_tick)
+		if(!edge_turfs.len)
+			continue
 		T = pick(edge_turfs)
+		edge_turfs -= T
 		T.rust_heretic_act()
-		turfs += get_turf(T)
+		turfs += T
+
+
 
 /**
   * Compile turfs
@@ -188,13 +198,17 @@
   */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
-	for(var/X in turfs)
-		if(!istype(X,/turf/closed/wall/rust) && !istype(X,/turf/closed/wall/r_wall/rust) && !istype(X,/turf/open/floor/plating/rust))
-			turfs -=X
+	var/list/removal_list = list()
+	var/max_dist = 1
+	for(var/turfie in turfs)
+		if(!istype(turfie,/turf/closed/wall/rust) && !istype(turfie,/turf/closed/wall/r_wall/rust) && !istype(turfie,/turf/open/floor/plating/rust))
+			removal_list +=turfie
+		max_dist = max(max_dist,get_dist(turfie,centre)+1)
+	turfs -= removal_list
+	for(var/turfie in spiral_range_turfs(max_dist,centre,FALSE))
+		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
-		for(var/turf/T in range(1,X))
-			if(T in turfs)
-				continue
-			if(is_type_in_typecache(T,blacklisted_turfs))
-				continue
-			edge_turfs += T
+		for(var/line_turfie_owo in getline(turfie,centre))
+			if(get_dist(turfie,line_turfie_owo) <= 1)
+				edge_turfs += turfie
+		CHECK_TICK

@@ -30,9 +30,10 @@
 	force = 6
 	hitsound = 'sound/items/welder.ogg'
 	name = "lit [initial(name)]"
-	attack_verb = list("burnt")
+	attack_verb_continuous = list("burns")
+	attack_verb_simple = list("burn")
 	set_light(l_range = 2, l_power = 2)
-	damtype = "fire"
+	damtype = BURN
 	START_PROCESSING(SSobj, src)
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_icon()

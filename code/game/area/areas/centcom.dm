@@ -7,8 +7,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 /area/centcom/control
@@ -106,7 +105,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 
 //Abductors
@@ -114,7 +113,7 @@
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = FALSE
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
@@ -124,8 +123,7 @@
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	noteleport = TRUE
-	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
 	ambientsounds = HIGHSEC
 

@@ -12,9 +12,10 @@
  */
 
 import { perf } from 'common/perf';
-import { UI_DISABLED, UI_INTERACTIVE } from './constants';
-import { releaseHeldKeys } from './hotkeys';
+import { setupDrag } from './drag';
+import { focusMap } from './focus';
 import { createLogger } from './logging';
+import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
@@ -42,6 +43,10 @@ export const backendSuspendSuccess = () => ({
 const initialState = {
   config: {},
   data: {},
+  shared: {},
+  // Start as suspended
+  suspended: Date.now(),
+  suspending: false,
 };
 
 export const backendReducer = (state = initialState, action) => {
@@ -72,17 +77,12 @@ export const backendReducer = (state = initialState, action) => {
         }
       }
     }
-    // Calculate our own fields
-    const visible = config.status !== UI_DISABLED;
-    const interactive = config.status === UI_INTERACTIVE;
     // Return new state
     return {
       ...state,
       config,
       data,
       shared,
-      visible,
-      interactive,
       suspended: false,
     };
   }
@@ -129,8 +129,25 @@ export const backendMiddleware = store => {
   let suspendInterval;
 
   return next => action => {
-    const { config, suspended } = selectBackend(store.getState());
+    const { suspended } = selectBackend(store.getState());
     const { type, payload } = action;
+
+    if (type === 'update') {
+      store.dispatch(backendUpdate(payload));
+      return;
+    }
+
+    if (type === 'suspend') {
+      store.dispatch(backendSuspendSuccess());
+      return;
+    }
+
+    if (type === 'ping') {
+      sendMessage({
+        type: 'pingReply',
+      });
+      return;
+    }
 
     if (type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${window.__windowId__})`);
@@ -144,12 +161,13 @@ export const backendMiddleware = store => {
     }
 
     if (type === 'backend/suspendSuccess') {
+      suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      releaseHeldKeys();
       Byond.winset(window.__windowId__, {
         'is-visible': false,
       });
+      setImmediate(() => focusMap());
     }
 
     if (type === 'backend/update') {
@@ -169,7 +187,11 @@ export const backendMiddleware = store => {
       }
     }
 
+    // Resume on incoming update
     if (type === 'backend/update' && suspended) {
+      resumeRenderer();
+      // Setup drag
+      setupDrag();
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
       setImmediate(() => {
@@ -239,22 +261,24 @@ export const sendAct = (action, payload = {}) => {
  *     title: string,
  *     status: number,
  *     interface: string,
- *     user: {
- *       name: string,
- *       ckey: string,
- *       observer: number,
- *     },
  *     window: {
  *       key: string,
  *       size: [number, number],
  *       fancy: boolean,
  *       locked: boolean,
  *     },
+ *     client: {
+ *       ckey: string,
+ *       address: string,
+ *       computer_id: string,
+ *     },
+ *     user: {
+ *       name: string,
+ *       observer: number,
+ *     },
  *   },
  *   data: any,
  *   shared: any,
- *   visible: boolean,
- *   interactive: boolean,
  *   suspending: boolean,
  *   suspended: boolean,
  * }}

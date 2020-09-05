@@ -17,22 +17,6 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/circulator
-	name = "Machine Design (Circulator Board)"
-	desc = "The circuit board for a circulator."
-	id = "circulator"
-	build_path = /obj/item/circuitboard/machine/circulator
-	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/teg
-	name = "Machine Design (TEG Board)"
-	desc = "The circuit board for a TEG."
-	id = "teg"
-	build_path = /obj/item/circuitboard/machine/generator
-	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
 	desc = "The circuit board for an automated announcement system."
@@ -609,6 +593,15 @@
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/board/plumbing_receiver
+	name = "Machine Design (Chemical Recipient)"
+	desc = "The circuit board for a Chemical Recipient."
+	id = "plumbing_receiver"
+	build_path = /obj/item/circuitboard/machine/plumbing_receiver
+	category = list ("Teleportation Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
 /datum/design/board/sheetifier
 	name = "Machine Design (Sheet-meister 2000)"
 	desc = "The circuit board for a Sheet-meister 2000."
@@ -637,3 +630,11 @@
 	build_path = /obj/item/circuitboard/machine/skill_station
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/accounting
+	name = "Machine Design (Account Registration Device)"
+	desc = "The circuit board for a Account Registration Device."
+	id = "accounting"
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	build_path = /obj/item/circuitboard/machine/accounting
+	category = list ("Misc. Machinery")

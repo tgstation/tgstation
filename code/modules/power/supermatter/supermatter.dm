@@ -14,12 +14,12 @@
 
 #define PLASMA_HEAT_PENALTY 15     // Higher == Bigger heat and waste penalty from having the crystal surrounded by this gas. Negative numbers reduce penalty.
 #define OXYGEN_HEAT_PENALTY 1
-#define PLUOXIUM_HEAT_PENALTY -1
+#define PLUOXIUM_HEAT_PENALTY 3
 #define TRITIUM_HEAT_PENALTY 10
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 8
+#define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
 #define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
 #define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 
@@ -37,7 +37,6 @@
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
-#define PLUOXIUM_HEAT_RESISTANCE 3
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
@@ -106,6 +105,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
+	base_icon_state = "darkmatter"
 
 	///The id of our supermatter
 	var/uid = 1
@@ -115,8 +115,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/zap_icon = DEFAULT_ZAP_ICON_STATE
 	///The portion of the gasmix we're on that we should remove
 	var/gasefficency = 0.15
-	///Used for changing icon states for diff base sprites
-	var/base_icon_state = "darkmatter"
 
 	///Are we exploding?
 	var/final_countdown = FALSE
@@ -202,7 +200,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
 		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
-		/datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE,
 		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
 	)
 	///The list of gases mapped against their powermix ratio
@@ -422,10 +419,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
+		var/turf/mob_turf = get_turf(M)
+		if(T.z == mob_turf.z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
-			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+
+			if (M.z == z)
+				to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+			else
+				to_chat(M, "<span class='boldannounce'>You hold onto \the [M.loc] as hard as you can, as reality distorts around you. You feel safe.</span>")
+
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
@@ -434,10 +437,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			S.consume(src)
 			return //No boom for me sir
 	else if(power > POWER_PENALTY_THRESHOLD)
-		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has released tritium from an overcharge.", INVESTIGATE_SUPERMATTER)
 		if(T)
-			var/obj/singularity/energy_ball/E = new(T)
-			E.energy = power
+			atmos_spawn_air("tritium=2500;TEMP=500000") //extremely fucking hot and could do fusion if you tried hard enough //GEORGE SEARS DID 9/11
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
@@ -535,7 +537,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			removed.assert_gas(gasID)
 
 		//calculating gas related values
-		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
+		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error //Old me, you're insane
 		combined_gas = max(removed.total_moles(), 0)
 
 		//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
@@ -546,20 +548,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Prevents huge bursts of gas/heat when a large amount of something is introduced
 		//They range between 0 and 1
 		for(var/gasID in gases_we_care_about)
-			gas_comp[gasID] += clamp(max(removed.gases[gasID][MOLES]/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
+			gas_comp[gasID] = clamp(removed.gases[gasID][MOLES] / combined_gas, 0, 1)
 
 		var/list/heat_mod = gases_we_care_about.Copy()
 		var/list/transit_mod = gases_we_care_about.Copy()
 		var/list/resistance_mod = gases_we_care_about.Copy()
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
-		var/pluoxiumbonus = (gas_comp[/datum/gas/pluoxium] >= 0.15) //makes pluoxium only work at 15%+
 		var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
 		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 
-		heat_mod[/datum/gas/pluoxium] = pluoxiumbonus
-		transit_mod[/datum/gas/pluoxium] = pluoxiumbonus
-		resistance_mod[/datum/gas/pluoxium] = pluoxiumbonus
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
@@ -572,7 +570,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		dynamic_heat_modifier = 0
 		for(var/gasID in gas_heat)
 			dynamic_heat_modifier += gas_comp[gasID] * gas_heat[gasID] * (isnull(heat_mod[gasID]) ? 1 : heat_mod[gasID])
-		dynamic_heat_modifier *= h2obonus
 		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 
 		//Value between 1 and 10. Effects the damage heat does to the crystal
@@ -764,7 +761,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return FALSE
 	if(!istype(Proj.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [Proj] fired by [key_name(Proj.firer)]", INVESTIGATE_SUPERMATTER)
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		if(power_changes) //This needs to be here I swear
 			power += Proj.damage * bullet_energy
 			if(!has_been_powered)
@@ -1142,14 +1139,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 40
-			target.zap_act(zap_str * multi, zap_flags, list())
+			target.zap_act(zap_str * multi, zap_flags)
 			zap_str /= 3 //Coils should take a lot out of the power of the zap
-
-		else if(target_type == ROD)
-			//We can expect this to do very little, maybe shock the poor soul buckled to it, but that's all.
-			//This is one of our endpoints, if the bolt hits a grounding rod, it stops jumping
-			target.zap_act(zap_str, zap_flags, list())
-			return
 
 		else if(isliving(target))//If we got a fleshbag on our hands
 			var/mob/living/creature = target
@@ -1163,8 +1154,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
 		else
-			target.zap_act(zap_str, zap_flags, list())
-			zap_str /= 2 // worse then living things, better then coils
+			zap_str = target.zap_act(zap_str, zap_flags)
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1
@@ -1180,6 +1170,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(zap_count > 1)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
+
+/obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
+	var/turf/turf_loc = get_turf(src)
+	if(!turf_loc)
+		return
+	explosion(turf_loc,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
+	. = new/obj/machinery/destabilized_crystal(turf_loc)
+	qdel(src)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

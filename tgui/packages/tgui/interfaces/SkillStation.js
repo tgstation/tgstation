@@ -114,13 +114,14 @@ export const ImplantedSkillchips = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
-    current = [],
     slots_used,
     slots_max,
     complexity_used,
     complexity_max,
     working,
   } = data;
+
+  const current = data.current || [];
 
   return (
     <Section

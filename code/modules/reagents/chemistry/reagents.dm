@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// increases as addiction gets worse
 	var/addiction_stage = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
-	var/overdosed = 0
+	var/overdosed = FALSE
 	///if false stops metab in liverless mobs
 	var/self_consuming = FALSE
 	///affects how far it travels when sprayed
@@ -94,16 +94,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
-		return 0
-	if(method == VAPOR) //smoke, foam, spray
+		return FALSE
+	if(methods & VAPOR) //smoke, foam, spray
 		if(M.reagents)
 			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
-	return 1
+	return TRUE
 
 /// Applies this reagent to an [/obj]
 /datum/reagent/proc/expose_obj(obj/O, volume)
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 
 ///Called after a reagent is transfered
-/datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume)
+/datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	return
 
 

@@ -10,8 +10,9 @@ SUBSYSTEM_DEF(mobs)
 	var/static/list/cubemonkeys = list()
 	var/static/list/cheeserats = list()
 
-/datum/controller/subsystem/mobs/stat_entry()
-	..("P:[GLOB.mob_living_list.len]")
+/datum/controller/subsystem/mobs/stat_entry(msg)
+	msg = "P:[length(GLOB.mob_living_list)]"
+	return ..()
 
 /datum/controller/subsystem/mobs/proc/MaxZChanged()
 	if (!islist(clients_by_zlevel))
@@ -23,7 +24,7 @@ SUBSYSTEM_DEF(mobs)
 		dead_players_by_zlevel.len++
 		dead_players_by_zlevel[dead_players_by_zlevel.len] = list()
 
-/datum/controller/subsystem/mobs/fire(resumed = 0)
+/datum/controller/subsystem/mobs/fire(resumed = FALSE)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = GLOB.mob_living_list.Copy()

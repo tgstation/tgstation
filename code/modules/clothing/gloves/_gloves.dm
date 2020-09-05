@@ -6,7 +6,8 @@
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
-	attack_verb = list("challenged")
+	attack_verb_continuous = list("challenges")
+	attack_verb_simple = list("challenge")
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
@@ -37,4 +38,4 @@
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
-	return 0 // return 1 to cancel attack_hand()
+	return FALSE // return 1 to cancel attack_hand()

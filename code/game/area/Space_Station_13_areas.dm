@@ -28,10 +28,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	valid_territory = FALSE
+	area_flags = UNIQUE_AREA
 	outdoors = TRUE
 	ambientsounds = SPACE
-	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 	flags_1 = CAN_BE_DIRTY_1
 
 /area/space/nearstation
@@ -58,8 +57,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
-	valid_territory = FALSE
+	area_flags = UNIQUE_AREA
 	ambientsounds = MINING
 	flags_1 = CAN_BE_DIRTY_1
 
@@ -68,7 +66,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
-	blob_allowed = TRUE
+	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
 
 /area/asteroid/nearstation/bomb_site
 	name = "Bomb Testing Asteroid"
@@ -79,7 +77,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance
 	ambientsounds = MAINTENANCE
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	airlock_wires = /datum/wires/airlock/maint
 
 //Departments
@@ -158,7 +156,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
-	xenobiology_compatible = TRUE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE
 
 
 //Maintenance - Generic
@@ -360,7 +358,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/dorms
 	name = "Dormitories"
 	icon_state = "dorms"
-	safe = TRUE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/crew_quarters/dorms/barracks
 	name = "Sleep Barracks"
@@ -547,7 +545,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
@@ -564,7 +562,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/engine/break_room
 	name = "Engineering Foyer"
@@ -592,8 +590,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/solar
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	valid_territory = FALSE
-	blob_allowed = FALSE
+	area_flags = UNIQUE_AREA
 	flags_1 = NONE
 	ambientsounds = ENGINEERING
 	airlock_wires = /datum/wires/airlock/engineering
@@ -1046,9 +1043,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tox_storage"
 
 /area/science/test_area
-	valid_territory = FALSE
 	name = "Toxins Test Area"
 	icon_state = "tox_test"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/science/mixing
 	name = "Toxins Mixing Lab"
@@ -1057,7 +1054,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/mixing/chamber
 	name = "Toxins Mixing Chamber"
 	icon_state = "tox_mix_chamber"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/science/genetics
 	name = "Genetics Lab"
@@ -1120,7 +1117,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tcom
 	name = "Telecomms Storage"
 	icon_state = "tcom"
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/storage/eva
 	name = "EVA Storage"

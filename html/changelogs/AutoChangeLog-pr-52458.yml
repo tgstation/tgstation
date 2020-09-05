@@ -1,8 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "Mafia Lobby System reworked"
-  - rscadd: "Mafia panel redesigned"
-  - rscadd: "Mafia Trials have a bit more depth"
-  - tweak: "Mafia misc. tweaks"
-  - bugfix: "Mafia misc. fixes"

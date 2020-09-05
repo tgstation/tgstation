@@ -40,6 +40,7 @@
 	desc = "Draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
+	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
 	var/width = 11
 	var/height = 11
@@ -220,7 +221,7 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
-	flags_1 = 0
+	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
 

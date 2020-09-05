@@ -10,7 +10,8 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("warned", "cautioned", "smashed")
+	attack_verb_continuous = list("warns", "cautions", "smashes")
+	attack_verb_simple = list("warn", "caution", "smash")
 
 /obj/item/choice_beacon
 	name = "choice beacon"
@@ -150,7 +151,8 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("skubbed")
+	attack_verb_continuous = list("skubs")
+	attack_verb_simple = list("skub")
 
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
@@ -216,3 +218,20 @@
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
 	user.adjustOxyLoss(200)
 	user.death(0)
+
+// Bouquets
+/obj/item/bouquet
+	name = "mixed bouquet"
+	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "mixedbouquet"
+
+/obj/item/bouquet/sunflower
+	name = "sunflower bouquet"
+	desc = "A bright bouquet of sunflowers."
+	icon_state = "sunbouquet"
+
+/obj/item/bouquet/poppy
+	name = "poppy bouquet"
+	desc = "A bouquet of poppies. You feel loved just looking at it."
+	icon_state = "poppybouquet"

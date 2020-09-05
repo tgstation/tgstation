@@ -163,4 +163,5 @@
 
 /datum/crafting_recipe/blackmarket_uplink/New()
 	..()
-	blacklist |= subtypesof(/obj/item/radio/)
+	blacklist |= typesof(/obj/item/radio/headset) // because we got shit like /obj/item/radio/off ... WHY!?!
+	blacklist |= typesof(/obj/item/radio/intercom)
