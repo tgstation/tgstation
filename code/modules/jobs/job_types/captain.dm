@@ -66,5 +66,5 @@
 	..()
 	if(visualsOnly)
 		return
-	var/datum/martial_art/cqc/under_t/justacap = new
+	var/datum/martial_art/cqc/under_tide/justacap = new
 	justacap.teach(H)
