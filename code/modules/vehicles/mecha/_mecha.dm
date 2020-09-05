@@ -258,7 +258,7 @@
 		mob_occupant.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
-	..()
+	. = ..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
 	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
 	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
