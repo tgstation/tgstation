@@ -1,7 +1,9 @@
 GLOBAL_LIST_EMPTY(string_num_lists)
 
 
-///based proc that yeets a list in a glob list with an index unless it already existed, if it did just return that list. perfect for keeping 1 (one) instance. thanks rohesie very cool.
+/**
+  * Caches associative lists with non-numeric stringify-able index keys and stringify-able values (text/typepath -> text/path/number).
+  */
 /datum/proc/string_assoc_list(list/values)
   var/list/string_id = list()
   for(var/val in values)
