@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Cyborg do not scream when disinfected in a storage unit"
