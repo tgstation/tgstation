@@ -1,0 +1,5 @@
+author: "Radacitus"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new Ingredient Beacon and gives it to the Chef in-place of their Ingredient Box on spawn."
+  - rscadd: "Adds some custom text that appears when you use the Chef and Curator Beacons."
