@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 #define DEFAULT_TCG_DMI_ICON 'icons/runtime/tcg/default.dmi'
 #define DEFAULT_TCG_DMI "icons/runtime/tcg/default.dmi"
+#define TAPPED_ANGLE 90
+#define UNTAPPED_ANGLE 0
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -19,6 +21,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
+	///Has this card been "tapped"? AKA, is it horizontal?
+	var/tapped = FALSE
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
@@ -43,19 +47,28 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+/obj/item/tcgcard/attack_hand(mob/user)
+	var/list/choices = list(
+		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
+		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Tap")
+			tap_card(user)
+		if("Pickup")
+			user.put_in_hands(src)
+		if("Flip")
+			flip_card(user)
+		if(null)
+			return
+
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
-	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
-	if(!flipped)
-		name = "Trading Card"
-		desc = "It's the back of a trading card... no peeking!"
-		icon_state = "cardback"
-	else
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
-		name = template.name
-		desc = template.desc
-		icon_state = template.icon_state
-	flipped = !flipped
+	flip_card(user)
 
 /obj/item/tcgcard/equipped(mob/user, slot, initial)
 	. = ..()
@@ -64,18 +77,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/dropped(mob/user, silent)
 	. = ..()
 	zoom_out()
-
-/**
-  * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
-  */
-/obj/item/tcgcard/proc/zoom_in()
-	transform = matrix()
-
-/**
-  * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
-  */
-/obj/item/tcgcard/proc/zoom_out()
-	transform = matrix(0.3,0,0,0,0.3,0)
 
 /obj/item/tcgcard/update_icon_state()
 	. = ..()
@@ -108,6 +109,46 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		zoom_in()
 	return ..()
 
+/obj/item/tcgcard/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/tcgcard/proc/tap_card(mob/user)
+	var/matrix/ntransform = matrix(transform)
+	if(tapped)
+		ntransform.TurnTo(TAPPED_ANGLE , UNTAPPED_ANGLE)
+	else
+		ntransform.TurnTo(UNTAPPED_ANGLE , TAPPED_ANGLE)
+	tapped = !tapped
+	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
+
+/**
+  * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
+  */
+/obj/item/tcgcard/proc/zoom_in()
+	transform = matrix()
+
+/**
+  * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
+  */
+/obj/item/tcgcard/proc/zoom_out()
+	transform = matrix(0.3,0,0,0,0.3,0)
+
+/obj/item/tcgcard/proc/flip_card(mob/user)
+	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
+	if(!flipped)
+		name = "Trading Card"
+		desc = "It's the back of a trading card... no peeking!"
+		icon_state = "cardback"
+	else
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		name = template.name
+		desc = template.desc
+		icon_state = template.icon_state
+	flipped = !flipped
 /**
   * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
   * The "top" card of the deck will always be the bottom card in the stack for our purposes.
