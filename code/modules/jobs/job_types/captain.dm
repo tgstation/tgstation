@@ -62,9 +62,9 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
 
-datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
-	var/datum/martial_art/cqc/under_tide/justacap = new
+	var/datum/martial_art/cqc/under_t/justacap = new
 	justacap.teach(H)
