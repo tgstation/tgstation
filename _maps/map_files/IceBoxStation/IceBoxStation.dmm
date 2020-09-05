@@ -27274,6 +27274,7 @@
 /area/science/robotics/lab)
 "blN" = (
 /obj/machinery/computer/rdconsole,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/bridge)
 "blP" = (
