@@ -341,14 +341,15 @@ This section is for the destabilized SM
 	if(length(GLOB.crystal_portals_center) == 0 && !changed_icon)
 		icon_state = "psy"
 		changed_icon = TRUE
-	if(!removed || !removed.total_moles() || isspaceturf(T))
-		removed.gases[/datum/gas/bz][MOLES] += 0.5
+
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
 	var/datum/gas_mixture/removed
 	var/gasefficency = 0.5
 	removed = env.remove(gasefficency * env.total_moles())
 	removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
+	if(!removed || !removed.total_moles() || isspaceturf(T))
+		removed.gases[/datum/gas/bz][MOLES] += 0.5
 	removed.gases[/datum/gas/bz][MOLES] += 15.5
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
