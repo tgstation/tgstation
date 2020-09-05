@@ -665,6 +665,8 @@
 		for(var/D in return_drivers())
 			var/mob/driver = D
 			if(driver.client?.keys_held["Alt"])
+				if(turnsound)
+					playsound(src,turnsound,40,TRUE)
 				return
 		setDir(olddir)
 

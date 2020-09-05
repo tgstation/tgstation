@@ -202,3 +202,9 @@
 		for(var/i in return_drivers())
 			var/mob/busdriver = i
 			busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)
+
+
+/obj/vehicle/sealed/car/clowncar/Destroy()
+	DumpMobs()
+	explosion(loc, 0, 1, 2, 3 , 0)
+	return ..()
