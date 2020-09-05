@@ -87,7 +87,6 @@
 		CHECK_TICK
 	for(var/v in consoles_accessing)
 		var/obj/machinery/computer/rdconsole/V = v
-		V.rescan_views()
 		V.updateUsrDialog()
 
 /datum/techweb/proc/add_point_list(list/pointlist)
@@ -309,7 +308,6 @@
 	if(autoupdate_consoles)
 		for(var/v in consoles_accessing)
 			var/obj/machinery/computer/rdconsole/V = v
-			V.rescan_views()
 			V.updateUsrDialog()
 
 //Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!

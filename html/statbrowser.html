@@ -4,6 +4,7 @@
 <title>Stat Browser</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Cache-Control" content="max-age=15; must-revalidate" />
 <link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
 <style>
 body {
@@ -145,6 +146,10 @@ li a:hover:not(.active) {
 .link:hover {
 	text-decoration: underline;
 }
+img {
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: pixelated;
+}
 </style>
 </head>
 <body>
@@ -169,6 +174,50 @@ if (!String.prototype.trim) {
 		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 	};
 }
+/*\
+|*|
+|*|  Polyfill which enables the passage of arbitrary arguments to the
+|*|  callback functions of JavaScript timers (HTML5 standard syntax).
+|*|
+|*|  https://developer.mozilla.org/en-US/docs/DOM/window.setInterval
+|*|
+|*|  Syntax:
+|*|  var timeoutID = window.setTimeout(func, delay[, arg1, arg2, ...]);
+|*|  var timeoutID = window.setTimeout(code, delay);
+|*|  var intervalID = window.setInterval(func, delay[, arg1, arg2, ...]);
+|*|  var intervalID = window.setInterval(code, delay);
+|*|
+\*/
+(function() {
+  setTimeout(function(arg1) {
+    if (arg1 === 'test') {
+      // feature test is passed, no need for polyfill
+      return;
+    }
+    var __nativeST__ = window.setTimeout;
+    window.setTimeout = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
+      var aArgs = Array.prototype.slice.call(arguments, 2);
+      return __nativeST__(vCallback instanceof Function ? function() {
+        vCallback.apply(null, aArgs);
+      } : vCallback, nDelay);
+    };
+  }, 0, 'test');
+
+  var interval = setInterval(function(arg1) {
+    clearInterval(interval);
+    if (arg1 === 'test') {
+      // feature test is passed, no need for polyfill
+      return;
+    }
+    var __nativeSI__ = window.setInterval;
+    window.setInterval = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
+      var aArgs = Array.prototype.slice.call(arguments, 2);
+      return __nativeSI__(vCallback instanceof Function ? function() {
+        vCallback.apply(null, aArgs);
+      } : vCallback, nDelay);
+    };
+  }, 0, 'test');
+}())
 
 // Browser passthrough code ---------------------------------------------------
 if (window.location) {
@@ -182,13 +231,11 @@ if (window.location) {
 			if(!anti_spam[e.which]) {
 				anti_spam[e.which] = true;
 				var key = String.fromCharCode(e.which);
-				if(key == "t")
-					window.location.href = "byond://winset?command=Say"
-				else if(key == "o")
-					window.location.href = "byond://winset?command=OOC"
-				else if(key == "m")
-					window.location.href = "byond://winset?command=Me"
-				window.location.href = "byond://winset?command=keyDown " + key;
+				var x = event.x || event.clientX;
+				var y = event.y || event.clientY;
+				if(x || y ) // if either of these exist this is happening after a click
+					return;
+				window.location.href = "byond://winset?command=keyDown " + e.key;
 			}
 		}
 	});
@@ -200,7 +247,12 @@ if (window.location) {
 		if(e.which) {
 			anti_spam[e.which] = false;
 			var key = String.fromCharCode(e.which);
-			window.location.href = "byond://winset?command=keyUp " + key;
+			var x = event.x || event.clientX;
+			var y = event.y || event.clientY;
+			if( x || y ) // if either of these exist this is happening after a click
+				return;
+
+			window.location.href = "byond://winset?command=keyUp " + e.key;
 		}
 	});
 }
@@ -229,6 +281,8 @@ var sqdl2 = [];
 var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
 var turfname = "";
+var imageRetryDelay = 50;
+var imageRetryLimit = 50;
 var menu = document.querySelector('#menu');
 var under_menu = document.querySelector('#under_menu');
 
@@ -338,6 +392,13 @@ function verbs_cat_check(cat) {
 	}
 }
 
+function findVerbindex(name, verblist) {
+	for(var i = 0; i < verblist.length; i++) {
+		var part = verblist[i];
+		if(part[1] == name)
+			return i;
+	}
+}
 function wipe_verbs() {
 	verbs = [["", ""]];
 	verb_tabs = [];
@@ -349,10 +410,9 @@ function add_verb_list(v) {
 	to_add.sort(); // sort what we're adding
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
+		if(findVerbindex(part[1], verbs))
+			continue;
 		if(verb_tabs.includes(part[0])){
-			if(verbs.includes(part)){
-				continue;
-			}
 			verbs.push(part);
 			if(current_tab == part[0]) {
 				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
@@ -393,7 +453,7 @@ function init_verbs(c, v) {
 		do_update = true;
 	}
 	if(v) {
-		verbs = JSON.parse(v);
+		add_verb_list(v);
 		verbs.sort(); // sort them
 		if(do_update) {
 			draw_verbs(current_tab);
@@ -674,7 +734,21 @@ function update_listedturf(TC) {
 	if(current_tab == turfname)
 		draw_listedturf();
 }
-
+function iconError(E) {
+	var that = this;
+	setTimeout(function() {
+		var current_attempts = that.id; // a bit of a hack, change this if we need to call on img id's later
+		if(!current_attempts)
+			that.id = 1;
+		if (current_attempts > imageRetryLimit)
+			return;
+		var src = that.src;
+		that.src = null;
+		that.src = src + '#' + current_attempts;
+		that.id++;
+		draw_listedturf();
+	}, imageRetryDelay);
+}
 function draw_listedturf() {
 	var statcontentdiv = document.getElementById("statcontent");
 	statcontentdiv[textContentKey] = "";
@@ -684,6 +758,7 @@ function draw_listedturf() {
 		if(part[2]) {
 			var img = document.createElement("img");
 			img.src = part[2];
+			img[addEventListenerKey]("onerror", iconError());
 			table.appendChild(img);
 		}
 		var b = document.createElement("div");

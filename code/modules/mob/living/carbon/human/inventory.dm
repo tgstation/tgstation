@@ -136,7 +136,15 @@
 			if (wear_suit && swap)
 				wear_suit.dropped(src, TRUE)
 				current_equip = wear_suit
+
 			wear_suit = I
+
+			if (s_store && swap)
+				var/obj/item/s_store_backup = s_store
+				dropItemToGround(s_store_backup)
+				put_in_inactive_hand(s_store_backup)
+				equip_to_slot_if_possible(s_store_backup, ITEM_SLOT_SUITSTORE)
+
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
 			if(wear_suit.breakouttime) //when equipping a straightjacket

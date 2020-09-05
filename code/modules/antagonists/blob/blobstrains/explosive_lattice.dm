@@ -17,7 +17,7 @@
 	else if(damage_flag != MELEE && damage_flag != BULLET && damage_flag != LASER)
 		return damage * 1.5
 	return ..()
-	
+
 /datum/blobstrain/reagent/explosive_lattice/on_sporedeath(mob/living/spore)
 	var/obj/effect/temp_visual/explosion/fast/effect = new /obj/effect/temp_visual/explosion/fast(get_turf(spore))
 	effect.alpha = 150
@@ -31,18 +31,23 @@
 	taste_description = "the bomb"
 	color = "#8B2500"
 
-/datum/reagent/blob/explosive_lattice/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/explosive_lattice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
-		var/obj/effect/temp_visual/explosion/fast/E = new /obj/effect/temp_visual/explosion/fast(get_turf(M))
-		E.alpha = 150
-		for(var/mob/living/L in orange(get_turf(M), 1))
-			if(ROLE_BLOB in L.faction) //no friendly fire
+		var/obj/effect/temp_visual/explosion/fast/ex_effect = new /obj/effect/temp_visual/explosion/fast(get_turf(exposed_mob))
+		ex_effect.alpha = 150
+		for(var/mob/living/nearby_mob in orange(get_turf(exposed_mob), 1))
+			if(ROLE_BLOB in nearby_mob.faction) //no friendly fire
 				continue
-			var/aoe_volume = ..(L, TOUCH, initial_volume, 0, L.get_permeability_protection(), O)
-			L.apply_damage(0.4*aoe_volume, BRUTE, wound_bonus=CANT_WOUND)
-		if(M)
-			M.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+			exposed_mob = nearby_mob
+			methods = TOUCH
+			reac_volume = initial_volume
+			show_message = FALSE
+			touch_protection = nearby_mob.get_permeability_protection()
+			var/aoe_volume = ..()
+			nearby_mob.apply_damage(0.4*aoe_volume, BRUTE, wound_bonus=CANT_WOUND)
+		if(exposed_mob)
+			exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
 	else
-		M.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+		exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)

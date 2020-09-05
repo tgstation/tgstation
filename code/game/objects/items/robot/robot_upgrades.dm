@@ -237,6 +237,27 @@
 		R.module.basic_modules += M
 		R.module.add_module(M, FALSE, TRUE)
 
+/obj/item/borg/upgrade/prt
+	name = "janitor cyborg plating repair tool"
+	desc = "A tiny heating device to repair burnt and damaged hull platings with."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/janitor)
+	module_flags = BORG_MODULE_JANITOR
+
+/obj/item/borg/upgrade/prt/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		var/obj/item/cautery/prt/P = new (R.module)
+		R.module.basic_modules += P
+		R.module.add_module(P, FALSE, TRUE)
+
+/obj/item/borg/upgrade/prt/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/cautery/prt/P in R.module.modules)
+			R.module.remove_module(P, TRUE)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."

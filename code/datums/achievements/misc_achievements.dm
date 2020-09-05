@@ -117,3 +117,9 @@
 	desc = "Caedite eos. Novit enim Dominus qui sunt eius."
 	database_id = MEDAL_ASCENSION
 	icon = "ascension"
+
+/datum/award/achievement/misc/frenching
+	name = "Frenching"
+	desc = "Just a taste, for science!"
+	database_id = MEDAL_FRENCHING
+	icon = "frenching"
