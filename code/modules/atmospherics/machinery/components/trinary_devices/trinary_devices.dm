@@ -48,9 +48,10 @@ Housekeeping and pipe network stuff
 	return list(node1_connect, node2_connect, node3_connect)
 
 /obj/machinery/atmospherics/components/trinary/proc/set_overlay_offset(var/pipe_layer)
-	if(pipe_layer == 1)
-		return 1
-	else if(pipe_layer == 5)
-		return 5
-	else
-		return 0
+	switch(pipe_layer)
+		if(1)
+			return 1
+		if(5)
+			return 5
+		else
+			return 0
