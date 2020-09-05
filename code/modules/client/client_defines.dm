@@ -144,6 +144,11 @@
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
+	/// our current tab
+	var/stat_tab
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
 	/// list of tabs containing verbs

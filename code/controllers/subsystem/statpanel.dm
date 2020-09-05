@@ -50,43 +50,48 @@ SUBSYSTEM_DEF(statpanels)
 	while(length(currentrun))
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
-		var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
-		var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
-		target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
+		//target << output("", "statbrowser:SendTabsToByond")
+		if(target.stat_tab == "Status")
+			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
+			var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
+			target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			var/turf/eye_turf = get_turf(target.eye)
-			var/coord_entry = url_encode(COORD(eye_turf))
-			target << output("[mc_data_encoded];[coord_entry];[url_encode(target.holder.href_token)]", "statbrowser:update_mc")
-			var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-			target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
-			if(!length(GLOB.sdql2_queries))
-				target << output("", "statbrowser:remove_sqdl2")
-			else
-				var/list/sqdl2A = list()
-				sqdl2A[++sqdl2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
-				var/list/sqdl2B = list()
+			if(target.stat_tab == "MC" || !("MC" in target.panel_tabs))
+				var/turf/eye_turf = get_turf(target.eye)
+				var/coord_entry = url_encode(COORD(eye_turf))
+				target << output("[mc_data_encoded];[coord_entry];[url_encode(target.holder.href_token)]", "statbrowser:update_mc")
+			if(target.stat_tab == "Tickets" || !("Tickets" in target.panel_tabs))
+				var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
+				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
+			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
+				target << output("", "statbrowser:remove_sdql2")
+			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)))
+				var/list/sdql2A = list()
+				sdql2A[++sdql2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
+				var/list/sdql2B = list()
 				for(var/i in GLOB.sdql2_queries)
 					var/datum/sdql2_query/Q = i
-					sqdl2B = Q.generate_stat()
-				sqdl2A += sqdl2B
-				target << output(url_encode(json_encode(sqdl2A)), "statbrowser:update_sqdl2")
-		var/list/proc_holders = target.mob.get_proc_holders()
-		target.spell_tabs.Cut()
-		for(var/phl in proc_holders)
-			var/list/proc_holder_list = phl
-			target.spell_tabs |= proc_holder_list[1]
-		var/proc_holders_encoded = ""
-		if(length(proc_holders))
-			proc_holders_encoded = url_encode(json_encode(proc_holders))
-		target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+					sdql2B = Q.generate_stat()
+				sdql2A += sdql2B
+				target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
+		if(target.stat_tab in target.spell_tabs)
+			var/list/proc_holders = target.mob.get_proc_holders()
+			target.spell_tabs.Cut()
+			for(var/phl in proc_holders)
+				var/list/proc_holder_list = phl
+				target.spell_tabs |= proc_holder_list[1]
+			var/proc_holders_encoded = ""
+			if(length(proc_holders))
+				proc_holders_encoded = url_encode(json_encode(proc_holders))
+			target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
 		if(target.mob?.listed_turf)
 			var/mob/target_mob = target.mob
 			if(!target_mob.TurfAdjacent(target_mob.listed_turf))
 				target << output("", "statbrowser:remove_listedturf")
 				target_mob.listed_turf = null
-			else
+			else if(target.stat_tab == target.mob?.listed_turf.name || !(target.mob?.listed_turf.name in target.panel_tabs))
 				var/list/overrides = list()
 				var/list/turfitems = list()
 				for(var/img in target.images)
@@ -94,7 +99,7 @@ SUBSYSTEM_DEF(statpanels)
 					if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 						continue
 					overrides += target_image.loc
-				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf))
+				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf), icon2html(target_mob.listed_turf, target, sourceonly=TRUE))
 				for(var/tc in target_mob.listed_turf)
 					var/atom/movable/turf_content = tc
 					if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
@@ -105,8 +110,44 @@ SUBSYSTEM_DEF(statpanels)
 						continue
 					if(turf_content.IsObscured())
 						continue
-					turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
+					if(length(turfitems) < 30) // only create images for the first 30 items on the turf, for performance reasons
+						if(!(REF(turf_content) in cached_images))
+							cached_images += REF(turf_content)
+							if(ismob(turf_content) || length(turf_content.overlays) > 2)
+								turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), costly_icon2html(turf_content, target, sourceonly=TRUE))
+							else
+								turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), icon2html(turf_content, target, sourceonly=TRUE))
+						else
+							turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
+					else
+						turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 				turfitems = url_encode(json_encode(turfitems))
 				target << output("[turfitems];", "statbrowser:update_listedturf")
 		if(MC_TICK_CHECK)
 			return
+
+
+/// verbs that send information from the browser UI
+/client/verb/set_tab(tab as text|null)
+	set name = "Set Tab"
+	set hidden = 1
+
+	stat_tab = tab
+
+/client/verb/send_tabs(tabs as text|null)
+	set name = "Send Tabs"
+	set hidden = 1
+
+	panel_tabs += tabs
+
+/client/verb/remove_tabs(tabs as text|null)
+	set name = "Remove Tabs"
+	set hidden = 1
+
+	panel_tabs -= tabs
+
+/client/verb/reset_tabs()
+	set name = "Reset Tabs"
+	set hidden = 1
+
+	panel_tabs = list()
