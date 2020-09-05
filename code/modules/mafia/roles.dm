@@ -311,7 +311,7 @@
 	desc = "You can protect a single person each night. If they are attacked, you will retaliate, killing yourself and the attacker."
 	revealed_outfit = /datum/outfit/mafia/security
 	revealed_icon = "securityofficer"
-	hud_icon = "hudmedicaldoctor"
+	hud_icon = "hudsecurityofficer"
 	role_type = TOWN_PROTECT
 	role_flags = ROLE_CAN_KILL
 	winner_award = /datum/award/achievement/mafia/officer
@@ -456,8 +456,8 @@
 	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
 	role_type = TOWN_MISC
 	role_flags = ROLE_CAN_KILL
-	hud_icon = "hudthoughtfeeder"
-	revealed_icon = "thoughtfeeder"
+	revealed_icon = "headofsecurity"
+	hud_icon = "hudheadofsecurity"
 	winner_award = /datum/award/achievement/mafia/hos
 
 	targeted_actions = list("Execute")
