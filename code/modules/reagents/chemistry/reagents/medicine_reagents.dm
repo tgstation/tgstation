@@ -232,13 +232,15 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/rezadone/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
+/datum/reagent/medicine/rezadone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(iscarbon(M))
-		var/mob/living/carbon/patient = M
-		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
-			patient.cure_husk("burn")
-			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
+	if(!iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/patient = exposed_mob
+	if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+		patient.cure_husk("burn")
+		patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
@@ -326,21 +328,24 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/mine_salve/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		if(methods & (INGEST|VAPOR|INJECT))
-			M.adjust_nutrition(-5)
-			if(show_message)
-				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
-		else
-			var/mob/living/carbon/C = M
-			for(var/s in C.surgeries)
-				var/datum/surgery/S = s
-				S.speed_modifier = max(0.1, S.speed_modifier)
+/datum/reagent/medicine/mine_salve/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+	. = ..()
+	if(!iscarbon(exposed_mob) || (exposed_mob.stat == DEAD))
+		return
 
-			if(show_message)
-				to_chat(M, "<span class='danger'>You feel your injuries fade away to nothing!</span>" )
-	..()
+	if(methods & (INGEST|VAPOR|INJECT))
+		exposed_mob.adjust_nutrition(-5)
+		if(show_message)
+			to_chat(exposed_mob, "<span class='warning'>Your stomach feels empty and cramps!</span>")
+
+	if(methods & (PATCH|TOUCH))
+		var/mob/living/carbon/exposed_carbon = exposed_mob
+		for(var/s in exposed_carbon.surgeries)
+			var/datum/surgery/surgery = s
+			surgery.speed_modifier = max(0.1, surgery.speed_modifier)
+
+		if(show_message)
+			to_chat(exposed_carbon, "<span class='danger'>You feel your injuries fade away to nothing!</span>" )
 
 /datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
@@ -766,26 +771,26 @@
 	if(chems.has_reagent(type, 1))
 		mytray.spawnplant()
 
-/datum/reagent/medicine/strange_reagent/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if(M.stat != DEAD)
+/datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	if(exposed_mob.stat != DEAD)
 		return ..()
-	if(M.suiciding || M.hellbound) //they are never coming back
-		M.visible_message("<span class='warning'>[M]'s body does not react...</span>")
+	if(exposed_mob.suiciding || exposed_mob.hellbound) //they are never coming back
+		exposed_mob.visible_message("<span class='warning'>[exposed_mob]'s body does not react...</span>")
 		return
-	if(iscarbon(M) && !(methods & INGEST)) //simplemobs can still be splashed
+	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
 		return ..()
-	var/amount_to_revive = round((M.getBruteLoss()+M.getFireLoss())/20)
-	if(M.getBruteLoss()+M.getFireLoss() >= 200 || HAS_TRAIT(M, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
-		M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
-		M.do_jitter_animation(10)
+	var/amount_to_revive = round((exposed_mob.getBruteLoss()+exposed_mob.getFireLoss())/20)
+	if(exposed_mob.getBruteLoss()+exposed_mob.getFireLoss() >= 200 || HAS_TRAIT(exposed_mob, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
+		exposed_mob.visible_message("<span class='warning'>[exposed_mob]'s body convulses a bit, and then falls still once more.</span>")
+		exposed_mob.do_jitter_animation(10)
 		return
-	M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
-	M.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
-	M.do_jitter_animation(10)
+	exposed_mob.visible_message("<span class='warning'>[exposed_mob]'s body starts convulsing!</span>")
+	exposed_mob.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
+	exposed_mob.do_jitter_animation(10)
 	var/excess_healing = 5*(reac_volume-amount_to_revive) //excess reagent will heal blood and organs across the board
-	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
-	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
-	addtimer(CALLBACK(M, /mob/living.proc/revive, FALSE, FALSE, excess_healing), 79)
+	addtimer(CALLBACK(exposed_mob, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
+	addtimer(CALLBACK(exposed_mob, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
+	addtimer(CALLBACK(exposed_mob, /mob/living.proc/revive, FALSE, FALSE, excess_healing), 79)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
@@ -926,12 +931,15 @@
 	color = "#CC23FF"
 	taste_description = "jelly"
 
-/datum/reagent/medicine/regen_jelly/expose_mob(mob/living/M, reac_volume)
-	if(M && ishuman(M) && reac_volume >= 0.5)
-		var/mob/living/carbon/human/H = M
-		H.hair_color = "C2F"
-		H.facial_hair_color = "C2F"
-		H.update_hair()
+/datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
+	. = ..()
+	if(!ishuman(exposed_mob) || (reac_volume < 0.5))
+		return
+
+	var/mob/living/carbon/human/exposed_human = exposed_mob
+	exposed_human.hair_color = "C2F"
+	exposed_human.facial_hair_color = "C2F"
+	exposed_human.update_hair()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
@@ -1267,18 +1275,18 @@
 	taste_description = "numbing bitterness"
 
 /datum/reagent/medicine/polypyr/on_mob_life(mob/living/carbon/M) //I wanted a collection of small positive effects, this is as hard to obtain as coniine after all.
+	. = ..()
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -0.25)
 	M.adjustBruteLoss(-0.35, 0)
-	..()
-	. = 1
+	return TRUE
 
-/datum/reagent/medicine/polypyr/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if(methods & (TOUCH|VAPOR))
-		if(M && ishuman(M) && reac_volume >= 0.5)
-			var/mob/living/carbon/human/H = M
-			H.hair_color = "92f"
-			H.facial_hair_color = "92f"
-			H.update_hair()
+/datum/reagent/medicine/polypyr/expose_mob(mob/living/carbon/human/exposed_human, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
+		return
+	exposed_human.hair_color = "92f"
+	exposed_human.facial_hair_color = "92f"
+	exposed_human.update_hair()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)

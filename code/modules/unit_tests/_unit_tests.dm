@@ -17,6 +17,7 @@
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "emoting.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"

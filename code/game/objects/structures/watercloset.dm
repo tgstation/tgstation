@@ -302,7 +302,7 @@
 
 	busy = FALSE
 	reagents.remove_any(5)
-	reagents.expose(user, TOUCH)
+	reagents.expose(user, TOUCH, 5 / max(reagents.total_volume, 5))
 
 	if(washing_face)
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_FACE_ACT, CLEAN_WASH)
@@ -389,8 +389,7 @@
 			return 1
 		busy = FALSE
 		O.wash(CLEAN_WASH)
-		O.acid_level = 0
-		reagents.expose(O, TOUCH)
+		reagents.expose(O, TOUCH, 5 / max(reagents.total_volume, 5))
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
@@ -566,10 +565,7 @@
 			return TRUE
 		busy = FALSE
 		O.wash(CLEAN_WASH)
-		O.acid_level = 0
-		create_reagents(5)
-		reagents.add_reagent(dispensedreagent, 5)
-		reagents.expose(O, TOUCH)
+		reagents.expose(O, TOUCH, 5 / max(reagents.total_volume, 5))
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return TRUE

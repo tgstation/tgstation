@@ -36,8 +36,8 @@
 	taste_description = "efficiency"
 	color = "#4F4441"
 
-/datum/reagent/blob/networked_fibers/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/networked_fibers/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
-	if(!QDELETED(M))
-		M.apply_damage(0.6*reac_volume, BURN, wound_bonus=CANT_WOUND)
+	exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+	if(!QDELETED(exposed_mob))
+		exposed_mob.apply_damage(0.6*reac_volume, BURN, wound_bonus=CANT_WOUND)
