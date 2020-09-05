@@ -353,23 +353,22 @@
 
 /obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
-	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"
+	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
-	inhand_icon_state = "wheelys"
+	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 
 /obj/item/clothing/shoes/wheelys/hoverboots
-	name = "hoverboots"
+	name = "hover boots"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	icon_state = "wheelys"
-	inhand_icon_state = "wheelys"
+	icon_state = "hoverboots"
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/hoverboots
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
-	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
-	inhand_icon_state = "skishoes"
+	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 
 
