@@ -670,7 +670,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
 	desc = "The busy man's hotdog."
-	icon_state = "corndog_stick"
+	icon_state = "corndog"
 	bitesize = 3
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
