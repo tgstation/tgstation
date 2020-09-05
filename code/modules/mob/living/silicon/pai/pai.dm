@@ -312,8 +312,8 @@
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 
-/mob/living/silicon/pai/process()
-	emitterhealth = clamp((emitterhealth + emitterregen * SSMOBS_DT), -50, emittermaxhealth)
+/mob/living/silicon/pai/process(delta_time)
+	emitterhealth = clamp((emitterhealth + emitterregen * delta_time), -50, emittermaxhealth)
 
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	if(pai && (istype(W, /obj/item/encryptionkey) || W.tool_behaviour == TOOL_SCREWDRIVER))

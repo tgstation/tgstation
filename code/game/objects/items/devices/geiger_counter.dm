@@ -37,16 +37,16 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/geiger_counter/process()
+/obj/item/geiger_counter/process(delta_time)
 	if(scanning)
-		radiation_count = LPFILTER(radiation_count, current_tick_amount, SSOBJ_DT, RAD_GEIGER_RC)
+		radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
 
 		if(current_tick_amount)
 			grace = RAD_GEIGER_GRACE_PERIOD
 			last_tick_amount = current_tick_amount
 
 		else if(!(obj_flags & EMAGGED))
-			grace -= SSOBJ_DT
+			grace -= delta_time
 			if(grace <= 0)
 				radiation_count = 0
 

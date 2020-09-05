@@ -108,15 +108,15 @@ God bless America.
 			icon_state = "fryer_on"
 			fry_loop.start()
 
-/obj/machinery/deepfryer/process()
+/obj/machinery/deepfryer/process(delta_time)
 	..()
 	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		reagents.trans_to(frying, oil_use * SSMACHINES_DT, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
-		cook_time += fry_speed * SSMACHINES_DT
+		reagents.trans_to(frying, oil_use * delta_time, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
+		cook_time += fry_speed * delta_time
 		if(cook_time >= DEEPFRYER_COOKTIME && !frying_fried)
 			frying_fried = TRUE //frying... frying... fried
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)

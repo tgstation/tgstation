@@ -44,7 +44,7 @@
 	if(connected_port)
 		. += "scrubber-connector"
 
-/obj/machinery/portable_atmospherics/scrubber/process_atmos()
+/obj/machinery/portable_atmospherics/scrubber/process_atmos(delta_time)
 	..()
 
 	var/pressure = air_contents.return_pressure()
@@ -58,10 +58,10 @@
 		return
 
 	if(holding)
-		scrub(holding.air_contents, SSAIR_DT)
+		scrub(holding.air_contents, delta_time)
 	else
 		var/turf/T = get_turf(src)
-		scrub(T.return_air(), SSAIR_DT)
+		scrub(T.return_air(), delta_time)
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture, delta_time = 2)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
@@ -170,7 +170,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
 	icon_state = "scrubber:[on]"
 
-/obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
+/obj/machinery/portable_atmospherics/scrubber/huge/process_atmos(delta_time)
 	if((!anchored && !movable) || !is_operational)
 		on = FALSE
 		update_icon()
@@ -182,7 +182,7 @@
 	if(!holding)
 		var/turf/T = get_turf(src)
 		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
-			scrub(AT.return_air(), SSMACHINES_DT)
+			scrub(AT.return_air(), delta_time)
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user, W))

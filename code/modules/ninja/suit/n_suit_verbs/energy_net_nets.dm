@@ -39,13 +39,13 @@ It is possible to destroy the net by the occupant or someone else.
 			to_chat(master, "<span class='userdanger'>ERROR</span>: unable to initiate transport protocol. Procedure terminated.")
 	return ..()
 
-/obj/structure/energy_net/process()
+/obj/structure/energy_net/process(delta_time)
 	if(QDELETED(affecting)||affecting.loc!=loc)
 		qdel(src)//Get rid of the net.
 		return
 
 	if(check > 0)
-		check -= SSOBJ_DT
+		check -= delta_time
 		return
 
 	success = TRUE

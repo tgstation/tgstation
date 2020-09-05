@@ -209,7 +209,7 @@
 		underlays = list() //hack: BYOND refuses to update the underlay to match the icon_state otherwise
 		underlays += mob_underlay
 
-/obj/structure/chrono_field/process()
+/obj/structure/chrono_field/process(delta_time)
 	if(captured)
 		if(timetokill > initial(timetokill))
 			for(var/atom/movable/AM in contents)
@@ -232,14 +232,14 @@
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))
-					timetokill -= SSOBJ_DT
+					timetokill -= delta_time
 				else
 					gun = null
 					return .()
 			else if(!attached)
-				timetokill -= SSOBJ_DT
+				timetokill -= delta_time
 			else
-				timetokill += SSOBJ_DT
+				timetokill += delta_time
 	else
 		qdel(src)
 

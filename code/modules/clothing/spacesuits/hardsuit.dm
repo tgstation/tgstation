@@ -78,13 +78,13 @@
 		return
 	current_tick_amount += amount
 
-/obj/item/clothing/head/helmet/space/hardsuit/process()
-	radiation_count = LPFILTER(radiation_count, current_tick_amount, SSOBJ_DT, RAD_GEIGER_RC)
+/obj/item/clothing/head/helmet/space/hardsuit/process(delta_time)
+	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
 
 	if(current_tick_amount)
 		grace = RAD_GEIGER_GRACE_PERIOD
 	else
-		grace -= SSOBJ_DT
+		grace -= delta_time
 		if(grace <= 0)
 			radiation_count = 0
 

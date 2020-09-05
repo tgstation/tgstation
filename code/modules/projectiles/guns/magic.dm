@@ -62,11 +62,11 @@
 	return ..()
 
 
-/obj/item/gun/magic/process()
+/obj/item/gun/magic/process(delta_time)
 	if (charges >= max_charges)
 		charge_timer = 0
 		return
-	charge_timer += SSOBJ_DT
+	charge_timer += delta_time
 	if(charge_timer < recharge_rate)
 		return 0
 	charge_timer = 0

@@ -66,10 +66,10 @@
 		timing = TRUE
 	update_icon()
 
-/obj/item/assembly/timer/process()
+/obj/item/assembly/timer/process(delta_time)
 	if(!timing)
 		return
-	time -= SSOBJ_DT
+	time -= delta_time
 	if(time <= 0)
 		timing = FALSE
 		timer_end()

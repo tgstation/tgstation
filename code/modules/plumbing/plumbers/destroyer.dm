@@ -9,13 +9,13 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
-/obj/machinery/plumbing/disposer/process()
+/obj/machinery/plumbing/disposer/process(delta_time)
 	if(machine_stat & NOPOWER)
 		return
 	if(reagents.total_volume)
 		if(icon_state != initial(icon_state) + "_working") //threw it here instead of update icon since it only has two states
 			icon_state = initial(icon_state) + "_working"
-		reagents.remove_any(disposal_rate * SSMACHINES_DT)
+		reagents.remove_any(disposal_rate * delta_time)
 	else
 		if(icon_state != initial(icon_state))
 			icon_state = initial(icon_state)

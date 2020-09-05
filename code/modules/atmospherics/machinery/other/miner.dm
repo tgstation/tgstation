@@ -118,14 +118,14 @@
 		on_overlay.color = overlay_color
 		. += on_overlay
 
-/obj/machinery/atmospherics/miner/process()
+/obj/machinery/atmospherics/miner/process(delta_time)
 	update_power()
 	check_operation()
 	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
 		if(do_use_power(active_power_usage))
-			mine_gas(SSMACHINES_DT)
+			mine_gas(delta_time)
 
 /obj/machinery/atmospherics/miner/proc/mine_gas(delta_time = 2)
 	var/turf/open/O = get_turf(src)

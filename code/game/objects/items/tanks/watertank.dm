@@ -407,7 +407,7 @@
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>[src] turns off.</span>")
 
-/obj/item/reagent_containers/chemtank/process()
+/obj/item/reagent_containers/chemtank/process(delta_time)
 	if(!ishuman(loc))
 		turn_off()
 		return
@@ -419,7 +419,7 @@
 		turn_off()
 		return
 
-	var/inj_am = injection_amount * SSOBJ_DT
+	var/inj_am = injection_amount * delta_time
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_icon()

@@ -56,14 +56,14 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.</span>"
 
-/obj/machinery/chem_heater/process()
+/obj/machinery/chem_heater/process(delta_time)
 	..()
 	if(machine_stat & NOPOWER)
 		return
 	if(on)
 		if(beaker && beaker.reagents.total_volume)
 			//keep constant with the chemical acclimator please
-			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SSMACHINES_DT * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)

@@ -39,8 +39,8 @@
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_icon()
 
-/obj/item/sparkler/process()
-	burntime -= SSOBJ_DT
+/obj/item/sparkler/process(delta_time)
+	burntime -= delta_time
 	if(burntime <= 0)
 		new /obj/item/stack/rods(drop_location())
 		qdel(src)

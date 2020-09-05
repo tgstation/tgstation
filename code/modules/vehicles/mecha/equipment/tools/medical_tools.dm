@@ -219,7 +219,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
 	go_out()
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process()
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/process(delta_time)
 	if(..())
 		return
 	if(!chassis.has_charge(energy_drain))
@@ -231,12 +231,12 @@
 	if(!M)
 		return
 	if(M.health > 0)
-		M.adjustOxyLoss(-0.5 * SSOBJ_DT)
-	M.AdjustStun(-40 * SSOBJ_DT)
-	M.AdjustKnockdown(-40 * SSOBJ_DT)
-	M.AdjustParalyzed(-40 * SSOBJ_DT)
-	M.AdjustImmobilized(-40 * SSOBJ_DT)
-	M.AdjustUnconscious(-40 * SSOBJ_DT)
+		M.adjustOxyLoss(-0.5 * delta_time)
+	M.AdjustStun(-40 * delta_time)
+	M.AdjustKnockdown(-40 * delta_time)
+	M.AdjustParalyzed(-40 * delta_time)
+	M.AdjustImmobilized(-40 * delta_time)
+	M.AdjustUnconscious(-40 * delta_time)
 	if(M.reagents.get_reagent_amount(/datum/reagent/medicine/epinephrine) < 5)
 		M.reagents.add_reagent(/datum/reagent/medicine/epinephrine, 5)
 	chassis.use_power(energy_drain)
@@ -507,7 +507,7 @@
 	update_equip_info()
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process(delta_time)
 	if(..())
 		return
 	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
@@ -515,7 +515,7 @@
 		log_message("Reagent processing stopped.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/amount = SSOBJ_DT * synth_speed / processed_reagents.len
+	var/amount = delta_time * synth_speed / processed_reagents.len
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)
 		chassis.use_power(energy_drain)
@@ -545,7 +545,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/process()
 	if(..())
 		return
-	medigun.process()
+	medigun.process(SSOBJ_DT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(mob/source, atom/movable/target, params)
 	medigun.process_fire(target, loc)

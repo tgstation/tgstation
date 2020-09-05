@@ -39,13 +39,13 @@
 		return
 	return ..()
 
-/obj/machinery/computer/bank_machine/process()
+/obj/machinery/computer/bank_machine/process(delta_time)
 	..()
 	if(siphoning)
 		if (machine_stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			end_syphon()
-		var/siphon_am = 100 * SSMACHINES_DT
+		var/siphon_am = 100 * delta_time
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(!D.has_money(siphon_am))
 			say("Cargo budget depleted. Halting siphon.")

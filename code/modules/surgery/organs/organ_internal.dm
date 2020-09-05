@@ -79,8 +79,8 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()
-	on_death(SSOBJ_DT) //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(delta_time)
+	on_death(delta_time) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/on_death(delta_time = 2)	//runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))

@@ -97,8 +97,8 @@ Slimecrossing Weapons
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/gun/magic/bloodchill/process()
-	charge_timer += SSOBJ_DT
+/obj/item/gun/magic/bloodchill/process(delta_time)
+	charge_timer += delta_time
 	if(charge_timer < recharge_rate || charges >= max_charges)
 		return FALSE
 	charge_timer = 0

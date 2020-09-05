@@ -59,11 +59,11 @@
 	put_out_candle()
 	return ..()
 
-/obj/item/candle/process()
+/obj/item/candle/process(delta_time)
 	if(!lit)
 		return PROCESS_KILL
 	if(!infinite)
-		wax -= SSOBJ_DT
+		wax -= delta_time
 	if(wax <= 0)
 		new /obj/item/trash/candle(loc)
 		qdel(src)

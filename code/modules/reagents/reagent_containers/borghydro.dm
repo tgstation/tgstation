@@ -48,8 +48,8 @@ Borg Hypospray
 	return ..()
 
 
-/obj/item/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
-	charge_timer += SSOBJ_DT
+/obj/item/reagent_containers/borghypo/process(delta_time) //Every [recharge_time] seconds, recharge some reagents for the cyborg
+	charge_timer += delta_time
 	if(charge_timer >= recharge_time)
 		regenerate_reagents()
 		charge_timer = 0

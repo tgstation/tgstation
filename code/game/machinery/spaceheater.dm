@@ -69,7 +69,7 @@
 	if(panel_open)
 		. += "sheater-open"
 
-/obj/machinery/space_heater/process()
+/obj/machinery/space_heater/process(delta_time)
 	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
@@ -100,7 +100,7 @@
 
 		var/heat_capacity = env.heat_capacity()
 		var/requiredEnergy = abs(env.temperature - targetTemperature) * heat_capacity
-		requiredEnergy = min(requiredEnergy, heatingPower * SSMACHINES_DT)
+		requiredEnergy = min(requiredEnergy, heatingPower * delta_time)
 
 		if(requiredEnergy < 1)
 			return

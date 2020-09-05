@@ -70,21 +70,21 @@
 				return
 	..()
 
-/obj/machinery/grill/process()
+/obj/machinery/grill/process(delta_time)
 	..()
 	update_icon()
 	if(grill_fuel <= 0)
 		return
 	else
-		grill_fuel -= GRILL_FUELUSAGE_IDLE * SSMACHINES_DT
-		if(DT_PROB(0.5, SSMACHINES_DT))
+		grill_fuel -= GRILL_FUELUSAGE_IDLE * delta_time
+		if(DT_PROB(0.5, delta_time))
 			var/datum/effect_system/smoke_spread/bad/smoke = new
 			smoke.set_up(1, loc)
 			smoke.start()
 	if(grilled_item)
-		grill_time += SSMACHINES_DT
-		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * SSMACHINES_DT)
-		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * SSMACHINES_DT
+		grill_time += delta_time
+		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * delta_time)
+		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * delta_time
 		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/AM)

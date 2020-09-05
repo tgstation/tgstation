@@ -281,14 +281,14 @@
 			var/obj/item/O = A
 			O.microwave_act()
 
-/obj/structure/bonfire/process()
+/obj/structure/bonfire/process(delta_time)
 	if(!CheckOxygen())
 		extinguish()
 		return
 	if(!grill)
-		Burn(SSOBJ_DT)
+		Burn(delta_time)
 	else
-		Cook(SSOBJ_DT)
+		Cook(delta_time)
 
 /obj/structure/bonfire/extinguish()
 	if(burning)

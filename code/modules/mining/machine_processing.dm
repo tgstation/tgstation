@@ -195,13 +195,13 @@
 	if(istype(target, /obj/item/stack/ore))
 		process_ore(target)
 
-/obj/machinery/mineral/processing_unit/process()
+/obj/machinery/mineral/processing_unit/process(delta_time)
 	if(on)
 		if(selected_material)
-			smelt_ore(SSMACHINES_DT)
+			smelt_ore(delta_time)
 
 		else if(selected_alloy)
-			smelt_alloy(SSMACHINES_DT)
+			smelt_alloy(delta_time)
 
 
 		if(CONSOLE)

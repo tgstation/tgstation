@@ -282,9 +282,9 @@
 	. = ..()
 	fuel = rand(1600, 2000)
 
-/obj/item/flashlight/flare/process()
+/obj/item/flashlight/flare/process(delta_time)
 	open_flame(heat)
-	fuel = max(fuel -= SSOBJ_DT, 0)
+	fuel = max(fuel -= delta_time, 0)
 	if(fuel <= 0 || !on)
 		turn_off()
 		if(!fuel)
@@ -399,8 +399,8 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/flashlight/emp/process()
-	charge_timer += SSOBJ_DT
+/obj/item/flashlight/emp/process(delta_time)
+	charge_timer += delta_time
 	if(charge_timer < charge_delay)
 		return FALSE
 	charge_timer -= charge_delay
@@ -466,8 +466,8 @@
 	return ..()
 
 
-/obj/item/flashlight/glowstick/process()
-	fuel = max(fuel - SSOBJ_DT, 0)
+/obj/item/flashlight/glowstick/process(delta_time)
+	fuel = max(fuel - delta_time, 0)
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)

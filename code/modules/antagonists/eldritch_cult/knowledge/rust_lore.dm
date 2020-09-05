@@ -175,8 +175,8 @@
 	STOP_PROCESSING(SSprocessing,src)
 	return ..()
 
-/datum/rust_spread/process()
-	var/spread_am = round(spread_per_sec * SSPROCESSING_DT)
+/datum/rust_spread/process(delta_time)
+	var/spread_am = round(spread_per_sec * delta_time)
 
 	if(edge_turfs.len < spread_am)
 		compile_turfs()

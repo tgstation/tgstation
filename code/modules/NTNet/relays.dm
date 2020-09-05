@@ -64,7 +64,7 @@
 	else
 		icon_state = "bus_off"
 
-/obj/machinery/ntnet_relay/process()
+/obj/machinery/ntnet_relay/process(delta_time)
 	if(is_operational)
 		use_power = ACTIVE_POWER_USE
 	else
@@ -73,7 +73,7 @@
 	update_icon()
 
 	if(dos_overload > 0)
-		dos_overload = max(0, dos_overload - dos_dissipate * SSMACHINES_DT)
+		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)

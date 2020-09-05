@@ -71,9 +71,9 @@
 		update_icon()
 	return ..()
 
-/obj/item/gun/energy/process()
+/obj/item/gun/energy/process(delta_time)
 	if(selfcharge && cell && cell.percent() < 100)
-		charge_timer += SSOBJ_DT
+		charge_timer += delta_time
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0

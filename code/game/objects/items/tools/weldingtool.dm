@@ -71,7 +71,7 @@
 		. += "[initial(icon_state)]-on"
 
 
-/obj/item/weldingtool/process()
+/obj/item/weldingtool/process(delta_time)
 	switch(welding)
 		if(0)
 			force = 3
@@ -84,7 +84,7 @@
 		if(1)
 			force = 15
 			damtype = BURN
-			burned_fuel_for += SSOBJ_DT
+			burned_fuel_for += delta_time
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 				use(1)
 			update_icon()

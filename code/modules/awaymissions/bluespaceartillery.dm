@@ -11,9 +11,9 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = TRUE
 
-/obj/machinery/artillerycontrol/process()
+/obj/machinery/artillerycontrol/process(delta_time)
 	if(reload < reload_cooldown)
-		reload += SSMACHINES_DT
+		reload += delta_time
 
 /obj/structure/artilleryplaceholder
 	name = "artillery"

@@ -73,10 +73,10 @@
 	next_activate = world.time + 30
 	return TRUE
 
-/obj/item/assembly/prox_sensor/process()
+/obj/item/assembly/prox_sensor/process(delta_time)
 	if(!timing)
 		return
-	time -= SSOBJ_DT
+	time -= delta_time
 	if(time <= 0)
 		timing = FALSE
 		toggle_scan(TRUE)

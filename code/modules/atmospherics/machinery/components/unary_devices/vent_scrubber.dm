@@ -138,17 +138,17 @@
 	check_turfs()
 	..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos(delta_time)
 	..()
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
-	scrub(loc, SSAIR_DT)
+	scrub(loc, delta_time)
 	if(widenet)
 		for(var/turf/tile in adjacent_turfs)
-			scrub(tile, SSAIR_DT)
+			scrub(tile, delta_time)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile, delta_time = 0.5)

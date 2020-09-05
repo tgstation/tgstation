@@ -239,15 +239,8 @@
 #define SSEXPLOSIONS_THROWS 3
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
-// Can potentially be updated with something more clever, like a "world.time - last run" time. However, current MC doesn't really support that since procs can sleep and resume after fire() has ended.
-#define SSAIR_DT (SSair.wait/10)
-#define SSDCS_DT (SSdcs.wait/10)
-#define SSFASTPROCESS_DT (SSfastprocess.wait/10)
+// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+#define SSFLUIDS_DT (SSfluids.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
-#define SSMOOD_DT (SSmood.wait/10)
-#define SSNANITES_DT (SSnanites.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)
-#define SSPROCESSING_DT (SSprocessing.wait/10)
-#define SSQUIRKS_DT (SSquirks.wait/10)
-#define SSRADIATION_DT (SSradiation.wait/10)

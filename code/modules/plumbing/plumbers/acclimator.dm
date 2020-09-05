@@ -30,7 +30,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/acclimator, bolt)
 
-/obj/machinery/plumbing/acclimator/process()
+/obj/machinery/plumbing/acclimator/process(delta_time)
 	if(machine_stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)
 		if(acclimate_state != NEUTRAL)
 			acclimate_state = NEUTRAL
@@ -51,7 +51,7 @@
 		if(reagents.chem_temp <= target_temperature && target_temperature - allowed_temperature_difference <= reagents.chem_temp) //heating here
 			emptying = TRUE
 
-	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * SSMACHINES_DT * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 	reagents.handle_reactions()
 
 /obj/machinery/plumbing/acclimator/update_icon_state()

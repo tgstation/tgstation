@@ -51,8 +51,8 @@
 		countdown.color = countdown_colour
 	countdown.start()
 
-/obj/effect/anomaly/process()
-	anomalyEffect()
+/obj/effect/anomaly/process(delta_time)
+	anomalyEffect(delta_time)
 	if(death_time < world.time)
 		if(loc)
 			detonate()
@@ -66,8 +66,8 @@
 		QDEL_NULL(aSignal)
 	return ..()
 
-/obj/effect/anomaly/proc/anomalyEffect()
-	if(DT_PROB(ANOMALY_MOVECHANCE, SSOBJ_DT))
+/obj/effect/anomaly/proc/anomalyEffect(delta_time)
+	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -280,9 +280,9 @@
 	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
-/obj/effect/anomaly/pyro/anomalyEffect()
+/obj/effect/anomaly/pyro/anomalyEffect(delta_time)
 	..()
-	ticks += SSOBJ_DT
+	ticks += delta_time
 	if(ticks < releasedelay)
 		return
 	else

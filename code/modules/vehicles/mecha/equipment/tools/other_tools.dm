@@ -241,15 +241,15 @@
 		send_byjax(chassis.occupants,"exosuit.browser", "[REF(src)]", get_equip_info())
 
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/process()
+/obj/item/mecha_parts/mecha_equipment/repair_droid/process(delta_time)
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
 		return
-	var/h_boost = health_boost * SSOBJ_DT
+	var/h_boost = health_boost * delta_time
 	var/repaired = 0
 	if(chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		h_boost *= -2
-	else if(chassis.internal_damage && DT_PROB(8, SSOBJ_DT))
+	else if(chassis.internal_damage && DT_PROB(8, delta_time))
 		for(var/int_dam_flag in repairable_damage)
 			if(chassis.internal_damage & int_dam_flag)
 				chassis.clearInternalDamage(int_dam_flag)
@@ -325,7 +325,7 @@
 	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process(delta_time)
 	if(!chassis || chassis.internal_damage & MECHA_INT_SHORT_CIRCUIT)
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -343,7 +343,7 @@
 					pow_chan = c
 					break
 			if(pow_chan)
-				var/delta = min(10 * SSOBJ_DT, chassis.cell.maxcharge-cur_charge)
+				var/delta = min(10 * delta_time, chassis.cell.maxcharge-cur_charge)
 				chassis.give_power(delta)
 				A.use_power(delta*coeff, pow_chan)
 
@@ -423,7 +423,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
 	load_fuel(weapon)
 
-/obj/item/mecha_parts/mecha_equipment/generator/process()
+/obj/item/mecha_parts/mecha_equipment/generator/process(delta_time)
 	if(!chassis)
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -440,8 +440,8 @@
 	var/use_fuel = fuelrate_idle
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuelrate_active
-		chassis.give_power(rechargerate * SSOBJ_DT)
-	fuel.amount -= min(SSOBJ_DT * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
+		chassis.give_power(rechargerate * delta_time)
+	fuel.amount -= min(delta_time * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
 	update_equip_info()
 	return TRUE
 
@@ -459,9 +459,9 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
 
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear/process(delta_time)
 	if(..())
-		radiation_pulse(get_turf(src), radrate * SSOBJ_DT)
+		radiation_pulse(get_turf(src), radrate * delta_time)
 
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////

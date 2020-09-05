@@ -679,38 +679,38 @@
 	deactivate_field()
 	. = ..()
 
-/obj/item/borg/projectile_dampen/process()
-	process_recharge()
-	process_usage()
+/obj/item/borg/projectile_dampen/process(delta_time)
+	process_recharge(delta_time)
+	process_usage(delta_time)
 	update_location()
 
 /obj/item/borg/projectile_dampen/proc/update_location()
 	if(dampening_field)
 		dampening_field.HandleMove()
 
-/obj/item/borg/projectile_dampen/proc/process_usage()
+/obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
 		if(!P.stun && P.nodamage)	//No damage
 			continue
-		usage += projectile_tick_speed_ecost * SSFASTPROCESS_DT
-		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * SSFASTPROCESS_DT
+		usage += projectile_tick_speed_ecost * delta_time
+		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
 
-/obj/item/borg/projectile_dampen/proc/process_recharge()
+/obj/item/borg/projectile_dampen/proc/process_recharge(delta_time)
 	if(!istype(host))
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = clamp(energy + energy_recharge * SSFASTPROCESS_DT, 0, maxenergy)
+			energy = clamp(energy + energy_recharge * delta_time, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * SSFASTPROCESS_DT * energy_recharge_cyborg_drain_coefficient)
-		energy += energy_recharge * SSFASTPROCESS_DT
+		host.cell.use(energy_recharge * delta_time * energy_recharge_cyborg_drain_coefficient)
+		energy += energy_recharge * delta_time
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/P, track_projectile = TRUE)
 	if(tracked[P])
