@@ -471,7 +471,7 @@
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide
 	required_reagents = list(/datum/reagent/nitrous_oxide = 1)
-	strengthdiv = 7
+	strengthdiv = 10
 	required_temp = 575
 	modifier = 1
 
