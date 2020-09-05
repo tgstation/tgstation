@@ -50,7 +50,6 @@ SUBSYSTEM_DEF(statpanels)
 	while(length(currentrun))
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
-		//target << output("", "statbrowser:SendTabsToByond")
 		if(target.stat_tab == "Status")
 			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 			var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
