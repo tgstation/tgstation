@@ -129,24 +129,24 @@ SUBSYSTEM_DEF(statpanels)
 /// verbs that send information from the browser UI
 /client/verb/set_tab(tab as text|null)
 	set name = "Set Tab"
-	set hidden = 1
+	set hidden = TRUE
 
 	stat_tab = tab
 
 /client/verb/send_tabs(tabs as text|null)
 	set name = "Send Tabs"
-	set hidden = 1
+	set hidden = TRUE
 
 	panel_tabs += tabs
 
 /client/verb/remove_tabs(tabs as text|null)
 	set name = "Remove Tabs"
-	set hidden = 1
+	set hidden = TRUE
 
 	panel_tabs -= tabs
 
 /client/verb/reset_tabs()
 	set name = "Reset Tabs"
-	set hidden = 1
+	set hidden = TRUE
 
 	panel_tabs = list()
