@@ -594,7 +594,7 @@
 	return ..()
 
 /**
-  * Proc that handles a charge attack for a mob.
+  * Proc that handles a charge attack windup for a mob.
   */
 /mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
 	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
@@ -603,12 +603,20 @@
 	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
 		return FALSE
 	Shake(15, 15, 1 SECONDS)
-	sleep(1.5 SECONDS) //Provides a visable wind up and tell for all charging mobs, with consistant visuals each time.
+	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
+
+/**
+  * Proc that throws the mob at the target after the windup.
+  */
+/mob/living/simple_animal/hostile/proc/handle_charge_target(var/atom/target)
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)
 	return TRUE
 
+/**
+  * Proc that handles a charge attack after it's concluded.
+  */
 /mob/living/simple_animal/hostile/proc/charge_end()
 	charge_state = FALSE
 
@@ -630,8 +638,6 @@
 			if(!blocked)
 				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 				L.Knockdown(knockdown_time)
-				sleep(2)
-				step_towards(src,L)
 			else
 				Stun((knockdown_time * 2), 1, 1)
 			charge_end()
