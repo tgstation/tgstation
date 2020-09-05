@@ -11,17 +11,16 @@ GLOBAL_LIST_INIT(crystal_invasion_waves, list(
 	"big wave" = list(
 		/obj/structure/crystal_portal/small=5,
 		/obj/structure/crystal_portal/medium=3,
-		/obj/structure/crystal_portal/big=2,
-		/obj/structure/crystal_portal/huge=1
+		/obj/structure/crystal_portal/big=2
 		),
 	"huge wave" = list(
 		/obj/structure/crystal_portal/small=7,
 		/obj/structure/crystal_portal/medium=5,
-		/obj/structure/crystal_portal/big=3,
-		/obj/structure/crystal_portal/huge=2
+		/obj/structure/crystal_portal/big=3
 		),
 	))
 GLOBAL_LIST_EMPTY(crystal_portals)
+GLOBAL_LIST_EMPTY(crystal_portals_center)
 
 /*
 This section is for the event controller
@@ -50,8 +49,18 @@ This section is for the event controller
 	var/is_zk_scenario = TRUE
 	///Ticks that have to pass before second wave
 	var/second_wave = 310
+	///Store the huge portals
+	var/obj/structure/crystal_portal/huge/center_portal
+	///Store the areas where the huge portals appears
+	var/list/center_areas = list()
 
 /datum/round_event/crystal_invasion/start()
+	destabilize_supermatter_crystal()
+	choose_wave_type()
+	addtimer(CALLBACK(src, .proc/create_random_portals), 2 SECONDS)
+
+///Destabilize the Supermatter crystal and spawn 6 portals around it
+/datum/round_event/crystal_invasion/proc/destabilize_supermatter_crystal()
 	var/list/sm_crystal = list()
 	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
 		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
@@ -66,9 +75,27 @@ This section is for the event controller
 	dest_crystal = crystal.destabilize(portal_numbers)
 	RegisterSignal(dest_crystal, COMSIG_PARENT_QDELETING, .proc/on_dest_crystal_qdel)
 
-/*
+	for(var/turf/turf_loc in RANGE_TURFS(8, dest_crystal.loc))
+		var/distance_from_center = max(get_dist(turf_loc, dest_crystal.loc), 1)
+		if(prob(325 / distance_from_center))
+			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
+				turf_loc.ChangeTurf(/turf/open/floor/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
+			else
+				turf_loc.ChangeTurf(/turf/closed/wall/crystal_wall)
 
-*/
+	var/list/crystal_spawner_turfs = list()
+	for(var/turf/range_turf in RANGE_TURFS(6, dest_crystal.loc))
+		if(!isopenturf(range_turf) || isspaceturf(range_turf))
+			continue
+		crystal_spawner_turfs += range_turf
+
+	for(var/i in 1 to 6)
+		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
+		var/turf/portal_spawner_turf = pick(crystal_spawner_turfs)
+		new pick_portal(portal_spawner_turf)
+
+///Chooses random areas where to put the main huge portals and then spawn around them 6 more portals
+/datum/round_event/crystal_invasion/proc/create_random_portals()
 	var/list/center_finder = list()
 	for(var/es in GLOB.generic_event_spawns)
 		var/obj/effect/landmark/event_spawn/temp = es
@@ -77,34 +104,43 @@ This section is for the event controller
 	if(!center_finder.len)
 		kill()
 		CRASH("No landmarks on the station map, aborting")
-	var/obj/center = pick(center_finder)
-	var/turf/center_turf = center.loc
-	var/area/center_area = get_area(center_turf)
+	for(var/j in 1 to portal_numbers)
+		var/obj/center = pick(center_finder)
+		var/turf/center_turf = center.loc
+		var/area/center_area = get_area(center_turf)
+		center_areas += center_area
 
-	explosion(center_turf,0,3,5,7,7)
+		explosion(center_turf,0,3,5,7,7)
 
-	center_portal = new/obj/structure/crystal_portal/huge(center_turf)
+		center_portal = new/obj/structure/crystal_portal/huge(center_turf)
 
-	for(var/turf/turf_loc in RANGE_TURFS(5, center_turf))
-		var/distance_from_center = max(get_dist(turf_loc, center_turf), 1)
-		if(prob(250 / distance_from_center))
-			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
-				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
-			else
-				turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
+		for(var/turf/turf_loc in RANGE_TURFS(5, center_turf))
+			var/distance_from_center = max(get_dist(turf_loc, center_turf), 1)
+			if(prob(250 / distance_from_center))
+				if(isopenturf(turf_loc) || isspaceturf(turf_loc))
+					turf_loc.ChangeTurf(/turf/open/floor/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
+				else
+					turf_loc.ChangeTurf(/turf/closed/wall/crystal_wall)
 
-	var/list/portal_spawner_turfs = list()
-	for(var/range_turf in RANGE_TURFS(10, center_turf))
-		if(!isopenturf(range_turf) || isspaceturf(range_turf) || isturf(center_turf))
-			continue
-		portal_spawner_turfs += range_turf
+		var/list/portal_spawner_turfs = list()
+		for(var/turf/range_turf in RANGE_TURFS(10, center_turf))
+			if(!isopenturf(range_turf) || isspaceturf(range_turf))
+				continue
+			portal_spawner_turfs += range_turf
 
-	for(var/i in 1 to 20)
-		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
-		var/turf/portal_spawner_turf = pick_n_take(portal_spawner_turfs)
-		new pick_portal(portal_spawner_turf)
+		for(var/i in 1 to 6)
+			var/pick_portal = pickweight(GLOB.crystal_invasion_waves[wave_name])
+			var/turf/portal_spawner_turf = pick(portal_spawner_turfs)
+			new pick_portal(portal_spawner_turf)
+	dest_crystal.icon_state = "psy_shielded"
+	dest_crystal.changed_icon = FALSE
+	addtimer(CALLBACK(src, .proc/announce_locations), 8 SECONDS)
 
-//	choose_wave_type()
+///After 8 seconds from the initial explosions centcomm will announce the location of the huge portals
+/datum/round_event/crystal_invasion/proc/announce_locations()
+	priority_announce("WARNING - After tracking the powerspikes from your station we have determined that huge portals have appeared at the following locations:[center_areas.Join(", ")]. \
+						Please close those before attempting to stabilize the crystal.", "Alert")
+	sound_to_playing_players('sound/misc/notice1.ogg')
 
 /datum/round_event/crystal_invasion/announce(fake)
 	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert")
@@ -120,67 +156,21 @@ This section is for the event controller
 			"huge wave" = 5))
 	switch(wave_name)
 		if("small wave")
-			portal_numbers = rand(9, 11)
+			portal_numbers = 2
 		if("medium wave")
-			portal_numbers = rand(8, 12)
+			portal_numbers = rand(2, 3)
 		if("big wave")
-			portal_numbers = rand(9, 13)
+			portal_numbers = rand(3, 4)
 		if("huge wave")
-			portal_numbers = rand(11, 15)
+			portal_numbers = rand(4, 5)
 		else
 			kill()
 			CRASH("Wave name of [wave_name] not recognised.")
 
-	var/list/sm_crystal = list()
-	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
-		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
-			continue
-		sm_crystal += temp
-	if(!length(sm_crystal))
-		log_game("No engine found, killing the crystal invasion event.")
-		kill()
-		return
-	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
-	dest_crystal = crystal.destabilize(portal_numbers)
-	RegisterSignal(dest_crystal, COMSIG_PARENT_QDELETING, .proc/on_dest_crystal_qdel)
-
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
-						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
+						coming from \[REDACTED]; there will be [portal_numbers] main portals spread around the station that you must close. Harvest a \[REDACTED] \
 						crystal from a portal by using the anomaly neutralizer, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
-
-	addtimer(CALLBACK(src, .proc/spawn_portals), 3 SECONDS)
-
-///Pick a location from the generic_event_spawns list that are present on the maps and call the spawn anomaly and portal procs
-/datum/round_event/crystal_invasion/proc/spawn_portals()
-	var/list/spawners = list()
-	for(var/es in GLOB.generic_event_spawns)
-		var/obj/effect/landmark/event_spawn/temp = es
-		if(is_station_level(temp.z))
-			spawners += temp
-	for(var/i in 1 to portal_numbers)
-		spawn_portal(GLOB.crystal_invasion_waves[wave_name], spawners)
-	for(var/i in 1 to 6)
-		spawn_anomaly(spawners)
-
-	var/list/crystal_spawner_turfs = list()
-	for(var/range_turf in RANGE_TURFS(6, dest_crystal.loc))
-		if(!isopenturf(range_turf) || isspaceturf(range_turf))
-			continue
-		crystal_spawner_turfs += range_turf
-	for(var/i in 1 to 4)
-		if(!length(crystal_spawner_turfs))
-			break
-		var/pick_portal = pickweight(GLOB.crystal_invasion_waves["big wave"])
-		var/turf/crystal_spawner_turf = pick_n_take(crystal_spawner_turfs)
-		new pick_portal(crystal_spawner_turf)
-
-///Spawn an anomaly randomly in a different location than spawn_portal()
-/datum/round_event/crystal_invasion/proc/spawn_anomaly(list/spawners)
-	if(!spawners.len)
-		CRASH("No landmarks on the station map, aborting")
-	var/obj/spawner = pick(spawners)
-	new/obj/effect/anomaly/flux(spawner.loc, 30 SECONDS, FALSE, FALSE)
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type, list/spawners)
@@ -262,9 +252,30 @@ This section is for the event controller
 	dest_crystal = null
 	kill()
 
-/turf/open/indestructible/crystal_floor
+/turf/open/floor/crystal_floor
+	name = "Crystal floor"
+	desc = "A crystalyzed floor"
+	icon_state = "noslip-damaged1"
+	floor_tile = null
+	baseturfs = /turf/open/space
 
-/turf/closed/indestructible/crystal_wall
+/turf/open/floor/crystal_floor/examine(mob/user)
+	. += ..()
+	. += "<span class='notice'>The floor is made of sturdy crystals.</span>"
+
+/turf/closed/wall/crystal_wall
+	name = "Crystal wall"
+	desc = "A crystalyzed wall"
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "rock_highchance"
+	baseturfs = /turf/open/space
+	sheet_type = null
+	girder_type = null
+
+/turf/closed/wall/crystal_wall/examine(mob/user)
+	. += ..()
+	. += "<span class='notice'>The wall is made of sturdy crystals.</span>"
+
 
 /*
 This section is for the destabilized SM
@@ -285,6 +296,8 @@ This section is for the destabilized SM
 	var/is_stabilized = FALSE
 	///Our sound loop
 	var/datum/looping_sound/destabilized_crystal/soundloop
+
+	var/changed_icon = TRUE
 
 /obj/machinery/destabilized_crystal/Initialize()
 	. = ..()
@@ -313,26 +326,32 @@ This section is for the destabilized SM
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
 	air_update_turf()
+	if(length(GLOB.crystal_portals_center) == 0 && !changed_icon)
+		icon_state = "psy"
+		changed_icon = TRUE
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
 		return
 	if(istype(W, /obj/item/crystal_stabilizer))
+		if(length(GLOB.crystal_portals_center) > 0)
+			to_chat(user, "<span class='notice'>\The shield protecting the crystal is still up! Close all the main portals before attempting this again!</span>")
+			return
 		var/obj/item/crystal_stabilizer/injector = W
 		if(!injector.filled)
 			to_chat(user, "<span class='notice'>\The [W] is empty!</span>")
 			return
 		to_chat(user, "<span class='notice'>You carefully begin injecting \the [src] with \the [W]... take care not to move untill all the steps are finished!</span>")
-		if(!W.use_tool(src, user, 2 SECONDS, volume = 100))
+		if(!W.use_tool(src, user, 1 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>Seems that \the [src] internal resonance is fading with the fluid!</span>")
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
-		if(!W.use_tool(src, user, 2.5 SECONDS, volume = 100))
+		if(!W.use_tool(src, user, 1.5 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>The [src] is reacting violently with the fluid!</span>")
 		fire_nuclear_particle()
 		radiation_pulse(src, 1000, 6)
-		if(!W.use_tool(src, user, 3 SECONDS, volume = 100))
+		if(!W.use_tool(src, user, 2 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>The [src] has been restored and restabilized!</span>")
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
@@ -343,6 +362,10 @@ This section is for the destabilized SM
 /obj/machinery/destabilized_crystal/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The Crystal appears to be heavily destabilized. Maybe it can be fixed by injecting it with something from another world.</span>"
+	if(length(GLOB.crystal_portals_center) > 0)
+		. += "<span class='notice'>The Destabilized Crystal appears to be protected by some kind of shield.</span>"
+	else
+		. += "<span class='notice'>The shield that was protecting the Crystal is gone, it's time to restore it.</span>"
 
 /obj/machinery/destabilized_crystal/Bumped(atom/movable/movable_atom)
 	if(!isliving(movable_atom))
@@ -558,12 +581,18 @@ This section is for the crystal portals variations
 	max_mobs = 5
 	spawn_time = 20 SECONDS
 	mob_types = list(
-		/mob/living/simple_animal/hostile/crystal_monster/minion,
-		/mob/living/simple_animal/hostile/crystal_monster/thug,
 		/mob/living/simple_animal/hostile/crystal_monster/recruit,
 		/mob/living/simple_animal/hostile/crystal_monster/killer,
 		/mob/living/simple_animal/hostile/crystal_monster/boss,
 		)
+
+/obj/structure/crystal_portal/huge/Initialize()
+	. = ..()
+	GLOB.crystal_portals_center += src
+
+/obj/structure/crystal_portal/huge/Destroy()
+	GLOB.crystal_portals_center -= src
+	return ..()
 
 /*
 This section is for the crystal monsters variations
