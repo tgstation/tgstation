@@ -1,0 +1,4 @@
+author: "Jack7D1"
+delete-after: True
+changes: 
+  - bugfix: "Bounty tablets can print the bounty sheets again."
