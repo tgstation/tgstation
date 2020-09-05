@@ -235,7 +235,7 @@
 	name = "Close Quarters Captaincy"
 
 ///Prevents use if the captain is not in their office or bedroom.
-/datum/martial_art/cqc/under_tide/can_use(mob/living/carbon/human/H) //this is used to make captain CQC only work in captain's office or bedroom
+/datum/martial_art/cqc/under_tide/can_use(mob/living/carbon/human/H)
 	if(!istype(get_area(H), /area/crew_quarters/heads/captain))
 		return FALSE
 	if(!istype(get_area(H), /area/crew_quarters/heads/captain/private))
