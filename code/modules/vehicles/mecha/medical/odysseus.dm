@@ -2,7 +2,6 @@
 	desc = "These exosuits are developed and produced by Vey-Med. (&copy; All rights reserved)."
 	name = "\improper Odysseus"
 	icon_state = "odysseus"
-	allow_diagonal_movement = TRUE
 	movedelay = 2
 	max_temperature = 15000
 	max_integrity = 120

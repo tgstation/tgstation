@@ -65,8 +65,6 @@
 	var/lights_power = 6
 	///Just stop the mech from doing anything
 	var/completely_disabled = FALSE
-	///Whether this mech is allowed to move diagonally
-	var/allow_diagonal_movement = FALSE
 	///Whether or not the mech destroys walls by running into it.
 	var/bumpsmash = FALSE
 
@@ -645,10 +643,6 @@
 
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		direction = pick(GLOB.alldirs)
-
-	//only mechs with diagonal movement may move diagonally
-	if(!allow_diagonal_movement && ISDIAGONALDIR(direction))
-		return TRUE
 
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate)

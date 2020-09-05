@@ -2,7 +2,6 @@
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
 	icon_state = "gygax"
-	allow_diagonal_movement = TRUE
 	movedelay = 3
 	dir_in = 1 //Facing North.
 	max_integrity = 250
