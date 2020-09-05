@@ -33966,7 +33966,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bCg" = (
-/obj,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/camera{
 	c_tag = "Security Checkpoint";
@@ -50231,6 +50230,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"edW" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Toxins Storage APC";
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel,
+/area/science/storage)
 "efX" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -51786,6 +51796,16 @@
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"jzb" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/effect/turf_decal/delivery,
+/obj/structure/extinguisher_cabinet{
+	dir = 2;
+	pixel_x = 0;
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel,
+/area/science/storage)
 "jBV" = (
 /obj/machinery/computer/warrant{
 	dir = 4
@@ -52416,10 +52436,6 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
-"lhZ" = (
-/obj,
-/turf/closed/wall/r_wall,
-/area/science/storage)
 "ljx" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -103813,10 +103829,10 @@ wkN
 dYq
 cas
 cas
-lhZ
-lhZ
+cas
+cas
 bxW
-lhZ
+cas
 bLh
 bMs
 bMs
@@ -104844,7 +104860,7 @@ bIA
 bys
 bys
 bya
-dIF
+jzb
 dGF
 bMw
 cBE
@@ -105354,7 +105370,7 @@ xEM
 pKm
 pDu
 cas
-bIA
+edW
 byu
 bzN
 byb
@@ -105611,11 +105627,11 @@ bpE
 bon
 bon
 bon
-lhZ
+cas
 nLS
-lhZ
-lhZ
-lhZ
+cas
+cas
+cas
 dGF
 bMv
 bNv
@@ -105867,7 +105883,7 @@ bzO
 taM
 dWG
 flN
-rYJ
+bon
 eRJ
 bFW
 wJG
@@ -106124,7 +106140,7 @@ xeP
 bAR
 iSM
 pBV
-rYJ
+bon
 eRJ
 bEA
 voe
