@@ -47685,7 +47685,6 @@
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/cigarette/cigar,
-/obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bNc" = (
@@ -80966,6 +80965,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cZC" = (
@@ -89861,6 +89864,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/blood_filter,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsO" = (
@@ -91475,6 +91479,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/cmo)
 "dwZ" = (
@@ -91562,6 +91567,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/cmo)
 "dxf" = (
@@ -94971,6 +94977,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "dFh" = (
@@ -108889,6 +108896,20 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"hBm" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "hFL" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
@@ -110010,6 +110031,16 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"lac" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "lce" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/hydroponics/constructable,
@@ -113423,6 +113454,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"uvi" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uxC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -158072,7 +158111,7 @@ dhf
 diB
 iLU
 cNA
-cXI
+lac
 dpt
 cXI
 uiZ
@@ -161158,7 +161197,7 @@ dkA
 cNA
 cXO
 dpA
-cXO
+uvi
 cXO
 cXO
 pif
@@ -161668,7 +161707,7 @@ deE
 qdq
 cPv
 diJ
-dkv
+hBm
 dma
 dnC
 dpB

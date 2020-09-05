@@ -289,7 +289,7 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	fire_stacks -= 5
+	adjust_fire_stacks(-5)
 	Paralyze(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
@@ -298,7 +298,7 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message("<span class='danger'>[src] successfully extinguishes [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
-		ExtinguishMob()
+		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -490,22 +490,43 @@
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
+
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
 			if(harm)
 				adjustBruteLoss(3)
-		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
-			if(T)
-				T.add_vomit_floor(src, VOMIT_PURPLE)
 		else
-			if(T)
-				T.add_vomit_floor(src, VOMIT_TOXIC, purge)//toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
+				if(T)
+					T.add_vomit_floor(src, VOMIT_PURPLE)
+			else
+				if(T)
+					T.add_vomit_floor(src, VOMIT_TOXIC, purge) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (T?.is_blocked_turf())
 			break
 	return TRUE
+
+/**
+ * Expel the reagents you just tried to ingest
+ *
+ * When you try to ingest reagents but you do not have a stomach
+ * you will spew the reagents on the floor.
+ *
+ * Vars:
+ * * bite: /atom the reagents to expel
+ * * amount: int The amount of reagent
+ */
+/mob/living/carbon/proc/expel_ingested(var/atom/bite, amount)
+	visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
+					"<span class='userdanger'>You are unable to keep the [bite] down without a stomach!</span>")
+
+	var/turf/floor = get_turf(src)
+	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
+	bite.reagents.trans_to(spew, amount, transfered_by = src)
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -924,7 +945,7 @@
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
-/mob/living/carbon/ExtinguishMob()
+/mob/living/carbon/extinguish_mob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
 		I.acid_level = 0 //washes off the acid on our clothes

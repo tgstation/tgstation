@@ -499,7 +499,7 @@
 		for(var/M in occupants)
 			var/mob/living/cookedalive = M
 			if(cookedalive.fire_stacks < 5)
-				cookedalive.fire_stacks += 1
+				cookedalive.adjust_fire_stacks(1)
 				cookedalive.IgniteMob()
 
 /obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
