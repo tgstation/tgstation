@@ -257,15 +257,15 @@
 /proc/text_in_list(haystack, list/needle_list, start=1, end=0)
 	for(var/needle in needle_list)
 		if(findtext(haystack, needle, start, end))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Like above, but case sensitive
 /proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
 	for(var/needle in needle_list)
 		if(findtextEx(haystack, needle, start, end))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Adds 'char' ahead of 'text' until there are 'count' characters total
 /proc/add_leading(text, count, char = " ")
@@ -294,6 +294,21 @@
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 	return ""
+
+/**
+  * Truncate a string to the given length
+  *
+  * Will only truncate if the string is larger than the length and *ignores unicode concerns*
+  *
+  * This exists soley because trim does other stuff too.
+  *
+  * Arguments:
+  * * text - String
+  * * max_length - integer length to truncate at
+  */
+/proc/truncate(text, max_length)
+	if(length(text) > max_length)
+		return copytext(text, 1, max_length)
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)

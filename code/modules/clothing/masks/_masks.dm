@@ -6,7 +6,7 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
-	var/mask_adjusted = 0
+	var/mask_adjusted = FALSE
 	var/adjusted_flags = null
 
 /obj/item/clothing/mask/attack_self(mob/user)

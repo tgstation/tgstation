@@ -94,6 +94,7 @@
 #define CELL_LINE_TABLE_MOLD "cell_line_mold_table"
 #define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
 #define CELL_LINE_TABLE_BLOB "cell_line_blob_table"
+#define CELL_LINE_TABLE_CLOWN "cell_line_clown_table"
 
 ///Biopsy cell line types
 #define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
@@ -114,6 +115,7 @@
 #define CELL_LINE_TABLE_SLIME "cell_line_slime_table"
 #define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
+#define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 
 ///All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

@@ -112,9 +112,9 @@
 			var/turf/currentpos = get_turf(src)
 			var/mob/living/user = loc
 			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
-				return 1
+				return TRUE
 		field_disconnect(F)
-		return 0
+		return FALSE
 
 /obj/item/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
 	if(TED)
@@ -170,7 +170,6 @@
 	var/obj/item/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
 	var/mutable_appearance/mob_underlay
-	var/preloaded = 0
 	var/RPpos = null
 	var/attached = TRUE //if the gun arg isn't included initially, then the chronofield will work without one
 

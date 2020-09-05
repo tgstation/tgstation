@@ -354,7 +354,7 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M

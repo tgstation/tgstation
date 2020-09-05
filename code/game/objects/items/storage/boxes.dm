@@ -72,7 +72,7 @@
 
 /obj/item/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/package_wrap))
-		return 0
+		return FALSE
 	return ..()
 
 //Mime spell boxes
@@ -1404,3 +1404,15 @@
 /obj/item/storage/box/petridish/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/petri_dish(src)
+
+/obj/item/storage/box/plumbing
+	name = "box of plumbing supplies"
+	desc = "Contains a small supply of pipes, water recyclers, and metal to connect to the rest of the station."
+
+/obj/item/storage/box/plumbing/PopulateContents()
+	var/list/items_inside = list(
+		/obj/item/stock_parts/water_recycler = 2,
+		/obj/item/stack/ducts/fifty = 1,
+		/obj/item/stack/sheet/metal/ten = 1,
+		)
+	generate_items_inside(items_inside, src)

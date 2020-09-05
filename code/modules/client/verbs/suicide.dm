@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = FALSE
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
@@ -22,7 +22,7 @@
 			mmi.brainmob.suiciding = suicide_state
 
 /mob/living/carbon/human/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
