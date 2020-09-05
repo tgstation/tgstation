@@ -2,6 +2,8 @@
     "map_name": "TowerStation",
     "map_path": "map_files/TowerStation",
     "map_file": "TowerStation.dmm",
+    "space_ruin_levels":0,
+    "space_empty_levels":0,
     "shuttles": {
 	    "cargo": "cargo_box",
 	    "ferry": "ferry_fancy",
@@ -78,4 +80,5 @@
           "Gravity" : true,
           "Baseturf" : "/turf/open/transparent/openspace/icemoon"
        },
+    ]
 }
