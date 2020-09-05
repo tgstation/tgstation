@@ -143,8 +143,8 @@
 	desc = "This dog can tell someting smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/bullterrier
-	name = "\improper bull terrier"
-	real_name = "bull terrier"
+	name = "\improper soulless bull terrier"
+	real_name = "soulless bull terrier"
 	desc = "It's a bull terrier."
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "bullterrier"
@@ -153,6 +153,19 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "bullterrier"
+	held_state = "bullterrier"
+
+/mob/living/simple_animal/pet/dog/bullterrier/ogwalter // walter
+	name = "\improper soulful bull terrier"
+	real_name = "soulful bull terrier"
+	desc = "It's a bull... corgi?"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "walter"
+	icon_living = "walter"
+	icon_dead = "walter_dead"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
+	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "corgi"
 	held_state = "bullterrier"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
