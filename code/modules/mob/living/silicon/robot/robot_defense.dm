@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
 		if(!modularInterface)
-			stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. Please make a bug report.")
+			stack_trace("Cyborg [src]. key [client] was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
 		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
 		if(modularInterface.install_component(floppy, user))

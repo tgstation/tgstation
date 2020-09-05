@@ -271,11 +271,12 @@
 	icon_state = "lamp_off"
 
 /obj/screen/robot/lamp/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/mob/living/silicon/robot/R = usr
-	R.toggle_headlamp()
-	if(R.lamp_enabled)
+	var/mob/living/silicon/robot/borgo = usr
+	borgo.toggle_headlamp()
+	if(borgo.lamp_enabled)
 		icon_state = "lamp_on"
 	else
 		icon_state = "lamp_off"
@@ -285,7 +286,8 @@
 	icon_state = "template"
 
 /obj/screen/robot/modPC/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/borgo = usr
 	if(!istype(borgo))
@@ -298,7 +300,8 @@
 	icon_state = "alerts"
 
 /obj/screen/robot/alerts/Click()
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/silicon/robot/borgo = usr
 	borgo.robot_alerts()

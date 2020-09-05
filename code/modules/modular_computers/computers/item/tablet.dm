@@ -44,7 +44,7 @@
 
 /obj/item/modular_computer/tablet/nukeops/Initialize()
 	. = ..()
-	set_light_color("#FF0000") //Syndicate likes it red
+	set_light_color(COLOR_RED) //Syndicate likes it red
 
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
 	if(!enabled)
@@ -64,16 +64,20 @@
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
 
+/obj/item/modular_computer/tablet/integrated/Initialize(mapload, container_borg)
+	. = ..()
+	borgo = container_borg
+
+/obj/item/modular_computer/tablet/integrated/Destroy()
+	borgo = null
+	return ..()
+
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
 	.["light_on"] = borgo?.lamp_enabled
 	.["comp_light_color"] = borgo?.lamp_color
-
-/obj/item/modular_computer/tablet/integrated/Initialize(mapload, container_borg)
-	. = ..()
-	borgo = container_borg
 
 //Overrides the ui_act to make the flashlight controls link to the borg instead
 /obj/item/modular_computer/tablet/integrated/ui_act(action, params)
@@ -91,7 +95,7 @@
 			var/new_color
 			while(!new_color)
 				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
-				if(!new_color)
+				if(!new_color || QDELETED(borgo))
 					return
 				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
 					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
@@ -108,4 +112,4 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
 	. = ..()
-	borgo.lamp_color = "#FF0000" //Syndicate likes it red
+	borgo.lamp_color = COLOR_RED //Syndicate likes it red

@@ -14,11 +14,16 @@
 	///A typed reference to the computer, specifying the borg tablet type
 	var/obj/item/modular_computer/tablet/integrated/tablet
 
+/datum/computer_file/program/borgUI/Destroy()
+	tablet = null
+	return ..()
+
 /datum/computer_file/program/borgUI/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
 		to_chat(user, "<span class='warning'>A warning flashes across /the [computer]: Device Incompatible.</span>")
 		return FALSE
-	if(..())
+	. = ..()
+	if(.)
 		tablet = computer
 		if(tablet.device_theme == "syndicate")
 			program_icon_state = "command-syndicate"
@@ -43,7 +48,7 @@
 	data["charge"] = charge //Current cell charge
 	data["maxcharge"] = maxcharge //Cell max charge
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
-	data["modDisable"] = borgo.disabled_modules //Bitflag for number of disabled modules
+	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
 	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
 	data["printerPictures"] = borgo.aicamera.stored.len //Number of pictures taken
 	data["printerToner"] = borgo.toner //amount of toner
@@ -78,7 +83,8 @@
 	return data
 
 /datum/computer_file/program/borgUI/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/living/silicon/robot/borgo = tablet.borgo
@@ -118,6 +124,10 @@
 
 		if("toggleThrusters")
 			borgo.toggle_ionpulse()
+
+		if("lampIntensity")
+			borgo.lamp_intensity = params["ref"]
+			borgo.toggle_headlamp(FALSE, TRUE)
 
 /**
   * Forces a full update of the UI, if currently open.

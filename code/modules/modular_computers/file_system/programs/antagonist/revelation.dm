@@ -20,8 +20,7 @@
 		if(istype(computer, /obj/item/modular_computer/tablet/integrated)) //If this is a borg's integrated tablet
 			var/obj/item/modular_computer/tablet/integrated/modularInterface = computer
 			to_chat(modularInterface.borgo,"<span class='danger'>sudo rm -rf /</span>")
-			sleep(20)
-			modularInterface.borgo.adjustFireLoss(200)
+			addtimer(CALLBACK(modularInterface.borgo, /mob/living/silicon/robot/death), 2, TIMER_UNIQUE)
 			return
 
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")

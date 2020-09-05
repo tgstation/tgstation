@@ -83,7 +83,7 @@
 	///If the lamp is turned on
 	var/lamp_enabled = FALSE
 	///Set lamp color
-	var/lamp_color = "#FFFFFF"
+	var/lamp_color = COLOR_WHITE
 	///Lamp brightness
 	var/lamp_intensity = 5
 
@@ -197,7 +197,7 @@
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
 	if(modularInterface)
-		qdel(modularInterface)
+		QDEL_NULL(modularInterface)
 	if(connected_ai)
 		connected_ai.connected_robots -= src
 	if(shell)
@@ -434,7 +434,7 @@
 			eye_lights.color = lamp_color
 		else
 			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e"
-			eye_lights.color = "#FFFFFF"
+			eye_lights.color = COLOR_WHITE
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -672,7 +672,7 @@
 /mob/living/silicon/robot/modules/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new/obj/item/modular_computer/tablet/integrated/syndicate(src, src)
-	. = ..()
+	return ..()
 
 /mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
 	if(playstyle_string)
@@ -1090,7 +1090,7 @@
 		heal_bodypart_damage(repairs, repairs - 1)
 
 /mob/living/silicon/robot/post_lawchange(announce = TRUE)
-	..()
+	. = ..()
 	logevent("Law update processed.")
 
 /**
@@ -1109,12 +1109,12 @@
 	if(stat == DEAD) //Dead borgs log no longer
 		return
 	if(!modularInterface)
-		stack_trace("Cyborg [src]. key [src.client] was somehow missing their integrated tablet. Please make a bug report.")
+		stack_trace("Cyborg [src]. key [client] was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
 	var/datum/computer_file/program/borgUI/program = hard_drive.find_file_by_name("borgUI")
 	if(!program)
-		stack_trace("Cyborg [src]. key [src.client] was somehow missing their self-manage app in their tablet. Please make a bug report.")
+		stack_trace("Cyborg [src]. key [client] was somehow missing their self-manage app in their tablet. Please make a bug report.")
 		return
 	program.force_full_update()

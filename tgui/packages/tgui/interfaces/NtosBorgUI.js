@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { resolveAsset } from '../assets';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, NoticeBox, Section, ProgressBar, LabeledList, Table, Tabs } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, NoticeBox, Section, Slider, ProgressBar, LabeledList, Table, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosBorgUI = (props, context) => {
@@ -49,7 +49,7 @@ export const NtosBorgUIContent_one = (props, context) => {
     charge,
     maxcharge,
     integrity,
-    modDisable,
+    lampIntensity,
     cover,
     locomotion,
     wireModule,
@@ -79,7 +79,7 @@ export const NtosBorgUIContent_one = (props, context) => {
         width="30%">
           <Section
             title="Configuration"
-            fill={1}>
+            fill>
             <LabeledList>
               <LabeledList.Item
                 label="Unit">
@@ -114,33 +114,18 @@ export const NtosBorgUIContent_one = (props, context) => {
               value={integrity / 100}>
             </ProgressBar>
           </Section>
-          <Flex
-            direction={"row"}>
-            <Flex.Item
-              grow={1}>
-              <Section
-                title="Slot_1"
-                fill={1}>
-                {modDisable&1?<font color="red">OFFLINE</font>:<font color="green">ONLINE</font>}
-              </Section>
-            </Flex.Item>
-            <Flex.Item
-              grow={1}>
-              <Section
-                title="Slot_2"
-                fill={1}>
-                {modDisable&2?<font color="red">OFFLINE</font>:<font color="green">ONLINE</font>}
-              </Section>
-            </Flex.Item>
-            <Flex.Item
-              grow={1}>
-              <Section
-                title="Slot_3"
-                fill={1}>
-                {modDisable&4?<font color="red">OFFLINE</font>:<font color="green">ONLINE</font>}
-              </Section>
-            </Flex.Item>
-          </Flex>
+          <Section
+          title="Lamp Power">
+          <Slider
+            value={lampIntensity}
+            step={1}
+            stepPixelSize={25}
+            maxValue={5}
+            minValue={1}
+            onChange={(e, value) => act('lampIntensity', {
+              ref: value,
+          })}/>
+          </Section>
       </Flex.Item>
       <Flex.Item
         width="50%">
@@ -169,7 +154,7 @@ export const NtosBorgUIContent_one = (props, context) => {
           </Tabs>
           {tab_sub === 1 && (
           <Section
-            fill={1}>
+            fill>
             <LabeledList>
               <LabeledList.Item
                 label="Maintenance Cover">
@@ -214,7 +199,7 @@ export const NtosBorgUIContent_one = (props, context) => {
           )}
           {tab_sub === 2 && (
           <Section
-            fill={1}>
+            fill>
             <Table>
               {borgUpgrades.map(upgrade => (
                 <Table.Row>
@@ -226,7 +211,7 @@ export const NtosBorgUIContent_one = (props, context) => {
           )}
           {tab_sub === 3 && ( 
             <Section
-              fill={1}>
+              fill>
               <LabeledList>
                 <LabeledList.Item
                 label="AI Connection"
@@ -298,7 +283,7 @@ export const NtosBorgUIContent_two = (props, context) => {
   const borgLog = data.borgLog || [];
   return (
     <Section
-      background_color="black"
+      backgroundColor="black"
       height={34}>
       <NtosWindow.Content scrollable>
       <Table>
