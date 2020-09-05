@@ -373,6 +373,9 @@ MAPROTATION
 ## When it's set to zero, the map will be randomly picked each round
 PREFERENCE_MAP_VOTING 1
 
+## Disables greentext weithout disabling objective generation
+#DISABLE_GREENTEXT
+
 ## AUTOADMIN
 ## The default admin rank
 AUTOADMIN_RANK Game Master
