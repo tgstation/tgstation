@@ -27273,14 +27273,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "blN" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/structure/blob/core,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel,
 /area/bridge)
 "blP" = (
@@ -34668,7 +34661,10 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bDY" = (
-/obj/structure/blob/core{
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -51290,6 +51286,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
+"hKu" = (
+/obj/machinery/modular_computer/console/preset/civilian,
+/turf/open/floor/plasteel/white,
+/area/science/robotics/lab)
 "hQK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -54830,8 +54830,7 @@
 	areastring = "/area/science/research";
 	dir = 4;
 	name = "Misc Research APC";
-	pixel_x = 25;
-	
+	pixel_x = 25
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
@@ -101482,7 +101481,7 @@ aYV
 bck
 aYV
 bfV
-biL
+hKu
 cHM
 biL
 blB
