@@ -50,6 +50,8 @@
 
 //Mafia medal hub IDs (misc stuff)
 #define MAFIA_MEDAL_HATED		"Universally Hated"
+#define MAFIA_MEDAL_CHARISMATIC	"Charismatic"
+#define MAFIA_MEDAL_VIP			"VIP"
 
 //Boss medals
 

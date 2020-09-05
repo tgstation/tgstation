@@ -15,7 +15,7 @@
 	var/vote_power = 1
 	///how many votes your role COULD count for, now or later. used in checking victory
 	var/vote_potential = 1
-	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant //the assistants need a special path to call out they were in fact assistant, everything else can just use job equipment
+	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant //what they get equipped with when they are revealed
 	//action = uses
 	var/list/actions = list()
 	var/list/targeted_actions = list()
@@ -38,8 +38,8 @@
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
 
-/datum/mafia_role/proc/kill(datum/mafia_controller/game,lynch=FALSE)
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_KILL,game,lynch) & MAFIA_PREVENT_KILL)
+/datum/mafia_role/proc/kill(datum/mafia_controller/game,attacker,lynch=FALSE)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_KILL,game,attacker,lynch) & MAFIA_PREVENT_KILL)
 		return FALSE
 	game_status = MAFIA_DEAD
 	body.death()
@@ -289,7 +289,7 @@
 		RegisterSignal(current_protected,COMSIG_MAFIA_ON_KILL,.proc/prevent_kill)
 		add_note("N[game.turn] - Protected [current_protected.body.real_name]")
 
-/datum/mafia_role/md/proc/prevent_kill(datum/source)
+/datum/mafia_role/md/proc/prevent_kill(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	if((current_protected.role_flags & ROLE_VULNERABLE))
@@ -346,14 +346,17 @@
 		RegisterSignal(current_defended,COMSIG_MAFIA_ON_KILL,.proc/retaliate)
 		add_note("N[game.turn] - Defended [current_defended.body.real_name]")
 
-/datum/mafia_role/officer/proc/retaliate(datum/source)
+/datum/mafia_role/officer/proc/retaliate(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	if((current_defended.role_flags & ROLE_VULNERABLE))
 		to_chat(body,"<span class='warning'>The person you defended could not be saved. You could not attack the killer.</span>")
 		return
-	to_chat(body,"<span class='warning'>The person you protected tonight was attacked!</span>")
+	to_chat(body,"<span class='warning'>The person you defended tonight was attacked!</span>")
 	to_chat(current_defended.body,"<span class='userdanger'>You were attacked last night, but security fought off the attacker!</span>")
+	if(attacker.kill(game,src,FALSE)) //you attack the attacker
+		to_chat(attacker.body, "<span class='userdanger'>You have been killed by Security!</span>")
+	kill(game,attacker,FALSE) //the attacker attacks you, they were able to attack the target so they can attack you.
 	return MAFIA_PREVENT_KILL
 
 /datum/mafia_role/officer/proc/end_defense(datum/mafia_controller/game)
@@ -451,7 +454,7 @@
 	role_flags |= ROLE_VULNERABLE
 	vote_power = 3
 
-/datum/mafia_role/mafia/hos
+/datum/mafia_role/hos
 	name = "Head of Security"
 	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
 	role_type = TOWN_MISC
@@ -464,23 +467,25 @@
 	targeted_actions = list("Execute")
 	var/datum/mafia_role/execute_target
 
-/datum/mafia_role/mafia/hos/New(datum/mafia_controller/game)
+/datum/mafia_role/hos/New(datum/mafia_controller/game)
 	. = ..()
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_ACTION_PHASE,.proc/execute)
 
-/datum/mafia_role/mafia/hos/validate_action_target(datum/mafia_controller/game,action,datum/mafia_role/target)
+/datum/mafia_role/hos/validate_action_target(datum/mafia_controller/game,action,datum/mafia_role/target)
 	. = ..()
 	if(!.)
 		return
 	return game.phase == MAFIA_PHASE_NIGHT && target.game_status == MAFIA_ALIVE && target != src
 
-/datum/mafia_role/mafia/hos/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
+/datum/mafia_role/hos/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(execute_target == target)
 		to_chat(body,"<span class='warning'>You have decided against executing tonight.</span>")
 	to_chat(body,"<span class='warning'>You have decided to execute [target.body.real_name] tonight.</span>")
 	execute_target = target
 
-/datum/mafia_role/mafia/hos/proc/execute(datum/mafia_controller/game)
+/datum/mafia_role/hos/proc/execute(datum/mafia_controller/game)
+	SIGNAL_HANDLER
+
 	var/datum/mafia_role/target = execute_target
 	execute_target = null
 	if(target)
@@ -490,17 +495,20 @@
 			add_note("N[game.turn] - [target.body.real_name] - Unable to execute")
 			return
 		//protection
-		if(!target.kill(game))
+		if(!target.kill(game,src,FALSE))
 			to_chat(body,"<span class='danger'>Your attempt at executing [target.body.real_name] was prevented!</span>")
 		else
+			to_chat(target.body, "<span class='userdanger'>You have been executed by the Head of Security!</span>")
 			if(target.team == MAFIA_TEAM_TOWN)
 				to_chat(body,"<span class='userdanger'>You have killed an innocent crewmember. You will die tomorrow night.</span>")
+				target.reveal_role(game, verbose = TRUE)
 				RegisterSignal(game,COMSIG_MAFIA_SUNDOWN,.proc/internal_affairs)
 				role_flags |= ROLE_VULNERABLE
 
-/datum/mafia_role/mafia/hos/proc/internal_affairs(datum/mafia_controller/game)
+/datum/mafia_role/hos/proc/internal_affairs(datum/mafia_controller/game)
 	to_chat(body,"<span class='userdanger'>You have been killed by Nanotrasen Internal Affairs!</span>")
-	kill(game)
+	reveal_role(game, verbose = TRUE)
+	kill(game,src,FALSE) //you technically kill yourself but that shouldn't matter
 
 ///MAFIA ROLES/// only one until i rework this to allow more, they're the "anti-town" working to kill off townies to win
 
@@ -598,7 +606,7 @@
 /datum/mafia_role/traitor/block_team_victory(alive_town, alive_mafia) //no team can win until they're dead
 	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
 
-/datum/mafia_role/traitor/proc/nightkill_immunity(datum/source,datum/mafia_controller/game,lynch)
+/datum/mafia_role/traitor/proc/nightkill_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	if(game.phase == MAFIA_PHASE_NIGHT && !lynch)
@@ -617,20 +625,22 @@
 	current_victim = target
 	to_chat(body,"<span class='warning'>You will attempt to kill [target.body.real_name] tonight.</span>")
 
-/datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/source)
+/datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
 	var/datum/mafia_role/target = current_victim
 	current_victim = null
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"traitor kill",target) & MAFIA_PREVENT_ACTION)
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"traitor kill",target) & MAFIA_PREVENT_ACTION)
 		return
 	if(game_status == MAFIA_ALIVE && target && target.game_status == MAFIA_ALIVE)
-		if(!target.kill(source))
+		if(!target.kill(game,src,FALSE))
 			to_chat(body,"<span class='danger'>Your attempt at killing [target.body.real_name] was prevented!</span>")
+		else
+			to_chat(target.body, "<span class='userdanger'>You have been killed by a Traitor!</span>")
 
 /datum/mafia_role/nightmare
 	name = "Nightmare"
-	desc = "You're a solo monster that cannot be detected by detective roles. You can flicker lights of another room each night. You can instead decide to hunt, killing everyone in a flickering room. Kill everyone to win."
+	desc = "You're a solo monster that cannot be detected by detective roles. You can flicker lights of another room each night, becoming immune to attacks from those roles. You can instead decide to hunt, killing everyone in a flickering room. Kill everyone to win."
 	win_condition = "kill everyone."
 	revealed_outfit = /datum/outfit/mafia/nightmare
 	role_flags = ROLE_UNDETECTABLE | ROLE_CAN_KILL
@@ -647,6 +657,7 @@
 
 /datum/mafia_role/nightmare/New(datum/mafia_controller/game)
 	. = ..()
+	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/flickering_immunity)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_KILL_PHASE,.proc/flicker_or_hunt)
 
 /datum/mafia_role/nightmare/check_total_victory(alive_town, alive_mafia) //nightmares just want teams dead
@@ -681,13 +692,21 @@
 	else
 		to_chat(body,"<span class='danger'>You will hunt everyone in a flickering room down tonight.</span>")
 
-/datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/source)
+/datum/mafia_role/nightmare/proc/flickering_immunity(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
+	SIGNAL_HANDLER
+	if(!attacker)
+		return //no chance man, that's a town lynch
+
+	if(attacker in flickering)
+		to_chat(body,"<span class='userdanger'>You were attacked by someone in a flickering room. You have danced in the shadows, evading them.</span>")
+		return MAFIA_PREVENT_KILL
+
+/datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
 	if(game_status != MAFIA_ALIVE || !flicker_target)
 		return
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
-		to_chat(flicker_target.body, "<span class='warning'>Your actions were prevented!</span>")
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,game,"nightmare actions",flicker_target) & MAFIA_PREVENT_ACTION)
 		return
 	var/datum/mafia_role/target = flicker_target
 	flicker_target = null
@@ -698,8 +717,8 @@
 	for(var/r in flickering)
 		var/datum/mafia_role/role = r
 		if(role && role.game_status == MAFIA_ALIVE)
-			to_chat(role.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
-			role.kill(source)
+			to_chat(role.body, "<span class='userdanger'>A shadowy figure appears out of the darkness!</span>")
+			role.kill(game,src,FALSE)
 		flickering -= role
 
 //just helps read better
@@ -759,7 +778,7 @@
 		to_chat(body,"<span class='danger'>You are no longer protected. You have [charges] use[charges == 1 ? "" : "s"] left of your power.</span>")
 		protection_status = FUGITIVE_NOT_PRESERVING
 
-/datum/mafia_role/fugitive/proc/prevent_death(datum/mafia_controller/game)
+/datum/mafia_role/fugitive/proc/prevent_death(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	to_chat(body,"<span class='userdanger'>You were attacked! Luckily, you were ready for this!</span>")
@@ -812,7 +831,7 @@
 	RegisterSignal(obsession,COMSIG_MAFIA_ON_KILL,.proc/check_victory)
 	UnregisterSignal(game,COMSIG_MAFIA_SUNDOWN)
 
-/datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,lynch)
+/datum/mafia_role/obsessed/proc/check_victory(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source,COMSIG_MAFIA_ON_KILL)
@@ -842,7 +861,7 @@
 	. = ..()
 	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prank)
 
-/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
+/datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,datum/mafia_role/attacker,lynch)
 	SIGNAL_HANDLER
 
 	if(lynch)
@@ -851,4 +870,4 @@
 		game.send_message("<span class='big clown'>!! CLOWN VICTORY !!</span>")
 		var/client/winner_client = GLOB.directory[player_key]
 		winner_client?.give_award(winner_award, body)
-		victim.kill(game,FALSE)
+		victim.kill(game,src,FALSE)

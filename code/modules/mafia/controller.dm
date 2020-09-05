@@ -237,7 +237,7 @@
 		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
-		on_trial.kill(src, lynch = TRUE)
+		on_trial.kill(src,lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
 		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
@@ -413,14 +413,15 @@
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_START)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_ACTION_PHASE)
 	//resolve mafia kill, todo unsnowflake this
-	var/datum/mafia_role/R = get_vote_winner("Mafia")
-	if(R)
+	var/datum/mafia_role/victim = get_vote_winner("Mafia")
+	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
-		if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"mafia killing",R) & MAFIA_PREVENT_ACTION)
-			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [R.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
+		if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"mafia killing",victim) & MAFIA_PREVENT_ACTION)
+			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
 		else
-			send_message("<span class='danger'>[killer.body.real_name] has attacked [R.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
-			R.kill(src)
+			send_message("<span class='danger'>[killer.body.real_name] has attacked [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
+			if(victim.kill(src,killer,lynch=FALSE))
+				to_chat(victim.body, "<span class='userdanger'>You have been killed by a Changeling!</span>")
 	reset_votes("Mafia")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
@@ -786,7 +787,7 @@
 /datum/mafia_controller/proc/generate_random_setup()
 	var/invests_left = 2
 	var/protects_left = 1
-	var/miscs_left = prob(35)
+	var/miscs_left = 1
 	var/mafiareg_left = 3
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
@@ -804,7 +805,10 @@
 			add_setup_role(random_setup, TOWN_PROTECT)
 			protects_left--
 		else if(miscs_left)
-			add_setup_role(random_setup, TOWN_MISC)
+			//add_setup_role(random_setup, TOWN_MISC)
+			//FORCING HEAD OF SECURITY FOR TESTMERGE
+			//REMOVE THIS BEFORE FULLMERGE vvv
+			random_setup[/datum/mafia_role/hos] = 1
 			miscs_left--
 		else if(mafiareg_left)
 			add_setup_role(random_setup, MAFIA_REGULAR)

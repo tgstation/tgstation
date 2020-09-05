@@ -107,3 +107,17 @@
 	desc = "Managed to get more than 12 votes when put up on trial, jesus christ."
 	database_id = MAFIA_MEDAL_HATED
 	icon = "hated"
+
+/*
+/datum/award/achievement/mafia/charismatic
+	name = "Charismatic"
+	desc = "As a Neutral/Mafia role, survive a day after being revealed. So what if i'm a Changeling? That sounds like a you problem."
+	database_id = MAFIA_MEDAL_CHARISMATIC
+	icon = "mafiabasic"
+
+/datum/award/achievement/mafia/vip
+	name = "V.I.P."
+	desc = "Get protected by both a security officer, and a doctor. Way overkill!"
+	database_id = MAFIA_MEDAL_VIP
+	icon = "mafiabasic"
+*/
