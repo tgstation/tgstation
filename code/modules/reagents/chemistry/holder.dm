@@ -772,6 +772,10 @@
 
 	if(isliving(my_atom))
 		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
+	else if(istype(my_atom, /obj/item/organ/stomach))
+		var/obj/item/organ/stomach/belly = my_atom
+		var/mob/living/carbon/body = belly.owner
+		R.on_mob_add(body)
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
