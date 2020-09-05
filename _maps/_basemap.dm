@@ -11,6 +11,7 @@
 		#include "map_files\MetaStation\MetaStation.dmm"
 		#include "map_files\PubbyStation\PubbyStation.dmm"
 		#include "map_files\IceBoxStation\IceBoxStation.dmm"
+		#include "map_files\TowerStation\TowerStation.dmm"
 
 		#ifdef TRAVISBUILDING
 			#include "templates.dm"

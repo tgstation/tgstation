@@ -34,6 +34,9 @@ map icebox
 	votable
 endmap
 
+map towerstation
+endmap
+
 map runtimestation
 endmap
 
