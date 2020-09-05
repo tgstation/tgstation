@@ -334,7 +334,7 @@
 
 /datum/mafia_role/officer/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(!target || target.game_status != MAFIA_ALIVE)
-		to_chat(body,"<span class='warning'>You can only protect alive people.</span>")
+		to_chat(body,"<span class='warning'>You can only defend alive people.</span>")
 		return
 	to_chat(body,"<span class='warning'>You will defend [target.body.real_name] tonight.</span>")
 	current_defended = target
@@ -352,7 +352,7 @@
 	if((current_defended.role_flags & ROLE_VULNERABLE))
 		to_chat(body,"<span class='warning'>The person you defended could not be saved. You could not attack the killer.</span>")
 		return
-	to_chat(body,"<span class='warning'>The person you defended tonight was attacked!</span>")
+	to_chat(body,"<span class='userdanger'>The person you defended tonight was attacked!</span>")
 	to_chat(current_defended.body,"<span class='userdanger'>You were attacked last night, but security fought off the attacker!</span>")
 	if(attacker.kill(game,src,FALSE)) //you attack the attacker
 		to_chat(attacker.body, "<span class='userdanger'>You have been killed by Security!</span>")
