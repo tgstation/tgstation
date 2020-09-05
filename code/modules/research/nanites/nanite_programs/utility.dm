@@ -356,3 +356,17 @@
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
+
+/datum/nanite_program/change_cloud
+	name = "Change Cloud"
+	desc = "When triggered, changes the nanites' cloud of reference."
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 10
+	rogue_types = list(/datum/nanite_program/glitch)
+	
+/datum/nanite_program/change_cloud/register_extra_settings()
+	extra_settings[NES_CLOUD_OVERWRITE] = new /datum/nanite_extra_setting/number(0, 0, 100)
+
+/datum/nanite_program/change_cloud/on_trigger(comm_message)
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_SET_CLOUD, extra_settings[NES_CLOUD_OVERWRITE].get_value() )
