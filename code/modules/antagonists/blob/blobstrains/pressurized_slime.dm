@@ -39,14 +39,13 @@
 	taste_description = "a sponge"
 	color = "#AAAABB"
 
-/datum/reagent/blob/pressurized_slime/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/pressurized_slime/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	reac_volume = ..()
-	var/turf/open/T = get_turf(M)
-	if(istype(T) && prob(reac_volume))
-		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		M.adjust_fire_stacks(-(reac_volume / 10))
-	M.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
-	if(M)
-		M.apply_damage(0.4*reac_volume, OXY)
-	if(M)
-		M.adjustStaminaLoss(reac_volume)
+	var/turf/open/location_turf = get_turf(exposed_mob)
+	if(istype(location_turf) && prob(reac_volume))
+		location_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
+		exposed_mob.adjust_fire_stacks(-(reac_volume / 10))
+	exposed_mob.apply_damage(0.4*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+	if(exposed_mob)
+		exposed_mob.adjustStaminaLoss(reac_volume, FALSE)
+		exposed_mob.apply_damage(0.4 * reac_volume, OXY)

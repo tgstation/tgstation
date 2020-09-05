@@ -29,9 +29,9 @@
 	taste_description = "pop rocks"
 	color = "#83ECEC"
 
-/datum/reagent/blob/electromagnetic_web/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/electromagnetic_web/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	reac_volume = ..()
 	if(prob(reac_volume*2))
-		M.emp_act(EMP_LIGHT)
-	if(M)
-		M.apply_damage(reac_volume, BURN, wound_bonus=CANT_WOUND)
+		exposed_mob.emp_act(EMP_LIGHT)
+	if(exposed_mob)
+		exposed_mob.apply_damage(reac_volume, BURN, wound_bonus=CANT_WOUND)

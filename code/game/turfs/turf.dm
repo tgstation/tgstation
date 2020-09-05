@@ -501,22 +501,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/acid_act(acidpwr, acid_volume)
-	. = 1
-	var/acid_type = /obj/effect/acid
-	if(acidpwr >= 200) //alien acid power
-		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = FALSE
+	. = ..()
+	if((acidpwr <= 0) || (acid_volume <= 0))
+		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
 	for(var/obj/O in src)
 		if(intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			return
-		if(istype(O, acid_type))
-			var/obj/effect/acid/A = O
-			A.acid_level = min(acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
-			has_acid_effect = 1
 			continue
+
 		O.acid_act(acidpwr, acid_volume)
-	if(!has_acid_effect)
-		new acid_type(src, acidpwr, acid_volume)
+
+	return . || TRUE
 
 /turf/proc/acid_melt()
 	return
