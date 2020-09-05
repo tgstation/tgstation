@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(string_lists)
 
-///based proc that yeets a list in a glob list with an index unless it already existed, if it did just return that list. perfect for keeping 1 (one) instance. thanks rohesie very cool.
+/**
+  * Caches lists with non-numeric stringify-able values (text or typepath).
+  */
 /datum/proc/string_list(list/values)
   var/string_id = values.Join("-")
 
