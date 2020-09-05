@@ -169,6 +169,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector
 	name = "Component Injector"
+	icon_state = "component"
 	late = TRUE
 	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
 	var/target_type //Will inject into atoms of this type
@@ -380,3 +381,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
+//This helper applies traits to things on the map directly.
+/obj/effect/mapping_helpers/trait_injector
+	name = "Trait Injector"
+	icon_state = "trait"
+	late = TRUE
+	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
+	var/target_type //Will inject into atoms of this type
+	var/target_name //Will inject into atoms with this name
+	var/trait_name //Name of the trait, in NOT the define form
+
+//Late init so everything is likely ready and loaded (no warranty)
+/obj/effect/mapping_helpers/trait_injector/LateInitialize()
+	if(!GLOB.trait_name_map)
+		GLOB.trait_name_map = generate_trait_name_map()
+	if(!GLOB.trait_name_map.Find(trait_name))
+		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
+	var/turf/T = get_turf(src)
+	for(var/atom/A in T.GetAllContents())
+		if(A == src)
+			continue
+		if(target_name && A.name != target_name)
+			continue
+		if(target_type && !istype(A,target_type))
+			continue
+		ADD_TRAIT(A, trait_name, MAPPING_HELPER_TRAIT)
+		if(!all)
+			qdel(src)
+			return
+	if(all)
+		qdel(src)
