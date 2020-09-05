@@ -27280,7 +27280,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/bridge)
 "blP" = (
@@ -33973,11 +33972,10 @@
 /area/maintenance/disposal/incinerator)
 "bCg" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/machinery/camera{
-	c_tag = "Security Checkpoint";
+/obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname{
 	dir = 1
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "bCj" = (
@@ -34925,10 +34923,8 @@
 /area/science/mixing)
 "bED" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/machinery/camera{
-	c_tag = "Starboard Primary Hallway"
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEE" = (
@@ -49922,10 +49918,8 @@
 	dir = 6
 	},
 /obj/structure/displaycase/labcage,
-/obj/machinery/camera{
-	c_tag = "Research Director's Office";
-	dir = 1;
-	network = list("ss13","rd")
+/obj/machinery/camera/autoname{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
@@ -50798,10 +50792,8 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ggS" = (
-/obj/machinery/camera{
-	c_tag = "Experimentor Lab Chamber";
-	dir = 1;
-	network = list("ss13","rd")
+/obj/machinery/camera/autoname{
+	dir = 1
 	},
 /turf/open/floor/grass,
 /area/science/genetics)
