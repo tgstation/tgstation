@@ -34,7 +34,7 @@
 	//digest food
 	var/mob/living/carbon/body = owner
 	var/obj/item/organ/liver/liver = body.getorganslot(ORGAN_SLOT_LIVER)
-	var/liverless = (liver && (liver.organ_flags & ORGAN_FAILING))
+	var/liverless = (!liver || (liver.organ_flags & ORGAN_FAILING))
 	reagents.metabolize(body, can_overdose=TRUE, liverless=liverless)
 	if(body)
 		handle_disgust(body)

@@ -150,13 +150,13 @@
  * This will locate the reagent in the mob and remove it from reagent holders
  * Vars:
  * * reagent (typepath) takes a PATH to a reagent.
- * * amount (int)(optional) checks for having a specific amount of that chemical.
+ * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
  * * safety (bool) check for the trans_id_to
  */
-/mob/living/proc/remove_reagent(reagent, amount = -1, safety)
-	if(amount == -1)
-		amount = get_reagent_amount(reagent)
-	return reagents.remove_reagent(reagent, amount, safety)
+/mob/living/proc/remove_reagent(reagent, custom_amount, safety)
+	if(!custom_amount)
+		custom_amount = get_reagent_amount(reagent)
+	return reagents.remove_reagent(reagent, custom_amount, safety)
 
 /**
  * Returns the amount of a reagent from the mob

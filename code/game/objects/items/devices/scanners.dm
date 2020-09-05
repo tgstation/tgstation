@@ -414,7 +414,7 @@ GENE SCANNER
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
 		var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 		if(belly)
-			if(belly?.reagents.reagent_list.len)
+			if(belly.reagents.reagent_list.len)
 				render_list += "<span class='notice ml-1'>Subject contains the following reagents in their stomach:</span>\n"
 				for(var/bile in belly.reagents.reagent_list)
 					var/datum/reagent/bit = bile

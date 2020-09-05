@@ -35,3 +35,7 @@
 	human.remove_reagent(/datum/reagent/medicine/epinephrine, 3)
 	// Test that removing a value less then what is in the body does not bleed to stomach
 	TEST_ASSERT_EQUAL(human.get_reagent_amount(/datum/reagent/medicine/epinephrine), 6, "Human does not have the proper amount of epinephrine after removal of 3u")
+
+	human.remove_reagent(/datum/reagent/medicine/epinephrine)
+	// Test removing all named reagent without a value
+	TEST_ASSERT_EQUAL(human.get_reagent_amount(/datum/reagent/medicine/epinephrine), FALSE, "Human does not have the proper amount of epinephrine after removal of 3u")
