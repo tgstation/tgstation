@@ -326,6 +326,7 @@
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
+	organ_flags = ORGAN_UNREMOVABLE
 
 /obj/item/organ/tongue/tied/Insert(mob/living/carbon/M)
 	. = ..()
