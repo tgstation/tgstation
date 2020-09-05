@@ -46,7 +46,7 @@
 	planetary_atmos = TRUE
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
-	icon = 'icons/turf/floors/junglegrass.dmi'
+	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
 
 /turf/closed/mineral/random/jungle
 	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,

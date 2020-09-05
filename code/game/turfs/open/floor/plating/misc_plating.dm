@@ -271,8 +271,8 @@
 /turf/open/floor/plating/grass
 	name = "grass"
 	desc = "A patch of grass."
-	icon_state = "grass"
-	icon = 'icons/turf/floors/grass.dmi'
+	icon_state = "grass0"
+	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
@@ -284,10 +284,12 @@
 	layer = HIGH_TURF_LAYER
 
 /turf/open/floor/plating/grass/Initialize()
+	if(smoothing_flags)
+		var/matrix/M = new
+		M.Translate(-9, -9)
+		transform = M
+		icon = smooth_icon
 	. = ..()
-	var/matrix/M = new
-	M.Translate(-9, -9)
-	transform = M
 
 /turf/open/floor/plating/grass/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
