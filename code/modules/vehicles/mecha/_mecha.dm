@@ -1005,7 +1005,7 @@
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
-		if(!AI.can_shunt)
+		if(AI.can_shunt)
 			to_chat(AI, "<span class='notice'>You can't leave a mech after dominating it!.</span>")
 			return FALSE
 	to_chat(user, "<span class='notice'>You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting.</span>")
