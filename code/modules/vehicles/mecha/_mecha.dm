@@ -953,6 +953,7 @@
 	add_fingerprint(H)
 	log_message("[H] moved in as pilot.", LOG_MECHA)
 	setDir(dir_in)
+	update_icon()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(H, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1029,6 +1030,7 @@
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
 	var/newloc = get_turf(src)
 	var/atom/movable/mob_container
+	update_icon()
 	if(ishuman(M))
 		mob_container = M
 	else if(isbrain(M))
