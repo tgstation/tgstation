@@ -136,7 +136,7 @@ This section is for the event controller
 	dest_crystal.changed_icon = FALSE
 	addtimer(CALLBACK(src, .proc/announce_locations), 8 SECONDS)
 
-///After 8 seconds from the initial explosions centcomm will announce the location of the huge portals
+///After 8 seconds from the initial explosions centcom will announce the location of the huge portals
 /datum/round_event/crystal_invasion/proc/announce_locations()
 	priority_announce("WARNING - After tracking the powerspikes from your station we have determined that huge portals have appeared at the following locations:[center_areas.Join(", ")]. \
 						Please close those before attempting to stabilize the crystal.", "Alert")
