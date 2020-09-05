@@ -430,126 +430,125 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 // Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /datum/controller/master/proc/RunQueue()
 	. = 0
-	var/datum/controller/subsystem/queue_node
+	var/datum/controller/subsystem/queue_node = queue_head
 	var/queue_node_flags
 	var/queue_node_priority
 	var/queue_node_paused
 
-	var/current_tick_budget
+	var/current_tick_budget = queue_priority_count
 	var/tick_precentage
 	var/tick_remaining
-	var/ran = TRUE //this is right
 	var/ran_non_ticker = FALSE
-	var/bg_calc //have we swtiched current_tick_budget to background mode yet?
+	var/bg_calc = FALSE //have we swtiched current_tick_budget to background mode yet?
 	var/tick_usage
 
-	//keep running while we have stuff to run and we haven't gone over a tick
-	//	this is so subsystems paused eariler can use tick time that later subsystems never used
-	while (ran && queue_head && TICK_USAGE < TICK_LIMIT_MC)
-		ran = FALSE
-		bg_calc = FALSE
-		current_tick_budget = queue_priority_count
-		queue_node = queue_head
-		while (queue_node)
-			if (ran && TICK_USAGE > TICK_LIMIT_RUNNING)
-				break
-			queue_node_flags = queue_node.flags
-			queue_node_priority = queue_node.queued_priority
+	while (queue_node)
+		queue_node_flags = queue_node.flags
+		queue_node_priority = queue_node.queued_priority
 
-			if (!(queue_node_flags & SS_TICKER) && skip_ticks)
-				queue_node = queue_node.queue_next
-				continue
-			//super special case, subsystems where we can't make them pause mid way through
-			//if we can't run them this tick (without going over a tick)
-			//we bump up their priority and attempt to run them next tick
-			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
-			//	in those cases, so we just let them run)
-			if (queue_node_flags & SS_NO_TICK_CHECK)
-				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
-					if (!(queue_node_flags & SS_BACKGROUND))
-						queue_node.queued_priority += queue_priority_count * 0.1
-						queue_priority_count -= queue_node_priority
-						queue_priority_count += queue_node.queued_priority
-						current_tick_budget -= queue_node_priority
-						queue_node = queue_node.queue_next
-					continue
-
-			if (!bg_calc && (queue_node_flags & SS_BACKGROUND))
-				current_tick_budget = queue_priority_count_bg
-				bg_calc = TRUE
-
-			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
-
-			if (current_tick_budget > 0 && queue_node_priority > 0)
-				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
-			else
-				tick_precentage = tick_remaining
-
-			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
-
-			current_ticklimit = round(TICK_USAGE + tick_precentage)
-
-			if (!(queue_node_flags & SS_TICKER))
-				ran_non_ticker = TRUE
-			ran = TRUE
-
-			queue_node_paused = (queue_node.state == SS_PAUSED || queue_node.state == SS_PAUSING)
-			last_type_processed = queue_node
-
-			queue_node.state = SS_RUNNING
-
-			tick_usage = TICK_USAGE
-			var/state = queue_node.ignite(queue_node_paused)
-			tick_usage = TICK_USAGE - tick_usage
-
-			if (state == SS_RUNNING)
-				state = SS_IDLE
-			current_tick_budget -= queue_node_priority
-
-
-			if (tick_usage < 0)
-				tick_usage = 0
-			queue_node.tick_overrun = max(0, MC_AVG_FAST_UP_SLOW_DOWN(queue_node.tick_overrun, tick_usage-tick_precentage))
-			queue_node.state = state
-
-			if (state == SS_PAUSED)
-				queue_node.paused_ticks++
-				queue_node.paused_tick_usage += tick_usage
-				queue_node = queue_node.queue_next
-				continue
-
-			queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
-			tick_usage += queue_node.paused_tick_usage
-
-			queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
-
-			queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_DELTA_TO_MS(tick_usage))
-			queue_node.paused_ticks = 0
-			queue_node.paused_tick_usage = 0
-
-			if (bg_calc) //update our running total
-				queue_priority_count_bg -= queue_node_priority
-			else
-				queue_priority_count -= queue_node_priority
-
-			queue_node.last_fire = world.time
-			queue_node.times_fired++
-
-			if (queue_node_flags & SS_TICKER)
-				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
-			else if (queue_node_flags & SS_POST_FIRE_TIMING)
-				queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
-			else if (queue_node_flags & SS_KEEP_TIMING)
-				queue_node.next_fire += queue_node.wait
-			else
-				queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
-
-			queue_node.queued_time = 0
-
-			//remove from queue
-			queue_node.dequeue()
-
+		if (!(queue_node_flags & SS_TICKER) && skip_ticks)
 			queue_node = queue_node.queue_next
+			continue
+		//super special case, subsystems where we can't make them pause mid way through
+		//if we can't run them this tick (without going over a tick)
+		//we bump up their priority and attempt to run them next tick
+		//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
+		//	in those cases, so we just let them run)
+		if (queue_node_flags & SS_NO_TICK_CHECK)
+			if (queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
+				if (!(queue_node_flags & SS_BACKGROUND))
+					queue_node.queued_priority += queue_priority_count * 0.1
+					queue_priority_count -= queue_node_priority
+					queue_priority_count += queue_node.queued_priority
+				current_tick_budget -= queue_node_priority
+				queue_node = queue_node.queue_next
+				continue
+
+		if (!bg_calc && (queue_node_flags & SS_BACKGROUND))
+			current_tick_budget = queue_priority_count_bg
+			bg_calc = TRUE
+
+		tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
+		if (tick_remaining < 1)
+			break
+			
+		if (current_tick_budget > 0 && queue_node_priority > 0)
+			tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
+		else
+			tick_precentage = tick_remaining
+
+		if (tick_precentage < 1)
+			continue
+		tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
+
+		current_ticklimit = round(TICK_USAGE + tick_precentage)
+
+		if (!(queue_node_flags & SS_TICKER))
+			ran_non_ticker = TRUE
+
+		queue_node_paused = (queue_node.state == SS_PAUSED || queue_node.state == SS_PAUSING)
+		last_type_processed = queue_node
+
+		queue_node.state = SS_RUNNING
+
+		tick_usage = TICK_USAGE
+		var/state = queue_node.ignite(queue_node_paused)
+		tick_usage = TICK_USAGE - tick_usage
+
+		if (state == SS_RUNNING)
+			state = SS_IDLE
+		current_tick_budget -= queue_node_priority
+
+
+		if (tick_usage < 0)
+			tick_usage = 0
+		queue_node.tick_overrun = max(0, MC_AVG_FAST_UP_SLOW_DOWN(queue_node.tick_overrun, tick_usage-tick_precentage))
+		queue_node.state = state
+
+
+		if (bg_calc) //update our running total
+			queue_priority_count_bg -= queue_node_priority
+		else
+			queue_priority_count -= queue_node_priority
+
+		if (state == SS_PAUSED)
+			if (bg_calc) //re-add to our running total
+				queue_priority_count_bg += queue_node.priority
+			else
+				queue_priority_count += queue_node.priority
+			queue_node.paused_ticks++
+			queue_node.paused_tick_usage += tick_usage
+			queue_node = queue_node.queue_next
+			continue
+
+		queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
+		tick_usage += queue_node.paused_tick_usage
+
+		queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
+
+		queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_DELTA_TO_MS(tick_usage))
+		queue_node.paused_ticks = 0
+		queue_node.paused_tick_usage = 0
+
+
+		queue_node.last_fire = world.time
+		queue_node.times_fired++
+
+		if (queue_node_flags & SS_TICKER)
+			queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
+		else if (queue_node_flags & SS_POST_FIRE_TIMING)
+			queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
+		else if (queue_node_flags & SS_KEEP_TIMING)
+			queue_node.next_fire += queue_node.wait
+		else
+			queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
+
+		queue_node.queued_time = 0
+
+		//remove from queue
+		queue_node.dequeue()
+
+		queue_node = queue_node.queue_next
 
 	. = 1
 
