@@ -49,8 +49,6 @@ This section is for the event controller
 	var/is_zk_scenario = TRUE
 	///Ticks that have to pass before second wave
 	var/second_wave = 310
-	///Store the huge portals
-	var/obj/structure/crystal_portal/huge/center_portal
 	///Store the areas where the huge portals appears
 	var/list/center_areas = list()
 
@@ -79,9 +77,9 @@ This section is for the event controller
 		var/distance_from_center = max(get_dist(turf_loc, dest_crystal.loc), 1)
 		if(prob(325 / distance_from_center))
 			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
-				turf_loc.ChangeTurf(/turf/open/floor/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
+				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
 			else
-				turf_loc.ChangeTurf(/turf/closed/wall/crystal_wall)
+				turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
 
 	var/list/crystal_spawner_turfs = list()
 	for(var/turf/range_turf in RANGE_TURFS(6, dest_crystal.loc))
@@ -110,27 +108,29 @@ This section is for the event controller
 		var/area/center_area = get_area(center_turf)
 		center_areas += center_area
 
-		explosion(center_turf,0,3,5,7,7)
+		explosion(center_turf,0,0,5,7,7)
 
-		center_portal = new/obj/structure/crystal_portal/huge(center_turf)
+		new/obj/structure/crystal_portal/huge(center_turf)
 
 		for(var/turf/turf_loc in RANGE_TURFS(5, center_turf))
 			var/distance_from_center = max(get_dist(turf_loc, center_turf), 1)
 			if(prob(250 / distance_from_center))
 				if(isopenturf(turf_loc) || isspaceturf(turf_loc))
-					turf_loc.ChangeTurf(/turf/open/floor/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
+					turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
 				else
-					turf_loc.ChangeTurf(/turf/closed/wall/crystal_wall)
+					turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
 
 		var/list/portal_spawner_turfs = list()
-		for(var/turf/range_turf in RANGE_TURFS(10, center_turf))
+		for(var/turf/range_turf in RANGE_TURFS(6, center_turf))
 			if(!isopenturf(range_turf) || isspaceturf(range_turf))
 				continue
 			portal_spawner_turfs += range_turf
 
 		for(var/i in 1 to 6)
+			if(!length(portal_spawner_turfs))
+				break
 			var/pick_portal = pickweight(GLOB.crystal_invasion_waves[wave_name])
-			var/turf/portal_spawner_turf = pick(portal_spawner_turfs)
+			var/turf/portal_spawner_turf = pick_n_take(portal_spawner_turfs)
 			new pick_portal(portal_spawner_turf)
 	dest_crystal.icon_state = "psy_shielded"
 	dest_crystal.changed_icon = FALSE
@@ -252,30 +252,52 @@ This section is for the event controller
 	dest_crystal = null
 	kill()
 
-/turf/open/floor/crystal_floor
+/turf/open/indestructible/crystal_floor
 	name = "Crystal floor"
 	desc = "A crystalyzed floor"
 	icon_state = "noslip-damaged1"
-	floor_tile = null
 	baseturfs = /turf/open/space
 
-/turf/open/floor/crystal_floor/examine(mob/user)
+/turf/open/indestructible/crystal_floor/examine(mob/user)
 	. += ..()
 	. += "<span class='notice'>The floor is made of sturdy crystals.</span>"
 
-/turf/closed/wall/crystal_wall
+/turf/open/indestructible/crystal_floor/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(!W.tool_start_check(user, amount=0))
+			return FALSE
+
+		to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=100))
+			if(iswallturf(src))
+				to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+	return FALSE
+
+/turf/closed/indestructible/crystal_wall
 	name = "Crystal wall"
 	desc = "A crystalyzed wall"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_highchance"
 	baseturfs = /turf/open/space
-	sheet_type = null
-	girder_type = null
 
-/turf/closed/wall/crystal_wall/examine(mob/user)
+/turf/closed/indestructible/crystal_wall/examine(mob/user)
 	. += ..()
 	. += "<span class='notice'>The wall is made of sturdy crystals.</span>"
 
+/turf/closed/indestructible/crystal_wall/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(!W.tool_start_check(user, amount=0))
+			return FALSE
+
+		to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=100))
+			if(iswallturf(src))
+				to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+	return FALSE
 
 /*
 This section is for the destabilized SM
@@ -316,6 +338,11 @@ This section is for the destabilized SM
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	if(prob(15))
 		fire_nuclear_particle()
+	if(length(GLOB.crystal_portals_center) == 0 && !changed_icon)
+		icon_state = "psy"
+		changed_icon = TRUE
+	if(!removed || !removed.total_moles() || isspaceturf(T))
+		removed.gases[/datum/gas/bz][MOLES] += 0.5
 	var/turf/loc_turf = loc
 	var/datum/gas_mixture/env = loc_turf.return_air()
 	var/datum/gas_mixture/removed
@@ -326,16 +353,13 @@ This section is for the destabilized SM
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
 	air_update_turf()
-	if(length(GLOB.crystal_portals_center) == 0 && !changed_icon)
-		icon_state = "psy"
-		changed_icon = TRUE
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
 		return
 	if(istype(W, /obj/item/crystal_stabilizer))
 		if(length(GLOB.crystal_portals_center) > 0)
-			to_chat(user, "<span class='notice'>\The shield protecting the crystal is still up! Close all the main portals before attempting this again!</span>")
+			to_chat(user, "<span class='notice'>The shield protecting the crystal is still up! Close all the main portals before attempting this again!</span>")
 			return
 		var/obj/item/crystal_stabilizer/injector = W
 		if(!injector.filled)
@@ -743,7 +767,7 @@ This section is for the crystal monsters variations
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "throws"
-	ranged_cooldown_time = 25
+	ranged_cooldown_time = 3.5 SECONDS
 
 /obj/projectile/temp/crystal_killer
 	name = "freezing blast"
@@ -783,7 +807,7 @@ This section is for the crystal monsters variations
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "throws"
-	ranged_cooldown_time = 55
+	ranged_cooldown_time = 5.5 SECONDS
 
 /mob/living/simple_animal/hostile/crystal_monster/boss/Bump(atom/clong)
 	. = ..()
