@@ -67,16 +67,20 @@
 	head = /obj/item/clothing/head/hopcap
 	glasses = /obj/item/clothing/glasses/sunglasses
 
+/datum/outfit/mafia/hos
+	name = "Mafia Head of Security"
+
+	uniform = /obj/item/clothing/under/rank/security/head_of_security
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/hos/beret
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+
 //mafia
 
 /datum/outfit/mafia/changeling
 	name = "Mafia Changeling"
-
-	head = /obj/item/clothing/head/helmet/changeling
-	suit = /obj/item/clothing/suit/armor/changeling
-
-/datum/outfit/mafia/changeling
-	name = "Mafia Thoughtfeeder"
 
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling

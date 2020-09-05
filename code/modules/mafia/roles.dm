@@ -431,10 +431,10 @@
 /datum/mafia_role/hop
 	name = "Head of Personnel"
 	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
-	revealed_outfit = /datum/outfit/mafia/hop
 	role_type = TOWN_MISC
 	hud_icon = "hudheadofpersonnel"
 	revealed_icon = "headofpersonnel"
+	revealed_outfit = /datum/outfit/mafia/hop
 	winner_award = /datum/award/achievement/mafia/hop
 
 	targeted_actions = list("Reveal")
@@ -456,6 +456,7 @@
 	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
 	role_type = TOWN_MISC
 	role_flags = ROLE_CAN_KILL
+	revealed_outfit = /datum/outfit/mafia/hos
 	revealed_icon = "headofsecurity"
 	hud_icon = "hudheadofsecurity"
 	winner_award = /datum/award/achievement/mafia/hos

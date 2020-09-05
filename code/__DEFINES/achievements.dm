@@ -42,7 +42,6 @@
 #define MAFIA_MEDAL_HOS				"Head of Security"
 #define MAFIA_MEDAL_CHANGELING		"CHANGELING"
 #define MAFIA_MEDAL_THOUGHTFEEDER	"Thoughtfeeder"
-#define MAFIA_MEDAL_Parastingling	"Parastingling"
 #define MAFIA_MEDAL_TRAITOR			"Traitor"
 #define MAFIA_MEDAL_NIGHTMARE		"Nightmare"
 #define MAFIA_MEDAL_FUGITIVE		"Fugitive"
