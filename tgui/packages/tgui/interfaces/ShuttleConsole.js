@@ -52,11 +52,11 @@ export const ShuttleConsole = (props, context) => {
 };
 
 const getLocationNameById = (locations, id) => {
-  return locations?.find(location => location.id === id).name;
+  return locations?.find(location => location.id === id)?.name;
 };
 
 const getLocationIdByName = (locations, name) => {
-  return locations?.find(location => location.name === name).id;
+  return locations?.find(location => location.name === name)?.id;
 };
 
 const ShuttleConsoleContent = (props, context) => {
@@ -123,7 +123,7 @@ const ShuttleConsoleContent = (props, context) => {
                 width="240px"
                 options={locations.map(location => location.name)}
                 disabled={locked || authorization_required}
-                selected={destination ? getLocationNameById(locations, destination) : "Select a Destination"}
+                selected={getLocationNameById(locations, destination) || "Select a Destination"}
                 onSelected={value => act('set_destination', {
                   destination: getLocationIdByName(locations, value),
                 })} />)}
@@ -132,7 +132,8 @@ const ShuttleConsoleContent = (props, context) => {
         <Button
           fluid
           content="Depart"
-          disabled={locked || authorization_required || !destination}
+          disabled={!getLocationNameById(locations, destination)
+            || locked || authorization_required}
           mt={1.5}
           icon="arrow-up"
           textAlign="center"

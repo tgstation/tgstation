@@ -197,14 +197,20 @@
 	if(!istype(M))
 		return
 	if(methods & TOUCH)
-		M.adjust_fire_stacks(-(reac_volume / 10))
-		M.ExtinguishMob()
+		M.extinguish_mob() // extinguish removes all fire stacks
 	..()
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(M.blood_volume)
 		M.blood_volume += 0.1 // water is good for you!
+
+///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
+/datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		//You don't belong in this world, monster!
+		chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(src.type))
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -217,7 +223,6 @@
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
 	if(chems.has_reagent(src.type, 1))
 		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
 		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
@@ -360,7 +365,7 @@
 	taste_description = "burning"
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
-	M.fire_stacks = min(5,M.fire_stacks + 3)
+	M.set_fire_stacks(min(5, M.fire_stacks + 3))
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?

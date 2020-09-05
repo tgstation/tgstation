@@ -161,15 +161,15 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		if(scanning)
 			to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user] unscrews [src]'s maintenance panel and begins fiddling with its innards...</span>", "<span class='notice'>You begin resetting [src]...</span>")
 		if(!I.use_tool(src, user, 40, volume=50))
-			return 0
+			return FALSE
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
 		obj_flags &= ~EMAGGED
 		radiation_count = 0
 		update_icon()
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -178,7 +178,7 @@
 		return ..()
 	if(!scanning)
 		to_chat(usr, "<span class='warning'>[src] must be on to reset its radiation level!</span>")
-		return 0
+		return
 	radiation_count = 0
 	to_chat(usr, "<span class='notice'>You flush [src]'s radiation counts, resetting it to normal.</span>")
 	update_icon()
@@ -188,7 +188,7 @@
 		return
 	if(scanning)
 		to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
-		return 0
+		return
 	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
 

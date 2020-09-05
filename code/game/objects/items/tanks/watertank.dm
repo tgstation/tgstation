@@ -117,7 +117,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	slot_flags = 0
+	slot_flags = NONE
 
 	var/obj/item/watertank/tank
 

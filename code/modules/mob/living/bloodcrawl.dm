@@ -55,7 +55,7 @@
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(mobloc)
-	ExtinguishMob()
+	extinguish_mob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()
 	// makes us stop pulling

@@ -23,7 +23,7 @@
 						"<span class='danger'>You avoid [A]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
 		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
 		log_combat(A, D, "attempted to hit", atk_verb)
-		return 0
+		return FALSE
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
@@ -46,7 +46,7 @@
 			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(100)
 			log_combat(A, D, "knocked out (boxing) ")
-	return 1
+	return TRUE
 
 /obj/item/clothing/gloves/boxing
 	var/datum/martial_art/boxing/style = new

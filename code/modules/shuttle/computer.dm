@@ -11,10 +11,12 @@
 	var/possible_destinations = ""
 	/// Variable dictating if the attached shuttle requires authorization from the admin staff to move
 	var/admin_controlled = FALSE
-	/// Variable dictating if the attached shuttle can change destinations mid-flight
+	/// Variable dictating if the attached shuttle is forbidden to change destinations mid-flight
 	var/no_destination_swap = FALSE
 	/// ID of the currently selected destination of the attached shuttle
 	var/destination
+	/// If the console controls are locked
+	var/locked = FALSE
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
@@ -29,17 +31,26 @@
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	data["docked_location"] = M ? M.get_status_text_tgui() : "Unknown"
-	data["status"] = M.mode == SHUTTLE_IGNITING ? "Igniting" : M.mode != SHUTTLE_IDLE ? "In Transit" : "Idle"
 	data["locations"] = list()
-	data["locked"] = FALSE
+	data["locked"] = locked
 	data["authorization_required"] = admin_controlled
 	data["timer_str"] = M ? M.getTimerStr() : "00:00"
 	data["destination"] = destination
-	if(admin_controlled)
-		data["status"] = "Unauthorized Access"
 	if(!M)
 		data["status"] = "Missing"
 		return data
+	if(admin_controlled)
+		data["status"] = "Unauthorized Access"
+	else if(locked)
+		data["status"] = "Locked"
+	else
+		switch(M.mode)
+			if(SHUTTLE_IGNITING)
+				data["status"] = "Igniting"
+			if(SHUTTLE_IDLE)
+				data["status"] = "Idle"
+			else
+				data["status"] = "In Transit"
 	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 		if(!options.Find(S.id))
 			continue
@@ -105,7 +116,7 @@
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, "<span class='notice'>Your request has been received by CentCom.</span>")
-			to_chat(GLOB.admins, "<b>FERRY: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")
+			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A HREF='?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)

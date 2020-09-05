@@ -129,8 +129,8 @@
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
-		return 1 //we did it, we were pulsed!
-	return 0 //oh no we failed
+		return TRUE//we did it, we were pulsed!
+	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -163,7 +163,7 @@
 			else
 				T = null
 	if(!T)
-		return 0
+		return
 	var/make_blob = TRUE //can we make a blob?
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
@@ -193,10 +193,10 @@
 			blob_attack_animation(T, controller)
 			T.blob_act(src) //if we can't move in hit the turf again
 			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
-			return null
+			return
 	else
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
-	return null
+	return
 
 /obj/structure/blob/emp_act(severity)
 	. = ..()

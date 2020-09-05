@@ -966,7 +966,7 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cI" = (
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cJ" = (

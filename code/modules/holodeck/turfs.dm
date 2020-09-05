@@ -136,3 +136,6 @@
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
+
+/turf/open/floor/holofloor/dark
+	icon_state = "darkfull"

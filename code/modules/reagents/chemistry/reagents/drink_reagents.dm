@@ -132,25 +132,6 @@
 		. = 1
 	..()
 
-// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
-/datum/reagent/consumable/banana_peel
-	name = "Pulped Banana Peel"
-	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
-	color = "#863333" // rgb: 175, 175, 0
-	reagent_state = SOLID
-	taste_description = "stringy, bitter pulp"
-	glass_name = "glass of banana peel pulp"
-	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
-
-/datum/reagent/consumable/baked_banana_peel
-	name = "Baked Banana Peel Powder"
-	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
-	color = "#863333" // rgb: 175, 175, 0
-	reagent_state = SOLID
-	taste_description = "bitter powder"
-	glass_name = "glass of banana peel powder"
-	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
-
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
