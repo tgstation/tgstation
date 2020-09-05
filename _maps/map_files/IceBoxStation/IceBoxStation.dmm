@@ -27274,7 +27274,15 @@
 /area/science/robotics/lab)
 "blN" = (
 /obj/machinery/computer/rdconsole,
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "blP" = (
@@ -53934,6 +53942,12 @@
 /area/maintenance/aft)
 "pjA" = (
 /obj/machinery/modular_computer/console/preset/civilian{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark/corner{
