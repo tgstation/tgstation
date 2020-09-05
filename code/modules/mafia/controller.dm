@@ -299,9 +299,9 @@
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
 
 	for(var/datum/mafia_role/solo in solos_to_ask)
-		if(solo.check_total_victory(alive_town, alive_mafia))
+		if(solo.check_total_victory(anti_mafia_power, alive_mafia))
 			total_victors += solo
-		if(solo.block_team_victory(alive_town, alive_mafia))
+		if(solo.block_team_victory(anti_mafia_power, alive_mafia))
 			blocked_victory = TRUE
 
 	//solo victories!
@@ -322,7 +322,7 @@
 			townie_client?.give_award(townie.winner_award, townie.body)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
+	else if(alive_mafia >= anti_mafia_power)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
 			var/client/changeling_client = GLOB.directory[changeling.player_key]
@@ -778,7 +778,7 @@
 /**
   * Returns a semirandom setup, with...
   * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
-  * Mafia, 2 normal mafia and one special.
+  * Mafia, 3 normal mafia
   * Neutral, two disruption roles, sometimes one is a killing.
   *
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
@@ -787,11 +787,10 @@
 	var/invests_left = 2
 	var/protects_left = 1
 	var/miscs_left = prob(35)
-	var/mafiareg_left = 2
-	var/mafiaspe_left = 1
+	var/mafiareg_left = 3
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
-	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
+	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + killing_role + disruptors)
 
 	var/list/random_setup = list()
 	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
@@ -810,9 +809,6 @@
 		else if(mafiareg_left)
 			add_setup_role(random_setup, MAFIA_REGULAR)
 			mafiareg_left--
-		else if(mafiaspe_left)
-			add_setup_role(random_setup, MAFIA_SPECIAL)
-			mafiaspe_left--
 		else if(killing_role)
 			add_setup_role(random_setup, NEUTRAL_KILL)
 			killing_role--

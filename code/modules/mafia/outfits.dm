@@ -78,14 +78,8 @@
 /datum/outfit/mafia/changeling
 	name = "Mafia Thoughtfeeder"
 
-	head = /obj/item/clothing/head/helmet/changeling/thoughtfeeder
-	suit = /obj/item/clothing/suit/armor/changeling
-
-/datum/outfit/mafia/changeling
-	name = "Mafia Parastingling"
-
 	head = /obj/item/clothing/head/helmet/changeling
-	suit = /obj/item/clothing/suit/armor/changeling/parastingling
+	suit = /obj/item/clothing/suit/armor/changeling
 
 //solo
 
