@@ -272,10 +272,10 @@
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
 
-	if(ninja_gloves.cyborg_hyjacks > 0)
+	if(ninja_gloves.cyborg_hijacks > 0)
 		to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
 		if (do_after(ninja, 60, target = src))
-			ninja_gloves.cyborg_hyjacks--
+			ninja_gloves.cyborg_hijacks--
 			spark_system.start()
 			playsound(loc, "sparks", 50, TRUE)
 			to_chat(src, "<span class='danger'>UPLOAD COMPLETE.  NEW CYBORG MODULE DETECTED.  INSTALLING...</span>")
@@ -290,7 +290,7 @@
 			var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 			if(!ninja_antag)
 				return
-			var/datum/objective/cyborg_hyjack/objective = locate() in ninja_antag.objectives
+			var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
 			if(objective)
 				objective.completed = TRUE
 		return
