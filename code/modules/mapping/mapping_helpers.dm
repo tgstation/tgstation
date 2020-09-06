@@ -387,7 +387,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "trait"
 	late = TRUE
 	///Will inject into all fitting the criteria if true, otherwise first found.
-	var/all = FALSE
+	var/first_match_only = TRUE
 	///Will inject into atoms of this type.
 	var/target_type
 	///Will inject into atoms with this name.
@@ -402,6 +402,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!GLOB.trait_name_map.Find(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
 	for(var/atom/atom_on_turf in target_turf.GetAllContents())
 		if(atom_on_turf == src)
 			continue
@@ -410,8 +411,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(target_type && !istype(atom_on_turf,target_type))
 			continue
 		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
-		if(!all)
+		matches_found++
+		if(first_match_only)
 			qdel(src)
 			return
-	if(all)
-		qdel(src)
+	if(!matches_found)
+		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
+	qdel(src)
