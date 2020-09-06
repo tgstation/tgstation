@@ -1,3 +1,4 @@
+///Global list that stores the 4 kinds of waves the crystal invasion can have and the portals each one can spawn
 GLOBAL_LIST_INIT(crystal_invasion_waves, list(
 	"small wave" = list(
 		/obj/structure/crystal_portal/small=4,
@@ -19,8 +20,10 @@ GLOBAL_LIST_INIT(crystal_invasion_waves, list(
 		/obj/structure/crystal_portal/big=3
 		),
 	))
+///Global list that stores the all the instantiated portals around the station, used when stabilizing the crystal
 GLOBAL_LIST_EMPTY(crystal_portals)
-GLOBAL_LIST_EMPTY(crystal_portals_center)
+///Global list that store the huge portals that spawns at the start of the event
+GLOBAL_LIST_EMPTY(huge_crystal_portals)
 
 /*
 This section is for the event controller
@@ -73,8 +76,15 @@ This section is for the event controller
 	dest_crystal = crystal.destabilize(portal_numbers)
 	RegisterSignal(dest_crystal, COMSIG_PARENT_QDELETING, .proc/on_dest_crystal_qdel)
 
-	for(var/turf/turf_loc in RANGE_TURFS(8, dest_crystal.loc))
-		var/distance_from_center = max(get_dist(turf_loc, dest_crystal.loc), 1)
+	for(var/t in RANGE_TURFS(8, dest_crystal.loc))
+		var/turf/turf_loc = t
+		var/distance_from_center = get_dist(turf_loc, dest_crystal.loc)
+		switch(distance_from_center)
+			if(0)
+				distance_from_center = 1 //Same tile, let's avoid a division by zero.
+			if(-1)
+				kill()
+				CRASH("Negative distance error here")
 		if(prob(325 / distance_from_center))
 			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -103,17 +113,27 @@ This section is for the event controller
 		kill()
 		CRASH("No landmarks on the station map, aborting")
 	for(var/j in 1 to portal_numbers)
-		var/obj/center = pick(center_finder)
+		if(!length(center_finder))
+			kill()
+			CRASH("center_finder had less entries than portal_numbers ([j]/[portal_numbers])")
+		var/obj/center = pick_n_take(center_finder)
 		var/turf/center_turf = center.loc
 		var/area/center_area = get_area(center_turf)
 		center_areas += center_area
 
 		explosion(center_turf,0,0,5,7,7)
 
-		new/obj/structure/crystal_portal/huge(center_turf)
+		new /obj/structure/crystal_portal/huge(center_turf)
 
-		for(var/turf/turf_loc in RANGE_TURFS(5, center_turf))
-			var/distance_from_center = max(get_dist(turf_loc, center_turf), 1)
+		for(var/t in RANGE_TURFS(5, center_turf))
+			var/turf/turf_loc = t
+			var/distance_from_center = get_dist(turf_loc, center_turf)
+			switch(distance_from_center)
+				if(0)
+					distance_from_center = 1 //Same tile, let's avoid a division by zero.
+				if(-1)
+					kill()
+					CRASH("Negative distance error here")
 			if(prob(250 / distance_from_center))
 				if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 					turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -121,7 +141,7 @@ This section is for the event controller
 					turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
 
 		var/list/portal_spawner_turfs = list()
-		for(var/turf/range_turf in RANGE_TURFS(6, center_turf))
+		for(var/range_turf in RANGE_TURFS(6, center_turf))
 			if(!isopenturf(range_turf) || isspaceturf(range_turf))
 				continue
 			portal_spawner_turfs += range_turf
@@ -143,7 +163,7 @@ This section is for the event controller
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
 /datum/round_event/crystal_invasion/announce(fake)
-	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert")
+	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by and await further instructions.", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
 ///Choose the type of the wave
@@ -254,7 +274,7 @@ This section is for the event controller
 
 /turf/open/indestructible/crystal_floor
 	name = "Crystal floor"
-	desc = "A crystalyzed floor"
+	desc = "A Crystallized floor"
 	icon_state = "noslip-damaged1"
 	baseturfs = /turf/open/space
 
@@ -262,22 +282,20 @@ This section is for the event controller
 	. += ..()
 	. += "<span class='notice'>The floor is made of sturdy crystals.</span>"
 
-/turf/open/indestructible/crystal_floor/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
-			return FALSE
-
-		to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=100))
-			if(iswallturf(src))
-				to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-			return TRUE
-	return FALSE
+/turf/open/indestructible/crystal_floor/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(!I.tool_start_check(user, amount=0))
+		return FALSE
+	to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
+	if(I.use_tool(src, user, 2.5 SECONDS, volume=100))
+		if(iswallturf(src))
+			to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
 
 /turf/closed/indestructible/crystal_wall
 	name = "Crystal wall"
-	desc = "A crystalyzed wall"
+	desc = "A Crystallized wall"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_highchance"
 	baseturfs = /turf/open/space
@@ -286,18 +304,16 @@ This section is for the event controller
 	. += ..()
 	. += "<span class='notice'>The wall is made of sturdy crystals.</span>"
 
-/turf/closed/indestructible/crystal_wall/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
-			return FALSE
-
-		to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
-		if(W.use_tool(src, user, 2.5 SECONDS, volume=100))
-			if(iswallturf(src))
-				to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
-				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-			return TRUE
-	return FALSE
+/turf/open/indestructible/crystal_floor/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(!I.tool_start_check(user, amount=0))
+		return FALSE
+	to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
+	if(I.use_tool(src, user, 2.5 SECONDS, volume=100))
+		if(iswallturf(src))
+			to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
 
 /*
 This section is for the destabilized SM
@@ -338,7 +354,7 @@ This section is for the destabilized SM
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	if(prob(15))
 		fire_nuclear_particle()
-	if(length(GLOB.crystal_portals_center) == 0 && !changed_icon)
+	if(length(GLOB.huge_crystal_portals) == 0 && !changed_icon)
 		icon_state = "psy"
 		changed_icon = TRUE
 
@@ -359,14 +375,14 @@ This section is for the destabilized SM
 	if(!istype(user))
 		return
 	if(istype(W, /obj/item/crystal_stabilizer))
-		if(length(GLOB.crystal_portals_center) > 0)
+		if(length(GLOB.huge_crystal_portals) > 0)
 			to_chat(user, "<span class='notice'>The shield protecting the crystal is still up! Close all the main portals before attempting this again!</span>")
 			return
 		var/obj/item/crystal_stabilizer/injector = W
 		if(!injector.filled)
 			to_chat(user, "<span class='notice'>\The [W] is empty!</span>")
 			return
-		to_chat(user, "<span class='notice'>You carefully begin injecting \the [src] with \the [W]... take care not to move untill all the steps are finished!</span>")
+		to_chat(user, "<span class='notice'>You carefully begin injecting \the [src] with \the [W]... take care not to move until all the steps are finished!</span>")
 		if(!W.use_tool(src, user, 1 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>Seems that \the [src] internal resonance is fading with the fluid!</span>")
@@ -387,7 +403,7 @@ This section is for the destabilized SM
 /obj/machinery/destabilized_crystal/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The Crystal appears to be heavily destabilized. Maybe it can be fixed by injecting it with something from another world.</span>"
-	if(length(GLOB.crystal_portals_center) > 0)
+	if(length(GLOB.huge_crystal_portals) > 0)
 		. += "<span class='notice'>The Destabilized Crystal appears to be protected by some kind of shield.</span>"
 	else
 		. += "<span class='notice'>The shield that was protecting the Crystal is gone, it's time to restore it.</span>"
@@ -613,10 +629,10 @@ This section is for the crystal portals variations
 
 /obj/structure/crystal_portal/huge/Initialize()
 	. = ..()
-	GLOB.crystal_portals_center += src
+	GLOB.huge_crystal_portals += src
 
 /obj/structure/crystal_portal/huge/Destroy()
-	GLOB.crystal_portals_center -= src
+	GLOB.huge_crystal_portals -= src
 	return ..()
 
 /*
