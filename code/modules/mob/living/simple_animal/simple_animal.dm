@@ -450,8 +450,8 @@
 		if(L.stat != CONSCIOUS)
 			return FALSE
 	if (ismecha(the_target))
-		var/obj/mecha/M = the_target
-		if (M.occupant)
+		var/obj/vehicle/sealed/mecha/M = the_target
+		if(LAZYLEN(M.occupants))
 			return FALSE
 	return TRUE
 
@@ -461,7 +461,7 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/ExtinguishMob()
+/mob/living/simple_animal/extinguish_mob()
 	return
 
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)

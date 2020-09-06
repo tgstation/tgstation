@@ -246,6 +246,25 @@
 
 		usr.client.trigger_centcom_recall()
 
+	else if(href_list["move_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/docking_port/mobile/shuttle = SSshuttle.getShuttle(href_list["move_shuttle"])
+		if(!shuttle)
+			return
+		shuttle.admin_fly_shuttle(usr)
+
+	else if(href_list["unlock_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/machinery/computer/shuttle/shuttle_console = locate(href_list["unlock_shuttle"])
+		if(!shuttle_console)
+			return
+		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
+		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
+
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
 			return

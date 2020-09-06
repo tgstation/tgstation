@@ -146,7 +146,6 @@
 			if(active_sound)
 				while(up)
 					playsound(src, "[active_sound]", 100, FALSE, 4)
-					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"

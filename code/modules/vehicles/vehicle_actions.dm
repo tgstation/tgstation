@@ -89,7 +89,7 @@
 	occupant_actions -= M
 	return TRUE
 
-//ACTION DATUMS
+/////////////ACTION DATUMS\\\\\\\\\
 
 /datum/action/vehicle
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS

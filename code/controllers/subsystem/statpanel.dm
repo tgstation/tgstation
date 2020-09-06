@@ -32,11 +32,11 @@ SUBSYSTEM_DEF(statpanels)
 			list("CPU:", world.cpu),
 			list("Instances:", "[num2text(world.contents.len, 10)]"),
 			list("World Time:", "[world.time]"),
-			list("Globals:", "Edit", "\ref[GLOB]"),
-			list("[config]:", "Edit", "\ref[config]"),
-			list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))"),
-			list("Master Controller:", Master ? "(TickRate:[Master.processing]) (Iteration:[Master.iteration])" : "ERROR", "\ref[Master]"),
-			list("Failsafe Controller:", Failsafe ? "Defcon: [Failsafe.defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration])" : "ERROR", "\ref[Failsafe]"),
+			list("Globals:", GLOB.stat_entry(), "\ref[GLOB]"),
+			list("[config]:", config.stat_entry(), "\ref[config]"),
+			list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
+			list("Master Controller:", Master.stat_entry(), "\ref[Master]"),
+			list("Failsafe Controller:", Failsafe.stat_entry(), "\ref[Failsafe]"),
 			list("","")
 		)
 		for(var/ss in Master.subsystems)
@@ -94,6 +94,7 @@ SUBSYSTEM_DEF(statpanels)
 					if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 						continue
 					overrides += target_image.loc
+				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf))
 				for(var/tc in target_mob.listed_turf)
 					var/atom/movable/turf_content = tc
 					if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
@@ -104,13 +105,7 @@ SUBSYSTEM_DEF(statpanels)
 						continue
 					if(turf_content.IsObscured())
 						continue
-					if(length(turfitems) < 30) // only create images for the first 30 items on the turf, for performance reasons
-						if(!(REF(turf_content) in cached_images))
-							target << browse_rsc(getFlatIcon(turf_content, no_anim = TRUE), "[REF(turf_content)].png")
-							cached_images += REF(turf_content)
-						turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), "[REF(turf_content)].png")
-					else
-						turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
+					turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 				turfitems = url_encode(json_encode(turfitems))
 				target << output("[turfitems];", "statbrowser:update_listedturf")
 		if(MC_TICK_CHECK)

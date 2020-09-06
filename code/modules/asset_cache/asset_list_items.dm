@@ -156,7 +156,6 @@
 	)
 
 /datum/asset/simple/namespaced/fontawesome
-	legacy = TRUE
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
@@ -262,7 +261,8 @@
 		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
 		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
 		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
-		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png'
+		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
+		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
 	)
 
 /datum/asset/spritesheet/simple/pills

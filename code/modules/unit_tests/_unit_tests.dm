@@ -8,27 +8,33 @@
 
 /// Asserts that the two parameters passed are equal, fails otherwise
 /// Optionally allows an additional message in the case of a failure
-#define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [a] to be equal to [b].[message ? " [message]" : ""]") }
+#define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [isnull(a) ? "null" : a] to be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
 
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
+#include "binary_insert.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "emoting.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
 #include "metabolizing.dm"
 #include "outfit_sanity.dm"
+#include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
+#include "reagent_mod_procs.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
+#include "stomach.dm"
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "timer_sanity.dm"
