@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer earn achievements in debug mafia games."
+  - refactor: "And the achievement code is much nicer :)"
