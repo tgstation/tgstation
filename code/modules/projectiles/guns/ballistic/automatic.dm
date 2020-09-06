@@ -107,6 +107,12 @@
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
 
+/obj/item/gun/ballistic/automatic/wt550/wepon
+	name = "wepon"
+	desc = "For when you need to kill fast, and bullets are just fast enough."
+	fire_delay = 0.3
+	burst_size = 30
+
 /obj/item/gun/ballistic/automatic/plastikov
 	name = "\improper PP-95 SMG"
 	desc = "An ancient 9x19mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."

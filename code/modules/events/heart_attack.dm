@@ -1,8 +1,8 @@
 /datum/round_event_control/heart_attack
 	name = "Random Heart Attack"
 	typepath = /datum/round_event/heart_attack
-	weight = 20
-	max_occurrences = 2
+	weight = 10
+	max_occurrences = 1
 	min_players = 40 // To avoid shafting lowpop
 
 /datum/round_event/heart_attack/start()

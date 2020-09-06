@@ -1,8 +1,8 @@
 /datum/round_event_control/falsealarm
 	name 			= "False Alarm"
 	typepath 		= /datum/round_event/falsealarm
-	weight			= 20
-	max_occurrences = 5
+	weight			= 10
+	max_occurrences = 2
 	var/forced_type //Admin abuse
 
 

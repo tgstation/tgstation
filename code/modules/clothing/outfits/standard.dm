@@ -455,3 +455,14 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()
+
+/datum/outfit/stranger
+	name = "A Stranger"
+	uniform = /obj/item/clothing/under/costume/stranger
+	suit = /obj/item/clothing/suit/cloak
+	ears = /obj/item/radio/headset/headset_cent/commander
+	back = /obj/item/storage/backpack/invis
+	backpack_contents = list(
+		/obj/item/gun/energy/laser/ghost=1,\
+		/obj/item/gun/energy/laser/ghost=1,\
+		)

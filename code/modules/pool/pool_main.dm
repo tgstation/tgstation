@@ -95,7 +95,7 @@
 	return ..()
 
 /turf/open/pool/proc/wash_obj(obj/O)
-	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_TYPE_WEAK)
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	if(isitem(O))
 		var/obj/item/I = O
@@ -103,7 +103,7 @@
 		I.extinguish()
 
 /turf/open/pool/proc/wash_mob(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_TYPE_WEAK)
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -150,7 +150,7 @@
 				H.update_inv_w_uniform()
 
 			if(washgloves)
-				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_TYPE_BLOOD)
 
 			if(!H.is_mouth_covered())
 				H.lip_style = null
@@ -159,9 +159,9 @@
 			if(H.belt && wash_obj(H.belt))
 				H.update_inv_belt()
 		else
-			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_TYPE_BLOOD)
 	else
-		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_TYPE_BLOOD)
 
 //put people in water, including you
 /turf/open/pool/MouseDrop_T(mob/living/M, mob/living/user)

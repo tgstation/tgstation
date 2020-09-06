@@ -1360,3 +1360,9 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+/mob/living/carbon/human/species/spirit
+	race = /datum/species/spirit
+
+/mob/living/carbon/human/species/goat
+	race = /datum/species/goat

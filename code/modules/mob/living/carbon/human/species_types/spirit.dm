@@ -21,3 +21,7 @@
 
 /datum/species/spirit/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
+
+/datum/species/spirit/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+	. = ..()
+	H.ventcrawler = VENTCRAWLER_ALWAYS

@@ -843,3 +843,11 @@
 	desc = "A ballgown-like dress adorned with gold"
 	icon_state = "beato"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+
+/obj/item/clothing/suit/cloak
+	name = "mysterious cloak"
+	desc = "What are you hiding?"
+	icon_state = "cloak"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+

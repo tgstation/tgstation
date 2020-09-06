@@ -1,7 +1,8 @@
 /datum/round_event_control/communications_blackout
 	name = "Communications Blackout"
 	typepath = /datum/round_event/communications_blackout
-	weight = 30
+	weight = 20
+	max_occurrences = 2
 
 /datum/round_event/communications_blackout
 	announceWhen	= 1
