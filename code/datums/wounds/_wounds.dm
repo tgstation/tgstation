@@ -228,8 +228,10 @@
 
 	var/allowed = FALSE
 
-	// check if we have a valid treatable tool (or, if cauteries are allowed, if we have something hot)
-	if((I.tool_behaviour == treatable_tool) || (treatable_tool == TOOL_CAUTERY && I.get_temperature()))
+	// check if we have a valid treatable tool
+	if(I.tool_behaviour == treatable_tool)
+		allowed = TRUE
+	else if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		allowed = TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))

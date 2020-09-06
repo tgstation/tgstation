@@ -1,0 +1,8 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscdel: "Reduced Diagnostics nanite program has been removed."
+  - rscadd: "Nanite Debugging nanite program has been added. This program causes your nanites to display their program list when scanned, but comes with a 0.1/s nanite cost."
+  - tweak: "Reduced Diagnostics nanite program functionality is now default behaviour. The nanite program list is hidden from nanite scanners by default. You now now to include the Nanite Debugging program to show the program list on scan."
+  - tweak: "Researching Harmonic Nanite Programming now confers a passive boost of 0.1 regen rate to all nanite clouds. This boost takes effects as soon as the node is researched."
+  - tweak: "Harmonic Nanite Programming research node now requires 3000 General and 3000 Nanite research, an increase of 1000 each."

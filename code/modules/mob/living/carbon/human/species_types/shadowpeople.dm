@@ -173,7 +173,7 @@
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
-	wound_bonus = -60
+	wound_bonus = -30
 	bare_wound_bonus = 20
 
 /obj/item/light_eater/Initialize()
