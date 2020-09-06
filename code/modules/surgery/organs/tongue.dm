@@ -352,19 +352,20 @@
 /obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
 	var/new_message
 	var/message = speech_args[SPEECH_MESSAGE]
+	var/exclamation_found = findtext(message, "!")
+	var/question_found = findtext(message, "?")
 	var/mob/living/carbon/M = owner
 	new_message = message
 	if(findtext(message, "!"))
-		if(!findtext(message, "?"))
-			M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
-		else
-			M.visible_message("<span class='notice'>[M] lowers one of [M.p_their()] eyebrows, raising the other.</span>")
 		new_message = replacetext(new_message, "!", "")
 
 	if(findtext(message, "?"))
-		if(!findtext(message, "!"))
-			M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
 		new_message = replacetext(new_message, "?", "")
 	speech_args[SPEECH_MESSAGE] = new_message
 
-
+	if(exclamation_found && question_found)
+		M.visible_message("<span class='notice'>[M] lowers one of [M.p_their()] eyebrows, raising the other.</span>")
+	else if(exclamation_found)
+		M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
+	else if(question_found)
+		M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
