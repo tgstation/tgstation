@@ -371,4 +371,4 @@
 
 /datum/nanite_program/change_cloud/on_trigger(comm_message)
 	var/datum/nanite_extra_setting/cloud = extra_settings[NES_CLOUD_OVERWRITE]
-	SEND_SIGNAL(host_mob, COMSIG_NANITE_SET_CLOUD, cloud.get_value() )
+	nanites.set_cloud(cloud.get_value())
