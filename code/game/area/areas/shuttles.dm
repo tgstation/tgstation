@@ -1,7 +1,6 @@
 
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 //Multi area shuttles are a thing now, use subtypes! ~ninjanomnom
-//Non-nanotrasen shuttles should have the flag NO_ALERTS so they are hidden on the alert console when on the station's z-level.
 
 /area/shuttle
 	name = "Shuttle"
@@ -10,7 +9,7 @@
 	has_gravity = STANDARD_GRAVITY
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
-	area_flags = NONE
+	area_flags = NO_ALERTS
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle
@@ -31,7 +30,6 @@
 	name = "Syndicate Infiltrator"
 	ambientsounds = HIGHSEC
 	area_limited_icon_smoothing = /area/shuttle/syndicate
-	area_flags = NO_ALERTS
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
@@ -55,14 +53,12 @@
 /area/shuttle/pirate
 	name = "Pirate Shuttle"
 	requires_power = TRUE
-	area_flags = NO_ALERTS
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	area_flags = NO_ALERTS
 
 ////////////////////////////White Ship////////////////////////////
 
@@ -70,7 +66,6 @@
 	name = "Abandoned Ship"
 	requires_power = TRUE
 	area_limited_icon_smoothing = /area/shuttle/abandoned
-	area_flags = NO_ALERTS
 
 /area/shuttle/abandoned/bridge
 	name = "Abandoned Ship Bridge"
@@ -122,6 +117,7 @@
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
+	area_flags = NONE //Set this so it doesn't inherit NO_ALERTS
 
 /area/shuttle/mining/large
 	name = "Mining Shuttle"
@@ -129,6 +125,7 @@
 
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
+	area_flags = NONE //Set this so it doesn't inherit NO_ALERTS
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
@@ -159,31 +156,24 @@
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
-	area_flags = NO_ALERTS
 
 /area/shuttle/sbc_starfury
 	name = "SBC Starfury"
-	area_flags = NO_ALERTS
 
 /area/shuttle/sbc_fighter1
 	name = "SBC Fighter 1"
-	area_flags = NO_ALERTS
 
 /area/shuttle/sbc_fighter2
 	name = "SBC Fighter 2"
-	area_flags = NO_ALERTS
 
 /area/shuttle/sbc_corvette
 	name = "SBC corvette"
-	area_flags = NO_ALERTS
 
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
-	area_flags = NO_ALERTS
 
 /area/shuttle/caravan
 	requires_power = TRUE
-	area_flags = NO_ALERTS
 
 /area/shuttle/caravan/syndicate1
 	name = "Syndicate Fighter"
