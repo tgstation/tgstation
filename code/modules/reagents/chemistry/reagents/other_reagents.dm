@@ -726,7 +726,7 @@
 /datum/reagent/oxygen/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if((!exposed_obj) || (!reac_volume))
-		return 0
+		return
 	var/temp = holder ? holder.chem_temp : T20C
 	exposed_obj.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 
@@ -763,7 +763,7 @@
 /datum/reagent/nitrogen/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if((!exposed_obj) || (!reac_volume))
-		return 0
+		return
 	var/temp = holder ? holder.chem_temp : T20C
 	exposed_obj.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
 
@@ -1271,7 +1271,7 @@
 /datum/reagent/carbondioxide/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if((!exposed_obj) || (!reac_volume))
-		return 0
+		return
 	var/temp = holder ? holder.chem_temp : T20C
 	exposed_obj.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 
@@ -1292,7 +1292,7 @@
 /datum/reagent/nitrous_oxide/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if((!exposed_obj) || (!reac_volume))
-		return 0
+		return
 	var/temp = holder ? holder.chem_temp : T20C
 	exposed_obj.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
