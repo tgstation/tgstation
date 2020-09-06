@@ -485,10 +485,10 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	))
 
 /obj/item/stack/sheet/mineral/metal_hydrogen
-	name = "Metal Hydrogen"
+	name = "metal hydrogen"
 	icon_state = "sheet-metalhydrogen"
 	inhand_icon_state = "sheet-metalhydrogen"
-	singular_name = "Metal Hydrogen sheet"
+	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	point_value = 100
