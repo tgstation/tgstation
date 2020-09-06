@@ -89,6 +89,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define XENOBIOLOGY_COMPATIBLE		(1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF				(1<<11)
+/// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
+#define NO_ALERTS					(1<<12)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
