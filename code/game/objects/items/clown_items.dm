@@ -248,7 +248,7 @@
 	attack_verb_simple = list("HONK")
 	w_class = WEIGHT_CLASS_HUGE //This dude's a chonker.
 	COOLDOWN_DECLARE(mega_horn_cooldown)
-	var/cooldown_length = 80 //malicious admin laughing engage
+	var/cooldown_length = 8 SECONDS //malicious admin laughing engage
 
 /obj/item/megahorn/attack_self(mob/source, atom/target, params) //this is just the honkerblast adapted for handheld use
 	var/mob/living/carbon/human/H = source
