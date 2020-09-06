@@ -92,7 +92,7 @@ This section is for the event controller
 				turf_loc.ChangeTurf(/turf/closed/indestructible/crystal_wall)
 
 	var/list/crystal_spawner_turfs = list()
-	for(var/turf/range_turf in RANGE_TURFS(6, dest_crystal.loc))
+	for(var/range_turf in RANGE_TURFS(6, dest_crystal.loc))
 		if(!isopenturf(range_turf) || isspaceturf(range_turf))
 			continue
 		crystal_spawner_turfs += range_turf
