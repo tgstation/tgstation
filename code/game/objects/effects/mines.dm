@@ -242,7 +242,13 @@
 	shrapnel_magnitude = 4
 	shred_triggerer = TRUE
 	arm_delay = 3 SECONDS
+	light_range = 1.6
+	light_power = 2
+	light_color = COLOR_VIVID_RED
 
+/obj/effect/mine/shrapnel/capspawn/now_armed()
+	. = ..()
+	set_light_on(TRUE)
 
 /obj/item/minespawner
 	name = "landmine deployment device"
@@ -272,5 +278,6 @@
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
 	visible_message("<span class='danger'>\The [src] releases a puff of smoke, revealing \a [new_mine]!</span>")
-	new /obj/effect/particle_effect/smoke(get_turf(src))
+	var/obj/effect/particle_effect/smoke/poof = new (get_turf(src))
+	poof.lifetime = 3
 	qdel(src)
