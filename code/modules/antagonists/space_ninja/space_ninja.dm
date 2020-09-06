@@ -24,9 +24,8 @@
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
 	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
-	antag_memory += "Officially, The Syndicate are my employer.<br>"
 
-/datum/objective/cyborg_hyjack
+/datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert a cyborg to aide you in sabotaging the station."
 	
 /datum/objective/door_jack
@@ -42,9 +41,9 @@
 	explanation_text = "Use your gloves on a communication console to announce a fake warning from Centcom."
 
 /datum/antagonist/ninja/proc/addObjectives()
-	//Cyborg Hyjack: Flag set to complete in the DrainAct in ninjaDrainAct.dm
-	var/datum/objective/hyjack = new /datum/objective/cyborg_hyjack()
-	objectives += hyjack
+	//Cyborg Hijack: Flag set to complete in the DrainAct in ninjaDrainAct.dm
+	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
+	objectives += hijack
 	
 	//Research stealing
 	var/datum/objective/download/research = new /datum/objective/download()
@@ -52,7 +51,7 @@
 	research.gen_amount_goal()
 	objectives += research
 	
-	//Door jacks, flag will be set to complete on when the last door is hyjacked
+	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
 	doorobjective.doors_required = rand(15,40)
 	doorobjective.explanation_text = "Use your gloves to doorjack [doorobjective.doors_required] airlocks on the station."
@@ -98,7 +97,6 @@
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
 	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
-	to_chat(owner.current, "Officially, The Syndicate are my employer.")
 	owner.announce_objectives()
 	return
 
