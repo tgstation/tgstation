@@ -403,7 +403,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0
-	for(var/atom/atom_on_turf in target_turf.GetAllContents())
+	for(var/a in target_turf.GetAllContents())
+		var/atom/atom_on_turf = a
 		if(atom_on_turf == src)
 			continue
 		if(target_name && atom_on_turf.name != target_name)
