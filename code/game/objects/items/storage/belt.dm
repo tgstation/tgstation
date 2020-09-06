@@ -67,7 +67,9 @@
 		/obj/item/construction/rcd,
 		/obj/item/pipe_dispenser,
 		/obj/item/inducer,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/airlock_painter,
+		/obj/item/pipe_painter
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -168,6 +170,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
@@ -367,6 +370,13 @@
 	STR.set_holdable(list(
 		/obj/item/clothing/mask/luchador
 		))
+
+/obj/item/storage/belt/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = "cummerbund"
+	worn_icon_state = "cummerbund"
 
 /obj/item/storage/belt/military
 	name = "chest rig"
@@ -732,5 +742,6 @@
 		/obj/item/graft,
 		/obj/item/secateurs,
 		/obj/item/geneshears,
-		/obj/item/shovel/spade
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
 		))

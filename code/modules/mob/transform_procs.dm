@@ -619,34 +619,34 @@
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return 0	//Sanity, this should never happen.
+		return FALSE	//Sanity, this should never happen.
 
 	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
-		return 0 //Verbs do not appear for players.
+		return FALSE //Verbs do not appear for players.
 
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/crab))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/shade))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
-		return 1
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/mouse))
-		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
-		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
+		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/parrot))
-		return 1 //Parrots are no longer unfinished! -Nodrak
+		return TRUE //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!
-	return 0
+	return FALSE
 
 #undef TRANSFORMATION_DURATION

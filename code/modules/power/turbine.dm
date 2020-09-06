@@ -109,7 +109,7 @@
 		locate_machinery()
 		if(turbine)
 			to_chat(user, "<span class='notice'>Turbine connected.</span>")
-			machine_stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 			obj_break()
@@ -195,7 +195,7 @@
 /obj/machinery/power/turbine/process()
 
 	if(!compressor)
-		machine_stat = BROKEN
+		set_machine_stat(BROKEN)
 
 	if((machine_stat & BROKEN) || panel_open)
 		return
@@ -239,7 +239,7 @@
 		locate_machinery()
 		if(compressor)
 			to_chat(user, "<span class='notice'>Compressor connected.</span>")
-			machine_stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 			obj_break()

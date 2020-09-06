@@ -3,7 +3,7 @@
 		return
 	..()
 
-/mob/living/silicon/robot/show_laws(everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = FALSE)
 	laws_sanity_check()
 	var/who
 
@@ -21,7 +21,7 @@
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
-			lawupdate = 0
+			lawupdate = FALSE
 
 	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)

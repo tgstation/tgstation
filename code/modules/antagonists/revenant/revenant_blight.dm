@@ -24,23 +24,28 @@
 		to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 	..()
 
+
 /datum/disease/revblight/stage_act()
+	. = ..()
+	if(!.)
+		return
+
 	if(!finalstage)
-		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage*6))
+		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage * 6))
 			cure()
-			return
-		if(prob(stage*3))
+			return FALSE
+		if(prob(stage * 3))
 			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
 			affected_mob.add_confusion(8)
-			affected_mob.adjustStaminaLoss(20)
+			affected_mob.adjustStaminaLoss(20, FALSE)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)
 			stagedamage++
-			affected_mob.adjustToxLoss(stage*2) //should, normally, do about 30 toxin damage.
+			affected_mob.adjustToxLoss(stage * 2, FALSE) //should, normally, do about 30 toxin damage.
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(prob(45))
-			affected_mob.adjustStaminaLoss(stage)
-	..() //So we don't increase a stage before applying the stage damage.
+			affected_mob.adjustStaminaLoss(stage, FALSE)
+
 	switch(stage)
 		if(2)
 			if(prob(5))
@@ -55,13 +60,11 @@
 			if(!finalstage)
 				finalstage = TRUE
 				to_chat(affected_mob, "<span class='revenbignotice'>You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")].</span>")
-				affected_mob.adjustStaminaLoss(45)
+				affected_mob.adjustStaminaLoss(45, FALSE)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
 				affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
-				addtimer(CALLBACK(src, .proc/cure), 100)
-		else
-			return
+				addtimer(CALLBACK(src, .proc/cure), 10 SECONDS)

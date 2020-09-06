@@ -109,6 +109,8 @@
 #define FACTOR_GAS_VISIBLE_MAX				20
 /// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP				0.25
+/// The total visible states
+#define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -349,8 +351,8 @@
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 #define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_MAX 5
+#define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
@@ -371,6 +373,14 @@
 	}																		\
 	if(T.dir & (EAST|WEST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	}
+
+#define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+	}																		\
+	if(T.dir & (EAST|WEST)) {										\
+		T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
 	}
 
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \

@@ -238,13 +238,32 @@
 			return
 		SSshuttle.emergency.setTimer(timer*10)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
 			return
 
 		usr.client.trigger_centcom_recall()
+
+	else if(href_list["move_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/docking_port/mobile/shuttle = SSshuttle.getShuttle(href_list["move_shuttle"])
+		if(!shuttle)
+			return
+		shuttle.admin_fly_shuttle(usr)
+
+	else if(href_list["unlock_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/machinery/computer/shuttle/shuttle_console = locate(href_list["unlock_shuttle"])
+		if(!shuttle_console)
+			return
+		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
+		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
@@ -1282,7 +1301,9 @@
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"
 				if(UNCONSCIOUS)
-					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+					status = "<font color='orange'><b>Unconscious</b></font>"
+				if(HARD_CRIT)
+					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
@@ -2333,6 +2354,12 @@
 		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
 			return
 		usr.nominate_heart(heart_recepient)
+
+	else if(href_list["force_war"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
+		button.force_war()
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

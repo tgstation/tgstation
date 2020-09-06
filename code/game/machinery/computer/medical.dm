@@ -559,14 +559,12 @@
 				continue
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
-	if(user)
-		if(message)
-			if(authenticated)
-				if(user.canUseTopic(src, !issilicon(user)))
-					if(!record1 || record1 == active1)
-						if(!record2 || record2 == active2)
-							return 1
-	return 0
+	if(user && message && authenticated)
+		if(user.canUseTopic(src, !issilicon(user)))
+			if(!record1 || record1 == active1)
+				if(!record2 || record2 == active2)
+					return TRUE
+	return FALSE
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"

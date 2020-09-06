@@ -52,7 +52,9 @@
 		inline_assets = list(),
 		inline_html = "",
 		fancy = FALSE)
-	log_tgui(client, "[id]/initialize")
+	log_tgui(client,
+		context = "[id]/initialize",
+		window = src)
 	if(!client)
 		return
 	src.inline_assets = inline_assets
@@ -177,11 +179,15 @@
 	if(!client)
 		return
 	if(can_be_suspended && can_be_suspended())
-		log_tgui(client, "[id]/close: suspending")
+		log_tgui(client,
+			context = "[id]/close (suspending)",
+			window = src)
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
-	log_tgui(client, "[id]/close")
+	log_tgui(client,
+		context = "[id]/close",
+		window = src)
 	release_lock()
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null

@@ -10,10 +10,16 @@
 	disease_flags = CURABLE
 	cures = list(/datum/reagent/consumable/sodiumchloride,  /datum/reagent/medicine/mutadone)
 
+
 /datum/disease/gastrolosis/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	if(is_species(affected_mob, /datum/species/snail))
 		cure()
+		return FALSE
+
 	switch(stage)
 		if(2)
 			if(prob(2))
@@ -60,12 +66,14 @@
 				affected_mob.visible_message("<span class='warning'>[affected_mob] turns into a snail!</span>", \
 				"<span class='boldnotice'>You turned into a snail person! You feel an urge to cccrrraaawwwlll...</span>")
 				cure()
+				return FALSE
 			if(prob(10))
 				affected_mob.emote("gag")
 			if(prob(10))
 				var/turf/open/OT = get_turf(affected_mob)
 				if(isopenturf(OT))
 					OT.MakeSlippery(TURF_WET_LUBE, 100)
+
 
 /datum/disease/gastrolosis/cure()
 	. = ..()
