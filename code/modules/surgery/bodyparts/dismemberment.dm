@@ -59,6 +59,7 @@
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
+	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, TRUE)
@@ -69,11 +70,16 @@
 			continue
 		O.Remove(C)
 		O.forceMove(T)
+		organ_spilled = 1
 		. += X
 	if(cavity_item)
 		cavity_item.forceMove(T)
 		. += cavity_item
 		cavity_item = null
+		organ_spilled = 1
+
+	if(organ_spilled)
+		C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
 
 
 
@@ -171,7 +177,7 @@
 /**
   * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
   *
-  * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state]. This simply makes the roll for whether we actually dismember or not
+  * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state()]. This simply makes the roll for whether we actually dismember or not
   * using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
   * Lastly, we choose which kind of dismember we want based on the wounding type we hit with. Note we don't care about all the normal mods or armor for this
   *
@@ -185,16 +191,17 @@
 	if(wounding_dmg < DISMEMBER_MINIMUM_DAMAGE)
 		return
 
-	var/base_chance = wounding_dmg
-	base_chance += (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
+	var/base_chance = wounding_dmg + (get_damage() / max_damage * 50) // how much damage we dealt with this blow, + 50% of the damage percentage we already had on this bodypart
+	if(locate(/datum/wound/blunt/critical) in wounds) // we only require a severe bone break, but if there's a critical bone break, we'll add 10% more
+		base_chance += 10
 
-	if(locate(/datum/wound/blunt/critical) in wounds) // we only require a severe bone break, but if there's a critical bone break, we'll add 15% more
-		base_chance += 15
+	if(!prob(base_chance))
+		return
 
-	if(prob(base_chance))
-		var/datum/wound/loss/dismembering = new
-		dismembering.apply_dismember(src, wounding_type)
-		return TRUE
+	var/datum/wound/loss/dismembering = new
+	dismembering.apply_dismember(src, wounding_type)
+
+	return TRUE
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
@@ -378,6 +385,15 @@
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special = FALSE, abort = FALSE)
+	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
+	var/hair_color = src.hair_color
+	var/hairstyle = src.hairstyle
+	var/facial_hair_color = src.facial_hair_color
+	var/facial_hairstyle = src.facial_hairstyle
+	var/lip_style = src.lip_style
+	var/lip_color = src.lip_color
+	var/real_name = src.real_name
+
 	. = ..()
 	if(!.)
 		return .

@@ -44,6 +44,8 @@
 	TEST_ASSERT_EQUAL(alice.get_bodypart(BODY_ZONE_HEAD), null, "Alice still has a head after dismemberment")
 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Unknown", "Alice's head was dismembered, but they are not Unknown")
 
+	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
+
 	// Put Bob's head onto Alice's body
 	var/datum/surgery_step/add_prosthetic/add_prosthetic = new
 	user.put_in_active_hand(bobs_head)
