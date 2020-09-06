@@ -24,7 +24,8 @@
 	taste_description = "rock"
 	color = "#9ACD32"
 
-/datum/reagent/blob/reactive_spines/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
+/datum/reagent/blob/reactive_spines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	..()
+	if(exposed_mob.stat == DEAD || istype(exposed_mob, /mob/living/simple_animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
-	M.adjustBruteLoss(reac_volume)
+	exposed_mob.adjustBruteLoss(reac_volume)
