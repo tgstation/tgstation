@@ -11,7 +11,7 @@ Passive gate is similar to the regular pump except:
 	icon_state = "passgate_map-2"
 
 	name = "passive gate"
-	desc = "A one-way air valve that does not require power. Passes gas when output pressure lower than target pressure."
+	desc = "A one-way air valve that does not require power. Passes gas when the output pressure is lower than the target pressure."
 
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
