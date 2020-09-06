@@ -9,6 +9,15 @@
 	..()
 	icon_state = "46x30mmt-[round(ammo_count(),4)]"
 
+/obj/item/ammo_box/magazine/wt550m9/wepon
+	name = "wepon magazine"
+	max_ammo = 120
+	icon_state = "46x30mmt-20"
+
+/obj/item/ammo_box/magazine/wt550m9/wepon/update_icon()
+	..()
+	icon_state = "46x30mmt-20"
+
 /obj/item/ammo_box/magazine/wt550m9/wtap
 	name = "wt550 magazine (Armour Piercing 4.6x30mm)"
 	icon_state = "46x30mmtA-20"

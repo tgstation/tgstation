@@ -365,6 +365,8 @@ obj/item/clothing/under/costume/servicesuit
 	icon_state = "stranger"
 	inhand_icon_state = "stranger"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	can_adjust = FALSE
 	resistance_flags = NONE
+	strip_delay = 99180
+	can_be_bloody = FALSE

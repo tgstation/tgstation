@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 /datum/round_event_control/wormholes
 	name = "Wormholes"
 	typepath = /datum/round_event/wormholes
-	max_occurrences = 3
+	max_occurrences = 2
 	weight = 2
 	min_players = 2
 

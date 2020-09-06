@@ -257,14 +257,14 @@
 	var/mob/living/carbon/C = quirk_holder
 	C.generate_fake_scars(rand(min_scars, max_scars))
 
-/datum/quirk/GCSL
+/datum/quirk/sign_lang
 	name = "Tongue Tied"
 	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
 	value = 0
 	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
 
 //Adds tongue & gloves
-/datum/quirk/GCSL/on_spawn()
+/datum/quirk/sign_lang/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
 	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
@@ -276,7 +276,7 @@
 	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
 	H.regenerate_icons()
 
-/datum/quirk/GCSL/post_add()
+/datum/quirk/sign_lang/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
 //Short lol
@@ -289,3 +289,18 @@
 /datum/quirk/short/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.resize = 0.85
+
+/datum/quirk/robotic_talk
+	name = "Robotongue"
+	desc = "you sound like a kickass robot."
+	value = 0
+	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
+
+/datum/quirk/robotic_talk/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
+	var/obj/item/organ/tongue/robot/new_tongue = new(get_turf(H))
+	old_tongue.Remove(H)
+	new_tongue.Insert(H)
+	qdel(old_tongue)
+	H.regenerate_icons()

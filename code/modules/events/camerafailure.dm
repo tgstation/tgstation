@@ -1,7 +1,7 @@
 /datum/round_event_control/camera_failure
 	name = "Camera Failure"
 	typepath = /datum/round_event/camera_failure
-	weight = 100
+	weight = 75
 	max_occurrences = 20
 	alert_observers = FALSE
 

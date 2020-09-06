@@ -81,3 +81,8 @@ config/title_music/sounds/Staring at my spaceship.ogg
 config/title_music/sounds/Corpse Party.ogg
 config/title_music/sounds/Raceway.ogg
 config/title_music/sounds/Define Me.ogg
+config/title_music/sounds/Hopeless Romantic.ogg
+config/title_music/sounds/Staring at my spaceship.ogg
+config/title_music/sounds/Greenpath.ogg
+config/title_music/sounds/Renai Circulation.ogg
+config/title_music/sounds/THE REAL FOLK BLUES.ogg

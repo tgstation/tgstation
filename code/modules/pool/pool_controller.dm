@@ -256,12 +256,12 @@
 	update_icon()
 
 /obj/machinery/poolcontroller/proc/CanUpTemp(mob/user)
-	if(temperature == WARM && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature < WARM)
+	if(temperature == WARM && (tempunlocked || issilicon(user) || isAdminGhostAI(user)) || temperature < WARM)
 		return TRUE
 	return FALSE
 
 /obj/machinery/poolcontroller/proc/CanDownTemp(mob/user)
-	if(temperature == COOL && (tempunlocked || issilicon(user) || IsAdminGhost(user)) || temperature > COOL)
+	if(temperature == COOL && (tempunlocked || issilicon(user) || isAdminGhostAI(user)) || temperature > COOL)
 		return TRUE
 	return FALSE
 
@@ -289,7 +289,7 @@
 		bloody = FALSE
 
 /obj/machinery/poolcontroller/proc/isDrainable(mob/user)
-	return (drainable || issilicon(user) || IsAdminGhost(user))
+	return (drainable || issilicon(user) || isAdminGhostAI(user))
 
 /obj/machinery/poolcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

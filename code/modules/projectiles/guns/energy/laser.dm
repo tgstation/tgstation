@@ -53,6 +53,16 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 	shaded_charge = FALSE
 
+/obj/item/gun/energy/laser/ghost
+	name = "ethereal shotgun"
+	icon_state = "ghostshot"
+	inhand_icon_state = "ghostshot"
+	desc = "This looks like an old compact combat shotgun. It's glowing with an otherworldly energy now. Definitely doesn't need bullets anymore."
+	force = 10
+	shaded_charge = 0
+	selfcharge = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
 /obj/item/gun/energy/laser/cyborg
 	can_charge = FALSE
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"

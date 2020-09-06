@@ -15,6 +15,7 @@
 	var/random_sensor = TRUE
 	var/sensor_mode = NO_SENSORS
 	var/can_adjust = TRUE
+	var/can_be_bloody = TRUE
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory

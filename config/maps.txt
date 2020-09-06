@@ -15,7 +15,7 @@ endmap
 
 map metastation
 	#default
-	minplayers 25
+	minplayers 0
 	#voteweight 0.5
 	votable
 endmap
@@ -25,12 +25,17 @@ map pubbystation
 endmap
 
 map deltastation
-	minplayers 50
+	minplayers 0
 	votable
 endmap
 
 map icebox
-	minplayers 25
+	minplayers 0
+	votable
+endmap
+
+map shipstation
+	minplayers 0
 	votable
 endmap
 

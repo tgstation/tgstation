@@ -4,7 +4,7 @@
 ## World address and port for server receiving cross server messages
 ## Use '+' to denote spaces in ServerName
 ## Repeat this entry to add more servers
-#CROSS_SERVER ServerName byond:\\address:port
+#CROSS_SERVER Heavenstation byond:\\address:port
 
 ## Name that the server calls itself in communications
 #CROSS_COMMS_NAME

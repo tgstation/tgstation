@@ -460,6 +460,7 @@ ROUNDSTART_RACES synth
 ROUNDSTART_RACES android
 ROUNDSTART_RACES dullahan
 ROUNDSTART_RACES mush
+ROUNDSTART_RACES goat
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 ROUNDSTART_RACES skeleton
