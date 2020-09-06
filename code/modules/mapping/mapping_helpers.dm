@@ -386,10 +386,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Trait Injector"
 	icon_state = "trait"
 	late = TRUE
-	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
-	var/target_type //Will inject into atoms of this type
-	var/target_name //Will inject into atoms with this name
-	var/trait_name //Name of the trait, in NOT the define form
+	///Will inject into all fitting the criteria if true, otherwise first found.
+	var/all = FALSE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
+	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
+	var/trait_name
 
 //Late init so everything is likely ready and loaded (no warranty)
 /obj/effect/mapping_helpers/trait_injector/LateInitialize()
