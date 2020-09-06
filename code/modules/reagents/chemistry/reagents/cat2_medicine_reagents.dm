@@ -414,12 +414,12 @@
 /datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
 	if(!iscarbon(exposed_mob))
-		return TRUE
+		return
 	var/mob/living/carbon/carbies = exposed_mob
 	if(carbies.stat == DEAD)
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
-		return TRUE
+		return
 	var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 	var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 	for(var/i in carbies.all_wounds)
@@ -432,7 +432,6 @@
 	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
 		carbies.cure_husk("burn")
 		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
-	return TRUE
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/

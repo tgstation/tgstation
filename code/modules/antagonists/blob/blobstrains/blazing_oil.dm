@@ -32,7 +32,8 @@
 	color = "#B68D00"
 
 /datum/reagent/blob/blazing_oil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
-	reac_volume = ..()
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	exposed_mob.adjust_fire_stacks(round(reac_volume/10))
 	exposed_mob.IgniteMob()
 	if(exposed_mob)
