@@ -359,6 +359,8 @@
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
+	custom_premium_price = 300
+	custom_price = 300
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
@@ -367,6 +369,8 @@
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
+	custom_premium_price = 100
+	custom_price = 100
 
 
 /obj/item/clothing/shoes/kindle_kicks

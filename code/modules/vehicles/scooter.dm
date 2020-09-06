@@ -259,6 +259,8 @@
 	instability = 12
 	///Stores the shoes associated with the vehicle
 	var/obj/item/clothing/shoes/wheelys/shoes = null
+	///Name of the wheels, for visible messages
+	var/wheel_name = "wheels"
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
@@ -267,7 +269,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-		to_chat(M, "<span class='notice'>You pop the Wheely-Heels' wheels back into place.</span>")
+		to_chat(M, "<span class='notice'>You pop the wheels back into place.</span>")
 		moveToNullspace()
 		shoes.toggle_wheels(FALSE)
 	return ..()
@@ -276,7 +278,7 @@
 	return
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_buckle_mob(mob/living/M)
-	to_chat(M, "<span class='notice'>You pop out the Wheely-Heels' wheels.</span>")
+	to_chat(M, "<span class='notice'>You pop out the [wheel_name].</span>")
 	shoes.toggle_wheels(TRUE)
 	return ..()
 
@@ -292,9 +294,10 @@
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
-	instability = 10
+	instability = 8
+	wheel_name = "skis"
 
-/obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
+/obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
