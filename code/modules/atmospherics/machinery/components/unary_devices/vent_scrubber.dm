@@ -13,6 +13,7 @@
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
+	shift_underlay_only = FALSE
 
 	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
@@ -69,8 +70,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(welded)
 		icon_state = "scrub_welded"

@@ -132,6 +132,42 @@
 			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
 	return fullness
 
+/**
+ * Check if the mob contains this reagent.
+ *
+ * This will validate the the reagent holder for the mob and any sub holders contain the requested reagent.
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ * * amount (int) checks for having a specific amount of that chemical.
+ * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
+ */
+/mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+
+/**
+ * Removes reagents from the mob
+ *
+ * This will locate the reagent in the mob and remove it from reagent holders
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
+ * * safety (bool) check for the trans_id_to
+ */
+/mob/living/proc/remove_reagent(reagent, custom_amount, safety)
+	if(!custom_amount)
+		custom_amount = get_reagent_amount(reagent)
+	return reagents.remove_reagent(reagent, custom_amount, safety)
+
+/**
+ * Returns the amount of a reagent from the mob
+ *
+ * This will locate the reagent in the mob and return the total amount from all reagent holders
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ */
+/mob/living/proc/get_reagent_amount(reagent)
+	return reagents.get_reagent_amount(reagent)
+
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 

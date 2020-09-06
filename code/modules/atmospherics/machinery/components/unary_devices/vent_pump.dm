@@ -16,6 +16,7 @@
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
+	shift_underlay_only = FALSE
 
 	var/id_tag = null
 	var/pump_direction = RELEASING
@@ -52,8 +53,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(welded)
 		icon_state = "vent_welded"

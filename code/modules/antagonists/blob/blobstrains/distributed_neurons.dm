@@ -24,17 +24,17 @@
 	name = "Distributed Neurons"
 	color = "#E88D5D"
 
-/datum/reagent/blob/distributed_neurons/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/distributed_neurons/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, TOX)
-	if(O && ishuman(M))
-		if(M.stat == UNCONSCIOUS || M.stat == HARD_CRIT)
-			M.death() //sleeping in a fight? bad plan.
-		if(M.stat == DEAD && O.can_buy(5))
-			var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(M))
-			BS.overmind = O
-			BS.update_icons()
-			O.blob_mobs.Add(BS)
-			BS.Zombify(M)
-			O.add_points(-5)
-			to_chat(O, "<span class='notice'>Spent 5 resources for the zombification of [M].</span>")
+	exposed_mob.apply_damage(0.6*reac_volume, TOX)
+	if(overmind && ishuman(exposed_mob))
+		if(exposed_mob.stat == UNCONSCIOUS || exposed_mob.stat == HARD_CRIT)
+			exposed_mob.death() //sleeping in a fight? bad plan.
+		if(exposed_mob.stat == DEAD && overmind.can_buy(5))
+			var/mob/living/simple_animal/hostile/blob/blobspore/spore = new/mob/living/simple_animal/hostile/blob/blobspore(get_turf(exposed_mob))
+			spore.overmind = overmind
+			spore.update_icons()
+			overmind.blob_mobs.Add(spore)
+			spore.Zombify(exposed_mob)
+			overmind.add_points(-5)
+			to_chat(overmind, "<span class='notice'>Spent 5 resources for the zombification of [exposed_mob].</span>")

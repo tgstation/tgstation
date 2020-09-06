@@ -1,5 +1,6 @@
 /obj/item/melee/transforming
 	sharpness = SHARP_EDGED
+	bare_wound_bonus = 20
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -13,8 +14,6 @@
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	var/clumsy_check = TRUE
-	wound_bonus = -30
-	bare_wound_bonus = 40
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
