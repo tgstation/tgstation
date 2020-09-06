@@ -3,7 +3,7 @@
 /datum/reagent/method_patch_test
 	name = "method patch test"
 
-/datum/reagent/method_patch_test/expose_mob(mob/living/target, methods=PATCH, reac_volume, show_message = TRUE)
+/datum/reagent/method_patch_test/expose_mob(mob/living/target, methods = PATCH, reac_volume, show_message = TRUE)
 	. = ..()
 	if(methods & PATCH)
 		target.health = 90
@@ -18,7 +18,7 @@
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 
 	// INGEST
-	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks on allocate")
+	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks before taking phlogiston")
 	drink.reagents.add_reagent(/datum/reagent/phlogiston, 10)
 	drink.attack(human, human)
 	TEST_ASSERT_EQUAL(human.fire_stacks, 1, "Human does not have fire stacks after taking phlogiston")
