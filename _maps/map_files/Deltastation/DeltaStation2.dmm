@@ -2699,6 +2699,21 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/fore)
+"ait" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "aiz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -56371,25 +56386,6 @@
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
-"ccF" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/tcommsat/server)
 "ccH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -56401,30 +56397,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/tcommsat/server)
-"ccI" = (
-/obj/structure/table/glass,
-/obj/item/folder/yellow,
-/obj/structure/cable,
-/turf/open/floor/circuit/green/telecomms/mainframe,
-/area/tcommsat/server)
-"ccJ" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	external_pressure_bound = 120;
-	name = "server vent"
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
@@ -57345,57 +57317,6 @@
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
-"cev" = (
-/obj/machinery/telecomms/broadcaster/preset_left,
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 5
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/tcommsat/server)
-"cex" = (
-/obj/machinery/telecomms/message_server/preset,
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	dir = 1
-	},
-/turf/open/floor/circuit/green/telecomms/mainframe,
-/area/tcommsat/server)
-"cey" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/tcommsat/server)
-"cez" = (
-/obj/machinery/telecomms/hub/preset,
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 4
-	},
-/turf/open/floor/circuit/green/telecomms/mainframe,
-/area/tcommsat/server)
-"ceA" = (
-/obj/machinery/blackbox_recorder,
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	dir = 1
-	},
-/turf/open/floor/circuit/green/telecomms/mainframe,
-/area/tcommsat/server)
-"ceB" = (
-/obj/machinery/telecomms/broadcaster/preset_right,
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 9
-	},
-/turf/open/floor/circuit/telecomms/mainframe,
-/area/tcommsat/server)
 "ceD" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -58217,20 +58138,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
-"cgk" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/tcommsat/server)
 "cgm" = (
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -61222,11 +61129,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"cmE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plating,
-/area/tcommsat/server)
 "cmF" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -62076,13 +61978,6 @@
 /area/crew_quarters/heads/hop)
 "coe" = (
 /turf/closed/wall,
-/area/tcommsat/server)
-"cof" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
 /area/tcommsat/server)
 "cog" = (
 /obj/machinery/holopad,
@@ -89984,6 +89879,23 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"dtf" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "dtg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -108452,6 +108364,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"fZt" = (
+/obj/machinery/telecomms/hub/preset,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/tcommsat/server)
 "gaK" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -108761,6 +108677,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmospherics_engine)
+"had" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/tcommsat/server)
 "hdH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -109270,21 +109193,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"iDI" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/tcommsat/server)
 "iFA" = (
 /turf/open/floor/plasteel/white,
 /area/maintenance/department/science)
@@ -109351,6 +109259,23 @@
 /obj/item/storage/crayons,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"iOJ" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "iQh" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -110152,6 +110077,11 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"lia" = (
+/obj/machinery/telecomms/message_server/preset,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/tcommsat/server)
 "ljP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -110512,6 +110442,11 @@
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/space)
+"mcn" = (
+/obj/machinery/blackbox_recorder,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/tcommsat/server)
 "mdG" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -111787,6 +111722,14 @@
 "pxG" = (
 /turf/closed/wall,
 /area/medical/pharmacy)
+"pzj" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/server)
 "pAL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random{
@@ -111862,6 +111805,15 @@
 	},
 /turf/closed/wall,
 /area/security/checkpoint/science/research)
+"pHV" = (
+/obj/structure/table/glass,
+/obj/item/folder/yellow,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
+/area/tcommsat/server)
 "pJb" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
@@ -112722,6 +112674,10 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"rWL" = (
+/obj/machinery/telecomms/broadcaster/preset_left,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/tcommsat/server)
 "rYU" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -112737,6 +112693,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
+"rZb" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "saw" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab/range)
@@ -112963,6 +112933,23 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"sUc" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/telecomms,
+/area/tcommsat/server)
 "sUE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -114343,6 +114330,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/prison)
+"wRg" = (
+/obj/machinery/telecomms/broadcaster/preset_right,
+/turf/open/floor/circuit/telecomms/mainframe,
+/area/tcommsat/server)
 "wTa" = (
 /obj/machinery/computer/nanite_cloud_controller,
 /obj/effect/turf_decal/bot,
@@ -152674,8 +152665,8 @@ bUH
 bWX
 bZf
 caT
-ccF
-cev
+ccH
+rWL
 bUF
 cid
 cjE
@@ -152932,7 +152923,7 @@ bWX
 bZg
 caU
 ccH
-cey
+bUF
 bUF
 cie
 cjF
@@ -153188,14 +153179,14 @@ bUI
 bWY
 bUF
 bUF
-ccH
-cex
-cgk
-iDI
-iDI
-iDI
-cmE
-cof
+dtf
+lia
+rZb
+ait
+ait
+ait
+had
+pzj
 cpI
 cqY
 csw
@@ -153445,8 +153436,8 @@ bUI
 bUI
 bUI
 caY
-ccH
-cey
+sUc
+bUF
 bUF
 cig
 bUI
@@ -153702,8 +153693,8 @@ bUK
 bWZ
 bZi
 bUF
-ccI
-cez
+pHV
+fZt
 cgm
 ccH
 cjG
@@ -153959,8 +153950,8 @@ bUI
 bUI
 bUI
 caY
-ccH
-cey
+sUc
+bUF
 bUF
 cig
 bUI
@@ -154216,13 +154207,13 @@ bUI
 bXa
 bUF
 bUF
-ccH
-ceA
-iDI
-iDI
-iDI
-iDI
-cmE
+iOJ
+mcn
+ait
+ait
+ait
+ait
+had
 coj
 cpM
 cqY
@@ -154474,7 +154465,7 @@ bWX
 bZj
 caZ
 ccH
-cey
+bUF
 ccH
 cih
 cjH
@@ -154730,8 +154721,8 @@ bUG
 bWX
 bZk
 cba
-ccJ
-ceB
+ccH
+wRg
 ccH
 cii
 cjI
