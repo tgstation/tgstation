@@ -25,7 +25,7 @@
 	var/candrain = FALSE
 	var/mindrain = 200
 	var/maxdrain = 400
-	var/cyborg_hyjacks = 1
+	var/cyborg_hijacks = 1
 	var/security_console_hacks = 1
 	var/communication_console_hacks = 1
 	var/door_hack_counter = 0
