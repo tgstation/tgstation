@@ -87,22 +87,8 @@
 		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 		holder.del_reagent(type)
 
-<<<<<<< HEAD
-/datum/reagent/toxin/plasma/expose_turf(turf/open/T, reac_volume)
-	if(!istype(T))
-=======
-/datum/reagent/toxin/plasma/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	if(temp >= LIQUID_PLASMA_BP)
-		exposed_obj.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
 	if(!istype(exposed_turf))
->>>>>>> upstream/master
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
