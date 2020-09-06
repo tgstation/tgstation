@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Cryo cells work again and are no longer permanent icy prisons"
