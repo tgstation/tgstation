@@ -281,7 +281,7 @@
 				M.Jitter(500)
 		COOLDOWN_START(src, mega_horn_cooldown, cooldown_length) //A generous amount of time to think about what you have done.
 
-		log_message("Honked from [src.name]. HONK!", LOG_ATTACK)
+		log_message("Honked from [name]. HONK!", LOG_ATTACK)
 		var/turf/T = get_turf(src)
 		message_admins("[ADMIN_LOOKUPFLW(source)] used a Mega Horn in [ADMIN_VERBOSEJMP(T)]")
 		log_game("[key_name(source)] used a Mega Horn in [AREACOORD(T)]")
