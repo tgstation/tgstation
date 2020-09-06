@@ -141,7 +141,7 @@
 
 /obj/effect/anomaly/grav/high/Initialize(mapload, new_lifespan)
 	. = ..()
-	setup_grav_field()
+	INVOKE_ASYNC(src, .proc/setup_grav_field)
 
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
 	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
@@ -160,6 +160,10 @@
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
+
+/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
+	. = ..()
+	explosive = _explosive
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()

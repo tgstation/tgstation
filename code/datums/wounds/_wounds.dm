@@ -228,8 +228,10 @@
 
 	var/allowed = FALSE
 
-	// check if we have a valid treatable tool (or, if cauteries are allowed, if we have something hot)
-	if((I.tool_behaviour == treatable_tool) || (treatable_tool == TOOL_CAUTERY && I.get_temperature()))
+	// check if we have a valid treatable tool
+	if(I.tool_behaviour == treatable_tool)
+		allowed = TRUE
+	else if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		allowed = TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
@@ -250,8 +252,12 @@
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return TRUE
 
-	if(!victim.can_inject(user, TRUE))
-		return TRUE
+	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
+	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
+	if(ishuman(victim))
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+			return TRUE
 
 	// lastly, treat them
 	treat(I, user)
@@ -293,10 +299,6 @@
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis()
-	return
-
-/// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
-/datum/wound/proc/crush()
 	return
 
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
