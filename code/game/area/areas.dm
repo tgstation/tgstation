@@ -208,27 +208,27 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
-				if (state == FALSE)
+				if (!state)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
-				if(state == FALSE)
+				if(!state)
 					a.cancelAlarm("Power", src, source)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.drones_list)
 				var/mob/living/simple_animal/drone/D = item
-				if(state == FALSE)
+				if(!state)
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
-				if(state == FALSE)
+				if(!state)
 					p.cancelAlarm("Power", src, source)
 				else
 					p.triggerAlarm("Power", src, cameras, source)
@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (area_flags & NO_ALERTS)
 		return
 	if(isdangerous != atmosalm)
-		if(isdangerous==TRUE)
+		if(isdangerous)
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
