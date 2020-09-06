@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 ))
 
 /datum/action/item_action/initialize_ninja_suit
-	name = "Toggle ninja suit"
+	name = "Toggle Ninja Suit"
 
 /**
   * Toggles the ninja suit on/off
