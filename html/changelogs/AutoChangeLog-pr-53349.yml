@@ -1,8 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue preventing zombies from being decappable. Krokodil addict zombies are also no longer immune to wounds"
-  - balance: "Eswords/dual sabers/armblades/light eaters/similar weapons no longer have significantly reduced wounding power and are similar in dismembering power to their old incarnations. In addition, they are moderately less hard-countered by armor."
-  - balance: "Attacking a prone target will now hit the targeted limb 90% of the time rather than the standard 80% (50% less likely to hit a different limb)"
-  - balance: "Sutures and cauterization are more effective at patching up piercing wounds"
-  - tweak: "Improvised cauterization (anything hot that isn't a cautery) is now slightly less efficient and requires an aggressive grab to apply to the target. No more accidentally trying to cauterize the guy you just attacked with an esword!"
