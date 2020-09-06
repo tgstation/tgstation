@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(crystal_invasion_waves, list(
 	))
 ///Global list that stores the all the instantiated portals around the station, used when stabilizing the crystal
 GLOBAL_LIST_EMPTY(crystal_portals)
-///Global list that store the huge portals that spawns at the start of the event
+///Global list that store the huge portals that spawn at the start of the event
 GLOBAL_LIST_EMPTY(huge_crystal_portals)
 
 /*
@@ -84,7 +84,7 @@ This section is for the event controller
 				distance_from_center = 1 //Same tile, let's avoid a division by zero.
 			if(-1)
 				kill()
-				CRASH("Negative distance error here")
+				CRASH("Negative distance measurement from the center turf detected, this should never happen")
 		if(prob(325 / distance_from_center))
 			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -274,7 +274,7 @@ This section is for the event controller
 
 /turf/open/indestructible/crystal_floor
 	name = "Crystal floor"
-	desc = "A Crystallized floor"
+	desc = "A crystallized floor"
 	icon_state = "noslip-damaged1"
 	baseturfs = /turf/open/space
 
@@ -288,14 +288,14 @@ This section is for the event controller
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
 	if(I.use_tool(src, user, 2.5 SECONDS, volume=100))
-		if(iswallturf(src))
-			to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
+	return FALSE
 
 /turf/closed/indestructible/crystal_wall
 	name = "Crystal wall"
-	desc = "A Crystallized wall"
+	desc = "A crystallized wall"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_highchance"
 	baseturfs = /turf/open/space
@@ -310,10 +310,10 @@ This section is for the event controller
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin heating up the crystal...</span>")
 	if(I.use_tool(src, user, 2.5 SECONDS, volume=100))
-		if(iswallturf(src))
-			to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
-			ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+		to_chat(user, "<span class='notice'>The crystal crumbles into dust.</span>")
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
+	return FALSE
 
 /*
 This section is for the destabilized SM
