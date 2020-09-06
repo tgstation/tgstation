@@ -340,7 +340,7 @@
 	. = 0
 	var/mob/living/M = A.affected_mob
 	if(M.fire_stacks < 0)
-		M.fire_stacks = min(M.fire_stacks + 1 * absorption_coeff, 0)
+		M.set_fire_stacks(min(M.fire_stacks + 1 * absorption_coeff, 0))
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)

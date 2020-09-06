@@ -189,16 +189,15 @@
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/M, methods=VAPOR, reac_volume)
+/datum/reagent/medicine/c2/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
+	. = ..()
 	if(!(methods & VAPOR))
 		return
 
-	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	M.adjust_fire_stacks(-reac_volume / 2)
+	exposed_mob.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
 	if(reac_volume >= metabolization_rate)
-		M.ExtinguishMob()
-
-	..()
+		exposed_mob.extinguish_mob()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M)
 	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
@@ -412,25 +411,27 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/M, methods=TOUCH, reac_volume,show_message = 1)
-	if(iscarbon(M))
-		var/mob/living/carbon/carbies = M
-		if (carbies.stat == DEAD)
-			show_message = 0
-		if(methods & (PATCH|TOUCH|VAPOR))
-			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			for(var/i in carbies.all_wounds)
-				var/datum/wound/iter_wound = i
-				iter_wound.on_synthflesh(reac_volume)
-			carbies.adjustToxLoss((harmies+burnies)*0.66)
-			if(show_message)
-				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
-				carbies.cure_husk("burn")
-				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
-	..()
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+	. = ..()
+	if(!iscarbon(exposed_mob))
+		return TRUE
+	var/mob/living/carbon/carbies = exposed_mob
+	if(carbies.stat == DEAD)
+		show_message = 0
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return TRUE
+	var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+	var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_synthflesh(reac_volume)
+	carbies.adjustToxLoss((harmies+burnies)*0.66)
+	if(show_message)
+		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
+		carbies.cure_husk("burn")
+		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	return TRUE
 
 /******ORGAN HEALING******/
@@ -447,22 +448,21 @@
 */
 /datum/reagent/medicine/c2/penthrite
 	name = "Penthrite"
-	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
+	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. Mixing it with epinephrine or atropine will cause an explosion."
 	color = "#F5F5F5"
 	overdose_threshold = 50
 
-/datum/reagent/medicine/c2/penthrite/on_mob_add(mob/living/M)
+/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()
 	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
 	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
-
+	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
-	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //we cannot save someone below our lowered crit threshold.
 
 		H.adjustToxLoss(-2 * REM, 0)
 		H.adjustBruteLoss(-2 * REM, 0)
@@ -480,8 +480,8 @@
 		if(prob(33))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
 
-	if(H.health <= H.crit_threshold) //certain death above this threshold
-		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
+	if(H.health <= (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //certain death below this threshold
+		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
 		H.emote("scream")
 		H.set_heartattack(TRUE)
@@ -489,10 +489,10 @@
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/M)
-	M.crit_threshold = M.crit_threshold - HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
+	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H)

@@ -7,19 +7,7 @@
 #define RDSCREEN_TECHDISK 1
 #define RDSCREEN_DESIGNDISK 20
 #define RDSCREEN_DESIGNDISK_UPLOAD 21
-#define RDSCREEN_DECONSTRUCT 3
-#define RDSCREEN_PROTOLATHE 40
-#define RDSCREEN_PROTOLATHE_MATERIALS 41
-#define RDSCREEN_PROTOLATHE_CHEMICALS 42
-#define RDSCREEN_PROTOLATHE_CATEGORY_VIEW 43
-#define RDSCREEN_PROTOLATHE_SEARCH 44
-#define RDSCREEN_IMPRINTER 50
-#define RDSCREEN_IMPRINTER_MATERIALS 51
-#define RDSCREEN_IMPRINTER_CHEMICALS 52
-#define RDSCREEN_IMPRINTER_CATEGORY_VIEW 53
-#define RDSCREEN_IMPRINTER_SEARCH 54
 #define RDSCREEN_SETTINGS 61
-#define RDSCREEN_DEVICE_LINKING 62
 #define RDSCREEN_TECHWEB 70
 #define RDSCREEN_TECHWEB_NODEVIEW 71
 #define RDSCREEN_TECHWEB_DESIGNVIEW 72
@@ -60,7 +48,7 @@
 
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"			///For instances where we don't want a design showing up due to it being for debug/sanity purposes
 
-#define RESEARCH_MATERIAL_RECLAMATION_ID "__materials"
+#define RESEARCH_MATERIAL_DESTROY_ID "__destroy"
 
 ///Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
@@ -115,6 +103,7 @@
 #define CELL_LINE_TABLE_SLIME "cell_line_slime_table"
 #define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
+#define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 
 ///All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

@@ -115,9 +115,9 @@
 		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
-				C.fire_stacks += 8
+				C.adjust_fire_stacks(8)
 				C.IgniteMob()
-		owner.fire_stacks = -20
+		owner.set_fire_stacks(-20)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 	return FALSE
