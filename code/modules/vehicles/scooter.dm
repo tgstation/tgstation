@@ -265,6 +265,7 @@
 /obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 0
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
@@ -291,6 +292,11 @@
 	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"
 	instability = 8
 
+/obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
+	. = ..()
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 1.5
+
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
@@ -300,4 +306,5 @@
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 1
 	D.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
