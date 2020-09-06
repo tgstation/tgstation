@@ -301,6 +301,7 @@
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	icon_state = "wheelys"
+	worn_icon_state = "wheelys"
 	inhand_icon_state = "wheelys"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
@@ -341,9 +342,9 @@
 
 /obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
 	if (status)
-		icon_state = "[initial(icon_state)]-on"
+		worn_icon_state = "[initial(icon_state)]-on"
 	else
-		icon_state = "[initial(icon_state)]"
+		worn_icon_state = "[initial(icon_state)]"
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
 	update_icon()
 
@@ -355,19 +356,15 @@
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
+	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
-
-/obj/item/clothing/shoes/wheelys/hoverboots
-	name = "hover boots"
-	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	icon_state = "hoverboots"
-	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/hoverboots
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
+	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 

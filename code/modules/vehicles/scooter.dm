@@ -289,11 +289,6 @@
 	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"
 	instability = 8
 
-/obj/vehicle/ridden/scooter/skateboard/wheelys/hoverboots
-	name = "hover boots"
-	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"
-	instability = 5
-
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
