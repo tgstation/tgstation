@@ -1,25 +1,13 @@
-
-
-
-/*
-	Dear ninja gloves
-
-	This isn't because I like you
-	this is because your father is a bastard
-
-	...
-	I guess you're a little cool.
-	 -Sayu
-
-
-	see ninjaDrainAct.dm for ninjadrain_act()
-	Touch() simply calls this on it's target now
-	Ninja's electricuting people when?
-	-Remie
-
-*/
-
-
+/**
+  * # Ninja Gloves
+  *
+  * Space ninja's gloves.  Gives access to a number of special interactions.
+  *
+  * Gloves only found from space ninjas.  Allows the wearer to access special interactions with various objects.
+  * These interactions are detailed in ninjaDrainAct.dm in the suit file.
+  * These interactions are toggled by an action tied to the gloves.  The interactions will not activate if the user is also not wearing a ninja suit.
+  *
+  */
 /obj/item/clothing/gloves/space_ninja
 	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
 	name = "ninja gloves"
@@ -32,10 +20,15 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	actions_types = list(/datum/action/item_action/toggle_glove)
 	var/draining = FALSE
 	var/candrain = FALSE
 	var/mindrain = 200
 	var/maxdrain = 400
+	var/cyborg_hyjacks = 1
+	var/security_console_hacks = 1
+	var/communication_console_hacks = 1
+	var/door_hack_counter = 0
 
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
@@ -44,9 +37,9 @@
 	if(!ishuman(loc))
 		return FALSE	//Only works while worn
 
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/wearer = loc
 
-	var/obj/item/clothing/suit/space/space_ninja/suit = H.wear_suit
+	var/obj/item/clothing/suit/space/space_ninja/suit = wearer.wear_suit
 	if(!istype(suit))
 		return FALSE
 	if(isturf(A))
@@ -55,27 +48,27 @@
 	if(!proximity)
 		return FALSE
 
-	A.add_fingerprint(H)
+	A.add_fingerprint(wearer)
 
 	draining = TRUE
-	. = A.ninjadrain_act(suit,H,src)
+	. = A.ninjadrain_act(suit,wearer,src)
 	draining = FALSE
 
 	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
 		if(.)
-			to_chat(H, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
+			to_chat(wearer, "<span class='notice'>Gained <B>[DisplayEnergy(.)]</B> of energy from [A].</span>")
 		else
-			to_chat(H, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
+			to_chat(wearer, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
 		. = FALSE	//as to not cancel attack_hand()
-
-
-/obj/item/clothing/gloves/space_ninja/proc/toggledrain()
-	var/mob/living/carbon/human/U = loc
-	to_chat(U, "<span class='notice'>You [candrain?"disable":"enable"] special interaction.</span>")
-	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
 		. += "[p_their(TRUE)] energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."
+
+/obj/item/clothing/gloves/space_ninja/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_glove))
+		toggledrain()
+		return TRUE
+	return FALSE
