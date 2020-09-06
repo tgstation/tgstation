@@ -1,7 +1,3 @@
-#define POWERFIST_WOUNDPOWER_1
-#define POWERFIST_WOUNDPOWER_2
-#define POWERFIST_WOUNDPOWER_3
-
 /obj/item/melee/powerfist
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
