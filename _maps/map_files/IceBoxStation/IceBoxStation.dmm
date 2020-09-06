@@ -32277,18 +32277,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
-"bya" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "byb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -32405,18 +32393,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "byo" = (
-/obj/machinery/portable_atmospherics/pump,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "byp" = (
 /obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plasteel,
-/area/science/storage)
-"byq" = (
-/obj,
-/obj/machinery/portable_atmospherics/pump,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "bys" = (
@@ -34923,9 +34903,8 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bED" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera/autoname,
+/obj/machinery/portable_atmospherics/canister/tier_1,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEE" = (
@@ -35400,8 +35379,12 @@
 /area/science/mixing)
 "bFX" = (
 /obj/structure/cable,
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/effect/turf_decal/bot,
+/obj/machinery/power/apc{
+	areastring = "/area/science/mixing";
+	dir = 4;
+	name = "Toxins Lab APC";
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/white/telecomms,
 /area/science/mixing)
 "bFY" = (
@@ -35572,7 +35555,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGA" = (
-/obj,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
@@ -35751,8 +35733,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bGY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/chair/office{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -36847,12 +36830,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/power/apc{
-	areastring = "/area/science/mixing";
-	dir = 4;
-	name = "Toxins Lab APC";
-	pixel_x = 24
-	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bKb" = (
@@ -49861,7 +49838,8 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
-/turf/open/floor/grass,
+/mob/living/carbon/monkey,
+/turf/open/floor/engine,
 /area/science/genetics)
 "ddD" = (
 /obj/structure/disposalpipe/segment{
@@ -50205,7 +50183,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/grass,
+/mob/living/carbon/monkey,
+/turf/open/floor/engine,
 /area/science/genetics)
 "dYq" = (
 /turf/closed/wall,
@@ -50315,9 +50294,6 @@
 /obj/item/reagent_containers/food/drinks/waterbottle,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"eAc" = (
-/turf/open/floor/grass,
-/area/science/genetics)
 "eAi" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -50406,8 +50382,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "eRJ" = (
-/obj/machinery/portable_atmospherics/canister/tier_1,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "eSG" = (
@@ -50477,9 +50453,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "flN" = (
-/obj,
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plasteel/white,
 /area/science/genetics)
 "fnC" = (
 /obj/effect/decal/cleanable/ash,
@@ -50792,12 +50768,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"ggS" = (
-/obj/machinery/camera/autoname{
-	dir = 1
-	},
-/turf/open/floor/grass,
-/area/science/genetics)
 "giT" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -50842,6 +50812,9 @@
 /obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -51307,10 +51280,6 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"hRm" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
-/area/science/genetics)
 "hSa" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/firecloset,
@@ -51558,13 +51527,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"iSM" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
-/area/science/genetics)
 "iTj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
@@ -51796,13 +51758,13 @@
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "jzb" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet{
 	dir = 2;
 	pixel_x = 0;
 	pixel_y = -28
 	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "jBV" = (
@@ -53122,6 +53084,7 @@
 	pixel_x = 0;
 	pixel_y = 25
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "mSf" = (
@@ -53431,6 +53394,11 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"nQF" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
+/area/science/genetics)
 "nQI" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -54123,7 +54091,12 @@
 /area/medical/medbay)
 "pBV" = (
 /obj,
-/turf/open/floor/grass,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
 /area/science/genetics)
 "pCj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -54461,8 +54434,9 @@
 	pixel_y = 2;
 	req_access_txt = "9"
 	},
+/obj/machinery/light,
 /mob/living/carbon/monkey,
-/turf/open/floor/grass,
+/turf/open/floor/engine,
 /area/science/genetics)
 "qrU" = (
 /obj/machinery/disposal/bin,
@@ -54535,7 +54509,9 @@
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
 "qQC" = (
-/obj,
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -25
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "qQH" = (
@@ -54638,6 +54614,9 @@
 	pixel_y = -29
 	},
 /obj/effect/spawner/xmastree/rdrod,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "rzl" = (
@@ -54820,10 +54799,6 @@
 /obj/machinery/camera,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"rYJ" = (
-/obj,
-/turf/closed/wall/r_wall,
-/area/science/genetics)
 "rZR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -55079,11 +55054,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sOU" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_y = -32
-	},
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/tier_1,
+/turf/open/floor/plasteel/white,
 /area/science/genetics)
 "sUw" = (
 /obj/machinery/button/door{
@@ -55969,7 +55942,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "voe" = (
-/obj,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
@@ -56303,6 +56275,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
+"wpg" = (
+/turf/open/floor/plating,
+/area/science/genetics)
 "wph" = (
 /obj/docking_port/stationary{
 	dheight = 4;
@@ -104348,7 +104323,7 @@ oMN
 ubw
 cas
 bCk
-byq
+byo
 bys
 bxP
 bIB
@@ -104864,7 +104839,7 @@ cas
 bIA
 bys
 bys
-bya
+bxP
 jzb
 dGF
 bMw
@@ -105886,9 +105861,9 @@ qrU
 kGS
 bzO
 taM
-dWG
-flN
 bon
+flN
+flN
 eRJ
 bFW
 wJG
@@ -106143,10 +106118,10 @@ gHj
 gHj
 xeP
 bAR
-iSM
-pBV
 bon
-eRJ
+pBV
+nQF
+bFU
 bEA
 voe
 bGA
@@ -106400,9 +106375,9 @@ bsL
 bsL
 rAv
 eFD
-dWG
+bon
 sOU
-rYJ
+sOU
 bED
 bFX
 glg
@@ -106657,8 +106632,8 @@ ifv
 ifv
 xkP
 cYY
-iSM
-ggS
+bon
+bon
 bon
 bEC
 bEC
@@ -106915,8 +106890,8 @@ bsL
 ink
 pSN
 ddy
-hRm
 bon
+wpg
 bEF
 bky
 bEO
@@ -107172,8 +107147,8 @@ bqe
 npF
 vPt
 qrH
-eAc
 bon
+wpg
 bEE
 bFY
 bKb
@@ -107429,8 +107404,8 @@ xXe
 lFP
 jyF
 dWG
-hRm
 bon
+wpg
 vqI
 bky
 bHs
@@ -107687,7 +107662,7 @@ bon
 bon
 bon
 bon
-bon
+wpg
 vqI
 bEs
 bEs
