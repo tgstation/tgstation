@@ -237,8 +237,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 5)
+			if(M.has_reagent(/datum/reagent/cryostylane))
+				M.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)
@@ -267,8 +267,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
+			if(M.has_reagent(/datum/reagent/consumable/capsaicin))
+				M.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -343,7 +343,7 @@
 				victim.vomit()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
-	if(!holder.has_reagent(/datum/reagent/consumable/milk))
+	if(!M.has_reagent(/datum/reagent/consumable/milk))
 		if(prob(10))
 			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
@@ -596,7 +596,7 @@
 			mytray.adjustPests(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
+	holder.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
