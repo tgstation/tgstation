@@ -401,15 +401,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		GLOB.trait_name_map = generate_trait_name_map()
 	if(!GLOB.trait_name_map.Find(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
-	var/turf/T = get_turf(src)
-	for(var/atom/A in T.GetAllContents())
-		if(A == src)
+	var/turf/target_turf = get_turf(src)
+	for(var/atom/atom_on_turf in target_turf.GetAllContents())
+		if(atom_on_turf == src)
 			continue
-		if(target_name && A.name != target_name)
+		if(target_name && atom_on_turf.name != target_name)
 			continue
-		if(target_type && !istype(A,target_type))
+		if(target_type && !istype(atom_on_turf,target_type))
 			continue
-		ADD_TRAIT(A, trait_name, MAPPING_HELPER_TRAIT)
+		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
 		if(!all)
 			qdel(src)
 			return
