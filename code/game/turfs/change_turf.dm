@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
 		SSair.remove_from_active(newT)
 		CALCULATE_ADJACENT_TURFS(newT)
-		SSair.add_to_active(newT,1)
+		SSair.add_to_active(newT, TRUE)
 
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
@@ -303,25 +303,36 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
+	//Stolen blatently from self_breakdown
+	var/list/turf_list = atmos_adjacent_turfs + src
+	var/turflen = turf_list.len
+	var/energy = 0
+	var/heat_cap = 0
 
-	for(var/T in atmos_adjacent_turfs)
-		var/turf/open/S = T
-		if(!S.air)
-			continue
-		var/list/S_gases = S.air.gases
-		for(var/id in S_gases)
-			ASSERT_GAS(id, total)
-			total_gases[id][MOLES] += S_gases[id][MOLES]
-		total.temperature += S.air.temperature
+	for(var/t in turf_list)
+		var/turf/open/T = t
+		//Cache?
+		var/datum/gas_mixture/turf/mix = T.air
+		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
+		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
+		var/capacity = mix.heat_capacity()
+		energy += mix.temperature * capacity
+		heat_cap += capacity
 
-	air.copy_from(total)
+		var/list/giver_gases = mix.gases
+		for(var/giver_id in giver_gases)
+			ASSERT_GAS(giver_id, total)
+			total_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	var/list/air_gases = air.gases
-	for(var/id in air_gases)
-		air_gases[id][MOLES] /= turf_count //Averages contents of the turfs, ignoring walls and the like
+	total.temperature = energy / heat_cap
+	for(var/id in total_gases)
+		total_gases[id][MOLES] /= turflen
 
-	air.temperature /= turf_count
-	SSair.add_to_active(src)
+	for(var/t in turf_list)
+		var/turf/open/T = t
+		T.air.copy_from(total)
+		T.update_visuals()
+		SSair.add_to_active(T, FALSE)
 
 /turf/proc/ReplaceWithLattice()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

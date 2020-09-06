@@ -58,6 +58,7 @@ SUBSYSTEM_DEF(air)
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
+	msg += "AO:[atom_process_list.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
@@ -288,18 +289,22 @@ SUBSYSTEM_DEF(air)
 	if(istype(T))
 		T.excited = FALSE
 		if(T.excited_group && kill_excited)
-			T.excited_group.garbage_collect()
+			T.excited_group.garbage_collect() //Yes this means walls can be active for a tick, no I don't care.
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
+		if(T.excited)
+			if(blockchanges && T.excited_group)// Did someone forget to clean you up?
+				T.excited_group.garbage_collect()
+			return
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
 		T.excited = TRUE
-		active_turfs |= T
+		active_turfs += T
 		if(currentpart == SSAIR_ACTIVETURFS)
-			currentrun |= T
-		if(blockchanges && T.excited_group) // Did someone forget to clean you up?
+			currentrun += T
+		if(blockchanges && T.excited_group)// Did someone forget to clean you up?
 			T.excited_group.garbage_collect()
 	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
@@ -365,7 +370,7 @@ SUBSYSTEM_DEF(air)
 		var/ending_ats = active_turfs.len
 		for(var/thing in excited_groups)
 			var/datum/excited_group/EG = thing
-			EG.self_breakdown(space_is_all_consuming = 1)
+			EG.self_breakdown(roundstart = TRUE, poke_turfs = FALSE)
 			EG.dismantle()
 			CHECK_TICK
 

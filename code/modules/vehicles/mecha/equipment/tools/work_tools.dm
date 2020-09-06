@@ -287,7 +287,7 @@
 				to_chat(source, "[icon2html(src, source)]<span class='notice'>Deconstructing [W]...</span>")
 				if(do_after_cooldown(W, source))
 					chassis.spark_system.start()
-					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					W.ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT)
 					playsound(W, 'sound/items/deconstruct.ogg', 50, TRUE)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target

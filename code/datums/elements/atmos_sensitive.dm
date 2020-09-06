@@ -40,8 +40,12 @@
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
 /atom/proc/process_exposure()
-	var/turf/open/spot = loc
-	if(!istype(spot)) //If you end up in a locker or a wall reconsider your life decisions
+	var/turf/open/spot
+	if(istype(loc, /turf/open))
+		spot = loc
+	else if(istype(src, /turf/open)) //Need to let turfs operate
+		spot = src
+	else //If you end up in a locker or a wall reconsider your life decisions
 		SSair.atom_process_list -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
@@ -54,3 +58,17 @@
 
 /atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return FALSE
+
+
+///Used by the atmos_sensitive component to register onto atmos flow over our turf
+/atom/proc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return
+
+/*
+	TODO:
+	Heat (might) need to matter for breakdown so hotpockets don't form. it might also slow down heat settling tho
+	Prehaps have it matter for compare()?
+	Superconductors need to fucking settle
+	They also need a better qualifyier, shouldn't just be heat.
+	Maybe link some atmos machinery to this system? idk man.
+*/

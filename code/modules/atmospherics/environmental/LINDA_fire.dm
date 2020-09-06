@@ -40,7 +40,7 @@
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
-		SSair.add_to_active(src, 0)
+		SSair.add_to_active(src, FALSE)
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot

@@ -160,7 +160,7 @@
 /turf/open/Initalize_Atmos(times_fired)
 	if(planetary_atmos)
 		return
-		
+
 	excited = FALSE
 	update_visuals()
 
@@ -172,7 +172,7 @@
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
-			SSair.active_turfs |= src
+			SSair.active_turfs += src
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()

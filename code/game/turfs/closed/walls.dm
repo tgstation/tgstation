@@ -61,7 +61,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT)
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
@@ -79,7 +79,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ScrapeAway()
+			var/turf/NT = ScrapeAway() //Should prob CHANGETURF_RECALC_ADJACENT but I don't wanna lag explosions further, should get caught in the hole
 			NT.contents_explosion(severity, target)
 			return
 		if(2)
@@ -266,7 +266,7 @@
 	switch(passed_mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the wall.</span>")
-			ScrapeAway()
+			ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT)
 			return TRUE
 	return FALSE
 

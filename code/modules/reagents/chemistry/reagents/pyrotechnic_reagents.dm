@@ -67,7 +67,7 @@
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
-			W.ScrapeAway()
+			W.ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT)
 
 /datum/reagent/clf3/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
 	if(istype(M))

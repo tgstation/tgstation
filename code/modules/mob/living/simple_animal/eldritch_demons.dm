@@ -263,7 +263,7 @@
 	//have fun
 	if(istype(target,/turf/closed/wall))
 		var/turf/closed/wall = target
-		wall.ScrapeAway()
+		wall.ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
