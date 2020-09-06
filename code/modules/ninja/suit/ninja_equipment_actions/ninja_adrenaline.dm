@@ -12,7 +12,7 @@
   * Proc called to activate space ninja's adrenaline.
   *
   * Proc called to use space ninja's adrenaline.  Gets the ninja out of almost any stun.
-  * Also makes them scream like a moron when used.  After a bit, it injects the user with
+  * Also makes them shout MGS references when used.  After a bit, it injects the user with
   * radium by calling a different proc.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
@@ -27,7 +27,7 @@
 		ninja.stuttering = 0
 		ninja.update_mobility()
 		ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
-		ninja.say("S̴̰̾Ć̶̂R̵̽̕Ẻ̷̉Ḗ̸Ë̴̚E̸͑͘È̵́Ë̴́̓E̵̛̓Ȇ̷͘Ē̵̒Ȇ̸̾E̸͘͠E̵͊͐E̷̐̆E̶̿͂E̴͐̎E̴͗͐E̴̾̏Ȅ̶́E̷͂̾E̵̍̍E̶̒̊Ẽ̸͝E̸̔̊È̷͌Ẽ̶̼È̷̈E̷͆̀Ë̸̕E̴̙͌E̷̻̓Ȅ̶̋E̴̒̈́E̷͒̃E̴͐̕E̸̼͊E̴̒̂Ȅ̴͐E̶͛͆E̶̍̐È̶͠Ë̷́̂!!", forced = "ninjaboost")
+		ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 		a_boost = FALSE
 		to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
 		s_coold = 3
