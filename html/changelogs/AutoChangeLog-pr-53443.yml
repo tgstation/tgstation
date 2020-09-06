@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - bugfix: "Printing and recycling bonesetters no longer creates materials from nothing"
