@@ -128,17 +128,25 @@
 	var/hardware_id			//text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
 	var/datum/ntnet/network = null
 	var/differentiate_broadcast = TRUE				//If false, broadcasts go to ntnet_receive. NOT RECOMMENDED.
-
-
+	var/list/linked_interfaces
 
 /datum/component/ntnet_interface/Initialize(network_name=null)			//Don't force ID unless you know what you're doing!
-	SSnetworks.register_interface(src, network_name)	// default to station
+	set_network(network_name)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool)
 
 /datum/component/ntnet_interface/Destroy()
 	SSnetworks.unregister_interface(src)
+	linked_interfaces = null
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	return ..()
+/datum/component/ntnet_interface/proc/set_network(network_name=null)
+	linked_interfaces = list() // clear linked names
+	if(network)
+		SSnetworks.unregister_interface(src)
+	SSnetworks.register_interface(src, network_name)
+
+
+
 
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
 	if(!SEND_SIGNAL(parent, COMSIG_COMPONENT_NTNET_RECEIVE, data))
@@ -152,32 +160,118 @@
 	network.process_data_transmit(src, data)
 	return TRUE
 
-/// Fuck it this is about networking, we are doing this with a tablet
-/datum/component/ntnet_interface/proc/OnTablet(datum/source, mob/user, obj/item/modular_computer/TABLET)
-	SIGNAL_HANDLER
-#if 0
-	if(!I.multitool_check_buffer(user, I))
-		return COMPONENT_BLOCK_TOOL_ATTACK
-	var/obj/item/multitool/M = I
-	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-		if (silo == M.buffer)
-			to_chat(user, "<span class='warning'>[parent] is already connected to [silo]!</span>")
-			return COMPONENT_BLOCK_TOOL_ATTACK
-		if (silo)
-			silo.connected -= src
-			silo.updateUsrDialog()
-		else if (mat_container)
-			mat_container.retrieve_all()
-			qdel(mat_container)
-		silo = M.buffer
-		silo.connected += src
-		silo.updateUsrDialog()
-		mat_container = silo.GetComponent(/datum/component/material_container)
-		to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
 
-#endif
-		to_chat(user, "<span class='notice'>You wack the thing with your tablet [parent] </span>")
-		return COMPONENT_BLOCK_TOOL_ATTACK
+/datum/component/ntnet_interface/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Telecomms")
+		ui.open()
+
+/datum/component/ntnet_interface/ui_data(mob/user)
+	var/list/data = list()
+
+	data += add_option()
+
+	data["hardware_id"] = hardware_id
+
+	var/obj/item/multitool/heldmultitool = get_multitool(user)
+	data["multitool"] = heldmultitool
+
+	if(heldmultitool)
+		data["multibuff"] = heldmultitool.buffer
+
+	data["toggled"] = toggled
+
+	var/list/linked = list()
+	for(var/hid in linked_interfaces)
+		var/datum/component/ntnet_interface/N = linked_interfaces[hid]
+		linked[hid] = parent.name
+	data["linked"] = linked
+
+	return data
+
+/datum/component/ntnet_interface/ui_act(action, params)
+	if(..())
+		return
+
+	if(!issilicon(usr))
+		if(!istype(usr.get_active_held_item(), /obj/item/multitool))
+			return
+
+	var/obj/item/multitool/heldmultitool = get_multitool(operator)
+
+	switch(action)
+		if("toggle")
+			toggled = !toggled
+			update_power()
+			update_icon()
+			log_game("[key_name(operator)] toggled [toggled ? "On" : "Off"] [src] at [AREACOORD(src)].")
+			. = TRUE
+		if("id")
+			if(params["value"])
+				if(length(params["value"]) > 32)
+					to_chat(operator, "<span class='warning'>Error: Machine ID too long!</span>")
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					return
+				else
+					id = params["value"]
+					log_game("[key_name(operator)] has changed the ID for [src] at [AREACOORD(src)] to [id].")
+					. = TRUE
+		if("network")
+			if(params["value"])
+				if(network.network_id != params["value"])
+					set_network(params["value"])
+					log_game("[hardware_id] network has changed  to [network.network_id].")
+					. = TRUE
+		if("freq")
+			var/newfreq = tempfreq * 10
+			if(newfreq == FREQ_SYNDICATE)
+				to_chat(operator, "<span class='warning'>Error: Interference preventing filtering frequency: \"[newfreq / 10] GHz\"</span>")
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			else
+				if(!(newfreq in freq_listening) && newfreq < 10000)
+					freq_listening.Add(newfreq)
+					log_game("[key_name(operator)] added frequency [newfreq] for [src] at [AREACOORD(src)].")
+					. = TRUE
+		if("delete")
+			freq_listening.Remove(params["value"])
+			log_game("[key_name(operator)] added removed frequency [params["value"]] for [src] at [AREACOORD(src)].")
+			. = TRUE
+		if("unlink")
+			var/obj/machinery/telecomms/T = links[text2num(params["value"])]
+			if(T)
+				// Remove link entries from both T and src.
+				if(T.links)
+					T.links.Remove(src)
+				links.Remove(T)
+				log_game("[key_name(operator)] unlinked [src] and [T] at [AREACOORD(src)].")
+				. = TRUE
+		if("link")
+			if(heldmultitool)
+				var/obj/machinery/telecomms/T = heldmultitool.buffer
+				if(istype(T) && T != src)
+					if(!(src in T.links))
+						T.links += src
+					if(!(T in links))
+						links += T
+						log_game("[key_name(operator)] linked [src] for [T] at [AREACOORD(src)].")
+						. = TRUE
+		if("buffer")
+			heldmultitool.buffer = src
+			. = TRUE
+		if("flush")
+			heldmultitool.buffer = null
+			. = TRUE
+
+	add_act(action, params)
+	. = TRUE
+
+
+/datum/component/ntnet_interface/proc/on_multitool(datum/source, mob/user, obj/item/multitool/TABLET)
+	SIGNAL_HANDLER
+
+	return COMPONENT_BLOCK_TOOL_ATTACK
+
 /datum/component/ntnet_interface/proc/get_multitool(mob/user)
 	var/obj/item/multitool/P = null
 	// Let's double check
