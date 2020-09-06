@@ -139,8 +139,5 @@
 
 MAP_REMOVE_JOB(hos)
 MAP_REMOVE_JOB(chief_engineer)
-MAP_REMOVE_JOB(qm)
 MAP_REMOVE_JOB(cmo)
 MAP_REMOVE_JOB(rd)
-MAP_REMOVE_JOB(warden)
-MAP_REMOVE_JOB(lawyer)
