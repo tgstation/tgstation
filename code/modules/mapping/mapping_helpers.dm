@@ -414,7 +414,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				connection_num++
 				break
 
-	var/turf/this_turf = get_turf(src)
 	switch(connection_num)
 		if(1)
 			for(var/direction in connections)
@@ -443,9 +442,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	qdel(src)
 
-
+//spawn pipe
 /obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction,type )
-	var/obj/machinery/atmospherics/pipe = new type(get_turf(src),TRUE,text2dir(direction))
+	var/obj/machinery/atmospherics/pipe/pipe = new type(get_turf(src),TRUE,text2dir(direction))
 	pipe.hide = hide
 	pipe.piping_layer = piping_layer
 	pipe.update_layer()
