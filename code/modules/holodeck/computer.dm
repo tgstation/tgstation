@@ -26,7 +26,7 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
-	var/area/holodeck/program
+	var/area/holodeck/program //should these still be area vars after refactoring? what else can i use?
 	var/area/holodeck/last_program
 	var/area/offline_program = /area/holodeck/rec_center/offline
 
@@ -35,8 +35,8 @@
 
 	// Splitting this up allows two holodecks of the same size
 	// to use the same source patterns.  Y'know, if you want to.
-	var/holodeck_type = /area/holodeck/rec_center	// locate(this) to get the target holodeck
-	var/program_type = /area/holodeck/rec_center	// subtypes of this (but not this itself) are loadable programs
+	var/holodeck_type = /datum/map_template/holodeck	// locate(this) to get the target holodeck
+	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
 
 	var/active = FALSE
 	var/damaged = FALSE
@@ -57,19 +57,19 @@
 	return spawn_tile = get_turf(Spawn)
 
 /obj/machinery/computer/holodeck/proc/get_template()//now i need to create template ids for all sims and match them with the program lists, however theyre done
-	if(template)
-		return
+	//if(template)//i think this is bad if we want to have more than one template loaded throughout the round
+	//	return
 	template = SSmapping.holodeck_templates[template_id]
-	if(!template)
-		WARNING("Shelter template ([template_id]) not found!")
-		qdel(src)
+	//if(!template)
+	//	WARNING("Shelter template ([template_id]) not found!")
+	//	qdel(src)
 
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/holodeck/LateInitialize()
+/obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner)
 	get_spawn_tile(holodeck_helper)
 	if(ispath(holodeck_type, /area))
@@ -108,22 +108,23 @@
 	. = ..()
 	toggle_power(!machine_stat)
 
-/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)//portable
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Holodeck", name)
+		ui = new(user, src, "Holodeck", name)//this creates the holodeck ui
 		ui.open()
 
-/obj/machinery/computer/holodeck/ui_data(mob/user)
+/obj/machinery/computer/holodeck/ui_data(mob/user)//In this proc you munges whatever complex data your `src_object`
+//has into an associative list, which will then be sent to UI as a JSON string.
 	var/list/data = list()
 
-	data["default_programs"] = program_cache
-	if(obj_flags & EMAGGED)
+	data["default_programs"] = program_cache//so all this does is associate the data into groups. so the program_cache is organized into the default_programs group
+	if(obj_flags & EMAGGED)//uh, it also does other stuff
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
 	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
-
+//kinda portable
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)
@@ -132,7 +133,7 @@
 	. = TRUE
 	switch(action)
 		if("load_program")
-			var/program_to_load = text2path(params["type"])
+			var/program_to_load = text2path(params["type"])//this takes the "type" in generate_prog_list and turns it into a path var/program_to_load = text2path(params["type"])
 			if(!ispath(program_to_load))
 				return FALSE
 			var/valid = FALSE
@@ -192,7 +193,7 @@
 /obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
 	if(obj_flags & EMAGGED)
 		return
-	if(!LAZYLEN(emag_programs))
+	if(!LAZYLEN(emag_programs))//porting dangerzone
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
 	playsound(src, "sparks", 75, TRUE)
@@ -215,19 +216,16 @@
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)//low priority
 	emergency_shutdown()
 	return ..()
-
-/obj/machinery/computer/holodeck/proc/generate_program_list()//med priority
-	for(var/typekey in subtypesof(program_type))//kyler, for every type of program
-		var/area/holodeck/A = GLOB.areas_by_type[typekey]
-		if(!A || !A.contents.len)
-			continue
+//FUCKING DO IT PUSSY
+/obj/machinery/computer/holodeck/proc/generate_program_list()
+	for(var/typekey in subtypesof(program_type))
+		var/datum/map_template/holodeck/A = typekey
 		var/list/info_this = list()
-		info_this["name"] = A.name
-		info_this["type"] = A.type
-		if(A.restricted)
-			LAZYADD(emag_programs, list(info_this))//kyler, wtf is lazyadd. whatever, its clear what its doing
-		else
-			LAZYADD(program_cache, list(info_this))
+		info_this["name"] = initial(A.name)
+		if(initial(A.restricted))
+			LAZYADD(emag_programs, list(info_this))//i assume LAZYADD is (new ui category to add, what to add to it), emag_program and program_cach are lists made at the top, and used for other things
+		else//#define LAZYADD(L, I) if(!L) { L = list(); } L += I; so var L, if L isnt defined, then it makes it a list, and adds I to it. so this takes emag_program and adds both the name and type (from info_this) as one element of emag_program
+			LAZYADD(program_cache, list(info_this))//emag_programs includes program_cache?
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)//low priority
 	if(active == toggleOn)
@@ -261,20 +259,19 @@
 		HE.safety(active)
 /*
 1. find turf to spawn on
-2. holodeck_id.place
-var/turf/central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
-use something like this to find the central turf to spawn on
+2. holodeck_id.place?
 */
 //FOR TESTING
 
 /obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
+	//takes an area, finds what program that area corresponds to
 	//if (1==2)
 		///datum/map_template/holodeck/wildlifesim/load(get_turf(A))
 	if(!is_operational)
 		A = offline_program
 		force = TRUE
 
-	if(program == A)
+	if(program == A)//if the program is the same as the corresponding area
 		return
 	if(current_cd > world.time && !force)
 		say("ERROR. Recalibrating projection apparatus.")
@@ -300,6 +297,8 @@ use something like this to find the central turf to spawn on
 	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
+
+	//spawned
 	for(var/obj/machinery/M in spawned)
 		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in spawned)

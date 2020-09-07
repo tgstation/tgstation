@@ -23,7 +23,7 @@
 	if(template)
 		return
 	var/obj/item/survivalcapsule/N = name
-	if (N == "holodeck lounge sim capsule")
+	if (N == "holodeck lounge sim capsule")//kyler, remove this shit
 		template = SSmapping.holodeck_templates[template_id]
 	else
 		template = SSmapping.shelter_templates[template_id]
