@@ -386,14 +386,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "pipe-3"
 	var/piping_layer = 3
 	var/pipe_color = ""
-	var/list/connections = list( NORTH = FALSE, SOUTH = FALSE , EAST = FALSE , WEST = FALSE)
 	var/connection_num = 0
 	var/hide = FALSE
 
 /obj/effect/mapping_helpers/simple_pipes/LateInitialize()
+	var/list/connections = list( dir2text(NORTH)  = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
 	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in connections)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src,  text2dir(direction))
 		for(var/_type in T.contents)
 			if(istype(_type,type))
 				var/obj/effect/mapping_helpers/simple_pipes/found = _type
@@ -409,10 +409,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			if(machine.piping_layer != piping_layer)
 				continue
 
-			if(direction in machine.initialize_directions)
+			if(angle2dir(dir2angle(text2dir(direction))+180) & machine.initialize_directions)
 				connections[direction] = TRUE
 				connection_num++
 				break
+
 	var/turf/this_turf = get_turf(src)
 	switch(connection_num)
 		if(1)
@@ -425,18 +426,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				if(connections[direction] != TRUE)
 					continue
 				//Detects straight pipes connected from east to west , north to south etc.
-				if(connections[angle2dir(dir2angle(direction)+180)] == TRUE)
+				if(connections[dir2text(angle2dir(dir2angle(text2dir(direction))+180))] == TRUE)
 					spawn_pipe(direction)
 					break
 
 				for(var/direction2 in connections - direction)
 					if(connections[direction2] != TRUE)
 						continue
-					spawn_pipe(direction)
+					spawn_pipe(dir2text(text2dir(direction)+text2dir(direction2)))
 		if(3)
 			for(var/direction in connections)
 				if(connections[direction] == FALSE)
-					var/obj/machinery/atmospherics/pipe/manifold/pipe = new(this_turf,TRUE,direction)
+					var/obj/machinery/atmospherics/pipe/manifold/pipe = new(this_turf,TRUE,text2dir(direction))
 					pipe.hide = hide
 					pipe.piping_layer = piping_layer
 					pipe.update_layer()
@@ -452,7 +453,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 
 /obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction)
-	var/obj/machinery/atmospherics/pipe/manifold/pipe = new/obj/machinery/atmospherics/pipe/manifold(get_turf(src),TRUE,direction)
+	var/obj/machinery/atmospherics/pipe/simple/pipe = new/obj/machinery/atmospherics/pipe/simple(get_turf(src),TRUE,text2dir(direction))
 	pipe.hide = hide
 	pipe.piping_layer = piping_layer
 	pipe.update_layer()
