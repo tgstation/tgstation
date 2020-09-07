@@ -244,4 +244,4 @@
 		return
 	target_temperature = max_temperature
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-	to_chat(user, "<span class='notice'>You maximize the volume output on [src].</span>")
+	to_chat(user, "<span class='notice'>You maximize the target temperature on [src].</span>")
