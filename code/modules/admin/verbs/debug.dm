@@ -954,7 +954,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Debug Worn Item Sprites"
 	set desc = "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)"
-
+	#ifdef TESTING
 	var/actual_file_name
 	for(var/T in subtypesof(/obj/item))
 		var/obj/item/x = new T
@@ -1014,3 +1014,4 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
 				if(!(x.icon_state in icon_states(actual_file_name)))
 					to_chat(src, "<span class='warning'>ERROR sprites for [x.type]. Suit Storage slot.</span>", confidential = TRUE)
+	#endif
