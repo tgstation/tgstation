@@ -386,7 +386,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Trait Injector"
 	icon_state = "trait"
 	late = TRUE
-	///Will inject into all fitting the criteria if true, otherwise first found.
+	///Will inject into all fitting the criteria if false, otherwise first found.
 	var/first_match_only = TRUE
 	///Will inject into atoms of this type.
 	var/target_type
