@@ -5,7 +5,7 @@
 	button_icon_state = "regenerate"
 	chemical_cost = 10
 	dna_cost = 0
-	req_stat = UNCONSCIOUS
+	req_stat = HARD_CRIT
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	..()

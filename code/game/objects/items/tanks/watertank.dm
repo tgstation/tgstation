@@ -12,7 +12,7 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
@@ -117,7 +117,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	slot_flags = 0
+	slot_flags = NONE
 
 	var/obj/item/watertank/tank
 
@@ -419,7 +419,7 @@
 		return
 
 	var/used_amount = injection_amount/usage_ratio
-	reagents.trans_to(user,used_amount,multiplier=usage_ratio, method = INJECT)
+	reagents.trans_to(user,used_amount,multiplier=usage_ratio, methods = INJECT)
 	update_icon()
 	user.update_inv_back() //for overlays update
 

@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stat Browser</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Cache-Control" content="max-age=15; must-revalidate" />
+<link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
+<style>
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 12px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+body.dark {
+	background-color: #131313;
+	color: #abc6ec;
+}
+
+#menu {
+	background-color: white;
+	position: fixed;
+	padding: 7px;
+	width: 100%;
+}
+.dark #menu {
+	background-color: #131313;
+}
+
+#statcontent {
+	padding: 0 7px 7px 7px;
+}
+
+a {
+	color: black;
+	text-decoration: none
+}
+.dark a {
+	color: #abc6ec;
+}
+a:hover, .dark a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	background-color: #333;
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover:not(.active) {
+	background-color: #111;
+}
+
+.button-container {
+	display: inline-flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	min-width: 0;
+	min-height: 0;
+	white-space: pre-wrap;
+}
+.button {
+	background-color: #FFFFFE;
+	border-color: rgba(255, 255, 254, 0.5);
+	border-width: 1px;
+	color: black;
+	padding: 7px 14px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 12px;
+	margin: 2px 2px;
+	cursor: pointer;
+	border-radius: 10%;
+	transition-duration: 0.25s;
+	order: 3;
+}
+.dark button {
+	background-color: #252525;
+	border-color: rgba(37, 37, 36, 0.5);
+	color: white;
+}
+.button:hover {
+	border-color: rgba(255, 255, 254, 0.5);
+	background-color: #252525;
+	color: white;
+}
+.dark button:hover {
+	border-color: rgba(37, 37, 36, 0.5);
+	background-color: #FFFFFE;
+	color: #252525;
+}
+.button:active, .button.active {
+	text-decoration: underline;
+}
+.grid-container {
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	min-width: 0;
+	min-height: 0;
+	white-space: pre-wrap;
+}
+.grid-item {
+	color: black;
+	width: 150px;
+	font-size: 11px;
+	line-height: 24px;
+	text-align: left;
+	min-width: 0;
+	min-height: 0;
+	white-space: pre-wrap;
+	padding-right: 12px; /* A little more than two spaces, to look good in IE8 where flex-justify does nothing */
+}
+.link {
+	display: inline;
+	background: none;
+	border: none;
+	padding: 7px 14px;
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+	font-size: 13px;
+	margin: 2px 2px;
+}
+.dark .link {
+	color: #abc6ec;
+}
+.link:hover {
+	text-decoration: underline;
+}
+img {
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: pixelated;
+}
+</style>
+</head>
+<body>
+<ul id="menu" class="button-container"></ul>
+<div id="under_menu"></div>
+<div id="statcontent"></div>
+<script>
+// Polyfills and compatibility ------------------------------------------------
+var decoder = decodeURIComponent || unescape;
+var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
+var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
+if(!Array.prototype.includes) {
+	Array.prototype.includes = function(thing) {
+		for(var i = 0; i < this.length; i++) {
+			if(this[i] == thing) return true;
+		}
+		return false;
+	}
+}
+if (!String.prototype.trim) {
+	String.prototype.trim = function () {
+		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+	};
+}
+/*\
+|*|
+|*|  Polyfill which enables the passage of arbitrary arguments to the
+|*|  callback functions of JavaScript timers (HTML5 standard syntax).
+|*|
+|*|  https://developer.mozilla.org/en-US/docs/DOM/window.setInterval
+|*|
+|*|  Syntax:
+|*|  var timeoutID = window.setTimeout(func, delay[, arg1, arg2, ...]);
+|*|  var timeoutID = window.setTimeout(code, delay);
+|*|  var intervalID = window.setInterval(func, delay[, arg1, arg2, ...]);
+|*|  var intervalID = window.setInterval(code, delay);
+|*|
+\*/
+(function() {
+  setTimeout(function(arg1) {
+    if (arg1 === 'test') {
+      // feature test is passed, no need for polyfill
+      return;
+    }
+    var __nativeST__ = window.setTimeout;
+    window.setTimeout = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
+      var aArgs = Array.prototype.slice.call(arguments, 2);
+      return __nativeST__(vCallback instanceof Function ? function() {
+        vCallback.apply(null, aArgs);
+      } : vCallback, nDelay);
+    };
+  }, 0, 'test');
+
+  var interval = setInterval(function(arg1) {
+    clearInterval(interval);
+    if (arg1 === 'test') {
+      // feature test is passed, no need for polyfill
+      return;
+    }
+    var __nativeSI__ = window.setInterval;
+    window.setInterval = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
+      var aArgs = Array.prototype.slice.call(arguments, 2);
+      return __nativeSI__(vCallback instanceof Function ? function() {
+        vCallback.apply(null, aArgs);
+      } : vCallback, nDelay);
+    };
+  }, 0, 'test');
+}())
+
+// Browser passthrough code ---------------------------------------------------
+if (window.location) {
+	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
+	document[addEventListenerKey]("keydown", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return; // do e.preventDefault() to prevent this behavior.
+		if(e.which) {
+			if(!anti_spam[e.which]) {
+				anti_spam[e.which] = true;
+				var key = String.fromCharCode(e.which);
+				var x = event.x || event.clientX;
+				var y = event.y || event.clientY;
+				if(x || y ) // if either of these exist this is happening after a click
+					return;
+				window.location.href = "byond://winset?command=keyDown " + e.key;
+			}
+		}
+	});
+	document[addEventListenerKey]("keyup", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return;
+		if(e.which) {
+			anti_spam[e.which] = false;
+			var key = String.fromCharCode(e.which);
+			var x = event.x || event.clientX;
+			var y = event.y || event.clientY;
+			if( x || y ) // if either of these exist this is happening after a click
+				return;
+
+			window.location.href = "byond://winset?command=keyUp " + e.key;
+		}
+	});
+}
+/* document.addEventListener("mousedown", function(e){
+ var shiftPressed=0;
+ var evt = e?e:window.event;
+ shiftPressed=evt.shiftKey;
+  if (shiftPressed) {
+   return false;
+  }
+ return true;
+}); */
+
+// Status panel implementation ------------------------------------------------
+var status_tab_parts = ["loading..."];
+var current_tab = null;
+var mc_tab_parts = [["loading...", ""]];
+var href_token = null;
+var spells = [];
+var spell_tabs = [];
+var verb_tabs = [];
+var verbs = [["", ""]]; // list with a list inside
+var inner = "";
+var tickets = [];
+var sqdl2 = [];
+var permanent_tabs = []; // tabs that won't be cleared by wipes
+var turfcontents = [];
+var turfname = "";
+var imageRetryDelay = 50;
+var imageRetryLimit = 50;
+var menu = document.querySelector('#menu');
+var under_menu = document.querySelector('#under_menu');
+
+function createStatusTab(name) {
+	if(document.getElementById(name) || name.trim() == "")
+		return;
+	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
+		return;
+	var B = document.createElement("BUTTON");
+	B.onclick = function() {
+		tab_change(name);
+		this.blur();
+	};
+	B.id = name;
+	B[textContentKey] = name;
+	B.className = "button";
+	//ORDERING ALPHABETICALLY
+	B.style.order = name.charCodeAt(0);
+	if(name == "Status" || name == "MC") {
+		if(name == "Status")
+			B.style.order = 1;
+		else
+			B.style.order = 2;
+	}
+	//END ORDERING
+	menu.appendChild(B);
+	under_menu.style.height = menu.clientHeight + 'px';
+}
+
+function removeStatusTab(name) {
+	if(!document.getElementById(name) || permanent_tabs.includes(name))
+		return;
+	for (var i = verb_tabs.length - 1; i >= 0; --i) {
+		if (verb_tabs[i] == name) {
+			verb_tabs.splice(i, 1);
+		}
+	}
+	menu.removeChild(document.getElementById(name));
+	under_menu.style.height = menu.clientHeight + 'px';
+	if(document.getElementById(name)) // repeat for duplicates
+		removeStatusTab(name);
+}
+
+window.onresize = function () {
+	under_menu.style.height = menu.clientHeight + 'px';
+}
+
+function addPermanentTab(name) {
+	if(!permanent_tabs.includes(name))
+		permanent_tabs.push(name);
+	createStatusTab(name);
+}
+
+function removePermanentTab(name) {
+	for (var i = permanent_tabs.length - 1; i >= 0; --i) {
+		if (permanent_tabs[i] == name) {
+			permanent_tabs.splice(i, 1);
+		}
+	}
+	removeStatusTab(name);
+}
+
+function checkStatusTab() {
+	for(var i=0; i < menu.children.length; i++)
+		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
+			removeStatusTab(menu.children[i].id);
+}
+function remove_verb(v) {
+	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
+	for(var i = verbs.length - 1; i >= 0; i--){
+		var part_to_remove = verbs[i];
+		if(part_to_remove[1] == verb_to_remove[1]){
+			verbs.splice(i, 1)
+		}
+	}
+}
+
+function check_verbs() {
+	for(var v = verb_tabs.length - 1; v >= 0; v--){
+		verbs_cat_check(verb_tabs[v]);
+	}
+	//checkStatusTab(); // removes any empty status tabs
+}
+
+function verbs_cat_check(cat) {
+	var verbs_in_cat = 0;
+	var verbcat = "";
+	if(!verb_tabs.includes(cat)){
+		removeStatusTab(cat);
+		return;
+	}
+	for(var v = 0; v < verbs.length; v++){
+		var part = verbs[v];
+		verbcat = part[0];
+		if(verbcat != cat || verbcat.trim() == ""){
+			continue;
+		}
+		else{
+			verbs_in_cat = 1;
+			break; // we only need one
+		}
+	}
+	if(verbs_in_cat != 1) {
+		removeStatusTab(cat);
+		if(current_tab == cat)
+			tab_change("Status");
+	}
+}
+
+function findVerbindex(name, verblist) {
+	for(var i = 0; i < verblist.length; i++) {
+		var part = verblist[i];
+		if(part[1] == name)
+			return i;
+	}
+}
+function wipe_verbs() {
+	verbs = [["", ""]];
+	verb_tabs = [];
+	checkStatusTab(); // remove all empty verb tabs
+}
+
+function add_verb_list(v) {
+	var to_add = JSON.parse(v); // list of a list with category and verb inside it
+	to_add.sort(); // sort what we're adding
+	for(var i = 0; i < to_add.length; i++) {
+		var part = to_add[i];
+		if(findVerbindex(part[1], verbs))
+			continue;
+		if(verb_tabs.includes(part[0])){
+			verbs.push(part);
+			if(current_tab == part[0]) {
+				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
+			}
+		} else if(part[0]) {
+			verb_tabs.push(part[0]);
+			verbs.push(part);
+			createStatusTab(part[0]);
+		}
+	}
+}
+
+function remove_verb_list(v) {
+	var to_remove = JSON.parse(v);
+	for(var i = 0; i < to_remove.length; i++) {
+		remove_verb(to_remove[i]);
+	}
+	check_verbs();
+	verbs.sort();
+	if(verb_tabs.includes(current_tab))
+		draw_verbs(current_tab);
+}
+
+// passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
+// example (IC, Say)
+function init_verbs(c, v) {
+	wipe_verbs(); // remove all verb categories so we can replace them
+	checkStatusTab(); // remove all status tabs
+	verb_tabs = JSON.parse(c);
+	verb_tabs.sort(); // sort it
+	var do_update = false;
+	var cat = "";
+	for(var i = 0; i < verb_tabs.length; i++){
+		cat = verb_tabs[i];
+		createStatusTab(cat); // create a category if the verb doesn't exist yet
+	}
+	if(verb_tabs.includes(current_tab)) {
+		do_update = true;
+	}
+	if(v) {
+		add_verb_list(v);
+		verbs.sort(); // sort them
+		if(do_update) {
+			draw_verbs(current_tab);
+		}
+	}
+}
+
+function update(global_data, ping_entry, other_entries) {
+	status_tab_parts = [ping_entry];
+	var parsed = JSON.parse(global_data);
+	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	parsed = JSON.parse(other_entries);
+	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	if(current_tab == "Status")
+		draw_status();
+	else if(current_tab == "Debug Stat Panel")
+		draw_debug();
+}
+
+function update_mc(global_mc_data, coords_entry, ht) {
+	mc_tab_parts = JSON.parse(global_mc_data);
+	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
+	href_token = ht;
+	if(!verb_tabs.includes("MC"))
+		verb_tabs.push("MC");
+	createStatusTab("MC");
+	if(current_tab == "MC")
+		draw_mc();
+}
+
+function remove_mc() {
+	removeStatusTab("MC");
+	if(current_tab == "MC")
+		tab_change("Status");
+}
+function remove_spells() {
+	for(var s = 0; s < spell_tabs.length; s++){
+		removeStatusTab(spell_tabs[s]);
+	}
+}
+
+function init_spells() {
+	var cat = "";
+	for(var i = 0; i < spell_tabs.length; i++) {
+		cat = spell_tabs[i];
+		if(cat.length > 0) {
+			verb_tabs.push(cat);
+			createStatusTab(cat);
+		}
+	}
+}
+
+function check_spells() {
+	for(var v = 0; v < spell_tabs.length; v++)
+		spell_cat_check(spell_tabs[v]);
+}
+function spell_cat_check(cat) {
+	var spells_in_cat = 0;
+	var spellcat = "";
+	for(var s = 0; s < spells.length; s++){
+		var spell = spells[s];
+		spellcat = spell[0];
+		if(spellcat == cat){
+			spells_in_cat++;
+		}
+	}
+	if(spells_in_cat < 1) {
+		removeStatusTab(cat);
+	}
+}
+function update_spells(t, s) {
+	spell_tabs = JSON.parse(t);
+	var do_update = false;
+	if(spell_tabs.includes(current_tab)) {
+		do_update = true;
+	}
+	init_spells();
+	if(s) {
+		spells = JSON.parse(s);
+		if(do_update) {
+			draw_spells(current_tab);
+		}
+	} else {
+		remove_spells();
+	}
+}
+
+function tab_change(tab) {
+	if(tab == current_tab) return;
+	if(document.getElementById(current_tab))
+		document.getElementById(current_tab).className = "button"; // disable active on last button
+	current_tab = tab;
+	if(document.getElementById(tab))
+		document.getElementById(tab).className = "button active"; // make current button active
+	var spell_tabs_thingy = (spell_tabs.includes(tab));
+	var verb_tabs_thingy = (verb_tabs.includes(tab));
+	if(tab == "Status") {
+		draw_status();
+	} else if(tab == "MC") {
+		draw_mc();
+	} else if(spell_tabs_thingy) {
+		draw_spells(tab);
+	} else if(verb_tabs_thingy){
+		draw_verbs(tab);
+	} else if(tab == "Debug Stat Panel") {
+		draw_debug();
+	} else if(tab == "Tickets") {
+		draw_tickets();
+	} else if(tab == "SQDL2") {
+		draw_sqdl2();
+	}else if(tab == turfname) {
+		draw_listedturf();
+	} else {
+		var statcontentdiv = document.getElementById("statcontent");
+		statcontentdiv[textContentKey] = "loading...";
+	}
+	window.location.href = "byond://winset?statbrowser.is-visible=true";
+}
+
+function draw_debug() {
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var wipeverbstabs = document.createElement("div");
+	var link = document.createElement("a");
+	link.onclick = function() {wipe_verbs()};
+	link[textContentKey] = "Wipe All Verbs";
+	wipeverbstabs.appendChild(link);
+	document.getElementById("statcontent").appendChild(wipeverbstabs);
+	var text = document.createElement("div");
+	text[textContentKey] = "Verb Tabs:";
+	document.getElementById("statcontent").appendChild(text);
+	var table1 = document.createElement("table");
+	for(var i=0; i < verb_tabs.length ; i++) {
+		var part = verb_tabs[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1[textContentKey] = part;
+		var a = document.createElement("a");
+		a.onclick = function (part) {
+			return function() {removeStatusTab(part)};
+		}(part);
+		a[textContentKey] = " Delete Tab " + part;
+		td1.appendChild(a);
+		tr.appendChild(td1);
+		table1.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table1);
+	var header2 = document.createElement("div");
+	header2[textContentKey] = "Verbs:";
+	document.getElementById("statcontent").appendChild(header2);
+	var table2 = document.createElement("table");
+	for(var v = 0; v < verbs.length; v++) {
+		var part2 = verbs[v];
+		var trr = document.createElement("tr");
+		var tdd1 = document.createElement("td");
+		tdd1[textContentKey] = part2[0];
+		var tdd2 = document.createElement("td");
+		tdd2[textContentKey] = part2[1];
+		trr.appendChild(tdd1);
+		trr.appendChild(tdd2);
+		table2.appendChild(trr);
+	}
+	document.getElementById("statcontent").appendChild(table2);
+	var text3 = document.createElement("div");
+	text3[textContentKey] = "Permanent Tabs:";
+	document.getElementById("statcontent").appendChild(text3);
+	var table3 = document.createElement("table");
+	for(var i=0; i < permanent_tabs.length ; i++) {
+		var part3 = permanent_tabs[i];
+		var trrr = document.createElement("tr");
+		var tddd1 = document.createElement("td");
+		tddd1[textContentKey] = part3;
+		trrr.appendChild(tddd1);
+		table3.appendChild(trrr);
+	}
+	document.getElementById("statcontent").appendChild(table3);
+
+}
+function draw_status() {
+	var statcontentdiv = document.getElementById("statcontent");
+	if(!document.getElementById("Status")) {
+		createStatusTab("Status");
+		current_tab = "Status";
+	}
+	statcontentdiv[textContentKey] = inner;
+	for(var i = 0; i < status_tab_parts.length; i++) {
+		if(status_tab_parts[i].trim() == "") {
+			document.getElementById("statcontent").appendChild(document.createElement("br"));
+		} else {
+			var div = document.createElement("div");
+			div[textContentKey] = status_tab_parts[i];
+			document.getElementById("statcontent").appendChild(div);
+		}
+	}
+	if(verb_tabs.length == 0 || !verbs)
+	{
+		window.location.href = "byond://winset?command=Fix-Stat-Panel";
+	}
+}
+
+function draw_mc() {
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("table");
+	for(var i = 0; i < mc_tab_parts.length; i++) {
+		var part = mc_tab_parts[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1[textContentKey] = part[0];
+		var td2 = document.createElement("td");
+		if(part[2]) {
+			var a = document.createElement("a");
+			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a[textContentKey] = part[1];
+			td2.appendChild(a);
+		} else {
+			td2[textContentKey] = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+function update_tickets(T){
+	tickets = JSON.parse(T);
+	if(!verb_tabs.includes("Tickets")) {
+		verb_tabs.push("Tickets");
+		addPermanentTab("Tickets");
+	}
+	if(current_tab == "Tickets")
+		draw_tickets();
+}
+function update_sqdl2(S) {
+	sqdl2 = JSON.parse(S);
+	if(sqdl2.length > 0 && !verb_tabs.includes("SQDL2")) {
+		verb_tabs.push("SQDL2");
+		addPermanentTab("SQDL2");
+	}
+	if(current_tab == "SQDL2")
+		draw_sqdl2();
+}
+
+function remove_sqdl2() {
+	if(sqdl2) {
+		sqdl2 = [];
+		removePermanentTab("SQDL2");
+		if(current_tab == "SQDL2")
+			tab_change("Status");
+	}
+	checkStatusTab();
+}
+
+function remove_tickets() {
+	if(tickets) {
+		tickets = [];
+		removePermanentTab("Tickets");
+		if(current_tab == "Tickets")
+			tab_change("Status");
+	}
+	checkStatusTab();
+}
+// removes MC, Tickets and MC tabs.
+function remove_admin_tabs() {
+	remove_mc();
+	remove_tickets();
+	remove_sqdl2();
+}
+
+function create_listedturf(TN) {
+	remove_listedturf(); // remove the last one if we had one
+	turfname = JSON.parse(TN);
+	addPermanentTab(turfname);
+	tab_change(turfname);
+}
+function update_listedturf(TC) {
+	turfcontents = JSON.parse(TC);
+	if(current_tab == turfname)
+		draw_listedturf();
+}
+function iconError(E) {
+	var that = this;
+	setTimeout(function() {
+		var current_attempts = that.id; // a bit of a hack, change this if we need to call on img id's later
+		if(!current_attempts)
+			that.id = 1;
+		if (current_attempts > imageRetryLimit)
+			return;
+		var src = that.src;
+		that.src = null;
+		that.src = src + '#' + current_attempts;
+		that.id++;
+		draw_listedturf();
+	}, imageRetryDelay);
+}
+function draw_listedturf() {
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("table");
+	for(var i = 0; i < turfcontents.length; i++) {
+		var part = turfcontents[i];
+		if(part[2]) {
+			var img = document.createElement("img");
+			img.src = part[2];
+			img[addEventListenerKey]("onerror", iconError());
+			table.appendChild(img);
+		}
+		var b = document.createElement("div");
+		var clickcatcher = "";
+		b.className = "link";
+		b.onmousedown = function (part) {
+			// The outer function is used to close over a fresh "part" variable,
+			// rather than every onmousedown getting the "part" of the last entry.
+			return function(e) {
+				e.preventDefault();
+				clickcatcher = "?src=" + part[1] + ";statpanel_item_click=1";
+				if(e.shiftKey){
+					clickcatcher += ";statpanel_item_shiftclick=1";
+				}
+				if(e.ctrlKey){
+					clickcatcher += ";statpanel_item_ctrlclick=1";
+				}
+				if(e.altKey) {
+					clickcatcher += ";statpanel_item_altclick=1";
+				}
+				window.location.href = clickcatcher;
+			}
+		}(part);
+		b[textContentKey] = part[0];
+		table.appendChild(b);
+		table.appendChild(document.createElement("br"));
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function remove_listedturf() {
+	removePermanentTab(turfname);
+	checkStatusTab();
+	if(current_tab == turfname)
+		tab_change("Status");
+}
+function draw_sqdl2(){
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("table");
+	for(var i = 0; i < sqdl2.length; i++) {
+		var part = sqdl2[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1[textContentKey] = part[0];
+		var td2 = document.createElement("td");
+		if(part[2]) {
+			var a = document.createElement("a");
+			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
+			a[textContentKey] = part[1];
+			td2.appendChild(a);
+		} else {
+			td2[textContentKey] = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_tickets() {
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("table");
+	if(!tickets)
+		return;
+	for(var i = 0; i < tickets.length; i++) {
+		var part = tickets[i];
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1[textContentKey] = part[0];
+		var td2 = document.createElement("td");
+		if(part[2]) {
+			var a = document.createElement("a");
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
+			a[textContentKey] = part[1];
+			td2.appendChild(a);
+		} else if(part[3]){
+			var a = document.createElement("a");
+			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a[textContentKey] = part[1];
+			td2.appendChild(a);
+		} else {
+			td2[textContentKey] = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_spells(cat) {
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("table");
+	for(var i = 0; i < spells.length; i++) {
+		var part = spells[i];
+		if(part[0] != cat) continue;
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		td1[textContentKey] = part[1];
+		var td2 = document.createElement("td");
+		if(part[3]) {
+			var a = document.createElement("a");
+			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a[textContentKey] = part[2];
+			td2.appendChild(a);
+		} else {
+			td2[textContentKey] = part[2];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function draw_verbs(cat){
+	var statcontentdiv = document.getElementById("statcontent");
+	statcontentdiv[textContentKey] = "";
+	var table = document.createElement("newdiv");
+	table.className = "grid-container";
+	var command = ""; // typecast name to string
+	verbs.sort();
+	verbs.reverse(); // sort verbs backwards before we draw
+	for(var i = verbs.length - 1; i >= 0; i--) {
+		var part = verbs[i]; // should be a list containing category and command
+		if(!part[1]) continue;
+		if(part[0] != cat){
+			continue;
+		}
+		if(part[0].trim() == ""){
+			verbs.splice(i, 1);
+			continue;
+		}
+		command = part[1];
+		var a = document.createElement("a");
+		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
+		a[textContentKey] = command;
+		a.className = "grid-item";
+		table.appendChild(a);
+	}
+	document.getElementById("statcontent").appendChild(table);
+}
+
+function set_theme(which) {
+	if (which == "light") {
+		document.body.className = "";
+		set_style_sheet("browserOutput_white");
+	} else if (which == "dark") {
+		document.body.className = "dark";
+		set_style_sheet("browserOutput");
+	}
+}
+
+function set_style_sheet(sheet) {
+	if(document.getElementById("goonStyle")) {
+		var currentSheet = document.getElementById("goonStyle");
+		currentSheet.parentElement.removeChild(currentSheet);
+	}
+	var head  = document.getElementsByTagName('head')[0];
+	var sheetElement = document.createElement("link");
+	sheetElement.id = "goonStyle";
+	sheetElement.rel = "stylesheet";
+	sheetElement.type = "text/css";
+	sheetElement.href = sheet + ".css";
+	sheetElement.media = 'all';
+	head.appendChild(sheetElement);
+}
+
+document[addEventListenerKey]("click", function(e) {
+	window.location.href = "byond://winset?map.focus=true";
+});
+
+if(!current_tab) {
+	addPermanentTab("Status");
+	tab_change("Status");
+}
+
+function create_debug(){
+	if(!document.getElementById("Debug Stat Panel")) {
+		addPermanentTab("Debug Stat Panel");
+	} else {
+		removePermanentTab("Debug Stat Panel");
+	}
+}
+
+function getCookie(cname) {
+	var name = cname + '=';
+	var ca = document.cookie.split(';');
+	for(var i=0; i < ca.length; i++) {
+	var c = ca[i];
+	while (c.charAt(0)==' ') c = c.substring(1);
+		if (c.indexOf(name) === 0) {
+			return decoder(c.substring(name.length,c.length));
+		}
+	}
+	return '';
+}
+</script>
+</body>
+</html>

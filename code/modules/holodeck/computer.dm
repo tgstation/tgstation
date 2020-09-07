@@ -238,7 +238,7 @@
 		HE.safety(active)
 
 /obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)
-	if(!is_operational())
+	if(!is_operational)
 		A = offline_program
 		force = TRUE
 

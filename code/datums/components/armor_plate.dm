@@ -2,7 +2,7 @@
 	var/amount = 0
 	var/maxamount = 3
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
-	var/datum/armor/added_armor = list("melee" = 10)
+	var/datum/armor/added_armor = list(MELEE = 10)
 	var/upgrade_name
 
 /datum/component/armor_plate/Initialize(_maxamount,obj/item/_upgrade_item,datum/armor/_added_armor)
@@ -12,7 +12,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/applyplate)
 	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/dropplates)
-	if(istype(parent, /obj/mecha/working/ripley))
+	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_mech_overlays)
 
 	if(_maxamount)
@@ -32,6 +32,8 @@
 	upgrade_name = initial(typecast.name)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
@@ -48,6 +50,8 @@
 			examine_list += "<span class='notice'>It can be strengthened with up to [maxamount] [upgrade_name].</span>"
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(!istype(I,upgrade_item))
 		return
 	if(amount >= maxamount)
@@ -67,7 +71,7 @@
 	O.armor = O.armor.attachArmor(added_armor)
 
 	if(ismecha(O))
-		var/obj/mecha/R = O
+		var/obj/vehicle/sealed/mecha/R = O
 		R.update_icon()
 		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
 	else
@@ -75,15 +79,19 @@
 
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
+	SIGNAL_HANDLER
+
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
 		for(var/i in 1 to amount)
 			new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_mech_overlays(obj/mecha/mech, list/overlays)
+/datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
+	SIGNAL_HANDLER
+
 	if(amount)
 		var/overlay_string = "ripley-g"
 		if(amount >= 3)
 			overlay_string += "-full"
-		if(!mech.occupant)
+		if(LAZYLEN(mech.occupants))
 			overlay_string += "-open"
 		overlays += overlay_string

@@ -72,12 +72,12 @@
 		pixel_x = 0
 		pixel_y = 0
 		shocked_things.Cut()
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER, shocked_targets = shocked_things)
+		tesla_zap(src, 3, TESLA_DEFAULT_POWER, shocked_targets = shocked_things)
 
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
-			var/range = rand(1, clamp(orbiting_balls.len, 3, 7))
+			var/range = rand(1, clamp(orbiting_balls.len, 2, 3))
 			var/list/temp_shock = list()
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range, shocked_targets = temp_shock)
 			shocked_things += temp_shock
@@ -92,8 +92,8 @@
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
 	var/list/dirs = GLOB.alldirs.Copy()
-	for(var/thing in shocked_things)
-		var/atom/real_thing = thing
+	for(var/I in 1 to 30)
+		var/atom/real_thing = pick(shocked_things)
 		dirs += get_dir(src, real_thing) //Carry some momentum yeah?
 	for(var/i in 0 to move_amount)
 		var/move_dir = pick(dirs) //ensures teslas don't just sit around
@@ -306,7 +306,7 @@
 	if(zapdir)
 		. = zapdir
 
-	var/next_range = 3
+	var/next_range = 2
 	if(closest_type == COIL)
 		next_range = 5
 

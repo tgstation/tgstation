@@ -62,24 +62,22 @@
 /datum/disease/proc/admin_details()
 	return "[src.name] : [src.type]"
 
+
+///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act()
-	var/cure = has_cure()
-
-	if(carrier && !cure)
-		return
-
-	stage = min(stage, max_stages)
-
-	if(!cure)
-		if(prob(stage_prob))
-			update_stage(min(stage + 1,max_stages))
-	else
+	if(has_cure())
 		if(prob(cure_chance))
 			update_stage(max(stage - 1, 1))
 
-	if(disease_flags & CURABLE)
-		if(cure && prob(cure_chance))
+		if(disease_flags & CURABLE && prob(cure_chance))
 			cure()
+			return FALSE
+
+	else if(prob(stage_prob))
+		update_stage(min(stage + 1, max_stages))
+
+	return !carrier
+
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
@@ -90,7 +88,7 @@
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id))
+		if(!affected_mob.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
@@ -103,7 +101,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2

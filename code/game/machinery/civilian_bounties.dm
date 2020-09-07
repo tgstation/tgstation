@@ -103,6 +103,7 @@
 		inserted_scan_id.registered_account.transfer_money(dept_account, curr_bounty.reward)
 		status_report += "Bounty Completed! [curr_bounty.reward] credits have been paid out. "
 		inserted_scan_id.registered_account.reset_bounty()
+		SSeconomy.civ_bounty_tracker++
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -137,7 +138,7 @@
 		return
 	if(!pad)
 		return
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")

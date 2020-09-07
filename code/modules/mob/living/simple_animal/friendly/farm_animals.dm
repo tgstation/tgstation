@@ -149,7 +149,11 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
+	add_cell_sample()
 	. = ..()
+
+/mob/living/simple_animal/cow/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -166,7 +170,7 @@
 /mob/living/simple_animal/cow/tamed()
 	. = ..()
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -274,6 +278,10 @@
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+	add_cell_sample()
+
+/mob/living/simple_animal/chick/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -342,6 +350,10 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	++chicken_count
+	add_cell_sample()
+
+/mob/living/simple_animal/chicken/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
 	--chicken_count

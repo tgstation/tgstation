@@ -4,8 +4,11 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
-
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
+
+/* Directions */
+///All the cardinal direction bitflags.
+#define ALL_CARDINALS (NORTH|SOUTH|EAST|WEST)
 
 // for /datum/var/datum_flags
 #define DF_USE_TAG		(1<<0)
@@ -39,7 +42,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define RAD_PROTECT_CONTENTS_1 (1 << 17)
 /// should this object be allowed to be contaminated
 #define RAD_NO_CONTAMINATE_1 (1 << 18)
-
+/// Should this object be paintable with very dark colors?
+#define ALLOW_DARK_PAINTS_1 (1 << 19)
+/// Should this object be unpaintable?
+#define UNPAINTABLE_1 (1 << 20)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
@@ -81,6 +87,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define BLOCK_SUICIDE				(1<<9)
 /// Can the Xenobio management console transverse this area by default?
 #define XENOBIOLOGY_COMPATIBLE		(1<<10)
+/// If Abductors are unable to teleport in with their observation console
+#define ABDUCTOR_PROOF				(1<<11)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -128,7 +136,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_STUN			(1<<4)
 #define ZAP_GENERATES_POWER		(1<<5)
 
-#define ZAP_DEFAULT_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
+#define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
 
@@ -189,3 +197,17 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
 // If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
 #define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
+
+//dir macros
+///Returns true if the dir is diagonal, false otherwise
+#define ISDIAGONALDIR(d) (d&(d-1))
+///True if the dir is north or south, false therwise
+#define NSCOMPONENT(d)   (d&(NORTH|SOUTH))
+///True if the dir is east/west, false otherwise
+#define EWCOMPONENT(d)   (d&(EAST|WEST))
+///Flips the dir for north/south directions
+#define NSDIRFLIP(d)     (d^(NORTH|SOUTH))
+///Flips the dir for east/west directions
+#define EWDIRFLIP(d)     (d^(EAST|WEST))
+///Turns the dir by 180 degrees
+#define DIRFLIP(d)       turn(d, 180)

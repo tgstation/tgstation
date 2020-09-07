@@ -34,7 +34,7 @@
 	var/name				//replaces mob/var/original_name
 	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
-	var/active = 0
+	var/active = FALSE
 
 	var/memory
 
@@ -135,6 +135,7 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
+		new_character.client.init_verbs() // re-initialize character specific verbs
 	current.update_atom_languages()
 
 /datum/mind/proc/init_known_skills()
@@ -219,6 +220,8 @@
 	to_chat(user, msg)
 
 /datum/mind/proc/set_death_time()
+	SIGNAL_HANDLER
+
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
@@ -255,7 +258,7 @@
 	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
-	A.on_gain()
+	INVOKE_ASYNC(A, /datum/antagonist.proc/on_gain)
 	log_game("[key_name(src)] has gained antag datum [A.name]([A.type])")
 	return A
 
@@ -718,6 +721,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+	current?.client << output(null, "statbrowser:check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)
@@ -775,7 +779,7 @@
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
+	mind.active = TRUE	//indicates that the mind is currently synced with a client
 
 /datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)

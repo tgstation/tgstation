@@ -17,9 +17,9 @@
 	var/icon_opened = "secure0"
 	var/code = ""
 	var/l_code = null
-	var/l_set = 0
-	var/l_setshort = 0
-	var/l_hacking = 0
+	var/l_set = FALSE
+	var/l_setshort = FALSE
+	var/l_hacking = FALSE
 	var/open = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
@@ -44,15 +44,15 @@
 		if (W.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
 		if ((W.tool_behaviour == TOOL_MULTITOOL) && (!l_hacking))
-			if(open == 1)
+			if(open == TRUE)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
-				l_hacking = 1
+				l_hacking = TRUE
 				if (W.use_tool(src, user, 400))
 					to_chat(user, "<span class='danger'>Internal memory reset - lock has been disengaged.</span>")
-					l_set = 0
-					l_hacking = 0
+					l_set = FALSE
+					l_hacking = FALSE
 				else
-					l_hacking = 0
+					l_hacking = FALSE
 			else
 				to_chat(user, "<span class='warning'>You must <b>unscrew</b> the service panel before you can pulse the wiring!</span>")
 			return
@@ -84,10 +84,10 @@
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")
-			if ((l_set == 0) && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
+			if (!l_set && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
 				l_code = code
-				l_set = 1
-			else if ((code == l_code) && (l_set == 1))
+				l_set = TRUE
+			else if ((code == l_code) && l_set)
 				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 				cut_overlays()
 				add_overlay(icon_opened)

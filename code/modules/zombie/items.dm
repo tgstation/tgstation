@@ -15,7 +15,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
-	damtype = "brute"
+	damtype = BRUTE
 
 /obj/item/zombie_hand/Initialize()
 	. = ..()

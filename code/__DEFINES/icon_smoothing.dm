@@ -29,10 +29,11 @@
 
 #define SMOOTH_GROUP_OPEN_FLOOR S_TURF(4)				///turf/open/floor
 
-#define SMOOTH_GROUP_FLOOR_ASH S_TURF(5)				///turf/open/floor/plating/ashplanet/ash
-#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(6)			///turf/open/floor/plating/ashplanet/rocky
-#define SMOOTH_GROUP_FLOOR_ICE S_TURF(7)				///turf/open/floor/plating/ice
-#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(8)				///turf/open/floor/plating/snowed
+#define SMOOTH_GROUP_FLOOR_GRASS S_TURF(5)				///turf/open/floor/plating/grass
+#define SMOOTH_GROUP_FLOOR_ASH S_TURF(6)				///turf/open/floor/plating/ashplanet/ash
+#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(7)			///turf/open/floor/plating/ashplanet/rocky
+#define SMOOTH_GROUP_FLOOR_ICE S_TURF(8)				///turf/open/floor/plating/ice
+#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(9)				///turf/open/floor/plating/snowed
 
 #define SMOOTH_GROUP_CARPET S_TURF(10)					///turf/open/floor/carpet
 #define SMOOTH_GROUP_CARPET_BLACK S_TURF(11)			///turf/open/floor/carpet/black
@@ -47,7 +48,7 @@
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(24)			///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(25)			///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
 #define SMOOTH_GROUP_HOTEL_WALLS S_TURF(27)				///turf/closed/indestructible/hotelwall
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(28)			///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(29)				///turf/closed/indestructible/riveted/boss
@@ -96,6 +97,8 @@
 
 #define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65)				///obj/structure/fluff/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT	S_OBJ(67)			///obj/effect/decal/cleanable/dirt
+
+#define SMOOTH_GROUP_INDUSTRIAL_LIFT S_OBJ(70)			///obj/structure/industrial_lift

@@ -1,6 +1,6 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
-	opacity = 1
+	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
@@ -30,7 +30,7 @@
 	return
 
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
-	return 0
+	return FALSE
 
 /turf/closed/indestructible/Melt()
 	to_be_destroyed = FALSE
@@ -114,7 +114,7 @@
 /turf/closed/indestructible/fakeglass
 	name = "window"
 	icon_state = "fake_window"
-	opacity = 0
+	opacity = FALSE
 	smoothing_flags = SMOOTH_CORNERS
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 
@@ -127,8 +127,10 @@
 /turf/closed/indestructible/opsglass
 	name = "window"
 	icon_state = "plastitanium_window"
-	opacity = 0
+	opacity = FALSE
 	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
+	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 
 /turf/closed/indestructible/opsglass/Initialize()

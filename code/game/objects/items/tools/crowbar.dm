@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	var/force_opens = FALSE
 
 /obj/item/crowbar/suicide_act(mob/user)
@@ -68,7 +68,7 @@
 
 /obj/item/crowbar/power/syndicate
 	name = "Syndicate jaws of life"
-	desc = "A rengineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in it's crowbar configuration."
+	desc = "A re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_pry_syndie"
 	toolspeed = 0.5
 	force_opens = TRUE
