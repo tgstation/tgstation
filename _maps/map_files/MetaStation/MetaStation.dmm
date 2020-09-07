@@ -13651,10 +13651,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Quarters";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
@@ -27588,10 +27587,9 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bmI" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Quarters";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -30710,10 +30708,9 @@
 /area/hallway/primary/central)
 "bum" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Head of Personnel";
 	req_access_txt = "57";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30782,10 +30779,9 @@
 /area/crew_quarters/heads/hop)
 "buu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/iron{
 	name = "Head of Personnel";
 	req_access_txt = "57";
-	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -31556,10 +31552,9 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bwG" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Emergency Escape";
 	req_access_txt = "20";
-	security_level = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32145,10 +32140,9 @@
 /area/bridge)
 "byo" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Quarters";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)

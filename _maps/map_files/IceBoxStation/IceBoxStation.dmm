@@ -22105,10 +22105,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aZX" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Office";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -26925,10 +26924,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "blb" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Quarters";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -26947,10 +26945,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bld" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/reinforced/plasteel{
 	name = "Captain's Office Maintenance";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
@@ -27493,10 +27490,9 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
 "bms" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/iron{
 	name = "Head of Personnel";
 	req_access_txt = "57";
-	security_level = 1
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -32180,10 +32176,9 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bxG" = (
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Head of Personnel";
 	req_access_txt = "57";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,

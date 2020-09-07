@@ -45337,10 +45337,9 @@
 /area/crew_quarters/heads/cmo)
 "bIX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Office";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -51899,10 +51898,9 @@
 /area/crew_quarters/heads/hop)
 "bUC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/iron{
 	name = "Head of Personnel's Office";
 	req_access_txt = "57";
-	security_level = 1
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -54641,10 +54639,9 @@
 /area/tcommsat/server)
 "bZm" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Captain's Quarters";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -59116,10 +59113,9 @@
 /area/tcommsat/server)
 "cij" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Emergency Escape";
 	req_access_txt = "20";
-	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -63246,10 +63242,9 @@
 	id = "hopblast";
 	name = "HoP Blast door"
 	},
-/obj/machinery/door/airlock/command{
+/obj/machinery/door/airlock/command/reinforced/plasteel{
 	name = "Head of Personnel's Office";
 	req_access_txt = "57";
-	security_level = 6
 	},
 /obj/structure/cable,
 /obj/machinery/navbeacon/wayfinding,
