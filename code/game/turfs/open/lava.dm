@@ -28,7 +28,7 @@
 	return src
 
 /turf/open/lava/acid_act(acidpwr, acid_volume)
-	return
+	return FALSE
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return

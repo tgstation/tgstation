@@ -40,7 +40,8 @@ SUBSYSTEM_DEF(runechat)
 	bucket_resolution = world.tick_lag
 
 /datum/controller/subsystem/runechat/stat_entry(msg)
-	..("ActMsgs:[bucket_count] SecQueue:[length(second_queue)]")
+	msg = "ActMsgs:[bucket_count] SecQueue:[length(second_queue)]"
+	return msg
 
 /datum/controller/subsystem/runechat/fire(resumed = FALSE)
 	// Store local references to datum vars as it is faster to access them this way
@@ -157,7 +158,7 @@ SUBSYSTEM_DEF(runechat)
 
 	// Handle insertion into the secondary queue if the required time is outside our tracked amounts
 	if (scheduled_destruction >= BUCKET_LIMIT)
-		BINARY_INSERT(src, SSrunechat.second_queue, datum/chatmessage, src, scheduled_destruction, COMPARE_KEY)
+		BINARY_INSERT(src, SSrunechat.second_queue, /datum/chatmessage, src, scheduled_destruction, COMPARE_KEY)
 		return
 
 	// Get bucket position and a local reference to the datum var, it's faster to access this way

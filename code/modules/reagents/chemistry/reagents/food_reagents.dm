@@ -24,20 +24,21 @@
 		return
 	holder.remove_reagent(type, metabolization_rate)
 
-/datum/reagent/consumable/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if((methods & INGEST) && quality && !HAS_TRAIT(M, TRAIT_AGEUSIA))
-		switch(quality)
-			if (DRINK_NICE)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
-			if (DRINK_GOOD)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
-			if (DRINK_VERYGOOD)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
-			if (DRINK_FANTASTIC)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
-			if (FOOD_AMAZING)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
-	return ..()
+/datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
+		return
+	switch(quality)
+		if (DRINK_NICE)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+		if (DRINK_GOOD)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+		if (DRINK_VERYGOOD)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+		if (DRINK_FANTASTIC)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+		if (FOOD_AMAZING)
+			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -124,49 +125,49 @@
 	taste_description = "oil"
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
+	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
-/datum/reagent/consumable/cooking_oil/expose_obj(obj/O, reac_volume)
-	if(holder && holder.chem_temp >= fry_temperature)
-		if(isitem(O) && !istype(O, /obj/item/food/deepfryholder))
-			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
-			var/obj/item/food/deepfryholder/F = new(O.drop_location(), O)
-			F.fry(volume)
-			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
-
-/datum/reagent/consumable/cooking_oil/expose_mob(mob/living/M, methods = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	if(!istype(M))
+/datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(!holder || (holder.chem_temp <= fry_temperature))
 		return
-	var/boiling = FALSE
-	if(holder && holder.chem_temp >= fry_temperature)
-		boiling = TRUE
-	if(!(methods & (VAPOR|TOUCH))) //Directly coats the mob, and doesn't go into their bloodstream
-		return ..()
-	if(!boiling)
-		return TRUE
+	if(!isitem(exposed_obj) || istype(exposed_obj, /obj/item/food/deepfryholder))
+		return
+	exposed_obj.loc.visible_message("<span class='warning'>[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow.</span>")
+	var/obj/item/food/deepfryholder/fry_target = new(exposed_obj.drop_location(), exposed_obj)
+	fry_target.fry(volume)
+	fry_target.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
+
+/datum/reagent/consumable/cooking_oil/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+	if(!(methods & (VAPOR|TOUCH)) || isnull(holder) || (holder.chem_temp < fry_temperature)) //Directly coats the mob, and doesn't go into their bloodstream
+		return
+
 	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
 	if(methods & TOUCH)
-		oil_damage *= 1 - M.get_permeability_protection()
+		oil_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, oil_damage * reac_volume))
-	if(!HAS_TRAIT(M, TRAIT_OIL_FRIED))
-		M.visible_message("<span class='warning'>The boiling oil sizzles as it covers [M]!</span>", \
+	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
+		exposed_mob.visible_message("<span class='warning'>The boiling oil sizzles as it covers [exposed_mob]!</span>", \
 		"<span class='userdanger'>You're covered in boiling oil!</span>")
 		if(FryLoss)
-			M.emote("scream")
-		playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-		ADD_TRAIT(M, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(M, /mob/living/proc/unfry_mob), 3)
+			exposed_mob.emote("scream")
+		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
+		addtimer(CALLBACK(exposed_mob, /mob/living/proc/unfry_mob), 3)
 	if(FryLoss)
-		M.adjustFireLoss(FryLoss)
+		exposed_mob.adjustFireLoss(FryLoss)
 	return TRUE
 
-/datum/reagent/consumable/cooking_oil/expose_turf(turf/open/T, reac_volume)
-	if(!istype(T) || isgroundlessturf(T))
+/datum/reagent/consumable/cooking_oil/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf) || isgroundlessturf(exposed_turf) || (reac_volume < 5))
 		return
-	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-		T.name = "deep-fried [initial(T.name)]"
-		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+
+	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
+	exposed_turf.name = "deep-fried [initial(exposed_turf.name)]"
+	exposed_turf.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -236,8 +237,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 5)
+			if(M.has_reagent(/datum/reagent/cryostylane))
+				M.remove_reagent(/datum/reagent/cryostylane, 5)
 			if(isslime(M))
 				heating = rand(5,20)
 		if(15 to 25)
@@ -266,8 +267,8 @@
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
+			if(M.has_reagent(/datum/reagent/consumable/capsaicin))
+				M.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -289,27 +290,32 @@
 	M.adjust_bodytemperature(cooling, 50)
 	..()
 
-/datum/reagent/consumable/frostoil/expose_turf(turf/T, reac_volume)
-	if(reac_volume >= 5)
-		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30))
-	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
-		if(isopenturf(T))
-			var/turf/open/OT = T
-			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
-			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
+/datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(reac_volume < 1)
+		return
+	if(isopenturf(exposed_turf))
+		var/turf/open/exposed_open_turf = exposed_turf
+		exposed_open_turf.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+		exposed_open_turf.air.temperature -= (MOLES_CELLSTANDARD * 100 * reac_volume) / exposed_open_turf.air.heat_capacity() // reduces environment temperature by 5K per unit.
+	if(reac_volume < 5)
+		return
+	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+		exposed_slime.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
+	penetrates_skin = NONE
 
-/datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if(!ishuman(M) && !ismonkey(M))
+/datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!ishuman(exposed_mob) && !ismonkey(exposed_mob))
 		return
 
-	var/mob/living/carbon/victim = M
+	var/mob/living/carbon/victim = exposed_mob
 	if(methods & (TOUCH|VAPOR))
 		var/pepper_proof = victim.is_pepper_proof()
 
@@ -320,7 +326,7 @@
 				victim.emote("scream")
 			victim.blur_eyes(5) // 10 seconds
 			victim.blind_eyes(3) // 6 seconds
-			victim.set_confusion(max(M.get_confusion(), 5)) // 10 seconds
+			victim.set_confusion(max(exposed_mob.get_confusion(), 5)) // 10 seconds
 			victim.Knockdown(3 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
@@ -328,7 +334,7 @@
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
-				to_chat(M, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]</span>")
+				to_chat(exposed_mob, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]</span>")
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
@@ -337,7 +343,7 @@
 				victim.vomit()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
-	if(!holder.has_reagent(/datum/reagent/consumable/milk))
+	if(!M.has_reagent(/datum/reagent/consumable/milk))
 		if(prob(10))
 			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
@@ -348,19 +354,19 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
+	penetrates_skin = NONE
 
-/datum/reagent/consumable/sodiumchloride/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if(!istype(M))
-		return
-	if(M.has_bane(BANE_SALT))
-		M.mind.disrupt_spells(-200)
+/datum/reagent/consumable/sodiumchloride/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
+	. = ..()
+	if(exposed_mob.has_bane(BANE_SALT))
+		exposed_mob.mind.disrupt_spells(-200)
 
-/datum/reagent/consumable/sodiumchloride/expose_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
-	if(!istype(T))
+/datum/reagent/consumable/sodiumchloride/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
+	. = ..()
+	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
-	if(reac_volume < 1)
-		return
-	new/obj/effect/decal/cleanable/food/salt(T)
+
+	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -447,16 +453,17 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 
-/datum/reagent/consumable/cornoil/expose_turf(turf/open/T, reac_volume)
-	if (!istype(T))
+/datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf))
 		return
-	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
 	if(hotspot)
-		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
+		var/datum/gas_mixture/lowertemp = exposed_turf.remove_air(exposed_turf.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react(src)
-		T.assume_air(lowertemp)
+		exposed_turf.assume_air(lowertemp)
 		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
@@ -497,8 +504,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob)
+	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 
 /datum/reagent/consumable/flour
@@ -508,12 +515,15 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
 
-/datum/reagent/consumable/flour/expose_turf(turf/T, reac_volume)
-	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(T)
-		reagentdecal = locate() in T //Might have merged with flour already there.
-		if(reagentdecal)
-			reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+/datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(isspaceturf(exposed_turf))
+		return
+
+	var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(exposed_turf)
+	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
+	if(reagentdecal)
+		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -586,7 +596,7 @@
 			mytray.adjustPests(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent(/datum/reagent/consumable/sugar,3)
+	holder.add_reagent(/datum/reagent/consumable/sugar,3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -594,13 +604,15 @@
 		M.adjustToxLoss(-1*REM, 0)
 	..()
 
-/datum/reagent/consumable/honey/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-  if(iscarbon(M) && (methods & (TOUCH|VAPOR|PATCH)))
-    var/mob/living/carbon/C = M
-    for(var/s in C.surgeries)
-      var/datum/surgery/S = s
-      S.speed_modifier = max(0.6, S.speed_modifier)
-  ..()
+/datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!iscarbon(exposed_mob) || !(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	for(var/s in exposed_carbon.surgeries)
+		var/datum/surgery/surgery = s
+		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -620,21 +632,18 @@
 	color = "#c0c9a0"
 	taste_description = "bitterness"
 
-/datum/reagent/consumable/tearjuice/expose_mob(mob/living/M, methods=TOUCH, reac_volume)
-	if(!istype(M))
+/datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
 		return
-	var/unprotected = FALSE
-	if((methods & INGEST) || ((methods & (TOUCH|PATCH|VAPOR)) && !M.is_mouth_covered() && !M.is_eyes_covered()))
-		unprotected = TRUE
-	if(unprotected)
-		if(!M.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
-			to_chat(M, "<span class='notice'>Your eye sockets feel wet.</span>")
-		else
-			if(!M.eye_blurry)
-				to_chat(M, "<span class='warning'>Tears well up in your eyes!</span>")
-			M.blind_eyes(2)
-			M.blur_eyes(5)
-	..()
+
+	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
+		to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
+	else
+		if(!exposed_mob.eye_blurry)
+			to_chat(exposed_mob, "<span class='warning'>Tears well up in your eyes!</span>")
+		exposed_mob.blind_eyes(2)
+		exposed_mob.blur_eyes(5)
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
 	..()
@@ -688,8 +697,9 @@
 	//Lazy list of mobs affected by the luminosity of this reagent.
 	var/list/mobs_affected
 
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/M)
-	add_reagent_light(M)
+/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
+	. = ..()
+	add_reagent_light(exposed_mob)
 
 /datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
 	remove_reagent_light(M)
@@ -740,12 +750,15 @@
 	color = "#97ee63"
 	taste_description = "pure electricity"
 
-/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/M, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
-	if((methods & (INGEST|INJECT|PATCH)) && iscarbon(M))
-		var/mob/living/carbon/C = M
-		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
-		if(istype(stomach))
-			stomach.adjust_charge(reac_volume * REM)
+/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * REM)
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))

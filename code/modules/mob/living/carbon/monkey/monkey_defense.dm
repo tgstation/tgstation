@@ -145,7 +145,7 @@
 		apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
-	. = 1
+	. = TRUE
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
 		if(wear_mask)
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
