@@ -51,9 +51,10 @@
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
 	if(clean_types & required_clean_types)
 		qdel(src)
-		return TRUE
+		return COMPONENT_CLEANED
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	SIGNAL_HANDLER

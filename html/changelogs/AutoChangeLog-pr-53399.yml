@@ -1,0 +1,11 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "Ligthing aoe projectile now have a no_stun version for the boss rank"
+  - rscadd: "Crystal mobs have TRAIT_TESLA_SHOCKIMMUNE to prevent boss from hurting himself and the other crystal mobs"
+  - rscadd: "Revamped mode, announced main portals with location, close them to be able to stabilize the SM"
+  - balance: "Balanced mobs spawn from portal and how much damage they deal"
+  - bugfix: "Fixed grammar stuff on crystal consume announcement"
+  - tweak: "Lowered time needed to use the crystal stabilizer to 7 second total"
+  - refactor: "Refractored code so that the more_portals() proc gets called by the event instead of a CALLBACK"
+  - code_imp: "Added check at start of event for presence of the supermatter crystal"

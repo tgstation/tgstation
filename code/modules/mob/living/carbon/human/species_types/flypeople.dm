@@ -25,17 +25,7 @@
 	if(chem.type == /datum/reagent/toxin/pestkiller)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
-
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(istype(chem, /datum/reagent/consumable))
-		var/datum/reagent/consumable/nutri_check = chem
-		if(nutri_check.nutriment_factor > 0)
-			var/turf/pos = get_turf(H)
-			H.vomit(0, FALSE, FALSE, 2, TRUE)
-			playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
-			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
-						"<span class='userdanger'>You throw up on the floor!</span>")
+		return TRUE
 	..()
 
 /datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
@@ -78,6 +68,21 @@
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
+
+/obj/item/organ/stomach/fly/on_life()
+	for(var/bile in reagents.reagent_list)
+		if(!istype(bile, /datum/reagent/consumable))
+			continue
+		var/datum/reagent/consumable/chunk = bile
+		if(chunk.nutriment_factor <= 0)
+			continue
+		var/mob/living/carbon/body = owner
+		var/turf/pos = get_turf(owner)
+		body.vomit(reagents.total_volume, FALSE, FALSE, 2, TRUE)
+		playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
+		body.visible_message("<span class='danger'>[body] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
+	return ..()
 
 /obj/item/organ/appendix/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
