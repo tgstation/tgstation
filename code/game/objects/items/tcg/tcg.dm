@@ -47,8 +47,12 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
+
 /obj/item/tcgcard/attack_hand(mob/user)
-	var/list/choices = list(
+	var/list/choices = GLOB.tcgcard_radial_choices
+	if(!choices)
+		choices = GLOB.tcgcard_radial_choices = list(
 		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
 		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
 		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
