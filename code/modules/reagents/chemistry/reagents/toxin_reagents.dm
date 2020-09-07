@@ -90,7 +90,7 @@
 /datum/reagent/toxin/plasma/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if((!exposed_obj) || (!reac_volume))
-		return 0
+		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
 		exposed_obj.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
