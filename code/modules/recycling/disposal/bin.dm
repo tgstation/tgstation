@@ -243,7 +243,7 @@
 	. = ..()
 	if(.)
 		return
-	for(var/obj/item/I in src_object)
+	for(var/obj/item/I in src_object.parent)
 		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
