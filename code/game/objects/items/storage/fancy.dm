@@ -17,6 +17,7 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/cardboard = 2000)
 	var/icon_type = "donut"
 	var/spawn_type = null
 	var/fancy_open = FALSE

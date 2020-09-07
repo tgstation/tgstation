@@ -585,6 +585,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/cardboard = 2000)
 
 /obj/item/storage/crayons/Initialize()
 	. = ..()
