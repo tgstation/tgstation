@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list(
 	//Notes: Attempts to move the contents of one area to another area.
 	//       Movement based on lower left corner. Tiles that do not fit
 	//		 into the new area will not be moved.
+	//WILL REMOVE
 
 	if(!A || !src)
 		return 0

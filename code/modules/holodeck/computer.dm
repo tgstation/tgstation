@@ -43,14 +43,37 @@
 	var/list/spawned = list()
 	var/list/effects = list()
 	var/current_cd = 0
+	//use template.load(deploy_location, centered = TRUE) somehow
+	//use get_turf(atom reference) and define a mapping helper on the wanted spot on every holodeck
+	var/datum/map_template/holodeck/template
+	var/turf/spawn_tile
+	var/template_id
+
+/obj/effect/mapping_helpers/holodeck_spawner
+	icon_state = ""
+	var/this
+
+/obj/machinery/computer/holodeck/proc/get_spawn_tile(var/obj/effect/Spawn)
+	return spawn_tile = get_turf(Spawn)
+
+/obj/machinery/computer/holodeck/proc/get_template()//now i need to create template ids for all sims and match them with the program lists, however theyre done
+	if(template)
+		return
+	template = SSmapping.holodeck_templates[template_id]
+	if(!template)
+		WARNING("Shelter template ([template_id]) not found!")
+		qdel(src)
+
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()
+	var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner)
+	get_spawn_tile(holodeck_helper)
 	if(ispath(holodeck_type, /area))
-		linked = pop(get_areas(holodeck_type, FALSE))
+		linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
 	if(ispath(offline_program, /area))
 		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
@@ -126,7 +149,7 @@
 
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
-				load_program(A)
+				load_program(A)//do i only need to replace this? NO EASYNESS, ONLY PAIN
 		if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
@@ -134,7 +157,7 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/obj/machinery/computer/holodeck/process()
+/obj/machinery/computer/holodeck/process()//will comment out when first testing, will have to port over
 	if(damaged && prob(10))
 		for(var/turf/T in linked)
 			if(prob(5))
@@ -166,7 +189,7 @@
 
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
-/obj/machinery/computer/holodeck/emag_act(mob/user)
+/obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
 	if(obj_flags & EMAGGED)
 		return
 	if(!LAZYLEN(emag_programs))
@@ -179,22 +202,22 @@
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED))
 
-/obj/machinery/computer/holodeck/emp_act(severity)
+/obj/machinery/computer/holodeck/emp_act(severity)//low priority
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	emergency_shutdown()
 
-/obj/machinery/computer/holodeck/ex_act(severity, target)
+/obj/machinery/computer/holodeck/ex_act(severity, target)//low priority
 	emergency_shutdown()
 	return ..()
 
-/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
+/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)//low priority
 	emergency_shutdown()
 	return ..()
 
-/obj/machinery/computer/holodeck/proc/generate_program_list()
-	for(var/typekey in subtypesof(program_type))
+/obj/machinery/computer/holodeck/proc/generate_program_list()//med priority
+	for(var/typekey in subtypesof(program_type))//kyler, for every type of program
 		var/area/holodeck/A = GLOB.areas_by_type[typekey]
 		if(!A || !A.contents.len)
 			continue
@@ -202,11 +225,11 @@
 		info_this["name"] = A.name
 		info_this["type"] = A.type
 		if(A.restricted)
-			LAZYADD(emag_programs, list(info_this))
+			LAZYADD(emag_programs, list(info_this))//kyler, wtf is lazyadd. whatever, its clear what its doing
 		else
 			LAZYADD(program_cache, list(info_this))
 
-/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
+/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)//low priority
 	if(active == toggleOn)
 		return
 
@@ -219,12 +242,12 @@
 		load_program(offline_program, TRUE)
 		active = FALSE
 
-/obj/machinery/computer/holodeck/proc/emergency_shutdown()
+/obj/machinery/computer/holodeck/proc/emergency_shutdown()//low priority
 	last_program = program
 	load_program(offline_program, TRUE)
 	active = FALSE
 
-/obj/machinery/computer/holodeck/proc/floorcheck()
+/obj/machinery/computer/holodeck/proc/floorcheck()//low priority
 	for(var/turf/T in linked)
 		if(!T.intact || isspaceturf(T))
 			return FALSE
@@ -236,8 +259,17 @@
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.safety(active)
+/*
+1. find turf to spawn on
+2. holodeck_id.place
+var/turf/central_turf = forced_turf ? forced_turf : locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z)
+use something like this to find the central turf to spawn on
+*/
+//FOR TESTING
 
-/obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)
+/obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
+	//if (1==2)
+		///datum/map_template/holodeck/wildlifesim/load(get_turf(A))
 	if(!is_operational)
 		A = offline_program
 		force = TRUE
@@ -265,16 +297,19 @@
 	// note nerfing does not yet work on guns, should
 	// should also remove/limit/filter reagents?
 	// this is an exercise left to others I'm afraid.  -Sayu
-	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))
+	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
+	//linked is the argument in place of the copy_contents area/A parameter
+	//map.load places templates on a TURF, copy_contents copies to an entire area
 	for(var/obj/machinery/M in spawned)
 		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in spawned)
 		S.flags_1 |= NODECONSTRUCT_1
 	effects = list()
 
-	addtimer(CALLBACK(src, .proc/finish_spawn), 30)
+	//addtimer(CALLBACK(src, .proc/finish_spawn), 30)//kyler, maybe this is what actually spawns the atoms?
 
-/obj/machinery/computer/holodeck/proc/finish_spawn()
+/obj/machinery/computer/holodeck/proc/finish_spawn()//kyler, this SHOULDNT be what actually spawns shit, copy_contents_2 is called in load_pro
+	//kyler, finish_spwn allows effects to work (at least spawning ones). without it pet park will not spawn anything for example
 	var/list/added = list()
 	for(var/obj/effect/holodeck_effect/HE in spawned)
 		effects += HE

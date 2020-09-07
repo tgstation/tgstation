@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
 
-/datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()//TODO: FIX THIS
+/datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()
 	for(var/item in subtypesof(/datum/map_template/holodeck))
 		var/datum/map_template/holodeck/holodeck_type = item
 		if(!(initial(holodeck_type.mappath)))

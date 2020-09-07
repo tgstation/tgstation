@@ -54658,6 +54658,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"qyH" = (
+/obj/effect/mapping_helpers/holodeck_spawner,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "qzm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -101700,7 +101706,7 @@ uSL
 aur
 aur
 aur
-aur
+qyH
 aur
 aur
 aur

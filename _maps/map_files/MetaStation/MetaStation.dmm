@@ -68576,6 +68576,12 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"ixM" = (
+/obj/effect/mapping_helpers/holodeck_spawner,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "iyN" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -117467,7 +117473,7 @@ pvY
 afD
 afD
 afD
-afD
+ixM
 afD
 afD
 afD

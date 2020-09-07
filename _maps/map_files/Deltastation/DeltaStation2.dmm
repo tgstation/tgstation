@@ -111882,6 +111882,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/medical/morgue)
+"pUN" = (
+/obj/effect/mapping_helpers/holodeck_spawner,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "pWW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -172186,7 +172192,7 @@ cFF
 cFF
 cFF
 cFF
-cFF
+pUN
 cFF
 cFF
 cFF

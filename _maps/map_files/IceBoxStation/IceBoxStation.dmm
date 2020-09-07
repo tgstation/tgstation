@@ -52602,6 +52602,12 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"lFC" = (
+/obj/effect/mapping_helpers/holodeck_spawner,
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "lFP" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
@@ -94455,7 +94461,7 @@ pFO
 aro
 aro
 aro
-aro
+lFC
 aro
 aro
 aro
