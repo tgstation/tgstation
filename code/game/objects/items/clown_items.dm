@@ -85,6 +85,21 @@
 	new /obj/structure/chrono_field(user.loc, user)
 	return MANUAL_SUICIDE
 
+/obj/item/soap/omega/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	else if(istype(target, /obj/effect/decal/cleanable))
+		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
+		if(do_after(user, clean_speedies, target = target))
+			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+			var/obj/effect/decal/cleanable/cleanies = target
+			user?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT,1),0)) //If someone has put the EFFORT in to aquire such HOLY soap, then they should at least get XP from it.
+			qdel(target)
+			decreaseUses(user)
+
+/obj/item/soap/omega/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 150) //to take 40 minutes of dedication to make yould think it would slip just a lil more
+
 /obj/item/paper/fluff/stations/soap
 	name = "ancient janitorial poem"
 	desc = "An old paper that has passed many hands."

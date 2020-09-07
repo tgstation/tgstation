@@ -83,6 +83,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/omegasoapification/on_reaction(datum/reagents/holder, created_volume)
+	playsound(src, 'sound/effects/pray.ogg', 30, TRUE)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/soap/omega(location)
