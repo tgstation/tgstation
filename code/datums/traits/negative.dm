@@ -463,7 +463,7 @@
 	hardcore_value = 6
 
 /datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
+	if(quirk_holder.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough
@@ -710,11 +710,11 @@
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/M in allergies)
-		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(M)
+		var/datum/reagent/instantiated_med = carbon_quirk_holder.has_reagent(M)
 		if(!instantiated_med)
 			continue
 		//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
-		if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		if(carbon_quirk_holder.has_reagent(/datum/reagent/medicine/epinephrine))
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
