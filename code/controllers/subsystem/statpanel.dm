@@ -75,16 +75,15 @@ SUBSYSTEM_DEF(statpanels)
 					sdql2B = Q.generate_stat()
 				sdql2A += sdql2B
 				target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
-		if(target.stat_tab in target.spell_tabs)
-			var/list/proc_holders = target.mob.get_proc_holders()
-			target.spell_tabs.Cut()
-			for(var/phl in proc_holders)
-				var/list/proc_holder_list = phl
-				target.spell_tabs |= proc_holder_list[1]
-			var/proc_holders_encoded = ""
-			if(length(proc_holders))
-				proc_holders_encoded = url_encode(json_encode(proc_holders))
-			target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+		var/list/proc_holders = target.mob.get_proc_holders()
+		target.spell_tabs.Cut()
+		for(var/phl in proc_holders)
+			var/list/proc_holder_list = phl
+			target.spell_tabs |= proc_holder_list[1]
+		var/proc_holders_encoded = ""
+		if(length(proc_holders))
+			proc_holders_encoded = url_encode(json_encode(proc_holders))
+		target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
 		if(target.mob?.listed_turf)
 			var/mob/target_mob = target.mob
 			if(!target_mob.TurfAdjacent(target_mob.listed_turf))

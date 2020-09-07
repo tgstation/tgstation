@@ -467,7 +467,7 @@ function init_verbs(c, v) {
 
 function SendTabsToByond(){
 	window.location.href = "byond://winset?command=Reset-Tabs";
-	var tabstosend = verb_tabs.concat(permanent_tabs);
+	var tabstosend = permanent_tabs.concat(verb_tabs);
 	for(var i=0; i < tabstosend.length; i++){
 		SendTabToByond(tabstosend[i]);
 	}
