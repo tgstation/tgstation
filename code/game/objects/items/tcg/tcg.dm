@@ -51,7 +51,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard/attack_hand(mob/user)
 	var/list/choices = GLOB.tcgcard_radial_choices
-	if(!choices)
+	if(!isturf(loc))
+		return ..()
+	if(!length(choices))
 		choices = GLOB.tcgcard_radial_choices = list(
 		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
 		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
@@ -108,9 +110,14 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		user.put_in_hands(new_deck)
 	if(istype(I, /obj/item/tcgcard_deck))
 		var/obj/item/tcgcard_deck/old_deck = I
-		flipped = old_deck.flipped
+		if(length(old_deck.contents) >= 30)
+			to_chat(user, "<span class='notice'>This pile has too many cards for a regular deck!</span>")
+			return
 		user.transferItemToLoc(src, old_deck)
+		flipped = old_deck.flipped
 		zoom_in()
+		old_deck.update_icon()
+		update_icon()
 	return ..()
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
@@ -218,7 +225,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		stored_card.zoom_out()
 	. = ..()
 
-
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -236,6 +242,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		new_card.flipped = flipped
 		new_card.forceMove(src)
 		new_card.zoom_in()
+
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
