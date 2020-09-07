@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Performing a head transplant will now properly preserve the appearance."
