@@ -8,6 +8,7 @@
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
+	show_to_ghosts = TRUE
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -30,7 +31,7 @@
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
-	
+
 /datum/antagonist/abductor/scientist/onemanteam
 	name = "Abductor Solo"
 	outfit = /datum/outfit/abductor/scientist/onemanteam
@@ -96,7 +97,7 @@
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()
-	for(var/datum/team/abductor_team/T in get_all_teams(/datum/team/abductor_team))
+	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T
 	var/choice = input(admin,"Add to which team ?") as null|anything in (current_teams + "new team")
 	if (choice == "new team")

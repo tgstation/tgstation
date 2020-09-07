@@ -15,6 +15,7 @@
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_PREVENT
 
@@ -207,8 +208,11 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		H.wanted_lvl = new /obj/screen/wanted
-		H.infodisplay += H.wanted_lvl
+		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		H.wanted_lvl = giving_wanted_lvl
+		giving_wanted_lvl.hud = H
+		H.infodisplay += giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
@@ -221,16 +225,17 @@
 	..()
 
 /datum/antagonist/ert/families/greet()
-	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
-	to_chat(owner, "<B><font size=3 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>")
-
+	to_chat(owner, "<B><font size=6 color=red>You are the [name].</font></B>")
+	to_chat(owner, "<B><font size=5 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>")
+	to_chat(owner, "<B><font size=5 color=red>You are NOT a deathsquad. You are here to help innocents escape violence, criminal activity, and other dangerous things.</font></B>")
 	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
 	missiondesc += "<BR><B>Your Mission</B>:"
-	missiondesc += "<BR> <B>1.</B> Secure the situation and crack down on any gang activity. You can view gangsters with your sunglasses."
-	missiondesc += "<BR> <B>2.</B> There is an undercover police officer on station. Secure him, receive his intel, and extract him safely."
-	missiondesc += "<BR> <B>3.</B> Minimize civilian casualties, but defend yourself and civilians from hostile gangsters."
-	missiondesc += "<BR> <B>3.</B> If Security is found to be violating the rights of citizens, detain them as per your authority as Spinward Stellar Coalition officers."
-	missiondesc += "<BR> <B>4.</B> If the situation demands it, evacuate the station. Otherwise, remain on station and keep the peace."
+	missiondesc += "<BR> <B>1.</B> Serve the public trust."
+	missiondesc += "<BR> <B>2.</B> Protect the innocent."
+	missiondesc += "<BR> <B>3.</B> Uphold the law."
+	missiondesc += "<BR> <B>4.</B> Find the Undercover Cops."
+	missiondesc += "<BR> <B>5.</B> Detain Nanotrasen Security personnel if they harm any citizen."
+	missiondesc += "<BR> You can <B>see gangsters</B> using your <B>special sunglasses</B>."
 	to_chat(owner,missiondesc)
 	var/policy = get_policy(ROLE_FAMILIES)
 	if(policy)
@@ -250,18 +255,19 @@
 	random_names = FALSE
 
 /datum/antagonist/ert/families/undercover_cop/on_gain()
-	for(var/C in free_clothes)
-		var/obj/O = new C(owner.current)
-		var/list/slots = list (
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = ITEM_SLOT_LPOCKET,
-			"right pocket" = ITEM_SLOT_RPOCKET
-		)
-		var/mob/living/carbon/human/H = owner.current
-		var/equipped = H.equip_in_one_of_slots(O, slots)
-		if(!equipped)
-			to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-			qdel(O)
+	if(istype(owner.current, /mob/living/carbon/human))
+		for(var/C in free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+				qdel(O)
 	. = ..()
 
 

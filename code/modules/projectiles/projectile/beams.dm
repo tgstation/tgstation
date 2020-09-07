@@ -3,22 +3,40 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
-	light_range = 2
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = LIGHT_COLOR_RED
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 1
+	light_color = COLOR_SOFT_RED
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
+	wound_bonus = -20
+	bare_wound_bonus = 10
+
 
 /obj/projectile/beam/laser
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+	wound_bonus = -30
+	bare_wound_bonus = 40
+
+//overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
+/obj/projectile/beam/laser/hellfire
+	name = "hellfire laser"
+	wound_bonus = 0
+	damage = 25
+	speed = 0.6 // higher power = faster, that's how light works right
+
+/obj/projectile/beam/laser/hellfire/Initialize()
+	. = ..()
+	transform *= 2
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -55,7 +73,7 @@
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	flag = "rad"
+	flag = RAD
 	damage = 15
 	irradiate = 300
 	range = 15
@@ -72,7 +90,7 @@
 	icon_state = "omnilaser"
 	damage = 30
 	damage_type = STAMINA
-	flag = "energy"
+	flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -90,12 +108,13 @@
 	tracer_type = /obj/effect/projectile/tracer/pulse
 	muzzle_type = /obj/effect/projectile/muzzle/pulse
 	impact_type = /obj/effect/projectile/impact/pulse
+	wound_bonus = 10
 
 /obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
 		if(isobj(target))
-			SSexplosions.medobj += target
+			SSexplosions.med_mov_atom += target
 		else
 			SSexplosions.medturf += target
 
@@ -119,6 +138,8 @@
 	damage = 30
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
+	wound_bonus = -40
+	bare_wound_bonus = 70
 
 /obj/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
@@ -129,7 +150,7 @@
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
-	flag = "laser"
+	flag = LASER
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
@@ -146,7 +167,7 @@
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
@@ -180,7 +201,7 @@
 /obj/projectile/beam/instakill/red
 	icon_state = "red_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()
@@ -196,7 +217,7 @@
 	hitsound = 'sound/weapons/shrink_hit.ogg'
 	damage = 0
 	damage_type = STAMINA
-	flag = "energy"
+	flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
 	light_color = LIGHT_COLOR_BLUE
 	var/shrink_time = 90

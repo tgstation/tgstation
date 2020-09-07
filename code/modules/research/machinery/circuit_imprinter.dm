@@ -19,10 +19,6 @@
 	production_animation = "circuit_imprinter_ani"
 	allowed_buildtypes = IMPRINTER
 
-/obj/machinery/rnd/production/circuit_imprinter/disconnect_console()
-	linked_console.linked_imprinter = null
-	..()
-
 /obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
 	. = ..()
 	var/total_rating = 0

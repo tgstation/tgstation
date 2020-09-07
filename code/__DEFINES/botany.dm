@@ -7,3 +7,6 @@
 //Both available scanning modes for the plant analyzer.
 #define PLANT_SCANMODE_STATS		0
 #define PLANT_SCANMODE_CHEMICALS 	1
+
+//Seed flags.
+#define MUTATE_EARLY	(1<<0)

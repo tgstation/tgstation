@@ -75,7 +75,7 @@
 
 /obj/structure/sink/oil_well/attack_hand(mob/M)
 	flick("puddle-oil-splash",src)
-	reagents.reaction(M, TOUCH, 20) //Covers target in 20u of oil.
+	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
@@ -146,7 +146,7 @@
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 
-/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
+/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)
 		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.</span>")
 	else

@@ -79,7 +79,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_arm
 	name = "Exosuit Left Arm (APLU \"Ripley\")"
@@ -88,7 +88,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_arm
 	name = "Exosuit Right Arm (APLU \"Ripley\")"
@@ -97,7 +97,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_left_leg
 	name = "Exosuit Left Leg (APLU \"Ripley\")"
@@ -106,7 +106,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_left_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 /datum/design/ripley_right_leg
 	name = "Exosuit Right Leg (APLU \"Ripley\")"
@@ -115,7 +115,7 @@
 	build_path = /obj/item/mecha_parts/part/ripley_right_leg
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Ripley","Firefighter")
+	category = list("Ripley")
 
 //Odysseus
 /datum/design/odysseus_chassis
@@ -513,7 +513,7 @@
 
 //Exosuit Equipment
 /datum/design/ripleyupgrade
-	name = "Ripley MK-1 to MK-II conversion kit"
+	name = "Ripley MK-I to MK-II conversion kit"
 	id = "ripleyupgrade"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
@@ -522,7 +522,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_hydraulic_clamp
-	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
+	name = "Exosuit Engineering (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
@@ -531,7 +531,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_drill
-	name = "Exosuit Engineering Equipment (Drill)"
+	name = "Exosuit Mining (Mining Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill
@@ -540,7 +540,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mining_scanner
-	name = "Exosuit Engineering Equipment (Mining Scanner)"
+	name = "Exosuit Engineering (Mining Scanner)"
 	id = "mech_mscanner"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -549,7 +549,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_extinguisher
-	name = "Exosuit Engineering Equipment (Extinguisher)"
+	name = "Exosuit Engineering (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
@@ -558,7 +558,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_generator
-	name = "Exosuit Equipment (Plasma Generator)"
+	name = "Exosuit Module (Plasma Generator)"
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
@@ -567,7 +567,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_mousetrap_mortar
-	name = "H.O.N.K Mousetrap Mortar"
+	name = "H.O.N.K Weapon (Mousetrap Mortar)"
 	id = "mech_mousetrap_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
@@ -576,7 +576,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_banana_mortar
-	name = "H.O.N.K Banana Mortar"
+	name = "H.O.N.K Weapon (Banana Mortar)"
 	id = "mech_banana_mortar"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
@@ -585,7 +585,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_honker
-	name = "HoNkER BlAsT 5000"
+	name = "H.O.N.K Weapon (HoNkER BlAsT 5000)"
 	id = "mech_honker"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/honker
@@ -594,7 +594,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_punching_glove
-	name = "Oingo Boingo Punch-face"
+	name = "H.O.N.K Weapon (Oingo Boingo Punch-face)"
 	id = "mech_punching_face"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
@@ -750,6 +750,15 @@
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_prt
+	name = "Cyborg Upgrade (Plating Repair Tool)"
+	id = "borg_upgrade_prt"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/prt
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
+	construction_time = 40
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"
@@ -766,7 +775,8 @@
 	build_path = /obj/item/borg/upgrade/ai
 	materials = list(/datum/material/iron = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Control Interfaces")
+	search_metadata = "boris"
 
 /datum/design/borg_upgrade_rped
 	name = "Cyborg Upgrade (RPED)"
@@ -804,15 +814,24 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_broomer
+	name = "Cyborg Upgrade (Experimental Push Broom)"
+	id = "borg_upgrade_broomer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/broomer
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
-	name = "Exosuit Tracking Beacon"
+	name = "Exosuit Tracker (Exosuit Tracking Beacon)"
 	id = "mecha_tracking"
 	build_type = MECHFAB
 	build_path =/obj/item/mecha_parts/mecha_tracking
 	materials = list(/datum/material/iron=500)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Exosuit Equipment")
 
 /datum/design/mecha_tracking_ai_control
 	name = "AI Control Beacon"
@@ -821,7 +840,7 @@
 	build_path = /obj/item/mecha_parts/mecha_tracking/ai_control
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 200)
 	construction_time = 50
-	category = list("Misc")
+	category = list("Control Interfaces")
 
 /datum/design/synthetic_flash
 	name = "Flash"

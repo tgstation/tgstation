@@ -8,5 +8,6 @@
 			"filenamePattern": "*.dmi",
 			"viewType": "imagePreview.previewEditor"
 		}
-	]
+	],
+	"files.eol": "\n"
 }

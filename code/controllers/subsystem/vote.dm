@@ -229,6 +229,8 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
+			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
 

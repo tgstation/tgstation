@@ -9,7 +9,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
@@ -36,7 +36,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	slowdown = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
@@ -61,6 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
+		update_hud_icon(user)		// update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -227,10 +228,10 @@
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
 	if(cell.charge >= THERMAL_REGULATOR_COST)
-		if(cell_percent > 0.60)
+		if(cell_percent > 60)
 			human.update_spacesuit_hud_icon("high")
 			return
-		if(cell_percent > 0.20)
+		if(cell_percent > 20)
 			human.update_spacesuit_hud_icon("mid")
 			return
 		human.update_spacesuit_hud_icon("low")

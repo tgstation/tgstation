@@ -27,9 +27,8 @@
 
 /datum/surgery_step/brainwash
 	name = "brainwash"
-	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/package_wrap = 35, /obj/item/stack/cable_coil = 15)
 	time = 200
-	experience_given = MEDICAL_SKILL_ADVANCED
 	var/objective
 
 /datum/surgery_step/brainwash/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -1,15 +1,5 @@
 //entirely neutral or internal status effects go here
 
-/datum/status_effect/sigil_mark //allows the affected target to always trigger sigils while mindless
-	id = "sigil_mark"
-	duration = -1
-	alert_type = null
-	var/stat_allowed = DEAD //if owner's stat is below this, will remove itself
-
-/datum/status_effect/sigil_mark/tick()
-	if(owner.stat < stat_allowed)
-		qdel(src)
-
 /datum/status_effect/crusher_damage //tracks the damage dealt to this mob by kinetic crushers
 	id = "crusher_damage"
 	duration = -1
@@ -119,30 +109,6 @@
 		rewarded.adjustToxLoss(-25)
 		rewarded.adjustOxyLoss(-25)
 		rewarded.adjustCloneLoss(-25)
-
-/datum/status_effect/bugged //Lets another mob hear everything you can
-	id = "bugged"
-	duration = -1
-	status_type = STATUS_EFFECT_MULTIPLE
-	alert_type = null
-	var/mob/living/listening_in
-
-/datum/status_effect/bugged/on_apply(mob/living/new_owner, mob/living/tracker)
-	. = ..()
-	if (.)
-		RegisterSignal(new_owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
-
-/datum/status_effect/bugged/on_remove()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-
-/datum/status_effect/bugged/proc/handle_hearing(datum/source, list/hearing_args)
-	listening_in.show_message(hearing_args[HEARING_MESSAGE])
-
-/datum/status_effect/bugged/on_creation(mob/living/new_owner, mob/living/tracker)
-	. = ..()
-	if(.)
-		listening_in = tracker
 
 // heldup is for the person being aimed at
 /datum/status_effect/heldup

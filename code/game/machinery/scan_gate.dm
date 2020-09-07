@@ -26,8 +26,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
-	ui_x = 400
-	ui_y = 300
 
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam
@@ -180,11 +178,10 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/scanner_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/scanner_gate/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ScannerGate", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ScannerGate", name)
 		ui.open()
 
 /obj/machinery/scanner_gate/ui_data()

@@ -180,7 +180,7 @@
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"
-	desc = "Keep those Plasmamen alive with two sets of Plasmaman outfits. Each set contains a plasmaman jumpsuit, internals tank, and helmet."
+	desc = "Keep those Plasmamen alive with two sets of Plasmaman outfits. Each set contains a plasmaman jumpsuit, gloves, internals tank, and helmet."
 	cost = 2000
 	contains = list(/obj/item/clothing/under/plasmaman,
 					/obj/item/clothing/under/plasmaman,
@@ -886,7 +886,7 @@
 
 /datum/supply_pack/engine/grounding_rods
 	name = "Grounding Rod Crate"
-	desc = "Four grounding rods guaranteed to keep any uppity tesla's lightning under control."
+	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
 	cost = 1700
 	contains = list(/obj/machinery/power/grounding_rod,
 					/obj/machinery/power/grounding_rod,
@@ -894,19 +894,6 @@
 					/obj/machinery/power/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-
-/datum/supply_pack/engine/PA
-	name = "Particle Accelerator Crate"
-	desc = "A supermassive black hole or hyper-powered teslaball are the perfect way to spice up any party! This \"My First Apocalypse\" kit contains everything you need to build your own Particle Accelerator! Ages 10 and up."
-	cost = 3000
-	contains = list(/obj/structure/particle_accelerator/fuel_chamber,
-					/obj/machinery/particle_accelerator/control_box,
-					/obj/structure/particle_accelerator/particle_emitter/center,
-					/obj/structure/particle_accelerator/particle_emitter/left,
-					/obj/structure/particle_accelerator/particle_emitter/right,
-					/obj/structure/particle_accelerator/power_box,
-					/obj/structure/particle_accelerator/end_cap)
-	crate_name = "particle accelerator crate"
 
 /datum/supply_pack/engine/collector
 	name = "Radiation Collector Crate"
@@ -916,13 +903,6 @@
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
 	crate_name = "collector crate"
-
-/datum/supply_pack/engine/sing_gen
-	name = "Singularity Generator Crate"
-	desc = "The key to unlocking the power of Lord Singuloth. Particle Accelerator not included."
-	cost = 5000
-	contains = list(/obj/machinery/the_singularitygen)
-	crate_name = "singularity generator crate"
 
 /datum/supply_pack/engine/solar
 	name = "Solar Panel Crate"
@@ -967,7 +947,7 @@
 
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"
-	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
+	desc = "Whether it's high-voltage executions, creating research points, or just plain old assistant electrofrying: This pack of four Tesla coils can do it all!"
 	cost = 2500
 	contains = list(/obj/machinery/power/tesla_coil,
 					/obj/machinery/power/tesla_coil,
@@ -975,13 +955,6 @@
 					/obj/machinery/power/tesla_coil)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-
-/datum/supply_pack/engine/tesla_gen
-	name = "Tesla Generator Crate"
-	desc = "The key to unlocking the power of the Tesla energy ball. Particle Accelerator not included."
-	cost = 5000
-	contains = list(/obj/machinery/the_singularitygen/tesla)
-	crate_name = "tesla generator crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Canisters & Materials ////////////////////////////////
@@ -1057,7 +1030,7 @@
 	name = "BZ Canister Crate"
 	desc = "Contains a canister of BZ. Requires Toxins access to open."
 	cost = 8000
-	access = ACCESS_TOX_STORAGE
+	access = ACCESS_TOXINS
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "BZ canister crate"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1092,6 +1065,14 @@
 	cost = 1200
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
 	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/hightankfuel
+	name = "Large Fuel Tank Crate"
+	desc = "Contains a high-capacity fuel tank. Keep contents away from open flame."
+	cost = 2000
+	contains = list(/obj/structure/reagent_dispensers/fueltank/large)
+	crate_name = "high-capacity fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/materials/nitrogen
@@ -1149,16 +1130,31 @@
 	cost = 3500
 	contains = list(/obj/item/reagent_containers/blood,
 					/obj/item/reagent_containers/blood,
-					/obj/item/reagent_containers/blood/APlus,
-					/obj/item/reagent_containers/blood/AMinus,
-					/obj/item/reagent_containers/blood/BPlus,
-					/obj/item/reagent_containers/blood/BMinus,
-					/obj/item/reagent_containers/blood/OPlus,
-					/obj/item/reagent_containers/blood/OMinus,
+					/obj/item/reagent_containers/blood/a_plus,
+					/obj/item/reagent_containers/blood/a_minus,
+					/obj/item/reagent_containers/blood/b_plus,
+					/obj/item/reagent_containers/blood/b_minus,
+					/obj/item/reagent_containers/blood/o_plus,
+					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/ethereal)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
+
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss
+)
+	crate_name = "medipen crate"
 
 /datum/supply_pack/medical/chemical
 	name = "Chemical Starter Kit Crate"
@@ -1218,9 +1214,11 @@
 					/obj/item/storage/firstaid/brute,
 					/obj/item/storage/firstaid/fire,
 					/obj/item/defibrillator/loaded,
-					/obj/item/reagent_containers/blood/OMinus,
+					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
+					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel,
 					/obj/item/vending_refill/medical)
 	crate_name = "medical supplies crate"
 
@@ -1289,7 +1287,7 @@
 	name = "Plasma Assembly Crate"
 	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."
 	cost = 1000
-	access = ACCESS_TOX_STORAGE
+	access = ACCESS_TOXINS
 	contains = list(/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
@@ -1304,6 +1302,51 @@
 					/obj/item/assembly/timer)
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/science/raw_flux_anomaly
+	name = "Raw Flux Anomaly"
+	desc = "The raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/flux)
+	crate_name = "raw flux anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_grav_anomaly
+	name = "Raw Gravitational Anomaly"
+	desc = "The raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/grav)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_vortex_anomaly
+	name = "Raw Vortex Anomaly"
+	desc = "The raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/vortex)
+	crate_name = "raw vortex anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_bluespace_anomaly
+	name = "Raw Bluespace Anomaly"
+	desc = "The raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/bluespace)
+	crate_name = "raw bluespace anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_pyro_anomaly
+	name = "Raw Pyro Anomaly"
+	desc = "The raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOXINS
+	contains = list(/obj/item/raw_anomaly_core/pyro)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -1364,6 +1407,26 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
+/datum/supply_pack/science/monkey_helmets
+	name = "Monkey Mind Magnification Helmet crate"
+	desc = "Some research is best done with monkeys, yet sometimes they're just too dumb to complete more complicated tasks. These helmets should help."
+	cost = 1500
+	contains = list(/obj/item/clothing/head/helmet/monkey_sentience,
+					/obj/item/clothing/head/helmet/monkey_sentience)
+	crate_name = "monkey mind magnification crate"
+
+/datum/supply_pack/science/cytology
+	name = "Cytology supplies crate"
+	desc = "Did out of control specimens pulverize xenobiology? Here is some more supplies for further testing."
+	cost = 1500
+	contains = list(/obj/structure/microscope,
+					/obj/item/biopsy_tool,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/petridish,
+					/obj/item/storage/box/swab,
+					/obj/item/construction/plumbing/research)
+	crate_name = "cytology supplies crate"
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1378,9 +1441,9 @@
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
 					/obj/item/export_scanner,
-					/obj/item/destTagger,
+					/obj/item/dest_tagger,
 					/obj/item/hand_labeler,
-					/obj/item/stack/packageWrap)
+					/obj/item/stack/package_wrap)
 	crate_name = "cargo supplies crate"
 
 /datum/supply_pack/service/noslipfloor
@@ -1575,6 +1638,20 @@
 	cost = 1000
 	contains = list(/obj/item/vending_refill/assist)
 	crate_name = "vendomat supply crate"
+
+/datum/supply_pack/service/wedding
+	name = "Wedding Crate"
+	desc = "Everything you need to host a wedding! Now you just need an officiant."
+	cost = 1500
+	contains = list(/obj/item/clothing/under/dress/wedding_dress,
+					/obj/item/clothing/under/suit/tuxedo,
+					/obj/item/storage/belt/cummerbund,
+					/obj/item/clothing/head/weddingveil,
+					/obj/item/bouquet,
+					/obj/item/bouquet/sunflower,
+					/obj/item/bouquet/poppy,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne)
+	crate_name = "wedding crate"
 
 /datum/supply_pack/service/emptycrate
 	name = "Empty Crate"
@@ -1897,7 +1974,7 @@
 	if(prob(50))
 		var/mob/living/simple_animal/pet/cat/C = locate() in .
 		qdel(C)
-		new /mob/living/simple_animal/pet/cat/Proc(.)
+		new /mob/living/simple_animal/pet/cat/_proc(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"
@@ -1920,7 +1997,7 @@
 		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
 			qdel(D)
-			new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+			new /mob/living/simple_animal/pet/dog/corgi/lisa(.)
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
@@ -1981,6 +2058,14 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
+/datum/supply_pack/critter/bullterrier
+	name = "Bull Terrier Crate"
+	desc = "Like a normal dog, but with a head the shape of an egg. Comes with a nice collar!"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/pet/dog/bullterrier,
+					/obj/item/clothing/neck/petcollar)
+	crate_name = "bull terrier crate"
+
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
@@ -2014,8 +2099,8 @@
 					/obj/item/clothing/head/collectable/rabbitears,
 					/obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/collectable/hardhat,
-					/obj/item/clothing/head/collectable/HoS,
-					/obj/item/clothing/head/collectable/HoP,
+					/obj/item/clothing/head/collectable/hos,
+					/obj/item/clothing/head/collectable/hop,
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/slime,
@@ -2212,15 +2297,14 @@
 	crate_name = "toy crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/toys/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/toys/fill(obj/structure/closet/crate/C)
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
-		new the_toy(.)
+		new the_toy(C)
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
@@ -2328,12 +2412,11 @@
 	contains = list()
 	crate_name = "booster pack pack"
 
-/datum/supply_pack/costumes_toys/randomised/tcg/generate()
-	. = ..()
+/datum/supply_pack/costumes_toys/randomised/tcg/fill(obj/structure/closet/crate/C)
 	var/cardpacktype
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
-		new cardpacktype(.)
+		new cardpacktype(C)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
@@ -2378,7 +2461,7 @@
 					/obj/item/instrument/trombone,
 					/obj/item/instrument/recorder,
 					/obj/item/instrument/harmonica,
-					/obj/structure/piano/unanchored)
+					/obj/structure/musician/piano/unanchored)
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/book_crate

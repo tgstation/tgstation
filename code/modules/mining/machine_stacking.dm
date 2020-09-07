@@ -93,6 +93,8 @@
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
+	if(QDELETED(AM))
+		return
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
@@ -105,21 +107,25 @@
 			return TRUE
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
+	if(QDELETED(inp))
+		return
+
+	// Dump the sheets to the silo if attached
+	if(materials.silo && !materials.on_hold())
+		var/matlist = inp.custom_materials & materials.mat_container.materials
+		if (length(matlist))
+			var/inserted = materials.mat_container.insert_item(inp)
+			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			qdel(inp)
+			return
+
+	// No silo attached process to internal storage
 	var/key = inp.merge_type
 	var/obj/item/stack/sheet/storage = stack_list[key]
 	if(!storage) //It's the first of this sheet added
 		stack_list[key] = storage = new inp.type(src, 0)
 	storage.amount += inp.amount //Stack the sheets
 	qdel(inp)
-
-	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
-		var/matlist = storage.custom_materials & materials.mat_container.materials
-		if (length(matlist))
-			var/inserted = materials.mat_container.insert_item(storage)
-			materials.silo_log(src, "collected", inserted, "sheets", matlist)
-			if (QDELETED(storage))
-				stack_list -= key
-			return
 
 	while(storage.amount >= stack_amt) //Get rid of excessive stackage
 		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)

@@ -110,7 +110,7 @@ GLOBAL_PROTECT(exp_to_update)
 				jobs_unlocked += job.title
 			else
 				var/xp_req = job.get_exp_req_amount()
-				jobs_locked += "[job.title] [get_exp_format(text2num(calc_exp_type(job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
+				jobs_locked += "[job.title] ([get_exp_format(text2num(calc_exp_type(job.get_exp_req_type())))] / [get_exp_format(xp_req)] as [job.get_exp_req_type()])"
 	if(jobs_unlocked.len)
 		return_text += "<BR><BR>Jobs Unlocked:<UL><LI>"
 		return_text += jobs_unlocked.Join("</LI><LI>")
@@ -156,7 +156,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	if(!SSdbcore.Connect())
 		return -1
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery(
+	var/datum/db_query/exp_read = SSdbcore.NewQuery(
 		"SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
@@ -191,7 +191,7 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		prefs.db_flags |= newflag
 
-	var/datum/DBQuery/flag_update = SSdbcore.NewQuery(
+	var/datum/db_query/flag_update = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET flags=:flags WHERE ckey=:ckey",
 		list("flags" = "[prefs.db_flags]", "ckey" = ckey)
 	)
@@ -274,7 +274,7 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!SSdbcore.Connect())
 		return FALSE
 
-	var/datum/DBQuery/flags_read = SSdbcore.NewQuery(
+	var/datum/db_query/flags_read = SSdbcore.NewQuery(
 		"SELECT flags FROM [format_table_name("player")] WHERE ckey=:ckey",
 		list("ckey" = ckey)
 	)

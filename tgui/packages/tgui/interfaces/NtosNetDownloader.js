@@ -5,6 +5,7 @@ import { NtosWindow } from '../layouts';
 export const NtosNetDownloader = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     disk_size,
     disk_used,
     downloadable_programs = [],
@@ -13,7 +14,11 @@ export const NtosNetDownloader = (props, context) => {
     hackedavailable,
   } = data;
   return (
-    <NtosWindow resizable>
+    <NtosWindow
+      theme={PC_device_theme}
+      width={480}
+      height={735}
+      resizable>
       <NtosWindow.Content scrollable>
         {!!error && (
           <NoticeBox>

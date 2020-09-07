@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/examine(mob/user)
 	. = ..()
 	if(glass_colour_type && ishuman(user))
-		. += "<span class='notice'>Alt-click to toggle its colors.</span>"
+		. += "<span class='notice'>Alt-click to toggle [p_their()] colors.</span>"
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
@@ -86,9 +86,10 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -99,7 +100,7 @@
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_EYES)
@@ -154,9 +155,10 @@
 	force = 10
 	throwforce = 20
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/regular
@@ -226,9 +228,10 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	name = "black giga gar glasses"
@@ -246,9 +249,10 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar

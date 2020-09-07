@@ -266,6 +266,10 @@
 	name = "Salvage Pod Recall (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
+
 //Medical
 
 /obj/item/circuitboard/computer/crew
@@ -287,11 +291,6 @@
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/pandemic
-
-/obj/item/circuitboard/computer/scan_consolenew
-	name = "DNA Machine (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/scan_consolenew
 
 //Science
 
@@ -328,11 +327,7 @@
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
 	icon_state = "science"
-	build_path = /obj/machinery/computer/rdconsole/core
-
-/obj/item/circuitboard/computer/rdconsole/production
-	name = "R&D Console Production Only (Computer Board)"
-	build_path = /obj/machinery/computer/rdconsole/production
+	build_path = /obj/machinery/computer/rdconsole
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
@@ -355,9 +350,19 @@
 	build_path = /obj/machinery/computer/teleporter
 
 /obj/item/circuitboard/computer/xenobiology
-	name = "circuit board (Xenobiology Console)"
+	name = "Xenobiology Console (Computer Board)"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
+
+/obj/item/circuitboard/computer/scan_consolenew
+	name = "DNA Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/scan_consolenew
+
+/obj/item/circuitboard/computer/mechpad
+	name = "Mecha Orbital Pad Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/mechpad
 
 //Security
 

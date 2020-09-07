@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Dropdown, Grid, Input, LabeledList, ProgressBar, Section, Flex } from '../components';
+import { Button, Dropdown, Flex, Input, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
@@ -24,7 +24,9 @@ export const Mule = (props, context) => {
   } = data;
   const locked = data.locked && !data.siliconUser;
   return (
-    <Window>
+    <Window
+      width={350}
+      height={425}>
       <Window.Content>
         <InterfaceLockNoticeBox />
         <Section

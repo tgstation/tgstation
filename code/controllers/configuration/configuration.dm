@@ -53,6 +53,9 @@
 	LoadPolicy()
 	LoadChatFilter()
 
+	if (Master)
+		Master.OnConfigLoad()
+
 /datum/controller/configuration/proc/full_wipe()
 	if(IsAdminAdvancedProcCall())
 		return
@@ -183,10 +186,9 @@
 	var/list/banned_edits = list(NAMEOF(src, entries_by_type), NAMEOF(src, entries), NAMEOF(src, directory))
 	return !(var_name in banned_edits) && ..()
 
-/datum/controller/configuration/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
-	stat("[name]:", statclick)
+/datum/controller/configuration/stat_entry(msg)
+	msg = "Edit"
+	return msg
 
 /datum/controller/configuration/proc/Get(entry_type)
 	var/datum/config_entry/E = entry_type
@@ -402,22 +404,16 @@ Example config:
 
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()
-
 	if(!fexists("[directory]/in_character_filter.txt"))
 		return
-
 	log_config("Loading config file in_character_filter.txt...")
-
 	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
 			continue
 		in_character_filter += REGEX_QUOTE(line)
-
 	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
-
-	syncChatRegexes()
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)

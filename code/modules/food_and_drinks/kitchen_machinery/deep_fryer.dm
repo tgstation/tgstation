@@ -29,7 +29,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
+	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
@@ -46,7 +46,7 @@ God bless America.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage,
-		/obj/item/smallDelivery,
+		/obj/item/small_delivery,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -89,7 +89,7 @@ God bless America.
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
-	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
+	if(istype(I, /obj/item/food/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
@@ -101,7 +101,7 @@ God bless America.
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
+			frying = new/obj/item/food/deepfryholder(src, I)
 			icon_state = "fryer_on"
 			fry_loop.start()
 
@@ -147,7 +147,7 @@ God bless America.
 			return
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class='danger'>[user] dunks [C]'s face in [src]!</span>")
-		reagents.reaction(C, TOUCH)
+		reagents.expose(C, TOUCH)
 		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
 		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))

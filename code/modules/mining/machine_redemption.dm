@@ -12,8 +12,6 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/ore_redemption
-	ui_x = 440
-	ui_y = 550
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
@@ -37,16 +35,6 @@
 	materials = null
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/RefreshParts()
-	var/point_upgrade_temp = 1
-	var/ore_multiplier_temp = 1
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.rating)
-	point_upgrade = point_upgrade_temp
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
-
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
@@ -55,6 +43,8 @@
 		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
+	if(QDELETED(O))
+		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)
 		return
@@ -142,6 +132,8 @@
 	signal.send_to_receivers()
 
 /obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(QDELETED(target))
+		return
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
@@ -204,10 +196,10 @@
 		register_input_turf() // register the new one
 		return TRUE
 
-/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OreRedemptionMachine", "Ore Redemption Machine", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "OreRedemptionMachine")
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)

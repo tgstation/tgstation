@@ -173,12 +173,12 @@
 		if(. && beegent && isliving(target))
 			var/mob/living/L = target
 			if(L.reagents)
-				beegent.reaction_mob(L, INJECT)
+				beegent.expose_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
 	if(beegent && istype(L) && L.reagents)
-		beegent.reaction_mob(L, INJECT)
+		beegent.expose_mob(L, INJECT)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
@@ -240,6 +240,9 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
+/mob/living/simple_animal/hostile/poison/bees/will_escape_storage()
+	return TRUE
+
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
@@ -262,7 +265,7 @@
 	. = ..()
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
-		beegent.reaction_mob(L, TOUCH)
+		beegent.expose_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 
@@ -270,6 +273,8 @@
 /mob/living/simple_animal/hostile/poison/bees/queen/pollinate()
 	return
 
+/mob/living/simple_animal/hostile/poison/bees/queen/will_escape_storage()
+	return FALSE
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)

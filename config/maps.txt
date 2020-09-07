@@ -13,13 +13,8 @@ Format:
 	votable (is this map votable)
 endmap
 
-map boxstation
-	#default
-	#voteweight 1.5
-	votable
-endmap
-
 map metastation
+	#default
 	minplayers 25
 	#voteweight 0.5
 	votable

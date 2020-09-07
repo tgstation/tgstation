@@ -1,14 +1,12 @@
 /datum/computer_file/program/job_management
-	filename = "job_manage"
-	filedesc = "Job Manager"
+	filename = "plexagoncore"
+	filedesc = "Plexagon HR Core"
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot avalibility."
 	transfer_access = ACCESS_HEADS
-	requires_ntnet = 0
+	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosJobManager"
-	ui_x = 400
-	ui_y = 620
 
 	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for

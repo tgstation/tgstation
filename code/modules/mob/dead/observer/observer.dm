@@ -17,11 +17,15 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_power = 2
+	light_on = FALSE
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
-							//If you died in the game and are a ghsot - this will remain as null.
+							//If you died in the game and are a ghost - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/atom/movable/following = null
 	var/fun_verbs = 0
@@ -55,15 +59,16 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
 /mob/dead/observer/Initialize()
 	set_invisibility(GLOB.observer_default_invisibility)
 
-	verbs += list(
+	add_verb(src, list(
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/tray_view)
+		/mob/dead/observer/proc/tray_view))
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -124,8 +129,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	real_name = name
 
 	if(!fun_verbs)
-		verbs -= /mob/dead/observer/verb/boo
-		verbs -= /mob/dead/observer/verb/possess
+		remove_verb(src, /mob/dead/observer/verb/boo)
+		remove_verb(src, /mob/dead/observer/verb/possess)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
@@ -142,6 +147,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	grant_all_languages()
 	show_data_huds()
 	data_huds_on = 1
+
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -166,6 +172,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	updateallghostimages()
 
+	QDEL_NULL(orbit_menu)
 	QDEL_NULL(spawners_menu)
 	return ..()
 
@@ -273,9 +280,16 @@ Works together with spawning an observer, noted above.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
+			ghost.client.init_verbs()
 			if(!can_reenter_corpse)	// Disassociates observer mind from the body mind
 				ghost.mind = null
 			return ghost
+
+/mob/living/ghostize(can_reenter_corpse = TRUE)
+	. = ..()
+	if(. && can_reenter_corpse)
+		var/mob/dead/observer/ghost = .
+		ghost.mind.current?.med_hud_set_status()
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -306,11 +320,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	ghostize(FALSE)
 
-/mob/dead/observer/Move(NewLoc, direct)
+/mob/dead/observer/Move(NewLoc, direct, glide_size_override = 32)
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
 
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
 	if(NewLoc)
 		forceMove(NewLoc)
 		update_parallax_contents()
@@ -344,6 +360,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.view_size.setDefault(getScreenSize(client.prefs.widescreenpref))//Let's reset so people can't become allseeing gods
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
+	mind.current.client.init_verbs()
 	return TRUE
 
 /mob/dead/observer/verb/stay_dead()
@@ -401,7 +418,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/filtered = list()
 	for(var/V in GLOB.sortedAreas)
 		var/area/A = V
-		if(!A.hidden)
+		if(!(A.area_flags & HIDDEN_AREA))
 			filtered += A
 	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
 
@@ -424,10 +441,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.ui_interact(src)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -647,6 +664,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest_html()
@@ -780,7 +803,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	return IsAdminGhost(usr)
+	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()
 	return TRUE
@@ -788,19 +811,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
 	switch(var_name)
-		if("icon")
+		if(NAMEOF(src, icon))
 			ghostimage_default.icon = icon
 			ghostimage_simple.icon = icon
-		if("icon_state")
+		if(NAMEOF(src, icon_state))
 			ghostimage_default.icon_state = icon_state
 			ghostimage_simple.icon_state = icon_state
-		if("fun_verbs")
+		if(NAMEOF(src, fun_verbs))
 			if(fun_verbs)
-				verbs += /mob/dead/observer/verb/boo
-				verbs += /mob/dead/observer/verb/possess
+				add_verb(src, /mob/dead/observer/verb/boo)
+				add_verb(src, /mob/dead/observer/verb/possess)
 			else
-				verbs -= /mob/dead/observer/verb/boo
-				verbs -= /mob/dead/observer/verb/possess
+				remove_verb(src, /mob/dead/observer/verb/boo)
+				remove_verb(src, /mob/dead/observer/verb/possess)
 
 /mob/dead/observer/reset_perspective(atom/A)
 	if(client)
@@ -854,6 +877,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, "<span class='warning'>Can't become a pAI candidate while not dead!</span>")
 
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+
+	mafia_signup()
+
+/mob/dead/observer/proc/mafia_signup()
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game("mafia")
+	game.ui_interact(usr)
+
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
@@ -863,12 +904,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!invisibility)
 		. += "It seems extremely obvious."
 
+/mob/dead/observer/examine_more(mob/user)
+	if(!isAdminObserver(user))
+		return ..()
+	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+	. += list("\t><span class='admin'>[ADMIN_FULLMONTY(src)]</span>")
+
+
 /mob/dead/observer/proc/set_invisibility(value)
 	invisibility = value
-	if(!value)
-		set_light(1, 2)
-	else
-		set_light(0, 0)
+	set_light_on(!value ? TRUE : FALSE)
+
 
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)
@@ -876,7 +922,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "invisibility")
+	if(var_name == NAMEOF(src, invisibility))
 		set_invisibility(invisibility) // updates light
 
 /proc/set_observer_default_invisibility(amount, message=null)
@@ -906,8 +952,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
 	for(var/obj/O in orange(client.view, src) )
-
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128

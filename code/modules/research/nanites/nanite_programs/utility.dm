@@ -59,7 +59,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/self_scan/register_extra_settings()
-	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Nanite"))
+	extra_settings[NES_SCAN_TYPE] = new /datum/nanite_extra_setting/type("Medical", list("Medical", "Chemical", "Wound", "Nanite"))
 
 /datum/nanite_program/self_scan/on_trigger(comm_message)
 	if(host_mob.stat == DEAD)
@@ -70,6 +70,8 @@
 			healthscan(host_mob, host_mob)
 		if("Chemical")
 			chemscan(host_mob, host_mob)
+		if("Wound")
+			woundscan(host_mob, host_mob)
 		if("Nanite")
 			SEND_SIGNAL(host_mob, COMSIG_NANITE_SCAN, host_mob, TRUE)
 
@@ -87,20 +89,20 @@
 	. = ..()
 	nanites.stealth = FALSE
 
-/datum/nanite_program/reduced_diagnostics
-	name = "Reduced Diagnostics"
-	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
-	Doing so saves some power, slightly increasing their replication speed."
+/datum/nanite_program/nanite_debugging
+	name = "Nanite Debugging"
+	desc = "Enables various high-cost diagnostics in the nanites, making them able to communicate their program list to portable scanners. \
+	Doing so uses some power, slightly decreasing their replication speed."
 	rogue_types = list(/datum/nanite_program/toxic)
-	use_rate = -0.1
+	use_rate = 0.1
 
-/datum/nanite_program/reduced_diagnostics/enable_passive_effect()
-	. = ..()
-	nanites.diagnostics = FALSE
-
-/datum/nanite_program/reduced_diagnostics/disable_passive_effect()
+/datum/nanite_program/nanite_debugging/enable_passive_effect()
 	. = ..()
 	nanites.diagnostics = TRUE
+
+/datum/nanite_program/nanite_debugging/disable_passive_effect()
+	. = ..()
+	nanites.diagnostics = FALSE
 
 /datum/nanite_program/relay
 	name = "Relay"

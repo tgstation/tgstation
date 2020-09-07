@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -134,7 +134,7 @@
 	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
-/obj/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+/obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
@@ -313,7 +313,7 @@
 	target.animate_atom_living(firer)
 	..()
 
-/atom/proc/animate_atom_living(var/mob/living/owner = null)
+/atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
@@ -337,9 +337,9 @@
 		else
 			var/obj/O = src
 			if(istype(O, /obj/item/gun))
-				new /mob/living/simple_animal/hostile/mimic/copy/ranged(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy/ranged(drop_location(), src, owner)
 			else
-				new /mob/living/simple_animal/hostile/mimic/copy(loc, src, owner)
+				new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
 
 	else if(istype(src, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
@@ -352,7 +352,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -372,7 +372,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -389,7 +389,7 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -456,7 +456,7 @@
 	animate(src, alpha = 0, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
 
-/obj/structure/closet/decay/open(mob/living/user)
+/obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
 		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
@@ -578,7 +578,7 @@
 		possession_test(M)
 		return BULLET_ACT_HIT
 
-/obj/projectile/magic/wipe/proc/possession_test(var/mob/living/carbon/M)
+/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
@@ -627,7 +627,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
@@ -706,7 +706,7 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

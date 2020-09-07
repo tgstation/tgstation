@@ -2,6 +2,7 @@
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
+	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_icon_state = "shotgun"
@@ -10,8 +11,8 @@
 	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	rack_sound = "sound/weapons/gun/shotgun/rack.ogg"
-	load_sound = "sound/weapons/gun/shotgun/insert_shell.ogg"
+	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -69,6 +70,8 @@
 	name = "cycler shotgun"
 	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
 	icon_state = "cycler"
+	inhand_icon_state = "bulldog"
+	worn_icon_state = "cshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	w_class = WEIGHT_CLASS_HUGE
 	var/toggled = FALSE
@@ -113,6 +116,7 @@
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
+	worn_icon_state = "cshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
@@ -130,6 +134,7 @@
 	empty_indicator = TRUE
 	empty_alarm = TRUE
 	special_mags = TRUE
+	mag_display_ammo = TRUE
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
@@ -222,14 +227,18 @@
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = 0
+		slung = FALSE
 		update_icon()
+		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
 	icon_state = "ishotgun_sawn"
 	inhand_icon_state = "ishotgun_sawn"
+	worn_icon_state = "gun"
+	worn_icon = null
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
@@ -239,13 +248,14 @@
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
 	inhand_icon_state = "shotgun"
-	load_sound = "sound/weapons/shotguninsert.ogg"
+	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
 	force = 16 //it has a hook on it
-	attack_verb = list("slashed", "hooked", "stabbed")
+	attack_verb_continuous = list("slashes", "hooks", "stabs")
+	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook

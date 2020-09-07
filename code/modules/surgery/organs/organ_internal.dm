@@ -35,13 +35,13 @@
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, .proc/OnEatFrom))
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(M, special = TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -97,16 +97,20 @@
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount)
+	applyOrganDamage(healing_amount, damage) // pass curent damage incase we are over cap
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
+
+	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken.</span>"
 			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
 		return
+
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
@@ -184,25 +188,35 @@
 		return
 
 	else
-		if(!getorganslot(ORGAN_SLOT_LUNGS))
-			var/obj/item/organ/lungs/L = new()
+		var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+		if(!L)
+			L = new()
 			L.Insert(src)
+		L.setOrganDamage(0)
 
-		if(!getorganslot(ORGAN_SLOT_HEART))
-			var/obj/item/organ/heart/H = new()
+		var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+		if(!H)
+			H = new()
 			H.Insert(src)
+		H.setOrganDamage(0)
 
-		if(!getorganslot(ORGAN_SLOT_TONGUE))
-			var/obj/item/organ/tongue/T = new()
+		var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
+		if(!T)
+			T = new()
 			T.Insert(src)
+		T.setOrganDamage(0)
 
-		if(!getorganslot(ORGAN_SLOT_EYES))
-			var/obj/item/organ/eyes/E = new()
-			E.Insert(src)
+		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+		if(!eyes)
+			eyes = new()
+			eyes.Insert(src)
+		eyes.setOrganDamage(0)
 
-		if(!getorganslot(ORGAN_SLOT_EARS))
-			var/obj/item/organ/ears/ears = new()
+		var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+		if(!ears)
+			ears = new()
 			ears.Insert(src)
+		ears.setOrganDamage(0)
 
 
 /** get_availability
@@ -215,3 +229,7 @@
   */
 /obj/item/organ/proc/get_availability(datum/species/S)
 	return TRUE
+
+/// Called before organs are replaced in regenerate_organs with new ones
+/obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
+	return

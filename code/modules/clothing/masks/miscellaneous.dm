@@ -28,7 +28,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 25, RAD = 0, FIRE = 0, ACID = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
@@ -253,6 +253,7 @@
 			nk.name = "[name] neckerchief"
 			nk.desc = "[desc] It's tied up like a neckerchief."
 			nk.icon_state = icon_state
+			nk.worn_icon = 'icons/misc/hidden.dmi' //hide underlying neckerchief object while it applies its own mutable appearance
 			nk.sourceBandanaType = src.type
 			var/currentHandIndex = user.get_held_index_of_item(src)
 			user.transferItemToLoc(src, null)

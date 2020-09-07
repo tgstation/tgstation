@@ -21,6 +21,7 @@
 	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
 	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
+	volume = 100
 
 /obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
@@ -53,8 +54,8 @@
 	if(reagents)
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
 	. = ..()
@@ -72,16 +73,21 @@
 			msg += seed.get_analyzer_text()
 		var/reag_txt = ""
 		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			msg += "<br><span class='info'>*Plant Reagents:*</span>"
-			for(var/reagent_id in seed.reagents_add)
-				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
-				var/amt = reagents.get_reagent_amount(reagent_id)
+			msg += "<br><span class='info'>*Plant Reagents*</span>"
+			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
+			var/chem_cap = 0
+			for(var/reagent_id in reagents.reagent_list)
+				var/datum/reagent/R  = reagent_id
+				var/amt = R.volume
+				chem_cap += R.volume
 				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+			if(chem_cap > 100)
+				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
 
 		if(reag_txt)
 			msg += "<br><span class='info'>*---------*</span>"
 			msg += reag_txt
-			msg += "<br><span class='info'>*---------*</span>"
+		msg += "<br><span class='info'>*---------*</span>"
 		to_chat(user, msg)
 	else
 		if(seed)
@@ -122,9 +128,9 @@
 		for(var/datum/plant_gene/trait/trait in seed.genes)
 			trait.on_squash(src, target)
 
-	reagents.reaction(T)
+	reagents.expose(T)
 	for(var/A in T)
-		reagents.reaction(A)
+		reagents.expose(A)
 
 	qdel(src)
 

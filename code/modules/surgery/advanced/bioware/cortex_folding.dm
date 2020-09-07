@@ -22,7 +22,6 @@
 	name = "fold cortex"
 	accept_hand = TRUE
 	time = 125
-	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/fold_cortex/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start folding [target]'s outer cerebral cortex into a fractal pattern.</span>",

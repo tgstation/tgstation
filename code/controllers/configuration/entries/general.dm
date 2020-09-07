@@ -96,9 +96,6 @@
 
 /datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 
-/// Whether demos are written, if not set demo SS never initializes
-/datum/config_entry/flag/demos_enabled
-
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
@@ -122,8 +119,6 @@
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
 
 /datum/config_entry/flag/no_dead_vote	// dead people can't vote
-
-/datum/config_entry/flag/allow_metadata	// Metadata is supported.
 
 /datum/config_entry/flag/popup_admin_pm	// adminPMs to non-admins show in a pop-up 'reply' window when set
 
@@ -187,8 +182,6 @@
 
 /datum/config_entry/flag/norespawn
 
-/datum/config_entry/flag/guest_jobban
-
 /datum/config_entry/flag/usewhitelist
 
 /datum/config_entry/flag/use_age_restriction_for_jobs	//Do jobs use account age restrictions? --requires database
@@ -229,10 +222,6 @@
 /datum/config_entry/string/roundstatsurl
 
 /datum/config_entry/string/gamelogurl
-
-/datum/config_entry/number/githubrepoid
-	config_entry_value = null
-	min_val = 0
 
 /datum/config_entry/flag/guest_ban
 
@@ -502,15 +491,7 @@
 
 /datum/config_entry/flag/auto_profile
 
-// DISCORD ROLE STUFFS
-// Using strings for everything because BYOND does not like numbers this big
-// (exception to the above is required living hours haha)
-/datum/config_entry/flag/enable_discord_autorole
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
 
-/datum/config_entry/number/required_living_hours
+/datum/config_entry/string/centcom_source_whitelist
 
-/datum/config_entry/string/discord_token
-
-/datum/config_entry/string/discord_guildid
-
-/datum/config_entry/string/discord_roleid

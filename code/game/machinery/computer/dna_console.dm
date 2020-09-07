@@ -149,11 +149,13 @@
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		// Insert disk into DNA Console
 		if (!user.transferItemToLoc(I,src))
 			return
+		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(user)
+		// Set the new diskette.
 		diskette = I
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
@@ -203,12 +205,7 @@
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
 
-/obj/machinery/computer/scan_consolenew/examine(mob/user)
-	. = ..()
-
-/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
 	// We can also do some general state processing here too as it's a good
@@ -250,11 +247,14 @@
 	time_to_pulse = round((rad_pulse_timer - world.time)/10)
 
 	// Attempt to update tgui ui, open and update if needed.
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "DnaConsole", name, 539, 710, master_ui, state)
+		ui = new(user, src, "DnaConsole")
 		ui.open()
+
+/obj/machinery/computer/scan_consolenew/ui_assets()
+	. = ..() || list()
+	. += get_asset_datum(/datum/asset/simple/genetics)
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()
@@ -344,7 +344,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
+/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
 	if(..())
 		return TRUE
 
@@ -1462,7 +1462,7 @@
 	if(!connected_scanner)
 		return FALSE
 
-	return (connected_scanner && connected_scanner.is_operational())
+	return (connected_scanner && connected_scanner.is_operational)
 
 /**
   * Checks if there is a valid DNA Scanner occupant for genetic modification
@@ -1489,7 +1489,7 @@
 		//	   this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_GENELESS) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
 		return TRUE
 
 	return FALSE
@@ -1512,7 +1512,7 @@
 	for(var/direction in GLOB.cardinals)
 		test_scanner = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 		if(!isnull(test_scanner))
-			if(test_scanner.is_operational())
+			if(test_scanner.is_operational)
 				connected_scanner = test_scanner
 				connected_scanner.linked_console = src
 				return
@@ -1978,6 +1978,9 @@
 		return
 
 	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// Reset the state to console storage.
+	tgui_view_state["storageMode"] = "console"
 
 	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
 	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))

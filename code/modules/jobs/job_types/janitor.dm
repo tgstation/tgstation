@@ -1,8 +1,6 @@
 /datum/job/janitor
 	title = "Janitor"
-	flag = JANITOR
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 1
@@ -30,5 +28,5 @@
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
 	if(GARBAGEDAY in SSevents.holidays)
-		l_pocket = /obj/item/gun/ballistic/revolver
+		backpack_contents += /obj/item/gun/ballistic/revolver
 		r_pocket = /obj/item/ammo_box/a357

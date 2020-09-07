@@ -5,6 +5,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	inhand_icon_state = "flashbang"
+	worn_icon_state = "grenade"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3

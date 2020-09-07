@@ -4,7 +4,7 @@
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
@@ -45,11 +45,6 @@
 	. = ..()
 	. += "This is a [generation]\th generation [name]!"
 
-/obj/structure/glowshroom/Destroy()
-	if(myseed)
-		QDEL_NULL(myseed)
-	return ..()
-
 /**
   *	Creates a new glowshroom structure.
   *
@@ -73,7 +68,8 @@
 		myseed.adjust_yield(rand(-3,2))
 		myseed.adjust_production(rand(-3,3))
 		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
-	delay_spread = delay_spread - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
+	if(myseed.production >= 1) //In case production is varedited to -1 or less which would cause unlimited or negative delay.
+		delay_spread = delay_spread - (11 - myseed.production) * 100 //Because lower production speed stat gives faster production speed, which should give faster mushroom spread. Range 200-1100 deciseconds.
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
 		myseed.genes -= G
@@ -81,7 +77,7 @@
 		myseed.genes += G
 	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 	setDir(CalcDir())
-	var/base_icon_state = initial(icon_state)
+	base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
 			if(NORTH)
@@ -142,6 +138,8 @@
 				continue
 
 			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
+			if(QDELETED(src))	//Decay can end us
+				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
 			child.generation = generation + 1
 			shrooms_planted++
@@ -210,11 +208,11 @@
 		take_damage(5, BURN, 0, 0)
 
 /obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
-	. = 1
 	visible_message("<span class='danger'>[src] melts away!</span>")
 	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
+	return TRUE
 
 /obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
 	if (istype(I, /obj/item/plant_analyzer))

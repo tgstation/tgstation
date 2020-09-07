@@ -20,7 +20,7 @@
 	var/spawn_amt = 1
 	var/activate_descriptor = "reality"
 	var/rend_desc = "You should run now."
-	var/spawn_fast = 0 //if 1, ignores checking for mobs on loc before spawning
+	var/spawn_fast = FALSE //if TRUE, ignores checking for mobs on loc before spawning
 
 /obj/item/veilrender/attack_self(mob/user)
 	if(charges > 0)
@@ -39,7 +39,7 @@
 	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
-	var/spawn_fast = 0
+	var/spawn_fast = FALSE
 
 /obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
 	src.spawn_path = spawn_type
@@ -293,14 +293,16 @@
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
-		else if(is_pointed(I))
+		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
 			SEND_SOUND(target, 'sound/items/airhorn.ogg')
-			target.adjustEarDamage(0,3)
+			var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
+			if(ears)
+				ears.adjustEarDamage(0, 3)
 			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return

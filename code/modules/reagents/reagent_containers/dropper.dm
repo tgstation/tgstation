@@ -38,7 +38,7 @@
 					if(!safe_thing.reagents)
 						safe_thing.create_reagents(100)
 
-					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transfered_by = user, method = TOUCH)
+					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transfered_by = user, methods = TOUCH)
 
 					target.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>", \
 											"<span class='userdanger'>[user] tries to squirt something into your eyes, but fails!</span>")
@@ -53,7 +53,7 @@
 			target.visible_message("<span class='danger'>[user] squirts something into [target]'s eyes!</span>", \
 									"<span class='userdanger'>[user] squirts something into your eyes!</span>")
 
-			reagents.reaction(target, TOUCH, fraction)
+			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
 			var/R
 			if(reagents)

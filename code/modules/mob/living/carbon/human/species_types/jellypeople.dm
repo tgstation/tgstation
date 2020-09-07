@@ -57,7 +57,7 @@
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
-	if(H.get_num_legs(FALSE)) //Legs go before arms
+	if(H.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
@@ -73,14 +73,15 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		var/list/limbs_to_heal = H.get_missing_limbs()
-		if(limbs_to_heal.len < 1)
-			return 0
-		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	var/list/limbs_to_heal = H.get_missing_limbs()
+	if(limbs_to_heal.len < 1)
+		return FALSE
+	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+		return TRUE
 
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -182,11 +183,13 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		return TRUE
+	return FALSE
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -264,11 +267,16 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/action/innate/swap_body/ui_host(mob/user)
+	return owner
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/action/innate/swap_body/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/action/innate/swap_body/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, state)
+		ui = new(user, src, "SlimeBodySwapper", name)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -444,13 +452,16 @@
 	name = "luminescent glow"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
-	light_color = "#FFFFFF"
+	light_system = MOVABLE_LIGHT
 	light_range = LUMINESCENT_DEFAULT_GLOW
+	light_power = 2.5
+	light_color = COLOR_WHITE
 
 /obj/effect/dummy/luminescent_glow/Initialize()
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
+
 
 /datum/action/innate/integrate_extract
 	name = "Integrate Extract"
@@ -636,6 +647,8 @@
 
 /datum/action/innate/linked_speech/Activate()
 	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD)
+		return
 	if(!species || !(H in species.linked_mobs))
 		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
 		Remove(H)

@@ -122,7 +122,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "y" = (
-/mob/living/simple_animal/bot/medbot,
+/mob/living/simple_animal/bot/medbot/derelict,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "z" = (

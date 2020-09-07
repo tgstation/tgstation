@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const Tank = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={400}
+      height={120}>
       <Window.Content>
         <Section>
           <LabeledList>

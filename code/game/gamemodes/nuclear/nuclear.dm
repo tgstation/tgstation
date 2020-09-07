@@ -64,7 +64,7 @@
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
-	var result = nuke_team.get_result()
+	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
 			SSticker.mode_result = "loss - syndicate nuked - disk secured"
@@ -113,7 +113,7 @@
 	gloves =  /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/pinpointer/nuke/syndicate
+	l_pocket = /obj/item/modular_computer/tablet/nukeops
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\

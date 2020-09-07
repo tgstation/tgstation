@@ -1,12 +1,14 @@
-import { Section, Button, LabeledList, Box, NoticeBox } from "../components";
-import { useBackend } from "../backend";
-import { createLogger } from "../logging";
-import { Fragment } from "inferno";
-import { NtosWindow } from "../layouts";
+import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosNetDos = (props, context) => {
   return (
-    <NtosWindow theme="syndicate">
+    <NtosWindow
+      width={400}
+      height={250}
+      theme="syndicate">
       <NtosWindow.Content>
         <NtosNetDosContent />
       </NtosWindow.Content>

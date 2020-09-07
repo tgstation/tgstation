@@ -1,5 +1,6 @@
 /*!
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
+
 	Variables:
 		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=2000.
 		max_amount - max raw amount of mineral this container can hold.
@@ -45,6 +46,8 @@
 		materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(show_on_examine)
 		for(var/I in materials)
 			var/datum/material/M = I
@@ -54,6 +57,8 @@
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/OnAttackBy(datum/source, obj/item/I, mob/living/user)
+	SIGNAL_HANDLER
+
 	var/list/tc = allowed_typecache
 	if(disable_attackby)
 		return
@@ -72,7 +77,7 @@
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
-	if((!istype(I, /obj/item/stack) && !has_space(material_amount)) || (!has_space(MINERAL_MATERIAL_AMOUNT)))
+	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user)
@@ -82,68 +87,52 @@
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(I, /obj/item/stack))
-		if(precise_insertion)
-			var/atom/current_parent = parent
-			var/obj/item/stack/S = I
-			requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
-			if(isnull(requested_amount) || (requested_amount <= 0))
-				return
-			if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
-				return
-		else
-			if((total_amount + get_item_material_amount(I)) <= max_amount)
-				requested_amount = get_item_material_amount(I)
-			else
-				requested_amount = (max_amount-total_amount)
+	if(istype(I, /obj/item/stack) && precise_insertion)
+		var/atom/current_parent = parent
+		var/obj/item/stack/S = I
+		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+		if(isnull(requested_amount) || (requested_amount <= 0))
+			return
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
+			return
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-	var/inserted = insert_item(I, amt = requested_amount)
+	var/inserted = insert_item(I, stack_amt = requested_amount)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
-		if(get_item_material_amount(I) - inserted)
-			user.put_in_active_hand(I)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			S.use(inserted / MINERAL_MATERIAL_AMOUNT)
-			I = S
-		else
-			qdel(I)
+		qdel(I)
 		if(after_insert)
 			after_insert.Invoke(I, last_inserted_id, inserted)
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, amt=1, multiplier = 1)
-	if(!I)
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
+	if(QDELETED(I))
 		return FALSE
 
 	multiplier = CEILING(multiplier, 0.01)
 
-	if(!amt)
+	var/material_amount = get_item_material_amount(I)
+	if(!material_amount || !has_space(material_amount))
 		return FALSE
-	if(!istype(I, /obj/item/stack) && !has_space(amt))
-		return FALSE
-	if(istype(I, /obj/item/stack))
-		amt = amount2sheet(amt) * MINERAL_MATERIAL_AMOUNT
 
 	last_inserted_id = insert_item_materials(I, multiplier)
-	return amt
+	return material_amount
 
 /datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1)
 	var/primary_mat
 	var/max_mat_value = 0
 	for(var/MAT in materials)
-		materials[MAT] += can_insert_amount_mat(I.custom_materials[MAT] * multiplier, MAT)
-		total_amount += can_insert_amount_mat(I.custom_materials[MAT] * multiplier, MAT)
+		materials[MAT] += I.custom_materials[MAT] * multiplier
+		total_amount += I.custom_materials[MAT] * multiplier
 		if(I.custom_materials[MAT] > max_mat_value)
 			primary_mat = MAT
 	return primary_mat
 
 /// For inserting an amount of material
-/datum/component/material_container/proc/insert_amount_mat(amt, var/datum/material/mat)
+/datum/component/material_container/proc/insert_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
 		mat = SSmaterials.GetMaterialRef(mat)
 	if(amt > 0 && has_space(amt))
@@ -158,7 +147,7 @@
 	return FALSE
 
 /// Uses an amount of a specific material, effectively removing it.
-/datum/component/material_container/proc/use_amount_mat(amt, var/datum/material/mat)
+/datum/component/material_container/proc/use_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
 		mat = SSmaterials.GetMaterialRef(mat)
 	var/amount = materials[mat]
@@ -170,7 +159,7 @@
 	return FALSE
 
 /// Proc for transfering materials to another container.
-/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, var/datum/material/mat)
+/datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
 	if(!istype(mat))
 		mat = SSmaterials.GetMaterialRef(mat)
 	if((amt==0)||(!T)||(!mat))
@@ -222,7 +211,7 @@
 	return total_amount_save - total_amount
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, var/datum/material/M, target = null)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, target = null)
 	if(!M.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
@@ -290,7 +279,7 @@
 
 
 /// Returns TRUE if you have enough of the specified material.
-/datum/component/material_container/proc/has_enough_of_material(var/datum/material/req_mat, amount, multiplier=1)
+/datum/component/material_container/proc/has_enough_of_material(datum/material/req_mat, amount, multiplier=1)
 	if(!materials[req_mat]) //Do we have the resource?
 		return FALSE //Can't afford it
 	var/amount_required = amount * multiplier
@@ -329,7 +318,7 @@
 	return material_amount
 
 /// Returns the amount of a specific material in this container.
-/datum/component/material_container/proc/get_material_amount(var/datum/material/mat)
+/datum/component/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
 		mat = SSmaterials.GetMaterialRef(mat)
 	return(materials[mat])

@@ -51,7 +51,7 @@
 	if(manifest)
 		tear_manifest(user)
 
-/obj/structure/closet/crate/open(mob/living/user)
+/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(. && manifest)
 		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
@@ -82,6 +82,27 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+
+/obj/structure/closet/crate/maint
+
+/obj/structure/closet/crate/maint/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/lootdrop/maintenance(src)
+
+/obj/structure/closet/crate/trashcart/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+
+/obj/structure/closet/crate/trashcart/filled
+
+/obj/structure/closet/crate/trashcart/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(7,15))
+		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		if(prob(12))
+			new	/obj/item/storage/bag/trash/filled(src)
+	new /obj/effect/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -116,7 +137,7 @@
 //Snowflake organ freezer code
 //Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
 
-/obj/structure/closet/crate/freezer/open()
+/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
 	recursive_organ_check(src)
 	..()
 
@@ -142,11 +163,11 @@
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
 	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood/AMinus(src)
-	new /obj/item/reagent_containers/blood/BMinus(src)
-	new /obj/item/reagent_containers/blood/BPlus(src)
-	new /obj/item/reagent_containers/blood/OMinus(src)
-	new /obj/item/reagent_containers/blood/OPlus(src)
+	new /obj/item/reagent_containers/blood/a_minus(src)
+	new /obj/item/reagent_containers/blood/b_minus(src)
+	new /obj/item/reagent_containers/blood/b_plus(src)
+	new /obj/item/reagent_containers/blood/o_minus(src)
+	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)

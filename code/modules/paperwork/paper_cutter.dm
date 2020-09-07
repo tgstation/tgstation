@@ -113,6 +113,12 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 
+/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
+	if(burn_paper_product_attackby_check(I, user))
+		return
+	return ..()
+
+
 /obj/item/paperslip/Initialize()
 	. = ..()
 	pixel_x = rand(-5, 5)

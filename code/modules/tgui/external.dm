@@ -1,7 +1,5 @@
 /**
- * tgui external
- *
- * Contains all external tgui declarations.
+ * External tgui definitions, such as src_object APIs.
  *
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -14,13 +12,9 @@
  * If this proc is not implemented properly, the UI will not update correctly.
  *
  * required user mob The mob who opened/is using the UI.
- * optional ui_key string The ui_key of the UI.
  * optional ui datum/tgui The UI to be updated, if it exists.
- * optional force_open bool If the UI should be re-opened instead of updated.
- * optional master_ui datum/tgui The parent UI.
- * optional state datum/ui_state The state used to determine status.
  */
-/datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/datum/proc/ui_interact(mob/user, datum/tgui/ui)
 	return FALSE // Not implemented.
 
 /**
@@ -40,10 +34,11 @@
  * public
  *
  * Static Data to be sent to the UI.
- * Static data differs from normal data in that it's large data that should be sent infrequently
- * This is implemented optionally for heavy uis that would be sending a lot of redundant data
- * frequently.
- * Gets squished into one object on the frontend side, but the static part is cached.
+ *
+ * Static data differs from normal data in that it's large data that should be
+ * sent infrequently. This is implemented optionally for heavy uis that would
+ * be sending a lot of redundant data frequently. Gets squished into one
+ * object on the frontend side, but the static part is cached.
  *
  * required user mob The mob interacting with the UI.
  *
@@ -55,18 +50,17 @@
 /**
  * public
  *
- * Forces an update on static data. Should be done manually whenever something happens to change static data.
+ * Forces an update on static data. Should be done manually whenever something
+ * happens to change static data.
  *
  * required user the mob currently interacting with the ui
  * optional ui ui to be updated
- * optional ui_key ui key of ui to be updated
  */
-/datum/proc/update_static_data(mob/user, datum/tgui/ui, ui_key = "main")
-	ui = SStgui.try_update_ui(user, src, ui_key, ui)
-	// If there was no ui to update, there's no static data to update either.
+/datum/proc/update_static_data(mob/user, datum/tgui/ui)
 	if(!ui)
-		return
-	ui.push_data(null, ui_static_data(user), TRUE)
+		ui = SStgui.get_open_ui(user, src)
+	if(ui)
+		ui.send_full_update()
 
 /**
  * public
@@ -88,17 +82,12 @@
  * public
  *
  * Called on an object when a tgui object is being created, allowing you to
- * customise the html
- * For example: inserting a custom stylesheet that you need in the head
+ * push various assets to tgui, for examples spritesheets.
  *
- * For this purpose, some tags are available in the html, to be parsed out
- ^ with replacetext
- * (customheadhtml) - Additions to the head tag
- *
- * required html the html base text
+ * return list List of asset datums or file paths.
  */
-/datum/proc/ui_base_html(html)
-	return html
+/datum/proc/ui_assets(mob/user)
+	return list()
 
 /**
  * private
@@ -111,6 +100,15 @@
 	return src // Default src.
 
 /**
+ * private
+ *
+ * The UI's state controller to be used for created uis
+ * This is a proc over a var for memory reasons
+ */
+/datum/proc/ui_state(mob/user)
+	return GLOB.default_state
+
+/**
  * global
  *
  * Associative list of JSON-encoded shared states that were set by
@@ -121,9 +119,24 @@
 /**
  * global
  *
- * Used to track UIs for a mob.
+ * Tracks open UIs for a user.
  */
-/mob/var/list/open_uis = list()
+/mob/var/list/tgui_open_uis = list()
+
+/**
+ * global
+ *
+ * Tracks open windows for a user.
+ */
+/client/var/list/tgui_windows = list()
+
+/**
+ * global
+ *
+ * TRUE if cache was reloaded by tgui dev server at least once.
+ */
+/client/var/tgui_cache_reloaded = FALSE
+
 /**
  * public
  *
@@ -140,17 +153,62 @@
  *
  * required uiref ref The UI that was closed.
  */
-/client/verb/uiclose(ref as text)
+/client/verb/uiclose(window_id as text)
 	// Name the verb, and hide it from the user panel.
 	set name = "uiclose"
-	set hidden = 1
+	set hidden = TRUE
+	var/mob/user = src && src.mob
+	if(!user)
+		return
+	// Close all tgui datums based on window_id.
+	SStgui.force_close_window(user, window_id)
 
-	// Get the UI based on the ref.
-	var/datum/tgui/ui = locate(ref)
-
-	// If we found the UI, close it.
-	if(istype(ui))
-		ui.close()
-		// Unset machine just to be sure.
-		if(src && src.mob)
-			src.mob.unset_machine()
+/**
+ * Middleware for /client/Topic.
+ *
+ * return bool If TRUE, prevents propagation of the topic call.
+ */
+/proc/tgui_Topic(href_list)
+	// Skip non-tgui topics
+	if(!href_list["tgui"])
+		return FALSE
+	var/type = href_list["type"]
+	// Unconditionally collect tgui logs
+	if(type == "log")
+		var/context = href_list["window_id"]
+		if (href_list["ns"])
+			context += " ([href_list["ns"]])"
+		log_tgui(usr, href_list["message"],
+			context = context)
+	// Reload all tgui windows
+	if(type == "cacheReloaded")
+		if(!check_rights(R_ADMIN) || usr.client.tgui_cache_reloaded)
+			return TRUE
+		// Mark as reloaded
+		usr.client.tgui_cache_reloaded = TRUE
+		// Notify windows
+		var/list/windows = usr.client.tgui_windows
+		for(var/window_id in windows)
+			var/datum/tgui_window/window = windows[window_id]
+			if (window.status == TGUI_WINDOW_READY)
+				window.on_message(type, null, href_list)
+		return TRUE
+	// Locate window
+	var/window_id = href_list["window_id"]
+	var/datum/tgui_window/window
+	if(window_id)
+		window = usr.client.tgui_windows[window_id]
+		if(!window)
+			log_tgui(usr,
+				"Error: Couldn't find the window datum, force closing.",
+				context = window_id)
+			SStgui.force_close_window(usr, window_id)
+			return TRUE
+	// Decode payload
+	var/payload
+	if(href_list["payload"])
+		payload = json_decode(href_list["payload"])
+	// Pass message to window
+	if(window)
+		window.on_message(type, payload, href_list)
+	return TRUE

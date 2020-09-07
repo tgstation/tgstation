@@ -8,6 +8,7 @@
 	force = 15
 	throwforce = 10
 	inhand_icon_state = "pickaxe"
+	worn_icon_state = "pickaxe"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -15,7 +16,8 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
-	attack_verb = list("hit", "pierced", "sliced", "attacked")
+	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
+	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -27,7 +29,8 @@
 /obj/item/pickaxe/rusted
 	name = "rusty pickaxe"
 	desc = "A pickaxe that's been left to rust."
-	attack_verb = list("ineffectively hit")
+	attack_verb_continuous = list("ineffectively hits")
+	attack_verb_simple = list("ineffectively hit")
 	force = 1
 	throwforce = 1
 
@@ -35,6 +38,7 @@
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
 	icon_state = "minipick"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
@@ -45,6 +49,7 @@
 	name = "silver-plated pickaxe"
 	icon_state = "spickaxe"
 	inhand_icon_state = "spickaxe"
+	worn_icon_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
@@ -53,6 +58,7 @@
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	inhand_icon_state = "dpickaxe"
+	worn_icon_state = "dpickaxe"
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
@@ -61,6 +67,7 @@
 	name = "mining drill"
 	icon_state = "handdrill"
 	inhand_icon_state = "jackhammer"
+	worn_icon_state = "jackhammer"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
@@ -91,6 +98,7 @@
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
+	worn_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -101,6 +109,7 @@
 	desc = "A pickaxe made with a knife and crowbar taped together, how does it not break?"
 	icon_state = "ipickaxe"
 	inhand_icon_state = "ipickaxe"
+	worn_icon_state = "pickaxe"
 	force = 10
 	throwforce = 7
 	toolspeed = 3 //3 times slower than a normal pickaxe
@@ -113,6 +122,7 @@
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
+	worn_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -125,8 +135,9 @@
 	inhand_icon_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=50)
-	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	sharpness = IS_SHARP
+	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
+	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
+	sharpness = SHARP_EDGED
 
 /obj/item/shovel/Initialize()
 	. = ..()
@@ -144,6 +155,7 @@
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
 	inhand_icon_state = "spade"
+	worn_icon_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	force = 5
@@ -155,11 +167,13 @@
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
 	icon_state = "shovel_bone"
 	inhand_icon_state = "shovel_bone"
+	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	force = 15
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
-	sharpness = IS_SHARP
+	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
+	attack_verb_simple = list("slash", "impale", "stab", "slice")
+	sharpness = SHARP_EDGED

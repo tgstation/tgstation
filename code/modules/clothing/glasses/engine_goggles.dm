@@ -12,6 +12,7 @@
 	icon_state = "trayson-meson"
 	inhand_icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 	vision_flags = NONE
 	darkness_view = 2
@@ -43,11 +44,22 @@
 			vision_flags = SEE_TURFS
 			darkness_view = 1
 			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
 			darkness_view = 2
 			lighting_alpha = null
+			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
+
+		if(MODE_RAD)
+			change_glass_color(user, /datum/client_colour/glass_colour/lightgreen)
+
+		if(MODE_SHUTTLE)
+			change_glass_color(user, /datum/client_colour/glass_colour/red)
+
+		if(MODE_NONE)
+			change_glass_color(user, initial(glass_colour_type))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -89,17 +101,17 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
-		if(get_dist(user, place) >= range*2)	//Rads are easier to see than wires under the floor
+		if(get_dist(user, place) >= range*5)	//Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
-		var/image/pic = new(loc = place)
+		var/image/pic = image(loc = place)
 		var/mutable_appearance/MA = new()
-		MA.alpha = 180
-		MA.maptext = "[strength]k"
-		MA.color = "#64C864"
-		MA.layer = FLY_LAYER
+		MA.maptext = "<span class='maptext'>[strength]k</span>"
+		MA.color = "#04e604"
+		MA.layer = RAD_TEXT_LAYER
+		MA.plane = GAME_PLANE
 		pic.appearance = MA
-		flick_overlay(pic, list(user.client), 8)
+		flick_overlay(pic, list(user.client), 10)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc

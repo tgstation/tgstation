@@ -168,7 +168,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/away{
 	pixel_y = 23
@@ -2552,11 +2552,11 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gy" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,

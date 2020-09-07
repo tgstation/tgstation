@@ -109,6 +109,8 @@
 #define FACTOR_GAS_VISIBLE_MAX				20
 /// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP				0.25
+/// The total visible states
+#define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -251,8 +253,8 @@
 #define AIRLESS_ATMOS				"TEMP=2.7"
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180"
-/// -80°C kitchen coldroom; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS		"o2=33;n2=124;TEMP=193.15"
+/// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
+#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=259.15"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370"
 
@@ -348,9 +350,10 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+//layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_MAX 5
+#define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
@@ -371,6 +374,14 @@
 	}																		\
 	if(T.dir & (EAST|WEST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	}
+
+#define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+	}																		\
+	if(T.dir & (EAST|WEST)) {										\
+		T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
 	}
 
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \

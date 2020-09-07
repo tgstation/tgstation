@@ -305,9 +305,25 @@
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
+//Icebox version of hermit
+/obj/effect/mob_spawn/human/hermit/icemoon
+	name = "Cryostasis bed"
+	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
+	mob_name = "a grumpy old man"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	outfit = /datum/outfit/hermit
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
+	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, but now that there are corporate stooges around, you need to watch your step."
+	assignedrole = "Hermit"
+
 /datum/outfit/hermit
 	name = "Lavaland hermit"
-	uniform = /obj/item/clothing/under/color/grey/glorf
+	uniform = /obj/item/clothing/under/color/grey/ancient
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/breath
@@ -358,14 +374,14 @@
 	mob_name = "hotel staff member"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
+	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel. Remember, the customer is always right!"
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
 	outfit = /datum/outfit/hotelstaff
 	short_desc = "You are a staff member of a top-of-the-line space hotel!"
-	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and make sure the manager doesn't fire you."
-	important_info = "DON'T leave the hotel"
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests, advertise the hotel, and make sure the manager doesn't fire you."
+	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
 	assignedrole = "Hotel Staff"
 
 /datum/outfit/hotelstaff
@@ -374,7 +390,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
-	implants = list(/obj/item/implant/mindshield)
+	implants = list(/obj/item/implant/mindshield, /obj/item/implant/exile/noteleport)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
@@ -384,7 +400,7 @@
 	flavour_text = "You have been assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff."
 	important_info = "Do NOT leave the hotel, as that is grounds for contract termination."
-	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests. Using non-lethal force instead of lethal force is heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Security"
@@ -479,9 +495,9 @@
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
 	important_info = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
-	outfit = /datum/outfit/syndicate_empty/SBC
+	outfit = /datum/outfit/syndicate_empty/battlecruiser
 
-/datum/outfit/syndicate_empty/SBC
+/datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
@@ -492,9 +508,9 @@
 	short_desc = "You are an assault operative aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13. There is an armory, multiple assault ships, and beam cannons to attack the station with."
 	important_info = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
-	outfit = /datum/outfit/syndicate_empty/SBC/assault
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault
 
-/datum/outfit/syndicate_empty/SBC/assault
+/datum/outfit/syndicate_empty/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
@@ -510,17 +526,17 @@
 	short_desc = "You are the captain aboard the syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
-	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain
+	outfit = /datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	id_access_list = list(150,151)
 
-/datum/outfit/syndicate_empty/SBC/assault/captain
+/datum/outfit/syndicate_empty/battlecruiser/assault/captain
 	name = "Syndicate Battlecruiser Captain"
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber/red
 	r_pocket = /obj/item/melee/classic_baton/telescopic
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	back = /obj/item/storage/backpack/satchel/leather
-	head = /obj/item/clothing/head/HoS/syndicate
+	head = /obj/item/clothing/head/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 
@@ -697,8 +713,9 @@
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
+	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	head = /obj/item/clothing/head/HoS/beret/syndicate
+	head = /obj/item/clothing/head/hos/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -707,3 +724,174 @@
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
+
+/obj/effect/mob_spawn/human/beach/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	mob_name = "Beach Bum"
+	name = "beach bum sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You're, like, totally a dudebro, bruh."
+	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
+	assignedrole = "Beach Bum"
+
+/obj/effect/mob_spawn/human/beach/alive/lifeguard
+	short_desc = "You're a spunky lifeguard!"
+	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
+	mob_gender = "female"
+	name = "lifeguard sleeper"
+	id_job = "Lifeguard"
+	uniform = /obj/item/clothing/under/shorts/red
+
+/datum/outfit/beachbum
+	name = "Beach Bum"
+	glasses = /obj/item/clothing/glasses/sunglasses
+	r_pocket = /obj/item/storage/wallet/random
+	l_pocket = /obj/item/reagent_containers/food/snacks/pizzaslice/dank;
+	uniform = /obj/item/clothing/under/pants/youngfolksjeans
+	id = /obj/item/card/id
+
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	H.dna.add_mutation(STONER)
+
+/obj/effect/mob_spawn/human/bartender/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	name = "bartender sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a space bartender!"
+	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
+	assignedrole = "Space Bartender"
+	id_job = "Bartender"
+
+/datum/outfit/spacebartender
+	name = "Space Bartender"
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+	id = /obj/item/card/id
+
+/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	var/obj/item/card/id/id_card = H.wear_id
+	if(H.age < AGE_MINOR)
+		id_card.registered_age = AGE_MINOR
+		to_chat(H, "<span class='notice'>You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!</span>")
+
+/obj/effect/mob_spawn/human/skeleton/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	short_desc = "By unknown powers, your skeletal remains have been reanimated!"
+	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
+	assignedrole = "Skeleton"
+
+/obj/effect/mob_spawn/human/skeleton/alive/special(mob/living/new_spawn)
+	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+/obj/effect/mob_spawn/human/zombie/alive
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	short_desc = "By unknown powers, your rotting remains have been resurrected!"
+	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
+
+/obj/effect/mob_spawn/human/zombie/alive/special(mob/living/new_spawn)
+	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+
+//terribly basic spawns below, please read the disclaimer. unless you're an admin. these are perfect for events as they have no intro text.
+
+//if you're going to use these in a map of some kind, add GUIDANCE or stationstuck component to them on spawn. see ash walkers and skeletons for an example of each. they're simply not very fleshed out.
+//if this is in your map, the player will have no idea what to do so will just go to the station and kill people until a policy headache arises
+
+//For ghost bar.
+/obj/effect/mob_spawn/human/alive/space_bar_patron
+	name = "Bar cryogenics"
+	mob_name = "Bar patron"
+	random = TRUE
+	permanent = TRUE
+	uses = -1
+	outfit = /datum/outfit/spacebartender
+	assignedrole = "Space Bar Patron"
+
+/obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
+	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)", null, "Yes", "No")
+	if(despawn == "No" || !loc || !Adjacent(user))
+		return
+	user.visible_message("<span class='notice'>[user.name] climbs back into cryosleep...</span>")
+	qdel(user)
+
+/datum/outfit/cryobartender
+	name = "Cryogenic Bartender"
+	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	suit = /obj/item/clothing/suit/armor/vest
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	faction = "nanotrasenprivate"
+	short_desc = "You are a Nanotrasen Private Security Officer!"
+
+/obj/effect/mob_spawn/human/commander/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "\improper Nanotrasen Commander"
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/doctor/alive
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	name = "sleeper"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	short_desc = "You are a space doctor!"
+	assignedrole = "Space Doctor"
+
+/obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/doctor)
+	. = ..()
+	// Remove radio and PDA so they wouldn't annoy station crew.
+	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
+	for(var/del_type in del_types)
+		var/obj/item/unwanted_item = locate(del_type) in doctor
+		qdel(unwanted_item)
+
+/obj/effect/mob_spawn/mouse
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/mouse
+	death = FALSE
+	roundstart = FALSE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/cow
+	name = "sleeper"
+	mob_type = 	/mob/living/simple_animal/cow
+	death = FALSE
+	roundstart = FALSE
+	mob_gender = FEMALE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"

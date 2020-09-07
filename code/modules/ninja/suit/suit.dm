@@ -13,9 +13,8 @@ Contents:
 	icon_state = "s-ninja"
 	inhand_icon_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
-	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
-	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 60, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
 	strip_delay = 12
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
@@ -133,7 +132,6 @@ Contents:
 		return FALSE
 	affecting = H
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 0
 	n_hood = H.head
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes
@@ -153,7 +151,6 @@ Contents:
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)

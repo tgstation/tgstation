@@ -43,7 +43,7 @@
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
 	reward = 1000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
+	wanted_types = list(/obj/item/food/bread, /obj/item/food/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase)
 
 /datum/bounty/item/chef/pie
 	name = "Pie"
@@ -69,7 +69,7 @@
 	name = "Super Bite Burger"
 	description = "Commander Tubbs thinks he can set a competitive eating world record. All he needs is a super bite burger shipped to him."
 	reward = 12000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/burger/superbite)
+	wanted_types = list(/obj/item/food/burger/superbite)
 
 /datum/bounty/item/chef/poppypretzel
 	name = "Poppy Pretzel"
@@ -136,3 +136,9 @@
 	required_count = 6
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/nugget)
 
+/datum/bounty/item/chef/corgifarming //Butchering is a chef's job.
+	name = "Corgi Hides"
+	description = "Admiral Weinstein's space yacht needs new upholstery. A dozen Corgi furs should do just fine."
+	reward = 30000 //that's a lot of dead dogs
+	required_count = 12
+	wanted_types = list(/obj/item/stack/sheet/animalhide/corgi)

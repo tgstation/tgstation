@@ -7,7 +7,7 @@
 	ghost_others = client.prefs.ghost_others
 	var/preferred_form = null
 
-	if(IsAdminGhost(src))
+	if(isAdminGhostAI(src))
 		has_unlimited_silicon_privilege = 1
 
 	if(client.prefs.unlock_content)

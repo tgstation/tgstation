@@ -111,7 +111,7 @@
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 		log_combat(user, target, "splashed", src)
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		reagents.clear_reagents()
 		return
 	..()
@@ -124,6 +124,6 @@
 	else if(reagents.total_volume && user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-		reagents.reaction(target, TOUCH)
+		reagents.expose(target, TOUCH)
 		reagents.clear_reagents()
 		return

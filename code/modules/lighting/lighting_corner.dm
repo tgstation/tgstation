@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	var/x     = 0
 	var/y     = 0
-	var/z     = 0
 
 	var/lum_r = 0
 	var/lum_g = 0
@@ -29,7 +28,6 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	. = ..()
 	masters = list()
 	masters[new_turf] = turn(diagonal, 180)
-	z = new_turf.z
 
 	var/vertical   = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
 	var/horizontal = diagonal & ~vertical       // Now that we know the horizontal one we can get the vertical one.

@@ -23,7 +23,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
@@ -34,6 +34,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/texture_layer_icon_state
 	///a cached filter for the texture icon
 	var/cached_texture_filter
+	///What type of shard the material will shatter to
+	var/obj/item/shard_type
 
 /datum/material/New()
 	. = ..()
@@ -58,7 +60,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		addtimer(CALLBACK(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount)), 0)
+		INVOKE_ASYNC(source, /datum.proc/_AddComponent, list(/datum/component/beauty, beauty_modifier * amount))
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -101,7 +103,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	I.pickup_sound = item_sound_override
 	I.drop_sound = item_sound_override
 
-/datum/material/proc/on_applied_turf(var/turf/T, amount, material_flags)
+/datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
 		if(!turf_sound_override)
 			return
@@ -141,3 +143,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, material_flags)
 	return
+
+/**
+  *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+  * Arguments
+  * * M - person consuming the mat
+  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)
+  */
+/datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
+	return FALSE

@@ -37,8 +37,6 @@
 	maptext_height = 26
 	maptext_width = 32
 	maptext_y = -1
-	ui_x = 300
-	ui_y = 138
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -142,11 +140,10 @@
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 
-/obj/machinery/door_timer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "BrigTimer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "BrigTimer", name)
 		ui.open()
 
 //icon update function

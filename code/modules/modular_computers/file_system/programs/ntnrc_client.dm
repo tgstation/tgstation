@@ -6,13 +6,9 @@
 	size = 8
 	requires_ntnet = 1
 	requires_ntnet_feature = NTNET_COMMUNICATION
-	network_destination = "NTNRC server"
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
 	tgui_id = "NtosNetChat"
-	ui_x = 900
-	ui_y = 675
-
 	var/last_message				// Used to generate the toolbar icon
 	var/username
 	var/active_channel

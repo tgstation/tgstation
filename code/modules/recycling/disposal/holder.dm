@@ -7,7 +7,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	dir = NONE
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/datum/gas_mixture/gas	// gas used to flush, will appear at exit point
 	var/active = FALSE			// true if the holder is moving, otherwise inactive
 	var/count = 1000			// can travel 1000 steps before going inactive (in case of loops)
@@ -46,14 +46,14 @@
 			continue
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
 		AM.forceMove(src)
-		if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
-			var/obj/structure/bigDelivery/T = AM
+		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
+			var/obj/structure/big_delivery/T = AM
 			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/smallDelivery) && !hasmob)
-			var/obj/item/smallDelivery/T = AM
+		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
+			var/obj/item/small_delivery/T = AM
 			src.destinationTag = T.sortTag
 		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/destTagger/borg/tagger = locate() in AM
+			var/obj/item/dest_tagger/borg/tagger = locate() in AM
 			if (tagger)
 				src.destinationTag = tagger.currTag
 
@@ -72,15 +72,17 @@
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
 	set waitfor = FALSE
+	var/ticks = 1
 	var/obj/structure/disposalpipe/last
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
+		set_glide_size(DELAY_TO_GLIDE_SIZE(ticks * world.tick_lag))
 		curr = curr.transfer(src)
 		if(!curr && active)
 			last.expel(src, loc, dir)
 
-		stoplag()
+		ticks = stoplag()
 		if(!(count--))
 			active = FALSE
 
@@ -113,7 +115,7 @@
 
 
 // called when player tries to move while in a pipe
-/obj/structure/disposalholder/relaymove(mob/user)
+/obj/structure/disposalholder/relaymove(mob/living/user, direction)
 	if(user.incapacitated())
 		return
 	for(var/mob/M in range(5, get_turf(src)))
