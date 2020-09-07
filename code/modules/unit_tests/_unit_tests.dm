@@ -10,6 +10,10 @@
 /// Optionally allows an additional message in the case of a failure
 #define TEST_ASSERT_EQUAL(a, b, message) if ((a) != (b)) { return Fail("Expected [isnull(a) ? "null" : a] to be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
 
+/// Asserts that the two parameters passed are not equal, fails otherwise
+/// Optionally allows an additional message in the case of a failure
+#define TEST_ASSERT_NOTEQUAL(a, b, message) if ((a) == (b)) { return Fail("Expected [isnull(a) ? "null" : a] to not be equal to [isnull(b) ? "null" : b].[message ? " [message]" : ""]") }
+
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
@@ -27,6 +31,7 @@
 #include "plantgrowth_tests.dm"
 #include "quick_swap_sanity.dm"
 #include "reagent_id_typos.dm"
+#include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
@@ -42,4 +47,5 @@
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
+#undef TEST_ASSERT_NOTEQUAL
 #endif
