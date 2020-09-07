@@ -380,3 +380,74 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
+/obj/effect/mapping_helpers/simple_pipes
+	name = "Simple Pipes"
+	late = TRUE
+	icon_state = "pipe-3"
+	var/piping_layer = 3
+	var/pipe_color = ""
+	var/list/connections = list( NORTH = FALSE, SOUTH = FALSE , EAST = FALSE , WEST = FALSE)
+	var/connection_num = 0
+	var/hide = FALSE
+
+/obj/effect/mapping_helpers/simple_pipes/LateInitialize()
+	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+	for(var/direction in connections)
+		var/turf/T = get_step(src,direction)
+		for(var/_type in T.contents)
+			if(istype(_type,type))
+				connections[direction] = TRUE
+				connection_num++
+				break
+			if(!is_type_in_typecache(_type,valid_connectors))
+				continue
+			var/obj/machinery/atmospherics/machine = _type
+			if(direction in machine.initialize_directions)
+				connections[direction] = TRUE
+				connection_num++
+				break
+	var/turf/this_turf = get_turf(src)
+	switch(connection_num)
+		if(1)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				spawn_pipe(direction)
+		if(2)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				//Detects straight pipes connected from east to west , north to south etc.
+				if(connections[angle2dir(dir2angle(direction)+180)] == TRUE)
+					spawn_pipe(direction)
+					break
+
+				for(var/direction2 in connections - direction)
+					if(connections[direction2] != TRUE)
+						continue
+					spawn_pipe(direction)
+		if(3)
+			for(var/direction in connections)
+				if(connections[direction] == FALSE)
+					var/obj/machinery/atmospherics/pipe/manifold/pipe = new(this_turf,TRUE,direction)
+					pipe.hide = hide
+					pipe.piping_layer = piping_layer
+					pipe.update_layer()
+					pipe.paint(pipe_color)
+		if(4)
+			var/obj/machinery/atmospherics/pipe/manifold4w/pipe = new(this_turf)
+			pipe.hide = hide
+			pipe.piping_layer = piping_layer
+			pipe.update_layer()
+			pipe.paint(pipe_color)
+
+	qdel(src)
+
+
+/obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction)
+	var/obj/machinery/atmospherics/pipe/manifold/pipe = new/obj/machinery/atmospherics/pipe/manifold(get_turf(src),TRUE,direction)
+	pipe.hide = hide
+	pipe.piping_layer = piping_layer
+	pipe.update_layer()
+	pipe.paint(pipe_color)
+
