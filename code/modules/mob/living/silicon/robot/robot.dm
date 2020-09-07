@@ -175,7 +175,7 @@
 
 /mob/living/silicon/robot/proc/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new/obj/item/modular_computer/tablet/integrated(src, src)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 
@@ -666,7 +666,7 @@
 
 /mob/living/silicon/robot/modules/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new/obj/item/modular_computer/tablet/integrated/syndicate(src, src)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
 	return ..()
 
 /mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
@@ -1114,12 +1114,12 @@
 	if(stat == DEAD) //Dead borgs log no longer
 		return
 	if(!modularInterface)
-		stack_trace("Cyborg [src]. key [client] was somehow missing their integrated tablet. Please make a bug report.")
+		stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
 	var/datum/computer_file/program/borgUI/program = hard_drive.find_file_by_name("borgUI")
 	if(!program)
-		stack_trace("Cyborg [src]. key [client] was somehow missing their self-manage app in their tablet. Please make a bug report.")
+		stack_trace("Cyborg [src] ( [type] ) was somehow missing their self-manage app in their tablet. Please make a bug report.")
 		return
 	program.force_full_update()

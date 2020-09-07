@@ -20,7 +20,7 @@
 
 /datum/computer_file/program/borgUI/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
-		to_chat(user, "<span class='warning'>A warning flashes across /the [computer]: Device Incompatible.</span>")
+		to_chat(user, "<span class='warning'>A warning flashes across \the [computer]: Device Incompatible.</span>")
 		return FALSE
 	. = ..()
 	if(.)

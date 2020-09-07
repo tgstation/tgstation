@@ -41,10 +41,7 @@
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
 	device_theme = "syndicate"
-
-/obj/item/modular_computer/tablet/nukeops/Initialize()
-	. = ..()
-	set_light_color(COLOR_RED) //Syndicate likes it red
+	light_color = COLOR_RED
 
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
 	if(!enabled)
@@ -64,9 +61,13 @@
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
 
-/obj/item/modular_computer/tablet/integrated/Initialize(mapload, container_borg)
+/obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
-	borgo = container_borg
+	borgo = loc
+	if(!istype(borgo))
+		borgo = null
+		stack_trace("[type] initialized outside of a borg, deleting.")
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	borgo = null
