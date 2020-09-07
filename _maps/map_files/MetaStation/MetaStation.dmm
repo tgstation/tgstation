@@ -13648,12 +13648,13 @@
 /area/engine/engineering)
 "aFs" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command{
-	name = "Captain's Quarters";
-	req_access_txt = "20"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/machinery/door/airlock/command{
+	name = "Captain's Quarters";
+	req_access_txt = "20";
+	security_level = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
@@ -27589,7 +27590,8 @@
 "bmI" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -30710,7 +30712,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access_txt = "57"
+	req_access_txt = "57";
+	security_level = 6
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30781,7 +30784,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access_txt = "57"
+	req_access_txt = "57";
+	security_level = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -31554,7 +31558,8 @@
 "bwG" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Escape";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32142,7 +32147,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access_txt = "20";
+	security_level = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
