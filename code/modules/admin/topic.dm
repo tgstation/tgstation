@@ -2355,12 +2355,6 @@
 			return
 		usr.nominate_heart(heart_recepient)
 
-	else if(href_list["force_war"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
-		button.force_war()
-
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return
