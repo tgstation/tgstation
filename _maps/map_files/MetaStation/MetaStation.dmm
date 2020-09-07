@@ -60744,12 +60744,16 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "dbh" = (
-/obj/effect/turf_decal/stripes/corner{
+/obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Cooling Loop Bypass"
+	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62283,19 +62287,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/engineering)
-"dfI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Cooling Loop Bypass"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -72265,6 +72256,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"oos" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "ooS" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -122317,7 +122317,7 @@ dfb
 dfj
 dlI
 deD
-dfF
+dfE
 dfT
 aVe
 alq
@@ -122574,7 +122574,7 @@ aNv
 dfk
 dfq
 djt
-dfE
+dfF
 dfP
 wHc
 aWH
@@ -123088,7 +123088,7 @@ aNv
 dfm
 aMk
 djt
-dbg
+oos
 cXz
 aVe
 atm
@@ -123345,7 +123345,7 @@ dfc
 dlI
 dlI
 deD
-dfI
+dbg
 dfR
 dga
 dgd
