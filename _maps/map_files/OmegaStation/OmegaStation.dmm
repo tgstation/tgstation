@@ -248,30 +248,6 @@
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aaL" = (
-/obj/item/radio/intercom{
-	broadcasting = 0;
-	freerange = 1;
-	listening = 1;
-	name = "Common Channel";
-	pixel_x = -27;
-	pixel_y = -7
-	},
-/obj/item/radio/intercom{
-	anyai = 1;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_y = -27
-	},
-/obj/item/radio/intercom{
-	anyai = 1;
-	broadcasting = 0;
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = 27;
-	pixel_y = -7
-	},
 /obj/effect/landmark/start/ai,
 /obj/machinery/button/door{
 	id = "aicorewindow";
@@ -286,6 +262,25 @@
 	pixel_x = -23;
 	pixel_y = -23;
 	req_access_txt = "16"
+	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 27;
+	pixel_y = -7
+	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_y = -27
+	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = -27;
+	pixel_y = -7
 	},
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
@@ -6519,12 +6514,6 @@
 /obj/machinery/power/tracker,
 /turf/open/space/basic,
 /area/space)
-"apl" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/space)
 "apm" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -10498,9 +10487,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/port/fore";
+	areastring = "/area/hallway/primary/fore";
 	dir = 1;
-	name = "Port Bow Primary Hallway APC";
+	name = "Fore Primary Hallway APC";
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -35178,9 +35167,9 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/port/aft";
+	areastring = "/area/hallway/primary/aft";
 	dir = 1;
-	name = "Port Quarter Hallway APC";
+	name = "Aft Hallway APC";
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/tile/green{
@@ -41227,9 +41216,9 @@
 "yeO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/starboard/fore";
+	areastring = "/area/hallway/primary/starboard";
 	dir = 8;
-	name = "Starboard Bow Primary Hallway APC";
+	name = "Starboard Primary Hallway APC";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -55580,7 +55569,7 @@ akX
 akX
 akX
 akX
-apl
+akX
 akX
 akX
 akX
@@ -56608,7 +56597,7 @@ akX
 akX
 akX
 akX
-apl
+akX
 akX
 akX
 akX
@@ -57636,7 +57625,7 @@ akX
 akX
 akX
 akX
-apl
+akX
 akX
 akX
 akX
@@ -58664,7 +58653,7 @@ akX
 akX
 akX
 akX
-apl
+akX
 akX
 akX
 akX
