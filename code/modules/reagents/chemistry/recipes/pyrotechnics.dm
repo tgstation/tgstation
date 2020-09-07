@@ -478,13 +478,13 @@
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide/on_reaction(datum/reagents/holder, created_volume)
 	holder.remove_reagent(/datum/reagent/sorium, created_volume*2)
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/turfie_owo = get_turf(holder.my_atom)
 	//generally twice as weak as sorium.
 	var/range = clamp(sqrt(created_volume*2), 1, 6)
 	//This first throws people away and then it explodes
-	goonchem_vortex(T, 1, range)
-	T.atmos_spawn_air("o2=[created_volume/2];TEMP=[575]")
-	T.atmos_spawn_air("n2=[created_volume/2];TEMP=[575]")
+	goonchem_vortex(turfie_owo, 1, range)
+	turfie_owo.atmos_spawn_air("o2=[created_volume/2];TEMP=[575]")
+	turfie_owo.atmos_spawn_air("n2=[created_volume/2];TEMP=[575]")
 	return ..()
 
 /datum/chemical_reaction/firefighting_foam
