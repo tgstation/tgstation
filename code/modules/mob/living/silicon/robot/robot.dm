@@ -101,7 +101,7 @@
 	return cell
 
 /mob/living/silicon/robot/New(loc, connect_to_ai = TRUE)
-	..()
+	. = ..()
 
 /mob/living/silicon/robot/Initialize(mapload, connect_to_ai = TRUE)
 	spark_system = new /datum/effect_system/spark_spread()

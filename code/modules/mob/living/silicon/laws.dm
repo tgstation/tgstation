@@ -115,7 +115,7 @@
 	if(!law_list.len)
 		return "None"
 
-	for(var/i = 1, i <= GLOB.lawset_law_lists.len, i++)
+	for(var/i in 1 to length(GLOB.lawset_law_lists))
 		var/lawset_name = GLOB.lawset_law_lists[i]
 
 		if(compare_list(law_list, GLOB.lawset_law_lists[lawset_name]))
