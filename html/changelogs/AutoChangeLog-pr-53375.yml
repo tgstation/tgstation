@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "passive gate max out limit pressure settings increased"
-  - tweak: "passive gate description more precise"
