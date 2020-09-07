@@ -216,7 +216,7 @@
 			else
 				lawtype = pick(subtypesof(/datum/ai_laws/default))
 
-			set_laws_lawset("[lawtype]")
+			set_laws_lawset(lawtype)
 
 		if(3)
 			pick_weighted_lawset()
@@ -235,7 +235,7 @@
 		WARNING("No LAW_WEIGHT entries.")
 		lawtype = /datum/ai_laws/default/asimov
 
-	set_laws_lawset("[lawtype]")
+	set_laws_lawset(lawtype)
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
@@ -437,14 +437,14 @@
 	if(!lawset_path)
 		return
 
-	name = GLOB.lawset_laws["[lawset_path]"][LAW_NAME]
+	name = GLOB.lawset_laws[lawset_path][LAW_NAME]
 
-	zeroth = GLOB.lawset_laws["[lawset_path]"][LAW_ZEROTH]
+	zeroth = GLOB.lawset_laws[lawset_path][LAW_ZEROTH]
 
-	hacked = GLOB.lawset_laws["[lawset_path]"][LAW_HACKED]
+	hacked = GLOB.lawset_laws[lawset_path][LAW_HACKED]
 
-	ion = GLOB.lawset_laws["[lawset_path]"][LAW_ION]
+	ion = GLOB.lawset_laws[lawset_path][LAW_ION]
 
-	inherent = GLOB.lawset_laws["[lawset_path]"][LAW_INHERENT]
+	inherent = GLOB.lawset_laws[lawset_path][LAW_INHERENT]
 
-	supplied = GLOB.lawset_laws["[lawset_path]"][LAW_SUPPLIED]
+	supplied = GLOB.lawset_laws[lawset_path][LAW_SUPPLIED]

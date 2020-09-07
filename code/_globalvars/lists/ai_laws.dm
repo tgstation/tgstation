@@ -3,10 +3,8 @@ GLOBAL_LIST_INIT(lawset_laws, get_lawset_laws())
 /proc/get_lawset_laws()
 	. = list()
 
-	var/datum/ai_laws/lawset_datum = null
-
 	for(var/lawset in subtypesof(/datum/ai_laws))
-		lawset_datum = new lawset
+		var/datum/ai_laws/lawset_datum = new lawset
 
 		.["[lawset]"] = list()
 
@@ -29,6 +27,9 @@ GLOBAL_LIST_INIT(lawset_laws, get_lawset_laws())
 		.["[lawset]"][LAW_SUPPLIED] = list()
 
 		.["[lawset]"][LAW_SUPPLIED] = lawset_datum.supplied
+		
+		qdel(lawset_datum)
+
 
 GLOBAL_LIST_INIT(lawset_law_lists, get_lawset_law_lists())
 
@@ -38,6 +39,8 @@ GLOBAL_LIST_INIT(lawset_law_lists, get_lawset_law_lists())
 	var/datum/ai_laws/lawset_datum = new /datum/ai_laws
 
 	for(var/lawset in subtypesof(/datum/ai_laws))
-		lawset_datum.set_laws_lawset("[lawset]")
+		lawset_datum.set_laws_lawset(lawset)
 
 		.[lawset_datum.name] = lawset_datum.get_law_list(TRUE, FALSE, FALSE)
+
+	qdel(lawset_datum)
