@@ -50,9 +50,9 @@ GLOBAL_LIST_EMPTY(cached_cards)
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard/attack_hand(mob/user)
-	var/list/choices = GLOB.tcgcard_radial_choices
 	if(!isturf(loc))
 		return ..()
+	var/list/choices = GLOB.tcgcard_radial_choices
 	if(!length(choices))
 		choices = GLOB.tcgcard_radial_choices = list(
 		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
