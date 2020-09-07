@@ -118,12 +118,7 @@
 	for(var/i = 1, i <= GLOB.lawset_law_lists.len, i++)
 		var/lawset_name = GLOB.lawset_law_lists[i]
 
-		var/list/lawset_law_list = GLOB.lawset_law_lists[lawset_name]
-
-		if(law_list.len != lawset_law_list.len)
-			continue
-
-		if(compare_list(law_list, lawset_law_list))
+		if(compare_list(law_list, GLOB.lawset_law_lists[lawset_name]))
 			return lawset_name
 
 	return "Custom"
