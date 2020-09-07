@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(string_num_lists)
+GLOBAL_LIST_EMPTY(string_assoc_lists)
 
 
 /**
@@ -10,9 +10,9 @@ GLOBAL_LIST_EMPTY(string_num_lists)
     string_id += "[val]_[values[val]]"
   string_id.Join("-")
 
-  . = GLOB.string_num_lists[string_id]
+  . = GLOB.string_assoc_lists[string_id]
 
   if(.)
     return
 
-  return GLOB.string_num_lists[string_id] = values
+  return GLOB.string_assoc_lists[string_id] = values
