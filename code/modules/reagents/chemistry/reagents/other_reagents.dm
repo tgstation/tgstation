@@ -759,7 +759,7 @@
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
 		exposed_turf.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
-	return
+	return ..()
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -1259,7 +1259,7 @@
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
 		exposed_turf.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
-	return
+	return ..()
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
