@@ -356,10 +356,10 @@
 	var/question_found = findtext(message, "?")
 	var/mob/living/carbon/M = owner
 	new_message = message
-	if(findtext(message, "!"))
+	if(exclamation_found)
 		new_message = replacetext(new_message, "!", "")
 
-	if(findtext(message, "?"))
+	if(question_found)
 		new_message = replacetext(new_message, "?", "")
 	speech_args[SPEECH_MESSAGE] = new_message
 
