@@ -622,6 +622,17 @@
 			return
 	return ..()
 
+/obj/item/storage/crayons/attack_self(mob/user)
+	. = ..()
+	if(contents.len > 0)
+		to_chat(user, "<span class='warning'>You can't fold down [src] with crayons inside!</span>")
+		return
+
+	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
+	to_chat(user, "<span class='notice'>You fold the [src] into cardboard.</span>")
+	user.put_in_active_hand(cardboard)
+	qdel(src)
+
 //Spraycan stuff
 
 /obj/item/toy/crayon/spraycan
