@@ -394,9 +394,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in connections)
 		var/turf/T = get_step(src,  text2dir(direction))
-		for(var/_type in T.contents)
-			if(istype(_type,type))
-				var/obj/effect/mapping_helpers/simple_pipes/found = _type
+		for(var/machine_type_owo in T.contents)
+			if(istype(machine_type_owo,type))
+				var/obj/effect/mapping_helpers/simple_pipes/found = machine_type_owo
 				if(found.piping_layer != piping_layer)
 					continue
 				connections[direction] = TRUE
