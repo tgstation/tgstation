@@ -1,0 +1,5 @@
+author: "Shirbu"
+delete-after: True
+changes: 
+  - balance: "nightmares can now dodge beam projectiles on dark tiles"
+  - tweak: "lasers', emitters', and disablers' projectiles, now emit light only on their own tile, instead of a 3x3 square"
