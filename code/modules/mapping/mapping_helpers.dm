@@ -436,7 +436,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(3)
 			for(var/direction in connections)
 				if(connections[direction] == FALSE)
-					spawn_pipe(/obj/machinery/atmospherics/pipe/manifold,direction)
+					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/manifold)
 		if(4)
 			spawn_pipe(dir2text(NORTH),/obj/machinery/atmospherics/pipe/manifold4w)
 
