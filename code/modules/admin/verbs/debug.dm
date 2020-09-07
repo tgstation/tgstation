@@ -1014,4 +1014,4 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
 				if(!(x.icon_state in icon_states(actual_file_name)))
 					to_chat(src, "<span class='warning'>ERROR sprites for [x.type]. Suit Storage slot.</span>", confidential = TRUE)
-	#endif
+#endif
