@@ -301,7 +301,8 @@
 	var/turf/T = loc
 	. = ..()
 	setDir(ini_dir)
-	move_update_air(T)
+	if(anchored)
+		move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(!anchored || !density)
@@ -381,7 +382,7 @@
 	receive_ricochet_chance_mod = 1.1
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
-//If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
+//If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 /obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
