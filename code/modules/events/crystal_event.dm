@@ -78,9 +78,14 @@ This section is for the event controller
 
 	for(var/t in RANGE_TURFS(8, dest_crystal.loc))
 		var/turf/turf_loc = t
-		var/distance_from_center = get_dist(turf_loc, dest_crystal.loc)
-		if(distance_from_center == 0)
-			distance_from_center = 1 //Same tile, let's avoid a division by zero.
+		var/distance_from_center
+		BETTER_DIST(distance_from_center, turf_loc, dest_crystal.loc)
+		switch(distance_from_center)
+			if(0)
+				distance_from_center = 1 //Same tile, let's avoid a division by zero.
+			if(-1)
+				kill()
+				CRASH("Negative distance measurement from the center turf detected, this should never happen")
 		if(prob(325 / distance_from_center))
 			if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 				turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -123,9 +128,14 @@ This section is for the event controller
 
 		for(var/t in RANGE_TURFS(5, center_turf))
 			var/turf/turf_loc = t
-			var/distance_from_center = get_dist(turf_loc, center_turf)
-			if(distance_from_center == 0)
-				distance_from_center = 1 //Same tile, let's avoid a division by zero.
+			var/distance_from_center
+			BETTER_DIST(distance_from_center, turf_loc, center_turf)
+			switch(distance_from_center)
+				if(0)
+					distance_from_center = 1 //Same tile, let's avoid a division by zero.
+				if(-1)
+					kill()
+					CRASH("Negative distance measurement from the center turf detected, this should never happen")
 			if(prob(250 / distance_from_center))
 				if(isopenturf(turf_loc) || isspaceturf(turf_loc))
 					turf_loc.ChangeTurf(/turf/open/indestructible/crystal_floor, flags = CHANGETURF_INHERIT_AIR)
@@ -611,8 +621,8 @@ This section is for the crystal portals variations
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
 	color = COLOR_BLACK
-	max_mobs = 2
-	spawn_time = 45 SECONDS
+	max_mobs = 5
+	spawn_time = 30 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/boss
 		)

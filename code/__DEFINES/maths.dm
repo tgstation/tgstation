@@ -219,3 +219,9 @@
 /// Like DT_PROB_RATE but easier to use, simply put `if(DT_PROB(10, 5))`
 #define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE(prob_per_second_percent/100, delta_time)))
 // )
+
+#define BETTER_DIST(dist, a, b)\
+	if (!a == null || b == null) {\
+		dist = -1;\
+	}\
+	dist = max(abs(a.x-b.x), abs(a.y-b.y));
