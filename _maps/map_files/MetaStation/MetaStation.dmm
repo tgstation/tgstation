@@ -24177,10 +24177,6 @@
 "bep" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
-	location = "13.2-Tcommstore"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -26309,6 +26305,10 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=14-Starboard-Central";
+	location = "13.3-Engineering-Central"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bjE" = (
@@ -27599,10 +27599,6 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "bmR" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.2-Tcommstore";
-	location = "13.1-Engineering-Enter"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -63416,6 +63412,14 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/main)
+"dkq" = (
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=13.2-Tcommstore";
+	location = "13.1-Engineering-Enter"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "dkR" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -73868,10 +73872,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "qpc" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14-Starboard-Central";
-	location = "13.3-Engineering-Central"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -75471,6 +75471,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
+	location = "13.2-Tcommstore"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -118350,7 +118354,7 @@ aWw
 aWw
 aWw
 bhQ
-bjw
+dkq
 lqU
 dhW
 dhW
