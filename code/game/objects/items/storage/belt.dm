@@ -170,6 +170,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,

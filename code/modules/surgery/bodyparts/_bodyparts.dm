@@ -228,11 +228,8 @@
 	var/bio_state = owner.get_biological_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	if(wounding_type == WOUND_BLUNT)
-		if(sharpness == SHARP_EDGED)
-			wounding_type = WOUND_SLASH
-		else if(sharpness == SHARP_POINTY)
-			wounding_type = WOUND_PIERCE
+	if(wounding_type == WOUND_BLUNT && sharpness)
+		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
 
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)
@@ -240,7 +237,7 @@
 		if(BIO_JUST_BONE)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
-				wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				wounding_dmg *= (easy_dismember ? 1 : 0.6)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
@@ -254,7 +251,7 @@
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
-					wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+					wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
@@ -308,11 +305,8 @@
 	var/bio_state = owner.get_biological_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	if(wounding_type == WOUND_BLUNT)
-		if(sharpness == SHARP_EDGED)
-			wounding_type = WOUND_SLASH
-		else if(sharpness == SHARP_POINTY)
-			wounding_type = WOUND_PIERCE
+	if(wounding_type == WOUND_BLUNT && sharpness)
+		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
 
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)
@@ -320,7 +314,7 @@
 		if(BIO_JUST_BONE)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
-				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.5)
+				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.6)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
 				phantom_wounding_dmg *= (easy_dismember ? 1 : 0.75)
@@ -334,7 +328,7 @@
 			if(mangled_state == BODYPART_MANGLED_FLESH && sharpness)
 				playsound(src, "sound/effects/wounds/crackandbleed.ogg", 100)
 				if(wounding_type == WOUND_SLASH && !easy_dismember)
-					phantom_wounding_dmg *= 0.5 // edged weapons pass along 50% of their wounding damage to the bone since the power is spread out over a larger area
+					phantom_wounding_dmg *= 0.6 // edged weapons pass along 60% of their wounding damage to the bone since the power is spread out over a larger area
 				if(wounding_type == WOUND_PIERCE && !easy_dismember)
 					phantom_wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 				wounding_type = WOUND_BLUNT
@@ -356,23 +350,24 @@
   * * bare_wound_bonus- The bare_wound_bonus of an attack
   */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
-	// actually roll wounds if applicable
+	// note that these are fed into an exponent, so these are magnified
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBWOUND))
 		damage *= 1.5
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+
 	if(HAS_TRAIT(owner,TRAIT_HARDLIMBWOUND))
-		damage *= 0.9
+		damage *= 0.85
 
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
-		damage *= 1.25
+		damage *= 1.1
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
 
-	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && (get_damage() / max_damage * 50))
+	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100))
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright=TRUE)
 		return
@@ -446,9 +441,9 @@
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += C.armor.getRating(WOUND)
 			if(wounding_type == WOUND_SLASH)
-				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
+				C.take_damage_zone(body_zone, damage, BRUTE)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
-				C.take_damage_zone(body_zone, damage, BURN, armour_penetration)
+				C.take_damage_zone(body_zone, damage, BURN)
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus

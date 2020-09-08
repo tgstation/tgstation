@@ -1,7 +1,7 @@
 /datum/component/orbiter
 	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/list/orbiters
+	var/list/orbiter_list
 	var/datum/movement_detector/tracker
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
@@ -13,7 +13,7 @@
 	if(!istype(orbiter) || !isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	orbiters = list()
+	orbiter_list = list()
 
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
@@ -34,9 +34,9 @@
 	var/atom/master = parent
 	if(master.orbiters == src)
 		master.orbiters = null
-	for(var/i in orbiters)
+	for(var/i in orbiter_list)
 		end_orbit(i)
-	orbiters = null
+	orbiter_list = null
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
@@ -45,15 +45,15 @@
 		begin_orbit(arglist(args.Copy(3)))
 		return
 	// The following only happens on component transfers
-	for(var/o in newcomp.orbiters)
+	for(var/o in newcomp.orbiter_list)
 		var/atom/movable/incoming_orbiter = o
 		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
 		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
 		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
-	orbiters += newcomp.orbiters
-	newcomp.orbiters = null
+	orbiter_list += newcomp.orbiter_list
+	newcomp.orbiter_list = null
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
@@ -66,14 +66,14 @@
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
 		else
 			orbiter.orbiting.end_orbit(orbiter)
-	orbiters[orbiter] = TRUE
+	orbiter_list[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
 	var/matrix/initial_transform = matrix(orbiter.transform)
-	orbiters[orbiter] = initial_transform
+	orbiter_list[orbiter] = initial_transform
 
 	// Head first!
 	if(pre_rotation)
@@ -101,14 +101,14 @@
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
-	if(!orbiters[orbiter])
+	if(!orbiter_list[orbiter])
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
-	if(istype(orbiters[orbiter],/matrix)) //This is ugly.
-		orbiter.transform = orbiters[orbiter]
-	orbiters -= orbiter
+	if(istype(orbiter_list[orbiter],/matrix)) //This is ugly.
+		orbiter.transform = orbiter_list[orbiter]
+	orbiter_list -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
 
@@ -117,7 +117,7 @@
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
-	if(!refreshing && !length(orbiters) && !QDELING(src))
+	if(!refreshing && !length(orbiter_list) && !QDELING(src))
 		qdel(src)
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
@@ -132,7 +132,7 @@
 		qdel(src)
 
 	var/atom/curloc = master.loc
-	for(var/i in orbiters)
+	for(var/i in orbiter_list)
 		var/atom/movable/thing = i
 		if(QDELETED(thing) || thing.loc == newturf)
 			continue
@@ -150,7 +150,7 @@
 	end_orbit(orbiter)
 
 /datum/component/orbiter/proc/orbiter_glide_size_update(datum/source, target)
-	for(var/orbiter in orbiters)
+	for(var/orbiter in orbiter_list)
 		var/atom/movable/movable_orbiter = orbiter
 		movable_orbiter.glide_size = target
 

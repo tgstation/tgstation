@@ -602,27 +602,27 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/flightpotion/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		var/mob/living/carbon/C = M
-		var/holycheck = ishumanbasic(C)
-		if(reac_volume < 5 || !(holycheck || islizard(C) || (ismoth(C) && C.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
+/datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+	. = ..()
+	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
+		var/mob/living/carbon/exposed_carbon = exposed_mob
+		var/holycheck = ishumanbasic(exposed_carbon)
+		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || (ismoth(exposed_carbon) && exposed_carbon.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
 			if((methods & INGEST) && show_message)
-				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
-			return ..()
-		if(C.dna.species.has_innate_wings)
-			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
-			C.dna.features["moth_wings"] = "None"
+				to_chat(exposed_carbon, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+			return
+		if(exposed_carbon.dna.species.has_innate_wings)
+			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
+			exposed_carbon.dna.features["moth_wings"] = "None"
 		else
-			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		C.dna.species.GiveSpeciesFlight(C)
+			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 		if(holycheck)
-			to_chat(C, "<span class='notice'>You feel blessed!</span>")
-			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
-		C.adjustBruteLoss(20)
-		C.emote("scream")
-	..()
+			to_chat(exposed_carbon, "<span class='notice'>You feel blessed!</span>")
+			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)
+		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		exposed_carbon.adjustBruteLoss(20)
+		exposed_carbon.emote("scream")
 
 
 /obj/item/jacobs_ladder
@@ -875,7 +875,7 @@
 		var/atom/A = thing
 		A.transfer_observers_to(src)
 
-	for(var/i in orbiters?.orbiters)
+	for(var/i in orbiters?.orbiter_list)
 		if(!isobserver(i))
 			continue
 		var/mob/dead/observer/G = i

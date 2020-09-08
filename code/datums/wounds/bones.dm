@@ -363,9 +363,9 @@
 		var/painkiller_bonus = 0
 		if(victim.drunkenness)
 			painkiller_bonus += 5
-		if(victim.reagents?.has_reagent(/datum/reagent/medicine/morphine))
+		if(victim.has_reagent(/datum/reagent/medicine/morphine))
 			painkiller_bonus += 10
-		if(victim.reagents?.has_reagent(/datum/reagent/determination))
+		if(victim.has_reagent(/datum/reagent/determination))
 			painkiller_bonus += 5
 
 		if(prob(25 + (20 * severity - 2) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
