@@ -27,6 +27,12 @@
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	///Max pressure allowed on other side of pump
+	var/max_output_pressure = 9000
+	///Number of stored motors inside the pump
+	var/motor_numbers = 0
+	///Max allowed number of motors in the pump
+	var/max_motors = 5
 
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -44,7 +50,15 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
+	if(motor_numbers > 0)
+		for(var/i in 1 to max_motors)
+			new /obj/item/assembly/motor(loc)
 	return ..()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
+	. = ..()
+	if(motor_numbers > 0)
+		. += "<span class='notice'>The pump has installed [motor_numbers] [(motor_numbers == 1) ? "motor" : "motors"] that increase the max output to [max_output_pressure] kpa!</span>"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
@@ -62,7 +76,7 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000))&&!overclocked)
+	if((input_starting_pressure < 0.01) || ((output_starting_pressure > max_output_pressure)) && !overclocked)
 		return
 
 	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
@@ -88,6 +102,25 @@
 	. = ..()
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+
+/obj/machinery/atmospherics/components/binary/volume_pump/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/assembly/motor))
+		if(motor_numbers == max_motors)
+			to_chat(user, "<span class='warning'>There are already [max_motors] connected to the pump!</span>")
+			return TRUE
+		motor_numbers++
+		update_assembly()
+		qdel(W)
+		playsound(get_turf(src), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
+		return TRUE
+
+/obj/machinery/atmospherics/components/binary/volume_pump/proc/update_assembly()
+	if(motor_numbers > 0)
+		max_output_pressure = 9000 //reset the pressure to the original one then adds up the new pressure
+		var/motor_pressure_upgrade = 0
+		for(var/i in 1 to motor_numbers)
+			motor_pressure_upgrade += i/(max_motors * 3) * 9000
+		max_output_pressure += motor_pressure_upgrade
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)

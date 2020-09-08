@@ -16,6 +16,12 @@
 	var/datum/radio_frequency/radio_connection
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
+	///Max pressure allowed on other side of pump
+	var/max_output_pressure = MAX_OUTPUT_PRESSURE
+	///Number of stored springs inside the valve
+	var/spring_numbers = 0
+	///Max allowed number of springs in the valve
+	var/max_springs = 5
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pvalve"
@@ -29,7 +35,7 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/AltClick(mob/user)
 	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
+		target_pressure = max_output_pressure
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
@@ -38,7 +44,15 @@
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)
 		radio_connection = null
+	if(spring_numbers > 0)
+		for(var/i in 1 to max_springs)
+			new /obj/item/assembly/spring(loc)
 	return ..()
+
+/obj/machinery/atmospherics/components/binary/pressure_valve/examine(mob/user)
+	. = ..()
+	if(spring_numbers > 0)
+		. += "<span class='notice'>The valve has installed [spring_numbers] [(spring_numbers == 1) ? "spring" : "springs"] that increase the max allowed pressure before the valve to [max_output_pressure] kpa!</span>"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
@@ -63,6 +77,25 @@
 	else
 		is_gas_flowing = FALSE
 	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/binary/pressure_valve/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/assembly/spring))
+		if(spring_numbers == max_springs)
+			to_chat(user, "<span class='warning'>There are already [max_springs] connected to the valve!</span>")
+			return TRUE
+		spring_numbers++
+		update_assembly()
+		qdel(W)
+		playsound(get_turf(src), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
+		return TRUE
+
+/obj/machinery/atmospherics/components/binary/pressure_valve/proc/update_assembly()
+	if(spring_numbers > 0)
+		max_output_pressure = MAX_OUTPUT_PRESSURE //reset the pressure to the original one then adds up the new pressure
+		var/spring_pressure_upgrade = 0
+		for(var/i in 1 to spring_numbers)
+			spring_pressure_upgrade += i/(max_springs * 2.45) * MAX_OUTPUT_PRESSURE
+		max_output_pressure += spring_pressure_upgrade
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -93,7 +126,7 @@
 	var/data = list()
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
-	data["max_pressure"] = round(ONE_ATMOSPHERE*100)
+	data["max_pressure"] = round(max_output_pressure)
 	return data
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/ui_act(action, params)
@@ -107,13 +140,13 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				pressure = ONE_ATMOSPHERE*100
+				pressure = max_output_pressure
 				. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(pressure, 0, ONE_ATMOSPHERE*100)
+				target_pressure = clamp(pressure, 0, max_output_pressure)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -135,7 +168,7 @@
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*100)
+		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,max_output_pressure)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
