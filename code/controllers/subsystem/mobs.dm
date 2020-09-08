@@ -53,10 +53,8 @@ SUBSYSTEM_DEF(mobs)
 						C.next_breathe_check--
 
 
-		if(L.client && (currentrun <= next_slow_check))//only check for the zlevel every 5 runs
+		if(L.client && (currentrun >= next_slow_check))//only check for the zlevel every 5 runs
 			next_slow_check = currentrun + 5
-
-			message_admins("cliechek")
 
 			var/turf/T = get_turf(L)
 			if(!T)
