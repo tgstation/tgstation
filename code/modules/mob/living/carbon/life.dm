@@ -5,7 +5,6 @@
 		damageoverlaytemp = FALSE
 		update_damage_hud()
 
-	message_admins("proc")
 	if(!IS_IN_STASIS(src))
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
@@ -60,8 +59,6 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-
-	message_admins("breather [src]")
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)

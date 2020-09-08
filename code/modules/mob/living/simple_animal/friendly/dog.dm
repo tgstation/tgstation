@@ -512,6 +512,8 @@
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/life_process()
 	. = ..()
+	if(!stat)
+		return
 	for(var/mob/living/simple_animal/pet/P in orange(1, src))
 		if(!istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
 			continue
