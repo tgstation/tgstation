@@ -2010,7 +2010,9 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afI" = (
-/obj/machinery/computer/arcade,
+/obj/machinery/computer/arcade{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afJ" = (
@@ -12916,7 +12918,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aGm" = (
-/obj/machinery/computer/arcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12926,6 +12927,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)

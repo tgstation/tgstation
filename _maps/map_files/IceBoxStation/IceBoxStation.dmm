@@ -19704,9 +19704,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "aUL" = (
-/obj/machinery/computer/arcade,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/computer/arcade{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
@@ -22132,9 +22134,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "baa" = (
-/obj/machinery/computer/arcade,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/computer/arcade{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -23426,7 +23430,9 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bdi" = (
-/obj/machinery/computer/arcade,
+/obj/machinery/computer/arcade{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bdj" = (
