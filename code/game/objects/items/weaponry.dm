@@ -955,6 +955,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/arm_wrassle/dropped(mob/user, silent)
 	if(!challenge_set)
 		qdel(src)
+		return
+	return ..()
 
 /obj/item/arm_wrassle/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/structure/table))

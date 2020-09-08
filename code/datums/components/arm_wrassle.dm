@@ -182,9 +182,6 @@
 		if(stage > AWRASSLE_STAGE_INITIALIZING && arena)
 			owner.visible_message("<span class='notice'>[owner] walks away from \the [arena].</span>")
 		qdel(src)
-		return
-
-	return ..()
 
 
 #undef AWRASSLE_STAGE_INITIALIZING
