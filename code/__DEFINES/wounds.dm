@@ -118,6 +118,8 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define MANGLES_BONE	(1<<3)
 /// If this wound marks the limb as being allowed to have gauze applied
 #define ACCEPTS_GAUZE	(1<<4)
+/// If this wound ignores preexisting wounds of the same type when applying
+#define IGNORES_EXISTING_WOUNDS (1<<5)
 
 
 // ~scar persistence defines

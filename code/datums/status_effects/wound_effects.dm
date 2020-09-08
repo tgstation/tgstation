@@ -187,6 +187,8 @@
 	id = "laceration"
 /datum/status_effect/wound/slash/critical
 	id = "avulsion"
+/datum/status_effect/wound/slash/dismemberment
+	id = "dismemberment"
 // pierce
 /datum/status_effect/wound/pierce/moderate
 	id = "breakage"

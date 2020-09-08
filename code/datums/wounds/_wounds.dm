@@ -42,6 +42,8 @@
 	var/mob/living/carbon/victim = null
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
+	/// A phantom body zone, for situations where the wound is tied to a bodypart that doesn't exist on the victim, like dismemberment
+	var/fake_body_zone
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
@@ -122,11 +124,12 @@
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
-	for(var/i in L.wounds)
-		var/datum/wound/preexisting_wound = i
-		if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
-			qdel(src)
-			return
+	if(!(wound_flags & IGNORES_EXISTING_WOUNDS))
+		for(var/i in L.wounds)
+			var/datum/wound/preexisting_wound = i
+			if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
+				qdel(src)
+				return
 
 	victim = L.owner
 	limb = L
@@ -314,7 +317,7 @@
   * * mob/user: The user examining the wound's owner, if that matters
   */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	. = "[victim.p_their(TRUE)] [fake_body_zone ? parse_zone(fake_body_zone) : limb.name] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)
@@ -330,3 +333,5 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
+		if(WOUND_SEVERITY_LOSS)
+			return "Dismemberment"

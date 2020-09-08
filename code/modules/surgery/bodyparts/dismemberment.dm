@@ -35,7 +35,7 @@
 		burn()
 		return TRUE
 	add_mob_blood(C)
-	C.bleed(rand(20, 40))
+	C.bleed(rand(8, 12))
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -50,7 +50,7 @@
 	return TRUE
 
 
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
@@ -192,7 +192,7 @@
 		base_chance += 15
 
 	if(prob(base_chance))
-		var/datum/wound/loss/dismembering = new
+		var/datum/wound/slash/critical/loss/dismembering = new
 		dismembering.apply_dismember(src, wounding_type)
 		return TRUE
 
@@ -464,6 +464,6 @@
 			qdel(L)
 			return FALSE
 		var/datum/scar/scaries = new
-		var/datum/wound/loss/phantom_loss = new // stolen valor, really
+		var/datum/wound/slash/critical/loss/phantom_loss = new // stolen valor, really
 		scaries.generate(L, phantom_loss)
 		return TRUE
