@@ -40,7 +40,7 @@
 
 	var/mimicing = ""
 	var/canrespec = FALSE//set to TRUE in absorb.dm
-	var/changeling_speak = 0
+	var/changeling_speak = FALSE
 	var/datum/dna/chosen_dna
 	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -61,7 +61,7 @@
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
 	QDEL_NULL(emporium_action)
-	. = ..()
+	return ..()
 
 /datum/antagonist/changeling/proc/generate_name()
 	var/honorific
@@ -92,8 +92,11 @@
 		if(team_mode)
 			forge_team_objectives()
 		forge_objectives()
+	regenerate()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
-	. = ..()
+	owner.current.hud_used.lingchemdisplay.invisibility = 0
+	owner.current.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
+	return ..()
 
 /datum/antagonist/changeling/on_removal()
 	//We'll be using this from now on
@@ -104,10 +107,11 @@
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
-	. = ..()
+	owner.current.hud_used.lingchemdisplay.invisibility = INVISIBILITY_MAXIMUM
+	return ..()
 
 /datum/antagonist/changeling/proc/reset_properties()
-	changeling_speak = 0
+	changeling_speak = FALSE
 	chosen_sting = null
 	geneticpoints = total_geneticspoints
 	sting_range = initial(sting_range)
@@ -217,8 +221,8 @@
 		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
 		return FALSE
 
-//Called in life()
-/datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
+///Handles regenerating chemicals
+/datum/antagonist/changeling/proc/regenerate()
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
 		if(the_ling.stat == DEAD)

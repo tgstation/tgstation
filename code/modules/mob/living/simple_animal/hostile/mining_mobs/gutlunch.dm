@@ -48,7 +48,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
 	udder = new()
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
@@ -80,14 +80,14 @@
 	cut_overlays()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
 		add_overlay("gl_full")
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		regenerate_icons()
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
 	if(is_type_in_typecache(target,wanted_objects)) //we eats
@@ -114,15 +114,18 @@
 	gender = FEMALE
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/life_process()
-	..()
+	. = ..()
+	if(!.)
+		return
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
 	. = ..()
-	if(.)
-		udder.reagents.clear_reagents()
-		regenerate_icons()
+	if(!.)
+		return
+	udder.reagents.clear_reagents()
+	regenerate_icons()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch
 	name = "grublunch"
@@ -138,7 +141,9 @@
 	update_transform()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/life_process()
-	..()
+	. = ..()
+	if(!.)
+		return
 	growth++
 	if(growth > 50) //originally used a timer for this but was more problem that it's worth.
 		growUp()

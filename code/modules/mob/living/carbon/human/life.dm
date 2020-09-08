@@ -21,7 +21,7 @@
 /mob/living/carbon/human/life_process()
 	. = ..()
 		//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name() //tivi todo
+	name = get_visible_name() //this needs to be moved out onto equiping and damage but I dont have the energy for it
 	if(.)
 		return
 	if(!IS_IN_STASIS(src))

@@ -32,8 +32,6 @@
 
 	check_cremation()
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
 
 	if(stat != DEAD)
 		return TRUE//checking again in case something killed us
@@ -68,7 +66,7 @@
 		else if(health <= crit_threshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
-	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME) //tivi todo fix
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
@@ -84,7 +82,6 @@
 			return
 
 		//Breathe from internal
-
 		if(isnull(breath)) //in case of 0 pressure internals
 
 			if(isobj(loc)) //Breathe from loc as object
@@ -355,18 +352,6 @@
 		var/datum/wound/W = thing
 		if(W.processes) // meh
 			W.handle_process()
-
-//todo generalize this and move hud out
-/mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)

@@ -10,7 +10,7 @@
 /datum/action/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	changeling.changeling_speak = 1
+	changeling.changeling_speak = TRUE
 	to_chat(user, "<i><font color=#800080>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with the other changelings.</font></i>")
 	var/datum/action/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
