@@ -522,8 +522,9 @@
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
 	..()
+	if(health <= 0)
+		return
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
-		if(!health <= 0)
 			if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
 				visible_message("<span class='warning'>[src] devours [P]!</span>", \
 				"<span class='cult big bold'>DELICIOUS SOULS</span>")
