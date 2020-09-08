@@ -146,6 +146,28 @@
 	// min dmg 3, max dmg 6, prob(70)
 	AddComponent(/datum/component/caltrop, 3, 6, 70)
 
+///Snow flora to exist on icebox.
+/obj/structure/flora/ash/chilly
+	icon_state = "chilly_pepper"
+	name = "springy grassy fruit"
+	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
+	harvested_name = "springy grass"
+	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
+	harvest = /obj/item/reagent_containers/food/snacks/grown/icepepper
+	needs_sharp_harvest = FALSE
+	harvest_amount_high = 3
+	harvest_time = 15
+	harvest_message_low = "You pluck a single, curved fruit."
+	harvest_message_med = "You pluck a number of curved fruit."
+	harvest_message_high = "You pluck quite a lot of curved fruit."
+	regrowth_time_low = 2400
+	regrowth_time_high = 5500
+
+/obj/structure/flora/ash/chilly/Initialize()
+	. = ..()
+	base_icon = "[icon_state][rand(1, 2)]"
+	icon_state = base_icon
+
 //SNACKS
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora
