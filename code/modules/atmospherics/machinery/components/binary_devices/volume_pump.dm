@@ -111,7 +111,8 @@
 		motor_numbers++
 		update_assembly()
 		qdel(W)
-		playsound(get_turf(src), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
+		var/obj/item/assembly/motor/motor = W
+		playsound(get_turf(src), motor.pickup_sound, 35, TRUE)
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/update_assembly()

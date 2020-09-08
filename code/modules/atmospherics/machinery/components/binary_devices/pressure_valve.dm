@@ -86,7 +86,8 @@
 		spring_numbers++
 		update_assembly()
 		qdel(W)
-		playsound(get_turf(src), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
+		var/obj/item/assembly/motor/spring = W
+		playsound(get_turf(src), spring.pickup_sound, 35, TRUE)
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/update_assembly()
