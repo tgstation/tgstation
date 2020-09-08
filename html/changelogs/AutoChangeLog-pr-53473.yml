@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "adds trait injector mapping helper"
