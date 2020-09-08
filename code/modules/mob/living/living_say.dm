@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/deaf_message
 	var/deaf_type
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
-		deaf_message = message
+		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 		if(speaker != src)
 			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
 				deaf_type = 1
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return FALSE
 
 
-		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		message = deaf_message
 
 		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlighting = speaker == src)
 		return message
