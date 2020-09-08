@@ -281,6 +281,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
 #define RESTING_TRAIT "resting" //trait associated to resting
 #define STAT_TRAIT "stat" //trait associated to a stat value or range of
+#define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
