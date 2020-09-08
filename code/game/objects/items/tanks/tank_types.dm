@@ -182,7 +182,7 @@
 	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
 	icon_state = "generic"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	force = 20
+	force = 10
 	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/tank/internals/generic/populate_gas()
