@@ -66,7 +66,6 @@
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)

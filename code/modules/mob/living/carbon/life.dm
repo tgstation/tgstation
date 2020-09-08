@@ -2,9 +2,10 @@
 	if(notransform)
 		return FALSE
 	if(damageoverlaytemp)
-		damageoverlaytemp = 0
+		damageoverlaytemp = FALSE
 		update_damage_hud()
 
+	message_admins("proc")
 	if(!IS_IN_STASIS(src))
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
@@ -35,6 +36,8 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+	if(stat != DEAD)
+		return TRUE//checking again in case something killed us
 
 ///////////////
 // BREATHING //
@@ -58,6 +61,8 @@
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
+	message_admins("breather [src]")
+
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
@@ -66,38 +71,40 @@
 		else if(health <= crit_threshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME) //tivi todo fix
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
+		failed_last_breath = TRUE
 		if(prob(10))
 			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
-		return
 
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))//later so people in crit with nobreathe can die
-		return
-	//Breathe from internal
-	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
+	else
+		if(HAS_TRAIT(src, TRAIT_NOBREATH))//later so people in crit with nobreathe can die
+			return
 
-	if(isnull(breath)) //in case of 0 pressure internals
+		//Breathe from internal
 
-		if(isobj(loc)) //Breathe from loc as object
-			var/obj/loc_as_obj = loc
-			breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
-		else if(isturf(loc)) //Breathe from loc as turf
-			var/breath_moles = 0
-			var/datum/gas_mixture/environment = loc?.return_air()
-			if(environment)
-				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+		if(isnull(breath)) //in case of 0 pressure internals
 
-			breath = loc.remove_air(breath_moles)
+			if(isobj(loc)) //Breathe from loc as object
+				var/obj/loc_as_obj = loc
+				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
+			else if(isturf(loc)) //Breathe from loc as turf
+				var/breath_moles = 0
+				var/datum/gas_mixture/environment = loc?.return_air()
+				if(environment)
+					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
-	else //Breathe from loc as obj again
-		if(istype(loc, /obj/))
-			var/obj/loc_as_obj = loc
-			loc_as_obj.handle_internal_lifeform(src,0)
+				breath = loc.remove_air(breath_moles)
+
+		else //Breathe from loc as obj again
+			if(istype(loc, /obj/))
+				var/obj/loc_as_obj = loc
+				loc_as_obj.handle_internal_lifeform(src,0)
 
 	if(check_breath(breath))
 		loc.assume_air(breath)
