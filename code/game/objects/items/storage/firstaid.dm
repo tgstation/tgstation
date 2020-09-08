@@ -560,17 +560,17 @@
 	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process()
+/obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/cool = FALSE
-	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
-	if(amount >= 0.1)
-		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
+	if(amount > 0)
+		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
 		cool = TRUE
 	else
-		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
-		if(amount >= 0.3)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
+		if(amount > 0)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE

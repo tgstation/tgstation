@@ -193,11 +193,11 @@
 							"<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
 		contents.Add(user)
 
-/obj/structure/spawner/nether/process()
+/obj/structure/spawner/nether/process(delta_time)
 	for(var/mob/living/M in contents)
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-			M.adjustBruteLoss(60)
+			M.adjustBruteLoss(60 * delta_time)
 			new /obj/effect/gibspawner/generic(get_turf(M), M)
 			if(M.stat == DEAD)
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank

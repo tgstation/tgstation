@@ -1,0 +1,4 @@
+author: "Donkie"
+delete-after: True
+changes: 
+  - code_imp: "Process procs now properly utilize deltatime when implementing rates, timers and probabilities, which paves way for easier subsystem tickrate adjustments."

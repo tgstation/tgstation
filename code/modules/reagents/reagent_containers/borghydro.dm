@@ -22,8 +22,8 @@ Borg Hypospray
 	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
-	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
+	var/charge_timer = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
@@ -48,11 +48,11 @@ Borg Hypospray
 	return ..()
 
 
-/obj/item/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
-	charge_tick++
-	if(charge_tick >= recharge_time)
+/obj/item/reagent_containers/borghypo/process(delta_time) //Every [recharge_time] seconds, recharge some reagents for the cyborg
+	charge_timer += delta_time
+	if(charge_timer >= recharge_time)
 		regenerate_reagents()
-		charge_tick = 0
+		charge_timer = 0
 
 	//update_icon()
 	return 1

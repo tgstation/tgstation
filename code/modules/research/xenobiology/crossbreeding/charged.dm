@@ -107,7 +107,7 @@ Charged extracts:
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
-	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(get_turf(user))
+	new /obj/item/food/cake/slimecake(get_turf(user))
 	for(var/i in 1 to 10)
 		var/drink_type = get_random_drink()
 		new drink_type(get_turf(user))

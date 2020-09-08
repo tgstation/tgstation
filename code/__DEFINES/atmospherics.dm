@@ -208,9 +208,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE					4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE					200
-/// 10% of an overclocked volume pump leaks into the air
-#define VOLUME_PUMP_LEAK_AMOUNT				0.1
+#define MAX_TRANSFER_RATE					400
+/// How many percent of the contents that an overclocked volume pumps leak into the air
+#define VOLUME_PUMP_LEAK_AMOUNT				0.2
 //used for device_type vars
 #define UNARY		1
 #define BINARY 		2
@@ -350,6 +350,7 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+//layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define PIPING_LAYER_MIN 1
 #define PIPING_LAYER_MAX 5
 #define PIPING_LAYER_DEFAULT 3
