@@ -25953,6 +25953,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "dla" = (
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "dlc" = (
@@ -26310,6 +26311,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/nanite)
 "dQf" = (
@@ -26406,6 +26408,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dXY" = (
@@ -26874,6 +26877,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "eOs" = (
@@ -27626,6 +27630,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "geN" = (
@@ -29080,6 +29085,7 @@
 	c_tag = "Experimentation Lab East";
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "iQp" = (
@@ -29359,6 +29365,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "jiS" = (
@@ -29598,6 +29605,11 @@
 "jDd" = (
 /turf/closed/wall/r_wall,
 /area/teleporter)
+"jDv" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "jFS" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall,
@@ -29894,6 +29906,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "kuo" = (
@@ -31089,6 +31102,7 @@
 /area/science/research)
 "mew" = (
 /obj/effect/landmark/start/scientist,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "mfs" = (
@@ -31867,6 +31881,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "nkJ" = (
@@ -32331,6 +32346,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "ock" = (
@@ -32706,6 +32722,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "oGt" = (
@@ -36251,6 +36268,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "sJA" = (
@@ -37370,6 +37388,7 @@
 	pixel_x = 23
 	},
 /obj/item/pen,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "sNx" = (
@@ -37919,6 +37938,7 @@
 	dir = 8;
 	light_color = "#e8eaff"
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "sZG" = (
@@ -38832,6 +38852,7 @@
 	name = "Research Division APC";
 	pixel_x = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "uBB" = (
@@ -40369,6 +40390,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "wVZ" = (
@@ -82611,7 +82633,7 @@ wVq
 xyr
 xyr
 onQ
-kBT
+jDv
 uJE
 wtK
 aad
