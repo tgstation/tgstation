@@ -5,6 +5,10 @@
   * Handles all mob updates
   */
 /mob/living/proc/life_process()
+	//This should never sleep
+	//however as the linter is not perfect we're going to have to have our cake and eat it too
+	//If life_process() does sleep, despite this check, it must not hold up ssmob.
+	set waitfor = FALSE
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
