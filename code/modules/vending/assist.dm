@@ -15,7 +15,8 @@
 					  /obj/item/stock_parts/cell/high = 1)
 	premium = list(/obj/item/price_tagger = 3,
 				   /obj/item/vending_refill/custom = 3,
-				   /obj/item/circuitboard/machine/vendor = 3)
+				   /obj/item/circuitboard/machine/vendor = 3,
+				   /obj/item/assembly/igniter/condenser = 2)
 	refill_canister = /obj/item/vending_refill/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	default_price = 125

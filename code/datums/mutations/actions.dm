@@ -180,7 +180,7 @@
 	clothes_req = FALSE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "void_magnet"
 
 /obj/effect/proc_holder/spell/self/void/can_cast(mob/user = usr)
@@ -284,9 +284,11 @@
 	throw_speed = 4
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = IS_SHARP
+	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = 500)
 	var/mob/living/carbon/human/fired_by
+	/// if we missed our target
+	var/missed = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, firedby)
 	. = ..()
@@ -294,13 +296,12 @@
 	addtimer(CALLBACK(src, .proc/checkembedded), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/checkembedded()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/embedtest = loc
-		for(var/l in embedtest.bodyparts)
-			var/obj/item/bodypart/limb = l
-			if(src in limb.embedded_objects)
-				return limb
-	unembedded()
+	if(missed)
+		unembedded()
+
+/obj/item/hardened_spike/embedded(atom/target)
+	if(isbodypart(target))
+		missed = FALSE
 
 /obj/item/hardened_spike/unembedded()
 	var/turf/T = get_turf(src)
@@ -371,14 +372,9 @@
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
-	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-	if(!transfered.has_embedded_objects())
-		transfered.clear_alert("embeddedobject")
-		SEND_SIGNAL(transfered, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	spikey.unembedded()
 
 //spider webs
 /datum/mutation/human/webbing

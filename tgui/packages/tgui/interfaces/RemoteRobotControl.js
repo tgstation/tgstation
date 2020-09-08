@@ -2,13 +2,27 @@ import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
+import { Window } from '../layouts';
 
-export const RemoteRobotControl = props => {
-  const { act, data } = useBackend(props);
+export const RemoteRobotControl = (props, context) => {
+  return (
+    <Window
+      title="Remote Robot Control"
+      width={500}
+      height={500}
+      resizable>
+      <Window.Content scrollable>
+        <RemoteRobotControlContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const RemoteRobotControlContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     robots = [],
   } = data;
-
   if (!robots.length) {
     return (
       <Section>
@@ -18,7 +32,6 @@ export const RemoteRobotControl = props => {
       </Section>
     );
   }
-
   return robots.map(robot => {
     return (
       <Section

@@ -12,9 +12,9 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /list(FACTOR_GAS_VISIBLE_MAX)
-			for(var/i in 1 to FACTOR_GAS_VISIBLE_MAX)
-				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
+			gas_info[META_GAS_OVERLAY] = new /list(TOTAL_VISIBLE_STATES)
+			for(var/i in 1 to TOTAL_VISIBLE_STATES)
+				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
 
 		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
@@ -156,12 +156,19 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/freon
 	id = "freon"
-	specific_heat = 300
+	specific_heat = 600
 	name = "Freon"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
 	rarity = 10
+
+/datum/gas/hydrogen
+	id = "hydrogen"
+	specific_heat = 15
+	name = "Hydrogen"
+	dangerous = TRUE
+	rarity = 700
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'

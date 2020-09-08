@@ -80,7 +80,7 @@
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
 	cooldown = (15 SECONDS)
-	stat_allowed = UNCONSCIOUS
+	stat_allowed = HARD_CRIT
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
 	var/mob/living/simple_animal/S = user
@@ -155,7 +155,7 @@
 	key_third_person = "gasps"
 	message = "gasps!"
 	emote_type = EMOTE_AUDIBLE
-	stat_allowed = UNCONSCIOUS
+	stat_allowed = HARD_CRIT
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -246,8 +246,8 @@
 	message_param = initial(message_param) // reset
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.get_num_arms() == 0)
-			if(H.get_num_legs() != 0)
+		if(H.usable_hands == 0)
+			if(H.usable_legs != 0)
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
 				H.Paralyze(20)
 			else
@@ -402,6 +402,12 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/gurgle
+	key = "gurgle"
+	key_third_person = "gurgles"
+	message = "makes an uncomfortable gurgle."
+	emote_type = EMOTE_AUDIBLE
+
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"
@@ -487,35 +493,6 @@
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-
-/datum/emote/living/circle
-	key = "circle"
-	key_third_person = "circles"
-	restraint_check = TRUE
-
-/datum/emote/living/circle/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	var/obj/item/circlegame/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
-	else
-		qdel(N)
-		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
-
-/datum/emote/living/slap
-	key = "slap"
-	key_third_person = "slaps"
-	restraint_check = TRUE
-
-/datum/emote/living/slap/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/slapper/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
-	else
-		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
 
 /datum/emote/inhale
 	key = "inhale"

@@ -11,7 +11,6 @@
 	construction_time=100
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list("Misc","Power Designs","Machinery","initial")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
@@ -90,11 +89,4 @@
 	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
 	id = "superpacman"
 	build_path = /obj/item/circuitboard/machine/pacman/super
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/pacman/mrs
-	name = "Machine Design (MRSPACMAN-type Generator Board)"
-	desc = "The circuit board that for a MRSPACMAN-type portable generator."
-	id = "mrspacman"
-	build_path = /obj/item/circuitboard/machine/pacman/mrs
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

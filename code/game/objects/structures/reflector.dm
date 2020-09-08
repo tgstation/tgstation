@@ -55,9 +55,6 @@
 /obj/structure/reflector/setDir(new_dir)
 	return ..(NORTH)
 
-/obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
-
 /obj/structure/reflector/bullet_act(obj/projectile/P)
 	var/pdir = P.dir
 	var/pangle = P.Angle
@@ -116,7 +113,7 @@
 								"<span class='notice'>You start to weld [src] to the floor...</span>",
 								"<span class='hear'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
 			if(!W.tool_start_check(user, amount=0))
@@ -126,7 +123,7 @@
 								"<span class='notice'>You start to cut [src] free from the floor...</span>",
 								"<span class='hear'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
 
 	//Finishing the frame
@@ -252,9 +249,6 @@
 		return
 	else
 		return ..()
-
-/obj/structure/reflector/dir_map_to_angle(dir)
-	return dir2angle(dir)
 
 /obj/structure/reflector/singularity_act()
 	if(admin)

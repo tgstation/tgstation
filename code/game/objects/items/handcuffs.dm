@@ -26,6 +26,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuff"
+	worn_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -36,7 +37,7 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -56,12 +57,12 @@
 		M.retaliate(user)
 
 	if(!C.handcuffed)
-		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
+		if(C.canBeHandcuffed())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
-			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, 30) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -102,7 +103,7 @@
 	desc = "A pair of restraints fashioned from long strands of flesh."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
-	item_state = "sinewcuff"
+	inhand_icon_state = "sinewcuff"
 	custom_materials = null
 	color = null
 
@@ -110,7 +111,7 @@
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff"
-	item_state = "coil"
+	inhand_icon_state = "coil"
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -194,7 +195,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
-	item_state = "cuff"
+	inhand_icon_state = "cuff"
 
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
@@ -268,7 +269,7 @@
 				var/mob/living/carbon/C = L
 				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)
 						C.update_equipment_speed_mods()
@@ -314,14 +315,14 @@
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
-	item_state = "bola"
+	inhand_icon_state = "bola"
 	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
 	var/knockdown = 0
 
-/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE)
+/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
@@ -338,7 +339,7 @@
   * * C - the carbon that we will try to ensnare
   */
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
-	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
+	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)
@@ -353,7 +354,7 @@
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
-	item_state = "bola_r"
+	inhand_icon_state = "bola_r"
 	breakouttime = 70
 	knockdown = 35
 
@@ -361,7 +362,7 @@
 	name = "energy bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
-	item_state = "ebola"
+	inhand_icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
@@ -377,10 +378,10 @@
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
-	item_state = "bola_r"
+	inhand_icon_state = "bola_r"
 	breakouttime = 300
 	slowdown = 0
-	var/datum/status_effect/gonbolaPacify/effectReference
+	var/datum/status_effect/gonbola_pacify/effectReference
 
 /obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

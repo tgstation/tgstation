@@ -38,7 +38,7 @@
 
 		basemob = text2path(mainsettings["mobtype"]["value"])
 		if (!ispath(basemob, /mob/living/simple_animal/hostile/mimic/copy) || !ispath(chosen_obj, /obj))
-			to_chat(usr, "Mob or object path invalid")
+			to_chat(usr, "Mob or object path invalid", confidential = TRUE)
 
 		basemob = new basemob(get_turf(usr), new chosen_obj(get_turf(usr)), usr, mainsettings["dropitem"]["value"] == "Yes" ? FALSE : TRUE, (mainsettings["googlyeyes"]["value"] == "Yes" ? FALSE : TRUE))
 

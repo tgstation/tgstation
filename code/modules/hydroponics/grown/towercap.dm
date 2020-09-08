@@ -16,6 +16,8 @@
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
+	reagents_add = list(/datum/reagent/cellulose = 0.05)
+	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
 /obj/item/seeds/tower/steel
 	name = "pack of steel-cap mycelium"
@@ -25,6 +27,7 @@
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
 	mutatelist = list()
+	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
 	rarity = 20
 
 
@@ -40,7 +43,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
-	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
 	var/static/list/accepted = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown/tobacco,
@@ -250,41 +254,41 @@
 	if(burning & !grill)
 		Burn()
 
-/obj/structure/bonfire/proc/Burn()
+/obj/structure/bonfire/proc/Burn(delta_time = 2)
 	var/turf/current_location = get_turf(src)
-	current_location.hotspot_expose(1000,500,1)
+	current_location.hotspot_expose(1000, 250 * delta_time, 1)
 	for(var/A in current_location)
 		if(A == src)
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			O.fire_act(1000, 500)
+			O.fire_act(1000, 250 * delta_time)
 		else if(isliving(A))
 			var/mob/living/L = A
-			L.adjust_fire_stacks(fire_stack_strength)
+			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
 
-/obj/structure/bonfire/proc/Cook()
+/obj/structure/bonfire/proc/Cook(delta_time = 2)
 	var/turf/current_location = get_turf(src)
 	for(var/A in current_location)
 		if(A == src)
 			continue
 		else if(isliving(A)) //It's still a fire, idiot.
 			var/mob/living/L = A
-			L.adjust_fire_stacks(fire_stack_strength)
+			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(istype(A, /obj/item) && DT_PROB(10, delta_time))
 			var/obj/item/O = A
 			O.microwave_act()
 
-/obj/structure/bonfire/process()
+/obj/structure/bonfire/process(delta_time)
 	if(!CheckOxygen())
 		extinguish()
 		return
 	if(!grill)
-		Burn()
+		Burn(delta_time)
 	else
-		Cook()
+		Cook(delta_time)
 
 /obj/structure/bonfire/extinguish()
 	if(burning)

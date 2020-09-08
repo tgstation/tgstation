@@ -14,10 +14,10 @@ GLOBAL_LIST_EMPTY(wayfindingbeacons)			    //list of all navigation beacons used
 GLOBAL_LIST_EMPTY(nuke_list)
 GLOBAL_LIST_EMPTY(alarmdisplay)				        //list of all machines or programs that can display station alerts
 GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the station (actually technically all engines)
+GLOBAL_LIST_EMPTY(mechpad_list)						//list of all /obj/machinery/mechpad
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
-GLOBAL_LIST_EMPTY(materials_list)				//list of all /datum/material datums indexed by material id.
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes)				//list of all table craft recipes
@@ -32,6 +32,8 @@ GLOBAL_LIST_EMPTY(meteor_list)				// List of all meteors.
 GLOBAL_LIST_EMPTY(active_jammers)             // List of active radio jammers
 GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(trophy_cases)
+///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
+GLOBAL_LIST_EMPTY(editable_sign_types)
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)
@@ -40,3 +42,6 @@ GLOBAL_LIST_EMPTY(ai_status_displays)
 
 GLOBAL_LIST_EMPTY(mob_spawners) 		    // All mob_spawn objects
 GLOBAL_LIST_EMPTY(alert_consoles)			// Station alert consoles, /obj/machinery/computer/station_alert
+
+GLOBAL_LIST_EMPTY(air_scrub_names)			// Name list of all air scrubbers
+GLOBAL_LIST_EMPTY(air_vent_names)			// Name list of all air vents

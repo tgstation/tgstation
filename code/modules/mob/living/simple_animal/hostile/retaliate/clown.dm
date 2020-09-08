@@ -258,7 +258,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 40
 	armour_penetration = 30
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	attack_verb_continuous = "acts out divine vengeance on"
 	attack_verb_simple = "act out divine vengeance on"
 	obj_damage = 50
@@ -292,6 +292,10 @@
 	attack_verb_simple = "awkwardly flail at"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow
+	speed = 20
+	move_to_delay = 60
+
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
 	name = "Something that was once a clown"
 	desc = "A grotesque bulging figure far mutated from it's original state."
@@ -306,3 +310,7 @@
 	attack_verb_simple = "bounce off of"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 	attack_reagent = /datum/reagent/toxin/mindbreaker
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow
+	speed = 50
+	move_to_delay = 120

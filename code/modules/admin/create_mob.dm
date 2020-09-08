@@ -12,6 +12,7 @@
 
 /proc/randomize_human(mob/living/carbon/human/H)
 	H.gender = pick(MALE, FEMALE)
+	H.body_type = H.gender
 	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
 	H.underwear = random_underwear(H.gender)

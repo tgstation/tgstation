@@ -8,8 +8,8 @@
 	var/datum/pipeline/parent = null
 
 	//Buckling
-	can_buckle = 1
-	buckle_requires_restraints = 1
+	can_buckle = TRUE
+	buckle_requires_restraints = TRUE
 	buckle_lying = -1
 
 /obj/machinery/atmospherics/pipe/New()
@@ -28,7 +28,7 @@
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
-		oldN.build_network()
+		SSair.add_to_rebuild_queue(oldN)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)

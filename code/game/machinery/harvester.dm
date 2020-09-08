@@ -58,7 +58,7 @@
 		start_harvest()
 
 /obj/machinery/harvester/proc/can_harvest()
-	if(!powered(EQUIP) || state_open || !occupant || !iscarbon(occupant))
+	if(!powered() || state_open || !occupant || !iscarbon(occupant))
 		return
 	var/mob/living/carbon/C = occupant
 	if(!allow_clothing)
@@ -95,7 +95,7 @@
 /obj/machinery/harvester/proc/harvest()
 	warming_up = FALSE
 	update_icon()
-	if(!harvesting || state_open || !powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
@@ -155,7 +155,7 @@
 		return TRUE
 
 /obj/machinery/harvester/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational() here
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
@@ -168,7 +168,7 @@
 	allow_living = TRUE
 	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
 
-/obj/machinery/harvester/container_resist(mob/living/user)
+/obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)
 		visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 			"<span class='notice'>You climb out of [src]!</span>")
@@ -178,11 +178,11 @@
 
 /obj/machinery/harvester/Exited(atom/movable/user)
 	if (!state_open && user == occupant)
-		container_resist(user)
+		container_resist_act(user)
 
-/obj/machinery/harvester/relaymove(mob/user)
+/obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)
-		container_resist(user)
+		container_resist_act(user)
 
 /obj/machinery/harvester/examine(mob/user)
 	. = ..()

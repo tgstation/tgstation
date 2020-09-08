@@ -64,7 +64,7 @@
 	multiplier = 4 //hush money
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "batch of \"muffins\""
-	
+
 /datum/bounty/item/botany/cannabis_white
 	name = "Lifeweed Leaves"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white)
@@ -199,3 +199,14 @@
 	multiplier = 2
 	foodtype = "batch of oatmeal"
 	bonus_desc = "Squats and oats. We're all out of oats."
+
+/datum/bounty/item/botany/bonfire
+	name = "Lit Bonfire"
+	description = "Space heaters are malfunctioning and the cargo crew of Central Command is starting to feel cold. Grow some logs and Ship a lit bonfire to warm them up."
+	wanted_types = list(/obj/structure/bonfire)
+
+/datum/bounty/item/botany/bonfire/applies_to(obj/O)
+	if(!..())
+		return FALSE
+	var/obj/structure/bonfire/B = O
+	return !!B.burning

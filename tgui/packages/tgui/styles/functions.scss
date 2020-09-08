@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2018 Aleksej Komarov
- * SPDX-License-Identifier: GPL-2.0-or-later
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 @use 'sass:color';
@@ -62,4 +62,13 @@
   @return (map.get($colors, 'red') * .2126)
     + (map.get($colors, 'green') * .7152)
     + (map.get($colors, 'blue') * .0722);
+}
+
+// Blends an RGBA color with a static background color based on its
+// alpha channel. Returns an RGB color, which is compatible with IE8.
+@function fake-alpha($color-rgba, $color-background) {
+  @return color.mix(
+    color.change($color-rgba, $alpha: 1),
+    $color-background,
+    color.alpha($color-rgba) * 100%);
 }

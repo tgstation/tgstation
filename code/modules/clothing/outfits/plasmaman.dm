@@ -162,3 +162,69 @@
 	uniform = /obj/item/clothing/under/plasmaman/clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	gloves = /obj/item/clothing/gloves/color/plasmaman/clown
+
+/datum/outfit/plasmaman/captain
+	name = "Captain Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/captain
+	uniform = /obj/item/clothing/under/plasmaman/captain
+	gloves = /obj/item/clothing/gloves/color/captain //Too iconic to be replaced with a plasma version
+
+/datum/outfit/plasmaman/head_of_personnel
+	name = "Head of Personnel Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/head_of_personnel
+	uniform = /obj/item/clothing/under/plasmaman/head_of_personnel
+	gloves = /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
+
+/datum/outfit/plasmaman/head_of_security
+	name = "Head of Security Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security/head_of_security
+	uniform = /obj/item/clothing/under/plasmaman/security/head_of_security
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+
+/datum/outfit/plasmaman/chief_engineer
+	name = "Chief Engineer Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
+	uniform = /obj/item/clothing/under/plasmaman/chief_engineer
+	gloves = /obj/item/clothing/gloves/color/plasmaman/chief_engineer
+
+/datum/outfit/plasmaman/chief_medical_officer
+	name = "Chief Medical Officer Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_medical_officer
+	uniform = /obj/item/clothing/under/plasmaman/chief_medical_officer
+	gloves = /obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
+
+/datum/outfit/plasmaman/research_director
+	name = "Research Director Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/research_director
+	uniform = /obj/item/clothing/under/plasmaman/research_director
+	gloves = /obj/item/clothing/gloves/color/plasmaman/research_director
+
+/datum/outfit/plasmaman/centcom_commander
+	name = "CentCom Command Plasmaman"
+
+	mask = /obj/item/clothing/mask/gas/sechailer
+	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
+	uniform = /obj/item/clothing/under/plasmaman/centcom_commander
+	gloves = /obj/item/clothing/gloves/color/plasmaman/centcom_commander
+
+/datum/outfit/plasmaman/centcom_official
+	name = "CentCom Official Plasmaman"
+
+	mask = /obj/item/clothing/mask/breath
+	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_official
+	uniform = /obj/item/clothing/under/plasmaman/centcom_official
+	gloves = /obj/item/clothing/gloves/color/plasmaman/centcom_official
+
+/datum/outfit/plasmaman/centcom_intern
+	name = "CentCom Intern Plasmaman"
+
+	mask = /obj/item/clothing/mask/breath
+	head = /obj/item/clothing/head/helmet/space/plasmaman/centcom_intern
+	uniform = /obj/item/clothing/under/plasmaman/centcom_intern
+	gloves = /obj/item/clothing/gloves/color/plasmaman/centcom_intern

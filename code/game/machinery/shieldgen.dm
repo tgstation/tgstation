@@ -5,7 +5,7 @@
 	icon_state = "shield-old"
 	density = TRUE
 	move_resist = INFINITY
-	opacity = 0
+	opacity = FALSE
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
@@ -29,7 +29,7 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, "energy", 0)
+			take_damage(50, BRUTE, ENERGY, 0)
 
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -43,16 +43,22 @@
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
-/obj/structure/emergency_shield/sanguine
-	name = "sanguine barrier"
-	desc = "A potent shield summoned by cultists to defend their rites."
-	icon_state = "shield-red"
-	max_integrity = 60
 
-/obj/structure/emergency_shield/sanguine/emp_act(severity)
+/obj/structure/emergency_shield/cult
+	name = "cult barrier"
+	desc = "A shield summoned by cultists to keep heretics away."
+	max_integrity = 100
+	icon_state = "shield-red"
+
+/obj/structure/emergency_shield/cult/emp_act(severity)
 	return
 
-/obj/structure/emergency_shield/invoker
+/obj/structure/emergency_shield/cult/narsie
+	name = "sanguine barrier"
+	desc = "A potent shield summoned by cultists to defend their rites."
+	max_integrity = 60
+
+/obj/structure/emergency_shield/cult/weak
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
 	color = "#FF0000"
@@ -60,9 +66,40 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
 
-/obj/structure/emergency_shield/invoker/emp_act(severity)
-	return
+/obj/structure/emergency_shield/cult/barrier
+	density = FALSE //toggled on right away by the parent rune
+	CanAtmosPass = ATMOS_PASS_DENSITY
+	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
+	var/obj/effect/rune/parent_rune
 
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user)
+	parent_rune.attack_hand(user)
+
+/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user)
+	if(iscultist(user))
+		parent_rune.attack_animal(user)
+	else
+		..()
+
+/obj/structure/emergency_shield/cult/barrier/Destroy()
+	if(parent_rune)
+		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
+		QDEL_NULL(parent_rune)
+	return ..()
+
+/**
+*Turns the shield on and off.
+*
+*The shield has 2 states: on and off. When on, it will block movement,projectiles, items, etc. and be clearly visible, and block atmospheric gases.
+*When off, the rune no longer blocks anything and turns invisible.
+*The barrier itself is not intended to interact with the conceal runes cult spell for balance purposes.
+*/
+/obj/structure/emergency_shield/cult/barrier/proc/Toggle()
+	density = !density
+	air_update_turf(1)
+	invisibility = initial(invisibility)
+	if(!density)
+		invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -70,7 +107,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	req_access = list(ACCESS_ENGINE)
@@ -107,9 +144,9 @@
 	update_icon()
 	QDEL_LIST(deployed_shields)
 
-/obj/machinery/shieldgen/process()
+/obj/machinery/shieldgen/process(delta_time)
 	if((machine_stat & BROKEN) && active)
-		if(deployed_shields.len && prob(5))
+		if(deployed_shields.len && DT_PROB(2.5, delta_time))
 			qdel(pick(deployed_shields))
 
 
@@ -162,7 +199,7 @@
 				return
 			coil.use(1)
 			obj_integrity = max_integrity
-			machine_stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
@@ -173,14 +210,14 @@
 		if(!anchored && !isinspace())
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 		else if(anchored)
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))

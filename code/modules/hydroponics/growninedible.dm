@@ -10,7 +10,7 @@
 
 /obj/item/grown/Initialize(newloc, obj/item/seeds/new_seed)
 	. = ..()
-	create_reagents(50)
+	create_reagents(100)
 
 	if(new_seed)
 		seed = new_seed.Copy()
@@ -44,8 +44,8 @@
 
 /obj/item/grown/proc/add_juice()
 	if(reagents)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?

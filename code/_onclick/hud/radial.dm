@@ -255,6 +255,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	current_user = M.client
 	//Blank
 	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing",layer = ABOVE_HUD_LAYER)
+	menu_holder.plane = ABOVE_HUD_PLANE
 	menu_holder.appearance_flags |= KEEP_APART
 	menu_holder.vis_contents += elements + close_button
 	current_user.images += menu_holder
@@ -311,4 +312,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/answer = menu.selected_choice
 	qdel(menu)
 	GLOB.radial_menus -= uniqueid
+	if(require_near && !in_range(anchor, user))
+		return
+	if(istype(custom_check))
+		if(!custom_check.Invoke())
+			return
 	return answer

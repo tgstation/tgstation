@@ -64,20 +64,8 @@
 								"<span class='danger'>You avoid [M]'s punch!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
 		if("disarm")
-			if(!IsUnconscious())
-				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-				if (prob(25))
-					Paralyze(40)
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-					log_combat(M, src, "pushed")
-					visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
-									"<span class='userdanger'>[M] pushes you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
-					to_chat(M, "<span class='danger'>You push [src] down!</span>")
-				else if(dropItemToGround(get_active_held_item()))
-					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-					visible_message("<span class='danger'>[M] disarms [src]!</span>", \
-									"<span class='userdanger'>[M] disarms you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, M)
-					to_chat(M, "<span class='danger'>You disarm [src]!</span>")
+			if(stat < UNCONSCIOUS)
+				M.disarm(src)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -157,7 +145,7 @@
 		apply_damage(damage, BRUTE, affecting)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
-	. = 1
+	. = TRUE
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
 		if(wear_mask)
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
@@ -180,6 +168,7 @@
 	..()
 	if(QDELETED(src))
 		return
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			gib()
@@ -187,15 +176,17 @@
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			damage_clothes(200, BRUTE, "bomb")
-			adjustEarDamage(30, 120)
+			damage_clothes(200, BRUTE, BOMB)
+			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+				ears.adjustEarDamage(30, 120)
 			if(prob(70))
 				Unconscious(200)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30, 0)
-			damage_clothes(50, BRUTE, "bomb")
-			adjustEarDamage(15,60)
+			damage_clothes(50, BRUTE, BOMB)
+			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+				ears.adjustEarDamage(15,60)
 			if (prob(50))
 				Unconscious(160)
 

@@ -32,7 +32,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/card/id/captains_spare(src)
-	new /obj/item/storage/photo_album/Captain(src)
+	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -60,7 +60,9 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civilian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
-	new /obj/item/storage/photo_album/HoP(src)
+	new /obj/item/storage/photo_album/hop(src)
+	new /obj/item/storage/lockbox/medal/hop(src)
+
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -79,7 +81,7 @@
 	new /obj/item/clothing/under/rank/security/head_of_security/skirt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/alt/skirt(src)
-	new /obj/item/clothing/head/HoS(src)
+	new /obj/item/clothing/head/hos(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/grey(src)
@@ -94,7 +96,7 @@
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
-	new /obj/item/storage/photo_album/HoS(src)
+	new /obj/item/storage/photo_album/hos(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -120,7 +122,6 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/door_remote/head_of_security(src)
-	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
@@ -181,18 +182,6 @@
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
-	new /obj/item/clothing/under/rank/security/detective(src)
-	new /obj/item/clothing/under/rank/security/detective/skirt(src)
-	new /obj/item/clothing/suit/det_suit(src)
-	new /obj/item/clothing/head/fedora/det_hat(src)
-	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/clothing/under/rank/security/detective/grey(src)
-	new /obj/item/clothing/under/rank/security/detective/grey/skirt(src)
-	new /obj/item/clothing/accessory/waistcoat(src)
-	new /obj/item/clothing/suit/det_suit/grey(src)
-	new /obj/item/clothing/suit/det_suit/noir(src)
-	new /obj/item/clothing/head/fedora(src)
-	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/detective_scanner(src)
@@ -204,6 +193,7 @@
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
+
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
 	req_access = list(ACCESS_HOS)

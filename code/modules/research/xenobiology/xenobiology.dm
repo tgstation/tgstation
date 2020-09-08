@@ -56,7 +56,7 @@
 */
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
-	return 0
+	return FALSE
 
 /**
 * Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
@@ -154,7 +154,8 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
-			var/obj/O = new food_type
+			var/obj/item/reagent_containers/food/snacks/O = new food_type
+			O.silver_spawned = TRUE
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -336,7 +337,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
-			user.ExtinguishMob()
+			user.extinguish_mob()
 			user.adjust_fire_stacks(-20)
 			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,4)
 			user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,5)
@@ -725,6 +726,8 @@
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
+		if(!SM.tame)
+			SM.tamed(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
@@ -1030,7 +1033,7 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile-bluespace"
-	item_state = "tile-bluespace"
+	inhand_icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	custom_materials = list(/datum/material/iron=500)
@@ -1047,14 +1050,13 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile-sepia"
-	item_state = "tile-sepia"
+	inhand_icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
 	custom_materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28
-	glide_size = 2
 	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
@@ -1071,5 +1073,5 @@
 	for(var/turf/T in A)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
-	A.xenobiology_compatible = TRUE
+	A.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)

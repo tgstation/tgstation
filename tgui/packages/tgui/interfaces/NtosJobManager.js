@@ -1,16 +1,28 @@
 import { useBackend } from '../backend';
 import { Button, Section, Table, NoticeBox, Dimmer, Box } from '../components';
+import { NtosWindow } from '../layouts';
 
-export const NtosJobManager = props => {
-  const { act, data } = useBackend(props);
+export const NtosJobManager = (props, context) => {
+  return (
+    <NtosWindow
+      width={400}
+      height={620}
+      resizable>
+      <NtosWindow.Content scrollable>
+        <NtosJobManagerContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
 
+export const NtosJobManagerContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     authed,
     cooldown,
     slots = [],
     prioritized = [],
   } = data;
-
   if (!authed) {
     return (
       <NoticeBox>
@@ -18,7 +30,6 @@ export const NtosJobManager = props => {
       </NoticeBox>
     );
   }
-
   return (
     <Section>
       {cooldown > 0 && (
@@ -26,8 +37,7 @@ export const NtosJobManager = props => {
           <Box
             bold
             textAlign="center"
-            fontSize="20px"
-            mt={10}>
+            fontSize="20px">
             On Cooldown: {cooldown}s
           </Box>
         </Dimmer>
@@ -54,8 +64,7 @@ export const NtosJobManager = props => {
                 checked={slot.total > 0 && prioritized.includes(slot.title)}
                 onClick={() => act('PRG_priority', {
                   target: slot.title,
-                })}
-              />
+                })} />
             </Table.Cell>
             <Table.Cell collapsing>
               {slot.current} / {slot.total}
@@ -66,15 +75,13 @@ export const NtosJobManager = props => {
                 disabled={!slot.status_open}
                 onClick={() => act('PRG_open_job', {
                   target: slot.title,
-                })}
-              />
+                })} />
               <Button
                 content="Close"
                 disabled={!slot.status_close}
                 onClick={() => act('PRG_close_job', {
                   target: slot.title,
-                })}
-              />
+                })} />
             </Table.Cell>
           </Table.Row>
         ))}

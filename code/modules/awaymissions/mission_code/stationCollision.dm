@@ -28,7 +28,7 @@
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
-	B.item_state = "melted"
+	B.inhand_icon_state = "melted"
 	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
@@ -43,8 +43,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-//	projectile_type = "/obj/projectile/practice"
-	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
+	clumsy_check = FALSE //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
@@ -68,7 +67,7 @@
 /obj/item/gun/energy/laser/practice/sc_laser
 	name = "Old laser"
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
-	clumsy_check = 0
+	clumsy_check = FALSE
 
 /*
  * Safe code hints
@@ -112,7 +111,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	info = {"<b>Target:</b> Research-station Epsilon<br>
 			<b>Objective:</b> Prototype weaponry. The captain likely keeps them locked in her safe.<br>
 			<br>
-			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captured by security
+			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunately he has been captured by security
 			Your objective is to split up, locate any of the papers containing the captain's safe code, open the safe and
 			secure anything found inside. If possible, recover the imprisioned syndicate operative and receive the code from him.<br>
 			<br>
@@ -148,9 +147,9 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/singularity/narsie/mini/admin_investigate_setup()
 	return
 
-/obj/singularity/narsie/mini/process()
+/obj/singularity/narsie/mini/process(delta_time)
 	eat()
-	if(prob(25))
+	if(DT_PROB(13, delta_time))
 		mezzer()
 
 /obj/singularity/narsie/mini/ex_act()

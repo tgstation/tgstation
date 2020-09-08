@@ -24,8 +24,8 @@
 	blend_mode = BLEND_MULTIPLY
 	alpha = 255
 
-/obj/screen/plane_master/openspace/backdrop(mob/mymob)
-	filters = list()
+/obj/screen/plane_master/openspace/Initialize()
+	. = ..()
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -10)
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
 	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -20)
@@ -73,10 +73,15 @@
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/plane_master/lighting/backdrop(mob/mymob)
+	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
+	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
+
 /obj/screen/plane_master/lighting/Initialize()
 	. = ..()
-	filters += filter(type="alpha", render_source=EMISSIVE_RENDER_TARGET, flags=MASK_INVERSE)
-	filters += filter(type="alpha", render_source=EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags=MASK_INVERSE)
+	filters += filter(type="alpha", render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE)
+	filters += filter(type="alpha", render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE)
+	filters += filter(type="alpha", render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE)
 
 /**
   * Things placed on this mask the lighting plane. Doesn't render directly.
@@ -100,7 +105,6 @@
   * Always masks the light plane, isn't blocked by anything. Use for on mob glows,
   * magic stuff, etc.
   */
-
 /obj/screen/plane_master/emissive_unblockable
 	name = "unblockable emissive plane master"
 	plane = EMISSIVE_UNBLOCKABLE_PLANE
@@ -129,12 +133,23 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 
-/obj/screen/plane_master/lighting/backdrop(mob/mymob)
-	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
-	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
-
 /obj/screen/plane_master/camera_static
 	name = "camera static plane master"
 	plane = CAMERA_STATIC_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
+
+/obj/screen/plane_master/excited_turfs
+	name = "atmos excited turfs"
+	plane = ATMOS_GROUP_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	alpha = 0
+
+/obj/screen/plane_master/o_light_visual
+	name = "overlight light visual plane master"
+	layer = O_LIGHTING_VISUAL_LAYER
+	plane = O_LIGHTING_VISUAL_PLANE
+	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_MULTIPLY

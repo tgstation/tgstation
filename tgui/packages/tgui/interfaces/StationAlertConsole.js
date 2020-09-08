@@ -1,9 +1,23 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Section } from '../components';
+import { Window } from '../layouts';
 
-export const StationAlertConsole = props => {
-  const { data } = useBackend(props);
+export const StationAlertConsole = () => {
+  return (
+    <Window
+      width={325}
+      height={500}
+      resizable>
+      <Window.Content scrollable>
+        <StationAlertConsoleContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const StationAlertConsoleContent = (props, context) => {
+  const { data } = useBackend(context);
   const categories = data.alarms || [];
   const fire = categories['Fire'] || [];
   const atmos = categories['Atmosphere'] || [];

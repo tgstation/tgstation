@@ -1,10 +1,6 @@
 /datum/language/draconic
 	name = "Draconic"
 	desc = "The common language of lizard-people, composed of sibilant hisses and rattles."
-	speech_verb = "hisses"
-	ask_verb = "hisses"
-	exclaim_verb = "roars"
-	sing_verb = "sings"
 	key = "o"
 	flags = TONGUELESS_SPEECH
 	space_chance = 40

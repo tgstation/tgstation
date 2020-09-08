@@ -6,7 +6,7 @@
 	charge_max = 200
 	clothes_req = TRUE
 	invocation = "FORTI GY AMA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
@@ -45,7 +45,7 @@
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "BIRUZ BENNAR"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 
@@ -99,7 +99,7 @@
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "NEC CANTIO"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //50 deciseconds reduction per rank
@@ -146,7 +146,7 @@
 	charge_max = 600
 	clothes_req = TRUE
 	invocation = "SCYAR NILA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -170,7 +170,7 @@
 	charge_max = 500
 	clothes_req = TRUE
 	invocation = "TOKI YO TOMARE"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 0
 	cooldown_min = 100
 	action_icon_state = "time"
@@ -188,29 +188,25 @@
 	charge_max = 1200
 	clothes_req = TRUE
 	invocation = "NOUK FHUNMM SACP RISSKA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
 
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades."
-
 	school = "conjuration"
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
 	summon_type = list(/obj/structure/constructshell)
-
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "artificer"
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
@@ -220,7 +216,7 @@
 	charge_max = 1200
 	clothes_req = FALSE
 	invocation = "IA IA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	summon_amt = 10
 	range = 3
 
@@ -233,13 +229,26 @@
 	charge_max = 5000
 	summon_amt = 2
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	name = "Lesser summon bees"
+	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
+	charge_max = 600
+	clothes_req = TRUE
+	invocation = "NOT THE BEES"
+	summon_amt = 9
+	action_icon_state = "bee"
+	cooldown_min = 20 SECONDS
+
+	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	cast_sound = 'sound/voice/moth/scream_moth.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "GITTAH WEIGH"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
@@ -315,7 +324,7 @@
 	charge_max = 60
 	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	max_targets = 0
 	range = 6
 	include_user = TRUE
@@ -361,7 +370,7 @@
 				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower

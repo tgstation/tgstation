@@ -15,7 +15,7 @@
 	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
 	idle_power_usage = 0
 	active_power_usage = 0
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
@@ -55,7 +55,7 @@
 		normalize_cardinal_directions()
 	nodes = new(device_type)
 	if (!armor)
-		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	..()
 	if(process)
 		SSair.atmos_machinery += src
@@ -66,6 +66,7 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	SSair.pipenets_needing_rebuilt -= src
 	if(SSair.currentpart == SSAIR_ATMOSMACHINERY)
 		SSair.currentrun -= src
 
@@ -124,6 +125,10 @@
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
 	update_icon()
+
+/obj/machinery/atmospherics/update_icon()
+	layer = initial(layer) + piping_layer / 1000
+	return ..()
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)
@@ -244,7 +249,7 @@
 			transfer_fingerprints_to(stored)
 	..()
 
-/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255), piping_layer=2)
+/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255), piping_layer=3, trinary = FALSE)
 
 	//Add identifiers for the iconset
 	if(iconsetids[iconset] == null)
@@ -258,6 +263,8 @@
 		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
 		pipe_overlay.color = col
 		PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
+		if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
+			PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)

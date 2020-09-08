@@ -209,7 +209,7 @@
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
 
-/datum/map_template/ruin/space/oldAIsat
+/datum/map_template/ruin/space/old_ai_sat
 	id = "oldAIsat"
 	suffix = "oldAIsat.dmm"
 	name = "Abandoned Telecommunications Satellite"
@@ -288,20 +288,12 @@
 	name = "Cleric's Den"
 	description = "Once part of a larger monastery, this holy order of long dead clerics practiced far less non-violence than they preached. Appears to have been untouched by looters, however. Odd."
 
-/datum/map_template/ruin/space/kinggoatarena
-	id = "kinggoatarena"
-	suffix = "kinggoatarena.dmm"
-	name = "King Goat Arena"
-	description = "Well wish you luck."
-	allow_duplicates = FALSE
-	unpickable = TRUE
-
 /datum/map_template/ruin/space/forgottenship
 	id = "forgottenship"
 	suffix = "forgottenship.dmm"
 	name = "Syndicate Forgotten Ship"
 	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
-  
+
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
 	suffix = "hellfactory.dmm"

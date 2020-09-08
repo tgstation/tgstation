@@ -21,7 +21,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_buckled_mobs = 1
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/blade_status = GUILLOTINE_BLADE_RAISED
@@ -123,7 +123,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)

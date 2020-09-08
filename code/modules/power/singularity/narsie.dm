@@ -1,7 +1,8 @@
 /obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 	name = "Nar'Sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/magic_terror.dmi'
+	icon = 'icons/obj/narsie_small.dmi'
+	icon_state = "narsie"
 	pixel_x = -89
 	pixel_y = -85
 	density = FALSE
@@ -13,7 +14,7 @@
 	consume_range = 6 //How many tiles out do we eat
 	light_power = 0.7
 	light_range = 15
-	light_color = rgb(255, 0, 0)
+	light_color = COLOR_RED
 	gender = FEMALE
 
 /obj/singularity/narsie/large
@@ -35,7 +36,7 @@
 	if(A)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar'Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
-	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
+	narsie_spawn_animation()
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM) //set up in /singularity/Initialize()
 
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
@@ -71,7 +72,7 @@
 /proc/begin_the_end()
 	sleep(50)
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected a anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
+		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
 		sleep(20)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
@@ -122,7 +123,7 @@
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
-/proc/cult_ending_helper(var/ending_type = 0)
+/proc/cult_ending_helper(ending_type = 0)
 	if(ending_type == 2) //narsie fukkin died
 		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
 	else if(ending_type) //no explosion
@@ -226,13 +227,10 @@
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
-	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	setDir(SOUTH)
-	move_self = 0
+	move_self = FALSE
 	flick("narsie_spawn_anim",src)
-	sleep(11)
-	move_self = 1
-	icon = initial(icon)
+	addtimer(CALLBACK(src, .proc/narsie_spawn_animation_end), 3.5 SECONDS)
 
-
-
+/obj/singularity/narsie/proc/narsie_spawn_animation_end()
+	move_self = TRUE

@@ -7,7 +7,7 @@
 
 	var/first_dir // This only stores the dir arg from init
 
-/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_NEVER, _color, _layer=TURF_LAYER, _description, _alpha=255)
+/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255)
 	if(!isatom(parent) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha))
 		return COMPONENT_INCOMPATIBLE
 	first_dir = _dir
@@ -19,7 +19,7 @@
 /datum/component/decal/RegisterWithParent()
 	if(first_dir)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
-	if(cleanable != CLEAN_NEVER)
+	if(cleanable != FALSE)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	if(description)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
@@ -50,26 +50,51 @@
 
 /datum/component/decal/proc/apply(atom/thing)
 	var/atom/master = thing || parent
-	master.add_overlay(pic, TRUE)
+	RegisterSignal(master,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	if(master.flags_1 & INITIALIZED_1)
+		master.update_icon() //could use some queuing here now maybe.
+	else
+		RegisterSignal(master,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon)
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
+/datum/component/decal/proc/late_update_icon(atom/source)
+	SIGNAL_HANDLER
+
+	if(source && istype(source))
+		source.update_icon()
+		UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+
+/datum/component/decal/proc/apply_overlay(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
+	overlay_list += pic
+
 /datum/component/decal/proc/remove(atom/thing)
 	var/atom/master = thing || parent
-	master.cut_overlay(pic, TRUE)
+	UnregisterSignal(master,COMSIG_ATOM_UPDATE_OVERLAYS)
+	master.update_icon()
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
 /datum/component/decal/proc/rotate_react(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(old_dir == new_dir)
 		return
 	remove()
 	pic.dir = turn(pic.dir, dir2angle(old_dir) - dir2angle(new_dir))
 	apply()
 
-/datum/component/decal/proc/clean_react(datum/source, strength)
-	if(strength >= cleanable)
+/datum/component/decal/proc/clean_react(datum/source, clean_types)
+	SIGNAL_HANDLER
+
+	. = NONE
+	if(clean_types & cleanable)
 		qdel(src)
+		return COMPONENT_CLEANED
 
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += description

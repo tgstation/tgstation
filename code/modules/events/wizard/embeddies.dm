@@ -14,7 +14,7 @@
 
 		if(!I.embedding || I.embedding == EMBED_HARMLESS)
 			I.embedding = EMBED_POINTY
-			I.AddElement(/datum/element/embed, I.embedding)
+			I.updateEmbedding()
 			I.name = "pointy [I.name]"
 
 	GLOB.embedpocalypse = TRUE
@@ -40,7 +40,7 @@
 
 		if(!I.embedding)
 			I.embedding = EMBED_HARMLESS
-			I.AddElement(/datum/element/embed, I.embedding)
+			I.updateEmbedding()
 			I.name = "sticky [I.name]"
 
 	GLOB.stickpocalypse = TRUE

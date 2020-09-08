@@ -68,7 +68,7 @@
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
 /obj/item/melee/baton/abductor{
-	desc = "Even aliens can see the use of a good old fashioned beating stick."
+	desc = "Even aliens can see the use of a good old-fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)

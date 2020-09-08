@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(input)
 	"T" = "say",
 	"M" = "me",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"", 
+	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
 
 // Badmins just wanna have fun ♪

@@ -16,7 +16,8 @@
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
-	attack_verb = list("beat", "thumped")
+	attack_verb_continuous = list("beats", "thumps")
+	attack_verb_simple = list("beat", "thump")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
 	var/failed = FALSE		//to prevent constantly running failing code
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
@@ -92,7 +93,7 @@
 		failed = TRUE
 
 /obj/item/organ/heart/get_availability(datum/species/S)
-	return !(NOBLOOD in S.species_traits)
+	return !(NOBLOOD in S.inherent_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -206,12 +207,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(world.time > severe_cooldown) //So we cant just spam emp to kill people.
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.Dizzy(10)
 		owner.losebreath += 10
-		severe_cooldown = world.time + 20 SECONDS
-	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
-		organ_flags = ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 		Stop()
 		owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
 						"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
@@ -219,7 +220,7 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.has_reagent(rid))
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()

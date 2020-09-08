@@ -486,7 +486,7 @@
 		oldT.change_area(old_area, underlying_area)
 		oldT.empty(FALSE)
 
-		// Here we locate the bottomost shuttle boundary and remove all turfs above it
+		// Here we locate the bottommost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs
 		for(var/k in 1 to length(baseturf_cache))
 			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))
@@ -708,6 +708,26 @@
 	else
 		return "00:00"
 
+/**
+  * Gets shuttle location status in a form of string for tgui interfaces
+  */
+/obj/docking_port/mobile/proc/get_status_text_tgui()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	var/docked_at = dockedAt?.name || "Unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		if(timeLeft() > 1 HOURS)
+			return "Hyperspace"
+		else
+			var/obj/docking_port/stationary/dst
+			if(mode == SHUTTLE_RECALL)
+				dst = previous
+			else
+				dst = destination
+			return "In transit to [dst?.name || "unknown location"]"
+	else if(mode == SHUTTLE_RECHARGING)
+		return "[docked_at], recharging [getTimerStr()]"
+	else
+		return docked_at
 
 /obj/docking_port/mobile/proc/getStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
@@ -726,7 +746,6 @@
 		return "[docked_at], recharging [getTimerStr()]"
 	else
 		return docked_at
-
 
 /obj/docking_port/mobile/proc/getDbgStatusText()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
@@ -785,7 +804,7 @@
 		for(var/mob/M in SSmobs.clients_by_zlevel[z])
 			var/dist_far = get_dist(M, distant_source)
 			if(dist_far <= long_range && dist_far > range)
-				M.playsound_local(distant_source, "sound/effects/[selected_sound]_distance.ogg", 100, falloff = 20)
+				M.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100, falloff = 20)
 			else if(dist_far <= range)
 				var/source
 				if(engine_list.len == 0)
@@ -797,7 +816,7 @@
 						if(dist_near < closest_dist)
 							source = O
 							closest_dist = dist_near
-				M.playsound_local(source, "sound/effects/[selected_sound].ogg", 100, falloff = range / 2)
+				M.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100, falloff = range / 2)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

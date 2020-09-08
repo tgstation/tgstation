@@ -101,7 +101,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/orange
 	name = "fiery cookie"
-	desc = "A orange cookie with a fiery pattern. Feels warm."
+	desc = "An orange cookie with a fiery pattern. Feels warm."
 	icon_state = "orange"
 	taste = "cinnamon and burning"
 
@@ -196,7 +196,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/darkblue/do_effect(mob/living/M, mob/user)
 	M.adjust_bodytemperature(-110)
-	M.ExtinguishMob()
+	M.extinguish_mob()
 
 /obj/item/slimecross/consuming/silver
 	colour = "silver"

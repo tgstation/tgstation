@@ -66,7 +66,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 
@@ -191,12 +191,12 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		count++
 
 	if(count)
-		to_chat(usr, "[count] AT markers removed.")
+		to_chat(usr, "[count] AT markers removed.", confidential = TRUE)
 	else
 		for(var/t in GLOB.active_turfs_startlist)
 			new /obj/effect/abstract/marker/at(t)
 			count++
-		to_chat(usr, "[count] AT markers placed.")
+		to_chat(usr, "[count] AT markers placed.", confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
@@ -205,15 +205,15 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Debug verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
+	remove_verb(src, /client/proc/enable_debug_verbs)
+	add_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/disable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
-	verbs += /client/proc/enable_debug_verbs
+	remove_verb(src, list(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping))
+	add_verb(src, /client/proc/enable_debug_verbs)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					count++
 					atom_list += A
 
-	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]")
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects Zlevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		if(istype(A,type_path))
 			count++
 
-	to_chat(world, "There are [count] objects of type [type_path] in the game world")
+	to_chat(world, "There are [count] objects of type [type_path] in the game world", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Count Objects All") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -374,4 +374,4 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 	messages += "</table>"
 
-	to_chat(src, messages.Join(""))
+	to_chat(src, messages.Join(""), confidential = TRUE)

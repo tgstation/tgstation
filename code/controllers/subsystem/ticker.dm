@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ticker)
 	var/start_immediately = FALSE
 	var/setup_done = FALSE //All game setup done including mode post setup and
 
-	var/hide_mode = 0
+	var/hide_mode = FALSE
 	var/datum/game_mode/mode = null
 
 	var/login_music							//music played in pregame lobby
@@ -23,12 +23,16 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-	var/delay_end = 0						//if set true, the round will not restart on it's own
+	var/delay_end = FALSE						//if set true, the round will not restart on it's own
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
-	var/triai = 0							//Global holder for Triumvirate
-	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	///If not set to ANON_DISABLED then people spawn with a themed anon name (see anonymousnames.dm)
+	var/anonymousnames = ANON_DISABLED
+	///Boolean to see if the game needs to set up a triumvirate ai (see tripAI.dm)
+	var/triai = FALSE
+
+	var/tipped = FALSE							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft						//pregame timer
@@ -54,6 +58,9 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_end_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
+
+	/// People who have been commended and will receive a heart
+	var/list/hearts
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
@@ -220,7 +227,7 @@ SUBSYSTEM_DEF(ticker)
 		if(!mode)
 			if(!runnable_modes.len)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-				return 0
+				return FALSE
 			mode = pickweight(runnable_modes)
 			if(!mode)	//too few roundtypes all run too recently
 				mode = pick(runnable_modes)
@@ -232,7 +239,7 @@ SUBSYSTEM_DEF(ticker)
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
@@ -248,7 +255,7 @@ SUBSYSTEM_DEF(ticker)
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
@@ -308,7 +315,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2tgs("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2adminchat("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
 	for(var/i in GLOB.start_landmarks_list)
@@ -318,6 +325,20 @@ SUBSYSTEM_DEF(ticker)
 		else
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
+	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
+	for(var/i in GLOB.player_list)
+		if(!ishuman(i))
+			continue
+		var/mob/living/carbon/human/iter_human = i
+
+		iter_human.increment_scar_slot()
+		iter_human.load_persistent_scars()
+
+		if(!iter_human.hardcore_survival_score)
+			continue
+		if(iter_human.mind?.special_role)
+			iter_human.hardcore_survival_score *= 2 //Double for antags
+		to_chat(iter_human, "<span class='notice'>You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -335,10 +356,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
-		var/turf/epi = bomb.loc
 		qdel(bomb)
-		if(epi)
-			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/i in GLOB.new_player_list)
@@ -389,6 +407,7 @@ SUBSYSTEM_DEF(ticker)
 			if(living.client)
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
+				living.client.init_verbs()
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
@@ -472,6 +491,7 @@ SUBSYSTEM_DEF(ticker)
 
 	delay_end = SSticker.delay_end
 
+	anonymousnames = SSticker.anonymousnames
 	triai = SSticker.triai
 	tipped = SSticker.tipped
 	selected_tip = SSticker.selected_tip
@@ -531,7 +551,7 @@ SUBSYSTEM_DEF(ticker)
 		if(WIZARD_KILLED)
 			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [station_name()]."
 		if(STATION_NUKED)
-			news_message = "[station_name()] activated its self destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
+			news_message = "[station_name()] activated its self-destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
 		if(CLOCK_SUMMON)
 			news_message = "The garbled messages about hailing a mouse and strange energy readings from [station_name()] have been discovered to be an ill-advised, if thorough, prank by a clown."
 		if(CLOCK_SILICONS)
@@ -650,3 +670,12 @@ SUBSYSTEM_DEF(ticker)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+/datum/controller/subsystem/ticker/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["cancel_heart"] && usr.client.holder)
+		var/mob/heart_sender = locate(href_list["heart_source"])
+		var/mob/intended_recepient = locate(href_list["heart_target"])
+		log_admin("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
+		message_admins("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
+		hearts[intended_recepient] = null

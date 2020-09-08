@@ -21,7 +21,7 @@
 	materials = list(/datum/material/glass = 500, /datum/material/iron = 500)
 	build_path = /obj/item/paicard
 	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/ai_cam_upgrade
 	name = "AI Surveillance Software Update"

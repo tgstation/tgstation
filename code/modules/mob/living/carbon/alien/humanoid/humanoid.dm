@@ -18,8 +18,14 @@
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/drooling = 0 //For Neruotoxic spit overlays
 	deathsound = 'sound/voice/hiss6.ogg'
-	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
-					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
+	bodyparts = list(
+		/obj/item/bodypart/chest/alien,
+		/obj/item/bodypart/head/alien,
+		/obj/item/bodypart/l_arm/alien,
+		/obj/item/bodypart/r_arm/alien,
+		/obj/item/bodypart/r_leg/alien,
+		/obj/item/bodypart/l_leg/alien,
+		)
 
 /mob/living/carbon/alien/humanoid/Initialize()
 	. = ..()
@@ -100,7 +106,7 @@
 	..()
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(var/alienpath)
+/proc/get_alien_type(alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in GLOB.alive_mob_list)
 		if(!istype(A, alienpath))
 			continue

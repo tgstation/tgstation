@@ -1,6 +1,6 @@
 //Revenants: based off of wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
-//Don't hear deadchat and are NOT normal ghosts
+//Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
 #define INVISIBILITY_REVENANT 50
@@ -72,7 +72,9 @@
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
+	flags_1 |= RAD_NO_CONTAMINATE_1
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -93,7 +95,9 @@
 	name = built_name
 
 /mob/living/simple_animal/revenant/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
 	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
@@ -131,13 +135,12 @@
 	update_health_hud()
 	..()
 
-/mob/living/simple_animal/revenant/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
-		stat(null, "Stolen essence: [essence_accumulated]E")
-		stat(null, "Unused stolen essence: [essence_excess]E")
-		stat(null, "Stolen perfect souls: [perfectsouls]")
+/mob/living/simple_animal/revenant/get_status_tab_items()
+	. = ..()
+	. += "Current essence: [essence]/[essence_regen_cap]E"
+	. += "Stolen essence: [essence_accumulated]E"
+	. += "Unused stolen essence: [essence_excess]E"
+	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
@@ -220,7 +223,7 @@
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
-		return 0
+		return
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
@@ -464,9 +467,9 @@
 		return FALSE
 	return TRUE
 
-/datum/objective/revenantFluff
+/datum/objective/revenant_fluff
 
-/datum/objective/revenantFluff/New()
+/datum/objective/revenant_fluff/New()
 	var/list/explanationTexts = list("Assist and exacerbate existing threats at critical moments.", \
 									 "Avoid killing in plain sight.", \
 									 "Cause as much chaos and anger as you can without being killed.", \
@@ -481,5 +484,5 @@
 	explanation_text = pick(explanationTexts)
 	..()
 
-/datum/objective/revenantFluff/check_completion()
+/datum/objective/revenant_fluff/check_completion()
 	return TRUE

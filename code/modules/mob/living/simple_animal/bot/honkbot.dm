@@ -21,7 +21,7 @@
 	path_image_color = "#FF69B4"
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
-	var/spam_flag = FALSE
+	var/limiting_spam = FALSE
 	var/cooldowntime = 30
 	var/cooldowntimehorn = 10
 	var/mob/living/carbon/target
@@ -45,8 +45,8 @@
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 
-/mob/living/simple_animal/bot/honkbot/proc/spam_flag_false() //used for addtimer
-	spam_flag = FALSE
+/mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
+	limiting_spam = FALSE
 
 /mob/living/simple_animal/bot/honkbot/proc/sensor_blink()
 	icon_state = "honkbot-c"
@@ -55,9 +55,9 @@
 //honkbots react with sounds.
 /mob/living/simple_animal/bot/honkbot/proc/react_ping()
 	playsound(src, 'sound/machines/ping.ogg', 50, TRUE, -1) //the first sound upon creation!
-	spam_flag = TRUE
+	limiting_spam = TRUE
 	sensor_blink()
-	addtimer(CALLBACK(src, .proc/spam_flag_false), 18) // calibrates before starting the honk
+	addtimer(CALLBACK(src, .proc/limiting_spam_false), 18) // calibrates before starting the honk
 
 /mob/living/simple_animal/bot/honkbot/proc/react_buzz()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
@@ -70,7 +70,7 @@
 	anchored = FALSE
 	walk_to(src,0)
 	last_found = world.time
-	spam_flag = FALSE
+	limiting_spam = FALSE
 
 /mob/living/simple_animal/bot/honkbot/set_custom_texts()
 
@@ -90,7 +90,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += text({"<BR> Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
@@ -151,7 +151,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			if(!C.IsParalyzed() || arrest_type)
 				stun_attack(A)
 		..()
-	else if (!spam_flag) //honking at the ground
+	else if (!limiting_spam) //honking at the ground
 		bike_horn(A)
 
 
@@ -166,39 +166,41 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
 	if (emagged <= 1)
-		if (!spam_flag)
+		if (!limiting_spam)
 			playsound(src, honksound, 50, TRUE, -1)
-			spam_flag = TRUE //prevent spam
+			limiting_spam = TRUE //prevent spam
 			sensor_blink()
-			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
+			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
-		if (!spam_flag)
+		if (!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
-			spam_flag = TRUE // prevent spam
+			limiting_spam = TRUE // prevent spam
 			icon_state = "honkbot-e"
 			addtimer(CALLBACK(src, /atom/.proc/update_icon), 30, TIMER_OVERRIDE|TIMER_UNIQUE)
-		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
+		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
-	if(!spam_flag)
+	if(!limiting_spam)
 		playsound(loc, honksound, 50, TRUE, -1)
-		spam_flag = TRUE // prevent spam
+		limiting_spam = TRUE // prevent spam
 		sensor_blink()
-		addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntimehorn)
+		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/stun_attack(mob/living/carbon/C) // airhorn stun
-	if(!spam_flag)
+	if(!limiting_spam)
 		playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 		sensor_blink()
-	if(spam_flag == 0)
+	if(limiting_spam == 0)
 		if(ishuman(C))
 			C.stuttering = 20
-			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
+			var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+			if (ears && !HAS_TRAIT_FROM(C, TRAIT_DEAF, CLOTHING_TRAIT))
+				ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
 			C.Paralyze(60)
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
-				spam_flag = TRUE
+				limiting_spam = TRUE
 			if (emagged <= 1) //HONK once, then leave
 				var/judgement_criteria = judgement_criteria()
 				threatlevel = H.assess_threat(judgement_criteria)
@@ -206,7 +208,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				target = oldtarget_name
 			else // you really don't want to hit an emagged honkbot
 				threatlevel = 6 // will never let you go
-			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
+			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntime)
 
 			log_combat(src,C,"honked")
 
@@ -215,7 +217,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		else
 			C.stuttering = 20
 			C.Paralyze(80)
-			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
+			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntime)
 
 
 /mob/living/simple_animal/bot/honkbot/handle_automated_action()
@@ -248,7 +250,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						if(threatlevel >= 6)
 							set waitfor = 0
 							stun_attack(target)
-							anchored = FALSE
+							set_anchored(FALSE)
 							target_lastloc = target.loc
 					return
 
@@ -301,14 +303,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 		if(threatlevel <= 3)
 			if(C in view(4,src)) //keep the range short for patrolling
-				if(!spam_flag)
+				if(!limiting_spam)
 					bike_horn()
 
 		else if(threatlevel >= 10)
 			bike_horn() //just spam the shit outta this
 
 		else if(threatlevel >= 4)
-			if(!spam_flag)
+			if(!limiting_spam)
 				target = C
 				oldtarget_name = C.name
 				bike_horn()
@@ -338,7 +340,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/alien/user as mob)
 	..()
 	if(!isalien(target))
 		target = user

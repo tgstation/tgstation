@@ -8,7 +8,7 @@
 	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
+	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
@@ -67,10 +67,10 @@
 			brainmob.add_to_alive_mob_list()
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
-			playsound(src, "sound/machines/synth_no.ogg", 5, TRUE)
+			playsound(src, 'sound/machines/synth_no.ogg', 5, TRUE)
 		else
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again.</span>")
-			playsound(src, "sound/weapons/smg_empty_alarm.ogg", 5, TRUE)
+			playsound(src, 'sound/machines/triple_beep.ogg', 5, TRUE)
 
 		brainmob.reset_perspective()
 		brain = newbrain
@@ -219,7 +219,7 @@
 		else
 			. += "<span class='notice'>\The [src] indicates that the brain is active.</span>"
 
-/obj/item/mmi/relaymove(mob/user)
+/obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
 
 /obj/item/mmi/proc/brain_check(mob/user)

@@ -10,7 +10,7 @@
 	school = "necromancy" //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
 	charge_max = 10
 	invocation = "AT ANY COST!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	level_max = 0
 	cooldown_min = 10
 

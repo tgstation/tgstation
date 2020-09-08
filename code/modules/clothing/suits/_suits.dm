@@ -3,13 +3,14 @@
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE
+	limb_integrity = 0 // disabled for most exo-suits
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
@@ -27,7 +28,7 @@
 				if(A.above_suit)
 					. += U.accessory_overlay
 
-/obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/suit/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

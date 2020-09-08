@@ -221,8 +221,11 @@
 	target.icon_state = initial(picked_item.icon_state)
 	if(isitem(target))
 		var/obj/item/clothing/I = target
-		I.item_state = initial(picked_item.item_state)
-		I.mob_overlay_icon = initial(picked_item.mob_overlay_icon)
+		I.lefthand_file = initial(picked_item.lefthand_file)
+		I.righthand_file = initial(picked_item.righthand_file)
+		I.inhand_icon_state = initial(picked_item.inhand_icon_state)
+		I.worn_icon = initial(picked_item.worn_icon)
+		I.worn_icon_state = initial(picked_item.worn_icon_state)
 		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
@@ -236,7 +239,7 @@
 	select_look(owner)
 	return 1
 
-/datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
+/datum/action/item_action/chameleon/change/proc/emp_randomise(amount = EMP_RANDOMISE_TIME)
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
@@ -293,14 +296,14 @@
 	name = "black jumpsuit"
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "black"
-	item_state = "bl_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
+	inhand_icon_state = "bl_suit"
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = FALSE
 	resistance_flags = NONE
 	can_adjust = FALSE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -326,10 +329,10 @@
 	name = "armor"
 	desc = "A slim armored vest that protects against most types of damage."
 	icon_state = "armor"
-	item_state = "armor"
+	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -355,9 +358,9 @@
 	name = "Optical Meson Scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
-	item_state = "meson"
+	inhand_icon_state = "meson"
 	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -383,10 +386,10 @@
 	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
-	item_state = "ygloves"
+	inhand_icon_state = "ygloves"
 
 	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -414,7 +417,7 @@
 	icon_state = "greysoft"
 
 	resistance_flags = NONE
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -439,7 +442,7 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	// which means it offers no protection, it's just air and light
 
 /obj/item/clothing/head/chameleon/drone/Initialize()
@@ -455,9 +458,9 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	item_state = "gas_alt"
+	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
@@ -493,7 +496,7 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	voice_change = 0
 
@@ -515,7 +518,7 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -656,7 +659,7 @@
 	desc = "A neosilk clip-on tie."
 	icon_state = "blacktie"
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -665,8 +668,13 @@
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/neck
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/neck/cloak/skill_reward)
 	chameleon_action.chameleon_name = "Neck Accessory"
 	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/neck/chameleon/Destroy()
+	qdel(chameleon_action)
+	return ..()
 
 /obj/item/clothing/neck/chameleon/emp_act(severity)
 	. = ..()
@@ -677,3 +685,166 @@
 /obj/item/clothing/neck/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/datum/action/item_action/chameleon/change/skillchip
+	/// Skillchip that this chameleon action is imitating.
+	var/obj/item/skillchip/skillchip_mimic
+	/// When we can next modify this skillchip
+	COOLDOWN_DECLARE(usable_cooldown)
+	var/cooldown = 5 MINUTES
+	var/is_active = TRUE
+
+/datum/action/item_action/chameleon/change/skillchip/Destroy()
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+	QDEL_NULL(skillchip_mimic)
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/proc/set_active(active = TRUE)
+	is_active = active
+	UpdateButtonIcon()
+
+/datum/action/item_action/chameleon/change/skillchip/Grant(mob/M)
+	. = ..()
+
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		START_PROCESSING(SSfastprocess, src)
+
+/datum/action/item_action/chameleon/change/skillchip/Remove(mob/M)
+	STOP_PROCESSING(SSfastprocess, src)
+
+	return ..()
+
+/// Completely override the functionality of the initialize_disguises() proc. No longer uses chameleon_blacklist and uses skillchip flags and vars instead.
+/datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	if(button)
+		button.name = "Change [chameleon_name] Function"
+
+	if(!ispath(chameleon_type, /obj/item/skillchip))
+		CRASH("Attempted to initialise [src] disguise list with incompatible item path [chameleon_type].")
+
+	var/obj/item/skillchip/target_chip = target
+
+	if(!istype(target_chip))
+		CRASH("Attempted to initialise [src] disguise list, but it is attached to incorrect item type [target_chip].")
+
+	for(var/chip_type in typesof(chameleon_type))
+		var/obj/item/skillchip/skillchip = chip_type
+		if((chip_type == initial(skillchip.abstract_parent_type)) \
+			|| (target_chip.slot_use < initial(skillchip.slot_use)) \
+			|| (initial(skillchip.skillchip_flags) & SKILLCHIP_CHAMELEON_INCOMPATIBLE) \
+			|| (initial(skillchip.item_flags) & ABSTRACT) \
+			|| !initial(skillchip.icon_state))
+			continue
+		var/chameleon_item_name = "[initial(skillchip.name)] ([initial(skillchip.icon_state)])"
+		chameleon_list[chameleon_item_name] = skillchip
+
+/datum/action/item_action/chameleon/change/skillchip/update_item(obj/item/skillchip/picked_item)
+	if(istype(picked_item))
+		target.name = initial(picked_item.skill_name)
+		target.desc = initial(picked_item.skill_description)
+		target.icon_state = initial(picked_item.skill_icon)
+
+/datum/action/item_action/chameleon/change/skillchip/update_look(mob/user, picked_item)
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		to_chat(user, "<span class='notice'>Chameleon skillchip is still recharging for another [COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1] seconds!</span>")
+		return ..()
+
+	var/obj/item/skillchip/new_chip = new picked_item(target, FALSE)
+
+	// Do a bit of a sanity check.
+	if(!istype(new_chip))
+		stack_trace("Chameleon skillchip [src] attempted to change into non-skillchip item [picked_item].")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Remove the existing chip first, if it exists.
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+		QDEL_NULL(skillchip_mimic)
+
+	// This chip should technically have 0 slot use before doing these checks. With skillchip_mimic removed, any checks
+	// will probably end up using the 2-slot chameleon chip that is holding new_chip.
+	new_chip.slot_use = 0
+
+	var/incompatibility_msg = new_chip.has_mob_incompatibility(user)
+	if(incompatibility_msg)
+		to_chat(user, "<span class='notice'>The chameleon skillchip fails to load the new skillchip's data. The following thought fills your mind: [incompatibility_msg]</span>")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	var/mob/living/carbon/target_mob = user
+
+	// Should never happen. Our target isn't the right mob type.
+	if(!istype(target_mob))
+		stack_trace("Chameleon skillchip [src] attempted to mimic [new_chip], but target [target_mob] is not of the correct type.")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Should doubly never happen, would imply the chameleon chip is in a qdel'd or null brain.
+	var/obj/item/organ/brain/brain = target_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	if(QDELETED(brain))
+		stack_trace("Chameleon skillchip [src] attempted to mimic [new_chip], but it appears this chip is in non-existent brain: [brain]")
+		QDEL_NULL(new_chip)
+		return ..()
+
+	// Bypass the usual channels and directly call on_implant.
+	skillchip_mimic = new_chip
+	skillchip_mimic.on_implant(brain)
+
+	// Let's update the slot size we deleted earlier. We're going to make it match the parent chip, as it'll end up
+	// feeding calls through itself to this chip.
+
+	var/obj/item/skillchip/target_chip = target
+
+	if(!istype(target_chip))
+		CRASH("Attempted to initialise [src] disguise list, but it is attached to incorrect item type [target_chip].")
+
+	skillchip_mimic.slot_use = target_chip.slot_use
+
+	var/activate_msg = skillchip_mimic.try_activate_skillchip(FALSE, FALSE)
+
+	// Couldn't activate the chip for some reason.
+	// Can still be activated later on, or a new chip type selected. So let's not start processing or cooldowns.
+	if(activate_msg)
+		to_chat(user, "<span class='notice'>Your skillchip can't activate! Your mind fills with the following thought: [activate_msg]</span>")
+		return ..()
+
+	// All set, start processing and cooldowns and inform the user of the recharge time.
+	COOLDOWN_START(src, usable_cooldown, cooldown)
+	START_PROCESSING(SSfastprocess, src)
+
+	to_chat(user, "<span class='notice'>The chameleon skillchip is recharging. It will be unable to change for another [cooldown * 0.1] seconds.</span>")
+
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/IsAvailable()
+	if(!is_active)
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, usable_cooldown))
+		return FALSE
+
+	return ..()
+
+/datum/action/item_action/chameleon/change/skillchip/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+
+	if(COOLDOWN_FINISHED(src, usable_cooldown))
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+
+	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
+
+/**
+  * Clears the currently mimic'd skillchip, if any exists.
+  */
+/datum/action/item_action/chameleon/change/skillchip/proc/clear_mimic_chip()
+	if(skillchip_mimic)
+		skillchip_mimic.on_removal(FALSE)
+		QDEL_NULL(skillchip_mimic)

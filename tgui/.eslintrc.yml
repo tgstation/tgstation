@@ -8,6 +8,8 @@ env:
   es6: true
   browser: true
   node: true
+globals:
+  Byond: readonly
 plugins:
   - react
 settings:
@@ -112,7 +114,7 @@ rules:
   ## Require return statements to either always or never specify values
   # consistent-return: error
   ## Enforce consistent brace style for all control statements
-  curly: [error, all]
+  curly: [error, multi-line]
   ## Require default cases in switch statements
   # default-case: error
   ## Enforce default parameters to be last
@@ -305,7 +307,13 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, always-multiline]
+  comma-dangle: [error, {
+    arrays: always-multiline,
+    objects: always-multiline,
+    imports: always-multiline,
+    exports: always-multiline,
+    functions: only-multiline, ## Optional on functions
+  }]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -366,6 +374,7 @@ rules:
     ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
     ignoreUrls: true,
     ignoreRegExpLiterals: true,
+    ignoreStrings: true,
   }]
   ## Enforce a maximum number of lines per file
   # max-lines: error
@@ -382,7 +391,7 @@ rules:
   ## Enforce a particular style for multiline comments
   # multiline-comment-style: error
   ## Enforce newlines between operands of ternary expressions
-  multiline-ternary: [error, always-multiline]
+  # multiline-ternary: [error, always-multiline]
   ## Require constructor names to begin with a capital letter
   # new-cap: error
   ## Enforce or disallow parentheses when invoking a constructor with no
@@ -625,7 +634,7 @@ rules:
   ## Prevent invalid characters from appearing in markup
   react/no-unescaped-entities: error
   ## Prevent usage of unknown DOM property (fixable)
-  react/no-unknown-property: error
+  # react/no-unknown-property: error
   ## Prevent usage of unsafe lifecycle methods
   react/no-unsafe: error
   ## Prevent definitions of unused prop types
@@ -705,7 +714,7 @@ rules:
   ## Validate JSX has key prop when in array or iterator
   react/jsx-key: error
   ## Validate JSX maximum depth
-  react/jsx-max-depth: [error, { max: 6 }] ## Generous
+  react/jsx-max-depth: [error, { max: 10 }] ## Generous
   ## Limit maximum of props on a single line in JSX (fixable)
   # react/jsx-max-props-per-line: error
   ## Prevent usage of .bind() and arrow functions in JSX props

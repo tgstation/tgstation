@@ -7,13 +7,10 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	tgui_id = "ntos_revelation"
-	ui_x = 400
-	ui_y = 250
-
+	tgui_id = "NtosRevelation"
 	var/armed = 0
 
-/datum/computer_file/program/revelation/run_program(var/mob/living/user)
+/datum/computer_file/program/revelation/run_program(mob/living/user)
 	. = ..(user)
 	if(armed)
 		activate()

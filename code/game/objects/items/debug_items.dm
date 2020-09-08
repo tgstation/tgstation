@@ -5,7 +5,7 @@
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "nothingwand"
-	item_state = "wand"
+	inhand_icon_state = "wand"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -26,10 +26,10 @@
 
 /obj/item/debug/omnitool
 	name = "omnitool"
-	desc = "The original hypertool, born before them all. Use it in hand to unleash it's true power."
+	desc = "The original hypertool, born before them all. Use it in hand to unleash its true power."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
-	item_state = "hypertool"
+	inhand_icon_state = "hypertool"
 	toolspeed = 0.1
 	tool_behaviour = null
 
@@ -55,14 +55,16 @@
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
-		"Mining Tool" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
+		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "spade"),
 		"Retractor" = image(icon = 'icons/obj/surgery.dmi', icon_state = "retractor"),
 		"Hemostat" = image(icon = 'icons/obj/surgery.dmi', icon_state = "hemostat"),
 		"Cautery" = image(icon = 'icons/obj/surgery.dmi', icon_state = "cautery"),
 		"Drill" = image(icon = 'icons/obj/surgery.dmi', icon_state = "drill"),
 		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
-		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw")
+		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
+		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter"),
+		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter")
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -82,7 +84,7 @@
 			tool_behaviour = TOOL_WELDER
 		if("Analyzer")
 			tool_behaviour = TOOL_ANALYZER
-		if("Mining Tool")
+		if("Pickaxe")
 			tool_behaviour = TOOL_MINING
 		if("Shovel")
 			tool_behaviour = TOOL_SHOVEL
@@ -98,3 +100,7 @@
 			tool_behaviour = TOOL_SCALPEL
 		if("Saw")
 			tool_behaviour = TOOL_SAW
+		if("Bonesetter")
+			tool_behaviour = TOOL_BONESET
+		if("Blood Filter")
+			tool_behaviour = TOOL_BLOODFILTER

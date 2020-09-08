@@ -3,10 +3,6 @@
 /datum/language/shadowtongue
 	name = "Shadowtongue"
 	desc = "What a grand and intoxicating innocence."
-	speech_verb = "growls"
-	ask_verb = "growls"
-	exclaim_verb = "roars"
-	sing_verb = "chants"
 	key = "x"
 	space_chance = 50
 	syllables = list(

@@ -15,22 +15,25 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 
+/obj/item/reagent_containers/glass/maunamug/get_cell()
+	return cell
+
 /obj/item/reagent_containers/glass/maunamug/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The status display reads: Current temperature: <b>[reagents.chem_temp]K</b> Current Charge:[cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found"].</span>"
 	if(open)
 		. += "<span class='notice'>The battery case is open.</span>"
 
-/obj/item/reagent_containers/glass/maunamug/process()
+/obj/item/reagent_containers/glass/maunamug/process(delta_time)
 	..()
 	if(on && (!cell || cell.charge <= 0)) //Check if we ran out of power
 		change_power_status(FALSE)
 		return FALSE
-	cell.use(10) //Basic cell goes for like 200 seconds, bluespace for 8000
+	cell.use(5 * delta_time) //Basic cell goes for like 200 seconds, bluespace for 8000
 	if(!reagents.total_volume)
 		return FALSE
 	var/max_temp = min(500 + (500 * (0.2 * cell.rating)), 1000) // 373 to 1000
-	reagents.adjust_thermal_energy(0.8 * cell.maxcharge * reagents.total_volume, max_temp = max_temp) // 4 kelvin every tick on a basic cell. 160k on bluespace
+	reagents.adjust_thermal_energy(0.4 * cell.maxcharge * reagents.total_volume * delta_time, max_temp = max_temp) // 4 kelvin every tick on a basic cell. 160k on bluespace
 	reagents.handle_reactions()
 	update_icon()
 	if(reagents.chem_temp >= max_temp)

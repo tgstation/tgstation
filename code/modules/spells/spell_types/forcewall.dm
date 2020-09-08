@@ -5,7 +5,7 @@
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "TARCOL MINTI ZHERI"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	sound = 'sound/magic/forcewall.ogg'
 	action_icon_state = "shield"
 	range = -1

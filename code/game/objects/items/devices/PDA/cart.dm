@@ -21,7 +21,7 @@
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -83,7 +83,7 @@
 /obj/item/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
-	access = CART_SECURITY
+	access = CART_SECURITY | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
 /obj/item/cartridge/detective
@@ -546,7 +546,7 @@ Code:
 			var/static/list/emoji_icon_states
 			var/static/emoji_table
 			if(!emoji_table)
-				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
 				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")

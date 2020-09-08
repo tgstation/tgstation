@@ -4,7 +4,7 @@
 	name = "bottle"
 	desc = "A small bottle."
 	icon_state = "bottle"
-	item_state = "atoxinbottle"
+	inhand_icon_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 	fill_icon_thresholds = list(0, 10, 30, 50, 70)
@@ -55,7 +55,7 @@
 /obj/item/reagent_containers/glass/bottle/multiver
 	name = "multiver bottle"
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
+	list_reagents = list(/datum/reagent/medicine/c2/multiver = 30)
 
 /obj/item/reagent_containers/glass/bottle/calomel
 	name = "calomel bottle"
@@ -65,7 +65,7 @@
 /obj/item/reagent_containers/glass/bottle/syriniver
 	name = "syriniver bottle"
 	desc = "A small bottle of syriniver."
-	list_reagents = list(/datum/reagent/medicine/C2/syriniver = 30)
+	list_reagents = list(/datum/reagent/medicine/c2/syriniver = 30)
 
 /obj/item/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"

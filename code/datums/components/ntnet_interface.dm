@@ -1,4 +1,4 @@
-//Thing meant for allowing datums and objects to access a NTnet network datum.
+//Thing meant for allowing datums and objects to access an NTnet network datum.
 /datum/proc/ntnet_receive(datum/netdata/data)
 	return
 

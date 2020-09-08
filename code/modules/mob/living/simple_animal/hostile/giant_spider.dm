@@ -69,11 +69,13 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
-		if(istype(ghost) && playable_spider)
+		if(istype(ghost) && playable_spider && !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 			humanize_spider(ghost)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(directive)
 		to_chat(src, "<span class='spider'>Your mother left you a directive! Follow it at all costs.</span>")
 		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
@@ -88,17 +90,17 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return 0
+		return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
-		return 1
+		return TRUE
 	key = user.key
 	if(directive)
 		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
-	return 1
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -242,15 +244,16 @@
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
-	if(!..()) //AIStatus is off
-		return 0
+	. = ..()
+	if(!.)//AIStatus is off
+		return FALSE
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = TRUE
 			Goto(pick(urange(20, src, 1)), move_to_delay)
 			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
 	stop_automated_movement = FALSE
@@ -389,7 +392,7 @@
 	active = FALSE
 	datum/action/spell_action/action = null
 	desc = "Wrap something or someone in a cocoon. If it's a living being, you'll also consume them, allowing you to lay eggs."
-	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
@@ -447,13 +450,14 @@
 	button_icon_state = "lay_eggs"
 
 /datum/action/innate/spider/lay_eggs/IsAvailable()
-	if(..())
-		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-			return 0
-		var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-		if(S.fed)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		return FALSE
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	if(S.fed)
+		return TRUE
 
 /datum/action/innate/spider/lay_eggs/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
@@ -511,6 +515,8 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
+	if(!. || !client)
+		return FALSE
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()

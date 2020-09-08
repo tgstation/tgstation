@@ -36,7 +36,14 @@ require only minor tweaks.
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+#define ZTRAIT_ICE_RUINS "Ice Ruins"
+#define ZTRAIT_ICE_RUINS_UNDERGROUND "Ice Ruins Underground"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
+
+// boolean - weather types that occur on the level
+#define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
+#define ZTRAIT_ASHSTORM "Weather_Ashstorm"
+#define ZTRAIT_ACIDRAIN "Weather_Acidrain"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -66,6 +73,7 @@ require only minor tweaks.
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(\
     ZTRAIT_MINING = TRUE, \
+    ZTRAIT_ASHSTORM = TRUE, \
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
@@ -97,3 +105,19 @@ require only minor tweaks.
 #define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
+
+
+///Map generation defines
+#define PERLIN_LAYER_HEIGHT "perlin_height"
+#define PERLIN_LAYER_HUMIDITY "perlin_humidity"
+#define PERLIN_LAYER_HEAT "perlin_heat"
+
+#define BIOME_LOW_HEAT "low_heat"
+#define BIOME_LOWMEDIUM_HEAT "lowmedium_heat"
+#define BIOME_HIGHMEDIUM_HEAT "highmedium_heat"
+#define BIOME_HIGH_HEAT "high_heat"
+
+#define BIOME_LOW_HUMIDITY "low_humidity"
+#define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
+#define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
+#define BIOME_HIGH_HUMIDITY "high_humidity"

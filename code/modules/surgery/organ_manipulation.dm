@@ -69,7 +69,7 @@
 	name = "manipulate organs"
 	repeatable = TRUE
 	implements = list(/obj/item/organ = 100, /obj/item/organ_storage = 100)
-	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
+	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
 	var/obj/item/organ/I = null
 
@@ -119,11 +119,15 @@
 				I = organs[I]
 				if(!I)
 					return -1
+				if(I.organ_flags & ORGAN_UNREMOVABLE)
+					to_chat(user, "<span class='warning'>[I] is too well connected to take out!</span>")
+					return -1
 				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
 					"<span class='notice'>[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 					"<span class='notice'>[user] begins to extract something from [target]'s [parse_zone(target_zone)].</span>")
 			else
 				return -1
+
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(current_type == "insert")
@@ -153,4 +157,4 @@
 			display_results(user, target, "<span class='warning'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='notice'>[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='notice'>[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!</span>")
-	return 0
+	return FALSE

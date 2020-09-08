@@ -1,0 +1,47 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../colors.scss';
+
+.outline-dotted {
+  outline-style: dotted !important;
+}
+
+.outline-dashed {
+  outline-style: dashed !important;
+}
+
+.outline-solid {
+  outline-style: solid !important;
+}
+
+.outline-double {
+  outline-style: double !important;
+}
+
+.outline-groove {
+  outline-style: groove !important;
+}
+
+.outline-ridge {
+  outline-style: ridge !important;
+}
+
+.outline-inset {
+  outline-style: inset !important;
+}
+
+.outline-outset {
+  outline-style: outset !important;
+}
+
+$fg-map: colors.$fg-map !default;
+$bg-map: colors.$bg-map !default;
+
+@each $color-name, $color-value in $fg-map {
+  .outline-color-#{$color-name} {
+    outline: 0.167rem solid $color-value !important;
+  }
+}

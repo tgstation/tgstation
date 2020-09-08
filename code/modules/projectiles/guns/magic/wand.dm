@@ -3,7 +3,7 @@
 	desc = "You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
-	item_state = "wand"
+	inhand_icon_state = "wand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)

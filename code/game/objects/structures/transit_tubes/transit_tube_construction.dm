@@ -9,8 +9,7 @@
 	density = FALSE
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = FALSE
-	var/const/time_to_unwrench = 2 SECONDS
-	var/flipped = 0
+	var/flipped = FALSE
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
 	var/base_icon
@@ -46,7 +45,7 @@
 		return
 	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
 	add_fingerprint(user)
-	if(I.use_tool(src, user, time_to_unwrench, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
+	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
 		to_chat(user, "<span class='notice'>You attach the [name].</span>")
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)
@@ -63,7 +62,7 @@
 
 /obj/structure/c_transit_tube/station/flipped
 	icon_state = "closed_station1"
-	flipped = 1
+	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/flipped
 	flipped_build_type = /obj/structure/transit_tube/station
 
@@ -78,7 +77,7 @@
 
 /obj/structure/c_transit_tube/station/reverse/flipped
 	icon_state = "closed_terminus1"
-	flipped = 1
+	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/reverse/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/reverse
 
@@ -92,7 +91,7 @@
 
 /obj/structure/c_transit_tube/station/dispenser/flipped
 	icon_state = "closed_station1"
-	flipped = 1
+	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/dispenser/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser
 
@@ -107,7 +106,7 @@
 
 /obj/structure/c_transit_tube/station/dispenser/reverse/flipped
 	icon_state = "closed_terminus1"
-	flipped = 1
+	flipped = TRUE
 	build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse
 
@@ -137,7 +136,7 @@
 	icon_state = "curved1"
 	build_type = /obj/structure/transit_tube/curved/flipped
 	flipped_build_type = /obj/structure/transit_tube/curved
-	flipped = 1
+	flipped = TRUE
 
 
 /obj/structure/c_transit_tube/junction
@@ -149,7 +148,7 @@
 
 /obj/structure/c_transit_tube/junction/flipped
 	icon_state = "junction1"
-	flipped = 1
+	flipped = TRUE
 	build_type = /obj/structure/transit_tube/junction/flipped
 	flipped_build_type = /obj/structure/transit_tube/junction
 

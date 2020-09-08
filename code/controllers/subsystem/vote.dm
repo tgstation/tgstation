@@ -75,12 +75,12 @@ SUBSYSTEM_DEF(vote)
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
 					if(C.prefs.preferred_map)
-						if(choices[C.prefs.preferred_map]) //No votes if the map isnt in the vote.
+						if(choices[C.prefs.preferred_map]) //No votes if the map isn't in the vote.
 							var/preferred_map = C.prefs.preferred_map
 							choices[preferred_map] += 1
 							greatest_votes = max(greatest_votes, choices[preferred_map])
 					else if(config.defaultmap)
-						if(choices[config.defaultmap]) //No votes if the map isnt in the vote.
+						if(choices[config.defaultmap]) //No votes if the map isn't in the vote.
 							var/default_map = config.defaultmap.map_name
 							choices[default_map] += 1
 							greatest_votes = max(greatest_votes, choices[default_map])
@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(vote)
 				active_admins = TRUE
 				break
 		if(!active_admins)
-			SSticker.Reboot("Restart vote successful.", "restart vote")
+			SSticker.Reboot("Restart vote successful.", "restart vote", 1)	//no delay in case the restart is due to lag
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
@@ -229,6 +229,8 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
+			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
 

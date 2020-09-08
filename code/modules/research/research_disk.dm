@@ -36,7 +36,7 @@
 	desc = "Valuable scientific data. Use it in a research console to scan it."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_SMALL
 	///research points it holds
 	var/value = 69

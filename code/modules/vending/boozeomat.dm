@@ -19,6 +19,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/menthol = 4,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
 					/obj/item/reagent_containers/food/drinks/beer = 6,
+					/obj/item/reagent_containers/food/drinks/bottle/maltliquor = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
@@ -66,6 +67,7 @@
 			/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6,
 			/obj/item/reagent_containers/food/drinks/flask = 1)
 	req_access = null
+	age_restrictions = FALSE
 
 /obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
 	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1,
@@ -78,6 +80,7 @@
 
 /obj/machinery/vending/boozeomat/syndicate_access
 	req_access = list(ACCESS_SYNDICATE)
+	age_restrictions = FALSE
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"

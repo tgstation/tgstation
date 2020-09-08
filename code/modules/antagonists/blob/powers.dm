@@ -1,15 +1,15 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(placement_override, pop_override = FALSE)
 	if(placed && placement_override != -1)
-		return 1
+		return TRUE
 	if(!placement_override)
 		if(!pop_override)
 			for(var/mob/living/M in range(7, src))
@@ -17,30 +17,34 @@
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-					return 0
+					return FALSE
 			for(var/mob/living/M in view(13, src))
 				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-					return 0
+					return FALSE
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-			return 0
+			return FALSE
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return FALSE
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					to_chat(src, "<span class='warning'>There is already a blob here!</span>")
-					return 0
+					return FALSE
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-				return 0
+				return FALSE
 		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
-			return 0
+			return FALSE
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
 		forceMove(T) //got overrided? you're somewhere random, motherfucker
@@ -54,7 +58,7 @@
 		core.update_icon()
 	update_health_hud()
 	placed = 1
-	return 1
+	return TRUE
 
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
@@ -77,7 +81,7 @@
 		if(chosen_node)
 			forceMove(chosen_node.loc)
 
-/mob/camera/blob/proc/createSpecial(price, blobstrain, nearEquals, needsNode, turf/T)
+/mob/camera/blob/proc/createSpecial(price, blobstrain, minSeparation, needsNode, turf/T)
 	if(!T)
 		T = get_turf(src)
 	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
@@ -87,14 +91,18 @@
 	if(!istype(B, /obj/structure/blob/normal))
 		to_chat(src, "<span class='warning'>Unable to use this blob, find a normal one.</span>")
 		return
-	if(needsNode && nodes_required)
-		if(!(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
+	if(needsNode)
+		var/area/A = get_area(src)
+		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
+			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
+			return
+		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
 			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
 			return //handholdotron 2000
-	if(nearEquals)
-		for(var/obj/structure/blob/L in orange(nearEquals, T))
+	if(minSeparation)
+		for(var/obj/structure/blob/L in orange(minSeparation, T))
 			if(L.type == blobstrain)
-				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [nearEquals] tiles away from it!</span>")
+				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [minSeparation] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
 		return
@@ -129,25 +137,25 @@
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
-		createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
+		createSpecial(15, /obj/structure/blob/shield, 0, FALSE, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/structure/blob/resource, 4, 1)
+	createSpecial(40, /obj/structure/blob/resource, 4, TRUE)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
 	set name = "Create Node Blob (50)"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(50, /obj/structure/blob/node, 5, 0)
+	createSpecial(50, /obj/structure/blob/node, 5, FALSE)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/structure/blob/factory, 7, 1)
+	createSpecial(60, /obj/structure/blob/factory, 7, TRUE)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
@@ -211,7 +219,7 @@
 		to_chat(src, "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>")
 		return
 	var/area/A = get_area(T)
-	if(isspaceturf(T) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
 	if(!can_buy(80))
@@ -350,7 +358,7 @@
 
 /mob/camera/blob/proc/reroll_strain()
 	var/list/choices = list()
-	while (length(choices) < 4)
+	while (length(choices) < 6)
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 

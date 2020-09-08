@@ -1,7 +1,7 @@
 //does massive brute and burn damage, but can only expand manually
 /datum/blobstrain/reagent/networked_fibers
 	name = "Networked Fibers"
-	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually."
+	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually using the core."
 	shortdesc = "will do high brute and burn damage."
 	effectdesc = "will move your core when manually expanding near it."
 	analyzerdescdamage = "Does high brute and burn damage."
@@ -9,6 +9,8 @@
 	color = "#4F4441"
 	complementary_color = "#414C4F"
 	reagent = /datum/reagent/blob/networked_fibers
+	core_regen = 5
+	point_rate = 3
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
 	if(!O && newB.overmind)
@@ -24,6 +26,9 @@
 					C.forceMove(T)
 					C.setDir(get_dir(newB, C))
 					O.add_points(1)
+					return
+			O.add_points(4)
+			qdel(newB)
 
 //does massive brute and burn damage, but can only expand manually
 /datum/reagent/blob/networked_fibers
@@ -31,8 +36,9 @@
 	taste_description = "efficiency"
 	color = "#4F4441"
 
-/datum/reagent/blob/networked_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
-	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE)
-	if(!QDELETED(M))
-		M.apply_damage(0.6*reac_volume, BURN)
+/datum/reagent/blob/networked_fibers/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
+	exposed_mob.apply_damage(0.6*reac_volume, BRUTE, wound_bonus=CANT_WOUND)
+	if(!QDELETED(exposed_mob))
+		exposed_mob.apply_damage(0.6*reac_volume, BURN, wound_bonus=CANT_WOUND)

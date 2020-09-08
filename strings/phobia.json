@@ -84,7 +84,6 @@
 
 	"lizards": [
 		"lizard",
-		"ligger",
 		"hiss",
 		"hissed",
 		"hissing",
@@ -217,8 +216,9 @@
 
 "strangers": [
 		"as (unknown)",
+		"unidentified",
 		"unknown",
-		"stranger danger"
+		"stranger"
 	],
 
 "birds": [
@@ -284,5 +284,18 @@
 		"neet",
 		"ora",
 		"~"
+	],
+"insects": [
+		"fly",
+		"moth",
+		"buzz",
+		"flutter",
+		"insect",
+		"moff",
+		"roach",
+		"cockroach",
+		"glockroach",
+		"bee",
+		"sting"
 	]
 }

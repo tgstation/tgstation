@@ -1,22 +1,29 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 @use 'sass:color';
+@use '../base.scss';
 @use '../functions.scss' as *;
 @use './Input.scss';
 
+$text-color: Input.$text-color !default;
+$background-color: Input.$background-color !default;
 $border-color: Input.$border-color !default;
 $border-radius: Input.$border-radius !default;
 
 .NumberInput {
   position: relative;
   display: inline-block;
-  border: 1px solid $border-color;
-  border: 1px solid rgba($border-color, 0.75);
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;
   color: $border-color;
-  background-color: #000;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 0 4px;
-  margin-right: 2px;
-  line-height: 17px;
+  background-color: $background-color;
+  padding: 0 base.em(4px);
+  margin-right: base.em(2px);
+  line-height: base.em(17px);
   text-align: right;
   overflow: visible;
   cursor: n-resize;
@@ -27,23 +34,23 @@ $border-radius: Input.$border-radius !default;
 }
 
 .NumberInput__content {
-  margin-left: 6px;
+  margin-left: 0.5em;
 }
 
 .NumberInput__barContainer {
   position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 2px;
+  top: base.em(2px);
+  bottom: base.em(2px);
+  left: base.em(2px);
 }
 
 .NumberInput__bar {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 3px;
+  width: base.em(3px);
   box-sizing: border-box;
-  border-bottom: 1px solid $border-color;
+  border-bottom: base.em(1px) solid $border-color;
   background-color: $border-color;
 }
 
@@ -57,13 +64,13 @@ $border-radius: Input.$border-radius !default;
   border: 0;
   outline: 0;
   width: 100%;
-  font-size: 12px;
-  line-height: 17px;
-  height: 17px;
+  font-size: base.em(12px);
+  line-height: base.em(17px);
+  height: base.em(17px);
   margin: 0;
-  padding: 0 6px;
+  padding: 0 0.5em;
   font-family: Verdana, sans-serif;
-  background-color: #000;
-  color: #fff;
+  background-color: $background-color;
+  color: $text-color;
   text-align: right;
 }

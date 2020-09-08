@@ -1,5 +1,8 @@
 //Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
 
+/// Chance of taking a step per second
+#define ANOMALY_MOVECHANCE 45
+
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -7,7 +10,7 @@
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
-	var/movechance = 70
+
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
@@ -17,7 +20,10 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan)
+	/// Do we drop a core when we're neutralized?
+	var/drops_core = TRUE
+
+/obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
@@ -25,6 +31,8 @@
 
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
+
+	src.drops_core = drops_core
 
 	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
@@ -43,8 +51,8 @@
 		countdown.color = countdown_colour
 	countdown.start()
 
-/obj/effect/anomaly/process()
-	anomalyEffect()
+/obj/effect/anomaly/process(delta_time)
+	anomalyEffect(delta_time)
 	if(death_time < world.time)
 		if(loc)
 			detonate()
@@ -54,10 +62,12 @@
 	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	return ..()
 
-/obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(movechance))
+/obj/effect/anomaly/proc/anomalyEffect(delta_time)
+	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
@@ -70,8 +80,10 @@
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
-	for(var/atom/movable/O in src)
-		O.forceMove(drop_location())
+	if(drops_core)
+		aSignal.forceMove(drop_location())
+		aSignal = null
+	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
 
@@ -102,6 +114,10 @@
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
 		if(!O.anchored)
+			if(isturf(O.loc))
+				var/turf/T = O.loc
+				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+					continue
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
@@ -128,7 +144,7 @@
 
 /obj/effect/anomaly/grav/high/Initialize(mapload, new_lifespan)
 	. = ..()
-	setup_grav_field()
+	INVOKE_ASYNC(src, .proc/setup_grav_field)
 
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
 	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
@@ -147,6 +163,10 @@
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
+
+/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
+	. = ..()
+	explosive = _explosive
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -256,15 +276,17 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	/// How many seconds between each gas release
+	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
-/obj/effect/anomaly/pyro/anomalyEffect()
+/obj/effect/anomaly/pyro/anomalyEffect(delta_time)
 	..()
-	ticks++
-	if(ticks < 5)
+	ticks += delta_time
+	if(ticks < releasedelay)
 		return
 	else
-		ticks = 0
+		ticks -= releasedelay
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
@@ -319,7 +341,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else
-			O.ex_act(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += O
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
@@ -338,7 +360,13 @@
 	if(prob(pull_chance))
 		for(var/obj/O in T.contents)
 			if(O.anchored)
-				O.ex_act(ex_act_force)
+				switch(ex_act_force)
+					if(EXPLODE_DEVASTATE)
+						SSexplosions.high_mov_atom += O
+					if(EXPLODE_HEAVY)
+						SSexplosions.med_mov_atom += O
+					if(EXPLODE_LIGHT)
+						SSexplosions.low_mov_atom += O
 			else
 				step_towards(O,src)
 		for(var/mob/living/M in T.contents)
@@ -346,4 +374,12 @@
 
 	//Damaging the turf
 	if( T && prob(turf_removal_chance) )
-		T.ex_act(ex_act_force)
+		switch(ex_act_force)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += T
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += T
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += T
+
+#undef ANOMALY_MOVECHANCE

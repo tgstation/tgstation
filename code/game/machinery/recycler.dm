@@ -10,7 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
-	var/blood = 0
+	var/bloody = FALSE
 	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
@@ -76,7 +76,7 @@
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
-	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
+	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
 	. = ..()
@@ -152,7 +152,7 @@
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
 			return
-		materials.insert_item(I, multiplier = (amount_produced / 100))
+		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
 		materials.retrieve_all()
 
 
@@ -181,8 +181,8 @@
 			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
 		add_mob_blood(L)
 
-	if(!blood && !issilicon(L))
-		blood = TRUE
+	if(!bloody && !issilicon(L))
+		bloody = TRUE
 		update_icon()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.

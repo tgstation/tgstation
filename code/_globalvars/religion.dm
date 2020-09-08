@@ -7,7 +7,7 @@ GLOBAL_VAR(favor)
 //bible
 GLOBAL_VAR(bible_name)
 GLOBAL_VAR(bible_icon_state)
-GLOBAL_VAR(bible_item_state)
+GLOBAL_VAR(bible_inhand_icon_state)
 
 //gear
 GLOBAL_VAR(holy_weapon_type)

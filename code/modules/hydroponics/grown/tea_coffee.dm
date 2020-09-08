@@ -14,6 +14,7 @@
 	icon_dead = "tea-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tea/astra)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/tea
 	seed = /obj/item/seeds/tea
@@ -57,6 +58,7 @@
 	maturation = 5
 	production = 5
 	yield = 5
+	instability = 20
 	growthstages = 5
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

@@ -18,7 +18,7 @@
 /mob/living/proc/taste(datum/reagents/from)
 	if(last_taste_time + 50 < world.time)
 		var/taste_sensitivity = get_taste_sensitivity()
-		var/text_output = from.generate_taste_message(taste_sensitivity)
+		var/text_output = from.generate_taste_message(taste_sensitivity,src)
 		// We dont want to spam the same message over and over again at the
 		// person. Give it a bit of a buffer.
 		if(hallucination > 50 && prob(25))

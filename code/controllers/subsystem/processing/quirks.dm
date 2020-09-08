@@ -6,13 +6,15 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
 	init_order = INIT_ORDER_QUIRKS
 	flags = SS_BACKGROUND
-	wait = 10
 	runlevels = RUNLEVEL_GAME
+	wait = 1 SECONDS
 
 	var/list/quirks = list()		//Assoc. list of all roundstart quirk datum types; "name" = /path/
 	var/list/quirk_points = list()	//Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	var/list/quirk_objects = list()	//A list of all quirk objects in the game, since some may process
-	var/list/quirk_blacklist = list() //A list a list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
+	var/list/quirk_blacklist = list() //A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
+	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
+	var/list/hardcore_quirks = list()
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
@@ -30,6 +32,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks[initial(T.name)] = T
 		quirk_points[initial(T.name)] = initial(T.value)
 
+		var/hardcore_value = initial(T.hardcore_value)
+
+		if(!hardcore_value)
+			continue
+		hardcore_quirks[T] += hardcore_value
+
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects)
 	var/badquirk = FALSE
 	for(var/V in cli.prefs.all_quirks)
@@ -42,6 +50,10 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/human = user
+		human.hardcore_survival_score = cli.prefs.hardcore_survival_score //Only do this if we actually asign quirks, to prevent sillicons etc from getting the points.
 
 	// Assign wayfinding pinpointer granting quirk if they're new
 	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/needswayfinder))

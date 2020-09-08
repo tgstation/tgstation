@@ -11,10 +11,12 @@
 	production = 1
 	yield = 2
 	potency = 10
+	instability = 35
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower, /obj/item/seeds/galaxythistle)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/starthistle/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc
@@ -46,7 +48,7 @@
 			START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/seeds/starthistle/corpse_flower/process()
+/obj/item/seeds/starthistle/corpse_flower/process(delta_time)
 	var/obj/machinery/hydroponics/parent = loc
 	if(parent.age < maturation) // Start a little before it blooms
 		return
@@ -57,7 +59,7 @@
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*7*MIASMA_CORPSE_MOLES // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*3.5*MIASMA_CORPSE_MOLES*delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
 	T.air_update_turf()
@@ -76,11 +78,13 @@
 	production = 2
 	yield = 2
 	potency = 25
+	instability = 35
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
+	graft_gene = /datum/plant_gene/trait/invasive
 
 /obj/item/seeds/galaxythistle/Initialize(mapload,nogenes)
 	. = ..()
@@ -111,11 +115,13 @@
 	maturation = 3
 	production = 5
 	yield = 4
+	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	seed_flags = null
 
 /obj/item/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -140,6 +146,7 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
+	instability = 15
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
@@ -222,7 +229,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
 	reagents.chem_temp = 1000 //Sets off the gunpowder

@@ -111,7 +111,7 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += "Extinguish Fires: <A href='?src=[REF(src)];operation=extinguish_fires'>[extinguish_fires ? "Yes" : "No"]</A><BR>"
 		dat += "Extinguish People: <A href='?src=[REF(src)];operation=extinguish_people'>[extinguish_people ? "Yes" : "No"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
@@ -209,10 +209,10 @@
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
-				playsound(src, "sound/voice/firebot/stopdropnroll.ogg", 50, FALSE)
+				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 50, FALSE)
 			else
 				speak("Extinguishing!")
-				playsound(src, "sound/voice/firebot/extinguishing.ogg", 50, FALSE)
+				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 50, FALSE)
 			speech_cooldown = world.time
 
 			flick("firebot1_use", src)
@@ -265,7 +265,7 @@
 	if(is_burning(scan_target))
 		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
 			speak("Fire detected!")
-			playsound(src, "sound/voice/firebot/detected.ogg", 50, FALSE)
+			playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
 			detected_cooldown = world.time
 		result = scan_target
 

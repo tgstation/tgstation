@@ -199,12 +199,20 @@
 	glass_name = "glass of milk"
 	glass_desc = "White and nutritious goodness!"
 
+	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
+/datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
+		if(myseed)
+			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
+
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
-	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
+	if(M.has_reagent(/datum/reagent/consumable/capsaicin))
+		M.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
 
 /datum/reagent/consumable/soymilk
@@ -258,8 +266,8 @@
 	M.AdjustSleeping(-40, FALSE)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
-	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
-		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
+	if(M.has_reagent(/datum/reagent/consumable/frostoil))
+		M.remove_reagent(/datum/reagent/consumable/frostoil, 5)
 	..()
 	. = 1
 
@@ -329,6 +337,26 @@
 	M.Jitter(5)
 	..()
 	. = 1
+
+/datum/reagent/consumable/hot_ice_coffee
+	name = "Hot Ice Coffee"
+	description = "Coffee with pulsing ice shards"
+	color = "#102838" // rgb: 16, 40, 56
+	nutriment_factor = 0
+	taste_description = "bitter coldness and a hint of smoke"
+	glass_icon_state = "hoticecoffee"
+	glass_name = "hot ice coffee"
+	glass_desc = "A sharp drink, this can't have come cheap"
+
+/datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-5)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-60, FALSE)
+	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	M.Jitter(5)
+	M.adjustToxLoss(1*REM, 0)
+	..()
+	. = TRUE
 
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
@@ -400,7 +428,7 @@
 	taste_description = "carbonated oil"
 	glass_icon_state = "grey_bull_glass"
 	glass_name = "glass of Grey Bull"
-	glass_desc = "Surprisingly it isnt grey."
+	glass_desc = "Surprisingly it isn't grey."
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
@@ -487,17 +515,17 @@
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 
-/datum/reagent/consumable/pwr_game/reaction_mob(mob/living/C, method=TOUCH, reac_volume)
-	..()
-	if(C?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && method==INGEST && !HAS_TRAIT(C, TRAIT_GAMERGOD))
-		ADD_TRAIT(C, TRAIT_GAMERGOD, "pwr_game")
-		to_chat(C, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
+/datum/reagent/consumable/pwr_game/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(exposed_mob?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && (methods & INGEST) && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD))
+		ADD_TRAIT(exposed_mob, TRAIT_GAMERGOD, "pwr_game")
+		to_chat(exposed_mob, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
 		You feel as though a great secret of the universe has been made known to you...</span>")
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	if(prob(10))
-		M?.mind.adjust_experience(/datum/skill/gaming, 5)
+		M.mind?.adjust_experience(/datum/skill/gaming, 5)
 	..()
 
 /datum/reagent/consumable/shamblers
@@ -520,6 +548,15 @@
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of soda water"
 	glass_desc = "Soda water. Why not make a scotch and soda?"
+
+
+	// A variety of nutrients are dissolved in club soda, without sugar.
+	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
+/datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -648,32 +685,10 @@
 	M.adjustToxLoss(-0.5, 0)
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+		if(!(M.mind && (M.mind.assigned_role in GLOB.medical_positions))) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2)
 	..()
 	. = 1
-
-/datum/reagent/consumable/chocolatepudding
-	name = "Chocolate Pudding"
-	description = "A great dessert for chocolate lovers."
-	color = "#800000"
-	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet chocolate"
-	glass_icon_state = "chocolatepudding"
-	glass_name = "chocolate pudding"
-	glass_desc = "Tasty."
-
-/datum/reagent/consumable/vanillapudding
-	name = "Vanilla Pudding"
-	description = "A great dessert for vanilla lovers."
-	color = "#FAFAD2"
-	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "sweet vanilla"
-	glass_icon_state = "vanillapudding"
-	glass_name = "vanilla pudding"
-	glass_desc = "Tasty."
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
@@ -884,11 +899,11 @@
 /datum/reagent/consumable/bungojuice
 	name = "Bungo Juice"
 	color = "#F9E43D"
-	description = "Exotic! You feel like you are on vactation already."
+	description = "Exotic! You feel like you are on vacation already."
 	taste_description = "succulent bungo"
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of bungo juice"
-	glass_desc = "Exotic! You feel like you are on vactation already."
+	glass_desc = "Exotic! You feel like you are on vacation already."
 
 /datum/reagent/consumable/prunomix
 	name = "pruno mixture"
@@ -919,7 +934,7 @@
 	description = "The drank that makes you go wheezy."
 	color = "#DE55ED"
 	quality = DRINK_NICE
-	taste_description = "purple and a hint of opiod."
+	taste_description = "purple and a hint of opioid."
 	glass_icon_state = "lean"
 	glass_name = "Lean"
 	glass_desc = "A drink that makes your life less miserable."

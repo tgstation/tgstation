@@ -51,7 +51,7 @@
 				atoms += A
 			CHECK_TICK
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "transparent")
+	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
 
 	var/list/sorted = list()
@@ -60,7 +60,7 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
+			if((c2.plane <= c.plane) && (c2.layer <= c.layer))
 				break
 		sorted.Insert(j+1, c)
 		CHECK_TICK
@@ -76,7 +76,7 @@
 				var/atom/movable/AM = A
 				xo += AM.step_x
 				yo += AM.step_y
-			var/icon/img = getFlatIcon(A)
+			var/icon/img = getFlatIcon(A, no_anim = TRUE)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 			CHECK_TICK
 	else
@@ -86,7 +86,7 @@
 			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp
 			xo += clone.step_x
 			yo += clone.step_y
-			var/icon/img = getFlatIcon(clone)
+			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
 			if(img)
 				if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
 					img.Turn(clone.turn_angle)

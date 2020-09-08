@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(traumas)
 	name = "Traumas"
 	flags = SS_NO_FIRE
 	var/list/phobia_types
-	var/list/phobia_words
+	var/list/phobia_regexes
 	var/list/phobia_mobs
 	var/list/phobia_objs
 	var/list/phobia_turfs
@@ -14,27 +14,28 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime"))
+						"aliens", "strangers", "birds", "falling", "anime", "insects"))
 
-	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
-						"space"     = strings(PHOBIA_FILE, "space"),
-						"security"  = strings(PHOBIA_FILE, "security"),
-						"clowns"    = strings(PHOBIA_FILE, "clowns"),
-						"greytide"  = strings(PHOBIA_FILE, "greytide"),
-						"lizards"   = strings(PHOBIA_FILE, "lizards"),
-						"skeletons" = strings(PHOBIA_FILE, "skeletons"),
-						"snakes"	= strings(PHOBIA_FILE, "snakes"),
-						"robots"	= strings(PHOBIA_FILE, "robots"),
-						"doctors"	= strings(PHOBIA_FILE, "doctors"),
-						"authority"	= strings(PHOBIA_FILE, "authority"),
-						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
-						"aliens"	= strings(PHOBIA_FILE, "aliens"),
-						"strangers"	= strings(PHOBIA_FILE, "strangers"),
-						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
-						"birds" = strings(PHOBIA_FILE, "birds"),
-						"falling" = strings(PHOBIA_FILE, "falling"),
-						"anime" = strings(PHOBIA_FILE, "anime")
-					   )
+	phobia_regexes = list("spiders"          = construct_phobia_regex("spiders"),
+						  "space"            = construct_phobia_regex("space"),
+						  "security"         = construct_phobia_regex("security"),
+						  "clowns"           = construct_phobia_regex("clowns"),
+						  "greytide"         = construct_phobia_regex("greytide"),
+						  "lizards"          = construct_phobia_regex("lizards"),
+						  "skeletons"        = construct_phobia_regex("skeletons"),
+						  "snakes"           = construct_phobia_regex("snakes"),
+						  "robots"           = construct_phobia_regex("robots"),
+						  "doctors"          = construct_phobia_regex("doctors"),
+						  "authority"        = construct_phobia_regex("authority"),
+						  "the supernatural" = construct_phobia_regex("the supernatural"),
+						  "aliens"           = construct_phobia_regex("aliens"),
+						  "strangers"        = construct_phobia_regex("strangers"),
+						  "conspiracies"     = construct_phobia_regex("conspiracies"),
+						  "birds"            = construct_phobia_regex("birds"),
+						  "falling"          = construct_phobia_regex("falling"),
+						  "anime"            = construct_phobia_regex("anime"),
+						  "insects"			 = construct_phobia_regex("insects")
+						  )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
@@ -51,33 +52,35 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/pet/penguin)),
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
-					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian))
+					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
+					   "insects" = typecacheof(list(/mob/living/simple_animal/hostile/cockroach, /mob/living/simple_animal/hostile/poison/bees))
 					   )
 
-	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius)),
+	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius, /obj/item/toy/plush/snakeplushie)),
 
 						"spiders"   = typecacheof(list(/obj/structure/spider)),
 
-					   "security"  = typecacheof(list(/obj/item/clothing/under/rank/security/officer, /obj/item/clothing/under/rank/security/warden,
+						"security"  = typecacheof(list(/obj/item/clothing/under/rank/security/officer, /obj/item/clothing/under/rank/security/warden,
 											 	 /obj/item/clothing/under/rank/security/head_of_security, /obj/item/clothing/under/rank/security/detective,
 												 /obj/item/melee/baton, /obj/item/gun/energy/taser, /obj/item/restraints/handcuffs,
 												 /obj/machinery/door/airlock/security, /obj/effect/hallucination/simple/securitron)),
 
-					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/civilian/clown, /obj/item/clothing/shoes/clown_shoes,
+					  	"clowns"    = typecacheof(list(/obj/item/clothing/under/rank/civilian/clown, /obj/item/clothing/shoes/clown_shoes,
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
 												 /obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/reagent_containers/food/snacks/cheesiehonkers,
 												 /obj/item/trash/cheesie)),
 
-					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
+						"greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/spear, /obj/item/clothing/mask/gas)),
 
-					  "lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail,
-												 /obj/item/organ/tail/lizard, /obj/item/reagent_containers/food/drinks/bottle/lizardwine)),
+						"lizards"   = typecacheof(list(/obj/item/toy/plush/lizardplushie, /obj/item/reagent_containers/food/snacks/kebab/tail, /obj/item/organ/tail/lizard,
+												 /obj/item/reagent_containers/food/drinks/bottle/lizardwine, /obj/item/clothing/head/lizard, /obj/item/clothing/shoes/cowboy/lizard)),
 
-					  "skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
+						"skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
-				   "conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/security/head_of_security,
+
+						"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/security/head_of_security,
 												 /obj/item/clothing/under/rank/engineering/chief_engineer, /obj/item/clothing/under/rank/medical/chief_medical_officer,
 												 /obj/item/clothing/under/rank/civilian/head_of_personnel, /obj/item/clothing/under/rank/rnd/research_director,
 												 /obj/item/clothing/under/rank/security/head_of_security/grey, /obj/item/clothing/under/rank/security/head_of_security/alt,
@@ -90,8 +93,9 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 												 /obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
 												 /obj/machinery/door/airlock/centcom)),
-						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/machinery/recharge_station,
-						/obj/item/aicard, /obj/item/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
+
+						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
+						           /obj/item/aicard, /obj/structure/swarmer_beacon)),
 
 						"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical,
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray,
@@ -138,7 +142,9 @@ SUBSYSTEM_DEF(traumas)
 					   "anime" = typecacheof(list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/reagent_containers/food/snacks/sashimi, /obj/item/reagent_containers/food/snacks/chawanmushi,
 					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
-					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe))
+					   /obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
+
+						"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
@@ -155,9 +161,23 @@ SUBSYSTEM_DEF(traumas)
 						  "the supernatural" = typecacheof(list(/datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
 						  /datum/species/shadow)),
-						  "anime" = typecacheof(list(/datum/species/human/felinid))
+						  "anime" = typecacheof(list(/datum/species/human/felinid)),
+						  "insects" = typecacheof(list(/datum/species/fly, /datum/species/moth))
 						 )
 
 	return ..()
+
+///Creates a regular expression to match against the given phobia
+///Capture group 2 = the scary word
+///Capture group 3 = an optional suffix on the scary word
+/datum/controller/subsystem/traumas/proc/construct_phobia_regex(list/name)
+	var/list/words = strings(PHOBIA_FILE, name)
+	if(!length(words))
+		CRASH("phobia [name] has no entries")
+	var/words_match = ""
+	for(var/word in words)
+		words_match += "[REGEX_QUOTE(word)]|"
+	words_match = copytext(words_match, 1, -1)
+	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "ig")
 
 #undef PHOBIA_FILE

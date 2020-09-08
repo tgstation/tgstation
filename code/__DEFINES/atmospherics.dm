@@ -86,6 +86,9 @@
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
 #define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
 #define PLASMA_OXYGEN_FULLBURN				10
+#define HYDROGEN_MINIMUM_BURN_TEMPERATURE	(100+T0C)
+#define HYDROGEN_UPPER_TEMPERATURE			(1370+T0C)
+#define HYDROGEN_OXYGEN_FULLBURN			10
 
 //COLD FIRE (this is used only for the freon-o2 reaction, there is no fire still)
 #define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_SPREAD	263 //fire will spread if the temperature is -10 °C
@@ -93,7 +96,7 @@
 #define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
 #define COLD_FIRE_GROWTH_RATE					40000
 #define FREON_MAXIMUM_BURN_TEMPERATURE			293
-#define FREON_LOWER_TEMPERATURE					30 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+#define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
 #define FREON_OXYGEN_FULLBURN					10
 
 //GASES
@@ -106,6 +109,8 @@
 #define FACTOR_GAS_VISIBLE_MAX				20
 /// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP				0.25
+/// The total visible states
+#define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -203,9 +208,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE					4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE					200
-/// 10% of an overclocked volume pump leaks into the air
-#define VOLUME_PUMP_LEAK_AMOUNT				0.1
+#define MAX_TRANSFER_RATE					400
+/// How many percent of the contents that an overclocked volume pumps leak into the air
+#define VOLUME_PUMP_LEAK_AMOUNT				0.2
 //used for device_type vars
 #define UNARY		1
 #define BINARY 		2
@@ -248,8 +253,8 @@
 #define AIRLESS_ATMOS				"TEMP=2.7"
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180"
-/// -80°C kitchen coldroom; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS		"o2=33;n2=124;TEMP=193.15"
+/// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
+#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=259.15"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370"
 
@@ -267,6 +272,7 @@
 
 //ATMOS MIX IDS
 #define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
+#define ICEMOON_DEFAULT_ATMOS		"ICEMOON_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -344,9 +350,10 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+//layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_MAX 5
+#define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
@@ -367,6 +374,14 @@
 	}																		\
 	if(T.dir & (EAST|WEST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	}
+
+#define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+	}																		\
+	if(T.dir & (EAST|WEST)) {										\
+		T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
 	}
 
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \

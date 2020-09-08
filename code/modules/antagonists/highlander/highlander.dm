@@ -9,12 +9,14 @@
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
-
+	if(L.has_quirk(/datum/quirk/nonviolent))
+		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
@@ -29,7 +31,9 @@
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
-	owner.current.set_species(/datum/species/human)
+	var/mob/living/carbon/human/humanlander = owner.current
+	if(ishuman(humanlander) && humanlander.dna.species.outfit_important_for_life) //things that cannot live with the scottish kilt will be owned
+		humanlander.set_species(/datum/species/human)
 	give_equipment()
 	. = ..()
 

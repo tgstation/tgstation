@@ -103,7 +103,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space)
 "av" = (
 /obj/structure/stairs/north,
@@ -211,6 +211,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aY" = (
 /obj/machinery/light{
 	dir = 4
@@ -415,7 +422,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bG" = (
@@ -1023,7 +1030,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1130,6 +1137,10 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/engine/storage)
+"fp" = (
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/engine/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	icon_state = "connector_map-2";
@@ -1183,12 +1194,11 @@
 /turf/open/floor/plating,
 /area/space)
 "iq" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/construction)
 "iu" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/hallway/secondary/service)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -1254,17 +1264,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"lT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mb" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/storage)
+"mG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mZ" = (
 /turf/open/floor/plasteel{
 	dir = 4
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1273,10 +1297,14 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "nF" = (
-/obj/structure/cable,
-/obj/machinery/power/deck_relay,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"nS" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "od" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/structure/window/reinforced,
@@ -1308,8 +1336,14 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"pi" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/transparent/openspace,
+/area/hallway/secondary/service)
 "qo" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "qx" = (
 /obj/structure/railing/corner{
@@ -1332,7 +1366,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1389,12 +1423,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"va" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/construction)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1442,6 +1470,17 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"xK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"xO" = (
+/obj/structure/lattice,
+/turf/open/transparent/openspace,
+/area/engine/storage)
 "yl" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1451,6 +1490,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
+"yR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"yX" = (
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "zd" = (
 /obj/structure/railing{
 	icon_state = "railing";
@@ -1506,7 +1556,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1515,7 +1565,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
 /area/storage/primary)
 "BM" = (
 /obj/machinery/power/apc/auto_name/north,
@@ -1695,7 +1746,7 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
@@ -1745,6 +1796,12 @@
 /obj/item/construction/plumbing,
 /turf/open/floor/plasteel,
 /area/construction)
+"SN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "Tf" = (
 /obj/structure/railing{
 	dir = 1
@@ -1773,8 +1830,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vm" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vn" = (
@@ -1810,6 +1866,13 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "Zv" = (
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
@@ -2665,7 +2728,7 @@ gY
 bO
 bO
 yt
-va
+vT
 dn
 dn
 dn
@@ -3745,9 +3808,9 @@ cH
 cI
 cJ
 by
-dJ
-dJ
-dB
+dk
+dk
+dC
 dl
 dE
 dH
@@ -3799,9 +3862,9 @@ eo
 eo
 cK
 by
-dJ
-dJ
-dB
+Zk
+mG
+xK
 dl
 dF
 dk
@@ -3853,9 +3916,9 @@ eo
 eo
 cL
 by
-dJ
-dJ
-dB
+aW
+yX
+nS
 dl
 dl
 dl
@@ -3907,9 +3970,9 @@ eo
 eo
 cM
 by
-dk
+yR
 Bm
-dC
+lT
 dl
 dl
 dl
@@ -6554,9 +6617,9 @@ iK
 iK
 en
 TY
-dY
-dY
-dY
+SN
+SN
+SN
 eF
 iu
 iu
@@ -6608,9 +6671,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6662,9 +6725,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6716,9 +6779,9 @@ dY
 dY
 dY
 TY
-dY
-eN
-dY
+iu
+pi
+iu
 eF
 iu
 iu
@@ -8774,7 +8837,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8828,7 +8891,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8880,17 +8943,17 @@ ej
 Qw
 Qw
 Vn
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -8928,15 +8991,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -8982,15 +9045,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9036,15 +9099,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9090,15 +9153,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9144,15 +9207,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9198,15 +9261,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9252,15 +9315,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9306,15 +9369,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9360,15 +9423,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9414,15 +9477,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9455,36 +9518,36 @@ au
 au
 au
 AG
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+fp
 qo
 qo
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+fp
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -9522,15 +9585,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9576,15 +9639,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9630,15 +9693,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
 qo
+xO
 qo
 qo
 qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo

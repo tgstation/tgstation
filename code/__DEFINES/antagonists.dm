@@ -70,3 +70,13 @@
 
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
+
+///It is faster as a macro than a proc
+#define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+
+#define PATH_SIDE "Side"
+
+#define PATH_ASH "Ash"
+#define PATH_RUST "Rust"
+#define PATH_FLESH "Flesh"

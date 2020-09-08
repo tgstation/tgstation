@@ -1,14 +1,14 @@
-import { map, reduce, zipWith } from './collections';
-
 /**
- * Creates a vector, with as many dimensions are there are arguments.
+ * N-dimensional vector manipulation functions.
+ *
+ * Vectors are plain number arrays, i.e. [x, y, z].
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
  */
-export const vecCreate = (...components) => {
-  if (Array.isArray(components[0])) {
-    return [...components[0]];
-  }
-  return components;
-};
+
+import { map, reduce, zipWith } from './collections';
 
 const ADD = (a, b) => a + b;
 const SUB = (a, b) => a - b;

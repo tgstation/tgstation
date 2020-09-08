@@ -1,7 +1,7 @@
 ///We pump liquids from activated(plungerated) geysers to a plumbing outlet. We need to be wired.
 /obj/machinery/plumbing/liquid_pump
 	name = "liquid pump"
-	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasnt fun
+	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasn't fun
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	anchored = FALSE
@@ -9,11 +9,8 @@
 	idle_power_usage = 10
 	active_power_usage = 1000
 
-	rcd_cost = 30
-	rcd_delay = 40
-
-	///units we pump per process (2 seconds)
-	var/pump_power = 2
+	///units we pump per second
+	var/pump_power = 1
 	///set to true if the loop couldnt find a geyser in process, so it remembers and stops checking every loop until moved. more accurate name would be absolutely_no_geyser_under_me_so_dont_try
 	var/geyserless = FALSE
 	///The geyser object
@@ -33,7 +30,7 @@
 		update_icon()
 		geyserless = FALSE //we switched state, so lets just set this back aswell
 
-/obj/machinery/plumbing/liquid_pump/process()
+/obj/machinery/plumbing/liquid_pump/process(delta_time)
 	if(!anchored || panel_open || geyserless)
 		return
 
@@ -47,13 +44,13 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			return
 
-	pump()
+	pump(delta_time)
 
 ///pump up that sweet geyser nectar
-/obj/machinery/plumbing/liquid_pump/proc/pump()
+/obj/machinery/plumbing/liquid_pump/proc/pump(delta_time)
 	if(!geyser || !geyser.reagents)
 		return
-	geyser.reagents.trans_to(src, pump_power)
+	geyser.reagents.trans_to(src, pump_power * delta_time)
 
 /obj/machinery/plumbing/liquid_pump/update_icon_state()
 	if(geyser)

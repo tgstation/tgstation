@@ -6,11 +6,11 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
-	power_channel = EQUIP
+	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 500
+	var/charge_rate = 250
 
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
@@ -30,7 +30,7 @@
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.</span>"
+		. += "<span class='notice'>The status display reads: Charging power: <b>[charge_rate]W</b>.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -115,17 +115,17 @@
 		charging.emp_act(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
-	charge_rate = 500
+	charge_rate = 250
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		charge_rate *= C.rating
 
-/obj/machinery/cell_charger/process()
+/obj/machinery/cell_charger/process(delta_time)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
 
 	if(charging.percent() >= 100)
 		return
-	use_power(charge_rate)
-	charging.give(charge_rate)	//this is 2558, efficient batteries exist
+	use_power(charge_rate * delta_time)
+	charging.give(charge_rate * delta_time)	//this is 2558, efficient batteries exist
 
 	update_icon()

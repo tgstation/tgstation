@@ -23,9 +23,10 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
+	light_color = LIGHT_COLOR_BROWN
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
-	var/working = 0
+	var/working = FALSE
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
 	var/paymode = HOLOCHIP //toggles between HOLOCHIP/COIN, defined above
@@ -34,36 +35,36 @@
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
-	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/slot_machine/Initialize()
 	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
 
-	toggle_reel_spin(1) //The reels won't spin unless we activate them
+	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
 	for(var/i = 0, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
 
-	toggle_reel_spin(0)
+	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
 
 	for(cointype in typesof(/obj/item/coin))
-		var/obj/item/coin/C = cointype
-		coinvalues["[cointype]"] = initial(C.value)
+		var/obj/item/coin/C = new cointype
+		coinvalues["[cointype]"] = C.get_item_credit_value()
+		qdel(C) //Sigh
 
 /obj/machinery/computer/slot_machine/Destroy()
 	if(balance)
 		give_payout(balance)
 	return ..()
 
-/obj/machinery/computer/slot_machine/process()
+/obj/machinery/computer/slot_machine/process(delta_time)
 	. = ..() //Sanity checks.
 	if(!.)
 		return .
 
-	money++ //SPESSH MAJICKS
+	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)
@@ -103,7 +104,7 @@
 			var/obj/item/holochip/H = I
 			if(!user.temporarilyRemoveItemFromInventory(H))
 				return
-			to_chat(user, "<span class='notice'>You insert [H.credits] holocredits into [src]'s!</span>")
+			to_chat(user, "<span class='notice'>You insert [H.credits] holocredits into [src]'s slot!</span>")
 			balance += H.credits
 			qdel(H)
 		else
@@ -159,7 +160,6 @@
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/slot_machine/Topic(href, href_list)
@@ -229,15 +229,17 @@
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(machine_stat & NOPOWER)
 		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
+		return FALSE
 	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
+		return FALSE
 	if(working)
 		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")
-		return 0
+		return FALSE
 	if(balance < SPIN_PRICE)
 		to_chat(user, "<span class='warning'>Insufficient money to play!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/slot_machine/proc/toggle_reel_spin(value, delay = 0) //value is 1 or 0 aka on or off
 	for(var/list/reel in reels)
@@ -334,7 +336,8 @@
 			H.throw_at(target, 3, 10)
 	else
 		var/value = coinvalues["[cointype]"]
-
+		if(value <= 0)
+			CRASH("Coin value of zero, refusing to payout in dispenser")
 		while(amount >= value)
 			var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 			amount -= value

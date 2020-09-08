@@ -14,6 +14,10 @@
 	var/max_volume = 500
 	var/start_volume = 50
 
+/obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
+
 /obj/structure/geyser/proc/start_chemming()
 	activated = TRUE
 	create_reagents(max_volume, DRAINABLE)
@@ -35,7 +39,7 @@
 		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
 		return
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!</span>")
+		to_chat(user, "<span class='warning'>The [name] is already active!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
@@ -44,7 +48,7 @@
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
+	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10,/datum/reagent/plasma_oxide = 8, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()

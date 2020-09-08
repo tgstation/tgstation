@@ -1,9 +1,23 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
-export const NaniteChamberControl = props => {
-  const { act, data } = useBackend(props);
+export const NaniteChamberControl = (props, context) => {
+  return (
+    <Window
+      width={380}
+      height={570}
+      resizable>
+      <Window.Content scrollable>
+        <NaniteChamberControlContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const NaniteChamberControlContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     status_msg,
     locked,

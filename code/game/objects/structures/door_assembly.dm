@@ -106,7 +106,7 @@
 						return
 					to_chat(user, "<span class='notice'>You secure the airlock assembly.</span>")
 					name = "secured airlock assembly"
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 			else
 				to_chat(user, "There is another door here!")
 
@@ -119,7 +119,7 @@
 					return
 				to_chat(user, "<span class='notice'>You unsecure the airlock assembly.</span>")
 				name = "airlock assembly"
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == AIRLOCK_ASSEMBLY_NEEDS_WIRES && anchored )
 		if(!W.tool_start_check(user, amount=1))
@@ -295,7 +295,7 @@
 	target.heat_proof_finished = source.heat_proof_finished
 	target.created_name = source.created_name
 	target.state = source.state
-	target.setAnchored(source.anchored)
+	target.set_anchored(source.anchored)
 	if(previous)
 		target.previous_assembly = source.type
 	if(electronics)

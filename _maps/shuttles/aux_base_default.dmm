@@ -4,73 +4,73 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "e" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/structure/ore_box,
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "i" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "k" = (
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "t" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "v" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "w" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "x" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "z" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "P" = (
-/obj/docking_port/mobile/auxillary_base{
+/obj/docking_port/mobile/auxiliary_base{
 	dir = 2
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base,
+/obj/machinery/computer/auxiliary_base,
 /turf/closed/wall,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "U" = (
 /obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "W" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 "X" = (
 /obj/machinery/camera{
 	c_tag = "Auxiliary Base";
@@ -79,7 +79,7 @@
 	},
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/shuttle/auxiliary_base)
 
 (1,1,1) = {"
 e
