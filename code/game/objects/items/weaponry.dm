@@ -938,8 +938,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return FALSE
 
 /obj/item/arm_wrassle
-	name = "arm"
-	desc = "This is how real men fight."
+	name = "arm wrestling challenge"
+	desc = "Simply pick this up to start an arm wrestling contest, the noblest way to settle who's paying the bar tab."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_l_arm"
 	inhand_icon_state = "nothing"
@@ -949,38 +949,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	hitsound = 'sound/effects/snap.ogg'
-	var/initialized = FALSE
-	var/obj/structure/table/arena
-	var/mob/living/carbon/owner
-	var/obj/item/bodypart/owner_arm
-	var/obj/item/bodypart/challenger_arm
-	var/mob/living/carbon/challenger
+	/// If FALSE, we haven't set a challenge yet and need to delete if it's been dropped (can't handle it in the component since it isn't there yet)
+	var/challenge_set = FALSE
 
+/obj/item/arm_wrassle/dropped(mob/user, silent)
+	if(!challenge_set)
+		qdel(src)
 
 /obj/item/arm_wrassle/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/structure/table))
 		return ..()
 
-	owner.AddComponent(/datum/component/arm_wrassle, src, O)
-
-/obj/item/arm_wrassle/proc/post_up(obj/O)
-	if(!iscarbon(loc))
-		return
-
-	arena = O
-	owner = loc
-
-	switch(owner.get_held_index_of_item(src))
-		if(LEFT_HANDS)
-			owner_arm = owner.get_bodypart(BODY_ZONE_L_ARM)
-		if(RIGHT_HANDS)
-			owner_arm = owner.get_bodypart(BODY_ZONE_R_ARM)
-		else
-			qdel(src)
-			return
-
-
-	owner.visible_message("<span class='notice'>[owner] sets [owner.p_their()] [owner_arm.name] on \the [arena], awaiting a challenger!</span>")
-	owner.transferItemToLoc(src, arena.drop_location(), silent = FALSE)
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_move)
-	initialized = TRUE
+	challenge_set = TRUE
+	user.AddComponent(/datum/component/arm_wrassle, src, O)
