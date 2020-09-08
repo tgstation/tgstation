@@ -25,11 +25,11 @@
 	var/obj/item/bombcore/miniature/pizza/bomb
 	var/bomb_active = FALSE // If the bomb is counting down.
 	var/bomb_defused = TRUE // If the bomb is inert.
-	var/bomb_timer = 1 // How long before blowing the bomb.
-	/// Min bomb timer allowed
+	var/bomb_timer = 1 // How long before blowing the bomb, in seconds.
+	/// Min bomb timer allowed in seconds
 	var/bomb_timer_min = 1
-	/// Max bomb timer allower
-	var/bomb_timer_max = 10
+	/// Max bomb timer allower in seconds
+	var/bomb_timer_max = 20
 
 /obj/item/pizzabox/Initialize()
 	. = ..()
@@ -131,10 +131,10 @@
 				if (isnull(bomb_timer))
 					return
 
-				bomb_timer = clamp(CEILING(bomb_timer / 2, 1), bomb_timer_min, bomb_timer_max)
+				bomb_timer = clamp(CEILING(bomb_timer, 1), bomb_timer_min, bomb_timer_max)
 				bomb_defused = FALSE
 
-				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer * 2] seconds")
+				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
 
 				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
@@ -213,10 +213,10 @@
 		to_chat(user, "<span class='warning'>That's not a pizza!</span>")
 	..()
 
-/obj/item/pizzabox/process()
+/obj/item/pizzabox/process(delta_time)
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
 		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
-		bomb_timer--
+		bomb_timer -= delta_time
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
 			bomb.detonate()

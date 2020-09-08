@@ -119,7 +119,7 @@
 	log_shuttle("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
-	process()
+	process(SSMACHINES_DT)
 
 /obj/machinery/computer/emergency_shuttle/proc/clear_recent_action(mob/user)
 	acted_recently -= user
@@ -175,7 +175,7 @@
 
 		authorized += ID
 
-	process()
+	process(SSMACHINES_DT)
 
 /obj/machinery/computer/emergency_shuttle/Destroy()
 	// Our fake IDs that the emag generated are just there for colour
