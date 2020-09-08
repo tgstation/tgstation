@@ -42,11 +42,11 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
-		icon_state = "pvalve_flow"
+		icon_state = "pvalve_flow-[set_overlay_offset(piping_layer)]"
 	else if(on && is_operational && !is_gas_flowing)
-		icon_state = "pvalve_on"
+		icon_state = "pvalve_on-[set_overlay_offset(piping_layer)]"
 	else
-		icon_state = "pvalve_off"
+		icon_state = "pvalve_off-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/process_atmos()
 

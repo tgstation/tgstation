@@ -33,7 +33,6 @@
 /datum/round_event/shuttle_catastrophe/start()
 	SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
 	SSshuttle.unload_preview()
-	SSshuttle.load_template(new_shuttle)
 	SSshuttle.existing_shuttle = SSshuttle.emergency
 	SSshuttle.action_load(new_shuttle)
 	log_shuttle("Shuttle Catastrophe set a new shuttle, [new_shuttle.name].")

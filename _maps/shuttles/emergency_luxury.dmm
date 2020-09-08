@@ -176,7 +176,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aF" = (
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate{
+/obj/item/food/cakeslice/chocolate{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
