@@ -87,7 +87,8 @@
 
 /obj/item/soap/omega/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	else if(istype(target, /obj/effect/decal/cleanable))
+	var/clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
+	if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
