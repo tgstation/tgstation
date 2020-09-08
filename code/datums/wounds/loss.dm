@@ -19,6 +19,7 @@
 
 	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 	victim = dismembered_part.owner
+	fake_body_zone = dismembered_part.body_zone
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
 		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
@@ -53,8 +54,8 @@
 	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE, silent = TRUE)
 
 	/// We apply ourselves to the chest now that we've ripped the bodypart off
-	name = "[capitalize(dismembered_part.name)] stump"
-	desc = "Patient's [capitalize(dismembered_part.name)] has been violently dismembered, leaving only a severely damaged stump in it's place."
+	name = "[parse_zone(dismembered_part.body_zone)] stump"
+	desc = "Patient's [parse_zone(dismembered_part.body_zone)] has been violently dismembered, leaving only a severely damaged stump in it's place."
 	var/obj/item/bodypart/chest/chest = victim.get_bodypart(BODY_ZONE_CHEST)
 	if((dismembered_part.body_zone != BODY_ZONE_CHEST) && chest)
 		apply_wound(chest, TRUE)
