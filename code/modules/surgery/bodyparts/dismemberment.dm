@@ -368,6 +368,12 @@
 		var/datum/wound/W = i
 		W.apply_wound(src, TRUE)
 
+	/// Reattaching a limb fixes dismemberment wounds
+	var/obj/item/bodypart/chest/chest = C.get_bodypart(BODY_ZONE_CHEST)
+	for(var/datum/wound/woundie in chest.wounds)
+		if((woundie.severity == WOUND_SEVERITY_LOSS) && (woundie.fake_body_zone == body_zone))
+			woundie.remove_wound()
+
 	update_bodypart_damage_state()
 
 	C.updatehealth()
