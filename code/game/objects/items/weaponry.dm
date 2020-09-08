@@ -956,34 +956,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/obj/item/bodypart/challenger_arm
 	var/mob/living/carbon/challenger
 
-/obj/item/arm_wrassle/attack_hand(mob/user)
-	if(!iscarbon(user) || user == owner)
-		return ..()
-
-	var/mob/living/carbon/potential_challenger = user
-	if(potential_challenger.active_hand_index != owner_arm.held_index)
-		potential_challenger.visible_message("<span class='warning'>[potential_challenger] tries grabbing [owner]'s [owner_arm.name] with the wrong hand!</span>")
-		return
-
-	return ..()
 
 /obj/item/arm_wrassle/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/structure/table))
 		return ..()
 
-	post_up(O)
-
-
-/obj/item/arm_wrassle/equipped(mob/user, slot, initial)
-	if(!initialized)
-		return
-	if(user == owner)
-		owner.visible_message("<span class='notice'>[owner] removes [owner.p_their()] [owner_arm.name] from \the [arena].</span>")
-		qdel(src)
-		return
-	if(iscarbon(user))
-		battle(user)
-
+	owner.AddComponent(/datum/component/arm_wrassle, src, O)
 
 /obj/item/arm_wrassle/proc/post_up(obj/O)
 	if(!iscarbon(loc))
@@ -1006,31 +984,3 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	owner.transferItemToLoc(src, arena.drop_location(), silent = FALSE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_move)
 	initialized = TRUE
-
-/obj/item/arm_wrassle/proc/battle(mob/living/carbon/user)
-	challenger = user
-	challenger.visible_message("<span class='notice'>[challenger] takes [user]'s arm \the [arena]!</span>")
-	challenger.do_alert_animation(challenger)
-	owner.do_alert_animation(owner)
-	playsound(get_turf(arena), 'sound/machines/chime.ogg', 50, TRUE)
-
-/obj/item/arm_wrassle/Moved(atom/OldLoc, Dir)
-	if(!initialized || ismob(loc))
-		return ..()
-	. = ..()
-	if(!Adjacent(owner, src))
-		if(ishuman(owner))
-			var/turf/our_turf = get_turf(src)
-			var/mob/living/carbon/human/owner_human = owner
-			if(!(owner_human.dna.species.species_traits & HAS_FLESH))
-				owner_arm.dismember()
-				owner_arm.throw_at(our_turf)
-		qdel(src)
-
-/obj/item/arm_wrassle/proc/check_move(atom/movable/mover, atom/oldloc, direction)
-	if(mover != owner)
-		return
-	if(!Adjacent(owner, src))
-		owner.visible_message("<span class='notice'>[owner] walks away from \the [arena].</span>")
-		qdel(src)
-
