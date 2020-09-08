@@ -16843,6 +16843,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"aSV" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "aSY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -25013,8 +25018,14 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 9
 	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Reeducation Room APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "bQa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -26028,13 +26039,14 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "dwn" = (
 /obj/effect/turf_decal/trimline/red/warning,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "dwU" = (
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /obj/effect/turf_decal/tile/neutral,
@@ -26218,6 +26230,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/item/restraints/handcuffs,
+/obj/item/reagent_containers/spray/pepper,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "dHp" = (
@@ -27304,6 +27318,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "fED" = (
@@ -27925,7 +27943,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/biohazard,
 /turf/open/floor/plating,
-/area/science/research)
+/area/science/mixing)
 "gLu" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -30046,7 +30064,7 @@
 /area/hallway/secondary/entry)
 "kHt" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Electric Chair";
+	name = "Reeducation Room";
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30055,8 +30073,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "kIq" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -30538,7 +30557,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/science/mixing)
 "ltt" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -34933,16 +34952,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "spw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/port";
-	dir = 4;
-	name = "Port Maintenance APC";
-	pixel_x = -26
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
+/turf/closed/wall/r_wall,
+/area/security/execution/education)
 "sqz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37818,10 +37829,16 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "sPi" = (
-/obj/effect/turf_decal/tile/purple,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/science/research)
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/port";
+	dir = 4;
+	name = "Port Maintenance APC";
+	pixel_x = -26
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "sPk" = (
 /obj/machinery/power/apc{
 	areastring = "/area/library";
@@ -38341,7 +38358,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "tIz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -39307,7 +39324,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "vmq" = (
 /turf/closed/wall,
 /area/security/detectives_office)
@@ -40379,7 +40396,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/execution/education)
 "wVk" = (
 /obj/machinery/light_switch{
 	pixel_x = -24;
@@ -68743,7 +68760,7 @@ lpx
 ozp
 aTy
 aTy
-spw
+sPi
 sNC
 sNC
 oDU
@@ -71261,10 +71278,10 @@ ayN
 ayN
 ayN
 ayN
-ayN
-ayN
+spw
+spw
 kHt
-ayN
+spw
 ayN
 ayN
 ayN
@@ -71518,10 +71535,10 @@ aaa
 aaa
 aad
 aac
-ayN
+spw
 bOW
 dvy
-wWz
+spw
 qIp
 ada
 eOs
@@ -71775,10 +71792,10 @@ aaa
 aaa
 aaa
 aaa
-ayN
+spw
 vlO
 dwn
-wWz
+spw
 jxc
 adb
 adi
@@ -72032,10 +72049,10 @@ aaa
 aac
 aac
 aac
-ayN
+spw
 wUZ
 tHP
-wWz
+spw
 acu
 bpB
 adj
@@ -72289,10 +72306,10 @@ aac
 aac
 aad
 aad
-ayN
-ayN
-wWz
-wWz
+spw
+spw
+spw
+spw
 auw
 adc
 vmq
@@ -82639,7 +82656,7 @@ wVq
 xyr
 xyr
 onQ
-sPi
+aSV
 uJE
 wtK
 aad
@@ -82885,7 +82902,7 @@ ukx
 gKP
 ltp
 gKP
-wtK
+ukx
 jFS
 wdg
 wdg
