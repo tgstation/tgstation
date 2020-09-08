@@ -225,7 +225,7 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
-	damtype = "fire"
+	damtype = BURN
 	usesound = 'sound/weapons/bladeslice.ogg'
 	var/usesLeft
 
@@ -238,8 +238,11 @@
 	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_tongs"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	inhand_icon_state = "supermatter_tongs"
 	toolspeed = 0.75
-	damtype = "fire"
+	damtype = BURN
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/hemostat/supermatter/Destroy()
@@ -248,6 +251,7 @@
 
 /obj/item/hemostat/supermatter/update_icon_state()
 	icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
+	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 
 /obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	. = ..()

@@ -499,7 +499,7 @@
 /obj/structure/table,
 /obj/item/kitchen/knife/butcher,
 /obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/snacks/meat,
+/obj/item/reagent_containers/food/snacks/meat/slab/human,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1508,7 +1508,7 @@
 /area/awaymission/bmpship/fore)
 "fO" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/food/snacks/meat,
+/obj/item/reagent_containers/food/snacks/meat/slab/human,
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/bmpship/aft)
 "fP" = (

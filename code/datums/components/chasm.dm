@@ -29,6 +29,8 @@
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 
 /datum/component/chasm/proc/Entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
 
@@ -110,8 +112,7 @@
 		if (isliving(AM))
 			var/mob/living/L = AM
 			L.notransform = TRUE
-			L.Stun(200)
-			L.resting = TRUE
+			L.Paralyze(20 SECONDS)
 
 		var/oldtransform = AM.transform
 		var/oldcolor = AM.color

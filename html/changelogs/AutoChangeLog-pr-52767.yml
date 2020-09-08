@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Camera consoles can now see through Cyborg cameras."
-  - rscadd: "The AI's camera network now includes the integrated cameras on their cyborgs."
-  - rscadd: "The Advanced Camera Console camera network now includes the integrated cameras on cyborgs."

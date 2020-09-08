@@ -45,9 +45,9 @@
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /**
   * Convert random parts of a passed in message to stars

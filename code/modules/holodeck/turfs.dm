@@ -26,9 +26,13 @@
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
-	icon_state = "grass"
+	icon_state = "grass0"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/grass/Initialize()
+	. = ..()
+	icon_state = "grass[rand(0,3)]"
 
 /turf/open/floor/holofloor/beach
 	gender = PLURAL
@@ -105,7 +109,7 @@
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	smoothing_flags = SMOOTH_TRUE
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = null
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
@@ -136,3 +140,6 @@
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
+
+/turf/open/floor/holofloor/dark
+	icon_state = "darkfull"

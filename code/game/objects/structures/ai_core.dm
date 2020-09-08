@@ -81,7 +81,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	if(!A.blob_allowed)
+	if(!(A.area_flags & BLOBS_ALLOWED))
 		return FALSE
 	if(!A.power_equip)
 		return FALSE

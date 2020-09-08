@@ -238,13 +238,32 @@
 			return
 		SSshuttle.emergency.setTimer(timer*10)
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+		minor_announce("The emergency shuttle will reach its destination in [DisplayTimeText(timer)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 	else if(href_list["trigger_centcom_recall"])
 		if(!check_rights(R_ADMIN))
 			return
 
 		usr.client.trigger_centcom_recall()
+
+	else if(href_list["move_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/docking_port/mobile/shuttle = SSshuttle.getShuttle(href_list["move_shuttle"])
+		if(!shuttle)
+			return
+		shuttle.admin_fly_shuttle(usr)
+
+	else if(href_list["unlock_shuttle"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/obj/machinery/computer/shuttle/shuttle_console = locate(href_list["unlock_shuttle"])
+		if(!shuttle_console)
+			return
+		shuttle_console.admin_controlled = !shuttle_console.admin_controlled
+		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
@@ -1282,7 +1301,9 @@
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"
 				if(UNCONSCIOUS)
-					status = "<font color='orange'><b>[L.InCritical() ? "Unconscious and Dying" : "Unconscious"]</b></font>"
+					status = "<font color='orange'><b>Unconscious</b></font>"
+				if(HARD_CRIT)
+					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status = [status]"
@@ -2071,6 +2092,71 @@
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 
+	else if(href_list["centcomlookup"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!CONFIG_GET(string/centcom_ban_db))
+			to_chat(usr, "<span class='warning'>Centcom Galactic Ban DB is disabled!</span>")
+			return
+
+		var/ckey = href_list["centcomlookup"]
+
+		// Make the request
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[ckey]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete() || !usr)
+		if (!usr)
+			return
+		var/datum/http_response/response = request.into_response()
+
+		var/list/bans
+
+		var/list/dat = list("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>")
+
+		if(response.errored)
+			dat += "<br>Failed to connect to CentCom."
+		else if(response.status_code != 200)
+			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
+		else
+			if(response.body == "[]")
+				dat += "<center><b>0 bans detected for [ckey]</b></center>"
+			else
+				bans = json_decode(response["body"])
+
+				//Ignore bans from non-whitelisted sources, if a whitelist exists
+				var/list/valid_sources
+				if(CONFIG_GET(string/centcom_source_whitelist))
+					valid_sources = splittext(CONFIG_GET(string/centcom_source_whitelist), ",")
+					dat += "<center><b>Bans detected for [ckey]</b></center>"
+				else
+					//Ban count is potentially inaccurate if they're using a whitelist
+					dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
+
+				for(var/list/ban in bans)
+					if(valid_sources && !(ban["sourceName"] in valid_sources))
+						continue
+					dat += "<b>Server: </b> [sanitize(ban["sourceName"])]<br>"
+					dat += "<b>RP Level: </b> [sanitize(ban["sourceRoleplayLevel"])]<br>"
+					dat += "<b>Type: </b> [sanitize(ban["type"])]<br>"
+					dat += "<b>Banned By: </b> [sanitize(ban["bannedBy"])]<br>"
+					dat += "<b>Reason: </b> [sanitize(ban["reason"])]<br>"
+					dat += "<b>Datetime: </b> [sanitize(ban["bannedOn"])]<br>"
+					var/expiration = ban["expires"]
+					dat += "<b>Expires: </b> [expiration ? "[sanitize(expiration)]" : "Permanent"]<br>"
+					if(ban["type"] == "job")
+						dat += "<b>Jobs: </b> "
+						var/list/jobs = ban["jobs"]
+						dat += sanitize(jobs.Join(", "))
+						dat += "<br>"
+					dat += "<hr>"
+
+		dat += "<br></body>"
+		var/datum/browser/popup = new(usr, "centcomlookup-[ckey]", "<div align='center'>Central Command Galactic Ban Database</div>", 700, 600)
+		popup.set_content(dat.Join())
+		popup.open(0)
+
 	else if(href_list["modantagrep"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2268,6 +2354,12 @@
 		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
 			return
 		usr.nominate_heart(heart_recepient)
+
+	else if(href_list["force_war"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/obj/item/nuclear_challenge/button = locate(href_list["force_war"])
+		button.force_war()
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

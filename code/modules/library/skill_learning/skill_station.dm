@@ -2,8 +2,8 @@
 #define SKILLCHIP_REMOVAL_TIME 30 SECONDS
 
 /obj/machinery/skill_station
-	name = "Skillsoft Station"
-	desc = "learn skills with only minimal chance for brain damage."
+	name = "\improper Skillsoft station"
+	desc = "Learn skills with only minimal chance for brain damage."
 
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
@@ -44,7 +44,7 @@
 	if(working)
 		. += "working"
 
-/obj/machinery/skill_station/relaymove(mob/user)
+/obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
 /obj/machinery/skill_station/open_machine()

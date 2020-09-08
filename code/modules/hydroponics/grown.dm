@@ -54,8 +54,8 @@
 	if(reagents)
 		if(bitesize_mod)
 			bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/reagent_containers/food/snacks/grown/examine(user)
 	. = ..()
@@ -74,6 +74,7 @@
 		var/reag_txt = ""
 		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			msg += "<br><span class='info'>*Plant Reagents*</span>"
+			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
 			var/chem_cap = 0
 			for(var/reagent_id in reagents.reagent_list)
 				var/datum/reagent/R  = reagent_id

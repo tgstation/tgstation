@@ -546,7 +546,7 @@ Code:
 			var/static/list/emoji_icon_states
 			var/static/emoji_table
 			if(!emoji_table)
-				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
 				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")

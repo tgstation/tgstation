@@ -62,9 +62,9 @@
 
 
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	dissipate = FALSE
+	move_self = FALSE
+	grav_pull = TRUE
 
 /obj/singularity/academy/admin_investigate_setup()
 	return

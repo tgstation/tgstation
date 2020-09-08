@@ -5,13 +5,9 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
-	rcd_cost = 25
-	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
-	///The maximum we can produce for every process
-	buffer = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
 	var/static/list/possible_amounts = list(0,1,2,3,4,5)
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.

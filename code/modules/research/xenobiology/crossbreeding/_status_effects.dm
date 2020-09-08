@@ -83,10 +83,10 @@
 	if(interrupted || !ismob(target))
 		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
 		return
-	owner.visible_message("<span class='warning'>[owner] disappears in a flurry of sparks!</span>",
-		"<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
-	do_sparks(3, TRUE, owner)
-	owner.forceMove(target.loc)
+	var/turf/old_location = get_turf(owner)
+	if(do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
+		old_location.visible_message("<span class='warning'>[owner] disappears in a flurry of sparks!</span>")
+		to_chat(owner, "<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
 
 /obj/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -317,15 +317,12 @@
 	duration = 600
 
 /datum/status_effect/timecookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed *= 0.95
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
 	return ..()
 
 /datum/status_effect/timecookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H
-		H.physiology.do_after_speed /= 0.95
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
+	return ..()
 
 /datum/status_effect/lovecookie
 	id = "lovecookie"
@@ -594,13 +591,13 @@
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
-		owner.fire_stacks--
+		owner.adjust_fire_stacks(-1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, "<span class='notice'>[linked_extract] coats you in a watery goo, extinguishing the flames.</span>")
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
-		O.acid_level = 0
+		O.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It makes [O] expand!</span>")
@@ -906,7 +903,7 @@
 
 /datum/status_effect/stabilized/lightpink/tick()
 	for(var/mob/living/carbon/human/H in range(1, get_turf(owner)))
-		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		if(H != owner && H.stat != DEAD && H.health <= 0 && !H.has_reagent(/datum/reagent/medicine/epinephrine))
 			to_chat(owner, "[linked_extract] pulses in sync with [H]'s heartbeat, trying to keep [H.p_them()] alive.")
 			H.reagents.add_reagent(/datum/reagent/medicine/epinephrine,5)
 	return ..()

@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(air)
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
-	..(msg)
+	return ..()
 
 
 /datum/controller/subsystem/air/Initialize(timeofday)
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(air)
 	return ..()
 
 
-/datum/controller/subsystem/air/fire(resumed = 0)
+/datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
 
 	if(currentpart == SSAIR_REBUILD_PIPENETS)
@@ -90,7 +90,7 @@ SUBSYSTEM_DEF(air)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(air)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_ACTIVETURFS)
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(air)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(air)
 		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_HIGHPRESSURE)
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(air)
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_HOTSPOTS
 
 	if(currentpart == SSAIR_HOTSPOTS)
@@ -135,7 +135,7 @@ SUBSYSTEM_DEF(air)
 		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = SSAIR_SUPERCONDUCTIVITY
 
 	if(currentpart == SSAIR_SUPERCONDUCTIVITY)
@@ -144,13 +144,13 @@ SUBSYSTEM_DEF(air)
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 	currentpart = SSAIR_REBUILD_PIPENETS
 
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
 
-/datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
+/datum/controller/subsystem/air/proc/process_pipenets(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -169,7 +169,7 @@ SUBSYSTEM_DEF(air)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
 		pipenets_needing_rebuilt += atmos_machine
 
-/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
+/datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = FALSE)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = atmos_machinery.Copy()
@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/process_super_conductivity(resumed = 0)
+/datum/controller/subsystem/air/proc/process_super_conductivity(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = active_super_conductivity.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -196,7 +196,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_hotspots(resumed = 0)
+/datum/controller/subsystem/air/proc/process_hotspots(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = hotspots.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 
-/datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
+/datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
 		high_pressure_delta.len--
@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
+/datum/controller/subsystem/air/proc/process_active_turfs(resumed = FALSE)
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
@@ -236,7 +236,7 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
+/datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = excited_groups.Copy()
 	//cache for sanic speed (lists are references anyways)
@@ -262,7 +262,7 @@ SUBSYSTEM_DEF(air)
 	T.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	if(istype(T))
-		T.excited = 0
+		T.excited = FALSE
 		if(T.excited_group)
 			T.excited_group.garbage_collect()
 
@@ -271,7 +271,7 @@ SUBSYSTEM_DEF(air)
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 		#endif
-		T.excited = 1
+		T.excited = TRUE
 		active_turfs |= T
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun |= T
@@ -370,7 +370,7 @@ SUBSYSTEM_DEF(air)
 		else
 			EG.add_turf(ET)
 		if (!ET.excited)
-			ET.excited = 1
+			ET.excited = TRUE
 			. += ET
 /turf/open/space/resolve_active_graph()
 	return list()

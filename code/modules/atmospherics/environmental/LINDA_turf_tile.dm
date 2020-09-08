@@ -124,7 +124,7 @@
 		var/gas_meta = gas[GAS_META]
 		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
 		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			new_overlay_types += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+			new_overlay_types += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -285,7 +285,7 @@
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
-	set waitfor = 0
+	set waitfor = FALSE
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
@@ -419,7 +419,7 @@
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
-	return NORTH|SOUTH|EAST|WEST
+	return ALL_CARDINALS
 
 /turf/open/conductivity_directions()
 	if(blocks_air)
