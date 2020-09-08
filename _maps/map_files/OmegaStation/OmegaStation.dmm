@@ -29605,11 +29605,6 @@
 "jDd" = (
 /turf/closed/wall/r_wall,
 /area/teleporter)
-"jDv" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "jFS" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall,
@@ -34796,6 +34791,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "sef" = (
@@ -34937,12 +34933,15 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "spw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/port";
+	dir = 4;
+	name = "Port Maintenance APC";
+	pixel_x = -26
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port)
 "sqz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -34959,6 +34958,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ssz" = (
@@ -35032,6 +35032,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "swv" = (
@@ -35055,6 +35056,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "swz" = (
@@ -35062,6 +35064,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -35730,6 +35733,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "sGC" = (
@@ -36625,6 +36629,7 @@
 "sLc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "sLf" = (
@@ -37008,6 +37013,7 @@
 /area/maintenance/port)
 "sMG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -37812,10 +37818,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "sPi" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/blobstart,
-/turf/open/floor/plating,
-/area/maintenance/port)
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "sPk" = (
 /obj/machinery/power/apc{
 	areastring = "/area/library";
@@ -68733,11 +68739,11 @@ sdX
 sGA
 sLc
 sMG
-sNC
-sPi
-oDU
-oDU
-sNC
+lpx
+ozp
+aTy
+aTy
+spw
 sNC
 sNC
 oDU
@@ -68986,7 +68992,7 @@ bjT
 bxC
 heQ
 hFl
-soC
+jxt
 sGC
 sLg
 sLg
@@ -69243,7 +69249,7 @@ bko
 bxM
 hpr
 hFl
-soC
+jxt
 sGD
 sLg
 sMH
@@ -69500,7 +69506,7 @@ blh
 bxW
 hOh
 hFl
-spw
+dNz
 sHb
 sLg
 sMI
@@ -82633,7 +82639,7 @@ wVq
 xyr
 xyr
 onQ
-jDv
+sPi
 uJE
 wtK
 aad
