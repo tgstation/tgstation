@@ -144,8 +144,7 @@
 				C.head_update(src, forced = 1)
 
 			if(active_sound)
-				while(up)
-					playsound(src, "[active_sound]", 100, FALSE, 4)
+				playsound(src, "[active_sound]", 100, FALSE, 4)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
