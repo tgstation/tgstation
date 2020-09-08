@@ -221,7 +221,9 @@
 // )
 
 #define BETTER_DIST(dist, a, b)\
-	if (!a == null || b == null) {\
+	if (a == null || b == null) {\
 		dist = -1;\
 	}\
-	dist = max(abs(a.x-b.x), abs(a.y-b.y));
+	else{\
+		dist = max(abs(a.x-b.x), abs(a.y-b.y));\
+	}
