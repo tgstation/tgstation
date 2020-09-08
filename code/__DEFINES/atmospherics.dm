@@ -206,7 +206,7 @@
 //PIPES
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
-#define MAX_OUTPUT_PRESSURE					4500
+#define MAX_OUTPUT_PRESSURE_NORMAL					4500
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE					400
 /// How many percent of the contents that an overclocked volume pumps leak into the air

@@ -74,7 +74,7 @@
 
 	var/output_starting_pressure = air3.return_pressure()
 
-	if(output_starting_pressure >= MAX_OUTPUT_PRESSURE)
+	if(output_starting_pressure >= MAX_OUTPUT_PRESSURE_NORMAL)
 		//No need to transfer if target is already full!
 		return
 
@@ -107,7 +107,7 @@
 		removed.gases[filter_type][MOLES] = 0
 		removed.garbage_collect()
 
-		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
+		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE_NORMAL ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 		target.merge(filtered_out)
 
 	air3.merge(removed)

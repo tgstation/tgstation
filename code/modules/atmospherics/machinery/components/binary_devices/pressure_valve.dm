@@ -17,7 +17,7 @@
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
 	///Max pressure allowed on other side of pump
-	var/max_output_pressure = MAX_OUTPUT_PRESSURE
+	var/max_output_pressure = MAX_OUTPUT_PRESSURE_NORMAL
 	///Number of stored springs inside the valve
 	var/spring_numbers = 0
 	///Max allowed number of springs in the valve
@@ -92,10 +92,10 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/update_assembly()
 	if(spring_numbers > 0)
-		max_output_pressure = MAX_OUTPUT_PRESSURE //reset the pressure to the original one then adds up the new pressure
+		max_output_pressure = MAX_OUTPUT_PRESSURE_NORMAL //reset the pressure to the original one then adds up the new pressure
 		var/spring_pressure_upgrade = 0
 		for(var/i in 1 to spring_numbers)
-			spring_pressure_upgrade += i/(max_springs * 2.45) * MAX_OUTPUT_PRESSURE
+			spring_pressure_upgrade += i/(max_springs * 2.45) * MAX_OUTPUT_PRESSURE_NORMAL
 		max_output_pressure += spring_pressure_upgrade
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)

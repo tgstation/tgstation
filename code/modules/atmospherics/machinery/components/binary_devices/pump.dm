@@ -27,7 +27,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 	///Max pressure allowed on other side of pump
-	var/max_output_pressure = MAX_OUTPUT_PRESSURE
+	var/max_output_pressure = MAX_OUTPUT_PRESSURE_NORMAL
 	///Number of stored motors inside the pump
 	var/motor_numbers = 0
 	///Max allowed number of motors in the pump
@@ -89,10 +89,10 @@
 
 /obj/machinery/atmospherics/components/binary/pump/proc/update_assembly()
 	if(motor_numbers > 0)
-		max_output_pressure = MAX_OUTPUT_PRESSURE //reset the pressure to the original one then adds up the new pressure
+		max_output_pressure = MAX_OUTPUT_PRESSURE_NORMAL //reset the pressure to the original one then adds up the new pressure
 		var/motor_pressure_upgrade = 0
 		for(var/i in 1 to motor_numbers)
-			motor_pressure_upgrade += i/(max_motors * 3) * MAX_OUTPUT_PRESSURE
+			motor_pressure_upgrade += i/(max_motors * 3) * MAX_OUTPUT_PRESSURE_NORMAL
 		max_output_pressure += motor_pressure_upgrade
 
 //Radio remote control

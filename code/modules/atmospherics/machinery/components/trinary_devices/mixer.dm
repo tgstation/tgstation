@@ -25,7 +25,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
 	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
+		target_pressure = MAX_OUTPUT_PRESSURE_NORMAL
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
@@ -134,7 +134,7 @@
 	var/data = list()
 	data["on"] = on
 	data["set_pressure"] = round(target_pressure)
-	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE_NORMAL)
 	data["node1_concentration"] = round(node1_concentration*100, 1)
 	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
@@ -150,13 +150,13 @@
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
-				pressure = MAX_OUTPUT_PRESSURE
+				pressure = MAX_OUTPUT_PRESSURE_NORMAL
 				. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE_NORMAL)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])
@@ -227,7 +227,7 @@
 	icon_state = "mixer_on"
 	node1_concentration = N2STANDARD
 	node2_concentration = O2STANDARD
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = MAX_OUTPUT_PRESSURE_NORMAL
 	on = TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse
