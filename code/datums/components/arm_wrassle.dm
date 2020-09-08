@@ -77,6 +77,7 @@
 
 /// Someone picked up the arm item. If it was the owner, we cancel the challenge, otherwise if it's a carbon (which it should be) we start the contest
 /datum/component/arm_wrassle/proc/check_arm_equipped(obj/item/source, mob/user, slot, initial)
+	SIGNAL_HANDLER
 	var/mob/living/carbon/owner = parent
 	if(user == owner)
 		owner.visible_message("<span class='notice'>[owner] removes [owner.p_their()] [owner_arm.name] from \the [arena].</span>")
