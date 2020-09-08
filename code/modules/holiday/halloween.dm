@@ -136,25 +136,22 @@
 	status_flags |= GODMODE
 	timer = rand(1,15)
 
-/mob/living/simple_animal/shade/howling_ghost/Life()
-	..()
+/mob/living/simple_animal/shade/howling_ghost/life_process()
+	. = ..()
 	timer--
 	if(prob(20))
-		roam()
+		if(prob(80))//Yes I hate it too dont blame me
+			var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
+			EtherealMove(direction)
 	if(timer == 0)
-		spooky_ghosty()
+		be_spooky()
 		timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
 	forceMove(get_step(src, direction))
 	setDir(direction)
 
-/mob/living/simple_animal/shade/howling_ghost/proc/roam()
-	if(prob(80))
-		var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
-		EtherealMove(direction)
-
-/mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
+/mob/living/simple_animal/shade/howling_ghost/proc/be_spooky()
 	if(prob(20)) //haunt
 		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), 300, TRUE)
 	if(prob(10)) //flickers

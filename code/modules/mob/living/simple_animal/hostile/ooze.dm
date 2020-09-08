@@ -54,10 +54,10 @@
 	eat_atom(A)
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life()
+/mob/living/simple_animal/hostile/ooze/life_process()
 	. = ..()
 
-	if(!mind && stat != DEAD)//no mind no change
+	if(!mind || !.)//no mind no change
 		return
 
 	var/nutrition_change = ooze_nutrition_loss

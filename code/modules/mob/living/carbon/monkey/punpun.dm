@@ -30,17 +30,17 @@
 		equip_to_slot_or_del(new relic_hat, ITEM_SLOT_HEAD)
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
+	RegisterSignal(SSdcs, COMSIG_GLOB_ROUND_FINISHED, .proc/writememory)
 
-/mob/living/carbon/monkey/punpun/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+/mob/living/carbon/monkey/punpun/proc/writememory()
+	if(!stat && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/carbon/monkey/punpun/death(gibbed)
 	if(!memory_saved)
 		Write_Memory(TRUE, gibbed)
-	..()
+	return ..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
 	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new

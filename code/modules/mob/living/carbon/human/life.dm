@@ -18,25 +18,18 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-/mob/living/carbon/human/Life()
-	if (notransform)
-		return
-
+/mob/living/carbon/human/life_process()
 	. = ..()
-
-	if (QDELETED(src))
-		return FALSE
-
+		//Update our name based on whether our face is obscured/disfigured
+	name = get_visible_name() //tivi todo
+	if(.)
+		return
 	if(!IS_IN_STASIS(src))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life()
-
-		if(stat != DEAD)
-			//heart attack stuff
-			handle_heart()
-			handle_liver()
+		for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+			HM.on_life()
+		//heart attack stuff
+		handle_heart()
+		handle_liver()
 
 		dna.species.spec_life(src) // for mutantraces
 	else
@@ -44,11 +37,8 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_stasis()
 
-	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
-
 	if(stat != DEAD)
-		return TRUE
+		return TRUE//we might die because of organs so check again
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -85,7 +75,7 @@
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-		failed_last_breath = 1
+		failed_last_breath = TRUE
 
 		var/datum/species/S = dna.species
 

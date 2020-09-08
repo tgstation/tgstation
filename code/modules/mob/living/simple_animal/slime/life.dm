@@ -7,21 +7,22 @@
 	var/SStun = 0 // stun variable
 
 
-/mob/living/simple_animal/slime/Life()
-	if (notransform)
+/mob/living/simple_animal/slime/life_process()
+	. = ..()
+	if(!.)
 		return
-	if(..())
-		if(buckled)
-			handle_feeding()
-		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
-			handle_nutrition()
-			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
-				return
-			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
-			handle_targets()
-			if (!ckey)
-				handle_mood()
-				handle_speech()
+	if(buckled)
+		handle_feeding()
+	if(stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+		return
+	handle_nutrition()
+	if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
+		return
+	reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
+	handle_targets()
+	if(!client)
+		handle_mood()
+		INVOKE_ASYNC(src, .proc/handle_speech)
 
 
 // Unlike most of the simple animals, slimes support UNCONSCIOUS. This is an ugly hack.
@@ -486,7 +487,7 @@
 			else if (findtext(phrase, "attack"))
 				if (rabid && prob(20))
 					Target = who
-					AIprocess() //Wake up the slime's Target AI, needed otherwise this doesn't work
+					INVOKE_ASYNC(src, .proc/AIprocess)//Wake up the slime's Target AI, needed otherwise this doesn't work
 					to_say = "ATTACK!?!?"
 				else if (Friends[who] >= SLIME_FRIENDSHIP_ATTACK)
 					for (var/mob/living/L in view(7,src)-list(src,who))

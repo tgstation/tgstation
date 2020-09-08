@@ -131,20 +131,19 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/life_process()
+	. = ..()
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
 	if((body.stat == DEAD && trauma.owner_backseat == src))
 		trauma.switch_personalities()
-		qdel(trauma)
+		QDEL_NULL(trauma)
 
 	//if one of the two ghosts, the other one stays permanently
 	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
-		qdel(trauma)
-
-	..()
+		QDEL_NULL(trauma)
 
 /mob/living/split_personality/Login()
 	. = ..()

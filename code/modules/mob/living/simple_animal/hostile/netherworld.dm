@@ -137,9 +137,9 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 50, TRUE)
 
-/mob/living/simple_animal/hostile/netherworld/migo/Life()
-	..()
-	if(stat)
+/mob/living/simple_animal/hostile/netherworld/migo/life_process()
+	. = ..()
+	if(!.)
 		return
 	if(prob(10))
 		var/chosen_sound = pick(migo_sounds)

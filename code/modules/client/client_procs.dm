@@ -939,9 +939,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view = new_size
 	apply_clickcatcher()
 	mob.reload_fullscreen()
-	if (isliving(mob))
-		var/mob/living/M = mob
-		M.update_damage_hud()
+	if (iscarbon(mob))
+		var/mob/living/carbon/C = mob
+		C.update_damage_hud()
 	if (prefs.auto_fit_viewport)
 		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
 

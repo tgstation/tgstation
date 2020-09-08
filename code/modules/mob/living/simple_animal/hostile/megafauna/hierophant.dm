@@ -380,7 +380,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
 	hierophant_burst(src, original, burst_range, spread_speed)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life()
+/mob/living/simple_animal/hostile/megafauna/hierophant/life_process()
 	. = ..()
 	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
 		if(target || loc == spawned_beacon.loc)
@@ -390,7 +390,7 @@ Difficulty: Hard
 		if(timeout_time <= 0 && !did_reset)
 			did_reset = TRUE
 			visible_message("<span class='hierophant_warning'>\"Vixyvrmrk xs fewi...\"</span>")
-			blink(spawned_beacon)
+			INVOKE_ASYNC(src, .proc/blink, spawned_beacon)
 			adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
 			wander = FALSE
 			if(health > maxHealth * 0.9)

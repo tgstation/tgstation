@@ -109,7 +109,6 @@
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/cats_deployed = 0
 	var/memory_saved = FALSE
 	held_state = "cat"
 
@@ -119,15 +118,14 @@
 		icon_living = "original"
 		icon_dead = "original_dead"
 	Read_Memory()
-	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_ROUND_FINISHED, .proc/writememory)
+	Deploy_The_Cats()
+	return ..()
 
-/mob/living/simple_animal/pet/cat/runtime/Life()
-	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
-		Deploy_The_Cats()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory()
+/mob/living/simple_animal/pet/cat/runtime/proc/writememory()
+	if(!stat && !memory_saved)
+		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/pet/cat/runtime/make_babies()
 	var/mob/baby = ..()
@@ -171,7 +169,6 @@
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /mob/living/simple_animal/pet/cat/runtime/proc/Deploy_The_Cats()
-	cats_deployed = 1
 	for(var/cat_type in family)
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
@@ -183,70 +180,70 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/cat/Life()
-	if(!stat && !buckled && !client)
-		if(prob(1))
-			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
-			icon_state = "[icon_living]_rest"
-			collar_type = "[initial(collar_type)]_rest"
-			set_resting(TRUE)
-		else if (prob(1))
-			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
-			icon_state = "[icon_living]_sit"
-			collar_type = "[initial(collar_type)]_sit"
-			set_resting(TRUE)
-		else if (prob(1))
-			if (resting)
-				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
-				icon_state = "[icon_living]"
-				collar_type = "[initial(collar_type)]"
-				set_resting(FALSE)
-			else
-				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+/mob/living/simple_animal/pet/cat/life_process()
+	. = ..()
+	if(stat || buckled || client)	//stat also makes sure they're not dead
+		return
+	if(prob(1))
+		manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
+		icon_state = "[icon_living]_rest"
+		collar_type = "[initial(collar_type)]_rest"
+		set_resting(TRUE)
+	else if (prob(1))
+		manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
+		icon_state = "[icon_living]_sit"
+		collar_type = "[initial(collar_type)]_sit"
+		set_resting(TRUE)
+	else if (prob(1))
+		if (resting)
+			manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
+			icon_state = "[icon_living]"
+			collar_type = "[initial(collar_type)]"
+			set_resting(FALSE)
+		else
+			manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+
 
 	//MICE!
-	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
-					if (emote_cooldown < (world.time - 600))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
-						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
-					break
-				if(!M.stat && Adjacent(M))
-					manual_emote("splats \the [M]!")
-					M.splat()
-					movement_target = null
-					stop_automated_movement = 0
-					break
-			for(var/obj/item/toy/cattoy/T in view(1,src))
-				if (T.cooldown < (world.time - 400))
-					manual_emote("bats \the [T] around with its paw!")
-					T.cooldown = world.time
-
-	..()
+	if(!isturf(loc) || resting)
+		return
+	for(var/mob/living/simple_animal/mouse/M in view(1,src))
+		if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+			if (emote_cooldown < (world.time - 600))
+				visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+				step(M, pick(GLOB.cardinals))
+				emote_cooldown = world.time
+			break
+		if(!M.stat && Adjacent(M))
+			manual_emote("splats \the [M]!")
+			M.splat()
+			movement_target = null
+			stop_automated_movement = FALSE
+			break
+	for(var/obj/item/toy/cattoy/T in view(1,src))
+		if (T.cooldown < (world.time - 400))
+			manual_emote("bats \the [T] around with its paw!")
+			T.cooldown = world.time
 
 	make_babies()
 
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			walk_to(src,0)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && !snack.stat)
-						movement_target = snack
-						break
-			if(movement_target)
-				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		walk_to(src,0)
+		turns_since_scan = 0
+		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+			movement_target = null
+			stop_automated_movement = FALSE
+		if(!(movement_target?.loc in oview(src, 3)))
+			movement_target = null
+			stop_automated_movement = FALSE
+			for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
+				if(isturf(snack.loc) && !snack.stat)
+					movement_target = snack
+					break
+		if(movement_target)
+			stop_automated_movement = TRUE
+			walk_to(src,movement_target,0,3)
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
@@ -271,7 +268,7 @@
 	return
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
-	..()
+	. = ..()
 	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
@@ -284,18 +281,18 @@
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life()
-	..()
-	if(stat)
+/mob/living/simple_animal/pet/cat/cak/life_process()
+	. = ..()
+	if(!.)
 		return
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+	for(var/obj/item/reagent_containers/food/snacks/donut/D in orange(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
-	..()
+	. = ..()
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)

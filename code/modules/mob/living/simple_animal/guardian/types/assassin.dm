@@ -21,11 +21,11 @@
 	. = ..()
 	stealthcooldown = 0
 
-/mob/living/simple_animal/hostile/guardian/assassin/Life()
+/mob/living/simple_animal/hostile/guardian/assassin/life_process()
 	. = ..()
 	updatestealthalert()
 	if(loc == summoner && toggle)
-		ToggleMode(0)
+		ToggleMode(FALSE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/get_status_tab_items()
 	. = ..()
@@ -36,18 +36,19 @@
 	. = ..()
 	if(.)
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
-			ToggleMode(1)
+			ToggleMode(TRUE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		ToggleMode(1)
+		ToggleMode(TRUE)
 
 /mob/living/simple_animal/hostile/guardian/assassin/Recall()
-	if(..() && toggle)
-		ToggleMode(0)
+	. = ..()
+	if(. && toggle)
+		ToggleMode(FALSE)
 
-/mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = 0)
+/mob/living/simple_animal/hostile/guardian/assassin/ToggleMode(forced = FALSE)
 	if(toggle)
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)

@@ -114,7 +114,7 @@ Difficulty: Hard
 		if(3)
 			disorienting_scream()
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Life()
+/mob/living/simple_animal/hostile/megafauna/wendigo/life_process()
 	. = ..()
 	if(!.)
 		return

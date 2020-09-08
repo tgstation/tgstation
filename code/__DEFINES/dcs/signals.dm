@@ -23,6 +23,8 @@
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC (1<<0)
 /// ingame button pressed (/obj/machinery/button/button)
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
+///Round just ended, called by SSticker/Fire()
+#define COMSIG_GLOB_ROUND_FINISHED "!round_finished"
 
 /// signals from globally accessible objects
 

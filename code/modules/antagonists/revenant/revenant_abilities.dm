@@ -159,7 +159,7 @@
 			locked = FALSE
 		return TRUE
 	if(locked)
-		if (!user.unlock(unlock_amount))
+		if(!user.change_essence_amount(unlock_amount))
 			charge_counter = charge_max
 			return FALSE
 		name = "[initial(name)] ([cast_amount]E)"
@@ -167,6 +167,7 @@
 		panel = "Revenant Abilities"
 		locked = FALSE
 		charge_counter = charge_max
+		user.update_action_buttons_icon()
 		return FALSE
 	if(!user.castcheck(-cast_amount))
 		charge_counter = charge_max

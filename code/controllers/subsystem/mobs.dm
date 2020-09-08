@@ -7,8 +7,9 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 	var/static/list/clients_by_zlevel[][]
 	var/static/list/dead_players_by_zlevel[][] = list(list()) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
-	var/static/list/cubemonkeys = list()
-	var/static/list/cheeserats = list()
+	var/cubemonkeys = 0
+	var/static/list/cheeserats
+	var/next_slow_check = 0
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
 	msg = "P:[length(GLOB.mob_living_list)]"
@@ -25,19 +26,54 @@ SUBSYSTEM_DEF(mobs)
 		dead_players_by_zlevel[dead_players_by_zlevel.len] = list()
 
 /datum/controller/subsystem/mobs/fire(resumed = FALSE)
-	var/seconds = wait * 0.1
-	if (!resumed)
-		src.currentrun = GLOB.mob_living_list.Copy()
+	if(!resumed)
+		currentrun = GLOB.mob_living_list.Copy()
 
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-	var/times_fired = src.times_fired
-	while(currentrun.len)
-		var/mob/living/L = currentrun[currentrun.len]
-		currentrun.len--
-		if(L)
-			L.Life(seconds, times_fired)
-		else
+	for(var/processmob in currentrun)
+		var/mob/living/L = processmob
+		if(!L.life_process())
 			GLOB.mob_living_list.Remove(L)
-		if (MC_TICK_CHECK)
-			return
+			continue
+
+		if(iscarbon(L))//carbon breathing
+			var/mob/living/carbon/C = L	//do it here because it happens slower than life to make atmos not die
+			if(times_fired >= C.next_breathe_check || C.failed_last_breath)
+				C.handle_breathing()
+				C.next_breathe_check = currentrun + 4
+				if(!C.failed_last_breath)//if this changes we're going to check next breathe anyway so no need to check organs
+					var/obj/item/organ/lungs/lung = C.getorganslot(ORGAN_SLOT_LUNGS)
+					var/obj/item/organ/lungs/heart = C:getorganslot(ORGAN_SLOT_HEART)
+					if(lung?.damage > lung.high_threshold)
+						C.next_breathe_check--
+					if(heart?.damage > heart.high_threshold)
+						C.next_breathe_check--
+
+
+		if(!L.client)
+			continue
+		if(currentrun <= next_slow_check)//only check for the zlevel every 5 runs
+			continue
+		next_slow_check = currentrun + 5
+
+		var/turf/T = get_turf(L)
+		if(!T)
+			L.move_to_error_room()
+			var/msg = "[ADMIN_LOOKUPFLW(L)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(msg)
+			send2tgs_adminless_only("Mob", msg, R_ADMIN)
+			log_game("[key_name(L)] was found to have no .loc with an attached client.")
+
+			// This is a temporary error tracker to make sure we've caught everything
+		else if(L.registered_z != T.z)
+#ifdef TESTING
+			message_admins("[ADMIN_LOOKUPFLW(L)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+#endif
+			log_game("Z-TRACKING: [L] has somehow ended up in Z-level [T.z] despite being registered in Z-level [L.registered_z].")
+			L.update_z(T.z)
+		else if(L.registered_z)
+			log_game("Z-TRACKING: [L] of type [L.type] has a Z-registration despite not having a client.")
+			L.update_z(null)
+
+
+		//if(MC_TICK_CHECK)
+			//return

@@ -39,7 +39,7 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/life_process()
 	. = ..()
 	handle_preattack()
 
@@ -156,7 +156,7 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/life_process()
 	. = ..()
 	if(!.) // dead
 		return

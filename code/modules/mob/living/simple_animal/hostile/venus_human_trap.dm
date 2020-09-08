@@ -100,9 +100,10 @@
 	/// Whether or not this plant is ghost possessable
 	var/playable_plant = TRUE
 
-/mob/living/simple_animal/hostile/venus_human_trap/Life()
+/mob/living/simple_animal/hostile/venus_human_trap/life_process()
 	. = ..()
-	pull_vines()
+	if(!.)
+		pull_vines()
 
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()

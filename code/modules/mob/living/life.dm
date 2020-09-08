@@ -1,57 +1,27 @@
 /// This divisor controls how fast body temperature changes to match the environment
 #define BODYTEMP_DIVISOR 8
 
-/mob/living/proc/Life(seconds, times_fired)
-	set waitfor = FALSE
+/**
+  * Handles all mob updates
+  */
+/mob/living/proc/life_process()
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
-	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
+	if(notransform)
+		return FALSE
 
-	if (client)
-		var/turf/T = get_turf(src)
-		if(!T)
-			move_to_error_room()
-			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
-			message_admins(msg)
-			send2tgs_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating //todo tivi
+		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 
-		// This is a temporary error tracker to make sure we've caught everything
-		else if (registered_z != T.z)
-#ifdef TESTING
-			message_admins("[ADMIN_LOOKUPFLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
-#endif
-			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
-			update_z(T.z)
-	else if (registered_z)
-		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
-		update_z(null)
-
-	if (notransform)
-		return
-	if(!loc)
-		return
+	if(!loc)//we check this in ssmob every 5 ticks but lets check regularily too just in case
+		return FALSE
 
 	if(!IS_IN_STASIS(src))
-
 		if(stat != DEAD)
-			//Mutations and radiation
+			handle_traits() // eye, ear, brain damages
+			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 			handle_mutations_and_radiation()
-
-		if(stat != DEAD)
-			//Breathing, if applicable
-			handle_breathing(times_fired)
-
-		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
-
-		handle_wounds()
-
-		if (QDELETED(src)) // diseases can qdel the mob via transformations
-			return
-
-		if(stat != DEAD)
-			//Random events (vomiting etc)
-			handle_random_events()
 
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -60,35 +30,21 @@
 
 		handle_gravity()
 
-		if(stat != DEAD)
-			handle_traits() // eye, ear, brain damages
-			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
-
 	handle_fire()
-
 	if(machine)
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
+	return FALSE
 
-/mob/living/proc/handle_breathing(times_fired)
-	return
 
+///handles mutations and radiation, not much to say here
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
-/mob/living/proc/handle_diseases()
-	return
-
-/mob/living/proc/handle_wounds()
-	return
-
-/mob/living/proc/handle_random_events()
-	return
-
-// Base mob environment handler for body temperature
+///Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	var/loc_temp = get_temperature(environment)
 
@@ -98,6 +54,7 @@
 	else // this is a hot place
 		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX))
 
+///Handles the mob being on fire and not being on fire
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		set_fire_stacks(min(0, fire_stacks + 1)) //So we dry ourselves back to default, nonflammable.
@@ -168,9 +125,7 @@
 /mob/living/proc/get_reagent_amount(reagent)
 	return reagents.get_reagent_amount(reagent)
 
-//this updates all special effects: knockdown, druggy, stuttering, etc..
-/mob/living/proc/handle_status_effects()
-
+///Handles traits such as blindness, deaf etc etc
 /mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)	//blindness, heals slowly over time
@@ -181,7 +136,9 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-/mob/living/proc/update_damage_hud()
+
+///this updates all special effects: knockdown, druggy, stuttering, etc..
+/mob/living/proc/handle_status_effects()
 	return
 
 /mob/living/proc/handle_gravity()

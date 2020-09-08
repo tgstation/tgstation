@@ -298,7 +298,7 @@
 						if(isitem(O) || isstructure(O) || ismachinery(O))
 							cocoon_target = O
 							busy = MOVING_TO_TARGET
-							stop_automated_movement = 1
+							stop_automated_movement = TRUE
 							Goto(O, move_to_delay)
 							//give up if we can't reach them after 10 seconds
 							addtimer(CALLBACK(src, .proc/GiveUp, O), 10 SECONDS)

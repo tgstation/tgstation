@@ -156,7 +156,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/Life()
+/mob/living/simple_animal/hostile/retaliate/goose/life_process()
 	. = ..()
 	if(choking && !stat)
 		do_jitter_animation(50)

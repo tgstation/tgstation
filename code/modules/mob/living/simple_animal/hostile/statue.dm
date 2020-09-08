@@ -82,9 +82,9 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
-	..()
-	if(!client && target) // If we have a target and we're AI controlled
+/mob/living/simple_animal/hostile/statue/life_process()
+	. = ..()
+	if(!client && target && !.) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target
 		if(watching && watching != target)

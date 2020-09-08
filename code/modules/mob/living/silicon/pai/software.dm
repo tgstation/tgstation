@@ -199,7 +199,7 @@
 					else if(href_list["ringer"])
 						aiPDA.silent = !aiPDA.silent
 					else if(href_list["target"])
-						if(silent)
+						if(silent_time)
 							return alert("Communications circuits remain uninitialized.")
 						var/target = locate(href_list["target"]) in GLOB.PDAs
 						aiPDA.create_message(src, target)

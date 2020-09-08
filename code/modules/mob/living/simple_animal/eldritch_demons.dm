@@ -15,7 +15,7 @@
 	icon = 'icons/mob/eldritch_mobs.dmi'
 	speed = 0
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	AIStatus = AI_OFF
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
@@ -321,14 +321,14 @@
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
-	if(stat == DEAD)
-		return ..()
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/life_process()
+	. = ..()
+	if(!.)
+		return
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
 		adjustBruteLoss(-3, FALSE)
 		adjustFireLoss(-3, FALSE)
-	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit
 	name = "Ash Man"

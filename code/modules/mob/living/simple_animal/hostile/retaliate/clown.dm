@@ -52,7 +52,7 @@
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Life()
+/mob/living/simple_animal/hostile/retaliate/clown/life_process()
 	. = ..()
 	if(banana_time && banana_time < world.time)
 		var/turf/T = get_turf(src)

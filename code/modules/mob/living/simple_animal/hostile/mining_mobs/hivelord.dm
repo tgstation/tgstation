@@ -188,7 +188,7 @@
 	var/can_infest_dead = FALSE
 
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/life_process()
 	. = ..()
 	if(stat == DEAD || !isturf(loc))
 		return

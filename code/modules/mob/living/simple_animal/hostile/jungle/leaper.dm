@@ -165,7 +165,7 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
+/mob/living/simple_animal/hostile/jungle/leaper/life_process()
 	. = ..()
 	update_icons()
 

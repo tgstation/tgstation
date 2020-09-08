@@ -56,7 +56,7 @@
 	response_disarm_simple = "gently move aside"
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
@@ -352,11 +352,10 @@
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life()
-	..()
-
+/mob/living/simple_animal/parrot/life_process()
+	. = ..()
 	//Sprite update for when a parrot gets pulled
-	if(pulledby && !stat && parrot_state != PARROT_WANDER)
+	if(pulledby && parrot_state != PARROT_WANDER)
 		if(buckled)
 			buckled.unbuckle_mob(src, TRUE)
 			buckled = null
@@ -892,13 +891,13 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 
-	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_ROUND_FINISHED, .proc/writememory)
+	return ..()
 
-/mob/living/simple_animal/parrot/poly/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory(FALSE)
+/mob/living/simple_animal/parrot/poly/proc/writememory()
+	if(!stat && !memory_saved)
+		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/parrot/poly/death(gibbed)
 	if(!memory_saved)
@@ -909,7 +908,7 @@
 			mind.transfer_to(G)
 		else
 			G.key = key
-	..(gibbed)
+	return ..()
 
 /mob/living/simple_animal/parrot/poly/proc/Read_Memory()
 	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new

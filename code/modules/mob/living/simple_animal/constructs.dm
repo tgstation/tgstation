@@ -15,7 +15,7 @@
 	icon = 'icons/mob/cult.dmi'
 	speed = 0
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7

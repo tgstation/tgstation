@@ -48,9 +48,9 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life()
-	..()
-	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
+/mob/living/simple_animal/hostile/mushroom/life_process()
+	. = ..()
+	if(!.)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
 /mob/living/simple_animal/hostile/mushroom/Initialize()//Makes every shroom a little unique

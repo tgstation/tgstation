@@ -1,8 +1,7 @@
-/mob/living/silicon/robot/Life()
-	if (src.notransform)
+/mob/living/silicon/robot/life_process()
+	. = ..()
+	if(!.)
 		return
-
-	..()
 	handle_robot_hud_updates()
 	handle_robot_cell()
 

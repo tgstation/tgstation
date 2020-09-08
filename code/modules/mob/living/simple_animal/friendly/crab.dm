@@ -17,7 +17,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "stomps"
 	response_harm_simple = "stomp"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -25,17 +25,17 @@
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Life()
-	..()
-	//CRAB movement
-	if(!ckey && !stat)
-		if(isturf(loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				var/east_vs_west = pick(4,8)
-				if(Process_Spacemove(east_vs_west))
-					Move(get_step(src,east_vs_west), east_vs_west)
-					turns_since_move = 0
+/mob/living/simple_animal/crab/life_process()
+	. = ..()
+	if(client || stat)
+		return//todo step here
+	if(isturf(loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		turns_since_move++
+		if(turns_since_move >= turns_per_move)
+			var/east_vs_west = pick(4,8)
+			if(Process_Spacemove(east_vs_west))
+				Move(get_step(src,east_vs_west), east_vs_west)
+				turns_since_move = 0
 	regenerate_icons()
 
 //COFFEE! SQUEEEEEEEEE!

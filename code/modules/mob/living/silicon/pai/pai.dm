@@ -82,7 +82,7 @@
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
-	var/silent = FALSE
+	var/silent_time = 0
 	var/brightness_power = 5
 
 /mob/living/silicon/pai/can_unbuckle()
@@ -175,7 +175,7 @@
 	if(hackprogress >= 100)
 		hackprogress = 0
 		var/obj/machinery/door/D = hacking_cable.machine
-		D.open()
+		INVOKE_ASYNC(D, /obj/machinery/door.proc/open)
 		hacking = FALSE
 
 /mob/living/silicon/pai/make_laws()
@@ -291,9 +291,9 @@
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
-/mob/living/silicon/pai/Life()
+/mob/living/silicon/pai/life_process()
 	. = ..()
-	if(QDELETED(src) || stat == DEAD)
+	if(!.)
 		return
 	if(hacking_cable)
 		if(get_dist(src, hacking_cable) > 1)
@@ -304,7 +304,7 @@
 				card.update_icon()
 		else if(hacking)
 			process_hack()
-	silent = max(silent - 1, 0)
+	silent_time = max(silent_time - 1, 0)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)

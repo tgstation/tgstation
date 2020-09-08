@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_dead = "magicbase"
 	speed = 0
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	movement_type = FLYING // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
 	fully_replace_character_name(null, new_name)
 
-/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+/mob/living/simple_animal/hostile/guardian/life_process() //Dies if the summoner dies
 	. = ..()
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
@@ -186,12 +186,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			summoner.dust()
 			death(TRUE)
 			qdel(src)
+			snapback()
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
 		visible_message("<span class='danger'><B>[src] dies along with its user!</B></span>")
 		death(TRUE)
 		qdel(src)
-	snapback()
 
 /mob/living/simple_animal/hostile/guardian/get_status_tab_items()
 	. += ..()

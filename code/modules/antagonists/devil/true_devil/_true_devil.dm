@@ -198,7 +198,7 @@
 							"<span class='userdanger'>[M] fails to disarm you!</span>")
 
 /mob/living/carbon/true_devil/handle_breathing()
-	// devils do not need to breathe
+	return// no breathing
 
 /mob/living/carbon/true_devil/is_literate()
 	return TRUE

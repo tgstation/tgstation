@@ -84,11 +84,11 @@
 	rift = new
 	rift.Grant(src)
 
-/mob/living/simple_animal/hostile/space_dragon/Life(mapload)
+/mob/living/simple_animal/hostile/space_dragon/life_process(mapload)
 	. = ..()
 	tiredness = max(tiredness - 1, 0)
 	if(rifts_charged == 3 && !objective_complete)
-		victory()
+		INVOKE_ASYNC(src, .proc/victory)
 	if(riftTimer == -1)
 		return
 	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)

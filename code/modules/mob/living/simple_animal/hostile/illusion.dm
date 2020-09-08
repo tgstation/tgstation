@@ -23,8 +23,8 @@
 	deathmessage = "vanishes into thin air! It was a fake!"
 
 
-/mob/living/simple_animal/hostile/illusion/Life()
-	..()
+/mob/living/simple_animal/hostile/illusion/life_process()
+	. = ..()
 	if(world.time > life_span)
 		death()
 

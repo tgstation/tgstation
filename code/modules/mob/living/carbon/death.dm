@@ -11,6 +11,10 @@
 
 	. = ..()
 
+	update_damage_hud()
+	stop_sound_channel(CHANNEL_HEARTBEAT)
+	LoadComponent(/datum/component/rot/corpse)
+
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_death()

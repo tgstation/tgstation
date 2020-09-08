@@ -97,10 +97,13 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life()
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/life_process()
 	. = ..()
 	if(!.) //Checks if they are dead as a rock.
 		return
+	INVOKE_ASYNC(src, .proc/passive_tentacles)
+
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/passive_tentacles()
 	if(health < maxHealth * 0.5 && rand_tent < world.time)
 		rand_tent = world.time + 30
 		var/tentacle_amount = 5

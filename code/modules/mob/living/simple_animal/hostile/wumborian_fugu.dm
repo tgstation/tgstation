@@ -46,7 +46,7 @@
 	QDEL_NULL(E)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/Life()
+/mob/living/simple_animal/hostile/asteroid/fugu/life_process()
 	if(!wumbo)
 		inflate_cooldown = max((inflate_cooldown - 1), 0)
 	if(target && AIStatus == AI_ON)

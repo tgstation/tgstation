@@ -116,7 +116,7 @@
 		adjustBruteLoss(5)
 		qdel(tasty_plastic)
 
-/mob/living/simple_animal/hostile/carp/Life()
+/mob/living/simple_animal/hostile/carp/life_process()
 	. = ..()
 	if(stat == CONSCIOUS)
 		chomp_plastic()
@@ -212,11 +212,11 @@
 	if(.)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
-/mob/living/simple_animal/hostile/carp/megacarp/Life()
+/mob/living/simple_animal/hostile/carp/megacarp/life_process()
 	. = ..()
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
-	if(!rideable && src.mind)
+	if(!rideable && mind)
 		can_buckle = TRUE
 		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)

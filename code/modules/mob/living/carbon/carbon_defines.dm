@@ -35,7 +35,8 @@
 	var/datum/dna/dna = null /// Carbon
 	var/datum/mind/last_mind = null ///last mind to control this mob, for blood-based cloning
 
-	var/failed_last_breath = 0 ///This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
+	///This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
+	var/failed_last_breath = FALSE
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
@@ -91,3 +92,6 @@
 
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
+
+	///marker for when the next time ssmobs will call handle_breathing
+	var/next_breathe_check = 0

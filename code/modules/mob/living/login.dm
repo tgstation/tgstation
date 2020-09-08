@@ -13,7 +13,6 @@
 			if("sandbox")
 				CanBuild()
 
-	update_damage_hud()
 	update_health_hud()
 
 	var/turf/T = get_turf(src)

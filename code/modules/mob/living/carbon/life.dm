@@ -1,8 +1,6 @@
-/mob/living/carbon/Life()
-
+/mob/living/carbon/life_process()
 	if(notransform)
-		return
-
+		return FALSE
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
@@ -11,81 +9,57 @@
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
+		handle_wounds()
 
 		. = ..()
 
-		if (QDELETED(src))
-			return
+		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+		if(QDELETED(src))//sometimes diseases delete the mob (transformations and whatnot)
+			return FALSE
 
 		if(.) //not dead
 			handle_blood()
-
-		if(stat != DEAD)
+			handle_random_events()//vomiting and so
 			var/bprv = handle_bodyparts()
 			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 				update_stamina() //needs to go before updatehealth to remove stamcrit
 				updatehealth()
-
-		if(stat != DEAD)
 			handle_brain_damage()
 
 	else
 		. = ..()
-
-	if(stat == DEAD)
-		stop_sound_channel(CHANNEL_HEARTBEAT)
-		LoadComponent(/datum/component/rot/corpse)
 
 	check_cremation()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
-	if(stat != DEAD)
-		return 1
 
 ///////////////
 // BREATHING //
 ///////////////
 
-//Start of a breath chain, calls breathe()
-/mob/living/carbon/handle_breathing(times_fired)
-	var/next_breath = 4
-	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
-	if(L)
-		if(L.damage > L.high_threshold)
-			next_breath--
-	if(H)
-		if(H.damage > H.high_threshold)
-			next_breath--
-
-	if((times_fired % next_breath) == 0 || failed_last_breath)
-		breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
-		if(failed_last_breath)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+///Handles everything that is changing gas mixtures due to breathing, this is called manually by SSmobs on a slower timer because thanks atmos
+/mob/living/carbon/proc/handle_breathing()
+	breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
+	if(failed_last_breath)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 	else
-		if(istype(loc, /obj/))
-			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src,0)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+	if(istype(loc, /obj/))
+		var/obj/location_as_object = loc
+		location_as_object.handle_internal_lifeform(src,0)
 
-//Second link in a breath chain, calls check_breath()
+///Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
-	var/datum/gas_mixture/environment
-	if(loc)
-		environment = loc.return_air()
-
-	var/datum/gas_mixture/breath
-
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
@@ -100,44 +74,39 @@
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
-	else
-		//Breathe from internal
-		breath = get_breath_from_internal(BREATH_VOLUME)
+		return
 
-		if(isnull(breath)) //in case of 0 pressure internals
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))//later so people in crit with nobreathe can die
+		return
+	//Breathe from internal
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
 
-			if(isobj(loc)) //Breathe from loc as object
-				var/obj/loc_as_obj = loc
-				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
+	if(isnull(breath)) //in case of 0 pressure internals
 
-			else if(isturf(loc)) //Breathe from loc as turf
-				var/breath_moles = 0
-				if(environment)
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+		if(isobj(loc)) //Breathe from loc as object
+			var/obj/loc_as_obj = loc
+			breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
+		else if(isturf(loc)) //Breathe from loc as turf
+			var/breath_moles = 0
+			var/datum/gas_mixture/environment = loc?.return_air()
+			if(environment)
+				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
-				breath = loc.remove_air(breath_moles)
-		else //Breathe from loc as obj again
-			if(istype(loc, /obj/))
-				var/obj/loc_as_obj = loc
-				loc_as_obj.handle_internal_lifeform(src,0)
+			breath = loc.remove_air(breath_moles)
 
-	check_breath(breath)
+	else //Breathe from loc as obj again
+		if(istype(loc, /obj/))
+			var/obj/loc_as_obj = loc
+			loc_as_obj.handle_internal_lifeform(src,0)
 
-	if(breath)
+	if(check_breath(breath))
 		loc.assume_air(breath)
 		air_update_turf()
 
-/mob/living/carbon/proc/has_smoke_protection()
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return TRUE
-	return FALSE
 
-
-//Third link in a breath chain, calls handle_breath_temperature()
+///Third link in a breath chain, calls handle_breath_temperature() and handles gas interactions
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
 
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
@@ -150,7 +119,7 @@
 			return FALSE
 		adjustOxyLoss(1)
 
-		failed_last_breath = 1
+		failed_last_breath = TRUE
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return FALSE
 
@@ -176,15 +145,15 @@
 		if(O2_partialpressure > 0)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
-			failed_last_breath = 1
+			failed_last_breath = TRUE
 			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
-			failed_last_breath = 1
+			failed_last_breath = TRUE
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
-		failed_last_breath = 0
+		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
@@ -306,28 +275,41 @@
 
 	return TRUE
 
-//Fourth and final link in a breath chain
+/**
+  * Fourth and final link in a breath chain, sets the temp of the breath to, by default, the mobs temp
+  * Arguments:
+  * * breath: the air mixture datum we are breathng out
+  */
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	// The air you breathe out should match your body temperature
 	breath.temperature = bodytemperature
 
+///Checks if we have empty/existing/no internals
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
 		if(internal.loc != src)
 			internal = null
-			update_internals_hud_icon(0)
+			update_internals_hud_icon(FALSE)
 		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
-			update_internals_hud_icon(0)
+			update_internals_hud_icon(FALSE)
 		else
-			update_internals_hud_icon(1)
+			update_internals_hud_icon(TRUE)
 			. = internal.remove_air_volume(volume_needed)
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
 
+///checks hether this mob is protected from the effects of smoke, true if it is, false otherwise
+/mob/living/carbon/proc/has_smoke_protection()
+	SHOULD_CALL_PARENT(TRUE)
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return TRUE
+	return FALSE
+
+///Handles blood updates and such
 /mob/living/carbon/proc/handle_blood()
 	return
 
+///Calls on_life() on all attached bodyparts
 /mob/living/carbon/proc/handle_bodyparts()
 	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
@@ -339,6 +321,7 @@
 		if(BP.needs_processing)
 			. |= BP.on_life(stam_regen)
 
+///Calls on_life() and on_death() on all attached organs
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
 		for(var/V in internal_organs)
@@ -352,7 +335,8 @@
 			var/obj/item/organ/O = V
 			O.on_death() //Needed so organs decay while inside the body.
 
-/mob/living/carbon/handle_diseases()
+///Handles any diseases the carbon might have
+/mob/living/carbon/proc/handle_diseases()
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
@@ -361,7 +345,8 @@
 		if(stat != DEAD || D.process_dead)
 			D.stage_act()
 
-/mob/living/carbon/handle_wounds()
+///Calls handle_process() for any wounds the carbon has
+/mob/living/carbon/proc/handle_wounds()
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
 		if(W.processes) // meh
@@ -434,7 +419,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
-	..()
+	. = ..()
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -900,3 +885,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		return
 
 	heart.beating = !status
+
+/mob/living/carbon/proc/handle_random_events()
+	return

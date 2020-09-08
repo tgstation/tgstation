@@ -48,7 +48,7 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/hostile/tree/Life()
+/mob/living/simple_animal/hostile/tree/life_process()
 	..()
 	if(is_tree && isopenturf(loc))
 		var/turf/open/T = src.loc

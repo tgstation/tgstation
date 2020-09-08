@@ -27,11 +27,11 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	///Use this to temporarely stop random movement or to if you write special movement code for animals.
-	var/stop_automated_movement = 0
+	var/stop_automated_movement = FALSE
 	///Does the mob wander around when idle?
-	var/wander = 1
+	var/wander = TRUE
 	///When set to 1 this stops the animal from moving when someone is pulling it.
-	var/stop_automated_movement_when_pulled = 1
+	var/stop_automated_movement_when_pulled = TRUE
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.

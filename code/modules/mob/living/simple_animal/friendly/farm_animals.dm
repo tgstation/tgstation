@@ -46,35 +46,37 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
+/mob/living/simple_animal/hostile/retaliate/goat/life_process()
 	. = ..()
-	if(.)
-		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
-			Retaliate()
+	if(stat)
+		return
+	//chance to go crazy and start wacking stuff
+	if(!enemies.len && prob(1))
+		Retaliate()
 
-		if(enemies.len && prob(10))
-			enemies = list()
-			LoseTarget()
-			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
-		udder.generateMilk()
-		eat_plants()
-		if(!pulledby)
-			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-				var/step = get_step(src, direction)
-				if(step)
-					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
-						Move(step, get_dir(src, step))
+	if(enemies.len && prob(10))
+		enemies = list()
+		LoseTarget()
+		visible_message("<span class='notice'>[src] calms down.</span>")
+	udder.generateMilk()
+	INVOKE_ASYNC(src, .proc/eat_plants)
+	if(pulledby)
+		return
+	for(var/direction in shuffle(GLOB.alldirs))
+		var/step = get_step(src, direction)
+		if(!step)
+			continue
+		if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
+			Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
-	..()
-	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
+	. = ..()
+	visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	. = ..()
 	if(!stat)
-		eat_plants()
+		INVOKE_ASYNC(src, .proc/eat_plants)
 
 /mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
 	var/eaten = FALSE
@@ -179,9 +181,9 @@
 	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 	D.drive_verb = "ride"
 
-/mob/living/simple_animal/cow/Life()
+/mob/living/simple_animal/cow/life_process()
 	. = ..()
-	if(stat == CONSCIOUS)
+	if(!stat)
 		udder.generateMilk()
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
@@ -283,19 +285,17 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life()
+/mob/living/simple_animal/chick/life_process()
 	. =..()
-	if(!.)
-		return
-	if(!stat && !ckey)
+	if(!stat && !client)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
-	..()
-	amount_grown = 0
+/mob/living/simple_animal/chick/holo/life_process()
+	SHOULD_CALL_PARENT(FALSE)
+	return
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -371,40 +371,36 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chicken/life_process()
+	. = ..()
+	if(stat || prob(97) || eggsleft < 0 || !egg_type)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type)
-		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
-		eggsleft--
-		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
-		if(eggsFertile)
-			if(chicken_count < MAX_CHICKENS && prob(25))
-				START_PROCESSING(SSobj, E)
+	visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
+	eggsleft--
+	var/obj/item/E = new egg_type(get_turf(src))
+	E.pixel_x = rand(-6,6)
+	E.pixel_y = rand(-6,6)
+	if(!eggsFertile)
+		return
+	if(chicken_count < MAX_CHICKENS && prob(25))
+		addtimer(CALLBACK(E, /obj/item/reagent_containers/food/snacks/egg.proc/hatch), rand(200, 400))
 
-/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process()
-	if(isturf(loc))
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
-			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
-			new /mob/living/simple_animal/chick(get_turf(src))
-			STOP_PROCESSING(SSobj, src)
-			qdel(src)
-	else
-		STOP_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/food/snacks/egg/proc/hatch()
+	if(!isturf(loc))
+		return
+	visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
+	new /mob/living/simple_animal/chick(loc)
+	qdel(src)
 
 
 /obj/item/udder
 	name = "udder"
 
 /obj/item/udder/Initialize()
+	. = ..()
 	create_reagents(50)
 	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
-	. = ..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))

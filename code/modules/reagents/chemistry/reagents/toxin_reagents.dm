@@ -9,7 +9,7 @@
 	taste_mult = 1.2
 	harmful = TRUE
 	var/toxpwr = 1.5
-	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
+	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life_process() if there isn't another non-silent toxin present.
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)

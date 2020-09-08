@@ -28,59 +28,49 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/pet/dog/Life()
-	..()
+/mob/living/simple_animal/pet/dog/life_process()
+	. = ..()
+	if(stat || resting || buckled)//needs conciousness so no !.
+		return
+	turns_since_scan++
+	if(prob(1))
+		manual_emote(pick("dances around.","chases its tail!"))
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+			movement_target = null
+			stop_automated_movement = FALSE
+		if(!movement_target || !(movement_target.loc in oview(src, 3)) )
+			movement_target = null
+			stop_automated_movement = FALSE
+			for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
+				if(isturf(S.loc) || ishuman(S.loc))
+					movement_target = S
+					break
+		if(movement_target)
+			INVOKE_ASYNC(src, .proc/get_snacks)
 
-	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = FALSE
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = FALSE
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
-						break
-			if(movement_target)
-				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
+/mob/living/simple_animal/pet/dog/proc/get_snacks()
+	stop_automated_movement = TRUE
+	step_to(src,movement_target,1)
+	sleep(3)
+	step_to(src,movement_target,1)
+	sleep(3)
+	step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					var/turf/T = get_turf(movement_target)
-					if(!T)
-						return
-					if (T.x < src.x)
-						setDir(WEST)
-					else if (T.x > src.x)
-						setDir(EAST)
-					else if (T.y < src.y)
-						setDir(SOUTH)
-					else if (T.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
+	if(!movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+		return
+	setDir(get_dir(src, movement_target))
 
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
+	if(!Adjacent(movement_target)) //can't reach food through windows.
+		return
 
-					if(isturf(movement_target.loc))
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-
-		if(prob(1))
-			manual_emote(pick("dances around.","chases its tail!"))
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
+	if(isturf(movement_target.loc))
+		movement_target.attack_animal(src)
+	else if(ishuman(movement_target.loc))
+		if(prob(50))
+			manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 //Corgis and pugs are now under one dog subtype
 
@@ -448,17 +438,17 @@
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
+	RegisterSignal(SSdcs, COMSIG_GLOB_ROUND_FINISHED, .proc/writememory)
 
-/mob/living/simple_animal/pet/dog/corgi/ian/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+/mob/living/simple_animal/pet/dog/corgi/ian/proc/writememory()
+	if(!stat && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/ian/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
-	..()
+	. = ..()
 
 /mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
@@ -520,20 +510,21 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
-	..()
-	for(var/mob/living/simple_animal/pet/P in range(1, src))
-		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
-			visible_message("<span class='warning'>[src] devours [P]!</span>", \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
-			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
-			narsie_act()
-			if(P.mind)
-				if(P.mind.hasSoul)
-					P.mind.hasSoul = FALSE //Nars-Ian ate your soul; you don't have one anymore
-				else
-					visible_message("<span class='cult big bold'>... Aw, someone beat me to this one.</span>")
-			P.gib()
+/mob/living/simple_animal/pet/dog/corgi/narsie/life_process()
+	. = ..()
+	for(var/mob/living/simple_animal/pet/P in orange(1, src))
+		if(!istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
+			continue
+		visible_message("<span class='warning'>[src] devours [P]!</span>", \
+		"<span class='cult big bold'>DELICIOUS SOULS</span>")
+		playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+		narsie_act()
+		if(P.mind)
+			if(P.mind.hasSoul)
+				P.mind.hasSoul = FALSE //Nars-Ian ate your soul; you don't have one anymore
+			else
+				visible_message("<span class='cult big bold'>... Aw, someone beat me to this one.</span>")
+		P.gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()
 	..()
@@ -655,7 +646,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
-	..()
-
-	make_babies()
+/mob/living/simple_animal/pet/dog/corgi/lisa/life_process()
+	. = ..()
+	if(.)
+		make_babies()

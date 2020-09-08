@@ -551,7 +551,8 @@ Difficulty: Hard
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum)) // hallucinations should not be stopping bubblegum or eachother
 		return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/life_process()
+	SHOULD_CALL_PARENT(FALSE)//it's fake
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

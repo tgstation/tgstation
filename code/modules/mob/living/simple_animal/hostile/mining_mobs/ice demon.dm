@@ -64,7 +64,7 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
+/mob/living/simple_animal/hostile/asteroid/ice_demon/life_process()
 	. = ..()
 	if(!. || target)
 		return

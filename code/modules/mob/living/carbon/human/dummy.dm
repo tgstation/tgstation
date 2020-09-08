@@ -11,8 +11,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life()
-	return
+/mob/living/carbon/human/dummy/life_process()
+	SHOULD_CALL_PARENT(FALSE)
+	return FALSE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()

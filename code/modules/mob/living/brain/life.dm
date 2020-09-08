@@ -1,9 +1,5 @@
 
-/mob/living/brain/Life()
-	if (notransform)
-		return
-	if(!loc)
-		return
+/mob/living/brain/life_process()
 	. = ..()
 	handle_emp_damage()
 
@@ -27,9 +23,6 @@
 			emp_damage = 0
 		else
 			emp_damage = max(emp_damage-1, 0)
-
-/mob/living/brain/handle_status_effects()
-	return
 
 /mob/living/brain/handle_traits()
 	return

@@ -681,7 +681,7 @@
 	return protection
 
 //this handles hud updates
-/mob/living/carbon/update_damage_hud()
+/mob/living/carbon/proc/update_damage_hud()
 
 	if(!client)
 		return

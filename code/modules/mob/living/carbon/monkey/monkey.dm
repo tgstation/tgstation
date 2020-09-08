@@ -38,22 +38,22 @@
 
 	. = ..()
 
-	if (cubespawned)
+	if(cubespawned)
 		var/cap = CONFIG_GET(number/monkeycap)
-		if (LAZYLEN(SSmobs.cubemonkeys) > cap)
-			if (spawner)
+		if(SSmobs.cubemonkeys > cap)
+			if(spawner)
 				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
 			return INITIALIZE_HINT_QDEL
-		SSmobs.cubemonkeys += src
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/remove_from_monkeylist)
+		SSmobs.cubemonkeys++
 
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, 2)
 	AddComponent(/datum/component/bloodysoles/feet)
 
-/mob/living/carbon/monkey/Destroy()
-	SSmobs.cubemonkeys -= src
-	return ..()
+/mob/living/carbon/monkey/proc/remove_from_monkeylist()
+	SSmobs.cubemonkeys--
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix

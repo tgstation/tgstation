@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/bear/Life()
+/mob/living/simple_animal/hostile/bear/life_process()
 	. = ..()
 	if(!rideable && mind)
 		can_buckle = TRUE
@@ -154,8 +154,9 @@
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
 	return //You cannot grow a real bear from butter.
 
-/mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
-	if(stat)
+/mob/living/simple_animal/hostile/bear/butter/life_process() //Heals butter bear really fast when he takes damage.
+	. = ..()
+	if(!.)
 		return
 	if(health < maxHealth)
 		heal_overall_damage(10) //Fast life regen, makes it hard for you to get eaten to death.

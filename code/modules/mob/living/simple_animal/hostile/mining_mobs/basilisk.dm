@@ -119,7 +119,7 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/life_process()
 	. = ..()
 	if(stat == CONSCIOUS)
 		consume_bait()

@@ -68,7 +68,6 @@
 	reset_perspective(null)
 	reload_fullscreen()
 	update_action_buttons_icon()
-	update_damage_hud()
 	update_health_hud()
 	update_mobility()
 	med_hud_set_health()
