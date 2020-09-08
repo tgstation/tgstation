@@ -22,20 +22,22 @@
 	. = ..()
 		//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() //this needs to be moved out onto equiping and damage but I dont have the energy for it
-	if(.)
-		return
 	if(!IS_IN_STASIS(src))
+		dna.species.spec_life(src) // for mutantraces, some do stuff while dead so we check this before
+		if(.)
+			return
 		for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
 			HM.on_life()
 		//heart attack stuff
 		handle_heart()
 		handle_liver()
 
-		dna.species.spec_life(src) // for mutantraces
-	else
-		for(var/i in all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_stasis()
+	else if(.)
+		return
+
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_stasis()
 
 	if(stat != DEAD)
 		return TRUE//we might die because of organs so check again
