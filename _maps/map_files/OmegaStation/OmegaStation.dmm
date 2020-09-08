@@ -29,6 +29,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aan" = (
@@ -47,6 +48,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aar" = (
@@ -59,6 +61,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aas" = (
@@ -72,7 +75,6 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aav" = (
@@ -104,6 +106,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaC" = (
@@ -131,7 +134,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aaF" = (
@@ -142,6 +144,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaG" = (
@@ -235,6 +238,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaK" = (
@@ -288,7 +292,6 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aaO" = (
@@ -300,6 +303,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaP" = (
@@ -313,6 +317,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaQ" = (
@@ -332,6 +337,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaS" = (
@@ -341,6 +347,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aaT" = (
@@ -364,6 +371,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aaU" = (
@@ -392,7 +400,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aba" = (
@@ -463,6 +470,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "abg" = (
@@ -512,9 +520,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "abm" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -607,7 +612,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "aby" = (
@@ -900,7 +904,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "aca" = (
@@ -917,7 +920,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "acf" = (
@@ -1251,7 +1253,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "acT" = (
@@ -1273,6 +1274,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "acW" = (
@@ -1650,7 +1652,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "adJ" = (
@@ -11395,7 +11396,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aDT" = (
@@ -26426,10 +26426,12 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dXY" = (
-/obj/machinery/status_display/ai,
-/obj/effect/landmark/start/virologist,
-/turf/closed/wall/r_wall,
-/area/engine/supermatter)
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
 "dYC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -32377,6 +32379,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"odq" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/cafeteria,
+/area/security/prison/safe)
 "ofR" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -67725,7 +67738,7 @@ bvV
 gyV
 mTM
 gyV
-dXY
+bta
 sKh
 sMw
 sNy
@@ -68964,7 +68977,7 @@ aaa
 aad
 aNU
 ify
-rQN
+odq
 jlU
 hmZ
 dmM
@@ -79736,7 +79749,7 @@ aad
 swv
 swv
 aas
-swC
+dXY
 aaB
 aaF
 aaF
@@ -79993,7 +80006,7 @@ aad
 swv
 swv
 aag
-aat
+aaf
 swv
 aaG
 swv
@@ -81023,9 +81036,9 @@ swv
 swv
 abw
 aaE
-aaf
+aat
 aaN
-aaf
+aat
 aaZ
 abw
 ahe
