@@ -1,6 +1,0 @@
-author: "floyd"
-delete-after: True
-changes: 
-  - code_imp: "moved cakes to newfood code"
-  - balance: "i fucked up some food lists because i misunderstood them, thats now fixed."
-  - code_imp: "edible component now properly handles transfering reagents on processing, microwaving and crafting"
