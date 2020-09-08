@@ -16246,7 +16246,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "aRx" = (
@@ -17916,6 +17915,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "aVI" = (
@@ -28607,6 +28607,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
+"iaJ" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Solar Maintenance APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "iaZ" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -29888,14 +29896,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"ktO" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Solar Maintenance APC";
-	pixel_y = -24
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars)
 "kuo" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
@@ -32045,6 +32045,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"nBs" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "nDy" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/wood,
@@ -33843,13 +33850,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"qtG" = (
-/obj/machinery/power/solar_control{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/solars)
 "qtS" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
@@ -34765,13 +34765,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
-"rYh" = (
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars)
 "rZO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -38036,6 +38029,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"til" = (
+/obj/machinery/power/solar_control{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "tir" = (
 /obj/machinery/recharge_station,
 /obj/effect/landmark/start/cyborg,
@@ -60980,8 +60980,8 @@ aaa
 aaa
 anL
 aoO
-rYh
-qtG
+nBs
+til
 arm
 avs
 ayW
@@ -61495,7 +61495,7 @@ aaa
 anL
 apn
 apn
-ktO
+iaJ
 arr
 avu
 ayY
