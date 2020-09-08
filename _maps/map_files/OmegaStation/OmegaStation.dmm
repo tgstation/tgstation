@@ -6329,24 +6329,18 @@
 /area/maintenance/solars)
 "aoO" = (
 /obj/structure/cable,
-/obj/machinery/power/solar_control,
-/turf/open/floor/plating,
-/area/maintenance/solars)
-"aoP" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/maintenance/solars)
+"aoP" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "aoQ" = (
-/obj/machinery/power/apc{
-	name = "Solar Maintenance APC";
-	pixel_y = 24
-	},
-/obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars)
+/obj/structure/lattice/catwalk,
+/obj/item/stack/cable_coil,
+/turf/open/space/basic,
+/area/space)
 "aoR" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/effect/turf_decal/bot,
@@ -23387,8 +23381,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/rcl/pre_loaded,
-/obj/item/rcl/pre_loaded,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -29896,6 +29888,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"ktO" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Solar Maintenance APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "kuo" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
@@ -33843,6 +33843,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"qtG" = (
+/obj/machinery/power/solar_control{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "qtS" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
@@ -34758,6 +34765,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
+"rYh" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "rZO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -55306,19 +55320,19 @@ aaa
 aaa
 aaa
 aaa
+akP
+akP
+akP
+akP
+akP
 aaa
-akP
-akP
-akP
-akP
-akP
 akX
-akP
-akP
-akP
-akP
-akP
 aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -55563,19 +55577,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
 akX
 akX
 akX
 akX
 akX
+aoP
+aoP
+aoP
 akX
 akX
 akX
 akX
 akX
-akX
-aaa
 aaa
 aaa
 aaa
@@ -55820,19 +55834,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -56083,7 +56097,7 @@ aaa
 aaa
 aaa
 aaa
-akX
+aoQ
 aaa
 aaa
 aaa
@@ -56334,19 +56348,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -56591,19 +56605,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
 akX
 akX
 akX
 akX
 akX
+aoP
+aoP
+aoP
 akX
 akX
 akX
 akX
 akX
-akX
-aaa
 aaa
 aaa
 aaa
@@ -56848,19 +56862,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -57111,7 +57125,7 @@ aaa
 aaa
 aaa
 aaa
-akX
+aoP
 aaa
 aaa
 aaa
@@ -57362,19 +57376,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -57619,19 +57633,19 @@ aaa
 bmC
 aaa
 aaa
-aaa
 akX
 akX
 akX
 akX
 akX
+aoP
+aoP
+aoP
 akX
 akX
 akX
 akX
 akX
-akX
-aaa
 aaa
 aaa
 aaa
@@ -57876,19 +57890,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -58139,7 +58153,7 @@ aaa
 aaa
 aaa
 aaa
-akX
+aoP
 aaa
 aaa
 aaa
@@ -58390,19 +58404,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -58647,19 +58661,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
 akX
 akX
 akX
 akX
 akX
+aoP
+aoP
+aoP
 akX
 akX
 akX
 akX
 akX
-akX
-aaa
 aaa
 aaa
 aaa
@@ -58904,19 +58918,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-akP
-akP
-akP
-akP
-akP
-akX
 akP
 akP
 akP
 akP
 akP
 aaa
+aoP
+aaa
+akP
+akP
+akP
+akP
+akP
 aaa
 aaa
 aaa
@@ -59167,7 +59181,7 @@ aaa
 aaa
 aaa
 aaa
-akX
+aoP
 aaa
 aaa
 aaa
@@ -60966,8 +60980,8 @@ aaa
 aaa
 anL
 aoO
-apn
-apn
+rYh
+qtG
 arm
 avs
 ayW
@@ -61222,9 +61236,9 @@ aaa
 aaa
 aaa
 anL
-aoP
-apv
 apn
+apv
+apv
 arm
 avt
 ayX
@@ -61479,9 +61493,9 @@ aad
 aad
 aaa
 anL
-aoQ
 apn
 apn
+ktO
 arr
 avu
 ayY
