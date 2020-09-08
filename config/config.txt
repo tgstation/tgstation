@@ -178,7 +178,7 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 #ALLOW_VOTE_MAP
 
 ## allow players to OOCly vote for a shuttle call after a certain amount of time
-ALLOW_VOTE_TRANSFER
+#ALLOW_VOTE_TRANSFER
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -192,20 +192,14 @@ VOTE_PERIOD 600
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## adds no-voters to the 'continue the round' option of transfer votes automatically when enabled
-TRANSFER_NO_VOTERS_CONTINUE
-
-## minimum shift length allowed before transfer votes are enabled. Also when auto transfer votes begin, if enabled. > 324000 = 1.5 hours
-TRANSFER_TIME_MIN_ALLOWED 3000
-
-## amount of time between automatic transfer votes. > 108000 = 30 minutes
-TRANSFER_TIME_BETWEEN_AUTO_VOTES 1200
-
-## whether or not transfer votes are automatically called at TRANSFER_TIME_MIN_ALLOWED and every TRANSFER_TIME_BETWEEN_AUTO_VOTES after.
+## whether or not transfer votes are automatically called at [TRANSFER_TIME_MIN_ALLOWED] and every [TRANSFER_TIME_BETWEEN_AUTO_VOTES] after.
 TRANSFER_AUTO_VOTE_ENABLED
 
-## number of auto transfer votes the system attempts before giving up. -1 = no limit on attemps.
-TRANSFER_AUTO_VOTE_LIMIT -1
+## minimum shift length allowed before transfer votes are enabled. Also when auto transfer votes begin, if enabled. (default 54000 = 1.5 hours)
+TRANSFER_TIME_MIN_ALLOWED 54000
+
+## amount of time between automatic transfer votes. (default 18000 = 30 minutes)
+TRANSFER_TIME_BETWEEN_AUTO_VOTES 18000
 
 ## disable abandon mob
 NORESPAWN

@@ -108,8 +108,6 @@
 
 /datum/config_entry/flag/allow_vote_transfer // allow people to call votes for shuttle OOCly
 
-/datum/config_entry/flag/transfer_no_voters_continue // not voting on crew transfer votes is added to 'continue the round' option
-
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	config_entry_value = 6000
 	integer = FALSE
@@ -123,16 +121,13 @@
 /datum/config_entry/number/transfer_time_min_allowed // minimum shift length before transfer votes can begin
 	config_entry_value = 1.5 HOURS
 	integer = FALSE
-	min_val = 0
+	min_val = 5 MINUTES
 
-/datum/config_entry/flag/transfer_auto_vote_enabled // automatic crew transfer votes that start at transfer_time_min_allowed and happen every transfer_time_between_auto_votes
-
-/datum/config_entry/number/transfer_auto_vote_limit // maximum amount of auto votes it will attempt (-1 = infinite attempts)
-	config_entry_value = -1
-	min_val = -1
+/datum/config_entry/flag/transfer_auto_vote_enabled // automatic crew transfer votes that start at [transfer_time_min_allowed] and happen every [transfer_time_between_auto_votes]
 
 /datum/config_entry/number/transfer_time_between_auto_votes // time between auto transfer votes
 	config_entry_value = 30 MINUTES
+	integer = FALSE
 	min_val = 2 MINUTES
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
