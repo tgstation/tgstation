@@ -220,10 +220,4 @@
 #define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE(prob_per_second_percent/100, delta_time)))
 // )
 
-#define BETTER_DIST(dist, a, b)\
-	if (a == null || b == null) {\
-		dist = -1;\
-	}\
-	else{\
-		dist = max(abs(a.x-b.x), abs(a.y-b.y));\
-	}
+#define BETTER_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x-b.x), abs(a.y-b.y))
