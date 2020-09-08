@@ -13447,7 +13447,8 @@
 /obj/machinery/camera{
 	c_tag = "Prison Isolation Cell";
 	dir = 8;
-	network = list("ss13","prison")
+	network = list("ss13","prison");
+	view_range = 5
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
