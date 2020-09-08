@@ -358,7 +358,6 @@
 	new_message = message
 	if(exclamation_found)
 		new_message = replacetext(new_message, "!", "")
-
 	if(question_found)
 		new_message = replacetext(new_message, "?", "")
 	speech_args[SPEECH_MESSAGE] = new_message
