@@ -22,10 +22,11 @@
 	var/base_icon
 	var/regrowth_time_low = 8 MINUTES
 	var/regrowth_time_high = 16 MINUTES
+	var/number_of_variants = 4
 
 /obj/structure/flora/ash/Initialize()
 	. = ..()
-	base_icon = "[icon_state][rand(1, 4)]"
+	base_icon = "[icon_state][rand(1, [number_of_variants]])]"
 	icon_state = base_icon
 
 /obj/structure/flora/ash/proc/harvest(user)
@@ -162,11 +163,7 @@
 	harvest_message_high = "You pluck quite a lot of curved fruit."
 	regrowth_time_low = 2400
 	regrowth_time_high = 5500
-
-/obj/structure/flora/ash/chilly/Initialize()
-	. = ..()
-	base_icon = "[icon_state][rand(1, 2)]"
-	icon_state = base_icon
+	number_of_variants = 2
 
 //SNACKS
 
