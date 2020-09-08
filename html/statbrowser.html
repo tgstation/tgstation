@@ -310,8 +310,8 @@ function createStatusTab(name) {
 	}
 	//END ORDERING
 	menu.appendChild(B);
-	under_menu.style.height = menu.clientHeight + 'px';
 	SendTabToByond(name);
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 function removeStatusTab(name) {
@@ -323,10 +323,8 @@ function removeStatusTab(name) {
 		}
 	}
 	menu.removeChild(document.getElementById(name));
-	under_menu.style.height = menu.clientHeight + 'px';
-	if(document.getElementById(name)) // repeat for duplicates
-		removeStatusTab(name);
 	TakeTabFromByond(name);
+	under_menu.style.height = menu.clientHeight + 'px';
 }
 
 window.onresize = function () {
@@ -351,7 +349,7 @@ function removePermanentTab(name) {
 function checkStatusTab() {
 	for(var i=0; i < menu.children.length; i++)
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
-			removeStatusTab(menu.children[i].id);
+			menu.removeChild(menu.children[i]);
 }
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
@@ -466,8 +464,8 @@ function init_verbs(c, v) {
 }
 
 function SendTabsToByond(){
-	window.location.href = "byond://winset?command=Reset-Tabs";
-	var tabstosend = permanent_tabs.concat(verb_tabs);
+	var tabstosend = [];
+	tabstosend = tabstosend.concat(permanent_tabs, verb_tabs);
 	for(var i=0; i < tabstosend.length; i++){
 		SendTabToByond(tabstosend[i]);
 	}
@@ -966,6 +964,14 @@ document[addEventListenerKey]("click", function(e) {
 if(!current_tab) {
 	addPermanentTab("Status");
 	tab_change("Status");
+}
+
+window.onload = function() {
+	NotifyByondOnload();
+	};
+
+function NotifyByondOnload() {
+	window.location.href = "byond://winset?command=Panel-Ready";
 }
 
 function create_debug(){
