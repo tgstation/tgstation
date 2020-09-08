@@ -950,11 +950,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /proc/cmp_timer_data(list/a, list/b)
 	return b["count"] - a["count"]
 
+
+
+#ifdef TESTING
 /client/proc/check_missing_sprites()
 	set category = "Debug"
 	set name = "Debug Worn Item Sprites"
 	set desc = "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)"
-	#ifdef TESTING
 	var/actual_file_name
 	for(var/T in subtypesof(/obj/item))
 		var/obj/item/x = new T
