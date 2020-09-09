@@ -43,7 +43,7 @@
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
 	/// A phantom body zone, for situations where the wound is tied to a bodypart that doesn't exist on the victim, like dismemberment
-	var/fake_body_zone
+	var/phantom_body_zone = null
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
