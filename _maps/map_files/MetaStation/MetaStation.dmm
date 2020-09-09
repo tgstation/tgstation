@@ -24738,6 +24738,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bfZ" = (
@@ -27032,6 +27035,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "blt" = (
@@ -28543,6 +28549,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "bpq" = (
@@ -29089,6 +29096,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "bqG" = (
@@ -30316,6 +30324,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
@@ -33955,7 +33966,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_alert{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark/corner,
@@ -66364,6 +66375,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "fOY" = (
@@ -68167,16 +68181,6 @@
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"itm" = (
-/obj/machinery/button/door{
-	id = "atmos";
-	name = "Atmospherics Lockdown";
-	req_access_txt = "24";
-	pixel_y = 26;
-	pixel_x = -4
-	},
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard)
 "itG" = (
 /obj/machinery/newscaster{
 	pixel_x = 1;
@@ -68793,10 +68797,8 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 9
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "jsA" = (
@@ -71344,7 +71346,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_alert{
+/obj/machinery/computer/atmos_control{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark/corner{
@@ -71641,6 +71643,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "noe" = (
@@ -71912,6 +71917,9 @@
 "nLx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "nLU" = (
@@ -73749,6 +73757,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "qhe" = (
@@ -75821,6 +75832,7 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "sTb" = (
@@ -120169,7 +120181,7 @@ fYr
 bIK
 bBt
 bHr
-itm
+atm
 mgO
 bPm
 lVD
