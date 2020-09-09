@@ -619,8 +619,8 @@ This section is for the crystal portals variations
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
 	color = COLOR_BLACK
-	max_mobs = 5
-	spawn_time = 30 SECONDS
+	max_mobs = 2
+	spawn_time = 40 SECONDS
 	mob_types = list(
 		/mob/living/simple_animal/hostile/crystal_monster/boss
 		)
@@ -830,8 +830,8 @@ This section is for the crystal monsters variations
 		var/mob/living/mob = clong
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
-			if(health < 120)
-				health += 30
+			if(health < maxHealth)
+				health = min(health+30,maxHealth)
 	else if(isturf(clong))
 		var/turf/turf_bump = clong
 		turf_bump.Melt()
@@ -843,8 +843,8 @@ This section is for the crystal monsters variations
 		var/mob/living/mob = target
 		if(mob.stat >= HARD_CRIT)
 			mob.dust()
-			if(health < 120)
-				health += 30
+			if(health < maxHealth)
+				health = min(health+30,maxHealth)
 		else
 			var/obj/item/bodypart/body_part = mob.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			if(body_part)
