@@ -1408,7 +1408,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
-	var/weakness = H.check_weakness(I, user)
+	var/weakness = check_species_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	H.send_item_attack_message(I, user, hit_area, affecting)

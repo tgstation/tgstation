@@ -89,8 +89,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
 
-#define istruedevil(A) (istype(A, /mob/living/carbon/true_devil))
-
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
