@@ -3,7 +3,7 @@
 
 /turf/open/floor/plating/asteroid //floor piece
 	gender = PLURAL
-	name = "asteroid sand"
+	name = "paved dirt"
 	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
