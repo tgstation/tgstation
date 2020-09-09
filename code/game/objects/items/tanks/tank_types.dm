@@ -160,7 +160,7 @@
 	icon_state = "emergency_engi"
 	worn_icon_state = "emergency_engi"
 	worn_icon = null
-	volume = 6 // should last a bit over 30 minutes if full
+	volume = 6 // should last 24 minutes if full
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
