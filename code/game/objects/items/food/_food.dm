@@ -23,6 +23,7 @@
 	///What you get if you microwave the food, this should be replaced once I fully re-work cooking.
 	var/microwaved_type
 	///Type of atom thats spawned after eatign this item
+	var/trash_type
 
 /obj/item/food/Initialize()
 	. = ..()
