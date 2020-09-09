@@ -415,20 +415,3 @@ SUBSYSTEM_DEF(vote)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
 			P.player_actions -= src
-
-/// Call an crew transfer vote from the server if a vote isn't running.
-/// returns TRUE if it successfully called a vote, FALSE if it failed.
-/datum/controller/subsystem/vote/proc/crew_transfer_vote()
-	//we won't call a vote if we shouldn't be able to leave
-	if(SSshuttle.emergencyNoEscape)
-		message_admins("Crew transfer vote delayed due to un-callable shuttle.")
-		return FALSE
-
-	//we won't call a vote if a vote is running
-	if(mode)
-		message_admins("Crew transfer vote delayed due to ongoing vote.")
-		return FALSE
-
-	message_admins("Crew transfer vote initiated.")
-	initiate_vote("transfer", "the server", TRUE)
-	return TRUE

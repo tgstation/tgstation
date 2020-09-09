@@ -118,12 +118,12 @@
 	integer = FALSE
 	min_val = 0
 
+/datum/config_entry/flag/transfer_auto_vote_enabled // automatic crew transfer votes that start at [transfer_time_min_allowed] and happen every [transfer_time_between_auto_votes]
+
 /datum/config_entry/number/transfer_time_min_allowed // minimum shift length before transfer votes can begin
 	config_entry_value = 1.5 HOURS
 	integer = FALSE
 	min_val = 5 MINUTES
-
-/datum/config_entry/flag/transfer_auto_vote_enabled // automatic crew transfer votes that start at [transfer_time_min_allowed] and happen every [transfer_time_between_auto_votes]
 
 /datum/config_entry/number/transfer_time_between_auto_votes // time between auto transfer votes
 	config_entry_value = 30 MINUTES

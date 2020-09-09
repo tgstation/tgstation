@@ -245,10 +245,10 @@
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/cancel(area/signalOrigin, respectNoRecall = TRUE)
+/obj/docking_port/mobile/emergency/cancel(area/signalOrigin, respect_no_recall = TRUE)
 	if(mode != SHUTTLE_CALL)
 		return
-	if(respectNoRecall && SSshuttle.emergencyNoRecall)
+	if(respect_no_recall && SSshuttle.emergencyNoRecall)
 		return
 
 	invertTimer()

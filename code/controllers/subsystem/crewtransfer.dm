@@ -1,9 +1,8 @@
 /** Auto crew transfer vote SS
   *
-  * Tracks information about auto crew transfer votes and calls transfer votes.area
+  * Tracks information about auto crew transfer votes and calls transfer votes.
   *
-  * calls a vote [minimum_transfer_time] into the round, and every [minimum_time_between_votes] after that
-  * stops calling votes automatically afer [auto_votes_allowed] attemps. all of these values are set in the config.
+  * If enabled, calls a vote [minimum_transfer_time] into the round, and every [minimum_time_between_votes] after that.
   *
   */
 SUBSYSTEM_DEF(crewtransfer)
@@ -49,12 +48,29 @@ SUBSYSTEM_DEF(crewtransfer)
 	//time to actually call the transfer vote.
 	//if the transfer vote is unable to be called, try again in 2 minutes.
 	//if the transfer vote begins successfully, then we'll come back in [minimum_time_between_votes]
-	wait = SSvote.crew_transfer_vote() ? minimum_time_between_votes : 2 MINUTES
+	wait = call_crew_transfer_vote() ? minimum_time_between_votes : 2 MINUTES
 
 /// prevents the crew transfer SS from firing.
 /datum/controller/subsystem/crewtransfer/proc/disable_vote()
 	can_fire = FALSE
 	message_admins("[name] system has been disabled and automatic votes will no longer be called.")
+	return TRUE
+
+/// Call an crew transfer vote from the server if a vote isn't running.
+/// returns TRUE if it successfully called a vote, FALSE if it failed.
+/datum/controller/subsystem/crewtransfer/proc/call_crew_transfer_vote()
+	//we won't call a vote if we shouldn't be able to leave
+	if(SSshuttle.emergencyNoEscape)
+		message_admins("Crew transfer vote prevented due to un-callable shuttle.")
+		return FALSE
+
+	//we won't call a vote if a vote is running
+	if(SSvote.mode)
+		message_admins("Crew transfer vote prevented due to ongoing vote.")
+		return FALSE
+
+	message_admins("Crew transfer vote initiated.")
+	SSvote.initiate_vote("transfer", "the server", TRUE)
 	return TRUE
 
 /// initiates the shuttle call and logs it.
