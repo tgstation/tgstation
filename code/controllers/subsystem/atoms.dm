@@ -88,7 +88,8 @@ SUBSYSTEM_DEF(atoms)
 	if(!A)	//possible harddel
 		qdeleted = TRUE
 	else if(!(A.flags_1 & INITIALIZED_1))
-		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
+		if (A.type != /mob/dview)  // See /mob/dview for why this is okay
+			BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
