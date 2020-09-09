@@ -64,5 +64,5 @@
 
 /datum/wound/slash/critical/loss/get_examine_description(mob/user)
 	. = ..()
-	if(fake_body_zone == BODY_ZONE_HEAD)
+	if(phantom_body_zone == BODY_ZONE_HEAD)
 		return "<span class='deadsay'>[.]</span>"
