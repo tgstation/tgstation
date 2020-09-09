@@ -49,8 +49,8 @@
 			var/datum/wound/W = i
 			msg += "[W.get_examine_description(user)]\n"
 			/// We don't count limbs that still have a fresh dismemberment wound as missing, that would be redundant
-			if((W.severity == WOUND_SEVERITY_LOSS) && (W.fake_body_zone))
-				missing -= W.fake_body_zone
+			if((W.severity == WOUND_SEVERITY_LOSS) && (W.phantom_body_zone))
+				missing -= W.phantom_body_zone
 
 	for(var/X in disabled)
 		var/obj/item/bodypart/BP = X
