@@ -73,6 +73,17 @@
 	maxbodytemp = T0C + 40
 	held_state = "spacecat"
 
+/mob/living/simple_animal/pet/cat/breadcat
+	name = "Jason"
+	desc = "Cat vore, hell yeah."
+	gender = MALE
+	icon_state = "breadcat"
+	icon_living = "breadcat"
+	icon_dead = "breadcat_dead"
+	collar_type = null
+	unique_pet = TRUE
+	held_state = "breadcat"
+
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
