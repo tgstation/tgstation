@@ -11,7 +11,7 @@
 	if(path)
 		mappath = path
 	if(mappath)
-		INVOKE_ASYNC(src, .proc/preload_size, mappath, cache)
+		preload_size(mappath, cache)
 	if(rename)
 		name = rename
 
