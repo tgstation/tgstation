@@ -26597,15 +26597,15 @@
 "bqE" = (
 /obj/structure/table,
 /obj/structure/window/reinforced,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/item/reagent_containers/dropper{
-	pixel_y = 8
+/obj/item/paper_bin{
+	layer = 2.9
 	},
+/obj/item/folder/blue,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bqF" = (
@@ -53432,6 +53432,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
+/obj/structure/closet/firecloset{
+	name = "fire extinguishers"
+	},
+/obj/item/extinguisher{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/extinguisher{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "ofX" = (
@@ -53590,13 +53601,13 @@
 /area/engine/engineering)
 "ost" = (
 /obj/structure/table/glass,
-/obj/item/paper_bin{
-	layer = 2.9
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/window/reinforced,
-/obj/item/folder/blue,
-/obj/item/pen,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 8
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "ots" = (
@@ -57287,14 +57298,7 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/item/extinguisher{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/extinguisher{
-	pixel_x = 6;
-	pixel_y = 7
-	},
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "wfO" = (
@@ -58312,6 +58316,10 @@
 /obj/structure/table/glass,
 /obj/structure/noticeboard{
 	pixel_y = 32
+	},
+/obj/item/clothing/glasses/science,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
