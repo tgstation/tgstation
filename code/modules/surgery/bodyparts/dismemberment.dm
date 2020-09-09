@@ -372,7 +372,7 @@
 	var/obj/item/bodypart/chest/chest = C.get_bodypart(BODY_ZONE_CHEST)
 	for(var/w in chest.wounds)
 		var/datum/wound/woundie = w
-		if((woundie.severity == WOUND_SEVERITY_LOSS) && (woundie.fake_body_zone == body_zone))
+		if((woundie.severity == WOUND_SEVERITY_LOSS) && (woundie.phantom_body_zone == body_zone))
 			woundie.remove_wound()
 
 	update_bodypart_damage_state()
