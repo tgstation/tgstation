@@ -41185,6 +41185,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "xXI" = (
@@ -86023,7 +86024,7 @@ aaa
 aaa
 aaa
 aad
-aad
+cPq
 cPq
 cPq
 cPq
@@ -86280,8 +86281,8 @@ aaa
 aaa
 aaa
 aad
-aad
 cPq
+gxc
 gxc
 gxc
 omM
@@ -86537,9 +86538,9 @@ aaa
 aaa
 aaa
 aac
-aad
 cPq
 gxc
+irG
 irG
 uDG
 yaX
@@ -86794,8 +86795,8 @@ aaa
 aaa
 aaa
 aac
-aad
 cPq
+rCJ
 rCJ
 rCJ
 omM
@@ -87051,7 +87052,7 @@ aaa
 aaa
 aaa
 aac
-aad
+cPq
 cPq
 cPq
 cPq
