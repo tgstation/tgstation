@@ -550,8 +550,8 @@
 		lamp_enabled = FALSE
 		update_icons()
 		return
-  set_light_range(lamp_intensity * 0.5)
-  set_light_on(TRUE)
+	set_light_range(lamp_intensity * 0.5)
+	set_light_on(TRUE)
 	//set_light(lamp_intensity,1,lamp_color)
 	lamp_enabled = TRUE
 	update_icons()
