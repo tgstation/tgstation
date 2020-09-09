@@ -135,12 +135,12 @@
   * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs]
   */
 /datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
-		handle_martyrs(lanced_by) // note that we can modify radius in this proc
+		INVOKE_ASYNC(src, .proc/handle_martyrs, lanced_by) // note that we can modify radius in this proc
 
 	if(radius < 1)
 		return
@@ -150,7 +150,7 @@
 
 	for(var/T in all_the_turfs_were_gonna_lacerate)
 		var/turf/shootat_turf = T
-		pew(shootat_turf)
+		INVOKE_ASYNC(src, .proc/pew, shootat_turf)
 
 /**
   * handle_martyrs() is used for grenades that shoot shrapnel to check if anyone threw themselves/were thrown on top of the grenade, thus absorbing a good chunk of the shrapnel

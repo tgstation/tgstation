@@ -240,9 +240,7 @@
 		var/mob/living/L = AM
 		L.fire_act(temperature, volume)
 
-/obj/effect/hotspot/backblast
-	volume = 250
-
+// for special backblast hotspots
 /obj/effect/hotspot/backblast/Crossed(atom/movable/AM, oldLoc)
 	..()
 	if(isliving(AM))

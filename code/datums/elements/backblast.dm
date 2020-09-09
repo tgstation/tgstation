@@ -15,7 +15,7 @@
 	/// How far each plume of fire will fly, assuming it doesn't hit a mob
 	var/range
 
-/datum/element/backblast/Attach(datum/target, plumes = 4, angle_spread = 60, range = 10)
+/datum/element/backblast/Attach(datum/target, plumes = 4, angle_spread = 48, range = 8)
 	. = ..()
 	if(!isgun(target) || plumes < 1 || angle_spread < 1 || range < 1)
 		return ELEMENT_INCOMPATIBLE
@@ -48,7 +48,7 @@
 	for(var/i in 1 to plumes)
 		var/this_angle = SIMPLIFY_DEGREES(starting_angle + ((i - 1) * iter_offset))
 		var/turf/target_turf = get_turf_in_angle(this_angle, get_turf(user), 10)
-		pew(target_turf, weapon, user)
+		INVOKE_ASYNC(src, .proc/pew, target_turf, weapon, user)
 
 /// If we're only firing one plume directly behind us, we don't need to bother with the loop or angles or anything
 /datum/element/backblast/proc/gun_fired_simple(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
@@ -59,7 +59,7 @@
 
 	var/backwards_angle = Get_Angle(target, user)
 	var/turf/target_turf = get_turf_in_angle(backwards_angle, get_turf(user), 10)
-	pew(target_turf, weapon, user)
+	INVOKE_ASYNC(src, .proc/pew, target_turf, weapon, user)
 
 /// For firing an actual backblast pellet
 /datum/element/backblast/proc/pew(turf/target_turf, obj/item/gun/weapon, mob/living/user)
