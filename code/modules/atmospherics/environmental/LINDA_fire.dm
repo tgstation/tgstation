@@ -245,7 +245,7 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		L.adjust_fire_stacks(5) // +5 firestacks from normal
+		L.adjust_fire_stacks(3) // +3 firestacks on top of the normal +3
 
 /obj/effect/hotspot/singularity_pull()
 	return
