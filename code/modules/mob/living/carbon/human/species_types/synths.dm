@@ -9,7 +9,8 @@
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off //Actually, this just determines how healthy we have to be to imitate bananium golem speech patterns. It looks like nobody got around to actually coding 
+	///If your health is no longer above this value, your disguise is supposed to break. Unfortunately, that feature currently isn't implemented, so currently, all this threshold is used for is determining whether or not you use SPAN_CLOWN when speaking while disguised as a bananium golem (see handle_speech() for more details).
+	var/disguise_fail_health = 75
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
