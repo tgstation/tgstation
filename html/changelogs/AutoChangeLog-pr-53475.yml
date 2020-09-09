@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "The crashed ship ruin now has proper meat."
