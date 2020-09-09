@@ -1,6 +1,6 @@
-/** Auto crew transfer vote SS
+/** Crew Transfer Vote SS
   *
-  * Tracks information about auto crew transfer votes and calls transfer votes.
+  * Tracks information about Crew transfer votes and calls auto transfer votes.
   *
   * If enabled, calls a vote [minimum_transfer_time] into the round, and every [minimum_time_between_votes] after that.
   *
@@ -22,7 +22,6 @@ SUBSYSTEM_DEF(crewtransfer)
 
 	if(!CONFIG_GET(flag/transfer_auto_vote_enabled))
 		can_fire = FALSE
-		return ..()
 
 	minimum_transfer_time = CONFIG_GET(number/transfer_time_min_allowed)
 	minimum_time_between_votes = CONFIG_GET(number/transfer_time_between_auto_votes)
@@ -41,14 +40,14 @@ SUBSYSTEM_DEF(crewtransfer)
 		return
 
 	//if the shuttle is called and uncreallable, docked or beyond, or a transfer vote succeeded, stop firing
-	if((!SSshuttle.canRecall() && SSshuttle.emergency.mode == SHUTTLE_CALL) || EMERGENCY_AT_LEAST_DOCKED || transfer_vote_successful)
+	if(EMERGENCY_PAST_POINT_OF_NO_RETURN || transfer_vote_successful)
 		disable_vote()
 		return
 
 	//time to actually call the transfer vote.
 	//if the transfer vote is unable to be called, try again in 2 minutes.
 	//if the transfer vote begins successfully, then we'll come back in [minimum_time_between_votes]
-	wait = call_crew_transfer_vote() ? minimum_time_between_votes : 2 MINUTES
+	wait = autocall_crew_transfer_vote() ? minimum_time_between_votes : 2 MINUTES
 
 /// prevents the crew transfer SS from firing.
 /datum/controller/subsystem/crewtransfer/proc/disable_vote()
@@ -58,18 +57,18 @@ SUBSYSTEM_DEF(crewtransfer)
 
 /// Call an crew transfer vote from the server if a vote isn't running.
 /// returns TRUE if it successfully called a vote, FALSE if it failed.
-/datum/controller/subsystem/crewtransfer/proc/call_crew_transfer_vote()
+/datum/controller/subsystem/crewtransfer/proc/autocall_crew_transfer_vote()
 	//we won't call a vote if we shouldn't be able to leave
 	if(SSshuttle.emergencyNoEscape)
-		message_admins("Crew transfer vote prevented due to un-callable shuttle.")
+		message_admins("Automatic crew transfer vote prevented due to hostile situation.")
 		return FALSE
 
 	//we won't call a vote if a vote is running
 	if(SSvote.mode)
-		message_admins("Crew transfer vote prevented due to ongoing vote.")
+		message_admins("Automatic crew transfer vote prevented due to ongoing vote.")
 		return FALSE
 
-	message_admins("Crew transfer vote initiated.")
+	message_admins("Automatic crew transfer vote initiated.")
 	SSvote.initiate_vote("transfer", "the server", TRUE)
 	return TRUE
 
@@ -98,4 +97,6 @@ SUBSYSTEM_DEF(crewtransfer)
 		message_admins("A crew transfer vote has passed, but the shuttle was already called. Recalling the shuttle ingame is disabled. You can still manually manipulate the shuttle if you want.")
 		to_chat(world, "<span style='boldannounce'>Crew transfer vote failed on account of shuttle being called.</span>")
 	SSshuttle.emergencyNoRecall = TRUE // Don't let one guy overrule democracy by recalling afterwards
-	transfer_vote_successful = TRUE //any successful vote, even non-auto ones are marked
+	transfer_vote_successful = TRUE
+
+	return TRUE
