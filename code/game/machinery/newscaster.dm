@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/body =""
 	var/list/authorCensorTime = list()
 	var/list/bodyCensorTime = list()
-	var/is_admin_message = 0
+	var/is_admin_message = FALSE
 	var/icon/img = null
 	var/time_stamp = ""
 	var/list/datum/newscaster/feed_comment/comments = list()
@@ -61,11 +61,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/list/datum/newscaster/feed_message/messages = list()
 	var/locked = FALSE
 	var/author = ""
-	var/censored = 0
+	var/censored = FALSE
 	var/list/authorCensorTime = list()
 	var/list/DclassCensorTime = list()
 	var/authorCensor
-	var/is_admin_channel = 0
+	var/is_admin_channel = FALSE
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	CreateFeedChannel("Station Announcements", "SS13", 1)
 	wanted_issue = new /datum/newscaster/wanted_message
 
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = 0)
+/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = FALSE)
 	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.is_admin_channel = adminChannel
 	network_channels += newChannel
 
-/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = 0, allow_comments = 1, update_alert = TRUE)
+/datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
 	var/datum/newscaster/feed_message/newMsg = new /datum/newscaster/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -138,8 +138,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	lastAction ++
 	newMsg.creationTime = lastAction
 
-/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = 0, newMessage = 0)
-	wanted_issue.active = 1
+/datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = FALSE, newMessage = FALSE)
+	wanted_issue.active = TRUE
 	wanted_issue.criminal = criminal
 	wanted_issue.body = body
 	wanted_issue.scannedUser = scanned_user
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			N.update_icon()
 
 /datum/newscaster/feed_network/proc/deleteWanted()
-	wanted_issue.active = 0
+	wanted_issue.active = FALSE
 	wanted_issue.criminal = null
 	wanted_issue.body = null
 	wanted_issue.scannedUser = null
@@ -273,9 +273,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+= "<BR><A href='?src=[REF(src)];refresh=1'>Re-scan User</A>"
 				dat+= "<BR><BR><A href='?src=[REF(human_or_robot_user)];mach_close=newscaster_main'>Exit</A>"
 				if(securityCaster)
-					var/wanted_already = 0
+					var/wanted_already = FALSE
 					if(GLOB.news_network.wanted_issue.active)
-						wanted_already = 1
+						wanted_already = TRUE
 					dat+="<HR><B>Feed Security functions:</B><BR>"
 					dat+="<BR><A href='?src=[REF(src)];menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
 					dat+="<BR><A href='?src=[REF(src)];menu_censor_story=1'>Censor Feed Stories</A>"
@@ -334,10 +334,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<FONT COLOR='maroon'>There is already a Feed channel under your name.</FONT><BR>"
 				if(channel_name=="" || channel_name == "\[REDACTED\]")
 					dat+="<FONT COLOR='maroon'>Invalid channel name.</FONT><BR>"
-				var/check = 0
+				var/check = FALSE
 				for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 					if(FC.channel_name == channel_name)
-						check = 1
+						check = TRUE
 						break
 				if(check)
 					dat+="<FONT COLOR='maroon'>Channel name already in use.</FONT><BR>"
@@ -436,10 +436,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[11]'>Back</A>"
 			if(14)
 				dat+="<B>Wanted Issue Handler:</B>"
-				var/wanted_already = 0
+				var/wanted_already = FALSE
 				var/end_param = 1
 				if(GLOB.news_network.wanted_issue.active)
-					wanted_already = 1
+					wanted_already = TRUE
 					end_param = 2
 				if(wanted_already)
 					dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
@@ -516,10 +516,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += FC.author
-			var/check = 0
+			var/check = FALSE
 			for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 				if(FC.channel_name == channel_name)
-					check = 1
+					check = TRUE
 					break
 			if(channel_name == "" || channel_name == "\[REDACTED\]" || scanned_user == "Unknown" || check || (scanned_user in existing_authors) )
 				screen=7
@@ -578,10 +578,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen=11
 			updateUsrDialog()
 		else if(href_list["menu_wanted"])
-			var/already_wanted = 0
 			if(GLOB.news_network.wanted_issue.active)
-				already_wanted = 1
-			if(already_wanted)
 				channel_name = GLOB.news_network.wanted_issue.criminal
 				msg = GLOB.news_network.wanted_issue.body
 			screen = 14
@@ -971,17 +968,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
-		return 0
+		return FALSE
 	for(var/i=L.len;i>0;i--)
 		var/num = abs(L[i])
 		if(creationTime <= num)
 			continue
 		else
 			if(L[i] > 0)
-				return 1
+				return TRUE
 			else
-				return 0
-	return 0
+				return FALSE
+	return FALSE
 
 /obj/item/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr

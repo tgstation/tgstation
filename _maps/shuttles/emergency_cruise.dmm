@@ -257,7 +257,7 @@
 /area/template_noop)
 "kJ" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/burger/baconburger{
+/obj/item/food/burger/baconburger{
 	pixel_x = 3
 	},
 /obj/item/reagent_containers/food/snacks/cracker{
@@ -810,7 +810,7 @@
 /area/shuttle/escape)
 "Aq" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate{
+/obj/item/food/cakeslice/chocolate{
 	pixel_x = 16;
 	pixel_y = -8
 	},

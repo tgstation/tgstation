@@ -472,11 +472,11 @@
 
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
-		return 1
+		return TRUE
 	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
-		return 1
+		return TRUE
 	else
 		if(!stealthy)
 			new /obj/effect/temp_visual/cult/sac(loc)
@@ -486,7 +486,7 @@
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1,src)
-		return 0
+		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'

@@ -303,7 +303,7 @@ SUBSYSTEM_DEF(shuttle)
 	if (!SSticker.IsRoundInProgress())
 		return
 
-	var/callShuttle = 1
+	var/callShuttle = TRUE
 
 	for(var/thing in GLOB.shuttle_caller_list)
 		if(isAI(thing))
@@ -319,7 +319,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		var/turf/T = get_turf(thing)
 		if(T && is_station_level(T.z))
-			callShuttle = 0
+			callShuttle = FALSE
 			break
 
 	if(callShuttle)

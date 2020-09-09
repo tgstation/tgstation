@@ -30,8 +30,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/resource_blobs = list()
 	var/free_strain_rerolls = 1 //one free strain reroll
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
-	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
-	var/placed = 0
+	var/nodes_required = TRUE //if the blob needs nodes to place resource and factory blobs
+	var/placed = FALSE
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
@@ -271,13 +271,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(B)
 			forceMove(NewLoc)
 		else
-			return 0
+			return FALSE
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
-			return 0
+			return FALSE
 		forceMove(NewLoc)
-		return 1
+		return TRUE
 
 /mob/camera/blob/mind_initialize()
 	. = ..()
