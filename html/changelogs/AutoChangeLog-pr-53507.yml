@@ -1,0 +1,4 @@
+author: "msgerbs"
+delete-after: True
+changes: 
+  - bugfix: "The PubbyStation Monastery Shuttle will no longer maroon passengers in deep space when the emergency shuttle docks at centcom."
