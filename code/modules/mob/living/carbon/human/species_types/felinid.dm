@@ -2,13 +2,13 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = "felinid"
-	say_mod = "meows"
 	limbs_id = "human"
 
 	mutant_bodyparts = list("ears", "tail_human")
 	default_features = list("mcolor" = "FFF", "tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
 
 	mutantears = /obj/item/organ/ears/cat
+	mutanttongue = /obj/item/organ/tongue/felinid
 	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid

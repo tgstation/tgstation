@@ -368,3 +368,27 @@
 		M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
 	else if(question_found)
 		M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")
+
+
+/obj/item/organ/tongue/felinid
+	name = "cat tongue"
+	desc = "Generally found in the mouths of degenerates."
+	say_mod = "meows"
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/felinid/handle_speech(datum/source, list/speech_args)
+	var/static/regex/felinid_l2w = new("l", "g")
+	var/static/regex/felinid_L2W = new("L", "g")
+	var/static/regex/felinid_r2w = new("r", "g")
+	var/static/regex/felinid_R2W = new("R", "g")
+	var/static/regex/felinid_nya = new(@"\bn([^\Wy])", "g")
+	var/static/regex/felinid_NYA = new(@"\bn([^\Wy])", "g")
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = felinid_l2w.Replace(message, "w")
+		message = felinid_L2W.Replace(message, "W")
+		message = felinid_r2w.Replace(message, "w")
+		message = felinid_R2W.Replace(message, "W")
+		message = felinid_nya.Replace(message, "ny$1")
+		message = felinid_NYA.Replace(message, "NY$1")
+	speech_args[SPEECH_MESSAGE] = message
