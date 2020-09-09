@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Hulk arms no longer break with punching things unintended to break hulk arms"
-  - balance: "Hulk arms no longer break when punching machines (but still take a small bit of recoil damage)."

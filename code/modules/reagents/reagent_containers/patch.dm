@@ -24,8 +24,8 @@
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
+		return FALSE
+	return TRUE // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
 /obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"
@@ -39,8 +39,8 @@
 	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 2, /datum/reagent/medicine/granibitaluri = 8)
 	icon_state = "bandaid_burn"
 
-/obj/item/reagent_containers/pill/patch/instabitaluri
-	name = "instabitaluri patch"
+/obj/item/reagent_containers/pill/patch/synthflesh
+	name = "synthflesh patch"
 	desc = "Helps with brute and burn injuries. Slightly toxic."
-	list_reagents = list(/datum/reagent/medicine/c2/instabitaluri = 20)
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	icon_state = "bandaid_both"

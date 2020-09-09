@@ -18,7 +18,8 @@
 	throw_range = 5
 	force = 5
 	item_flags = NEEDS_PERMIT
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb_continuous = list("strikes", "hits", "bashes")
+	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -93,6 +94,8 @@
 		QDEL_NULL(chambered)
 	if(azoom)
 		QDEL_NULL(azoom)
+	if(suppressed)
+		QDEL_NULL(suppressed)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -105,7 +108,16 @@
 		clear_bayonet()
 	if(A == gun_light)
 		clear_gunlight()
+	if(A == suppressed)
+		clear_suppressor()
 	return ..()
+
+///Clears var and updates icon. In the case of ballistic weapons, also updates the gun's weight.
+/obj/item/gun/proc/clear_suppressor()
+	if(!can_unsuppress)
+		return
+	suppressed = null
+	update_icon()
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
@@ -179,7 +191,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!target)
+	if(QDELETED(target))
 		return
 	if(firing_burst)
 		return
@@ -198,7 +210,8 @@
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
-			for(var/datum/wound/W in C.all_wounds)
+			for(var/i in C.all_wounds)
+				var/datum/wound/W = i
 				if(W.try_treating(src, user))
 					return // another coward cured!
 
@@ -385,9 +398,7 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
-			if(S.on)
-				set_light(0)
-			gun_light = S
+			set_gun_light(S)
 			update_gunlight()
 			alight = new(src)
 			if(loc == user)
@@ -495,11 +506,29 @@
 	if(!gun_light)
 		return
 	var/obj/item/flashlight/seclite/removed_light = gun_light
-	gun_light = null
+	set_gun_light(null)
 	update_gunlight()
 	removed_light.update_brightness()
 	QDEL_NULL(alight)
 	return TRUE
+
+
+///Called when gun_light value changes.
+/obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
+	if(gun_light == new_light)
+		return
+	. = gun_light
+	gun_light = new_light
+	if(gun_light)
+		gun_light.set_light_flags(gun_light.light_flags | LIGHT_ATTACHED)
+		if(gun_light.loc != src)
+			gun_light.forceMove(src)
+	else if(.)
+		var/obj/item/flashlight/seclite/old_gun_light = .
+		old_gun_light.set_light_flags(old_gun_light.light_flags & ~LIGHT_ATTACHED)
+		if(old_gun_light.loc == src)
+			old_gun_light.forceMove(get_turf(src))
+
 
 /obj/item/gun/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, alight))
@@ -513,19 +542,13 @@
 
 	var/mob/living/carbon/human/user = usr
 	gun_light.on = !gun_light.on
+	gun_light.update_brightness()
 	to_chat(user, "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_gunlight()
 
 /obj/item/gun/proc/update_gunlight()
-	if(gun_light)
-		if(gun_light.on)
-			set_light(gun_light.brightness_on)
-		else
-			set_light(0)
-	else
-		set_light(0)
 	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -597,8 +620,14 @@
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
+		if(chambered.BB.wound_bonus != CANT_WOUND)
+			chambered.BB.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
-	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
+	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
+	if(!fired && chambered?.BB)
+		chambered.BB.damage /= 5
+		if(chambered.BB.wound_bonus != CANT_WOUND)
+			chambered.BB.wound_bonus -= 5
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
@@ -633,6 +662,8 @@
 	..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	if(ismob(thing))
 		var/mob/lad = thing
 		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)

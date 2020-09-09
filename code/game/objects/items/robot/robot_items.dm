@@ -70,6 +70,9 @@
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
+				if(isanimal(M))
+					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
@@ -303,7 +306,7 @@
 			"<span class='danger'>The siren pierces your hearing!</span>")
 		for(var/mob/living/carbon/M in get_hearers_in_view(9, user))
 			if(M.get_ear_protection() == FALSE)
-				M.confused += 6
+				M.add_confusion(6)
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
@@ -320,12 +323,12 @@
 			var/bang_effect = C.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
 				if(1)
-					C.confused += 5
+					C.add_confusion(5)
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
 					C.Paralyze(40)
-					C.confused += 10
+					C.add_confusion(10)
 					C.stuttering += 15
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
@@ -349,11 +352,8 @@
 
 	var/firedelay = 0
 	var/hitspeed = 2
-	var/hitdamage = 0
-	var/emaggedhitdamage = 3
 
 /obj/item/borg/lollipop/clown
-	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
 	. = ..()
@@ -418,11 +418,14 @@
 		to_chat(user, "<span class='warning'>Not enough lollipops left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/lollipop/A = new /obj/item/ammo_casing/caseless/lollipop(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+
+	var/obj/item/ammo_casing/caseless/lollipop/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/lollipop/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/lollipop(src)
+
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
@@ -433,11 +436,13 @@
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/gumball/A = new /obj/item/ammo_casing/caseless/gumball(src)
-	A.BB.damage = hitdamage
-	if(hitdamage)
-		A.BB.nodamage = FALSE
-	A.BB.speed = 0.5
+	var/obj/item/ammo_casing/caseless/gumball/A
+	var/mob/living/silicon/robot/R = user
+	if(istype(R) && R.emagged)
+		A = new /obj/item/ammo_casing/caseless/gumball/harmful(src)
+	else
+		A = new /obj/item/ammo_casing/caseless/gumball(src)
+
 	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -452,8 +457,6 @@
 		if(!R.cell.use(12))
 			to_chat(user, "<span class='warning'>Not enough power.</span>")
 			return FALSE
-		if(R.emagged)
-			hitdamage = emaggedhitdamage
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
@@ -463,7 +466,6 @@
 			shootL(target, user, click_params)
 		if(THROW_GUMBALL_MODE)
 			shootG(target, user, click_params)
-	hitdamage = initial(hitdamage)
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
 	switch(mode)
@@ -492,6 +494,8 @@
 	projectile_type = /obj/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
+/obj/item/ammo_casing/caseless/gumball/harmful
+	projectile_type = /obj/projectile/bullet/reusable/gumball/harmful
 
 /obj/projectile/bullet/reusable/gumball
 	name = "gumball"
@@ -499,6 +503,13 @@
 	icon_state = "gumball"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+
+/obj/projectile/bullet/reusable/gumball/harmful
+	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	nodamage = FALSE
+	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
@@ -513,13 +524,26 @@
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
+// rejected name: DumDum lollipop (get it, cause it embeds?)
+/obj/item/ammo_casing/caseless/lollipop/harmful
+	projectile_type = /obj/projectile/bullet/reusable/lollipop/harmful
+
 /obj/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
 	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
-	var/color2 = rgb(0, 0, 0)
+	embedding = null
 	nodamage = TRUE
+	damage = 0
+	speed = 0.5
+	var/color2 = rgb(0, 0, 0)
+
+/obj/projectile/bullet/reusable/lollipop/harmful
+	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
+	damage = 3
+	nodamage = FALSE
+	embed_falloff_tile = 0
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
@@ -536,6 +560,18 @@
 		S.change_head_color(color2)
 		dropped = TRUE
 
+/obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
+	name = "plating repair tool"
+	desc = "A tiny heating device that's powered by a cyborg's excess heat. Its intended purpose is to repair burnt or damaged hull platings, but it can also be used as a crude lighter or cautery."
+	toolspeed = 1.5 //it's not designed to be used as a cautery (although it's close enough to one to be considered to be a proper cautery instead of just a hot object for the purposes of surgery) 
+	heat = 3800 //this thing is intended for metal-shaping, so it's the same temperature as a lit welder
+	resistance_flags = FIRE_PROOF //if it's channeling a cyborg's excess heat, it's probably fireproof
+	force = 5
+	damtype = BURN
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg') //the usesounds of a lit welder
+	hitsound = 'sound/items/welder.ogg' //the hitsound of a lit welder
+
+
 #define PKBORG_DAMPEN_CYCLE_DELAY 20
 
 //Peacekeeper Cyborg Projectile Dampenening Field
@@ -546,15 +582,18 @@
 	icon_state = "shield"
 	var/maxenergy = 1500
 	var/energy = 1500
-	var/energy_recharge = 7.5
+	/// Recharging rate in energy per second
+	var/energy_recharge = 37.5
 	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
 	var/datum/proximity_monitor/advanced/dampening_field
 	var/projectile_damage_coefficient = 0.5
-	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
+	/// Energy cost per tracked projectile damage amount per second
+	var/projectile_damage_tick_ecost_coefficient = 10
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
-	var/projectile_tick_speed_ecost = 15
+	/// Energy cost per tracked projectile per second
+	var/projectile_tick_speed_ecost = 75
 	var/list/obj/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
@@ -640,38 +679,38 @@
 	deactivate_field()
 	. = ..()
 
-/obj/item/borg/projectile_dampen/process()
-	process_recharge()
-	process_usage()
+/obj/item/borg/projectile_dampen/process(delta_time)
+	process_recharge(delta_time)
+	process_usage(delta_time)
 	update_location()
 
 /obj/item/borg/projectile_dampen/proc/update_location()
 	if(dampening_field)
 		dampening_field.HandleMove()
 
-/obj/item/borg/projectile_dampen/proc/process_usage()
+/obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
 		if(!P.stun && P.nodamage)	//No damage
 			continue
-		usage += projectile_tick_speed_ecost
-		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
+		usage += projectile_tick_speed_ecost * delta_time
+		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
 		visible_message("<span class='warning'>[src] blinks \"ENERGY DEPLETED\".</span>")
 
-/obj/item/borg/projectile_dampen/proc/process_recharge()
+/obj/item/borg/projectile_dampen/proc/process_recharge(delta_time)
 	if(!istype(host))
 		if(iscyborg(host.loc))
 			host = host.loc
 		else
-			energy = clamp(energy + energy_recharge, 0, maxenergy)
+			energy = clamp(energy + energy_recharge * delta_time, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
-		energy += energy_recharge
+		host.cell.use(energy_recharge * delta_time * energy_recharge_cyborg_drain_coefficient)
+		energy += energy_recharge * delta_time
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/P, track_projectile = TRUE)
 	if(tracked[P])

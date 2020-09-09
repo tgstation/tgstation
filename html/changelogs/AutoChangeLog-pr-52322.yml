@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Arrhytmic knife now updates movespeed every time it processes, as intended."
-  - balance: "Arrhytmic knife movespeed change brought more in line with other speed increasing effects."

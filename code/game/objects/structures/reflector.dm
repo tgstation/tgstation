@@ -113,7 +113,7 @@
 								"<span class='notice'>You start to weld [src] to the floor...</span>",
 								"<span class='hear'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
 		else
 			if(!W.tool_start_check(user, amount=0))
@@ -123,7 +123,7 @@
 								"<span class='notice'>You start to cut [src] free from the floor...</span>",
 								"<span class='hear'>You hear welding.</span>")
 			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
 
 	//Finishing the frame

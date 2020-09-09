@@ -3,7 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
-	flora_allowed = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 
 /area/mine/explored
 	name = "Mine"
@@ -17,7 +17,7 @@
 	outdoors = TRUE
 	flags_1 = NONE
 	ambientsounds = MINING
-	flora_allowed = FALSE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 /area/mine/unexplored
 	name = "Mine"
@@ -31,7 +31,7 @@
 	outdoors = TRUE
 	flags_1 = NONE
 	ambientsounds = MINING
-	tunnel_allowed = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | TUNNELS_ALLOWED
 
 /area/mine/lobby
 	name = "Mining Station"
@@ -70,6 +70,10 @@
 /area/mine/sleeper
 	name = "Mining Station Emergency Sleeper"
 
+/area/mine/mechbay
+	name = "Mining Station Mech Bay"
+	icon_state = "mechbay"
+
 /area/mine/laborcamp
 	name = "Labor Camp"
 	icon_state = "mining_labor"
@@ -88,8 +92,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	flora_allowed = TRUE
-	blob_allowed = FALSE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -120,16 +123,15 @@
 
 /area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	tunnel_allowed = TRUE
-	mob_spawn_allowed = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
 
 /area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
 	icon_state = "danger"
-	megafauna_spawn_allowed = TRUE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
-	flora_allowed = FALSE
+	area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 
 
@@ -139,9 +141,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	flora_allowed = TRUE
-	blob_allowed = FALSE
-	valid_territory = FALSE
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED
 
 /area/icemoon/surface
 	name = "Icemoon"
@@ -160,18 +160,17 @@
 
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"
-	flora_allowed = FALSE
+	area_flags = UNIQUE_AREA
 
 /area/icemoon/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
-	tunnel_allowed = TRUE
-	mob_spawn_allowed = TRUE
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | TUNNELS_ALLOWED
 
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
-	mob_spawn_allowed = FALSE
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | TUNNELS_ALLOWED
 
 /area/icemoon/underground
 	name = "Icemoon Caves"
@@ -187,13 +186,11 @@
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
-	tunnel_allowed = TRUE
-	mob_spawn_allowed = TRUE
-	megafauna_spawn_allowed = TRUE
+	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"
-	flora_allowed = FALSE
+	area_flags = UNIQUE_AREA

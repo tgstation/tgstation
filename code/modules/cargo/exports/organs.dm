@@ -36,3 +36,20 @@
 	cost = 5
 	unit_name = "humanoid tounge"
 	export_types = list(/obj/item/organ/tongue)
+
+/datum/export/organ/tail/lizard
+	cost = 250
+	unit_name = "lizard tail"
+	export_types = list(/obj/item/organ/tail/lizard)
+
+
+/datum/export/organ/tail/cat
+	cost = 300
+	unit_name = "cat tail"
+	export_types = list(/obj/item/organ/tail/cat)
+
+/datum/export/organ/ears/cat
+	cost = 200
+	unit_name = "cat ears"
+	export_types = list(/obj/item/organ/ears/cat)
+

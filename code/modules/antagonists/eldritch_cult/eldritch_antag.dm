@@ -48,7 +48,6 @@
 		EK.on_lose(owner.current)
 
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
@@ -215,9 +214,9 @@
 	name = "spendtime"
 	var/timer = 5 MINUTES
 
-/datum/objective/stalk/process()
+/datum/objective/stalk/process(delta_time)
 	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
-		timer -= 1 SECONDS
+		timer -= delta_time * 10 // timer is in deciseconds
 	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
 	if(timer <= 0)
 		STOP_PROCESSING(SSprocessing,src)

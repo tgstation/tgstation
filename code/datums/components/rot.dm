@@ -10,7 +10,7 @@
 
 	START_PROCESSING(SSprocessing, src)
 
-/datum/component/rot/process()
+/datum/component/rot/process(delta_time)
 	var/atom/A = parent
 
 	var/turf/open/T = get_turf(A)
@@ -19,7 +19,7 @@
 
 	var/datum/gas_mixture/stank = new
 	ADD_GAS(/datum/gas/miasma, stank.gases)
-	stank.gases[/datum/gas/miasma][MOLES] = amount
+	stank.gases[/datum/gas/miasma][MOLES] = amount * delta_time
 	stank.temperature = BODYTEMP_NORMAL // otherwise we have gas below 2.7K which will break our lag generator
 	T.assume_air(stank)
 	T.air_update_turf()
@@ -47,7 +47,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
+	if(C.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead

@@ -63,3 +63,12 @@
     + (map.get($colors, 'green') * .7152)
     + (map.get($colors, 'blue') * .0722);
 }
+
+// Blends an RGBA color with a static background color based on its
+// alpha channel. Returns an RGB color, which is compatible with IE8.
+@function fake-alpha($color-rgba, $color-background) {
+  @return color.mix(
+    color.change($color-rgba, $alpha: 1),
+    $color-background,
+    color.alpha($color-rgba) * 100%);
+}

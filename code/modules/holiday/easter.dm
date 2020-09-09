@@ -49,6 +49,8 @@
 	icon_prefix = "rabbit"
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
+	pet_bonus = TRUE
+	pet_bonus_emote = "hops around happily!"
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -61,26 +63,24 @@
 	unsuitable_atmos_damage = 0
 
 //Easter Baskets
-/obj/item/storage/bag/easterbasket
+/obj/item/storage/basket/easter
 	name = "Easter Basket"
-	icon = 'icons/mob/easter.dmi'
-	icon_state = "basket"
 
-/obj/item/storage/bag/easterbasket/Initialize()
+/obj/item/storage/basket/easter/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
 
-/obj/item/storage/bag/easterbasket/proc/countEggs()
+/obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
 	add_overlay("basket-grass")
 	add_overlay("basket-egg[min(contents.len, 5)]")
 
-/obj/item/storage/bag/easterbasket/Exited()
+/obj/item/storage/basket/easter/Exited()
 	. = ..()
 	countEggs()
 
-/obj/item/storage/bag/easterbasket/Entered()
+/obj/item/storage/basket/easter/Entered()
 	. = ..()
 	countEggs()
 
@@ -174,34 +174,19 @@
 /datum/crafting_recipe/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/food/bread/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
 	subcategory = CAT_MISCFOOD
 
-
-/obj/item/reagent_containers/food/snacks/store/cake/brioche
-	name = "brioche cake"
-	desc = "A ring of sweet, glazed buns."
-	icon_state = "briochecake"
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brioche
-	slices_num = 6
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
-
-/obj/item/reagent_containers/food/snacks/cakeslice/brioche
-	name = "brioche cake slice"
-	desc = "Delicious sweet-bread. Who needs anything else?"
-	icon_state = "briochecake_slice"
-	filling_color = "#FFD700"
-
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/food/cake/plain = 1,
 		/datum/reagent/consumable/sugar = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche
+	result = /obj/item/food/cake/brioche
 	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/scotchegg
@@ -234,7 +219,7 @@
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1,
+		/obj/item/food/bread/plain = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)

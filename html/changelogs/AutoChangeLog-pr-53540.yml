@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - soundadd: "light eaters make a slashing sound effect rather than a bludgeoning one"

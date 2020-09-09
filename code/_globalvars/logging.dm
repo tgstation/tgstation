@@ -44,8 +44,6 @@ GLOBAL_VAR(tgui_log)
 GLOBAL_PROTECT(tgui_log)
 GLOBAL_VAR(world_shuttle_log)
 GLOBAL_PROTECT(world_shuttle_log)
-GLOBAL_VAR(discord_api_log)
-GLOBAL_PROTECT(discord_api_log)
 
 GLOBAL_VAR(demo_log)
 GLOBAL_PROTECT(demo_log)

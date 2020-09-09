@@ -91,7 +91,7 @@
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
+		return FALSE
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
@@ -361,9 +361,9 @@
 	..()
 	var/sanity = 0
 	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
-		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
-		if(summon && is_station_level(summon.z) && summon.valid_territory)
-			summon_spots += summon
+		var/area/summon_area = pick(GLOB.sortedAreas - summon_spots)
+		if(summon_area && is_station_level(summon_area.z) && (summon_area.area_flags & VALID_TERRITORY))
+			summon_spots += summon_area
 		sanity++
 	update_explanation_text()
 

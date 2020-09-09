@@ -50,7 +50,7 @@
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
 	trash = /obj/item/trash/sosjerky
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sodiumchloride = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/sodiumchloride = 2)
 	junkiness = 25
 	filling_color = "#8B0000"
 	tastes = list("dried meat" = 1)
@@ -60,7 +60,7 @@
 /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	name = "homemade beef jerky"
 	desc = "Homemade beef jerky made from the finest space cows."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	junkiness = 0
 	value = FOOD_FAST
 
@@ -76,6 +76,20 @@
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtype = JUNKFOOD | FRIED
 	value = FOOD_JUNK
+
+/obj/item/reagent_containers/food/snacks/chips/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(!isliving(AM) || bitecount) // can't pop opened chips
+		return
+
+	var/mob/living/popper = AM
+	if(popper.mob_size < MOB_SIZE_HUMAN)
+		return
+
+	playsound(src, 'sound/effects/chipbagpop.ogg', 100)
+	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a sharp crack!</span>", COMBAT_MESSAGE_RANGE)
+	generate_trash(loc)
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"

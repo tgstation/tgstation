@@ -42,13 +42,6 @@
 
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 
-/datum/outfit/mafia/clown
-	name = "Mafia Clown"
-
-	uniform = /obj/item/clothing/under/rank/civilian/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
-
 /datum/outfit/mafia/lawyer
 	name = "Mafia Lawyer"
 
@@ -56,8 +49,14 @@
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 
+/datum/outfit/mafia/hop
+	name = "Mafia Head of Personnel"
 
-
+	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	head = /obj/item/clothing/head/hopcap
+	glasses = /obj/item/clothing/glasses/sunglasses
 
 //mafia
 
@@ -88,9 +87,22 @@
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 
+/datum/outfit/mafia/clown
+	name = "Mafia Clown"
+
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
+
 /datum/outfit/mafia/traitor
 	name = "Mafia Traitor"
 
 	mask = /obj/item/clothing/mask/gas/syndicate
 	uniform = /obj/item/clothing/under/syndicate/tacticool
 	shoes = /obj/item/clothing/shoes/jackboots
+
+/datum/outfit/mafia/nightmare
+	name = "Mafia Nightmare"
+
+	uniform = null
+	shoes = null

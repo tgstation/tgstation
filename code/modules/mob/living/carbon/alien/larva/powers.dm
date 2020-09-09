@@ -44,6 +44,10 @@
 		to_chat(L, "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into a praetorian and then queen if no queen exists, and are vital to maintaining a hive with their resin secretion abilities.</span>")
 		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
 
+		if(L.movement_type & VENTCRAWLING)
+			to_chat(user, "<span class='warning'>You cannot evolve while ventcrawling!</span>")
+			return
+
 		if(user.incapacitated()) //something happened to us while we were choosing.
 			return
 
@@ -57,7 +61,7 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
-		return 0
+		return
 	else
 		to_chat(user, "<span class='warning'>You are not fully grown!</span>")
-		return 0
+		return

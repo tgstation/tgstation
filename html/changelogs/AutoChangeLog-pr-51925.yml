@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Items hidden in bread, cake, and cheeses can now have unique interactions when someone bites into it them."
-  - rscadd: "Sharp objects like shards of glass, ammunition, beakers, bottles, syringes, pills, organs, and more will now have unique interactions if you somehow manage to accidentally bite or swallow one that was hidden in food."
-  - tweak: "You can now insert sharp objects into food containers (bread, cake, cheese) if you're on disarm intent."

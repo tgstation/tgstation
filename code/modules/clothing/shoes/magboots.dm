@@ -3,7 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	var/magboot_state = "magboots"
-	var/magpulse = 0
+	var/magpulse = FALSE
 	var/slowdown_active = 2
 	permeability_coefficient = 0.05
 	actions_types = list(/datum/action/item_action/toggle)
@@ -32,6 +32,7 @@
 	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
 	user.update_inv_shoes()	//so our mob-overlays update
 	user.update_gravity(user.has_gravity())
+	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

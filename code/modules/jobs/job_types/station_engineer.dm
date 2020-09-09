@@ -1,8 +1,6 @@
 /datum/job/engineer
 	title = "Station Engineer"
-	flag = ENGINEER
 	department_head = list("Chief Engineer")
-	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 5
@@ -41,6 +39,8 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+
+	skillchip_path = /obj/item/skillchip/job/engineer
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"

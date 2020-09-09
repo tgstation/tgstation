@@ -1,0 +1,26 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+.Notifications {
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+  right: 2em;
+}
+
+.Notification {
+  color: #fff;
+  background-color: crimson;
+  padding: 0.5em;
+  margin: 1em 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
