@@ -9,7 +9,7 @@
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	///If your health is no longer above this value, your disguise is supposed to break. Unfortunately, that feature currently isn't implemented, so currently, all this threshold is used for is determining whether or not you use SPAN_CLOWN when speaking while disguised as a bananium golem (see handle_speech() for more details).
+	///If your health becomes equal to or less than this value, your disguise is supposed to break. Unfortunately, that feature currently isn't implemented, so currently, all this threshold is used for is (I kid you not) determining whether or not your speech uses SPAN_CLOWN while you're disguised as a bananium golem. See the handle_speech() override for synths in this file for more details on that.
 	var/disguise_fail_health = 75
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
