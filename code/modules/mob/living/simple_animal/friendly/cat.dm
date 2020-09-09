@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/pet/cat/breadcat
 	name = "Jason"
-	desc = "Cat vore, hell yeah."
+	desc = "It's a cat... with a bread!"
 	gender = MALE
 	icon_state = "breadcat"
 	icon_living = "breadcat"
