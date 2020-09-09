@@ -14,9 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
+	var/mob/living/owner
 
-/obj/effect/proc_holder/Initialize()
+/obj/effect/proc_holder/Initialize(mob/living/owner)
 	. = ..()
+	src.owner = owner
 	if(has_action)
 		action = new base_action(src)
 
