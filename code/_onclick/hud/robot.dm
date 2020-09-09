@@ -111,7 +111,7 @@
 	using.screen_loc = ui_borg_lamp
 	using.hud = src
 	static_inventory += using
-	mymobR.lamp_button = using
+//	mymobR.lamp_button = using
 
 //Photography stuff
 	using = new /obj/screen/ai/image_take()

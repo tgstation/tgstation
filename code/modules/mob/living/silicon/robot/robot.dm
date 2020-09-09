@@ -33,8 +33,6 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
-	var/obj/screen/lamp_button = null
-	var/obj/screen/thruster_button = null
 	var/obj/screen/hands = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
@@ -86,8 +84,8 @@
 	var/lamp_enabled = FALSE
 	///Set lamp color
 	var/lamp_color = COLOR_WHITE
-	///Lamp brightness
-	var/lamp_intensity = 5
+	///Lamp brightness. Starts at 3, but can be 1 - 5.
+	var/lamp_intensity = 3
 
 
 	var/sight_mode = 0
@@ -316,8 +314,6 @@
 		ion_trail.start()
 	else
 		ion_trail.stop()
-	if(thruster_button)
-		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
@@ -1118,7 +1114,7 @@
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
-	var/datum/computer_file/program/borgUI/program = hard_drive.find_file_by_name("borgUI")
+	var/datum/computer_file/program/robotact/program = hard_drive.find_file_by_name("borgUI")
 	if(!program)
 		stack_trace("Cyborg [src] ( [type] ) was somehow missing their self-manage app in their tablet. Please make a bug report.")
 		return

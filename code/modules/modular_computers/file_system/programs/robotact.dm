@@ -1,6 +1,6 @@
-/datum/computer_file/program/borgUI //generic parent that handles most of the process
-	filename = "borgUI"
-	filedesc = "borgUI"
+/datum/computer_file/program/robotact
+	filename = "RoboTact"
+	filedesc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
 	requires_ntnet = FALSE
@@ -10,15 +10,15 @@
 	undeletable = TRUE
 	usage_flags = PROGRAM_TABLET
 	size = 5
-	tgui_id = "NtosBorgUI"
+	tgui_id = "NtosRobotact"
 	///A typed reference to the computer, specifying the borg tablet type
 	var/obj/item/modular_computer/tablet/integrated/tablet
 
-/datum/computer_file/program/borgUI/Destroy()
+/datum/computer_file/program/robotact/Destroy()
 	tablet = null
 	return ..()
 
-/datum/computer_file/program/borgUI/run_program(mob/living/user)
+/datum/computer_file/program/robotact/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
 		to_chat(user, "<span class='warning'>A warning flashes across \the [computer]: Device Incompatible.</span>")
 		return FALSE
@@ -30,7 +30,7 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/borgUI/ui_data(mob/user)
+/datum/computer_file/program/robotact/ui_data(mob/user)
 	var/list/data = get_header_data()
 	if(!iscyborg(user))
 		return data
@@ -71,7 +71,7 @@
 
 	return data
 
-/datum/computer_file/program/borgUI/ui_static_data(mob/user)
+/datum/computer_file/program/robotact/ui_static_data(mob/user)
 	var/list/data = list()
 	if(!iscyborg(user))
 		return data
@@ -82,7 +82,7 @@
 	data["borgUpgrades"] = borgo.upgrades
 	return data
 
-/datum/computer_file/program/borgUI/ui_act(action, params)
+/datum/computer_file/program/robotact/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -135,6 +135,6 @@
   * Forces an update that includes refreshing ui_static_data. Called by
   * law changes and borg log additions.
   */
-/datum/computer_file/program/borgUI/proc/force_full_update()
+/datum/computer_file/program/robotact/proc/force_full_update()
 	if(tablet)
 		SStgui.get_open_ui(tablet.borgo, src)?.send_full_update()
