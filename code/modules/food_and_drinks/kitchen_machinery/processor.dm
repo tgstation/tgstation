@@ -43,7 +43,7 @@
 			continue
 		return recipe
 
-/obj/machinery/processor/attackby(obj/item/O, mob/user, params)
+/obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
 	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
@@ -79,7 +79,7 @@
 		user.transferItemToLoc(O, src, TRUE)
 		return 1
 	else
-		if(user.a_intent != INTENT_HARM)
+		if(!user.in_combat_mode())
 			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 			return 1
 		else

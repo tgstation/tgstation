@@ -881,8 +881,8 @@
 	add_overlay(pancake)
 	update_icon()
 
-/obj/item/reagent_containers/food/snacks/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
-	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+/obj/item/reagent_containers/food/snacks/pancakes/attack(mob/M, mob/living/user, def_zone, stacked = TRUE)
+	if(user.in_combat_mode() || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
 	. = O.attack(M, user, def_zone, FALSE)

@@ -232,7 +232,7 @@
 						monkey_attack(target)
 
 					else
-						a_intent = INTENT_HARM
+						combat_mode = TRUE
 						monkey_attack(target)
 
 					return TRUE
@@ -368,19 +368,19 @@
 	if(L != src)
 		enemies[L] += MONKEY_HATRED_AMOUNT
 
-	if(a_intent != INTENT_HARM)
+	if(!in_combat_mode())
 		battle_screech()
-		a_intent = INTENT_HARM
+		toggle_combat_mode()
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)

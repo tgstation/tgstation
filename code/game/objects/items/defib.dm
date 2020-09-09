@@ -410,7 +410,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/user)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user)
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
@@ -446,7 +446,7 @@
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
-	if(user.a_intent == INTENT_HARM)
+	if(user.in_combat_mode())
 		do_harm(H, user)
 		return
 

@@ -794,7 +794,11 @@
 		var/mob/M = dropping
 		if(ismob(user))
 			var/mob/U = user
-			if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+			if(iscyborg(U))
+				var/mob/living/silicon/robot/cyborg = U
+				if(cyborg.in_combat_mode())
+					M.show_inv(cyborg)
+			else
 				M.show_inv(U)
 		else
 			M.show_inv(user)

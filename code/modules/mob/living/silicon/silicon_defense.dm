@@ -80,7 +80,7 @@
 			to_chat(M, "<span class='danger'>You punch [src], but don't leave a dent!</span>")
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.a_intent == INTENT_HARM)
+	if(M.in_combat_mode())
 		return
 	return ..()
 

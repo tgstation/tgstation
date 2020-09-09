@@ -79,7 +79,7 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-		if(chassis.occupant.a_intent == INTENT_HARM)
+		if(chassis.occupant.in_combat_mode())
 			M.take_overall_damage(dam_force)
 			if(!M)
 				return
@@ -139,7 +139,7 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-		if(chassis.occupant.a_intent == INTENT_HARM)
+		if(chassis.occupant.in_combat_mode())
 			if(real_clamp)
 				M.take_overall_damage(dam_force)
 				if(!M)

@@ -47,7 +47,7 @@
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
-	if(is_type_in_list(I, collectable_items) && user.a_intent != INTENT_HARM)
+	if(is_type_in_list(I, collectable_items) && !user.in_combat_mode())
 		if(!user.transferItemToLoc(I, src))
 			return
 		to_chat(user, "<span class='notice'>You put [I] in [src], and it's beamed into energy!</span>")

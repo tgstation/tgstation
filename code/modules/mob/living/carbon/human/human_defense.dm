@@ -256,7 +256,7 @@
 		return 0
 
 	if(..())
-		if(M.a_intent == INTENT_HARM)
+		if(M.in_combat_mode())
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
 			var/damage = prob(90) ? 20 : 0
@@ -350,7 +350,7 @@
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
-	if(M.occupant.a_intent == INTENT_HARM)
+	if(in_combat_mode())
 		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
 			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return

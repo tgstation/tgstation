@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	mob_biotypes = MOB_HUMANOID
 
 	response_help_continuous = "touches"

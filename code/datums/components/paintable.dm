@@ -15,7 +15,7 @@
 /datum/component/spraycan_paintable/proc/Repaint(datum/source, obj/item/toy/crayon/spraycan/spraycan, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!istype(spraycan) || user.a_intent == INTENT_HARM)
+	if(!istype(spraycan) || user.in_combat_mode())
 		return
 	. = COMPONENT_NO_AFTERATTACK
 	if(spraycan.is_capped)

@@ -293,7 +293,7 @@
 
 /obj/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.in_combat_mode())
 		return
 	. = TRUE
 	if(internal_damage & MECHA_INT_TANK_BREACH)

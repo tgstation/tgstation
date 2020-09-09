@@ -120,7 +120,7 @@
 		return attack_threshold_check(damage)
 
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.a_intent == INTENT_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
+	if(M.in_combat_mode()) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 

@@ -70,7 +70,7 @@
 
 /mob/living/proc/toggle_combat_mode()
 	combat_mode = !combat_mode
-	client?.show_popup_menus = !combat_mode //No right click menu in combat mode.
+	client?.show_popup_menus = !src.combat_mode //No right click menu in combat mode.
 	if(combat_mode)
 		playsound_local(src, 'sound/misc/ui_togglecombat.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	else
@@ -111,7 +111,7 @@
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
-	if(M.occupant.a_intent == INTENT_HARM)
+	if(M.occupant.in_combat_mode())
 		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
 			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
@@ -275,7 +275,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return FALSE
 
-	if (M.a_intent == INTENT_HARM)
+	if (M.in_combat_mode())
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
 			return FALSE

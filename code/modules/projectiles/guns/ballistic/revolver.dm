@@ -91,7 +91,7 @@
 						"The Peacemaker" = "detective_peacemaker",
 						"Black Panther" = "detective_panther"
 						)
-	
+
 	/// Used to avoid some redundancy on a revolver loaded with 357 regarding misfiring while being wrenched.
 	var/skip_357_missfire_check = FALSE
 
@@ -193,7 +193,7 @@
 
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
-			if(user.a_intent == INTENT_HARM) // Flogging action
+			if(user.in_combat_mode()) // Flogging action
 				return
 
 	if(isliving(user))

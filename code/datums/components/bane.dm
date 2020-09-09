@@ -41,7 +41,7 @@
 		return
 	activate(source, target, user)
 
-/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/attacker)
+/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/living/attacker)
 	if(!attacker.in_combat_mode())
 		return
 

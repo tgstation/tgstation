@@ -78,7 +78,7 @@
 	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -94,7 +94,7 @@
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
-	if(user.a_intent != INTENT_HARM)
+	if(!user.in_combat_mode())
 		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
 		return 1
 	else

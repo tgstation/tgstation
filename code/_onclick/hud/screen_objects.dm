@@ -260,41 +260,6 @@
 	if(usr.stat == CONSCIOUS)
 		usr.dropItemToGround(usr.get_active_held_item())
 
-/obj/screen/act_intent
-	name = "intent"
-	icon_state = "help"
-	screen_loc = ui_acti
-
-/obj/screen/act_intent/Click(location, control, params)
-	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
-
-/obj/screen/act_intent/segmented/Click(location, control, params)
-	if(usr.client.prefs.toggles & INTENT_STYLE)
-		var/_x = text2num(params2list(params)["icon-x"])
-		var/_y = text2num(params2list(params)["icon-y"])
-
-		if(_x<=16 && _y<=16)
-			usr.a_intent_change(INTENT_HARM)
-
-		else if(_x<=16 && _y>=17)
-			usr.a_intent_change(INTENT_HELP)
-
-		else if(_x>=17 && _y<=16)
-			usr.a_intent_change(INTENT_GRAB)
-
-		else if(_x>=17 && _y>=17)
-			usr.a_intent_change(INTENT_DISARM)
-	else
-		return ..()
-
-/obj/screen/act_intent/alien
-	icon = 'icons/mob/screen_alien.dmi'
-	screen_loc = ui_movi
-
-/obj/screen/act_intent/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
-	screen_loc = ui_borg_intents
-
 /obj/screen/internals
 	name = "toggle internals"
 	icon_state = "internal0"
@@ -677,7 +642,7 @@
 	if(iscarbon(usr))
 		var/mob/living/owner = usr
 		owner.toggle_combat_mode()
-		update_icon_state()
+		update_icon()
 
 
 /obj/screen/combattoggle/update_icon_state()

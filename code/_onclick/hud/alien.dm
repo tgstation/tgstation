@@ -50,11 +50,11 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/act_intent/alien()
-	using.icon_state = mymob.a_intent
+	using = new /obj/screen/combattoggle()
 	using.hud = src
+	using.icon = ui_style
+	using.screen_loc = ui_combat_toggle
 	static_inventory += using
-	action_intent = using
 
 	if(isalienhunter(mymob))
 		var/mob/living/carbon/alien/humanoid/hunter/H = mymob

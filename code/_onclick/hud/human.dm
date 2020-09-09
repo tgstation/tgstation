@@ -228,6 +228,7 @@
 	hotkeybuttons += using
 
 	using = new /obj/screen/combattoggle()
+	using.hud = src
 	using.icon = ui_style
 	using.screen_loc = ui_combat_toggle
 	static_inventory += using

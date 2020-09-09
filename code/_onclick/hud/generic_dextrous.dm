@@ -32,17 +32,11 @@
 	using.hud = src
 	static_inventory += using
 
-	if(mymob.possible_a_intents)
-		if(mymob.possible_a_intents.len == 4)
-			// All possible intents - full intent selector
-			action_intent = new /obj/screen/act_intent/segmented
-		else
-			action_intent = new /obj/screen/act_intent
-			action_intent.icon = ui_style
-		action_intent.icon_state = mymob.a_intent
-		action_intent.hud = src
-		static_inventory += action_intent
-
+	using = new /obj/screen/combattoggle()
+	using.hud = src
+	using.icon = ui_style
+	using.screen_loc = ui_combat_toggle
+	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

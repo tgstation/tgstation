@@ -62,7 +62,7 @@
 	var/list/tc = allowed_typecache
 	if(disable_attackby)
 		return
-	if(user.a_intent != INTENT_HELP)
+	if(user.in_combat_mode())
 		return
 	if(I.item_flags & ABSTRACT)
 		return

@@ -3,12 +3,12 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	action_intent = new /obj/screen/act_intent()
-	action_intent.icon = ui_style
-	action_intent.icon_state = mymob.a_intent
-	action_intent.screen_loc = ui_acti
-	action_intent.hud = src
-	static_inventory += action_intent
+
+	using = new /obj/screen/combattoggle()
+	using.hud = src
+	using.icon = ui_style
+	using.screen_loc = ui_combat_toggle
+	static_inventory += using
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style

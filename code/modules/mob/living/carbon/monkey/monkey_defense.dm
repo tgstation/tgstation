@@ -69,7 +69,7 @@
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
-		if (M.a_intent == INTENT_HARM)
+		if (M.in_combat_mode())
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 				var/damage = rand(15, 30)

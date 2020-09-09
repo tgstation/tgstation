@@ -57,7 +57,7 @@
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
 	stop_automated_movement = 1
-	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
+	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	friendly_verb_continuous = "grooms"
@@ -271,7 +271,7 @@
 	..()
 	if(client)
 		return
-	if(!stat && M.a_intent == INTENT_HARM)
+	if(!stat && M.in_combat_mode())
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -556,7 +556,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = INTENT_HARM
+			combat_mode = TRUE
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -852,12 +852,12 @@
 	if(stat || !client)
 		return
 
-	if(a_intent != INTENT_HELP)
+	if(in_combat_mode())
 		melee_damage_upper = 0
-		a_intent = INTENT_HELP
+		combat_mode = FALSE
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = INTENT_HARM
+		combat_mode = TRUE
 	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
 	return
 

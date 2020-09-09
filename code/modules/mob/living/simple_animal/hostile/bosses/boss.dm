@@ -4,7 +4,7 @@
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	status_flags = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss

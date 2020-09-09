@@ -158,11 +158,12 @@
 	static_inventory += using
 	mymobR.thruster_button = using
 
-//Intent
-	action_intent = new /obj/screen/act_intent/robot()
-	action_intent.icon_state = mymob.a_intent
-	action_intent.hud = src
-	static_inventory += action_intent
+//Combat mode
+	using = new /obj/screen/combattoggle()
+	using.hud = src
+	using.icon = ui_style
+	using.screen_loc = ui_combat_toggle
+	static_inventory += using
 
 //Health
 	healths = new /obj/screen/healths/robot()

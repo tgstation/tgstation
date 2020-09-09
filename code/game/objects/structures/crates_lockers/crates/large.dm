@@ -19,7 +19,7 @@
 	else
 		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
@@ -38,7 +38,7 @@
 		qdel(src)
 
 	else
-		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
+		if(user.in_combat_mode())	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
 			return ..()						//Stops it from opening and turning invisible when items are used on it.
 
 		else

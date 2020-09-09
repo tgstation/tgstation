@@ -100,7 +100,7 @@
 		I.play_tool_sound(src)
 		deconstruct()
 	else if(cistern)
-		if(user.a_intent != INTENT_HARM)
+		if(!user.in_combat_mode())
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				to_chat(user, "<span class='warning'>[I] does not fit!</span>")
 				return
@@ -350,7 +350,7 @@
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.in_combat_mode())
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
