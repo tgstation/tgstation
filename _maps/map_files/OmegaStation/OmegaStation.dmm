@@ -23744,6 +23744,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"bmz" = (
+/obj/structure/table,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/obj/item/storage/bag/tray/cafeteria,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "bmC" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -69798,7 +69810,7 @@ ayN
 lCZ
 pub
 xfw
-glK
+bmz
 hqX
 cqU
 yba
