@@ -950,7 +950,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /proc/cmp_timer_data(list/a, list/b)
 	return b["count"] - a["count"]
 
-#isdef TESTING
+#ifdef TESTING
 /client/proc/check_missing_sprites()
 	set category = "Debug"
 	set name = "Debug Worn Item Sprites"
