@@ -1,6 +1,7 @@
 /datum/computer_file/program/robotact
-	filename = "RoboTact"
-	filedesc = "A built-in app for cyborg self-management and diagnostics."
+	filename = "robotact"
+	filedesc = "RoboTact"
+	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
 	requires_ntnet = FALSE
