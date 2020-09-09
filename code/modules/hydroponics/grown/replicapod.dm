@@ -114,7 +114,7 @@
 		// parent.update_tray() qdels this seed.
 		if(QDELETED(src))
 			to_chat(user, text = "This pod has already had its seeds harvested!", type = MESSAGE_TYPE_INFO)
-			return list()
+			return result
 
 		var/seed_count = 1
 		if(prob(getYield() * 20))
