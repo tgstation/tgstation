@@ -78,7 +78,7 @@ This section is for the event controller
 
 	for(var/t in RANGE_TURFS(8, dest_crystal.loc))
 		var/turf/turf_loc = t
-		var/distance_from_center = BETTER_DIST(turf_loc, dest_crystal.loc)
+		var/distance_from_center = get_dist(turf_loc, dest_crystal)
 		switch(distance_from_center)
 			if(0)
 				distance_from_center = 1 //Same tile, let's avoid a division by zero.
