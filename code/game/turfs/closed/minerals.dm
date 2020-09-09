@@ -287,6 +287,7 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/snow/underground
+	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	// abundant ore and caves
 	mineralChance = 20
 	mineralSpawnChanceList = list(
