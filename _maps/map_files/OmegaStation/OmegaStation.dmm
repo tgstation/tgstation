@@ -14926,7 +14926,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/warning/nosmoking,
 /turf/closed/wall/r_wall,
-/area/space)
+/area/engine/break_room)
 "aNF" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
