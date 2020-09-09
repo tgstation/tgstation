@@ -26,9 +26,9 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
-	var/area/holodeck/program //should these still be area vars after refactoring? what else can i use?
-	var/area/holodeck/last_program
-	var/area/offline_program = /area/holodeck/rec_center/offline
+	var/datum/map_template/holodeck/program //should these still be area vars after refactoring? what else can i use?
+	var/datum/map_template/holodeck/last_program
+	var/area/offline_program = /datum/map_template/holodeck/offline
 
 	var/list/program_cache
 	var/list/emag_programs
@@ -37,7 +37,7 @@
 	// to use the same source patterns.  Y'know, if you want to.
 	var/holodeck_type = /datum/map_template/holodeck	// locate(this) to get the target holodeck
 	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
-
+	//^ im pretty sure this will not work
 	var/active = FALSE
 	var/damaged = FALSE
 	var/list/spawned = list()
@@ -64,6 +64,8 @@
 	//	WARNING("Shelter template ([template_id]) not found!")
 	//	qdel(src)
 
+/obj/machinery/computer/holodeck/Destroy()
+	to_chat(world,"DEBUG -- lmao youre fucked")
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -118,8 +120,8 @@
 //has into an associative list, which will then be sent to UI as a JSON string.
 	var/list/data = list()
 
-	data["default_programs"] = program_cache//so all this does is associate the data into groups. so the program_cache is organized into the default_programs group
-	if(obj_flags & EMAGGED)//uh, it also does other stuff
+	data["default_programs"] = program_cache
+	if(obj_flags & EMAGGED)
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
@@ -133,7 +135,8 @@
 	. = TRUE
 	switch(action)
 		if("load_program")
-			var/program_to_load = text2path(params["type"])//this takes the "type" in generate_prog_list and turns it into a path var/program_to_load = text2path(params["type"])
+			//var/program_to_load = text2path(params["type"])
+			var/datum/map_template/holodeck/program_to_load = params
 			if(!ispath(program_to_load))
 				return FALSE
 			var/valid = FALSE
@@ -147,16 +150,20 @@
 					break
 			if(!valid)
 				return FALSE
-
-			var/area/A = locate(program_to_load) in GLOB.sortedAreas
-			if(A)
-				load_program(A)//do i only need to replace this? NO EASYNESS, ONLY PAIN
+			//load the map_template that program_to_load represents
+			//var/datum/map_template/shelter/template //template = SSmapping.holodeck_templates[template_id]
+			//var/datum/map_template/shelter/template = SSmapping.holodeck_templates[program_to_load]
+			//var/area/A = locate(program_to_load) in GLOB.sortedAreas
+			if(program_to_load)
+				var/id = initial(program_to_load.template_id)
+				load_program(id)//do i only need to replace this? NO EASYNESS, ONLY PAIN
 		if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
+
 
 /obj/machinery/computer/holodeck/process()//will comment out when first testing, will have to port over
 	if(damaged && prob(10))
@@ -190,6 +197,7 @@
 
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
+
 /obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
 	if(obj_flags & EMAGGED)
 		return
@@ -222,10 +230,11 @@
 		var/datum/map_template/holodeck/A = typekey
 		var/list/info_this = list()
 		info_this["name"] = initial(A.name)
+		info_this["type"] = A.type//this doesnt like initial being used on it
 		if(initial(A.restricted))
-			LAZYADD(emag_programs, list(info_this))//i assume LAZYADD is (new ui category to add, what to add to it), emag_program and program_cach are lists made at the top, and used for other things
-		else//#define LAZYADD(L, I) if(!L) { L = list(); } L += I; so var L, if L isnt defined, then it makes it a list, and adds I to it. so this takes emag_program and adds both the name and type (from info_this) as one element of emag_program
-			LAZYADD(program_cache, list(info_this))//emag_programs includes program_cache?
+			LAZYADD(emag_programs, list(info_this))
+		else
+			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)//low priority
 	if(active == toggleOn)
@@ -263,15 +272,17 @@
 */
 //FOR TESTING
 
-/obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
+/obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
 	//takes an area, finds what program that area corresponds to
 	//if (1==2)
 		///datum/map_template/holodeck/wildlifesim/load(get_turf(A))
+	//template.load(deploy_location, centered = TRUE)
+
 	if(!is_operational)
-		A = offline_program
+		template = offline_program
 		force = TRUE
 
-	if(program == A)//if the program is the same as the corresponding area
+	if(program == template)//if the program is the same as the corresponding area
 		return
 	if(current_cd > world.time && !force)
 		say("ERROR. Recalibrating projection apparatus.")
@@ -280,7 +291,7 @@
 		current_cd = world.time + HOLODECK_CD
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
-	active = (A != offline_program)
+	active = (template != offline_program)
 	use_power = active + IDLE_POWER_USE
 
 	for(var/e in effects)
@@ -290,14 +301,18 @@
 	for(var/item in spawned)
 		derez(item, !force)
 
-	program = A
+	//program = A
 	// note nerfing does not yet work on guns, should
 	// should also remove/limit/filter reagents?
 	// this is an exercise left to others I'm afraid.  -Sayu
-	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
+
+	//template = SSmapping.holodeck_templates[template_id]
+	template = SSmapping.holodeck_templates[map_id]
+	spawned = template.load(spawn_tile, centered = TRUE)//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
 
+	//spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))
 	//spawned
 	for(var/obj/machinery/M in spawned)
 		M.flags_1 |= NODECONSTRUCT_1

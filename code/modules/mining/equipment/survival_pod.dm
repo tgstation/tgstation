@@ -16,7 +16,9 @@
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
-	var/datum/map_template/shelter/template
+	var/datum/map_template/shelter/template //template = SSmapping.holodeck_templates[template_id]
+	//so this is a var that stores the intended shelter_id for when it does template.load(deploy_location, centered = TRUE)
+	//template.load is really template_id.load
 	var/used = FALSE
 
 /obj/item/survivalcapsule/proc/get_template()

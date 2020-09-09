@@ -451,8 +451,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			continue
 		var/datum/map_template/holodeck/S = new holodeck_type()
 
-		holodeck_templates[S.holodeck_id] = S
-		map_templates[S.holodeck_id] = S
+		holodeck_templates[S.template_id] = S
+		map_templates[S.template_id] = S
 
 //Manual loading of away missions.
 /client/proc/admin_away()
