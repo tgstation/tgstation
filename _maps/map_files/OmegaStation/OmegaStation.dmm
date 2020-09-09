@@ -27032,6 +27032,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"eXn" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "eYe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -32704,6 +32708,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "ozp" = (
@@ -33420,6 +33425,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"pIh" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay)
 "pIt" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -39652,7 +39667,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "vFP" = (
@@ -41028,7 +41042,6 @@
 "xJG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -71122,7 +71135,7 @@ wlD
 sLg
 qpf
 qGj
-qGj
+eXn
 qGj
 twR
 emJ
@@ -72405,7 +72418,7 @@ qtS
 mAL
 sMZ
 tMJ
-sGP
+pIh
 vYr
 kVk
 sMZ
