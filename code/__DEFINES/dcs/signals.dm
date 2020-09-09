@@ -597,12 +597,14 @@
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
+///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+#define COMSIG_GUN_FIRED "gun_fired"
 
 // /obj/item/grenade signals
 
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/grenade/proc/prime(mob/living/lanced_by)
 #define COMSIG_GRENADE_PRIME "grenade_prime"
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/grenade/proc/preprime (det_time, delayoverride)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
 
 // /obj/projectile signals (sent to the firer)

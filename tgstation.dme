@@ -570,6 +570,7 @@
 #include "code\datums\diseases\advance\symptoms\weight.dm"
 #include "code\datums\diseases\advance\symptoms\youth.dm"
 #include "code\datums\elements\_element.dm"
+#include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\cleaning.dm"
 #include "code\datums\elements\digitalcamo.dm"
