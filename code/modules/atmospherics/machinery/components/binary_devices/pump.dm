@@ -94,6 +94,7 @@
 		for(var/i in 1 to motor_numbers)
 			motor_pressure_upgrade += i/(max_motors * 3) * MAX_OUTPUT_PRESSURE_NORMAL
 		max_output_pressure += motor_pressure_upgrade
+		use_power += 250
 
 //Radio remote control
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)

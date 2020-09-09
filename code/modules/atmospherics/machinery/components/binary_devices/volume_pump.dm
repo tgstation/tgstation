@@ -55,11 +55,6 @@
 			new /obj/item/assembly/motor(loc)
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
-	. = ..()
-	if(motor_numbers > 0)
-		. += "<span class='notice'>The pump has installed [motor_numbers] [(motor_numbers == 1) ? "motor" : "motors"] that increase the max output to [max_output_pressure] kpa!</span>"
-
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
 
@@ -102,6 +97,8 @@
 	. = ..()
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
+	if(motor_numbers > 0)
+		. += "<span class='notice'>The pump has installed [motor_numbers] [(motor_numbers == 1) ? "motor" : "motors"] that increase the max output to [max_output_pressure] kpa!</span>"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/assembly/motor))
@@ -122,6 +119,7 @@
 		for(var/i in 1 to motor_numbers)
 			motor_pressure_upgrade += i/(max_motors * 3) * 9000
 		max_output_pressure += motor_pressure_upgrade
+		use_power += 250
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
