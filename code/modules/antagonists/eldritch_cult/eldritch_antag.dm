@@ -214,9 +214,9 @@
 	name = "spendtime"
 	var/timer = 5 MINUTES
 
-/datum/objective/stalk/process()
+/datum/objective/stalk/process(delta_time)
 	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
-		timer -= 1 SECONDS
+		timer -= delta_time * 10 // timer is in deciseconds
 	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
 	if(timer <= 0)
 		STOP_PROCESSING(SSprocessing,src)

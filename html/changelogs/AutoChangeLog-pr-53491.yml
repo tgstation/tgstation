@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Chemicals now properly acknowledge exposure. Water is wet again, synthflesh will now apply properly, space lube will now properly make floors slippery again, etc."

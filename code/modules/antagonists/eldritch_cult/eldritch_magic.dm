@@ -450,15 +450,15 @@
 /obj/effect/proc_holder/spell/targeted/fire_sworn/proc/remove()
 	has_fire_ring = FALSE
 
-/obj/effect/proc_holder/spell/targeted/fire_sworn/process()
+/obj/effect/proc_holder/spell/targeted/fire_sworn/process(delta_time)
 	. = ..()
 	if(!has_fire_ring)
 		return
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(5)
+			livies.adjustFireLoss(25 * delta_time)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract

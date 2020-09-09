@@ -77,7 +77,7 @@
 	return 0
 
 // Called by Process() on device that runs us, once every tick.
-/datum/computer_file/program/proc/process_tick()
+/datum/computer_file/program/proc/process_tick(delta_time)
 	return TRUE
 
 /**
