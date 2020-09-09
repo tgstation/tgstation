@@ -19,7 +19,7 @@
 
 	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 	victim = dismembered_part.owner
-	fake_body_zone = dismembered_part.body_zone
+	phantom_body_zone = dismembered_part.body_zone
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
 		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
