@@ -11,6 +11,8 @@ SUBSYSTEM_DEF(crewtransfer)
 	priority = FIRE_PRIORITY_CREW_TRANSFER
 	runlevels = RUNLEVEL_GAME
 	init_order = INIT_ORDER_CREW_TRANSFER
+	/// Number of votes attempted total, including auto and manual votes
+	var/transfer_votes_attempted = 0
 	/// Minimum shift length before automatic votes begin - from config.
 	var/minimum_transfer_time = 0
 	/// Minimum length of time between automatic votes - from config.

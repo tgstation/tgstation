@@ -86,7 +86,9 @@ SUBSYSTEM_DEF(vote)
 								choices[default_map] += 1
 								greatest_votes = max(greatest_votes, choices[default_map])
 				if("transfer")
-					choices["Continue Shift"] += non_voters.len
+					/// multipler applied to non-voters. non-voters count for 1/3rd of a vote, then past two votes they count for 1/4th, 1/5th, and so on.
+					var/non_voters_multiplier = clamp(SScrewtransfer.transfer_votes_attempted + 1, 3, 50)
+					choices["Continue Shift"] += round(non_voters.len / non_voters_multiplier)
 					if(choices["Continue Shift"] >= greatest_votes)
 						greatest_votes = choices["Continue Shift"]
 
@@ -217,6 +219,7 @@ SUBSYSTEM_DEF(vote)
 					to_chat(usr, "<span class='warning'>[caller.started_as_observer? "You are not taking part in the round." : "You have died in the round."] If you think it should end, call a restart vote instead.</span>")
 					return FALSE
 
+				SScrewtransfer.transfer_votes_attempted++
 				choices.Add("Initiate Crew Transfer", "Continue Shift")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
