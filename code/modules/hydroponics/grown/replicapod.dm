@@ -24,6 +24,7 @@
 	var/list/quirks
 	var/sampleDNA
 	var/contains_sample = FALSE
+	var/being_harvested = FALSE
 
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
@@ -103,10 +104,17 @@
 
 	// No podman player, give one or two seeds.
 	if(!make_podman)
-		// Prevent accidental harvesting. Make sure the user REALLY wants to do this.
-		var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
-		if(choice == "Cancel")
-			return result
+		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
+		if(mind || ckey)
+			var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
+			if(choice == "Cancel")
+				return result
+
+		// If this plant has already been harvested, return early.
+		// parent.update_tray() qdels this seed.
+		if(QDELETED(src))
+			to_chat(user, text = "This pod has already had its seeds harvested!", type = MESSAGE_TYPE_INFO)
+			return list()
 
 		var/seed_count = 1
 		if(prob(getYield() * 20))
