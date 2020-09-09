@@ -24,7 +24,7 @@
 	if(!.)
 		return
 
-	addtimer(CALLBACK(src, .proc/lawsync), 0)
+	addtimer(CALLBACK(src, .proc/lawsync), 0, TIMER_UNIQUE)
 
 /mob/living/silicon/ai/lawsync()
 	for(var/r in connected_robots)

@@ -1108,7 +1108,7 @@
 		return
 	. = connected_ai
 	connected_ai = new_ai
-	update_lawset_name_malf()
+	update_lawset_name()
 	if(.)
 		var/mob/living/silicon/ai/old_ai = .
 		old_ai.connected_robots -= src

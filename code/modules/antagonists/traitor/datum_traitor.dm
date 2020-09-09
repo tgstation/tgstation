@@ -20,10 +20,10 @@
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current)
-		if(iscyborg(owner.current))
-			var/mob/living/silicon/robot/R = owner.current
-			if(R.deployed)
-				R.undeploy()
+		if(iscyborgshell(owner.current))
+			var/mob/living/silicon/robot/shell/cyborg_shell = owner.current
+			if(cyborg_shell.deployed)
+				cyborg_shell.undeploy()
 		if(isAI(owner.current))
 			traitor_kind = TRAITOR_AI
 
@@ -37,10 +37,10 @@
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
 	if(traitor_kind == TRAITOR_AI && owner.current)
-		if(iscyborg(owner.current))
-			var/mob/living/silicon/robot/R = owner.current
-			if(R.deployed)
-				R.undeploy()
+		if(iscyborgshell(owner.current))
+			var/mob/living/silicon/robot/shell/cyborg_shell = owner.current
+			if(cyborg_shell.deployed)
+				cyborg_shell.undeploy()
 		if(isAI(owner.current))
 			var/mob/living/silicon/ai/A = owner.current
 			A.clear_zeroth_law(TRUE)

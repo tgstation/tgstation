@@ -98,6 +98,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
+#define iscyborgshell(A) (istype(A, /mob/living/silicon/robot/shell))
+
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
 
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))

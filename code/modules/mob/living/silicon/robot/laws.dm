@@ -33,7 +33,7 @@
 
 	laws_sanity_check()
 
-	if(deployed)
+	if(shell)
 		laws = connected_ai.laws
 
 	else

@@ -17,13 +17,13 @@
 	if(last_lawchange == world.time)
 		return FALSE
 	last_lawchange = world.time
-	addtimer(CALLBACK(src, .proc/update_lawset_name), 0)
+	addtimer(CALLBACK(src, .proc/update_lawset_name), 0, TIMER_UNIQUE)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	to_chat(src, "<b>Your laws have been updated.</b>")
 	// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
-	addtimer(CALLBACK(src, .proc/show_laws), 0)
+	addtimer(CALLBACK(src, .proc/show_laws), 0, TIMER_UNIQUE)
 	if(announce)
-		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0)
+		addtimer(CALLBACK(src, .proc/deadchat_lawchange), 0, TIMER_UNIQUE)
 	return TRUE
 
 /mob/living/silicon/proc/set_law_sixsixsix(law, announce = TRUE)
@@ -128,12 +128,6 @@
 		return
 
 	laws.lawset_name = get_lawset_name()
-
-	update_lawset_name_malf()
-
-/mob/living/silicon/proc/update_lawset_name_malf()
-	if(!laws)
-		return
 
 	if(is_malf())
 		laws.name = "[laws.lawset_name] (Malfunctioning)"
