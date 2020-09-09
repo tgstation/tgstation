@@ -938,7 +938,7 @@
 
 /obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/user)
 	if(!operating && density)
-		if(user.a_intent != INTENT_HELP)
+		if(user.in_combat_mode())
 			if(!W.tool_start_check(user, amount=0))
 				return
 			user.visible_message("<span class='notice'>[user] begins [welded ? "unwelding":"welding"] the airlock.</span>", \

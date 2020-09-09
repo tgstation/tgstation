@@ -199,8 +199,8 @@
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/user, turf/T)
-	if((user.a_intent != INTENT_HELP) || !LAZYLEN(dent_decals))
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+	if((user.in_combat_mode()) || !LAZYLEN(dent_decals))
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)
