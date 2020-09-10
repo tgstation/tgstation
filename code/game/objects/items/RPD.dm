@@ -350,6 +350,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
+	//Unwrench pipe before we build one over/paint it.
+	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH))
+		if(istype(A, /obj/machinery/atmospherics))
+			A = A.wrench_act(user, src)	
+
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
@@ -359,10 +364,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
 
 	. = TRUE
-
-	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH))
-		if(istype(A, /obj/machinery/atmospherics))
-			A = A.wrench_act(user, src)		
 
 	if((mode & DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
