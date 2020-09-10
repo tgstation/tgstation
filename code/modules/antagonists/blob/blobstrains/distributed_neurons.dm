@@ -25,7 +25,8 @@
 	color = "#E88D5D"
 
 /datum/reagent/blob/distributed_neurons/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
-	reac_volume = ..()
+	. = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	exposed_mob.apply_damage(0.6*reac_volume, TOX)
 	if(overmind && ishuman(exposed_mob))
 		if(exposed_mob.stat == UNCONSCIOUS || exposed_mob.stat == HARD_CRIT)

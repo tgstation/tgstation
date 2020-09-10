@@ -53,7 +53,8 @@
   */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
-	pod.reverse_dropoff_turf = get_turf(where)
+	var/turf/target_turf = get_turf(where)
+	pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/structure/closet/supplypod/mechpod

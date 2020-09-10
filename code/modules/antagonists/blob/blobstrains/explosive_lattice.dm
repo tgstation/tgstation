@@ -32,8 +32,9 @@
 	color = "#8B2500"
 
 /datum/reagent/blob/explosive_lattice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+	. = ..()
 	var/initial_volume = reac_volume
-	reac_volume = ..()
+	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
 		var/obj/effect/temp_visual/explosion/fast/ex_effect = new /obj/effect/temp_visual/explosion/fast(get_turf(exposed_mob))
 		ex_effect.alpha = 150

@@ -1,0 +1,22 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "hydrogen + rads = trit"
+  - rscadd: "5 new gases"
+  - rscadd: "Healium : made from Bz + Freon + cold, it knocks people down but have healing properties"
+  - rscadd: "Proto Nitrate : made from pluox and H2 + heat, it has different reaction with a bunch of other gases"
+  - rscadd: "Cyrion B : made from hypernoblium + stimulum around 0°C, it has heavy damage if breathed but is decomposed rapidly by N2"
+  - rscadd: "Halon : made from bz + trit + cold, it reacts with O2 at high temperature removing it and cooling the air, helping putting out fires"
+  - rscadd: "Hexane : made from bz + H2 + cold, it reacts with plasma and n2o and removes them from the air mix, filtering them."
+  - tweak: "stimulum no longer require plasma"
+  - rscadd: "canister sprites, gas sprites"
+  - rscadd: "crystal from gases formation and reaction"
+  - rscadd: "new metallic hydrogen recipes"
+  - rscadd: "elder atmosian statue"
+  - rscadd: "supermatter interactions"
+  - tweak: "minor changes to fusion math to make it \"easier\" to start
+add : pluoxium can be also made without using rads (not removing the rad production one) (this also produces a minimal amount of h2)"
+  - tweak: "lowered hypernoblium min temperature of reaction"
+  - tweak: "metallic hydrogen production more common"
+  - rscadd: "cyrion-b bounty"
+  - rscadd: "all 5 gases are up to selling"

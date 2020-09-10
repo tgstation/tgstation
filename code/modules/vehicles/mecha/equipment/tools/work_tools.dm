@@ -373,7 +373,7 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/M)
-	var/obj/vehicle/sealed/mecha/working/ripley/mkii/N = new /obj/vehicle/sealed/mecha/working/ripley/mkii(get_turf(M),1)
+	var/obj/vehicle/sealed/mecha/working/ripley/mk2/N = new (get_turf(M),1)
 	if(!N)
 		return
 	QDEL_NULL(N.cell)
