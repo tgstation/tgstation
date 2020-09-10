@@ -144,6 +144,18 @@
 			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, BRUTE, affecting)
 
+/mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	var/hulk_verb = pick("smash", "pummel")
+	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
+	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
+					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
+	to_chat(user, "<span class='danger'>You [hulk_verb] [src]!</span>")
+	apply_damage(15, BRUTE, wound_bonus=10)
+	retaliate(user)
+
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = TRUE
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
@@ -160,7 +172,6 @@
 				to_chat(src, "<span class='warning'>Your hat protects you from the acid.</span>")
 			return
 	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
-
 
 /mob/living/carbon/monkey/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))

@@ -378,6 +378,15 @@
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special = FALSE, abort = FALSE)
+	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
+	var/hair_color = src.hair_color
+	var/hairstyle = src.hairstyle
+	var/facial_hair_color = src.facial_hair_color
+	var/facial_hairstyle = src.facial_hairstyle
+	var/lip_style = src.lip_style
+	var/lip_color = src.lip_color
+	var/real_name = src.real_name
+
 	. = ..()
 	if(!.)
 		return .

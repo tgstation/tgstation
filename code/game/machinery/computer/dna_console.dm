@@ -96,6 +96,8 @@
 	var/is_joker_ready = FALSE
 	/// Used for setting tgui data - Whether injectors are ready to be printed
 	var/is_injector_ready = FALSE
+	/// Used for setting tgui data - Is CRISPR ready?
+	var/is_crispr_ready = FALSE
 	/// Used for setting tgui data - Wheher an enzyme pulse operation is ongoing
 	var/is_pulsing_rads = FALSE
 	/// Used for setting tgui data - Time until scramble is ready
@@ -128,6 +130,9 @@
 
 	/// State of tgui view, i.e. which tab is currently active, or which genome we're currently looking at.
 	var/list/list/tgui_view_state = list()
+
+	///Counter for CRISPR charges
+	var/crispr_charges = 0
 
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
@@ -174,6 +179,8 @@
 					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
 				else
 					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
+				if(A.crispr_charge)
+					crispr_charges++
 			qdel(I)
 			return
 
@@ -246,6 +253,8 @@
 	is_pulsing_rads = ((rad_pulse_index > 0) && (rad_pulse_timer > world.time))
 	time_to_pulse = round((rad_pulse_timer - world.time)/10)
 
+	is_crispr_ready = (crispr_charges > 0)
+
 	// Attempt to update tgui ui, open and update if needed.
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -309,6 +318,8 @@
 	data["isScrambleReady"] = is_scramble_ready
 	data["isJokerReady"] = is_joker_ready
 	data["isInjectorReady"] = is_injector_ready
+	data["isCrisprReady"] = is_crispr_ready
+	data["crisprCharges"] = crispr_charges
 	data["scrambleSeconds"] = time_to_scramble
 	data["jokerSeconds"] = time_to_joker
 	data["injectorSeconds"] = time_to_injector
@@ -548,6 +559,143 @@
 					CM.apply(HM)
 
 			return
+
+		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
+		// So AA means the AT pair stays the same, AT means AT becomes TA. This requires both knowing the
+		// solved full DNA of the subject mutation and the full DNA of the replacement genes. Applies probable disease
+		// of probable strengths as well. If you mess it up, you might end up getting undesirable genes, including
+		// unstable DNA. This could lead to permanent monkey. When you get it right, some will be swapped out, on a
+		// probability scale.
+		// ---------------------------------------------------------------------- //
+		// params["mutref"] - ATOM Ref of specific mutation to swap out
+		// params["source"] - The source the request came from.
+		//	Expected results:
+		//   "occupant" - From genetic sequencer
+		//   "console" - From DNA Console storage
+		//   "disk" - From inserted diskette
+		if("crispr")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(scanner_occupant != connected_scanner.occupant)
+				return
+
+			//GUARD CHECK
+			//Make sure there's charges available.
+			if(crispr_charges < 1)
+				return
+			var/search_flags = 0
+
+			// Only continue if applying to occupant - all replacements in-vitro.
+			switch(params["source"])
+				if("occupant")
+					if(can_modify_occupant())
+						search_flags |= SEARCH_OCCUPANT
+				if("console")
+					search_flags |= SEARCH_STORED
+					return
+				if("disk")
+					search_flags |= SEARCH_DISKETTE
+					return
+
+			//Currently selected mutation
+			var/bref = params["mutref"]
+
+			//Valid gene-pairs
+			var/at_str = "AT"
+			var/cg_str = "CG"
+
+			// GUARD CHECK - Only search occupant for this specific ref, since you
+			//  can only CRISPR existing mutations in a target
+			var/datum/mutation/human/target_mutation = get_mut_by_ref(bref, search_flags)
+
+			// Prompt for modifier string
+			var/new_sequence_input = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
+			// Drop out if the string is the wrong length
+			if(length(new_sequence_input) != 32)
+				return
+
+			//Generate the original and new gene sequences from the CRISPR string
+			//vars to hold the 2 sequences
+			var/old_sequence
+			var/new_sequence
+
+			//Unzip the modification string
+			for(var/i = 1 to length(new_sequence_input))
+				var/char = new_sequence_input[i]
+				var/pair_str
+				var/new_pair
+				//figure out which pair type the character belongs to
+				pair_str = ((at_str[1] == char || at_str[2] == char) ? at_str : ((cg_str[1] == char || cg_str[2] == char) ? cg_str : null))
+				//Valid pair from character
+				new_pair = (pair_str ? char + (pair_str[1]==char?pair_str[2]:pair_str[1]) : null)
+				// every second letter in the sequence represents a valid pair of the new sequence, otherwise it belongs to old
+				if(new_pair)
+					if(i%2==0)
+						new_sequence+=new_pair
+					else
+						old_sequence+=new_pair
+				else
+					return //drop out, no pair
+
+			//decrement CRISPR charge
+			crispr_charges--
+
+			//Apply sequence
+			if(new_sequence)
+				//to hold the found mutation, if found
+				var/datum/mutation/human/matched_mutation = null
+				//Go through all sequences for matching gene, and set the mutation
+				for (var/M in subtypesof(/datum/mutation/human))
+					var/true_sequence = GET_SEQUENCE(M)
+					if (new_sequence == true_sequence)
+						matched_mutation = M
+				//First check is for the more-likely, weaker random virus. Second is for a tougher one. There's a chance both checks fail and you get nothing.
+				//This change was to bring it more in line with what I originally imagined, that the virus risk was from the virus misbehaving somehow - it
+				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
+				if(prob(60))
+					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
+					random_disease.try_infect(scanner_occupant, FALSE)
+				else if (prob(30))
+					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
+					random_disease.try_infect(scanner_occupant, FALSE)
+				//Instantiate list to hold resulting mutation_index
+				var/mutation_data[0]
+				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
+				//assures BAD END is the natural state if things go wrong
+				//I think this should be like with viruses, probability cascade or switch/case on random?
+				var/result_mutation = ACIDFLESH
+				//If we found the replacement mutation
+				if(matched_mutation)
+					//and the old sequence matches the real sequence of the old mutation
+					if(old_sequence == GET_SEQUENCE(target_mutation.type))
+						//Set the replacement mutation to the desired mutation
+						result_mutation = matched_mutation
+				//Remove the current active mutations - let's say doing this triggers DNA repair or something
+				//This is admittedly because I couldn't figure out how to only remove the targeted mutation
+				//Not touching MUT_EXTRA will hopefully leave the added mutations alone
+				scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL))
+				//Add the resulting mutation to the active mutations
+				scanner_occupant.dna.add_mutation(result_mutation,MUT_NORMAL, 0)
+				//Rebuild the mutation_index into mutation_data, replacing the sequence entry with the solved
+				//entry for the result mutation
+				for(var/mutation_type in scanner_occupant.dna.mutation_index)
+					if(mutation_type == target_mutation.type)
+						mutation_data[result_mutation] = new_sequence
+					else
+						mutation_data[mutation_type]=scanner_occupant.dna.mutation_index[mutation_type]
+				//Overwrite the mutation_index list with the rebuild mutation_data
+				scanner_occupant.dna.mutation_index = mutation_data
+				//Not sure what this does but it seems to be a sanity check and this needs a sanity check
+				scanner_occupant.domutcheck()
+
+
+			return
+
 
 		// Print any type of standard injector, limited right now to activators that
 		//  activate a dormant mutation and mutators that forcibly create a new
