@@ -452,25 +452,9 @@
 	suffix = "pubby"
 	name = "NT White UFO"
 
-/datum/map_template/shuttle/whiteship/cere
-	suffix = "cere"
-	name = "NT Construction Vessel"
-
-/datum/map_template/shuttle/whiteship/kilo
-	suffix = "kilo"
-	name = "NT Mining Shuttle"
-
-/datum/map_template/shuttle/whiteship/donut
-	suffix = "donut"
-	name = "NT Long-Distance Bluespace Jumper"
-
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
-
-/datum/map_template/shuttle/whiteship/pod
-	suffix = "whiteship_pod"
-	name = "Salvage Pod"
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -479,10 +463,6 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
-
-/datum/map_template/shuttle/cargo/donut
-	suffix = "donut"
-	name = "supply shuttle (Donut)"
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
@@ -549,10 +529,6 @@
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
 
-/datum/map_template/shuttle/mining/kilo
-	suffix = "kilo"
-	name = "mining shuttle (Kilo)"
-
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
 	name = "mining shuttle (Large)"
@@ -569,17 +545,9 @@
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
 
-/datum/map_template/shuttle/mining_common/kilo
-	suffix = "kilo"
-	name = "lavaland shuttle (Kilo)"
-
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
-
-/datum/map_template/shuttle/arrival/kilo
-	suffix = "kilo"
-	name = "arrival shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
@@ -592,10 +560,6 @@
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"
-
-/datum/map_template/shuttle/aux_base/small
-	suffix = "small"
-	name = "auxilliary base (Small)"
 
 /datum/map_template/shuttle/escape_pod/default
 	suffix = "default"
