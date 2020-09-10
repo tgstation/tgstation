@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/construction/attackby(obj/item/W, mob/user, params)
+/obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
 		var/obj/item/rpd_upgrade/rpd_up = W
 		if(!(upgrade & rpd_up.upgrade))
