@@ -169,8 +169,8 @@
 	category = list ("Medical Machinery")
 
 /datum/design/board/hypnochair
-	name = "Machine Design (Enhanced Interrogation Chamber)"
-	desc = "Allows for the construction of circuit boards used to build an Enhanced Interrogation Chamber."
+	name = "Machine Design (Enhanced Prisoner Interrogation Chamber)"
+	desc = "Allows for the construction of circuit boards used to build an Enhanced Prisoner Interrogation Chamber."
 	id = "hypnochair"
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 	build_path = /obj/item/circuitboard/machine/hypnochair

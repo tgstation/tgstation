@@ -12,7 +12,7 @@ export const HypnoChair = (props, context) => {
         <Section
           title="Information"
           backgroundColor="#450F44">
-          The Enhanced Interrogation Chamber is designed to induce a
+          The Enhanced Prisoner Interrogation Chamber is designed to induce a
           deep-rooted trance trigger into the subject. Once the procedure
           is complete, by using the implanted trigger phrase, the
           authorities are able to ensure immediate and complete obedience

@@ -1,5 +1,5 @@
 /obj/machinery/hypnochair
-	name = "enhanced interrogation chamber"
+	name = "enhanced prisoner interrogation chamber"
 	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "hypnochair"
