@@ -54,7 +54,7 @@
 
 /datum/antagonist/imp/proc/give_objectives()
 	var/datum/objective/newobjective = new
-	newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
+	newobjective.explanation_text = "Try to get a promotion to a higher devilish rank."
 	newobjective.owner = owner
 	objectives += newobjective
 

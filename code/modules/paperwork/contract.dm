@@ -1,4 +1,4 @@
-/* For employment contracts and infernal contracts */
+/* For employment contracts */
 
 /obj/item/paper/contract
 	throw_range = 3
