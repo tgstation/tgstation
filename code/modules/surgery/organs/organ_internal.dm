@@ -64,7 +64,7 @@
 	if(reagents && iscarbon(owner))
 		var/mob/living/carbon/body = owner
 		for(var/chem in reagents.reagent_list)
-			var/datum/reagent/_reagent = body
+			var/datum/reagent/_reagent = chem
 			if(!_reagent.metabolizing)
 				continue
 			_reagent.metabolizing = FALSE
