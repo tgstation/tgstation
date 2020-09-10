@@ -307,6 +307,36 @@
 		InsertAll("", each, GLOB.alldirs)
 	..()
 
+/datum/asset/spritesheet/supplypods
+	name = "supplypods"
+
+/datum/asset/spritesheet/supplypods/register()
+	for (var/style in 1 to length(GLOB.podstyles))
+		var/icon_file = "icons/obj/supplypods.dmi" 
+		if (style == STYLE_SEETHROUGH)
+			Insert("pod_asset[style]", icon(icon_file, "seethrough-icon"))
+			continue
+		var/base = GLOB.podstyles[style][POD_BASE]
+		if (!base)
+			Insert("pod_asset[style]", icon(icon_file, "invisible-icon"))
+			continue
+		var/icon/podIcon = icon(icon_file, base)
+		var/door = GLOB.podstyles[style][POD_DOOR]
+		if (door)
+			door = "[base]_door"
+			podIcon.Blend(icon(icon_file, door), ICON_OVERLAY)
+		var/shape = GLOB.podstyles[style][POD_SHAPE]
+		if (shape == POD_SHAPE_NORML)
+			var/decal = GLOB.podstyles[style][POD_DECAL]
+			if (decal)
+				podIcon.Blend(icon(icon_file, decal), ICON_OVERLAY)
+			var/glow = GLOB.podstyles[style][POD_GLOW]
+			if (glow)
+				glow = "pod_glow_[glow]"
+				podIcon.Blend(icon(icon_file, glow), ICON_OVERLAY)
+		Insert("pod_asset[style]", podIcon)
+	return ..()
+		
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
 	name = "design"
