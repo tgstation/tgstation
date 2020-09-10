@@ -348,6 +348,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = TRUE
 
+	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH)
+		if(istype(A, /obj/machinery/atmospherics))
+			A = A.wrench_act(user, src)		
+
 	if((mode & DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
