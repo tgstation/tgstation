@@ -12,7 +12,7 @@
     },
     "traits":[
        {"Up" : 1,"Linkage" : "Cross","Gravity" : true},
-       {"Up" : 1,"Down" : -1,"Linkage" : "Cross","Gravity" : true,"Baseturf" : "/turf/open/transparent/openspace/icemoon"},
+       {"Up" : 1,"Down" : -1,"Linkage" : "Cross","Gravity" : true,"Baseturf" : "/turf/open/transparent/openspace"},
        {"Up" : 1,"Down" : -1,"Linkage" : "Cross","Gravity" : true,"Baseturf" : "/turf/open/transparent/openspace"},
        {"Up" : 1,"Down" : -1,"Linkage" : "Cross","Gravity" : true,"Baseturf" : "/turf/open/transparent/openspace"},
        {"Up" : 1,"Down" : -1,"Linkage" : "Cross","Gravity" : true,"Baseturf" : "/turf/open/transparent/openspace"},
