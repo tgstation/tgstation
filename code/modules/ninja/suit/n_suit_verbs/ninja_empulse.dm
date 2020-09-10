@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 //Disables nearby tech equipment.
@@ -8,3 +9,6 @@
 		playsound(H.loc, 'sound/effects/empulse.ogg', 60, 2)
 		empulse(H, 4, 6) //Procs sure are nice. Slightly weaker than wizard's disable tch.
 		s_coold = 4
+=======
+///Water sausage, 0 out of 5
+>>>>>>> 2b48477445... Attempting a Risky Manuever

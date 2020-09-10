@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
 //Movement impairing would indicate drugs and the like.
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
@@ -22,3 +23,6 @@
 	var/mob/living/carbon/human/H = affecting
 	H.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer)
 	to_chat(H, "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>")
+=======
+///Water sausage, 0 out of 5
+>>>>>>> 2b48477445... Attempting a Risky Manuever

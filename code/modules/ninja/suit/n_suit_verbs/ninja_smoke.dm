@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 //Smoke bomb
@@ -12,3 +13,6 @@
 		s_bombs--
 		to_chat(H, "<span class='notice'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
 		s_coold = 2
+=======
+///Water sausage, 0 out of 5
+>>>>>>> 2b48477445... Attempting a Risky Manuever

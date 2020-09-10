@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
 It is possible to destroy the net by the occupant or someone else.
@@ -84,3 +85,6 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	return//The net must be destroyed to free the target
+=======
+///Water sausage, 0 out of 5
+>>>>>>> 2b48477445... Attempting a Risky Manuever
