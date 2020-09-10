@@ -23,8 +23,8 @@ $nanotrasen: #384e68;
     'color-transparent-text': rgba(227, 240, 255, 0.75),
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-default': $nanotrasen,
-    'color-background': rgba(0, 0, 0, 0.5),
+    'color-default-fill': $nanotrasen,
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
 
@@ -32,6 +32,6 @@ $nanotrasen: #384e68;
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': color.scale($nanotrasen, $lightness: -25%),
+    'background-color': color.scale($nanotrasen, $lightness: -25%),
   ));
 }

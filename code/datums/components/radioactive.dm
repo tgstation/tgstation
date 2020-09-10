@@ -39,8 +39,8 @@
 	master.remove_filter("rad_glow")
 	return ..()
 
-/datum/component/radioactive/process()
-	if(!prob(50))
+/datum/component/radioactive/process(delta_time)
+	if(!DT_PROB(50, delta_time))
 		return
 	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
 	if(!hl3_release_date)
@@ -68,6 +68,8 @@
 		strength = max(strength, _strength)
 
 /datum/component/radioactive/proc/rad_examine(datum/source, mob/user, atom/thing)
+	SIGNAL_HANDLER
+
 	var/atom/master = parent
 	var/list/out = list()
 	if(get_dist(master, user) <= 1)
@@ -85,6 +87,8 @@
 	to_chat(user, "<span class ='warning'>[out.Join()]</span>")
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
+	SIGNAL_HANDLER
+
 	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
 	if(!hl3_release_date)
@@ -92,19 +96,22 @@
 	strength -= strength / hl3_release_date
 
 /datum/component/radioactive/proc/rad_clean(datum/source, clean_types)
+	SIGNAL_HANDLER
+
 	if(QDELETED(src))
-		return
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_RADIATION))
-		return
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_WEAK))
 		qdel(src)
-		return
+		return COMPONENT_CLEANED
 
 	strength = max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(src)
+		return COMPONENT_CLEANED
 
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM

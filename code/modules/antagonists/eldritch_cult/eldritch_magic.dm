@@ -132,27 +132,28 @@
 		if(tar.anti_magic_check())
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
-	var/mob/living/carbon/C2 = user
+	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(20)
-		C2.adjustBruteLoss(-20)
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(20)
+		carbon_user.adjustBruteLoss(-20)
 	if(iscarbon(target))
-		var/mob/living/carbon/C1 = target
-		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
+		var/mob/living/carbon/carbon_target = target
+		for(var/bp in carbon_user.bodyparts)
+			var/obj/item/bodypart/bodypart = bp
 			for(var/i in bodypart.wounds)
 				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
-				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
+				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
 				if(!target_bodypart)
 					continue
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(target_bodypart)
 
-		C1.blood_volume -= 20
-		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			C2.blood_volume += 20
+		carbon_target.blood_volume -= 20
+		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
+			carbon_user.blood_volume += 20
 		return ..()
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
@@ -353,11 +354,11 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BURN, "melee", 1)
+			M.take_damage(45, BURN, MELEE, 1)
 		sleep(1.5)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
@@ -449,15 +450,15 @@
 /obj/effect/proc_holder/spell/targeted/fire_sworn/proc/remove()
 	has_fire_ring = FALSE
 
-/obj/effect/proc_holder/spell/targeted/fire_sworn/process()
+/obj/effect/proc_holder/spell/targeted/fire_sworn/process(delta_time)
 	. = ..()
 	if(!has_fire_ring)
 		return
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(5)
+			livies.adjustFireLoss(25 * delta_time)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
@@ -510,11 +511,11 @@
 		if(target.stat == DEAD || !target.on_fire)
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
-		if(target.InCritical())
+		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION))
 			target.death()
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/eldritch_smoke(target.drop_location())
-		human_user.ExtinguishMob()
+		human_user.extinguish_mob()
 		human_user.adjustBruteLoss(-10, FALSE)
 		human_user.adjustFireLoss(-10, FALSE)
 		human_user.adjustStaminaLoss(-10, FALSE)
@@ -651,7 +652,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
 		return
 	victim.apply_status_effect(STATUS_EFFECT_AMOK)
 	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))

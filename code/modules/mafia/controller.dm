@@ -5,6 +5,8 @@
   * It is first created when the first ghost signs up to play.
   */
 /datum/mafia_controller
+	///list of observers that should get game updates.
+	var/list/spectators = list()
 	///all roles in the game, dead or alive. check their game status if you only want living or dead.
 	var/list/all_roles = list()
 	///exists to speed up role retrieval, it's a dict. player_role_lookup[player ckey] will give you the role they play
@@ -13,7 +15,7 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
-	///for debugging and testing a full game, or adminbuse. If this is not null, it will use this as a setup. clears when game is over
+	///for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over
 	var/list/custom_setup = list()
 	///first day has no voting, and thus is shorter
 	var/first_day_phase_period = 20 SECONDS
@@ -48,7 +50,8 @@
 
 	///group voting on one person, like putting people to trial or choosing who to kill as mafia
 	var/list/votes = list()
-	///and these (judgement_innocent_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent lists. whichever has more wins!
+	///and these (judgement_innocent_votes, judgement_abstain_votes and judgement_guilty_votes) are the judgement phase votes, aka people sorting themselves into guilty and innocent, and "eh, i don't really care" lists. whichever has more inno or guilty wins!
+	var/list/judgement_abstain_votes = list()
 	var/list/judgement_innocent_votes = list()
 	var/list/judgement_guilty_votes = list()
 	///current role on trial for the judgement phase, will die if guilty is greater than innocent
@@ -129,7 +132,7 @@
 	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
 	for(var/M in GLOB.dead_mob_list)
 		var/mob/spectator = M
-		if(spectator.ckey in GLOB.mafia_signup || player_role_lookup[spectator.mind.current] != null) //was in current game, or is signed up
+		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
 			var/link = FOLLOW_LINK(M, town_center_landmark)
 			to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
 
@@ -193,8 +196,16 @@
 	var/loser_votes = get_vote_count(loser,"Day")
 	if(loser)
 		if(loser_votes > 12)
-			loser.body.client?.give_award(/datum/award/achievement/mafia/universally_hated, loser.body)
+			award_role(/datum/award/achievement/mafia/universally_hated, loser)
 		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
+		//refresh the lists
+		judgement_abstain_votes = list()
+		judgement_innocent_votes = list()
+		judgement_guilty_votes = list()
+		for(var/i in all_roles)
+			var/datum/mafia_role/abstainee = i
+			if(abstainee.game_status == MAFIA_ALIVE && abstainee != loser)
+				judgement_abstain_votes += abstainee
 		on_trial = loser
 		on_trial.body.forceMove(get_turf(town_center_landmark))
 		phase = MAFIA_PHASE_JUDGEMENT
@@ -215,12 +226,14 @@
   * * If the accused is killed, their true role is revealed to the rest of the players.
   */
 /datum/mafia_controller/proc/lynch()
-
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
 		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
-	for(var/ii in judgement_guilty_votes)
+	for(var/ii in judgement_abstain_votes)
 		var/datum/mafia_role/role = ii
+		send_message("<span class='comradio'>[role.body.real_name] abstained.</span>")
+	for(var/iii in judgement_guilty_votes)
+		var/datum/mafia_role/role = iii
 		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
@@ -229,9 +242,6 @@
 	else
 		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
-	//by now clowns should have killed someone in guilty list, clear this out
-	judgement_innocent_votes = list()
-	judgement_guilty_votes = list()
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, FALSE),judgement_lynch_period,TIMER_STOPPABLE)// small pause to see the guy dead, no verbosity since we already did this
@@ -297,8 +307,7 @@
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
 		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
-		var/client/winner_client = GLOB.directory[winner.player_key]
-		winner_client?.give_award(winner.winner_award, winner.body)
+		award_role(winner.winner_award, winner)
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
@@ -307,16 +316,27 @@
 		return FALSE
 	if(alive_mafia == 0)
 		for(var/datum/mafia_role/townie in total_town)
-			var/client/townie_client = GLOB.directory[townie.player_key]
-			townie_client?.give_award(townie.winner_award, townie.body)
+			award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
-			var/client/changeling_client = GLOB.directory[changeling.player_key]
-			changeling_client?.give_award(changeling.winner_award, changeling.body)
+			award_role(changeling.winner_award, changeling)
 		return TRUE
+
+/**
+  * Lets the game award roles with all their checks and sanity, prevents achievements given out for debug games
+  *
+  * Arguments:
+  * * award: path of the award
+  * * role: mafia_role datum to reward.
+  */
+/datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
+	if(custom_setup.len)
+		return
+	var/client/role_client = GLOB.directory[rewarded.player_key]
+	role_client?.give_award(award, rewarded.body)
 
 /**
   * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
@@ -341,9 +361,7 @@
   * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
   */
 /datum/mafia_controller/proc/end_game()
-
 	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
-
 	QDEL_LIST(all_roles)
 	current_setup_text = null
 	custom_setup = list()
@@ -504,10 +522,12 @@
   * * overlay_list: signal var passing the overlay list of the mob
   */
 /datum/mafia_controller/proc/display_votes(atom/source, list/overlay_list)
+	SIGNAL_HANDLER
+
 	if(phase != MAFIA_PHASE_VOTING)
 		return
 	var/v = get_vote_count(player_role_lookup[source],"Day")
-	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v]")
+	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v > 12 ? "over_12" : v]")
 	overlay_list += MA
 
 /**
@@ -554,13 +574,26 @@
 		.["judgement_phase"] = FALSE
 	var/datum/mafia_role/user_role = player_role_lookup[user]
 	if(user_role)
-		.["roleinfo"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes)
+		.["roleinfo"] = list("role" = user_role.name,"desc" = user_role.desc, "action_log" = user_role.role_notes, "hud_icon" = user_role.hud_icon, "revealed_icon" = user_role.revealed_icon)
 		var/actions = list()
 		for(var/action in user_role.actions)
 			if(user_role.validate_action_target(src,action,null))
 				actions += action
 		.["actions"] = actions
 		.["role_theme"] = user_role.special_theme
+	else
+		var/list/lobby_data = list()
+		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup)
+			var/list/lobby_member = list()
+			lobby_member["name"] = key
+			lobby_member["status"] = "Ready"
+			if(key in GLOB.mafia_bad_signup)
+				lobby_member["status"] = "Disconnected"
+			lobby_member["spectating"] = "Ghost"
+			if(key in spectators)
+				lobby_member["spectating"] = "Spectator"
+			lobby_data += list(lobby_member)
+		.["lobbydata"] = lobby_data
 	var/list/player_data = list()
 	for(var/datum/mafia_role/R in all_roles)
 		var/list/player_info = list()
@@ -586,6 +619,11 @@
 
 	//Not sure on this, should this info be visible
 	.["all_roles"] = current_setup_text
+
+/datum/mafia_controller/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/mafia),
+	)
 
 /datum/mafia_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -642,7 +680,7 @@
 				custom_setup = debug_setup
 			if("cancel_setup")
 				custom_setup = list()
-	switch(action)
+	switch(action) //both living and dead
 		if("mf_lookup")
 			var/role_lookup = params["atype"]
 			var/datum/mafia_role/helper
@@ -651,10 +689,35 @@
 					helper = role
 					break
 			helper.show_help(usr)
-	if(!user_role || user_role.game_status == MAFIA_DEAD)//ghosts, dead people?
+	if(!user_role)//just the dead
+		var/client/C = ui.user.client
+		switch(action)
+			if("mf_signup")
+				if(!SSticker.HasRoundStarted())
+					to_chat(usr, "<span class='warning'>Wait for the round to start.</span>")
+					return
+				if(GLOB.mafia_signup[C.ckey])
+					GLOB.mafia_signup -= C.ckey
+					to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
+					return TRUE
+				else
+					GLOB.mafia_signup[C.ckey] = C
+					to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
+				if(phase == MAFIA_PHASE_SETUP)
+					check_signups()
+					try_autostart()
+				return TRUE
+			if("mf_spectate")
+				if(C.ckey in spectators)
+					to_chat(usr, "<span class='notice'>You will no longer get messages from the game.</span>")
+					spectators -= C.ckey
+				else
+					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
+					spectators += C.ckey
+				return TRUE
+	if(user_role.game_status == MAFIA_DEAD)
 		return
-	var/self_voting = user_role == on_trial ? TRUE : FALSE //used to block people from voting themselves innocent or guilty
-	//User actions
+	//User actions (just living)
 	switch(action)
 		if("mf_action")
 			if(!user_role.actions.Find(params["atype"]))
@@ -682,20 +745,29 @@
 						return
 					user_role.handle_action(src,params["atype"],target)
 			return TRUE
-		if("vote_innocent")
-			if(phase != MAFIA_PHASE_JUDGEMENT && !self_voting)
-				return
-			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
-			judgement_innocent_votes -= user_role//no double voting
-			judgement_guilty_votes -= user_role//no radical centrism
-			judgement_innocent_votes += user_role
-		if("vote_guilty")
-			if(phase != MAFIA_PHASE_JUDGEMENT && !self_voting)
-				return
-			to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
-			judgement_innocent_votes -= user_role//no radical centrism
-			judgement_guilty_votes -= user_role//no double voting
-			judgement_guilty_votes += user_role
+	if(user_role != on_trial)
+		switch(action)
+			if("vote_abstain")
+				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))
+					return
+				to_chat(user_role.body,"You have decided to abstain.")
+				judgement_innocent_votes -= user_role
+				judgement_guilty_votes -= user_role
+				judgement_abstain_votes += user_role
+			if("vote_innocent")
+				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_innocent_votes))
+					return
+				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
+				judgement_abstain_votes -= user_role//no fakers, and...
+				judgement_guilty_votes -= user_role//no radical centrism
+				judgement_innocent_votes += user_role
+			if("vote_guilty")
+				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_guilty_votes))
+					return
+				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
+				judgement_abstain_votes -= user_role//no fakers, and...
+				judgement_innocent_votes -= user_role//no radical centrism
+				judgement_guilty_votes += user_role
 
 /datum/mafia_controller/ui_state(mob/user)
 	return GLOB.always_state
@@ -800,7 +872,7 @@
 	//cuts invalid players from signups (disconnected/not a ghost)
 	var/list/possible_keys = list()
 	for(var/key in GLOB.mafia_signup)
-		if(GLOB.directory[key] && GLOB.directory[key] == GLOB.mafia_signup[key])
+		if(GLOB.directory[key])
 			var/client/C = GLOB.directory[key]
 			if(isobserver(C.mob))
 				possible_keys += key
@@ -838,6 +910,25 @@
 		return
 	if(GLOB.mafia_signup.len >= MAFIA_MAX_PLAYER_COUNT || custom_setup.len)//enough people to try and make something (or debug mode)
 		basic_setup()
+
+/**
+  * Filters inactive player into a different list until they reconnect, and removes players who are no longer ghosts.
+  *
+  * If a disconnected player gets a non-ghost mob and reconnects, they will be first put back into mafia_signup then filtered by that.
+  */
+/datum/mafia_controller/proc/check_signups()
+	for(var/bad_key in GLOB.mafia_bad_signup)
+		if(GLOB.directory[bad_key])//they have reconnected if we can search their key and get a client
+			GLOB.mafia_bad_signup -= bad_key
+			GLOB.mafia_signup += bad_key
+	for(var/key in GLOB.mafia_signup)
+		var/client/C = GLOB.directory[key]
+		if(!C)//vice versa but in a variable we use later
+			GLOB.mafia_signup -= key
+			GLOB.mafia_bad_signup += key
+		if(!isobserver(C.mob))
+			//they are back to playing the game, remove them from the signups
+			GLOB.mafia_signup -= key
 
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"

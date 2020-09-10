@@ -7,11 +7,12 @@
 	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	attack_verb = list("poked")
+	attack_verb_continuous = list("pokes")
+	attack_verb_simple = list("poke")
 	var/fail_message = "<span class='warning'>INVALID USER.</span>"
-	var/selfdestruct = 0 // Explode when user check is failed.
-	var/force_replace = 0 // Can forcefully replace other pins.
-	var/pin_removeable = 0 // Can be replaced by any pin.
+	var/selfdestruct = FALSE // Explode when user check is failed.
+	var/force_replace = FALSE // Can forcefully replace other pins.
+	var/pin_removeable = FALSE // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
 /obj/item/firing_pin/New(newloc)

@@ -87,11 +87,11 @@
 		return ..()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process()
+/obj/machinery/modular_computer/process(delta_time)
 	if(cpu)
 		// Keep names in sync.
 		cpu.name = name
-		cpu.process()
+		cpu.process(delta_time)
 
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
@@ -100,13 +100,13 @@
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
-	machine_stat |= NOPOWER
+	set_machine_stat(machine_stat | NOPOWER)
 	update_icon()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
 	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
-		machine_stat &= ~NOPOWER
+		set_machine_stat(machine_stat & ~NOPOWER)
 		update_icon()
 		return
 	. = ..()
@@ -123,11 +123,11 @@
 	if(cpu)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += cpu
+				SSexplosions.high_mov_atom += cpu
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += cpu
+				SSexplosions.med_mov_atom += cpu
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += cpu
+				SSexplosions.low_mov_atom += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
