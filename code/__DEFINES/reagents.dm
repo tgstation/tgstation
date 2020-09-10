@@ -37,7 +37,7 @@
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
 ///Health threshold for synthflesh and rezadone to unhusk someone
-#define THRESHOLD_UNHUSK 50
+#define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone
 #define SYNTHFLESH_UNHUSK_AMOUNT 100
 
