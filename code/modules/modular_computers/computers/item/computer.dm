@@ -349,9 +349,8 @@
 
 /obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
 	// Check for ID first
-	if(istype(W, /obj/item/card/id))
-		if(InsertID(W))
-			return
+	if(istype(W, /obj/item/card/id) && InsertID(W))
+		return
 
 	// Insert items into the components
 	for(var/h in all_components)
