@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - tweak: "Things without a client or not alive, bots included, will be ejected out of the station pods (like the ones leading to the AI sat) on arrival, to prevent them being hidden in a very hard to detect location."

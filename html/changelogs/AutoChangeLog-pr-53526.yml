@@ -1,4 +1,0 @@
-author: "AsphaltEvidence"
-delete-after: True
-changes: 
-  - bugfix: "fixed drone_maint_green (M) north animation state"

@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "BETTER_DIST define to replace the get_dist() native proc"
-  - bugfix: "event crash fix by replacing the native proc with the define"
-  - tweak: "monster damage overall reduced and boss spawning changed a bit"

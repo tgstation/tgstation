@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "The blob random event can no longer occur after the shuttle has reached the point of no return"
