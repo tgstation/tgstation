@@ -116,6 +116,11 @@
 			to_chat(user, text = "This pod has already had its seeds harvested!", type = MESSAGE_TYPE_INFO)
 			return result
 
+		// Make sure they can still interact with the parent hydroponics tray.
+		if(!parent.can_interact(user))
+			to_chat(user, text = "You are no longer able to harvets the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
+			return result
+
 		var/seed_count = 1
 		if(prob(getYield() * 20))
 			seed_count++
