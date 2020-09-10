@@ -22109,7 +22109,7 @@
 "aZX" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -26933,7 +26933,7 @@
 "blb" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -26955,7 +26955,7 @@
 "bld" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Captain's Office Maintenance";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -27501,7 +27501,7 @@
 "bms" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access_txt = "57";
+	req_access_txt = "57"
 	security_level = 1
 	},
 /obj/structure/disposalpipe/segment,
@@ -32188,7 +32188,7 @@
 "bxG" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access_txt = "57";
+	req_access_txt = "57"
 	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
