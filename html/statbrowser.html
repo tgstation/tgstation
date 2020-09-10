@@ -742,6 +742,10 @@ function remove_admin_tabs() {
 	remove_sdql2();
 }
 
+function add_admin_tabs() {
+	addPermanentTab("MC");
+	addPermanentTab("Tickets");
+}
 function create_listedturf(TN) {
 	remove_listedturf(); // remove the last one if we had one
 	turfname = JSON.parse(TN);

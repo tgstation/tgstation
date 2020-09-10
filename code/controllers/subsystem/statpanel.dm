@@ -27,31 +27,13 @@ SUBSYSTEM_DEF(statpanels)
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
 		encoded_global_data = url_encode(json_encode(global_data))
-
-		var/list/mc_data = list(
-			list("CPU:", world.cpu),
-			list("Instances:", "[num2text(world.contents.len, 10)]"),
-			list("World Time:", "[world.time]"),
-			list("Globals:", GLOB.stat_entry(), "\ref[GLOB]"),
-			list("[config]:", config.stat_entry(), "\ref[config]"),
-			list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
-			list("Master Controller:", Master.stat_entry(), "\ref[Master]"),
-			list("Failsafe Controller:", Failsafe.stat_entry(), "\ref[Failsafe]"),
-			list("","")
-		)
-		for(var/ss in Master.subsystems)
-			var/datum/controller/subsystem/sub_system = ss
-			mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
-		mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
-		mc_data_encoded = url_encode(json_encode(mc_data))
 		src.currentrun = GLOB.clients.Copy()
-
+		mc_data_encoded = null
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
 		if(!target.statbrowser_ready)
-			target << browse(file('html/statbrowser.html'), "window=statbrowser")
 			continue
 		if(target.stat_tab == "Status")
 			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
@@ -60,11 +42,15 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			if(target.stat_tab == "MC" || !("MC" in target.panel_tabs))
+			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
+				target << output("", "statbrowser:add_admin_tabs")
+			if(target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
 				var/coord_entry = url_encode(COORD(eye_turf))
+				if(!mc_data_encoded)
+					generate_mc_data()
 				target << output("[mc_data_encoded];[coord_entry];[url_encode(target.holder.href_token)]", "statbrowser:update_mc")
-			if(target.stat_tab == "Tickets" || !("Tickets" in target.panel_tabs))
+			if(target.stat_tab == "Tickets")
 				var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
@@ -130,6 +116,24 @@ SUBSYSTEM_DEF(statpanels)
 		if(MC_TICK_CHECK)
 			return
 
+
+/datum/controller/subsystem/statpanels/proc/generate_mc_data()
+	var/list/mc_data = list(
+		list("CPU:", world.cpu),
+		list("Instances:", "[num2text(world.contents.len, 10)]"),
+		list("World Time:", "[world.time]"),
+		list("Globals:", GLOB.stat_entry(), "\ref[GLOB]"),
+		list("[config]:", config.stat_entry(), "\ref[config]"),
+		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
+		list("Master Controller:", Master.stat_entry(), "\ref[Master]"),
+		list("Failsafe Controller:", Failsafe.stat_entry(), "\ref[Failsafe]"),
+		list("","")
+	)
+	for(var/ss in Master.subsystems)
+		var/datum/controller/subsystem/sub_system = ss
+		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
+	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
+	mc_data_encoded = url_encode(json_encode(mc_data))
 
 /// verbs that send information from the browser UI
 /client/verb/set_tab(tab as text|null)
