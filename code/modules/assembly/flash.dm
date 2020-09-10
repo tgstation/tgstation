@@ -145,7 +145,8 @@
 			else
 				to_chat(M, "<span class='userdanger'>You are flashed by [src]!</span>")
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			M.Paralyze(rand(60,80)*(1-deviation/2))
+			M.adjustStaminaLoss(rand(80,120)*(1-deviation/2))
+			M.Paralyze(rand(25,50)*(1-deviation/2))
 
 		else if(user)
 			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
