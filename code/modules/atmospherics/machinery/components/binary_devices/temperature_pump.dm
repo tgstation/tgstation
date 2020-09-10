@@ -6,7 +6,9 @@
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 
+	///Value of the amount of rate of heat exchange
 	var/heat_transfer_rate = 0
+	///Maximum allowed amount for the heat exchange
 	var/max_heat_transfer_rate = 4500
 
 	construction_type = /obj/item/pipe/directional
@@ -20,14 +22,14 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/AltClick(mob/user)
-	if(can_interact(user))
+	if(can_interact(user) && !(heat_transfer_rate == max_heat_transfer_rate))
 		heat_transfer_rate = max_heat_transfer_rate
-		investigate_log("was set to [heat_transfer_rate] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+		investigate_log("was set to [heat_transfer_rate] K/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
-	icon_state = (on && is_operational) ? "tpump_on-[set_overlay_offset(piping_layer)]" : "tpump_off-[set_overlay_offset(piping_layer)]"
+	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
 
