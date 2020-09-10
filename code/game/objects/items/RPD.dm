@@ -212,7 +212,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
-	var/upgrade = FALSE
+	///Hold upgrade flags
+	var/upgrade
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -359,7 +360,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = TRUE
 
-	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH)
+	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH))
 		if(istype(A, /obj/machinery/atmospherics))
 			A = A.wrench_act(user, src)		
 
@@ -497,3 +498,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef DESTROY_MODE
 #undef PAINT_MODE
 #undef WRENCH_MODE
+
+/obj/item/rpd_upgrade
+	name = "RPD advanced design disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	var/upgrade
+
+/obj/item/rpd_upgrade/unwrench
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	upgrade = RPD_UPGRADE_UNWRENCH

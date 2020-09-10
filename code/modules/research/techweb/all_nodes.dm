@@ -542,8 +542,6 @@
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
-
-
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
 	id = "weaponry"
