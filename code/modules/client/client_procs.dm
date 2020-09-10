@@ -283,12 +283,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
-
 	. = ..()	//calls mob.Login()
-	if (length(GLOB.stickybanadminexemptions))
-		GLOB.stickybanadminexemptions -= ckey
-		if (!length(GLOB.stickybanadminexemptions))
-			restore_stickybans()
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
