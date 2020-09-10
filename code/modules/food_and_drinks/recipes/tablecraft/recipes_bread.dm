@@ -111,3 +111,15 @@
 		)
 	result = /obj/item/food/breadslice/moldy
 	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/breadcat
+	name = "Bread cat"
+	reqs = list(
+		/obj/item/food/bread/plain = 1,
+		/obj/item/clothing/head/kitty = 1,
+		/obj/item/reagent_containers/food/snacks/meat/slab = 3,
+		/datum/reagent/blood = 50,
+		/datum/reagent/teslium = 10
+	)
+	result = /mob/living/simple_animal/pet/cat/breadcat
+	subcategory = CAT_BREAD
