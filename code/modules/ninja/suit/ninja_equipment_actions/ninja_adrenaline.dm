@@ -30,7 +30,7 @@
 		ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 		a_boost = FALSE
 		to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
-		s_coold = 3
+		s_coold = 6
 		addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
 
 /**
