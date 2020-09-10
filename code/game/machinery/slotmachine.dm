@@ -59,12 +59,12 @@
 		give_payout(balance)
 	return ..()
 
-/obj/machinery/computer/slot_machine/process()
+/obj/machinery/computer/slot_machine/process(delta_time)
 	. = ..() //Sanity checks.
 	if(!.)
 		return .
 
-	money++ //SPESSH MAJICKS
+	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)

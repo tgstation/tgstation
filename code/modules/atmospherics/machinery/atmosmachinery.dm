@@ -126,6 +126,10 @@
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
 	update_icon()
 
+/obj/machinery/atmospherics/update_icon()
+	layer = initial(layer) + piping_layer / 1000
+	return ..()
+
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)
 

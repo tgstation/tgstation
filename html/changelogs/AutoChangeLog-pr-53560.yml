@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - balance: "Spacemen will now take 4x larger breaths"
+  - balance: "Various pocket and belt-sized internals tanks have had their capacities increased 3x to 4x to account for the new breathing changes"

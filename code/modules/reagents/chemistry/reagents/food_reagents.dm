@@ -158,7 +158,6 @@
 		addtimer(CALLBACK(exposed_mob, /mob/living/proc/unfry_mob), 3)
 	if(FryLoss)
 		exposed_mob.adjustFireLoss(FryLoss)
-	return TRUE
 
 /datum/reagent/consumable/cooking_oil/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
