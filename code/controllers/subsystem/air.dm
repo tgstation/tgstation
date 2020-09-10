@@ -65,10 +65,10 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
+	gas_reactions = init_gas_reactions()
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
-	gas_reactions = init_gas_reactions()
 	setup_turf_visuals()
 	return ..()
 
@@ -371,24 +371,24 @@ SUBSYSTEM_DEF(air)
 		for(var/thing in excited_groups)
 			var/datum/excited_group/EG = thing
 			EG.self_breakdown(roundstart = TRUE, poke_turfs = FALSE)
-			EG.dismantle()
+			EG.dismantle(TRUE)
 			CHECK_TICK
 
-		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		var/msg = "HEY! LISTEN! [DisplayTimeText(world.timeofday - timer)] were wasted processing [starting_ats] turf(s) (connected to [ending_ats - starting_ats] other turfs) with atmos differences at round start."
 		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
 /turf/open/proc/resolve_active_graph()
 	. = list()
 	var/datum/excited_group/EG = excited_group
-	if (blocks_air || !air)
+	if (blocks_air || !air || planetary_atmos)
 		return
 	if (!EG)
 		EG = new
 		EG.add_turf(src)
 
 	for (var/turf/open/ET in atmos_adjacent_turfs)
-		if ( ET.blocks_air || !ET.air)
+		if (ET.blocks_air || !ET.air)
 			continue
 
 		var/ET_EG = ET.excited_group

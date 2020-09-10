@@ -158,11 +158,15 @@
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/Initalize_Atmos(times_fired)
-	if(planetary_atmos)
-		return
-
 	excited = FALSE
 	update_visuals()
+
+	var/datum/gas_mixture/cache = new()
+	cache.copy_from(air)
+	cache.react(src)
+
+	if(planetary_atmos)
+		return
 
 	current_cycle = times_fired
 	ImmediateCalculateAdjacentTurfs()

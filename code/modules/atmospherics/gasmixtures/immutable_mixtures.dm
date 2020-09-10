@@ -75,6 +75,8 @@
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		initial_temperature = text2num(gas["TEMP"])
+		temperature_archived = initial_temperature
+		temperature = initial_temperature
 		gas -= "TEMP"
 	mix.Cut()
 	for(var/id in gas)
@@ -84,6 +86,6 @@
 		ADD_GAS(path, mix)
 		mix[path][MOLES] = text2num(gas[id])
 		mix[path][ARCHIVE] = mix[path][MOLES]
-	temperature_archived = initial_temperature
+	gases = initial_gas.Copy()
 
 

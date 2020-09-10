@@ -46,12 +46,11 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			air = new
 			air.copy_from_turf(src)
 		else
-			if(!GLOB.planetary[src.initial_gas_mix])
+			if(!GLOB.planetary[initial_gas_mix])
 				var/datum/gas_mixture/immutable/planetary/mix = new
-				mix.parse_string_immutable(src.initial_gas_mix)
-				GLOB.planetary[src.initial_gas_mix] = mix
-			air = GLOB.planetary[src.initial_gas_mix]
-		update_visuals()
+				mix.parse_string_immutable(initial_gas_mix)
+				GLOB.planetary[initial_gas_mix] = mix
+			air = GLOB.planetary[initial_gas_mix]
 	. = ..()
 
 /turf/open/Destroy()
@@ -374,7 +373,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	var/list/A_gases = A.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
-	var/space_in_group = FALSE
+	var/imumutable_in_group = FALSE
 	var/energy = 0
 	var/heat_cap = 0
 
@@ -382,10 +381,9 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/turf/open/T = t
 		//Cache?
 		var/datum/gas_mixture/turf/mix = T.air
-		if (roundstart && (istype(T.air, /datum/gas_mixture/immutable/space) || T.planetary_atmos))
-			space_in_group = TRUE
-			qdel(A)
-			A = mix //This had better be immutable young man
+		if (roundstart && istype(T.air, /datum/gas_mixture/immutable))
+			imumutable_in_group = TRUE
+			A.copy_from(T.air) //This had better be immutable young man
 			A_gases = A.gases //update the cache
 			break
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
@@ -399,7 +397,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			ASSERT_GAS(giver_id, A)
 			A_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	if(!space_in_group)
+	if(!imumutable_in_group)
 		A.temperature = energy / heat_cap
 		for(var/id in A_gases)
 			A_gases[id][MOLES] /= turflen
@@ -408,13 +406,22 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/turf/open/T = t
 		T.air.copy_from(A)
 		T.update_visuals()
-		if(!T.excited && !roundstart) //Because we only activate all these once every breakdown, in event of lag due to slow space + vent things, increase the wait time for breakdowns
-			SSair.add_to_active(T, FALSE)
+		if(!T.excited && poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to slow space + vent things, increase the wait time for breakdowns
+			SSair.add_to_active(T, FALSE) //Maybe check molar diff or something? IDK
+	if(roundstart)
+		var/datum/gas_mixture/cache = new()
+		cache.copy_from(A)
+		for(var/t in turf_list)
+			var/turf/open/T = t
+			A.react(T)
+			T.update_visuals()
+			A.copy_from(cache) //Keep it the same nerd
 
 	breakdown_cooldown = 0
 
-/datum/excited_group/proc/dismantle()
-	self_breakdown(poke_turfs = FALSE)
+/datum/excited_group/proc/dismantle(starting_up = FALSE)
+	if(!starting_up)
+		self_breakdown(poke_turfs = FALSE)
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited = FALSE
