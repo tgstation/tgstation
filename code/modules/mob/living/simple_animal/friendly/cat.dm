@@ -74,14 +74,13 @@
 	held_state = "spacecat"
 
 /mob/living/simple_animal/pet/cat/breadcat
-	name = "Jason"
+	name = "bread cat"
 	desc = "It's a cat... with a bread!"
 	gender = MALE
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
 	collar_type = null
-	unique_pet = TRUE
 	held_state = "breadcat"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
