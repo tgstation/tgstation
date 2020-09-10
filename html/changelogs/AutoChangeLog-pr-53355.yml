@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "spy glasses now use an action button instead of a verb, so they are less cryptic and someone will know how to use them"
-  - balance: "spy glasses are now sunglasses, removes the sunglasses from det's office so you can just take the spy ones from your locker"

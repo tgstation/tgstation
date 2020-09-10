@@ -300,3 +300,13 @@
 	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
 	icon_state = "marx"
 	art_type = /datum/component/art/rev
+
+///////////Elder Atmosian///////////////////////////////////////////
+
+/obj/structure/statue/elder_atmosian
+	name = "Elder Atmosian"
+	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
+	icon_state = "eng"
+	material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	max_integrity = 1000
+	impressiveness = 100

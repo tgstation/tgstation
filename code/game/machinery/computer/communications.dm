@@ -173,7 +173,6 @@
 						if(points_to_check >= S.credit_cost)
 							SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 							SSshuttle.unload_preview()
-							SSshuttle.load_template(S)
 							SSshuttle.existing_shuttle = SSshuttle.emergency
 							SSshuttle.action_load(S)
 							D.adjust_money(-S.credit_cost)
