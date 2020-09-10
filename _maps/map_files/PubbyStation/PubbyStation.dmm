@@ -9215,7 +9215,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office Access";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -9978,7 +9978,7 @@
 "ayW" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/machinery/door/firedoor,
@@ -11784,7 +11784,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/structure/disposalpipe/segment{

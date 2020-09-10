@@ -13679,7 +13679,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -27631,7 +27631,7 @@
 "bmI" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -31599,7 +31599,7 @@
 "bwG" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Escape";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -32188,7 +32188,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access_txt = "20";
+	req_access_txt = "20"
 	security_level = 6
 	},
 /turf/open/floor/plasteel/dark,
