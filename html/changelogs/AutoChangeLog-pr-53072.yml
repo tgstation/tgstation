@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Readds the tesla with some changes, it's more about killing machines and people then the hull now. Oh and it makes pretty blue light now. Power delam your local supermatter crystal today"
-  - rscadd: "You feel the universe shift, tesla code has changed."
-  - bugfix: "Most zaps no longer generate power, excepting the sm zaps."
