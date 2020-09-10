@@ -119,7 +119,7 @@
 		/obj/item/clothing/head/kitty = 1,
 		/obj/item/reagent_containers/food/snacks/meat/slab = 3,
 		/datum/reagent/blood = 50,
-		/datum/reagent/teslium = 10
+		/datum/reagent/medicine/strange_reagent = 5
 	)
 	result = /mob/living/simple_animal/pet/cat/breadcat
 	subcategory = CAT_BREAD
