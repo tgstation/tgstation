@@ -11,15 +11,15 @@
 	var/give_equipment = TRUE
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	var/mob/living/ninja = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
 
 /datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
+	var/mob/living/ninja = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, ninja)
 
-/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
-	return H.equipOutfit(/datum/outfit/ninja)
+/datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
+	return ninja.equipOutfit(/datum/outfit/ninja)
 
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
@@ -83,15 +83,15 @@
 	survival.owner = owner
 	objectives += survival
 
-/proc/remove_ninja(mob/living/L)
-	if(!L || !L.mind)
+/proc/remove_ninja(mob/living/ninja)
+	if(!ninja || !ninja.mind)
 		return FALSE
-	var/datum/antagonist/datum = L.mind.has_antag_datum(/datum/antagonist/ninja)
+	var/datum/antagonist/datum = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	datum.on_removal()
 	return TRUE
 
-/proc/is_ninja(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/ninja)
+/proc/is_ninja(mob/living/possible_ninja)
+	return possible_ninja && possible_ninja.mind && possible_ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 
 /datum/antagonist/ninja/greet()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
@@ -106,7 +106,7 @@
 	addMemories()
 	if(give_equipment)
 		equip_space_ninja(owner.current)
-	. = ..()
+	return ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.assigned_role = ROLE_NINJA
