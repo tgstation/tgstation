@@ -63,9 +63,13 @@
 	//Stop any reagent metabolizing on organ destruction
 	if(reagents && iscarbon(owner))
 		var/mob/living/carbon/body = owner
-		for(var/bit in reagents.reagent_list)
-			var/datum/reagent/_reagent = bit
+		for(var/chem in reagents.reagent_list)
+			var/datum/reagent/_reagent = body
+			if(!_reagent.metabolizing)
+				continue
+			_reagent.metabolizing = FALSE
 			_reagent.on_mob_end_metabolize(body)
+			_reagent.on_mob_delete(body) //It was removed from the body
 
 	owner = null
 	if(M)
