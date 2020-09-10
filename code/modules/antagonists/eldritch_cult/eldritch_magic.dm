@@ -34,7 +34,7 @@
 	desc = "Touch spell that let's you channel the power of the old gods through you."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = "evocation"
-	charge_max = 150
+	charge_max = 100
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
@@ -409,7 +409,7 @@
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
 			for(var/mob/living/livies in T.contents - centre)
-				livies.adjustFireLoss(10)
+				livies.adjustFireLoss(5)
 		_range++
 		sleep(3)
 
@@ -458,7 +458,7 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(25 * delta_time)
+			livies.adjustFireLoss(2.5 * delta_time)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
@@ -477,6 +477,7 @@
 	. = ..()
 	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
 		to_chat(user, "<span class='userdanger'>You try to contract your muscles but nothing happens...</span>")
+		return
 	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
 	armsy.contract_next_chain_into_single_tile()
 
@@ -667,3 +668,46 @@
 		return 3
 	else
 		return 2
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form
+	name = "Shed form"
+	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
+	invocation_type = INVOCATION_SHOUT
+	invocation = "BOW BEFORE THE KING OF ARMS!"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "worm_ascend"
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form/cast(list/targets, mob/user)
+	var/mob/living/target = targets[1]
+	var/mob/living/mob_inside = locate() in target.contents - target
+
+	if(!mob_inside)
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,10)
+		target.mind.transfer_to(outside, TRUE)
+		target.forceMove(outside)
+		target.apply_status_effect(STATUS_EFFECT_STASIS)
+		return ..()
+
+	if(istype(mob_inside , /mob/living/simple_animal/hostile/eldritch/armsy/prime))
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/inside = mob_inside
+		inside.unpack_armsy()
+		inside.forceMove(target.loc)
+		target.mind.transfer_to(inside, TRUE)
+		target.forceMove(inside)
+		invocation = initial(invocation)
+		return ..()
+
+	if(ishuman(mob_inside))
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
+		mob_inside.forceMove(armsy.loc)
+		target.remove_status_effect(STATUS_EFFECT_STASIS)
+		if(armsy.pack_armsy())
+			armsy.mind.transfer_to(mob_inside, TRUE)
+			armsy.forceMove(mob_inside)
+		invocation = "FLESH IS WILLING!"
+		return ..()
