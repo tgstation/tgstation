@@ -956,7 +956,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Worn Item Sprites"
 	set desc = "We're cancelling the Spritemageddon. (This will create a LOT of runtimes! Don't use on a live server!)"
 	var/actual_file_name
-	for(var/text_obj in subtypesof(/obj/item))
+	for(var/test_obj in subtypesof(/obj/item))
 		var/obj/item/sprite = new test_obj
 		if(!sprite.slot_flags || (sprite.item_flags & ABSTRACT))
 			continue
@@ -1002,9 +1002,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				actual_file_name = 'icons/mob/clothing/back.dmi'
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, "<span class='warning'>ERROR sprites for [sprite.type]. Back slot.</span>", confidential = TRUE)
-			if(x.slot_flags & ITEM_SLOT_HEAD)
+			if(sprite.slot_flags & ITEM_SLOT_HEAD)
 				actual_file_name = 'icons/mob/clothing/head.dmi'
-				if(!(x.icon_state in icon_states(actual_file_name)))
+				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, "<span class='warning'>ERROR sprites for [sprite.type]. Head slot.</span>", confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
 				actual_file_name = 'icons/mob/clothing/belt.dmi'
