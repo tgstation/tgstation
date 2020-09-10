@@ -114,6 +114,7 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
+///Awfully bad proc that flashes carbons. this really fucking needs a refactor
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
