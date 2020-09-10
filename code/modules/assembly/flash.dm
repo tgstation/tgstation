@@ -114,7 +114,6 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
-
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -122,8 +121,18 @@
 		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+
+
+
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
+
+	var/deviation = calculate_deviation(M,user)
+
+	//If you face away from someone they shouldnt notice any effects.
+	if(deviation == 2)
+		return
+
 	if(targeted)
 		if(M.flash_act(1, 1))
 			if(M.get_confusion() < power)
@@ -131,22 +140,34 @@
 				M.add_confusion(min(power, diff))
 			if(user)
 				terrible_conversion_proc(M, user)
-				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
-				to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
+				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
 			else
-				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Paralyze(rand(80,120))
+				to_chat(M, "<span class='userdanger'>You are flashed by [src]!</span>")
+			//easy way to make sure that you can only long stun someone who is facing in your direction
+			M.Paralyze(rand(60,80)*(1-deviation/2))
+
 		else if(user)
-			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>")
-			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
 			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 			M.add_confusion(min(power, diff))
+
+///Returns a value of deviation, 0 means they face the same direction, 2 means they face away from eachother.
+/obj/item/assembly/flash/proc/calculate_deviation(mob/living/carbon/M, mob/user)
+	var/dir1 = M.dir
+	var/dir2 = turn(user.dir,180)
+	//Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
+	//What we actually check is we check if the inverted vector of the second mob is equal to the vector of the first one which indicates they they are looking in the same line
+	//The second check makes sure that the first user is actually facing the mob, since the first check will fail at it's job when the 2 mobs face away from each other.
+	if(dir1 == dir2 && get_dir(M,user) == dir1)
+		return 0
+	else if(turn(dir1,90) == dir2 || turn(dir1,-90) == dir2)
+		return 1
+	else if(turn(dir1,180) == dir2)
+		return 2
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
