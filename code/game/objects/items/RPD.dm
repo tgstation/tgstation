@@ -212,6 +212,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/upgrade = FALSE
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -234,6 +235,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
+
+/obj/item/construction/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rpd_upgrade))
+		var/obj/item/rpd_upgrade/rpd_up = W
+		if(!(upgrade & rpd_up.upgrade))
+			upgrade |= rpd_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			qdel(W)
+	else
+		return ..()
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
