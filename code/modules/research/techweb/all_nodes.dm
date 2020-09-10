@@ -528,9 +528,9 @@
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
-	display_name = "RCD designs upgrade"
-	description = "Unlocks new RCD designs."
-	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing")
+	display_name = "RCD/RPD designs upgrade"
+	description = "Unlocks new RCD/RPD designs."
+	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing", "rpd_upgrade_unwrench")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -541,6 +541,8 @@
 	design_ids = list("rcd_upgrade_silo_link")
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+
+
 
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
