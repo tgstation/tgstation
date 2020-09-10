@@ -53009,8 +53009,8 @@
 /area/lawoffice)
 "oCF" = (
 /obj/machinery/bounty_board{
-	dir = 8;
-	pixel_x = -23
+	dir = 4;
+	pixel_x = -30
 	},
 /obj/machinery/light{
 	dir = 8;
