@@ -1,0 +1,4 @@
+author: "Joe Berry"
+delete-after: True
+changes: 
+  - bugfix: "Brings back icebox mining mobs from the shadow realm."
