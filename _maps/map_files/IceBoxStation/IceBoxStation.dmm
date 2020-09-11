@@ -5718,7 +5718,9 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to access the various cameras on the station.";
 	dir = 1;
+	layer = 3.1;
 	name = "Security Camera Monitor";
+	network = list("ss13");
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
