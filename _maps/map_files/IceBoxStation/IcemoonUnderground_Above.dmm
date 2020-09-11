@@ -2236,6 +2236,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"kw" = (
+/turf/open/transparent/openspace/icemoon,
+/area/storage/mining)
 "ky" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -24867,11 +24870,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+kw
+kw
+kw
+kw
+kw
 ah
 ah
 ah
@@ -25124,11 +25127,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+kw
+kw
+kw
+kw
+kw
 ah
 ah
 ah
@@ -25381,11 +25384,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+kw
+kw
+kw
+kw
+kw
 ah
 ah
 ah
