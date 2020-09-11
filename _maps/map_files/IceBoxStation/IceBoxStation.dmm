@@ -4829,6 +4829,8 @@
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "akV" = (
@@ -5092,9 +5094,13 @@
 	},
 /obj/machinery/button/flasher{
 	id = "brigentry";
-	pixel_x = -28;
+	pixel_x = -26;
 	pixel_y = -8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "alA" = (
@@ -5398,7 +5404,7 @@
 	dir = 8
 	},
 /obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
+	desc = "A remote control switch for the brig exterior doors.";
 	id = "outerbrig";
 	name = "Brig Exterior Doors Control";
 	normaldoorcontrol = 1;
@@ -5407,13 +5413,16 @@
 	req_access_txt = "63"
 	},
 /obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
+	desc = "A remote control switch for the brig interior doors.";
 	id = "innerbrig";
 	name = "Brig Interior Doors Control";
 	normaldoorcontrol = 1;
 	pixel_x = -26;
 	pixel_y = 5;
 	req_access_txt = "63"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -5434,6 +5443,10 @@
 "amn" = (
 /obj/structure/chair/office{
 	dir = 4
+	},
+/obj/effect/landmark/start/security_officer,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -5701,6 +5714,14 @@
 	icon_state = "right";
 	name = "Brig Desk";
 	req_access_txt = "1"
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to access the various cameras on the station.";
+	dir = 1;
+	layer = 3.1;
+	name = "Security Camera Monitor";
+	network = list("ss13");
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -51494,6 +51515,15 @@
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
+"iMY" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "iNn" = (
 /obj/machinery/camera{
 	c_tag = "Kitchen Cold Room"
@@ -57032,6 +57062,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
+"yca" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "yce" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
@@ -86545,8 +86585,8 @@ ahz
 aie
 aIF
 ajc
-ajD
-akp
+yca
+iMY
 akU
 alz
 aml
