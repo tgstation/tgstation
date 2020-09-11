@@ -74,7 +74,6 @@ export const MassDriverControl = (props, context) => {
                     }>
                     <NumberInput
                       value={power}
-                      disabled={timing}
                       width="40px"
                       minValue={0.25}
                       maxValue={16}

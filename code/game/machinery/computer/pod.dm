@@ -19,16 +19,16 @@
 			connected = M
 			break
 
-/obj/machinery/computer/pod/process()
+/obj/machinery/computer/pod/process(delta_time)
 	if(!..())
 		return
-	if(timing)
-		if(time > 0)
-			time = round(time) - 1
-		else
-			alarm()
-			time = 0
-			timing = FALSE
+	if(!timing)
+		return
+	time -= delta_time
+	if(time <= 0)
+		timing = FALSE
+		time = initial(time)
+		alarm()
 
 /**
   * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
