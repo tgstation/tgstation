@@ -20,7 +20,16 @@
 		D.piercing = S.proj_piercing
 		SG.syringes.Remove(S)
 		qdel(S)
-	..()
+	else if(istype(loc, /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun))
+		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = loc
+		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
+		SG.reagents.trans_to(BB, min(S.volume, SG.reagents.total_volume), transfered_by = user)
+		BB.name = S.name
+		var/obj/projectile/bullet/dart/D = BB
+		D.piercing = S.proj_piercing
+		LAZYREMOVE(SG.syringes, S)
+		qdel(S)
+	return ..()
 
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
@@ -38,7 +47,7 @@
 		CG.reagents.trans_to(BB, 15, transfered_by = user)
 		BB.name = "chemical dart"
 		CG.syringes_left--
-	..()
+	return ..()
 
 /obj/item/ammo_casing/dnainjector
 	name = "rigged syringe gun spring"
@@ -58,4 +67,4 @@
 		var/obj/projectile/bullet/dnainjector/D = BB
 		S.forceMove(D)
 		D.injector = S
-	..()
+	return ..()
