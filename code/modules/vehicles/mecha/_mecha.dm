@@ -662,12 +662,14 @@
 	//if we're not facing the way we're going rotate us
 	if(dir != direction && !strafe || forcerotate || keyheld)
 		setDir(direction)
+		use_power(step_energy_drain)
 		if(turnsound)
 			playsound(src,turnsound,40,TRUE)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
+	use_power(step_energy_drain)
 	. = step(src,direction, dir)
 
 	if(strafe)

@@ -61,6 +61,7 @@
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
+	reverseOptionList = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=TRUE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE) //Allow the pod to pick up anchored objects
 	landingDelay = 0
 	openingDelay = 0
 	departureDelay = 0
