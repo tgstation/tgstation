@@ -1,0 +1,6 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - rscadd: "Ventilation and a security monitor have been added to the Ice Box Station security desk"
+  - rscadd: "A security officer may now spawn at the security desk on Ice Box Station."
+  - spellcheck: "Fixed the description of the door controls at the Ice Box Station security desk."
