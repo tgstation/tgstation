@@ -203,7 +203,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 
 //non-mob traits
-#define TRAIT_PARALYSIS				"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+/// Used for limb-based paralysis, where replacing the limb will fix it.
+#define TRAIT_PARALYSIS				"paralysis"
+/// Used for limbs.
+#define TRAIT_DISABLED_BY_WOUND		"disabled-by-wound"
 
 ///Used for managing KEEP_TOGETHER in [appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
