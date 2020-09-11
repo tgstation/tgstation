@@ -14127,8 +14127,8 @@
 /area/hallway/primary/central)
 "aKp" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/closed/wall,
-/area/quartermaster/warehouse)
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "aKq" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -15564,7 +15564,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aOW" = (
-/obj/item/toy/plush/pkplush,
+/obj/item/toy/plush/pkplush{
+	name = "Schrodinger"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aOZ" = (
@@ -15589,6 +15591,10 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
@@ -15624,6 +15630,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Cargo Maintenance APC";
+	pixel_x = 24
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aPg" = (
@@ -15871,8 +15882,21 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aPY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/conveyor{
+	id = "CargoLoad"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
+	},
 /turf/open/floor/plasteel,
-/area/quartermaster/office)
+/area/quartermaster/warehouse)
 "aQa" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Cargo Security Post";
@@ -16830,6 +16854,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -18528,6 +18555,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aXx" = (
@@ -19859,6 +19889,9 @@
 /obj/item/radio/intercom{
 	pixel_x = -32
 	},
+/obj/effect/turf_decal/trimline/brown/filled/end{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "baw" = (
@@ -20702,18 +20735,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bcK" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Maintenance APC";
-	pixel_x = 24
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/warning/vacuum,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/quartermaster/storage)
 "bcL" = (
-/obj/item/toy/plush/lizardplushie,
+/obj/item/toy/plush/lizardplushie{
+	name = "Mozu"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bcN" = (
@@ -21003,6 +21032,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -21707,10 +21739,6 @@
 /obj/item/shovel{
 	pixel_x = -5
 	},
-/obj/machinery/camera{
-	c_tag = "Cargo Mining Dock";
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
@@ -22018,11 +22046,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bgB" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
+/area/quartermaster/office)
 "bgC" = (
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel,
@@ -48243,6 +48268,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"fgT" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/hallway/primary/central)
 "fhE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -48531,6 +48562,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "fER" = (
@@ -49566,6 +49598,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"hvm" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/floor/grass,
+/area/hallway/primary/central)
 "hvF" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
@@ -49707,16 +49745,15 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "hKm" = (
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel,
-/area/quartermaster/office)
+/area/quartermaster/storage)
 "hMa" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
@@ -54755,9 +54792,9 @@
 /turf/open/floor/grass,
 /area/medical/medbay/central)
 "qEm" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light{
-	light_color = "#cee5d2"
+	dir = 4;
+	light_color = "#e8eaff"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -57760,11 +57797,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "vRC" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/grass,
 /area/hallway/primary/central)
 "vSG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -57845,6 +57881,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "wcs" = (
@@ -58840,6 +58877,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "xyl" = (
@@ -95314,9 +95352,9 @@ bat
 aDZ
 qvM
 aDZ
-qEm
-aAN
-bgB
+aDZ
+fgT
+aDZ
 aDZ
 aDZ
 bhd
@@ -95826,10 +95864,10 @@ bat
 jJn
 bat
 aDZ
+qEm
 aDZ
 aDZ
-aDZ
-vRC
+hvm
 bgC
 bgC
 bhQ
@@ -96846,7 +96884,7 @@ dMB
 aRi
 aSf
 aVp
-aVp
+bgB
 aVv
 aWw
 pMg
@@ -97102,8 +97140,8 @@ aTA
 dMB
 aRj
 dTT
-aPY
 aVp
+bgB
 aVv
 aWw
 dVK
@@ -97359,9 +97397,9 @@ aTB
 lAs
 bdS
 dTT
-aPY
 aVp
-hKm
+bgB
+aVv
 pvZ
 abc
 tQP
@@ -99165,7 +99203,7 @@ xNS
 jOm
 cCB
 cCB
-baB
+hKm
 bbI
 bcC
 bbI
@@ -102494,7 +102532,7 @@ aJs
 cDa
 aPc
 aPU
-aPU
+aPY
 bcJ
 aPU
 fQd
@@ -102748,7 +102786,7 @@ aEj
 aEj
 aEj
 aJs
-aKp
+cDa
 cDa
 cDa
 cDa
@@ -103005,7 +103043,7 @@ aFi
 aFi
 aFi
 aJs
-aFi
+aKp
 aFi
 aQj
 aTw
@@ -103266,7 +103304,7 @@ aRs
 aPf
 aMB
 aMB
-bcK
+aMB
 bdH
 mXc
 beR
@@ -105326,7 +105364,7 @@ aaa
 aYF
 sZh
 sut
-aTy
+bcK
 oSC
 cCB
 aHu
