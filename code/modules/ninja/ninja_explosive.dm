@@ -25,7 +25,7 @@
 		to_chat(user, "<span class='notice'>This isn't the location you're supposed to use this!</span>")
 		return
 	detonator = user
-	. = ..()
+	return ..()
 		
 /obj/item/grenade/c4/ninja/prime(mob/living/lanced_by)
 	. = ..()
