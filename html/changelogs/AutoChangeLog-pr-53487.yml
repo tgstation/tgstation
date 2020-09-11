@@ -1,0 +1,6 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "The AI will no longer get power/atmos/fire alarms from random ice box ruins"
+  - refactor: "Minor refactor of area alarm code"
+  - admin: "Removed old admin alert for engineering losing power which was meant for the singulo"
