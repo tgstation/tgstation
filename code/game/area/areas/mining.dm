@@ -186,7 +186,7 @@
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
-	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+	area_flags = UNIQUE_AREA | TUNNELS_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
 
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
