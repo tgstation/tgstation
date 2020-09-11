@@ -624,7 +624,7 @@
 
 /// Only moves the object if it's under no gravity
 /atom/movable/proc/newtonian_move(direction)
-	if(!loc || Process_Spacemove(0))
+	if(!isturf(loc) || Process_Spacemove(0))
 		inertia_dir = 0
 		return FALSE
 
