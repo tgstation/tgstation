@@ -10429,6 +10429,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"aBs" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/port)
 "aBt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -25310,6 +25315,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/medbay)
+"cjS" = (
+/obj/structure/table/wood,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/maintenance/port)
 "ckU" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
@@ -26638,11 +26650,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"egs" = (
-/obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "egS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -26758,6 +26765,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
+"eqx" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "eus" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/oil,
@@ -28169,6 +28184,16 @@
 /obj/item/cultivator,
 /turf/open/floor/plating/beach/sand,
 /area/security/prison)
+"gYI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "gZN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -29042,6 +29067,15 @@
 	heat_capacity = 1e+006
 	},
 /area/hallway/primary/port)
+"ixy" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "izN" = (
 /turf/closed/mineral/random/labormineral,
 /area/science/test_area)
@@ -29094,6 +29128,26 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"iFK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/obj/structure/table/wood,
+/obj/item/lipstick/random{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/lipstick/random{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/lipstick/random,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "iFT" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -30179,6 +30233,20 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
+"kFY" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/clothing/suit/justice,
+/obj/item/clothing/head/helmet/justice/escape{
+	name = "justice helmet"
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "kGz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -30669,6 +30737,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
+/area/maintenance/port)
+"lsW" = (
+/obj/structure/chair/comfy/black,
+/turf/open/floor/wood,
 /area/maintenance/port)
 "ltp" = (
 /obj/machinery/door/airlock/research{
@@ -32492,6 +32564,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"oep" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/door/window/northright{
+	name = "Theatre Stage"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "ofR" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -34156,6 +34238,14 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"qGT" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/dresser,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "qHf" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -38121,6 +38211,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"tay" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/vending/autodrobe{
+	req_access = null
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "tcB" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/item/radio/intercom{
@@ -39453,6 +39553,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"vip" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/wood,
+/area/maintenance/port)
 "viy" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -39695,6 +39799,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"vyP" = (
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "vzB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -40290,6 +40399,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
+"wAw" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "wBn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 2;
@@ -41230,6 +41346,16 @@
 	},
 /turf/closed/wall,
 /area/chapel/main)
+"xRW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "xSA" = (
 /obj/machinery/status_display/evac{
 	pixel_x = 32
@@ -41471,6 +41597,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"yfJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/clothing/suit/syndicatefake,
+/obj/item/clothing/head/syndicatefake,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port)
 "yhg" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
@@ -65863,10 +66001,10 @@ aac
 aay
 aad
 aac
-aad
-aad
-aad
-aaa
+ihP
+ihP
+ihP
+ihP
 aaa
 aaa
 aaa
@@ -66120,10 +66258,10 @@ sAA
 aad
 aad
 aad
-aad
-aad
-aac
-aac
+ihP
+tay
+qGT
+ihP
 aaa
 aaa
 aaa
@@ -66377,10 +66515,10 @@ aad
 aad
 aad
 aad
-aad
-aad
-aad
-aad
+ihP
+wAw
+wAw
+ihP
 aac
 aaa
 aaa
@@ -66630,14 +66768,14 @@ mRC
 sAA
 sAA
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+ihP
+ihP
+ihP
+ihP
+ihP
+xRW
+ihP
+ihP
 aad
 aad
 aaa
@@ -66887,14 +67025,14 @@ yeE
 sAA
 xFw
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+ihP
+aBs
+uEb
+lsW
+eqx
+wAw
+yfJ
+ihP
 aad
 aad
 aad
@@ -67144,14 +67282,14 @@ mRC
 sAA
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+ihP
+uEb
+vip
+lsW
+ixy
+wAw
+iFK
+ihP
 aad
 aad
 aac
@@ -67401,14 +67539,14 @@ yeE
 xFw
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+ihP
+cjS
+uEb
+pZx
+oep
+wAw
+kFY
+ihP
 aad
 aad
 aad
@@ -67660,12 +67798,12 @@ sdL
 uWc
 ihP
 ihP
-ihP
-uWc
-uWc
+gYI
 ihP
 ihP
-aad
+ihP
+ihP
+ihP
 aad
 aad
 aad
@@ -68646,7 +68784,7 @@ nUk
 ezP
 xPz
 ahx
-egs
+vyP
 aiM
 ezP
 ajU
