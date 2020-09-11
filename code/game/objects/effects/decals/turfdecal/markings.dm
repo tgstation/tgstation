@@ -186,3 +186,31 @@
 
 /obj/effect/turf_decal/mining/survival
 	icon_state = "survival"
+
+/obj/effect/turf_decal/siding/white
+	color = "#FFFFFF"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/red
+	color = "#DE3A3A"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/green
+	color = "#9FED58"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/blue
+	color = "#52B4E9"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/yellow
+	color = "#EFB341"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/purple
+	color = "#D381C9"
+	icon_state = "siding_line"
+
+/obj/effect/turf_decal/siding/brown
+	color = "#A46106"
+	icon_state = "siding_line"
