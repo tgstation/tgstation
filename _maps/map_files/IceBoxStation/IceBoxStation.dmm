@@ -11457,9 +11457,17 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aBc" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/obj/machinery/camera{
+	c_tag = "Hydroponics Storage"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
+/obj/structure/closet/secure_closet/hydroponics,
+/turf/open/floor/plasteel,
 /area/hydroponics)
 "aBd" = (
 /obj/machinery/flasher{
@@ -15471,8 +15479,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aJO" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aJP" = (
@@ -15799,16 +15806,15 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "aKH" = (
-/obj/structure/sink{
-	pixel_y = 30
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/structure/sink{
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aKI" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -15888,6 +15894,7 @@
 /area/crew_quarters/kitchen)
 "aKU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/disposalpipe/trunk/multiz/down,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aKV" = (
@@ -15976,17 +15983,6 @@
 /area/chapel/office)
 "aLd" = (
 /obj/structure/table,
-/obj/item/reagent_containers/spray/plantbgone{
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/spray/plantbgone{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/spray/plantbgone{
-	pixel_x = 13;
-	pixel_y = 5
-	},
 /obj/item/watertank,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -16516,7 +16512,7 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -16539,7 +16535,19 @@
 /area/library)
 "aMI" = (
 /obj/machinery/light/small,
-/obj/machinery/vending/wardrobe/hydro_wardrobe,
+/obj/structure/table,
+/obj/item/grenade/chem_grenade/antiweed,
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = 13;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aMJ" = (
@@ -16568,10 +16576,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aMN" = (
-/obj/machinery/chem_master/condimaster,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aMO" = (
@@ -17394,10 +17399,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "aOQ" = (
-/obj/machinery/requests_console{
-	department = "Hydroponics";
-	departmentType = 2;
-	pixel_y = 30
+/obj/machinery/camera{
+	c_tag = "Hydroponics North"
 	},
 /turf/open/transparent/openspace,
 /area/hydroponics)
@@ -17416,11 +17419,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOW" = (
-/obj/machinery/camera{
-	c_tag = "Hydroponics North"
+/obj/machinery/holopad{
+	name = "botany requests holopad"
 	},
-/turf/open/transparent/openspace,
-/area/hydroponics)
+/obj/item/paper/guides/jobs/holopad_hydro,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "aOY" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
@@ -17429,7 +17433,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aOZ" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/hydroponics)
@@ -19519,7 +19522,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/hydroponics)
@@ -20044,7 +20046,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
 /turf/open/transparent/openspace,
 /area/hydroponics)
@@ -21545,9 +21546,11 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "aYO" = (
-/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/holopad{
+	name = "botany requests holopad"
+	},
 /turf/open/floor/plasteel,
-/area/hydroponics)
+/area/hallway/primary/starboard)
 "aYP" = (
 /obj/structure/sink{
 	dir = 4;
@@ -21567,7 +21570,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYR" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/office/light,
 /obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -21592,6 +21595,7 @@
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "aYU" = (
@@ -22174,6 +22178,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
+/obj/item/paper/guides/jobs/holopad_hydro,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bao" = (
@@ -26425,7 +26430,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/hydroponics)
 "bkh" = (
@@ -26461,19 +26466,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"bkl" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Hydroponics Storage"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bkm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52769,7 +52761,6 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
 "muj" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/lattice/catwalk,
 /obj/machinery/light{
 	dir = 4
@@ -55632,13 +55623,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"uDE" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/dark,
-/area/hydroponics)
 "uES" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -96549,7 +96533,7 @@ aJI
 aJI
 aJI
 aRH
-aVz
+aOW
 aVz
 bmX
 aXn
@@ -97317,7 +97301,7 @@ aJB
 aKD
 aMs
 aIp
-aOQ
+aVK
 aVK
 aVK
 aSQ
@@ -97831,7 +97815,7 @@ aIp
 aKI
 aMt
 aIp
-aOW
+aVK
 aVK
 aVK
 aVK
@@ -98083,7 +98067,7 @@ aCA
 aEl
 awD
 aGW
-anf
+aIp
 aIp
 bkg
 aMA
@@ -98341,11 +98325,11 @@ alP
 alO
 aGV
 aIp
-aIp
-bkl
+aBc
+aRJ
 aMz
 aNQ
-aVK
+aOQ
 aVK
 aVK
 aVK
@@ -98354,7 +98338,7 @@ aVK
 iYg
 aYR
 ban
-aYV
+aYO
 aYV
 bdr
 bez
@@ -98609,7 +98593,7 @@ aXo
 aXo
 aXo
 sRe
-aYO
+aRJ
 bap
 aYV
 aDA
@@ -98858,14 +98842,14 @@ aIp
 aJN
 aLd
 aMN
-aBc
+aNQ
 aOZ
 aOZ
 muj
 aOZ
 aUz
 aVM
-uDE
+aSR
 aYT
 bam
 aYV

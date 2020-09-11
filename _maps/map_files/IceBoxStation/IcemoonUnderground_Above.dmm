@@ -2014,6 +2014,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"gb" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/filled/end{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "gd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/effect/turf_decal/tile/purple{
@@ -2146,9 +2156,15 @@
 /turf/closed/mineral/random/snow,
 /area/mine/laborcamp)
 "jc" = (
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/dark,
-/area/hydroponics)
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk/multiz{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/white/box,
+/turf/open/floor/plating,
+/area/storage/mining)
 "je" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -2230,6 +2246,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/hydroponics)
 "jU" = (
@@ -2905,6 +2922,7 @@
 /area/mine/laborcamp)
 "wF" = (
 /obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "wN" = (
@@ -3021,6 +3039,7 @@
 /area/mine/production)
 "zz" = (
 /obj/machinery/light,
+/obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "zQ" = (
@@ -3182,6 +3201,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Cg" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/storage/mining)
 "Cr" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag1";
@@ -3289,6 +3312,8 @@
 	pixel_y = -23
 	},
 /obj/structure/cable,
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "DZ" = (
@@ -3440,6 +3465,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
+"Gl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/hydroponics)
 "Gn" = (
 /obj/item/clothing/under/color/jumpskirt/random,
 /turf/open/floor/plasteel,
@@ -3759,6 +3789,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
+"MB" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "MG" = (
 /obj/machinery/computer/secure_data,
 /obj/structure/cable,
@@ -3806,6 +3847,7 @@
 /area/mine/laborcamp)
 "ND" = (
 /obj/effect/landmark/start/botanist,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "NI" = (
@@ -4579,6 +4621,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria,
 /area/mine/laborcamp)
+"ZX" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/filled/end{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 
 (1,1,1) = {"
 ah
@@ -45047,7 +45099,7 @@ SL
 Wq
 PR
 rG
-jc
+rG
 wF
 rD
 HC
@@ -45559,7 +45611,7 @@ wd
 jC
 BB
 Wn
-QH
+MB
 bb
 QH
 hy
@@ -45816,7 +45868,7 @@ wd
 Wq
 Wq
 Wq
-BC
+ZX
 JE
 BC
 Vq
@@ -46070,10 +46122,10 @@ ah
 wd
 wd
 ah
-wd
-wd
-qn
-BP
+jc
+Cg
+Gl
+gb
 JE
 BP
 Vq
@@ -46327,8 +46379,8 @@ ah
 ah
 ah
 ah
-wd
-wd
+YF
+YF
 Wq
 td
 xH
