@@ -49861,6 +49861,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"dfX" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/lattice/catwalk,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/transparent/openspace,
+/area/hydroponics)
 "dgS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -53824,10 +53832,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"pnk" = (
-/obj/machinery/biogenerator,
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "poM" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -55573,6 +55577,12 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"uHb" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/transparent/openspace,
+/area/hydroponics)
 "uHA" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -96953,7 +96963,7 @@ aMI
 aIp
 aUk
 aUk
-aUk
+uHb
 aYP
 aUi
 aVJ
@@ -98245,7 +98255,7 @@ aUk
 rvr
 aYR
 ban
-pnk
+aYV
 aYV
 bdr
 bez
@@ -98752,7 +98762,7 @@ aMN
 gKJ
 aOZ
 aOZ
-aOZ
+dfX
 aOZ
 aUz
 aVM

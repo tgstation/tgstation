@@ -2227,7 +2227,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/hydroponics)
 "jU" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
@@ -3128,7 +3128,7 @@
 "BB" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/storage/mining)
+/area/hydroponics)
 "BC" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/end{
@@ -45809,8 +45809,8 @@ ah
 ah
 ah
 wd
-YF
-YF
+Wq
+Wq
 Wq
 BC
 JE
