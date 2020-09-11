@@ -22,3 +22,4 @@
 	name = "Moth Scream"
 	id = "mothscream"
 	real_samples = list("60"='sound/voice/moth/scream_moth.ogg')
+	admin_only = TRUE
