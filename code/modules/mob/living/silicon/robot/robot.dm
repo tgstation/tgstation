@@ -46,7 +46,7 @@
 	/// For checking which modules are disabled or not.
 	var/disabled_modules
 
-	//var/mutable_appearance/eye_lights
+	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
@@ -207,10 +207,10 @@
 			radio.keyslot = null
 	qdel(wires)
 	qdel(module)
-	//qdel(eye_lights)
+	qdel(eye_lights)
 	wires = null
 	module = null
-	//eye_lights = null
+	eye_lights = null
 	cell = null
 	return ..()
 
@@ -424,19 +424,18 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = module.cyborg_base_icon
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
-		var/eye_state
-		var/eye_color
-		//if(!eye_lights)
-		//	eye_lights = new()
+		if(!eye_lights)
+			eye_lights = new()
 		if(lamp_enabled)
-			eye_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_l"
-			eye_color = lamp_color
+			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_l"
+			eye_lights.color = lamp_color
+			eye_lights.plane = 19 //glowy eyes
 		else
-			eye_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e"
-			eye_color = COLOR_WHITE
-		SSvis_overlays.add_vis_overlay(src, icon, eye_state, layer, plane, dir, color = eye_color)
-		SSvis_overlays.add_vis_overlay(src, icon, eye_state, layer, EMISSIVE_PLANE, dir, color = eye_color)
-		//add_overlay(eye_lights)
+			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e"
+			eye_lights.color = COLOR_WHITE
+			eye_lights.plane = -1
+		eye_lights.icon = icon
+		add_overlay(eye_lights)
 
 	if(opened)
 		if(wiresexposed)
@@ -554,12 +553,9 @@
 		lamp_enabled = FALSE
 		update_icons()
 		return
-	if(lamp_intensity == 1) //This level is basically just for glowing color highlights, but we pretend the light is enabled
-		set_light_on(FALSE)
-	else
-		set_light_range(lamp_intensity * 0.5)
-		set_light_color(lamp_color)
-		set_light_on(TRUE)
+	set_light_range(lamp_intensity)
+	set_light_color(lamp_color)
+	set_light_on(TRUE)
 	lamp_enabled = TRUE
 	update_icons()
 
