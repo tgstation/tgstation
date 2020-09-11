@@ -36,7 +36,7 @@
 
 /datum/bounty/item/engineering/gas/cyrion_b_tank
 	name = "Full Tank of Cyrion-B"
-	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses the Cyrion-B gas. Ship us a tank full of it. (20 Moles)"
+	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Cyrion-B gas. Ship us a tank full of it. (20 Moles)"
 	reward = 10000
 	gas_type = /datum/gas/cyrion_b
 

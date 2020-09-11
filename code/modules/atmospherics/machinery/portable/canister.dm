@@ -209,7 +209,7 @@
 
 /obj/machinery/portable_atmospherics/canister/proto_nitrate
 	name = "Proto Nitrate canister"
-	desc = "Proto Nitrate, react differently with various gases"
+	desc = "Proto Nitrate, reacts differently with various gases"
 	icon_state = "proto_nitrate"
 	base_icon_state = "proto_nitrate"
 	gas_type = /datum/gas/proto_nitrate
@@ -225,7 +225,7 @@
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
-	desc = "Halon, remove oxygen from high temperature fires and cool down the area"
+	desc = "Halon, removes oxygen from high temperature fires and cools down the area"
 	icon_state = "halon"
 	base_icon_state = "halon"
 	gas_type = /datum/gas/halon
@@ -233,7 +233,7 @@
 
 /obj/machinery/portable_atmospherics/canister/hexane
 	name = "Hexane canister"
-	desc = "hexane, highly flammable"
+	desc = "Hexane, highly flammable"
 	icon_state = "hexane"
 	base_icon_state = "hexane"
 	gas_type = /datum/gas/hexane
