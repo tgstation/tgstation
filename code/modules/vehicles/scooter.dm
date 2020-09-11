@@ -139,7 +139,7 @@
 				if(location)
 					location.hotspot_expose(1000,1000)
 				sparks.start() //the most radical way to start plasma fires
-			addtimer(CALLBACK(src, .proc/grind), 2)
+			addtimer(CALLBACK(src, .proc/grind), 1)
 			return
 	else
 		grinding = FALSE
@@ -264,9 +264,9 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 0
+	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
@@ -294,8 +294,8 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1.5
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 1.5
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
@@ -305,6 +305,6 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
-	D.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 1
+	riding.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
