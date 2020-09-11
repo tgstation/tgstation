@@ -59,13 +59,12 @@
 	
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
-	var/sanity = 0
-	while(sanity < 100)
+	for(var/sanity in 1 to 100) // 100 checks at most.
 		var/area/selected_area = pick(GLOB.sortedAreas)
-		if(selected_area && is_station_level(selected_area.z) && (selected_area.area_flags & VALID_TERRITORY))
-			bombobjective.detonation_location = selected_area
-			break
-		sanity++
+		if(!is_station_level(selected_area.z) || !(selected_area.area_flags & VALID_TERRITORY))
+			continue
+		bombobjective.detonation_location = selected_area
+		break
 	if(bombobjective.detonation_location)
 		bombobjective.explanation_text = "Detonate your starter bomb in [bombobjective.detonation_location].  Note that the bomb will not work anywhere else!"
 		objectives += bombobjective
