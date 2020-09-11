@@ -925,7 +925,7 @@
 	},
 /obj/item/stamp,
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/brown,
@@ -940,7 +940,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1046,7 +1046,7 @@
 /area/maintenance/solars/starboard/fore)
 "acg" = (
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/red{
