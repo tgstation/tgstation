@@ -95,7 +95,7 @@
 #define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST	273 //fire will start if the temperature is 0 °C
 #define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
 #define COLD_FIRE_GROWTH_RATE					40000
-#define FREON_MAXIMUM_BURN_TEMPERATURE			293
+#define FREON_MAXIMUM_BURN_TEMPERATURE			283
 #define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
 #define FREON_OXYGEN_FULLBURN					10
 
