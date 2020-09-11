@@ -34,6 +34,15 @@
 		update_icon()
 	return ..()
 
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/examine(mob/user)
+	. = ..()
+	. += "This device will let gas flow if the temperature of the gas in the input is [inverted ? "higher" : "lower"] than the temperature set in the interface."
+	if(inverted)
+		. += "The device settings can be restored if a multitool is used on it."
+	else
+		. += "The sensor's settings can be changed by using a multitool on the device."
+
 /obj/machinery/atmospherics/components/binary/temperature_gate/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
 		icon_state = "tgate_flow-[set_overlay_offset(piping_layer)]"
