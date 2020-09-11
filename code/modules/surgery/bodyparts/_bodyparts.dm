@@ -108,7 +108,7 @@
 		owner.remove_bodypart(src)
 		set_owner(null)
 	for(var/wound in wounds)
-		qdel(wound)
+		qdel(wound) // wounds is a lazylist, and each wound removes itself from it on deletion.
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
