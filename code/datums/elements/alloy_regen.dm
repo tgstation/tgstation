@@ -2,6 +2,7 @@
   */
 /datum/element/alloy_regen
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
 	/// The rate of regeneration as a function of maximum integrity.
 	var/rate
 	/// The objects that are regenerating due to this element.
