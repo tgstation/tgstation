@@ -1563,10 +1563,10 @@
 	},
 /obj/structure/cable,
 /obj/structure/bed/dogbed/lia,
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
+/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "adO" = (
@@ -16969,11 +16969,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aNK" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/mob/living/simple_animal/hostile/retaliate/goat{
+	name = "Pete"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
@@ -39213,10 +39213,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "bQK" = (
@@ -46630,9 +46630,9 @@
 	uses = 10
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuT" = (
@@ -46703,10 +46703,10 @@
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuZ" = (
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/floorbot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cva" = (
@@ -46767,10 +46767,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/service)
 "cvh" = (
@@ -47788,9 +47788,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cAL" = (
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAN" = (
@@ -53136,6 +53136,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
+"mWP" = (
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/beanie/orange{
+	pixel_y = 8
+	},
+/obj/item/clothing/shoes/wheelys/skishoes{
+	pixel_y = -8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "mXW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -96001,7 +96012,7 @@ aua
 aua
 kbz
 arj
-boP
+mWP
 boP
 boP
 cVb
