@@ -34523,7 +34523,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
-	name = "Service Shutter"
+	name = "Kitchen Counter Shutters"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -34535,7 +34535,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
-	name = "Service Shutter"
+	name = "Kitchen Counter Shutters"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -44800,7 +44800,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
-	name = "Service Shutter"
+	name = "Kitchen Counter Shutters"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -66807,7 +66807,7 @@
 /obj/item/storage/fancy/donut_box,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
-	name = "Service Shutter"
+	name = "Kitchen Counter Shutters"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -68471,6 +68471,16 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"iLR" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "iMF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -71799,6 +71809,9 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/storage_shared)
@@ -76524,12 +76537,12 @@
 "tJz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
-	name = "Service Shutter"
+	name = "Kitchen Counter Shutters"
+	},
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -115210,7 +115223,7 @@ scu
 bYh
 hhf
 duF
-ccw
+iLR
 bST
 ceZ
 cgq
