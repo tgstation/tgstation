@@ -291,6 +291,7 @@ SUBSYSTEM_DEF(air)
 	if(istype(T))
 		T.excited = FALSE
 		if(T.excited_group && kill_excited)
+			//TODO: Make this whole chain suck less ass.
 			T.excited_group.garbage_collect() //Yes this means walls can be active for a tick, no I don't care.
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)

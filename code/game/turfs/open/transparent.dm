@@ -1,6 +1,7 @@
 /turf/open/transparent
 	baseturfs = /turf/open/transparent/openspace
 	intact = FALSE //this means wires go on top
+	heat_capacity = INFINITY //You are not allowed to melt air
 
 /turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()

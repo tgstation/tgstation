@@ -35,12 +35,11 @@
 	normal_gases = list(
 		/datum/gas/oxygen=10,
 		/datum/gas/nitrogen=10,
-		/datum/gas/carbon_dioxide=10,
+		/datum/gas/water_vapor=2,
 	)
 	restricted_gases = list(
-		/datum/gas/miasma=10,
+		/datum/gas/miasma=5,
 		/datum/gas/plasma=0.1,
-		/datum/gas/water_vapor=0.1,
 	)
 	restricted_chance = 50
 

@@ -439,11 +439,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
-				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
-				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
-			)
-				continue
 
 			for(var/id in min_reqs)
 				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
@@ -451,7 +446,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 
+			//Not sure on the order of these, I think we have enough reactions that relevant gas types has more effect then temperture
 			if((min_reqs["TEMP"] && temperature < min_reqs["TEMP"]) \
+			|| (min_reqs["MAX_TEMP"] && temperature > min_reqs["MAX_TEMP"]) \
 			|| (min_reqs["ENER"] && THERMAL_ENERGY(src) < min_reqs["ENER"]))
 				continue
 

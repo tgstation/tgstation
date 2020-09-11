@@ -439,7 +439,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = null
-			T.rebuilding = TRUE //Reform the group
+			if(!istype(T.air, /datum/gas_mixture/immutable)) //I want my holes to space consistent you hear me?
+				T.rebuilding = TRUE //Reform the group
 			if(!T.excited)
 				SSair.add_to_active(T, FALSE) //Poke everybody in the group, just in case
 	turf_list.Cut()
