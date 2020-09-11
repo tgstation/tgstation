@@ -328,7 +328,7 @@
 "aaK" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white,
@@ -614,7 +614,7 @@
 "abg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
