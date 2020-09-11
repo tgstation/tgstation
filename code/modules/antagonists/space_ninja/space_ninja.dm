@@ -97,7 +97,6 @@
 	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	owner.announce_objectives()
-	return
 
 /datum/antagonist/ninja/on_gain()
 	if(give_objectives)
