@@ -618,9 +618,9 @@
 
 			if (isliving(my_atom))
 				mob_consumer = my_atom
-			else if (istype(my_atom, /obj/item/organ/stomach))
-				var/obj/item/organ/stomach/belly = my_atom
-				mob_consumer = belly.owner
+			else if (istype(my_atom, /obj/item/organ))
+				var/obj/item/organ/organ = my_atom
+				mob_consumer = organ.owner
 
 			if (mob_consumer)
 				if(R.metabolizing)
