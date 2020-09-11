@@ -1,5 +1,4 @@
-/**
-  *
+/** Object integrity regeneration element added by alien alloy.
   */
 /datum/element/alloy_regen
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
@@ -22,6 +21,10 @@
 
 	rate = _rate
 	RegisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE, .proc/on_take_damage)
+	if(target.obj_integrity < target.max_integrity)
+		if(!length(processing))
+			START_PROCESSING(SSobj, src)
+		processing |= target
 
 /datum/element/alloy_regen/Detach(obj/target)
 	UnregisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE)
@@ -29,6 +32,7 @@
 	if(!length(processing))
 		STOP_PROCESSING(SSobj, src)
 
+/// Handles beginning processing objects.
 /datum/element/alloy_regen/proc/on_take_damage(obj/target, damage_amt)
 	if(!damage_amt)
 		return

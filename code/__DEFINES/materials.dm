@@ -10,7 +10,7 @@
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD	(1<<0)
 
-// Breakdown flags used when decomposing alloys.
+// Breakdown flags used when decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
 /// Can reduce an alloy into its component materials.
 #define BREAKDOWN_ALLOYS				(1<<0)
 /// Breakdown flags used by techfabs and circuit printers.

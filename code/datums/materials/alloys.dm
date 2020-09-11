@@ -2,7 +2,7 @@
   */
 /datum/material/alloy
 	name = "alloy"
-	desc = ""
+	desc = "A material composed of two or more other materials."
 	material_flags = NONE
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
@@ -35,7 +35,7 @@
 	value_per_unit = 0.135
 	strength_modifier = 1.3
 	integrity_modifier = 1.5 // Heavy duty.
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/plasteel
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
@@ -67,7 +67,7 @@
 	value_per_unit = 0.225
 	strength_modifier = 0.9	// It's a lightweight alloy.
 	integrity_modifier = 1.3
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.5, ENERGY = 1.5, BOMB = 1.1, BIO = 1.2, RAD = 1.1, FIRE = 1.5, ACID = 1)
+	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, RAD = 1.1, FIRE = 1.5, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
@@ -138,7 +138,7 @@
 	material_flags = MATERIAL_INIT_MAPLOAD
 	strength_modifier = 1.5 // It's twice the density of plasteel and just as durable. Getting hit with it is going to HURT.
 	integrity_modifier = 1.5
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 2, BIO = 1.5, RAD = 2, FIRE = 1.3, ACID = 1.5)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.2, ENERGY = 1.2, BOMB = 1.5, BIO = 1.2, RAD = 1.5, FIRE = 1.2, ACID = 1.2)
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	value_per_unit = 0.4
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
