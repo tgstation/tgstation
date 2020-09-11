@@ -23826,11 +23826,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/safe)
-"brA" = (
-/obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "bst" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/plaque{
@@ -25725,6 +25720,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"cNS" = (
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -68631,7 +68631,7 @@ nUk
 ezP
 xPz
 ahx
-brA
+cNS
 aiM
 ezP
 ajU
@@ -78711,7 +78711,7 @@ mnl
 mnl
 mnl
 mnl
-mnl
+wqy
 mnl
 mnl
 mnl
