@@ -799,6 +799,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aca" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/transparent/openspace/icemoon,
+/area/security/execution/transfer)
 "acb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -15670,12 +15676,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"aKu" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/transparent/openspace/icemoon,
-/area/security/execution/transfer)
 "aKv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -17487,6 +17487,12 @@
 	},
 /turf/open/floor/engine/cult,
 /area/library)
+"aPj" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/transparent/openspace/icemoon,
+/area/security/execution/transfer)
 "aPk" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 4
@@ -51118,13 +51124,6 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"hRZ" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
-/turf/open/floor/plating/icemoon,
-/area/security/execution/transfer)
 "hSa" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/firecloset,
@@ -51923,6 +51922,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
+"krJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/door/window/westright{
+	name = "Transfer Room";
+	req_access_txt = "2"
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/execution/transfer)
 "kul" = (
 /turf/closed/wall,
 /area/engine/engine_smes)
@@ -54120,6 +54133,13 @@
 "pSk" = (
 /turf/closed/wall,
 /area/medical/medbay/aft)
+"pSp" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plating/icemoon,
+/area/security/execution/transfer)
 "pSN" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -55860,20 +55880,6 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"vyc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/machinery/door/window/westright{
-	name = "Transfer Room";
-	req_access_txt = "2"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/execution/transfer)
 "vyA" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -77671,7 +77677,7 @@ boP
 boP
 afA
 aWA
-aWA
+aca
 aWA
 aWA
 aWA
@@ -77927,7 +77933,7 @@ aaJ
 aaJ
 aaJ
 afA
-aKu
+aWA
 aWA
 acB
 abu
@@ -78185,13 +78191,13 @@ aDu
 aFq
 afA
 aWA
-aWA
+aPj
 acA
 aWA
 aWA
 aWF
 aZL
-hRZ
+pSp
 abc
 boP
 boP
@@ -78448,7 +78454,7 @@ afA
 afA
 aWG
 aZi
-vyc
+krJ
 abc
 boP
 boP
