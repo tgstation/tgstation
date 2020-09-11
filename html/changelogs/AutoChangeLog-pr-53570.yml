@@ -1,4 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - bugfix: "Runechat no longer breaks when the tick lag is changed"
