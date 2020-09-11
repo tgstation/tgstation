@@ -35,7 +35,7 @@
 	value_per_unit = 0.135
 	strength_modifier = 1.25
 	integrity_modifier = 1.5 // Heavy duty.
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/plasteel
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
