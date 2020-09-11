@@ -97,18 +97,18 @@ Slimecrossing Weapons
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/gun/magic/bloodchill/process()
-	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges)
-		return 0
-	charge_tick = 0
+/obj/item/gun/magic/bloodchill/process(delta_time)
+	charge_timer += delta_time
+	if(charge_timer < recharge_rate || charges >= max_charges)
+		return FALSE
+	charge_timer = 0
 	var/mob/living/M = loc
 	if(istype(M) && M.blood_volume >= 20)
 		charges++
 		M.blood_volume -= 20
 	if(charges == 1)
 		recharge_newshot()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/magic/bloodchill
 	projectile_type = /obj/projectile/magic/bloodchill

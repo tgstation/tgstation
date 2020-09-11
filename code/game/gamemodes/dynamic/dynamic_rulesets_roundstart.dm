@@ -714,7 +714,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	var/meteordelay = 2000
-	var/nometeors = 0
+	var/nometeors = FALSE
 	var/rampupdelta = 5
 
 /datum/dynamic_ruleset/roundstart/meteor/rule_process()

@@ -206,16 +206,16 @@
 
 /turf/open/space/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /turf/open/space/is_transition_turf()
 	if(destination_x || destination_y || destination_z)
-		return 1
+		return TRUE
 
 
 /turf/open/space/acid_act(acidpwr, acid_volume)
-	return 0
+	return FALSE
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'

@@ -56,7 +56,7 @@
 */
 /obj/item/slime_extract/proc/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	to_chat(user, "<span class='warning'>Nothing happened... This slime extract cannot be activated this way.</span>")
-	return 0
+	return FALSE
 
 /**
 * Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
@@ -337,7 +337,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
-			user.ExtinguishMob()
+			user.extinguish_mob()
 			user.adjust_fire_stacks(-20)
 			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,4)
 			user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,5)

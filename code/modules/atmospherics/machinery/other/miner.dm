@@ -14,7 +14,8 @@
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
 	var/spawn_id = null
 	var/spawn_temp = T20C
-	var/spawn_mol = MOLES_CELLSTANDARD * 10
+	/// Moles of gas to spawn per second
+	var/spawn_mol = MOLES_CELLSTANDARD * 5
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
 	var/overlay_color = "#FFFFFF"
@@ -117,22 +118,22 @@
 		on_overlay.color = overlay_color
 		. += on_overlay
 
-/obj/machinery/atmospherics/miner/process()
+/obj/machinery/atmospherics/miner/process(delta_time)
 	update_power()
 	check_operation()
 	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
 		if(do_use_power(active_power_usage))
-			mine_gas()
+			mine_gas(delta_time)
 
-/obj/machinery/atmospherics/miner/proc/mine_gas()
+/obj/machinery/atmospherics/miner/proc/mine_gas(delta_time = 2)
 	var/turf/open/O = get_turf(src)
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = (spawn_mol)
+	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 	O.air_update_turf(TRUE)

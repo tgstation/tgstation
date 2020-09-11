@@ -101,7 +101,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -122,7 +127,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
 		/datum/gas/freon			= new/datum/tlv/no_checks,
-		/datum/gas/hydrogen			= new/datum/tlv/no_checks
+		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
@@ -143,7 +153,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -448,16 +463,16 @@
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((machine_stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -466,7 +481,7 @@
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
@@ -474,7 +489,7 @@
 	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
-	return 1
+	return TRUE
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
@@ -508,7 +523,7 @@
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -531,12 +546,17 @@
 						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
-						/datum/gas/hydrogen
+						/datum/gas/hydrogen,
+						/datum/gas/healium,
+						/datum/gas/proto_nitrate,
+						/datum/gas/cyrion_b,
+						/datum/gas/halon,
+						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -549,7 +569,7 @@
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -563,7 +583,7 @@
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -577,7 +597,7 @@
 					"widenet" = 1,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -588,7 +608,7 @@
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -598,7 +618,7 @@
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -607,7 +627,7 @@
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,

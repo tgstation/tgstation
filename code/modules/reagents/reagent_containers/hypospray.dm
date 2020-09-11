@@ -13,7 +13,7 @@
 	resistance_flags = ACID_PROOF
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
-	var/ignore_flags = 0
+	var/ignore_flags = NONE
 	var/infinite = FALSE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)

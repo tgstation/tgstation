@@ -810,7 +810,7 @@ RLD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
-							return 0
+							return FALSE
 						activate()
 						qdel(A)
 						return TRUE
@@ -871,9 +871,9 @@ RLD
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
-							return 0
+							return FALSE
 						if(!useResource(floorcost, user))
-							return 0
+							return FALSE
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)

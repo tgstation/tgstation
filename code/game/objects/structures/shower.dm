@@ -50,7 +50,7 @@
 	add_fingerprint(M)
 	if(on)
 		START_PROCESSING(SSmachines, src)
-		process()
+		process(SSMACHINES_DT)
 		soundloop.start()
 	else
 		soundloop.stop()
@@ -121,7 +121,6 @@
 	A.wash(CLEAN_WASH)
 	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(A, TOUCH)
-	reagents.expose(A, VAPOR)
 	if(isliving(A))
 		check_heat(A)
 
@@ -131,7 +130,7 @@
 		wash_atom(loc)
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
-			reagents.expose(movable_content, TOUCH, reaction_volume)
+			reagents.expose(movable_content, TOUCH, 5) //There's not many reagents leaving the sink at once!
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 				wash_atom(movable_content)
 	else

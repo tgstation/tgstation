@@ -3,7 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	var/magboot_state = "magboots"
-	var/magpulse = 0
+	var/magpulse = FALSE
 	var/slowdown_active = 2
 	permeability_coefficient = 0.05
 	actions_types = list(/datum/action/item_action/toggle)
