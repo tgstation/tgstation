@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime with Plexagon Access Management when the second ID slot is missing."
-  - bugfix: "Plexagon Access Management now follows the standard for ID reading and requires you to insert your card."
