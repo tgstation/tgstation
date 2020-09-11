@@ -222,6 +222,27 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/deaf_message
 	var/deaf_type
+	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
+		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+		if(speaker != src)
+			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
+				deaf_type = 1
+		else
+			deaf_type = 2
+
+		// Create map text prior to modifying message for goonchat, sign lang edition
+		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)))
+			create_chat_message(speaker, message_language, raw_message, spans)
+
+		if(is_blind(src))
+			return FALSE
+
+
+		message = deaf_message
+
+		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlighting = speaker == src)
+		return message
+
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
@@ -246,6 +267,24 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
+	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+		var/mob/living/carbon/mute = src
+		if(istype(mute))
+			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
+			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
+				message = stars(message)
+			if(length(empty_indexes) == 0)//Both hands full, can't sign
+				to_chat(src, "<span class='warning'>You can't sign with your hands full!</span.?>")
+				return FALSE
+			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
+				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
+				return FALSE
+			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
+				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands cuffed!</span.?>")
+				return FALSE
+			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED))
+				to_chat(src, "<span class='warning'>You can't sign in this state!</span.?>")
+				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
@@ -303,14 +342,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return TRUE
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
+	var/mob/living/carbon/human/H = src
 	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
 
 	if(is_muzzled())
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
 
 	if(!IsVocal())
-		return FALSE
+		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
 
 	return TRUE
 
@@ -376,9 +416,15 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	else if(message_mods[MODE_SING])
 		. = verb_sing
 	else if(stuttering)
-		. = "stammers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "shakily signs"
+		else
+			. = "stammers"
 	else if(derpspeech)
-		. = "gibbers"
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			. = "incoherently signs"
+		else
+			. = "gibbers"
 	else
 		. = ..()
 

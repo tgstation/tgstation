@@ -97,12 +97,12 @@
 	update_icon()
 	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
 
-/obj/machinery/hypnochair/process()
+/obj/machinery/hypnochair/process(delta_time)
 	var/mob/living/carbon/C = occupant
 	if(!istype(C) || C != victim)
 		interrupt_interrogation()
 		return
-	if(prob(10) && !(C.get_eye_protection() > 0))
+	if(DT_PROB(5, delta_time) && !(C.get_eye_protection() > 0))
 		to_chat(C, "<span class='hypnophrase'>[pick(\
 			"...blue... red... green... blue, red, green, blueredgreen<span class='small'>blueredgreen</span>",\
 			"...pretty colors...",\

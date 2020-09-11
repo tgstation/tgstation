@@ -428,7 +428,7 @@
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
 	/// The maximum charge the rift can have.  It actually goes to max_charge + 1, as to prevent constantly retriggering the effects on full charge.
-	var/max_charge = 240
+	var/max_charge = 480
 	/// How many carp spawns it has available.
 	var/carp_stored = 0
 	/// A reference to the Space Dragon that created it.
@@ -453,12 +453,12 @@
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 	return ..()
 
-/obj/structure/carp_rift/process()
-	time_charged = min(time_charged + 1, max_charge + 1)
+/obj/structure/carp_rift/process(delta_time)
+	time_charged = min(time_charged + delta_time, max_charge + 1)
 	update_check()
 	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
 		if("carp" in hostilehere.faction)
-			hostilehere.adjustHealth(-10)
+			hostilehere.adjustHealth(-5 * delta_time)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
 			H.color = "#0000FF"
 	if(time_charged < max_charge)
@@ -470,8 +470,7 @@
 			icon_state = "carp_rift_carpspawn"
 			light_color = LIGHT_COLOR_PURPLE
 	else
-		var/spawncarp = rand(1,40)
-		if(spawncarp == 1)
+		if(DT_PROB(1.25, delta_time))
 			new /mob/living/simple_animal/hostile/carp(loc)
 
 /obj/structure/carp_rift/attack_ghost(mob/user)

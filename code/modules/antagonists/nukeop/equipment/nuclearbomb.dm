@@ -536,13 +536,10 @@
 		disarm()
 		return
 	if(is_station_level(bomb_location.z))
-		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
-		if(E)
-			E.runEvent()
 		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
 	else
 		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
-		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
+		addtimer(CALLBACK(src, .proc/local_foam), 110)
 
 /obj/machinery/nuclearbomb/beer/proc/disarm()
 	detonation_timer = null
@@ -555,7 +552,7 @@
 	countdown.stop()
 	update_icon()
 
-/obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
+/obj/machinery/nuclearbomb/beer/proc/local_foam()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = src
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
@@ -565,8 +562,24 @@
 	foam.start()
 	disarm()
 
+/obj/machinery/nuclearbomb/beer/proc/stationwide_foam()
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent in GLOB.machines)
+		var/turf/vent_turf = get_turf(vent)
+		if (!vent_turf || !is_station_level(vent_turf.z) || vent.welded)
+			continue
+
+		var/datum/reagents/beer = new /datum/reagents(1000)
+		beer.my_atom = vent
+		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+		beer.create_foam(/datum/effect_system/foam_spread, 200)
+
+		CHECK_TICK
+
 /obj/machinery/nuclearbomb/beer/really_actually_explode()
 	disarm()
+	stationwide_foam()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
@@ -611,7 +624,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF

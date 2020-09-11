@@ -4,10 +4,6 @@
 #define RAD_LEVEL_VERY_HIGH 800
 #define RAD_LEVEL_CRITICAL 1500
 
-#define RAD_MEASURE_SMOOTHING 5
-
-#define RAD_GRACE_PERIOD 2
-
 /obj/item/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "\improper Geiger counter"
 	desc = "A handheld device used for detecting and measuring radiation pulses."
@@ -21,7 +17,7 @@
 	item_flags = NOBLUDGEON
 	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 
-	var/grace = RAD_GRACE_PERIOD
+	var/grace = RAD_GEIGER_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
 
 	var/scanning = FALSE
@@ -41,27 +37,23 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/geiger_counter/process()
-	update_icon()
-	update_sound()
+/obj/item/geiger_counter/process(delta_time)
+	if(scanning)
+		radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
 
-	if(!scanning)
-		current_tick_amount = 0
-		return
+		if(current_tick_amount)
+			grace = RAD_GEIGER_GRACE_PERIOD
+			last_tick_amount = current_tick_amount
 
-	radiation_count -= radiation_count/RAD_MEASURE_SMOOTHING
-	radiation_count += current_tick_amount/RAD_MEASURE_SMOOTHING
-
-	if(current_tick_amount)
-		grace = RAD_GRACE_PERIOD
-		last_tick_amount = current_tick_amount
-
-	else if(!(obj_flags & EMAGGED))
-		grace--
-		if(grace <= 0)
-			radiation_count = 0
+		else if(!(obj_flags & EMAGGED))
+			grace -= delta_time
+			if(grace <= 0)
+				radiation_count = 0
 
 	current_tick_amount = 0
+
+	update_icon()
+	update_sound()
 
 /obj/item/geiger_counter/examine(mob/user)
 	. = ..()
