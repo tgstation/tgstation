@@ -65,10 +65,9 @@
 		var/mob/living/carbon/body = owner
 		for(var/chem in reagents.reagent_list)
 			var/datum/reagent/reagent = chem
-			if(!reagent.metabolizing)
-				continue
-			reagent.metabolizing = FALSE
-			reagent.on_mob_end_metabolize(body)
+			if(reagent.metabolizing)
+				reagent.metabolizing = FALSE
+				reagent.on_mob_end_metabolize(body)
 			reagent.on_mob_delete(body) //It was removed from the body
 
 	owner = null
