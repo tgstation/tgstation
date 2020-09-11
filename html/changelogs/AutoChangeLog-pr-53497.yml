@@ -1,0 +1,6 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "Added rollerskates and skishoes, available at the library's fun vendor"
+  - code_imp: "wheelys are now a skateboard subtype and more modular"
+  - code_imp: "improvised skateboard is now it's own subtype"
