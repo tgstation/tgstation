@@ -25089,7 +25089,7 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "bQa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -25592,10 +25592,17 @@
 /turf/open/floor/wood,
 /area/library)
 "cAH" = (
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 10
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "cBf" = (
@@ -25720,11 +25727,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/library)
-"cNS" = (
-/obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -26111,12 +26113,12 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "dwn" = (
 /obj/effect/turf_decal/trimline/red/warning,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "dwU" = (
 /obj/effect/turf_decal/trimline/red/filled/warning,
@@ -28873,7 +28875,14 @@
 /area/science/mixing)
 "imu" = (
 /obj/structure/table,
-/obj/item/instrument/harmonica,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "imx" = (
@@ -30861,21 +30870,14 @@
 	},
 /obj/item/storage/pill_bottle/dice,
 /obj/item/storage/crayons,
+/obj/item/instrument/harmonica,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "lDB" = (
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel,
-/area/security/prison)
+/area/security/brig)
 "lEr" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -34119,8 +34121,10 @@
 /area/hallway/secondary/entry)
 "qBl" = (
 /obj/structure/window,
-/obj/effect/turf_decal/trimline/red/filled/warning,
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "qCM" = (
@@ -38505,7 +38509,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "tIz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -39503,7 +39507,7 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "vmq" = (
 /turf/closed/wall,
@@ -39877,16 +39881,9 @@
 /turf/open/floor/plating,
 /area/medical/medbay)
 "vOi" = (
-/obj/effect/turf_decal/trimline/red/filled/warning{
-	dir = 8
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/paper_bin,
-/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "vSr" = (
@@ -40543,7 +40540,7 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "wVk" = (
 /obj/machinery/light_switch{
@@ -68631,7 +68628,7 @@ nUk
 ezP
 xPz
 ahx
-cNS
+lDB
 aiM
 ezP
 ajU
@@ -69387,8 +69384,8 @@ rQN
 iXc
 aNU
 vOi
-lDB
-cAH
+rvA
+hqX
 gDj
 ijE
 niE
@@ -69644,7 +69641,7 @@ aNU
 aNU
 aNU
 imu
-jwc
+cAH
 qBl
 gLu
 ykZ
