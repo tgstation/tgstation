@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Manual Valve",		/obj/machinery/atmospherics/components/binary/valve, TRUE),
 		new /datum/pipe_info/pipe("Digital Valve",		/obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
 		new /datum/pipe_info/pipe("Pressure Valve",		/obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
+		new /datum/pipe_info/pipe("Temperature gate",	/obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
 		new /datum/pipe_info/meter("Meter"),
 	),
 	"Heat Exchange" = list(
