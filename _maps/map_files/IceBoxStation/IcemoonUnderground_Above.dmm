@@ -2145,6 +2145,10 @@
 	},
 /turf/closed/mineral/random/snow,
 /area/mine/laborcamp)
+"jc" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "je" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -45043,7 +45047,7 @@ SL
 Wq
 PR
 rG
-rG
+jc
 wF
 rD
 HC
