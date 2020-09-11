@@ -1563,7 +1563,6 @@
 	},
 /obj/structure/cable,
 /obj/structure/bed/dogbed/lia,
-/mob/living/simple_animal/hostile/carp/cayenne/lia,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
@@ -16970,9 +16969,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aNK" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -24731,10 +24727,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
-"bgl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/icemoon,
-/area/hallway/secondary/entry)
 "bgm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -24814,7 +24806,7 @@
 /area/maintenance/port)
 "bgx" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating,
 /area/science/test_area)
 "bgy" = (
 /obj/structure/cable,
@@ -30919,7 +30911,7 @@
 /area/icemoon/surface/outdoors)
 "buw" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating,
 /area/engine/atmos)
 "bux" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -35814,7 +35806,7 @@
 /area/science/mixing)
 "bGI" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "bGJ" = (
 /obj/machinery/air_sensor/atmos/incinerator_tank{
@@ -36925,7 +36917,7 @@
 /area/maintenance/disposal/incinerator)
 "bJS" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
 "bJT" = (
 /obj/machinery/vending/cigarette,
@@ -39217,7 +39209,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
@@ -46635,9 +46626,9 @@
 	uses = 10
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuT" = (
@@ -46708,7 +46699,6 @@
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuZ" = (
 /obj/effect/turf_decal/tile/blue,
-/mob/living/simple_animal/bot/floorbot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -46773,7 +46763,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -47795,9 +47784,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cAL" = (
-/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/lizard/wags_his_tail,
 /turf/open/floor/plasteel,
 /area/janitor)
 "cAN" = (
@@ -65988,9 +65977,9 @@ boP
 boP
 boP
 asU
-bgl
+awW
 auP
-bgl
+awW
 asU
 asU
 boP

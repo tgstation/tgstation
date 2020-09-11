@@ -31,11 +31,11 @@
 	base_gases = list(
 		/datum/gas/oxygen=5,
 		/datum/gas/nitrogen=10,
+		/datum/gas/water_vapor=4,
 	)
 	normal_gases = list(
 		/datum/gas/oxygen=10,
 		/datum/gas/nitrogen=10,
-		/datum/gas/water_vapor=2,
 	)
 	restricted_gases = list(
 		/datum/gas/miasma=5,
