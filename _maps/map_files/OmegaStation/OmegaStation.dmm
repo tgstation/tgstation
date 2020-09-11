@@ -1075,7 +1075,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/plate_press,
+/obj/machinery/vending/cola/sodie,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acu" = (
@@ -17790,7 +17790,7 @@
 /obj/machinery/shower{
 	pixel_y = 16
 	},
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aVr" = (
 /obj/machinery/door/airlock/research{
@@ -26638,6 +26638,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"egs" = (
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "egS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -27436,7 +27441,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "fEM" = (
 /obj/structure/cable,
@@ -27914,7 +27919,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "gyy" = (
 /obj/structure/cable,
@@ -29301,11 +29306,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "iXc" = (
-/obj/structure/closet/crate/trashcart,
-/obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/trash/chips,
-/obj/item/trash/candy,
-/obj/item/storage/bag/trash,
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -29313,6 +29313,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/plate_press,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/safe)
 "iXD" = (
@@ -30411,7 +30412,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "kYl" = (
-/obj/machinery/vending/cola/sodie,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -30874,10 +30874,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "lDB" = (
-/obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/turf/open/floor/plasteel,
-/area/security/brig)
+/obj/item/radio/intercom{
+	dir = 8;
+	pixel_x = -28
+	},
+/turf/open/floor/wood,
+/area/lawoffice)
 "lEr" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -32223,16 +32225,12 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/closet/crate,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/item/stack/license_plates/empty/fifty,
-/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/machinery/camera{
 	c_tag = "Prison East";
 	dir = 8;
 	network = list("ss13","prison")
 	},
+/obj/machinery/vending/sustenance,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "nIg" = (
@@ -33769,13 +33767,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"qbI" = (
-/obj/machinery/vending/cigarette,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "qcg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34872,6 +34863,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/item/stack/license_plates/empty/fifty,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison/safe)
 "rTJ" = (
@@ -38922,7 +38918,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "uqY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -39884,6 +39880,29 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/radio/intercom{
+	desc = "A station intercom. It looks like it has been modified to not broadcast.";
+	name = "Prison Intercom (General)";
+	pixel_y = 24;
+	prison_radio = 1
+	},
+/obj/item/radio/intercom{
+	desc = "A station intercom. It looks like it has been modified to not broadcast.";
+	name = "Prison Intercom (General)";
+	pixel_y = 24;
+	prison_radio = 1
+	},
+/obj/item/radio/intercom{
+	desc = "A station intercom. It looks like it has been modified to not broadcast.";
+	name = "Prison Intercom (General)";
+	pixel_y = 24;
+	prison_radio = 1
+	},
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/item/trash/chips,
+/obj/item/trash/candy,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "vSr" = (
@@ -40211,7 +40230,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "wsd" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
@@ -41228,7 +41247,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
 "xTA" = (
-/obj/machinery/vending/sustenance,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -68363,7 +68381,7 @@ vuW
 niE
 czj
 ooT
-svt
+lDB
 niE
 qDm
 gsN
@@ -68628,7 +68646,7 @@ nUk
 ezP
 xPz
 ahx
-lDB
+egs
 aiM
 ezP
 ajU
@@ -68872,7 +68890,7 @@ aNU
 vwN
 xTA
 kYl
-qbI
+xTA
 hKu
 niE
 rsS
