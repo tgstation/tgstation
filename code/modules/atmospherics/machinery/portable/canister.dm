@@ -177,7 +177,7 @@
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
-	desc = "Miasma. Makes you wish your nose were blocked."
+	desc = "Miasma. Makes you wish your nose was blocked."
 	icon_state = "miasma"
 	base_icon_state = "miasma"
 	gas_type = /datum/gas/miasma
@@ -233,7 +233,7 @@
 
 /obj/machinery/portable_atmospherics/canister/hexane
 	name = "Hexane canister"
-	desc = "Hexane, highly flammable"
+	desc = "Hexane, useful for removing contaminants."
 	icon_state = "hexane"
 	base_icon_state = "hexane"
 	gas_type = /datum/gas/hexane
