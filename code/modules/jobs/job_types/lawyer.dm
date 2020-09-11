@@ -12,6 +12,7 @@
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	card_trim = TRIM_SECURITY
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)

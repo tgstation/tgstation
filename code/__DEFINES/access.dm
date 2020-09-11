@@ -83,6 +83,33 @@
 /// Toxins tank storage room access
 #define ACCESS_TOXINS_STORAGE 71
 
+	//CARD TRIMS
+	/*These allow access to be added to a card without consuming a wildcard slot.*/
+
+/// Departments
+#define TRIM_SERVICE		1
+#define TRIM_SECURITY 		2
+#define TRIM_MEDICAL 		3
+#define TRIM_SCIENCE 		4
+#define TRIM_ENGINEERING 	5
+#define TRIM_SUPPLY 		6
+#define TRIM_COMMAND 		7
+/// These trims are unique and cannot be made in the trimming machine.
+#define TRIM_PARAMEDIC 		8
+#define TRIM_HOP 			9
+
+	//CARD LEVELS
+#define CARD_LEVEL_PRISONER 	1
+#define CARD_LEVEL_GREY 		2
+// Silver and Gold trim get a free slot for the heads office.
+#define CARD_LEVEL_SILVER 		3
+#define CARD_LEVEL_GOLD 		4
+#define CARD_LEVEL_CENTCOMM		5
+#define CARD_LEVEL_SYNDICATE 	6
+#define CARD_LEVEL_DEATHSQUAD	7
+
+
+
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 	Mostly for admin fun times.*/

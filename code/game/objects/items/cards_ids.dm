@@ -74,6 +74,10 @@
 	var/id_type_name = "identification card"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
+	var/trim = NONE // Department access flags wont take away wildcards when using the appropriate trim
+	var/card_level = CARD_LEVEL_GREY
+	var/common_wildcards = 2
+	var/command_wildcards = 0
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/access_txt // mapping aid
@@ -277,6 +281,24 @@
 
 	return msg
 
+//Returns the number of already used wildcards
+/obj/item/card/id/GetCommonWildcards()
+	if(card_level >= CARD_LEVEL_GOLD) // Gold cards and above have no restriction
+		return 0
+	var/count = 0
+	var/list/t_access
+	if(trim && trim != NONE)
+		var/list/t_access = get_region_accesses(trim)
+		for(var/a in access)
+			if(!LAZYFIND(t_access, var/a)) // if their card is trimmed, we dont count those access flags as wildcards
+				count++
+		return count
+	else
+		return LAZYLEN(access)
+
+/obj/item/card/id/GetCommandWildcards()
+
+
 /obj/item/card/id/GetAccess()
 	return access
 
@@ -296,6 +318,8 @@
 		. += mutable_appearance(icon, "assigned")
 	if(job)
 		. += mutable_appearance(icon, "id[job]")
+	if(trim)
+		. += mutable_appearance(icon, "cardtrim[trim]")
 
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
@@ -332,6 +356,9 @@ update_label()
 	name = "silver identification card"
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
+	card_level = CARD_LEVEL_SILVER
+	common_wildcards = 4
+	command_wildcards = 1
 	icon_state = "silver"
 	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -347,6 +374,8 @@ update_label()
 	name = "gold identification card"
 	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
+	card_level = CARD_LEVEL_GOLD
+	// wildcards don't matter at this card level
 	icon_state = "gold"
 	inhand_icon_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
