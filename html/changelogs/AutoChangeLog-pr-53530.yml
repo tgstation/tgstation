@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - rscadd: "Mappers can now use Smart Pipes, pipes that autoconnect to other pipes, like redstone! MAPPERS ONLY!"
