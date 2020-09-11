@@ -1381,7 +1381,7 @@
 
 /datum/reagent/halon
 	name = "Halon"
-	description = "A fire supression gas that removes oxygen and cools down the area"
+	description = "A fire suppression gas that removes oxygen and cools down the area"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
