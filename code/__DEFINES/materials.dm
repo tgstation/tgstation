@@ -7,6 +7,9 @@
 ///Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"
 
+/// Used to make a material initialize at roundstart.
+#define MATERIAL_INIT_MAPLOAD	(1<<0)
+
 // Breakdown flags used when decomposing alloys.
 /// Can reduce an alloy into its component materials.
 #define BREAKDOWN_ALLOYS				(1<<0)
@@ -30,3 +33,11 @@
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
 
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
+
+
+
+// Slowdown values.
+/// The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of plasteel.
+#define MATERIAL_SLOWDOWN_PLASTEEL		(0.05)
+/// The slowdown value of one [MINERAL_MATERIAL_AMOUNT] of alien alloy.
+#define MATERIAL_SLOWDOWN_ALIEN_ALLOY	(0.1)
