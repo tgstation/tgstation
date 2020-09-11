@@ -134,7 +134,8 @@
 	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	allowed_instrument_ids = "guitar"
+	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
+	var/datum/song/song
 
 /obj/item/instrument/eguitar
 	name = "electric guitar"
@@ -151,21 +152,21 @@
 	name = "glockenspiel"
 	desc = "Smooth metal bars perfect for any marching band."
 	icon_state = "glockenspiel"
-	allowed_instrument_ids = "glockenspiel"
+	allowed_instrument_ids = list("glockenspiel","crvibr", "sgmmbox", "r3celeste")
 	inhand_icon_state = "glockenspiel"
 
 /obj/item/instrument/accordion
 	name = "accordion"
 	desc = "Pun-Pun not included."
 	icon_state = "accordion"
-	allowed_instrument_ids = "accordion"
+	allowed_instrument_ids = list("crack", "crtango", "accordion")
 	inhand_icon_state = "accordion"
 
 /obj/item/instrument/trumpet
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	allowed_instrument_ids = "trombone"
+	allowed_instrument_ids = "crtrumpet"
 	inhand_icon_state = "trumpet"
 
 /obj/item/instrument/trumpet/spectral
@@ -213,7 +214,7 @@
 	name = "trombone"
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
-	allowed_instrument_ids = "trombone"
+	allowed_instrument_ids = list("crtrombone", "crbrass", "trombone")
 	inhand_icon_state = "trombone"
 
 /obj/item/instrument/trombone/spectral
@@ -245,7 +246,7 @@
 	name = "harmonica"
 	desc = "For when you get a bad case of the space blues."
 	icon_state = "harmonica"
-	allowed_instrument_ids = "harmonica"
+	allowed_instrument_ids = list("crharmony", "harmonica")
 	inhand_icon_state = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
@@ -272,7 +273,7 @@
 	inhand_icon_state = "bike_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	allowed_instrument_ids = "bikehorn"
+	allowed_instrument_ids = list("bikehorn", "honk")
 	attack_verb_continuous = list("beautifully honks")
 	attack_verb_simple = list("beautifully honk")
 	w_class = WEIGHT_CLASS_TINY
@@ -308,3 +309,14 @@
 			var/atom/A = V
 			instruments[initial(A.name)] = A
 	return instruments
+
+/obj/item/instrument/bikehorn
+	name = "musical moth"
+	desc = "A moth musician, or moth-sician, just vibin' and making tunes."
+	icon_state = "mothsician"
+	allowed_instrument_ids = "mothscream"
+	attack_verb_continuous = list("flutters", "flaps")
+	attack_verb_simple = list("flutter", "flap")
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	hitsound = 'sound/voice/moth/scream_moth.ogg'
