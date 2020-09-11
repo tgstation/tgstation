@@ -259,6 +259,8 @@
 	var/has_water_reclaimer = TRUE
 	///Has the water reclamation begun?
 	var/reclaiming = FALSE
+	///Units of water to reclaim per second
+	var/reclaim_rate = 0.5
 
 /obj/structure/sink/Initialize(mapload, bolt)
 	. = ..()
@@ -401,9 +403,9 @@
 		drop_materials()
 	..()
 
-/obj/structure/sink/process()
+/obj/structure/sink/process(delta_time)
 	if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
-		reagents.add_reagent(dispensedreagent, 1)
+		reagents.add_reagent(dispensedreagent, reclaim_rate * delta_time)
 	else
 		reclaiming = FALSE
 		return PROCESS_KILL
