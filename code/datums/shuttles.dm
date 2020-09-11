@@ -401,7 +401,7 @@
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
 	credit_cost = 50000
 
-/datum/map_template/shuttle/emergency/cruise
+/datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
 	name = "Dynamic Environmental Interaction Shuttle"
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
