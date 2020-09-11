@@ -474,14 +474,25 @@
 
 /mob/living/blind_examine_check(atom/examined_thing)
 	//need to be next to something and awake
-	if(!in_range(examined_thing, src) || incapacitated())
+	if(!Adjacent(examined_thing) || incapacitated())
 		to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
 		return FALSE
-	//also neeed an empty hand, and you can only initiate as many examines as you have hands
-	if(LAZYLEN(do_afters) >= usable_hands || get_active_held_item())
+
+	//you can examine things you're holding directly, but you can't examine other things if your hands are full
+	/// the item in our active hand
+	var/active_item = get_active_held_item()
+	if(active_item && active_item != examined_thing)
+		to_chat(src, "<span class='warning'>Your hands are too full to examine this!</span>")
+		return FALSE
+
+	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
+	/// our active hand, to check if it's disabled/detatched
+	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
+	if(!active_hand || active_hand.bodypart_disabled || LAZYLEN(do_afters) >= usable_hands)
 		to_chat(src, "<span class='warning'>You don't have a free hand to examine this!</span>")
 		return FALSE
-	//can only queue up one examine on something at a time
+
+	//you can only queue up one examine on something at a time
 	if(examined_thing in do_afters)
 		return FALSE
 
@@ -491,7 +502,7 @@
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
 	if(client?.recent_examines && client?.recent_examines[examined_thing]) //easier to find things we just touched
-		examine_delay_length = 0.5 SECONDS
+		examine_delay_length = 0.33 SECONDS
 	else if(isobj(examined_thing))
 		examine_delay_length *= 1.5
 	else if(ismob(examined_thing) && examined_thing != src)
@@ -505,7 +516,7 @@
 	/// our current intent, so we can go back to it after touching
 	var/previous_intent = a_intent
 	a_intent = INTENT_HELP
-	examined_thing.attack_hand(src)
+	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
 	a_intent = previous_intent
 	return TRUE
 
@@ -1152,7 +1163,7 @@
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if (ismecha(loc))
-		var/obj/mecha/M = loc
+		var/obj/vehicle/sealed/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	else if (istype(loc, /obj/vehicle/sealed))

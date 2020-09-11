@@ -52,7 +52,7 @@
 			else if (M.mind == null)
 				npcs += list(serialized)
 			else
-				var/number_of_orbiters = M.orbiters?.orbiters?.len
+				var/number_of_orbiters = M.orbiters?.orbiter_list?.len
 				if (number_of_orbiters)
 					serialized["orbiters"] = number_of_orbiters
 
@@ -80,8 +80,7 @@
 	data["npcs"] = npcs
 
 	return data
-	
+
 /datum/orbit_menu/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/orbit)
-

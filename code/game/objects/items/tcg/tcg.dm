@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 #define DEFAULT_TCG_DMI_ICON 'icons/runtime/tcg/default.dmi'
 #define DEFAULT_TCG_DMI "icons/runtime/tcg/default.dmi"
+#define TAPPED_ANGLE 90
+#define UNTAPPED_ANGLE 0
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -19,6 +21,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
+	///Has this card been "tapped"? AKA, is it horizontal?
+	var/tapped = FALSE
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
@@ -43,8 +47,108 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
+
+/obj/item/tcgcard/attack_hand(mob/user)
+	if(!isturf(loc))
+		return ..()
+	var/list/choices = GLOB.tcgcard_radial_choices
+	if(!length(choices))
+		choices = GLOB.tcgcard_radial_choices = list(
+		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
+		"Tap" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_tap"),
+		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Tap")
+			tap_card(user)
+		if("Pickup")
+			user.put_in_hands(src)
+		if("Flip")
+			flip_card(user)
+		if(null)
+			return
+
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
+	flip_card(user)
+
+/obj/item/tcgcard/equipped(mob/user, slot, initial)
+	. = ..()
+	zoom_in()
+
+/obj/item/tcgcard/dropped(mob/user, silent)
+	. = ..()
+	zoom_out()
+
+/obj/item/tcgcard/update_icon_state()
+	. = ..()
+	if(!flipped)
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		name = template.name
+		desc = template.desc
+		icon_state = template.icon_state
+
+	else
+		name = "Trading Card"
+		desc = "It's the back of a trading card... no peeking!"
+		icon_state = "cardback"
+
+/obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/tcgcard))
+		var/obj/item/tcgcard/second_card = I
+		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
+		new_deck.flipped = flipped
+		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
+		second_card.zoom_in()
+		user.transferItemToLoc(src, new_deck)
+		zoom_in()
+		new_deck.update_icon_state()
+		user.put_in_hands(new_deck)
+	if(istype(I, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/old_deck = I
+		if(length(old_deck.contents) >= 30)
+			to_chat(user, "<span class='notice'>This pile has too many cards for a regular deck!</span>")
+			return
+		user.transferItemToLoc(src, old_deck)
+		flipped = old_deck.flipped
+		zoom_in()
+		old_deck.update_icon()
+		update_icon()
+	return ..()
+
+/obj/item/tcgcard/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/tcgcard/proc/tap_card(mob/user)
+	var/matrix/ntransform = matrix(transform)
+	if(tapped)
+		ntransform.TurnTo(TAPPED_ANGLE , UNTAPPED_ANGLE)
+	else
+		ntransform.TurnTo(UNTAPPED_ANGLE , TAPPED_ANGLE)
+	tapped = !tapped
+	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
+
+/**
+  * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
+  */
+/obj/item/tcgcard/proc/zoom_in()
+	transform = matrix()
+
+/**
+  * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
+  */
+/obj/item/tcgcard/proc/zoom_out()
+	transform = matrix(0.3,0,0,0,0.3,0)
+
+/obj/item/tcgcard/proc/flip_card(mob/user)
 	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
 	if(!flipped)
 		name = "Trading Card"
@@ -56,20 +160,141 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		desc = template.desc
 		icon_state = template.icon_state
 	flipped = !flipped
+/**
+  * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
+  * The "top" card of the deck will always be the bottom card in the stack for our purposes.
+  */
+/obj/item/tcgcard_deck
+	name = "Trading Card Pile"
+	desc = "A stack of TCG cards."
+	icon = DEFAULT_TCG_DMI_ICON
+	icon_state = "deck_up"
+	obj_flags = UNIQUE_RENAME
+	var/flipped = FALSE
+	var/static/radial_draw = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw")
+	var/static/radial_shuffle = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle")
+	var/static/radial_pickup = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard/equipped(mob/user, slot, initial)
+/obj/item/tcgcard_deck/Initialize()
 	. = ..()
-	zoom_in()
+	LoadComponent(/datum/component/storage/concrete/tcg)
 
-/obj/item/tcgcard/dropped(mob/user, silent)
+/obj/item/tcgcard_deck/update_icon_state()
 	. = ..()
-	zoom_out()
+	if(flipped)
+		switch(contents.len)
+			if(1 to 10)
+				icon_state = "deck_tcg_low"
+			if(11 to 20)
+				icon_state = "deck_tcg_half"
+			if(21 to INFINITY)
+				icon_state = "deck_tcg_full"
+	else
+		icon_state = "deck_up"
 
-/obj/item/tcgcard/proc/zoom_in()
-	transform = matrix()
+/obj/item/tcgcard_deck/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>\The [src] has [contents.len] cards inside.</span>"
 
-/obj/item/tcgcard/proc/zoom_out()
-	transform = matrix(0.3,0,0,0,0.3,0)
+/obj/item/tcgcard_deck/attack_hand(mob/user)
+	var/list/choices = list(
+		"Draw" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_draw"),
+		"Shuffle" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_shuffle"),
+		"Pickup" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_pickup"),
+		"Flip" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_flip"),
+		)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Draw")
+			draw_card(user)
+		if("Shuffle")
+			shuffle_deck(user)
+		if("Pickup")
+			user.put_in_hands(src)
+		if("Flip")
+			flip_deck()
+		if(null)
+			return
+
+/obj/item/tcgcard_deck/Destroy()
+	for(var/card in 1 to contents.len)
+		var/obj/item/tcgcard/stored_card = contents[card]
+		stored_card.forceMove(drop_location())
+		stored_card.zoom_out()
+	. = ..()
+
+/obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/tcgcard_deck/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/tcgcard))
+		if(contents.len > 30)
+			to_chat(user, "<span class='notice'>This pile has too many cards for a regular deck!</span>")
+			return FALSE
+		var/obj/item/tcgcard/new_card = I
+		new_card.flipped = flipped
+		new_card.forceMove(src)
+		new_card.zoom_in()
+
+
+/obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
+	shuffle_deck(user)
+	return ..()
+
+/**
+  * The user draws a single card. The deck is then handled based on how many cards are left.
+  */
+/obj/item/tcgcard_deck/proc/draw_card(mob/user)
+	if(!contents.len)
+		CRASH("A TCG deck was created with no cards inside of it.")
+	var/obj/item/tcgcard/drawn_card = contents[contents.len]
+	user.put_in_hands(drawn_card)
+	drawn_card.flipped = flipped //If it's a face down deck, it'll be drawn face down, if it's a face up pile you'll draw it face up.
+	drawn_card.update_icon_state()
+	user.visible_message("<span class='notice'>[user] draws a card from \the [src]!</span>", \
+					"<span class='notice'>You draw a card from \the [src]!</span>")
+	if(contents.len <= 1)
+		var/obj/item/tcgcard/final_card = contents[1]
+		user.transferItemToLoc(final_card, drop_location())
+		final_card.zoom_out()
+		qdel(src)
+
+/**
+  * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
+  * *User: The person doing the shuffling, used in visable message and closing UI.
+  * *Visible: Will anyone need to hear the visable message about the shuffling?
+  */
+/obj/item/tcgcard_deck/proc/shuffle_deck(mob/user, var/visable = TRUE)
+	if(!contents)
+		return
+	contents = shuffle(contents)
+	if(user.active_storage)
+		user.active_storage.close(user)
+	if(visable)
+		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
+						"<span class='notice'>You shuffle \the [src]!</span>")
+
+/**
+  * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
+  */
+/obj/item/tcgcard_deck/proc/flip_deck()
+	flipped = !flipped
+	var/list/temp_deck = contents.Copy()
+	contents = reverseRange(temp_deck)
+	//Now flip the cards to their opposite positions.
+	for(var/a in 1 to contents.len)
+		var/obj/item/tcgcard/nu_card = contents[a]
+		nu_card.zoom_in()
+		nu_card.flipped = flipped
+		nu_card.update_icon_state()
+	update_icon_state()
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"

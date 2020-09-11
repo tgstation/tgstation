@@ -89,9 +89,10 @@
 /datum/component/decal/proc/clean_react(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
 	if(clean_types & cleanable)
 		qdel(src)
-		return TRUE
+		return COMPONENT_CLEANED
 
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
