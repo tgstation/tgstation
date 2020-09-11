@@ -15,7 +15,7 @@
 	..()
 	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
-		var/obj/vehicle/ridden/scooter/skateboard/S = new(drop_location())
+		var/obj/vehicle/ridden/scooter/skateboard/improvised/S = new(drop_location())
 		new /obj/item/stack/rods(drop_location(), 2)
 		to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
 		if(has_buckled_mobs())
@@ -43,8 +43,8 @@
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard
-	name = "improvised skateboard"
-	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
+	name = "skateboard"
+	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
 	arms_required = 0
@@ -54,8 +54,6 @@
 	var/grinding = FALSE
 	///Stores the time of the last crash plus a short cooldown, affects availability and outcome of certain actions
 	var/next_crash
-	///Stores the default icon state
-	var/board_icon = "skateboard"
 	///The handheld item counterpart for the board
 	var/board_item_type = /obj/item/melee/skateboard
 	///Stamina drain multiplier
@@ -132,7 +130,7 @@
 			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
 			L.Paralyze(40)
 			grinding = FALSE
-			icon_state = board_icon
+			icon_state = "[initial(icon_state)]"
 			return
 		else
 			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
@@ -141,11 +139,11 @@
 				if(location)
 					location.hotspot_expose(1000,1000)
 				sparks.start() //the most radical way to start plasma fires
-			addtimer(CALLBACK(src, .proc/grind), 2)
+			addtimer(CALLBACK(src, .proc/grind), 1)
 			return
 	else
 		grinding = FALSE
-		icon_state = board_icon
+		icon_state = "[initial(icon_state)]"
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()
@@ -167,9 +165,8 @@
 
 /obj/vehicle/ridden/scooter/skateboard/pro
 	name = "skateboard"
-	desc = "A RaDSTORMz brand professional skateboard. Looks a lot more stable than the average board."
+	desc = "An EightO brand professional skateboard. Looks a lot more stable than the average board."
 	icon_state = "skateboard2"
-	board_icon = "skateboard2"
 	board_item_type = /obj/item/melee/skateboard/pro
 	instability = 6
 
@@ -179,16 +176,6 @@
 	board_item_type = /obj/item/melee/skateboard/hoverboard
 	instability = 3
 	icon_state = "hoverboard_red"
-	board_icon = "hoverboard_red"
-
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/screwdriver_act(mob/living/user, obj/item/I)
-	return FALSE
-
-/obj/vehicle/ridden/scooter/skateboard/hoverboard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/rods))
-		return
-	else
-		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"
@@ -196,7 +183,11 @@
 	board_item_type = /obj/item/melee/skateboard/hoverboard/admin
 	instability = 0
 	icon_state = "hoverboard_nt"
-	board_icon = "hoverboard_nt"
+
+/obj/vehicle/ridden/scooter/skateboard/improvised
+	name = "improvised skateboard"
+	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
+	board_item_type = /obj/item/melee/skateboard/improvised
 
 //CONSTRUCTION
 /obj/item/scooter_frame
@@ -226,7 +217,10 @@
 	qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/scooter/skateboard/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+	return
+
+/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))
 		if(!I.tool_start_check(user, amount=2))
 			return
@@ -242,7 +236,7 @@
 	else
 		return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/screwdriver_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
 	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
@@ -256,47 +250,61 @@
 		qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
-	return
-
 //Wheelys
-/obj/vehicle/ridden/scooter/wheelys
+/obj/vehicle/ridden/scooter/skateboard/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
-	icon_state = "wheely"
+	icon_state = null
 	density = FALSE
+	instability = 12
+	///Stores the shoes associated with the vehicle
+	var/obj/item/clothing/shoes/wheelys/shoes = null
+	///Name of the wheels, for visible messages
+	var/wheel_name = "wheels"
 
-/obj/vehicle/ridden/scooter/wheelys/Initialize()
+/obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 0
+	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
 
-/obj/vehicle/ridden/scooter/wheelys/post_unbuckle_mob(mob/living/M)
+/obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-		to_chat(M, "<span class='notice'>You pop the Wheely-Heels' wheels back into place.</span>")
+		to_chat(M, "<span class='notice'>You pop the wheels back into place.</span>")
 		moveToNullspace()
+		shoes.toggle_wheels(FALSE)
 	return ..()
 
-/obj/vehicle/ridden/scooter/wheelys/post_buckle_mob(mob/living/M)
-	to_chat(M, "<span class='notice'>You pop out the Wheely-Heels' wheels.</span>")
+/obj/vehicle/ridden/scooter/skateboard/wheelys/pick_up_board(mob/living/carbon/Skater)
+	return
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/post_buckle_mob(mob/living/M)
+	to_chat(M, "<span class='notice'>You pop out the [wheel_name].</span>")
+	shoes.toggle_wheels(TRUE)
 	return ..()
 
-/obj/vehicle/ridden/scooter/wheelys/Bump(atom/A)
+///Sets the shoes that the vehicle is associated with, called when the shoes are initialized
+/obj/vehicle/ridden/scooter/skateboard/wheelys/proc/link_shoes(newshoes)
+	shoes = newshoes
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
+	name = "roller skates"
+	desc = "An EightO brand pair of roller skates. Vintage, yet functional!"
+	instability = 8
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
 	. = ..()
-	if(A.density && has_buckled_mobs())
-		var/mob/living/H = buckled_mobs[1]
-		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-		unbuckle_mob(H)
-		H.throw_at(throw_target, 4, 3)
-		H.Paralyze(30)
-		H.adjustStaminaLoss(10)
-		var/head_slot = H.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
-			H.updatehealth()
-		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 1.5
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
+	name = "ski shoes"
+	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
+	instability = 8
+	wheel_name = "skis"
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
+	. = ..()
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.vehicle_move_delay = 1
+	riding.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)

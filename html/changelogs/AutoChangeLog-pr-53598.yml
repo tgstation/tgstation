@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Various spells and abilities across reventants, wizards, genetics, heretics and others, no longer have cooldowns 10 times longer than expected."
