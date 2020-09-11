@@ -21,9 +21,11 @@
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
 	var/datum/callback/after_insert
+	///The material breakdown flags used when inserting items into this container. Used to reduce alloys to their components.
+	var/breakdown_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby, _breakdown_flags=NONE)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
@@ -37,6 +39,7 @@
 
 	precondition = _precondition
 	after_insert = _after_insert
+	breakdown_flags = _breakdown_flags
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
@@ -73,17 +76,17 @@
 	var/datum/callback/pc = precondition
 	if(pc && !pc.Invoke(user))
 		return
-	var/material_amount = get_item_material_amount(I)
+	var/material_amount = get_item_material_amount(I, breakdown_flags)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
 	if(!has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] is full. Please remove materials from [parent] in order to insert more.</span>")
 		return
-	user_insert(I, user)
+	user_insert(I, user, breakdown_flags)
 
 /// Proc used for when player inserts materials
-/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, breakdown_flags=src.breakdown_flags)
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
@@ -98,7 +101,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-	var/inserted = insert_item(I, stack_amt = requested_amount)
+	var/inserted = insert_item(I, stack_amt = requested_amount, breakdown_flags=breakdown_flags)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 		qdel(I)
@@ -108,26 +111,28 @@
 		user.put_in_active_hand(I)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt)
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt, breakdown_flags=src.breakdown_flags)
 	if(QDELETED(I))
 		return FALSE
 
 	multiplier = CEILING(multiplier, 0.01)
 
-	var/material_amount = get_item_material_amount(I)
+	var/material_amount = get_item_material_amount(I, breakdown_flags)
 	if(!material_amount || !has_space(material_amount))
 		return FALSE
 
-	last_inserted_id = insert_item_materials(I, multiplier)
+	last_inserted_id = insert_item_materials(I, multiplier, breakdown_flags)
 	return material_amount
 
-/datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1)
+/datum/component/material_container/proc/insert_item_materials(obj/item/I, multiplier = 1, breakdown_flags=src.breakdown_flags)
 	var/primary_mat
 	var/max_mat_value = 0
+	var/list/item_materials = I.get_material_composition(breakdown_flags)
 	for(var/MAT in materials)
-		materials[MAT] += I.custom_materials[MAT] * multiplier
-		total_amount += I.custom_materials[MAT] * multiplier
-		if(I.custom_materials[MAT] > max_mat_value)
+		materials[MAT] += item_materials[MAT] * multiplier
+		total_amount += item_materials[MAT] * multiplier
+		if(item_materials[MAT] > max_mat_value)
+			max_mat_value = item_materials[MAT]
 			primary_mat = MAT
 	return primary_mat
 
@@ -309,12 +314,13 @@
 
 
 ///returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account
-/datum/component/material_container/proc/get_item_material_amount(obj/item/I)
+/datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags=src.breakdown_flags)
 	if(!istype(I) || !I.custom_materials)
-		return FALSE
+		return 0
 	var/material_amount = 0
+	var/list/item_materials = I.get_material_composition(breakdown_flags)
 	for(var/MAT in materials)
-		material_amount += I.custom_materials[MAT]
+		material_amount += item_materials[MAT]
 	return material_amount
 
 /// Returns the amount of a specific material in this container.

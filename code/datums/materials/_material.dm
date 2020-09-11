@@ -152,3 +152,14 @@ Simple datum which is instanced once per type and is used for every object of sa
   */
 /datum/material/proc/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
 	return FALSE
+
+/** Returns the composition of this material.
+  *
+  * Mostly used for alloys when breaking down materials.
+  *
+  * Arguments:
+  * - amount: The amount of the material to break down.
+  * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
+  */
+/datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
+	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.

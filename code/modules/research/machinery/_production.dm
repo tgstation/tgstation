@@ -21,7 +21,7 @@
 	matching_designs = list()
 	cached_designs = list()
 	update_designs()
-	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
+	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, breakdown_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()
