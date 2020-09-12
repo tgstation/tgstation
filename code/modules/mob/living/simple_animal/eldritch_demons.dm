@@ -136,6 +136,8 @@
 	var/stacks_to_grow = 5
 	///Currently eaten arms
 	var/current_stacks = 0
+	///Does this follow other pieces?
+	var/follow = TRUE
 
 //I tried Initalize but it didnt work, like at all. This proc just wouldnt fire if it was Initalize instead of New
 /mob/living/simple_animal/hostile/eldritch/armsy/Initialize(mapload,spawn_more = TRUE,len = 6)
@@ -148,6 +150,9 @@
 	if(!spawn_more)
 		return
 	allow_pulling = TRUE
+	///sets the hp of the head to be exactly the length times hp, so the head is de facto the hardest to destroy.
+	maxHealth = len * maxHealth
+	health = maxHealth
 	///next link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/next
 	///previous link
@@ -193,18 +198,15 @@
 		back.contract_next_chain_into_single_tile()
 	return
 
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/pack_armsy()
-	if(back && back.pack_armsy())
-		back.forceMove(src)
-	return TRUE
-
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/unpack_armsy()
+/mob/living/simple_animal/hostile/eldritch/armsy/proc/get_length()
+	. += 1
 	if(back)
-		back.forceMove(loc)
-		back.unpack_armsy()
+		. += back.get_length()
 
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
+	if(!follow)
+		return
 	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
@@ -294,10 +296,10 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/prime
 	name = "Lord of the Night"
 	real_name = "Master of Decay"
-	maxHealth = 400
-	health = 400
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	maxHealth = 600
+	health = 600
+	melee_damage_lower = 30
+	melee_damage_upper = 50
 
 /mob/living/simple_animal/hostile/eldritch/armsy/prime/Initialize(mapload,spawn_more = TRUE,len = 9)
 	. = ..()

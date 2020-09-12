@@ -142,7 +142,7 @@
 /datum/reality_smash_tracker/proc/_Generate()
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
-	var/number = targ_len * 6 - smash_len
+	var/number = max(targ_len * (5-(targ_len-1)) - smash_len,2)
 
 	for(var/i in 0 to number)
 
@@ -230,7 +230,9 @@
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
+		if(human_user.getOrganLoss(ORGAN_SLOT_BRAIN) < 190)
+			human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,5)
+		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"

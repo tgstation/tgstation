@@ -192,6 +192,7 @@
 
 //Ascension knowledge
 /datum/eldritch_knowledge/final
+
 	var/finished = FALSE
 
 /datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc,selected_atoms)
@@ -207,6 +208,8 @@
 
 /datum/eldritch_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	finished = TRUE
+	var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	ascension.ascended = TRUE
 	return TRUE
 
 /datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
