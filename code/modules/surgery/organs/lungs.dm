@@ -99,7 +99,24 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/freon, /datum/gas/hypernoblium)
+	breath.assert_gases(/datum/gas/oxygen,
+						/datum/gas/plasma,
+						/datum/gas/carbon_dioxide,
+						/datum/gas/nitrous_oxide,
+						/datum/gas/bz,
+						/datum/gas/nitrogen,
+						/datum/gas/tritium,
+						/datum/gas/nitryl,
+						/datum/gas/pluoxium,
+						/datum/gas/stimulum,
+						/datum/gas/freon,
+						/datum/gas/hypernoblium,
+						/datum/gas/healium,
+						/datum/gas/proto_nitrate,
+						/datum/gas/cyrion_b,
+						/datum/gas/halon,
+						/datum/gas/hexane
+						)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
@@ -313,6 +330,47 @@
 			H.reagents.add_reagent(/datum/reagent/freon,1)
 
 		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
+
+	// Healium
+		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
+		if(healium_pp > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
+			H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
+			H.adjustOxyLoss(-5)
+			H.adjustFireLoss(-7)
+			H.adjustToxLoss(-7)
+			H.adjustBruteLoss(-10)
+		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
+		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
+
+	// Proto Nitrate
+		// Inert
+	// Cyrion B
+		var/cyrion_b_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/cyrion_b][MOLES])
+		if(cyrion_b_pp > gas_stimulation_min)
+			H.adjustBruteLoss(25)
+			H.adjustOxyLoss(5)
+			H.adjustFireLoss(8)
+			H.adjustToxLoss(8)
+		gas_breathed = breath_gases[/datum/gas/cyrion_b][MOLES]
+		breath_gases[/datum/gas/cyrion_b][MOLES]-=gas_breathed
+
+	// Halon
+		var/halon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/halon][MOLES])
+		if(halon_pp > gas_stimulation_min)
+			H.adjustOxyLoss(5)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/halon)
+			H.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
+		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
+		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
+
+	// Hexane
+		var/hexane_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/hexane][MOLES])
+		if(hexane_pp > gas_stimulation_min)
+			H.hallucination += 50
+			H.reagents.add_reagent(/datum/reagent/hexane,5)
+			if(prob(33))
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 	// Stimulum
 		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]

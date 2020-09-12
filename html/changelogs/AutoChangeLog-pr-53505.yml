@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "The light tiles on disco inferno no longer look ugly when they burn down every shift."

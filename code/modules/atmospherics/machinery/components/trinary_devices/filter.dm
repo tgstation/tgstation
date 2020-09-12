@@ -25,6 +25,7 @@
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
 		update_icon()
 	return ..()
 
@@ -59,7 +60,7 @@
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
 	icon_state = "filter_[on_state ? "on" : "off"]-[set_overlay_offset(piping_layer)][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
+/obj/machinery/atmospherics/components/trinary/filter/process_atmos(delta_time)
 	..()
 	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational)
 		return
@@ -78,7 +79,7 @@
 		//No need to transfer if target is already full!
 		return
 
-	var/transfer_ratio = transfer_rate/air1.volume
+	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
 
 	//Actually transfer the gas
 

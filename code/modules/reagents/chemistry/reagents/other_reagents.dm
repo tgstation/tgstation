@@ -1362,6 +1362,61 @@
 	if(isplasmaman(L))
 		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
 	return ..()
+
+/datum/reagent/healium
+	name = "Healium"
+	description = "A Powerful sleeping agent with healing properties"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "rubbery"
+
+/datum/reagent/healium/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+
+/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	return ..()
+
+/datum/reagent/halon
+	name = "Halon"
+	description = "A firefighter gas that remove oxygen and cool down the area"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "minty"
+
+/datum/reagent/halon/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
+
+/datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
+	return ..()
+
+/datum/reagent/hexane
+	name = "Hexane"
+	description = "A filtering gas, don't breathe it if you suffer from brain conditions"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "fresh"
+
+/datum/reagent/hexane/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
+	ADD_TRAIT(L, TRAIT_SIXTHSENSE, type)
+
+/datum/reagent/hexane/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
+	REMOVE_TRAIT(L, TRAIT_SIXTHSENSE, type)
+	return ..()
+
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 

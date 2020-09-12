@@ -60,6 +60,16 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+	//Stop any reagent metabolizing on organ destruction
+	if(reagents && iscarbon(owner))
+		var/mob/living/carbon/body = owner
+		for(var/chem in reagents.reagent_list)
+			var/datum/reagent/reagent = chem
+			if(reagent.metabolizing)
+				reagent.metabolizing = FALSE
+				reagent.on_mob_end_metabolize(body)
+			reagent.on_mob_delete(body) //It was removed from the body
+
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -79,13 +89,13 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()
-	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(delta_time)
+	on_death(delta_time) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+/obj/item/organ/proc/on_death(delta_time = 2)	//runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	applyOrganDamage(maxHealth * decay_factor)
+	applyOrganDamage(maxHealth * decay_factor * 0.5 * delta_time)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)

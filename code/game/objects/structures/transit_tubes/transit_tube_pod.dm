@@ -146,7 +146,7 @@
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
-		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
 

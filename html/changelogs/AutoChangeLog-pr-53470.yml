@@ -1,8 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "fixed mech icons and lights"
-  - bugfix: "Made strafe behavior better"
-  - bugfix: "fixed mechs exploding"
-  - bugfix: "fixed mech weapon cooldowns being inconsistent"
-  - code_imp: "cleaned up mech code some more"

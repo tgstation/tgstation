@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Showers no longer have the vapor reaction, as before the changes."
-  - bugfix: "Showers no longer produce ludicrously over-scaled chemical reactions."
-  - balance: "Gas chems now produce 1/4th less gas when released into the air as before."
