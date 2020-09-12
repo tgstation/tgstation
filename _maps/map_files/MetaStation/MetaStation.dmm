@@ -32725,14 +32725,14 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics - Control Room"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /obj/structure/tank_dispenser{
 	pixel_x = -1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
@@ -69346,7 +69346,7 @@
 	location = "Atmospherics"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "jTg" = (
 /obj/structure/disposalpipe/segment{
@@ -69537,7 +69537,9 @@
 	id = "atmos";
 	name = "Atmospherics Blast Door"
 	},
-/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "kfZ" = (
@@ -72394,10 +72396,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "ogE" = (
@@ -79732,6 +79730,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/structure/sign/warning/securearea{
+	pixel_x = -32;
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "yax" = (
