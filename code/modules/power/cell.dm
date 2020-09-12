@@ -49,9 +49,9 @@
 				STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/stock_parts/cell/process()
+/obj/item/stock_parts/cell/process(delta_time)
 	if(self_recharge)
-		give(chargerate * 0.25)
+		give(chargerate * 0.125 * delta_time)
 	else
 		return PROCESS_KILL
 
@@ -73,13 +73,13 @@
 /obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
-		return 0
+		return FALSE
 	if(charge < amount)
-		return 0
+		return FALSE
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return 1
+	return TRUE
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)

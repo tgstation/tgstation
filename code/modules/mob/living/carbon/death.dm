@@ -7,7 +7,7 @@
 
 	if(!gibbed)
 		emote("deathgasp")
-	reagents.end_metabolization(src)
+	end_metabolization()
 
 	. = ..()
 

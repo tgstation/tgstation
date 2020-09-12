@@ -70,7 +70,7 @@
 	if(merge)
 		for(var/obj/item/stack/S in loc)
 			if(S.merge_type == merge_type)
-				merge(S)
+				INVOKE_ASYNC(src, .proc/merge, S)
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -84,7 +84,7 @@
 	update_icon()
 
 /obj/item/stack/proc/get_main_recipes()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	return list()//empty list
 
 /obj/item/stack/proc/update_weight()
@@ -369,8 +369,8 @@
 		return source.energy < cost
 	if(amount < 1)
 		qdel(src)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/stack/proc/add(amount)
 	if (is_cyborg)

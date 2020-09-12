@@ -77,8 +77,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
 							/obj/item/circuitboard/computer/arcade/amputation = 2)
 		var/thegame = pickweight(gameodds)
-		var/obj/item/circuitboard/CB = new thegame()
-		new CB.build_path(loc, CB)
+		var/obj/item/circuitboard/new_board = new thegame()
+		var/obj/new_cabinet = new new_board.build_path(loc, new_board)
+		new_cabinet.setDir(dir)
 		return INITIALIZE_HINT_QDEL
 	Reset()
 

@@ -215,13 +215,13 @@ Difficulty: Medium
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
 					any_attack = 1
-			for(var/obj/mecha/M in T.contents)
+			for(var/obj/vehicle/sealed/mecha/M in T.contents)
 				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
 				any_attack = 1
 		if(!any_attack)
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)
-			return 0 // nothing to attack in the arena time for enraged attack if we still have a target
+			return FALSE // nothing to attack in the arena time for enraged attack if we still have a target
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -229,7 +229,7 @@ Difficulty: Medium
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		SLEEP_CHECK_DEATH(24)
-	return 1 // attack finished completely
+	return TRUE // attack finished completely
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0)
@@ -285,7 +285,7 @@ Difficulty: Medium
 			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
 
 		// deals damage to mechs
-		for(var/obj/mecha/M in T.contents)
+		for(var/obj/vehicle/sealed/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
@@ -372,7 +372,7 @@ Difficulty: Medium
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
-	for(var/obj/mecha/M in orange(1, src))
+	for(var/obj/vehicle/sealed/mecha/M in orange(1, src))
 		M.take_damage(75, BRUTE, MELEE, 1)
 
 	for(var/mob/M in range(7, src))
@@ -444,7 +444,7 @@ Difficulty: Medium
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
 
 	// deals damage to mechs
-	for(var/obj/mecha/M in T.contents)
+	for(var/obj/vehicle/sealed/mecha/M in T.contents)
 		M.take_damage(45, BRUTE, MELEE, 1)
 
 	// changes turf to lava temporarily

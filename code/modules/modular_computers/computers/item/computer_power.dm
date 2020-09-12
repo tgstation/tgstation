@@ -41,10 +41,10 @@
 		shutdown_computer(0)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
-/obj/item/modular_computer/proc/handle_power()
+/obj/item/modular_computer/proc/handle_power(delta_time)
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 	if(recharger)
-		recharger.process()
+		recharger.process(delta_time)
 
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 

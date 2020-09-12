@@ -128,7 +128,7 @@
 //Carpets
 /obj/item/stack/tile/carpet
 	name = "carpet"
-	singular_name = "carpet"
+	singular_name = "carpet tile"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	inhand_icon_state = "tile-carpet"
@@ -233,7 +233,7 @@
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
-	singular_name = "astral carpet"
+	singular_name = "astral carpet tile"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	inhand_icon_state = "tile-space"

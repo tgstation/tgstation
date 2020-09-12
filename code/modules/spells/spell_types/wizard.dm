@@ -229,6 +229,19 @@
 	charge_max = 5000
 	summon_amt = 2
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	name = "Lesser summon bees"
+	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
+	charge_max = 600
+	clothes_req = TRUE
+	invocation = "NOT THE BEES"
+	summon_amt = 9
+	action_icon_state = "bee"
+	cooldown_min = 20 SECONDS
+
+	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	cast_sound = 'sound/voice/moth/scream_moth.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."

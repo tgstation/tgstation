@@ -221,11 +221,13 @@
 			t_prod.seed.name = initial(new_prod.name)
 			t_prod.seed.desc = initial(new_prod.desc)
 			t_prod.seed.plantname = initial(new_prod.plantname)
+			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
+				if(trait.can_add(t_prod.seed))
+					t_prod.seed.genes += trait
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			t_amount++
 			if(t_prod.seed)
-				//t_prod.seed = new new_prod
 				t_prod.seed.instability = round(instability * 0.5)
 			continue
 		else

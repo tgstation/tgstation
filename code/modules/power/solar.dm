@@ -15,12 +15,16 @@
 
 	var/id
 	var/obscured = FALSE
-	var/sunfrac = 0 //[0-1] measure of obscuration -- multipllier against power generation
-	var/azimuth_current = 0 //[0-360) degrees, which direction are we facing?
+	///[0-1] measure of obscuration -- multipllier against power generation
+	var/sunfrac = 0
+	///[0-360) degrees, which direction are we facing?
+	var/azimuth_current = 0
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
-	var/needs_to_turn = TRUE //do we need to turn next tick?
-	var/needs_to_update_solar_exposure = TRUE //do we need to call update_solar_exposure() next tick?
+	///do we need to turn next tick?
+	var/needs_to_turn = TRUE
+	///do we need to call update_solar_exposure() next tick?
+	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)

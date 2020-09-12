@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(spacedrift)
 	return ..()
 
 
-/datum/controller/subsystem/spacedrift/fire(resumed = 0)
+/datum/controller/subsystem/spacedrift/fire(resumed = FALSE)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -41,7 +41,8 @@ SUBSYSTEM_DEF(spacedrift)
 
 		var/old_dir = AM.dir
 		AM.inertia_moving = TRUE
-		step(AM, AM.inertia_dir, 8) // TODO: rework inertia to use degstep and angles
+		AM.set_glide_size(DELAY_TO_GLIDE_SIZE(AM.inertia_move_delay))
+		step(AM, AM.inertia_dir)
 		AM.inertia_moving = FALSE
 
 		AM.setDir(old_dir)

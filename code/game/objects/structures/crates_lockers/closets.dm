@@ -396,6 +396,7 @@
 	. = ..()
 	if(AM.loc == src)
 		return FALSE
+	return TRUE
 
 /obj/structure/closet/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()

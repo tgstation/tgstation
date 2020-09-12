@@ -94,8 +94,8 @@
 		if(C == must_be_alone)
 			continue
 		if(our_area == get_area(C))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.
@@ -263,7 +263,7 @@
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(IS_OPAQUE_TURF(T))
-					return 0
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -279,8 +279,8 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(IS_OPAQUE_TURF(T))
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 #undef SIGNV
 
 
@@ -289,13 +289,9 @@
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
-	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
-
-	else
-		return 0
+	return inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z)
 
 /proc/try_move_adjacent(atom/movable/AM, trydir)
 	var/turf/T = get_turf(AM)

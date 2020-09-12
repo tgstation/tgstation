@@ -70,6 +70,9 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 
+	flags_1 |= ALLOW_DARK_PAINTS_1
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
@@ -276,6 +279,14 @@
 	ini_dir = dir
 	add_fingerprint(user)
 
+/obj/structure/window/proc/on_painted(is_dark_color)
+	SIGNAL_HANDLER
+
+	if (is_dark_color)
+		set_opacity(255)
+	else
+		set_opacity(initial(opacity))
+
 /obj/structure/window/Destroy()
 	density = FALSE
 	air_update_turf(1)
@@ -330,11 +341,11 @@
 
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
-		return 1
+		return TRUE
 	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 /obj/structure/window/GetExplosionBlock()
 	return reinf && fulltile ? real_explosion_block : 0

@@ -230,7 +230,7 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = 1
+	player_mind.active = TRUE
 	if(!GLOB.xeno_spawn)
 		return MAP_ERROR
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
