@@ -569,7 +569,7 @@
 	update_stat()
 	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
-		become_husk("burn")
+		become_husk(BURN)
 
 	med_hud_set_health()
 
