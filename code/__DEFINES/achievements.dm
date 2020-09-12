@@ -26,6 +26,7 @@
 #define MEDAL_GOTTEM			"GOTTEM"
 #define MEDAL_ASCENSION			"Ascension"
 #define MEDAL_FRENCHING			"FrenchingTheBubble"
+#define MEDAL_AIRBUD			"Airbud"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"

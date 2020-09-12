@@ -146,6 +146,9 @@
 	var/mob/living/carbon/carbon_target = target
 	var/datum/wound/blunt/moderate/broken_ankle/preexisting_condition = (locate(/datum/wound/blunt/moderate/broken_ankle) in carbon_target.all_wounds)
 
+	if(carbon_target.client)
+		carbon_target.client.give_award(/datum/award/achievement/misc/airbud, carbon_target)
+
 	// if we've already got a broken ankle, just blast that leg
 	if(preexisting_condition)
 		var/obj/item/bodypart/ankle = preexisting_condition.limb

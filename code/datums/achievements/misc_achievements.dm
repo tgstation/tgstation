@@ -123,3 +123,9 @@
 	desc = "Just a taste, for science!"
 	database_id = MEDAL_FRENCHING
 	icon = "frenching"
+
+/datum/award/achievement/misc/airbud
+	name = "Space Bud"
+	desc = "550 years later, and there still ain't no rule that says a dog can't play basketball!"
+	database_id = MEDAL_AIRBUD
+	icon = "airbud"
