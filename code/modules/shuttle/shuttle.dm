@@ -171,10 +171,6 @@
 	var/datum/map_template/shuttle/roundstart_template
 	var/json_key
 
-// Never move the stationary docking port, otherwise things get WEIRD
-/obj/docking_port/stationary/onShuttleMove()
-	return FALSE
-
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
