@@ -113,10 +113,11 @@
 	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/breadcat
-	name = "Bread cat"
+	name = "Bread cat/bread hybrid"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/obj/item/clothing/head/kitty = 1,
+		/obj/item/organ/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/reagent_containers/food/snacks/meat/slab = 3,
 		/datum/reagent/blood = 50,
 		/datum/reagent/medicine/strange_reagent = 5
