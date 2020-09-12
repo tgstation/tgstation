@@ -41,8 +41,7 @@ SUBSYSTEM_DEF(spacedrift)
 
 		var/old_dir = AM.dir
 		AM.inertia_moving = TRUE
-		AM.set_glide_size(DELAY_TO_GLIDE_SIZE(AM.inertia_move_delay))
-		step(AM, AM.inertia_dir)
+		step(AM, AM.inertia_dir, 8) // TODO: rework inertia to use degstep and angles
 		AM.inertia_moving = FALSE
 
 		AM.setDir(old_dir)

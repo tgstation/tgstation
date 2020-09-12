@@ -72,17 +72,13 @@
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
 	set waitfor = FALSE
-	var/ticks = 1
 	var/obj/structure/disposalpipe/last
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
-		set_glide_size(DELAY_TO_GLIDE_SIZE(ticks * world.tick_lag))
 		curr = curr.transfer(src)
 		if(!curr && active)
 			last.expel(src, loc, dir)
-
-		ticks = stoplag()
 		if(!(count--))
 			active = FALSE
 

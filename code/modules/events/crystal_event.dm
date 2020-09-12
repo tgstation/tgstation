@@ -718,7 +718,6 @@ This section is for the crystal monsters variations
 	move_resist = MOVE_FORCE_NORMAL
 	pull_force = MOVE_FORCE_NORMAL
 	dodging = TRUE
-	dodge_prob = 25
 
 /mob/living/simple_animal/hostile/crystal_monster/thug/attackby(obj/item/O, mob/user, params)
 	if(prob(30))
@@ -776,7 +775,6 @@ This section is for the crystal monsters variations
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	dodging = TRUE
-	dodge_prob = 35
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	projectiletype = /obj/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'

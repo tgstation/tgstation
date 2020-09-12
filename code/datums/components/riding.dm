@@ -55,8 +55,6 @@
 	SIGNAL_HANDLER
 
 	var/atom/movable/movable_parent = parent
-	M.set_glide_size(movable_parent.glide_size)
-	M.updating_glide_size = FALSE
 	handle_vehicle_offsets(movable_parent.dir)
 	if(can_use_abilities)
 		setup_abilities(M)
@@ -104,11 +102,8 @@
 	var/atom/movable/movable_parent = parent
 	if (isnull(dir))
 		dir = movable_parent.dir
-	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for (var/m in movable_parent.buckled_mobs)
 		ride_check(m)
-		var/mob/buckled_mob = m
-		buckled_mob.set_glide_size(movable_parent.glide_size)
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
 
