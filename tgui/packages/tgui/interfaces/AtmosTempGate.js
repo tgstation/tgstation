@@ -18,29 +18,27 @@ export const AtmosTempGate = (props, context) => {
                 selected={data.on}
                 onClick={() => act('power')} />
             </LabeledList.Item>
-            {(
-              <LabeledList.Item label="Heat settings">
-                <NumberInput
-                  animated
-                  value={parseFloat(data.temperature)}
-                  unit="K"
-                  width="75px"
-                  minValue={3}
-                  maxValue={4500}
-                  step={1}
-                  onChange={(e, value) => act('temperature', {
-                    temperature: value,
-                  })} />
-                <Button
-                  ml={1}
-                  icon="plus"
-                  content="Max"
-                  disabled={data.temperature === data.max_temperature}
-                  onClick={() => act('temperature', {
-                    temperature: 'max',
-                  })} />
-              </LabeledList.Item>
-            )}
+            <LabeledList.Item label="Heat settings">
+              <NumberInput
+                animated
+                value={parseFloat(data.temperature)}
+                unit="K"
+                width="75px"
+                minValue={3}
+                maxValue={4500}
+                step={1}
+                onChange={(e, value) => act('temperature', {
+                  temperature: value,
+                })} />
+              <Button
+                ml={1}
+                icon="plus"
+                content="Max"
+                disabled={data.temperature === data.max_temperature}
+                onClick={() => act('temperature', {
+                  temperature: 'max',
+                })} />
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>
