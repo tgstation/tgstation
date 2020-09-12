@@ -18,10 +18,14 @@
 	canSmoothWith = list()
 	smooth = SMOOTH_FALSE
 	/// The amount of time it takes to create a venus human trap, in deciseconds
-	var/growth_time = 1200
+	var/growth_time = 2 MINUTES
+
+	var/timerid
+	var/obj/effect/countdown/flower_bud/countdown
 
 /obj/structure/alien/resin/flower_bud_enemy/Initialize()
 	. = ..()
+	countdown = new(src)
 	var/list/anchors = list()
 	anchors += locate(x-2,y+2,z)
 	anchors += locate(x+2,y+2,z)
@@ -31,13 +35,14 @@
 	for(var/turf/T in anchors)
 		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
-	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
+	timerid = addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
+	countdown.start()
 
 /**
   * Spawns a venus human trap, then qdels itself.
   *
   * Displays a message, spawns a human venus trap, then qdels itself.
-  */	
+  */
 /obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
@@ -103,7 +108,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
 	pull_vines()
-	
+
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()
 	if(isliving(target))
@@ -125,7 +130,7 @@
 		for(var/obj/O in T)
 			if(O.density)
 				return
-	
+
 	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
 	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
 	vines += newVine
