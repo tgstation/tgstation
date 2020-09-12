@@ -299,12 +299,16 @@
 /obj/item/robot_module/security
 	name = "Security"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/restraints/handcuffs/cable/zipties,
-		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/extinguisher/mini)
+		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/pen,
+		/obj/item/rsf,
+		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	emag_modules = null
 	cyborg_base_icon = "sec"
