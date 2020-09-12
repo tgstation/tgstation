@@ -33,14 +33,15 @@
 /turf/open/space/Initialize()
 	SHOULD_CALL_PARENT(FALSE)
 
-	// Multi Z shenanigans, replace 2D space to 3D.
-	var/turf/Tbelow = below()
-	if(Tbelow)
-		if(!isspaceturf(Tbelow)) //If we have floor below this turf somewhere, think about this like a room
-			ChangeTurf(/turf/open/transparent/openspace/airless)
-		else	//If we have not floor below this turf somewhere, think about this like a space
-			ChangeTurf(/turf/open/space/transparent/openspace)
-		return FALSE
+	// Multi Z shenanigans, replace 2D space to 3D. Keep border.
+	if((x < (world.maxx - TRANSITIONEDGE)) && (x > (1 + TRANSITIONEDGE)) && (y < (world.maxy - TRANSITIONEDGE)) && (y > (1 + TRANSITIONEDGE)))
+		var/turf/Tbelow = below()
+		if(Tbelow)
+			if(!isspaceturf(Tbelow)) //If we have floor below this turf somewhere, think about this like a room
+				ChangeTurf(/turf/open/transparent/openspace/airless)
+			else	//If we have not floor below this turf somewhere, think about this like a space
+				ChangeTurf(/turf/open/space/transparent/openspace)
+			return FALSE
 
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
