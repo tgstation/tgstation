@@ -16,6 +16,8 @@
 	var/datum/looping_sound/acid/sizzle
 	/// Used exclusively for melting turfs. TODO: Move integrity to the atom level so that this can be dealt with there.
 	var/parent_integrity = 30
+	/// How far the acid melting of turfs has progressed
+	var/stage = 0
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
@@ -94,25 +96,25 @@
 
 
 /// Handles the slow corrosion of the parent [/atom].
-/datum/component/acid/process()
-	process_effect?.InvokeAsync()
+/datum/component/acid/process(delta_time)
+	process_effect?.InvokeAsync(delta_time)
 	if(QDELING(src)) //The process effect deals damage, and on turfs diminishes the acid volume, potentially destroying the component. Let's not destroy it twice.
 		return
-	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))))
+	set_volume(acid_volume - (ACID_DECAY_BASE + (ACID_DECAY_SCALING*round(sqrt(acid_volume)))) * delta_time)
 
 /// Handles processing on a [/obj].
-/datum/component/acid/proc/process_obj(obj/target)
+/datum/component/acid/proc/process_obj(obj/target, delta_time)
 	if(target.resistance_flags & ACID_PROOF)
 		return
-	target.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX), BURN, ACID, 0)
+	target.take_damage(min(1 + round(sqrt(acid_power * acid_volume)*0.3), OBJ_ACID_DAMAGE_MAX) * delta_time, BURN, ACID, 0)
 
 /// Handles processing on a [/mob/living].
-/datum/component/acid/proc/process_mob(mob/living/target)
-	target.acid_act(acid_power, acid_volume)
+/datum/component/acid/proc/process_mob(mob/living/target, delta_time)
+	target.acid_act(acid_power, acid_volume * delta_time)
 
 /// Handles processing on a [/turf].
-/datum/component/acid/proc/process_turf(turf/target_turf)
-	var/acid_used = min(acid_volume * 0.05, 20)
+/datum/component/acid/proc/process_turf(turf/target_turf, delta_time)
+	var/acid_used = min(acid_volume * 0.05, 20) * delta_time
 	var/applied_targets = 0
 	for(var/am in target_turf)
 		var/atom/movable/target_movable = am
@@ -126,19 +128,22 @@
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
-	switch(parent_integrity--)
-		if(-INFINITY to 0)
-			target_turf.visible_message("<span class='warning'>[target_turf] collapses under its own weight into a puddle of goop and undigested debris!</span>")
-			target_turf.acid_melt()
-		if(0 to 4)
-			target_turf.visible_message("<span class='warning'>[target_turf] begins to crumble under the acid!</span>")
-		if(4 to 8)
-			target_turf.visible_message("<span class='warning'>[target_turf] is struggling to withstand the acid!</span>")
-		if(8 to 16)
-			target_turf.visible_message("<span class='warning'>[target_turf] is being melted by the acid!</span>")
-		if(16 to 24)
-			target_turf.visible_message("<span class='warning'>[target_turf] is holding up against the acid!</span>")
-
+	parent_integrity -= delta_time
+	if(parent_integrity <= 0)
+		target_turf.visible_message("<span class='warning'>[target_turf] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+		target_turf.acid_melt()
+	else if(parent_integrity <= 4 && stage <= 3)
+		target_turf.visible_message("<span class='warning'>[target_turf] begins to crumble under the acid!</span>")
+		stage = 4
+	else if(parent_integrity <= 8 && stage <= 2)
+		target_turf.visible_message("<span class='warning'>[target_turf] is struggling to withstand the acid!</span>")
+		stage = 3
+	else if(parent_integrity <= 16 && stage <= 1)
+		target_turf.visible_message("<span class='warning'>[target_turf] is being melted by the acid!</span>")
+		stage = 2
+	else if(parent_integrity <= 24 && stage == 0)
+		target_turf.visible_message("<span class='warning'>[target_turf] is holding up against the acid!</span>")
+		stage = 1
 
 /// Used to maintain the acid overlay on the parent [/atom].
 /datum/component/acid/proc/on_update_overlays(atom/parent_atom, list/overlays)

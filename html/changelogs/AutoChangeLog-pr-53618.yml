@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - bugfix: "xenobio cameras no longer runtime when they're not in their original allowed area."

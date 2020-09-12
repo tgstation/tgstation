@@ -267,13 +267,13 @@ export const NtosRobotactContent = (props, context) => {
                     onClick={() => act('lawchannel')} />
                 </Fragment>
               )}>
-                {laws.map(law => (
-                  <Box
-                    mb={1}
-                    key={law}>
-                    {law}
-                  </Box>
-                ))}
+              {laws.map(law => (
+                <Box
+                  mb={1}
+                  key={law}>
+                  {law}
+                </Box>
+              ))}
             </Section>
           </Flex.Item>
         </Fragment>

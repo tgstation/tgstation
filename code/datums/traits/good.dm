@@ -37,18 +37,18 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
-/datum/quirk/drunkhealing/on_process()
+/datum/quirk/drunkhealing/on_process(delta_time)
 	var/mob/living/carbon/C = quirk_holder
 	switch(C.drunkenness)
 		if (6 to 40)
-			C.adjustBruteLoss(-0.1, FALSE)
-			C.adjustFireLoss(-0.05, FALSE)
+			C.adjustBruteLoss(-0.1*delta_time, FALSE)
+			C.adjustFireLoss(-0.05*delta_time, FALSE)
 		if (41 to 60)
-			C.adjustBruteLoss(-0.4, FALSE)
-			C.adjustFireLoss(-0.2, FALSE)
+			C.adjustBruteLoss(-0.4*delta_time, FALSE)
+			C.adjustFireLoss(-0.2*delta_time, FALSE)
 		if (61 to INFINITY)
-			C.adjustBruteLoss(-0.8, FALSE)
-			C.adjustFireLoss(-0.4, FALSE)
+			C.adjustBruteLoss(-0.8*delta_time, FALSE)
+			C.adjustFireLoss(-0.4*delta_time, FALSE)
 
 /datum/quirk/empath
 	name = "Empath"
@@ -126,8 +126,8 @@
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
-/datum/quirk/jolly/on_process()
-	if(prob(0.05))
+/datum/quirk/jolly/on_process(delta_time)
+	if(DT_PROB(0.05, delta_time))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step

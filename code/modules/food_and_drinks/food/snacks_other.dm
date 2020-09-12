@@ -474,8 +474,8 @@
 /obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
 	value = FOOD_WORTHLESS
-	///How long it lasts before being deleted
-	var/succ_dur = 180
+	///How long it lasts before being deleted in seconds
+	var/succ_dur = 360
 	///The delay between each time it will handle reagents
 	var/succ_int = 100
 	///Stores the time set for the next handle_reagents
@@ -492,12 +492,12 @@
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/reagent_containers/food/snacks/chewable/process()
+/obj/item/reagent_containers/food/snacks/chewable/process(delta_time)
 	if(iscarbon(loc))
-		if(succ_dur < 1)
+		if(succ_dur <= 0)
 			qdel(src)
 			return
-		succ_dur--
+		succ_dur -= delta_time
 		if((reagents && reagents.total_volume) && (next_succ <= world.time))
 			handle_reagents()
 			next_succ = world.time + succ_int
@@ -564,7 +564,7 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
-	succ_dur = 450 //15 minutes
+	succ_dur = 15 * 60
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
 	name = "nicotine gum"
@@ -585,7 +585,7 @@
 	color = "#913D3D"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
-	succ_dur = 180
+	succ_dur = 6 * 60
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
 	. = ..()
