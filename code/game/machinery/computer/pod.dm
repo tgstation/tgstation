@@ -1,6 +1,8 @@
 /obj/machinery/computer/pod
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
+	processing_flags = START_PROCESSING_MANUALLY
+
 	/// Connected mass driver
 	var/obj/machinery/mass_driver/connected = null
 	/// ID of the launch control
@@ -11,6 +13,8 @@
 	var/time = 30
 	/// Range in which we search for a mass drivers and poddoors nearby
 	var/range = 4
+	/// Countdown timer for the mass driver's delayed launch functionality.
+	COOLDOWN_DECLARE(massdriver_countdown)
 
 /obj/machinery/computer/pod/Initialize()
 	. = ..()
@@ -20,14 +24,10 @@
 			break
 
 /obj/machinery/computer/pod/process(delta_time)
-	if(!..())
-		return
-	if(!timing)
-		return
-	time -= delta_time
-	if(time <= 0)
+	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
-		time = initial(time)
+		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
+		end_processing()
 		alarm()
 
 /**
@@ -64,9 +64,11 @@
 
 /obj/machinery/computer/pod/ui_data(mob/user)
 	var/list/data = list()
+	// If the cooldown has finished, just display the time. If the cooldown hasn't finished, display the cooldown.
+	var/display_time = COOLDOWN_FINISHED(src, massdriver_countdown) ? time : COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
 	data["connected"] = connected ? TRUE : FALSE
-	data["seconds"] = round(time % 60)
-	data["minutes"] = round((time - data["seconds"]) / 60)
+	data["seconds"] = round(display_time % 60)
+	data["minutes"] = round((display_time - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["power"] = connected ? connected.power : 0.25
 	data["poddoor"] = FALSE
@@ -98,6 +100,14 @@
 			return TRUE
 		if("time")
 			timing = !timing
+
+			if(timing)
+				COOLDOWN_START(src, massdriver_countdown, time SECONDS)
+				begin_processing()
+			else
+				COOLDOWN_RESET(src, massdriver_countdown)
+				end_processing()
+
 			return TRUE
 		if("input")
 			var/value = text2num(params["adjust"])
