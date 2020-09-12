@@ -109,10 +109,10 @@
 	orbiter_list -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
-	orbiter.client.eye = orbiter
 
 	if(ismob(orbiter))
 		var/mob/orbiter_mob = orbiter
+		orbiter_mob.client.eye = orbiter_mob
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
