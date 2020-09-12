@@ -10,7 +10,7 @@ export const Stack = (props, context) => {
     recipes,
   } = data;
 
-  const height = 92 + Object.keys(recipes).length * 20.2;
+  const height = Math.max(92 + Object.keys(recipes).length * 21.8, 250);
 
   return (
     <Window
@@ -33,13 +33,25 @@ const RecipeList = (props, context) => {
     recipes,
   } = props;
 
-  let sortedKeys = Object.keys(recipes).sort();
+  let sortedKeys = Object.keys(recipes).sort((a, b) => {
+    if (a.toLowerCase() < b.toLowerCase()) {
+      return -1;
+    }
+    if (a.toLowerCase() > b.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  });
 
   return sortedKeys.map(title => {
     let recipe = recipes[title];
     if (recipe.ref === undefined) {
       return (
-        <Collapsible ml={1} mb={-0.7} color="label" title={title}>
+        <Collapsible
+          ml={1}
+          mb={-0.8}
+          color="label"
+          title={title}>
           <Box ml={1}>
             <RecipeList recipes={recipe} />
           </Box>
@@ -47,7 +59,9 @@ const RecipeList = (props, context) => {
       );
     } else {
       return (
-        <Recipe title={title} recipe={recipe} />
+        <Recipe
+          title={title}
+          recipe={recipe} />
       );
     }
   });
@@ -135,7 +149,7 @@ const Recipe = (props, context) => {
   let maxMultiplier = buildMultiplier(recipe, amount);
 
   return (
-    <Box>
+    <Box mb={0.3}>
       <Table>
         <Table.Row>
           <Table.Cell>
@@ -151,7 +165,9 @@ const Recipe = (props, context) => {
           </Table.Cell>
           {max_res_amount > 1 && maxMultiplier > 1 && (
             <Table.Cell collapsing>
-              <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
+              <Multipliers
+                recipe={recipe}
+                maxMultiplier={maxMultiplier} />
             </Table.Cell>
           )}
         </Table.Row>
