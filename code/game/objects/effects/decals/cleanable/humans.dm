@@ -56,6 +56,15 @@
 
 	var/already_rotting = FALSE
 
+/obj/effect/decal/cleanable/blood/no_rot_gibs
+	name = "gibs"
+	desc = "They look bloody and gruesome."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "gib1"
+	layer = LOW_OBJ_LAYER
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
+	mergeable_decal = FALSE
+
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
@@ -119,6 +128,35 @@
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 	bloodiness = 0
 	already_rotting = TRUE
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/up
+	icon_state = "gibup1"
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/down
+	icon_state = "gibdown1"
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/body
+	icon_state = "gibtorso"
+	random_icon_states = list("gibhead", "gibtorso")
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/torso
+	icon_state = "gibtorso"
+	random_icon_states = null
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/limb
+	icon_state = "gibleg"
+	random_icon_states = list("gibleg", "gibarm")
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/core
+	icon_state = "gibmid1"
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+
+/obj/effect/decal/cleanable/blood/no_rot_gibs/old
+	name = "old rotting gibs"
+	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()

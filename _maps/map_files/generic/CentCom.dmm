@@ -10925,7 +10925,7 @@
 /area/wizard_station)
 "yI" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/no_rot_gibs/body,
 /turf/open/floor/grass,
 /area/wizard_station)
 "yJ" = (
