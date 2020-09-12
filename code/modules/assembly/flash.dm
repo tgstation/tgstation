@@ -114,7 +114,17 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
-///Awfully bad proc that flashes carbons. this really fucking needs a refactor
+/**
+  * Handles actual flashing part of the attack
+  *
+  *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  *	* power - handles the amount of confusion it gives you
+  * * targeted - determines if it was aoe or targeted
+  * * generic_message - checks if it should display default message.
+  */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -157,7 +167,14 @@
 			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 			M.add_confusion(min(power, diff))
 
-///Returns a value of deviation, 0 means they face the same direction, 2 means they face away from eachother.
+/**
+  * Handles the directionality of the attack
+  *
+  *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  */
 /obj/item/assembly/flash/proc/calculate_deviation(mob/living/carbon/M, mob/user)
 	var/dir1 = M.dir
 	var/dir2 = turn(user.dir,180)
