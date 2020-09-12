@@ -246,7 +246,7 @@
 	return ..()
 
 /obj/docking_port/stationary/picked
-	///Hods a list of map name strings for the port to pick from
+	///Holds a list of map name strings for the port to pick from
 	var/list/shuttlekeys
 
 /obj/docking_port/stationary/picked/Initialize(mapload)
