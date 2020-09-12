@@ -109,6 +109,7 @@
 	orbiter_list -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+	orbiter.client.eye = orbiter
 
 	if(ismob(orbiter))
 		var/mob/orbiter_mob = orbiter

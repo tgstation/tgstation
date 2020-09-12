@@ -303,8 +303,9 @@
 	if(!Adjacent(A))
 		to_chat(src, "<span class='warning'>You can't move [pulling] that far!</span>")
 		return
-	pulling.step_size = 1 + pulling.Move(get_turf(A), get_dir(pulling.loc, A)) // 1 + pixels moved
-	pulling.step_size = step_size
+	if(ismovable(pulling))
+		pulling.step_size = 1 + pulling.Move(get_turf(A), get_dir(pulling.loc, A)) // 1 + pixels moved
+		pulling.step_size = step_size
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A, params)
