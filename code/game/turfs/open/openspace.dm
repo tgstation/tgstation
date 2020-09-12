@@ -26,7 +26,11 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/transparent/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/transparent/openspace/debug/update_multiz()
+/turf/open/transparent/openspace/update_multiz()
+	var/turf/T = below()
+	if(isspaceturf(T)) //If we have not floor below this turf somewhere, think about this like a space
+		ChangeTurf(/turf/open/space/transparent/openspace)
+		return FALSE
 	..()
 	return TRUE
 

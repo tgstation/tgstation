@@ -327,6 +327,13 @@
 
 	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
 
+/turf/open/space/transparent/openspace/update_multiz()
+	var/turf/T = below()
+	if(!isspaceturf(T)) //If we have floor below this turf somewhere, think about this like a room
+		ChangeTurf(/turf/open/transparent/openspace/airless)
+		return FALSE
+	return ..()
+
 /turf/open/space/transparent/openspace/zAirIn()
 	return TRUE
 
