@@ -1,3 +1,7 @@
+#define DOG_MODE_SNACK	1
+#define DOG_MODE_GET_BALL	2
+#define DOG_MODE_SHOOT_BALL 3
+
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
@@ -22,6 +26,12 @@
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
+	var/obj/item/precious_cargo
+
+	var/airbud_activated = FALSE
+
+	var/target_mode
+
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/Initialize()
@@ -31,56 +41,184 @@
 /mob/living/simple_animal/pet/dog/Life()
 	..()
 
+
+	if(stat || resting || buckled)
+		return
+
+	switch(target_mode)
+		if(DOG_MODE_SNACK)
+			handle_snackhunt()
+			return
+		if(DOG_MODE_GET_BALL)
+			handle_airbud()
+			return
+
+	turns_since_scan++
+	//if(turns_since_scan < 5)
+	if(turns_since_scan < 4)
+		return
+	turns_since_scan = 0
+
+	if(seek_bball() || seek_snacks())
+		return
+
+	if(prob(1))
+		manual_emote(pick("dances around.","chases its tail!"))
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
+
+
+/mob/living/simple_animal/pet/dog/proc/seek_bball()
+	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
+
+	for(var/i in oview(src, 6))
+		if(istype(i, /obj/item/toy/beach_ball/holoball))
+			bball = i
+			testing("[src] noticed [bball] and starting handle airbud1")
+			break
+		else if(isliving(i))
+			var/mob/living/check_mob = i
+			bball = (locate(/obj/item/toy/beach_ball/holoball) in check_mob)
+			if(bball)
+				testing("[src] noticed [bball] in [check_mob]'s hands and starting handle airbud2")
+				break
+
+	if(bball)
+		testing("[src] noticed [bball] and starting handle airbud3")
+		target_mode = DOG_MODE_GET_BALL
+		movement_target = bball
+		stop_automated_movement = TRUE
+		return TRUE
+
+/mob/living/simple_animal/pet/dog/proc/abandon_bball()
+	precious_cargo = null
+	movement_target = null
+	target_mode = null
+	stop_automated_movement = FALSE
+
+/mob/living/simple_animal/pet/dog/proc/handle_airbud()
+	var/obj/item/toy/beach_ball/holoball/bball = movement_target
+	if(!istype(bball) || (isturf(bball.loc) && get_dist(src, bball) > 7))
+		abandon_bball()
+		return
+
+	if(precious_cargo && precious_cargo == movement_target)
+		kobe()
+		return
+
+	if(isliving(bball.loc))
+		var/mob/living/bball_player = bball.loc
+		visible_message("<span class='warning'>[src] leaps at [bball_player], trying to steal [bball]!</span>")
+		var/datum/callback/ankle_breaking = CALLBACK(src, .proc/ankle_breaker, bball_player)
+		throw_at(bball_player, 10, 4, src, FALSE, FALSE, ankle_breaking)
+	else
+		visible_message("<span class='warning'>[src] dashes to [bball], taking possession!</span>")
+		precious_cargo = bball
+		var/datum/callback/kobe_callback = CALLBACK(src, .proc/kobe)
+		throw_at(bball, 10, 4, src, FALSE, FALSE, kobe_callback)
+
+/mob/living/simple_animal/pet/dog/proc/ankle_breaker(mob/living/target)
+	var/obj/item/toy/beach_ball/holoball/bball = movement_target
+	if(!target || !istype(bball))
+		abandon_bball()
+		return
+
+	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it breaks [target]'s ankle!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it breaks your ankle!</span>")
+	if(iscarbon(target))
+		var/obj/item/bodypart/ankle = target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG) // make random
+		ankle.receive_damage(10, wound_bonus = rand(40, 130))
+
+	target.Knockdown(3 SECONDS)
+	precious_cargo = bball
+	precious_cargo.forceMove(get_turf(src))
+
+/mob/living/simple_animal/pet/dog/proc/kobe()
+	var/obj/item/toy/beach_ball/holoball/bball = precious_cargo
+	if(!istype(bball))
+		abandon_bball()
+		return
+
+	var/obj/structure/holohoop/the_hoop = locate(/obj/structure/holohoop) in oview(7, src)
+	if(!the_hoop)
+		visible_message("<span class='notice'>[src] dribbles [bball] for a bit, then seems to grow bored by the lack of hoops.</span>")
+		abandon_bball()
+		return
+
+	shoot(bball, the_hoop)
+
+
+/mob/living/simple_animal/pet/dog/proc/shoot(obj/item/toy/beach_ball/holoball/bball, obj/structure/holohoop/the_hoop)
+	if(!istype(bball) || !istype(the_hoop))
+		abandon_bball()
+		return
+
+	var/datum/callback/shot_callback
+	var/atom/movable/what_gets_thrown
+
+	switch(get_dist(src, the_hoop))
+		if(0 to 2)
+			visible_message("<span class='notice'>[src] grabs insane air as [p_they()] slam[p_s()] [bball] into [the_hoop]! Ho shit!</span>")
+			bball.forceMove(src)
+			what_gets_thrown = src
+			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/dunk, bball, src)
+			//throw_at(get_turf(the_hoop), 10, 3, src, FALSE, FALSE, shot_callback)
+
+		if(3 to 5)
+			visible_message("<span class='notice'>[src] does a sick flip while shooting [bball] at [the_hoop]!</span>")
+			SpinAnimation(10, 1)
+			what_gets_thrown = bball
+			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, src)
+
+		if(6 to INFINITY)
+			// behold: the only code ever written that actually references simple mob pronouns
+			visible_message("<span class='notice'>[src] is briefly overcome by grim determination as [p_they()] set[p_s()] on [p_their()] hind legs and shoot[p_s()] [bball] at [the_hoop] from downtown!</span>")
+			what_gets_thrown = bball
+			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, src)
+
+	what_gets_thrown.throw_at(get_turf(the_hoop), 10, 3, src, FALSE, FALSE, shot_callback)
+	abandon_bball()
+
+
+/mob/living/simple_animal/pet/dog/proc/seek_snacks()
+	for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
+		if(isturf(S.loc) || ishuman(S.loc))
+			movement_target = S
+			target_mode = DOG_MODE_SNACK
+			stop_automated_movement = TRUE
+			return TRUE
+
+
+/mob/living/simple_animal/pet/dog/proc/abandon_snacks()
+	movement_target = null
+	target_mode = null
+	stop_automated_movement = FALSE
+
+
+/mob/living/simple_animal/pet/dog/proc/handle_snackhunt()
+	if(!movement_target || isnull(movement_target.loc) || get_dist(src, movement_target.loc) > 3 || (!isturf(movement_target.loc) && !ishuman(movement_target.loc)))
+		abandon_snacks()
+		return
+
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = FALSE
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = FALSE
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
-						break
-			if(movement_target)
-				stop_automated_movement = TRUE
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
+	step_to(src,movement_target,1)
+	sleep(3)
+	step_to(src,movement_target,1)
+	sleep(3)
+	step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					var/turf/T = get_turf(movement_target)
-					if(!T)
-						return
-					if (T.x < src.x)
-						setDir(WEST)
-					else if (T.x > src.x)
-						setDir(EAST)
-					else if (T.y < src.y)
-						setDir(SOUTH)
-					else if (T.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
+	if(!movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+		abandon_snacks()
+		return
 
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
+	face_atom(movement_target)
 
-					if(isturf(movement_target.loc))
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+	if(!Adjacent(movement_target)) //can't reach food through windows.
+		return
 
-		if(prob(1))
-			manual_emote(pick("dances around.","chases its tail!"))
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
+	if(isturf(movement_target.loc))
+		movement_target.attack_animal(src)
+	else if(ishuman(movement_target.loc))
+		if(prob(20))
+			manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
 
 //Corgis and pugs are now under one dog subtype
 
@@ -659,3 +797,7 @@
 	..()
 
 	make_babies()
+
+#undef DOG_MODE_SNACK
+#undef DOG_MODE_GET_BALL
+#undef DOG_MODE_SHOOT_BALL

@@ -136,7 +136,14 @@
 	else
 		return ..()
 
+/obj/structure/holohoop/proc/swish(atom/movable/AM, mob/living/shooter)
+	AM.forceMove(get_turf(src))
+	visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
 
+/obj/structure/holohoop/proc/dunk(atom/movable/AM, mob/living/shooter)
+	AM.forceMove(get_turf(src))
+	visible_message("<span class='warning'>[shooter] slams [AM] down into [src] with a resounding CLANG!</span>")
+	playsound(src.loc, 'sound/effects/bamf.ogg', 50, FALSE, FALSE)
 
 //
 // Machines
