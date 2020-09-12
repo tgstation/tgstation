@@ -135,7 +135,6 @@
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
-	var/datum/song/song
 
 /obj/item/instrument/eguitar
 	name = "electric guitar"
@@ -310,9 +309,9 @@
 			instruments[initial(A.name)] = A
 	return instruments
 
-/obj/item/instrument/bikehorn
+/obj/item/instrument/musicalmoth
 	name = "musical moth"
-	desc = "A moth musician, or moth-sician, just vibin' and making tunes."
+	desc = "A moth musician, or mothsician, just vibin' and making tunes."
 	icon_state = "mothsician"
 	allowed_instrument_ids = "mothscream"
 	attack_verb_continuous = list("flutters", "flaps")
@@ -320,3 +319,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
+	custom_price = 666
+	custom_premium_price = 666
