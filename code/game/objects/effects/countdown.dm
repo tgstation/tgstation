@@ -165,5 +165,5 @@
 	var/obj/structure/alien/resin/flower_bud_enemy/bud = attached_to
 	if(!istype(bud))
 		return
-	else if(bud.timerid)
+	else if(bud.growth_timer)
 		return round(timeleft(bud.timerid), 1)
