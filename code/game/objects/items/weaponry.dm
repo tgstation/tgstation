@@ -551,8 +551,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "catwhip"
 
 /obj/item/melee/skateboard
-	name = "improvised skateboard"
-	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
+	name = "skateboard"
+	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a radical weapon."
 	icon_state = "skateboard"
 	inhand_icon_state = "skateboard"
 	force = 12
@@ -568,9 +568,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	S.buckle_mob(user)
 	qdel(src)
 
+/obj/item/melee/skateboard/improvised
+	name = "improvised skateboard"
+	desc = "A jury-rigged skateboard. It can be placed on its wheels and ridden, or used as a radical weapon."
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/improvised
+
 /obj/item/melee/skateboard/pro
 	name = "skateboard"
-	desc = "A RaDSTORMz brand professional skateboard. It looks sturdy and well made."
+	desc = "An EightO brand professional skateboard. It looks sturdy and well made."
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
@@ -585,7 +590,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_premium_price = 2015
 
 /obj/item/melee/skateboard/hoverboard/admin
-	name = "\improper Board Of Directors"
+	name = "Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
 	icon_state = "hoverboard_nt"
 	inhand_icon_state = "hoverboard_nt"

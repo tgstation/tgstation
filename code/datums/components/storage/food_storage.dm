@@ -176,7 +176,7 @@
 		return FALSE
 
 	for(var/obj/item/i in food.contents) //search the food's contents for a replacement item
-		if(istype(i, /obj/item/reagent_containers/food/snacks))
+		if(IS_EDIBLE(i))
 			continue
 		if(QDELETED(i))
 			continue

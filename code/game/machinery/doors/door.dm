@@ -337,11 +337,7 @@
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			for(var/i in C.all_wounds) // should probably replace with signal
-				var/datum/wound/W = i
-				W.crush(DOOR_CRUSH_DAMAGE)
+		SEND_SIGNAL(L, COMSIG_LIVING_DOORCRUSHED, src)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
@@ -415,5 +411,10 @@
 	. = ..()
 	if(. && !(machine_stat & NOPOWER))
 		autoclose_in(DOOR_CLOSE_WAIT)
+
+/obj/machinery/door/zap_act(power, zap_flags)
+	zap_flags &= ~ZAP_OBJ_DAMAGE
+	. = ..()
+
 
 #undef DOOR_CLOSE_WAIT

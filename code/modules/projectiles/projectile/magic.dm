@@ -651,6 +651,11 @@
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
 
+/obj/projectile/magic/aoe/lightning/no_zap
+	zap_power = 10000
+	zap_range = 4
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
 	. = ..()

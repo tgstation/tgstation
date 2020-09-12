@@ -421,4 +421,4 @@
 	l_pocket = /obj/item/kitchen/knife
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/fireworks=3,\
-		/obj/item/reagent_containers/food/snacks/store/cake/birthday=1)
+		/obj/item/food/cake/birthday=1)

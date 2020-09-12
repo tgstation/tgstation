@@ -61,6 +61,32 @@
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
 
+/obj/item/cautery/advanced
+	name = "searing tool"
+	desc = "It projects a high power laser used for medical applications."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery_a"
+	hitsound = 'sound/items/welder.ogg'
+	toolspeed = 0.7
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_color = COLOR_SOFT_RED
+
+
+/obj/item/cautery/advanced/attack_self(mob/user)
+	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_CAUTERY)
+		tool_behaviour = TOOL_DRILL
+		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
+		icon_state = "surgicaldrill_a"
+	else
+		tool_behaviour = TOOL_CAUTERY
+		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
+		icon_state = "cautery_a"
+
+/obj/item/cautery/advanced/examine()
+	. = ..()
+	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -79,6 +105,9 @@
 	attack_verb_simple = list("drill")
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
+	sharpness = SHARP_POINTY
+	wound_bonus = 10
+	bare_wound_bonus = 10
 
 /obj/item/surgicaldrill/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -117,7 +146,8 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
-	bare_wound_bonus = 20
+	wound_bonus = 15
+	bare_wound_bonus = 15
 
 /obj/item/scalpel/Initialize()
 	. = ..()
@@ -154,8 +184,8 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
-	wound_bonus = 10
-	bare_wound_bonus = 15
+	wound_bonus = 15
+	bare_wound_bonus = 10
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
@@ -312,33 +342,6 @@
 	. = ..()
 	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
 
-/obj/item/surgicaldrill/advanced
-	name = "searing tool"
-	desc = "It projects a high power laser used for medical application."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "surgicaldrill_a"
-	hitsound = 'sound/items/welder.ogg'
-	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
-	light_color = COLOR_SOFT_RED
-
-
-/obj/item/surgicaldrill/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_DRILL)
-		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
-		icon_state = "cautery_a"
-	else
-		tool_behaviour = TOOL_DRILL
-		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
-		icon_state = "surgicaldrill_a"
-
-/obj/item/surgicaldrill/advanced/examine()
-	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
-
 /obj/item/shears
 	name = "amputation shears"
 	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
@@ -423,4 +426,19 @@
 	attack_verb_continuous = list("corrects", "properly sets")
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
+	toolspeed = 1
+
+/obj/item/blood_filter
+	name = "blood filter"
+	desc = "For filtering the blood."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bloodfilter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("pumps", "siphons")
+	attack_verb_simple = list("pumps", "siphons")
+	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1

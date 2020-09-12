@@ -432,7 +432,7 @@
 		return TRUE
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
-/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+/datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != HARD_CRIT)
@@ -440,7 +440,7 @@
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(owner, TRUE)
+		qdel(I)
 
 	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in view(2,owner))
