@@ -13464,7 +13464,8 @@
 /obj/machinery/camera{
 	c_tag = "Prison Isolation Cell";
 	dir = 8;
-	network = list("ss13","prison")
+	network = list("ss13","prison");
+	view_range = 5
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -17597,23 +17598,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
-"aPp" = (
-/obj/machinery/camera{
-	c_tag = "Prison Hallway West";
-	dir = 4;
-	network = list("ss13","prison")
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "aPq" = (
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -78867,7 +78851,7 @@ aEf
 aFC
 aaJ
 aKx
-aPp
+aRT
 aRT
 aRT
 afA
