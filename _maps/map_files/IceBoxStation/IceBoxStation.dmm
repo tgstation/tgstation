@@ -22165,6 +22165,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bam" = (
