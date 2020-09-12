@@ -61,6 +61,7 @@
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
+	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)
 	landingDelay = 0
 	openingDelay = 0
 	departureDelay = 0
@@ -69,8 +70,3 @@
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	close_sound = null
 	pod_flags = FIRST_SOUNDS
-
-/obj/structure/closet/supplypod/mechpod/insertion_allowed(atom/movable/AM)
-	if(!ismecha(AM))
-		return FALSE
-	. = ..()
