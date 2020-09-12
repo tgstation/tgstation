@@ -614,12 +614,20 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.type == reagent)
-			if(my_atom && isliving(my_atom))
-				var/mob/living/M = my_atom
+			var/mob/living/mob_consumer
+
+			if (isliving(my_atom))
+				mob_consumer = my_atom
+			else if (istype(my_atom, /obj/item/organ))
+				var/obj/item/organ/organ = my_atom
+				mob_consumer = organ.owner
+
+			if (mob_consumer)
 				if(R.metabolizing)
 					R.metabolizing = FALSE
-					R.on_mob_end_metabolize(M)
-				R.on_mob_delete(M)
+					R.on_mob_end_metabolize(mob_consumer)
+				R.on_mob_delete(mob_consumer)
+
 			//Clear from relevant lists
 			addiction_list -= R
 			reagent_list -= R
