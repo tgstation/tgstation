@@ -73,14 +73,15 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		var/list/limbs_to_heal = H.get_missing_limbs()
-		if(limbs_to_heal.len < 1)
-			return 0
-		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	var/list/limbs_to_heal = H.get_missing_limbs()
+	if(limbs_to_heal.len < 1)
+		return FALSE
+	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+		return TRUE
 
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -182,11 +183,13 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		return TRUE
+	return FALSE
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner

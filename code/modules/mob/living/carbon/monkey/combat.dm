@@ -27,7 +27,7 @@
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/walk2derpless(target)
 	if(!target || IsStandingStill())
-		return 0
+		return FALSE
 
 	if(myPath.len <= 0)
 		myPath = get_path_to(src, get_turf(target), /turf/proc/Distance, MAX_RANGE_FIND + 1, 250,1)
@@ -41,25 +41,25 @@
 						qdel(myPath[1])
 						myPath.Cut(1, 2)
 			walk_to(src, target) // we pathed to the waypoint now head straight for the target
-			return 1
+			return TRUE
 
 	// failed to path correctly so just try to head straight for a bit
 	QDEL_LIST(myPath)
 	walk_for(src, get_dir(loc, get_turf(target)), until=0.5 SECONDS)
 
-	return 0
+	return FALSE
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
 	if(!(mobility_flags & MOBILITY_FLAGS_INTERACTION))
-		return 1
+		return TRUE
 	if(health <= 0 && checkDead)
-		return 1
+		return TRUE
 	if(IsStun() || IsParalyzed())
-		return 1
+		return TRUE
 	if(stat)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)

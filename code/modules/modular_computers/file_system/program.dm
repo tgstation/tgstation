@@ -68,8 +68,8 @@
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, "<span class='danger'>\The [computer] flashes a \"Hardware Error - Incompatible software\" warning.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
@@ -77,8 +77,8 @@
 	return 0
 
 // Called by Process() on device that runs us, once every tick.
-/datum/computer_file/program/proc/process_tick()
-	return 1
+/datum/computer_file/program/proc/process_tick(delta_time)
+	return TRUE
 
 /**
   *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
@@ -147,8 +147,8 @@
 				ID = card_holder.GetID()
 			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /**
   *

@@ -91,12 +91,18 @@
 	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
-									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
-									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
-									/obj/machinery/nuclearbomb,			/obj/machinery/particle_accelerator, \
-									/obj/machinery/recharge_station,	/obj/machinery/smartfridge, \
-									/obj/machinery/computer,			/obj/machinery/suit_storage_unit)
+	var/obj/desired_perches = list(/obj/structure/frame/computer,
+		/obj/structure/displaycase,
+		/obj/structure/filingcabinet,
+		/obj/machinery/teleport,
+		/obj/machinery/dna_scannernew,
+		/obj/machinery/telecomms,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/recharge_station,
+		/obj/machinery/smartfridge,
+		/obj/machinery/computer,
+		/obj/machinery/suit_storage_unit,
+	)
 
 	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
@@ -159,8 +165,8 @@
 
 /mob/living/simple_animal/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(. != 0)
-		return .
+	if(.)
+		return
 
 	if(message_mods[MODE_HEADSET])
 		if(ears)
@@ -175,7 +181,7 @@
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /*
  * Inventory
@@ -605,12 +611,12 @@
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null
-				return 1
+				return TRUE
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -635,8 +641,6 @@
 				continue
 			QDEL_LIST(path)
 			return item
-
-	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
 	for(var/obj/O in view(src))

@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/controller/subsystem/throwing/stat_entry(msg)
 	msg = "P:[length(processing)]"
-	return ..()
+	return msg
 
 
 /datum/controller/subsystem/throwing/fire(resumed = 0)

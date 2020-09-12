@@ -98,7 +98,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = 0
+	set waitfor = FALSE
 	if(moving)
 		return
 
@@ -136,7 +136,7 @@
 
 		if(current_tube == null)
 			setDir(next_dir)
-			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
@@ -145,7 +145,7 @@
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
-		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
 

@@ -19,9 +19,9 @@
 
 	heat_protection = 0.5 // minor heat insulation
 
-	var/leaping = 0
+	var/leaping = FALSE
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
-	unique_name = 1
+	unique_name = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 

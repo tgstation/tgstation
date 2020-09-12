@@ -146,7 +146,7 @@
 /mob/living/simple_animal/hostile/carp/tamed()
 	. = ..()
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 13), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-2, 12), TEXT_WEST = list(2, 12)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -218,7 +218,7 @@
 		heal_overall_damage(4)
 	if(!rideable && src.mind)
 		can_buckle = TRUE
-		buckle_lying = FALSE
+		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
 		D.set_vehicle_dir_offsets(SOUTH, pixel_x, 0)

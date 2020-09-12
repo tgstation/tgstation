@@ -297,7 +297,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton

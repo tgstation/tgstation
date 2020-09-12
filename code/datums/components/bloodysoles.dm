@@ -44,7 +44,7 @@
   * Returns true if the parent item is obscured by something else that the wielder is wearing
   */
 /datum/component/bloodysoles/proc/is_obscured()
-	return equipped_slot in wielder.check_obscured_slots(TRUE)
+	return wielder.check_obscured_slots(TRUE) & equipped_slot
 
 /**
   * Run to update the icon of the parent
@@ -206,12 +206,12 @@
 	SIGNAL_HANDLER
 
 	if(!(clean_types & CLEAN_TYPE_BLOOD) || last_blood_state == BLOOD_STATE_NOT_BLOODY)
-		return
+		return NONE
 
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	last_blood_state = BLOOD_STATE_NOT_BLOODY
 	update_icon()
-	return TRUE
+	return COMPONENT_CLEANED
 
 
 /**
@@ -266,7 +266,7 @@
 /datum/component/bloodysoles/feet/is_obscured()
 	if(wielder.shoes)
 		return TRUE
-	return ITEM_SLOT_FEET in wielder.check_obscured_slots(TRUE)
+	return wielder.check_obscured_slots(TRUE) & ITEM_SLOT_FEET
 
 /datum/component/bloodysoles/feet/on_moved(datum/source, OldLoc, Dir, Forced)
 	if(wielder.num_legs < 2)

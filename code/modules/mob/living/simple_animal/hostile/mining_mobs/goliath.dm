@@ -114,7 +114,7 @@
 			qdel(O)
 			saddled = TRUE
 			can_buckle = TRUE
-			buckle_lying = FALSE
+			buckle_lying = 0
 			add_overlay("goliath_saddled")
 			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 			D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))

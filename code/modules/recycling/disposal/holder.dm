@@ -79,8 +79,6 @@
 		curr = curr.transfer(src)
 		if(!curr && active)
 			last.expel(src, loc, dir)
-
-		stoplag()
 		if(!(count--))
 			active = FALSE
 

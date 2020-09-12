@@ -1,7 +1,8 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		524288	//Restricts client uploads to the server to 0.5MB
+#define UPLOAD_LIMIT_ADMIN	2621440	//Restricts admin client uploads to the server to 2.5MB
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
@@ -125,8 +126,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -157,11 +158,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		total_message_count = 0
 		total_count_reset = 0
 		cmd_admin_mute(src, mute_type, 1)
-		return 1
+		return TRUE
 
 	//Otherwise just supress the message
 	else if(cache >= SPAM_TRIGGER_AUTOMUTE)
-		return 1
+		return TRUE
 
 
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
@@ -169,21 +170,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
 			cmd_admin_mute(src, mute_type, 1)
-			return 1
+			return TRUE
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
+			return FALSE
 	else
 		last_message = message
 		src.last_message_count = 0
-		return 0
+		return FALSE
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
-	if(filelength > UPLOAD_LIMIT)
+	if (holder)
+		if(filelength > UPLOAD_LIMIT_ADMIN)
+			to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT_ADMIN/1024]KiB.</font>")
+			return FALSE
+	else if(filelength > UPLOAD_LIMIT)
 		to_chat(src, "<font color='red'>Error: AllowUpload(): File Upload too large. Upload Limit: [UPLOAD_LIMIT/1024]KiB.</font>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 	///////////
@@ -333,7 +338,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
 			qdel(src)
-			return 0
+			return
 	else if (byond_version < cwv)	//We have words for this client.
 		if(CONFIG_GET(flag/client_warn_popup))
 			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
@@ -353,11 +358,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (!CONFIG_GET(flag/allow_webclient))
 			to_chat(src, "Web client is disabled")
 			qdel(src)
-			return 0
+			return
 		if (CONFIG_GET(flag/webclient_only_byond_members) && !IsByondMember())
 			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
 			qdel(src)
-			return 0
+			return
 
 	if( (world.address == address || !address) && !GLOB.host )
 		GLOB.host = key
@@ -998,8 +1003,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(IsAdminAdvancedProcCall())
 		return
 	var/list/verblist = list()
+	var/list/verbstoprocess = verbs.Copy()
+	if(mob)
+		verbstoprocess += mob.verbs
+		for(var/AM in mob.contents)
+			var/atom/movable/thing = AM
+			verbstoprocess += thing.verbs
 	verb_tabs.Cut()
-	for(var/thing in (verbs + mob?.verbs))
+	for(var/thing in verbstoprocess)
 		var/procpath/verb_to_init = thing
 		if(!verb_to_init)
 			continue

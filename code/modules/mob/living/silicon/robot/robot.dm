@@ -53,10 +53,10 @@
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high ///If this is a path, this gets created as an object in Initialize.
 
-	var/opened = 0
+	var/opened = FALSE
 	var/emagged = FALSE
 	var/emag_cooldown = 0
-	var/wiresexposed = 0
+	var/wiresexposed = FALSE
 
 	/// Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
@@ -74,7 +74,7 @@
 	var/datum/effect_system/spark_spread/spark_system // So they can initialize sparks whenever/N
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
-	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
+	var/scrambledcodes = FALSE // Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
 	var/lockcharge //Boolean of whether the borg is locked down or not
 
 	var/toner = 0
@@ -94,7 +94,7 @@
 	var/hat_offset = -3
 
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/get_cell()
@@ -155,7 +155,7 @@
 		mmi.brainmob.container = mmi
 		mmi.update_icon()
 
-	updatename()
+	INVOKE_ASYNC(src, .proc/updatename)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
@@ -181,7 +181,7 @@
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
 	if(connected_ai)
-		connected_ai.connected_robots -= src
+		set_connected_ai(null)
 	if(shell)
 		GLOB.available_ai_shells -= src
 	else
@@ -211,8 +211,7 @@
 		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
-	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
-	"Engineering" = /obj/item/robot_module/engineering, \
+	var/list/modulelist = list("Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
@@ -324,13 +323,13 @@
 		. += "Master AI: [connected_ai.name]"
 
 /mob/living/silicon/robot/restrained(ignore_grab)
-	. = 0
+	return
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
 	if(stat == DEAD)
-		return 1
+		return TRUE
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
@@ -338,7 +337,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if (O && istype(O, /list))
@@ -349,11 +348,11 @@
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
 	queueAlarm(text("--- [class] alarm detected in [A.name]!"), class)
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
-	var/cleared = 0
+	var/cleared = FALSE
 	for (var/I in L)
 		if (I == A.name)
 			var/list/alarm = L[I]
@@ -361,7 +360,7 @@
 			if (origin in srcs)
 				srcs -= origin
 			if (srcs.len == 0)
-				cleared = 1
+				cleared = TRUE
 				L -= I
 	if (cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
@@ -392,36 +391,36 @@
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
-		return 1
+		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
-	return 0
+	return FALSE
 
 /mob/living/silicon/robot/proc/check_access(obj/item/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = req_access
 	if(!L.len) //no requirements
-		return 1
+		return TRUE
 
 	if(!istype(I, /obj/item/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/silicon/robot/regenerate_icons()
 	return update_icons()
@@ -461,9 +460,7 @@
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if(src.connected_ai)
-		connected_ai.connected_robots -= src
-		src.connected_ai = null
+	set_connected_ai(null)
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
@@ -582,7 +579,7 @@
 		robot_suit.r_leg = null
 		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
 		robot_suit.chest.forceMove(T)
-		robot_suit.chest.wired = 0
+		robot_suit.chest.wired = FALSE
 		robot_suit.chest = null
 		robot_suit.l_arm.forceMove(T)
 		robot_suit.l_arm = null
@@ -625,9 +622,6 @@
 /mob/living/silicon/robot/modules/Initialize()
 	. = ..()
 	module.transform_to(set_module)
-
-/mob/living/silicon/robot/modules/standard
-	set_module = /obj/item/robot_module/standard
 
 /mob/living/silicon/robot/modules/medical
 	set_module = /obj/item/robot_module/medical
@@ -886,7 +880,7 @@
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
-	updatename()
+	INVOKE_ASYNC(src, .proc/updatename)
 
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)
@@ -956,7 +950,7 @@
 		builtInCamera.c_tag = real_name	//update the camera name too
 	mainframe = AI
 	deployed = TRUE
-	connected_ai = mainframe
+	set_connected_ai(mainframe)
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
@@ -1049,7 +1043,7 @@
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
-	. = ..(M, force, check_loc)
+	return ..()
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
@@ -1057,7 +1051,7 @@
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
-	. = ..(user)
+	return ..()
 
 /mob/living/silicon/robot/resist()
 	. = ..()
@@ -1069,11 +1063,10 @@
 
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
-	connected_ai = select_active_ai_with_fewest_borgs(z)
+	set_connected_ai(select_active_ai_with_fewest_borgs(z))
 	if(connected_ai)
-		connected_ai.connected_robots += src
 		lawsync()
-		lawupdate = 1
+		lawupdate = TRUE
 		return TRUE
 	picturesync()
 	return FALSE
@@ -1092,3 +1085,14 @@
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
 		heal_bodypart_damage(repairs, repairs - 1)
+
+/mob/living/silicon/robot/proc/set_connected_ai(new_ai)
+	if(connected_ai == new_ai)
+		return
+	. = connected_ai
+	connected_ai = new_ai
+	if(.)
+		var/mob/living/silicon/ai/old_ai = .
+		old_ai.connected_robots -= src
+	if(connected_ai)
+		connected_ai.connected_robots |= src

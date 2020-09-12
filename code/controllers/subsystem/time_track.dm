@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
-	wait = 600
+	wait = 100
 	flags = SS_NO_INIT|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(time_track)
 		time_dilation_avg_fast = MC_AVERAGE_FAST(time_dilation_avg_fast, time_dilation_current)
 		time_dilation_avg = MC_AVERAGE(time_dilation_avg, time_dilation_avg_fast)
 		time_dilation_avg_slow = MC_AVERAGE_SLOW(time_dilation_avg_slow, time_dilation_avg)
+		GLOB.glide_size_multiplier = (current_byondtime - last_tick_byond_time) / (current_realtime - last_tick_realtime)
 	else
 		first_run = FALSE
 	last_tick_realtime = current_realtime

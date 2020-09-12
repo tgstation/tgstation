@@ -31,7 +31,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/count_objects_all,
 	/client/proc/cmd_assume_direct_control,	//-errorage
 	/client/proc/cmd_give_direct_control,
-	/client/proc/startSinglo,
 	/client/proc/set_server_fps,	//allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
@@ -66,7 +65,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 	icon_state = "yellow"
 
 /obj/effect/debugging/marker/Move()
-	return 0
+	return FALSE
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -111,7 +110,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 
