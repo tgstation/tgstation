@@ -78,8 +78,8 @@
 /area/shuttle/escape/luxury)
 "ap" = (
 /obj/structure/chair/comfy/teal{
-	icon_state = "comfychair";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
@@ -226,8 +226,8 @@
 /area/shuttle/escape/luxury)
 "aM" = (
 /obj/structure/chair/comfy/teal{
-	icon_state = "comfychair";
-	dir = 4
+	dir = 4;
+	icon_state = "comfychair"
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -323,7 +323,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "ba" = (
-/obj/item/reagent_containers/food/snacks/customizable/pizza{
+/obj/item/food/pizza/dank{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -454,8 +454,8 @@
 	layer = 2.9
 	},
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bx" = (
@@ -522,8 +522,8 @@
 "bG" = (
 /obj/machinery/door/window/eastleft,
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bH" = (
@@ -562,8 +562,8 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright,
 /turf/open/floor/holofloor/beach/coast_t{
-	icon_state = "sandwater_t";
-	dir = 8
+	dir = 8;
+	icon_state = "sandwater_t"
 	},
 /area/shuttle/escape/luxury)
 "bN" = (
