@@ -102,6 +102,7 @@
 /**
   * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
   *
+  * Returns TRUE if the wound is successfully applied
   *
   * Arguments:
   * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
@@ -143,7 +144,13 @@
 	if(old_wound)
 		demoted = (severity <= old_wound.severity)
 
-	if(severity == WOUND_SEVERITY_TRIVIAL)
+	if(!demoted)
+		wound_injury(old_wound)
+		second_wind()
+
+	. = TRUE // we've successfully applied the wound
+
+	if(severity == WOUND_SEVERITY_TRIVIAL) // trivials have no messages
 		return
 
 	if(!(silent || demoted))
@@ -158,9 +165,6 @@
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
-	if(!demoted)
-		wound_injury(old_wound)
-		second_wind()
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)

@@ -209,7 +209,7 @@
 // special apply wound so we can make the message about their ankle and not their leg
 /datum/wound/blunt/moderate/broken_ankle/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
 	. = ..(L, TRUE, old_wound, smited) // carry out the normal apply_wound() except forced silent, since we do the messages here instead
-	if(QDELETED(src))
+	if(!.)
 		return
 
 	var/which_side = limb.body_zone == BODY_ZONE_R_LEG ? "right" : "left"
@@ -219,6 +219,7 @@
 /datum/wound/blunt/moderate/broken_ankle/get_examine_description(mob/user)
 	var/which_side = (limb.body_zone == BODY_ZONE_R_LEG ? "right" : "left")
 	return "[victim.p_their(TRUE)] [which_side] ankle [examine_desc]."
+
 
 /datum/wound/blunt/moderate/Destroy()
 	if(victim)

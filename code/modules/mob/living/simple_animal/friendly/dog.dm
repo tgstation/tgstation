@@ -1,6 +1,7 @@
+/// If we're currently preoccupied snacking
 #define DOG_MODE_SNACK	1
-#define DOG_MODE_GET_BALL	2
-#define DOG_MODE_SHOOT_BALL 3
+/// If we're currently preoccupied dunking on people
+#define DOG_MODE_AIRBUD	2
 
 //Dogs.
 
@@ -23,16 +24,17 @@
 	can_be_held = TRUE
 	pet_bonus = TRUE
 	pet_bonus_emote = "woofs happily!"
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+	/// We only actually scan for balls and snacks every 5 ticks if we're not otherwise engaged
 	var/turns_since_scan = 0
+	/// Whatever object is holding our attention and that we're moving towards, be it snack or ball
 	var/obj/movement_target
-
+	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
 	var/obj/item/precious_cargo
-
-	var/airbud_activated = FALSE
-
+	/// Either null, DOG_MODE_SNACK, or DOG_MODE_AIRBUD. If it's either of the latter, we're currently on the hunt for a ball or snack
 	var/target_mode
 
-	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -40,8 +42,6 @@
 
 /mob/living/simple_animal/pet/dog/Life()
 	..()
-
-
 	if(stat || resting || buckled)
 		return
 
@@ -49,7 +49,7 @@
 		if(DOG_MODE_SNACK)
 			handle_snackhunt()
 			return
-		if(DOG_MODE_GET_BALL)
+		if(DOG_MODE_AIRBUD)
 			handle_airbud()
 			return
 
@@ -80,7 +80,7 @@
 				break
 
 	if(bball)
-		target_mode = DOG_MODE_GET_BALL
+		target_mode = DOG_MODE_AIRBUD
 		movement_target = bball
 		stop_automated_movement = TRUE
 		return TRUE
@@ -124,8 +124,8 @@
   *
   * If the mob we just tackled to steal the ball from wasn't a carbon, we just take the ball and that's it
   *
-  * If they are though, oh boy! If they have a broken ankle already, just explode one of their legs. If their ankles aren't specifically destroyed,
-  * give them the special [/datum/wound/blunt/moderate/broken_ankle] wound on one or both of their legs.
+  * If their ankles aren't specifically destroyed, give them the special [/datum/wound/blunt/moderate/broken_ankle] wound on one of their legs.
+  * If they have a broken ankle already, just explode said leg and REALLY break it.
   */
 /mob/living/simple_animal/pet/dog/proc/ankle_breaker(mob/living/target)
 	var/obj/item/toy/beach_ball/holoball/bball = movement_target
@@ -146,31 +146,22 @@
 	var/mob/living/carbon/carbon_target = target
 	var/datum/wound/blunt/moderate/broken_ankle/preexisting_condition = (locate(/datum/wound/blunt/moderate/broken_ankle) in carbon_target.all_wounds)
 
-	if(preexisting_condition) // if we've already got a broken ankle, just blast a random leg
-		var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
-		if(ankle) // i really hope you had at least one leg, it's like 10x sadder if Ian just owned a double amputee
-			ankle.receive_damage(10, wound_bonus = rand(40,120))
-			target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it obliterates [target]'s [ankle.name]!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it obliterates your [ankle.name]!</span>")
+	// if we've already got a broken ankle, just blast that leg
+	if(preexisting_condition)
+		var/obj/item/bodypart/ankle = preexisting_condition.limb
+		ankle.receive_damage(10, wound_bonus = rand(40,120))
+		target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it obliterates [target]'s [ankle.name]!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it obliterates your [ankle.name]!</span>")
 		return
 
-	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift, [target] crumples to the ground trying to keep up!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that you crumple to the ground!</span>")
-	if(prob(60)) // 60% chance to only break one ankle
-		// reminder: write better helpers for picking between legs/arms
-		var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
-		if(ankle)
-			var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
-			ankle_wound.apply_wound(ankle)
-			ankle.receive_damage(10, wound_bonus = CANT_WOUND)
-	else // 40% chance to break both, ouchie! (assuming we have both)
-		for(var/which_leg in list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			var/obj/item/bodypart/ankle = target.get_bodypart(which_leg)
-			if(!ankle)
-				continue
-			var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
-			ankle_wound.apply_wound(ankle)
-			ankle.receive_damage(10, wound_bonus = CANT_WOUND)
+	// otherwise, break an ankle
+	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift, [target] crumples painfully to the ground trying to keep up!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that you crumple painfully to the ground!</span>")
+	var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
+	if(ankle)
+		var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
+		ankle_wound.apply_wound(ankle)
+		ankle.receive_damage(10, wound_bonus = CANT_WOUND)
 
-
+/// Get ready to shoot/dunk if there's a hoop nearby. If not, we'll just give up and dribble a bit
 /mob/living/simple_animal/pet/dog/proc/kobe()
 	var/obj/item/toy/beach_ball/holoball/bball = precious_cargo
 	if(!istype(bball))
@@ -185,22 +176,21 @@
 
 	shoot(bball, the_hoop)
 
-
+/// This is where we actually go to shoot/dunk the ball into our acquired hoop. What type of shot we do depends on our distance
 /mob/living/simple_animal/pet/dog/proc/shoot(obj/item/toy/beach_ball/holoball/bball, obj/structure/holohoop/the_hoop)
 	if(!istype(bball) || !istype(the_hoop))
 		abandon_bball()
 		return
 
 	var/datum/callback/shot_callback
-	var/atom/movable/what_gets_thrown
+	var/atom/movable/what_gets_thrown // dunks throw the dog, shots throw the ball
 
 	switch(get_dist(src, the_hoop))
 		if(0 to 2)
-			visible_message("<span class='notice'>[src] grabs insane air as [p_they()] slam[p_s()] [bball] into [the_hoop]! Ho shit!</span>")
+			visible_message("<span class='notice'>[src] grabs insane air as [p_they()] slam[p_s()] [bball] into [the_hoop]! Damn!</span>")
 			bball.forceMove(src)
 			what_gets_thrown = src
 			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/dunk, bball, src)
-			//throw_at(get_turf(the_hoop), 10, 3, src, FALSE, FALSE, shot_callback)
 
 		if(3 to 5)
 			visible_message("<span class='notice'>[src] does a sick flip while shooting [bball] at [the_hoop]!</span>")
@@ -217,7 +207,7 @@
 	what_gets_thrown.throw_at(get_turf(the_hoop), 10, 3, src, FALSE, FALSE, shot_callback)
 	abandon_bball()
 
-
+/// See if there's any snacks in the vicinity, if so, set to work after them
 /mob/living/simple_animal/pet/dog/proc/seek_snacks()
 	for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
 		if(isturf(S.loc) || ishuman(S.loc))
@@ -226,13 +216,13 @@
 			stop_automated_movement = TRUE
 			return TRUE
 
-
+/// Something or other made us give up on snacks :(, so do our best to forget about them
 /mob/living/simple_animal/pet/dog/proc/abandon_snacks()
 	movement_target = null
 	target_mode = null
 	stop_automated_movement = FALSE
 
-
+/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /mob/living/simple_animal/pet/dog/proc/handle_snackhunt()
 	if(!movement_target || isnull(movement_target.loc) || get_dist(src, movement_target.loc) > 3 || (!isturf(movement_target.loc) && !ishuman(movement_target.loc)))
 		abandon_snacks()
@@ -839,5 +829,4 @@
 	make_babies()
 
 #undef DOG_MODE_SNACK
-#undef DOG_MODE_GET_BALL
-#undef DOG_MODE_SHOOT_BALL
+#undef DOG_MODE_AIRBUD
