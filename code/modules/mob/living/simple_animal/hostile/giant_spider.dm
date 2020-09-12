@@ -68,7 +68,8 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/death()
 	if(key)
-		client.player_details.respawn_timer()
+		client.player_details.respawn_timer(type)
+		client.player_details.decrease_lives_available(type)
 	return ..()
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
@@ -91,7 +92,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.client.player_details.can_ghost_role_respawn)
+	if(!user.client.player_details.ghost_roles_respawn_checks[type]["can_respawn"])
 		to_chat(user, "<span class='warning'>You already took a spider role and died!</span>")
 		return FALSE
 	humanize_spider(user)
