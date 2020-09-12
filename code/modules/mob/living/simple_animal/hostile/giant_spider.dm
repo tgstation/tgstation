@@ -89,14 +89,10 @@ GLOBAL_LIST_EMPTY(users_played_spider)
 	if(.)
 		return
 	if(user.key in GLOB.users_played_spider)
-		to_chat(user, "<span class='warning'>You already took a spider role and died! Wait approximately 2 minutes before trying again!</span>")
+		to_chat(user, "<span class='warning'>You already took a spider role and died!</span>")
 		return FALSE
 	GLOB.users_played_spider += user.key
-	addtimer(CALLBACK(src, .proc/allow_player_respawn, user), 2 MINUTES)
 	humanize_spider(user)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/proc/allow_player_respawn(mob/user)
-	GLOB.users_played_spider -= user.key
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
