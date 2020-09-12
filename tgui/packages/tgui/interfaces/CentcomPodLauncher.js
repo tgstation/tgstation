@@ -28,7 +28,7 @@ export const CentcomPodLauncher = (props, context) => {
         ? "Use against Helen Weinstein"
         : "Supply Pod Menu (Use against Helen Weinstein)"}
       overflow="hidden"
-      width={compact ? 435 : 690}
+      width={compact ? 435 : 730}
       height={compact ? 360 : 440}>
       <CentcomPodLauncherContent />
     </Window>
@@ -45,7 +45,7 @@ const CentcomPodLauncherContent = (props, context) => {
         </Flex.Item>
         <Flex.Item mt={1} grow={1}>
           <Flex height="100%">
-            <Flex.Item grow={1} shrink={0} basis="13em">
+            <Flex.Item grow={1} shrink={0} basis="14.1em">
               <Flex direction="column" height="100%" >
                 <Flex.Item grow={1}>
                   <PresetsPage />
@@ -137,6 +137,12 @@ const REVERSE_OPTIONS = [
   {
     title: 'Walls',
     icon: 'square',
+
+  },
+  {
+    title: 'Mechs',
+    key: 'Mecha',
+    icon: 'truck',
 
   },
 ];
@@ -749,8 +755,8 @@ const ReverseMenu = (props, context) => {
                 disabled={!data.effectReverse}
                 selected={
                   option.key
-                    ? data.reverseOptionList[option.key]
-                    : data.reverseOptionList[option.title]
+                    ? data.reverse_option_list[option.key]
+                    : data.reverse_option_list[option.title]
                 }
                 tooltip={option.title}
                 tooltipOverrideLong
