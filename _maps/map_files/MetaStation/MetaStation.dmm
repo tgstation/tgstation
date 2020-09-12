@@ -29421,6 +29421,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "brn" = (
@@ -64574,10 +64577,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_x = -4;
-	pixel_y = 7
-	},
 /obj/machinery/navbeacon/wayfinding/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -64585,6 +64584,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "dDf" = (
@@ -65448,7 +65448,13 @@
 	req_access_txt = "24"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel/checker,
 /area/engine/atmos)
 "ezE" = (
 /obj/structure/disposalpipe/segment{
@@ -70868,7 +70874,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = -4;
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "lWY" = (
@@ -79722,6 +79731,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "yax" = (
