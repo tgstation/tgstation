@@ -1,3 +1,4 @@
+///Stores the users ckey that have already played as spiders
 GLOBAL_LIST_EMPTY(users_played_spider)
 #define SPIDER_IDLE 0
 #define SPINNING_WEB 1
@@ -88,7 +89,7 @@ GLOBAL_LIST_EMPTY(users_played_spider)
 	if(.)
 		return
 	if(user.key in GLOB.users_played_spider)
-		to_chat(user, "<span class='warning'>You already took a spider and died!</span>")
+		to_chat(user, "<span class='warning'>You already took a spider role and died!</span>")
 		return FALSE
 	GLOB.users_played_spider += user.key
 	humanize_spider(user)
