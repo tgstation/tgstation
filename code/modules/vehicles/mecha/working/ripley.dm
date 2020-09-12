@@ -40,7 +40,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage, ignore_threshold = FALSE)
 	if (!enclosed)
 		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH) //if we don't even have an air tank, these two doesn't make a ton of sense.
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize()
 	. = ..()
