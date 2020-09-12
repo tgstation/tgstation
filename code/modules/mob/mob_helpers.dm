@@ -510,6 +510,8 @@
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+	if(HAS_TRAIT(src,TRAIT_HUSK))
+		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
 
 /**
   * Get the list of keywords for policy config

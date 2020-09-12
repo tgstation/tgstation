@@ -2671,8 +2671,6 @@
 #include "code\modules\power\singularity\containment_field.dm"
 #include "code\modules\power\singularity\emitter.dm"
 #include "code\modules\power\singularity\field_generator.dm"
-#include "code\modules\power\singularity\generator.dm"
-#include "code\modules\power\singularity\investigate.dm"
 #include "code\modules\power\singularity\narsie.dm"
 #include "code\modules\power\singularity\singularity.dm"
 #include "code\modules\power\supermatter\supermatter.dm"

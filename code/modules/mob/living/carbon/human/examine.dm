@@ -157,12 +157,13 @@
 	for(var/X in disabled)
 		var/obj/item/bodypart/body_part = X
 		var/damage_text
-		if(body_part.is_disabled() != BODYPART_DISABLED_WOUND) // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
-			if(!(body_part.get_damage(include_stamina = FALSE) >= body_part.max_damage)) //we don't care if it's stamcritted
-				damage_text = "limp and lifeless"
-			else
-				damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
-			msg += "<B>[capitalize(t_his)] [body_part.name] is [damage_text]!</B>\n"
+		if(HAS_TRAIT(body_part, TRAIT_DISABLED_BY_WOUND))
+			continue // skip if it's disabled by a wound (cuz we'll be able to see the bone sticking out!)
+		if(!(body_part.get_damage(include_stamina = FALSE) >= body_part.max_damage)) //we don't care if it's stamcritted
+			damage_text = "limp and lifeless"
+		else
+			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
+		msg += "<B>[capitalize(t_his)] [body_part.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
