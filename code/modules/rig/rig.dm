@@ -14,15 +14,16 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	actions_types = list(/datum/action/item_action/rig/deploy, /datum/action/item_action/rig/activate)
-	resistance_flags = ACID_PROOF
+	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
 	/// How the RIG and things connected to it look
-	var/theme = "engi"
+	var/theme = "standard"
 	/// If the suit is deployed and turned on
 	var/active = FALSE
 	/// If the suit wire/module hatch is open
@@ -75,6 +76,7 @@
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
+	name = "[theme] [initial(name)]"
 	icon_state = "[theme]-[icon_state]"
 	worn_icon_state = "[theme]-[worn_icon_state]"
 	wires = new /datum/wires/rig(src)
@@ -107,9 +109,9 @@
 			piece.resistance_flags = resistance_flags
 			piece.max_heat_protection_temperature = max_heat_protection_temperature
 			piece.min_cold_protection_temperature = min_cold_protection_temperature
+			piece.gas_transfer_coefficient = gas_transfer_coefficient
 			piece.permeability_coefficient = permeability_coefficient
-			if(piece.siemens_coefficient > siemens_coefficient)
-				piece.siemens_coefficient = siemens_coefficient
+			piece.siemens_coefficient = siemens_coefficient
 			piece.icon_state = "[theme]-[piece.icon_state]"
 			piece.worn_icon_state = "[theme]-[piece.worn_icon_state]"
 	if(initial_modules.len)
@@ -228,7 +230,7 @@
 		for(var/obj/item/rig/module/thingy in modules)
 			if(thingy.removable)
 				uninstall(thingy)
-				I.play_tool_sound(src, 100)
+		I.play_tool_sound(src, 100)
 		return TRUE
 	to_chat(user, "<span class='warning'>There's no modules on [src]!</span>")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
@@ -279,6 +281,11 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	var/obj/item/rig/module/thingy = module
+	if(!thingy.rig_whitelist.Find(theme))
+		if(!starting_module)
+			audible_message("<span class='warning'>[src] indicates that it rejects the module.</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
 	var/complexity_with_thingy = complexity
 	complexity_with_thingy += thingy.complexity
 	if(complexity_with_thingy > complexity_max)
@@ -317,9 +324,9 @@
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/rig.dmi'
 	worn_icon_state = "helmet"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	flash_protect = FLASH_PROTECTION_NONE
-	resistance_flags = ACID_PROOF
+	resistance_flags = NONE
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = HEADCOVERSMOUTH
@@ -327,7 +334,6 @@
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	visor_flags_cover = HEADCOVERSEYES|PEPPERPROOF
 	alternate_worn_layer = NECK_LAYER
-	permeability_coefficient = 0.01
 	var/obj/item/rig/control/rig
 
 /obj/item/clothing/head/helmet/space/rig/Destroy()
@@ -342,7 +348,7 @@
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/rig.dmi'
 	worn_icon_state = "chestplate"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -351,8 +357,7 @@
 	clothing_flags = THICKMATERIAL
 	visor_flags = STOPSPRESSUREDAMAGE
 	allowed = list(/obj/item/flashlight)
-	resistance_flags = ACID_PROOF
-	permeability_coefficient = 0.01
+	resistance_flags = NONE
 	var/obj/item/rig/control/rig
 
 /obj/item/clothing/suit/armor/rig/Destroy()
@@ -367,9 +372,8 @@
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/rig.dmi'
 	worn_icon_state = "gauntlets"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
-	resistance_flags = ACID_PROOF
-	permeability_coefficient = 0.01
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	resistance_flags = NONE
 	var/obj/item/rig/control/rig
 
 /obj/item/clothing/gloves/rig/Destroy()
@@ -384,9 +388,8 @@
 	icon_state = "boots"
 	worn_icon = 'icons/mob/rig.dmi'
 	worn_icon_state = "boots"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 30, "acid" = 100)
-	resistance_flags = ACID_PROOF
-	permeability_coefficient = 0.01
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	resistance_flags = NONE
 	var/obj/item/rig/control/rig
 
 /obj/item/clothing/shoes/rig/Destroy()

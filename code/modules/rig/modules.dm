@@ -11,6 +11,8 @@
 	var/power_use = 0
 	/// Linked RIGsuit
 	var/obj/item/rig/control/rig
+	/// Whitelist of RIG themes that can use it
+	var/list/rig_blacklist = list()
 
 /obj/item/rig/module/Destroy()
 	..()
