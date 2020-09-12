@@ -33,6 +33,7 @@
 	growth = max(growth, growth + calculate_growth(vat.reagents, vat.biological_sample)) //Prevent you from having minus growth.
 	if(growth >= 100)
 		finish_growing(vat)
+		vat.update_icon()
 	return TRUE
 
 ///Tries to consume the required reagents. Can only do this if all of them are available. Reagents is the growing vats reagents
@@ -90,7 +91,6 @@
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-
 
 /datum/micro_organism/cell_line/proc/succeed_growing(var/obj/machinery/plumbing/growing_vat/vat)
 	var/datum/effect_system/smoke_spread/smoke = new

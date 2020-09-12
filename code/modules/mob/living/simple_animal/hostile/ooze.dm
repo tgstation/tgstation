@@ -504,3 +504,9 @@
 
 	if(inhabitant.reagents.get_reagent_amount(/datum/reagent/consumable/milk) < 20)
 		inhabitant.reagents.add_reagent(/datum/reagent/consumable/milk, 2)
+
+/obj/structure/gel_cocoon/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)
+		playsound(src, 'sound/items/Welder.ogg', 60, TRUE)
+	else
+		playsound(src, 'sound/misc/moist_impact.ogg', 60, TRUE)

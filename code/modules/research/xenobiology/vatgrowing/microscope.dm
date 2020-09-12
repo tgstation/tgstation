@@ -6,14 +6,21 @@
 	var/obj/item/petri_dish/current_dish
 
 /obj/structure/microscope/attacked_by(obj/item/I, mob/living/user)
-	if(!istype(I, /obj/item/petri_dish))
+	if(I.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		if(I.use_tool(src, user, 20, volume=50))
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			set_anchored(!anchored)
+
+	else if(istype(I, /obj/item/petri_dish))
+		if(current_dish)
+			to_chat(user, "<span class='warning'>There is already a petridish in \the [src].</span>")
+			return
+		to_chat(user, "<span class='notice'>You put [I] into \the [src].</span>")
+		current_dish = I
+		current_dish.forceMove(src)
+	else
 		return ..()
-	if(current_dish)
-		to_chat(user, "<span class='warning'>There is already a petridish in \the [src].</span>")
-		return
-	to_chat(user, "<span class='notice'>You put [I] into \the [src].</span>")
-	current_dish = I
-	current_dish.forceMove(src)
 
 /obj/structure/microscope/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
