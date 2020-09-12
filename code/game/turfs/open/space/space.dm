@@ -60,6 +60,15 @@
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
 
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, UP)
+
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
@@ -286,9 +295,7 @@
 	return TRUE
 
 /turf/open/space/transparent/multiz_turf_del(turf/T, dir)
-	if(dir != DOWN)
-		return
-	update_multiz()
+	return
 
 /turf/open/space/transparent/multiz_turf_new(turf/T, dir)
 	if(dir != DOWN)
@@ -309,7 +316,7 @@
 
 
 /turf/open/space/transparent/openspace
-	name = "open space"
+	//name = "open space space"
 	desc = "Watch your step!"
 	icon_state = "transparent"
 	baseturfs = /turf/open/space/transparent/openspace

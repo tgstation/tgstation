@@ -29,9 +29,7 @@
 	return TRUE
 
 /turf/open/transparent/multiz_turf_del(turf/T, dir)
-	if(dir != DOWN)
-		return
-	update_multiz()
+	return
 
 /turf/open/transparent/multiz_turf_new(turf/T, dir)
 	if(dir != DOWN)
