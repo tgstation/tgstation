@@ -1,5 +1,3 @@
-///Stores the users ckey that have already played as spiders
-GLOBAL_LIST_EMPTY(users_played_spider)
 #define SPIDER_IDLE 0
 #define SPINNING_WEB 1
 #define LAYING_EGGS 2
@@ -68,6 +66,11 @@ GLOBAL_LIST_EMPTY(users_played_spider)
 	QDEL_NULL(lay_web)
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/giant_spider/death()
+	if(key)
+		client.player_details.respawn_timer()
+	return ..()
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
@@ -88,10 +91,9 @@ GLOBAL_LIST_EMPTY(users_played_spider)
 	. = ..()
 	if(.)
 		return
-	if(user.key in GLOB.users_played_spider)
+	if(!user.client.player_details.can_ghost_role_respawn)
 		to_chat(user, "<span class='warning'>You already took a spider role and died!</span>")
 		return FALSE
-	GLOB.users_played_spider += user.key
 	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
