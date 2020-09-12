@@ -173,7 +173,7 @@ GENE SCANNER
 	if(advanced && HAS_TRAIT_FROM(M, TRAIT_HUSK, BURN))
 		render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
 	else if (advanced && HAS_TRAIT_FROM(M, TRAIT_HUSK, CHANGELING_DRAIN))
-		render_list += "<span class='alert ml-1'>Subject has been husked by extreme loss of fluids, recovery is unlikely.</span>\n"
+		render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
 	else if(HAS_TRAIT(M, TRAIT_HUSK))
 		render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
