@@ -251,12 +251,9 @@
 /obj/item/robot_module/medical
 	name = "Medical"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
-		/obj/item/reagent_containers/borghypo,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
 		/obj/item/retractor,
 		/obj/item/hemostat,
@@ -265,15 +262,15 @@
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
-		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/stack/medical/bone_gel/cyborg,
 		/obj/item/organ_storage,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+		/obj/item/gun/magic/staff/healing)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
+	emag_modules = null
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
 	can_be_pushed = FALSE
@@ -282,31 +279,18 @@
 /obj/item/robot_module/engineering
 	name = "Engineering"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
-		/obj/item/construction/rcd/borg,
-		/obj/item/pipe_dispenser,
-		/obj/item/extinguisher,
-		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
-		/obj/item/geiger_counter/cyborg,
-		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
-		/obj/item/electroadaptive_pseudocircuit,
-		/obj/item/stack/sheet/metal/cyborg,
-		/obj/item/stack/sheet/glass/cyborg,
-		/obj/item/stack/sheet/rglass/cyborg,
-		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/stack/cable_coil/cyborg)
+		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/pen,
+		/obj/item/rsf,
+		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = null
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
@@ -322,7 +306,7 @@
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
+	emag_modules = null
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	can_be_pushed = FALSE
@@ -347,15 +331,17 @@
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/rsf/cookiesynth,
-		/obj/item/harmalarm,
-		/obj/item/reagent_containers/borghypo/peace,
-		/obj/item/holosign_creator/cyborg,
-		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/extinguisher,
-		/obj/item/borg/projectile_dampen)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
+		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/pen,
+		/obj/item/rsf,
+		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
+	emag_modules = null
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
 	can_be_pushed = FALSE
@@ -369,22 +355,18 @@
 /obj/item/robot_module/janitor
 	name = "Janitor"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/soap/nanotrasen,
 		/obj/item/storage/bag/trash/cyborg,
-		/obj/item/melee/flyswatter,
-		/obj/item/extinguisher/mini,
 		/obj/item/mop/cyborg,
 		/obj/item/reagent_containers/glass/bucket,
-		/obj/item/paint/paint_remover,
-		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator/janibarrier,
-		/obj/item/reagent_containers/spray/cyborg_drying)
+		/obj/item/reagent_containers/spray/cyborg_drying,
+		/obj/item/rsf,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
-	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
+	emag_modules = null
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	hat_offset = -5
@@ -410,33 +392,21 @@
 	if(CD)
 		CD.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 
-	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
-	if(CL)
-		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
-
 /obj/item/robot_module/clown
 	name = "Clown"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/toy/crayon/rainbow,
 		/obj/item/instrument/bikehorn,
 		/obj/item/stamp/clown,
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
-		/obj/item/paint/anycolor,
 		/obj/item/soap/nanotrasen,
-		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
-		/obj/item/razor,					//killbait material
-		/obj/item/lipstick/purple,
-		/obj/item/reagent_containers/spray/waterflower/cyborg,
-		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/borg/lollipop/clown,
 		/obj/item/picket_sign/cyborg,
-		/obj/item/reagent_containers/borghypo/clown,
-		/obj/item/extinguisher/mini)
-	emag_modules = list(
-		/obj/item/reagent_containers/borghypo/clown/hacked,
-		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+		/obj/item/rsf,
+		/obj/item/extinguisher/mini,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
+	emag_modules = null
 	moduleselect_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
@@ -444,14 +414,8 @@
 /obj/item/robot_module/butler
 	name = "Service"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
-		/obj/item/reagent_containers/food/condiment/enzyme,
 		/obj/item/pen,
-		/obj/item/toy/crayon/spraycan/borg,
-		/obj/item/extinguisher/mini,
-		/obj/item/hand_labeler/borg,
-		/obj/item/razor,
 		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth,
@@ -459,20 +423,12 @@
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
-		/obj/item/borg/lollipop,
-		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
-	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
+	emag_modules = null
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-
-/obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
-	if(O)
-		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
@@ -506,20 +462,18 @@
 /obj/item/robot_module/miner
 	name = "Miner"
 	basic_modules = list(
-		/obj/item/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
-		/obj/item/storage/bag/ore/cyborg,
-		/obj/item/pickaxe/drill/cyborg,
-		/obj/item/shovel,
-		/obj/item/crowbar/cyborg,
-		/obj/item/weldingtool/mini,
-		/obj/item/extinguisher/mini,
-		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/gun/energy/kinetic_accelerator/cyborg,
-		/obj/item/gps/cyborg,
-		/obj/item/stack/marker_beacon)
+		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/pen,
+		/obj/item/rsf,
+		/obj/item/instrument/guitar,
+		/obj/item/instrument/piano_synth,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/lighter,
+		/obj/item/storage/bag/tray,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = null
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0
