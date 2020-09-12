@@ -1,3 +1,4 @@
+import { sortBy } from 'common/collections';
 import { useBackend } from "../backend";
 import { Box, Button, Section, Collapsible, Table } from "../components";
 import { Window } from "../layouts";
@@ -10,7 +11,7 @@ export const Stack = (props, context) => {
     recipes,
   } = data;
 
-  const height = Math.max(92 + Object.keys(recipes).length * 21.8, 250);
+  const height = Math.max(90 + Object.keys(recipes).length * 25, 250);
 
   return (
     <Window
@@ -33,23 +34,14 @@ const RecipeList = (props, context) => {
     recipes,
   } = props;
 
-  let sortedKeys = Object.keys(recipes).sort((a, b) => {
-    if (a.toLowerCase() < b.toLowerCase()) {
-      return -1;
-    }
-    if (a.toLowerCase() > b.toLowerCase()) {
-      return 1;
-    }
-    return 0;
-  });
+  const sortedKeys = sortBy(key => key.toLowerCase())(Object.keys(recipes));
 
   return sortedKeys.map(title => {
-    let recipe = recipes[title];
+    const recipe = recipes[title];
     if (recipe.ref === undefined) {
       return (
         <Collapsible
           ml={1}
-          mb={-0.8}
           color="label"
           title={title}>
           <Box ml={1}>
@@ -83,14 +75,14 @@ const Multipliers = (props, context) => {
     maxMultiplier,
   } = props;
 
-  let maxM = Math.min(maxMultiplier,
+  const maxM = Math.min(maxMultiplier,
     Math.floor(recipe.max_res_amount / recipe.res_amount));
 
-  let multipliers = [5, 10, 25];
+  const multipliers = [5, 10, 25];
 
   let finalResult = [];
 
-  for (let multiplier of multipliers) {
+  for (const multiplier of multipliers) {
     if (maxM >= multiplier) {
       finalResult.push((
         <Button
@@ -146,10 +138,10 @@ const Recipe = (props, context) => {
     buttonName = res_amount + "x " + buttonName;
   }
 
-  let maxMultiplier = buildMultiplier(recipe, amount);
+  const maxMultiplier = buildMultiplier(recipe, amount);
 
   return (
-    <Box mb={0.3}>
+    <Box mb={0.8}>
       <Table>
         <Table.Row>
           <Table.Cell>

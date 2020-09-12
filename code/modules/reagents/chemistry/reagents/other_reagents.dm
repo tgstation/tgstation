@@ -1331,7 +1331,7 @@
 
 /datum/reagent/freon
 	name = "Freon"
-	description = "A powerful heat adsorbant."
+	description = "A powerful heat absorbent."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -1347,7 +1347,7 @@
 
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
-	description = "A suppresive gas that stops gas reactions on those who inhale it."
+	description = "A suppressive gas that stops gas reactions on those who inhale it."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -1365,7 +1365,7 @@
 
 /datum/reagent/healium
 	name = "Healium"
-	description = "A Powerful sleeping agent with healing properties"
+	description = "A powerful sleeping agent with healing properties"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
@@ -1381,7 +1381,7 @@
 
 /datum/reagent/halon
 	name = "Halon"
-	description = "A firefighter gas that remove oxygen and cool down the area"
+	description = "A fire suppression gas that removes oxygen and cools down the area"
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"

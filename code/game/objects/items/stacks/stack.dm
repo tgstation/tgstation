@@ -9,7 +9,6 @@
  * Stacks
  */
 
-
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
@@ -40,7 +39,6 @@
 	var/absorption_rate
 	/// Amount of matter for RCD
 	var/matter_amount = 0
-
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -95,7 +93,6 @@
 	else
 		w_class = full_w_class
 
-
 /obj/item/stack/update_icon_state()
 	if(novariants)
 		return
@@ -105,12 +102,6 @@
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-
-
-/obj/item/stack/Destroy()
-	if (usr && usr.machine==src)
-		usr << browse(null, "window=stack")
-	. = ..()
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
@@ -153,7 +144,6 @@
 			var/datum/stack_recipe/R = recipe
 			L["[R.title]"] = build_recipe(R)
 	return L
-
 
 /**
   * Returns a list of properties of a given recipe
