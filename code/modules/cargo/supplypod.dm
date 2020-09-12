@@ -57,7 +57,7 @@
 	var/effectShrapnel = FALSE
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
-	var/list/reverseOptionList = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE)
+	var/list/reverseOptionList = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE, "Mecha"=FALSE)
 	var/list/turfs_in_cargo = list()
 
 /obj/structure/closet/supplypod/bluespacepod
@@ -384,7 +384,9 @@
 			return FALSE
 		if(!obj_to_insert.anchored && reverseOptionList["Unanchored"])
 			return TRUE
-		if(obj_to_insert.anchored && reverseOptionList["Anchored"])
+		if(obj_to_insert.anchored && !ismecha(obj_to_insert) && reverseOptionList["Anchored"]) //Mecha are anchored but there is a separate option for them
+			return TRUE
+		if(ismecha(obj_to_insert) && reverseOptionList["Mecha"])
 			return TRUE
 		return FALSE
 
