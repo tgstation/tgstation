@@ -2,7 +2,6 @@
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
 	processing_flags = START_PROCESSING_MANUALLY
-
 	/// Connected mass driver
 	var/obj/machinery/mass_driver/connected = null
 	/// ID of the launch control
@@ -100,14 +99,13 @@
 			return TRUE
 		if("time")
 			timing = !timing
-
 			if(timing)
 				COOLDOWN_START(src, massdriver_countdown, time SECONDS)
 				begin_processing()
 			else
+				time = COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
 				COOLDOWN_RESET(src, massdriver_countdown)
 				end_processing()
-
 			return TRUE
 		if("input")
 			var/value = text2num(params["adjust"])
@@ -127,7 +125,7 @@
 		if("driver_test")
 			for(var/obj/machinery/mass_driver/M in range(range, src))
 				if(M.id == id)
-					M.power = connected.power
+					M.power = connected?.power
 					M.drive()
 			return TRUE
 
