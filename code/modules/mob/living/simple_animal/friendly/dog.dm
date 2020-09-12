@@ -54,8 +54,7 @@
 			return
 
 	turns_since_scan++
-	//if(turns_since_scan < 5)
-	if(turns_since_scan < 4)
+	if(turns_since_scan < 5)
 		return
 	turns_since_scan = 0
 
@@ -66,35 +65,39 @@
 		manual_emote(pick("dances around.","chases its tail!"))
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
-
+/// We look around to see if there's a ball we can hoop with around us. If a person has it, we steal it from them. If it's on the ground, we grab possession. Either way, then we're ready for hooping
 /mob/living/simple_animal/pet/dog/proc/seek_bball()
 	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
 
 	for(var/i in oview(src, 6))
 		if(istype(i, /obj/item/toy/beach_ball/holoball))
 			bball = i
-			testing("[src] noticed [bball] and starting handle airbud1")
 			break
 		else if(isliving(i))
 			var/mob/living/check_mob = i
 			bball = (locate(/obj/item/toy/beach_ball/holoball) in check_mob)
 			if(bball)
-				testing("[src] noticed [bball] in [check_mob]'s hands and starting handle airbud2")
 				break
 
 	if(bball)
-		testing("[src] noticed [bball] and starting handle airbud3")
 		target_mode = DOG_MODE_GET_BALL
 		movement_target = bball
 		stop_automated_movement = TRUE
 		return TRUE
 
+/// For whatever reason, we're no longer interested in hooping, so unset all the variables for it
 /mob/living/simple_animal/pet/dog/proc/abandon_bball()
 	precious_cargo = null
 	movement_target = null
 	target_mode = null
 	stop_automated_movement = FALSE
 
+/**
+  * This proc is the rough loop for handling dog basketball playing once we recognize a ball.
+  *
+  * If we have the ball, take a shot with it. Otherwise, if a living mob has it, steal it from them in an incredibly brutal fashion.
+  * Or if it's just on the ground, take it and go for a shot
+  */
 /mob/living/simple_animal/pet/dog/proc/handle_airbud()
 	var/obj/item/toy/beach_ball/holoball/bball = movement_target
 	if(!istype(bball) || (isturf(bball.loc) && get_dist(src, bball) > 7))
@@ -105,7 +108,7 @@
 		kobe()
 		return
 
-	if(isliving(bball.loc))
+	if(isliving(bball.loc)) // some poor sucker is about to get taught a lesson they'll never forget
 		var/mob/living/bball_player = bball.loc
 		visible_message("<span class='warning'>[src] leaps at [bball_player], trying to steal [bball]!</span>")
 		var/datum/callback/ankle_breaking = CALLBACK(src, .proc/ankle_breaker, bball_player)
@@ -116,20 +119,57 @@
 		var/datum/callback/kobe_callback = CALLBACK(src, .proc/kobe)
 		throw_at(bball, 10, 4, src, FALSE, FALSE, kobe_callback)
 
+/**
+  * This proc is for when air bud steps up his game and destroys some poor assistant
+  *
+  * If the mob we just tackled to steal the ball from wasn't a carbon, we just take the ball and that's it
+  *
+  * If they are though, oh boy! If they have a broken ankle already, just explode one of their legs. If their ankles aren't specifically destroyed,
+  * give them the special [/datum/wound/blunt/moderate/broken_ankle] wound on one or both of their legs.
+  */
 /mob/living/simple_animal/pet/dog/proc/ankle_breaker(mob/living/target)
 	var/obj/item/toy/beach_ball/holoball/bball = movement_target
 	if(!target || !istype(bball))
 		abandon_bball()
 		return
 
-	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it breaks [target]'s ankle!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it breaks your ankle!</span>")
-	if(iscarbon(target))
-		var/obj/item/bodypart/ankle = target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG) // make random
-		ankle.receive_damage(10, wound_bonus = rand(40, 130))
-
 	target.Knockdown(3 SECONDS)
 	precious_cargo = bball
 	precious_cargo.forceMove(get_turf(src))
+
+	//			 ~~~~Editor's Note~~~~			  //
+	// I'm aware that ankle breaking is offensive //
+	// and not defensive, but shhhhhhhhhhhhhhhhhh //
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	var/datum/wound/blunt/moderate/broken_ankle/preexisting_condition = (locate(/datum/wound/blunt/moderate/broken_ankle) in carbon_target.all_wounds)
+
+	if(preexisting_condition) // if we've already got a broken ankle, just blast a random leg
+		var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
+		if(ankle) // i really hope you had at least one leg, it's like 10x sadder if Ian just owned a double amputee
+			ankle.receive_damage(10, wound_bonus = rand(40,120))
+			target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it obliterates [target]'s [ankle.name]!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it obliterates your [ankle.name]!</span>")
+		return
+
+	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift, [target] crumples to the ground trying to keep up!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that you crumple to the ground!</span>")
+	if(prob(60)) // 60% chance to only break one ankle
+		// reminder: write better helpers for picking between legs/arms
+		var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
+		if(ankle)
+			var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
+			ankle_wound.apply_wound(ankle)
+			ankle.receive_damage(10, wound_bonus = CANT_WOUND)
+	else // 40% chance to break both, ouchie! (assuming we have both)
+		for(var/which_leg in list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+			var/obj/item/bodypart/ankle = target.get_bodypart(which_leg)
+			if(!ankle)
+				continue
+			var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
+			ankle_wound.apply_wound(ankle)
+			ankle.receive_damage(10, wound_bonus = CANT_WOUND)
+
 
 /mob/living/simple_animal/pet/dog/proc/kobe()
 	var/obj/item/toy/beach_ball/holoball/bball = precious_cargo

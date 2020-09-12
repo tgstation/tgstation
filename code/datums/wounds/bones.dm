@@ -199,6 +199,27 @@
 	status_effect_type = /datum/status_effect/wound/blunt/moderate
 	scar_keyword = "bluntmoderate"
 
+/// Broken ankle (special snowflake subtype of joint dislocation for legs, gained from getting juked on too hard in basketball)
+/datum/wound/blunt/moderate/broken_ankle
+	name = "Janked Ankle"
+	desc = "Patient's ankle region has been obliterated by superior footwork and athletic prowess. Treatment profile identical to standard Joint Dislocation in affected leg."
+	viable_zones = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	limp_slowdown = 4
+
+// special apply wound so we can make the message about their ankle and not their leg
+/datum/wound/blunt/moderate/broken_ankle/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
+	. = ..(L, TRUE, old_wound, smited) // carry out the normal apply_wound() except forced silent, since we do the messages here instead
+	if(QDELETED(src))
+		return
+
+	var/which_side = limb.body_zone == BODY_ZONE_R_LEG ? "right" : "left"
+	victim.visible_message("<span class='danger'>[victim]'s [which_side] ankle [occur_text]!</span>", "<span class='userdanger'>Your [which_side] ankle [occur_text]!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+	playsound(victim, sound_effect, 70 + 20 * severity, TRUE)
+
+/datum/wound/blunt/moderate/broken_ankle/get_examine_description(mob/user)
+	var/which_side = (limb.body_zone == BODY_ZONE_R_LEG ? "right" : "left")
+	return "[victim.p_their(TRUE)] [which_side] ankle [examine_desc]."
+
 /datum/wound/blunt/moderate/Destroy()
 	if(victim)
 		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
