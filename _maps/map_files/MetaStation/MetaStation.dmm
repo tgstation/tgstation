@@ -57376,6 +57376,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching output from station security cameras.";
 	name = "Security Camera Monitor";
+	network = list("ss13");
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/tile/red{
