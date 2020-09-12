@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "sinks now refill properly after multiple uses or after wetting a mop"
