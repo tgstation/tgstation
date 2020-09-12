@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(users_played_spider)
 #define SPIDER_IDLE 0
 #define SPINNING_WEB 1
 #define LAYING_EGGS 2
@@ -86,6 +87,10 @@
 	. = ..()
 	if(.)
 		return
+	if(user.key in GLOB.users_played_spider)
+		to_chat(user, "<span class='warning'>You already took a spider and died!</span>")
+		return FALSE
+	GLOB.users_played_spider += user.key
 	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
