@@ -95,9 +95,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aap" = (
-/obj/machinery/newscaster{
-	pixel_x = -28
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -60822,12 +60819,12 @@
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
 	dir = 1
 	},
-/turf/open/floor/engine,
-/area/engine/engineering)
-"dbh" = (
 /obj/machinery/light{
 	dir = 1
 	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"dbh" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "Cooling Loop Bypass"
@@ -62360,9 +62357,6 @@
 /area/engine/engineering)
 "dfF" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -71807,9 +71801,6 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 8
 	},
@@ -74870,6 +74861,9 @@
 	name = "Service Shutter"
 	},
 /obj/item/pen,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "roZ" = (
@@ -77135,6 +77129,19 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/aft/secondary)
+"uIw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "uIS" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/structure/window/reinforced{
@@ -77697,6 +77704,9 @@
 	},
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -112629,13 +112639,13 @@ bjo
 bkT
 bmL
 bmP
-bmP
+bBS
 fGa
-bBS
-aEc
 bDC
+aEc
 bBS
 bBS
+bmP
 bmP
 bmP
 bmP
@@ -122637,7 +122647,7 @@ dfb
 dfj
 dlI
 deD
-dfE
+uIw
 dfT
 aVe
 alq
