@@ -40,7 +40,10 @@
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
+	add_cell_sample()
 
+/mob/living/simple_animal/mouse/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -59,7 +62,17 @@
 				M.desc = "It's toast."
 		qdel(src)
 	else
+		SSmobs.cheeserats -= src // remove play controlled mouse also
 		..(gibbed)
+
+/mob/living/simple_animal/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
+	var/cap = CONFIG_GET(number/ratcap)
+	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
+		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		return FALSE
+	. = ..()
+	if(.)
+		SSmobs.cheeserats += src
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
@@ -163,6 +176,8 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "squeaks happily!"
 
 /obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
@@ -174,6 +189,10 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+
+/obj/item/reagent_containers/food/snacks/deadmouse/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
 	. = ..()

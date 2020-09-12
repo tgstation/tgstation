@@ -13,7 +13,7 @@
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
 	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
-	var/calibrated //Calibration prevents mutation
+	var/calibrated = FALSE//Calibration prevents mutation
 
 /obj/machinery/teleport/hub/Initialize()
 	. = ..()
@@ -83,7 +83,7 @@
 							log_game("[human] ([key_name(human)]) was turned into a fly person")
 
 					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
-			calibrated = 0
+			calibrated = FALSE
 	return
 
 /obj/machinery/teleport/hub/update_icon_state()

@@ -11,6 +11,7 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
+	wound_bonus = CANT_WOUND // can't wound by default
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -47,7 +48,7 @@
 	var/ricochets = 0
 	/// how many times we can ricochet max
 	var/ricochets_max = 0
-	/// 0-100, the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
+	/// 0-100 (or more, I guess), the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
 	var/ricochet_chance = 0
 	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
 	var/ricochet_decay_chance = 0.7
@@ -97,7 +98,7 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	var/projectile_type = /obj/projectile
@@ -124,23 +125,36 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
-	///If defined, on hit we create an item of this type then call hitby() on the hit target with this
+	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
+	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
+	var/list/embedding
+
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
 
-	wound_bonus = CANT_WOUND
-	/// For telling whether we want to roll for bone breaking or lacerations if we're bothering with wounds
-	var/sharpness = FALSE
+	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
+	var/sharpness = SHARP_NONE
+	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	var/wound_falloff_tile
+	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
+	var/embed_falloff_tile
 
 
 /obj/projectile/Initialize()
 	. = ..()
 	permutated = list()
 	decayedRange = range
+	if(embedding)
+		updateEmbedding()
 
 /obj/projectile/proc/Range()
 	range--
+	if(wound_bonus != CANT_WOUND)
+		wound_bonus += wound_falloff_tile
+		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+	if(embedding)
+		embedding["embed_chance"] += embed_falloff_tile
 	if(range <= 0 && loc)
 		on_range()
 
@@ -172,7 +186,8 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		hit_limb = L.check_limb_hit(def_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb)
+	if(SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb) & COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
+		return BULLET_ACT_HIT
 	var/turf/target_loca = get_turf(target)
 
 	var/hitx
@@ -275,6 +290,9 @@
 	beam_segments[beam_index] = null
 
 /obj/projectile/Bump(atom/A)
+	if(!trajectory)
+		qdel(src)
+		return
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(ricochets < ricochets_max && check_ricochet_flag(A) && check_ricochet(A))
@@ -362,7 +380,7 @@
 	//Returns null if nothing at all was found.
 
 /obj/projectile/proc/check_ricochet(atom/A)
-	var/chance = ricochet_chance * A.ricochet_chance_mod
+	var/chance = ricochet_chance * A.receive_ricochet_chance_mod
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		chance += NICE_SHOT_RICOCHET_BONUS
 	if(prob(chance))
@@ -370,10 +388,10 @@
 	return FALSE
 
 /obj/projectile/proc/check_ricochet_flag(atom/A)
-	if((flag in list("energy", "laser")) && (A.flags_ricochet & RICOCHET_SHINY))
+	if((flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
 
-	if((flag in list("bomb", "bullet")) && (A.flags_ricochet & RICOCHET_HARD))
+	if((flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
 	return FALSE
@@ -743,3 +761,23 @@
 
 /obj/projectile/experience_pressure_difference()
 	return
+
+///Like [/obj/item/proc/updateEmbedding] but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element
+/obj/projectile/proc/updateEmbedding()
+	if(!shrapnel_type || !LAZYLEN(embedding))
+		return
+
+	AddElement(/datum/element/embed,\
+		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
+		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\
+		pain_chance = (!isnull(embedding["pain_chance"]) ? embedding["pain_chance"] : EMBEDDED_PAIN_CHANCE),\
+		pain_mult = (!isnull(embedding["pain_mult"]) ? embedding["pain_mult"] : EMBEDDED_PAIN_MULTIPLIER),\
+		remove_pain_mult = (!isnull(embedding["remove_pain_mult"]) ? embedding["remove_pain_mult"] : EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER),\
+		rip_time = (!isnull(embedding["rip_time"]) ? embedding["rip_time"] : EMBEDDED_UNSAFE_REMOVAL_TIME),\
+		ignore_throwspeed_threshold = (!isnull(embedding["ignore_throwspeed_threshold"]) ? embedding["ignore_throwspeed_threshold"] : FALSE),\
+		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
+		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
+		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
+		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
+		projectile_payload = shrapnel_type)
+	return TRUE

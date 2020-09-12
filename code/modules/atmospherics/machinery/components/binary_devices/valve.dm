@@ -3,7 +3,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 */
 
 /obj/machinery/atmospherics/components/binary/valve
-	icon_state = "mvalve_map-2"
+	icon_state = "mvalve_map-3"
 
 	name = "manual valve"
 	desc = "A pipe with a valve that can be used to disable flow of gas through it."
@@ -27,8 +27,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = FALSE)
 	normalize_cardinal_directions()
 	if(animation)
-		flick("[valve_type]valve_[on][!on]", src)
-	icon_state = "[valve_type]valve_[on ? "on" : "off"]"
+		flick("[valve_type]valve_[on][!on]-[set_overlay_offset(piping_layer)]", src)
+	icon_state = "[valve_type]valve_[on ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/valve/proc/toggle()
 	if(on)
@@ -57,7 +57,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 
 /obj/machinery/atmospherics/components/binary/valve/digital // can be controlled by AI
-	icon_state = "dvalve_map-2"
+	icon_state = "dvalve_map-3"
 
 	name = "digital valve"
 	desc = "A digitally controlled valve."
@@ -67,47 +67,47 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
-	if(!is_operational())
+	if(!is_operational)
 		normalize_cardinal_directions()
-		icon_state = "dvalve_nopower"
+		icon_state = "dvalve_nopower-[set_overlay_offset(piping_layer)]"
 		return
 	..()
 
 
-/obj/machinery/atmospherics/components/binary/valve/layer1
-	piping_layer = 1
-	icon_state = "mvalve_map-1"
+/obj/machinery/atmospherics/components/binary/valve/layer2
+	piping_layer = 2
+	icon_state = "mvalve_map-2"
 
-/obj/machinery/atmospherics/components/binary/valve/layer3
-	piping_layer = 3
-	icon_state = "mvalve_map-3"
+/obj/machinery/atmospherics/components/binary/valve/layer4
+	piping_layer = 4
+	icon_state = "mvalve_map-4"
 
 /obj/machinery/atmospherics/components/binary/valve/on
 	on = TRUE
 
-/obj/machinery/atmospherics/components/binary/valve/on/layer1
-	piping_layer = 1
-	icon_state = "mvalve_map-1"
+/obj/machinery/atmospherics/components/binary/valve/on/layer2
+	piping_layer = 2
+	icon_state = "mvalve_map-2"
 
-/obj/machinery/atmospherics/components/binary/valve/on/layer3
-	piping_layer = 3
-	icon_state = "mvalve_map-3"
+/obj/machinery/atmospherics/components/binary/valve/on/layer4
+	piping_layer = 4
+	icon_state = "mvalve_map-4"
 
-/obj/machinery/atmospherics/components/binary/valve/digital/layer1
-	piping_layer = 1
-	icon_state = "dvalve_map-1"
+/obj/machinery/atmospherics/components/binary/valve/digital/layer2
+	piping_layer = 2
+	icon_state = "dvalve_map-2"
 
-/obj/machinery/atmospherics/components/binary/valve/digital/layer3
-	piping_layer = 3
-	icon_state = "dvalve_map-3"
+/obj/machinery/atmospherics/components/binary/valve/digital/layer4
+	piping_layer = 4
+	icon_state = "dvalve_map-4"
 
 /obj/machinery/atmospherics/components/binary/valve/digital/on
 	on = TRUE
 
-/obj/machinery/atmospherics/components/binary/valve/digital/on/layer1
-	piping_layer = 1
-	icon_state = "dvalve_map-1"
+/obj/machinery/atmospherics/components/binary/valve/digital/on/layer2
+	piping_layer = 2
+	icon_state = "dvalve_map-2"
 
-/obj/machinery/atmospherics/components/binary/valve/digital/on/layer3
-	piping_layer = 3
-	icon_state = "dvalve_map-3"
+/obj/machinery/atmospherics/components/binary/valve/digital/on/layer4
+	piping_layer = 4
+	icon_state = "dvalve_map-4"

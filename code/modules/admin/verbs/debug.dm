@@ -98,11 +98,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in sortNames(available)
 	if(!choice)
-		return 0
+		return
 	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
-			return 0
+			return
 	var/obj/item/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
 
@@ -556,7 +556,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 
 	if (dresscode == "As Plasmaman...")
-		var/list/plasmaman_paths = subtypesof(/datum/outfit/plasmaman)
+		var/list/plasmaman_paths = typesof(/datum/outfit/plasmaman)
 		var/list/plasmaman_outfits = list()
 		for(var/path in plasmaman_paths)
 			var/datum/outfit/O = path
@@ -578,64 +578,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return
 
 	return dresscode
-
-/client/proc/startSinglo()
-
-	set category = "Debug"
-	set name = "Start Singularity"
-	set desc = "Sets up the singularity and all machines to get power flowing through the station"
-
-	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
-		return
-
-	for(var/obj/machinery/power/emitter/E in GLOB.machines)
-		if(E.anchored)
-			E.active = 1
-
-	for(var/obj/machinery/field/generator/F in GLOB.machines)
-		if(F.active == 0)
-			F.set_anchored(TRUE)
-			F.active = 1
-			F.state = 2
-			F.power = 250
-			F.warming_up = 3
-			F.start_fields()
-			F.update_icon()
-
-	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in GLOB.machines)
-			if(G.anchored)
-				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
-//				qdel(G)
-				S.energy = 1750
-				S.current_size = 7
-				S.icon = 'icons/effects/224x224.dmi'
-				S.icon_state = "singularity_s7"
-				S.pixel_x = -96
-				S.pixel_y = -96
-				S.grav_pull = 0
-				//S.consume_range = 3
-				S.dissipate = 0
-				//S.dissipate_delay = 10
-				//S.dissipate_track = 0
-				//S.dissipate_strength = 10
-
-	for(var/obj/machinery/power/rad_collector/Rad in GLOB.machines)
-		if(Rad.anchored)
-			if(!Rad.loaded_tank)
-				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				Plasma.air_contents.assert_gas(/datum/gas/plasma)
-				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
-				Rad.drainratio = 0
-				Rad.loaded_tank = Plasma
-				Plasma.forceMove(Rad)
-
-			if(!Rad.active)
-				Rad.toggle_power()
-
-	for(var/obj/machinery/power/smes/SMES in GLOB.machines)
-		if(SMES.anchored)
-			SMES.input_attempt = 1
 
 /client/proc/cmd_debug_mob_lists()
 	set category = "Debug"
@@ -889,3 +831,63 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+/// A debug verb to check the sources of currently running timers
+/client/proc/check_timer_sources()
+	set category = "Debug"
+	set name = "Check Timer Sources"
+	set desc = "Checks the sources of the running timers"
+	if (!check_rights(R_DEBUG))
+		return
+
+	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
+	var/second_queue = generate_timer_source_output(SStimer.second_queue)
+
+	usr << browse({"
+		<h3>bucket_list</h3>
+		[bucket_list_output]
+
+		<h3>second_queue</h3>
+		[second_queue]
+	"}, "window=check_timer_sources;size=700x700")
+
+/proc/generate_timer_source_output(list/datum/timedevent/events)
+	var/list/per_source = list()
+
+	// Collate all events and figure out what sources are creating the most
+	for (var/_event in events)
+		if (!_event)
+			continue
+		var/datum/timedevent/event = _event
+
+		do
+			if (event.source)
+				if (per_source[event.source] == null)
+					per_source[event.source] = 1
+				else
+					per_source[event.source] += 1
+			event = event.next
+		while (event && event != _event)
+
+	// Now, sort them in order
+	var/list/sorted = list()
+	for (var/source in per_source)
+		sorted += list(list("source" = source, "count" = per_source[source]))
+	sorted = sortTim(sorted, .proc/cmp_timer_data)
+
+	// Now that everything is sorted, compile them into an HTML output
+	var/output = "<table border='1'>"
+
+	for (var/_timer_data in sorted)
+		var/list/timer_data = _timer_data
+		output += {"<tr>
+			<td><b>[timer_data["source"]]</b></td>
+			<td>[timer_data["count"]]</td>
+		</tr>"}
+
+	output += "</table>"
+
+	return output
+
+/proc/cmp_timer_data(list/a, list/b)
+	return b["count"] - a["count"]

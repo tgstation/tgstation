@@ -149,6 +149,11 @@
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
 			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
+
+			if(builtInCamera)
+				builtInCamera.status = FALSE
+				to_chat(src, "<span class='userdanger'>CRITICAL ERROR: Built in security camera OFFLINE.</span>")
+
 			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
 		if(2)
@@ -175,7 +180,6 @@
 
 	return TRUE
 
-
 /**
   * Breaks all of a cyborg's slots.
   */
@@ -200,6 +204,9 @@
 
 			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
+			if(builtInCamera)
+				builtInCamera.status = TRUE
+				to_chat(src, "<span class='notice'>You hear your built in security camera focus adjust as it comes back online!</span>")
 		if(2)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
@@ -246,10 +253,11 @@
 					break
 
 /**
-  * Unequips the active held item.
+  * Unequips the active held item, if there is one.
   */
 /mob/living/silicon/robot/proc/uneq_active()
-	unequip_module_from_slot(module_active, get_selected_module())
+	if(module_active)
+		unequip_module_from_slot(module_active, get_selected_module())
 
 /**
   * Unequips all held items.
@@ -312,7 +320,7 @@
   * * module_num - the slot number being selected
   */
 /mob/living/silicon/robot/proc/select_module(module_num)
-	if(!held_items[module_num])
+	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
 
 	switch(module_num)
@@ -326,6 +334,7 @@
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
+	return TRUE
 
 /**
   * Deselects the module in the slot module_num.
@@ -344,6 +353,7 @@
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
+	return TRUE
 
 /**
   * Toggles selection of the module in the slot module_num.
@@ -385,3 +395,4 @@
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
+

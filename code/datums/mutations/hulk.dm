@@ -27,6 +27,8 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!proximity)
 		return
 	if(source.a_intent != INTENT_HARM)
@@ -54,11 +56,11 @@
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
 	switch(arm.brute_dam)
 		if(45 to 50)
-			arm.force_wound_upwards(/datum/wound/brute/bone/critical)
+			arm.force_wound_upwards(/datum/wound/blunt/critical)
 		if(41 to 45)
-			arm.force_wound_upwards(/datum/wound/brute/bone/severe)
+			arm.force_wound_upwards(/datum/wound/blunt/severe)
 		if(35 to 41)
-			arm.force_wound_upwards(/datum/wound/brute/bone/moderate)
+			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)
@@ -79,6 +81,8 @@
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
+	SIGNAL_HANDLER
+
 	var/message = wrapped_message[1]
 	if(message)
 		message = "[replacetext(message, ".", "!")]!!"

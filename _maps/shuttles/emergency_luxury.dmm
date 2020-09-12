@@ -176,7 +176,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aF" = (
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate{
+/obj/item/food/cakeslice/chocolate{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
@@ -232,7 +232,7 @@
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
 "aN" = (
-/obj/item/reagent_containers/food/snacks/burger/baconburger{
+/obj/item/food/burger/baconburger{
 	pixel_y = 2
 	},
 /obj/structure/table/wood/fancy/black,
@@ -697,7 +697,7 @@
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ci" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/carpet/green,

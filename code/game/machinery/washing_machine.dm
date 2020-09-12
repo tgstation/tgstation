@@ -139,13 +139,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	density = TRUE
 	state_open = TRUE
 	var/busy = FALSE
-	var/bloody_mess = 0
+	var/bloody_mess = FALSE
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
-
-/obj/machinery/washing_machine/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
@@ -169,32 +165,34 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/washing_machine/process()
+/obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
 		animate(src, transform=matrix(), time=2)
 		return PROCESS_KILL
 	if(anchored)
-		if(prob(5))
+		if(DT_PROB(2.5, delta_time))
 			var/matrix/M = new
 			M.Translate(rand(-1, 1), rand(0, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
-		if(prob(1))
+		if(DT_PROB(0.5, delta_time))
 			step(src, pick(GLOB.cardinals))
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
 
-/obj/machinery/washing_machine/proc/clean_blood()
-	if(!busy)
+/obj/machinery/washing_machine/wash(clean_types)
+	. = ..()
+	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_icon()
+		. = TRUE
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src)
 
 	busy = FALSE
@@ -266,15 +264,15 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
-		chained = 0
+		chained = FALSE
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
 	..()
 
-/obj/machinery/washing_machine/relaymove(mob/user)
-	container_resist(user)
+/obj/machinery/washing_machine/relaymove(mob/living/user, direction)
+	container_resist_act(user)
 
-/obj/machinery/washing_machine/container_resist(mob/living/user)
+/obj/machinery/washing_machine/container_resist_act(mob/living/user)
 	if(!busy)
 		add_fingerprint(user)
 		open_machine()

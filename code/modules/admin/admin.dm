@@ -2,11 +2,17 @@
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
-	to_chat(GLOB.admins, msg, confidential = TRUE)
+	to_chat(GLOB.admins,
+		type = MESSAGE_TYPE_ADMINLOG,
+		html = msg,
+		confidential = TRUE)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -40,6 +46,11 @@
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
+		if(CONFIG_GET(string/centcom_ban_db))
+			body += "<a href='?_src_=holder;[HrefToken()];centcomlookup=[M.client.ckey]'>Search</a>"
+		else
+			body += "<i>Disabled</i>"
 		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
 		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
@@ -754,7 +765,7 @@
 	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/show_skill_panel(var/target)
+/datum/admins/proc/show_skill_panel(target)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's experience and skill levels"
 	set name = "Show Skill Panel"

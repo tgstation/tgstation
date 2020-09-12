@@ -9,6 +9,6 @@ mkdir travis_test/config
 cp tools/travis/travis_config.txt travis_test/config/config.txt
 
 cd travis_test
-DreamDaemon tgstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis"
+DreamDaemon tgstation.dmb -close -trusted -verbose -params "log-directory=travis"
 cd ..
 cat travis_test/data/logs/travis/clean_run.lk

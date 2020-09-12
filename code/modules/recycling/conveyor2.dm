@@ -25,13 +25,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
 
-/obj/machinery/conveyor/inverted //Directions inverted so you can use different corner peices.
+/obj/machinery/conveyor/inverted //Directions inverted so you can use different corner pieces.
 	icon_state = "conveyor_map_inverted"
 	verted = -1
 
 /obj/machinery/conveyor/inverted/Initialize(mapload)
 	. = ..()
-	if(mapload && !(dir in GLOB.diagonals))
+	if(mapload && !(ISDIAGONALDIR(dir)))
 		log_mapping("[src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
 
 // Auto conveyour is always on unless unpowered

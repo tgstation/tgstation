@@ -13,6 +13,7 @@
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
+#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
@@ -30,6 +31,11 @@
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
 #define ENDGAME_TRANSIT 3
+
+//positive value = cannot puchase
+#define SHUTTLEPURCHASE_PURCHASABLE 0 //station can buy a shuttle
+#define SHUTTLEPURCHASE_PURCHASED 1 //station has already bought a shuttle, so cannot
+#define SHUTTLEPURCHASE_FORCED 2 //station was given a new shuttle through events or other shenanigans
 
 // Ripples, effects that signal a shuttle's arrival
 #define SHUTTLE_RIPPLE_TIME 100

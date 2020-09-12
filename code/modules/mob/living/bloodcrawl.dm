@@ -8,7 +8,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/canmove = TRUE
 
-/obj/effect/dummy/phased_mob/slaughter/relaymove(mob/user, direction)
+/obj/effect/dummy/phased_mob/slaughter/relaymove(mob/living/user, direction)
 	forceMove(get_step(src,direction))
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
@@ -19,6 +19,11 @@
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
+
+/obj/effect/dummy/phased_mob/slaughter/proc/deleteself(mob/living/source, obj/effect/decal/cleanable/phase_in_decal)
+	SIGNAL_HANDLER
+	qdel(src)
+
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
 	if(iscarbon(src))
@@ -50,7 +55,7 @@
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(mobloc)
-	ExtinguishMob()
+	extinguish_mob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()
 	// makes us stop pulling
@@ -74,7 +79,7 @@
 
 	if(victim.stat == CONSCIOUS)
 		visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
-	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/demonsblood, needs_metabolizing = TRUE))
+	else if(victim.has_reagent(/datum/reagent/consumable/ethanol/demonsblood, needs_metabolizing = TRUE))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
 		victim.forceMove(src)
@@ -94,8 +99,8 @@
 	to_chat(src, "<span class='danger'>You begin to feast on [victim]... You can not move while you are doing this.</span>")
 
 	var/sound
-	if(istype(src, /mob/living/simple_animal/slaughter))
-		var/mob/living/simple_animal/slaughter/SD = src
+	if(istype(src, /mob/living/simple_animal/hostile/imp/slaughter))
+		var/mob/living/simple_animal/hostile/imp/slaughter/SD = src
 		sound = SD.feast_sound
 	else
 		sound = 'sound/magic/demon_consume.ogg'
@@ -107,7 +112,7 @@
 	if(!victim)
 		return FALSE
 
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/devilskiss, needs_metabolizing = TRUE))
+	if(victim.has_reagent(/datum/reagent/consumable/ethanol/devilskiss, needs_metabolizing = TRUE))
 		to_chat(src, "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>")
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE
@@ -117,6 +122,7 @@
 				victim.visible_message("<span class='warning'>[target] violently expels [victim]!</span>")
 				victim.exit_blood_effect(target)
 				found_bloodpool = TRUE
+				break
 
 		if(!found_bloodpool)
 			// Fuck it, just eject them, thanks to some split second cleaning
@@ -168,6 +174,7 @@
 		return
 	forceMove(B.loc)
 	client.eye = src
+	SEND_SIGNAL(src, COMSIG_LIVING_AFTERPHASEIN, B)
 	visible_message("<span class='boldwarning'>[src] rises out of the pool of blood!</span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
@@ -175,5 +182,4 @@
 		for(var/obj/item/bloodcrawl/BC in C)
 			BC.flags_1 = null
 			qdel(BC)
-	QDEL_NULL(holder)
 	return TRUE

@@ -49,7 +49,7 @@
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Single-Pack"
 	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
-	cost = 2000
+	cost = 2250
 	contains = list(/obj/item/gun/energy/laser/hellgun)
 
 /datum/supply_pack/goody/wt550_single
@@ -129,3 +129,9 @@
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 	cost = 200
 	contains = list(/obj/item/toy/beach_ball)
+
+/datum/supply_pack/goody/medipen_twopak
+	name = "Medipen Two-Pak"
+	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
+	cost = 500
+	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)

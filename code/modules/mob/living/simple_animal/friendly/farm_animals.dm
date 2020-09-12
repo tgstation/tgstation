@@ -144,10 +144,16 @@
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+	pet_bonus = TRUE
+	pet_bonus_emote = "moos happily!"
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
+	add_cell_sample()
 	. = ..()
+
+/mob/living/simple_animal/cow/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -164,7 +170,7 @@
 /mob/living/simple_animal/cow/tamed()
 	. = ..()
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -263,6 +269,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
+	pet_bonus = TRUE
+	pet_bonus_emote = "chirps!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
@@ -270,6 +278,10 @@
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+	add_cell_sample()
+
+/mob/living/simple_animal/chick/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -338,6 +350,10 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	++chicken_count
+	add_cell_sample()
+
+/mob/living/simple_animal/chicken/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
 	--chicken_count
@@ -370,10 +386,10 @@
 				START_PROCESSING(SSobj, E)
 
 /obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process()
+/obj/item/reagent_containers/food/snacks/egg/process(delta_time)
 	if(isturf(loc))
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
+		amount_grown += rand(1,2) * delta_time
+		if(amount_grown >= 200)
 			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			STOP_PROCESSING(SSobj, src)

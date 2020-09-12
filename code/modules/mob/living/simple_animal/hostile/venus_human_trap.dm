@@ -14,11 +14,11 @@
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
-	opacity = 0
-	canSmoothWith = list()
-	smooth = SMOOTH_FALSE
-	/// The amount of time it takes to create a venus human trap, in deciseconds
-	var/growth_time = 2 MINUTES
+	opacity = FALSE
+	canSmoothWith = null
+	smoothing_flags = NONE
+	/// The amount of time it takes to create a venus human trap.
+	var/growth_time = 120 SECONDS
 
 	var/timerid
 	var/obj/effect/countdown/flower_bud/countdown
@@ -145,7 +145,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
-	if(.)
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	humanize_plant(user)
 
@@ -193,5 +193,5 @@
   * Arguments:
   * * datum/beam/vine - The vine to be removed from the list.
   */
-mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
+/mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
 	vines -= vine

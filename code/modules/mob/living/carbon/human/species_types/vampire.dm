@@ -2,7 +2,7 @@
 	name = "Vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
@@ -102,7 +102,7 @@
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
-			if(victim?.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+			if(victim.has_reagent(/datum/reagent/consumable/garlic))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
 				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
@@ -121,13 +121,11 @@
 #undef VAMP_DRAIN_AMOUNT
 
 
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
-		if(darkheart)
-			stat(null, "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
-			return 1
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	if(darkheart)
+		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
 
 
 /obj/item/organ/heart/vampire

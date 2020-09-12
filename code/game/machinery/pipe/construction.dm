@@ -119,7 +119,7 @@ Buildable meters
 
 /obj/item/pipe/trinary/flippable/fixed_dir()
 	. = dir
-	if(dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(dir))
 		. = turn(dir, 45)
 
 /obj/item/pipe/attack_self(mob/user)
@@ -188,7 +188,7 @@ Buildable meters
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes."
+	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"

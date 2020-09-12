@@ -87,17 +87,16 @@ the new instance inside the host to be updated to the template's stats.
 		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
 
-/mob/camera/disease/Stat()
+/mob/camera/disease/get_status_tab_items()
 	..()
-	if(statpanel("Status"))
-		if(freemove)
-			stat("Host Selection Time: [round((freemove_end - world.time)/10)]s")
-		else
-			stat("Adaptation Points: [points]/[total_points]")
-			stat("Hosts: [disease_instances.len]")
-			var/adapt_ready = next_adaptation_time - world.time
-			if(adapt_ready > 0)
-				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
+	if(freemove)
+		. += "Host Selection Time: [round((freemove_end - world.time)/10)]s"
+	else
+		. += "Adaptation Points: [points]/[total_points]"
+		. += "Hosts: [disease_instances.len]"
+		var/adapt_ready = next_adaptation_time - world.time
+		if(adapt_ready > 0)
+			. += "Adaptation Ready: [round(adapt_ready/10, 0.1)]s"
 
 
 /mob/camera/disease/examine(mob/user)
@@ -282,17 +281,19 @@ the new instance inside the host to be updated to the template's stats.
 		set_following(hosts[index])
 
 /mob/camera/disease/proc/follow_mob(datum/source, newloc, dir)
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(following_host)
 	if(T)
 		forceMove(T)
 
-/mob/camera/disease/DblClickOn(var/atom/A, params)
+/mob/camera/disease/DblClickOn(atom/A, params)
 	if(hosts[A])
 		set_following(A)
 	else
 		..()
 
-/mob/camera/disease/ClickOn(var/atom/A, params)
+/mob/camera/disease/ClickOn(atom/A, params)
 	if(freemove && ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")

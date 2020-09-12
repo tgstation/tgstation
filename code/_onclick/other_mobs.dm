@@ -7,8 +7,8 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
-		if(check_arm && check_arm.is_disabled() == BODYPART_DISABLED_WOUND)
-			to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
+		if(check_arm?.bodypart_disabled)
+			to_chat(src, "<span class='warning'>Your [check_arm.name] is in no condition to be used.</span>")
 			return
 
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
@@ -81,7 +81,7 @@
 */
 
 /mob/living/carbon/RestrainedClickOn(atom/A)
-	return 0
+	return
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
 	. = ..()
@@ -138,7 +138,7 @@
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML
 			affecting = H.get_bodypart(ran_zone(dam_zone))
-		var/armor = ML.run_armor_check(affecting, "melee")
+		var/armor = ML.run_armor_check(affecting, MELEE)
 		if(prob(75))
 			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
@@ -248,7 +248,7 @@
 	if(dextrous && !ismob(A))
 		..()
 	else
-		AttackingTarget()
+		AttackingTarget(A)
 
 
 

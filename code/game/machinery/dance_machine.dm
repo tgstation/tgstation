@@ -185,60 +185,28 @@
 	var/turf/cen = get_turf(src)
 	FOR_DVIEW(var/turf/t, 3, get_turf(src),INVISIBILITY_LIGHTING)
 		if(t.x == cen.x && t.y > cen.y)
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_RED
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1 + get_dist(src, t), 30 - (get_dist(src, t) * 8), COLOR_SOFT_RED)
 			continue
 		if(t.x == cen.x && t.y < cen.y)
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_PURPLE
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_PURPLE)
 			continue
 		if(t.x > cen.x && t.y == cen.y)
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_YELLOW
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_YELLOW)
 			continue
 		if(t.x < cen.x && t.y == cen.y)
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_GREEN
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_GREEN)
 			continue
 		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_ORANGE
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.4+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_ORANGE)
 			continue
 		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_CYAN
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.4+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_CYAN)
 			continue
 		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_BLUEGREEN
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.4+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_BLUEGREEN)
 			continue
 		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
-			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
-			L.light_color = LIGHT_COLOR_BLUE
-			L.light_power = 30-(get_dist(src,L)*8)
-			L.range = 1.4+get_dist(src, L)
-			spotlights+=L
+			spotlights += new /obj/item/flashlight/spotlight(t, 1.4 + get_dist(src, t), 30 - (get_dist(src, t) * 8), LIGHT_COLOR_BLUE)
 			continue
 		continue
 	FOR_DVIEW_END
@@ -270,65 +238,84 @@
 		sleep(7)
 	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
 		sleep(280)
-	for(var/obj/reveal in sparkles)
+	for(var/s in sparkles)
+		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255
 	while(active)
-		for(var/obj/item/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
-			if(QDELETED(src) || !active || QDELETED(glow))
+		for(var/g in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
+			var/obj/item/flashlight/spotlight/glow = g
+			if(QDELETED(glow))
+				stack_trace("[glow?.gc_destroyed ? "Qdeleting glow" : "null entry"] found in [src].[gc_destroyed ? " Source qdeleting at the time." : ""]")
 				return
-			if(glow.light_color == LIGHT_COLOR_RED)
-				glow.light_color = LIGHT_COLOR_BLUE
-				glow.light_power = glow.light_power * 1.48
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_BLUE)
-				glow.light_color = LIGHT_COLOR_GREEN
-				glow.light_range = glow.range * DISCO_INFENO_RANGE
-				glow.light_power = glow.light_power * 2 // Any changes to power must come in pairs to neutralize it for other colors
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_GREEN)
-				glow.light_color = LIGHT_COLOR_ORANGE
-				glow.light_power = glow.light_power * 0.5
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_ORANGE)
-				glow.light_color = LIGHT_COLOR_PURPLE
-				glow.light_power = glow.light_power * 2.27
-				glow.light_range = glow.range * DISCO_INFENO_RANGE
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_PURPLE)
-				glow.light_color = LIGHT_COLOR_BLUEGREEN
-				glow.light_power = glow.light_power * 0.44
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_BLUEGREEN)
-				glow.light_color = LIGHT_COLOR_YELLOW
-				glow.light_range = glow.range * DISCO_INFENO_RANGE
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_YELLOW)
-				glow.light_color = LIGHT_COLOR_CYAN
-				glow.light_range = 0
-				glow.update_light()
-				continue
-			if(glow.light_color == LIGHT_COLOR_CYAN)
-				glow.light_color = LIGHT_COLOR_RED
-				glow.light_power = glow.light_power * 0.68
-				glow.light_range = glow.range * DISCO_INFENO_RANGE
-				glow.update_light()
-				continue
+			switch(glow.light_color)
+				if(COLOR_SOFT_RED)
+					if(glow.even_cycle)
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_BLUE)
+					else
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 1.48, LIGHT_COLOR_BLUE)
+						glow.set_light_on(TRUE)
+				if(LIGHT_COLOR_BLUE)
+					if(glow.even_cycle)
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 2, LIGHT_COLOR_GREEN)
+						glow.set_light_on(TRUE)
+					else
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_GREEN)
+				if(LIGHT_COLOR_GREEN)
+					if(glow.even_cycle)
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_ORANGE)
+					else
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.5, LIGHT_COLOR_ORANGE)
+						glow.set_light_on(TRUE)
+				if(LIGHT_COLOR_ORANGE)
+					if(glow.even_cycle)
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 2.27, LIGHT_COLOR_PURPLE)
+						glow.set_light_on(TRUE)
+					else
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_PURPLE)
+				if(LIGHT_COLOR_PURPLE)
+					if(glow.even_cycle)
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_BLUEGREEN)
+					else
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.44, LIGHT_COLOR_BLUEGREEN)
+						glow.set_light_on(TRUE)
+				if(LIGHT_COLOR_BLUEGREEN)
+					if(glow.even_cycle)
+						glow.set_light_range(glow.base_light_range * DISCO_INFENO_RANGE)
+						glow.set_light_color(LIGHT_COLOR_YELLOW)
+						glow.set_light_on(TRUE)
+					else
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_YELLOW)
+				if(LIGHT_COLOR_YELLOW)
+					if(glow.even_cycle)
+						glow.set_light_on(FALSE)
+						glow.set_light_color(LIGHT_COLOR_CYAN)
+					else
+						glow.set_light_range(glow.base_light_range * DISCO_INFENO_RANGE)
+						glow.set_light_color(LIGHT_COLOR_CYAN)
+						glow.set_light_on(TRUE)
+				if(LIGHT_COLOR_CYAN)
+					if(glow.even_cycle)
+						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.68, COLOR_SOFT_RED)
+						glow.set_light_on(TRUE)
+					else
+						glow.set_light_on(FALSE)
+						glow.set_light_color(COLOR_SOFT_RED)
+					glow.even_cycle = !glow.even_cycle
 		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
 			INVOKE_ASYNC(src, .proc/hierofunk)
 		sleep(selection.song_beat)
+		if(QDELETED(src))
+			return
 
 #undef DISCO_INFENO_RANGE
 
-/obj/machinery/jukebox/disco/proc/dance(var/mob/living/M) //Show your moves
+/obj/machinery/jukebox/disco/proc/dance(mob/living/M) //Show your moves
 	set waitfor = FALSE
 	switch(rand(0,9))
 		if(0 to 1)
@@ -349,7 +336,7 @@
 	if(dir == WEST)
 		emote("flip")
 
-/obj/machinery/jukebox/disco/proc/dance3(var/mob/living/M)
+/obj/machinery/jukebox/disco/proc/dance3(mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 75)
 		if (!M)
@@ -396,7 +383,7 @@
 		sleep(1)
 	M.lying_fix()
 
-/obj/machinery/jukebox/disco/proc/dance4(var/mob/living/M)
+/obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
 	var/speed = rand(1,3)
 	set waitfor = 0
 	var/time = 30
@@ -408,7 +395,7 @@
 				NS.set_resting(!NS.resting, TRUE)
 		 time--
 
-/obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
+/obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)

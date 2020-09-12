@@ -4,7 +4,6 @@
 	layer = MOB_LAYER
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
-	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
@@ -23,6 +22,9 @@
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
 	faction = list("neutral", "silicon" , "turret")
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_power = 0.9
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -128,7 +130,7 @@
 		return FALSE
 	on = TRUE
 	update_mobility()
-	set_light(initial(light_range))
+	set_light_on(on)
 	update_icon()
 	to_chat(src, "<span class='boldnotice'>You turned on!</span>")
 	diag_hud_set_botstat()
@@ -137,7 +139,7 @@
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
 	update_mobility()
-	set_light(0)
+	set_light_on(on)
 	bot_reset() //Resets an AI's call, should it exist.
 	to_chat(src, "<span class='userdanger'>You turned off!</span>")
 	update_icon()
@@ -330,7 +332,7 @@
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
 			to_chat(user, "<span class='warning'>The maintenance panel is locked!</span>")
-	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))
+	else if(W.GetID())
 		unlock_with_id(user)
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
@@ -402,7 +404,7 @@
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
-	if(. != 0)
+	if(.)
 		return
 
 	if(message_mods[MODE_HEADSET])
@@ -691,7 +693,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		patrol_target = nearest_beacon_loc
 		destination = next_destination
 	else
-		auto_patrol = 0
+		auto_patrol = FALSE
 		mode = BOT_IDLE
 		speak("Disengaging patrol mode.")
 
@@ -730,11 +732,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!!
-			auto_patrol = 0
+			bot_reset() //HOLD IT!!	//OBJECTION!!
+			auto_patrol = FALSE
 
 		if("patrolon")
-			auto_patrol = 1
+			auto_patrol = TRUE
 
 		if("summon")
 			bot_reset()
@@ -749,7 +751,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			ejectpairemote(user)
 	return
 
-//
+
 /mob/living/simple_animal/bot/proc/bot_control_message(command, user)
 	switch(command)
 		if("patroloff")
@@ -829,7 +831,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-	popup.open(use_onclose = 0)
+	popup.open(use_onclose = FALSE)
 	onclose(M,window_id,ref=src)
 	return
 
@@ -1041,7 +1043,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 					var/turf/prevprevT = path[i - 2]
 					var/prevDir = get_dir(prevprevT, prevT)
 					var/mixDir = direction|prevDir
-					if(mixDir in GLOB.diagonals)
+					if(ISDIAGONALDIR(mixDir))
 						prevI.dir = mixDir
 						if(prevDir & (NORTH|SOUTH))
 							var/matrix/ntransform = matrix()

@@ -53,6 +53,8 @@
 	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least splinted!"
 
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
+	SIGNAL_HANDLER
+
 	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND) || !owner.has_gravity() || (owner.movement_type & FLYING) || forced)
 		return
 	var/determined_mod = 1
@@ -66,6 +68,8 @@
 		next_leg = left
 
 /datum/status_effect/limp/proc/update_limp()
+	SIGNAL_HANDLER
+
 	var/mob/living/carbon/C = owner
 	left = C.get_bodypart(BODY_ZONE_L_LEG)
 	right = C.get_bodypart(BODY_ZONE_R_LEG)
@@ -116,8 +120,7 @@
 
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
 	. = ..()
-	var/datum/wound/W = incoming_wound
-	linked_wound = W
+	linked_wound = incoming_wound
 	linked_limb = linked_wound.limb
 
 /datum/status_effect/wound/on_remove()
@@ -133,54 +136,68 @@
 
 /// check if the wound getting removed is the wound we're tied to
 /datum/status_effect/wound/proc/check_remove(mob/living/L, datum/wound/W)
+	SIGNAL_HANDLER
+
 	if(W == linked_wound)
 		qdel(src)
 
 
 // bones
-/datum/status_effect/wound/bone
+/datum/status_effect/wound/blunt
 
-/datum/status_effect/wound/bone/interact_speed_modifier()
+/datum/status_effect/wound/blunt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	on_swap_hands()
+
+/datum/status_effect/wound/blunt/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
+	var/mob/living/carbon/wound_owner = owner
+	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+
+/datum/status_effect/wound/blunt/proc/on_swap_hands()
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/wound_owner = owner
+	if(wound_owner.get_active_hand() == linked_limb)
+		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
+	else
+		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+
+/datum/status_effect/wound/blunt/nextmove_modifier()
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)
-		to_chat(C, "<span class='warning'>The [lowertext(linked_wound)] in your [linked_limb.name] slows your progress!</span>")
 		return linked_wound.interaction_efficiency_penalty
 
 	return 1
 
-/datum/status_effect/wound/bone/nextmove_modifier()
-	var/mob/living/carbon/C = owner
-
-	if(C.get_active_hand() == linked_limb)
-		return linked_wound.interaction_efficiency_penalty
-
-	return 1
-
-/datum/status_effect/wound/bone/moderate
+// blunt
+/datum/status_effect/wound/blunt/moderate
 	id = "disjoint"
-/datum/status_effect/wound/bone/severe
+/datum/status_effect/wound/blunt/severe
 	id = "hairline"
-
-/datum/status_effect/wound/bone/critical
+/datum/status_effect/wound/blunt/critical
 	id = "compound"
-
-// cuts
-/datum/status_effect/wound/cut/moderate
+// slash
+/datum/status_effect/wound/slash/moderate
 	id = "abrasion"
-
-/datum/status_effect/wound/cut/severe
+/datum/status_effect/wound/slash/severe
 	id = "laceration"
-
-/datum/status_effect/wound/cut/critical
+/datum/status_effect/wound/slash/critical
 	id = "avulsion"
-
+// pierce
+/datum/status_effect/wound/pierce/moderate
+	id = "breakage"
+/datum/status_effect/wound/pierce/severe
+	id = "puncture"
+/datum/status_effect/wound/pierce/critical
+	id = "rupture"
 // burns
 /datum/status_effect/wound/burn/moderate
 	id = "seconddeg"
-
 /datum/status_effect/wound/burn/severe
 	id = "thirddeg"
-
 /datum/status_effect/wound/burn/critical
 	id = "fourthdeg"
