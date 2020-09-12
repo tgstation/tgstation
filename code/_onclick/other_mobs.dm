@@ -7,8 +7,8 @@
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
-		if(check_arm && check_arm.is_disabled() == BODYPART_DISABLED_WOUND)
-			to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
+		if(check_arm?.bodypart_disabled)
+			to_chat(src, "<span class='warning'>Your [check_arm.name] is in no condition to be used.</span>")
 			return
 
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")

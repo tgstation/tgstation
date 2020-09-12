@@ -24,6 +24,11 @@
 		/datum/gas/water_vapor,
 		/datum/gas/freon,
 		/datum/gas/hydrogen,
+		/datum/gas/healium,
+		/datum/gas/proto_nitrate,
+		/datum/gas/cyrion_b,
+		/datum/gas/halon,
+		/datum/gas/hexane,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
