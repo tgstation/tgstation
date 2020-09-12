@@ -925,7 +925,7 @@
 	},
 /obj/item/stamp,
 /obj/machinery/bounty_board{
-	dir = 4;
+	dir = 8;
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/brown,
@@ -940,7 +940,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1046,7 +1046,7 @@
 /area/maintenance/solars/starboard/fore)
 "acg" = (
 /obj/machinery/bounty_board{
-	dir = 8;
+	dir = 4;
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/red{
@@ -33150,18 +33150,14 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "bnS" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "Holodeck - Fore 2";
+	name = "holodeck camera"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
+/area/holodeck/rec_center)
 "bnT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -34956,7 +34952,9 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bqQ" = (
@@ -59931,7 +59929,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "cjO" = (
@@ -70874,7 +70871,7 @@
 /area/holodeck/rec_center)
 "cFG" = (
 /obj/machinery/camera{
-	c_tag = "Holodeck - Fore";
+	c_tag = "Holodeck - Fore 1";
 	name = "holodeck camera"
 	},
 /turf/open/floor/engine{
@@ -77648,7 +77645,7 @@
 /area/crew_quarters/fitness/recreation)
 "cTi" = (
 /obj/machinery/camera{
-	c_tag = "Holodeck - Aft";
+	c_tag = "Holodeck - Aft 1";
 	dir = 1;
 	name = "holodeck camera"
 	},
@@ -93689,7 +93686,6 @@
 	name = "Morgue";
 	req_access_txt = "5;6"
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -97560,7 +97556,6 @@
 	name = "Medbay Maintenance";
 	req_access_txt = "5"
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -115177,6 +115172,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"xVV" = (
+/obj/machinery/camera{
+	c_tag = "Holodeck - Aft 2";
+	dir = 1;
+	name = "holodeck camera"
+	},
+/turf/open/floor/engine{
+	name = "Holodeck Projector Floor"
+	},
+/area/holodeck/rec_center)
 "xXn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
@@ -166056,7 +166061,7 @@ cDD
 cFx
 cGU
 cAw
-bnS
+cJj
 cLg
 cMx
 cAw
@@ -173249,7 +173254,7 @@ aad
 cuM
 aaa
 cDR
-cFG
+bnS
 cFF
 cFF
 cFF
@@ -173258,7 +173263,7 @@ cFF
 cFF
 cFF
 cFF
-cTi
+xVV
 cVj
 aaa
 cuM

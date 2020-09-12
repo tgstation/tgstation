@@ -1,0 +1,7 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - rscadd: "Health analyzers have been upgraded with the ability to alert their user when the subject is husked."
+  - rscadd: "Defibrillators have been upgraded with the ability to alert their user when attempting to revive a husked corpse."
+  - rscadd: "The husk status of a corpse is now visible when examining the corpse."
+  - spellcheck: "The description for synthflesh and rezadone now mention their use in restoring husks."
