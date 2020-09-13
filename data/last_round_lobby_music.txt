@@ -86,3 +86,6 @@ config/title_music/sounds/Staring at my spaceship.ogg
 config/title_music/sounds/Greenpath.ogg
 config/title_music/sounds/Renai Circulation.ogg
 config/title_music/sounds/THE REAL FOLK BLUES.ogg
+config/title_music/sounds/It Was At That Point I Realised.ogg
+config/title_music/sounds/Icarus.ogg
+config/title_music/sounds/Raceway.ogg

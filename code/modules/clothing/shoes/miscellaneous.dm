@@ -213,6 +213,10 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
+/obj/item/clothing/shoes/workboots/timbs
+	name = "timbs"
+	desc = "Damn, you got the yaddas!"
+
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."

@@ -1,0 +1,34 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"d" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/plating,/area/shuttle/abandoned)
+"f" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"g" = (/obj/effect/decal/cleanable/dirt/dust,/turf/closed/wall/mineral/titanium,/area/shuttle/abandoned)
+"j" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/closed/wall/mineral/titanium,/area/shuttle/abandoned)
+"k" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"l" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"m" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/machinery/door/airlock/titanium{name = "External Airlock"},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"q" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/door/airlock{name = "Control Room"},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"s" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+"t" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"u" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/docking_port/mobile{dir = 8; dwidth = 2; height = 10; id = "whiteship"; launch_status = 0; name = "White Ship"; port_direction = 4; width = 5},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"v" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/remains/human,/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"y" = (/obj/effect/decal/cleanable/dirt/dust,/obj/machinery/computer/shuttle/white_ship{dir = 4},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"z" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"D" = (/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+"E" = (/obj/structure/window/reinforced,/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+"I" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/structure/closet{name = "Space Suits"},/obj/item/clothing/suit/space/fragile,/obj/item/clothing/suit/space/fragile,/obj/item/clothing/suit/space/fragile,/obj/item/clothing/head/helmet/space/fragile,/obj/item/clothing/head/helmet/space/fragile,/obj/item/clothing/head/helmet/space/fragile,/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"J" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/propulsion{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+"L" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+"M" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"P" = (/obj/effect/decal/cleanable/dirt/dust,/obj/effect/turf_decal/tile/neutral,/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{dir = 4},/turf/open/floor/plasteel,/area/shuttle/abandoned)
+"U" = (/turf/closed/wall/mineral/titanium,/area/shuttle/abandoned)
+"V" = (/obj/effect/decal/cleanable/dirt/dust,/obj/structure/frame/computer{anchored = 1; dir = 4},/turf/open/floor/plating,/area/shuttle/abandoned)
+"Y" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/shuttle/abandoned)
+"Z" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{dir = 4},/turf/open/space/basic,/area/shuttle/abandoned)
+
+(1,1,1) = {"
+aMUUUUUULD
+MMVdjzzlsE
+MyktqtvYmu
+MMPfgllIZJ
+aMUUUUUULD
+"}
