@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(statpanels)
 				target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
 		if(target.mob)
 			var/mob/M = target.mob
-			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(M.mob_spell_list) || length(M?.mind.spell_list)))
+			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(M.mob_spell_list) || length(M.mind?.spell_list)))
 				var/list/proc_holders = M.get_proc_holders()
 				target.spell_tabs.Cut()
 				for(var/phl in proc_holders)
