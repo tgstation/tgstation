@@ -26,8 +26,9 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked
-	var/datum/map_template/holodeck/program //should these still be area vars after refactoring? what else can i use?
-	var/datum/map_template/holodeck/last_program
+	var/area/holodeck/loaded
+	var/program //should these still be area vars after refactoring? what else can i use?
+	var/last_program
 	var/area/offline_program = /datum/map_template/holodeck/offline
 
 	var/list/program_cache
@@ -47,46 +48,49 @@
 	//use get_turf(atom reference) and define a mapping helper on the wanted spot on every holodeck
 	var/datum/map_template/holodeck/template
 	var/turf/spawn_tile
-	var/template_id
+	//var/template_id
+	var/turf/bottom_left
+	var/area/current_holodeck_area
 
 /obj/effect/mapping_helpers/holodeck_spawner
 	icon_state = ""
 	var/this
 
 /obj/machinery/computer/holodeck/proc/get_spawn_tile(var/obj/effect/Spawn)
-	return spawn_tile = get_turf(Spawn)
+	spawn_tile = get_turf(Spawn)
 
 /obj/machinery/computer/holodeck/proc/get_template()//now i need to create template ids for all sims and match them with the program lists, however theyre done
 	//if(template)//i think this is bad if we want to have more than one template loaded throughout the round
 	//	return
-	template = SSmapping.holodeck_templates[template_id]
+	//template = SSmapping.holodeck_templates[template_id]
 	//if(!template)
 	//	WARNING("Shelter template ([template_id]) not found!")
 	//	qdel(src)
 
-/obj/machinery/computer/holodeck/Destroy()
-	to_chat(world,"DEBUG -- lmao youre fucked")
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
-	var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner)
-	get_spawn_tile(holodeck_helper)
-	if(ispath(holodeck_type, /area))
+	//var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner) //BAD KYLER :newspaper2:
+	//get_spawn_tile(holodeck_helper)
+	current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
+	bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
+
+	/*if(ispath(holodeck_type, /area))
 		linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
 	if(ispath(offline_program, /area))
 		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
-		qdel(src)
+		//qdel(src)
 		return
 	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
-		qdel(src)
+		//qdel(src)
 		return
 	else
 		linked.linked = src
@@ -95,11 +99,13 @@
 			linked.power_usage = my_area.power_usage
 		else
 			linked.power_usage = new /list(AREA_USAGE_LEN)
+			*/
 
 	generate_program_list()
-	load_program(offline_program, FALSE, FALSE)
+	//load_program("holodeck_lounge")//honestly there isnt a reason to do this as far as im aware
 
 /obj/machinery/computer/holodeck/Destroy()
+	message_admins(world,"DEBUG -- lmao youre fucked")
 	emergency_shutdown()
 	if(linked)
 		linked.linked = null
@@ -117,7 +123,7 @@
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)//In this proc you munges whatever complex data your `src_object`
-//has into an associative list, which will then be sent to UI as a JSON string.
+//has into an associative list, which will then be sent to UI as a JSON string. -some nerd
 	var/list/data = list()
 
 	data["default_programs"] = program_cache
@@ -126,7 +132,6 @@
 		data["emag_programs"] = emag_programs
 	data["program"] = program
 	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
-//kinda portable
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)
@@ -136,12 +141,14 @@
 	switch(action)
 		if("load_program")
 			//var/program_to_load = text2path(params["type"])
-			var/datum/map_template/holodeck/program_to_load = params
-			if(!ispath(program_to_load))
-				return FALSE
-			var/valid = FALSE
-			var/list/checked = program_cache.Copy()
-			if(obj_flags & EMAGGED)
+			//^ i might have needed to do this
+			//var/datum/map_template/holodeck/program_to_load = params//this shouldnt work as is, holodeck.js doesnt send the type at all, it only sends the name and template_id
+			var/program_to_load = params["id"]
+			//if(!ispath(program_to_load))
+			//	return FALSE
+			//var/valid = FALSE
+			//var/list/checked = program_cache.Copy()
+			/*if(obj_flags & EMAGGED)
 				checked |= emag_programs
 			for(var/prog in checked)
 				var/list/P = prog
@@ -149,23 +156,23 @@
 					valid = TRUE
 					break
 			if(!valid)
-				return FALSE
+				return FALSE*/
 			//load the map_template that program_to_load represents
 			//var/datum/map_template/shelter/template //template = SSmapping.holodeck_templates[template_id]
 			//var/datum/map_template/shelter/template = SSmapping.holodeck_templates[program_to_load]
 			//var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(program_to_load)
-				var/id = initial(program_to_load.template_id)
-				load_program(id)//do i only need to replace this? NO EASYNESS, ONLY PAIN
-		if("safety")
+				//var/id = initial(program_to_load.template_id)
+				load_program(program_to_load)//do i only need to replace this? NO EASYNESS, ONLY PAIN
+		/*if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
 			obj_flags ^= EMAGGED
-			say("Safeties restored. Restarting...")
+			say("Safeties restored. Restarting...")*/
 
 
-/obj/machinery/computer/holodeck/process()//will comment out when first testing, will have to port over
+/obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
 		for(var/turf/T in linked)
 			if(prob(5))
@@ -225,14 +232,16 @@
 	emergency_shutdown()
 	return ..()
 //FUCKING DO IT PUSSY
-/obj/machinery/computer/holodeck/proc/generate_program_list()
+/obj/machinery/computer/holodeck/proc/generate_program_list()//this is important so that the js ui program knows what is necessary for the holdeck
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/A = typekey
+		//if(!A)
+			//continue
 		var/list/info_this = list()
 		info_this["name"] = initial(A.name)
-		info_this["type"] = A.type//this doesnt like initial being used on it
+		info_this["id"] = initial(A.template_id)
 		if(initial(A.restricted))
-			LAZYADD(emag_programs, list(info_this))
+			LAZYADD(emag_programs, list(info_this))//this is supposed to be sent to the js thing\
 		else
 			LAZYADD(program_cache, list(info_this))
 
@@ -242,16 +251,16 @@
 
 	if(toggleOn)
 		if(last_program && last_program != offline_program)
-			addtimer(CALLBACK(src, .proc/load_program, last_program, TRUE), 25)
+			addtimer(CALLBACK(src, .proc/load_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
-		load_program(offline_program, TRUE)
+		load_program("holodeck_offline")
 		active = FALSE
 
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()//low priority
 	last_program = program
-	load_program(offline_program, TRUE)
+	load_program("holodeck_offline", TRUE)
 	active = FALSE
 
 /obj/machinery/computer/holodeck/proc/floorcheck()//low priority
@@ -266,63 +275,37 @@
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.safety(active)
-/*
-1. find turf to spawn on
-2. holodeck_id.place?
-*/
-//FOR TESTING
 
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
+	//current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
+	//bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
+
+	//message_admins(world,"DEBUG -- load_program started")
 	//takes an area, finds what program that area corresponds to
 	//if (1==2)
 		///datum/map_template/holodeck/wildlifesim/load(get_turf(A))
 	//template.load(deploy_location, centered = TRUE)
-
+	/*
 	if(!is_operational)
 		template = offline_program
 		force = TRUE
 
 	if(program == template)//if the program is the same as the corresponding area
 		return
-	if(current_cd > world.time && !force)
-		say("ERROR. Recalibrating projection apparatus.")
-		return
-	if(add_delay)
-		current_cd = world.time + HOLODECK_CD
-		if(damaged)
-			current_cd += HOLODECK_DMG_CD
-	active = (template != offline_program)
-	use_power = active + IDLE_POWER_USE
+	*/
 
-	for(var/e in effects)
-		var/obj/effect/holodeck_effect/HE = e
-		HE.deactivate(src)
-
-	for(var/item in spawned)
-		derez(item, !force)
-
-	//program = A
-	// note nerfing does not yet work on guns, should
-	// should also remove/limit/filter reagents?
-	// this is an exercise left to others I'm afraid.  -Sayu
+	program = map_id //<- dont forget this
 
 	//template = SSmapping.holodeck_templates[template_id]
 	template = SSmapping.holodeck_templates[map_id]
-	spawned = template.load(spawn_tile, centered = TRUE)//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
+	template.load(bottom_left, FALSE)//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
 
 	//spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))
-	//spawned
-	for(var/obj/machinery/M in spawned)
-		M.flags_1 |= NODECONSTRUCT_1
-	for(var/obj/structure/S in spawned)
-		S.flags_1 |= NODECONSTRUCT_1
-	effects = list()
+	//message_admins(world,"DEBUG -- load_program ended")
 
-	//addtimer(CALLBACK(src, .proc/finish_spawn), 30)//kyler, maybe this is what actually spawns the atoms?
-
-/obj/machinery/computer/holodeck/proc/finish_spawn()//kyler, this SHOULDNT be what actually spawns shit, copy_contents_2 is called in load_pro
+/obj/machinery/computer/holodeck/proc/finish_spawn()
 	//kyler, finish_spwn allows effects to work (at least spawning ones). without it pet park will not spawn anything for example
 	var/list/added = list()
 	for(var/obj/effect/holodeck_effect/HE in spawned)
@@ -355,7 +338,7 @@
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
-	qdel(O)
+		qdel(O)
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD

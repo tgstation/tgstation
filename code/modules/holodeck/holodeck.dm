@@ -37,7 +37,7 @@
 	return SHELTER_DEPLOY_ALLOWED
 	*/
 
-/datum/map_template/holodeck/lounge
+/datum/map_template/holodeck/lounge//the l in lounge starts after space 29
 	name = "Holodeck - Lounge"
 	template_id = "holodeck_lounge"
 	description = "benis"
@@ -170,14 +170,14 @@
 	restricted = TRUE
 
 /datum/map_template/holodeck/wildlifesim
-	name = "Holodeck Wild Life Sim"
+	name = "Holodeck - Wildlife Simulation"
 	template_id = "holodeck_wildlifesim"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_wildlifesim.dmm"
 	restricted = TRUE
 
 /datum/map_template/holodeck/winterwonderland
-	name = "Holodeck Winter Wonderland"
+	name = "Holodeck - Winter Wonderland"
 	template_id = "holodeck_winterwonderland"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_winterwonderland.dmm"
