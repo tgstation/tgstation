@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Guide to Dank Mimery now uses a radial menu."
