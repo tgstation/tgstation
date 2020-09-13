@@ -19,7 +19,7 @@
 
 /obj/item/ammo_casing/energy/lasergun/gauss
 	projectile_type = /obj/projectile/beam/laser/gauss
-
+	fire_sound = 'sound/magic/mm_hit.ogg'
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 120
 
