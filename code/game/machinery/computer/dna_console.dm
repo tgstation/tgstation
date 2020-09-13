@@ -1681,7 +1681,7 @@
   */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	// Set the appropriate occupant now the scanner is closed
-	if(connected_scanner.occupant)
+	if(connected_scanner?.occupant)
 		scanner_occupant = connected_scanner.occupant
 	else
 		scanner_occupant = null
