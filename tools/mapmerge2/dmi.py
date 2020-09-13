@@ -241,7 +241,7 @@ def parse_bool(value):
         raise ValueError(value)
     return value == '1'
 
-if __name__ == '__main__':
+def _self_test():
     # test: can we load every DMI in the tree
     import os
 
@@ -251,7 +251,31 @@ if __name__ == '__main__':
             dirnames.remove('.git')
         for filename in filenames:
             if filename.endswith('.dmi'):
-                Dmi.from_file(os.path.join(dirpath, filename))
+                fullpath = os.path.join(dirpath, filename)
+                try:
+                    Dmi.from_file(fullpath)
+                except:
+                    print('Failed on:', fullpath)
+                    raise
                 count += 1
 
     print(f"Successfully parsed {count} dmi files")
+
+def _usage():
+    import sys
+    print(f"Usage:")
+    print(f"    {sys.argv[0]} --test")
+    exit(1)
+
+def _main():
+    import sys
+    if len(sys.argv) < 2:
+        return _usage()
+
+    if sys.argv[1] == '--test':
+        return _self_test()
+
+    return _usage()
+
+if __name__ == '__main__':
+    _main()
