@@ -333,8 +333,29 @@
 
 /obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(iscultist(L))
+			to_chat(user, "<span class='cult'>With the divine guidance of Nar'Sie to help you, you easily find the section of the archives detailing the creation process of eldritch daggers and forge one for yourself. The Summon Ritual Dagger spell that you can prepare using your Prepare Blood Magic ability is for chumps, anyway. REAL cultists MAKE their daggers with GRIT and their BARE HANDS (and a how-to article)!</span>")
+			return //cultists don't get aged up by (or go (more) insane due to) accessing forbidden knowledge
 	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
+	if(ishuman(user)) //monkeys have seen it all
+		var/mob/living/carbon/human/N = user //mostly copied from the code from the old timer drink
+		if(N.age < 969) //same limit as the old timer drink, except we don't dust you for trying to go beyond it
+			N.age = min(N.age+10, 969)
+		if(N.age > 70)
+			N.facial_hair_color = "ccc"
+			N.hair_color = "ccc"
+			N.update_hair()
+			if(N.age > 100)
+				N.become_nearsighted(type)
+				if(N.gender == MALE)
+					N.facial_hairstyle = "Beard (Very Long)"
+					N.update_hair()
+		var/datum/component/mood/mood = N.GetComponent(/datum/component/mood)
+		mood?.setSanity(min(mood.sanity, SANITY_DISTURBED))
+		
 
 /obj/machinery/computer/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
