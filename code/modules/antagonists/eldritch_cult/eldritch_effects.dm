@@ -230,8 +230,7 @@
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
-		if(human_user.getOrganLoss(ORGAN_SLOT_BRAIN) < 190)
-			human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,5)
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
 		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
