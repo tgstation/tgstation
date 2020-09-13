@@ -109,8 +109,7 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	QDEL_LIST(Friends)
-	QDEL_LIST(speech_buffer)
+	Friends = null
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
