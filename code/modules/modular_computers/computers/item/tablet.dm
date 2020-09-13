@@ -74,6 +74,11 @@
 	borgo = null
 	return ..()
 
+/obj/item/modular_computer/tablet/integrated/update_overlays()
+	. = ..()
+	if(borgo?.interfaceButton)
+		borgo.interfaceButton.update_icon()
+
 /obj/item/modular_computer/tablet/integrated/attackby(obj/item/W as obj, mob/user as mob)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		return

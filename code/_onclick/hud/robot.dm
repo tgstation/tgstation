@@ -111,7 +111,9 @@
 	using.screen_loc = ui_borg_lamp
 	using.hud = src
 	static_inventory += using
-//	mymobR.lamp_button = using
+	mymobR.lampButton = using
+	var/obj/screen/robot/lamp/lampscreen = using
+	lampscreen.robot = mymobR
 
 //Photography stuff
 	using = new /obj/screen/ai/image_take()
@@ -124,6 +126,10 @@
 	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
+	mymobR.interfaceButton = using
+	using.update_icon()
+	var/obj/screen/robot/modPC/tablet = using
+	tablet.robot = mymobR
 
 //Alerts
 	using = new /obj/screen/robot/alerts()
@@ -269,14 +275,17 @@
 /obj/screen/robot/lamp
 	name = "headlamp"
 	icon_state = "lamp_off"
+	var/mob/living/silicon/robot/robot
 
 /obj/screen/robot/lamp/Click()
 	. = ..()
 	if(.)
 		return
-	var/mob/living/silicon/robot/borgo = usr
-	borgo.toggle_headlamp()
-	if(borgo.lamp_enabled)
+	robot?.toggle_headlamp()
+	update_icon()
+
+/obj/screen/robot/lamp/update_icon()
+	if(robot?.lamp_enabled)
 		icon_state = "lamp_on"
 	else
 		icon_state = "lamp_off"
@@ -284,15 +293,18 @@
 /obj/screen/robot/modPC
 	name = "Modular Interface"
 	icon_state = "template"
+	var/mob/living/silicon/robot/robot
+
+/obj/screen/robot/modPC/update_icon()
+	cut_overlays()
+	if(robot?.modularInterface)
+		add_overlay(robot.modularInterface)
 
 /obj/screen/robot/modPC/Click()
 	. = ..()
 	if(.)
 		return
-	var/mob/living/silicon/robot/borgo = usr
-	if(!istype(borgo))
-		return
-	borgo.modularInterface.interact(borgo)
+	robot.modularInterface?.interact(robot)
 
 /obj/screen/robot/alerts
 	name = "Alert Panel"

@@ -86,13 +86,15 @@
 	var/lamp_color = COLOR_WHITE
 	///Lamp brightness. Starts at 3, but can be 1 - 5.
 	var/lamp_intensity = 3
-
+	///Lamp button reference
+	var/obj/screen/robot/lamp/lampButton
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	///The reference to the built-in tablet that borgs carry.
 	var/obj/item/modular_computer/tablet/integrated/modularInterface
+	var/obj/screen/robot/modPC/interfaceButton
 
 	var/list/upgrades = list()
 
@@ -551,12 +553,14 @@
 	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || stat || low_power_mode))
 		set_light_on(FALSE)
 		lamp_enabled = FALSE
+		lampButton.update_icon()
 		update_icons()
 		return
 	set_light_range(lamp_intensity)
 	set_light_color(lamp_color)
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
+	lampButton.update_icon()
 	update_icons()
 
 /mob/living/silicon/robot/proc/deconstruct()
@@ -1117,7 +1121,7 @@
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
-	var/datum/computer_file/program/robotact/program = hard_drive.find_file_by_name("borgUI")
+	var/datum/computer_file/program/robotact/program = hard_drive.find_file_by_name("robotact")
 	if(!program)
 		stack_trace("Cyborg [src] ( [type] ) was somehow missing their self-manage app in their tablet. Please make a bug report.")
 		return
