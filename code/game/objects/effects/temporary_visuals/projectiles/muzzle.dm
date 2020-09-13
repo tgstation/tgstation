@@ -26,8 +26,5 @@
 /obj/effect/projectile/muzzle/heavy_laser
 	icon_state = "muzzle_beam_heavy"
 
-/obj/effect/projectile/muzzle/gauss
-	icon_state = "muzzle_gauss"
-
 /obj/effect/projectile/muzzle/wormhole
 	icon_state = "wormhole_g"

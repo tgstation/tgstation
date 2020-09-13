@@ -34,9 +34,5 @@
 	name = "heavy laser impact"
 	icon_state = "impact_beam_heavy"
 
-/obj/effect/projectile/impact/gauss
-	name = "gauss impact"
-	icon_state = "impact_gauss"
-
 /obj/effect/projectile/impact/wormhole
 	icon_state = "wormhole_g"

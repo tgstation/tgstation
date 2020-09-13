@@ -55,10 +55,6 @@
 	name = "heavy laser"
 	icon_state = "beam_heavy"
 
-/obj/effect/projectile/tracer/gauss
-	name = "gauss shot"
-	icon_state = "gauss_beam"
-
 //BEAM RIFLE
 /obj/effect/projectile/tracer/tracer/beam_rifle
 	icon_state = "tracer_beam"

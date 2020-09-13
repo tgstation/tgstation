@@ -1933,7 +1933,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/gauss_gun
-	name = "Gauss rifle Arm Implant"
+	name = "Gauss Rifle Arm Implant"
 	desc = "An implant that grants you a recharging gauss rifle inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/organ/syndicate/gauss_gun
