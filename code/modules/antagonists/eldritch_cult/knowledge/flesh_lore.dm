@@ -171,7 +171,7 @@
 	gain_text = "Uncanny man, walks alone in the valley between the worlds , I was able to call his aid."
 	desc = "You can now summon a Raw Prophet using eyes, a left arm, right arm and a pool of blood. Raw prophets have increased seeing range, as well as Xray. But are very fragile and weak."
 	cost = 1
-	required_atoms = list(/obj/item/organ/eyes,/obj/effect/decal/cleanable/blood,/obj/item/paper)
+	required_atoms = list(/obj/item/organ/eyes,/obj/effect/decal/cleanable/blood,/obj/item/bodypart/l_arm)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/raw_prophet
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/curse/paralysis)
 	route = PATH_FLESH
@@ -179,9 +179,9 @@
 /datum/eldritch_knowledge/summon/stalker
 	name = "Lonely Ritual"
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast i have not seen before. Ever shapeshifting mass of flesh, it well knew my goals."
-	desc = "You can now summon a Stalker using a knife, a flower, a pen and a piece of paper. Stalkers can shapeshift into harmeless animals and get close to the victim."
+	desc = "You can now summon a Stalker using a knife, a candle, a pen and a piece of paper. Stalkers can shapeshift into harmeless animals and get close to the victim."
 	cost = 1
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/pen,/obj/item/paper)
+	required_atoms = list(/obj/item/kitchen/knife,/obj/item/pen,/obj/item/paper,/obj/item/candle)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
 	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/final/flesh_final)
 	route = PATH_FLESH
@@ -198,7 +198,7 @@
 /datum/eldritch_knowledge/summon/rusty
 	name = "Rusted Ritual"
 	gain_text = "I combined principle of hunger with desire of corruption. The Rusted Hills call my name."
-	desc = "You can now summon a Rust Walker transmutating vomit pool, a head and a book."
+	desc = "You can now summon a Rust Walker transmutating vomit pool and a book."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/book)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/rust_spirit

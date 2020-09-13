@@ -128,14 +128,18 @@
 /datum/eldritch_knowledge/curse
 	var/timer = 5 MINUTES
 	var/list/fingerprints = list()
+	var/list/dna = list()
 
 /datum/eldritch_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
 	fingerprints = list()
 	for(var/X in atoms)
 		var/atom/A = X
 		fingerprints |= A.return_fingerprints()
+		var/dna_local |= A.return_blood_DNA()
+		dna += dna_local.holder
 	listclearnulls(fingerprints)
-	if(fingerprints.len == 0)
+	listclearnulls(dna)
+	if(fingerprints.len == 0 && dna.len == 0)
 		return FALSE
 	return TRUE
 
@@ -145,12 +149,12 @@
 
 	for(var/H in GLOB.human_list)
 		var/mob/living/carbon/human/human_to_check = H
-		if(fingerprints[md5(human_to_check.dna.uni_identity)])
+		if(fingerprints[md5(human_to_check.dna.uni_identity)] || human_to_check in dna)
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
-		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")
+		to_chat(user, "<span class='warning'>The items don't posses required fingerprints or dna.</span>")
 		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)

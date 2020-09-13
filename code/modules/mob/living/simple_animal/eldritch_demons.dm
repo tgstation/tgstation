@@ -183,6 +183,18 @@
 			prev.AIStatus = AI_OFF
 		next = prev
 
+/mob/living/simple_animal/hostile/eldritch/armsy/adjustBruteLoss(amount, updating_health, forced)
+	if(back)
+		back.adjustBruteLoss(amount, updating_health, forced)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/eldritch/armsy/adjustFireLoss(amount, updating_health, forced)
+	if(back)
+		back.adjustFireLoss(amount, updating_health, forced)
+	else
+		return ..()
+
 //we are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
 /mob/living/simple_animal/hostile/eldritch/armsy/has_gravity(turf/T)
 	return TRUE
@@ -231,33 +243,30 @@
 		QDEL_NULL(back) // chain destruction baby
 	return ..()
 
-
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/heal()
-	if(health == maxHealth)
-		if(back)
-			back.heal()
-			return
-		else
-			current_stacks++
-			if(current_stacks >= stacks_to_grow)
-				var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
-				icon_state = "armsy_mid"
-				icon_living =  "armsy_mid"
-				back = prev
-				prev.icon_state = "armsy_end"
-				prev.icon_living = "armsy_end"
-				prev.front = src
-				prev.AIStatus = AI_OFF
-				current_stacks = 0
+	if(back)
+		back.heal()
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
 	adjustFireLoss(-maxHealth * 0.5 ,FALSE)
 
+	if(health == maxHealth)
+		current_stacks++
+		if(current_stacks >= stacks_to_grow)
+			var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
+			icon_state = "armsy_mid"
+			icon_living =  "armsy_mid"
+			back = prev
+			prev.icon_state = "armsy_end"
+			prev.icon_living = "armsy_end"
+			prev.front = src
+			prev.AIStatus = AI_OFF
+			current_stacks = 0
+			return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
 	target = targeted_atom
 	AttackingTarget()
-
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
@@ -296,8 +305,8 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/prime
 	name = "Lord of the Night"
 	real_name = "Master of Decay"
-	maxHealth = 600
-	health = 600
+	maxHealth = 400
+	health = 400
 	melee_damage_lower = 30
 	melee_damage_upper = 50
 
