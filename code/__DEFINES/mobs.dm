@@ -95,6 +95,12 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define SAFE_OXY_MINIMUM	16
+#define SAFE_CO2_MINIMUM	10
+#define SAFE_TOX_MINIMUM	0.05
+#define SAFE_N20_PARALYSIS_MINIMUM	1
+#define SAFE_N20_SLEEP_MINIMUM	5
+
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
 #define BRAIN_DAMAGE_SEVERE 100

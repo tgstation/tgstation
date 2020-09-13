@@ -9,7 +9,7 @@
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
-		handle_wounds()
+		handle_wounds()//I know its dumb wounds process when dead but whatever
 
 		. = ..()
 
@@ -26,7 +26,16 @@
 				update_stamina() //needs to go before updatehealth to remove stamcrit
 				updatehealth()
 			handle_brain_damage()
-
+			if(SSmobs.times_fired >= next_breathe_check || failed_last_breath)
+				handle_breathing()
+				next_breathe_check = SSmobs.times_fired + 4
+				if(!failed_last_breath)//if this changes we're going to check next breathe anyway so no need to check organs
+					var/obj/item/organ/lungs/lung = getorganslot(ORGAN_SLOT_LUNGS)
+					var/obj/item/organ/lungs/heart = getorganslot(ORGAN_SLOT_HEART)
+					if(lung?.damage > lung.high_threshold)
+						next_breathe_check--
+					if(heart?.damage > heart.high_threshold)
+						next_breathe_check--
 	else
 		. = ..()
 
@@ -47,15 +56,10 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
-	if(istype(loc, /obj/))
-		var/obj/location_as_object = loc
-		location_as_object.handle_internal_lifeform(src,0)
 
 ///Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
 	if(has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
-		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
@@ -89,7 +93,7 @@
 				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
 			else if(isturf(loc)) //Breathe from loc as turf
 				var/breath_moles = 0
-				var/datum/gas_mixture/environment = loc?.return_air()
+				var/datum/gas_mixture/environment = loc.return_air()
 				if(environment)
 					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
 
@@ -124,30 +128,26 @@
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return FALSE
 
-	var/safe_oxy_min = 16
-	var/safe_co2_max = 10
-	var/safe_tox_max = 0.05
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-	var/list/breath_gases = breath.gases
+#define BREATH_GASES (breath.gases)
+
 	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
-	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (BREATH_GASES[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (BREATH_GASES[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (BREATH_GASES[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
-	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
+	if(O2_partialpressure < SAFE_OXY_MINIMUM) //Not enough oxygen
 		if(prob(20))
 			emote("gasp")
 		if(O2_partialpressure > 0)
-			var/ratio = 1 - O2_partialpressure/safe_oxy_min
+			var/ratio = 1 - O2_partialpressure/SAFE_OXY_MINIMUM
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = TRUE
-			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
+			oxygen_used = BREATH_GASES[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
@@ -157,14 +157,14 @@
 		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
-		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
+		oxygen_used = BREATH_GASES[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
 
-	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
-	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
+	BREATH_GASES[/datum/gas/oxygen][MOLES] -= oxygen_used
+	BREATH_GASES[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
-	if(CO2_partialpressure > safe_co2_max)
+	if(CO2_partialpressure > SAFE_CO2_MINIMUM)
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
@@ -179,26 +179,26 @@
 		co2overloadtime = 0
 
 	//TOXINS/PLASMA
-	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
+	if(Toxins_partialpressure > SAFE_TOX_MINIMUM)
+		var/ratio = (BREATH_GASES[/datum/gas/plasma][MOLES]/SAFE_TOX_MINIMUM) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(breath_gases[/datum/gas/nitrous_oxide])
-		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
-		if(SA_partialpressure > SA_para_min)
+	if(BREATH_GASES[/datum/gas/nitrous_oxide])
+		var/SA_partialpressure = (BREATH_GASES[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
+		if(SA_partialpressure > SAFE_N20_PARALYSIS_MINIMUM)
 			Unconscious(60)
-			if(SA_partialpressure > SA_sleep_min)
+			if(SA_partialpressure > SAFE_N20_SLEEP_MINIMUM)
 				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
-		if(SA_partialpressure > safe_tox_max*3)
-			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_tox_max)
+		if(SA_partialpressure > SAFE_TOX_MINIMUM*3)
+			var/ratio = (BREATH_GASES[/datum/gas/nitrous_oxide][MOLES]/SAFE_TOX_MINIMUM)
 			adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 			throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 		else
@@ -207,31 +207,31 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
-	if(breath_gases[/datum/gas/bz])
-		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
+	if(BREATH_GASES[/datum/gas/bz])
+		var/bz_partialpressure = (BREATH_GASES[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
 	//TRITIUM
-	if(breath_gases[/datum/gas/tritium])
-		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
+	if(BREATH_GASES[/datum/gas/tritium])
+		var/tritium_partialpressure = (BREATH_GASES[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
 	//NITRYL
-	if(breath_gases[/datum/gas/nitryl])
-		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
+	if(BREATH_GASES[/datum/gas/nitryl])
+		var/nitryl_partialpressure = (BREATH_GASES[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
 
 	//FREON
-	if(breath_gases[/datum/gas/freon])
-		var/freon_partialpressure = (breath_gases[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
+	if(BREATH_GASES[/datum/gas/freon])
+		var/freon_partialpressure = (BREATH_GASES[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(freon_partialpressure * 0.25)
 
 	//MIASMA
-	if(breath_gases[/datum/gas/miasma])
-		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+	if(BREATH_GASES[/datum/gas/miasma])
+		var/miasma_partialpressure = (BREATH_GASES[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
 
 		if(prob(1 * miasma_partialpressure))
 			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
@@ -275,7 +275,7 @@
 	handle_breath_temperature(breath)
 
 	return TRUE
-
+#undef BREATH_GASES
 /**
   * Fourth and final link in a breath chain, sets the temp of the breath to, by default, the mobs temp
   * Arguments:

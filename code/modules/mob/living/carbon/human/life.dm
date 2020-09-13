@@ -20,9 +20,12 @@
 
 /mob/living/carbon/human/life_process()
 	. = ..()
-		//Update our name based on whether our face is obscured/disfigured
+	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() //this needs to be moved out onto equiping and damage but I dont have the energy for it
-	if(!IS_IN_STASIS(src))
+	if(.)
+		return
+
+	else if(!IS_IN_STASIS(src))
 		dna.species.spec_life(src) // for mutantraces, some do stuff while dead so we check this before
 		if(.)
 			return
@@ -31,9 +34,6 @@
 		//heart attack stuff
 		handle_heart()
 		handle_liver()
-
-	else if(.)
-		return
 
 	for(var/i in all_wounds)
 		var/datum/wound/iter_wound = i
@@ -60,17 +60,13 @@
 	return ..()
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
-	if(!dna || !dna.species.handle_mutations_and_radiation(src))
-		..()
-
-/mob/living/carbon/human/breathe()
-	if(!dna.species.breathe(src))
-		..()
+	if(!dna.species.handle_mutations_and_radiation(src))
+		return ..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	var/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lun = getorganslot(ORGAN_SLOT_LUNGS)
 
-	if(!L)
+	if(!lun)
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
@@ -91,16 +87,10 @@
 
 		return FALSE
 	else
-		if(istype(L, /obj/item/organ/lungs))
-			var/obj/item/organ/lungs/lun = L
-			lun.check_breath(breath,src)
+		lun.check_breath(breath,src)
 
 /// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	// If we are in a cryo bed do not process life functions
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
-
 	dna.species.handle_environment(environment, src)
 	dna.species.handle_environment_pressure(environment, src)
 	dna.species.handle_body_temperature(src)
@@ -125,14 +115,13 @@
 	if(.) //if the mob isn't on fire anymore
 		return
 
-	if(dna)
-		. = dna.species.handle_fire(src) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
-
 	if(!last_fire_update)
 		last_fire_update = fire_stacks
 	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
 		last_fire_update = fire_stacks
 		update_fire()
+	if(dna)
+		return dna.species.handle_fire(src) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
 
 
 /mob/living/carbon/human/proc/get_thermal_protection()
@@ -151,12 +140,12 @@
 	//If firestacks are high enough
 	if(!dna || dna.species.CanIgniteMob(src))
 		return ..()
-	. = FALSE //No ignition
+	return FALSE //No ignition
 
 /mob/living/carbon/human/extinguish_mob()
 	if(!dna || !dna.species.extinguish_mob(src))
 		last_fire_update = null
-		..()
+		return ..()
 //END FIRE CODE
 
 
@@ -301,12 +290,10 @@
 	return ..()
 
 /mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
-
 	if(!undergoing_cardiac_arrest())
 		return
 
-	if(we_breath)
+	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT))
 		adjustOxyLoss(8)
 		Unconscious(80)
 	// Tissues die without blood circulation

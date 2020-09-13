@@ -57,7 +57,6 @@
 	return ..()
 
 /datum/wound/blunt/handle_process()
-	. = ..()
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
 			QDEL_NULL(active_trauma)

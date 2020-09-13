@@ -33,7 +33,6 @@
 
 
 /datum/wound/burn/handle_process()
-	. = ..()
 	if(strikes_to_lose_limb == 0)
 		victim.adjustToxLoss(0.5)
 		if(prob(1))

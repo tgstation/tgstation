@@ -1546,14 +1546,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// called before a projectile hit
 	return 0
 
-/////////////
-//BREATHING//
-/////////////
-
-/datum/species/proc/breathe(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return TRUE
-
 //////////////////////////
 // ENVIRONMENT HANDLERS //
 //////////////////////////

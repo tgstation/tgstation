@@ -32,26 +32,13 @@ SUBSYSTEM_DEF(mobs)
 
 	///Cache for speed as lists are references
 	var/list/currentprocrun = currentrun
-	var/times_fired = src.times_fired
 	while(currentprocrun.len)
 		var/mob/living/L = currentprocrun[currentprocrun.len]
 		currentprocrun.len--
-		if(!L.life_process())
-			GLOB.mob_living_list.Remove(L)//we died
+		if(!L)
+			GLOB.mob_living_list.Remove(L)//something removed us so dont process
 
-		if(iscarbon(L))//carbon breathing
-			var/mob/living/carbon/C = L	//do it here because it happens slower than life to make atmos not die
-			if(times_fired >= C.next_breathe_check || C.failed_last_breath)
-				C.handle_breathing()
-				C.next_breathe_check = times_fired + 4
-				if(!C.failed_last_breath)//if this changes we're going to check next breathe anyway so no need to check organs
-					var/obj/item/organ/lungs/lung = C.getorganslot(ORGAN_SLOT_LUNGS)
-					var/obj/item/organ/lungs/heart = C:getorganslot(ORGAN_SLOT_HEART)
-					if(lung?.damage > lung.high_threshold)
-						C.next_breathe_check--
-					if(heart?.damage > heart.high_threshold)
-						C.next_breathe_check--
-
+		L.life_process()
 
 		if(L.client && (currentrun >= next_slow_check))//only check for the zlevel every 5 runs
 			next_slow_check = currentrun + 5
