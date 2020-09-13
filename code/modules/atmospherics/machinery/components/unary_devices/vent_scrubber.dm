@@ -14,8 +14,6 @@
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
 	shift_underlay_only = FALSE
-
-	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
@@ -23,22 +21,29 @@
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
-
 	pipe_state = "scrubber"
+	frequency = FREQ_ATMOS_CONTROL
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
-	if(!id_tag)
-		id_tag = assign_uid_vents()
-
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/LateInitialize()
+	var/area/scrub_area = get_area(src)
+	if(!GLOB.air_scrub_names[id_tag])
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+		// If we do not have a name, assign one
+		name = "\proper [scrub_area.name] air scrubber [radio_connection.station_id]"
+		GLOB.air_scrub_names[id_tag] = name
+
+	scrub_area.air_scrub_info[id_tag] = src
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
@@ -46,8 +51,6 @@
 		scrub_area.air_scrub_info -= id_tag
 		GLOB.air_scrub_names -= id_tag
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
 	adjacent_turfs.Cut()
 	return ..()
 
@@ -91,49 +94,25 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
-	if(!radio_connection)
-		return FALSE
-
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
 		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
 
 	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
 		"device" = "VS",
 		"timestamp" = world.time,
 		"power" = on,
 		"scrubbing" = scrubbing,
 		"widenet" = widenet,
 		"filter_types" = f_types,
-		"sigtype" = "status"
 	))
+	_broadcast_status(signal)
 
-	var/area/scrub_area = get_area(src)
-	if(!GLOB.air_scrub_names[id_tag])
-		// If we do not have a name, assign one
-		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
-		GLOB.air_scrub_names[id_tag] = name
-
-	scrub_area.air_scrub_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
-
-	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-	if(frequency)
-		set_frequency(frequency)
 	broadcast_status()
 	check_turfs()
 	..()
@@ -220,7 +199,7 @@
 		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(..() != "command")
 		return
 
 	var/atom/signal_sender = signal.data["user"]

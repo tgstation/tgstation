@@ -37,7 +37,7 @@
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return
 
-/obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
+/obj/machinery/embedded_controller/proc/receive_signal(datum/signal/signal)
 	if(istype(signal) && program)
 		program.receive_signal(signal)
 
@@ -61,25 +61,27 @@
 	src.updateDialog()
 
 /obj/machinery/embedded_controller/radio
-	var/frequency
-	var/datum/radio_frequency/radio_connection
+	var/frequency = 0
+	var/radio_filter = null
 
-/obj/machinery/embedded_controller/radio/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
+// if we care about radio, make sure frequency is NOT 0 when the device is created
+// Otherwise the component was never installed
+/obj/machinery/atmospherics/components/ComponentInitialize()
+	if(frequency)
+		AddComponent(/datum/component/radio_interface, frequency, radio_filter)
+		RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, .proc/receive_signal)
 
-/obj/machinery/embedded_controller/radio/Initialize()
+/obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	. = ..()
-	set_frequency(frequency)
 
-/obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
+/obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal,comm_line)
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
 	signal.transmission_method = TRANSMISSION_RADIO
 	if(radio_connection)
-		return radio_connection.post_signal(src, signal)
+		return radio_connection.brodcast(signal)
 	else
 		signal = null
 
-/obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency)
+// handles some basic checking on the signal
+/obj/machinery/embedded_controller/radio/proc/set_frequency(freq, filter=null)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, freq, filter)

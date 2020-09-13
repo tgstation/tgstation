@@ -231,13 +231,13 @@ SUBSYSTEM_DEF(shuttle)
 		else
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-
-	if(!frequency)
-		return
-
+	// Original code just manualy found the frequency and sent the update signal
+	// Instead we add the component if it dosn't exist and send it that way
+	var/datum/component/radio_interface/I = GetComponent(/datum/component/radio_interface)
+	if(!I)
+		I = AddComponent(/datum/component/radio_interface, FREQ_STATUS_DISPLAYS)
 	var/datum/signal/status_signal = new(list("command" = "update")) // Start processing shuttle-mode displays to display the timer
-	frequency.post_signal(src, status_signal)
+	I.brodcast(status_signal) 
 
 	var/area/A = get_area(user)
 

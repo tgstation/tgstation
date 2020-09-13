@@ -36,6 +36,12 @@
 	else
 		obj_flags &= ~EMAGGED
 
+
+/obj/machinery/computer/cargo/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/radio_interface, FREQ_STATUS_DISPLAYS)
+
+
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
 	..()
@@ -273,11 +279,9 @@
 		post_signal("supply")
 
 /obj/machinery/computer/cargo/proc/post_signal(command)
+	var/datum/component/radio_interface/I = GetComponent(/datum/compunent/radio_interface)
+	if(I)
+		var/datum/signal/status_signal = new(list("command" = command))
+		I.brodcast(status_signal)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new(list("command" = command))
-	frequency.post_signal(src, status_signal)

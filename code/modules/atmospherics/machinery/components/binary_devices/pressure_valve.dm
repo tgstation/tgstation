@@ -9,11 +9,8 @@
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling
-	var/frequency = 0
-	///ID for radio signaling
-	var/id = null
-	///Connection to the radio processing
-	var/datum/radio_frequency/radio_connection
+	frequency = 0
+	radio_filter = RADIO_ATMOSIA
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
 
@@ -35,9 +32,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/Destroy()
-	SSradio.remove_object(src,frequency)
-	if(radio_connection)
-		radio_connection = null
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
@@ -64,24 +58,14 @@
 		is_gas_flowing = FALSE
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list(
-		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
-		"sigtype" = "status"
 	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	_broadcast_status(signal)
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -117,13 +101,9 @@
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pressure_valve/atmosinit()
-	. = ..()
-	if(frequency)
-		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if(..()!="command")
 		return
 
 	var/old_on = on //for logging

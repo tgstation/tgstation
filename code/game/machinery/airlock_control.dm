@@ -92,14 +92,20 @@
 
 	power_channel = AREA_USAGE_ENVIRON
 
-	var/id_tag
-	var/master_tag
+	var/id_tag = null
+	var/master_tag = null
 	var/frequency = FREQ_AIRLOCK_CONTROL
-
-	var/datum/radio_frequency/radio_connection
 
 	var/on = TRUE
 	var/alert = FALSE
+
+/obj/machinery/airlock_sensor/ComponentInitialize()
+	if(!id_tag || !master_tag)
+		investigate_log("No tag for the airlock sensor to use", INVESTIGATE_RADIO)
+	else
+		AddComponent(/datum/component/radio_interface, frequency, RADIO_AIRLOCK, id_tag)
+	. = ..()
+
 
 /obj/machinery/airlock_sensor/incinerator_toxmix
 	id_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
@@ -126,12 +132,13 @@
 	. = ..()
 	if(.)
 		return
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
 	var/datum/signal/signal = new(list(
 		"tag" = master_tag,
 		"command" = "cycle"
 	))
 
-	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+	radio_connection.transmit(signal, master_tag, AIRLOCK_CONTROL_RANGE)
 	flick("airlock_sensor_cycle", src)
 
 /obj/machinery/airlock_sensor/process()
@@ -140,25 +147,14 @@
 		var/pressure = round(air_sample.return_pressure(),0.1)
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
 		var/datum/signal/signal = new(list(
 			"tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = num2text(pressure)
 		))
 
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+		radio_connection.brodcast(signal, RADIO_AIRLOCK, AIRLOCK_CONTROL_RANGE)
 
 	update_icon()
 
-/obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
-
-/obj/machinery/airlock_sensor/Initialize()
-	. = ..()
-	set_frequency(frequency)
-
-/obj/machinery/airlock_sensor/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()

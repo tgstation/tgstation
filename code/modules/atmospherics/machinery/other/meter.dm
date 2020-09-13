@@ -11,8 +11,9 @@
 	max_integrity = 150
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
 	var/frequency = 0
+	var/id_tag = null
 	var/atom/target
-	var/id_tag
+
 	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/atmos
@@ -44,6 +45,12 @@
 	if(!target)
 		reattach_to_layer()
 	return ..()
+
+/obj/machinery/atmospherics/components/ComponentInitialize()
+	if(frequency)
+		var/datum/component/radio_interface/I = AddComponent(/datum/component/radio_interface, frequency, RADIO_ATMOSIA, id_tag)
+		if(!id_tag)
+			id_tag = I.station_id
 
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate
@@ -90,8 +97,8 @@
 		icon_state = "meter4"
 
 	if(frequency)
-		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
-
+		// REALLY?  In process atmos?  mabey using set_for = true in brodast is a good idea
+		var/datum/component/radio_frequency/radio_connection = GetComponent(/datum/componnet/radio_interface)
 		if(!radio_connection)
 			return
 
@@ -101,7 +108,7 @@
 			"pressure" = round(env_pressure),
 			"sigtype" = "status"
 		))
-		radio_connection.post_signal(src, signal)
+		radio_connection.broadcast(signal, RADIO_ATMOSIA)
 
 /obj/machinery/meter/proc/status()
 	if (target)

@@ -18,7 +18,6 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
-	var/id_tag = null
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -28,17 +27,23 @@
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
-
+	frequency = FREQ_ATMOS_CONTROL
+	radio_filter = RADIO_AIRALARM
 	pipe_state = "uvent"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
 	..()
-	if(!id_tag)
-		id_tag = assign_uid_vents()
+	return INITIALIZE_HINT_LATELOAD // so we can set the name right
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/LateInitialize()
+	var/area/vent_area = get_area(src)
+	if(!GLOB.air_vent_names[id_tag])
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+		// If we do not have a name, assign one
+		name = "\proper [vent_area.name] vent pump [radio_connection.station_id]"
+		GLOB.vent_area[id_tag] = name
+
+	vent_area.air_scrub_info[id_tag] = src
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
@@ -46,8 +51,6 @@
 		vent_area.air_vent_info -= id_tag
 		GLOB.air_vent_names -= id_tag
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -137,19 +140,8 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency,radio_filter_in)
-
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
 		"device" = "VP",
 		"timestamp" = world.time,
 		"power" = on,
@@ -157,35 +149,16 @@
 		"checks" = pressure_checks,
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
-		"sigtype" = "status"
 	))
-
-	var/area/vent_area = get_area(src)
-	if(!GLOB.air_vent_names[id_tag])
-		// If we do not have a name, assign one.
-		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		name = "\proper [vent_area.name] vent pump [assign_random_name()]"
-		GLOB.air_vent_names[id_tag] = name
-
-	vent_area.air_vent_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	_broadcast_status(signal)
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
-	//some vents work his own spesial way
-	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
-	if(frequency)
-		set_frequency(frequency)
 	broadcast_status()
 	..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(!is_operational)
-		return
-	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(..() != "command")
 		return
 
 	var/atom/signal_sender = signal.data["user"]

@@ -580,8 +580,8 @@
 // /obj/item/radio signals
 
 ///called from base of /obj/item/radio/proc/set_frequency(): (list/args)
-#define COMSIG_RADIO_NEW_FREQUENCY "radio_new_frequency"
-
+#define COMSIG_RADIO_NEW_FREQUENCY 	"radio_new_frequency"
+#define COMSIG_RADIO_RECEIVE_DATA	"radio_receive_data"
 // /obj/item/pen signals
 
 ///called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)

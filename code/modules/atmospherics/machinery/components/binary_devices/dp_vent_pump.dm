@@ -16,9 +16,8 @@
 
 	hide = TRUE
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
+	frequency = FREQ_AIRLOCK_CONTROL
+	radio_filter = RADIO_ATMOSIA
 
 	var/pump_direction = 1 //0 = siphoning, 1 = releasing
 
@@ -31,10 +30,6 @@
 	//EXT_BOUND: Do not pass external_pressure_bound
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	SSradio.remove_object(src, frequency)
-	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
@@ -106,18 +101,13 @@
 
 	//Radio remote control
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
+
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
-	if(!radio_connection)
+	if(..() != "command")
 		return
 
 	var/datum/signal/signal = new(list(
-		"tag" = id,
 		"device" = "ADVP",
 		"power" = on,
 		"direction" = pump_direction?("release"):("siphon"),
@@ -125,18 +115,16 @@
 		"input" = input_pressure_min,
 		"output" = output_pressure_max,
 		"external" = external_pressure_bound,
-		"sigtype" = "status"
 	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+
+	_broadcast_status(signal)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
-	if(frequency)
-		set_frequency(frequency)
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if(..()!="command")
 		return
 
 	if("power" in signal.data)
@@ -206,15 +194,15 @@
 	icon_state = "dpvent_map_on-4"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_DP_VENTPUMP
+	id_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
-	id = INCINERATOR_ATMOS_DP_VENTPUMP
+	id_tag = INCINERATOR_ATMOS_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava
-	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	id_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer2

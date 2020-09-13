@@ -13,7 +13,6 @@
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
-	var/datum/radio_frequency/radio_connection
 	///Holds the mind that commited suicide.
 	var/datum/mind/suicider
 	///Holds a reference string to the mob, decides how much of a gamer you are.
@@ -43,9 +42,12 @@
 	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
 
-/obj/item/assembly/signaler/Initialize()
-	. = ..()
-	set_frequency(frequency)
+// if we care about radio, make sure frequency is NOT 0 when the device is created
+// Otherwise the component was never installed
+/obj/item/assembly/signaler/ComponentInitialize()
+	AddComponent(/datum/component/radio_interface, frequency, radio_filter)
+	RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, .proc/receive_signal)
+
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -93,7 +95,7 @@
 		if("freq")
 			frequency = unformat_frequency(params["freq"])
 			frequency = sanitize_frequency(frequency, TRUE)
-			set_frequency(frequency)
+			SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, frequency)
 			. = TRUE
 		if("code")
 			code = text2num(params["code"])
@@ -102,6 +104,7 @@
 		if("reset")
 			if(params["reset"] == "freq")
 				frequency = initial(frequency)
+				SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, frequency)
 			else
 				code = initial(code)
 			. = TRUE
@@ -113,23 +116,21 @@
 		var/obj/item/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
 			code = signaler2.code
-			set_frequency(signaler2.frequency)
+			SEND_SIGNAL(src,COMSIG_RADIO_NEW_FREQUENCY, signaler2.frequency)
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
 /obj/item/assembly/signaler/proc/signal()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list("code" = code))
-	radio_connection.post_signal(src, signal)
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+	radio_connection.broadcast(signal)
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
 		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
-/obj/item/assembly/signaler/receive_signal(datum/signal/signal)
+/obj/item/assembly/signaler/proc/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
 		return
@@ -148,11 +149,6 @@
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
 
-/obj/item/assembly/signaler/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
-	return
 
 // Embedded signaller used in grenade construction.
 // It's necessary because the signaler doens't have an off state.

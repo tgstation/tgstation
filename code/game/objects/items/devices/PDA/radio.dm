@@ -15,15 +15,14 @@
 	radio_connection = null
 	return ..()
 
-/obj/item/integrated_signaler/Initialize()
+/obj/item/integrated_signaler/ComponentInitialize()
 	. = ..()
 	if (frequency < MIN_FREE_FREQ || frequency > MAX_FREE_FREQ)
 		frequency = sanitize_frequency(frequency)
-	set_frequency(frequency)
+	AddComponent(/datum/component/radio_interface, frequency)
 
 /obj/item/integrated_signaler/proc/set_frequency(new_frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.return_frequency(frequency)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, new_frequency)
 
 /obj/item/integrated_signaler/proc/send_activation()
 	if(last_transmission && world.time < (last_transmission + 5))
@@ -35,4 +34,5 @@
 	GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location [AREACOORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
 
 	var/datum/signal/signal = new(list("code" = code))
-	radio_connection.post_signal(src, signal, filter = RADIO_SIGNALER)
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+	radio_connection.brodcast(signal,  RADIO_SIGNALER)

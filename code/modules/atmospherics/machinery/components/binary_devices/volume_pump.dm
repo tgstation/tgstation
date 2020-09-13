@@ -21,9 +21,8 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	var/overclocked = FALSE
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
+	frequency = 0
+	radio_filter = RADIO_ATMOSIA
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
@@ -40,10 +39,6 @@
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_icon()
-	return ..()
-
-/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
-	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
@@ -89,24 +84,14 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list(
-		"tag" = id,
 		"device" = "APV",
 		"power" = on,
 		"transfer_rate" = transfer_rate,
-		"sigtype" = "status"
 	))
-	radio_connection.post_signal(src, signal)
+	_broadcast_status(signal)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -121,10 +106,6 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
-	..()
-
-	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
@@ -148,7 +129,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if(..()!="command")
 		return
 
 	var/old_on = on //for logging

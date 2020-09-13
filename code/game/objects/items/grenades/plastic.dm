@@ -65,7 +65,7 @@
 	qdel(src)
 
 //assembly stuff
-/obj/item/grenade/c4/receive_signal()
+/obj/item/grenade/c4/proc/receive_signal()
 	prime()
 
 /obj/item/grenade/c4/attack_self(mob/user)

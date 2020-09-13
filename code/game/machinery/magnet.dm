@@ -13,7 +13,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
-	var/freq = FREQ_MAGNETS		// radio frequency
+	var/frequency = FREQ_MAGNETS		// radio frequency
 	var/electricity_level = 1 // intensity of the magnetic pull
 	var/magnetic_field = 1 // the range of magnetic attraction
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
@@ -30,17 +30,19 @@
 	..()
 	var/turf/T = loc
 	center = T
-	SSradio.add_object(src, freq, RADIO_MAGNETS)
-
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/magnetic_module/ComponentInitialize()
+	if(frequency)
+		AddComponent(/datum/component/radio_interface, frequency, RADIO_MAGNETS)
+		RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, ./proc/receive_signal)
 
 /obj/machinery/magnetic_module/LateInitialize()
 	magnetic_process()
 
 /obj/machinery/magnetic_module/Destroy()
-	SSradio.remove_object(src, freq)
 	center = null
 	return ..()
 
@@ -55,7 +57,7 @@
 
 	icon_state = "[state][onstate]"
 
-/obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
+/obj/machinery/magnetic_module/proc/receive_signal(datum/signal/signal)
 
 	var/command = signal.data["command"]
 	var/modifier = signal.data["modifier"]
@@ -204,22 +206,25 @@
 	var/moving = TRUE // true if scheduled to loop
 	var/looping = TRUE // true if looping
 
-	var/datum/radio_frequency/radio_connection
-
 
 /obj/machinery/magnetic_controller/Initialize()
 	. = ..()
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
-			if(M.freq == frequency && M.code == code)
+			if(M.frequency == frequency && M.code == code)
 				magnets.Add(M)
 
 	if(path) // check for default path
 		filter_path() // renders rpath
-	radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
+
+
+/obj/machinery/magnetic_controller/ComponentInitialize()
+	if(frequency)
+		AddComponent(/datum/component/radio_interface, frequency, RADIO_MAGNETS)
+
+
 
 /obj/machinery/magnetic_controller/Destroy()
-	SSradio.remove_object(src, frequency)
 	magnets = null
 	rpath = null
 	return ..()
@@ -227,7 +232,7 @@
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
-			if(M.freq == frequency && M.code == code)
+			if(M.frequency == frequency && M.code == code)
 				magnets.Add(M)
 
 /obj/machinery/magnetic_controller/ui_interact(mob/user)
@@ -283,8 +288,8 @@
 
 
 		// Broadcast the signal
-
-		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+		radio_connection.broadcast(signal,  RADIO_MAGNETS)
 
 		updateUsrDialog()
 
@@ -346,7 +351,8 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		INVOKE_ASYNC(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS)
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+		radio_connection.brodcast(signal, RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

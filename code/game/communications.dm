@@ -122,71 +122,9 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_CTF_BLUE]" = RADIO_CHANNEL_CTF_BLUE
 ))
 
-/datum/radio_frequency
-	var/frequency as num
-	var/list/list/obj/devices = list()
 
-/datum/radio_frequency/New(freq)
-	frequency = freq
-
-//If range > 0, only post to devices on the same z_level and within range
-//Use range = -1, to restrain to the same z_level without limiting range
-/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
-	// Ensure the signal's data is fully filled
-	signal.source = source
-	signal.frequency = frequency
-
-	//Apply filter to the signal. If none supply, broadcast to every devices
-	//_default channel is always checked
-	var/list/filter_list
-
-	if(filter)
-		filter_list = list(filter,"_default")
-	else
-		filter_list = devices
-
-	//If checking range, find the source turf
-	var/turf/start_point
-	if(range)
-		start_point = get_turf(source)
-		if(!start_point)
-			return
-
-	//Send the data
-	for(var/current_filter in filter_list)
-		for(var/obj/device in devices[current_filter])
-			if(device == source)
-				continue
-			if(range)
-				var/turf/end_point = get_turf(device)
-				if(!end_point)
-					continue
-				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
-					continue
-			device.receive_signal(signal)
-
-/datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
-	if (!filter)
-		filter = "_default"
-
-	var/list/devices_line = devices[filter]
-	if(!devices_line)
-		devices[filter] = devices_line = list()
-	devices_line += device
-
-
-/datum/radio_frequency/proc/remove_listener(obj/device)
-	for(var/devices_filter in devices)
-		var/list/devices_line = devices[devices_filter]
-		if(!devices_line)
-			devices -= devices_filter
-		devices_line -= device
-		if(!devices_line.len)
-			devices -= devices_filter
-
-
-/obj/proc/receive_signal(datum/signal/signal)
-	return
+///obj/proc/receive_signal(datum/signal/signal)
+//	return
 
 /datum/signal
 	var/obj/source

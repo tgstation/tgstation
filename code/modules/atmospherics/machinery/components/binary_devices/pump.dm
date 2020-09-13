@@ -20,9 +20,8 @@
 
 	var/target_pressure = ONE_ATMOSPHERE
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
+	frequency = 0
+	radio_filter = RADIO_ATMOSIA
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
@@ -41,12 +40,6 @@
 		update_icon()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/pump/Destroy()
-	SSradio.remove_object(src,frequency)
-	if(radio_connection)
-		radio_connection = null
-	return ..()
-
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
 	icon_state = (on && is_operational) ? "pump_on-[set_overlay_offset(piping_layer)]" : "pump_off-[set_overlay_offset(piping_layer)]"
 
@@ -62,24 +55,13 @@
 		update_parents()
 
 //Radio remote control
-/obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
 /obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list(
-		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
-		"sigtype" = "status"
 	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	_broadcast_status(signal)
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -115,13 +97,9 @@
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/atmosinit()
-	..()
-	if(frequency)
-		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if(..()!="command")
 		return
 
 	var/old_on = on //for logging

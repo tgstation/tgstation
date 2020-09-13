@@ -11,13 +11,9 @@
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/computer/atmos_alert/Initialize()
-	. = ..()
-	set_frequency(receive_frequency)
-
-/obj/machinery/computer/atmos_alert/Destroy()
-	SSradio.remove_object(src, receive_frequency)
-	return ..()
+/obj/machinery/atmospherics/components/proc/ComponentInitialize()
+	AddComponent(/datum/component/radio_interface, receive_frequency, RADIO_ATMOSIA)
+	RegesterSignal(src, COMSIG_RADIO_RECEIVE_DATA, ./proc/recive_signal)
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -53,12 +49,8 @@
 				. = TRUE
 	update_icon()
 
-/obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, receive_frequency)
-	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
-/obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
+/obj/machinery/computer/atmos_alert/proc/receive_signal(datum/signal/signal)
 	if(!signal)
 		return
 

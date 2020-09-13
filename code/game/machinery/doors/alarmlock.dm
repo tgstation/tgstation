@@ -10,22 +10,16 @@
 	var/air_frequency = FREQ_ATMOS_ALARMS
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/alarmlock/Initialize()
+/obj/machinery/airlock_sensor/ComponentInitialize()
+	AddComponent(/datum/component/radio_interface, frequency, RADIO_AIRALARM, id_tag)
+	RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, ./proc/receive_signal)
 	. = ..()
-	air_connection = new
-
-/obj/machinery/door/airlock/alarmlock/Destroy()
-	SSradio.remove_object(src,air_frequency)
-	air_connection = null
-	return ..()
 
 /obj/machinery/door/airlock/alarmlock/Initialize()
 	. = ..()
-	SSradio.remove_object(src, air_frequency)
-	air_connection = SSradio.add_object(src, air_frequency, RADIO_TO_AIRALARM)
 	INVOKE_ASYNC(src, .proc/open)
 
-/obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)
+/obj/machinery/door/airlock/alarmlock/proc/receive_signal(datum/signal/signal)
 	..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return

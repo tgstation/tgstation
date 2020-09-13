@@ -221,3 +221,7 @@
 	if(issilicon(user) || in_range(user, src))
 		return TRUE
 	return FALSE
+
+// because I am lazy and don't want evey god damn machine to have this proc
+/obj/machinery/telecomms/proc/receive_signal(datum/signal/signal)
+

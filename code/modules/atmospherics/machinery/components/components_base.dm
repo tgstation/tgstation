@@ -11,6 +11,11 @@
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
+	// Radio stuff
+	var/id_tag = null					// randomly generated tag
+	var/frequency = 0					// starting frequency for device
+	var/radio_filter = RADIO_ATMOSIA	// filter for radio
+
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
@@ -27,6 +32,35 @@
 
 	if(hide)
 		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+
+// if we care about radio, make sure frequency is NOT 0 when the device is created
+// Otherwise the component was never installed
+/obj/machinery/atmospherics/components/ComponentInitialize()
+	if(frequency)
+		var/datum/component/radio_interface/I = AddComponent(/datum/component/radio_interface, frequency, radio_filter, id_tag)
+		RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, .proc/receive_signal)
+
+		if(!id_tag)
+			id_tag = I.station_id
+
+// handles some basic checking on the signal, use to check if its the right device
+/obj/machinery/atmospherics/components/proc/receive_signal(datum/signal/S)
+	SHOULD_CALL_PARENT(1)
+	if(is_operational && S.data["tag"] == id_tag)
+		return S.data["sigtype"]
+
+// handles some basic checking on the signal
+/obj/machinery/atmospherics/components/proc/set_frequency(freq, filter=null)
+	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, freq, filter)
+
+// helper
+/obj/machinery/atmospherics/components/proc/_broadcast_status(datum/signal/signal)
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+	if(!radio_connection)
+		return
+	signal.data["id"] = id_tag
+	signal.data["sigtype"] = "status"
+	radio_connection.broadcast (signal, radio_filter)
 
 // Iconnery
 

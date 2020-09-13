@@ -96,8 +96,7 @@
 #define TRANSMISSION_SUPERSPACE 3  // reaches independent (CentCom) radios only
 
 // Filter types, used as an optimization to avoid unnecessary proc calls.
-#define RADIO_TO_AIRALARM "to_airalarm"
-#define RADIO_FROM_AIRALARM "from_airalarm"
+#define RADIO_AIRALARM "airalarm"
 #define RADIO_SIGNALER "signaler"
 #define RADIO_ATMOSIA "atmosia"
 #define RADIO_AIRLOCK "airlock"
@@ -114,3 +113,7 @@
 #define REQ_DEP_TYPE_ASSISTANCE 	(1<<0)
 #define REQ_DEP_TYPE_SUPPLIES 		(1<<1)
 #define REQ_DEP_TYPE_INFORMATION 	(1<<2)
+
+// Radio range constants
+#define RADIO_RANGE_INFINITY 	-1	// The entire z level is covered
+#define RADIO_RANGE_AREA 		-2	// Just in the area

@@ -51,10 +51,6 @@
 	status_alarm(FALSE)
 
 /datum/weather/rad_storm/proc/status_alarm(active)	//Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
 	var/datum/signal/signal = new
 	if (active)
 		signal.data["command"] = "alert"
@@ -62,5 +58,5 @@
 	else
 		signal.data["command"] = "shuttle"
 
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
+	var/atom/movable/virtualspeaker/virt = new(null) // .... I assume this is station only?  ugh
+	SSradio.station_brodcast(FREQ_STATUS_DISPLAYS, signal,virt)

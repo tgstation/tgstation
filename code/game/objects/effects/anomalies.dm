@@ -38,7 +38,7 @@
 	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
 	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
 		frequency++
-	aSignal.set_frequency(frequency)
+	SEND_SIGNAL(aSignal, COMSIG_RADIO_NEW_FREQUENCY, frequency)
 
 	if(new_lifespan)
 		lifespan = new_lifespan

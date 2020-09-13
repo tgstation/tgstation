@@ -160,14 +160,12 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-/obj/machinery/status_display/evac/Initialize()
-	. = ..()
-	// register for radio system
-	SSradio.add_object(src, frequency)
+// if we care about radio, make sure frequency is NOT 0 when the device is created
+// Otherwise the component was never installed
+/obj/machinery/status_display/evac/ComponentInitialize()
+	AddComponent(/datum/component/radio_interface, frequency)
+	RegisterSignal(src, COMSIG_RADIO_RECEIVE_DATA, .proc/receive_signal)
 
-/obj/machinery/status_display/evac/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
 
 /obj/machinery/status_display/evac/process()
 	if(machine_stat & NOPOWER)
@@ -201,7 +199,7 @@
 	else if(!message1 && !message2)
 		. += "The display is blank."
 
-/obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
+/obj/machinery/status_display/evac/proc/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
 		if("blank")
 			mode = SD_BLANK

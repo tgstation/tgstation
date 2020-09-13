@@ -19,9 +19,8 @@ Passive gate is similar to the regular pump except:
 
 	var/target_pressure = ONE_ATMOSPHERE
 
-	var/frequency = 0
-	var/id = null
-	var/datum/radio_frequency/radio_connection
+	frequency = 0
+	radio_filter = RADIO_ATMOSIA
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
@@ -41,7 +40,6 @@ Passive gate is similar to the regular pump except:
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
-	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
@@ -63,24 +61,15 @@ Passive gate is similar to the regular pump except:
 
 //Radio remote control
 
-/obj/machinery/atmospherics/components/binary/passive_gate/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
 	var/datum/signal/signal = new(list(
-		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
-		"sigtype" = "status"
 	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+
+	_broadcast_status(signal)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -118,11 +107,9 @@ Passive gate is similar to the regular pump except:
 
 /obj/machinery/atmospherics/components/binary/passive_gate/atmosinit()
 	..()
-	if(frequency)
-		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
+	if(..()!="command")
 		return
 
 	var/old_on = on //for logging

@@ -12,7 +12,7 @@
 
 	var/id_tag
 	var/frequency = FREQ_ATMOS_STORAGE
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
@@ -47,6 +47,9 @@
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
+		var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+		if(!radio_connection)
+			return
 		var/datum/gas_mixture/air_sample = return_air()
 
 		var/datum/signal/signal = new(list(
@@ -63,22 +66,21 @@
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+		radio_connection.brodcast(signal,  RADIO_ATMOSIA)
 
-
-/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
 	SSair.atmos_machinery += src
-	set_frequency(frequency)
+
+/obj/machinery/air_sensor/ComponentInitialize()
+	var/datum/component/radio_interface/I = AddComponent(/datum/component/radio_interface, frequency, radio_filter, id_tag)
+
+	if(!id_tag)
+		id_tag = I.station_id
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.atmos_machinery -= src
-	SSradio.remove_object(src, frequency)
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -109,17 +111,17 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
 	var/list/sensor_information = list()
-	var/datum/radio_frequency/radio_connection
-
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
 	GLOB.atmos_air_controllers += src
-	set_frequency(frequency)
+
+/obj/machinery/air_sensor/ComponentInitialize()
+	AddComponent(/datum/component/radio_interface, frequency, RADIO_ATMOSIA, id_tag)
+	RegesterSignal(src, COMSIG_RADIO_RECEIVE_DATA, ./proc/recive_signal)
 
 /obj/machinery/computer/atmos_control/Destroy()
 	GLOB.atmos_air_controllers -= src
-	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
@@ -146,7 +148,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		))
 	return data
 
-/obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
+/obj/machinery/computer/atmos_control/proc/receive_signal(datum/signal/signal)
 	if(!signal)
 		return
 
@@ -156,10 +158,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 	sensor_information[id_tag] = signal.data
 
-/obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 //Incinerator sensor only
 /obj/machinery/computer/atmos_control/incinerator
@@ -275,7 +273,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
-	if(..() || !radio_connection)
+	if(..())
 		return
 	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
 	switch(action)
@@ -300,7 +298,9 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 				target = clamp(target, 0, 4500)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				
+	var/datum/component/radio_interface/radio_connection = GetComponent(/datum/component/radio_interface)
+	radio_connection.broadcast(signal, RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
 	if(!signal)
