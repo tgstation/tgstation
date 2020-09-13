@@ -155,7 +155,7 @@
 			else
 				to_chat(M, "<span class='userdanger'>You are flashed by [src]!</span>")
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			M.adjustStaminaLoss(rand(80,120)*(1-deviation/2))
+			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
 			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
 
 		else if(user)
