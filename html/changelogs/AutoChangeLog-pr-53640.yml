@@ -1,0 +1,7 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Meta Engineering lobby fixes and tweaks, added missing machine, moved lights in SM"
+  - bugfix: "Meta The bar and kitchen have had several updates to objects"
+  - bugfix: "Meta The service hall was widened by one tile"
+  - bugfix: "Meta Atmosia has a fancy new control room and a bigger storage room for projects"
