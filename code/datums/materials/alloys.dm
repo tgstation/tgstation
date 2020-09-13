@@ -30,7 +30,7 @@
 /datum/material/alloy/plasteel
 	name = "plasteel"
 	desc = "The heavy duty result of infusing iron with plasma."
-	color = "#828282"
+	color = "#706374"
 	material_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.135
 	strength_modifier = 1.25
@@ -62,7 +62,7 @@
 /datum/material/alloy/plastitanium
 	name = "plastitanium"
 	desc = "The extremely heat resistant result of infusing titanium with plasma."
-	color = "#585658"
+	color = "#3a313a"
 	material_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.225
 	strength_modifier = 0.9	// It's a lightweight alloy.
@@ -79,8 +79,8 @@
 /datum/material/alloy/plasmaglass
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
-	color = "#dc90eb"
-	alpha = 210
+	color = "#ff80f4"
+	alpha = 150
 	material_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 0.5
 	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, RAD = 1, FIRE = 2, ACID = 2)
@@ -97,8 +97,8 @@
 /datum/material/alloy/titaniumglass
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
-	color = "#333135"
-	alpha = 210
+	color = "#cfbee0"
+	alpha = 150
 	material_flags = MATERIAL_INIT_MAPLOAD
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, RAD = 1, FIRE = 0.8, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/titaniumglass
@@ -114,8 +114,8 @@
 /datum/material/alloy/plastitaniumglass
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
-	color = "#232127"
-	alpha = 210
+	color = "#5d3369"
+	alpha = 150
 	material_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 1.1
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, RAD = 1, FIRE = 2, ACID = 2)
@@ -134,7 +134,7 @@
 /datum/material/alloy/alien
 	name = "alien alloy"
 	desc = "An extremely dense alloy similar to plasteel in composition. It requires exotic metallurgical processes to create."
-	color = "#313a68"
+	color = "#6041aa"
 	material_flags = MATERIAL_INIT_MAPLOAD
 	strength_modifier = 1.5 // It's twice the density of plasteel and just as durable. Getting hit with it is going to HURT.
 	integrity_modifier = 1.5
