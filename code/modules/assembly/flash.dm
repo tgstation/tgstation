@@ -140,8 +140,10 @@
 
 	var/deviation = calculate_deviation(M,user)
 
+	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
+
 	//If you face away from someone they shouldnt notice any effects.
-	if(deviation == 2)
+	if(deviation == 2 && !converter)
 		return
 
 	if(targeted)
@@ -149,8 +151,11 @@
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-			if(user)
+			if(converter)
 				terrible_conversion_proc(M, user)
+				if(deviation == 2)
+					to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
+					deviation = 1
 				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
 			else
 				to_chat(M, "<span class='userdanger'>You are flashed by [src]!</span>")
@@ -183,7 +188,7 @@
 	//The second check makes sure that the first user is actually facing the mob, since the first check will fail at it's job when the 2 mobs face away from each other.
 	if(dir1 == dir2 && get_dir(M,user) == dir1)
 		return 0
-	else if(turn(dir1,90) == dir2 || turn(dir1,-90) == dir2)
+	else if((turn(dir1,90) == dir2 || turn(dir1,-90) == dir2) || M.loc == user.loc)
 		return 1
 	else if(turn(dir1,180) == dir2)
 		return 2
@@ -228,24 +233,32 @@
 		return
 	AOE_flash()
 
+/**
+  * Converts the victim to revs
+  *
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  */
 /obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
-	if(istype(H) && H.stat != DEAD)
-		if(user.mind)
-			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
-			if(!converter)
-				return
-			if(!H.client)
-				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
-				return
-			if(H.stat != CONSCIOUS)
-				to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
-				return
-			if(converter.add_revolutionary(H.mind))
-				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-					H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-			else
-				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
+	if(!istype(H) || H.stat == DEAD)
+		return
+	if(!user.mind)
+		return
+	if(!H.client)
+		to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+		return
+	if(H.stat != CONSCIOUS)
+		to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
+		return
+	//If this proc fires the mob must be a revhead
+	var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
+	if(converter.add_revolutionary(H.mind))
+		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+	else
+		to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/assembly/flash/cyborg
