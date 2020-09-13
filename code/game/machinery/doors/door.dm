@@ -98,7 +98,14 @@
 			return TRUE
 	return FALSE
 
-/// Triggered when attempting to remove an airlock seal
+/**
+  * Called when attempting to remove the seal from an airlock
+  *
+  * Here because we need to call it and return if there was a seal so we don't try to open the door
+  * or try it's safety lock while it's sealed
+  * Arguments:
+  * * user - the mob attempting to remove the seal
+  */
 /obj/machinery/door/proc/try_remove_seal(mob/user)
 	return
 
