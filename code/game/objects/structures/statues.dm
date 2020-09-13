@@ -268,9 +268,10 @@
 	name = "Elder Atmosian"
 	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
 	icon_state = "eng"
-	//material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	custom_materials = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
+	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
 
 /obj/item/chisel
 	name = "chisel"
