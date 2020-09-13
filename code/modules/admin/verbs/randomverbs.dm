@@ -1132,7 +1132,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			plaunch.temp_pod.damage = 40//bring the mother fuckin ruckus
 			plaunch.temp_pod.explosionSize = list(0,0,0,2)
 			plaunch.temp_pod.effectStun = TRUE
-			plaunch.ui_interact(usr)
 			return //We return here because punish_log() is handled by the centcom_podlauncher datum
 		if(ADMIN_PUNISHMENT_MAZING)
 			if(!puzzle_imprison(target))

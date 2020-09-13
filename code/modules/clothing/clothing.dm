@@ -19,7 +19,6 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
 

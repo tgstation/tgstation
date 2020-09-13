@@ -569,7 +569,7 @@
 	update_stat()
 	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
-		become_husk("burn")
+		become_husk(BURN)
 
 	med_hud_set_health()
 
@@ -967,7 +967,7 @@
 	var/r_arm_index_next = 0
 	for(var/bodypart_path in bodyparts)
 		var/obj/item/bodypart/bodypart_instance = new bodypart_path()
-		bodypart_instance.owner = src
+		bodypart_instance.set_owner(src)
 		bodyparts.Remove(bodypart_path)
 		add_bodypart(bodypart_instance)
 		switch(bodypart_instance.body_part)
@@ -1016,10 +1016,6 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
-/mob/living/carbon/proc/update_disabled_bodyparts()
-	for(var/B in bodyparts)
-		var/obj/item/bodypart/BP = B
-		BP.update_disabled()
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()

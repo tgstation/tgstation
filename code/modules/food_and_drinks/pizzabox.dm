@@ -14,6 +14,7 @@
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	custom_materials = list(/datum/material/cardboard = 2000)
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
@@ -106,6 +107,12 @@
 		audible_message("<span class='warning'>[icon2html(src, hearers(src))] *beep*</span>")
 		bomb_active = TRUE
 		START_PROCESSING(SSobj, src)
+	else if(!open && !pizza && !bomb)
+		var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
+		to_chat(user, "<span class='notice'>You fold [src] into [cardboard].</span>")
+		user.put_in_active_hand(cardboard)
+		qdel(src)
+		return
 	update_icon()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
