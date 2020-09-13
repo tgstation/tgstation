@@ -4,6 +4,9 @@
 #define MOVING_TO_TARGET 3
 #define SPINNING_COCOON 4
 
+#define GHOST_TOTAL_LIVES 3
+#define GHOST_RESPAWN_DELAY 1 MINUTES
+
 /mob/living/simple_animal/hostile/poison
 	var/poison_per_bite = 5
 	var/poison_type = /datum/reagent/toxin
@@ -66,6 +69,18 @@
 	QDEL_NULL(lay_web)
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/giant_spider/death()
+	if(key)
+		client?.player_details?.modify_lost_lives(type, 1)
+		client?.player_details?.set_respawn_in(type, GHOST_RESPAWN_DELAY)
+		var/lives_left = GHOST_TOTAL_LIVES - client?.player_details?.get_lost_lives(type)
+		var/respawn_in = client?.player_details?.get_respawn_in(type) * 0.1
+		if(lives_left)
+			to_chat(src, type = MESSAGE_TYPE_WARNING, text = "You have [lives_left] remaining lives as this mob and may respawn as one again in [respawn_in] seconds.")
+		else
+			to_chat(src, type = MESSAGE_TYPE_WARNING, text = "You have used up all remaining lives for this mob and may no longer respawn as one.")
+	return ..()
+
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
@@ -86,6 +101,12 @@
 	. = ..()
 	if(.)
 		return
+	var/respawn_error = user.client?.player_details?.get_respawn_error(type, GHOST_TOTAL_LIVES)
+
+	if(respawn_error)
+		to_chat(user, type = MESSAGE_TYPE_WARNING, text = respawn_error)
+		return FALSE
+
 	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
@@ -567,3 +588,6 @@
 #undef LAYING_EGGS
 #undef MOVING_TO_TARGET
 #undef SPINNING_COCOON
+
+#undef GHOST_TOTAL_LIVES
+#undef GHOST_RESPAWN_DELAY
