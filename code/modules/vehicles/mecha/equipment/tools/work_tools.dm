@@ -23,7 +23,7 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M)
 	if(!.)
 		return
-	if(!istype(M, /obj/vehicle/sealed/mecha/working/ripley/M))
+	if(!istype(M, /obj/vehicle/sealed/mecha/working/ripley))
 		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
@@ -53,31 +53,33 @@
 			to_chat(source, "No providable supplies found in cargo hold")
 
 	else if(isobj(target))
-		var/obj/O = target
-		if(istype(O, /obj/machinery/door/firedoor))
-			var/obj/machinery/door/firedoor/D = O
-			D.try_to_crowbar(src, source)
+		var/obj/clamptarget = target
+		if(istype(clamptarget, /obj/machinery/door/firedoor))
+			var/obj/machinery/door/firedoor/targetfiredoor = clamptarget
+			targetfiredoor.try_to_crowbar(src, source)
 			return
-		if(istype(O, /obj/machinery/door/airlock/))
-			var/obj/machinery/door/airlock/D = O
-			D.try_to_crowbar(src, source)
+		if(istype(clamptarget, /obj/machinery/door/airlock/))
+			var/obj/machinery/door/airlock/targetairlock = clamptarget
+			targetairlock.try_to_crowbar(src, source)
 			return
-		if(O.anchored)
+		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)]<span class='warning'>[target] is firmly secured!</span>")
 			return
-		if(cargo_holder.cargo.len >= cargo_holder.cargo_capacity)
+		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)]<span class='warning'>Not enough room in cargo compartment!</span>")
 			return
 		chassis.visible_message("<span class='notice'>[chassis] lifts [target] and starts to load it into cargo compartment.</span>")
-		O.set_anchored(TRUE)
+		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source))
-			O.set_anchored(initial(O.anchored))
+			clamptarget.set_anchored(initial(clamptarget.anchored))
 			return
-		cargo_holder.cargo += O
-		O.forceMove(chassis)
-		O.set_anchored(FALSE)
+		LAZYADD(cargo_holder.cargo, clamptarget)
+		clamptarget.forceMove(chassis)
+		clamptarget.set_anchored(FALSE)
+		if(!cargo_holder.box && istype(clamptarget, /obj/structure/ore_box))
+			cargo_holder.box = clamptarget
 		to_chat(source, "[icon2html(src, source)]<span class='notice'>[target] successfully loaded.</span>")
-		log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]", LOG_MECHA)
+		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
 
 	else if(isliving(target))
 		var/mob/living/M = target
@@ -99,7 +101,6 @@
 				return
 			var/mob/living/carbon/C = target
 			var/torn_off = FALSE
-			var/limbs_gone = ""
 			var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
 			if(affected != null)
 				affected.dismember(damtype)
@@ -178,18 +179,18 @@
 	var/turf/T2 = get_step(T,turn(direction, -90))
 
 	var/list/the_targets = list(T,T1,T2)
-	INVOKE_ASYNC(src, .proc/do_extinguish, the_targets)
+	INVOKE_ASYNC(src, .proc/do_extinguish, the_targets, source)
 	return ..()
 
 ///Creates new water effects and moves them, takes a list of turfs as an argument
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/do_extinguish(list/targets)//this could be made slighty better but extinguisher code sucks even more so...
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/do_extinguish(list/targets, mob/user)//this could be made slighty better but extinguisher code sucks even more so...
 	for(var/a=0 to 5)//generate new water...
 		var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(chassis))
-		var/turf/my_target = pick(the_targets)
+		var/turf/my_target = pick(targets)
 		var/datum/reagents/R = new/datum/reagents(5)
 		W.reagents = R
 		R.my_atom = W
-		reagents.trans_to(W,1, transfered_by = source)
+		reagents.trans_to(W,1, transfered_by = user)
 		for(var/b=0 to 4)//...and move it 4 tiles
 			if(!W)
 				return
@@ -320,7 +321,7 @@
 	if(M.type != /obj/vehicle/sealed/mecha/working/ripley)
 		to_chat(loc, "<span class='warning'>This conversion kit can only be applied to APLU MK-I models.</span>")
 		return FALSE
-	if(M.cargo.len)
+	if(LAZYLEN(M.cargo))
 		to_chat(loc, "<span class='warning'>[M]'s cargo hold must be empty before this conversion kit can be applied.</span>")
 		return FALSE
 	if(!(M.mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
