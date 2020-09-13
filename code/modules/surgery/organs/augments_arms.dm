@@ -171,6 +171,8 @@
 /obj/item/organ/cyberimp/arm/gun/laser/gauss
 	name = "arm-mounted gauss rifle implant"
 	desc = "A variant of the arm cannon implant that uses Gorlex Marauder technology to fire lethal beams of energy. The cannon emerges from the subject's arm and remains inside when not in use."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "gauss_cyborg"
 	contents = newlist(/obj/item/gun/energy/laser/gauss/mounted)
 
 /obj/item/organ/cyberimp/arm/gun/laser/gauss/l

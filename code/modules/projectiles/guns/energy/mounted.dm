@@ -29,8 +29,8 @@
 	name = "mounted laser"
 	desc = "An arm mounted gauss"
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "laser"
-	inhand_icon_state = "armcannonlase"
+	icon_state = "gauss_cyborg"
+	inhand_icon_state = "armcannongauss"
 	force = 5
 	selfcharge = 1
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
