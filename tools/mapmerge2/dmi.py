@@ -217,7 +217,8 @@ class State:
         return self.frames[self._frame_index(*args, **kwargs)]
 
 def escape(text):
-    assert '\\' not in text and '"' not in text
+    text = text.replace('\\', '\\\\')
+    text = text.replace('"', '\\"')
     return f'"{text}"'
 
 def unescape(text, quote='"'):
@@ -226,7 +227,8 @@ def unescape(text, quote='"'):
     if not (text.startswith(quote) and text.endswith(quote)):
         raise ValueError(text)
     text = text[1:-1]
-    assert '\\' not in text and quote not in text
+    text = text.replace('\\"', '"')
+    text = text.replace('\\\\', '\\')
     return text
 
 def parse_num(value):
