@@ -55,13 +55,6 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_animeschool.dmm"
 
-/datum/map_template/holodeck/anthophillia
-	name = "Holodeck - Anthophillia"
-	template_id = "holodeck_anthophillia"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_anthophillia.dmm"
-	restricted = TRUE
-
 /datum/map_template/holodeck/basketball
 	name = "Holodeck - Basketball Court"
 	template_id = "holodeck_basketball"
@@ -73,13 +66,6 @@
 	template_id = "holodeck_beach"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_beach.dmm"
-
-/datum/map_template/holodeck/burntest
-	name = "Holodeck - Atmospheric Burn Test"
-	template_id = "holodeck_burntest"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_burntest.dmm"
-	restricted = TRUE
 
 /datum/map_template/holodeck/chapelcourt
 	name = "Holodeck - Chapel Courtroom"
@@ -105,20 +91,6 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_firingrange.dmm"
 
-/datum/map_template/holodeck/holdoutbunker
-	name = "Holodeck - Holdout Bunker"
-	template_id = "holodeck_holdoutbunker"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_holdoutbunker.dmm"
-	restricted = TRUE
-
-/datum/map_template/holodeck/medicalsim
-	name = "Holodeck - Emergency Medical"
-	template_id = "holodeck_medicalsim"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_medicalsim.dmm"
-	restricted = TRUE
-
 /datum/map_template/holodeck/petpark
 	name = "Holodeck - Pet Park"
 	template_id = "holodeck_lounge"
@@ -130,13 +102,6 @@
 	template_id = "holodeck_photobooth"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_photobooth.dmm"
-
-/datum/map_template/holodeck/refuelingstation
-	name = "Holodeck - Refueling Station"
-	template_id = "holodeck_refuelingstation"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
-	restricted = TRUE
 
 /datum/map_template/holodeck/skatepark
 	name = "Holodeck - Skatepark"
@@ -162,6 +127,12 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_thunderdome.dmm"
 
+/datum/map_template/holodeck/winterwonderland
+	name = "Holodeck Winter Wonderland"
+	template_id = "holodeck_winterwonderland"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_winterwonderland.dmm"
+
 /datum/map_template/holodeck/thunderdome1218
 	name = "Holodeck - 1218 AD"
 	template_id = "holodeck_thunderdome1218"
@@ -174,14 +145,42 @@
 	template_id = "holodeck_wildlifesim"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_wildlifesim.dmm"
-	restricted = TRUE
+	//restricted = TRUE
 
-/datum/map_template/holodeck/winterwonderland
-	name = "Holodeck - Winter Wonderland"
-	template_id = "holodeck_winterwonderland"
+/datum/map_template/holodeck/refuelingstation
+	name = "Holodeck - Refueling Station"
+	template_id = "holodeck_refuelingstation"
 	description = "benis"
-	mappath = "_maps/templates/holodeck_winterwonderland.dmm"
+	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
+	//restricted = TRUE
 
+/datum/map_template/holodeck/holdoutbunker
+	name = "Holodeck - Holdout Bunker"
+	template_id = "holodeck_holdoutbunker"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_holdoutbunker.dmm"
+	//restricted = TRUE
+
+/datum/map_template/holodeck/medicalsim
+	name = "Holodeck - Emergency Medical"
+	template_id = "holodeck_medicalsim"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_medicalsim.dmm"
+	//restricted = TRUE
+
+/datum/map_template/holodeck/burntest
+	name = "Holodeck - Atmospheric Burn Test"
+	template_id = "holodeck_burntest"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_burntest.dmm"
+	//restricted = TRUE
+
+/datum/map_template/holodeck/anthophillia
+	name = "Holodeck - Anthophillia"
+	template_id = "holodeck_anthophillia"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_anthophillia.dmm"
+	//restricted = TRUE
 
 /*
 /datum/map_template/holodeck/lounge/New()

@@ -122,8 +122,7 @@
 		ui = new(user, src, "Holodeck", name)//this creates the holodeck ui
 		ui.open()
 
-/obj/machinery/computer/holodeck/ui_data(mob/user)//In this proc you munges whatever complex data your `src_object`
-//has into an associative list, which will then be sent to UI as a JSON string. -some nerd
+/obj/machinery/computer/holodeck/ui_data(mob/user)
 	var/list/data = list()
 
 	data["default_programs"] = program_cache
@@ -232,7 +231,7 @@
 	emergency_shutdown()
 	return ..()
 //FUCKING DO IT PUSSY
-/obj/machinery/computer/holodeck/proc/generate_program_list()//this is important so that the js ui program knows what is necessary for the holdeck
+/obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/A = typekey
 		//if(!A)
@@ -241,7 +240,7 @@
 		info_this["name"] = initial(A.name)
 		info_this["id"] = initial(A.template_id)
 		if(initial(A.restricted))
-			LAZYADD(emag_programs, list(info_this))//this is supposed to be sent to the js thing\
+			LAZYADD(emag_programs, list(info_this))
 		else
 			LAZYADD(program_cache, list(info_this))
 
