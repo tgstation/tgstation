@@ -13,6 +13,7 @@
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
 	//uncomment me when trash is merged trash = /obj/item/trash/plate
+	w_class = WEIGHT_CLASS_SMALL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY

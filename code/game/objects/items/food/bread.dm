@@ -14,6 +14,7 @@
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
 	slot_flags = ITEM_SLOT_HEAD
+	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = GRAIN
 	eat_time = 0.5 SECONDS
 
