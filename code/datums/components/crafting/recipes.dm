@@ -387,7 +387,7 @@
 
 
 /datum/crafting_recipe/radiogloves
-	name = "Translation Gloves"
+	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
 	time = 15
 	reqs = list(/obj/item/clothing/gloves/color/black = 1,
@@ -428,7 +428,7 @@
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
-	result = /obj/vehicle/ridden/scooter/skateboard
+	result = /obj/vehicle/ridden/scooter/skateboard/improvised
 	time = 60
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
