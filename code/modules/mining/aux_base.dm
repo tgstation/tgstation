@@ -36,7 +36,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/dat = "[is_station_level(z) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
 	if(M)
 		var/destination_found
-		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+		for(var/port_u_id in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_u_id]
 			if(!options.Find(S.id))
 				continue
 			if(!M.check_dock(S, silent=TRUE))
@@ -133,7 +134,12 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
 /obj/machinery/computer/auxiliary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
-	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile
+	var/obj/docking_port/mobile/auxiliary_base/base_dock
+	for(var/S in SSshuttle.mobile)
+		var/obj/docking_port/mobile/MS = SSshuttle.mobile[S]
+		if(MS.type == /obj/docking_port/mobile/auxiliary_base)
+			base_dock = MS
+			break
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxiliary base. Please contact your Nanotrasen contractor.</span>")
 		return
@@ -252,7 +258,9 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 /obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
-	id = "disabled" //The Aux Base has to leave before this can be used as a dock.
+	id = "mining_public"
+	u_id = "mining_public"
+	hidden = TRUE //The Aux Base has to leave before this can be used as a dock.
 	//Should be checked on the map to ensure it matchs the mining shuttle dimensions.
 	dwidth = 3
 	width = 7
@@ -303,7 +311,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
 	for(var/S in SSshuttle.stationary)
-		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
+		var/obj/docking_port/stationary/SM = SSshuttle.stationary[S] //SM is declared outside so it can be checked for null
 		if(SM.id == "mining_home" || SM.id == "mining_away")
 
 			var/area/A = get_area(landing_spot)
@@ -326,7 +334,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/obj/docking_port/mobile/mining_shuttle
 	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
 	for(var/S in SSshuttle.mobile)
-		var/obj/docking_port/mobile/MS = S
+		var/obj/docking_port/mobile/MS = SSshuttle.mobile[S]
 		if(MS.id != "mining")
 			continue
 		mining_shuttle = MS
@@ -335,7 +343,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	if(!mining_shuttle) //Not having a mining shuttle is a map issue
 		to_chat(user, "<span class='warning'>No mining shuttle signal detected. Please contact Nanotrasen Support.</span>")
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary.Remove(Mport.u_id)
 		qdel(Mport)
 		return
 
@@ -343,18 +351,18 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		var/turf/L = landing_turfs[i]
 		if(!L) //This happens at map edges
 			to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base.</span>")
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary.Remove(Mport.u_id)
 			qdel(Mport)
 			return
 		if(istype(get_area(L), /area/shuttle/auxiliary_base))
 			to_chat(user, "<span class='warning'>The mining shuttle must not land within the mining base itself.</span>")
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary.Remove(Mport.u_id)
 			qdel(Mport)
 			return
 
 	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
 		to_chat(user, "<span class='warning'>Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base.</span>")
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary.Remove(Mport.u_id)
 		qdel(Mport)
 		return
 

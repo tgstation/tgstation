@@ -7,6 +7,8 @@
 	req_access = list( )
 	/// ID of the attached shuttle
 	var/shuttleId
+	/// Unique ID of the attached shuttle
+	var/shuttleUniqueId
 	/// Possible destinations of the attached shuttle
 	var/possible_destinations = ""
 	/// Variable dictating if the attached shuttle requires authorization from the admin staff to move
@@ -20,6 +22,11 @@
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -29,7 +36,7 @@
 /obj/machinery/computer/shuttle/ui_data(mob/user)
 	var/list/data = list()
 	var/list/options = params2list(possible_destinations)
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleUniqueId)
 	data["docked_location"] = M ? M.get_status_text_tgui() : "Unknown"
 	data["locations"] = list()
 	data["locked"] = locked
@@ -51,13 +58,14 @@
 				data["status"] = "Idle"
 			else
 				data["status"] = "In Transit"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+	for(var/dock in SSshuttle.stationary)
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[dock]
 		if(!options.Find(S.id))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
 			continue
 		var/list/location_data = list(
-			id = S.id,
+			id = S.u_id,
 			name = S.name
 		)
 		data["locations"] += list(location_data)
@@ -80,7 +88,7 @@
 
 	switch(action)
 		if("move")
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleUniqueId)
 			if(M.launch_status == ENDGAME_LAUNCHED)
 				to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
 				return
@@ -92,11 +100,12 @@
 					to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 					return
 			var/list/options = params2list(possible_destinations)
-			if(!(params["shuttle_id"] in options))
+			var/obj/docking_port/stationary/dock = SSshuttle.stationary[params["shuttle_id"]]
+			if(!(dock.id in options))
 				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				return
-			switch(SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1))
+			switch(SSshuttle.moveShuttle(shuttleUniqueId, params["shuttle_id"], 1))
 				if(0)
 					say("Shuttle departing. Please stand away from the doors.")
 					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[params["shuttle_id"]]\", using [src].")
@@ -129,3 +138,5 @@
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		shuttleUniqueId = port.u_id
+		possible_destinations += ";[port.u_id]_custom"

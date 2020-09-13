@@ -6,7 +6,9 @@
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
+	var/shuttleUniqueId = ""
 	var/shuttlePortId = ""
+	var/shuttlePortUniqueId = ""
 	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
@@ -21,13 +23,22 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/port_u_id in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_u_id]
+			if(S.id == shuttleId)
+				jumpto_ports[S.u_id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
-		var/obj/docking_port/stationary/S = V
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[V]
 		if(jumpto_ports[S.id])
 			z_lock |= S.z
 	whitelist_turfs = typecacheof(whitelist_turfs)
@@ -140,13 +151,15 @@
 	if(my_port && my_port.get_docked())
 		my_port.delete_after = TRUE
 		my_port.id = null
+		my_port.u_id = null
 		my_port.name = "Old [my_port.name]"
 		my_port = null
 
 	if(!my_port)
 		my_port = new()
 		my_port.name = shuttlePortName
-		my_port.id = shuttlePortId
+		my_port.id = shuttlePortUniqueId
+		my_port.u_id = shuttlePortUniqueId
 		my_port.height = shuttle_port.height
 		my_port.width = shuttle_port.width
 		my_port.dheight = shuttle_port.dheight
@@ -266,7 +279,10 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		shuttleUniqueId = port.u_id
 		shuttlePortId = "[port.id]_custom"
+		shuttlePortUniqueId = "[port.u_id]_custom"
+		shuttlePortName = "[shuttleId]_[shuttlePortName]"
 	if(dock)
 		jumpto_ports[dock.id] = TRUE
 

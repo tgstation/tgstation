@@ -12,12 +12,12 @@
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
 	var/list/options = list()
 
-	for(var/port in SSshuttle.stationary)
-		if (istype(port, /obj/docking_port/stationary/transit))
+	for(var/port_u_id in SSshuttle.stationary)
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[port_u_id]
+		if (istype(S, /obj/docking_port/stationary/transit))
 			continue  // please don't do this
-		var/obj/docking_port/stationary/S = port
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
-			options[S.name || S.id] = S
+			options[S.name || S.u_id] = S
 
 	options += "--------"
 	options += "Infinite Transit"
@@ -60,10 +60,10 @@
 
 	var/list/options = list()
 
-	for(var/port in SSshuttle.stationary)
-		if (istype(port, /obj/docking_port/stationary/transit))
+	for(var/port_u_id in SSshuttle.stationary)
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[port_u_id]
+		if (istype(S, /obj/docking_port/stationary/transit))
 			continue  // please don't do this
-		var/obj/docking_port/stationary/S = port
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.id] = S
 

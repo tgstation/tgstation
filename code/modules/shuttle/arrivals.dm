@@ -33,6 +33,8 @@
 		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
+	target_dock = locate(/obj/docking_port/stationary) in loc
+
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
@@ -179,10 +181,12 @@
 	if(mode == SHUTTLE_IDLE)
 		if(console)
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
-		var/obj/docking_port/stationary/target = target_dock
-		if(QDELETED(target))
-			target = SSshuttle.getDock("arrivals_stationary")
-		request(target)		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
+		if(QDELETED(target_dock))
+			console.say("Error in flight targeting system!")
+			message_admins("Arrival shuttle [src] dont have arrival dock.")
+			target_dock = SSshuttle.getDock("arrivals_stationary")
+			return
+		request(target_dock)		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)

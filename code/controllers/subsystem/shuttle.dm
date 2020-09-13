@@ -7,7 +7,9 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	// associated list(u_id = shuttle)
 	var/list/mobile = list()
+	// associated list(u_id = dock)
 	var/list/stationary = list()
 	var/list/beacons = list()
 	var/list/transit = list()
@@ -83,20 +85,23 @@ SUBSYSTEM_DEF(shuttle)
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
-	for(var/s in stationary)
-		var/obj/docking_port/stationary/S = s
-		S.load_roundstart()
+	for(var/dock_u_id in stationary)
+		var/obj/docking_port/stationary/dock = stationary[dock_u_id]
+		dock.load_roundstart()
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/fire()
-	for(var/thing in mobile)
-		if(!thing)
-			mobile.Remove(thing)
+	for(var/shuttle_u_id in mobile)
+		if(!shuttle_u_id)
+			mobile.Remove(shuttle_u_id)
 			continue
-		var/obj/docking_port/mobile/P = thing
-		P.check()
-	for(var/thing in transit)
-		var/obj/docking_port/stationary/transit/T = thing
+		var/obj/docking_port/mobile/shuttle_port = mobile[shuttle_u_id]
+		if(!shuttle_port)
+			mobile.Remove(shuttle_u_id)
+			continue
+		shuttle_port.check()
+	for(var/transit_dock in transit)
+		var/obj/docking_port/stationary/transit/T = transit_dock
 		if(!T.owner)
 			qdel(T, force=TRUE)
 		// This next one removes transit docks/zones that aren't
@@ -159,17 +164,25 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
 	emergencyNoRecall = FALSE
 
-/datum/controller/subsystem/shuttle/proc/getShuttle(id)
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(M.id == id)
-			return M
-	WARNING("couldn't find shuttle with id: [id]")
+/datum/controller/subsystem/shuttle/proc/getShuttle(u_id)
+	if(mobile[u_id])
+		return mobile[u_id]
+	WARNING("couldn't find shuttle with unique u_id: [u_id]. try to find match id")
+	for(var/port in mobile)
+		var/obj/docking_port/mobile/shuttle_port = mobile[port]
+		if(shuttle_port.id == u_id)
+			return shuttle_port
+	WARNING("couldn't find shuttle with id: [u_id]")
 
-/datum/controller/subsystem/shuttle/proc/getDock(id)
-	for(var/obj/docking_port/stationary/S in stationary)
-		if(S.id == id)
-			return S
-	WARNING("couldn't find dock with id: [id]")
+/datum/controller/subsystem/shuttle/proc/getDock(u_id)
+	if(stationary[u_id])
+		return stationary[u_id]
+	WARNING("couldn't find dock with unique u_id: [u_id]. try to find match id")
+	for(var/port in stationary)
+		var/obj/docking_port/stationary/dock_port = stationary[port]
+		if(dock_port.id == u_id)
+			return dock_port
+	WARNING("couldn't find dock with id: [u_id]")
 
 /datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
@@ -387,7 +400,7 @@ SUBSYSTEM_DEF(shuttle)
 		return 1
 	var/obj/docking_port/stationary/dockedAt = M.get_docked()
 	var/destination = dockHome
-	if(dockedAt && dockedAt.id == dockHome)
+	if(dockedAt && dockedAt.u_id == dockHome)
 		destination = dockAway
 	if(timed)
 		if(M.request(getDock(destination)))
@@ -496,7 +509,7 @@ SUBSYSTEM_DEF(shuttle)
 	A.contents = proposal.reserved_turfs
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.reserved_area = proposal
-	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.name = "Transit for [M.u_id]/[M.name]"
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 
@@ -572,38 +585,36 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/current = get_area(A)
 	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
-	for(var/obj/docking_port/mobile/M in mobile)
+	for(var/port in mobile)
+		var/obj/docking_port/mobile/M = mobile[port]
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
 
 /datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
-	var/list/mobile_cache = mobile
-	for(var/i in 1 to mobile_cache.len)
-		var/obj/docking_port/port = mobile_cache[i]
-		if(port.is_in_shuttle_bounds(A))
-			return port
+	for(var/port in mobile)
+		var/obj/docking_port/dock = mobile[port]
+		if(dock.is_in_shuttle_bounds(A))
+			return dock
 
 /datum/controller/subsystem/shuttle/proc/get_containing_dock(atom/A)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
-		if(port.is_in_shuttle_bounds(A))
-			. += port
+	for(var/port in stationary)
+		var/obj/docking_port/dock = stationary[port]
+		if(dock.is_in_shuttle_bounds(A))
+			. += dock
 
 /datum/controller/subsystem/shuttle/proc/get_dock_overlap(x0, y0, x1, y1, z)
 	. = list()
-	var/list/stationary_cache = stationary
-	for(var/i in 1 to stationary_cache.len)
-		var/obj/docking_port/port = stationary_cache[i]
-		if(!port || port.z != z)
+	for(var/port in stationary)
+		var/obj/docking_port/dock = stationary[port]
+		if(!dock || dock.z != z)
 			continue
-		var/list/bounds = port.return_coords()
+		var/list/bounds = dock.return_coords()
 		var/list/overlap = get_overlap(x0, y0, x1, y1, bounds[1], bounds[2], bounds[3], bounds[4])
 		var/list/xs = overlap[1]
 		var/list/ys = overlap[2]
 		if(xs.len && ys.len)
-			.[port] = overlap
+			.[dock] = overlap
 
 /datum/controller/subsystem/shuttle/proc/update_hidden_docking_ports(list/remove_turfs, list/add_turfs)
 	var/list/remove_images = list()
@@ -651,8 +662,9 @@ SUBSYSTEM_DEF(shuttle)
 		QDEL_NULL(preview_reservation)
 
 	if(!preview_shuttle)
-		if(load_template(loading_template))
-			preview_shuttle.linkup(loading_template, destination_port)
+		//if(load_template(loading_template))
+			//preview_shuttle.linkup(loading_template, destination_port)
+		load_template(loading_template)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any
@@ -662,10 +674,10 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(istype(destination_port))
 		D = destination_port
-	else if(existing_shuttle)
-		timer = existing_shuttle.timer
-		mode = existing_shuttle.mode
-		D = existing_shuttle.get_docked()
+	//else if(existing_shuttle)
+	//	timer = existing_shuttle.timer
+	//	mode = existing_shuttle.mode
+	//	D = existing_shuttle.get_docked()
 
 	if(!D)
 		D = generate_transit_dock(preview_shuttle)
@@ -681,8 +693,8 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 		return
 
-	if(existing_shuttle)
-		existing_shuttle.jumpToNullSpace()
+	//if(existing_shuttle)
+	//	existing_shuttle.jumpToNullSpace()
 
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
@@ -799,11 +811,11 @@ SUBSYSTEM_DEF(shuttle)
 	// Status panel
 	data["shuttles"] = list()
 	for(var/i in mobile)
-		var/obj/docking_port/mobile/M = i
+		var/obj/docking_port/mobile/M = mobile[i]
 		var/timeleft = M.timeLeft(1)
 		var/list/L = list()
 		L["name"] = M.name
-		L["id"] = M.id
+		L["id"] = M.u_id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
 		if (timeleft > 1 HOURS)
@@ -842,31 +854,25 @@ SUBSYSTEM_DEF(shuttle)
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
-				for(var/i in mobile)
-					var/obj/docking_port/mobile/M = i
-					if(M.id == params["id"])
-						user.forceMove(get_turf(M))
-						. = TRUE
-						break
+				var/obj/docking_port/mobile/M = getShuttle(params["id"])
+				if(M)
+					user.forceMove(get_turf(M))
+					. = TRUE
 
 		if("fly")
-			for(var/i in mobile)
-				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"])
-					. = TRUE
-					M.admin_fly_shuttle(user)
-					break
+			var/obj/docking_port/mobile/M = getShuttle(params["id"])
+			if(M)
+				. = TRUE
+				M.admin_fly_shuttle(user)
 
 		if("fast_travel")
-			for(var/i in mobile)
-				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft(1) >= 50)
-					M.setTimer(50)
-					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled [M]")
-					log_admin("[key_name(usr)] fast travelled [M]")
-					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
-					break
+			var/obj/docking_port/mobile/M = getShuttle(params["id"])
+			if(M && M.timer && M.timeLeft(1) >= 50)
+				M.setTimer(50)
+				. = TRUE
+				message_admins("[key_name_admin(usr)] fast travelled [M]")
+				log_admin("[key_name(usr)] fast travelled [M]")
+				SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 
 		if("preview")
 			if(S)

@@ -16,6 +16,8 @@
 	/// stationary ports and whatnot to tell them your ship's mobile
 	/// port can be used in these places, or the docking port is compatible, etc.
 	var/id
+	///Generated from id, unique u_id, for identifying shuttle or dock among many others, necessarily be unique
+	var/u_id 
 	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
 	///size of covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
@@ -142,11 +144,19 @@
 /obj/docking_port/proc/get_docked()
 	return locate(/obj/docking_port/stationary) in loc
 
+// Return id of the docked docking_port
 /obj/docking_port/proc/getDockedId()
 	var/obj/docking_port/P = get_docked()
 	if(P)
-		return P.id
+		return P.u_id
 
+// Return u_id of the docked docking_port
+/obj/docking_port/proc/getDockedUniqueId()
+	var/obj/docking_port/P = get_docked()
+	if(P)
+		return P.u_id
+
+// Say that A in the absolute (rectangular) bounds of this shuttle or no.
 /obj/docking_port/proc/is_in_shuttle_bounds(atom/A)
 	var/turf/T = get_turf(A)
 	if(T.z != z)
@@ -172,11 +182,16 @@
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
-	SSshuttle.stationary += src
 	if(!id)
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
+	if(SSshuttle.stationary[id])
+		u_id = "[id]_[SSshuttle.stationary.len+1]"
+		name = "[name] dock [SSshuttle.stationary.len+1]"
+	else
+		u_id = id
+	SSshuttle.stationary[u_id] = src
 	if(!area_type)
 		var/area/place = get_area(src)
 		area_type = place?.type // We might be created in nullspace
@@ -191,7 +206,7 @@
 
 /obj/docking_port/stationary/Destroy(force)
 	if(force)
-		SSshuttle.stationary -= src
+		SSshuttle.stationary -= u_id
 	. = ..()
 
 /obj/docking_port/stationary/Moved(atom/oldloc, dir, forced)
@@ -314,11 +329,18 @@
 	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
-	SSshuttle.mobile += src
+	if(SSshuttle.mobile[u_id])
+		stack_trace("[src] [u_id] already in SSshuttle.mobile! Replacing existing u_id.")
+	if(!u_id || u_id == initial(u_id))
+		stack_trace("[src] dont have unique u_id on register(). Generatng.")
+		u_id = "[id][GUID()]"
+	SSshuttle.mobile[u_id] = src
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
-		SSshuttle.mobile -= src
+		if(!SSshuttle.mobile[u_id])
+			stack_trace("[src] [u_id] already deleted or not exist in SSshuttle.mobile!")
+		SSshuttle.mobile -= u_id
 		destination = null
 		previous = null
 		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
@@ -333,6 +355,11 @@
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")
 		name = "shuttle[SSshuttle.mobile.len]"
+	if(SSshuttle.mobile[id])
+		u_id = "[id]_[SSshuttle.mobile.len+1]"
+		name = "[name] shuttle [SSshuttle.mobile.len+1]"
+	else
+		u_id = id
 
 	shuttle_areas = list()
 	var/list/all_turfs = return_ordered_turfs(x, y, z, dir)
@@ -351,19 +378,12 @@
 
 // Called after the shuttle is loaded from template
 /obj/docking_port/mobile/proc/linkup(datum/map_template/shuttle/template, obj/docking_port/stationary/dock)
-	var/list/static/shuttle_id = list()
-	var/idnum = ++shuttle_id[template]
-	if(idnum > 1)
-		if(id == initial(id))
-			id = "[id][idnum]"
-		if(name == initial(name))
-			name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
-		area.connect_to_shuttle(src, dock, idnum, FALSE)
+		area.connect_to_shuttle(src, dock, u_id, FALSE)
 		for(var/each in place)
 			var/atom/atom = each
-			atom.connect_to_shuttle(src, dock, idnum, FALSE)
+			atom.connect_to_shuttle(src, dock, u_id, FALSE)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
@@ -469,14 +489,14 @@
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
 		if(initiate_docking(S1) != DOCKING_SUCCESS)
-			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
+			WARNING("shuttle \"[u_id]\" could not enter transit space. Docked at [S0 ? S0.u_id : "null"]. Transit dock [S1 ? S1.u_id : "null"].")
 		else
 			if(S0.delete_after)
 				qdel(S0, TRUE)
 			else
 				previous = S0
 	else
-		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
+		WARNING("shuttle \"[u_id]\" could not enter transit space. S0=[S0 ? S0.u_id : "null"] S1=[S1 ? S1.u_id : "null"]")
 
 
 /obj/docking_port/mobile/proc/jumpToNullSpace()
@@ -561,8 +581,8 @@
 	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
-/obj/docking_port/mobile/proc/dock_id(id)
-	var/port = SSshuttle.getDock(id)
+/obj/docking_port/mobile/proc/dock_id(u_id)
+	var/port = SSshuttle.getDock(u_id)
 	if(port)
 		. = initiate_docking(port)
 	else
@@ -769,11 +789,11 @@
 		else
 			dst = destination
 		if(dst)
-			. = "(transit to) [dst.name || dst.id]"
+			. = "(transit to) [dst.name || dst.u_id]"
 		else
 			. = "(transit to) nowhere"
 	else if(dockedAt)
-		. = dockedAt.name || dockedAt.id
+		. = dockedAt.name || dockedAt.u_id
 	else
 		. = "unknown"
 
@@ -783,7 +803,7 @@
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/obj/machinery/computer/shuttle/S in shuttle_area)
-			if(S.shuttleId == id)
+			if(S.shuttleId == u_id)
 				return S
 	return null
 
@@ -908,7 +928,7 @@
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		initiate_docking(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
+		initiate_docking(SSshuttle.getDock("[u_id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()

@@ -390,6 +390,17 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter3)
+"gh" = (
+/obj/docking_port/stationary{
+	dwidth = 4;
+	height = 5;
+	id = "caravansyndicate1_ambush";
+	name = "Trade Route";
+	roundstart_template = /datum/map_template/shuttle/ruin/syndicate_fighter_shiv;
+	width = 9
+	},
+/turf/template_noop,
+/area/template_noop)
 "gk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3902,7 +3913,7 @@ aa
 aa
 aa
 aa
-aa
+gh
 aa
 aa
 aa
