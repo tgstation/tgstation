@@ -25,9 +25,9 @@
 		return
 
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/I = new /obj/item/stack/sheet/metal(user.loc)
+	var/trash = new /obj/item/stack/sheet/metal(user.loc)
 	qdel(src)
-	user.put_in_hands(I)
+	user.put_in_hands(trash)
 
 /obj/item/mecha_ammo/examine(mob/user)
 	. = ..()

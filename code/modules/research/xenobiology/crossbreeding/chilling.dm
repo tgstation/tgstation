@@ -238,7 +238,7 @@ Chilling extracts:
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm.</span>")
 	else
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, but nothing happens...</span>")
-	..()
+	return ..()
 
 /obj/item/slimecross/chilling/green
 	colour = "green"

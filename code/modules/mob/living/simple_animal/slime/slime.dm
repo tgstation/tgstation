@@ -109,8 +109,8 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	Friends.Cut()
-	speech_buffer.Cut()
+	QDEL_LIST(Friends)
+	QDEL_LIST(speech_buffer)
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
