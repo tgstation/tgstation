@@ -25,7 +25,7 @@
 	var/glass = FALSE
 	var/welded = FALSE
 	var/normalspeed = 1
-	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
+	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors (Also normal doors, heat is just too strong man)
 	var/emergency = FALSE // Emergency access override
 	var/sub_door = FALSE // true if it's meant to go under another door.
 	var/closingLayer = CLOSED_DOOR_LAYER

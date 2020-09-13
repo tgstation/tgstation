@@ -48,7 +48,7 @@
 
 //EXCITED GROUPS
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
-#define EXCITED_GROUP_BREAKDOWN_CYCLES				4
+#define EXCITED_GROUP_BREAKDOWN_CYCLES				5
 /// number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
 #define EXCITED_GROUP_DISMANTLE_CYCLES				16
 /// Ratio of air that must move to/from a tile to reset group processing
@@ -66,7 +66,7 @@
 /// Minimum temperature difference before the gas temperatures are just set to be equal
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+80)
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
+#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+400)
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster

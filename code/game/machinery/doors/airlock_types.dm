@@ -66,6 +66,7 @@
 /obj/machinery/door/airlock/glass
 	opacity = FALSE
 	glass = TRUE
+	heat_proof = FALSE
 
 /obj/machinery/door/airlock/glass/incinerator
 	autoclose = FALSE
