@@ -90,14 +90,19 @@
 	return TRUE
 
 /obj/item/autosurgeon/organ/cmo
-	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	desc = "A single-use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
-/obj/item/autosurgeon/organ/syndicate/laser_arm
-	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+/obj/item/autosurgeon/organ/laser_arm
+	desc = "A single-use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
+
+/obj/item/autosurgeon/organ/syndicate/gauss_gun
+	desc ="A single-use autosurgeon that contains an arm implanted gauss rifle augment. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser/gauss
 
 /obj/item/autosurgeon/organ/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals

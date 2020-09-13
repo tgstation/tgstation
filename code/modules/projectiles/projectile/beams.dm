@@ -46,6 +46,14 @@
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
 
+/obj/projectile/beam/laser/gauss
+	name = "gauss shot"
+	icon_state = "gauss_beam"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	tracer_type = /obj/effect/projectile/tracer/gauss
+	muzzle_type = /obj/effect/projectile/muzzle/gauss
+	impact_type = /obj/effect/projectile/impact/gauss
+
 /obj/projectile/beam/laser/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))

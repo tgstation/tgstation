@@ -24,3 +24,16 @@
 
 /obj/item/gun/energy/laser/mounted/dropped()
 	..()
+
+/obj/item/gun/energy/laser/gauss/mounted //mounted guns could probably use some refractoring if we ever add more.
+	name = "mounted laser"
+	desc = "An arm mounted gauss"
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "laser"
+	inhand_icon_state = "armcannonlase"
+	force = 5
+	selfcharge = 1
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+
+/obj/item/gun/energy/laser/gauss/mounted/dropped()
+	..()

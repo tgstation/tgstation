@@ -17,6 +17,9 @@
 	e_cost = 200
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun/gauss
+	projectile_type = /obj/projectile/beam/laser/gauss
+
 /obj/item/ammo_casing/energy/laser/hos
 	e_cost = 120
 

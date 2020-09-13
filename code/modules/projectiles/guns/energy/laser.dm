@@ -53,6 +53,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 	shaded_charge = FALSE
 
+/obj/item/gun/energy/laser/gauss
+	name = "gauss rifle"
+	desc = "Old fashioned Gorlex Marauders tech. Not often used today due to their tendencies to melt themselves." //note to anyone who actuly wants to add this, write wittier desc.
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/gauss)
+
 /obj/item/gun/energy/laser/cyborg
 	can_charge = FALSE
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
