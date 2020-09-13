@@ -1,0 +1,5 @@
+author: "Jimmius"
+delete-after: True
+changes: 
+  - rscadd: "Adds door seals to the game, printable at engineering and security lathes after they've been researched. Makes airlocks much harder to smash down if you can't remove them."
+  - tweak: "Slightly changed how bonus health to an airlock works"

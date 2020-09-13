@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - tweak: "Fixes some issues with sign language, such as unique mime text, drunk slurring, punctuation, and megaphones."
