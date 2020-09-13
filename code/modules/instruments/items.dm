@@ -311,7 +311,7 @@
 
 /obj/item/instrument/musicalmoth
 	name = "musical moth"
-	desc = "A moth musician, or mothsician, just vibin' and making tunes."
+	desc = "Despite its popularity, this controversial musical toy was eventually banned due to its unethically sampled sounds of moths screaming in agony."
 	icon_state = "mothsician"
 	allowed_instrument_ids = "mothscream"
 	attack_verb_continuous = list("flutters", "flaps")
@@ -319,5 +319,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = 666
-	custom_premium_price = 666
+	custom_price = 237
+	custom_premium_price = 237
