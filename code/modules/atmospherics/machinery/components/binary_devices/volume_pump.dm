@@ -39,6 +39,7 @@
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
+		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
 		update_icon()
 	return ..()
 
@@ -47,9 +48,9 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
-	icon_state = on && is_operational ? "volpump_on" : "volpump_off"
+	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
 
-/obj/machinery/atmospherics/components/binary/volume_pump/process_atmos()
+/obj/machinery/atmospherics/components/binary/volume_pump/process_atmos(delta_time)
 //	..()
 	if(!on || !is_operational)
 		return
@@ -69,14 +70,14 @@
 		return
 
 
-	var/transfer_ratio = transfer_rate/air1.volume
+	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
 	if(overclocked)//Some of the gas from the mixture leaks to the environment when overclocked
 		var/turf/open/T = loc
 		if(istype(T))
-			var/datum/gas_mixture/leaked = removed.remove_ratio(VOLUME_PUMP_LEAK_AMOUNT)
+			var/datum/gas_mixture/leaked = removed.remove_ratio(DT_PROB_RATE(VOLUME_PUMP_LEAK_AMOUNT, delta_time))
 			T.assume_air(leaked)
 			T.air_update_turf()
 

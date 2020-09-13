@@ -15,7 +15,7 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
-	///for debugging and testing a full game, or adminbuse. If this is not null, it will use this as a setup. clears when game is over
+	///for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over
 	var/list/custom_setup = list()
 	///first day has no voting, and thus is shorter
 	var/first_day_phase_period = 20 SECONDS
@@ -196,7 +196,7 @@
 	var/loser_votes = get_vote_count(loser,"Day")
 	if(loser)
 		if(loser_votes > 12)
-			loser.body.client?.give_award(/datum/award/achievement/mafia/universally_hated, loser.body)
+			award_role(/datum/award/achievement/mafia/universally_hated, loser)
 		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
 		//refresh the lists
 		judgement_abstain_votes = list()
@@ -307,8 +307,7 @@
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
 		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
-		var/client/winner_client = GLOB.directory[winner.player_key]
-		winner_client?.give_award(winner.winner_award, winner.body)
+		award_role(winner.winner_award, winner)
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
@@ -317,16 +316,27 @@
 		return FALSE
 	if(alive_mafia == 0)
 		for(var/datum/mafia_role/townie in total_town)
-			var/client/townie_client = GLOB.directory[townie.player_key]
-			townie_client?.give_award(townie.winner_award, townie.body)
+			award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
 	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
-			var/client/changeling_client = GLOB.directory[changeling.player_key]
-			changeling_client?.give_award(changeling.winner_award, changeling.body)
+			award_role(changeling.winner_award, changeling)
 		return TRUE
+
+/**
+  * Lets the game award roles with all their checks and sanity, prevents achievements given out for debug games
+  *
+  * Arguments:
+  * * award: path of the award
+  * * role: mafia_role datum to reward.
+  */
+/datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
+	if(custom_setup.len)
+		return
+	var/client/role_client = GLOB.directory[rewarded.player_key]
+	role_client?.give_award(award, rewarded.body)
 
 /**
   * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.

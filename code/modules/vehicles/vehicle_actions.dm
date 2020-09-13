@@ -209,30 +209,30 @@
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
 	if(world.time > next_ollie)
-		var/obj/vehicle/ridden/scooter/skateboard/V = vehicle_target
-		if (V.grinding)
+		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
+		if (vehicle.grinding)
 			return
-		var/mob/living/L = owner
-		var/turf/landing_turf = get_step(V.loc, V.dir)
-		L.adjustStaminaLoss(V.instability*2)
-		if (L.getStaminaLoss() >= 100)
+		var/mob/living/rider = owner
+		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
+		rider.adjustStaminaLoss(vehicle.instability*2)
+		if (rider.getStaminaLoss() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-			V.unbuckle_mob(L)
-			L.throw_at(landing_turf, 2, 2)
-			L.Paralyze(40)
-			V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
+			vehicle.unbuckle_mob(rider)
+			rider.throw_at(landing_turf, 2, 2)
+			rider.Paralyze(40)
+			vehicle.visible_message("<span class='danger'>[rider] misses the landing and falls on [rider.p_their()] face!</span>")
 		else
-			L.spin(4, 1)
-			animate(L, pixel_y = -6, time = 4)
-			animate(V, pixel_y = -6, time = 3)
-			playsound(V, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-			passtable_on(L, VEHICLE_TRAIT)
-			V.pass_flags |= PASSTABLE
-			L.Move(landing_turf, vehicle_target.dir)
-			passtable_off(L, VEHICLE_TRAIT)
-			V.pass_flags &= ~PASSTABLE
-		if(locate(/obj/structure/table) in V.loc.contents)
-			V.grinding = TRUE
-			V.icon_state = "[V.board_icon]-grind"
-			addtimer(CALLBACK(V, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+			rider.spin(4, 1)
+			animate(rider, pixel_y = -6, time = 4)
+			animate(vehicle, pixel_y = -6, time = 3)
+			playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+			passtable_on(rider, VEHICLE_TRAIT)
+			vehicle.pass_flags |= PASSTABLE
+			rider.Move(landing_turf, vehicle_target.dir)
+			passtable_off(rider, VEHICLE_TRAIT)
+			vehicle.pass_flags &= ~PASSTABLE
+		if(locate(/obj/structure/table) in vehicle.loc.contents)
+			vehicle.grinding = TRUE
+			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
+			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
 		next_ollie = world.time + 5
