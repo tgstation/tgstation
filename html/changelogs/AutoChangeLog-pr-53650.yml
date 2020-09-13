@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Livers once again give peptides when put in a grinder"
