@@ -24,14 +24,16 @@
 	if(!armed)
 		. += "\t<span class='information'>It appears to be inactive...</span>"
 
+/// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
 
+/// If the landmine was previously inactive, this beeps and displays a message marking it active
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
 	icon_state = "uglymine"
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
-	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>")
+	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distnace = COMBAT_MESSAGE_RANGE)
 
 /obj/effect/mine/Crossed(atom/movable/AM)
 	if(triggered || !isturf(loc) || !armed)
@@ -47,8 +49,9 @@
 	. = ..()
 	triggermine()
 
+/// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
-	if(triggered)
+	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
 		visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
@@ -272,7 +275,7 @@
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
 
-
+/// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()
 	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)

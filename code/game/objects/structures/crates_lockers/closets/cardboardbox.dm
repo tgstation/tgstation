@@ -55,6 +55,7 @@
 				L.do_alert_animation()
 		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
+/// Does the MGS ! animation
 /atom/proc/do_alert_animation()
 	var/image/I = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
 	flick_overlay_view(I, src, 8)
