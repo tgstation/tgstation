@@ -195,7 +195,6 @@
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
-	QDEL_NULL(linked_core)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(malf_picker)
 	QDEL_NULL(doomsday_device)
@@ -205,6 +204,7 @@
 	current = null
 	Bot = null
 	controlled_mech = null
+	linked_core = null
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
