@@ -455,7 +455,7 @@ nobiliumsuppression = INFINITY
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
-	air.assert_gases(/datum/gas/water_vapor)v
+	air.assert_gases(/datum/gas/water_vapor)
 	var/total_gas = initial_plasma+initial_hydrogen+cached_gases[/datum/gas/water_vapor][MOLES]
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
