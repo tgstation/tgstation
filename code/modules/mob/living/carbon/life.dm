@@ -136,8 +136,12 @@
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
+		failed_last_breath = 0
+		clear_alert("not_enough_oxy")
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		failed_last_breath = 0
+		clear_alert("not_enough_oxy")
 		return FALSE
 
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
