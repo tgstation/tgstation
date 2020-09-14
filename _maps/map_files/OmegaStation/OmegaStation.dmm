@@ -34230,17 +34230,6 @@
 "qGj" = (
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"qGE" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_home";
-	name = "SS13: Auxiliary Dock, Station-Port";
-	width = 35
-	},
-/turf/open/space/basic,
-/area/space)
 "qHf" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -73995,7 +73984,7 @@ aaa
 aaa
 aaa
 aaa
-qGE
+aaa
 aaa
 aaa
 aaa
