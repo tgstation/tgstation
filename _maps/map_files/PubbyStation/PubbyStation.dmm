@@ -47486,7 +47486,8 @@
 "dyL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = "50"
+	req_access_txt = null;
+	req_one_access = "12;50"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -50069,6 +50070,10 @@
 /obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "ihj" = (
@@ -51218,6 +51223,10 @@
 	},
 /obj/structure/disposaloutlet{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -57693,6 +57702,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"vHj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Docking Arm Maintenance";
+	req_access_txt = null;
+	req_one_access = "12;50"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "vIc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -103361,7 +103381,7 @@ dyL
 saR
 saR
 saR
-dyL
+vHj
 beR
 mXc
 beR
