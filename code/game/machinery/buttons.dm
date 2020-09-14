@@ -288,3 +288,12 @@
 	icon_state = "button"
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+
+/obj/machinery/button/elevator
+	name = "elevator button"
+	desc = "Go back. Go back. Go back. Can you operate the elevator."
+	icon_state = "launcher"
+	skin = "launcher"
+	device_type = /obj/item/assembly/control/elevator
+	req_access = list()
+	id = 1

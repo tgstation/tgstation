@@ -98,6 +98,7 @@
 			return FALSE
 	return TRUE
 
+GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift
 	name = "lift platform"
 	desc = "A lightweight lift platform. It moves up and down."
@@ -114,6 +115,8 @@
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
+	var/id = 1 //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
+	var/controls_locked = FALSE //if true, the lift cannot be manually moved.
 	var/list/atom/movable/lift_load //things to move
 	var/datum/lift_master/lift_master_datum    //control from
 
@@ -165,7 +168,7 @@
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/user, is_ghost=FALSE)
-	if (is_ghost && !in_range(src, user))
+	if(is_ghost && !in_range(src, user))
 		return
 
 	var/static/list/tool_list = list(
@@ -176,13 +179,18 @@
 	var/turf/can_move_up = lift_master_datum.Check_lift_move(UP)
 	var/turf/can_move_up_down = lift_master_datum.Check_lift_move(DOWN)
 
-	if (!can_move_up && !can_move_up_down)
-		to_chat(user, "<span class='warning'>[src] doesn't seem to able move anywhere!</span>")
+	if(controls_locked)
+		to_chat(user, "<span class='warning'>[src] has its controls locked! It must already be trying to do something!</span>")
+		add_fingerprint(user)
+		return
+
+	if(!can_move_up && !can_move_up_down)
+		to_chat(user, "<span class='warning'>[src] doesn't seem to able to move anywhere!</span>")
 		add_fingerprint(user)
 		return
 
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if (!is_ghost && !in_range(src, user))
+	if(!is_ghost && !in_range(src, user))
 		return  // nice try
 	switch(result)
 		if("Up")
@@ -191,7 +199,7 @@
 				show_fluff_message(TRUE, user)
 				use(user)
 			else
-				to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
+				to_chat(user, "<span class='warning'>[src] doesn't seem to able to move up!</span>")
 				use(user)
 		if("Down")
 			if(can_move_up_down)
@@ -199,7 +207,7 @@
 				show_fluff_message(FALSE, user)
 				use(user)
 			else
-				to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
+				to_chat(user, "<span class='warning'>[src] doesn't seem to able to move down!</span>")
 				use(user)
 		if("Cancel")
 			return
@@ -229,9 +237,9 @@
 
 /obj/structure/industrial_lift/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("<span class='notice'>[user] move lift up.</span>", "<span class='notice'>Lift move up.</span>")
+		user.visible_message("<span class='notice'>[user] moves the lift upwards.</span>", "<span class='notice'>You move the lift upwards.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] move lift down.</span>", "<span class='notice'>Lift move down.</span>")
+		user.visible_message("<span class='notice'>[user] moves lift downwards.</span>", "<span class='notice'>You move the lift downwards.</span>")
 
 /obj/structure/industrial_lift/Destroy()
 	QDEL_NULL(lift_master_datum)
