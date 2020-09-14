@@ -56,8 +56,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 				return
 
 			if(iscarbon(src) && ventcrawler == VENTCRAWLER_NUDE)
-				var/list/items_list = get_equipped_items(include_pockets = TRUE)
-				if(items_list.len || held_items.len)
+				if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
 					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 
