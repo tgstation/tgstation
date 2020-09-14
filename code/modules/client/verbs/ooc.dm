@@ -333,7 +333,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Client closed the window? Some other error? This is unexpected behaviour, let's
 	// CRASH with some info.
 	if(!sizes["mapwindow.size"])
-		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted.")
+		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
 
 	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
 
