@@ -52,7 +52,7 @@
 
 /// Borg Built-in tablet interface
 /obj/item/modular_computer/tablet/integrated
-	name = "Modular Interface"
+	name = "modular interface"
 	icon_state = "tablet-silicon"
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
@@ -64,6 +64,7 @@
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
+	vis_flags |= VIS_INHERIT_ID
 	borgo = loc
 	if(!istype(borgo))
 		borgo = null
@@ -73,16 +74,15 @@
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	borgo = null
 	return ..()
-
-/obj/item/modular_computer/tablet/integrated/update_overlays()
-	. = ..()
-	if(borgo?.interfaceButton)
-		borgo.interfaceButton.update_icon()
+/*
+/obj/item/modular_computer/tablet/integrated/screwdriver_act(mob/user, obj/item/tool)
+	to_chat(world, "DEBUG -- screwdriver_act")
+	return
 
 /obj/item/modular_computer/tablet/integrated/attackby(obj/item/W as obj, mob/user as mob)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		return
-	return ..()
+	return ..()*/
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)

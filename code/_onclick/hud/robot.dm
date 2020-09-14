@@ -127,9 +127,10 @@
 	using.hud = src
 	static_inventory += using
 	mymobR.interfaceButton = using
-	using.update_icon()
-	var/obj/screen/robot/modPC/tablet = using
-	tablet.robot = mymobR
+	if(mymobR.modularInterface)
+		using.vis_contents += mymobR.modularInterface
+	var/obj/screen/robot/modPC/tabletbutton = using
+	tabletbutton.robot = mymobR
 
 //Alerts
 	using = new /obj/screen/robot/alerts()
@@ -261,16 +262,9 @@
 						else
 							return
 					screenmob.client.screen += I
-
-			if(R.modularInterface)
-				R.modularInterface.screen_loc = ui_borg_tablet
-				screenmob.client.screen += R.modularInterface
 		else
 			for(var/obj/item/I in R.held_items)
 				screenmob.client.screen -= I
-
-			if(R.modularInterface)
-				screenmob.client.screen -= R.modularInterface
 
 /obj/screen/robot/lamp
 	name = "headlamp"
@@ -294,11 +288,6 @@
 	name = "Modular Interface"
 	icon_state = "template"
 	var/mob/living/silicon/robot/robot
-
-/obj/screen/robot/modPC/update_icon()
-	cut_overlays()
-	if(robot?.modularInterface)
-		add_overlay(robot.modularInterface)
 
 /obj/screen/robot/modPC/Click()
 	. = ..()
