@@ -145,7 +145,7 @@ Buildable meters
 			return TRUE
 	// no conflicts found
 
-	var/obj/machinery/atmospherics/A = new pipe_type(loc, fixed_dir())
+	var/obj/machinery/atmospherics/A = new pipe_type(loc)
 	build_pipe(A)
 	A.on_construction(color, piping_layer)
 	transfer_fingerprints_to(A)
@@ -188,7 +188,7 @@ Buildable meters
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes."
+	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"
