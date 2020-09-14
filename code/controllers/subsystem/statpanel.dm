@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(statpanels)
 						if(length(turfitems) < 30) // only create images for the first 30 items on the turf, for performance reasons
 							if(!(REF(turf_content) in cached_images))
 								cached_images += REF(turf_content)
-								RegisterSignal(turf_content, COMSIG_PARENT_QDELETING, .proc/reset_cache) // we reset cache if anything in it gets deleted
+								turf_content.RegisterSignal(turf_content, COMSIG_PARENT_QDELETING, /atom/.proc/remove_from_cache) // we reset cache if anything in it gets deleted
 								if(ismob(turf_content) || length(turf_content.overlays) > 2)
 									turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), costly_icon2html(turf_content, target, sourceonly=TRUE))
 								else
@@ -136,8 +136,8 @@ SUBSYSTEM_DEF(statpanels)
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
 	mc_data_encoded = url_encode(json_encode(mc_data))
 
-/datum/controller/subsystem/statpanels/proc/reset_cache()
-	cached_images.Cut()
+/atom/proc/remove_from_cache()
+	SSstatpanels.cached_images -= REF(src)
 
 /// verbs that send information from the browser UI
 /client/verb/set_tab(tab as text|null)
