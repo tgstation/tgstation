@@ -683,13 +683,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/integrity = get_integrity()
 			if(integrity < 15)
 				damage += max((power * 0.05) * DAMAGE_INCREASE_MULTIPLIER, 0)
-			else if(integrity < 30)
+			else if(integrity < 25)
 				damage += max((power * 0.09) * DAMAGE_INCREASE_MULTIPLIER, 0)
-			else if(integrity < 50)
-				damage += max((power * 0.001) * DAMAGE_INCREASE_MULTIPLIER, 0)
-			else if(integrity < 75)
-				damage += max((power * 0.009) * DAMAGE_INCREASE_MULTIPLIER, 0)
-			else
+			else if(integrity < 45)
 				damage += max((power * 0.0001) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 	//Makes em go mad and accumulate rads.
