@@ -16,16 +16,20 @@
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc
+	///List of products if payment is setup on a mob.
+	var/list/products
 
-/datum/component/payment/Initialize(_cost, _target, _style)
+/datum/component/payment/Initialize(_cost, _target, _style, _products)
 	target_acc = _target
 	if(!target_acc)
 		target_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
-
+	if(_products)
+		products = _products
 	cost = _cost
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
+	RegisterSignal(parent, COMSIG_MOB_ATTEMPT_SELL, .proc/purchase_item)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
@@ -69,7 +73,34 @@
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
 	SIGNAL_HANDLER
-
 	if(!isnum(new_cost))
 		CRASH("change_cost called with variable new_cost as not a number.")
 	cost = new_cost
+
+/datum/component/payment/proc/purchase_item(datum/source, atom/movable/customer)
+	SIGNAL_HANDLER
+	if(!LAZYLEN(products))
+		return
+	var/list/display_names = list()
+	var/list/items = list()
+	for(var/i in 1 to length(products))
+		var/obj/item/product = products[i]
+		display_names["[initial(product.name)] ([i])"] = REF(product)
+		var/image/product_image = image(icon = initial(product.icon), icon_state = initial(product.icon_state))
+		items += list("[initial(product.name)] ([i])" = product_image)
+	var/pick = show_radial_menu(customer, parent, items, custom_check = FALSE, require_near = TRUE)
+	if(!pick)
+		return
+	var/product_reference = display_names[pick]
+	var/obj/item/new_product = locate(product_reference) in products
+	if(!new_product)
+		return
+	if(attempt_charge(src, customer, initial(new_product.custom_price)) & COMPONENT_OBJ_CANCEL_CHARGE)
+		return
+	new new_product(customer.drop_location())
+	for(var/i in 1 to length(products))
+		var/obj/item/product = products[i]
+		if(istype(new_product, product))
+			products[i] = products[i] - 1
+			if(products[i] < 1)
+				products -= new_product
