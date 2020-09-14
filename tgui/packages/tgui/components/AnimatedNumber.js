@@ -7,7 +7,7 @@
 import { clamp, toFixed } from 'common/math';
 import { Component } from 'inferno';
 
-const FPS = 25;
+const FPS = 20;
 const Q = 0.5;
 
 const isSafeNumber = value => {

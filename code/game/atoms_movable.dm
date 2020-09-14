@@ -366,7 +366,7 @@
 	var/mspeed = vx
 	if(direct & NORTH || direct & SOUTH)
 		mspeed = vy
-	pulling.add_velocity(direct, abs(mspeed))
+	pulling.add_velocity(direct, abs(mspeed) + 1)
 /* 	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
@@ -407,7 +407,9 @@
 		. = slider.slide(src, direct, _step_x, _step_y)
 		if(.)
 			//if slider was able to slide, step us in the direction indicated
-			. = step(src, ., 2)
+			// add_velocity(., test_range)
+			// . = TRUE
+			. = step(src, ., 4)
 		//mark that we are no longer sliding
 		sidestep = FALSE
 	last_move = direct
@@ -422,7 +424,7 @@
 	else // we still didn't move, something is blocking further movement
 		walk(src, NONE)
 
-/atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = 0)
+/atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = FALSE)
 	if(vx == 0 && vy == 0)
 		START_PROCESSING(SSmovement, src)
 	var/accelu = accel
@@ -487,7 +489,11 @@
 
 	// Move without changing dir and return the result.
 	. = Move(loc, dir, step_x + move_x, step_y + move_y)
-
+	if(!.) // movement failed, means we can't move either
+		vx = 0
+		vy = 0
+		vdir = NONE
+		return FALSE
 	// Set step_size to the amount actually moved.
 	// This tells clients to smoothly interpolate this when using client.fps.
 	step_size = 1 + .
