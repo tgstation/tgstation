@@ -16,7 +16,7 @@
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc
-	///List of products if payment is setup on a mob.
+	///Associated list of products if payment is setup on a mob.
 	var/list/products
 
 /datum/component/payment/Initialize(_cost, _target, _style, _products)
@@ -29,7 +29,7 @@
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
-	RegisterSignal(parent, COMSIG_MOB_ATTEMPT_SELL, .proc/purchase_item)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/purchase_item)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
@@ -61,14 +61,14 @@
 	if(!(card.registered_account.has_money(cost + extra_fees)))
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
-				to_chat(user, "<span class='warning'>I'm so sorry... You don't seem to have enough money.</span>")
+				to_chat(user, "<span class='warning'>I'm so sorry... You don't seem to have enough money. This costs [cost+extra_fees]</span>")
 			if(PAYMENT_ANGRY)
 				to_chat(user, "<span class='warning'>YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.</span>")
 			if(PAYMENT_CLINICAL)
 				to_chat(user, "<span class='warning'>ID Card lacks funds. Aborting.</span>")
 		return COMPONENT_OBJ_CANCEL_CHARGE
-	target_acc.transfer_money(card.registered_account, cost)
-	card.registered_account.bank_card_talk("[cost] credits deducted from your account.")
+	target_acc.transfer_money(card.registered_account, cost + extra_fees)
+	card.registered_account.bank_card_talk("[cost+extra_fees] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
@@ -95,12 +95,13 @@
 	var/obj/item/new_product = locate(product_reference) in products
 	if(!new_product)
 		return
-	if(attempt_charge(src, customer, initial(new_product.custom_price)) & COMPONENT_OBJ_CANCEL_CHARGE)
+	var/added_value = initial(new_product.custom_price) + initial(new_product.custom_premium_price)
+	if(attempt_charge(src, customer, added_value) & COMPONENT_OBJ_CANCEL_CHARGE)
 		return
 	new new_product(customer.drop_location())
-	for(var/i in 1 to length(products))
-		var/obj/item/product = products[i]
-		if(istype(new_product, product))
-			products[i] = products[i] - 1
-			if(products[i] < 1)
-				products -= new_product
+	if(ishuman(customer))
+		var/mob/living/carbon/human/human_cust = customer
+		human_cust.put_in_hand(new_product)
+	products[new_product] -= 1
+	if(products[new_product] < 1)
+		products -= new_product

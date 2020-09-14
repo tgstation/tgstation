@@ -19,7 +19,7 @@
 
 /mob/living/simple_animal/merchant/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == INTENT_HELP)
-		return SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_SELL, M)
+		return SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M)
 	return ..()
 
 /mob/living/simple_animal/merchant/gondola
@@ -30,9 +30,7 @@
 	icon_state = "gondola"
 	icon_living = "gondola"
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/reagent_containers/food/snacks/meat/slab/gondola = 1)
-	///What products are being assigned to the product list?
 	product_list = list(/obj/item/stack/sheet/animalhide/gondola = 3, /obj/item/clothing/under/costume/gondola = 1, /obj/item/clothing/mask/gondola = 1)
-	///What is the base price for the products being offered?
 	product_cost = 300
 
 /mob/living/simple_animal/merchant/skeleton
@@ -42,8 +40,6 @@
 	icon_state = "skeleton"
 	icon_living = "skeleton"
 	icon_dead = "skeleton"
-	loot = list(/obj/effect/decal/cleanable/ash, /obj/item/stack/sheet/bone = 1)
-	///What products are being assigned to the product list?
+	loot = list(/obj/effect/decal/remains/human, /obj/item/stack/sheet/bone = 1)
 	product_list = list(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull = 3, /obj/item/gun/ballistic/automatic/wt550 = 1, /obj/item/reagent_containers/food/condiment/milk = 1)
-	///What is the base price for the products being offered?
 	product_cost = 100
