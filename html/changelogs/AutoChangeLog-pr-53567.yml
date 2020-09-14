@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - tweak: "Added a confirmation prompt before harvesting a fully grown Replica Pod that has been associated with a player, but the player is not yet dead or ready to be revived. Gives you the choice of backing out or harvesting them for seeds. Functionality unchanged."
