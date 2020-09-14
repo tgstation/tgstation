@@ -479,7 +479,7 @@
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide/on_reaction(datum/reagents/holder, created_volume)
 	holder.remove_reagent(/datum/reagent/sorium, created_volume*2)
 	var/turf/turfie = get_turf(holder.my_atom)
-	//generally twice as weak as sorium.
+	//generally half as strong as sorium.
 	var/range = clamp(sqrt(created_volume*2), 1, 6)
 	//This first throws people away and then it explodes
 	goonchem_vortex(turfie, 1, range)
