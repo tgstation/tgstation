@@ -455,9 +455,8 @@ nobiliumsuppression = INFINITY
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
-	var/initial_water = cached_gases[/datum/gas/water_vapor][MOLES]
 	//var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
-	var/total_gas = initial_plasma+initial_hydrogen+initial_water
+	var/total_gas = initial_plasma+initial_hydrogen+cached_gases[/datum/gas/water_vapor][MOLES]
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * cached_gases[gas_id][MOLES])
