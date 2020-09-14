@@ -455,24 +455,34 @@ nobiliumsuppression = INFINITY
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
-	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
-	var/toroidal_size = (2 * PI) //The size of the phase space hypertorus
+	var/initial_water = cached_gases[/datum/gas/water_vapor][MOLES]
+	//var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
+	var/total_gas = initial_plasma+initial_hydrogen+initial_water
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER] * cached_gases[gas_id][MOLES])
-	var/instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, toroidal_size) //Instability effects how chaotic the behavior of the reaction is
+	var/instability = MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2, FUSION_TOROIDAL_SIZE) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability//used for analyzer feedback
 
-	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of hydrogen and plasma down a significant amount in order to show the chaotic dynamics we want
-	var/hydrogen = (initial_hydrogen-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+	if(initial_plasma-FUSION_MOLE_THRESHOLD>(total_gas/2))
+		var/kickoff_plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)-(total_gas/2)
+		reaction_energy += kickoff_plasma*PLASMA_BINDING_ENERGY
+		initial_plasma -= kickoff_plasma
+	if(initial_hydrogen-FUSION_MOLE_THRESHOLD>(total_gas/2))
+		initial_hydrogen = (total_gas/2)+FUSION_MOLE_THRESHOLD
+	var/plasma = ((initial_plasma-FUSION_MOLE_THRESHOLD)/(total_gas/2))*FUSION_TOROIDAL_SIZE //We have to scale the amounts of hydrogen and plasma down a significant amount in order to show the chaotic dynamics we want
+	var/hydrogen = ((initial_hydrogen-FUSION_MOLE_THRESHOLD)/(total_gas/2))*FUSION_TOROIDAL_SIZE//We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+
 
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
-	plasma = MODULUS(plasma - (instability * sin(TODEGREES(hydrogen))), toroidal_size)
-	hydrogen = MODULUS(hydrogen - plasma, toroidal_size)
+	plasma = MODULUS(plasma - (instability * sin(TODEGREES(hydrogen))), FUSION_TOROIDAL_SIZE)
+	hydrogen = MODULUS(hydrogen - plasma, FUSION_TOROIDAL_SIZE)
+	var/water = (2*FUSION_TOROIDAL_SIZE)-(plasma+hydrogen)
 
-
-	cached_gases[/datum/gas/plasma][MOLES] = plasma * scale_factor + FUSION_MOLE_THRESHOLD //Scales the gases back up
-	cached_gases[/datum/gas/hydrogen][MOLES] = hydrogen * scale_factor + FUSION_MOLE_THRESHOLD
+	cached_gases[/datum/gas/plasma][MOLES] = (plasma/FUSION_TOROIDAL_SIZE) * (total_gas/2) + FUSION_MOLE_THRESHOLD //Scales the gases back up
+	cached_gases[/datum/gas/hydrogen][MOLES] = (hydrogen/FUSION_TOROIDAL_SIZE) * (total_gas/2) + FUSION_MOLE_THRESHOLD
+	air.assert_gases(/datum/gas/water_vapor)
+	cached_gases[/datum/gas/water_vapor][moles] = ((water/FUSION_TODOIAL_SIZE) * total_gas) - 2*FUSION_MOLE_THRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
 
 	reaction_energy += delta_plasma * PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
@@ -486,14 +496,13 @@ nobiliumsuppression = INFINITY
 		cached_gases[/datum/gas/hydrogen][MOLES] = initial_hydrogen
 		return NO_REACTION
 	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
-	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
+	//The decay of the tritium and the reaction's energy produces carbon dioxide, the amount depending on whether the reaction is endo or exothermic
 	if(reaction_energy > 0)
-		air.assert_gases(/datum/gas/carbon_dioxide, /datum/gas/water_vapor)
+		air.assert_gases(/datum/gas/carbon_dioxide)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED * (reaction_energy * FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/water_vapor][MOLES] += (FUSION_TRITIUM_MOLES_USED * (reaction_energy * FUSION_TRITIUM_CONVERSION_COEFFICIENT)) * 0.25
 	else
 		air.assert_gases(/datum/gas/carbon_dioxide)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED * (reaction_energy * -FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED * (reaction_energy * -FUSION_TRITIUM_CONVERSION_COEFFICIENT)*0.25
 
 	if(reaction_energy)
 		if(location)
@@ -508,7 +517,7 @@ nobiliumsuppression = INFINITY
 			air.temperature = clamp(((air.temperature * old_heat_capacity + reaction_energy) / new_heat_capacity), TCMB, INFINITY)
 		return REACTING
 
-/datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
+/datum/gas_reaction/nitrousformation //formation of n2o, exothermic, requires bz as catalyst
 	priority = 3
 	name = "Nitrous Oxide formation"
 	id = "nitrousformation"
