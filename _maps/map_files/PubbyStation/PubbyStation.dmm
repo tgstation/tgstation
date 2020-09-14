@@ -53269,7 +53269,8 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = "31"
+	req_access_txt = "31";
+	req_one_access = "31;48
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -55046,8 +55047,9 @@
 /area/construction/mining/aux_base)
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster";
-	req_access_txt = "41"
+	name = "Mining";
+	req_access_txt = null;
+	req_one_access = "41; 48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
