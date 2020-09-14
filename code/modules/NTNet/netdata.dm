@@ -3,7 +3,7 @@
 	// Packets are kind of shaped like IPX.  IPX had a network, a node (aka id) and a port.
 	// receiver_id == null, its a brodcast packet to that network
 	// all these should be strings and numbers.  If a device wants to be smart and cashe
-	// them, then they should manualy go though SSnetworks and find the device there 
+	// them, then they should manualy go though SSnetworks and find the device there
 	var/sender_network
 	var/sender_id
 	var/sender_port
@@ -13,10 +13,38 @@
 	var/list/data = list()
 	var/passkey = null
 
-
 /datum/netdata/Destroy()
 	data = null
 	return ..()
+
+/datum/netdata/proc/clone(deep_copy=FALSE)
+	var/datum/netdata/C = new
+	C.sender_network = sender_network
+	C.sender_id = sender_id
+	C.sender_port = sender_port
+	C.receiver_network = receiver_network
+	C.receiver_id = receiver_id
+	C.receiver_port = receiver_port
+	C.passkey = passkey
+	if(deep_copy)
+		C.data = deepCopyList(data)
+	else
+		C.data = data
+
+// this proc just changes the sender/reciever's so we don't have to make a new packet
+/datum/netdata/proc/make_return(list/new_data)
+	var/temp
+	temp = sender_network
+	sender_network = receiver_network
+	receiver_network = temp
+	temp = sender_id
+	sender_id = receiver_id
+	receiver_id = temp
+	temp = sender_port
+	sender_port = receiver_port
+	receiver_port = temp
+	data = new_data
+	
 
 /datum/netdata/proc/json_to_data(json)
 	data = json_decode(json)

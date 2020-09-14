@@ -12,84 +12,44 @@
 
 	var/network_id
 	var/list/linked_devices
-	var/list/forward_lookup
-	var/list/reverse_lookup
+	var/list/networks
 	var/datum/ntnet/parent
-	var/isolated = FALSE // isolated network, so we only can get hardware on this network, not parents
 
 /datum/ntnet/New(network_id, datum/ntnet/parent = null)
 	src.linked_devices = list()
 	src.network_id = network_id
 	if(parent)
-		src.forward_lookup = parent.forward_lookup
-		src.reverse_lookup = parent.reverse_lookup
 		src.parent = parent
+		networks = parent.networks	// kind of a hack so the network knows we can route to this
 	else
-		src.forward_lookup = list()
-		src.reverse_lookup = list()
 		src.parent = null
+		networks = list()
 
+	networks[network_id] = src
 	if(!SSnetworks.register_network(src))
 		stack_trace("Network [type] with ID [network_id] failed to register and has been deleted.")
 		qdel(src)
 
 /datum/ntnet/Destroy()
-	if(src.parent)
-		var/name
-		for(var/hid in linked_devices)
-			name = reverse_lookup[hid]
-			reverse_lookup.Remove(hid)
-			forward_lookup.Remove(name)
-		src.parent = null
+	networks.Remove(network_id)
+	parent = null
 	linked_devices = null
-	reverse_lookup = null
-	forward_lookup = null
-
+	networks = null
 	return ..()
 
-/datum/ntnet/proc/find_by_hid(hid)
-	var/datum/component/ntnet_interface/thing = linked_devices[hid]
-	if(!thing && parent && !isolated)
-		thing = parent.find_by_hid(hid)
-	return thing
-
-/datum/ntnet/proc/find_by_name(name)
-	var/hid = forward_lookup[name]
-	if(hid)
-		return find_by_hid(hid)
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
-	var/hid = device.hardware_id
 	if(device.network)
-		interface_disconnect(device)
-	linked_devices[hid] = device
+		device.network.interface_disconnect(device)
+	linked_devices[device.hardware_id] = device
 	device.network = src
 
 /datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
-	var/hid = device.hardware_id
-	linked_devices.Remove(hid)
-	var/name = reverse_lookup[hid]
-	if(name)
-		reverse_lookup.Remove(hid)
-		forward_lookup.Remove(name)
+	linked_devices.Remove(device.hardware_id)
 	device.network = null
 
-/datum/ntnet/proc/add_lookup(hardware_id, name)
-	if(linked_devices[hardware_id])
-		if(!forward_lookup[name])
-			forward_lookup[name] = hardware_id
-			reverse_lookup[hardware_id] = name
-			return TRUE
 
-/datum/ntnet/proc/remove_lookup(name)
-	var/id = forward_lookup[name]
-	if(id)
-		reverse_lookup.Remove(id)
-		forward_lookup.Remove(name)
-		return TRUE
-
-
-/datum/ntnet/proc/check_relay_operation(zlevel)	//can be expanded later but right now it's true/false.
+/datum/ntnet/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.
 	for(var/i in relays)
 		var/obj/machinery/ntnet_relay/n = i
 		if(zlevel && n.z != zlevel)
@@ -102,24 +62,32 @@
 /datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
 	if(!check_relay_operation())
 		return FALSE
-	data.network = src
+	data.sender_network = sender.network.network_id
+	data.sender_id = sender.hardware_id
 	log_data_transfer(data)
+	ASSERT(network_id == data.receiver_network)
+	var/datum/component/ntnet_interface/target
 	var/list/datum/component/ntnet_interface/receiving = list()
-	if((length(data.recipient_ids) == 1 && data.recipient_ids[1] == NETWORK_BROADCAST_ID) || data.recipient_ids == NETWORK_BROADCAST_ID)
-		data.broadcast = TRUE
-		for(var/hid in src.linked_devices)
-			receiving.Add(src.linked_devices[hid])
+	if(!data.recipient_id)
+		// its null so its brodcas
+		for(var/hid in linked_devices)
+			target = linked_devices[hid]
+			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
+				target.__network_receive(data)
+	else if(islist(data.recipient_id))
+		var/list/targets = data.recipient_id
+			// its null so its brodcas
+		for(var/hid in targets)
+			target = linked_devices[hid]
+			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
+				target.__network_receive(data)
+	else if(istext(data.recipient_id))
+		target = linked_devices[hid]
+		if(!QDELETED(target)) // Do we need this or not? alot of async goes around
+			target.__network_receive(data)
 	else
-		for(var/hid in data.recipient_ids)
-			var/datum/component/ntnet_interface/receiver = find_by_hid(hid)
-			receiving.Add(receiver)
+		debug_world_log("Bad target address [data.recipient_id]")
 
-	for(var/i in 1 to receiving.len)
-		var/datum/component/ntnet_interface/receiver = receiving[i]
-		if(receiver)
-			receiver.__network_receive(data)
-
-	return TRUE
 
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
