@@ -538,21 +538,32 @@
 					vy += decel
 				else
 					vy = 0
-	else if(vdir)
-		if(vx > decel)
-			vx -= decel
-		else if(vx < -decel)
-			vx += decel
-		else
-			vx = 0
+	else if(vdir) // for movables
+		if((vdir & EAST) || (vdir & WEST))
+			if(vx > decel)
+				vx -= decel
+			else if(vx < -decel)
+				vx += decel
+			else
+				vx = 0
 
-		if(vy > decel)
-			vy -= decel
-		else if(vy < -decel)
-			vy += decel
-		else
-			vy = 0
-	if(vx == 0 && vy == 0) // vx and vy is 0 we have no inertia
+		if((vdir & SOUTH) || (vdir & NORTH))
+			if(vy > decel)
+				vy -= decel
+			else if(vy < -decel)
+				vy += decel
+			else
+				vy = 0
+	//update vdir
+	if(vx > 0)
+		vdir = EAST
+	else if(vx < 0)
+		vdir = WEST
+	if(vy > 0)
+		vdir |= NORTH
+	else if(vy < 0)
+		vdir |= SOUTH
+	else if(vx == 0 && vy == 0) // vx and vy is 0 we have no inertia
 		vdir = NONE
 		return FALSE
 

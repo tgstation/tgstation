@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/clientfps = -1
 
-	var/sidestepper = TRUE
+	var/sidestepper = FALSE
 
 	var/parallax
 
