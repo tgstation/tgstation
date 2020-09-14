@@ -13,6 +13,17 @@
 #define TURRET_FLAG_SHOOT_BORGS			(1<<6)	// checks if it can shoot cyborgs
 #define TURRET_FLAG_SHOOT_HEADS			(1<<7)	// checks if it can shoot at heads of staff
 
+DEFINE_BITFIELD(turret_flags, list(
+	"TURRET_FLAG_SHOOT_ALL_REACT" = TURRET_FLAG_SHOOT_ALL_REACT,
+	"TURRET_FLAG_AUTH_WEAPONS" = TURRET_FLAG_AUTH_WEAPONS,
+	"TURRET_FLAG_SHOOT_CRIMINALS" = TURRET_FLAG_SHOOT_CRIMINALS,
+	"TURRET_FLAG_SHOOT_ALL" = TURRET_FLAG_SHOOT_ALL,
+	"TURRET_FLAG_SHOOT_ANOMALOUS" = TURRET_FLAG_SHOOT_ANOMALOUS,
+	"TURRET_FLAG_SHOOT_UNSHIELDED" = TURRET_FLAG_SHOOT_UNSHIELDED,
+	"TURRET_FLAG_SHOOT_BORGS" = TURRET_FLAG_SHOOT_BORGS,
+	"TURRET_FLAG_SHOOT_HEADS" = TURRET_FLAG_SHOOT_HEADS,
+))
+
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -448,10 +459,12 @@
 
 	for(var/A in GLOB.mechas_list)
 		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
-			var/obj/mecha/Mech = A
-			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
-				if(assess_perp(Mech.occupant) >= 4)
-					targets += Mech
+			var/obj/vehicle/sealed/mecha/mech = A
+			for(var/O in mech.occupants)
+				var/mob/living/occupant = O
+				if(!in_faction(occupant)) //If there is a user and they're not in our faction
+					if(assess_perp(occupant) >= 4)
+						targets += mech
 
 	if((turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS) && GLOB.blobs.len && (mode == TURRET_LETHAL))
 		for(var/obj/structure/blob/B in view(scan_range, base))

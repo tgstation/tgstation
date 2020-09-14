@@ -1,8 +1,11 @@
 
-
+/*
+	Burn wounds
+*/
 
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
+	name = "Burn Wound"
 	a_or_from = "from"
 	wound_type = WOUND_BURN
 	processes = TRUE
@@ -38,11 +41,11 @@
 		return
 
 	if(victim.reagents)
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
+		if(victim.has_reagent(/datum/reagent/medicine/spaceacillin))
 			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
+		if(victim.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
 			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
+		if(victim.has_reagent(/datum/reagent/medicine/mine_salve))
 			sanitization += 0.3
 			flesh_healing += 0.5
 
@@ -79,19 +82,19 @@
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling && prob(2))
 				to_chat(victim, "<span class='warning'><b>Your [limb.name] completely locks up, as you struggle for control against the infection!</b></span>")
-				disabling = TRUE
+				set_disabling(TRUE)
 			else if(disabling && prob(8))
 				to_chat(victim, "<span class='notice'>You regain sensation in your [limb.name], but it's still in terrible shape!</span>")
-				disabling = FALSE
+				set_disabling(FALSE)
 			else if(prob(20))
 				victim.adjustToxLoss(0.5)
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
 			if(!disabling && prob(3))
 				to_chat(victim, "<span class='warning'><b>You suddenly lose all sensation of the festering infection in your [limb.name]!</b></span>")
-				disabling = TRUE
+				set_disabling(TRUE)
 			else if(disabling && prob(3))
 				to_chat(victim, "<span class='notice'>You can barely feel your [limb.name] again, and you have to strain to retain motor control!</span>")
-				disabling = FALSE
+				set_disabling(FALSE)
 			else if(prob(1))
 				to_chat(victim, "<span class='warning'>You contemplate life without your [limb.name]...</span>")
 				victim.adjustToxLoss(0.75)
@@ -197,6 +200,9 @@
 
 /// if someone is using mesh on our burns
 /datum/wound/burn/proc/mesh(obj/item/stack/medical/mesh/I, mob/user)
+	if(!I.is_open)
+		to_chat(user, "<span class='warning'>You need to open [I] first.</span>")
+		return
 	user.visible_message("<span class='notice'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin wrapping [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return

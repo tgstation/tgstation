@@ -109,10 +109,10 @@
   */
 /mob/proc/Cell()
 	set category = "Admin"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!loc)
-		return 0
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -302,7 +302,7 @@
 
 	if(istype(W))
 		if(equip_to_slot_if_possible(W, slot,0,0,0))
-			return 1
+			return TRUE
 
 	if(!W)
 		// Activate the item
@@ -310,7 +310,7 @@
 		if(istype(I))
 			I.attack_hand(src)
 
-	return 0
+	return FALSE
 
 /**
   * Try to equip an item to a slot on the mob
@@ -331,9 +331,8 @@
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self, swap))
 		if(qdel_on_fail)
 			qdel(W)
-		else
-			if(!disable_warning)
-				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
+		else if(!disable_warning)
+			to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
 	equip_to_slot(W, slot, initial, redraw_mob, swap) //This proc should not ever fail.
 	return TRUE
@@ -370,7 +369,7 @@
   */
 /mob/proc/equip_to_appropriate_slot(obj/item/W, swap=FALSE)
 	if(!istype(W))
-		return 0
+		return FALSE
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -387,9 +386,9 @@
 
 	for(var/slot in slot_priority)
 		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE, swap)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 /**
   * Reset the attached clients perspective (viewpoint)
   *
@@ -475,14 +474,25 @@
 
 /mob/living/blind_examine_check(atom/examined_thing)
 	//need to be next to something and awake
-	if(!in_range(examined_thing, src) || incapacitated())
+	if(!Adjacent(examined_thing) || incapacitated())
 		to_chat(src, "<span class='warning'>Something is there, but you can't see it!</span>")
 		return FALSE
-	//also neeed an empty hand, and you can only initiate as many examines as you have hands
-	if(LAZYLEN(do_afters) >= usable_hands || get_active_held_item())
+
+	//you can examine things you're holding directly, but you can't examine other things if your hands are full
+	/// the item in our active hand
+	var/active_item = get_active_held_item()
+	if(active_item && active_item != examined_thing)
+		to_chat(src, "<span class='warning'>Your hands are too full to examine this!</span>")
+		return FALSE
+
+	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
+	/// our active hand, to check if it's disabled/detatched
+	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
+	if(!active_hand || active_hand.bodypart_disabled || LAZYLEN(do_afters) >= usable_hands)
 		to_chat(src, "<span class='warning'>You don't have a free hand to examine this!</span>")
 		return FALSE
-	//can only queue up one examine on something at a time
+
+	//you can only queue up one examine on something at a time
 	if(examined_thing in do_afters)
 		return FALSE
 
@@ -492,7 +502,7 @@
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
 	if(client?.recent_examines && client?.recent_examines[examined_thing]) //easier to find things we just touched
-		examine_delay_length = 0.5 SECONDS
+		examine_delay_length = 0.33 SECONDS
 	else if(isobj(examined_thing))
 		examine_delay_length *= 1.5
 	else if(ismob(examined_thing) && examined_thing != src)
@@ -506,7 +516,7 @@
 	/// our current intent, so we can go back to it after touching
 	var/previous_intent = a_intent
 	a_intent = INTENT_HELP
-	examined_thing.attack_hand(src)
+	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
 	a_intent = previous_intent
 	return TRUE
 
@@ -802,113 +812,36 @@
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
-	return 0
+	return FALSE
 
-/**
-  * Output an update to the stat panel for the client
-  *
-  * calculates client ping, round id, server time, time dilation and other data about the round
-  * and puts it in the mob status panel on a regular loop
-  */
-/mob/Stat()
-	..()
+/// Adds this list to the output to the stat browser
+/mob/proc/get_status_tab_items()
+	. = list()
 
-	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		if (SSticker.round_start_time)
-			var/round_time = world.time - SSticker.round_start_time
-			if(round_time > MIDNIGHT_ROLLOVER)
-				stat(null, "Round Time: [round(round_time/MIDNIGHT_ROLLOVER)]:[gameTimestamp("hh:mm:ss", round_time)]")
-			else
-				stat(null, "Round Time: [gameTimestamp("hh:mm:ss", round_time)]")
-		else
-			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
-		stat(null, "Station Time: [station_time_timestamp()]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
-	if(client && client.holder)
-		if(statpanel("MC"))
-			var/turf/T = get_turf(client.eye)
-			stat("Location:", COORD(T))
-			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[num2text(world.contents.len, 10)]")
-			stat("World Time:", "[world.time]")
-			GLOB.stat_entry()
-			config.stat_entry()
-			stat(null)
-			if(Master)
-				Master.stat_entry()
-			else
-				stat("Master Controller:", "ERROR")
-			if(Failsafe)
-				Failsafe.stat_entry()
-			else
-				stat("Failsafe Controller:", "ERROR")
-			if(Master)
-				stat(null)
-				for(var/datum/controller/subsystem/SS in Master.subsystems)
-					SS.stat_entry()
-			GLOB.cameranet.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
-		if(length(GLOB.sdql2_queries))
-			if(statpanel("SDQL2"))
-				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
-				for(var/i in GLOB.sdql2_queries)
-					var/datum/sdql2_query/Q = i
-					Q.generate_stat()
-
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			var/list/overrides = list()
-			for(var/image/I in client.images)
-				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides += I.loc
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
-					continue
-				statpanel(listed_turf.name, null, A)
-
-
+/// Gets all relevant proc holders for the browser statpenl
+/mob/proc/get_proc_holders()
+	. = list()
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-	add_spells_to_statpanel(mob_spell_list)
+		. += get_spells_for_statpanel(mind.spell_list)
+	. += get_spells_for_statpanel(mob_spell_list)
 
 /**
   * Convert a list of spells into a displyable list for the statpanel
   *
   * Shows charge and other important info
   */
-/mob/proc/add_spells_to_statpanel(list/spells)
+/mob/proc/get_spells_for_statpanel(list/spells)
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
 				if("holdervar")
-					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
+	return L
 
 #define MOB_FACE_DIRECTION_DELAY 1
 
@@ -1029,6 +962,8 @@
 		if(istype(S, spell))
 			LAZYREMOVE(mob_spell_list, S)
 			qdel(S)
+	if(client)
+		client << output(null, "statbrowser:check_spells")
 
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
@@ -1084,11 +1019,11 @@
 
 ///can the mob be buckled to something by default?
 /mob/proc/can_buckle()
-	return 1
+	return TRUE
 
 ///can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
-	return 1
+	return TRUE
 
 ///Can the mob interact() with an atom?
 /mob/proc/can_interact_with(atom/A)
@@ -1148,7 +1083,7 @@
 /mob/proc/fully_replace_character_name(oldname,newname)
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
-		return 0
+		return FALSE
 
 	log_played_names(ckey,newname)
 
@@ -1171,7 +1106,7 @@
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
-	return 1
+	return TRUE
 
 ///Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
@@ -1228,7 +1163,7 @@
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if (ismecha(loc))
-		var/obj/mecha/M = loc
+		var/obj/vehicle/sealed/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
 	else if (istype(loc, /obj/vehicle/sealed))

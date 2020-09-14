@@ -90,7 +90,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
-	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 50)
+	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS), \
+	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS)
 ))
 
 /obj/item/stack/sheet/metal
@@ -259,7 +260,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 /obj/item/stack/sheet/mineral/bamboo
 	name = "bamboo cuttings"
 	desc = "Finely cut bamboo sticks."
-	singular_name = "cut bamboo"
+	singular_name = "cut bamboo stick"
 	icon_state = "sheet-bamboo"
 	inhand_icon_state = "sheet-bamboo"
 	icon = 'icons/obj/stack_objects.dmi'
@@ -733,7 +734,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/sandblock
 	name = "blocks of sand"
 	desc = "You're too old to be playing with sandcastles. Now you build... sandstations."
-	singular_name = "block of sand"
+	singular_name = "sand block"
 	icon_state = "sheet-sandstone"
 	custom_materials = list(/datum/material/sand = MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/sandblock

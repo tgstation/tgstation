@@ -49,7 +49,7 @@
 			L.bodytemperature = avg_temp
 		pipe_air.temperature = avg_temp
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/process()
+/obj/machinery/atmospherics/pipe/heat_exchanging/process(delta_time)
 	if(!parent)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
@@ -78,4 +78,4 @@
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)

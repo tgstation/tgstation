@@ -119,7 +119,7 @@
   */
 /obj/machinery/proc/power_change()
 	SIGNAL_HANDLER
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 
 	if(machine_stat & BROKEN)
 		return

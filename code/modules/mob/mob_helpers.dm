@@ -45,9 +45,9 @@
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /**
   * Convert random parts of a passed in message to stars
@@ -510,6 +510,8 @@
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+	if(HAS_TRAIT(src,TRAIT_HUSK))
+		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
 
 /**
   * Get the list of keywords for policy config

@@ -30,8 +30,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/list/resource_blobs = list()
 	var/free_strain_rerolls = 1 //one free strain reroll
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
-	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
-	var/placed = 0
+	var/nodes_required = TRUE //if the blob needs nodes to place resource and factory blobs
+	var/placed = FALSE
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
 	var/list/blobs_legit = list()
@@ -252,19 +252,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
 
-/mob/camera/blob/Stat()
-	..()
-	if(statpanel("Status"))
-		if(blob_core)
-			stat(null, "Core Health: [blob_core.obj_integrity]")
-			stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-			stat(null, "Blobs to Win: [blobs_legit.len]/[blobwincount]")
-		if(free_strain_rerolls)
-			stat(null, "You have [free_strain_rerolls] Free Strain Reroll\s Remaining")
-		if(!placed)
-			if(manualplace_min_time)
-				stat(null, "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]")
-			stat(null, "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]")
+/mob/camera/blob/get_status_tab_items()
+	. = ..()
+	if(blob_core)
+		. += "Core Health: [blob_core.obj_integrity]"
+		. += "Power Stored: [blob_points]/[max_blob_points]"
+		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
+	if(free_strain_rerolls)
+		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
+	if(!placed)
+		if(manualplace_min_time)
+			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
 	if(placed)
@@ -272,13 +271,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(B)
 			forceMove(NewLoc)
 		else
-			return 0
+			return FALSE
 	else
 		var/area/A = get_area(NewLoc)
 		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
-			return 0
+			return FALSE
 		forceMove(NewLoc)
-		return 1
+		return TRUE
 
 /mob/camera/blob/mind_initialize()
 	. = ..()

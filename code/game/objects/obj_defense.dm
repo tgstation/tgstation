@@ -137,26 +137,6 @@
 		return
 	attack_generic(user, rand(10, 15), BRUTE, MELEE, 1)
 
-/obj/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	var/play_soundeffect = 0
-	var/mech_damtype = M.damtype
-	if(M.selected)
-		mech_damtype = M.selected.damtype
-		play_soundeffect = 1
-	else
-		switch(M.damtype)
-			if(BRUTE)
-				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-			if(BURN)
-				playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-			if(TOX)
-				playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
-				return 0
-			else
-				return 0
-	M.visible_message("<span class='danger'>[M.name] hits [src]!</span>", "<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return take_damage(M.force*3, mech_damtype, MELEE, play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
 	SSexplosions.high_mov_atom += src
@@ -171,31 +151,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
-	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-
-		if(!acid_level)
-			SSacid.processing[src] = src
-			update_icon()
-		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
-		if(acid_level < acid_cap)
-			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
-		return 1
-
-///the proc called by the acid subsystem to process the acid that's on the obj
-/obj/proc/acid_processing()
-	. = TRUE
-	if(!(resistance_flags & ACID_PROOF))
-		if(prob(33))
-			playsound(loc, 'sound/items/welder.ogg', 150, TRUE)
-		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, ACID, 0)
-
-	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
-	if(!acid_level)
+	. = ..()
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
 		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	return TRUE
 
 ///called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	SSacid.processing -= src
 	deconstruct(FALSE)
 
 //// FIRE

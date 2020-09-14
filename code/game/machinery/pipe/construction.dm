@@ -188,7 +188,7 @@ Buildable meters
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes."
+	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"
