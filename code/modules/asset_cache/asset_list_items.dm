@@ -462,3 +462,8 @@
 /datum/asset/spritesheet/mafia/register()
 	InsertAll("", 'icons/obj/mafia.dmi')
 	..()
+
+/datum/asset/simple/pai
+	assets = list(
+		"paigrid.png" = 'html/paigrid.png',
+	)
