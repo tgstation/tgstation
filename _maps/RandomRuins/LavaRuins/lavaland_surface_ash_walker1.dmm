@@ -606,7 +606,6 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/machinery/the_singularitygen,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bA" = (

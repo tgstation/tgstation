@@ -28,7 +28,7 @@
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize()
 	. = ..()
-	tentacle_slap = new
+	tentacle_slap = new(src)
 	AddAbility(tentacle_slap)
 	add_cell_sample()
 
@@ -41,6 +41,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.can_use_abilities = TRUE
 	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
 	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -85,7 +86,7 @@
 	if(.)
 		return
 
-	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/vatbeast) || ranged_ability_user.stat)
+	if(owner.stat)
 		remove_ranged_ability()
 		return
 
@@ -97,12 +98,10 @@
 
 	var/mob/living/living_target = target
 
-	var/mob/living/simple_animal/hostile/vatbeast/vatbeast = ranged_ability_user
-
-	vatbeast.visible_message("<span class='warning>[vatbeast] slaps [living_target] with its tentacle!</span>", "<span class='notice'>You slap [living_target] with your tentacle.</span>")
-	playsound(vatbeast, 'sound/effects/assslap.ogg', 90)
-	var/atom/throw_target = get_edge_target_turf(target, vatbeast.dir)
-	living_target.throw_at(throw_target, 6, 4, vatbeast)
+	owner.visible_message("<span class='warning>[owner] slaps [living_target] with its tentacle!</span>", "<span class='notice'>You slap [living_target] with your tentacle.</span>")
+	playsound(owner, 'sound/effects/assslap.ogg', 90)
+	var/atom/throw_target = get_edge_target_turf(target, ranged_ability_user.dir)
+	living_target.throw_at(throw_target, 6, 4, owner)
 	living_target.apply_damage(30)
 	current_cooldown = world.time + cooldown
 	remove_ranged_ability()

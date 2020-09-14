@@ -7,13 +7,14 @@
 	can_unwrench = TRUE
 	hide = TRUE
 	layer = GAS_SCRUBBER_LAYER
+	shift_underlay_only = FALSE
 
 	pipe_state = "pvent"
 
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	icon_state = "passive_vent"
 
