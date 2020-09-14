@@ -31945,16 +31945,19 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bFu" = (
-/obj/machinery/button/massdriver{
-	dir = 4;
-	id = "toxinsdriver";
-	pixel_x = 28
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/computer/pod/old{
+	density = 0;
+	icon = 'icons/obj/airlock_machines.dmi';
+	icon_state = "airlock_control_standby";
+	id = "toxinsdriver";
+	name = "Mass Driver Controller";
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -45985,9 +45988,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/button/massdriver{
+/obj/machinery/computer/pod/old{
+	density = 0;
+	icon = 'icons/obj/airlock_machines.dmi';
+	icon_state = "airlock_control_standby";
 	id = "chapelgun";
-	pixel_x = 28
+	name = "Mass Driver Controller";
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -48077,14 +48084,8 @@
 	id = "Disposal Exit";
 	name = "Disposal Vent Control";
 	pixel_x = -25;
-	pixel_y = 4;
+	pixel_y = 6;
 	req_access_txt = "12"
-	},
-/obj/machinery/button/massdriver{
-	id = "trash";
-	name = "Trash Ejector Control";
-	pixel_x = -26;
-	pixel_y = -6
 	},
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
@@ -48095,6 +48096,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/computer/pod/old{
+	density = 0;
+	icon = 'icons/obj/airlock_machines.dmi';
+	icon_state = "airlock_control_standby";
+	id = "trash";
+	name = "Mass Driver Controller";
+	pixel_x = -24;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "eUU" = (
