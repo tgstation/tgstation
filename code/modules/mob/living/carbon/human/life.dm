@@ -82,7 +82,7 @@
 
 		failed_last_breath = TRUE
 
-		var/datum/species/S = dna.species// tivi todo
+		var/datum/species/S = dna.species
 
 		if(S.breathid == "o2")
 			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
@@ -146,12 +146,12 @@
 /mob/living/carbon/human/IgniteMob()
 	//If have no DNA or can be Ignited, call parent handling to light user
 	//If firestacks are high enough
-	if(!dna || dna.species.CanIgniteMob(src))
+	if(dna.species.CanIgniteMob(src))
 		return ..()
 	return FALSE //No ignition
 
 /mob/living/carbon/human/extinguish_mob()
-	if(!dna || !dna.species.extinguish_mob(src))
+	if(!dna.species.extinguish_mob(src))
 		last_fire_update = null
 		return ..()
 //END FIRE CODE

@@ -21,8 +21,7 @@
 		if(.) //not dead
 			handle_blood()
 			handle_random_events()//vomiting and so
-			var/bprv = handle_bodyparts()
-			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+			if(handle_bodyparts() & BODYPART_LIFE_UPDATE_HEALTH)
 				update_stamina() //needs to go before updatehealth to remove stamcrit
 				updatehealth()
 			handle_brain_damage()
@@ -70,7 +69,7 @@
 		else if(health <= crit_threshold)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
-	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
+	var/datum/gas_mixture/breath
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
@@ -81,10 +80,11 @@
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
 
+
 	else
 		if(HAS_TRAIT(src, TRAIT_NOBREATH))//later so people in crit with nobreathe can die
 			return
-
+		breath = get_breath_from_internal(BREATH_VOLUME)
 		//Breathe from internal
 		if(isnull(breath)) //in case of 0 pressure internals
 
@@ -92,15 +92,12 @@
 				var/obj/loc_as_obj = loc
 				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
 			else if(isturf(loc)) //Breathe from loc as turf
-				var/breath_moles = 0
 				var/datum/gas_mixture/environment = loc.return_air()
 				if(environment)
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
-
-				breath = loc.remove_air(breath_moles)
+					breath = loc.remove_air(environment.total_moles()*BREATH_PERCENTAGE)
 
 		else //Breathe from loc as obj again
-			if(istype(loc, /obj/))
+			if(isobj(loc)))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
@@ -117,9 +114,12 @@
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
+		failed_last_breath = TRUE
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		return FALSE
 
 	//CRIT
-	if(!breath || (breath.total_moles() == 0) || !lungs)
+	if(!breath || (breath.total_moles() == 0))
 		if(has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return FALSE
 		adjustOxyLoss(1)
