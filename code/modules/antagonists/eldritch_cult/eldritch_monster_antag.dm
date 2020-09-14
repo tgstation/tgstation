@@ -19,9 +19,7 @@
 	to_chat(owner, "<span class='boldannounce'>You became an Eldritch Horror!</span>")
 
 /datum/antagonist/heretic_monster/on_removal()
-	if(owner)
-		to_chat(owner, "<span class='boldannounce'>Your master is no longer [master.owner.current.real_name]</span>")
-		owner = null
+	to_chat(owner, "<span class='boldannounce'>Your master is no longer [master.owner.current.real_name]</span>")
 	return ..()
 
 /datum/antagonist/heretic_monster/proc/set_owner(datum/antagonist/_master)

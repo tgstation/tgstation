@@ -15,28 +15,38 @@
 
 
 /datum/antagonist/traitor/internal_affairs/proc/give_pinpointer()
-	if(owner && owner.current)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+
+	if(owner.current)
 		owner.current.apply_status_effect(/datum/status_effect/agent_pinpointer)
 
 /datum/antagonist/traitor/internal_affairs/apply_innate_effects()
-	.=..() //in case the base is used in future
-	if(owner && owner.current)
+	. = ..()
+
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+
+	if(owner.current)
 		give_pinpointer(owner.current)
 
 /datum/antagonist/traitor/internal_affairs/remove_innate_effects()
-	.=..()
-	if(owner && owner.current)
+	. = ..()
+
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+
+	if(owner.current)
 		owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer)
 
 /datum/antagonist/traitor/internal_affairs/on_gain()
 	START_PROCESSING(SSprocessing, src)
-	.=..()
+	. = ..()
 /datum/antagonist/traitor/internal_affairs/on_removal()
 	STOP_PROCESSING(SSprocessing,src)
-	.=..()
+	. = ..()
 /datum/antagonist/traitor/internal_affairs/process()
 	iaa_process()
-
 
 /datum/status_effect/agent_pinpointer
 	id = "agent_pinpointer"
@@ -101,7 +111,9 @@
 	return (istype(O, /datum/objective/assassinate/internal)||istype(O, /datum/objective/destroy/internal))
 
 /datum/antagonist/traitor/proc/replace_escape_objective()
-	if(!owner || !objectives.len)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+	if(!objectives.len)
 		return
 	for (var/objective_ in objectives)
 		if(!(istype(objective_, /datum/objective/escape)||istype(objective_, /datum/objective/survive)))
@@ -113,7 +125,9 @@
 	add_objective(martyr_objective)
 
 /datum/antagonist/traitor/proc/reinstate_escape_objective()
-	if(!owner||!objectives.len)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+	if(!objectives.len)
 		return
 	for (var/objective_ in objectives)
 		if(!istype(objective_, /datum/objective/martyr))
@@ -174,7 +188,9 @@
 		replace_escape_objective(owner)
 
 /datum/antagonist/traitor/internal_affairs/proc/iaa_process()
-	if(owner&&owner.current&&owner.current.stat!=DEAD)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+	if(owner.current && owner.current.stat != DEAD)
 		for(var/objective_ in objectives)
 			if(!is_internal_objective(objective_))
 				continue

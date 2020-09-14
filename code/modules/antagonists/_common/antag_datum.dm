@@ -30,8 +30,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
-	if(owner)
-		LAZYREMOVE(owner.antag_datums, src)
+	if(!owner)
+		CRASH("Destroy()ing antagonist datum when it has no owner.")
+	LAZYREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
 
@@ -133,14 +134,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
 /datum/antagonist/proc/on_removal()
 	SHOULD_CALL_PARENT(TRUE)
-	if(owner)
-		remove_innate_effects()
-		clear_antag_moodies()
-		LAZYREMOVE(owner.antag_datums, src)
-		if(!LAZYLEN(owner.antag_datums))
-			owner.current.remove_from_current_living_antags()
-		if(!silent && owner.current)
-			farewell()
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+
+	remove_innate_effects()
+	clear_antag_moodies()
+	LAZYREMOVE(owner.antag_datums, src)
+	if(!LAZYLEN(owner.antag_datums))
+		owner.current.remove_from_current_living_antags()
+	if(!silent && owner.current)
+		farewell()
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -171,7 +174,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/report = list()
 
 	if(!owner)
-		CRASH("antagonist datum without owner")
+		CRASH("Antagonist datum without owner")
 
 	report += printplayer(owner)
 
