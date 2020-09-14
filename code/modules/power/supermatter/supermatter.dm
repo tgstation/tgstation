@@ -678,6 +678,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(produces_gas)
 			env.merge(removed)
 			air_update_turf()
+	for(var/turf/turf_to_check in view(1, loc))
+		if(isspaceturf(turf_to_check))
+			var/integrity = get_integrity()
+			if(integrity < 15)
+				damage += max((power * 0.05) * DAMAGE_INCREASE_MULTIPLIER, 0.1)
+			else if(integrity < 30)
+				damage += max((power * 0.06) * DAMAGE_INCREASE_MULTIPLIER, 0.1)
+			else if(integrity < 50)
+				damage += max((power * 0.07) * DAMAGE_INCREASE_MULTIPLIER, 0.1)
+			else if(integrity < 75)
+				damage += max((power * 0.08) * DAMAGE_INCREASE_MULTIPLIER, 0.1)
+			else
+				damage += max((power * 0.09) * DAMAGE_INCREASE_MULTIPLIER, 0.1)
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
