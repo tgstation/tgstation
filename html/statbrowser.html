@@ -492,10 +492,9 @@ function update(global_data, ping_entry, other_entries) {
 		draw_debug();
 }
 
-function update_mc(global_mc_data, coords_entry, ht) {
+function update_mc(global_mc_data, coords_entry) {
 	mc_tab_parts = JSON.parse(global_mc_data);
 	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
-	href_token = ht;
 	if(!verb_tabs.includes("MC"))
 		verb_tabs.push("MC");
 	createStatusTab("MC");
@@ -737,12 +736,14 @@ function remove_tickets() {
 }
 // removes MC, Tickets and MC tabs.
 function remove_admin_tabs() {
+	href_token = null;
 	remove_mc();
 	remove_tickets();
 	remove_sdql2();
 }
 
-function add_admin_tabs() {
+function add_admin_tabs(ht) {
+	href_token = ht;
 	addPermanentTab("MC");
 	addPermanentTab("Tickets");
 }
