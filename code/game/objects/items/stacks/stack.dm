@@ -208,7 +208,7 @@
 
 	switch(action)
 		if("make")
-			if(get_amount() < 1)
+			if(get_amount() < 1 && !is_cyborg)
 				qdel(src)
 				return
 			var/datum/stack_recipe/R = locate(params["ref"])
