@@ -36572,6 +36572,14 @@
 	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
+/obj/machinery/computer/pod/old{
+	density = 0;
+	icon = 'icons/obj/airlock_machines.dmi';
+	icon_state = "airlock_control_standby";
+	id = "toxinsdriver";
+	name = "Mass Driver Controller";
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bKi" = (
@@ -47622,10 +47630,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cBA" = (
-/obj/machinery/button/massdriver{
-	id = "toxinsdriver";
-	pixel_y = 24
-	},
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -55674,6 +55678,20 @@
 	dir = 8
 	},
 /area/science/research)
+"vdL" = (
+/obj/structure/marker_beacon{
+	icon_state = "markerburgundy-on"
+	},
+/obj/machinery/computer/pod/old{
+	density = 0;
+	icon = 'icons/obj/airlock_machines.dmi';
+	icon_state = "airlock_control_standby";
+	id = "chapelgun";
+	name = "Mass Driver Controller";
+	pixel_x = 24
+	},
+/turf/open/floor/plating/icemoon,
+/area/icemoon/surface/outdoors)
 "vdT" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -108744,7 +108762,7 @@ bky
 boP
 boP
 boP
-bwo
+vdL
 asU
 bwo
 boP
