@@ -187,8 +187,6 @@
 	if(!. || !client)
 		return FALSE
 
-	var/datum/asset/simple/pai/assets = get_asset_datum(/datum/asset/simple/pai)
-	assets.send(usr)
 	client.perspective = EYE_PERSPECTIVE
 	if(holoform)
 		client.eye = src
