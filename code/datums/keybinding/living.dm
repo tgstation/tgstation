@@ -61,7 +61,7 @@
 	return TRUE
 
 /datum/keybinding/living/rest
-	hotkey_keys = list("C")
+	hotkey_keys = list("U")
 	name = "rest"
 	full_name = "Rest"
 	description = "Lay down, or get up."
