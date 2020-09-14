@@ -1,3 +1,8 @@
+
+
+#define ADDRESS_TO_STRING(NETWORK,NODE,PORT) "[NETWORK].[NODE].[PORT]"
+
+
 /datum/ntnet
 	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
 	// High values make displaying logs much laggier.
@@ -180,6 +185,7 @@
 	build_software_lists()
 	add_log("NTNet logging system activated.")
 
+// not sure if we want service to work as it is, hold off till we get machines working
 
 #ifdef NTNET_SERVICE
 /datum/ntnet/station/Destroy()
