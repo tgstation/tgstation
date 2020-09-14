@@ -7,7 +7,6 @@
 	. = ..()
 	if(!.)
 		return
-	update_gravity(mob_has_gravity())
 
 	if(malfhack && malfhack.aidisabled)
 		deltimer(malfhacking)

@@ -842,18 +842,16 @@
 
 /mob/living/update_gravity(has_gravity, override)
 	. = ..()
-	if(!SSticker.HasRoundStarted())
-		return
-	if(has_gravity)
-		if(has_gravity == 1)
-			clear_alert("gravity")
-		else
-			if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
-				throw_alert("gravity", /obj/screen/alert/veryhighgravity)
-			else
-				throw_alert("gravity", /obj/screen/alert/highgravity)
-	else
+	if(!has_gravity)
 		throw_alert("gravity", /obj/screen/alert/weightless)
+		return
+	if(has_gravity == 1)
+		clear_alert("gravity")
+	else
+		if(has_gravity >= GRAVITY_DAMAGE_TRESHOLD)
+			throw_alert("gravity", /obj/screen/alert/veryhighgravity)
+		else
+			throw_alert("gravity", /obj/screen/alert/highgravity)
 	if(!override && !is_flying())
 		INVOKE_ASYNC(src, /atom/movable.proc/float, !has_gravity)
 

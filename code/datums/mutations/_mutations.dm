@@ -1,9 +1,5 @@
-/datum/mutation
-
-	var/name
-
-/datum/mutation/human
-	name = "mutation"
+/datum/mutation/human //if you are reading this this should be /datum/mutation and if youll fix it ill call you nice
+	var/name = "mutation"
 	var/desc = "A mutation."
 	var/locked
 	var/quality

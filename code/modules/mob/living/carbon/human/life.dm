@@ -22,29 +22,37 @@
 	. = ..()
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name() //this needs to be moved out onto equiping and damage but I dont have the energy for it
-	if(.)
-		return
 
-	else if(!IS_IN_STASIS(src))
+	if(!IS_IN_STASIS(src))
 		dna.species.spec_life(src) // for mutantraces, some do stuff while dead so we check this before
 		if(.)
 			return
-		for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+		for(var/i in dna.mutations) // Handle active genes
+			var/datum/mutation/human/HM = i
 			HM.on_life()
-		//heart attack stuff
-		handle_heart()
-		handle_liver()
 
-	for(var/i in all_wounds)
-		var/datum/wound/iter_wound = i
-		iter_wound.on_stasis()
+		//heart attack stuff
+		if(undergoing_cardiac_arrest())
+
+			if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT))
+				adjustOxyLoss(8)
+				Unconscious(80)
+			// Tissues die without blood circulation
+			adjustBruteLoss(2)
+
+		if(!getorganslot(ORGAN_SLOT_LIVER))
+			liver_failure()
+	else if(!.)
+		for(var/i in all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_stasis()
 
 	if(stat != DEAD)
 		return TRUE//we might die because of organs so check again
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+	if (istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
@@ -74,7 +82,7 @@
 
 		failed_last_breath = TRUE
 
-		var/datum/species/S = dna.species
+		var/datum/species/S = dna.species// tivi todo
 
 		if(S.breathid == "o2")
 			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
@@ -288,16 +296,6 @@
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
-
-/mob/living/carbon/human/proc/handle_heart()
-	if(!undergoing_cardiac_arrest())
-		return
-
-	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT))
-		adjustOxyLoss(8)
-		Unconscious(80)
-	// Tissues die without blood circulation
-	adjustBruteLoss(2)
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

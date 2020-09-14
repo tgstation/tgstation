@@ -9,7 +9,7 @@
 
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
-		handle_wounds()//I know its dumb wounds process when dead but whatever
+		handle_wounds()//I know its wierd wounds process when dead but whatever
 
 		. = ..()
 
@@ -131,12 +131,13 @@
 	var/oxygen_used = 0
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-#define BREATH_GASES (breath.gases)
+	//caches the gases for that super speed
+	var/list/breath_cache = breath.gases
 
 	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
-	var/O2_partialpressure = (BREATH_GASES[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (BREATH_GASES[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (BREATH_GASES[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath_cache[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
+	var/Toxins_partialpressure = (breath_cache[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/CO2_partialpressure = (breath_cache[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
 
 
 	//OXYGEN
@@ -147,7 +148,7 @@
 			var/ratio = 1 - O2_partialpressure/SAFE_OXY_MINIMUM
 			adjustOxyLoss(min(5*ratio, 3))
 			failed_last_breath = TRUE
-			oxygen_used = BREATH_GASES[/datum/gas/oxygen][MOLES]*ratio
+			oxygen_used = breath_cache[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
@@ -157,11 +158,11 @@
 		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
-		oxygen_used = BREATH_GASES[/datum/gas/oxygen][MOLES]
+		oxygen_used = breath_cache[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
 
-	BREATH_GASES[/datum/gas/oxygen][MOLES] -= oxygen_used
-	BREATH_GASES[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
+	breath_cache[/datum/gas/oxygen][MOLES] -= oxygen_used
+	breath_cache[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > SAFE_CO2_MINIMUM)
@@ -180,15 +181,15 @@
 
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > SAFE_TOX_MINIMUM)
-		var/ratio = (BREATH_GASES[/datum/gas/plasma][MOLES]/SAFE_TOX_MINIMUM) * 10
+		var/ratio = (breath_cache[/datum/gas/plasma][MOLES]/SAFE_TOX_MINIMUM) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
-	if(BREATH_GASES[/datum/gas/nitrous_oxide])
-		var/SA_partialpressure = (BREATH_GASES[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/nitrous_oxide])
+		var/SA_partialpressure = (breath_cache[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SAFE_N20_PARALYSIS_MINIMUM)
 			Unconscious(60)
 			if(SA_partialpressure > SAFE_N20_SLEEP_MINIMUM)
@@ -198,7 +199,7 @@
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		if(SA_partialpressure > SAFE_TOX_MINIMUM*3)
-			var/ratio = (BREATH_GASES[/datum/gas/nitrous_oxide][MOLES]/SAFE_TOX_MINIMUM)
+			var/ratio = (breath_cache[/datum/gas/nitrous_oxide][MOLES]/SAFE_TOX_MINIMUM)
 			adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 			throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 		else
@@ -207,31 +208,31 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
-	if(BREATH_GASES[/datum/gas/bz])
-		var/bz_partialpressure = (BREATH_GASES[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/bz])
+		var/bz_partialpressure = (breath_cache[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
 	//TRITIUM
-	if(BREATH_GASES[/datum/gas/tritium])
-		var/tritium_partialpressure = (BREATH_GASES[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/tritium])
+		var/tritium_partialpressure = (breath_cache[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
 
 	//NITRYL
-	if(BREATH_GASES[/datum/gas/nitryl])
-		var/nitryl_partialpressure = (BREATH_GASES[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/nitryl])
+		var/nitryl_partialpressure = (breath_cache[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
 
 	//FREON
-	if(BREATH_GASES[/datum/gas/freon])
-		var/freon_partialpressure = (BREATH_GASES[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/freon])
+		var/freon_partialpressure = (breath_cache[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(freon_partialpressure * 0.25)
 
 	//MIASMA
-	if(BREATH_GASES[/datum/gas/miasma])
-		var/miasma_partialpressure = (BREATH_GASES[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+	if(breath_cache[/datum/gas/miasma])
+		var/miasma_partialpressure = (breath_cache[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
 
 		if(prob(1 * miasma_partialpressure))
 			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
@@ -275,7 +276,6 @@
 	handle_breath_temperature(breath)
 
 	return TRUE
-#undef BREATH_GASES
 /**
   * Fourth and final link in a breath chain, sets the temp of the breath to, by default, the mobs temp
   * Arguments:
@@ -354,7 +354,7 @@
 			W.handle_process()
 
 /mob/living/carbon/handle_mutations_and_radiation()
-	if(dna && dna.temporary_mutations.len)
+	if(dna?.temporary_mutations.len)
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -731,19 +731,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /////////
 //LIVER//
 /////////
-
-///Decides if the liver is failing or not.
-/mob/living/carbon/proc/handle_liver()
-	if(!dna)
-		return
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(!liver)
-		liver_failure()
-
-/mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && (liver.organ_flags & ORGAN_FAILING))
-		return TRUE
 
 /mob/living/carbon/proc/liver_failure()
 	end_metabolization(keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
