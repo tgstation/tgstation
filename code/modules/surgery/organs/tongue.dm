@@ -322,7 +322,7 @@
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/tongue/tied
 	name = "tied tongue"
-	desc = "If only one had a sword so we may finally untie this knot."
+	desc = "If only one had a sword so we may finally untie this knot. If you're seeing this, then it's coded wrong."
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
@@ -357,9 +357,9 @@
 	var/mob/living/carbon/M = owner
 	new_message = message
 	if(exclamation_found)
-		new_message = replacetext(new_message, "!", "")
+		new_message = replacetext(new_message, "!", ".")
 	if(question_found)
-		new_message = replacetext(new_message, "?", "")
+		new_message = replacetext(new_message, "?", ".")
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	if(exclamation_found && question_found)

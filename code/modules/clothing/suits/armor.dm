@@ -290,7 +290,7 @@
 
 /obj/item/clothing/suit/armor/elder_atmosian
 	name = "Elder Atmosian Armor"
-	desc = "A superb armor made with the thoughest and rarest materials avaiable to man."
+	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "knight_grey"
 	inhand_icon_state = "knight_greyscale"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
