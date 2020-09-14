@@ -253,6 +253,20 @@
 	air_contents.gases[/datum/gas/tritium][MOLES] = 350
 	air_contents.temperature = 10000
 
+/obj/machinery/portable_atmospherics/canister/fusion_test_2
+	name = "fusion test canister"
+	desc = "Don't be a badmin."
+	heat_limit = 1e12
+	pressure_limit = 1e14
+	mode = CANISTER_TIER_3
+
+/obj/machinery/portable_atmospherics/canister/fusion_test_2/create_gas()
+	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/hydrogen][MOLES] = 1200
+	air_contents.gases[/datum/gas/plasma][MOLES] = 3600
+	air_contents.gases[/datum/gas/tritium][MOLES] = 1200
+	air_contents.temperature = 10000
+
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
 		. = round(max(0, valve_timer - world.time) / 10, 1)

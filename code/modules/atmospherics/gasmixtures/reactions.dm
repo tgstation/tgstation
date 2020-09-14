@@ -482,7 +482,7 @@ nobiliumsuppression = INFINITY
 	cached_gases[/datum/gas/plasma][MOLES] = (plasma/FUSION_TOROIDAL_SIZE) * (total_gas/2) + FUSION_MOLE_THRESHOLD //Scales the gases back up
 	cached_gases[/datum/gas/hydrogen][MOLES] = (hydrogen/FUSION_TOROIDAL_SIZE) * (total_gas/2) + FUSION_MOLE_THRESHOLD
 	air.assert_gases(/datum/gas/water_vapor)
-	cached_gases[/datum/gas/water_vapor][moles] = ((water/FUSION_TODOIAL_SIZE) * total_gas) - 2*FUSION_MOLE_THRESHOLD
+	cached_gases[/datum/gas/water_vapor][MOLES] = ((water/FUSION_TOROIDAL_SIZE) * total_gas) - 2*FUSION_MOLE_THRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
 
 	reaction_energy += delta_plasma * PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
