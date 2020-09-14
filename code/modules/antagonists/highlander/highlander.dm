@@ -17,14 +17,14 @@
 	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
 	if(L.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
+
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
 	steal_objective.set_target(new /datum/objective_item/steal/nukedisc)
 	objectives += steal_objective
 
-	var/datum/objective/hijack/hijack_objective = new
-	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
+	var/datum/objective/hijack/highlander/hijack_objective = new
 	hijack_objective.owner = owner
 	objectives += hijack_objective
 
@@ -54,7 +54,7 @@
 	H.regenerate_icons()
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), ITEM_SLOT_ICLOTHING)
-	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), ITEM_SLOT_EARS)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/syndicate(H), ITEM_SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), ITEM_SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), ITEM_SLOT_FEET)
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
@@ -81,3 +81,23 @@
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
 	antiwelder.icon_state = "bloodhand_right"
 	H.put_in_hands(antiwelder)
+
+/datum/antagonist/highlander/robot
+	name="highlander"
+
+/datum/antagonist/highlander/robot/on_gain()
+	forge_objectives()
+	owner.special_role = "highlander"
+	give_equipment()
+
+/datum/antagonist/highlander/robot/give_equipment()
+	var/mob/living/silicon/robot/robotlander = owner.current
+	if(!istype(robotlander))
+		return ..()
+	robotlander.set_connected_ai() //disconnect from prior AI, if any
+	robotlander.laws.clear_inherent_laws()
+	robotlander.laws.set_zeroth_law("THERE CAN ONLY BE ONE")
+	robotlander.laws.show_laws(robotlander)
+	robotlander.module.transform_to(/obj/item/robot_module/syndicate/kiltborg)
+	robotlander.place_on_head(new /obj/item/clothing/head/beret/highlander(robotlander))
+	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.module.basic_modules

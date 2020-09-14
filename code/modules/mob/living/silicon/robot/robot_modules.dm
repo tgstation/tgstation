@@ -24,6 +24,8 @@
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
+	var/breakable_modules = TRUE //Whether the borg loses tool slots with damage.
+	var/locked_transform = TRUE //Whether swapping to this module should lockcharge the borg
 
 	var/did_feedback = FALSE
 
@@ -217,14 +219,14 @@
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", R)
 	R.notransform = TRUE
-	R.SetLockdown(1)
-	R.set_anchored(TRUE)
+	if(locked_transform)
+		R.SetLockdown(TRUE)
+		R.set_anchored(TRUE)
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
-	if(!prev_lockcharge)
-		R.SetLockdown(0)
+	R.SetLockdown(prev_lockcharge)
 	R.setDir(SOUTH)
 	R.set_anchored(FALSE)
 	R.notransform = FALSE
@@ -641,6 +643,17 @@
 	magpulsing = TRUE
 	hat_offset = -4
 	canDispose = TRUE
+
+/obj/item/robot_module/syndicate/kiltborg
+	name = "Highlander"
+	basic_modules = list(
+		/obj/item/claymore/highlander/robot,
+		/obj/item/pinpointer/nuke,)
+	moduleselect_icon = "kilt"
+	cyborg_base_icon = "kilt"
+	hat_offset = -2
+	breakable_modules = FALSE
+	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

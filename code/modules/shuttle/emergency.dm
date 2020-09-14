@@ -260,15 +260,15 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/proc/is_hijacked()
+/obj/docking_port/mobile/emergency/proc/is_hijacked(filter_by_human = TRUE)
 	var/has_people = FALSE
 	var/hijacker_present = FALSE
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
+				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player)) //animals don't count
+				if(isanimal(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
