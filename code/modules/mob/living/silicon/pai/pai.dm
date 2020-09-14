@@ -187,7 +187,7 @@
 	if(!. || !client)
 		return FALSE
 
-	var/datum/asset/spritesheet/pai/assets = get_asset_datum(/datum/asset/spritesheet/pai)
+	var/datum/asset/simple/pai/assets = get_asset_datum(/datum/asset/simple/pai)
 	assets.send(usr)
 	client.perspective = EYE_PERSPECTIVE
 	if(holoform)
