@@ -27,9 +27,9 @@
 
 	var/area/holodeck/linked
 	var/area/holodeck/loaded
-	var/program //should these still be area vars after refactoring? what else can i use?
+	var/program = "holodeck_offline"//should these still be area vars after refactoring? what else can i use?
 	var/last_program
-	var/area/offline_program = /datum/map_template/holodeck/offline
+	var/offline_program = "holodeck_offline"
 
 	var/list/program_cache
 	var/list/emag_programs
@@ -275,6 +275,16 @@
 		var/obj/effect/holodeck_effect/HE = e
 		HE.safety(active)
 
+/obj/machinery/computer/holodeck/proc/prepare_holodeck_area()//called AFTER the current template is selected in l_pro, but BEFORE template.load
+	//spawned += template.get_affected_turfs(bottom_left)//get_a_f shoooould be a list
+	var/list/area_contents = get_area(bottom_left).contents
+	LAZYADD(spawned, area_contents)//THIS ONLY HAS FUCKIGN TURFS
+	for (var/atom/previous_item in spawned)
+		if (previous_item.flags_1 & HOLOGRAM_1)
+			if (!istype(previous_item,/turf/))
+				qdel(previous_item)
+
+
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
 	//current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
 	//bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
@@ -297,7 +307,8 @@
 
 	//template = SSmapping.holodeck_templates[template_id]
 	template = SSmapping.holodeck_templates[map_id]
-	template.load(bottom_left, FALSE)//kyler, oh wait, is this call what actually SPAWNS that atoms? idk
+	//prepare_holodeck_area()
+	template.load(bottom_left, FALSE)
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
 
