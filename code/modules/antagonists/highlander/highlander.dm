@@ -96,7 +96,7 @@
 		return ..()
 	robotlander.set_connected_ai() //disconnect from prior AI, if any
 	robotlander.laws.clear_inherent_laws()
-	robotlander.laws.set_zeroth_law("THERE CAN ONLY BE ONE")
+	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
 	robotlander.module.transform_to(/obj/item/robot_module/syndicate/kiltborg)
 	robotlander.place_on_head(new /obj/item/clothing/head/beret/highlander(robotlander))
