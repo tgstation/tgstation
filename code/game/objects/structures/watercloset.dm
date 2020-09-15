@@ -156,7 +156,7 @@
 	. = ..()
 	hiddenitem = new /obj/item/reagent_containers/food/snacks/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/user)
+/obj/structure/urinal/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return

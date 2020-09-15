@@ -76,8 +76,7 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
-		var/list/modifiers = params2list(params)
-		if (L.in_combat_mode() && modifiers["right"])
+		if (M.in_combat_mode() && modifiers["right"])
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] [response_disarm_continuous] [name]!</span>", \
 							"<span class='userdanger'>[M] [response_disarm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)

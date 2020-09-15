@@ -230,7 +230,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	var/list/modifiers = params2list(params)
 	if (M.in_combat_mode() && modifiers["right"])
 		if(mobility_flags & MOBILITY_STAND)
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)

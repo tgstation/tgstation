@@ -100,7 +100,7 @@
 		return TRUE
 
 	var/try_to_fail = FALSE
-	if(user.in_combat_mode())
+	if(user.in_combat_mode()) //This means you are fucking up on purpose (you combat mode right clicked)
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/S = get_surgery_step()

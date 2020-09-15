@@ -89,7 +89,7 @@
 			target.visible_message("<span class='danger'>[chassis] squeezes [target]!</span>", \
 								"<span class='userdanger'>[chassis] squeezes you!</span>",\
 								"<span class='hear'>You hear something crack.</span>")
-			log_combat(source, M, "attacked", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+			log_combat(source, M, "attacked", "[name]", "(Combat mode: [M.in_combat_mode() ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
 			to_chat(source, "[icon2html(src, source)]<span class='notice'>You push [target] out of the way.</span>")
@@ -141,9 +141,34 @@
 
 	else if(isliving(target))
 		var/mob/living/M = target
+		var/list/modifiers = params2list(params)
 		if(M.stat == DEAD)
 			return
 		if(actioner.in_combat_mode())
+			if(modifiers["right"])
+				if(real_clamp)
+					var/mob/living/carbon/C = target
+					var/play_sound = FALSE
+					var/limbs_gone = ""
+					var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
+					if(affected != null)
+						affected.dismember(damtype)
+						play_sound = TRUE
+						limbs_gone = ", [affected]"
+					affected = C.get_bodypart(BODY_ZONE_R_ARM)
+					if(affected != null)
+						affected.dismember(damtype)
+						play_sound = TRUE
+						limbs_gone = "[limbs_gone], [affected]"
+					if(play_sound)
+						playsound(src, get_dismember_sound(), 80, TRUE)
+						target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
+										"<span class='userdanger'>[chassis] rips your arms off!</span>")
+						log_combat(source, M, "dismembered of[limbs_gone],", "[name]", "(Combat mode: [actioner.in_combat_mode() ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+				else
+					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
+								 	  "<span class='userdanger'>[chassis] rips your arms off!</span>")
+				return ..()
 			if(real_clamp)
 				M.take_overall_damage(dam_force)
 				if(!M)
@@ -152,10 +177,11 @@
 				M.updatehealth()
 				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury!</span>", \
 									"<span class='userdanger'>[chassis] destroys you in an unholy fury!</span>")
-				log_combat(source, M, "attacked", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+				log_combat(source, M, "attacked", "[name]", "(Combat mode: [actioner.in_combat_mode() ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 			else
 				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury!</span>", \
 									"<span class='userdanger'>[chassis] destroys you in an unholy fury!</span>")
+
 		else
 			step_away(M,chassis)
 			target.visible_message("<span class='danger'>[chassis] tosses [target] like a piece of paper!</span>", \

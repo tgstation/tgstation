@@ -55,7 +55,7 @@
 
 /mob/living/simple_animal/hostile/hivebot/update_icons()
 	QDEL_NULL(alert_light)
-	if(a_intent != INTENT_HELP)
+	if(in_combat_mode())
 		icon_state = "[initial(icon_state)]_attack"
 		alert_light = mob_light(6, 0.4, COLOR_RED_LIGHT)
 	else

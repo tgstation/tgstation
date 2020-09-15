@@ -176,7 +176,7 @@ All foods are distributed among various categories. Use common sense.
 			else
 				. += "[src] was bitten multiple times!"
 
-/obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
+/obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/storage))// -> item/attackby()
 		return ..()
 	if(istype(W, /obj/item/reagent_containers/food/snacks))

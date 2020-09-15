@@ -321,11 +321,9 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			var/list/modifiers = params2list(params)
-
 			if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -338,12 +336,11 @@
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		var/list/modifiers = params2list(params)
+		if(!user.in_combat_mode() || (user.in_combat_mode() && modifiers["right"]))
 			for(var/datum/surgery/S in surgeries)
-				var/list/modifiers = params2list(params)
-				if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
-					if(S.next_step(user, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
-						return 1
+				if(S.next_step(user))
+					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]

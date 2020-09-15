@@ -372,7 +372,6 @@
 		set_combat_mode()
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L, modifiers)
-	var/list/modifiers = params2list(params)
 	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.in_combat_mode() && modifiers["right"] && prob(MONKEY_RETALIATE_DISARM_PROB))
@@ -380,10 +379,9 @@
 	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L, modifiers)
-	var/list/modifiers = params2list(params)
 	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
-	else if(L.in_combat_mode() && modifiers["right"] prob(MONKEY_RETALIATE_DISARM_PROB))
+	else if(L.in_combat_mode() && modifiers["right"] && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 

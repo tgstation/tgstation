@@ -151,7 +151,7 @@
 	. = ..()
 	. += ""
 	. += "Held Item: [held_item]"
-	. += "Mode: [a_intent]"
+	. += "Combat mode: [in_combat_mode() ? "On" : "Off"]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -862,7 +862,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		set_combat_mode(TRUE)
-	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
+	to_chat(src, "<span class='notice'>You will now [in_combat_mode() ? "Harm" : "Help"] others.</span>")
 	return
 
 /*

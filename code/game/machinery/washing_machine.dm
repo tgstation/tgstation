@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
 
-	if(user.pulling && living.in_combat_mode() && isliving(user.pulling))
+	if(user.pulling && user.in_combat_mode() && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return

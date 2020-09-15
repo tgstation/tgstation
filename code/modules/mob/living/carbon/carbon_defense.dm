@@ -156,8 +156,8 @@
 
 	for(var/datum/surgery/S in surgeries)
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
-			if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
-				if(S.next_step(user, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
+			if(!user.in_combat_mode() || (user.in_combat_mode() && modifiers["right"]))
+				if(S.next_step(user))
 					return TRUE
 
 	for(var/i in all_wounds)

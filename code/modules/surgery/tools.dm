@@ -361,8 +361,8 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = 1800
 
-/obj/item/shears/attack(mob/living/M, mob/user)
-	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+/obj/item/shears/attack(mob/living/M, mob/living/user)
+	if(!iscarbon(M) || user.in_combat_mode())
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)

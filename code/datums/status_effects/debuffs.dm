@@ -885,8 +885,8 @@
 
 /datum/status_effect/amok/tick()
 	. = ..()
-	var/prev_intent = owner.a_intent
-	owner.a_intent = INTENT_HARM
+	var/prev_combat_mode = owner.in_combat_mode()
+	owner.set_combat_mode(TRUE, TRUE)
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
@@ -896,7 +896,7 @@
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
-	owner.a_intent = prev_intent
+	owner.set_combat_mode(prev_combat_mode, TRUE)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

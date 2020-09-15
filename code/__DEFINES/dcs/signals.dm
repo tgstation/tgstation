@@ -214,8 +214,6 @@
 #define COMSIG_CLICK_ALT "alt_click"
 ///from base of atom/CtrlShiftClick(/mob)
 #define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
-///from base of atom/RightClick(/mob)
-#define COMSIG_CLICK_RIGHT "right_click"
 ///from base of atom/MouseDrop(): (/atom/over, /mob/user)
 #define COMSIG_MOUSEDROP_ONTO "mousedrop_onto"
 	#define COMPONENT_NO_MOUSEDROP (1<<0)

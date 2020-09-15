@@ -153,7 +153,7 @@
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
+	if(!user.in_combat_mode()) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
@@ -176,7 +176,7 @@
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 			return 1
 
-	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
+	else if((user.in_combat_mode()) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, "<span class='notice'>You start to remove \the [src]  with \the [S].</span>")
 			if (do_after(user,15, target = src))

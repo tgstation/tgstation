@@ -185,7 +185,7 @@
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
+	return dna.species.spec_attacked_by(I, user, affecting, src)
 
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
@@ -217,7 +217,6 @@
 		..() //shaking
 		return FALSE
 
-	var/list/modifiers = params2list(params)
 	if(M.in_combat_mode() && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
@@ -252,7 +251,7 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(check_shields(M, 0, "the M.name"))
 		visible_message("<span class='danger'>[M] attempts to touch [src]!</span>", \
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", null, M)
@@ -285,8 +284,7 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-	var/list/modifiers = params2list(params)
-	if(user.in_combat_mode() && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
+	if(M.in_combat_mode() && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)

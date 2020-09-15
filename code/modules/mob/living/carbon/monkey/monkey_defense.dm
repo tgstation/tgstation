@@ -97,8 +97,7 @@
 				visible_message("<span class='danger'>[M]'s lunge misses [name]!</span>", \
 								"<span class='danger'>You avoid [M]'s lunge!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your lunge misses [name]!</span>")
-		var/list/modifiers = params2list(params)
-		if (L.in_combat_mode() && modifiers["right"])
+		if(M.in_combat_mode() && modifiers["right"])
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if(prob(95))

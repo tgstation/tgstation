@@ -410,7 +410,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, param)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
 	if(busy)
 		return
 	if(req_defib && !defib.powered)

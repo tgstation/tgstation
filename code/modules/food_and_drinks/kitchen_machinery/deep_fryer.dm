@@ -144,7 +144,7 @@ God bless America.
 			frying_burnt = FALSE
 			fry_loop.stop()
 			return
-	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
+	else if(user.pulling && user.in_combat_mode() && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
