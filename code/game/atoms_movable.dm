@@ -365,8 +365,11 @@
 	var/direct = angle2dir(angle)
 	var/mspeed = vx
 	if(direct & NORTH || direct & SOUTH)
-		mspeed = vy
-	pulling.add_velocity(direct, abs(mspeed) + 2, TRUE)
+		if(direct & EAST || direct & WEST)
+			mspeed = sqrt((vx * vx) + (vy * vy))
+		else
+			mspeed = vy
+	pulling.add_velocity(direct, (abs(mspeed) + 2), TRUE)
 /* 	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
@@ -522,7 +525,7 @@
 	while(fy < -0.5)
 		fy += 0.5
 		move_y -= 1
-
+	var/old_step_size = step_size
 	// Enable sliding to anywhere in the world.
 	step_size = 1#INF
 	//change dir
@@ -540,6 +543,7 @@
 		vx = 0
 		vy = 0
 		vdir = NONE
+		step_size = old_step_size
 		return FALSE
 	// Set step_size to the amount actually moved.
 	// This tells clients to smoothly interpolate this when using client.fps.
