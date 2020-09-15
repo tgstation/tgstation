@@ -22388,7 +22388,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/science/robotics/mechbay)
 "bhq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
