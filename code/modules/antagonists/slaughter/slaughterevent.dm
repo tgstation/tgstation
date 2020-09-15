@@ -20,7 +20,7 @@
 	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = 1
+	player_mind.active = TRUE
 
 	var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)

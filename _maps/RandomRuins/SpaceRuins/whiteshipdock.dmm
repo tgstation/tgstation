@@ -3,16 +3,7 @@
 /turf/open/space/basic,
 /area/space)
 "b" = (
-/obj/docking_port/stationary{
-	dheight = 0;
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_away";
-	name = "Deep Space";
-	width = 35;
-	json_key = "whiteship"
-	},
+/obj/docking_port/stationary/picked/whiteship,
 /turf/open/space,
 /area/space)
 

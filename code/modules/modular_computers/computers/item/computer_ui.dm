@@ -7,17 +7,17 @@
 	if(!enabled)
 		if(ui)
 			ui.close()
-		return 0
+		return
 	if(!use_power())
 		if(ui)
 			ui.close()
-		return 0
+		return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
 			ui.close()
-		return 0
+		return
 
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -74,9 +74,9 @@
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
-		var/running = 0
+		var/running = FALSE
 		if(P in idle_threads)
-			running = 1
+			running = TRUE
 
 		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
 

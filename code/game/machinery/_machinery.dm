@@ -90,7 +90,7 @@ Class Procs:
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
-	ricochet_chance_mod = 0.3
+	receive_ricochet_chance_mod = 0.3
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -266,12 +266,12 @@ Class Procs:
 
 /obj/machinery/proc/auto_use_power()
 	if(!powered(power_channel))
-		return 0
+		return FALSE
 	if(use_power == 1)
 		use_power(idle_power_usage,power_channel)
 	else if(use_power >= 2)
 		use_power(active_power_usage,power_channel)
-	return 1
+	return TRUE
 
 
 ///Called when we want to change the value of the `is_operational` variable. Boolean.
@@ -370,11 +370,11 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 	if(!can_interact(usr))
-		return 1
+		return TRUE
 	if(!usr.canUseTopic(src))
-		return 1
+		return TRUE
 	add_fingerprint(usr)
-	return 0
+	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -467,7 +467,7 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		set_machine_stat(machine_stat | BROKEN)
@@ -513,8 +513,8 @@ Class Procs:
 		I.play_tool_sound(src, 50)
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)

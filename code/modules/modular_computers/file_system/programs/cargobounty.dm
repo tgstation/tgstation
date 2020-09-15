@@ -8,21 +8,20 @@
 	size = 10
 	tgui_id = "NtosBountyConsole"
 	///cooldown var for printing paper sheets.
-	var/printer_ready = 0
+	COOLDOWN_DECLARE(printer_cooldown)
 	///The cargo account for grabbing the cargo account's credits.
 	var/static/datum/bank_account/cargocash
 
 /datum/computer_file/program/bounty/proc/print_paper()
 	new /obj/item/paper/bounty_printout(get_turf(computer))
 
-/datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)
+/datum/computer_file/program/bounty/ui_interact(mob/user, datum/tgui/ui)	//Cashes in the bounty if valid
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
-	printer_ready = world.time + PRINTER_TIMEOUT
 	cargocash = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
 
-/datum/computer_file/program/bounty/ui_data(mob/user)
+/datum/computer_file/program/bounty/ui_data(mob/user)		//Gets all bounties and displays them
 	var/list/data = get_header_data()
 	var/list/bountyinfo = list()
 	for(var/datum/bounty/B in GLOB.bounties_list)
@@ -31,7 +30,7 @@
 	data["bountydata"] = bountyinfo
 	return data
 
-/datum/computer_file/program/bounty/ui_act(action,params)
+/datum/computer_file/program/bounty/ui_act(action,params)	//When a button is clicked (claim or Print bounties)
 	if(..())
 		return
 	switch(action)
@@ -41,7 +40,9 @@
 				cashmoney.claim()
 			return TRUE
 		if("Print")
-			if(printer_ready < world.time)
-				printer_ready = world.time + PRINTER_TIMEOUT
+			if(COOLDOWN_FINISHED(src, printer_cooldown))
+				COOLDOWN_START(src, printer_cooldown, PRINTER_TIMEOUT)
 				print_paper()
 				return
+			else
+				to_chat(computer.loc, "<span class='warning'>The printer is not ready to print yet!</span>")

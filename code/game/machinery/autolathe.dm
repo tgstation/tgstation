@@ -17,7 +17,7 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = 0
+	var/disabled = FALSE
 	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire

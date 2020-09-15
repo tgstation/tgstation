@@ -132,25 +132,6 @@
 		. = 1
 	..()
 
-// i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
-/datum/reagent/consumable/banana_peel
-	name = "Pulped Banana Peel"
-	description = "Okay, so you put a banana peel in a grinder... Why, exactly?"
-	color = "#863333" // rgb: 175, 175, 0
-	reagent_state = SOLID
-	taste_description = "stringy, bitter pulp"
-	glass_name = "glass of banana peel pulp"
-	glass_desc = "Okay, so you put a banana peel in a grinder... Why, exactly?"
-
-/datum/reagent/consumable/baked_banana_peel
-	name = "Baked Banana Peel Powder"
-	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
-	color = "#863333" // rgb: 175, 175, 0
-	reagent_state = SOLID
-	taste_description = "bitter powder"
-	glass_name = "glass of banana peel powder"
-	description = "You took a banana peel... pulped it... baked it... Where are you going with this?"
-
 /datum/reagent/consumable/nothing
 	name = "Nothing"
 	description = "Absolutely nothing."
@@ -230,8 +211,8 @@
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
-	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
+	if(M.has_reagent(/datum/reagent/consumable/capsaicin))
+		M.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
 
 /datum/reagent/consumable/soymilk
@@ -285,8 +266,8 @@
 	M.AdjustSleeping(-40, FALSE)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
-	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
-		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5)
+	if(M.has_reagent(/datum/reagent/consumable/frostoil))
+		M.remove_reagent(/datum/reagent/consumable/frostoil, 5)
 	..()
 	. = 1
 
@@ -534,11 +515,11 @@
 	glass_name = "glass of Pwr Game"
 	glass_desc = "Goes well with a Vlad's salad."
 
-/datum/reagent/consumable/pwr_game/expose_mob(mob/living/C, method=TOUCH, reac_volume)
-	..()
-	if(C?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && method==INGEST && !HAS_TRAIT(C, TRAIT_GAMERGOD))
-		ADD_TRAIT(C, TRAIT_GAMERGOD, "pwr_game")
-		to_chat(C, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
+/datum/reagent/consumable/pwr_game/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(exposed_mob?.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && (methods & INGEST) && !HAS_TRAIT(exposed_mob, TRAIT_GAMERGOD))
+		ADD_TRAIT(exposed_mob, TRAIT_GAMERGOD, "pwr_game")
+		to_chat(exposed_mob, "<span class='nicegreen'>As you imbibe the Pwr Game, your gamer third eye opens... \
 		You feel as though a great secret of the universe has been made known to you...</span>")
 
 /datum/reagent/consumable/pwr_game/on_mob_life(mob/living/carbon/M)

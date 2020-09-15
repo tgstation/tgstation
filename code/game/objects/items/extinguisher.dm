@@ -56,7 +56,7 @@
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
-	//inhand_icon_state = "foam_extinguisher" needs sprite
+	inhand_icon_state = "foam_extinguisher"
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
@@ -108,7 +108,7 @@
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
-			return 1
+			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
 		if(transferred > 0)
@@ -119,9 +119,9 @@
 		else
 			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
 		safety = safety_save
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	. = ..()

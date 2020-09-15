@@ -1,4 +1,5 @@
-#define SMELT_AMOUNT 10
+/// Smelt amount per second
+#define SMELT_AMOUNT 5
 
 /**********************Mineral processing unit console**************************/
 
@@ -194,13 +195,13 @@
 	if(istype(target, /obj/item/stack/ore))
 		process_ore(target)
 
-/obj/machinery/mineral/processing_unit/process()
+/obj/machinery/mineral/processing_unit/process(delta_time)
 	if(on)
 		if(selected_material)
-			smelt_ore()
+			smelt_ore(delta_time)
 
 		else if(selected_alloy)
-			smelt_alloy()
+			smelt_alloy(delta_time)
 
 
 		if(CONSOLE)
@@ -208,11 +209,11 @@
 	else
 		end_processing()
 
-/obj/machinery/mineral/processing_unit/proc/smelt_ore()
+/obj/machinery/mineral/processing_unit/proc/smelt_ore(delta_time = 2)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/datum/material/mat = selected_material
 	if(mat)
-		var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT) ) ? SMELT_AMOUNT : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
+		var/sheets_to_remove = (materials.materials[mat] >= (MINERAL_MATERIAL_AMOUNT * SMELT_AMOUNT * delta_time) ) ? SMELT_AMOUNT * delta_time : round(materials.materials[mat] /  MINERAL_MATERIAL_AMOUNT)
 		if(!sheets_to_remove)
 			on = FALSE
 		else
@@ -220,13 +221,13 @@
 			materials.retrieve_sheets(sheets_to_remove, mat, out)
 
 
-/obj/machinery/mineral/processing_unit/proc/smelt_alloy()
+/obj/machinery/mineral/processing_unit/proc/smelt_alloy(delta_time = 2)
 	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
 	if(!alloy)
 		on = FALSE
 		return
 
-	var/amount = can_smelt(alloy)
+	var/amount = can_smelt(alloy, delta_time)
 
 	if(!amount)
 		on = FALSE
@@ -237,11 +238,11 @@
 
 	generate_mineral(alloy.build_path)
 
-/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
+/obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D, delta_time = 2)
 	if(D.make_reagents.len)
 		return FALSE
 
-	var/build_amount = SMELT_AMOUNT
+	var/build_amount = SMELT_AMOUNT * delta_time
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 

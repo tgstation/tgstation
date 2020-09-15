@@ -5,7 +5,7 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	layer = BELOW_OBJ_LAYER
 	flags_ricochet = RICOCHET_HARD
-	ricochet_chance_mod = 0.5
+	receive_ricochet_chance_mod = 0.6
 
 	var/climb_time = 20
 	var/climb_stun = 20
@@ -131,4 +131,10 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, MELEE, 1)
+	take_damage(500, BRUTE, "melee", 1)
+
+/obj/structure/zap_act(power, zap_flags)
+	if(zap_flags & ZAP_OBJ_DAMAGE)
+		take_damage(power/8000, BURN, "energy")
+	power -= power/2000 //walls take a lot out of ya
+	. = ..()

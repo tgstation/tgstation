@@ -52,8 +52,8 @@
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
-	if(istype(target, /obj/mecha))
-		var/obj/mecha/M = target
+	if(istype(target, /obj/vehicle/sealed/mecha))
+		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 //Elites can't talk (normally)!
@@ -176,11 +176,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	activator = null
 	return ..()
 
-/obj/structure/elite_tumor/process()
+/obj/structure/elite_tumor/process(delta_time)
 	if(isturf(loc))
 		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 			if(elitehere == mychild && activity == TUMOR_PASSIVE)
-				mychild.adjustHealth(-mychild.maxHealth*0.05)
+				mychild.adjustHealth(-mychild.maxHealth*0.025*delta_time)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 				H.color = "#FF0000"
 

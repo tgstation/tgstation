@@ -5,7 +5,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ay" = (

@@ -100,24 +100,6 @@
 	else
 		add_dent(WALL_DENT_HIT)
 
-/turf/closed/wall/mech_melee_attack(obj/mecha/M)
-	M.do_attack_animation(src)
-	switch(M.damtype)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-			M.visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
-							"<span class='danger'>You hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			if(prob(hardness + M.force) && M.force > 20)
-				dismantle_wall(1)
-				playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-			else
-				add_dent(WALL_DENT_HIT)
-		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-		if(TOX)
-			playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-			return FALSE
-
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user)
@@ -269,7 +251,7 @@
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
 	if(explosion_block >= 2)
 		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
-	. = ..()
+	return ..()
 
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)

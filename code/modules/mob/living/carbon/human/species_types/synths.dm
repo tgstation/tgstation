@@ -9,7 +9,8 @@
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
+	///If your health becomes equal to or less than this value, your disguise is supposed to break. Unfortunately, that feature currently isn't implemented, so currently, all this threshold is used for is (I kid you not) determining whether or not your speech uses SPAN_CLOWN while you're disguised as a bananium golem. See the handle_speech() proc further down in this file for more information on that check.
+	var/disguise_fail_health = 75
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
@@ -117,7 +118,7 @@
 
 /datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	if(fake_species)
-		fake_species.handle_body(H,forced_colour)
+		fake_species.handle_mutant_bodyparts(H,forced_colour)
 	else
 		return ..()
 

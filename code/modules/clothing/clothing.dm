@@ -19,11 +19,12 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
 
 	var/clothing_flags = NONE
+
+	var/can_be_bloody = TRUE
 
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
@@ -59,6 +60,8 @@
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
+	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
+		LoadComponent(/datum/component/bloodysoles)
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()

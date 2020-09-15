@@ -11,7 +11,7 @@
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
-		C.bloodiness = min((C.bloodiness + bloodiness),MAX_SHOE_BLOODINESS)
+		C.bloodiness = min((C.bloodiness + bloodiness), BLOOD_AMOUNT_PER_DECAL)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/old
@@ -149,7 +149,12 @@
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
 	var/exited_dirs = 0
+
+	/// List of shoe or other clothing that covers feet types that have made footprints here.
 	var/list/shoe_types = list()
+
+	/// List of species that have made footprints here.
+	var/list/species_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload)
 	. = ..()
@@ -178,31 +183,6 @@
 	update_icon()
 	return ..()
 
-/obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
-	..()
-	if(ishuman(O))
-		var/mob/living/carbon/human/H = O
-		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.bloody_shoes[blood_state])
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			shoe_types |= S.type
-			if (!(entered_dirs & H.dir))
-				entered_dirs |= H.dir
-				update_icon()
-
-/obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
-	..()
-	if(ishuman(O))
-		var/mob/living/carbon/human/H = O
-		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.bloody_shoes[blood_state])
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			shoe_types  |= S.type
-			if (!(exited_dirs & H.dir))
-				exited_dirs |= H.dir
-				update_icon()
-
-
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
 
@@ -218,16 +198,27 @@
 				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
-	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
+	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
 
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
-	if(shoe_types.len)
-		. += "You recognise the footprints as belonging to:\n"
-		for(var/shoe in shoe_types)
-			var/obj/item/clothing/shoes/S = shoe
-			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
+	if((shoe_types.len + species_types.len) > 0)
+		. += "You recognise the footprints as belonging to:"
+		for(var/sole in shoe_types)
+			var/obj/item/clothing/item = sole
+			var/article = initial(item.gender) == PLURAL ? "Some" : "A"
+			. += "[icon2html(initial(item.icon), user, initial(item.icon_state))] [article] <B>[initial(item.name)]</B>."
+		for(var/species in species_types)
+			// god help me
+			if(species == "unknown")
+				. += "Some <B>feet</B>."
+			else if(species == "monkey")
+				. += "[icon2html('icons/mob/monkey.dmi', user, "monkey1")] Some <B>monkey feet</B>."
+			else if(species == "human")
+				. += "[icon2html('icons/mob/human_parts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
+			else
+				. += "[icon2html('icons/mob/human_parts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
@@ -236,5 +227,5 @@
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
