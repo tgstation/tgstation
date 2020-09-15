@@ -146,12 +146,16 @@
 	if(deviation == 2 && !converter)
 		return
 
+
 	if(targeted)
 		if(M.flash_act(1, 1))
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
 			if(converter)
+				if(converter.owner.current.a_intent == INTENT_HELP && deviation == 2)
+					visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
+					return
 				terrible_conversion_proc(M, user)
 				if(deviation == 2)
 					to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
