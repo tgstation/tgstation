@@ -27,7 +27,6 @@
 
 	var/datum/excited_group/excited_group
 	var/excited = FALSE
-	var/rebuilding = FALSE
 	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
@@ -234,27 +233,25 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 		//cache for sanic speed
 		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
-		var/both_have_group = (our_excited_group && enemy_excited_group)
-		//If we are both in an excited group, and they aren't the same, merge..
+		//If we are both in an excited group, and they aren't the same, merge.
 		//If we are both in an excited group, and you're active, share
 		//If we pass compare or if we're rebuilding, and if we're not already both in a group, lets join up
 		//If we both pass compare or are rebuilding, add to active and share
-		if(both_have_group)
+		if(our_excited_group && enemy_excited_group)
 			if(our_excited_group != enemy_excited_group)
 				//combine groups (this also handles updating the excited_group var of all involved turfs)
 				our_excited_group.merge_groups(enemy_excited_group)
 				our_excited_group = excited_group //update our cache
-		if(both_have_group && enemy_tile.excited)
+		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air) || (rebuilding && enemy_tile.rebuilding))
-			SSair.add_to_active(enemy_tile, FALSE)
-			if(!both_have_group)
-				var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
-				if(!our_excited_group)
-					EG.add_turf(src)
-				if(!enemy_excited_group)
-					EG.add_turf(enemy_tile)
-				our_excited_group = excited_group
+		else if(our_air.compare(enemy_air)) //Lets see if you're up for it
+			SSair.add_to_active(enemy_tile, FALSE) //Add yourself young man
+			var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
+			if(!our_excited_group)
+				EG.add_turf(src)
+			if(!enemy_excited_group)
+				EG.add_turf(enemy_tile)
+			our_excited_group = excited_group
 			should_share_air = TRUE
 
 		//air sharing
@@ -275,8 +272,6 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	our_air.react(src)
 
 	update_visuals()
-	if(rebuilding) //I hate this, but I can't think of a way to share the information.
-		rebuilding = FALSE
 	if(CONSIDER_SUPERCONDUCTIVITY(air))
 		SSair.active_super_conductivity += src
 	else if(!our_excited_group) //If nothing of interest is happening, kill the active turf
@@ -286,6 +281,38 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 	significant_share_ticker = cached_ticker //Save our changes
 	temperature_expose(our_air, our_air.temperature) //I should add some sanity checks to this thing
+
+////////////////////Excited Group Cleanup///////////////////////
+/turf/open/proc/cleanup_group(fire_count)
+	current_cycle = fire_count + 0.5 //Shut up I'm testing
+
+	//cache for sanic speed
+	var/list/adjacent_turfs = atmos_adjacent_turfs
+	var/datum/excited_group/our_excited_group = excited_group
+
+	for(var/t in adjacent_turfs)
+		var/turf/open/enemy_tile = t
+
+		if(fire_count <= enemy_tile.current_cycle)
+			continue
+
+		//cache for sanic speed
+		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
+		//If we are both in an excited group, and they aren't the same, merge.
+		//Otherwise make/take one to join and get to it
+		if(our_excited_group && enemy_excited_group)
+			if(our_excited_group != enemy_excited_group)
+				//combine groups (this also handles updating the excited_group var of all involved turfs)
+				our_excited_group.merge_groups(enemy_excited_group)
+				our_excited_group = excited_group //update our cache
+		else
+			var/datum/excited_group/EG = our_excited_group || enemy_excited_group || new
+			if(!our_excited_group)
+				EG.add_turf(src)
+			if(!enemy_excited_group)
+				EG.add_turf(enemy_tile)
+			our_excited_group = excited_group
+
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/T, difference)
@@ -319,6 +346,18 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
+/*
+	I've got a problem with excited groups
+	Adding tiles works out fine, but if you try and remove them, we get issues
+	The main one is to do with how sleeping tiles are processed
+	If a tile is sleeping, it is removed from the active turfs list and not processed at all
+	The issue comes when we try and reform excited groups after a removal like this
+	and the turfs just poof go fully to sleep.
+	I'm going to try keeping track of state with the excited variable, and if it's set to sleep, we just well,
+	only preform merge operations with neighboring excited groups.
+
+	Maybe this will help with player caused rebuilds
+*/
 /datum/excited_group
 	var/list/turf_list = list()
 	var/breakdown_cooldown = 0
@@ -440,9 +479,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			var/turf/open/T = t
 			T.excited_group = null
 			if(!istype(T.air, /datum/gas_mixture/immutable)) //I want my holes to space consistent you hear me?
-				T.rebuilding = TRUE //Reform the group
-			if(!T.excited)
-				SSair.add_to_active(T, FALSE) //Poke everybody in the group, just in case
+				SSair.add_to_cleanup(T) //Poke everybody in the group, just in case
 	turf_list.Cut()
 	SSair.excited_groups -= src
 

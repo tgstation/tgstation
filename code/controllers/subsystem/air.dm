@@ -15,8 +15,10 @@ SUBSYSTEM_DEF(air)
 	var/cost_pipenets = 0
 	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
+	var/cost_ex_cleanup = 0
 
 	var/list/excited_groups = list()
+	var/list/cleanup_ex_groups = list()
 	var/list/active_turfs = list()
 	var/list/hotspots = list()
 	var/list/networks = list()
@@ -45,16 +47,18 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "CL:[round(cost_ex_cleanup, 1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
-	msg += "AM:[round(cost_atmos_machinery,1)]"
+	msg += "AM:[round(cost_atmos_machinery,1)]|"
 	msg += "AO:[round(cost_atoms, 1)]"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
+	msg += "CL:[cleanup_ex_groups.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HS:[hotspots.len]|"
 	msg += "PN:[networks.len]|"
@@ -112,6 +116,16 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_active_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = FALSE
+		currentpart = SSAIR_EXCITEDCLEANUP
+
+	//Yes I made a subprocess just to deal with firelocks, fuck you too
+	if(currentpart == SSAIR_EXCITEDCLEANUP)
+		timer = TICK_USAGE_REAL
+		process_excited_cleanup(resumed)
+		cost_turfs = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = FALSE
@@ -237,7 +251,6 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/process_high_pressure_delta(resumed = FALSE)
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
@@ -262,6 +275,22 @@ SUBSYSTEM_DEF(air)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/air/proc/process_excited_cleanup(resumed = FALSE)
+	//cache for sanic speed
+	var/fire_count = times_fired
+	if (!resumed)
+		src.currentrun = cleanup_ex_groups.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/turf/open/T = currentrun[currentrun.len]
+		currentrun.len--
+		if (T && !T.excited_group)
+			T.cleanup_group(fire_count)
+		if (MC_TICK_CHECK)
+			return
+	cleanup_ex_groups.Cut() //Only once you hear?
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
@@ -318,6 +347,11 @@ SUBSYSTEM_DEF(air)
 		return
 	else
 		T.requires_activation = TRUE
+
+/datum/controller/subsystem/air/proc/add_to_cleanup(turf/open/T)
+	cleanup_ex_groups += T
+	if(currentpart == SSAIR_EXCITEDCLEANUP)
+		currentrun += T
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
