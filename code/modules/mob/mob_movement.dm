@@ -124,7 +124,8 @@
 			direct = newdir
 			n = get_step(L, direct)
 	mob.setDir(direct)
-	. = mob.add_velocity(direct)
+	if(mob.premove_pull_checks(mob.loc, direct))
+		. = mob.add_velocity(direct)
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)

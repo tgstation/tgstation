@@ -391,9 +391,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc, direct, _step_x, _step_y) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return FALSE
 
-	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
-		handle_pulled_movement()
-		check_pulling()
+	if(!premove_pull_checks(newloc, direct, _step_x, _step_y))
 		return FALSE
 
 	var/atom/oldloc = loc
@@ -407,9 +405,7 @@
 		. = slider.slide(src, direct, _step_x, _step_y)
 		if(.)
 			//if slider was able to slide, step us in the direction indicated
-			// add_velocity(., test_range)
-			// . = TRUE
-			. = step(src, ., 4)
+			. = step(src, ., 2)
 		//mark that we are no longer sliding
 		sidestep = FALSE
 	last_move = direct
@@ -423,6 +419,13 @@
 			return FALSE
 	else // we still didn't move, something is blocking further movement
 		walk(src, NONE)
+
+/atom/movable/proc/premove_pull_checks(newloc, direct, _step_x, _step_y)
+	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
+		handle_pulled_movement()
+		check_pulling()
+		return FALSE
+	return TRUE
 
 /atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = FALSE)
 	if(vx == 0 && vy == 0)
@@ -453,6 +456,22 @@
 	if(vx != 0 || vy != 0) // we have velocity
 		vdir = direct
 		return TRUE // test the waters
+
+/atom/movable/proc/force_velocity(direct, velocity)
+	if(vx == 0 && vy == 0)
+		START_PROCESSING(SSmovement, src)
+	if(direct & EAST)
+		vx = velocity
+	else if(direct & WEST)
+		vx = -velocity
+	if(direct & NORTH)
+		vy = velocity
+	else if(direct & SOUTH)
+		vy = -velocity
+
+	if(vx != 0 || vy != 0) // we have velocity
+		vdir = direct
+		return TRUE
 
 /atom/movable/proc/handle_inertia()
 	var/move_x = vx
@@ -486,8 +505,16 @@
 
 	// Enable sliding to anywhere in the world.
 	step_size = 1#INF
-
-	// Move without changing dir and return the result.
+	//change dir
+	if(move_x > 0)
+		dir = EAST
+	else if(move_x < 0)
+		dir = WEST
+	if(move_y > 0)
+		dir |= NORTH
+	else if(move_y < 0)
+		dir |= SOUTH
+	// Move and return the result.
 	. = Move(loc, dir, step_x + move_x, step_y + move_y)
 	if(!.) // movement failed, means we can't move either
 		vx = 0
