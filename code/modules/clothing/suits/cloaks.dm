@@ -99,7 +99,7 @@
 	. += "<span class='notice'>You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.</span>"
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
-	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
+	return user?.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
 	to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")

@@ -105,7 +105,9 @@
   * * user - The mob that is using the soap to clean.
   */
 /obj/item/soap/proc/decreaseUses(mob/user)
-	var/skillcheck = user.mind?.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+	var/skillcheck = 1
+	if(user?.mind)
+		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
 	if(uses <= 0)
@@ -116,7 +118,9 @@
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
-	var/clean_speedies = cleanspeed * min(user.mind?.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
+	var/clean_speedies = 1 * cleanspeed
+	if(user?.mind)
+		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
