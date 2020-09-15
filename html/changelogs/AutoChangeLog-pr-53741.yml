@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "AIs should no longer experience weird interface disparities or module selection issues when assuming direct control over a shell for the first time when said shell is damaged."
