@@ -149,6 +149,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
   * * mover - the movable that crossed us
   */
 /obj/machinery/conveyor/proc/RegisterMover(atom/movable/mover)
+	if(istype(mover, /atom/movable/collider/slider)) // sliders shouldn't be moved
+		return
 	RegisterSignal(mover, COMSIG_PARENT_QDELETING, .proc/UnregisterMover)
 	if(!affecting)
 		affecting = list()
