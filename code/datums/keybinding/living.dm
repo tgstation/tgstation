@@ -71,6 +71,6 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/L = user.mob
-	L.lay_down()
+	var/mob/living/living_mob = user.mob
+	living_mob.lay_down()
 	return TRUE
