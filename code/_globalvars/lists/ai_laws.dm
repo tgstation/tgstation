@@ -14,19 +14,19 @@ GLOBAL_LIST_INIT(lawset_laws, get_lawset_laws())
 
 		.[lawset][LAW_HACKED] = list()
 
-		.[lawset][LAW_HACKED] = lawset_datum.hacked
+		.[lawset][LAW_HACKED].Add(lawset_datum.hacked)
 
 		.[lawset][LAW_ION] = list()
 
-		.[lawset][LAW_ION] = lawset_datum.ion
+		.[lawset][LAW_ION].Add(lawset_datum.ion)
 
 		.[lawset][LAW_INHERENT] = list()
 
-		.[lawset][LAW_INHERENT] = lawset_datum.inherent
+		.[lawset][LAW_INHERENT].Add(lawset_datum.inherent)
 
 		.[lawset][LAW_SUPPLIED] = list()
 
-		.[lawset][LAW_SUPPLIED] = lawset_datum.supplied
+		.[lawset][LAW_SUPPLIED].Add(lawset_datum.supplied)
 		
 		qdel(lawset_datum)
 
@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(lawset_law_lists, get_lawset_law_lists())
 	for(var/lawset in subtypesof(/datum/ai_laws))
 		lawset_datum.set_laws_lawset(lawset)
 
-		.[lawset_datum.name] = lawset_datum.get_law_list(TRUE, FALSE, FALSE)
+		.[lawset_datum.name] = list()
+
+		.[lawset_datum.name].Add(lawset_datum.get_law_list(TRUE, FALSE, FALSE))
 
 	qdel(lawset_datum)

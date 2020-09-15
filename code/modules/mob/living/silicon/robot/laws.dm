@@ -34,7 +34,7 @@
 	laws_sanity_check()
 
 	if(shell)
-		laws = connected_ai.laws
+		laws.zeroth = connected_ai.laws.zeroth
 
 	else
 		if(!lawupdate)
@@ -42,13 +42,21 @@
 
 		laws.zeroth = connected_ai.laws.zeroth_borg || connected_ai.laws.zeroth
 
-		laws.hacked = connected_ai.laws.hacked
+	laws.hacked = list()
 
-		laws.ion = connected_ai.laws.ion
+	laws.hacked.Add(connected_ai.laws.hacked)
 
-		laws.inherent = connected_ai.laws.inherent
+	laws.ion = list()
 
-		laws.supplied = connected_ai.laws.supplied
+	laws.ion.Add(connected_ai.laws.ion)
+
+	laws.inherent = list()
+
+	laws.inherent.Add(connected_ai.laws.inherent)
+
+	laws.supplied = list()
+
+	laws.supplied.Add(connected_ai.laws.supplied)
 
 	post_lawchange(FALSE)
 

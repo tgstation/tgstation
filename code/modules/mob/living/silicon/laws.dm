@@ -110,14 +110,14 @@
 	if(!laws)
 		return
 
-	var/list/law_list = laws.get_law_list(!is_malf(), FALSE, FALSE)
+	var/list/law_list = list()
+	
+	law_list.Add(laws.get_law_list(!is_malf(), FALSE, FALSE))
 
 	if(!law_list.len)
 		return "None"
 
-	for(var/i in 1 to length(GLOB.lawset_law_lists))
-		var/lawset_name = GLOB.lawset_law_lists[i]
-
+	for(var/lawset_name in GLOB.lawset_law_lists)
 		if(compare_list(law_list, GLOB.lawset_law_lists[lawset_name]))
 			return lawset_name
 

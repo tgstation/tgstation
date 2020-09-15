@@ -441,10 +441,18 @@
 
 	zeroth = GLOB.lawset_laws[lawset_path][LAW_ZEROTH]
 
-	hacked = GLOB.lawset_laws[lawset_path][LAW_HACKED]
+	hacked = list()
 
-	ion = GLOB.lawset_laws[lawset_path][LAW_ION]
+	hacked.Add(GLOB.lawset_laws[lawset_path][LAW_HACKED])
 
-	inherent = GLOB.lawset_laws[lawset_path][LAW_INHERENT]
+	ion = list()
 
-	supplied = GLOB.lawset_laws[lawset_path][LAW_SUPPLIED]
+	ion.Add(GLOB.lawset_laws[lawset_path][LAW_ION])
+
+	inherent = list()
+
+	inherent.Add(GLOB.lawset_laws[lawset_path][LAW_INHERENT])
+
+	supplied = list()
+
+	supplied.Add(GLOB.lawset_laws[lawset_path][LAW_SUPPLIED])
