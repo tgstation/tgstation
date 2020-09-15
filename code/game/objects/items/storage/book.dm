@@ -248,11 +248,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/obj/item/ai_module/core/full/drone/unholylawset = A //this lawset was hand-crafted by satan and you can't convince me otherwise
 		to_chat(user, "<span class='notice'>You begin to exorcise [unholylawset]...</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 40, target = unholylawset))
-			playsound(src, 'sound/voice/borg_deathsound.ogg', 200, TRUE, TRUE) //sadly, drones don't have a unique deathsound, so the generic silicon death noise will have to do
-			new /obj/item/ai_module/core/full/damaged(get_turf(unholylawset))
-			user.visible_message("<span class='notice'>[user] purifies [unholylawset]!</span>")
-			qdel(unholylawset)
+		if(!do_after(user, 4 SECONDS, target = unholylawset))
+			return
+		playsound(src, 'sound/voice/borg_deathsound.ogg', 200, TRUE, TRUE) //sadly, drones don't have a unique deathsound, so the generic silicon death noise will have to do
+		new /obj/item/ai_module/core/full/damaged(get_turf(unholylawset))
+		user.visible_message("<span class='notice'>[user] purifies [unholylawset]!</span>")
+		qdel(unholylawset)
 
 
 
