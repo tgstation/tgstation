@@ -93,6 +93,7 @@
 
 /datum/hud/robot/New(mob/owner)
 	..()
+	// i, Robit
 	var/mob/living/silicon/robot/robit = mymob
 	var/obj/screen/using
 
