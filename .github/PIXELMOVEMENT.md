@@ -18,3 +18,17 @@ Bounds can take additional arguments so you can use dynamic hitboxes for certain
 
 ## forceStep
 If you've worked with the codebase prior then you would know about the forceMove proc which would teleport the provided ref to the location defined. forceStep is the pixel movement version of this proc, setting the step_x and step_y values to the ones defined by the args, if you'd like to set the step_x and step_y values manually you should call forceStep(null, <desired_x>, <desired_y>) and if you want the step_ values to line up with a defined movable then you simply call forceStep(<desired_movable>) and ref will copy the step_ values of the object which will offset its location on the turf
+
+## Velocity, Inertia and SSmovement
+This one isn't in the byond doc, There are a few new variables on all movables that handle inertia, momentum and velocity
+
+### Variables
+* vx - velocity in the x
+* fx - fractional velocity in the x(rounded up when greater than 0.5)
+* vy - velocity in the y
+* fy - fractional velocity in the y(rounded up when greater than 0.5)
+* maxspeed - the maximum speed the movable can move(for mobs this is handled by update_movespeed)
+* accel - the acceleration rate of the movable, defaults to 1
+* decel - the deceleration rate of the movable, defaults to 1
+
+Inertia is handled by handle_inertia, which is called on a process by SSmovement, velocity is added through  the add_velocity proc and can be forced to a value using force_velocity proc, these two procs automatically handle adding the movable to the currentrun of the SSmovement subsystem and the subsystem handles removing movables that no longer have any inertia(have stopped moving)

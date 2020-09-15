@@ -15,6 +15,10 @@
 	circuit = /obj/item/circuitboard/machine/space_heater
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
+	bound_x = 12
+	bound_y = 7
+	bound_width = 9
+	bound_height = 22
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY

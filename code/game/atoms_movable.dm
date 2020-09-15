@@ -366,7 +366,7 @@
 	var/mspeed = vx
 	if(direct & NORTH || direct & SOUTH)
 		mspeed = vy
-	pulling.add_velocity(direct, abs(mspeed) + 1)
+	pulling.add_velocity(direct, abs(mspeed) + 2, TRUE)
 /* 	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
@@ -420,6 +420,7 @@
 	else // we still didn't move, something is blocking further movement
 		walk(src, NONE)
 
+///Handles premove checks, called on client.mob by client/Move as well
 /atom/movable/proc/premove_pull_checks(newloc, direct, _step_x, _step_y)
 	if(pulling && !handle_pulled_premove(newloc, direct, _step_x, _step_y))
 		handle_pulled_movement()
@@ -427,6 +428,16 @@
 		return FALSE
 	return TRUE
 
+/**
+  * Adds velocity to an movable atom
+  *
+  * Starts processing on SSmovement if the movable was not previously moving
+  * handles math for acceleration and diagonals, prevents further acceleration if maxspeed is reached
+  * Arguments:
+  * * direct - The direction of velocity
+  * * acceleration - if null, uses movables accel var. Otherwise overwrites the accel var to acceleration by a set amount
+  * * force - defaults to FALSE, if TRUE ignores maxspeed and forces acceleration to be added to velocity
+  */
 /atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = FALSE)
 	if(vx == 0 && vy == 0)
 		START_PROCESSING(SSmovement, src)
@@ -457,6 +468,15 @@
 		vdir = direct
 		return TRUE // test the waters
 
+/**
+  * Forces the velocity of a movable atom to the value defined in velocity
+  *
+  * Starts processing on SSmovement if the movable was not previously moving
+  * handles math for acceleration and diagonals, prevents further acceleration if maxspeed is reached
+  * Arguments:
+  * * direct - The direction of velocity
+  * * velocity - The velocity to be forced in the direction provided
+  */
 /atom/movable/proc/force_velocity(direct, velocity)
 	if(vx == 0 && vy == 0)
 		START_PROCESSING(SSmovement, src)
