@@ -600,19 +600,14 @@
 	desc = "The Owl would do his best to protect the station. Will you?"
 	icon_state = "poster33_legit"
 
-/obj/structure/sign/poster/official/no_erp
-	name = "No ERP"
-	desc = "This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."
-	icon_state = "poster34_legit"
-
 /obj/structure/sign/poster/official/wtf_is_co2
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
-	icon_state = "poster35_legit"
+	icon_state = "poster34_legit"
 
 /obj/structure/sign/poster/official/dick_gum
 	name = "Dick Gumshue"
 	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
-	icon_state = "poster36_legit"
+	icon_state = "poster35_legit"
 
 #undef PLACE_SPEED
