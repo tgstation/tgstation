@@ -13023,7 +13023,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/enlist{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -31553,7 +31553,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/enlist{
 	pixel_x = -32
 	},
 /obj/structure/cable,

@@ -19542,7 +19542,7 @@
 	dir = 8
 	},
 /obj/item/caution,
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/ian{
 	pixel_x = -30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

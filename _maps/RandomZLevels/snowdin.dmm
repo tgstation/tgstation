@@ -2290,7 +2290,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "ft" = (
-/obj/structure/sign/poster/official/no_erp{
+/obj/structure/sign/poster/official/enlist{
 	pixel_x = -32
 	},
 /obj/machinery/holopad,
