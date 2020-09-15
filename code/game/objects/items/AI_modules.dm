@@ -617,6 +617,6 @@ AI MODULES
 	var/counter = 1
 	while (prob(75) && counter < 9) //the number of laws (including the one before this while loop, which is why counter starts at 1) this module can add is capped at nine
 		laws += generate_ion_law()
-		counter += 1
+		counter++
 	..()
 	laws = list()
