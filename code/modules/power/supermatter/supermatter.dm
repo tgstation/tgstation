@@ -679,7 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf()
 	if(takes_damage)
-		for(var/turf/turf_to_check in view(1, loc))
+		for(var/turf_to_check in RANGE_TURFS(1, loc))
 			if(isspaceturf(turf_to_check) && istype(loc))
 				var/is_open =  TRUE
 				for(var/obj/object_to_check in turf_to_check)
