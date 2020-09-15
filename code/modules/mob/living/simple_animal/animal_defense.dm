@@ -72,7 +72,7 @@
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
 			return 1
-	if (M.a_intent == INTENT_HELP)
+	if (!M.in_combat_mode())
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help_continuous] [src].</span>", \
 							"<span class='notice'>[M.name] [response_help_continuous] you.</span>", null, COMBAT_MESSAGE_RANGE, M)

@@ -641,7 +641,7 @@
 /obj/screen/combattoggle/Click()
 	if(iscarbon(usr))
 		var/mob/living/owner = usr
-		owner.toggle_combat_mode()
+		owner.set_combat_mode(!owner.combat_mode)
 		update_icon()
 
 

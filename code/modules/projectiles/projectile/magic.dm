@@ -287,7 +287,7 @@
 
 	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.combat_mode = TRUE
+	new_mob.set_combat_mode(TRUE, TRUE)
 
 	M.wabbajack_act(new_mob)
 

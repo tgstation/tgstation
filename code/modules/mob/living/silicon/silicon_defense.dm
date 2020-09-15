@@ -46,7 +46,7 @@
 	return attack_hand(user)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HELP)
+	if(!L.in_combat_mode())
 		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)

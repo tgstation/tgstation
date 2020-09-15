@@ -232,7 +232,7 @@
 						monkey_attack(target)
 
 					else
-						combat_mode = TRUE
+						set_combat_mode(TRUE)
 						monkey_attack(target)
 
 					return TRUE
@@ -328,7 +328,7 @@
 
 	mode = MONKEY_IDLE
 	target = null
-	a_intent = INTENT_HELP
+	set_combat_mode(FALSE)
 	frustration = 0
 	walk_to(src,0)
 
@@ -370,7 +370,7 @@
 
 	if(!in_combat_mode())
 		battle_screech()
-		toggle_combat_mode()
+		set_combat_mode()
 
 /mob/living/carbon/monkey/attack_hand(mob/living/L)
 	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))

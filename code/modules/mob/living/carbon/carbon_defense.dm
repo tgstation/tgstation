@@ -156,7 +156,7 @@
 
 	for(var/datum/surgery/S in surgeries)
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
-			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+			if(!user.in_combat_mode())
 				if(S.next_step(user, user.a_intent))
 					return TRUE
 
@@ -181,7 +181,7 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(M.a_intent == INTENT_HELP)
+	if(!M.in_combat_mode())
 		help_shake_act(M)
 		return FALSE
 

@@ -68,9 +68,13 @@
 		else
 				return 0
 
-/mob/living/proc/toggle_combat_mode()
-	combat_mode = !combat_mode
-	client?.show_popup_menus = !src.combat_mode //No right click menu in combat mode.
+/mob/living/proc/set_combat_mode(new_mode, silent)
+	if(combat_mode == new_mode)
+		return
+	combat_mode = new_mode
+	client?.show_popup_menus = !src.combat_mode
+	if(silent)
+		return
 	if(combat_mode)
 		playsound_local(src, 'sound/misc/ui_togglecombat.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	else

@@ -75,7 +75,7 @@
 			var/mob/living/L = user
 			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
 			if(riding_datum)
-				if(L.a_intent == INTENT_HELP)
+				if(!L.in_combat_mode())
 					for(var/mob/M in L.buckled_mobs)
 						riding_datum.force_dismount(M, TRUE)
 				else

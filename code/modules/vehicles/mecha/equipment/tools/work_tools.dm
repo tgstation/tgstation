@@ -80,7 +80,7 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-		if(source.a_intent == INTENT_HARM)
+		if(M.in_combat_mode())
 			M.take_overall_damage(dam_force)
 			if(!M)
 				return
@@ -115,6 +115,9 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(mob/source, atom/target, params)
 	if(!action_checks(target))
 		return
+	if(!isliving(source))
+		return
+	var/mob/living/actioner = source
 	if(!cargo_holder)
 		return
 	if(isobj(target))
@@ -140,7 +143,7 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-		if(source.a_intent == INTENT_HARM)
+		if(actioner.in_combat_mode())
 			if(real_clamp)
 				M.take_overall_damage(dam_force)
 				if(!M)
@@ -153,29 +156,6 @@
 			else
 				target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury!</span>", \
 									"<span class='userdanger'>[chassis] destroys you in an unholy fury!</span>")
-		else if(source.a_intent == INTENT_DISARM)
-			if(real_clamp)
-				var/mob/living/carbon/C = target
-				var/play_sound = FALSE
-				var/limbs_gone = ""
-				var/obj/item/bodypart/affected = C.get_bodypart(BODY_ZONE_L_ARM)
-				if(affected != null)
-					affected.dismember(damtype)
-					play_sound = TRUE
-					limbs_gone = ", [affected]"
-				affected = C.get_bodypart(BODY_ZONE_R_ARM)
-				if(affected != null)
-					affected.dismember(damtype)
-					play_sound = TRUE
-					limbs_gone = "[limbs_gone], [affected]"
-				if(play_sound)
-					playsound(src, get_dismember_sound(), 80, TRUE)
-					target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
-								   "<span class='userdanger'>[chassis] rips your arms off!</span>")
-					log_combat(source, M, "dismembered of[limbs_gone],", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-			else
-				target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
-								   "<span class='userdanger'>[chassis] rips your arms off!</span>")
 		else
 			step_away(M,chassis)
 			target.visible_message("<span class='danger'>[chassis] tosses [target] like a piece of paper!</span>", \

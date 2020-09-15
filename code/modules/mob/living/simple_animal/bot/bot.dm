@@ -292,7 +292,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == INTENT_HELP)
+	if(!H.in_combat_mode())
 		interact(H)
 	else
 		return ..()

@@ -47,39 +47,45 @@
 	return ..()
 
 /mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
-	if(user.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
-			return
-		mecha_attacker.do_attack_animation(src)
-		if(mecha_attacker.damtype == "brute")
-			step_away(src, mecha_attacker, 15)
-		switch(mecha_attacker.damtype)
-			if(BRUTE)
-				Unconscious(20)
-				take_overall_damage(rand(mecha_attacker.force/2, mecha_attacker.force))
-				playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-			if(BURN)
-				take_overall_damage(0, rand(mecha_attacker.force * 0.5, mecha_attacker.force))
-				playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-			if(TOX)
-				mecha_attacker.mech_toxin_damage(src)
-			else
+	if(isliving(user))
+		var/mob/living/attacker = user
+		if(attacker.in_combat_mode())
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
-		updatehealth()
-		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
-						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
-		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-		log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
-	else
-		step_away(src, mecha_attacker)
-		log_combat(user, src, "pushed", mecha_attacker)
-		visible_message("<span class='warning'>[mecha_attacker] pushes [src] out of the way.</span>", \
-						"<span class='warning'>[mecha_attacker] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, list(mecha_attacker))
-		to_chat(mecha_attacker, "<span class='danger'>You push [src] out of the way.</span>")
+			mecha_attacker.do_attack_animation(src)
+			if(mecha_attacker.damtype == "brute")
+				step_away(src, mecha_attacker, 15)
+			switch(mecha_attacker.damtype)
+				if(BRUTE)
+					Unconscious(20)
+					take_overall_damage(rand(mecha_attacker.force/2, mecha_attacker.force))
+					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
+				if(BURN)
+					take_overall_damage(0, rand(mecha_attacker.force * 0.5, mecha_attacker.force))
+					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+				if(TOX)
+					mecha_attacker.mech_toxin_damage(src)
+				else
+					return
+			updatehealth()
+			visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
+							"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
+			to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
+			log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+			return
+
+	step_away(src, mecha_attacker)
+	log_combat(user, src, "pushed", mecha_attacker)
+	visible_message("<span class='warning'>[mecha_attacker] pushes [src] out of the way.</span>", \
+					"<span class='warning'>[mecha_attacker] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, list(mecha_attacker))
+	to_chat(mecha_attacker, "<span class='danger'>You push [src] out of the way.</span>")
 
 /mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
-	if(user.a_intent == INTENT_HARM)
+	if(!isliving(user))
+		return ..()
+	var/mob/living/attacker = user
+	if(attacker.in_combat_mode())
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return

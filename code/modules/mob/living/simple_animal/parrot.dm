@@ -292,7 +292,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && !M.in_combat_mode())
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -562,7 +562,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			combat_mode = TRUE
+			set_combat_mode(TRUE)
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -858,10 +858,10 @@
 
 	if(in_combat_mode())
 		melee_damage_upper = 0
-		combat_mode = FALSE
+		set_combat_mode(FALSE)
 	else
 		melee_damage_upper = parrot_damage_upper
-		combat_mode = TRUE
+		set_combat_mode(TRUE)
 	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
 	return
 

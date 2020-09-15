@@ -157,7 +157,7 @@
 /obj/machinery/firealarm/attack_robot(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)

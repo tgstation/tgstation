@@ -61,7 +61,7 @@
 		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
-	O.combat_mode = TRUE
+	O.set_combat_mode(TRUE, TRUE)
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
@@ -328,7 +328,7 @@
 				changeling.purchasedpowers -= HF
 				changeling.regain_powers()
 
-	O.a_intent = INTENT_HELP
+	O.set_combat_mode(FALSE, TRUE)
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
 
@@ -464,7 +464,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
-	new_xeno.combat_mode = TRUE
+	new_xeno.set_combat_mode(TRUE, TRUE)
 	new_xeno.key = key
 	update_atom_languages()
 
@@ -497,7 +497,7 @@
 		new_slime = pick(babies)
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
-	new_slime.combat_mode = TRUE
+	new_slime.set_combat_mode(TRUE, TRUE)
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
@@ -525,7 +525,7 @@
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
-	new_corgi.combat_mode = TRUE
+	new_corgi.set_combat_mode(TRUE, TRUE)
 	new_corgi.key = key
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
@@ -549,7 +549,7 @@
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
-	new_gorilla.combat_mode = TRUE
+	new_gorilla.set_combat_mode(TRUE, TRUE)
 	if(mind)
 		mind.transfer_to(new_gorilla)
 	else
@@ -585,7 +585,7 @@
 	var/mob/living/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.combat_mode = TRUE
+	new_mob.set_combat_mode(TRUE, TRUE)
 
 
 	to_chat(new_mob, "<span class='boldnotice'>You suddenly feel more... animalistic.</span>")
@@ -604,7 +604,7 @@
 	var/mob/living/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.combat_mode = TRUE
+	new_mob.set_combat_mode(TRUE, TRUE)
 	to_chat(new_mob, "<span class='boldnotice'>You feel more... animalistic.</span>")
 
 	. = new_mob

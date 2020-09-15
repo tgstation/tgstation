@@ -213,7 +213,7 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	if(M.a_intent == INTENT_HELP)
+	if(!M.in_combat_mode())
 		..() //shaking
 		return FALSE
 

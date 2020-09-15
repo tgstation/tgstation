@@ -514,10 +514,10 @@
 
 	//now we touch the thing we're examining
 	/// our current intent, so we can go back to it after touching
-	var/previous_intent = a_intent
-	a_intent = INTENT_HELP
+	var/previous_combat_mode = combat_mode
+	set_combat_mode(FALSE, TRUE)
 	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
-	a_intent = previous_intent
+	set_combat_mode(previous_combat_mode, TRUE)
 	return TRUE
 
 

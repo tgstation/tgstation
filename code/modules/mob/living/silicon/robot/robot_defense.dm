@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			deconstruct()
 		return
 
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.in_combat_mode() && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		to_chat(user, "<span class='notice'>You begin to place [W] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [W] on your head...</span>")
 		if(do_after(user, 30, target = src))

@@ -255,8 +255,12 @@
   */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(!I || limb.body_zone != user.zone_selected || (I.force && in_combat_mode()))
+	if(!I || limb.body_zone != user.zone_selected)
 		return FALSE
+	if(isliving(user))
+		var/mob/living/tendee = user
+		if(I.force && tendee.in_combat_mode())
+			return FALSE
 
 	var/allowed = FALSE
 

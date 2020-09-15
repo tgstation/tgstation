@@ -126,7 +126,7 @@
 	. = ..()
 	if(.)
 		return
-	if(M.a_intent == INTENT_HELP)
+	if(!M.in_combat_mode())
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)
