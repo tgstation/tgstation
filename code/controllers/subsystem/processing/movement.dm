@@ -2,7 +2,7 @@ PROCESSING_SUBSYSTEM_DEF(movement)
 	name = "Movement"
 	wait = 1 //SS_TICKER means this runs every tick
 	flags = SS_TICKER | SS_NO_INIT
-	priority = FIRE_PRIORITY_INPUT + 1
+	priority = FIRE_PRIORITY_MOVEMENT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	stat_tag = "MOV"
 

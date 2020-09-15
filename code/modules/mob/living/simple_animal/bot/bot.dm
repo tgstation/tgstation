@@ -526,7 +526,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return FALSE
 	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
 	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
-	if(dest in locs) //We have arrived, no need to move again.
+	if(dest in loc) //We have arrived, no need to move again.
+		QDEL_LIST(path)
+		walk(src, NONE)
 		return TRUE
 	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
 		set_path(null)
@@ -543,6 +545,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/bot_step(dest) //Step,increase tries if failed
 	if(!path)
+		walk(src, NONE)
 		return FALSE
 	if(path.len > 1)
 		walk_to(src, path[1])
@@ -553,8 +556,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 			tries++
 			return FALSE
 	else if(path.len == 1)
-		walk_to(src, dest)
-		set_path(null)
+		walk_to(src, path[1])
+		if(path[1] in obounds()) //Successful move and entire bot in on turf
+			tries = 0
+			qdel(path[1])
+			set_path(null)
+		else
+			tries++
+			return FALSE
 	return TRUE
 
 
@@ -805,7 +814,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(client)		// In use by player, don't actually move.
 		return
 
-	if(summon_target in locs)		// Arrived to summon location.
+	if(summon_target in obounds())		// Arrived to summon location.
 		bot_reset()
 		return
 

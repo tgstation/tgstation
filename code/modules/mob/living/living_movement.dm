@@ -1,6 +1,8 @@
 /mob/living/Moved(atom/OldLoc, Dir)
 	. = ..()
 	update_turf_movespeed(loc)
+	if(!(mobility_flags & MOBILITY_STAND) && !buckled && prob(getBruteLoss()*200/maxHealth) && OldLoc != loc)
+		makeTrail(loc, OldLoc, Dir)
 
 /mob/living/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()

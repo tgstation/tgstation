@@ -223,6 +223,7 @@
 
 	// Target ran away
 	else if(target_fire && path.len && (get_dist(target_fire,path[path.len]) > 2))
+		QDEL_LIST(path)
 		path = list()
 		mode = BOT_IDLE
 		last_found = world.time

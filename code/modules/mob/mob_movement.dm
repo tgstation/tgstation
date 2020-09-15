@@ -126,6 +126,11 @@
 	mob.setDir(direct)
 	if(mob.premove_pull_checks(mob.loc, direct))
 		. = mob.add_velocity(direct)
+	else
+		/// dead stop
+		mob.vx = 0
+		mob.vy = 0
+		mob.vdir = NONE
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)

@@ -18,7 +18,7 @@
 	hub = "Exadv1.spacestation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
-	fps = 25
+	fps = 20
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

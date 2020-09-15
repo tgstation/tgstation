@@ -604,8 +604,6 @@
 		else
 			return FALSE
 
-	var/old_direction = dir
-	var/turf/T = loc
 	if(pulling)
 		update_pull_movespeed()
 	. = ..()
@@ -618,8 +616,6 @@
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
-	if(!(mobility_flags & MOBILITY_STAND) && !buckled && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(newloc, T, old_direction)
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)

@@ -328,7 +328,7 @@
 				home_destination = new_home
 		if("unload")
 			if(load && mode != BOT_HUNT)
-				if(target in locs)
+				if(target in obounds())
 					unload(loaddir)
 				else
 					unload(0)
@@ -573,7 +573,7 @@
 			return
 
 		if(BOT_DELIVER, BOT_GO_HOME, BOT_BLOCKED) // navigating to deliver,home, or blocked
-			if(target in locs) // reached target
+			if(target in obounds()) // reached target
 				forceMove(target)
 				at_target()
 				return

@@ -366,10 +366,10 @@
 	var/mspeed = vx
 	if(direct & NORTH || direct & SOUTH)
 		if(direct & EAST || direct & WEST)
-			mspeed = sqrt((vx * vx) + (vy * vy))
+			mspeed = CEILING(sqrt((abs(vx) ^ 2) * (abs(vy) ^ 2)), 1)
 		else
 			mspeed = vy
-	pulling.add_velocity(direct, (abs(mspeed) + 2), TRUE)
+	pulling.add_velocity(direct, (abs(mspeed) + distance-6), TRUE)
 /* 	if(!degstep(pulling, angle, distance-6))
 		for(var/i in GLOB.cardinals)
 			if(direct & i)
@@ -386,7 +386,7 @@
   * Returns TRUE and allows movement if the object we're pulling is in range.
   */
 /atom/movable/proc/handle_pulled_premove(atom/newloc, direct, _step_x, _step_y)
-	if((bounds_dist(src, pulling) > 8 + step_size) && !(direct & GET_PIXELDIR(src, pulling)))
+	if((bounds_dist(src, pulling) > 8 + maxspeed) && !(direct & GET_PIXELDIR(src, pulling)))
 		return FALSE
 	return TRUE
 
@@ -448,7 +448,7 @@
 	if(!isnull(acceleration)) // acceleration override
 		accelu = acceleration
 	var/limit_speed = 0
-	if(vx * vx + vy * vy <= maxspeed * maxspeed + 1)
+	if(!force || vx * vx + vy * vy <= maxspeed * maxspeed + 1)
 		limit_speed = 1
 	if(direct & EAST)
 		if(vx < maxspeed || force)

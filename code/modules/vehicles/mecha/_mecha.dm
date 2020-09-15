@@ -29,9 +29,12 @@
 	anchored = TRUE
 	emulate_door_bumps = TRUE
 	COOLDOWN_DECLARE(mecha_bump_smash)
+	COOLDOWN_DECLARE(sound_cooldown)
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 	light_range = 4
+	step_size = 4
+	maxspeed = 4
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
@@ -577,7 +580,8 @@
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
-	if(stepsound)
+	if(stepsound && COOLDOWN_FINISHED(src, sound_cooldown))
+		COOLDOWN_START(src, sound_cooldown, 0.5 SECONDS)
 		playsound(src,stepsound,40,1)
 
 /obj/vehicle/sealed/mecha/proc/disconnect_air()
@@ -607,9 +611,6 @@
 	return FALSE
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
-	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
-		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
 	if(completely_disabled)
 		return FALSE
 	if(!direction)
@@ -642,7 +643,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!use_power(step_energy_drain))
+	if(!use_power(step_energy_drain / (PIXEL_TILE_SIZE / step_size)))
 		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Insufficient power to move!</span>")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
@@ -678,8 +679,7 @@
 		return TRUE
 
 	//Otherwise just walk normally
-	. = step(src,direction, dir)
-
+	. = step(src, direction)
 	if(strafe)
 		setDir(olddir)
 

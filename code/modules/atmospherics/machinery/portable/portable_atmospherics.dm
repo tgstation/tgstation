@@ -70,6 +70,8 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
+	step_x = 0
+	step_y = 0
 	update_icon()
 	return TRUE
 
