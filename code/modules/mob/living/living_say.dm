@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
 				if(eavesdrop_range && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 					continue
-				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				if(!eavesdrop_range && !(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= M
 			the_dead[M] = TRUE
