@@ -74,15 +74,11 @@
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	borgo = null
 	return ..()
-/*
-/obj/item/modular_computer/tablet/integrated/screwdriver_act(mob/user, obj/item/tool)
-	to_chat(world, "DEBUG -- screwdriver_act")
-	return
 
-/obj/item/modular_computer/tablet/integrated/attackby(obj/item/W as obj, mob/user as mob)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		return
-	return ..()*/
+/obj/item/modular_computer/tablet/integrated/turn_on(mob/user)
+	if(borgo?.stat != DEAD)
+		return ..()
+	return FALSE
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)

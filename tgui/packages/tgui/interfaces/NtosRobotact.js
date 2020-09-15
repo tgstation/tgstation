@@ -106,12 +106,22 @@ export const NtosRobotactContent = (props, context) => {
                   disabled={charge}
                   onClick={() => act('alertPower')} />
                 <ProgressBar
-                  value={charge / maxcharge}>
-                  <AnimatedNumber value={charge} />
+                  value={charge / maxcharge}
+                  ranges={{
+                    good: [0.5,Infinity],
+                    average: [0.1,0.5],
+                    bad: [-Infinity,0.1],
+                  }}>
+                  <AnimatedNumber value={charge}/>
                 </ProgressBar>
                 Chassis Integrity:
                 <ProgressBar
-                  value={integrity / 100} />
+                  value={integrity / 100}
+                  ranges={{
+                    good: [0.75, Infinity],
+                    average: [0.5, 0.75],
+                    bad: [-Infinity, 0.5],
+                }}/>
               </Section>
               <Section
                 title="Lamp Power">
