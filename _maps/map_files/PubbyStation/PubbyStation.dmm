@@ -53269,8 +53269,8 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = "31";
-	req_one_access = "31;48
+	req_access_txt = null;
+	req_one_access = "31;48"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
