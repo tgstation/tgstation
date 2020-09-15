@@ -9,12 +9,14 @@
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
 	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
 	if(L.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
@@ -85,19 +87,16 @@
 /datum/antagonist/highlander/robot
 	name="highlander"
 
-/datum/antagonist/highlander/robot/on_gain()
-	forge_objectives()
-	owner.special_role = "highlander"
-	give_equipment()
-
 /datum/antagonist/highlander/robot/give_equipment()
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
 		return ..()
-	robotlander.set_connected_ai() //disconnect from prior AI, if any
+	robotlander.revive(full_heal = TRUE, admin_revive = TRUE)
+	robotlander.set_connected_ai() //DISCONNECT FROM AI
 	robotlander.laws.clear_inherent_laws()
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
 	robotlander.module.transform_to(/obj/item/robot_module/syndicate/kiltborg)
 	robotlander.place_on_head(new /obj/item/clothing/head/beret/highlander(robotlander))
+	ADD_TRAIT(robotlander.hat, TRAIT_NODROP, HIGHLANDER)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.module.basic_modules

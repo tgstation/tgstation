@@ -222,11 +222,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return ..()
 
 /obj/item/claymore/highlander/robot/process()
-	if(robot && !src in robot.held_items)
-		robot.uneq_all()
-		robot.equip_module_to_slot(src, 1)
-		to_chat(robot, "<span clas='danger'>The [src] forces itself into your primary equipment slot!</span>")
-	return
+	loc.layer = LARGE_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"

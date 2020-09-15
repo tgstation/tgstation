@@ -132,8 +132,6 @@
   * * module_num - the slot number being repaired.
   */
 /mob/living/silicon/robot/proc/break_cyborg_slot(module_num)
-	if(!module.breakable_modules)
-		return FALSE
 	if(is_invalid_module_number(module_num, TRUE))
 		return FALSE
 
@@ -186,8 +184,6 @@
   * Breaks all of a cyborg's slots.
   */
 /mob/living/silicon/robot/proc/break_all_cyborg_slots()
-	if(!module.breakable_modules)
-		return FALSE
 	for(var/cyborg_slot in 1 to 3)
 		break_cyborg_slot(cyborg_slot)
 

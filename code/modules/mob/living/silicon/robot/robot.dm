@@ -75,7 +75,7 @@
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
 	var/scrambledcodes = FALSE // Used to determine if a borg shows up on the robotics console.  Setting to TRUE hides them.
-	var/lockcharge //Boolean of whether the borg is locked down or not
+	var/lockcharge = FALSE //Boolean of whether the borg is locked down or not
 
 	var/toner = 0
 	var/tonermax = 40
@@ -730,14 +730,15 @@
 	/// the current percent health of the robot (-1 to 1)
 	var/percent_hp = health/maxHealth
 	if(health <= previous_health) //if change in health is negative (we're losing hp)
-		if(percent_hp <= 0.5)
-			break_cyborg_slot(3)
+		if(module.breakable_modules)
+			if(percent_hp <= 0.5)
+				break_cyborg_slot(3)
 
-		if(percent_hp <= 0)
-			break_cyborg_slot(2)
+			if(percent_hp <= 0)
+				break_cyborg_slot(2)
 
-		if(percent_hp <= -0.5)
-			break_cyborg_slot(1)
+			if(percent_hp <= -0.5)
+				break_cyborg_slot(1)
 
 	else //if change in health is positive (we're gaining hp)
 		if(percent_hp >= 0.5)

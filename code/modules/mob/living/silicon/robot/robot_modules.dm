@@ -7,6 +7,8 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
+	///Host of this module
+	var/mob/living/silicon/robot/robot
 
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
 	var/list/emag_modules = list() //ditto
@@ -185,6 +187,7 @@
 /obj/item/robot_module/proc/transform_to(new_module_type)
 	var/mob/living/silicon/robot/R = loc
 	var/obj/item/robot_module/RM = new new_module_type(R)
+	RM.robot = R
 	if(!RM.be_transformed_to(src))
 		qdel(RM)
 		return
@@ -654,6 +657,16 @@
 	hat_offset = -2
 	breakable_modules = FALSE
 	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
+
+/obj/item/robot_module/syndicate/kiltborg/be_transformed_to(obj/item/robot_module/old_module)
+	. = ..()
+	qdel(robot.radio)
+	robot.radio = new /obj/item/radio/borg/syndicate(robot)
+	robot.scrambledcodes = TRUE
+	robot.maxHealth = 50 //DIE IN THREE HITS, LIKE REAL SCOT
+	robot.break_cyborg_slot(3) //YOU ONLY HAVE TWO ITEMS ANYWAY
+	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
+	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"
