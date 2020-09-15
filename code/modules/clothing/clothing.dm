@@ -19,11 +19,12 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
 
 	var/clothing_flags = NONE
+
+	var/can_be_bloody = TRUE
 
 	/// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
@@ -59,6 +60,8 @@
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
+	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
+		LoadComponent(/datum/component/bloodysoles)
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
@@ -181,7 +184,7 @@
 		body_parts_covered &= ~i
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
-		obj_destruction((damage_type == BRUTE ? "melee" : "laser")) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
+		obj_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
 	switch(zones_disabled)
@@ -358,8 +361,8 @@
 			to_chat(M, "<span class='warning'>[src] start[p_s()] to fall apart!</span>")
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
-/obj/item/clothing/proc/update_clothes_damaged_state()
-	return
+/obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
+	damaged_clothes = damaged_state
 
 /obj/item/clothing/update_overlays()
 	. = ..()
@@ -436,12 +439,12 @@ BLIND     // can't see anything
 	return 0
 
 /obj/item/clothing/obj_destruction(damage_flag)
-	if(damage_flag == "bomb")
+	if(damage_flag == BOMB)
 		var/turf/T = get_turf(src)
 		//so the shred survives potential turf change from the explosion.
 		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
-	else if(!(damage_flag in list("acid", "fire")))
+	else if(!(damage_flag in list(ACID, FIRE)))
 		body_parts_covered = NONE
 		slot_flags = NONE
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
@@ -458,6 +461,8 @@ BLIND     // can't see anything
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)
+	SIGNAL_HANDLER
+
 	if(!istype(L))
 		return
 	if(prob(0.2))

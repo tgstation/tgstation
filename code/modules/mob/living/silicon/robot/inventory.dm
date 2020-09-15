@@ -149,6 +149,11 @@
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
 			audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\"</span>")
+
+			if(builtInCamera)
+				builtInCamera.status = FALSE
+				to_chat(src, "<span class='userdanger'>CRITICAL ERROR: Built in security camera OFFLINE.</span>")
+
 			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
 		if(2)
@@ -175,7 +180,6 @@
 
 	return TRUE
 
-
 /**
   * Breaks all of a cyborg's slots.
   */
@@ -200,6 +204,9 @@
 
 			inv1.icon_state = initial(inv1.icon_state)
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
+			if(builtInCamera)
+				builtInCamera.status = TRUE
+				to_chat(src, "<span class='notice'>You hear your built in security camera focus adjust as it comes back online!</span>")
 		if(2)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
@@ -388,3 +395,4 @@
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
+

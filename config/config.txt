@@ -4,6 +4,7 @@ $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
 $include antag_rep.txt
+$include resources.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -439,7 +440,7 @@ MINUTE_CLICK_LIMIT 400
 ## Game Chat Message Options
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
-## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
+## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
 ## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
 
 ## Send a message with the station name starting a new game.
@@ -493,6 +494,13 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
+
+## Uncomment to enable global ban DB using the provided URL. The API should expect to receive a ckey at the end of the URL.
+## More API details can be found here: https://centcom.melonmesa.com
+#CENTCOM_BAN_DB https://centcom.melonmesa.com/ban/search
+## Uncomment to enable source whitelisting, a comma-separated list (no spaces) of CentCom sources (sourceName).
+## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
+#CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
 
 #### DISCORD STUFFS ####
 ## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING

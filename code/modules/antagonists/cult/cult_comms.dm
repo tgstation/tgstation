@@ -86,7 +86,7 @@
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		pollCultists(owner,C.cult_team)
 
-/proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
+/proc/pollCultists(mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
 		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
@@ -141,7 +141,7 @@
 
 /datum/action/innate/cult/master/IsAvailable()
 	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/action/innate/cult/master/finalreck

@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
@@ -148,8 +148,8 @@
 						SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 #undef VOX_DELAY
 #endif

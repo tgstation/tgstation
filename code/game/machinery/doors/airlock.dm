@@ -34,6 +34,8 @@
 
 #define AIRLOCK_INTEGRITY_N			 300 // Normal airlock integrity
 #define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
+/// How much extra health airlocks get when braced with a seal
+#define AIRLOCK_SEAL_MULTIPLIER		 2
 #define AIRLOCK_DAMAGE_DEFLECTION_N  21  // Normal airlock damage deflection
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
@@ -52,6 +54,7 @@
 	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
+	smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
@@ -69,6 +72,8 @@
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
+	/// The seal on the airlock
+	var/obj/item/seal
 	var/detonated = FALSE
 	var/abandoned = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
@@ -293,6 +298,7 @@
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
 	QDEL_NULL(note)
+	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
 	return ..()
@@ -300,6 +306,9 @@
 /obj/machinery/door/airlock/handle_atom_del(atom/A)
 	if(A == note)
 		note = null
+		update_icon()
+	if(A == seal)
+		seal = null
 		update_icon()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
@@ -430,6 +439,7 @@
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
 	var/mutable_appearance/note_overlay
+	var/mutable_appearance/seal_overlay
 	var/notetype = note_type()
 
 	switch(state)
@@ -446,6 +456,8 @@
 					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
 			if(obj_integrity < integrity_failure * max_integrity)
 				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
 			else if(obj_integrity < (0.75 * max_integrity))
@@ -477,6 +489,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
@@ -499,6 +513,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
@@ -559,6 +575,7 @@
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
 	add_overlay(note_overlay)
+	add_overlay(seal_overlay)
 	check_unres()
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -617,7 +634,8 @@
 		else
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
-
+	if(seal)
+		. += "It's been braced with a pneumatic seal."
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
@@ -812,7 +830,7 @@
 						user.visible_message("<span class='notice'>[user] reinforces \the [src] with plasteel.</span>",
 											"<span class='notice'>You reinforce \the [src] with plasteel.</span>")
 						security_level = AIRLOCK_SECURITY_PLASTEEL
-						modify_max_integrity(normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
+						modify_max_integrity(max_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 						update_icon()
 					return
@@ -843,7 +861,7 @@
 						user.visible_message("<span class='notice'>[user] remove \the [src]'s shielding.</span>",
 											"<span class='notice'>You remove \the [src]'s inner shielding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
-						modify_max_integrity(normal_integrity)
+						modify_max_integrity(max_integrity / AIRLOCK_INTEGRITY_MULTIPLIER)
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
 						update_icon()
@@ -921,6 +939,33 @@
 		cable.plugin(src, user)
 	else if(istype(C, /obj/item/airlock_painter))
 		change_paintjob(C, user)
+	else if(istype(C, /obj/item/door_seal)) //adding the seal
+		var/obj/item/door_seal/airlockseal = C
+		if(!density)
+			to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
+			return
+		if(seal)
+			to_chat(user, "<span class='warning'>[src] has already been sealed!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] begins sealing [src].</span>", "<span class='notice'>You begin sealing [src].</span>")
+		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+		if(!do_after(user, airlockseal.seal_time, target = src))
+			return
+		if(!density)
+			to_chat(user, "<span class='warning'>[src] must be closed before you can seal it!</span>")
+			return
+		if(seal)
+			to_chat(user, "<span class='warning'>[src] has already been sealed!</span>")
+			return
+		if(!user.transferItemToLoc(airlockseal, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [airlockseal]!</span>")
+			return
+		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		user.visible_message("<span class='notice'>[user] finishes sealing [src].</span>", "<span class='notice'>You finish sealing [src].</span>")
+		seal = airlockseal
+		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
+		update_icon()
+
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)
 			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.</span>")
@@ -937,6 +982,9 @@
 
 /obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/user)
 	if(!operating && density)
+		if(seal)
+			to_chat(user, "<span class='warning'>[src] is blocked by a seal!</span>")
+			return
 		if(user.a_intent != INTENT_HELP)
 			if(!W.tool_start_check(user, amount=0))
 				return
@@ -957,7 +1005,7 @@
 								"<span class='hear'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
-					machine_stat &= ~BROKEN
+					set_machine_stat(machine_stat & ~BROKEN)
 					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
@@ -966,6 +1014,36 @@
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
 	return !operating && density
+
+/**
+  * Used when attempting to remove a seal from an airlock
+  *
+  * Called when attacking an airlock with an empty hand, returns TRUE (there was a seal and we removed it, or failed to remove it)
+  * or FALSE (there was no seal)
+  * Arguments:
+  * * user - Whoever is attempting to remove the seal
+  */
+/obj/machinery/door/airlock/try_remove_seal(mob/living/user)
+	if(!seal)
+		return FALSE
+	var/obj/item/door_seal/airlockseal = seal
+	if(!ishuman(user))
+		to_chat(user, text("<span class='warning'>You don't have the dexterity to remove the seal!</span>"))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] begins removing the seal from [src].</span>", "<span class='notice'>You begin removing [src]'s pneumatic seal.</span>")
+	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+	if(!do_after(user, airlockseal.unseal_time, target = src))
+		return TRUE
+	if(!seal)
+		return TRUE
+	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	airlockseal.forceMove(get_turf(user))
+	user.visible_message("<span class='notice'>[user] finishes removing the seal from [src].</span>", "<span class='notice'>You finish removing [src]'s pneumatic seal.</span>")
+	seal = null
+	modify_max_integrity(max_integrity / AIRLOCK_SEAL_MULTIPLIER)
+	update_icon()
+	return TRUE
+
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
 	if(I)
@@ -976,6 +1054,9 @@
 			if(I.use_tool(src, user, 40, volume=100))
 				deconstruct(TRUE, user)
 				return
+	if(seal)
+		to_chat(user, "<span class='warning'>Remove the seal first!</span>")
+		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 		return
@@ -1017,7 +1098,7 @@
 
 
 /obj/machinery/door/airlock/open(forced=0)
-	if( operating || welded || locked )
+	if( operating || welded || locked || seal )
 		return FALSE
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
@@ -1027,6 +1108,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
+
 		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
 			closeOther.close()
 	else
@@ -1037,6 +1119,7 @@
 
 	if(!density)
 		return TRUE
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
 	sleep(1)
@@ -1057,7 +1140,7 @@
 
 
 /obj/machinery/door/airlock/close(forced=0)
-	if(operating || welded || locked)
+	if(operating || welded || locked || seal)
 		return
 	if(density)
 		return TRUE
@@ -1069,19 +1152,19 @@
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
 				return
-
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return
 		use_power(50)
 		playsound(src, doorClose, 30, TRUE)
+
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
-		SSexplosions.medobj += killthis
-
+		SSexplosions.med_mov_atom += killthis
+	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
@@ -1172,7 +1255,7 @@
 		return
 	if(!density) //Already open
 		return ..()
-	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
+	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
 		if(user.a_intent == INTENT_HARM)
 			return ..()
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
@@ -1213,6 +1296,8 @@
 
 
 /obj/machinery/door/airlock/proc/on_break()
+	SIGNAL_HANDLER
+
 	if(!panel_open)
 		panel_open = TRUE
 	wires.cut_all()
@@ -1237,7 +1322,7 @@
 		add_hiddenprint(user)
 
 /obj/machinery/door/airlock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	if((damage_amount >= obj_integrity) && (damage_flag == "bomb"))
+	if((damage_amount >= obj_integrity) && (damage_flag == BOMB))
 		flags_1 |= NODECONSTRUCT_1  //If an explosive took us out, don't drop the assembly
 	. = ..()
 	if(obj_integrity < (0.75 * max_integrity))
@@ -1289,6 +1374,9 @@
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
+			if(seal)
+				to_chat(user, "<span class='notice'>[src]'s seal needs to be removed first.</span>")
+				return FALSE
 			if(security_level != AIRLOCK_SECURITY_NONE)
 				to_chat(user, "<span class='notice'>[src]'s reinforcement needs to be removed first.</span>")
 				return FALSE
@@ -1494,6 +1582,7 @@
 
 #undef AIRLOCK_INTEGRITY_N
 #undef AIRLOCK_INTEGRITY_MULTIPLIER
+#undef AIRLOCK_SEAL_MULTIPLIER
 #undef AIRLOCK_DAMAGE_DEFLECTION_N
 #undef AIRLOCK_DAMAGE_DEFLECTION_R
 

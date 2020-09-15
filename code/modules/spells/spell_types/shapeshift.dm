@@ -26,6 +26,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
+		LAZYREMOVE(user.mob_spell_list, src)
 		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
@@ -33,10 +34,14 @@
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
+			var/list/display_animals = list()
 			for(var/path in possible_shapes)
-				var/mob/living/simple_animal/A = path
-				animal_list[initial(A.name)] = path
-			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
+				var/mob/living/simple_animal/animal = path
+				animal_list[initial(animal.name)] = path
+				var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
+				display_animals += list(initial(animal.name) = animal_image)
+			sortList(display_animals)
+			var/new_shapeshift_type = show_radial_menu(M, M, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 			if(shapeshift_type)
 				return
 			shapeshift_type = new_shapeshift_type
@@ -71,6 +76,19 @@
 				M.death()
 				qdel(M)
 				return
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster

@@ -27,7 +27,7 @@
 	if(A.properties["transmittable"] >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
-/datum/symptom/mind_restoration/Activate(var/datum/disease/advance/A)
+/datum/symptom/mind_restoration/Activate(datum/disease/advance/A)
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
@@ -46,10 +46,10 @@
 
 	if(A.stage >= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
-		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
-			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
-		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
-			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
+		if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
+			M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+		if(M.has_reagent(/datum/reagent/toxin/histamine))
+			M.remove_reagent(/datum/reagent/toxin/histamine, 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)

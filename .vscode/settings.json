@@ -9,5 +9,8 @@
 			"viewType": "imagePreview.previewEditor"
 		}
 	],
-	"files.eol": "\n"
+
+	"files.eol": "\n",
+
+	"gitlens.advanced.blame.customArguments": ["-w"]
 }

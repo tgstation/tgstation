@@ -89,13 +89,13 @@
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/process()
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/process(delta_time)
 	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)
 				return
-			held_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
-			if(prob(10))
+			held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+			if(DT_PROB(5, delta_time))
 				to_chat(held_mob, "<span class='warning'>Your hand holding [src] burns!</span>")
 	else
 		held_mob = null

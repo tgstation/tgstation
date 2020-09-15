@@ -30,7 +30,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3
-	attack_verb = list("pompfed")
+	attack_verb_continuous = list("pompfs")
+	attack_verb_simple = list("pompf")
 
 /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/Initialize()
 	. = ..()

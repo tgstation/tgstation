@@ -14,11 +14,11 @@
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
-	opacity = 0
-	canSmoothWith = list()
+	opacity = FALSE
+	canSmoothWith = null
 	smoothing_flags = NONE
-	/// The amount of time it takes to create a venus human trap, in deciseconds
-	var/growth_time = 1200
+	/// The amount of time it takes to create a venus human trap.
+	var/growth_time = 120 SECONDS
 
 /obj/structure/alien/resin/flower_bud_enemy/Initialize()
 	. = ..()
@@ -140,7 +140,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
 	. = ..()
-	if(.)
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	humanize_plant(user)
 
