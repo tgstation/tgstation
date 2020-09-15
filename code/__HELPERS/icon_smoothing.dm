@@ -42,12 +42,12 @@
 #define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
 
-#define SET_ADJ_IN_DIR(source, junction, direction) \
+#define SET_ADJ_IN_DIR(source, junction, direction, direction_flag) \
 	do { \
 		var/turf/neighbor = get_step(source, direction); \
 		if(!neighbor) { \
 			if(source.smoothing_flags & SMOOTH_BORDER) { \
-				junction |=  direction; \
+				junction |=  direction_flag; \
 			}; \
 		}; \
 		else { \
@@ -55,10 +55,10 @@
 				if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
 					continue; \
 				}; \
-				junction |= direction; \
+				junction |= direction_flag; \
 				break; \
 			}; \
-			if(!(junction & direction) && source.smoothing_flags & SMOOTH_OBJ) { \
+			if(!(junction & direction_flag) && source.smoothing_flags & SMOOTH_OBJ) { \
 				for(var/obj/thing in neighbor) { \
 					if(!thing.anchored || isnull(thing.smoothing_groups)) { \
 						continue; \
@@ -67,10 +67,10 @@
 						if(!(source.canSmoothWith[target] & thing.smoothing_groups[target])) { \
 							continue; \
 						}; \
-						junction |= direction; \
+						junction |= direction_flag; \
 						break; \
 					}; \
-					if(junction & direction) { \
+					if(junction & direction_flag) { \
 						break; \
 					}; \
 				}; \
@@ -334,7 +334,7 @@
 	. = NONE //junction
 
 	for(var/direction in GLOB.cardinals) //Cardinal case first.
-		SET_ADJ_IN_DIR(src, ., direction)
+		SET_ADJ_IN_DIR(src, ., direction, direction)
 
 	if(!(smoothing_flags & SMOOTH_DIAGONAL) || !(. & (NORTH|SOUTH)) || !(. & (EAST|WEST)))
 		icon_state = "[base_icon_state]-[.]"
@@ -342,17 +342,17 @@
 
 	if(. & N_NORTH)
 		if(. & N_WEST)
-			SET_ADJ_IN_DIR(src, ., NORTHWEST)
+			SET_ADJ_IN_DIR(src, ., NORTHWEST, N_NORTHWEST)
 
 		if(. & N_EAST)
-			SET_ADJ_IN_DIR(src, ., N_NORTHEAST)
+			SET_ADJ_IN_DIR(src, ., NORTHEAST, N_NORTHEAST)
 
 	if(. & N_SOUTH)
 		if(. & N_WEST)
-			SET_ADJ_IN_DIR(src, ., SOUTHWEST)
+			SET_ADJ_IN_DIR(src, ., SOUTHWEST, N_SOUTHWEST)
 
 		if(. & N_EAST)
-			SET_ADJ_IN_DIR(src, ., SOUTHEAST)
+			SET_ADJ_IN_DIR(src, ., SOUTHEAST, N_SOUTHEAST)
 
 	icon_state = "[base_icon_state]-[.]"
 
