@@ -154,6 +154,7 @@
 				M.add_confusion(min(power, diff))
 			if(converter)
 				if(converter.owner.current.a_intent == INTENT_HELP && deviation == 2)
+					to_chat(user, "<span class='notice'>Your stance is too weak to flash [M] from behind!</span>")
 					visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 					return
 				terrible_conversion_proc(M, user)
