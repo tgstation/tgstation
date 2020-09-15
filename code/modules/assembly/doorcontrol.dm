@@ -167,8 +167,8 @@
 	if(!lift)
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 		return
-	lift.visible_message("<span class='notice'>[src] clinks and whirrs into motion, locking controls.</span")
-	lift.controls_locked = TRUE
+	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
+	lift.lift_master_datum.set_controls(LOCKED)
 	var/difference = abs(z - lift.z)
 	var/direction = lift.z > z ? UP : DOWN
 	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
@@ -179,5 +179,5 @@
 			return
 		lift.lift_master_datum.MoveLift(direction, null)
 	lift.visible_message("<span class='notice'>[src] clicks, ready to be manually operated again.</span")
-	lift.controls_locked = FALSE
+	lift.lift_master_datum.set_controls(UNLOCKED)
 

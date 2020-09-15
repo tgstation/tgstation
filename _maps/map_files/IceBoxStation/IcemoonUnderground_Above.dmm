@@ -2214,6 +2214,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"jq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -2336,6 +2342,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"kP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "lL" = (
 /obj/structure/sign/warning/xeno_mining,
 /turf/closed/wall,
@@ -2419,6 +2431,8 @@
 	name = "Public Mining APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
+/obj/item/reagent_containers/food/drinks/bottle/hooch,
 /turf/open/floor/plating,
 /area/storage/mining)
 "nE" = (
@@ -2653,6 +2667,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"re" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "rj" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3351,8 +3371,8 @@
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "Ea" = (
-/obj/effect/spawner/bundle/hobo_squat,
-/obj/item/reagent_containers/food/drinks/bottle/hooch,
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/storage/mining)
 "Ee" = (
@@ -3418,6 +3438,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Fa" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "Fc" = (
 /obj/structure/sign/warning,
 /turf/closed/wall,
@@ -3468,6 +3494,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"FG" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "FQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
@@ -4032,6 +4064,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"PT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "PY" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -4662,11 +4703,23 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "Zr" = (
-/obj/structure/cable/multilayer/multiz,
+/obj/structure/cable,
 /turf/open/floor/plating,
+/area/storage/mining)
+"ZB" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Public Mining Storage"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "ZX" = (
 /obj/machinery/hydroponics/constructable,
@@ -32568,7 +32621,7 @@ wd
 wd
 YF
 Fc
-DZ
+ZB
 Fc
 YF
 OC
@@ -33853,7 +33906,7 @@ YF
 Ea
 YF
 YF
-xn
+FG
 YF
 Fc
 Yl
@@ -34109,9 +34162,9 @@ ah
 YF
 YF
 YF
-xn
-xn
-xn
+Fa
+PT
+kP
 YF
 wd
 wd
@@ -34366,9 +34419,9 @@ ah
 wd
 wd
 YF
-xn
+jq
 Zn
-xn
+re
 YF
 wd
 wd

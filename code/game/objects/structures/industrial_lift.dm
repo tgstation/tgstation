@@ -43,18 +43,33 @@
 					possible_expansions |= lift_platform
 			possible_expansions -= borderline
 
-///Move all platforms together
+/**
+  * Moves the lift UP or DOWN, this is what users invoke with their hand.
+  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+  * Arguments:
+  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+  * user - Whomever made the lift movement.
+  */
 /datum/lift_master/proc/MoveLift(going, mob/user)
+	set_controls(LOCKED)
 	for(var/p in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = p
 		lift_platform.travel(going)
+	set_controls(UNLOCKED)
 
+/**
+  * Moves the lift, this is what users invoke with their hand.
+  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+  */
 /datum/lift_master/proc/MoveLiftHorizontal(going, z)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 
+	set_controls(LOCKED)
 	for(var/p in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = p
 		max_x = max(max_x, lift_platform.x)
@@ -89,6 +104,7 @@
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)
+	set_controls(UNLOCKED)
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
@@ -100,6 +116,18 @@
 		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/transparent/openspace))
 			return FALSE
 	return TRUE
+
+
+//Booleans in arguments are confusing, so I made them defines.
+#define LOCKED TRUE
+#define UNLOCKED FALSE
+/**
+  * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
+  */
+/datum/lift_master/proc/set_controls(state)
+	for(var/l in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = l
+		lift.controls_locked = state
 
 GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift

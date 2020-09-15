@@ -24643,8 +24643,11 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bgN" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/structure/table,
+/obj/item/toy/plush/beeplushie{
+	name = "multi-bee plushie";
+	pixel_y = 4
+	},
 /turf/open/floor/plating,
 /area/storage/mining)
 "bgO" = (
@@ -25351,10 +25354,10 @@
 /turf/open/floor/plating,
 /area/storage/mining)
 "bih" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+/obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -25366,6 +25369,12 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
@@ -27916,8 +27925,8 @@
 /turf/closed/wall/r_wall,
 /area/storage/mining)
 "bnW" = (
-/obj/machinery/firealarm,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/storage/mining)
 "bnX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -28382,8 +28391,11 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bpg" = (
-/obj/structure/cable/multilayer/multiz,
-/turf/open/floor/plating,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
 /area/storage/mining)
 "bph" = (
 /obj/structure/table,
@@ -28907,11 +28919,8 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "bqD" = (
-/obj/structure/table,
-/obj/item/toy/plush/beeplushie{
-	name = "multi-bee plushie";
-	pixel_y = 4
-	},
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/storage/mining)
 "bqE" = (
@@ -48965,8 +48974,8 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "cJV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
@@ -50798,10 +50807,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "hcE" = (
@@ -54085,11 +54094,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "pTF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 9
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
@@ -54596,7 +54605,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "rUV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "rVn" = (
@@ -55372,6 +55383,9 @@
 	c_tag = "Public Mining Ladder";
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "uhH" = (
@@ -55803,6 +55817,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "voE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "vqI" = (
@@ -56524,6 +56541,9 @@
 "xkH" = (
 /obj/structure/ladder,
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -85159,7 +85179,7 @@ urc
 lSU
 nlo
 ejU
-urc
+bnW
 xbg
 mME
 xbg
@@ -85416,7 +85436,7 @@ urc
 oGZ
 hZS
 gVn
-urc
+bnW
 aeE
 aeE
 aeE
@@ -85925,7 +85945,7 @@ bcf
 bdg
 bed
 bfv
-bpg
+jcM
 jcM
 big
 hau
@@ -86191,7 +86211,7 @@ bnV
 olp
 aeE
 aOB
-aeE
+bpg
 buS
 bwn
 xWd
@@ -86701,7 +86721,7 @@ urc
 uhq
 xkH
 voE
-urc
+bnW
 xbg
 tGE
 xbg
