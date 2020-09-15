@@ -525,6 +525,8 @@
 			gun_light.forceMove(src)
 	else if(.)
 		var/obj/item/flashlight/seclite/old_gun_light = .
+		if(QDELETED(old_gun_light))
+			return
 		old_gun_light.set_light_flags(old_gun_light.light_flags & ~LIGHT_ATTACHED)
 		if(old_gun_light.loc == src)
 			old_gun_light.forceMove(get_turf(src))
