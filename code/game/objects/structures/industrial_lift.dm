@@ -1,3 +1,8 @@
+
+//Booleans in arguments are confusing, so I made them defines.
+#define LOCKED 1
+#define UNLOCKED 0
+
 ///Collect and command
 /datum/lift_master
 	var/list/lift_platforms
@@ -117,17 +122,13 @@
 			return FALSE
 	return TRUE
 
-
-//Booleans in arguments are confusing, so I made them defines.
-#define LOCKED TRUE
-#define UNLOCKED FALSE
 /**
   * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
   */
 /datum/lift_master/proc/set_controls(state)
 	for(var/l in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = l
-		lift.controls_locked = state
+		lift_platform.controls_locked = state
 
 GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift
