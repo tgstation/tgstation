@@ -1,0 +1,4 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Flashes now stun for shorter and the duration of the stun is based on the direction of your enemy."

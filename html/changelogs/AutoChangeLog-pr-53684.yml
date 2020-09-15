@@ -1,0 +1,4 @@
+author: "Cartographer-D"
+delete-after: True
+changes: 
+  - bugfix: "Pubby Cargo will not go down so easily to fire. Its lights are once more controlled by man. Mining once again treads where it wishes."
