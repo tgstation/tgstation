@@ -35,6 +35,7 @@
 /obj/structure/energy_net/Destroy()
 	if(!QDELETED(affecting))
 		affecting.visible_message("<span class='notice'>[affecting.name] is recovered from the energy net!</span>", "<span class='notice'>You are recovered from the energy net!</span>", "<span class='hear'>You hear a grunt.</span>")
+	affecting = null
 	return ..()
 
 /obj/structure/energy_net/attack_paw(mob/user)
