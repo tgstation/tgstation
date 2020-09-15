@@ -10,6 +10,7 @@
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
+	can_fold=0
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
 	..()

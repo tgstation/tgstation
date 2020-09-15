@@ -13,6 +13,8 @@
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
+	var/foldabletype = /obj/item/wheelchair
+	var/can_fold = 1
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -110,13 +112,6 @@
 		return TRUE
 	return FALSE
 
-/obj/vehicle/ridden/wheelchair/the_whip/driver_move(mob/living/user, direction)
-	if(istype(user))
-		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / max(user.usable_hands, 1)
-	return ..()
-
-
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
@@ -125,3 +120,39 @@
 	max_integrity = 200
 	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 40)
 	custom_materials = list(/datum/material/gold = 10000)
+	foldabletype = /obj/item/wheelchair/gold
+
+/obj/item/wheelchair
+	name = "wheelchair"
+	desc = "A collapsed wheelchair that can be carried around."
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "folded"
+	w_class = WEIGHT_CLASS_NORMAL
+	var/unfolded_type = /obj/vehicle/ridden/wheelchair/
+
+/obj/item/wheelchair/gold
+	name = "gold wheelchair"
+	desc = "A collapsed, shiny wheelchair that can be carried around."
+	icon = 'icons/obj/rollerbed.dmi'
+	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
+
+/obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
+	. = ..()
+	if(over_object == usr && Adjacent(usr) && can_fold==1)
+		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+			return FALSE
+		if(has_buckled_mobs())
+			return FALSE
+		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
+		var/obj/vehicle/ridden/wheelchair/B = new foldabletype(get_turf(src))
+		usr.put_in_hands(B)
+		qdel(src)
+
+/obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchaair on in-hand use
+	deploy_wheelchair(user, user.loc)
+
+/obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
+	var/obj/vehicle/ridden/wheelchair/R = new unfolded_type(location)
+	R.add_fingerprint(user)
+	qdel(src)
+
