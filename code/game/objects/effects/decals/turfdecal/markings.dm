@@ -271,7 +271,7 @@
 
 /obj/effect/turf_decal/siding/thinplating
 	icon_state = "siding_thinplating_line"
-	color = "#8B8B8B"
+	color = "#aaaaaa"
 
 /obj/effect/turf_decal/siding/thinplating/corner
 	icon_state = "siding_thinplating_corner"
@@ -300,7 +300,7 @@
 
 /obj/effect/turf_decal/siding/wideplating
 	icon_state = "siding_wideplating_line"
-	color = "#8B8B8B"
+	color = "#aaaaaa"
 
 /obj/effect/turf_decal/siding/wideplating/corner
 	icon_state = "siding_wideplating_corner"
