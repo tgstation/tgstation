@@ -152,7 +152,7 @@
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-			// Special check for if we're a revhead. Special cases to attempt conversion.
+				// Special check for if we're a revhead. Special cases to attempt conversion.
 				if(converter)
 					// Did we try to flash them from behind?
 					if(deviation == 2)
