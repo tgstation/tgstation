@@ -315,36 +315,21 @@
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-
-	if(M.occupant.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
-			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
-			return
-		M.do_attack_animation(src)
-		if(M.damtype == BRUTE)
-			step_away(src,M,15)
-		var/obj/item/bodypart/temp = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
-		if(temp)
-			var/update = 0
-			var/dmg = rand(M.force/2, M.force)
-			switch(M.damtype)
-				if(BRUTE)
-					if(M.force > 35) // durand and other heavy mechas
-						Unconscious(20)
-					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(40)
-					update |= temp.receive_damage(dmg, 0)
-					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
-				if(BURN)
-					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/welder.ogg', 50, TRUE)
-				if(TOX)
-					M.mech_toxin_damage(src)
-				else
-					return
-			if(update)
-				update_damage_overlays()
-			updatehealth()
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
+	. = ..()
+	if(!.)
+		return
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(check_shields(M, damage, "the [M.name]", MELEE_ATTACK, M.armour_penetration))
+		return FALSE
+	var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	if(!dam_zone) //Dismemberment successful
+		return TRUE
+	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+	if(!affecting)
+		affecting = get_bodypart(BODY_ZONE_CHEST)
+	var/armor = run_armor_check(affecting, MELEE, armour_penetration = M.armour_penetration)
+	apply_damage(damage, M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)

@@ -185,27 +185,23 @@
 		var/mob/living/carried_mob = riding_item.rider
 		if(carried_mob == user) //Piggyback user.
 			return
-		switch(user.a_intent)
-			if(INTENT_HARM)
+		if(user.in_combat_mode())
+			user.unbuckle_mob(carried_mob)
+			tablelimbsmash(user, carried_mob)
+		else
+			var/tableplace_delay = 3.5 SECONDS
+			var/skills_space = ""
+			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+				tableplace_delay = 2 SECONDS
+				skills_space = " expertly"
+			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+				tableplace_delay = 2.75 SECONDS
+				skills_space = " quickly"
+			carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
+				"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
+			if(do_after(user, tableplace_delay, target = carried_mob))
 				user.unbuckle_mob(carried_mob)
-				tablelimbsmash(user, carried_mob)
-			if(INTENT_HELP)
-				var/tableplace_delay = 3.5 SECONDS
-				var/skills_space = ""
-				if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-					tableplace_delay = 2 SECONDS
-					skills_space = " expertly"
-				else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-					tableplace_delay = 2.75 SECONDS
-					skills_space = " quickly"
-				carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
-					"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
-				if(do_after(user, tableplace_delay, target = carried_mob))
-					user.unbuckle_mob(carried_mob)
-					tableplace(user, carried_mob)
-			else
-				user.unbuckle_mob(carried_mob)
-				tablepush(user, carried_mob)
+				tableplace(user, carried_mob)
 		return TRUE
 
 	if(!user.in_combat_mode() && !(I.item_flags & ABSTRACT))
