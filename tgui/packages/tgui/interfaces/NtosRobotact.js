@@ -116,11 +116,13 @@ export const NtosRobotactContent = (props, context) => {
                 </ProgressBar>
                 Chassis Integrity:
                 <ProgressBar
-                  value={integrity / 100}
+                  value={integrity}
+                  minValue={0}
+                  maxValue={100}
                   ranges={{
-                    good: [0.75, Infinity],
-                    average: [0.5, 0.75],
-                    bad: [-Infinity, 0.5],
+                    bad: [-Infinity, 25],
+                    average: [25, 75],
+                    good: [75, Infinity],
                 }}/>
               </Section>
               <Section
