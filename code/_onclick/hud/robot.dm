@@ -116,14 +116,14 @@
 	static_inventory += robit.inv1
 
 	if(!robit.inv2)
-		robit.inv2 = new /obj/screen/robot/module1()
+		robit.inv2 = new /obj/screen/robot/module2()
 
 	robit.inv2.screen_loc = ui_inv2
 	robit.inv2.hud = src
 	static_inventory += robit.inv2
 
 	if(!robit.inv3)
-		robit.inv3 = new /obj/screen/robot/module1()
+		robit.inv3 = new /obj/screen/robot/module3()
 
 	robit.inv3.screen_loc = ui_inv3
 	robit.inv3.hud = src
