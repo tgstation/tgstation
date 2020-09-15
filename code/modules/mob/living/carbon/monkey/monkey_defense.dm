@@ -27,47 +27,46 @@
 				affecting = get_bodypart(BODY_ZONE_CHEST)
 			apply_damage(damage, BRUTE, affecting)
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M, modifiers)
 	if(..())	//To allow surgery to return properly.
 		return
 
-	switch(M.a_intent)
-		if("help")
-			help_shake_act(M)
-		if("grab")
-			grabbedby(M)
-		if("harm")
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			if (prob(75))
-				visible_message("<span class='danger'>[M] punches [name]!</span>", \
-								"<span class='userdanger'>[M] punches you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
-				to_chat(M, "<span class='danger'>You punch [name]!</span>")
 
-				playsound(loc, "punch", 25, TRUE, -1)
-				var/damage = rand(5, 10)
-				if(prob(40))
-					damage = rand(10, 15)
-					if(AmountUnconscious() < 100 && health > 0)
-						Unconscious(rand(200, 300))
-						visible_message("<span class='danger'>[M] knocks [name] out!</span>", \
-										"<span class='userdanger'>[M] knocks you out!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", 5, M)
-						to_chat(M, "<span class='danger'>You knock [name] out!</span>")
-				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-				if(!affecting)
-					affecting = get_bodypart(BODY_ZONE_CHEST)
-				apply_damage(damage, BRUTE, affecting)
-				log_combat(M, src, "attacked")
 
-			else
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-				visible_message("<span class='danger'>[M]'s punch misses [name]!</span>", \
-								"<span class='danger'>You avoid [M]'s punch!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
-				to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
-		if("disarm")
-			if(stat < UNCONSCIOUS)
-				M.disarm(src)
+	if(in_combat_mode())
+		if(modifiers["right"] && stat < UNCONSCIOUS)
+			M.disarm(src)
+			return
+		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		if (prob(75))
+			visible_message("<span class='danger'>[M] punches [name]!</span>", \
+							"<span class='userdanger'>[M] punches you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
+			to_chat(M, "<span class='danger'>You punch [name]!</span>")
 
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+			playsound(loc, "punch", 25, TRUE, -1)
+			var/damage = rand(5, 10)
+			if(prob(40))
+				damage = rand(10, 15)
+				if(AmountUnconscious() < 100 && health > 0)
+					Unconscious(rand(200, 300))
+					visible_message("<span class='danger'>[M] knocks [name] out!</span>", \
+									"<span class='userdanger'>[M] knocks you out!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", 5, M)
+					to_chat(M, "<span class='danger'>You knock [name] out!</span>")
+			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+			if(!affecting)
+				affecting = get_bodypart(BODY_ZONE_CHEST)
+			apply_damage(damage, BRUTE, affecting)
+			log_combat(M, src, "attacked")
+
+		else
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			visible_message("<span class='danger'>[M]'s punch misses [name]!</span>", \
+							"<span class='danger'>You avoid [M]'s punch!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
+			to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
+	else
+		help_shake_act(M)
+
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
 		if (M.in_combat_mode())
 			if ((prob(95) && health > 0))
@@ -98,8 +97,8 @@
 				visible_message("<span class='danger'>[M]'s lunge misses [name]!</span>", \
 								"<span class='danger'>You avoid [M]'s lunge!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your lunge misses [name]!</span>")
-
-		if (M.a_intent == INTENT_DISARM)
+		var/list/modifiers = params2list(params)
+		if (L.in_combat_mode() && modifiers["right"])
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if(prob(95))

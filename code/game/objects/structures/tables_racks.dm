@@ -63,14 +63,13 @@
 			if(pushed_mob.buckled)
 				to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 				return
-			if(user.a_intent == INTENT_GRAB)
-				if(user.grab_state < GRAB_AGGRESSIVE)
-					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
-					return
-				if(user.grab_state >= GRAB_NECK)
-					tablelimbsmash(user, pushed_mob)
-				else
-					tablepush(user, pushed_mob)
+			if(user.grab_state < GRAB_AGGRESSIVE)
+				to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+				return
+			if(user.grab_state >= GRAB_NECK)
+				tablelimbsmash(user, pushed_mob)
+			else
+				tablepush(user, pushed_mob)
 			if(!user.in_combat_mode())
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")

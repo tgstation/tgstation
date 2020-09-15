@@ -452,12 +452,13 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H, modifiers)
 	if(INTERACTING_WITH(H, src))
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
-	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
+	var/list/modifiers = params2list(params)
+	if(H.in_combat_mode() && modifiers["right"] && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)

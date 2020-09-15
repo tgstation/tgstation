@@ -97,9 +97,6 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
-	if(modifiers["right"])
-		RightClickOn(A)
-		return
 
 	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
@@ -136,7 +133,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
+			UnarmedAttack(A,null, modifiers)
 		return
 
 	//Can't reach anything else in lockers or other weirdness
@@ -150,7 +147,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1)
+			UnarmedAttack(A,1,modifiers)
 	else
 		if(W)
 			W.afterattack(A,src,0,params)
@@ -260,8 +257,10 @@
   *
   * proximity_flag is not currently passed to attack_hand, and is instead used
   * in human click code to allow glove touches only at melee range.
+  *
+  * modifiers is the click modifiers this attack had, used for disarm
   */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag, modifiers)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return
@@ -374,14 +373,6 @@
 
 /atom/proc/CtrlShiftClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
-	return
-
-/mob/proc/RightClickOn(atom/A)
-	A.RightClick(src)
-	return
-
-/atom/proc/RightClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_RIGHT)
 	return
 
 

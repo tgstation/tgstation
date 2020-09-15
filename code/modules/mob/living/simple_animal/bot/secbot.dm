@@ -21,7 +21,7 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
-	a_intent = "harm"
+	combat_mode = TRUE
 
 	var/baton_type = /obj/item/melee/baton
 	var/obj/item/weapon

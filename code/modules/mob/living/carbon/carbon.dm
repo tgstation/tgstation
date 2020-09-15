@@ -62,8 +62,9 @@
 /mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
 	for(var/datum/surgery/S in surgeries)
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
-			if((S.self_operable || user != src) && !user.in_combat_mode())
-				if(S.next_step(user,user.a_intent))
+			var/list/modifiers = params2list(params)
+			if((S.self_operable || user != src) && (!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"])))
+				if(S.next_step(user, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
 					return 1
 
 	if(!all_wounds || !(!user.in_combat_mode() || user == src))

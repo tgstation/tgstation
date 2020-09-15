@@ -228,8 +228,7 @@
 					// if the target has a weapon, chance to disarm them
 					if(W && prob(MONKEY_ATTACK_DISARM_PROB))
 						pickupTarget = W
-						a_intent = INTENT_DISARM
-						monkey_attack(target)
+						monkey_attack(target, TRUE)
 
 					else
 						set_combat_mode(TRUE)
@@ -274,7 +273,7 @@
 				INVOKE_ASYNC(src, .proc/walk2derpless, target.loc)
 
 				if(Adjacent(target) && isturf(target.loc))
-					a_intent = INTENT_GRAB
+					set_combat_mode(TRUE, TRUE)
 					target.grabbedby(src)
 				else
 					var/turf/olddist = get_dist(src, target)
@@ -333,14 +332,14 @@
 	walk_to(src,0)
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
+/mob/living/carbon/monkey/proc/monkey_attack(mob/living/L, disarm)
 	var/obj/item/Weapon = locate(/obj/item) in held_items
 
 	// attack with weapon if we have one
 	if(Weapon)
 		Weapon.melee_attack_chain(src, L)
 	else
-		L.attack_paw(src)
+		L.attack_paw(src, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarming
 
 	// no de-aggro
 	if(aggressive)
@@ -372,17 +371,19 @@
 		battle_screech()
 		set_combat_mode()
 
-/mob/living/carbon/monkey/attack_hand(mob/living/L)
+/mob/living/carbon/monkey/attack_hand(mob/living/L, modifiers)
+	var/list/modifiers = params2list(params)
 	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+	else if(L.in_combat_mode() && modifiers["right"] && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 
-/mob/living/carbon/monkey/attack_paw(mob/living/L)
+/mob/living/carbon/monkey/attack_paw(mob/living/L, modifiers)
+	var/list/modifiers = params2list(params)
 	if(L.in_combat_mode() && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+	else if(L.in_combat_mode() && modifiers["right"] prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
 	return ..()
 
@@ -424,8 +425,7 @@
 	. = ..()
 	if(!IsDeadOrIncap() && pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB))) // nuh uh you don't pull me!
 		if(Adjacent(pulledby))
-			a_intent = INTENT_DISARM
-			monkey_attack(pulledby)
+			monkey_attack(pulledby, TRUE)
 			retaliate(pulledby)
 			return TRUE
 

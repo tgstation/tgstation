@@ -194,7 +194,8 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return FALSE
-	if(user.a_intent != INTENT_DISARM)
+	var/list/modifiers = params2list(params)
+	if(!(user.in_combat_mode() && modifiers["right"]))
 		var/sharp = W.get_sharpness()
 		return sharp && slice(sharp, W, user)
 	else

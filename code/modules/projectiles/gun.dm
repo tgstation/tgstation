@@ -202,7 +202,8 @@
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
-		if(ismob(target) && user.a_intent == INTENT_GRAB)
+		var/list/modifiers = params2list(params)
+		if(ismob(target) && modifiers["right"]) //Right click to hold someone up
 			if(user.GetComponent(/datum/component/gunpoint))
 				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
 				return

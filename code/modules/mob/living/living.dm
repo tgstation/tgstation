@@ -246,12 +246,14 @@
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
+
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_ATTEMPT_PULL, src)
+	AM.add_fingerprint(src)
+
 	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
-
-	AM.add_fingerprint(src)
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)

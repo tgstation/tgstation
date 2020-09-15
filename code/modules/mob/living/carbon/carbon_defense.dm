@@ -142,7 +142,7 @@
 	return //so we don't call the carbon's attack_hand().
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/attack_hand(mob/living/carbon/human/user, modifiers)
 
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
@@ -156,8 +156,8 @@
 
 	for(var/datum/surgery/S in surgeries)
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
-			if(!user.in_combat_mode())
-				if(S.next_step(user, user.a_intent))
+			if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
+				if(S.next_step(user, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
 					return TRUE
 
 	for(var/i in all_wounds)

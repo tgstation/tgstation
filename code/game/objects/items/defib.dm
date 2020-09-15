@@ -410,7 +410,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, param)
 	if(busy)
 		return
 	if(req_defib && !defib.powered)
@@ -430,7 +430,8 @@
 			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
 		return
 
-	if(user.a_intent == INTENT_DISARM)
+	var/list/modifiers = params2list(params)
+	if(user.in_combat_mode() && modifiers["right"])
 		do_disarm(M, user)
 		return
 

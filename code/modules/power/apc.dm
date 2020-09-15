@@ -814,7 +814,7 @@
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
-		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
+		else if(E.drain_time < world.time)
 			if(cell.charge == cell.maxcharge)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return

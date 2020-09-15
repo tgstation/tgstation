@@ -291,7 +291,7 @@
 		return
 	discipline_slime(user)
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M, modifiers)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -321,9 +321,11 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
+			var/list/modifiers = params2list(params)
+
+			if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M,M.a_intent))
+					if(S.next_step(M, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -338,8 +340,10 @@
 	if(stat == DEAD && surgeries.len)
 		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user,user.a_intent))
-					return 1
+				var/list/modifiers = params2list(params)
+				if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
+					if(S.next_step(user, M.in_combat_mode() && modifiers["right"] ? TRUE : FALSE))
+						return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]

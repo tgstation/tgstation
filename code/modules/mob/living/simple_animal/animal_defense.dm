@@ -1,22 +1,9 @@
 
 
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M, modifiers)
 	..()
-	switch(M.a_intent)
-		if("help")
-			if (stat == DEAD)
-				return
-			visible_message("<span class='notice'>[M] [response_help_continuous] [src].</span>", \
-							"<span class='notice'>[M] [response_help_continuous] you.</span>", null, null, M)
-			to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-			if(pet_bonus)
-				funpet(M)
-
-		if("grab")
-			grabbedby(M)
-
-		if("disarm")
+	if(M.in_combat_mode())
+		if(modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 			var/shove_dir = get_dir(M, src)
@@ -31,20 +18,27 @@
 				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
 			return TRUE
-
-		if("harm")
-			if(HAS_TRAIT(M, TRAIT_PACIFISM))
-				to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
-				return
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			visible_message("<span class='danger'>[M] [response_harm_continuous] [src]!</span>",\
-							"<span class='userdanger'>[M] [response_harm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='danger'>You [response_harm_simple] [src]!</span>")
-			playsound(loc, attacked_sound, 25, TRUE, -1)
-			attack_threshold_check(harm_intent_damage)
-			log_combat(M, src, "attacked")
-			updatehealth()
-			return TRUE
+		if(HAS_TRAIT(M, TRAIT_PACIFISM))
+			to_chat(M, "<span class='warning'>You don't want to hurt [src]!</span>")
+			return
+		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		visible_message("<span class='danger'>[M] [response_harm_continuous] [src]!</span>",\
+						"<span class='userdanger'>[M] [response_harm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+		to_chat(M, "<span class='danger'>You [response_harm_simple] [src]!</span>")
+		playsound(loc, attacked_sound, 25, TRUE, -1)
+		attack_threshold_check(harm_intent_damage)
+		log_combat(M, src, "attacked")
+		updatehealth()
+		return TRUE
+	else
+		if (stat == DEAD)
+			return
+		visible_message("<span class='notice'>[M] [response_help_continuous] [src].</span>", \
+						"<span class='notice'>[M] [response_help_continuous] you.</span>", null, null, M)
+		to_chat(M, "<span class='notice'>You [response_help_simple] [src].</span>")
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		if(pet_bonus)
+			funpet(M)
 
 /**
 *This is used to make certain mobs (pet_bonus == TRUE) emote when pet, make a heart emoji at their location, and give the petter a moodlet.
@@ -80,9 +74,10 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
-		if(M.a_intent == INTENT_DISARM)
+		var/list/modifiers = params2list(params)
+		if (L.in_combat_mode() && modifiers["right"])
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] [response_disarm_continuous] [name]!</span>", \
 							"<span class='userdanger'>[M] [response_disarm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)

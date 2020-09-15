@@ -184,8 +184,9 @@
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M, modifiers)
+	var/list/modifiers = params2list(params)
+	if(!stat && M.in_combat_mode() && modifiers["right"] && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
