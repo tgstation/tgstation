@@ -37,7 +37,7 @@
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(t)
-			name = "body bag - [t]"
+			name = "[initial(name)] - [t]"
 			tagged = TRUE
 			update_icon()
 		else
@@ -45,7 +45,7 @@
 		return
 	else if(I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
-		name = "body bag"
+		name = initial(name)
 		tagged = FALSE
 		update_icon()
 
@@ -84,7 +84,7 @@
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"
-	desc = "A bluespace body bag designed for the storage and transportation of cadavers."
+	desc = "A bluespace body bag designed for the storage and transportation of multiple cadavers. Cannot fit inside of most storage devices while something is stored inside of it."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bluebodybag"
 	foldedbag_path = /obj/item/bodybag/bluespace
@@ -112,4 +112,8 @@
 			A.forceMove(B)
 			if(isliving(A))
 				to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
+		if(B.contents.len)
+			B.w_class = WEIGHT_CLASS_GIGANTIC //you can't put a bluespace body bag into a backpack while it has items in it
+		else
+			B.w_class = WEIGHT_CLASS_SMALL
 		qdel(src)

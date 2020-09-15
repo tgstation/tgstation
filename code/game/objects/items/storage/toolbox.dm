@@ -190,7 +190,6 @@
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
