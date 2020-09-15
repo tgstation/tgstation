@@ -25364,6 +25364,9 @@
 	id = "publicElevator";
 	pixel_y = -25
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "bij" = (
@@ -48962,8 +48965,8 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "cJV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
@@ -51069,6 +51072,7 @@
 /obj/structure/industrial_lift{
 	id = "publicElevator"
 	},
+/obj/machinery/light/floor,
 /turf/open/transparent/openspace,
 /area/storage/mining)
 "ibG" = (
@@ -52976,9 +52980,6 @@
 /area/crew_quarters/heads/hor)
 "nlo" = (
 /obj/structure/industrial_lift,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/transparent/openspace,
 /area/storage/mining)
 "nlN" = (
@@ -54595,9 +54596,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "rUV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "rVn" = (
@@ -55373,9 +55372,6 @@
 	c_tag = "Public Mining Ladder";
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "uhH" = (
@@ -55807,9 +55803,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "voE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "vqI" = (

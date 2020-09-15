@@ -148,8 +148,7 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
 //purposefully keeping this deciseconds because we divide it
-#define LIFT_COOLDOWN 110
-#define LIFT_TRAVEL_TIME 100
+#define FLOOR_TRAVEL_TIME 2 SECONDS
 /obj/item/assembly/control/elevator
 	name = "elevator controller"
 	desc = "A small device used to call elevators to the current floor."
@@ -161,21 +160,24 @@
 	var/obj/structure/industrial_lift/lift
 	for(var/l in GLOB.lifts)
 		var/obj/structure/industrial_lift/possible_lift = l
-		if(possible_lift.id != id || possible_lift.z == z || lift.controls_locked)
+		if(possible_lift.id != id || possible_lift.z == z || possible_lift.controls_locked)
 			continue
 		lift = possible_lift
 		break
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), LIFT_COOLDOWN)
 	if(!lift)
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 		return
+	lift.visible_message("<span class='notice'>[src] clinks and whirrs into motion, locking controls.</span")
 	lift.controls_locked = TRUE
 	var/difference = abs(z - lift.z)
-	var/direction = lift.z > z ? DOWN : UP
-	var/travel_speed = LIFT_TRAVEL_TIME / difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
+	var/direction = lift.z > z ? UP : DOWN
+	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
 	for(var/i in 1 to difference)
-		lift.lift_master_datum.MoveLift(direction, null)
-		sleep(travel_speed)//hey this should be alright... right?
+		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
 		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
 			return
+		lift.lift_master_datum.MoveLift(direction, null)
+	lift.visible_message("<span class='notice'>[src] clicks, ready to be manually operated again.</span")
 	lift.controls_locked = FALSE
 

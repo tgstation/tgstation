@@ -2419,7 +2419,6 @@
 	name = "Public Mining APC";
 	pixel_y = 23
 	},
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/storage/mining)
 "nE" = (
@@ -2968,7 +2967,6 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "wY" = (
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/storage/mining)
 "wZ" = (
@@ -3104,12 +3102,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Ar" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/elevatorshaft,
-/area/storage/mining)
 "Aw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -3360,7 +3352,7 @@
 /area/storage/mining)
 "Ea" = (
 /obj/effect/spawner/bundle/hobo_squat,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/food/drinks/bottle/hooch,
 /turf/open/floor/plating,
 /area/storage/mining)
 "Ee" = (
@@ -4674,7 +4666,6 @@
 /area/storage/mining)
 "Zr" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/storage/mining)
 "ZX" = (
@@ -33091,7 +33082,7 @@ YF
 YF
 YF
 Re
-Ar
+Re
 Re
 YF
 OC
