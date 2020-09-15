@@ -237,28 +237,28 @@
   * Converts the victim to revs
   *
   * Arguments:
-  * * M - Victim
-  * * user - Attacker
+  * * victim - Victim
+  * * aggressor - Attacker
   */
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
-	if(!istype(H) || H.stat == DEAD)
+/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
+	if(!istype(victim) || victim.stat == DEAD)
 		return
-	if(!user.mind)
+	if(!aggressor.mind)
 		return
-	if(!H.client)
-		to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+	if(!victim.client)
+		to_chat(aggressor, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
 		return
-	if(H.stat != CONSCIOUS)
-		to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
+	if(victim.stat != CONSCIOUS)
+		to_chat(aggressor, "<span class='warning'>They must be conscious before you can convert [victim.p_them()]!</span>")
 		return
 	//If this proc fires the mob must be a revhead
-	var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
-	if(converter.add_revolutionary(H.mind))
+	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
+	if(converter.add_revolutionary(victim.mind))
 		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 	else
-		to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
+		to_chat(aggressor, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/assembly/flash/cyborg
