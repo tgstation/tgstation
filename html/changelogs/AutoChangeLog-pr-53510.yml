@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "Alt-clicking atmos machinery will now give a chat message explaining what happened."
