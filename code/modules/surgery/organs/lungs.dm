@@ -339,7 +339,7 @@
 		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
 		if(healium_pp > gas_stimulation_min)
 			if(prob(15))
-				to_chat(H, "<span class='alert'>Your head start spinning and your lungs burn!</span>")
+				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
 				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 				H.emote("gasp")
 		else
