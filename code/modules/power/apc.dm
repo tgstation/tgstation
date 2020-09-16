@@ -794,7 +794,7 @@
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
-		if((H.combat_mode) && (E.drain_time < world.time))
+		if(H.combat_mode && E.drain_time < world.time)
 			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldn't drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
