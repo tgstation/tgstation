@@ -16,7 +16,7 @@
 	/// acceleration
 	var/accel = 1
 	/// deceleration
-	var/decel = 1
+	var/decel = 2
 	/// maxspeed
 	var/maxspeed = 6
 	/// velocity dir
