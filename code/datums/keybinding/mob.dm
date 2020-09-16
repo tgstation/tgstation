@@ -296,3 +296,18 @@
 		return
 	user.body_l_leg()
 	return TRUE
+
+///This binding is super specific to shift click interactions, but those can vary. This should become more specific in the future.
+/datum/keybinding/mob/shift_interact
+	hotkey_keys = list("Shift")
+	name = "shift_click_interact"
+	full_name = "Shift Click Interact"
+	description = "Hotkey for all interactions normally linked to the shift key, such as examine."
+	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
+
+/datum/keybinding/mob/target_left_leg/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.body_l_leg()
+	return TRUE
