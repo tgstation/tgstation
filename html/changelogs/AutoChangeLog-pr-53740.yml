@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Using a burning black crossbreed to transform into a slime, go ventcrawling, then transform back into a human while ventcrawling is now a lot more deadly."
