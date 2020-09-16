@@ -9,7 +9,3 @@
 
 	for(var/key in keys_held)
 		keyUp(key)
-
-	for(var/k in keybinds_held)
-		var/datum/keybinding/keybind = k
-		keybind.up(src)
