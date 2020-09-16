@@ -137,6 +137,9 @@
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+	if(!user.in_combat_mode())
+		to_chat(user, "<span class='danger'>You need to be in combat mode to tighten your grip on [src]!</span>")
+		return
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
