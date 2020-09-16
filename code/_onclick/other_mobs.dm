@@ -109,7 +109,7 @@
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(atom/A, modifiers)
+/mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity, modifiers)
 	A.attack_paw(src, modifiers)
 
 /atom/proc/attack_paw(mob/user, modifiers)
@@ -158,7 +158,7 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/A, modifiers)
+/mob/living/carbon/alien/UnarmedAttack(atom/A, proximity, modifiers)
 	A.attack_alien(src, modifiers)
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user, modifiers)

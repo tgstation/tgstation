@@ -93,7 +93,7 @@
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
-/datum/surgery/proc/next_step(mob/living/user, disarm)
+/datum/surgery/proc/next_step(mob/living/user)
 	if(location != user.zone_selected)
 		return FALSE
 	if(step_in_progress)
