@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Microwaved cake batter and similar snack foods that create non-snack foods will no longer cause runtimes, meaning cakes now get filled with reagenty-goodness and are both delicious and nutritious."
