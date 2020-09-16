@@ -7,20 +7,20 @@
     },
     "traits":[
         {
-		   "Up":1,
-		   "Linkage" : "Cross",
-           "Gravity":true
+			"Up":1,
+			"Linkage" : "Cross",
+    		"Gravity":true
         },
         {
-           "Down":-1,
-		   "Up":1,
-		   "Linkage" : "Cross",
-           "Gravity":true
+    		"Down":-1,
+			"Up":1,
+			"Linkage" : "Cross",
+        	"Gravity":true
         },
         {
-		   "Down":-1,
-		   "Linkage" : "Cross",
-           "Gravity":true
+			"Down":-1,
+			"Linkage" : "Cross",
+           	"Gravity":true
         }
     ]
 }
