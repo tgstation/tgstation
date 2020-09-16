@@ -4,7 +4,7 @@
 
 
 /datum/keybinding/mob/face_north
-	hotkey_keys = list("W", "North")
+	hotkey_keys = list("AltW", "AltNorth")
 	name = "face_north"
 	full_name = "Face North"
 	description = ""
