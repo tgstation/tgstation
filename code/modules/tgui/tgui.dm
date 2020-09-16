@@ -158,7 +158,7 @@
  */
 /datum/tgui/proc/send_asset(datum/asset/asset)
 	if(!window)
-		CRASH("send_asset() can only be called after open().")
+		CRASH("send_asset() was called either without calling open() first or when open() did not return TRUE.")
 	return window.send_asset(asset)
 
 /**
