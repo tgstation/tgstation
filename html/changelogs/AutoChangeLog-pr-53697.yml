@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes runtime when attempting to start surgery on simple mobs and other non-humans/humanlikes"
