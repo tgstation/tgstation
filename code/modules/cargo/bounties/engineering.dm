@@ -34,11 +34,11 @@
 	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it. (20 Moles)"
 	gas_type = /datum/gas/hydrogen
 
-/datum/bounty/item/engineering/gas/zauker_tank
-	name = "Full Tank of Zauker"
-	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Zauker gas. Ship us a tank full of it. (20 Moles)"
+/datum/bounty/item/engineering/gas/taburine_tank
+	name = "Full Tank of Taburine"
+	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Taburine gas. Ship us a tank full of it. (20 Moles)"
 	reward = 10000
-	gas_type = /datum/gas/zauker
+	gas_type = /datum/gas/taburine
 
 /datum/bounty/item/engineering/emitter
 	name = "Emitter"

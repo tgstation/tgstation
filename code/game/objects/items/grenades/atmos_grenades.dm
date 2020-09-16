@@ -29,10 +29,10 @@
 	///Amount of Oxygen gas released (close to the grenade)
 	var/o2_gas_amount = 100
 
-/obj/item/grenade/gas_crystal/zauker_crystal
-	name = "Zauker crystal"
-	desc = "A crystal made from the Zauker Gas, you can see the liquid plasma inside."
-	icon_state = "zauker_crystal"
+/obj/item/grenade/gas_crystal/taburine_crystal
+	name = "Taburine crystal"
+	desc = "A crystal made from the Taburine Gas, you can see the liquid plasma inside."
+	icon_state = "taburine_crystal"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
@@ -89,7 +89,7 @@
 		floor_loc.air_update_turf()
 	qdel(src)
 
-/obj/item/grenade/gas_crystal/zauker_crystal/prime(mob/living/lanced_by)
+/obj/item/grenade/gas_crystal/taburine_crystal/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)
