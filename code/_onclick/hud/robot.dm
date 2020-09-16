@@ -115,9 +115,9 @@
 	using.screen_loc = ui_borg_lamp
 	using.hud = src
 	static_inventory += using
-	mymobR.lampButton = using
+	robit.lampButton = using
 	var/obj/screen/robot/lamp/lampscreen = using
-	lampscreen.robot = mymobR
+	lampscreen.robot = robit
 
 //Photography stuff
 	using = new /obj/screen/ai/image_take()
@@ -130,11 +130,11 @@
 	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
-	mymobR.interfaceButton = using
-	if(mymobR.modularInterface)
-		using.vis_contents += mymobR.modularInterface
+	robit.interfaceButton = using
+	if(robit.modularInterface)
+		using.vis_contents += robit.modularInterface
 	var/obj/screen/robot/modPC/tabletbutton = using
-	tabletbutton.robot = mymobR
+	tabletbutton.robot = robit
 
 //Alerts
 	using = new /obj/screen/robot/alerts()
