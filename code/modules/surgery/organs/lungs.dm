@@ -38,7 +38,7 @@
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
-	var/healium_knock_min = 6
+	var/healium_sleep_min = 6
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -346,9 +346,8 @@
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 		if(healium_pp > healium_para_min)
 			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
-			if(healium_pp > healium_knock_min)
-				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
-				H.reagents.add_reagent(/datum/reagent/healium,max(0, 0.6 - existing))
+			if(healium_pp > healium_sleep_min)
+				H.Sleeping(min(H.AmountSleeping() + rand(100, 150), rand(200, 400)))
 				H.adjustOxyLoss(-5)
 				H.adjustFireLoss(-7)
 				H.adjustToxLoss(-7)
