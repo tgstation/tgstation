@@ -6,7 +6,6 @@
   */
 /client/verb/reset_held_keys()
 	set name = "Reset Held Keys"
-	set category = "OOC"
 	set hidden = TRUE
 
 	for(var/key in keys_held)
