@@ -63,5 +63,5 @@
 /obj/machinery/heavy_emitter/arm
 
 /obj/machinery/heavy_emitter/interface
-
+delta_time
 /obj/machinery/heavy_emitter/vent
