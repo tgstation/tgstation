@@ -97,7 +97,7 @@
 					breath = loc.remove_air(environment.total_moles()*BREATH_PERCENTAGE)
 
 		else //Breathe from loc as obj again
-			if(isobj(loc)))
+			if(isobj(loc))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
