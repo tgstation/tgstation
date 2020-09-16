@@ -173,7 +173,10 @@
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
+		var/zone_hit_chance = 80
+		if(!(mobility_flags & MOBILITY_STAND)) // half as likely to hit a different zone if they're on the ground
+			zone_hit_chance += 10
+		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
 
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
@@ -714,7 +717,7 @@
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
 		var/isdisabled = ""
-		if(LB.is_disabled())
+		if(LB.bodypart_disabled)
 			isdisabled = " is disabled"
 			if(no_damage)
 				isdisabled += " but otherwise"

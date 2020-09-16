@@ -53,13 +53,15 @@
   */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
-	pod.reverse_dropoff_turf = get_turf(where)
+	var/turf/target_turf = get_turf(where)
+	pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/structure/closet/supplypod/mechpod
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
+	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)
 	landingDelay = 0
 	openingDelay = 0
 	departureDelay = 0
@@ -68,8 +70,3 @@
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	close_sound = null
 	pod_flags = FIRST_SOUNDS
-
-/obj/structure/closet/supplypod/mechpod/insertion_allowed(atom/movable/AM)
-	if(!ismecha(AM))
-		return FALSE
-	. = ..()

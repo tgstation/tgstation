@@ -111,8 +111,8 @@
 	M.AdjustUnconscious(-20, FALSE)
 	M.AdjustImmobilized(-20, FALSE)
 	M.AdjustParalyzed(-20, FALSE)
-	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
-		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+	if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
+		M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -126,10 +126,10 @@
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
-		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
-	if(holder.has_reagent(/datum/reagent/toxin/histamine))
-		holder.remove_reagent(/datum/reagent/toxin/histamine, 5)
+	if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
+		M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+	if(M.has_reagent(/datum/reagent/toxin/histamine))
+		M.remove_reagent(/datum/reagent/toxin/histamine, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -212,7 +212,7 @@
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
-	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
+	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds and restoring corpses husked by burns. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
@@ -238,8 +238,8 @@
 		return
 
 	var/mob/living/carbon/patient = exposed_mob
-	if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
-		patient.cure_husk("burn")
+	if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, BURN) && patient.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD) //One carp yields 12u rezadone.
+		patient.cure_husk(BURN)
 		patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
@@ -570,7 +570,7 @@
 	if(prob(10))
 		M.drowsyness += 1
 	M.jitteriness -= 1
-	M.reagents.remove_reagent(/datum/reagent/toxin/histamine,3)
+	M.remove_reagent(/datum/reagent/toxin/histamine,3)
 	..()
 
 /datum/reagent/medicine/morphine
@@ -726,11 +726,11 @@
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
 	. = TRUE
-	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
-		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2)
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
+	if(M.has_reagent(/datum/reagent/toxin/lexorin))
+		M.remove_reagent(/datum/reagent/toxin/lexorin, 2)
+		M.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
 		if(prob(20))
-			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
+			M.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
 		..()
 		return
 	if(M.health <= M.crit_threshold)
@@ -824,8 +824,8 @@
 	color = "#C0C0C0" //ditto
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
-		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
+	if(C.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
+		C.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
 	if(prob(15))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
@@ -908,7 +908,7 @@
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
 	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
-	M.reagents.remove_reagent(/datum/reagent/consumable/sugar, 3)
+	M.remove_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.

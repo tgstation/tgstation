@@ -161,7 +161,7 @@
 	var/list/turfs = list()
 	var/turf/centre
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/indestructible,/turf/closed/indestructible,/turf/open/space,/turf/open/lava,/turf/open/chasm))
-	var/spread_per_tick = 6
+	var/spread_per_sec = 6
 
 
 /datum/rust_spread/New(loc)
@@ -175,13 +175,14 @@
 	STOP_PROCESSING(SSprocessing,src)
 	return ..()
 
-/datum/rust_spread/process()
+/datum/rust_spread/process(delta_time)
+	var/spread_am = round(spread_per_sec * delta_time)
 
-	if(edge_turfs.len < spread_per_tick)
+	if(edge_turfs.len < spread_am)
 		compile_turfs()
 
 	var/turf/T
-	for(var/i in 0 to spread_per_tick)
+	for(var/i in 0 to spread_am)
 		if(!edge_turfs.len)
 			continue
 		T = pick(edge_turfs)

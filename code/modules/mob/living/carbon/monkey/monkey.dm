@@ -70,9 +70,9 @@
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
 	var/amount
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
+	if(has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
-	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
+	if(has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
