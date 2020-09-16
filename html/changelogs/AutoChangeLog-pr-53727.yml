@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - code_imp: "Added two code paths to help catch and debug a runtime error in the fit_viewport verb."
