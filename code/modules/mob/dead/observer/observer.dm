@@ -17,8 +17,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	invisibility = INVISIBILITY_OBSERVER
 	hud_type = /datum/hud/ghost
 	movement_type = GROUND | FLYING
-	step_size = 16
-	glide_size = 16
+	step_size = 32
+	glide_size = 32
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 2

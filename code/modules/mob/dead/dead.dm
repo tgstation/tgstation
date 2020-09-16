@@ -44,8 +44,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
-	var/oldloc = loc
 	NORMALIZE_STEP(destination, _step_x, _step_y)
+	var/oldloc = loc
 	loc = destination
 	step_x = _step_x
 	step_y = _step_y
