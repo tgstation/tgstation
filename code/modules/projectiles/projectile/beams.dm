@@ -144,6 +144,13 @@
 /obj/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
+//This is basically a cannon beam
+/obj/projectile/beam/emitter/heavy
+	name = "heavy emitter beam"
+	icon_state = "emitter_heavy"
+	damage = 450
+	wound_bonus = 40
+
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
 	icon_state = "omnilaser"
