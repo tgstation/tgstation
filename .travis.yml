@@ -32,6 +32,7 @@ jobs:
         - find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
         - tools/travis/build_tgui.sh
         - tools/travis/check_grep.sh
+        - python3 -m pip install -r tools/mapmerge2/requirements.txt && python3 tools/mapmerge2/dmi.py --test
         - ~/dreamchecker
 
     - name: "Compile All Maps"

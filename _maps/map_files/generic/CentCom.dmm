@@ -19067,10 +19067,6 @@
 /obj/item/toy/seashell,
 /turf/open/floor/holofloor/beach,
 /area/holodeck/rec_center/beach)
-"VX" = (
-/obj/effect/landmark/shuttle_import,
-/turf/open/space/basic,
-/area/space)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -42270,7 +42266,7 @@ aa
 aa
 aa
 aa
-VX
+aa
 aa
 aa
 aa
