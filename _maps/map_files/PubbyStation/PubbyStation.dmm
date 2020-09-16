@@ -22148,12 +22148,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgS" = (
@@ -50169,6 +50171,10 @@
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"irv" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "iuM" = (
 /obj/machinery/door/window/southleft{
 	dir = 8;
@@ -100566,7 +100572,7 @@ bcG
 bdM
 beP
 bfH
-bfH
+irv
 bhv
 bbI
 aEj
