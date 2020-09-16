@@ -327,7 +327,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		setDir(direct)
 	if(newloc)
 		forceMove(newloc, _step_x, _step_y)
-		update_parallax_contents()
+		if(newloc != loc)
+			update_parallax_contents()
 	else
 		forceMove(get_turf(src))
 		return

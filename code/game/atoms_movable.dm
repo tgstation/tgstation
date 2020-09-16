@@ -632,7 +632,7 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED_TURF, OldLoc, Dir)
 	if (!inertia_moving)
 		newtonian_move(Dir)
-	if (length(client_mobs_in_contents))
+	if (length(client_mobs_in_contents) && OldLoc != loc)
 		update_parallax_contents()
 
 	return TRUE
