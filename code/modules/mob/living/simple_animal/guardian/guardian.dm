@@ -620,6 +620,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	add_verb(user, list(/mob/living/proc/guardian_comm, \
 						/mob/living/proc/guardian_recall, \
 						/mob/living/proc/guardian_reset))
+	G?.client.init_verbs()
 
 /obj/item/guardiancreator/choose
 	random = FALSE

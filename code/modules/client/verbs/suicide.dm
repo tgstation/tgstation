@@ -100,7 +100,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/brain/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -117,7 +117,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/carbon/monkey/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -135,7 +135,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/ai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -154,7 +154,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/robot/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -173,7 +173,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/pai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
@@ -188,7 +188,7 @@
 		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -208,7 +208,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/simple_animal/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")

@@ -114,7 +114,17 @@
 /obj/item/assembly/flash/proc/flash_end()
 	set_light_on(FALSE)
 
-
+/**
+  * Handles actual flashing part of the attack
+  *
+  *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  *	* power - handles the amount of confusion it gives you
+  * * targeted - determines if it was aoe or targeted
+  * * generic_message - checks if it should display default message.
+  */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -122,31 +132,74 @@
 		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
+
+
+
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
+
+	var/deviation = calculate_deviation(M,user)
+
+	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
+
+	//If you face away from someone they shouldnt notice any effects.
+	if(deviation == 2 && !converter)
+		return
+
+
 	if(targeted)
 		if(M.flash_act(1, 1))
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-			if(user)
-				terrible_conversion_proc(M, user)
-				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
-				to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
-				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
-			else
-				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Paralyze(rand(80,120))
+				// Special check for if we're a revhead. Special cases to attempt conversion.
+				if(converter)
+					// Did we try to flash them from behind?
+					if(deviation == 2)
+						// If we did and we're on help intent, fail with a feedback message and return.
+						if(converter.owner.current.a_intent == INTENT_HELP)
+							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
+							visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
+							return
+						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
+						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
+						deviation = 1
+					// Convert them. Terribly.
+					terrible_conversion_proc(M, user)
+					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
+			//easy way to make sure that you can only long stun someone who is facing in your direction
+			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
+			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
+
 		else if(user)
-			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>")
-			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
 			var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 			M.add_confusion(min(power, diff))
+
+/**
+  * Handles the directionality of the attack
+  *
+  *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+  * Arguments:
+  * * M - Victim
+  * * user - Attacker
+  */
+/obj/item/assembly/flash/proc/calculate_deviation(mob/living/carbon/M, mob/user)
+	var/dir1 = M.dir
+	var/dir2 = turn(user.dir,180)
+	//Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
+	//What we actually check is we check if the inverted vector of the second mob is equal to the vector of the first one which indicates they they are looking in the same line
+	//The second check makes sure that the first user is actually facing the mob, since the first check will fail at it's job when the 2 mobs face away from each other.
+	if(dir1 == dir2 && get_dir(M,user) == dir1)
+		return 0
+	else if((turn(dir1,90) == dir2 || turn(dir1,-90) == dir2) || M.loc == user.loc)
+		return 1
+	else if(turn(dir1,180) == dir2)
+		return 2
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -188,24 +241,32 @@
 		return
 	AOE_flash()
 
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
-	if(istype(H) && H.stat != DEAD)
-		if(user.mind)
-			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
-			if(!converter)
-				return
-			if(!H.client)
-				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
-				return
-			if(H.stat != CONSCIOUS)
-				to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
-				return
-			if(converter.add_revolutionary(H.mind))
-				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-					H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-			else
-				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
+/**
+  * Converts the victim to revs
+  *
+  * Arguments:
+  * * victim - Victim
+  * * aggressor - Attacker
+  */
+/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
+	if(!istype(victim) || victim.stat == DEAD)
+		return
+	if(!aggressor.mind)
+		return
+	if(!victim.client)
+		to_chat(aggressor, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
+		return
+	if(victim.stat != CONSCIOUS)
+		to_chat(aggressor, "<span class='warning'>They must be conscious before you can convert [victim.p_them()]!</span>")
+		return
+	//If this proc fires the mob must be a revhead
+	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
+	if(converter.add_revolutionary(victim.mind))
+		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
+	else
+		to_chat(aggressor, "<span class='warning'>This mind seems resistant to the flash!</span>")
 
 
 /obj/item/assembly/flash/cyborg
