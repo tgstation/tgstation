@@ -64,7 +64,7 @@
 	if(.)
 		return
 	if(!pod_moving)
-		if(user.pulling && isliving(user.pulling))
+		if(isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
