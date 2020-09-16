@@ -533,21 +533,21 @@
 	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
 
 /// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
-/mob/proc/set_safe_hunger_level(mob/target)
+/mob/proc/set_safe_hunger_level()
 	// Nutrition reset and alert clearing.
-	target.nutrition = NUTRITION_LEVEL_FED
-	target.clear_alert("nutrition")
-	target.satiety = 0
+	nutrition = NUTRITION_LEVEL_FED
+	clear_alert("nutrition")
+	satiety = 0
 
 	// Trait removal if obese
-	if(HAS_TRAIT_FROM(target, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(target.overeatduration >= 100)
-			to_chat(target, "<span class='notice'>Your transformation restores your body's natural fitness!</span>")
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))//I share your pain, past coder.
+		if(overeatduration >= 100)
+			to_chat(src, "<span class='notice'>Your transformation restores your body's natural fitness!</span>")
 
-		REMOVE_TRAIT(target, TRAIT_FAT, OBESITY)
-		target.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		target.update_inv_w_uniform()
-		target.update_inv_wear_suit()
+		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
+		update_inv_w_uniform()
+		update_inv_wear_suit()
 
 	// Reset overeat duration.
-	target.overeatduration = 0
+	overeatduration = 0
