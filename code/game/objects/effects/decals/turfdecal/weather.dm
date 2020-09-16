@@ -23,3 +23,11 @@
 
 /obj/effect/turf_decal/weather/sand/light
 	icon_state = "lightsand_side"
+
+/obj/effect/turf_decal/weather/grass // also functions as corners
+	name = "grass siding"
+	icon = 'icons/turf/decals.dmi'
+	icon_state = "grass_edges"
+
+/obj/effect/turf_decal/weather/grass/corner
+	icon_state = "grass_edge_corner"
