@@ -442,6 +442,7 @@
 /area/maintenance/department/science)
 "abg" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/quartermaster,
 /turf/open/floor/wood,
 /area/quartermaster/qm)
 "abh" = (
@@ -53269,8 +53270,8 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = null;
-	req_one_access = "31;48"
+	req_one_access = null;
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
