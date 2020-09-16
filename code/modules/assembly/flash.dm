@@ -133,8 +133,6 @@
 	else //caused by emp/remote signal
 		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
 
-
-
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
 
@@ -189,41 +187,27 @@
   * * attacker - Attacker
   */
 /obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
-	var/victim_dir = victim.dir
-	var/inverse_attacker_dir
-
-	// If the victim was looking at the attacker, this is the direction they'd be facing.
+	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
 	var/victim_to_attacker = get_dir(victim, attacker)
-
-	// Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
-	// What we actually check is we check if the inverted vector of the second mob is equal to the vector of the
-	// first. The more deviated the vectors, the less powerful the flash.
-	if(ismob(attacker))
-		inverse_attacker_dir = turn(attacker.dir,180)
-	else
-		inverse_attacker_dir = get_dir(victim, src)
+	var/victim_dir = victim.dir
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
 	if(victim.loc == attacker.loc)
 		return 1
-	// Are they looking in opposite directions or within 45 degrees of this?
-	if(victim_dir == inverse_attacker_dir || turn(victim_dir, 45) == inverse_attacker_dir || turn(victim_dir, -45) == inverse_attacker_dir )
-		// Now we get the dir as if the victim was looking at the attacker. If this matches up properly
-		// or is within 45 degrees of one, they were infront of eachother and this is a frontal flash.
-		if(victim_to_attacker == inverse_attacker_dir || victim_to_attacker == turn(inverse_attacker_dir, 45) || victim_to_attacker == turn(inverse_attacker_dir, -45))
-			return 0
-		// Otherwise, they were behind eachother. You know, standing back-to-back.
-		return 2
-	// If they're directly to the side, we look to do a side flash.
-	if(turn(victim_dir,90) == inverse_attacker_dir || turn(victim_dir,-90) == inverse_attacker_dir)
-		// Now what matters is where our attacker was looking. We can use victim_to_attacker again.
-		// We take that attack's inverse direction, this is the opposite of where they are looking.
-		// We take the direction as if the victim was looking at the attacker.
-		if(victim_to_attacker == inverse_attacker_dir)
-			return 1
 
-	// If we got here, they weren't facing eachother, facing within 45 degrees of eachother or facing within 90 degrees of eachother.
+	// Is the victim looking directly at the attacker? and is the attacker looking at the victim?
+	if(victim_dir == victim_to_attacker)
+		return 0
+
+	// Is the victim looking at the attacker within 45 degrees?
+	if(victim_dir == turn(victim_to_attacker, 45) || victim_dir == turn(victim_to_attacker, -45))
+		return 0
+
+	// Is the is the victim looking perpendicular to the attacker?
+	if(victim_dir == turn(victim_to_attacker, 90) || victim_dir == turn(victim_to_attacker, -90))
+		return 1
+
 	// This only leaves directions from directly behind and diagonal-behind. No flash bueno.
 	return 2
 
