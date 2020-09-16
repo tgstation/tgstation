@@ -61,7 +61,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_combat_mode
-	hotkey_keys = list("Space", "4")
+	hotkey_keys = list("F", "4")
 	name = "toggle combat_mode"
 	full_name = "Look Down"
 	description = "Look down at the previous z-level.  Only works if directly above open space."
