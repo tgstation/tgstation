@@ -251,6 +251,14 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	use(user)
 
+//ai probably shouldn't get to use lifts but they sure are great for admins to crush people with
+/obj/structure/industrial_lift/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(isAdminGhostAI(user))
+		use(user)
+
 /obj/structure/industrial_lift/attack_paw(mob/user)
 	return use(user)
 
