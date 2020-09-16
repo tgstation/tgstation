@@ -71,6 +71,7 @@
 /mob/living/proc/set_combat_mode(new_mode, silent)
 	if(combat_mode == new_mode)
 		return
+	. = combat_mode
 	combat_mode = new_mode
 	client?.show_popup_menus = !src.combat_mode
 	if(hud_used?.action_intent)
