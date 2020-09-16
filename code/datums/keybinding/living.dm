@@ -72,5 +72,5 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/L = user.mob
-	L.set_combat_mode(!L.combat_mode)
+	var/mob/living/user_mob = user.mob
+	user_mob.set_combat_mode(!L.combat_mode)
