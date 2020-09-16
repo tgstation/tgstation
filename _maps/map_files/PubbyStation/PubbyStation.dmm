@@ -55065,8 +55065,8 @@
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining";
-	req_access_txt = null;
-	req_one_access = "41; 48"
+	req_access_txt = "41; 48";
+	req_one_access = null
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
