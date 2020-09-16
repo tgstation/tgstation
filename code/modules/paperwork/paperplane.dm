@@ -102,7 +102,7 @@
 		if(C.can_catch_item(TRUE))
 			var/datum/action/innate/origami/origami_action = locate() in C.actions
 			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
-				C.throw_mode_on()
+				C.throw_mode_on(THROW_MODE_TOGGLE)
 
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return

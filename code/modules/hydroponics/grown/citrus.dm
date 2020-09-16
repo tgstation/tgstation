@@ -118,7 +118,7 @@
 	log_bomber(user, "primed a", src, "for detonation")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.throw_mode_on()
+		C.throw_mode_on(THROW_MODE_TOGGLE)
 	icon_state = "firelemon_active"
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(src, .proc/prime), rand(10, 60))
