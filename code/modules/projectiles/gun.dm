@@ -372,7 +372,7 @@
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
 
-/obj/item/gun/attack(mob/M as mob, mob/living/user)
+/obj/item/gun/attack(mob/M, mob/living/user)
 	if(user.combat_mode) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
