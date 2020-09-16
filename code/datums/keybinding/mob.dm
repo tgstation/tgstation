@@ -304,10 +304,3 @@
 	full_name = "Shift Click Interact"
 	description = "Hotkey for all interactions normally linked to the shift key, such as examine."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
-
-/datum/keybinding/mob/target_left_leg/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.body_l_leg()
-	return TRUE
