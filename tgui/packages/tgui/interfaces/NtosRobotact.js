@@ -108,11 +108,11 @@ export const NtosRobotactContent = (props, context) => {
                 <ProgressBar
                   value={charge / maxcharge}
                   ranges={{
-                    good: [0.5,Infinity],
-                    average: [0.1,0.5],
-                    bad: [-Infinity,0.1],
+                    good: [0.5, Infinity],
+                    average: [0.1, 0.5],
+                    bad: [-Infinity, 0.1],
                   }}>
-                  <AnimatedNumber value={charge}/>
+                  <AnimatedNumber value={charge} />
                 </ProgressBar>
                 Chassis Integrity:
                 <ProgressBar
@@ -123,7 +123,7 @@ export const NtosRobotactContent = (props, context) => {
                     bad: [-Infinity, 25],
                     average: [25, 75],
                     good: [75, Infinity],
-                }}/>
+                  }} />
               </Section>
               <Section
                 title="Lamp Power">
