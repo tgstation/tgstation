@@ -12,10 +12,11 @@
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
-	//uncomment me when trash is merged trash = /obj/item/trash/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cake/plain
 	name = "plain cake"

@@ -20,6 +20,10 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
+	///What you get if you microwave the food, this should be replaced once I fully re-work cooking.
+	var/microwaved_type
+	///Type of atom thats spawned after eating this item
+	var/trash_type
 
 /obj/item/food/Initialize()
 	. = ..()
@@ -31,6 +35,7 @@
 		eatverbs = string_list(eatverbs)
 	MakeEdible()
 	MakeProcessable()
+	MakeLeaveTrash()
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -42,9 +47,15 @@
 				eat_time = eat_time,\
 				tastes = tastes,\
 				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption)
+				bite_consumption = bite_consumption,\
+				microwaved_type = microwaved_type)
 
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/MakeProcessable()
+	return
+
+///This proc handles trash components, overwrite this if you want the object to spawn trash
+/obj/item/food/proc/MakeLeaveTrash()
+	AddElement(/datum/element/food_trash, trash_type)
 	return
