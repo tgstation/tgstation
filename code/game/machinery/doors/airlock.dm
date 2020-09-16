@@ -1255,7 +1255,7 @@
 		return
 	if(!density) //Already open
 		return ..()
-	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
+	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
 		if(user.combat_mode)
 			return ..()
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
