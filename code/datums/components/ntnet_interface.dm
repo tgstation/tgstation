@@ -26,7 +26,8 @@
 	SSnetworks.register_interface(src, network_name)
 
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
-	var/service = regestered_scokets[receiver_port]
+	set waitfor = FALSE
+	var/service = regestered_scokets[data.receiver_port]
 	if(service)
 		if(islist(service))
 			// if we are a list, this is a static return (like static data about the device)
@@ -39,6 +40,7 @@
 
 
 /datum/component/ntnet_interface/proc/__network_send(datum/netdata/data)			//Do not directly proccall!
+	set waitfor = FALSE
 	network.process_data_transmit(src, data)
 
 

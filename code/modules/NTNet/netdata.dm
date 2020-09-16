@@ -6,12 +6,12 @@
 	// them, then they should manualy go though SSnetworks and find the device there
 	var/sender_network
 	var/sender_id
-	var/sender_port
+	var/sender_port = "normal_data"
 	var/receiver_network
 	var/receiver_id
-	var/receiver_port
+	var/receiver_port = "normal_data"
 	var/list/data = list()
-	var/passkey = null
+	var/passkey = null // for encryption?  Originaly used for a silly rot13 encryption on the packet
 
 /datum/netdata/Destroy()
 	data = null
@@ -44,7 +44,7 @@
 	sender_port = receiver_port
 	receiver_port = temp
 	data = new_data
-	
+
 
 /datum/netdata/proc/json_to_data(json)
 	data = json_decode(json)
@@ -62,7 +62,7 @@
 /datum/netdata/proc/json_list_generation()
 	. = list()
 	. |= json_list_generation_netlog()
-	.["network_id"] = network.network_id
+
 
 /datum/netdata/proc/json_list_generation_netlog()
 	. = list()

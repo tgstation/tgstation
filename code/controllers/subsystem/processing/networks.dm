@@ -6,11 +6,13 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	flags = SS_KEEP_TIMING
 	init_order = INIT_ORDER_NETWORKS
 	var/datum/ntnet/station/station_network
+	var/datum/ntnet/station/syndicate_network
 	var/list/networks_by_id = list()				//id = network
 	var/list/interfaces_by_hardware_id = list()
 
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
+	syndicate_network = new
 	station_network.register_map_supremecy()
 	. = ..()
 
@@ -22,7 +24,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 		if(!networks_by_id[network])
 			if(!parent)
 				parent = station_network
-			net = new/datum/ntnet/(network, parent) // always a parrent to the main network
+			net = new/datum/ntnet(network, parent) // always a parrent to the main network
 			networks_by_id[network] = net
 			log_network("Network created for [parent] with the name '[network]'")
 	else if(istype(network, /datum/ntnet)) // custom network, like for sindies or charlie
@@ -47,7 +49,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	collision_check[.] = TRUE
 
 
-/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/ntnet_interface/I, network=null)
+/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/ntnet_interface/I, network)
 		I.hardware_id = "[get_next_HID()]"
 		interfaces_by_hardware_id[I.hardware_id] = I
 		var/datum/ntnet/net = register_network(network)	// default to station

@@ -60,33 +60,25 @@
 
 
 /datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
-	if(!check_relay_operation())
+	if(!check_relay_operation()) // mabye hold of on relays and refactor them as "routers"
 		return FALSE
 	data.sender_network = sender.network.network_id
 	data.sender_id = sender.hardware_id
 	log_data_transfer(data)
 	ASSERT(network_id == data.receiver_network)
 	var/datum/component/ntnet_interface/target
-	var/list/datum/component/ntnet_interface/receiving = list()
-	if(!data.recipient_id)
-		// its null so its brodcas
-		for(var/hid in linked_devices)
-			target = linked_devices[hid]
-			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
-				target.__network_receive(data)
-	else if(islist(data.recipient_id))
-		var/list/targets = data.recipient_id
-			// its null so its brodcas
+	var/list/targets = !data.receiver_id ? linked_devices : data.receiver_id
+	if(targets)// its null so its brodcas
 		for(var/hid in targets)
 			target = linked_devices[hid]
 			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 				target.__network_receive(data)
-	else if(istext(data.recipient_id))
-		target = linked_devices[hid]
+	else
+		target = linked_devices[data.receiver_id]
 		if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 			target.__network_receive(data)
-	else
-		debug_world_log("Bad target address [data.recipient_id]")
+		else
+			debug_world_log("Address not found, send return packet [data.receiver_id]")
 
 
 
@@ -98,7 +90,7 @@
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
-	var/log_text = "[station_time_timestamp()] - "
+	var/log_text = "[station_time_timestamp()](network_id) - "
 	if(source)
 		log_text += "[source.get_network_tag()] - "
 	else
@@ -148,11 +140,18 @@
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New()
-	..("SS13-NTNET")
+/datum/ntnet/station/New(network_id = "SS13-NTNET")
+	..()
 	build_software_lists()
 	add_log("NTNet logging system activated.")
 
+
+/datum/ntnet/station/syndicate
+
+/datum/ntnet/station/syndicate/New(network_id = "SYNDI-NTNET")
+	..()
+	build_software_lists()
+	add_log("NTNet logging system activated.")
 // not sure if we want service to work as it is, hold off till we get machines working
 
 #ifdef NTNET_SERVICE
