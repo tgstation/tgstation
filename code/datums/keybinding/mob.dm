@@ -51,7 +51,7 @@
 	return TRUE
 
 /datum/keybinding/mob/face_west
-	hotkey_keys = list("A", "West")
+	hotkey_keys = list("AltA", "AltWest")
 	name = "face_west"
 	full_name = "Face West"
 	description = ""
