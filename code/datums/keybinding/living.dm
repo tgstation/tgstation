@@ -59,3 +59,18 @@
 	var/mob/living/L = user.mob
 	L.end_look_down()
 	return TRUE
+
+/datum/keybinding/living/toggle_combat_mode
+	hotkey_keys = list("Space")
+	name = "toggle combat_mode"
+	full_name = "Look Down"
+	description = "Look down at the previous z-level.  Only works if directly above open space."
+	keybind_signal = COMSIG_KB_LIVING_TOGGLE_COMBAT_DOWN
+
+
+/datum/keybinding/living/toggle_combat_mode/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/L = user.mob
+	L.set_combat_mode(!L.in_combat_mode())

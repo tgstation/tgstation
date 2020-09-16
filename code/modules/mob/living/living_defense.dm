@@ -73,6 +73,8 @@
 		return
 	combat_mode = new_mode
 	client?.show_popup_menus = !src.combat_mode
+	if(hud_used?.action_intent)
+		hud_used.action_intent.update_icon()
 	if(silent)
 		return
 	if(combat_mode)

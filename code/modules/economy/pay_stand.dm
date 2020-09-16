@@ -140,4 +140,4 @@
 	if(force_fee)
 		. += "<span class='warning'>This paystand forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.</span>"
 	if(user.get_active_held_item() == my_card)
-		. += "<span class='notice'>Paystands can be edited through swiping your card with different intents. <b>Disarm</b> allows editing the name while <b>Grab</b> changes payment functionality.</span>"
+		. += "<span class='notice'>Paystands can be edited through swiping your card.</span>"

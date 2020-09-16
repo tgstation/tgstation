@@ -248,6 +248,7 @@
 	firstname.Find(real_name)
 	return firstname.match
 
+
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
 /mob/proc/is_blind()
 	SHOULD_BE_PURE(TRUE)

@@ -159,11 +159,11 @@
 	mymobR.thruster_button = using
 
 //Combat mode
-	using = new /obj/screen/combattoggle()
-	using.hud = src
-	using.icon = ui_style
-	using.screen_loc = ui_combat_toggle
-	static_inventory += using
+	action_intent = new /obj/screen/combattoggle/robot()
+	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
+	static_inventory += action_intent
 
 //Health
 	healths = new /obj/screen/healths/robot()

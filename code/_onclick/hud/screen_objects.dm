@@ -635,15 +635,13 @@
 	name = "toggle combat mode"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "combat_off"
-	///Mut appearance for flashy border
-	var/mutable_appearance/flashy
+	screen_loc = ui_combat_toggle
 
 /obj/screen/combattoggle/Click()
 	if(iscarbon(usr))
 		var/mob/living/owner = usr
 		owner.set_combat_mode(!owner.combat_mode)
 		update_icon()
-
 
 /obj/screen/combattoggle/update_icon_state()
 	. = ..()
@@ -652,7 +650,12 @@
 		return
 	icon_state = user.combat_mode ? "combat" : "combat_off" //Treats the combat_mode
 
-/obj/screen/combattoggle/update_overlays()
+//Version of the combat toggle with the flashy overlay
+/obj/screen/combattoggle/flashy
+	///Mut appearance for flashy border
+	var/mutable_appearance/flashy
+
+/obj/screen/combattoggle/flashy/update_overlays()
 	. = ..()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user) || !user.client)
@@ -663,6 +666,10 @@
 			flashy = mutable_appearance('icons/mob/screen_gen.dmi', "togglefull_flash")
 			flashy.color = "#C62727"
 		. += flashy
+
+/obj/screen/combattoggle/robot
+	icon = 'icons/mob/screen_cyborg.dmi'
+	screen_loc = ui_borg_intents
 
 /obj/screen/splash
 	icon = 'icons/blank_title.png'

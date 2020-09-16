@@ -46,7 +46,7 @@
 		return
 	return ..()
 
-/mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
+/mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(isliving(user))
 		var/mob/living/attacker = user
 		if(attacker.in_combat_mode())
@@ -72,7 +72,7 @@
 			visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 							"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
 			to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-			log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+			log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.in_combat_mode())]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 			return
 
 	step_away(src, mecha_attacker)
@@ -81,7 +81,7 @@
 					"<span class='warning'>[mecha_attacker] pushes you out of the way.</span>", "<span class='hear'>You hear aggressive shuffling!</span>", 5, list(mecha_attacker))
 	to_chat(mecha_attacker, "<span class='danger'>You push [src] out of the way.</span>")
 
-/mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
+/mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(!isliving(user))
 		return ..()
 	var/mob/living/attacker = user
@@ -118,6 +118,6 @@
 		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, list(mecha_attacker))
 		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-		log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.in_combat_mode())] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	else
 		return ..()
