@@ -443,7 +443,7 @@
   */
 /atom/movable/proc/add_velocity(direct = 0, acceleration = null, force = FALSE)
 	if(vx == 0 && vy == 0)
-		START_PROCESSING(SSmovement, src)
+		SSmovement.moving[src] = src
 	var/accelu = accel
 	if(!isnull(acceleration)) // acceleration override
 		accelu = acceleration
@@ -482,7 +482,7 @@
   */
 /atom/movable/proc/force_velocity(direct, velocity)
 	if(vx == 0 && vy == 0)
-		START_PROCESSING(SSmovement, src)
+		SSmovement.moving[src] = src
 	if(direct & EAST)
 		vx = velocity
 	else if(direct & WEST)
@@ -529,16 +529,17 @@
 	// Enable sliding to anywhere in the world.
 	step_size = 1#INF
 	//change dir
+	var/dir_to_set
 	if(move_x > 0)
-		dir = EAST
+		dir_to_set = EAST
 	else if(move_x < 0)
-		dir = WEST
+		dir_to_set = WEST
 	if(move_y > 0)
-		dir |= NORTH
+		dir_to_set |= NORTH
 	else if(move_y < 0)
-		dir |= SOUTH
+		dir_to_set |= SOUTH
 	// Move and return the result.
-	. = Move(loc, dir, step_x + move_x, step_y + move_y)
+	. = Move(loc, dir_to_set, step_x + move_x, step_y + move_y)
 	if(!.) // movement failed, means we can't move either
 		vx = 0
 		vy = 0
