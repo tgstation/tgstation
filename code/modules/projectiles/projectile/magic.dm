@@ -204,7 +204,6 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/cyborg = new_mob
 				cyborg.lawupdate = FALSE
-				cyborg.set_connected_ai(null)
 				cyborg.mmi.transfer_identity(M)	//Does not transfer key/client.
 				cyborg.clear_zeroth_law(announce = FALSE)
 				cyborg.clear_hacked_laws(FALSE)
