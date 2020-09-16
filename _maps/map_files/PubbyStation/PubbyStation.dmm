@@ -18575,6 +18575,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aXw" = (
@@ -47918,6 +47919,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "evB" = (
@@ -50171,10 +50173,6 @@
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
-"irv" = (
-/obj/effect/landmark/start/shaft_miner,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
 "iuM" = (
 /obj/machinery/door/window/southleft{
 	dir = 8;
@@ -50854,6 +50852,10 @@
 	},
 /turf/closed/wall,
 /area/maintenance/department/cargo)
+"jIM" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "jJn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -52922,6 +52924,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"nxG" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "nxT" = (
 /obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel,
@@ -54552,6 +54558,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"pXH" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "pXT" = (
 /obj/item/kirbyplants,
 /obj/machinery/power/apc{
@@ -58867,6 +58877,7 @@
 	c_tag = "Cargo Office";
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "xud" = (
@@ -100307,7 +100318,7 @@ aSk
 aVB
 aWB
 cCB
-cCB
+nxG
 baB
 baF
 bbK
@@ -100572,7 +100583,7 @@ bcG
 bdM
 beP
 bfH
-irv
+pXH
 bhv
 bbI
 aEj
@@ -102355,7 +102366,7 @@ aLl
 cCY
 aTv
 cCY
-aTv
+jIM
 dqY
 ueu
 bcV
