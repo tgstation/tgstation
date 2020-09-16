@@ -36,7 +36,7 @@
 
 
 /datum/keybinding/mob/face_south
-	hotkey_keys = list("S", "South")
+	hotkey_keys = list("AltS", "AltSouth")
 	name = "face_south"
 	full_name = "Face South"
 	description = ""
