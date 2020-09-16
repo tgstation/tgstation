@@ -21,23 +21,7 @@
 		O.burn_reduction = 4
 
 	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
-
-	// Nutrition reset and alert clearing.
-	C.nutrition = NUTRITION_LEVEL_FED
-	C.clear_alert("nutrition")
-
-	// Trait removal if obese
-	if(HAS_TRAIT_FROM(C, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(C.overeatduration >= 100)
-			to_chat(C, "<span class='notice'>Your android transformation restores your body's natural fitness!</span>")
-
-		REMOVE_TRAIT(C, TRAIT_FAT, OBESITY)
-		C.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		C.update_inv_w_uniform()
-		C.update_inv_wear_suit()
-
-	// Reset overeat duration.
-	C.overeatduration = 0
+	C.set_safe_hunger_level()
 
 /datum/species/android/on_species_loss(mob/living/carbon/C)
 	. = ..()
