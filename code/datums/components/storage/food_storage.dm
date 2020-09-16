@@ -19,7 +19,7 @@
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
-	RegisterSignal(parent, COMSIG_MOVABLE_ATTEMPT_PULL, .proc/try_removing_item)
+	RegisterSignal(parent, COMSIG_CLICK_CTRL, .proc/try_removing_item)
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
 
 	var/atom/food = parent
@@ -71,10 +71,15 @@
   * Arguments
   *	user - the person removing the item.
   */
-/datum/component/food_storage/proc/try_removing_item(datum/source, mob/living/user)
+/datum/component/food_storage/proc/try_removing_item(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	var/atom/food = parent
+
 	if(QDELETED(stored_item))
+		return
+
+	if(!food.can_interact(user))
 		return
 
 	user.visible_message("<span class='notice'>[user.name] begins tearing at \the [parent].</span>", \
