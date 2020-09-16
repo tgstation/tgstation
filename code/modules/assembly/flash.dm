@@ -157,7 +157,7 @@
 					// Did we try to flash them from behind?
 					if(deviation == 2)
 						// If we did and we're on help intent, fail with a feedback message and return.
-						if(converter.owner.current.a_intent == INTENT_HELP)
+						if(!converter.owner.current.in_combat_mode())
 							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
 							visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 							return

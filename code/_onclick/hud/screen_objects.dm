@@ -637,8 +637,12 @@
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
 
+/obj/screen/combattoggle/New(loc, ...)
+	. = ..()
+	update_icon()
+
 /obj/screen/combattoggle/Click()
-	if(iscarbon(usr))
+	if(isliving(usr))
 		var/mob/living/owner = usr
 		owner.set_combat_mode(!owner.combat_mode)
 		update_icon()
