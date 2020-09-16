@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes: 
+  - tweak: "Ghost Whispers preference no longer requires Ghost Ears to be enabled to hear all whispers."
