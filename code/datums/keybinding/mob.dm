@@ -20,7 +20,7 @@
 
 
 /datum/keybinding/mob/face_east
-	hotkey_keys = list("D", "East")
+	hotkey_keys = list("AltD", "AltEast")
 	name = "face_east"
 	full_name = "Face East"
 	description = ""
