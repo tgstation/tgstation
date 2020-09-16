@@ -147,7 +147,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A,1,modifiers)
+			UnarmedAttack(A, TRUE, modifiers)
 	else
 		if(W)
 			W.afterattack(A,src,0,params)
