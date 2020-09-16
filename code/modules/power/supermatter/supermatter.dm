@@ -24,7 +24,7 @@
 #define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
-#define taburine_HEAT_PENALTY 8
+#define TABURINE_HEAT_PENALTY 8
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -37,7 +37,7 @@
 #define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
 #define HEALIUM_TRANSMIT_MODIFIER 2.4
 #define PROTO_NITRATE_TRANSMIT_MODIFIER 15
-#define taburine_TRANSMIT_MODIFIER 20
+#define TABURINE_TRANSMIT_MODIFIER 20
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -197,7 +197,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
 		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
-		/datum/gas/taburine = taburine_TRANSMIT_MODIFIER,
+		/datum/gas/taburine = TABURINE_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -213,7 +213,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
 		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
-		/datum/gas/taburine = taburine_HEAT_PENALTY,
+		/datum/gas/taburine = TABURINE_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
