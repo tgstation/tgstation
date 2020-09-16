@@ -28,7 +28,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='hear'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.combat_mode && isliving(user.pulling))
+	else if(user.combat_mode && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
