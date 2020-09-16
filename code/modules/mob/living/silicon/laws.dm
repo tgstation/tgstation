@@ -95,6 +95,7 @@
 	laws = new /datum/ai_laws
 	laws.set_laws_config()
 	laws.associate(src)
+	update_lawset_name()
 
 /mob/living/silicon/proc/clear_zeroth_law(force = FALSE, announce = TRUE)
 	laws_sanity_check()

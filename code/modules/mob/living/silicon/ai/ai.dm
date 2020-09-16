@@ -111,6 +111,7 @@
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
+		update_lawset_name()
 	else
 		make_laws()
 
@@ -168,8 +169,6 @@
 
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
-
-	update_lawset_name()
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number

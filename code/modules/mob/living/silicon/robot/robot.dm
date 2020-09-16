@@ -165,8 +165,6 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
-	update_lawset_name()
-
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	var/atom/T = drop_location()//To hopefully prevent run time errors.

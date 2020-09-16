@@ -149,8 +149,6 @@
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-	update_lawset_name()
-
 /mob/living/silicon/pai/proc/pdaconfig()
 	//PDA
 	aiPDA = new/obj/item/pda/ai(src)
