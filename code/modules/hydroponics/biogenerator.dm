@@ -76,7 +76,7 @@
 		icon_state = "biogen-work"
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 
 	if(processing)

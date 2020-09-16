@@ -33,7 +33,7 @@
 
 
 
-	if(in_combat_mode())
+	if(combat_mode)
 		if(modifiers["right"] && stat < UNCONSCIOUS)
 			M.disarm(src)
 			return
@@ -68,7 +68,7 @@
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
-		if (M.in_combat_mode())
+		if (M.combat_mode)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 				var/damage = rand(15, 30)
@@ -97,7 +97,7 @@
 				visible_message("<span class='danger'>[M]'s lunge misses [name]!</span>", \
 								"<span class='danger'>You avoid [M]'s lunge!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your lunge misses [name]!</span>")
-		if(M.in_combat_mode() && modifiers["right"])
+		if(M.combat_mode && modifiers["right"])
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if(prob(95))

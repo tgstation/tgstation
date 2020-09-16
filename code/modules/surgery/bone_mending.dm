@@ -56,7 +56,7 @@
 		display_results(user, target, "<span class='notice'>You successfully repair the fracture in [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "repaired a hairline fracture in", addition="COMBAT MODE: [uppertext(user.in_combat_mode())]")
+		log_combat(user, target, "repaired a hairline fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, "<span class='warning'>[target] has no hairline fracture there!</span>")
@@ -92,7 +92,7 @@
 		display_results(user, target, "<span class='notice'>You successfully reset the bone in [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] successfully resets the bone in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully resets the bone in [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "reset a compound fracture in", addition="COMBAT MODE: [uppertext(user.in_combat_mode())]")
+		log_combat(user, target, "reset a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no compound fracture there!</span>")
 	return ..()
@@ -126,7 +126,7 @@
 		display_results(user, target, "<span class='notice'>You successfully repair the fracture in [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "repaired a compound fracture in", addition="COMBAT MODE: [uppertext(user.in_combat_mode())]")
+		log_combat(user, target, "repaired a compound fracture in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		qdel(surgery.operated_wound)
 	else
 		to_chat(user, "<span class='warning'>[target] has no compound fracture there!</span>")

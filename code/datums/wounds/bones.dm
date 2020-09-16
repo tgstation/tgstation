@@ -85,7 +85,7 @@
 /datum/wound/blunt/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(victim.get_active_hand() != limb || !victim.in_combat_mode() || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+	if(victim.get_active_hand() != limb || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
@@ -225,7 +225,7 @@
 	if(user.grab_state >= GRAB_AGGRESSIVE)
 		user.visible_message("<span class='danger'>[user] begins twisting and straining [victim]'s dislocated [limb.name]!</span>", "<span class='notice'>You begin twisting and straining [victim]'s dislocated [limb.name]...</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] begins twisting and straining your dislocated [limb.name]!</span>")
-		if(!user.in_combat_mode())
+		if(!user.combat_mode)
 			chiropractice(user)
 		else
 			malpractice(user)

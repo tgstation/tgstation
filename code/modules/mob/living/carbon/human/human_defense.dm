@@ -213,11 +213,11 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	if(!M.in_combat_mode())
+	if(!M.combat_mode)
 		..() //shaking
 		return FALSE
 
-	if(M.in_combat_mode() && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
+	if(M.combat_mode && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -260,7 +260,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if (w_uniform)
 			w_uniform.add_fingerprint(M)
 		var/damage = prob(90) ? 20 : 0
@@ -284,7 +284,7 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-	if(M.in_combat_mode() && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
+	if(M.combat_mode && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)

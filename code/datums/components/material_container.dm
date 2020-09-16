@@ -62,7 +62,7 @@
 	var/list/tc = allowed_typecache
 	if(disable_attackby)
 		return
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return
 	if(I.item_flags & ABSTRACT)
 		return

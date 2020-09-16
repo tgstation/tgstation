@@ -97,7 +97,7 @@ All foods are distributed among various categories. Use common sense.
 	return
 
 /obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
@@ -195,7 +195,7 @@ All foods are distributed among various categories. Use common sense.
 			C.initialize_custom_food(src, S, user)
 			return FALSE
 	var/list/modifiers = params2list(params)
-	if(!(user.in_combat_mode() && modifiers["right"]))
+	if(!(user.combat_mode && modifiers["right"]))
 		var/sharp = W.get_sharpness()
 		return sharp && slice(sharp, W, user)
 	else

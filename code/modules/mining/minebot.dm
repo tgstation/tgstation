@@ -126,7 +126,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!M.in_combat_mode())
+	if(!M.combat_mode)
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)

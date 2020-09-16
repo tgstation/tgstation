@@ -46,7 +46,7 @@
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
-	if(P.tool_behaviour == TOOL_WRENCH && user.in_combat_mode())
+	if(P.tool_behaviour == TOOL_WRENCH && user.combat_mode)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
@@ -59,7 +59,7 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
 	else
 		return ..()

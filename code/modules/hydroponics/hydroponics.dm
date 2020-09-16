@@ -99,7 +99,7 @@
 	return ..()
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
-	if (!user.in_combat_mode())
+	if (!user.combat_mode)
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			return

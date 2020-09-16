@@ -457,7 +457,7 @@
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
-	if(H.in_combat_mode() && modifiers["right"] && mode != BOT_TIPPED)
+	if(H.combat_mode && modifiers["right"] && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)
@@ -470,7 +470,7 @@
 		if(do_after(H, 3 SECONDS, target=src))
 			tip_over(H)
 
-	else if(!H.in_combat_mode() && mode == BOT_TIPPED)
+	else if(!H.combat_mode && mode == BOT_TIPPED)
 		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
 		if(do_after(H, 3 SECONDS, target=src))
 			set_right(H)

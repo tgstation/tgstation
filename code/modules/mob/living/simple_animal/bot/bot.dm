@@ -292,7 +292,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(!H.in_combat_mode())
+	if(!H.combat_mode)
 		interact(H)
 	else
 		return ..()
@@ -347,7 +347,7 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.tool_behaviour == TOOL_WELDER && !user.in_combat_mode())
+		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
 				return

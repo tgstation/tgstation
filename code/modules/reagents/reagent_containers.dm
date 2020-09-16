@@ -45,7 +45,7 @@
 				return
 
 /obj/item/reagent_containers/attack(mob/M, mob/living/user, def_zone)
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)

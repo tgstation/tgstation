@@ -26,7 +26,7 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && !user.in_combat_mode() && bar_material == METAL)
+	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return

@@ -49,7 +49,7 @@
 /mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 	if(isliving(user))
 		var/mob/living/attacker = user
-		if(attacker.in_combat_mode())
+		if(attacker.combat_mode)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
 				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
@@ -72,7 +72,7 @@
 			visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 							"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
 			to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-			log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.in_combat_mode())]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+			log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 			return
 
 	step_away(src, mecha_attacker)
@@ -85,7 +85,7 @@
 	if(!isliving(user))
 		return ..()
 	var/mob/living/attacker = user
-	if(attacker.in_combat_mode())
+	if(attacker.combat_mode)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
@@ -118,6 +118,6 @@
 		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
 						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, list(mecha_attacker))
 		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
-		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.in_combat_mode())] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	else
 		return ..()

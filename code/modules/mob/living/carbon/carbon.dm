@@ -63,11 +63,11 @@
 	for(var/datum/surgery/S in surgeries)
 		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
 			var/list/modifiers = params2list(params)
-			if((S.self_operable || user != src) && (!user.in_combat_mode() || (user.in_combat_mode() && modifiers["right"])))
+			if((S.self_operable || user != src) && (!user.combat_mode || (user.combat_mode && modifiers["right"])))
 				if(S.next_step(user))
 					return 1
 
-	if(!all_wounds || !(!user.in_combat_mode() || user == src))
+	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))

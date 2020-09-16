@@ -1016,7 +1016,7 @@
 	cell = null
 
 /mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (!in_combat_mode())))
+	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (!combat_mode)))
 		if(buckle_mob(M))
 			return TRUE
 

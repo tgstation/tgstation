@@ -46,7 +46,7 @@
 	return attack_hand(user)
 
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(!L.in_combat_mode())
+	if(!L.combat_mode)
 		visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
@@ -64,7 +64,7 @@
 	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_NO_ATTACK_HAND)
 		. = TRUE
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		visible_message("<span class='notice'>[M] pets [src].</span>", \
 						"<span class='notice'>[M] pets you.</span>", null, null, M)
 		to_chat(M, "<span class='notice'>You pet [src].</span>")
@@ -78,7 +78,7 @@
 		to_chat(M, "<span class='danger'>You punch [src], but don't leave a dent!</span>")
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		return
 	return ..()
 

@@ -41,7 +41,7 @@
 			Paralyze(200)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		user.do_attack_animation(src)
 		if (user.name == master)
 			visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")

@@ -259,7 +259,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(feeder.in_combat_mode())
+	if(feeder.combat_mode)
 		return
 	if(!owner.reagents.total_volume)//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(feeder, "<span class='warning'>None of [owner] left, oh no!</span>")

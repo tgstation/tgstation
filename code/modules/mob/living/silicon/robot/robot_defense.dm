@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	)))
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && (!user.in_combat_mode() || user == src))
+	if(W.tool_behaviour == TOOL_WELDER && (!user.combat_mode || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		if (!getBruteLoss())
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -99,14 +99,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			deconstruct()
 		return
 
-	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.in_combat_mode() && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		to_chat(user, "<span class='notice'>You begin to place [W] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [W] on your head...</span>")
 		if(do_after(user, 30, target = src))
 			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
 				place_on_head(W)
 		return
-	if(istype(W, /obj/item/defibrillator) && !user.in_combat_mode())
+	if(istype(W, /obj/item/defibrillator) && !user.combat_mode)
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
 			return
@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	if (M.in_combat_mode() && modifiers["right"])
+	if (M.combat_mode && modifiers["right"])
 		if(mobility_flags & MOBILITY_STAND)
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()

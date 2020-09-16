@@ -198,7 +198,7 @@
 	if(W.get_temperature())
 		StartBurning()
 	if(grill)
-		if(!user.in_combat_mode() && !(W.item_flags & ABSTRACT))
+		if(!user.combat_mode && !(W.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)

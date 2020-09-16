@@ -151,7 +151,7 @@
 	. = ..()
 	. += ""
 	. += "Held Item: [held_item]"
-	. += "Combat mode: [in_combat_mode() ? "On" : "Off"]"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -277,7 +277,7 @@
 	..()
 	if(client)
 		return
-	if(!stat && M.in_combat_mode())
+	if(!stat && M.combat_mode)
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -292,7 +292,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && !M.in_combat_mode())
+	if(stat != DEAD && !M.combat_mode)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -856,13 +856,13 @@
 	if(stat || !client)
 		return
 
-	if(in_combat_mode())
+	if(combat_mode)
 		melee_damage_upper = 0
 		set_combat_mode(FALSE)
 	else
 		melee_damage_upper = parrot_damage_upper
 		set_combat_mode(TRUE)
-	to_chat(src, "<span class='notice'>You will now [in_combat_mode() ? "Harm" : "Help"] others.</span>")
+	to_chat(src, "<span class='notice'>You will now [combat_mode ? "Harm" : "Help"] others.</span>")
 	return
 
 /*

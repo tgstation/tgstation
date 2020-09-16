@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_icon()
 		return
 
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		if (!state_open)
 			to_chat(user, "<span class='warning'>Open the door first!</span>")
 			return TRUE
@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
 
-	if(user.pulling && user.in_combat_mode() && isliving(user.pulling))
+	if(user.pulling && user.combat_mode && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return

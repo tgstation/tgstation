@@ -101,7 +101,7 @@
 		wires.interact(user)
 		return TRUE
 
-	if(user.in_combat_mode()) //so we can hit the machine
+	if(user.combat_mode) //so we can hit the machine
 		return ..()
 
 	if(machine_stat)

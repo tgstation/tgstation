@@ -431,7 +431,7 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(user.in_combat_mode() && modifiers["right"])
+	if(user.combat_mode && modifiers["right"])
 		do_disarm(M, user)
 		return
 
@@ -447,7 +447,7 @@
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		do_harm(H, user)
 		return
 

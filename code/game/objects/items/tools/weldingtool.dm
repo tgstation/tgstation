@@ -119,7 +119,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.in_combat_mode())
+	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.combat_mode)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",

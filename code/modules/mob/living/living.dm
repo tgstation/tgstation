@@ -134,8 +134,8 @@
 				var/mob/living/bumped_living = M
 				if(
 					!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
-					((M.restrained() && !too_strong) || !bumped_living.in_combat_mode()) &&\
-					(restrained() || !in_combat_mode())
+					((M.restrained() && !too_strong) || !bumped_living.combat_mode) &&\
+					(restrained() || !combat_mode)
 				)
 					mob_swap = TRUE
 		if(mob_swap)
@@ -178,7 +178,7 @@
 	//If they're a human, and they're not in help intent, block pushing
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
-		if(human.in_combat_mode())
+		if(human.combat_mode)
 			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)

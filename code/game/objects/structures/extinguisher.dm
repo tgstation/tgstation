@@ -68,7 +68,7 @@
 			return TRUE
 		else
 			toggle_cabinet(user)
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		toggle_cabinet(user)
 	else
 		return ..()

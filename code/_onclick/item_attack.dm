@@ -102,7 +102,7 @@
 	user.do_attack_animation(M)
 	M.attacked_by(src, user)
 
-	log_combat(user, M, "attacked", src.name, "(COMBAT MODE: [uppertext(user.in_combat_mode())]) (DAMTYPE: [uppertext(damtype)])")
+	log_combat(user, M, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
 

@@ -93,7 +93,7 @@
 				deconstruct()
 			return
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)

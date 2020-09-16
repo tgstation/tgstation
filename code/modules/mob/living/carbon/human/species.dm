@@ -1363,14 +1363,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.in_combat_mode() && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.combat_mode && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempts to touch [H]!</span>", \
 						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style, modifiers)
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if(modifiers["right"])
 			disarm(M, H, attacker_style)
 			return // dont attack after
@@ -1400,7 +1400,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are laying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((I.item_flags & SURGICAL_TOOL) && !user.in_combat_mode() && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
+	if((I.item_flags & SURGICAL_TOOL) && !user.combat_mode && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
 	var/weakness = H.check_weakness(I, user)

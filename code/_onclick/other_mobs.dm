@@ -127,7 +127,7 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(!in_combat_mode() || !ismob(A))
+	if(!combat_mode || !ismob(A))
 		return
 	if(is_muzzled())
 		return

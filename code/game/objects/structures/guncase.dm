@@ -47,7 +47,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		open = !open
 		update_icon()
 	else

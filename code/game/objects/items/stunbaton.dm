@@ -193,7 +193,7 @@
 		if(check_martial_counter(L, user))
 			return
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
 				if(baton_effect(M, user))

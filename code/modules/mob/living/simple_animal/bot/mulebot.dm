@@ -155,7 +155,7 @@
 		diag_hud_set_mulebotcell()
 		visible_message("<span class='notice'>[user] inserts \a [cell] into [src].</span>",
 						"<span class='notice'>You insert [cell] into [src].</span>")
-	else if(I.tool_behaviour == TOOL_CROWBAR && open && !user.in_combat_mode())
+	else if(I.tool_behaviour == TOOL_CROWBAR && open && !user.combat_mode)
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] doesn't have a power cell!</span>")
 			return

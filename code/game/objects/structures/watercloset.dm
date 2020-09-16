@@ -28,7 +28,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='hear'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.in_combat_mode() && isliving(user.pulling))
+	else if(user.pulling && user.combat_mode && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -100,7 +100,7 @@
 		I.play_tool_sound(src)
 		deconstruct()
 	else if(cistern)
-		if(!user.in_combat_mode())
+		if(!user.combat_mode)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
 				to_chat(user, "<span class='warning'>[I] does not fit!</span>")
 				return
@@ -160,7 +160,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.pulling && user.in_combat_mode() && isliving(user.pulling))
+	if(user.pulling && user.combat_mode && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -383,7 +383,7 @@
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
@@ -559,7 +559,7 @@
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))

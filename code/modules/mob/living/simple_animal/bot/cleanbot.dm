@@ -171,7 +171,7 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
-	else if(istype(W, /obj/item/kitchen/knife) && !user.in_combat_mode())
+	else if(istype(W, /obj/item/kitchen/knife) && !user.combat_mode)
 		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
 		if(do_after(user, 25, target = src))
 			deputize(W, user)

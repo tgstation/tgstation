@@ -120,7 +120,7 @@
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='alert'>Access denied.</span>")
-	else if(W.tool_behaviour == TOOL_WELDER && !user.in_combat_mode() && !broken)
+	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
@@ -189,7 +189,7 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (!user.in_combat_mode())
+		if (!user.combat_mode)
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -294,7 +294,7 @@
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
@@ -532,7 +532,7 @@
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(open && !user.in_combat_mode())
+	if(open && !user.combat_mode)
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
 		else
@@ -546,7 +546,7 @@
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			set_anchored(!anchored)
 			return
-	else if(!open && !user.in_combat_mode())
+	else if(!open && !user.combat_mode)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
 

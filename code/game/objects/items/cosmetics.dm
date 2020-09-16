@@ -131,7 +131,7 @@
 			to_chat(user, "<span class='warning'>[H] doesn't have a head!</span>")
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH)
-			if(!user.in_combat_mode())
+			if(!user.combat_mode)
 				if(H.gender == MALE)
 					if (H == user)
 						to_chat(user, "<span class='warning'>You need a mirror to properly style your own facial hair!</span>")
@@ -178,7 +178,7 @@
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
-			if(user.in_combat_mode())
+			if(user.combat_mode)
 				if (H == user)
 					to_chat(user, "<span class='warning'>You need a mirror to properly style your own hair!</span>")
 					return

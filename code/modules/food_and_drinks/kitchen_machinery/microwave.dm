@@ -176,7 +176,7 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
 		return
 
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.in_combat_mode())
+	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
 		if(ingredients.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE

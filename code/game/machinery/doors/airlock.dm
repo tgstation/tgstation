@@ -985,7 +985,7 @@
 		if(seal)
 			to_chat(user, "<span class='warning'>[src] is blocked by a seal!</span>")
 			return
-		if(user.in_combat_mode())
+		if(user.combat_mode)
 			if(!W.tool_start_check(user, amount=0))
 				return
 			user.visible_message("<span class='notice'>[user] begins [welded ? "unwelding":"welding"] the airlock.</span>", \
@@ -1256,7 +1256,7 @@
 	if(!density) //Already open
 		return ..()
 	if(locked || welded) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		if(user.in_combat_mode())
+		if(user.combat_mode)
 			return ..()
 		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
 		return

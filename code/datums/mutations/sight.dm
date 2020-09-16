@@ -101,7 +101,7 @@
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
 	SIGNAL_HANDLER_DOES_SLEEP
 
-	if(!source.in_combat_mode())
+	if(!source.combat_mode)
 		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
 	source.changeNext_move(CLICK_CD_RANGE)

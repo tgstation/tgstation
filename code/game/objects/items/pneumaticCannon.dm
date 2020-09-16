@@ -71,7 +71,7 @@
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))
 		if(!tank)
@@ -135,7 +135,7 @@
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(flag && user.in_combat_mode()) //melee attack
+	if(flag && user.combat_mode) //melee attack
 		return
 	if(!istype(user))
 		return

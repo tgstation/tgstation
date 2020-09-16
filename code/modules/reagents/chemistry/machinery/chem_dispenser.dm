@@ -349,7 +349,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-	else if(!user.in_combat_mode() && !istype(I, /obj/item/card/emag))
+	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
 	else

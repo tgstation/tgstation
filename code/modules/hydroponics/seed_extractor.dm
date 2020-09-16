@@ -114,7 +114,7 @@
 			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
 			updateUsrDialog()
 		return
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
 	else
 		return ..()

@@ -351,7 +351,7 @@
 	if(!target)
 		return
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		if(cap_on && reagents.total_volume && istype(target))
 			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 			return
@@ -362,7 +362,7 @@
 		SplashReagents(target)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.in_combat_mode())))
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.combat_mode)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 		return
 
@@ -629,7 +629,7 @@
 	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
-	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.in_combat_mode() && user.zone_selected == BODY_ZONE_HEAD)
+	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
 			user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		else

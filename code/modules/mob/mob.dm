@@ -807,7 +807,7 @@
 			var/mob/U = user
 			if(iscyborg(U))
 				var/mob/living/silicon/robot/cyborg = U
-				if(cyborg.in_combat_mode())
+				if(cyborg.combat_mode)
 					M.show_inv(cyborg)
 			else
 				M.show_inv(U)

@@ -35,7 +35,7 @@
 	smoke.start()
 
 /obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && !user.in_combat_mode())
+	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")

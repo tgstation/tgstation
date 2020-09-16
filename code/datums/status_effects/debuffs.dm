@@ -885,7 +885,7 @@
 
 /datum/status_effect/amok/tick()
 	. = ..()
-	var/prev_combat_mode = owner.in_combat_mode()
+	var/prev_combat_mode = owner.combat_mode
 	owner.set_combat_mode(TRUE, TRUE)
 
 	var/list/mob/living/targets = list()

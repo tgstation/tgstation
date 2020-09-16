@@ -108,7 +108,7 @@
 	return TRUE
 
 /obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/living/user)
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return

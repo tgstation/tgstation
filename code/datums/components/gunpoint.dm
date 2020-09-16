@@ -88,7 +88,7 @@
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || (shooter.in_combat_mode() && modifiers["right"]))
+	if(T != target || (shooter.combat_mode && modifiers["right"]))
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
 		"<span class='danger'>You bump into [target] and fumble your aim!</span>", target)

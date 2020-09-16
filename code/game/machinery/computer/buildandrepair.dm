@@ -118,7 +118,7 @@
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 
 

@@ -160,7 +160,7 @@
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
-	if(CanPass(user) && !user.in_combat_mode())
+	if(CanPass(user) && !user.combat_mode)
 		force_allaccess = !force_allaccess
 		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
 	else

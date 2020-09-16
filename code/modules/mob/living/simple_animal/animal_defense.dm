@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M, modifiers)
 	..()
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if(modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -66,7 +66,7 @@
 			var/damage = rand(1, 3)
 			attack_threshold_check(damage)
 			return 1
-	if (!M.in_combat_mode())
+	if (!M.combat_mode)
 		if (health > 0)
 			visible_message("<span class='notice'>[M.name] [response_help_continuous] [src].</span>", \
 							"<span class='notice'>[M.name] [response_help_continuous] you.</span>", null, COMBAT_MESSAGE_RANGE, M)
@@ -76,7 +76,7 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
-		if (M.in_combat_mode() && modifiers["right"])
+		if (M.combat_mode && modifiers["right"])
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] [response_disarm_continuous] [name]!</span>", \
 							"<span class='userdanger'>[M] [response_disarm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
@@ -114,7 +114,7 @@
 		return attack_threshold_check(damage)
 
 /mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.in_combat_mode()) //No kicking dogs even as a rogue drone. Use a weapon.
+	if(M.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 

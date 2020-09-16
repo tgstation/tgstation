@@ -79,7 +79,7 @@
 		user.transferItemToLoc(O, src, TRUE)
 		return 1
 	else
-		if(!user.in_combat_mode())
+		if(!user.combat_mode)
 			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 			return 1
 		else

@@ -285,7 +285,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/H = parent
-	if(H.in_combat_mode() && modifiers["right"] && (target in H.buckled_mobs))
+	if(H.combat_mode && modifiers["right"] && (target in H.buckled_mobs))
 		force_dismount(target)
 
 /datum/component/riding/human/handle_vehicle_layer(dir)

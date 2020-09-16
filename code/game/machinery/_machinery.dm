@@ -379,7 +379,7 @@ Class Procs:
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/attack_paw(mob/living/user)
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		return attack_hand(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)

@@ -73,7 +73,7 @@
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 
-	if(user.in_combat_mode()) //so we can hit the machine
+	if(user.combat_mode) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/Topic(href, href_list)

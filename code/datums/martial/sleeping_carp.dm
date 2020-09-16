@@ -205,7 +205,7 @@
 		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
 	var/list/modifiers = params2list(params)
-	if(user.in_combat_mode() && modifiers["right"])
+	if(user.combat_mode && modifiers["right"])
 		if(!wielded)
 			return ..()
 		if(!ishuman(target))

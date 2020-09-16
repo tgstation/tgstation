@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()

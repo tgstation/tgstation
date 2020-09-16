@@ -62,7 +62,7 @@
 	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
-	R.set_combat_mode(!R.in_combat_mode())
+	R.set_combat_mode(!R.combat_mode)
 	return TRUE
 
 /datum/keybinding/robot/unequip_module

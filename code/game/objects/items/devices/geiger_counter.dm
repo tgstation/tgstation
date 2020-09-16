@@ -124,7 +124,7 @@
 
 /obj/item/geiger_counter/afterattack(atom/target, mob/living/user)
 	. = ..()
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		if(!(obj_flags & EMAGGED))
 			user.visible_message("<span class='notice'>[user] scans [target] with [src].</span>", "<span class='notice'>You scan [target]'s radiation levels with [src]...</span>")
 			addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents

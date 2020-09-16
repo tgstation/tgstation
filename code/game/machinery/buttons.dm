@@ -101,7 +101,7 @@
 		update_icon()
 		return
 
-	if(!user.in_combat_mode() && !(W.item_flags & NOBLUDGEON))
+	if(!user.combat_mode && !(W.item_flags & NOBLUDGEON))
 		return attack_hand(user)
 	else
 		return ..()

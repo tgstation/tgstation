@@ -348,7 +348,7 @@
 				var/firer_combat_mode = TRUE
 				var/mob/living/living_shooter = firer
 				if(istype(living_shooter))
-					firer_combat_mode = living_shooter.in_combat_mode()
+					firer_combat_mode = living_shooter.combat_mode
 				if(firer_combat_mode)
 					C.visible_message("<span class='danger'>[L] is thrown towards [H] by a tentacle!</span>","<span class='userdanger'>A tentacle grabs you and throws you towards [H]!</span>")
 					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_stab, H, C))

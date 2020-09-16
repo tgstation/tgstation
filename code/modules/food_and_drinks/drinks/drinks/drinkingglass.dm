@@ -107,7 +107,7 @@
 		..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/living/user)
-	if(user.in_combat_mode() && ismob(target) && target.reagents && reagents.total_volume)
+	if(user.combat_mode && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 		log_combat(user, target, "splashed", src)
@@ -121,7 +121,7 @@
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
-	else if(reagents.total_volume && user.in_combat_mode())
+	else if(reagents.total_volume && user.combat_mode)
 		user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 							"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 		reagents.expose(target, TOUCH)

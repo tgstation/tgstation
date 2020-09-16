@@ -263,7 +263,7 @@
 		return
 	if(iscyborg(target))
 		// We don't stun if we're on harm.
-		if (!user.in_combat_mode())
+		if (!user.combat_mode)
 			if (affect_silicon)
 				var/list/desc = get_silicon_stun_description(target, user)
 
@@ -283,7 +283,7 @@
 		return
 	if(!isliving(target))
 		return
-	if (user.in_combat_mode())
+	if (user.combat_mode)
 		if(!..())
 			return
 		if(!iscyborg(target))

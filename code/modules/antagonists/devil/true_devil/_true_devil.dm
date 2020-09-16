@@ -169,7 +169,7 @@
 /mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M, modifiers)
 	. = ..()
 	if(.)
-		if(M.in_combat_mode())
+		if(M.combat_mode)
 			if(modifiers["Right"])
 				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))

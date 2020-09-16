@@ -70,7 +70,7 @@
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return FALSE
 
 	if(!broken)

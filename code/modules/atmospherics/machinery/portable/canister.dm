@@ -386,7 +386,7 @@
 
 /obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return FALSE
 
 	if(!I.tool_start_check(user, amount=0))

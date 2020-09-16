@@ -125,7 +125,7 @@
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
 				return FALSE
 
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>\The [src] smartly refuses [O].</span>")
 		updateUsrDialog()
 		return FALSE

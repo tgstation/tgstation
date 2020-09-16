@@ -16,7 +16,7 @@
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M, modifiers)
 	if(..())
-		if(M.in_combat_mode())
+		if(M.combat_mode)
 			if(modifiers["right"])
 				if (!(mobility_flags & MOBILITY_STAND))
 					if (prob(5))

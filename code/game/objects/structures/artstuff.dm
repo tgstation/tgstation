@@ -88,7 +88,7 @@
 		ui.open()
 
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		ui_interact(user)
 	else
 		return ..()

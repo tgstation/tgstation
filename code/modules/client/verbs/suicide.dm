@@ -81,7 +81,7 @@
 
 		var/suicide_message
 
-		if(!in_combat_mode())
+		if(!combat_mode)
 			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")

@@ -18,7 +18,7 @@ In all, this is a lot like the monkey code. /N
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if(M == src && check_self_for_injuries())
 			return
 		set_resting(FALSE)
@@ -51,7 +51,7 @@ In all, this is a lot like the monkey code. /N
 	if(.)	//to allow surgery to return properly.
 		return FALSE
 
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if(modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE

@@ -31,7 +31,7 @@
 
 	if(!proximity)
 		return
-	if(!source.in_combat_mode())
+	if(!source.combat_mode)
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))

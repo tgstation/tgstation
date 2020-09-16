@@ -321,7 +321,7 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(!M.in_combat_mode() || (M.in_combat_mode() && modifiers["right"]))
+			if(!M.combat_mode || (M.combat_mode && modifiers["right"]))
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(M))
 						return 1
@@ -337,7 +337,7 @@
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
 		var/list/modifiers = params2list(params)
-		if(!user.in_combat_mode() || (user.in_combat_mode() && modifiers["right"]))
+		if(!user.combat_mode || (user.combat_mode && modifiers["right"]))
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1

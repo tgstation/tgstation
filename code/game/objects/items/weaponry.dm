@@ -29,7 +29,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]!</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]!</span>", "<span class='hear'>You hear a banhammer banning someone.</span>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..(M, user)
 
 /obj/item/sord

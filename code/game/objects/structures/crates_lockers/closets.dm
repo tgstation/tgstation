@@ -289,7 +289,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='hear'>You hear a ratchet.</span>")
-	else if(!user.in_combat_mode())
+	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE

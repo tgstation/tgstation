@@ -298,7 +298,7 @@
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return
 	. = TRUE
 	if(internal_damage & MECHA_INT_TANK_BREACH)
@@ -331,7 +331,7 @@
 		return NONE
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
-		log_combat(user, src, "attacked", M, "(Combat mode: [user.in_combat_mode() ? "On" : "Off"]) (DAMTYPE: [uppertext(M.damtype)])")
+		log_combat(user, src, "attacked", M, "(Combat mode: [user.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)

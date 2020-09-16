@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/L) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	..()
-	if(L.in_combat_mode() && L.reagents && !stat)
+	if(L.combat_mode && L.reagents && !stat)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
 

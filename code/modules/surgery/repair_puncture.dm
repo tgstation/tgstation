@@ -53,7 +53,7 @@
 	display_results(user, target, "<span class='notice'>You successfully realign some of the blood vessels in [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] successfully realigns some of the blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 		"<span class='notice'>[user] successfully realigns some of the blood vessels in  [target]'s [parse_zone(target_zone)]!</span>")
-	log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.in_combat_mode())]")
+	log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 	pierce_wound.blood_flow -= 0.25
 	return ..()
@@ -95,7 +95,7 @@
 	display_results(user, target, "<span class='notice'>You successfully meld some of the split blood vessels in [target]'s [parse_zone(target_zone)] with [tool].</span>",
 		"<span class='notice'>[user] successfully melds some of the split blood vessels in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 		"<span class='notice'>[user] successfully melds some of the split blood vessels in [target]'s [parse_zone(target_zone)]!</span>")
-	log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext(user.in_combat_mode())]")
+	log_combat(user, target, "dressed burns in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	pierce_wound.blood_flow -= 0.5
 	if(pierce_wound.blood_flow > 0)
 		surgery.status = REALIGN_INNARDS

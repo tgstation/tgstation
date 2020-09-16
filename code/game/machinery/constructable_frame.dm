@@ -270,7 +270,7 @@
 						return TRUE
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
 				return FALSE
-	if(user.in_combat_mode())
+	if(user.combat_mode)
 		return ..()
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)

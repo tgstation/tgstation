@@ -82,8 +82,6 @@
 	else
 		playsound_local(src, 'sound/misc/ui_toggleoffcombat.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above
 
-#define IN_COMBAT_MODE(source) source.combat_mode
-
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))
 		var/obj/item/thrown_item = AM
@@ -135,7 +133,7 @@
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
-	if(!user.in_combat_mode())
+	if(!user.combat_mode)
 		to_chat(user, "<span class='danger'>You need to be in combat mode to tighten your grip on [src]!</span>")
 		return
 	if(user.grab_state < GRAB_KILL)
@@ -246,7 +244,7 @@
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return FALSE
 
-	if (M.in_combat_mode())
+	if (M.combat_mode)
 		if(HAS_TRAIT(M, TRAIT_PACIFISM))
 			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
 			return FALSE
@@ -269,7 +267,7 @@
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.in_combat_mode())
+	if(L.combat_mode)
 		if(HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(L, "<span class='warning'>You don't want to hurt anyone!</span>")
 			return
@@ -295,7 +293,7 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	if(M.in_combat_mode())
+	if(M.combat_mode)
 		if(modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
