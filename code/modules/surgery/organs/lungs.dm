@@ -338,14 +338,14 @@
 	// Healium
 		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
 		if(healium_pp > gas_stimulation_min)
-			if(prob(15)
+			if(prob(15))
 				to_chat(H, "<span class='alert'>Your head start spinning and your lungs burn!</span>")
 				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 				H.emote("gasp")
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 		if(healium_pp > healium_para_min)
-			H.Unconscious(rand(3, 5) SECONDS)
+			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
 			if(healium_pp > healium_knock_min)
 				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
 				H.reagents.add_reagent(/datum/reagent/healium,max(0, 0.6 - existing))
