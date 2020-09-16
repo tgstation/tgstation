@@ -138,7 +138,7 @@
 	if(generic_message && M != user)
 		to_chat(M, "<span class='danger'>[src] emits a blinding light!</span>")
 
-	var/deviation = calculate_deviation(M,user)
+	var/deviation = calculate_deviation(M, user ? user : src)
 
 	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
 
@@ -185,21 +185,47 @@
   *
   *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
   * Arguments:
-  * * M - Victim
-  * * user - Attacker
+  * * victim - Victim
+  * * attacker - Attacker
   */
-/obj/item/assembly/flash/proc/calculate_deviation(mob/living/carbon/M, mob/user)
-	var/dir1 = M.dir
-	var/dir2 = turn(user.dir,180)
-	//Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
-	//What we actually check is we check if the inverted vector of the second mob is equal to the vector of the first one which indicates they they are looking in the same line
-	//The second check makes sure that the first user is actually facing the mob, since the first check will fail at it's job when the 2 mobs face away from each other.
-	if(dir1 == dir2 && get_dir(M,user) == dir1)
-		return 0
-	else if((turn(dir1,90) == dir2 || turn(dir1,-90) == dir2) || M.loc == user.loc)
+/obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
+	var/victim_dir = victim.dir
+	var/inverse_attacker_dir
+
+	// If the victim was looking at the attacker, this is the direction they'd be facing.
+	var/victim_to_attacker = get_dir(victim, attacker)
+
+	// Imagine 2 vectors coming from both mobs, they represent the direction the mob is currently looking towards,
+	// What we actually check is we check if the inverted vector of the second mob is equal to the vector of the
+	// first. The more deviated the vectors, the less powerful the flash.
+	if(ismob(attacker))
+		inverse_attacker_dir = turn(attacker.dir,180)
+	else
+		inverse_attacker_dir = get_dir(victim, src)
+
+	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
+	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
+	if(victim.loc == attacker.loc)
 		return 1
-	else if(turn(dir1,180) == dir2)
+	// Are they looking in opposite directions or within 45 degrees of this?
+	if(victim_dir == inverse_attacker_dir || turn(victim_dir, 45) == inverse_attacker_dir || turn(victim_dir, -45) == inverse_attacker_dir )
+		// Now we get the dir as if the victim was looking at the attacker. If this matches up properly
+		// or is within 45 degrees of one, they were infront of eachother and this is a frontal flash.
+		if(victim_to_attacker == inverse_attacker_dir || victim_to_attacker == turn(inverse_attacker_dir, 45) || victim_to_attacker == turn(inverse_attacker_dir, -45))
+			return 0
+		// Otherwise, they were behind eachother. You know, standing back-to-back.
 		return 2
+	// If they're directly to the side, we look to do a side flash.
+	if(turn(victim_dir,90) == inverse_attacker_dir || turn(victim_dir,-90) == inverse_attacker_dir)
+		// Now what matters is where our attacker was looking. We can use victim_to_attacker again.
+		// We take that attack's inverse direction, this is the opposite of where they are looking.
+		// We take the direction as if the victim was looking at the attacker.
+		if(victim_to_attacker == inverse_attacker_dir)
+			return 1
+
+	// If we got here, they weren't facing eachother, facing within 45 degrees of eachother or facing within 90 degrees of eachother.
+	// This only leaves directions from directly behind and diagonal-behind. No flash bueno.
+	return 2
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
