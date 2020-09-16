@@ -362,7 +362,7 @@
 
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
-	else
+	else if(!combat_mode)
 		stop_pulling()
 
 /mob/living/stop_pulling()
