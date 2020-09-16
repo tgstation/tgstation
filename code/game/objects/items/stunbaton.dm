@@ -179,7 +179,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
 
@@ -193,22 +193,25 @@
 		if(check_martial_counter(L, user))
 			return
 
-	if(!user.combat_mode)
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				if(baton_effect(M, user))
-					user.do_attack_animation(M)
-					return
+	if(user.combat_mode)
+		var/list/modifiers = params2list(params)
+		if(modifiers["right"])
+			if(turned_on)
+				if(attack_cooldown_check <= world.time)
+					if(baton_effect(M, user))
+						user.do_attack_animation(M)
+						return
+				else
+					to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 			else
-				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
+				M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
+								"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
+
 		else
-			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
-	else
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				baton_effect(M, user)
-		..()
+			if(turned_on)
+				if(attack_cooldown_check <= world.time)
+					baton_effect(M, user)
+			..()
 
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)

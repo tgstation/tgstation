@@ -83,6 +83,10 @@
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
+	if(force && !user.combat_mode)
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack things!</span>")
+		return
+
 	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user
