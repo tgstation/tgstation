@@ -73,7 +73,8 @@
 		return
 	. = combat_mode
 	combat_mode = new_mode
-	client?.show_popup_menus = !src.combat_mode
+	if(client) //Due to a BYOND bug, `client?.show_popup_menus = !combat_mode` will runtime, trying to access the client's inexistent combat_mode var.
+		client.show_popup_menus = !combat_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_icon()
 	if(silent)
