@@ -18,7 +18,7 @@
 	var/fire = null
 	///Whether there is an atmos alarm in this area
 	var/atmosalm = FALSE
-	var/poweralm = TRUE
+	var/poweralm = FALSE
 	var/lightswitch = TRUE
 
 	/// All beauty in this area combined, only includes indoor area.
@@ -201,32 +201,34 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   */
 /area/proc/poweralert(state, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
-				if (state == 1)
+				if (!state)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.alert_consoles)
 				var/obj/machinery/computer/station_alert/a = item
-				if(state == 1)
+				if(!state)
 					a.cancelAlarm("Power", src, source)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
 			for (var/item in GLOB.drones_list)
 				var/mob/living/simple_animal/drone/D = item
-				if(state == 1)
+				if(!state)
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
 			for(var/item in GLOB.alarmdisplay)
 				var/datum/computer_file/program/alarm_monitor/p = item
-				if(state == 1)
+				if(!state)
 					p.cancelAlarm("Power", src, source)
 				else
 					p.triggerAlarm("Power", src, cameras, source)
@@ -237,8 +239,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   */
 /area/proc/atmosalert(isdangerous, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
 	if(isdangerous != atmosalm)
-		if(isdangerous==TRUE)
+		if(isdangerous)
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
@@ -300,29 +304,25 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
-	if(always_unpowered == 1) //no fire alarms in space/asteroid
-		return
-
 	if (!fire)
 		set_fire_alarm_effect()
 		ModifyFiredoors(FALSE)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_icon()
-
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.triggerAlarm("Fire", src, cameras, source)
-
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.triggerAlarm("Fire", src, cameras, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.triggerAlarm("Fire", src, cameras, source)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -340,20 +340,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
 			F.update_icon()
-
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.cancelAlarm("Fire", src, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.cancelAlarm("Fire", src, source)
-
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.cancelAlarm("Fire", src, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.cancelAlarm("Fire", src, source)
 	STOP_PROCESSING(SSobj, src)
 
 /**
@@ -382,9 +381,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Alarm auto resets after 600 ticks
   */
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered) //no burglar alarms in space/asteroid
+	if (area_flags & NO_ALERTS)
 		return
-
 	//Trigger alarm effect
 	set_fire_alarm_effect()
 	//Lockdown airlocks

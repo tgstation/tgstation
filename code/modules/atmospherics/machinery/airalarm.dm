@@ -101,7 +101,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -122,7 +127,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
 		/datum/gas/freon			= new/datum/tlv/no_checks,
-		/datum/gas/hydrogen			= new/datum/tlv/no_checks
+		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
@@ -143,7 +153,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -508,7 +523,7 @@
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -531,12 +546,17 @@
 						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
-						/datum/gas/hydrogen
+						/datum/gas/hydrogen,
+						/datum/gas/healium,
+						/datum/gas/proto_nitrate,
+						/datum/gas/cyrion_b,
+						/datum/gas/halon,
+						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -549,7 +569,7 @@
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -563,7 +583,7 @@
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -577,7 +597,7 @@
 					"widenet" = 1,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -588,7 +608,7 @@
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -598,7 +618,7 @@
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
@@ -607,7 +627,7 @@
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
@@ -725,7 +745,7 @@
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
-			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
+			else if(W.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
 				return
 			else if(panel_open && is_wire_tool(W))

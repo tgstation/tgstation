@@ -22,7 +22,7 @@
 		// Will generate one if an expired one doesn't exist already, otherwise will grab existing token
 		var/one_time_token = SSdiscord.get_or_generate_one_time_token_for_ckey(ckey)
 		SSdiscord.reverify_cache[usr.ckey] = one_time_token
-		message = "Your one time token is: [one_time_token], Assuming you have the required living minutes in game, you can now verify yourself in discord by using the command <span class=\"warning\">\".verify [one_time_token]\"</span>"
+		message = "Your one time token is: [one_time_token], Assuming you have the required living minutes in game, you can now verify yourself in discord by using the command <span class=\"warning\">\" .verify [one_time_token] \"</span>"
 
 	//Now give them a browse window so they can't miss whatever we told them
 	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord verification")

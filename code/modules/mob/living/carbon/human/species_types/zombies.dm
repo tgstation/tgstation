@@ -99,5 +99,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	species_traits = list(HAS_FLESH, HAS_BONE)
+	inherent_traits = list(TRAIT_EASYLIMBWOUND)
 
 #undef REGENERATION_DELAY

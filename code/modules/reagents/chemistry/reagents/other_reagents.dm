@@ -535,7 +535,7 @@
 	if(current_cycle >= cycles_to_turn)
 		var/datum/species/species_type = race
 		H.set_species(species_type)
-		H.reagents.del_reagent(type)
+		holder.del_reagent(type)
 		to_chat(H, "<span class='warning'>You've become \a [lowertext(initial(species_type.name))]!</span>")
 		return
 	..()
@@ -592,12 +592,12 @@
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
 		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
-		H.reagents.del_reagent(type)
+		holder.del_reagent(type)
 		return TRUE
 	if(current_cycle >= cycles_to_turn) //overwrite since we want subtypes of jelly
 		var/datum/species/species_type = pick(subtypesof(race))
 		H.set_species(species_type)
-		H.reagents.del_reagent(type)
+		holder.del_reagent(type)
 		to_chat(H, "<span class='warning'>You've become \a [initial(species_type.name)]!</span>")
 		return TRUE
 	return ..()
@@ -723,18 +723,13 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0 // oderless and tasteless
 
-/datum/reagent/oxygen/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	exposed_obj.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 
 /datum/reagent/oxygen/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
+	return
 
 /datum/reagent/copper
 	name = "Copper"
@@ -760,19 +755,11 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
 
-/datum/reagent/nitrogen/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	exposed_obj.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
-
 /datum/reagent/nitrogen/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
-	return
+		exposed_turf.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
+	return ..()
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -1268,18 +1255,11 @@
 	color = "#B0B0B0" // rgb : 192, 192, 192
 	taste_description = "something unknowable"
 
-/datum/reagent/carbondioxide/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	exposed_obj.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
-
 /datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
+	return ..()
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
@@ -1289,18 +1269,11 @@
 	color = "#808080"
 	taste_description = "sweetness"
 
-/datum/reagent/nitrous_oxide/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	exposed_obj.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
-
 /datum/reagent/nitrous_oxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
 	if(istype(exposed_turf))
 		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("n2o=[reac_volume/20];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1358,7 +1331,7 @@
 
 /datum/reagent/freon
 	name = "Freon"
-	description = "A powerful heat adsorbant."
+	description = "A powerful heat absorbent."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -1374,7 +1347,7 @@
 
 /datum/reagent/hypernoblium
 	name = "Hyper-Noblium"
-	description = "A suppresive gas that stops gas reactions on those who inhale it."
+	description = "A suppressive gas that stops gas reactions on those who inhale it."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -1389,6 +1362,61 @@
 	if(isplasmaman(L))
 		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
 	return ..()
+
+/datum/reagent/healium
+	name = "Healium"
+	description = "A powerful sleeping agent with healing properties"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "rubbery"
+
+/datum/reagent/healium/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+
+/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	return ..()
+
+/datum/reagent/halon
+	name = "Halon"
+	description = "A fire suppression gas that removes oxygen and cools down the area"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "minty"
+
+/datum/reagent/halon/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
+
+/datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
+	return ..()
+
+/datum/reagent/hexane
+	name = "Hexane"
+	description = "A filtering gas, don't breathe it if you suffer from brain conditions"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "fresh"
+
+/datum/reagent/hexane/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
+	ADD_TRAIT(L, TRAIT_SIXTHSENSE, type)
+
+/datum/reagent/hexane/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
+	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
+	REMOVE_TRAIT(L, TRAIT_SIXTHSENSE, type)
+	return ..()
+
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
@@ -2195,7 +2223,7 @@
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
 
 /datum/reagent/yuck/on_mob_add(mob/living/L)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER)) //they can't puke
+	if(HAS_TRAIT(L, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
 #define YUCK_PUKE_CYCLES 3 		// every X cycle is a puke

@@ -74,8 +74,8 @@
 	penetrates_skin = NONE
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(C.has_reagent(/datum/reagent/medicine/epinephrine))
+		C.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
 
@@ -87,21 +87,13 @@
 		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 		holder.del_reagent(type)
 
-/datum/reagent/toxin/plasma/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return 0
-	var/temp = holder ? holder.chem_temp : T20C
-	if(temp >= LIQUID_PLASMA_BP)
-		exposed_obj.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
 	if(!istype(exposed_turf))
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
 		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+	return ..()
 
 /datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	. = ..()
@@ -120,8 +112,8 @@
 	material = /datum/material/hot_ice
 
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
-	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
-		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(M.has_reagent(/datum/reagent/medicine/epinephrine))
+		M.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	M.adjustPlasma(20)
 	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	return ..()
@@ -214,7 +206,7 @@
 	. = ..()
 	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.has_reagent(/datum/reagent/toxin/zombiepowder)
 		if(istype(zombiepowder))
 			zombiepowder.fakedeath_active = TRUE
 
@@ -530,7 +522,7 @@
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
-		M.reagents.remove_reagent(/datum/reagent/toxin/venom, 1.1)
+		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
 
@@ -604,7 +596,7 @@
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
-		M.reagents.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
+		holder.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
 	..()
 

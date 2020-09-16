@@ -211,8 +211,8 @@
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
-	if(M.reagents.has_reagent(/datum/reagent/oxygen))
-		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
+	if(M.has_reagent(/datum/reagent/oxygen))
+		M.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(-15)
 	..()
 
@@ -232,8 +232,8 @@
 	self_consuming = TRUE
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
-	if(M.reagents.has_reagent(/datum/reagent/oxygen))
-		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5)
+	if(M.has_reagent(/datum/reagent/oxygen))
+		M.remove_reagent(/datum/reagent/oxygen, 0.5)
 		M.adjust_bodytemperature(15)
 	..()
 

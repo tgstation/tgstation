@@ -91,7 +91,8 @@
 	throw_range = 4
 	mopspeed = 8
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
-	var/refill_rate = 1 //Rate per process() tick mop refills itself
+	/// Amount of reagent to refill per second
+	var/refill_rate = 0.5
 	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
 /obj/item/mop/advanced/New()
@@ -107,10 +108,10 @@
 	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
-/obj/item/mop/advanced/process()
-
-	if(reagents.total_volume < mopcap)
-		reagents.add_reagent(refill_reagent, refill_rate)
+/obj/item/mop/advanced/process(delta_time)
+	var/amadd = min(mopcap - reagents.total_volume, refill_rate * delta_time)
+	if(amadd > 0)
+		reagents.add_reagent(refill_reagent, amadd)
 
 /obj/item/mop/advanced/examine(mob/user)
 	. = ..()
