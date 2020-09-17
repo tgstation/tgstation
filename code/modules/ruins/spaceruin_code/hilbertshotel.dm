@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
-GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
+GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
@@ -21,6 +21,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	//Load templates
 	INVOKE_ASYNC(src, .proc/prepare_rooms)
+	
+	if(!GLOB.hhmysteryRoomNumber)
+		GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 
 /obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
