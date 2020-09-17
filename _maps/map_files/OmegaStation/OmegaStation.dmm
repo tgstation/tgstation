@@ -32873,9 +32873,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"oud" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/space)
 "ovu" = (
 /obj/machinery/status_display/ai,
 /turf/closed/wall,
@@ -38768,9 +38765,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"tLI" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "tLZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -65627,11 +65621,11 @@ aac
 aac
 aac
 aaa
-oud
-oud
-oud
-oud
-oud
+aac
+aac
+aac
+aac
+aac
 aaa
 aaa
 aaa
@@ -65884,12 +65878,12 @@ aac
 aac
 aad
 aad
-tLI
-tLI
-oud
-tLI
-tLI
-tLI
+aad
+aad
+aac
+aad
+aad
+aad
 aaa
 aaa
 aaa
@@ -66145,9 +66139,9 @@ ihP
 ihP
 ihP
 ihP
-tLI
-tLI
-tLI
+aad
+aad
+aad
 aaa
 aaa
 aaa
@@ -66402,8 +66396,8 @@ ihP
 pLm
 xsX
 ihP
-tLI
-tLI
+aad
+aad
 aaa
 aaa
 aaa
@@ -66659,9 +66653,9 @@ ihP
 czk
 czk
 ihP
-tLI
-oud
-oud
+aad
+aac
+aac
 aaa
 aaa
 aaa
@@ -66916,9 +66910,9 @@ ihP
 pYb
 ihP
 ihP
-tLI
-tLI
-oud
+aad
+aad
+aac
 aaa
 aaa
 aaa
