@@ -81,10 +81,35 @@
 /// Save file as an external file then md5 it.
 /// Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.
 /proc/md5asfile(file)
-	var/static/notch = 0
-	// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
-	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
-	notch = WRAP(notch+1, 0, 2^15)
-	fcopy(file, filename)
+	var/filename = file2filepath(file)
+	if (!filename || length(filename) < 1)
+		// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
+		filename = generate_tmp_filepath("md5asfile")
+		fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)
+
+/// Generate a unique filepath inside the tmp folder.
+/// namespace - a optional string to prepend to the filename, useful for knowing what isn't cleaning up their things in the tmp folder
+/proc/generate_tmp_filepath(namespace = "tmpfile")
+	var/static/notch = 0
+	. = "tmp/[namespace].[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
+	notch = WRAP(notch+1, 0, 2^15)
+	
+/// Returns the filepath a given file reference can be found at.
+/// returns null if the file exists only in the rsc (modified icons), in those cases just fcopy() the file to the tmp folder and clean it up when you are done
+/// file_or_icon - A file, rsc cache reference, or /icon.
+/proc/file2filepath(file_or_icon)
+	if (istype(file_or_icon, /icon))
+		var/icon/I = file_or_icon
+		file_or_icon = I.icon //undocumented var, stores the actual file reference the icon is at, almost always a rsc cache entry
+	if (!isfile(file_or_icon))
+		CRASH("file2filepath: unknown input: [file_or_icon] (\ref[file_or_icon]) - [json_encode(file_or_icon)]")
+	. = "[locate("\ref[file_or_icon]")]"
+	if (length(.) < 1)
+		return null
+		
+
+
+
+
