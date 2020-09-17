@@ -7,7 +7,7 @@
 	desc = "A piece of dough."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "dough"
-	cooked_type = /obj/item/reagent_containers/food/snacks/store/bread/plain
+	cooked_type = /obj/item/food/bread/plain
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("dough" = 1)
@@ -80,7 +80,7 @@
 	desc = "Cook it to get a cake."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "cakebatter"
-	cooked_type = /obj/item/reagent_containers/food/snacks/store/cake/plain
+	cooked_type = /obj/item/food/cake/plain
 	list_reagents = list(/datum/reagent/consumable/nutriment = 9)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("batter" = 1)

@@ -14,20 +14,41 @@
 
 .Flex--iefix {
   display: table !important;
+  width: 105%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  &:after {
+    content: '';
+    display: table-cell;
+    width: 5%;
+  }
 }
 
 .Flex--iefix--column {
-  display: block !important;
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-collapse: collapse;
+  border-spacing: 0;
 
-  & > .Flex__item {
-    display: block !important;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+  & > .Flex__item--iefix {
+    display: table-row !important;
+  }
+
+  & > .Flex__item--iefix--grow {
+    height: 100% !important;
   }
 }
 
 .Flex__item--iefix {
   display: table-cell !important;
+  width: 1% !important;
+  min-width: 99%;
+}
+
+.Flex__item--iefix--grow {
+  width: auto !important;
 }
 
 @for $i from 1 through 2 {

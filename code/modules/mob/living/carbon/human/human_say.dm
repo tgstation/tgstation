@@ -1,7 +1,10 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
 	if(slurring)
-		return "slurs"
+		if (HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			return "loosely signs"
+		else
+			return "slurs"
 	else
 		. = ..()
 
@@ -60,8 +63,8 @@
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()
-	if(. != FALSE)
-		return .
+	if(.)
+		return
 
 	if(message_mods[MODE_HEADSET])
 		if(ears)
@@ -76,7 +79,7 @@
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())

@@ -1,4 +1,4 @@
-/mob/var/suiciding = 0
+/mob/var/suiciding = FALSE
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
@@ -22,7 +22,7 @@
 			mmi.brainmob.suiciding = suicide_state
 
 /mob/living/carbon/human/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
@@ -110,7 +110,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/brain/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -127,7 +127,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/carbon/monkey/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -145,7 +145,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/ai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -164,7 +164,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/robot/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -183,7 +183,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/pai/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
@@ -198,7 +198,7 @@
 		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -218,7 +218,7 @@
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/simple_animal/verb/suicide()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -242,7 +242,7 @@
 
 /mob/living/proc/canSuicide()
 	var/area/A = get_area(src)
-	if(A.block_suicide)
+	if(A.area_flags & BLOCK_SUICIDE)
 		to_chat(src, "<span class='warning'>You can't commit suicide here! You can ghost if you'd like.</span>")
 		return
 	switch(stat)
@@ -250,7 +250,7 @@
 			return TRUE
 		if(SOFT_CRIT)
 			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
 		if(DEAD)
 			to_chat(src, "<span class='warning'>You're already dead!</span>")

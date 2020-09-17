@@ -16,9 +16,6 @@
 	var/groin_pain_threshold = 20
 	var/groin_pain_nads_modifier = 2
 
-/datum/species/human/qualifies_for_rank(rank, list/features)
-	return TRUE	//Pure humans are always allowed in all roles.
-
 /datum/species/human/handle_groin_damage(mob/living/carbon/human/H, damage_amount, sharpness)
 	if(damage_amount >= 10)
 		H.emote("wince")

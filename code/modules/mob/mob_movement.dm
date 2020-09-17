@@ -4,7 +4,7 @@
   * This is a hidden verb, likely for binding with winset for hotkeys
   */
 /client/verb/drop_item()
-	set hidden = 1
+	set hidden = TRUE
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
@@ -118,18 +118,20 @@
 		return FALSE
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? 2 : 1 ) )) // set it now in case of pulled objects
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
 
-	if(L.confused)
+	var/confusion = L.get_confusion()
+	if(confusion)
 		var/newdir = 0
-		if(L.confused > 40)
+		if(confusion > 40)
 			newdir = pick(GLOB.alldirs)
-		else if(prob(L.confused * 1.5))
+		else if(prob(confusion * 1.5))
 			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(L.confused * 3))
+		else if(prob(confusion * 3))
 			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
 		if(newdir)
 			direct = newdir
@@ -139,6 +141,7 @@
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
@@ -346,7 +349,7 @@
   */
 /client/verb/body_toggle_head()
 	set name = "body-toggle-head"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -366,7 +369,7 @@
 ///Hidden verb to target the right arm, bound to 4
 /client/verb/body_r_arm()
 	set name = "body-r-arm"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -377,7 +380,7 @@
 ///Hidden verb to target the chest, bound to 5
 /client/verb/body_chest()
 	set name = "body-chest"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -388,7 +391,7 @@
 ///Hidden verb to target the left arm, bound to 6
 /client/verb/body_l_arm()
 	set name = "body-l-arm"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -399,7 +402,7 @@
 ///Hidden verb to target the right leg, bound to 1
 /client/verb/body_r_leg()
 	set name = "body-r-leg"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -410,7 +413,7 @@
 ///Hidden verb to target the groin, bound to 2
 /client/verb/body_groin()
 	set name = "body-groin"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return
@@ -421,7 +424,7 @@
 ///Hidden verb to target the left leg, bound to 3
 /client/verb/body_l_leg()
 	set name = "body-l-leg"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!check_has_body_select())
 		return

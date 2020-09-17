@@ -18,6 +18,7 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/communications
+	light_color = LIGHT_COLOR_BLUE
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
 	var/datum/comm_message/currmsg
@@ -31,7 +32,6 @@
 	var/stat_msg1
 	var/stat_msg2
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/communications/proc/checkCCcooldown()
 	var/obj/item/circuitboard/computer/communications/CM = circuit
@@ -159,8 +159,10 @@
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
 						return
-					if(SSshuttle.shuttle_purchased)
+					if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
 						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
+					else if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
+						to_chat(usr, "<span class='alert'>Due to unforseen circumstances, shuttle purchasing is no longer available.</span>")
 					else if(!S.prerequisites_met())
 						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 					else
@@ -169,9 +171,8 @@
 						if(D)
 							points_to_check = D.account_balance
 						if(points_to_check >= S.credit_cost)
-							SSshuttle.shuttle_purchased = TRUE
+							SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
 							SSshuttle.unload_preview()
-							SSshuttle.load_template(S)
 							SSshuttle.existing_shuttle = SSshuttle.emergency
 							SSshuttle.action_load(S)
 							D.adjust_money(-S.credit_cost)
@@ -445,7 +446,6 @@
 
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 
 	if(issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access

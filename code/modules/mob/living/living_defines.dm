@@ -33,8 +33,6 @@
 	VAR_PROTECTED/lying_angle = 0			///number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
 	var/lying_prev = 0		///last value of lying on update_mobility
 
-	var/confused = 0	///Makes the mob move in random directions.
-
 	var/hallucination = 0 ///Directly affects how long a mob will hallucinate for
 
 	var/last_special = 0 ///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
@@ -58,10 +56,9 @@
 
 	var/tod = null /// Time of death
 
-	var/on_fire = 0 ///The "Are we on fire?" var
+	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
-	var/holder = null //The holder for blood crawling
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
@@ -69,6 +66,20 @@
 	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/has_limbs = 0 ///does the mob have distinct limbs?(arms,legs, chest,head)
+
+	///How many legs does this mob have by default. This shouldn't change at runtime.
+	var/default_num_legs = 2
+	///How many legs does this mob currently have. Should only be changed through set_num_legs()
+	var/num_legs = 2
+	///How many usable legs this mob currently has. Should only be changed through set_usable_legs()
+	var/usable_legs = 2
+
+	///How many hands does this mob have by default. This shouldn't change at runtime.
+	var/default_num_hands = 2
+	///How many hands hands does this mob currently have. Should only be changed through set_num_hands()
+	var/num_hands = 2
+	///How many usable hands does this mob currently have. Should only be changed through set_usable_hands()
+	var/usable_hands = 2
 
 	var/list/pipes_shown = list()
 	var/last_played_vent
@@ -88,7 +99,7 @@
 
 	var/hellbound = 0 ///People who've signed infernal contracts are unrevivable.
 
-	var/list/weather_immunities = list()
+	var/list/weather_immunities
 
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
@@ -122,8 +133,8 @@
 	var/losebreath = 0
 
 	//List of active diseases
-	var/list/diseases = list() /// list of all diseases in a mob
-	var/list/disease_resistances = list()
+	var/list/diseases /// list of all diseases in a mob
+	var/list/disease_resistances
 
 	var/slowed_by_drag = TRUE ///Whether the mob is slowed down when dragging another prone mob
 

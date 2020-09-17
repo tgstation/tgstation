@@ -12,7 +12,7 @@
 	inhand_icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
 	strip_delay = 40
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
@@ -41,7 +41,7 @@
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 30, RAD = 30, FIRE = 90, ACID = 50)
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain wooden sandals."
@@ -74,7 +74,7 @@
 	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 75)
 	can_be_bloody = FALSE
 	custom_price = 600
 	can_be_tied = FALSE
@@ -101,6 +101,7 @@
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
@@ -300,14 +301,22 @@
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	icon_state = "wheelys"
+	worn_icon_state = "wheelys"
 	inhand_icon_state = "wheelys"
+	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
 	actions_types = list(/datum/action/item_action/wheelys)
-	var/wheelToggle = FALSE //False means wheels are not popped out
-	var/obj/vehicle/ridden/scooter/wheelys/W
+	///False means wheels are not popped out
+	var/wheelToggle = FALSE
+	///The vehicle associated with the shoes
+	var/obj/vehicle/ridden/scooter/skateboard/wheelys/wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys
 
 /obj/item/clothing/shoes/wheelys/Initialize()
 	. = ..()
-	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	wheels = new wheels(null)
+	wheels.link_shoes(src)
 
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -315,25 +324,54 @@
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
-	if(!(W.is_occupant(user)))
+	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
 	if(wheelToggle)
-		W.unbuckle_mob(user)
+		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 		return
-	W.forceMove(get_turf(user))
-	W.buckle_mob(user)
+	wheels.forceMove(get_turf(user))
+	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
 /obj/item/clothing/shoes/wheelys/dropped(mob/user)
 	if(wheelToggle)
-		W.unbuckle_mob(user)
+		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 	..()
 
+/obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
+	if (status)
+		worn_icon_state = "[initial(icon_state)]-on"
+	else
+		worn_icon_state = "[initial(icon_state)]"
+	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
+	update_icon()
+
 /obj/item/clothing/shoes/wheelys/Destroy()
-	QDEL_NULL(W)
+	QDEL_NULL(wheels)
 	. = ..()
+
+/obj/item/clothing/shoes/wheelys/rollerskates
+	name = "roller skates"
+	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
+	icon_state = "rollerskates"
+	worn_icon_state = "rollerskates"
+	slowdown = SHOES_SLOWDOWN+1
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
+	custom_premium_price = 300
+	custom_price = 300
+
+/obj/item/clothing/shoes/wheelys/skishoes
+	name = "ski shoes"
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
+	icon_state = "skishoes"
+	worn_icon_state = "skishoes"
+	slowdown = SHOES_SLOWDOWN+1
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
+	custom_premium_price = 100
+	custom_price = 100
+
 
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
@@ -341,25 +379,31 @@
 	icon_state = "kindleKicks"
 	inhand_icon_state = "kindleKicks"
 	actions_types = list(/datum/action/item_action/kindle_kicks)
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 3
+	light_on = FALSE
 	var/lightCycle = 0
 	var/active = FALSE
+
 
 /obj/item/clothing/shoes/kindle_kicks/ui_action_click(mob/user, action)
 	if(active)
 		return
 	active = TRUE
-	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
-	addtimer(CALLBACK(src, .proc/lightUp), 5)
+	set_light_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+	set_light_on(active)
+	addtimer(CALLBACK(src, .proc/lightUp), 0.5 SECONDS)
 
 /obj/item/clothing/shoes/kindle_kicks/proc/lightUp(mob/user)
 	if(lightCycle < 15)
-		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
-		lightCycle += 1
-		addtimer(CALLBACK(src, .proc/lightUp), 5)
+		set_light_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+		lightCycle++
+		addtimer(CALLBACK(src, .proc/lightUp), 0.5 SECONDS)
 	else
-		set_light(0)
 		lightCycle = 0
 		active = FALSE
+		set_light_on(active)
 
 /obj/item/clothing/shoes/russian
 	name = "russian boots"
@@ -411,7 +455,7 @@
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
 
-/obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
+/obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 10, target = user))
 		return
 	user.forceMove(user.drop_location())
@@ -436,7 +480,7 @@
 	name = "lizard skin boots"
 	desc = "You can hear a faint hissing from inside the boots; you hope it is just a mournful ghost."
 	icon_state = "lizardboots_green"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 0) //lizards like to stay warm
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 0) //lizards like to stay warm
 
 /obj/item/clothing/shoes/cowboy/lizard/masterwork
 	name = "\improper Hugs-The-Feet lizard skin boots"

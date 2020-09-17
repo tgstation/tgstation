@@ -14,7 +14,6 @@
 	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
 	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/export_price = 0					//Cargo export price.
 	var/list/research_costs = list()					//Point cost to research. type = amount
 	var/category = "Misc"				//Category
 
@@ -47,7 +46,6 @@
 	VARSET_TO_LIST(., assoc_list_strip_value(unlock_ids))
 	VARSET_TO_LIST(., boost_item_paths)
 	VARSET_TO_LIST(., autounlock_by_boost)
-	VARSET_TO_LIST(., export_price)
 	VARSET_TO_LIST(., research_costs)
 	VARSET_TO_LIST(., category)
 
@@ -63,7 +61,6 @@
 	VARSET_FROM_LIST(input, unlock_ids)
 	VARSET_FROM_LIST(input, boost_item_paths)
 	VARSET_FROM_LIST(input, autounlock_by_boost)
-	VARSET_FROM_LIST(input, export_price)
 	VARSET_FROM_LIST(input, research_costs)
 	VARSET_FROM_LIST(input, category)
 	Initialize()

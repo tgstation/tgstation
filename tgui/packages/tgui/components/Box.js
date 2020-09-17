@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { classes, isFalsy, pureComponentHooks } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
@@ -46,25 +46,25 @@ const isColorClass = str => typeof str === 'string'
   && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
 };
 
 const mapUnitPropTo = (attrName, unit) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = unit(value);
   }
 };
 
 const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (value) {
     style[attrName] = attrValue;
   }
 };
 
 const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
     }
@@ -96,10 +96,11 @@ const styleMapperByPropName = {
   fontSize: mapUnitPropTo('font-size', unit),
   fontFamily: mapRawPropTo('font-family'),
   lineHeight: (style, value) => {
-    if (!isFalsy(value)) {
-      style['line-height'] = typeof value === 'number'
-        ? value
-        : unit(value);
+    if (typeof value === 'number') {
+      style['line-height'] = value;
+    }
+    else if (typeof value === 'string') {
+      style['line-height'] = unit(value);
     }
   },
   opacity: mapRawPropTo('opacity'),
@@ -160,6 +161,11 @@ export const computeBoxProps = props => {
   // Compute props
   for (let propName of Object.keys(props)) {
     if (propName === 'style') {
+      continue;
+    }
+    // IE8: onclick workaround
+    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
+      computedProps.onclick = props[propName];
       continue;
     }
     const propValue = props[propName];
