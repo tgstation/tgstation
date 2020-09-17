@@ -462,7 +462,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/docslogs/Initialize()
 	. = ..()
-	GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
+	if(!GLOB.hhmysteryRoomNumber)
+		GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 	info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
