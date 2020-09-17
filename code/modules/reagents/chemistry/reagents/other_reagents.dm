@@ -1363,22 +1363,6 @@
 		REMOVE_TRAIT(L, TRAIT_NOFIRE, type)
 	return ..()
 
-/datum/reagent/healium
-	name = "Healium"
-	description = "A powerful sleeping agent with healing properties"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "rubbery"
-
-/datum/reagent/healium/on_mob_metabolize(mob/living/L)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
-
-/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
-	return ..()
-
 /datum/reagent/halon
 	name = "Halon"
 	description = "A fire suppression gas that removes oxygen and cools down the area"
