@@ -953,22 +953,18 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potlightpink"
 
-/obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
-	if(!istype(L) || L.stat == DEAD)
-		to_chat(user, "<span class='warning'>The potion can only be used on living things!</span>")
-		return
-
-	if(L.gender != MALE && L.gender != FEMALE)
+/obj/item/slimepotion/genderchange/attack_self(mob/user)
+	if(user.gender != MALE && user.gender != FEMALE)
 		to_chat(user, "<span class='warning'>The potion can only be used on gendered things!</span>")
 		return
 
-	if(L.gender == MALE)
-		L.gender = FEMALE
-		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+	if(user.gender == MALE)
+		user.gender = FEMALE
+		user.visible_message("<span class='boldnotice'>[user] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 	else
-		L.gender = MALE
-		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
-	L.regenerate_icons()
+		user.gender = MALE
+		user.visible_message("<span class='boldnotice'>[user] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+	user.regenerate_icons()
 	qdel(src)
 
 /obj/item/slimepotion/slime/renaming
