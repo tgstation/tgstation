@@ -503,3 +503,8 @@
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."
+
+/datum/emote/living/wince
+	key = "wince"
+	key_third_person = "winces"
+	message = "winces."
