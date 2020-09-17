@@ -347,7 +347,8 @@
 		if(healium_pp > healium_para_min)
 			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
 			if(healium_pp > healium_sleep_min)
-				H.Sleeping(min(H.AmountSleeping() + rand(100, 150), rand(200, 400)))
+				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
+				H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
 				H.adjustOxyLoss(-5)
 				H.adjustFireLoss(-7)
 				H.adjustToxLoss(-7)

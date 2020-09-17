@@ -162,8 +162,6 @@
 	tick_interval = initial(tick_interval)
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		return
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = -0.2
