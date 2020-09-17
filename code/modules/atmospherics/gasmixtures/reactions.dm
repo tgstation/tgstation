@@ -1273,11 +1273,11 @@ nobiliumsuppression = INFINITY
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 	if(cached_gases[/datum/gas/bz][MOLES] < 30)
-		radiation_pulse(location, consumed_amount, 1, TRUE, FALSE)
+		radiation_pulse(location, consumed_amount * 20, 1, TRUE, FALSE)
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	else
 		for(var/mob/living/carbon/L in location)
-			L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.5
+			L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.7
 	energy_released += 100
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
