@@ -83,3 +83,21 @@
 						riding_datum.force_dismount(M)
 			else
 				L.unbuckle_all_mobs()
+
+/datum/emote/spin/check_cooldown(mob/user, intentional)
+	. = ..()
+	if(.)
+		return
+	if(!can_run_emote(user, intentional=intentional))
+		return
+	if(iscarbon(user))
+		var/mob/living/carbon/spinner = user
+		var/current_confusion = spinner.get_confusion()
+		if(current_confusion > 30)
+			spinner.vomit(60, FALSE, TRUE, 0)
+			return
+		if(prob(20))
+			to_chat(spinner, "<span class='warning'>You feel woozy from spinning.</span>")
+			spinner.Dizzy(10)
+			if(current_confusion < 40)
+				spinner.add_confusion(10)
