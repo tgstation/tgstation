@@ -1,0 +1,26 @@
+{
+    "map_name": "Fall Festival",
+    "map_path": "map_files/generic",
+    "map_file": "fallball2020.dmm",
+    "shuttles": {
+        "cargo": "cargo_delta"
+    },
+    "traits":[
+        {
+			"Up":1,
+			"Linkage" : "Cross",
+    		"Gravity":true
+        },
+        {
+    		"Down":-1,
+			"Up":1,
+			"Linkage" : "Cross",
+        	"Gravity":true
+        },
+        {
+			"Down":-1,
+			"Linkage" : "Cross",
+           	"Gravity":true
+        }
+    ]
+}
