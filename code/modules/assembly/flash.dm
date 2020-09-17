@@ -1,4 +1,12 @@
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
+
+/// No deviation at all. Flashed from the front or front-left/front-right. Alternatively, flashed in direct view.
+#define DEVIATION_NONE 0
+/// Partial deviation. Flashed from the side. Alternatively, flashed out the corner of your eyes.
+#define DEVIATION_PARTIAL 1
+/// Full deviation. Flashed from directly behind or behind-left/behind-rack. Not flashed at all.
+#define DEVIATION_FULL 2
+
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
@@ -141,7 +149,7 @@
 	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
 
 	//If you face away from someone they shouldnt notice any effects.
-	if(deviation == 2 && !converter)
+	if(deviation == DEVIATION_FULL && !converter)
 		return
 
 
@@ -153,7 +161,7 @@
 				// Special check for if we're a revhead. Special cases to attempt conversion.
 				if(converter)
 					// Did we try to flash them from behind?
-					if(deviation == 2)
+					if(deviation == DEVIATION_FULL)
 						// If we did and we're on help intent, fail with a feedback message and return.
 						if(converter.owner.current.a_intent == INTENT_HELP)
 							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
@@ -161,7 +169,7 @@
 							return
 						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
 						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
-						deviation = 1
+						deviation = DEVIATION_PARTIAL
 					// Convert them. Terribly.
 					terrible_conversion_proc(M, user)
 					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
@@ -194,22 +202,22 @@
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
 	if(victim.loc == attacker.loc)
-		return 1
+		return DEVIATION_PARTIAL
 
 	// Is the victim looking directly at the attacker? and is the attacker looking at the victim?
 	if(victim_dir == victim_to_attacker)
-		return 0
+		return DEVIATION_NONE
 
 	// Is the victim looking at the attacker within 45 degrees?
 	if(victim_dir == turn(victim_to_attacker, 45) || victim_dir == turn(victim_to_attacker, -45))
-		return 0
+		return DEVIATION_NONE
 
 	// Is the is the victim looking perpendicular to the attacker?
 	if(victim_dir == turn(victim_to_attacker, 90) || victim_dir == turn(victim_to_attacker, -90))
-		return 1
+		return DEVIATION_PARTIAL
 
 	// This only leaves directions from directly behind and diagonal-behind. No flash bueno.
-	return 2
+	return DEVIATION_FULL
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -378,3 +386,8 @@
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
 		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+
+#undef CONFUSION_STACK_MAX_MULTIPLIER
+#undef DEVIATION_NONE
+#undef DEVIATION_PARTIAL
+#undef DEVIATION_FULL
