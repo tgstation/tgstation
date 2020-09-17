@@ -606,3 +606,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/cannoli
 	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/smores
+	name = "Smores"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/cracker = 2,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/datum/reagent/consumable/sugar = 3,
+	)
+	result = /obj/item/reagent_containers/food/snacks/smores
+	subcategory = CAT_PASTRY
