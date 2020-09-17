@@ -299,3 +299,14 @@
 	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/headstone
+	name = "headstone"
+	desc = "R.I.P"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "headstone"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE

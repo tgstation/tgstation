@@ -58,17 +58,15 @@
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	..()
 	if(process)
-		SSair.atmos_machinery += src
+		SSair.start_processing_machine(src)
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
 		nullifyNode(i)
 
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	SSair.pipenets_needing_rebuilt -= src
-	if(SSair.currentpart == SSAIR_ATMOSMACHINERY)
-		SSair.currentrun -= src
 
 	dropContents()
 	if(pipe_vision_img)
@@ -125,6 +123,10 @@
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
 	update_icon()
+
+/obj/machinery/atmospherics/update_icon()
+	layer = initial(layer) + piping_layer / 1000
+	return ..()
 
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target, iteration)
 	return connection_check(target, piping_layer)

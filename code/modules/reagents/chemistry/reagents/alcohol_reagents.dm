@@ -654,7 +654,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M)
 	if(QDELETED(light_holder))
-		M.reagents.del_reagent(/datum/reagent/consumable/ethanol/tequila_sunrise) //If we lost our light object somehow, remove the reagent
+		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
 	else if(light_holder.loc != M)
 		light_holder.forceMove(M)
 	return ..()
@@ -1730,7 +1730,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
 	..()
 	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
-		L.reagents.del_reagent(/datum/reagent/consumable/ethanol/alexander)
+		holder.remove_reagent(type)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
 	if(mighty_shield)

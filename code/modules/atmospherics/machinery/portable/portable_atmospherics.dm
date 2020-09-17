@@ -14,18 +14,15 @@
 
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
-/obj/machinery/portable_atmospherics/New()
-	..()
-	SSair.atmos_machinery += src
-
 /obj/machinery/portable_atmospherics/Initialize()
 	. = ..()
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
+	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 
 	disconnect()
 	qdel(air_contents)
