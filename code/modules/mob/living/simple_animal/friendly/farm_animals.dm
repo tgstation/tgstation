@@ -386,10 +386,10 @@
 				START_PROCESSING(SSobj, E)
 
 /obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process()
+/obj/item/reagent_containers/food/snacks/egg/process(delta_time)
 	if(isturf(loc))
-		amount_grown += rand(1,2)
-		if(amount_grown >= 100)
+		amount_grown += rand(1,2) * delta_time
+		if(amount_grown >= 200)
 			visible_message("<span class='notice'>[src] hatches with a quiet cracking sound.</span>")
 			new /mob/living/simple_animal/chick(get_turf(src))
 			STOP_PROCESSING(SSobj, src)

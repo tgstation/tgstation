@@ -236,7 +236,13 @@
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
 			if(R.overdosed)
 				overdose_list += list(list("name" = R.name))
-
+	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
+		for(var/bile in belly.reagents.reagent_list)
+			var/datum/reagent/bit = bile
+			chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
+			if(bit.overdosed)
+				overdose_list += list(list("name" = bit.name))
 	if(altPatient.reagents.addiction_list.len)
 		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
 			addict_list += list(list("name" = R.name))

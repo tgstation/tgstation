@@ -181,7 +181,7 @@
 					U.update_icon()
 					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
 		for(var/mob/living/L in T)
-			L.ExtinguishMob()
+			L.extinguish_mob()
 		for(var/obj/item/Item in T)
 			Item.extinguish()
 

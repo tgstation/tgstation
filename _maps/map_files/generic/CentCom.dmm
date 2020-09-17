@@ -903,7 +903,7 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/dodgeball)
 "cD" = (
-/obj/structure/sink/puddle,
+/obj/structure/water_source/puddle,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
 "cE" = (
@@ -8464,7 +8464,9 @@
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "tb" = (
-/turf/open/floor/white,
+/turf/open/floor/holofloor{
+	icon_state = "pure_white"
+	},
 /area/holodeck/rec_center/photobooth)
 "tc" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -14673,8 +14675,8 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/spaghetti,
-/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/food/spaghetti,
+/obj/item/food/spaghetti,
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet,
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet,
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet,
@@ -19065,10 +19067,6 @@
 /obj/item/toy/seashell,
 /turf/open/floor/holofloor/beach,
 /area/holodeck/rec_center/beach)
-"VX" = (
-/obj/effect/landmark/shuttle_import,
-/turf/open/space/basic,
-/area/space)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -42268,7 +42266,7 @@ aa
 aa
 aa
 aa
-VX
+aa
 aa
 aa
 aa

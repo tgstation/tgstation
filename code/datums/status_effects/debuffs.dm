@@ -195,7 +195,11 @@
 	. = ..()
 	if(.)
 		update_time_of_death()
-		owner.reagents?.end_metabolization(owner, FALSE)
+		if(istype(owner, /mob/living/carbon))
+			var/mob/living/carbon/body = owner
+			body.end_metabolization(FALSE)
+		else
+			owner.reagents?.end_metabolization(owner, FALSE)
 
 /datum/status_effect/grouped/stasis/on_apply()
 	. = ..()
@@ -888,7 +892,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
-		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+		if(IS_HERETIC(potential_target) || IS_HERETIC_MONSTER(potential_target))
 			continue
 		targets += potential_target
 	if(LAZYLEN(targets))

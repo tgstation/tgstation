@@ -117,6 +117,10 @@
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 
+	inv1 = new /obj/screen/robot/module1()
+	inv2 = new /obj/screen/robot/module2()
+	inv3 = new /obj/screen/robot/module3()
+
 	ident = rand(1, 999)
 
 	previous_health = health
@@ -158,7 +162,7 @@
 		mmi.brainmob.container = mmi
 		mmi.update_icon()
 
-	updatename()
+	INVOKE_ASYNC(src, .proc/updatename)
 
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
@@ -191,12 +195,12 @@
 		if(T && istype(radio) && istype(radio.keyslot))
 			radio.keyslot.forceMove(T)
 			radio.keyslot = null
-	qdel(wires)
-	qdel(module)
-	qdel(eye_lights)
-	wires = null
-	module = null
-	eye_lights = null
+	QDEL_NULL(wires)
+	QDEL_NULL(module)
+	QDEL_NULL(eye_lights)
+	QDEL_NULL(inv1)
+	QDEL_NULL(inv2)
+	QDEL_NULL(inv3)
 	cell = null
 	return ..()
 
@@ -214,8 +218,7 @@
 		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
-	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
-	"Engineering" = /obj/item/robot_module/engineering, \
+	var/list/modulelist = list("Engineering" = /obj/item/robot_module/engineering, \
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
@@ -632,9 +635,6 @@
 	. = ..()
 	module.transform_to(set_module)
 
-/mob/living/silicon/robot/modules/standard
-	set_module = /obj/item/robot_module/standard
-
 /mob/living/silicon/robot/modules/medical
 	set_module = /obj/item/robot_module/medical
 	icon_state = "medical"
@@ -892,7 +892,7 @@
 	hat_offset = module.hat_offset
 
 	magpulse = module.magpulsing
-	updatename()
+	INVOKE_ASYNC(src, .proc/updatename)
 
 
 /mob/living/silicon/robot/proc/place_on_head(obj/item/new_hat)

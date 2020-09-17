@@ -19,7 +19,6 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
 
@@ -63,6 +62,8 @@
 		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
+	if(!icon_state)
+		item_flags |= ABSTRACT
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()

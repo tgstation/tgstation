@@ -18,11 +18,11 @@
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
 
-/obj/machinery/meter/atmos/layer1
-	target_layer = 1
+/obj/machinery/meter/atmos/layer2
+	target_layer = 2
 
-/obj/machinery/meter/atmos/layer3
-	target_layer = 3
+/obj/machinery/meter/atmos/layer4
+	target_layer = 4
 
 /obj/machinery/meter/atmos/atmos_waste_loop
 	name = "waste loop gas flow meter"
@@ -33,14 +33,14 @@
 	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	target = null
 	return ..()
 
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
 	return ..()
