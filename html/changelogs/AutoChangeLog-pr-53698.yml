@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Minor runtime with no gameplay impact related to printing implant cases."
