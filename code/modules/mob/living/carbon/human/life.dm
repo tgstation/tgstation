@@ -85,7 +85,7 @@
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-		failed_last_breath = 1
+		failed_last_breath = TRUE
 
 		var/datum/species/S = dna.species
 

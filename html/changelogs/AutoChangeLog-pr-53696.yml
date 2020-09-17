@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Non-gameplay impacting runtime on holopads when the user spoke after placing a call but before it has been connected."

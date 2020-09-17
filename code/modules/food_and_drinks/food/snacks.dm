@@ -281,17 +281,25 @@ All foods are distributed among various categories. Use common sense.
 	add_overlay(filling)
 
 // initialize_cooked_food() is called when microwaving the food
-/obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/reagent_containers/food/snacks/S, cooking_efficiency = 1)
-	S.create_reagents(S.volume)
-	if(reagents)
-		reagents.trans_to(S, reagents.total_volume)
-	if(S.bonus_reagents && S.bonus_reagents.len)
-		for(var/r_id in S.bonus_reagents)
-			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
-			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
-				S.reagents.add_reagent(r_id, amount, tastes)
-			else
-				S.reagents.add_reagent(r_id, amount)
+/obj/item/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/S, cooking_efficiency = 1)
+	if(istype(S, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/food/snacks/snackyfood = S
+		snackyfood.create_reagents(snackyfood.volume)
+		if(reagents)
+			reagents.trans_to(snackyfood, reagents.total_volume)
+		if(snackyfood.bonus_reagents && snackyfood.bonus_reagents.len)
+			for(var/r_id in snackyfood.bonus_reagents)
+				var/amount = snackyfood.bonus_reagents[r_id] * cooking_efficiency
+				if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
+					snackyfood.reagents.add_reagent(r_id, amount, tastes)
+				else
+					snackyfood.reagents.add_reagent(r_id, amount)
+		return
+	if(istype(S, /obj/item/food))
+		var/obj/item/food/non_snackyfood = S
+		non_snackyfood.create_reagents(non_snackyfood.max_volume)
+		if(reagents)
+			reagents.trans_to(non_snackyfood, reagents.total_volume)
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	var/turf/T = get_turf(src)
