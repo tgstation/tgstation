@@ -31,12 +31,12 @@
 /**
   * Return the zone or randomly, another valid zone
   *
-  * probability controls the chance it chooses the passed in zone, or another random zone
-  * defaults to 80
+  * * probability - Controls the chance it chooses the passed in zone, or another random zone.
+  * * precise - If precise zones may be returned on success
   */
-/proc/ran_zone(zone, probability = 80)
+/proc/ran_zone(zone, probability = 80, precise = FALSE)
 	if(prob(probability))
-		zone = check_zone(zone)
+		zone = precise ? zone : check_zone(zone)
 	else
 		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
