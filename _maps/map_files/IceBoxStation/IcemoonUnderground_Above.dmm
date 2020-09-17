@@ -2541,6 +2541,11 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"kq" = (
+/obj/structure/cable,
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "kr" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -2703,6 +2708,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"mj" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"mn" = (
+/obj/structure/closet/cardboard,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "mp" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -2831,6 +2844,10 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "nU" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -3130,6 +3147,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
+"sf" = (
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "sj" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -3346,12 +3367,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"uo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "us" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -3400,6 +3415,10 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"vh" = (
+/obj/structure/closet/decay,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "vl" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -3410,6 +3429,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"vr" = (
+/obj/structure/sign/warning/vacuum,
+/turf/closed/wall,
+/area/maintenance/aft)
 "vw" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -3436,6 +3459,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"vC" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "vG" = (
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = 32
@@ -4226,9 +4253,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"Ff" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/maintenance/aft)
 "Fl" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "misclab";
@@ -4244,6 +4268,12 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"Fn" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Fw" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel/dark,
@@ -4588,8 +4618,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Jr" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "Js" = (
 /obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"JA" = (
+/obj/structure/sign/departments/xenobio{
+	pixel_x = -32
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "JE" = (
@@ -4870,6 +4909,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"NN" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "NP" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel,
@@ -4907,6 +4953,15 @@
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"Ob" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Of" = (
 /obj/machinery/light/small,
 /turf/closed/mineral/random/snow,
@@ -5207,6 +5262,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"RK" = (
+/obj/structure/closet/athletic_mixed,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "RO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5334,8 +5393,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "SW" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/sign/warning/biohazard{
+	pixel_x = -32
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -5459,6 +5518,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"Ul" = (
+/obj/structure/cable,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Uq" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -5686,6 +5750,9 @@
 "Wq" = (
 /turf/closed/wall,
 /area/hydroponics)
+"Wr" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors)
 "WA" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -5819,12 +5886,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"Yf" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/maintenance/aft)
 "Yj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Xenobiology Maintenance";
@@ -46514,6 +46575,11 @@ ah
 ah
 ah
 ah
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -46525,16 +46591,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -46770,41 +46831,41 @@ ah
 ah
 ah
 ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+ah
+ah
+ah
+ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -47027,42 +47088,42 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZG
 ZG
 ZG
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ZG
 ZG
 ZG
 ZG
 ZG
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -47284,8 +47345,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 AR
 QD
@@ -47295,31 +47356,31 @@ ZG
 ZG
 ZG
 ZG
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
 ZG
 ZG
 oR
 Js
 tU
 ZG
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ZG
 ZG
 ZG
 ZG
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -47540,8 +47601,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZG
 ZF
@@ -47550,7 +47611,7 @@ ZF
 yg
 ZF
 ZF
-ZF
+vh
 ZG
 ZG
 ZG
@@ -47571,12 +47632,12 @@ ZG
 ZG
 ZG
 ZG
-AR
-AR
+mn
 ZF
+sf
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -47797,8 +47858,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 ZF
@@ -47832,8 +47893,8 @@ ZF
 ZF
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -48054,8 +48115,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -48089,8 +48150,8 @@ Qs
 ZF
 yg
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -48311,8 +48372,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -48346,8 +48407,8 @@ lX
 ZF
 ZG
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -48568,8 +48629,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -48602,8 +48663,8 @@ Iy
 lX
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -48825,8 +48886,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -48859,8 +48920,8 @@ Xm
 lX
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -49082,8 +49143,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -49113,11 +49174,11 @@ bk
 Hj
 ko
 lX
-Qs
+kR
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -49339,8 +49400,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -49370,12 +49431,12 @@ CQ
 FP
 Ya
 OU
-kR
+Qs
 ZF
 ZG
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -49596,8 +49657,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -49611,7 +49672,7 @@ Yu
 Qs
 Nz
 ze
-qX
+NN
 gR
 qX
 qX
@@ -49631,8 +49692,8 @@ Ay
 ZF
 Nn
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ak
@@ -49853,8 +49914,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -49888,8 +49949,8 @@ Ay
 ZF
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -50110,8 +50171,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -50145,8 +50206,8 @@ Ay
 EJ
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -50367,8 +50428,8 @@ ah
 ah
 ah
 ah
-ah
-ah
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -50402,8 +50463,8 @@ Qs
 Rd
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -50621,11 +50682,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Wr
+Wr
+Vx
+Vx
 ZG
 ZF
 Qs
@@ -50659,8 +50720,8 @@ kR
 EJ
 ZF
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -50877,12 +50938,12 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Wr
+Jr
+Wr
+Wr
+Wr
 ZG
 ZF
 Qs
@@ -50914,10 +50975,10 @@ Iy
 pp
 YK
 EJ
-ZF
+EJ
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -51133,13 +51194,13 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Wr
+Jr
+Jr
+Jr
+Wr
+ZG
 ZG
 ZF
 Qs
@@ -51170,11 +51231,11 @@ Iy
 Iy
 Iy
 YK
+ZF
 EJ
 ZG
-ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -51390,19 +51451,19 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Jr
+Jr
+Jr
+Jr
+Jr
 ZG
+Nn
 ZF
 ZF
 SW
 EJ
-Js
+JA
 Qs
 Qs
 Qs
@@ -51427,10 +51488,10 @@ FN
 cY
 Iy
 YK
+ZF
 EJ
 ZG
-ah
-ah
+Vx
 ah
 ah
 ah
@@ -51647,14 +51708,14 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Jr
+Jr
+Jr
+Jr
+Jr
 ZG
+Js
 ZF
 ZF
 ZF
@@ -51684,10 +51745,10 @@ Qs
 Qs
 Qs
 Qs
-EJ
+ZF
+Ul
 ZG
-ah
-ah
+Vx
 ah
 ah
 ah
@@ -51904,17 +51965,17 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Jr
+Jr
+Jr
+Jr
+mj
 ZG
 ZG
-ed
-oV
+vr
+ZF
+ZF
 ZF
 ZF
 EJ
@@ -51942,9 +52003,9 @@ EJ
 EJ
 EJ
 EJ
+kq
 ZG
-ah
-ah
+Vx
 ah
 ah
 ah
@@ -52161,19 +52222,19 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ZG
-ZG
-ZG
+Wr
+Wr
+Wr
+Jr
+Jr
+Jr
 TE
-ZG
+Ob
+TE
+ZF
+Fn
+ed
+oV
 ZG
 ZG
 ZG
@@ -52186,9 +52247,9 @@ BJ
 Oq
 ZF
 ZF
-ZF
+vC
 yg
-ZF
+RK
 Nn
 ZF
 ZF
@@ -52200,8 +52261,8 @@ ZF
 ZF
 ZF
 ZG
-ah
-ah
+ZG
+Vx
 ah
 ah
 ah
@@ -52419,19 +52480,19 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-Vx
-Vx
+Wr
+Jr
+Jr
+Jr
+mj
 ZG
-uo
 ZG
-Vx
+ZG
+ZG
+ZG
+ZG
+ZG
+ZG
 Vx
 Vx
 Vx
@@ -52457,8 +52518,8 @@ ZF
 ZG
 ZG
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -52676,45 +52737,45 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-Vx
-Vx
-Vx
-ZG
-TE
-ZG
+Wr
+Jr
+Jr
+Jr
+Jr
+Wr
 Vx
 Vx
 Vx
 Vx
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+wd
+wd
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ZG
 ZF
 be
 ZG
-ah
-ah
-ah
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -52933,44 +52994,44 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+Wr
+Wr
+Jr
+Jr
+Wr
+Wr
+Vx
+Vx
+Vx
 Vx
 Vx
 wd
-wd
-Yf
-Ff
-Yf
-wd
+kw
+kw
+kw
 wd
 Vx
 Vx
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ZG
 ZF
 Us
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -53192,16 +53253,17 @@ ah
 ah
 ah
 ah
+Wr
+Jr
+Wr
+ah
+ah
 ah
 ah
 ah
 Vx
-wd
-wd
-wd
-wd
-wd
-wd
+Vx
+Vx
 wd
 wd
 wd
@@ -53219,15 +53281,14 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
+Vx
+Vx
 ZG
 ZG
 ZG
 ZG
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -53449,18 +53510,19 @@ ah
 ah
 ah
 ah
+Wr
+Wr
+Wr
+ah
+ah
+ah
 ah
 ah
 ah
 Vx
 Vx
-wd
-wd
-wd
-wd
-wd
-wd
-wd
+Vx
+Vx
 Vx
 Vx
 ah
@@ -53476,14 +53538,13 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
+Vx
 ah
 ah
 ah
@@ -53709,38 +53770,38 @@ ah
 ah
 ah
 ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
 Vx
-wd
-wd
-wd
-wd
-wd
-wd
-wd
 Vx
 Vx
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+Vx
+Vx
 ah
 ah
 ah
@@ -53966,15 +54027,15 @@ ah
 ah
 ah
 ah
-Vx
-wd
-wd
-wd
-Vx
-Vx
-wd
-wd
-Vx
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
 ah
 ah
 ah
@@ -54223,15 +54284,15 @@ ah
 ah
 ah
 ah
-Vx
-Vx
-wd
-Vx
-Vx
-Vx
-Vx
-Vx
-Vx
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
 ah
 ah
 ah
@@ -54481,9 +54542,9 @@ ah
 ah
 ah
 ah
-Vx
-Vx
-Vx
+ah
+ah
+ah
 ah
 ah
 ah

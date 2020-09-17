@@ -35977,6 +35977,9 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bIz" = (
@@ -36077,6 +36080,9 @@
 	dir = 1
 	},
 /obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -36376,6 +36382,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bJM" = (
@@ -36737,6 +36746,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/transparent/glass/reinforced,
@@ -38120,6 +38132,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -46947,6 +46962,7 @@
 	req_access_txt = "30"
 	},
 /obj/structure/railing/corner,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "cBA" = (
@@ -48968,6 +48984,20 @@
 	pixel_x = -6;
 	pixel_y = -25;
 	req_access_txt = "47"
+	},
+/obj/machinery/button/door{
+	id = "misclab";
+	name = "Test Chamber Blast Doors";
+	pixel_x = 6;
+	pixel_y = -38;
+	req_access_txt = "55"
+	},
+/obj/machinery/button/door{
+	id = "xenobiomain";
+	name = "Xenobiology Containment Blast Doors";
+	pixel_x = -6;
+	pixel_y = -38;
+	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -51866,6 +51896,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "mhs" = (
@@ -52400,6 +52431,9 @@
 	pixel_x = -26;
 	pixel_y = 6;
 	req_access_txt = "55"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -53341,6 +53375,9 @@
 /area/hallway/secondary/service)
 "pPa" = (
 /obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -54431,6 +54468,7 @@
 "trt" = (
 /obj/structure/railing,
 /obj/structure/window/reinforced,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "trM" = (
@@ -54584,6 +54622,7 @@
 "tLf" = (
 /obj/structure/window/reinforced,
 /obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "tMl" = (
