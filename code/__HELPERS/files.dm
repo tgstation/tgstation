@@ -82,12 +82,15 @@
 /// Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.
 /proc/md5asfile(file)
 	var/filename = file2filepath(file)
+	var/istmp = FALSE
 	if (!filename || length(filename) < 1)
 		// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
 		filename = generate_tmp_filepath("md5asfile")
 		fcopy(file, filename)
+		istmp = TRUE
 	. = md5filepath(filename)
-	fdel(filename)
+	if (istmp)
+		fdel(filename)
 
 /// Generate a unique filepath inside the tmp folder.
 /// namespace - a optional string to prepend to the filename, useful for knowing what isn't cleaning up their things in the tmp folder
