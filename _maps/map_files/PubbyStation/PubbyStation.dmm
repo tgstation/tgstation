@@ -449,6 +449,10 @@
 	dir = 1
 	},
 /obj/structure/filingcabinet,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/wood,
 /area/quartermaster/qm)
 "abi" = (
@@ -14789,6 +14793,10 @@
 /area/quartermaster/warehouse)
 "aMw" = (
 /obj/structure/cable,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -15555,6 +15563,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aOV" = (
@@ -15946,6 +15957,10 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 9
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aQp" = (
@@ -16858,6 +16873,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 32
 	},
+/obj/machinery/light_switch{
+	pixel_x = 22
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aSZ" = (
@@ -16940,6 +16958,10 @@
 "aTk" = (
 /obj/item/radio/intercom{
 	pixel_y = -26
+	},
+/obj/machinery/light_switch{
+	pixel_x = 8;
+	pixel_y = -34
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -17756,6 +17778,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = -4;
+	pixel_y = -25
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -19969,6 +19995,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/firealarm{
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "baF" = (
@@ -21742,6 +21771,11 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bfE" = (
@@ -22354,7 +22388,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/science/robotics/mechbay)
 "bhq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -44122,7 +44156,7 @@
 /area/crew_quarters/kitchen)
 "cpn" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/food/spaghetti,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cpo" = (
@@ -47452,7 +47486,8 @@
 "dyL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = "50"
+	req_access_txt = null;
+	req_one_access = "12;50"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -47630,6 +47665,10 @@
 "dVK" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "dWk" = (
@@ -50031,6 +50070,10 @@
 /obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "ihj" = (
@@ -51180,6 +51223,10 @@
 	},
 /obj/structure/disposaloutlet{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -53222,7 +53269,8 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = "31"
+	req_access_txt = null;
+	req_one_access = "31;48"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -54999,8 +55047,9 @@
 /area/construction/mining/aux_base)
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster";
-	req_access_txt = "41"
+	name = "Mining";
+	req_access_txt = null;
+	req_one_access = "41; 48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -55365,6 +55414,10 @@
 	},
 /obj/item/radio/intercom{
 	pixel_x = 32
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = -9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -56400,6 +56453,13 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"tvh" = (
+/obj/machinery/light_switch{
+	pixel_x = -20;
+	pixel_y = 34
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "tvj" = (
 /obj/structure/festivus{
 	anchored = 1;
@@ -57644,6 +57704,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"vHj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Docking Arm Maintenance";
+	req_access_txt = null;
+	req_one_access = "12;50"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "vIc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -97143,7 +97214,7 @@ dTT
 aVp
 bgB
 aVv
-aWw
+pvZ
 dVK
 cdV
 aZn
@@ -97915,7 +97986,7 @@ xau
 aVp
 aVv
 aWw
-bat
+tvh
 aYu
 aZn
 aOV
@@ -103312,7 +103383,7 @@ dyL
 saR
 saR
 saR
-dyL
+vHj
 beR
 mXc
 beR
