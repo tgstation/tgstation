@@ -263,12 +263,6 @@
 /obj/effect/turf_decal/siding/wood/end
 	icon_state = "siding_wood_end"
 
-/obj/effect/turf_decal/siding/wood/corner
-	icon_state = "siding_thinplating_corner"
-
-/obj/effect/turf_decal/siding/wood/end
-	icon_state = "siding_thinplating_end"
-
 /obj/effect/turf_decal/siding/thinplating
 	icon_state = "siding_thinplating_line"
 	color = "#aaaaaa"
