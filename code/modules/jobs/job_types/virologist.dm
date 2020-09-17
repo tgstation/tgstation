@@ -1,5 +1,5 @@
 /datum/job/virologist
-	title = "Bioweapons Technician"
+	title = "Virologist"
 	department_head = list("Chief Medical Officer")
 	faction = "Station"
 	total_positions = 1

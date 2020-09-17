@@ -1,5 +1,5 @@
 /datum/job/hos
-	title = "Chief Master at Arms"
+	title = "Head of Security"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
 	head_announce = list(RADIO_CHANNEL_SECURITY)
