@@ -31921,23 +31921,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bxW" = (
-/obj/machinery/door/airlock/research{
-	name = "Toxins Storage";
-	req_access_txt = "71"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/door/firedoor/heavy,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "bxX" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating,
@@ -54806,16 +54789,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"uqJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobiomain";
-	name = "containment blast door"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "urc" = (
 /turf/closed/wall/r_wall,
 /area/storage/mining)
@@ -100501,7 +100474,7 @@ uME
 iHv
 iHv
 wIh
-uqJ
+qyX
 aah
 cOT
 pxV
@@ -103045,7 +103018,7 @@ cas
 cas
 cas
 cas
-bxW
+nLS
 cas
 bLh
 bMs
