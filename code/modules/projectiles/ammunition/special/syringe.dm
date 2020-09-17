@@ -8,19 +8,28 @@
 	if(!BB)
 		return
 	if(istype(loc, /obj/item/gun/syringe))
-		var/obj/item/gun/syringe/SG = loc
-		if(!SG.syringes.len)
+		var/obj/item/gun/syringe/thesyringegun = loc
+		if(!thesyringegun.syringes.len)
 			return
 
-		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
+		var/obj/item/reagent_containers/syringe/actualsyringe = thesyringegun.syringes[1]
 
-		S.reagents.trans_to(BB, S.reagents.total_volume, transfered_by = user)
-		BB.name = S.name
+		actualsyringe.reagents.trans_to(BB, actualsyringe.reagents.total_volume, transfered_by = user)
+		BB.name = actualsyringe.name
 		var/obj/projectile/bullet/dart/D = BB
-		D.piercing = S.proj_piercing
-		SG.syringes.Remove(S)
+		D.piercing = actualsyringe.proj_piercing
+		thesyringegun.syringes.Remove(actualsyringe)
 		qdel(S)
-	..()
+	else if(istype(loc, /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun))
+		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/thesyringegun = loc
+		var/obj/item/reagent_containers/syringe/actualsyringe = thesyringegun.syringes[1]
+		thesyringegun.reagents.trans_to(BB, min(actualsyringe.volume, thesyringegun.reagents.total_volume), transfered_by = user)
+		BB.name = actualsyringe.name
+		var/obj/projectile/bullet/dart/D = BB
+		D.piercing = actualsyringe.proj_piercing
+		LAZYREMOVE(thesyringegun.syringes, actualsyringe)
+		qdel(actualsyringe)
+	return ..()
 
 /obj/item/ammo_casing/chemgun
 	name = "dart synthesiser"
