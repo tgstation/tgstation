@@ -125,15 +125,20 @@
 /obj/item/wheelchair
 	name = "wheelchair"
 	desc = "A collapsed wheelchair that can be carried around."
-	icon = 'icons/obj/rollerbed.dmi'
-	icon_state = "folded"
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "wheelchair_folded"
+	inhand_icon_state = "wheelchair_folded"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	force = 8 //Force is same as a chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair/
 
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "wheelchair_folded_gold"
+	force = 10
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
