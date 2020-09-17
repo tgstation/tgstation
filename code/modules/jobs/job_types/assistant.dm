@@ -2,7 +2,7 @@
 Assistant
 */
 /datum/job/assistant
-	title = "Assistant"
+	title = "Lackey"
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 5
@@ -24,7 +24,7 @@ Assistant
 		return ..()
 
 /datum/outfit/job/assistant
-	name = "Operative"
+	name = "Lackey"
 	jobtype = /datum/job/assistant
 
 	belt = /obj/item/storage/belt/utility/syndicate

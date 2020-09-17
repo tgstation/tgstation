@@ -33,7 +33,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/beret/sec
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = suit = /obj/item/clothing/suit/toggle/labcoat/virologist
 
 	backpack = /obj/item/storage/backpack/duffelbag/syndie
 	satchel = /obj/item/storage/backpack/duffelbag/syndie

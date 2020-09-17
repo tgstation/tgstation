@@ -30,8 +30,8 @@
 	glasses = /obj/item/clothing/glasses/night
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/beret/black
-	suit = /obj/item/clothing/suit/armor/vest
+	head = /obj/item/clothing/head/chefhat
+	suit = /obj/item/clothing/suit/apron/chef
 
 	backpack = /obj/item/storage/backpack/duffelbag/syndie
 	satchel = /obj/item/storage/backpack/duffelbag/syndie

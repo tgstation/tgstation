@@ -358,7 +358,7 @@
 			return "Code Scotch"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Admiral", "Corporate Liaison", "Bartender", "Cook", "Botanist", "Deck Officer", "Deck Crewman",
+	return list("Lackey", "Admiral", "Corporate Liaison", "Bartender", "Cook", "Botanist", "Deck Officer", "Deck Crewman",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Corporate Lawyer", "Chaplain", "Chief Engineering Officer", "Engine Technician",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Officer", "Paramedic", "Explosives Technician", "Genetics Researcher", "Bioweapons Technician", "Psychologist",
 				"Chief Research Officer", "Researcher", "Robotics Technician", "Chief Master at Arms", "Brig Officer", "Investigative Officer", "Master at Arms", "Prisoner")
