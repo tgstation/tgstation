@@ -441,22 +441,14 @@
 	if(!lawset_path)
 		return
 
-	name = GLOB.lawset_laws[lawset_path][LAW_NAME]
+	name = GLOB.lawset_datums[lawset_path].name
 
-	zeroth = GLOB.lawset_laws[lawset_path][LAW_ZEROTH]
+	zeroth = GLOB.lawset_datums[lawset_path].zeroth
 
-	hacked = list()
+	hacked = GLOB.lawset_datums[lawset_path].hacked.Copy()
 
-	hacked.Add(GLOB.lawset_laws[lawset_path][LAW_HACKED])
+	ion = GLOB.lawset_datums[lawset_path].ion.Copy()
 
-	ion = list()
+	inherent = GLOB.lawset_datums[lawset_path].inherent.Copy()
 
-	ion.Add(GLOB.lawset_laws[lawset_path][LAW_ION])
-
-	inherent = list()
-
-	inherent.Add(GLOB.lawset_laws[lawset_path][LAW_INHERENT])
-
-	supplied = list()
-
-	supplied.Add(GLOB.lawset_laws[lawset_path][LAW_SUPPLIED])
+	supplied = GLOB.lawset_datums[lawset_path].supplied.Copy()

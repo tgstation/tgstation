@@ -42,21 +42,13 @@
 
 		laws.zeroth = connected_ai.laws.zeroth_borg || connected_ai.laws.zeroth
 
-	laws.hacked = list()
+	laws.hacked = connected_ai.laws.hacked.Copy()
 
-	laws.hacked.Add(connected_ai.laws.hacked)
+	laws.ion = connected_ai.laws.ion.Copy()
 
-	laws.ion = list()
+	laws.inherent = connected_ai.laws.inherent.Copy()
 
-	laws.ion.Add(connected_ai.laws.ion)
-
-	laws.inherent = list()
-
-	laws.inherent.Add(connected_ai.laws.inherent)
-
-	laws.supplied = list()
-
-	laws.supplied.Add(connected_ai.laws.supplied)
+	laws.supplied = connected_ai.laws.supplied.Copy()
 
 	post_lawchange(FALSE)
 

@@ -111,9 +111,7 @@
 	if(!laws)
 		return
 
-	var/list/law_list = list()
-	
-	law_list.Add(laws.get_law_list(!is_malf(), FALSE, FALSE))
+	var/list/law_list = laws.get_law_list(!is_malf(), FALSE, FALSE).Copy()
 
 	if(!law_list.len)
 		return "None"

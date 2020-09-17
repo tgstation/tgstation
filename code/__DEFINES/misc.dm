@@ -517,8 +517,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ANON_EMPLOYEENAMES "Employees"
 
 // Silicon laws
-#define LAW_NAME "name"
-
 #define LAW_DEVIL "devil"
 #define LAW_ZEROTH "zeroth"
 #define LAW_HACKED "hacked"
