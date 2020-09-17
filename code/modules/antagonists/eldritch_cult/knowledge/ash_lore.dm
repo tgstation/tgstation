@@ -43,8 +43,8 @@
 			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
 	to_chat(C, "<span class='danger'>Your eyes burn horrifically!</span>") //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
 	C.become_nearsighted(EYE_DAMAGE)
-	C.blind_eyes(10)
-	C.blur_eyes(20)
+	C.blind_eyes(5)
+	C.blur_eyes(10)
 	return
 
 /datum/eldritch_knowledge/ashen_eyes
