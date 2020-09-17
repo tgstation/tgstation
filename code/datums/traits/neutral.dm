@@ -268,3 +268,18 @@
 /datum/quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
 
+/datum/quirk/bipolar
+	name = "Mood Swings"
+	desc = "You sometimes simply can't control if you feel positive or negative."
+	mob_trait = TRAIT_BIPOLAR
+	value = 0
+	gain_text = "<span class='danger'>You feel as if you can't control your emotions well.</span>"
+	lose_text = "<span class='notice'>Your emotions seem to stabilize.</span>"
+	medical_record_text = "Patient suffers from occasional, abrupt changes in mood."
+	mood_quirk = TRUE
+
+/datum/quirk/bipolar/on_process(delta_time)
+	if(DT_PROB(0.1, delta_time))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	if(DT_PROB(0.1, delta_time))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
