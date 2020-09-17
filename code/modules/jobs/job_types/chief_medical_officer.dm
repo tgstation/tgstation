@@ -38,7 +38,7 @@
 	l_pocket = /obj/item/pda/syndicate
 	uniform = /obj/item/clothing/under/syndicate/camo
 	r_pocket = /obj/item/flashlight/seclite
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/hud/health/night
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/beret/sec/navyofficer
