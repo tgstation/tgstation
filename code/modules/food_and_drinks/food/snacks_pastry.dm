@@ -912,16 +912,17 @@
 	filling_color = "#ffffff"
 	tastes = list("pastry" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
-/obj/item/reagent_containers/food/snacks/smores
-	name = "smores"
+
+/obj/item/reagent_containers/food/snacks/smore
+	name = "smore"
 	desc = "Toasted marshmallows and gooey chocolate sandwiched between a pair of graham crackers. A campfire classic!"
-	icon_state = "smores"
+	icon_state = "smore"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 1, "marshmallows" = 1, "crackers" = 2)
 	foodtype = GRAIN | SUGAR | JUNKFOOD
 	value = FOOD_FAST
 
-/obj/item/reagent_containers/food/snacks/smores/examine(mob/user)
+/obj/item/reagent_containers/food/snacks/smore/examine(mob/user)
 	. = ..()
 	if (prob(10))
 		desc = "Some more what?"
