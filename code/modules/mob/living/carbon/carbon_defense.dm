@@ -67,17 +67,17 @@
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	var/obj/item/bodypart/affecting
-	if(user == src)
-		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
-	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
+	var/def_zone = user.zone_selected
+	if(user != src) //we're self-mutilating! yay!
+		def_zone = ran_zone(user.zone_selected, precise = TRUE)
+	var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
-	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name, affecting)
+		def_zone = affecting.body_zone
+	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, def_zone)
+	send_item_attack_message(I, user, def_zone, affecting)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
+		apply_damage(I.force, I.damtype, def_zone, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -207,12 +207,19 @@
 					updatehealth()
 		return 1
 
-/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
+/**
+  * Attempts to have an attacker dismember the mob
+  *
+  * * attacker - The attacking mob
+  * * dam_zone - The damage zone, can be precise
+  * * randomize_client_dam_zone - If dam_zone should be randomized if the attacker has a client
+  */
+/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone, randomize_client_dam_zone = TRUE)
 	if(!attacker.limb_destroyer)
 		return dam_zone
 	var/obj/item/bodypart/affecting
 	if(dam_zone && attacker.client)
-		affecting = get_bodypart(ran_zone(dam_zone))
+		affecting = get_bodypart(randomize_client_dam_zone ? ran_zone(dam_zone) : check_zone(dam_zone))
 	else
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
 		for(var/B in things_to_ruin)

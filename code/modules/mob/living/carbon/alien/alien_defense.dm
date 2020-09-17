@@ -72,10 +72,9 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
-	if(..())
-		if (stat != DEAD)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			apply_damage(rand(1, 3), BRUTE, affecting)
+	if(..() || stat == DEAD)
+		return
+	apply_damage(rand(1, 3), BRUTE, ran_zone(M.zone_selected, precise = TRUE))
 
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)

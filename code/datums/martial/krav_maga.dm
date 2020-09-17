@@ -132,14 +132,15 @@
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "punched")
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/def_zone = ran_zone(A.zone_selected, precise = TRUE)
+	var/obj/item/bodypart/affecting = D.get_bodypart()
 	var/armor_block = D.run_armor_check(affecting, "melee")
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomp"
-	D.apply_damage(rand(5,10) + bonus_damage, A.dna.species.attack_type, affecting, armor_block)
+	D.apply_damage(rand(5,10) + bonus_damage, A.dna.species.attack_type, def_zone, armor_block)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -155,7 +156,8 @@
 /datum/martial_art/krav_maga/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/def_zone = ran_zone(A.zone_selected, precise = TRUE)
+	var/obj/item/bodypart/affecting = D.get_bodypart(check_zone(def_zone))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 	if((D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
@@ -163,7 +165,7 @@
 		to_chat(A, "<span class='danger'>You jab [D]!</span>")
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		D.apply_damage(rand(5,10), STAMINA, affecting, armor_block)
+		D.apply_damage(rand(5,10), STAMINA, def_zone, armor_block)
 		log_combat(A, D, "punched nonlethally")
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		D.visible_message("<span class='danger'>[A] reprimands [D]!</span>", \
@@ -171,7 +173,7 @@
 		to_chat(A, "<span class='danger'>You stomp [D]!</span>")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(D, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-		D.apply_damage(rand(10,15), STAMINA, affecting, armor_block)
+		D.apply_damage(rand(10,15), STAMINA, def_zone, armor_block)
 		log_combat(A, D, "stomped nonlethally")
 	if(prob(D.getStaminaLoss()))
 		D.visible_message("<span class='warning'>[D] sputters and recoils in pain!</span>", "<span class='userdanger'>You recoil in pain as you are jabbed in a nerve!</span>")

@@ -12,8 +12,8 @@
 			if ((stat != DEAD) && (damage > 4.9))
 				Unconscious(rand(100,200))
 
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			apply_damage(damage, BRUTE, affecting)
+			var/def_zone = ran_zone(M.zone_selected, precise = TRUE)
+			apply_damage(damage, BRUTE, def_zone)
 		else
 			playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M]'s kick misses [src]!</span>", \

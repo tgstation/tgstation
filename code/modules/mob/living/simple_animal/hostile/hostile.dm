@@ -330,7 +330,11 @@
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
+	SelectTargetZone()
 	return target.attack_animal(src)
+
+/mob/living/simple_animal/hostile/proc/SelectTargetZone()
+	zone_selected = pick(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -399,7 +403,7 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, TRUE)
-		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), 0,  src)
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(BODY_ZONE_CHEST), 0,  src)
 	else if(projectiletype)
 		var/obj/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, TRUE)

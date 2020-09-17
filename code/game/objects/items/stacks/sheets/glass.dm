@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		return
 	if(istype(A, /obj/item/storage))
 		return
-	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
+	var/hit_hand = (user.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc

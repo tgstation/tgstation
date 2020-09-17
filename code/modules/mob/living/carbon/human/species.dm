@@ -1339,7 +1339,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/def_zone = ran_zone(user.zone_selected, precise = TRUE)
+		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(def_zone))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
@@ -1369,14 +1370,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
-			target.dismembering_strike(user, affecting.body_zone)
+			target.dismembering_strike(user, affecting.body_zone, FALSE)
 
 		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
+			target.apply_damage(damage*1.5, user.dna.species.attack_type, def_zone, armor_block)
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
+			target.apply_damage(damage, user.dna.species.attack_type, def_zone, armor_block)
+			target.apply_damage(damage*1.5, STAMINA, def_zone, armor_block)
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
@@ -1539,7 +1540,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if("disarm")
 			disarm(M, H, attacker_style)
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+/**
+  * Handle an attack by an item from another mob
+  *
+  * * I - The item used
+  * * user - The attacking mob
+  * * affecting - The affected bodypart
+  * * intent - The intent used
+  * * H - The species owner
+  * * dam_zone - The precisely targeted zone
+  */
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, def_zone)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
@@ -1553,8 +1564,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
 		affecting = H.bodyparts[1]
 
-	hit_area = affecting.name
-	var/def_zone = affecting.body_zone
+	if(!def_zone)
+		def_zone = affecting.body_zone
+		hit_area = affecting.name
+	else
+		hit_area = parse_zone(def_zone)
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
@@ -1659,6 +1673,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
+			if (def_zone == BODY_ZONE_PRECISE_GROIN)
+				handle_groin_damage(H, damage_amount, sharpness)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
@@ -2116,3 +2132,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. |= BIO_JUST_FLESH
 	if(HAS_BONE in species_traits)
 		. |= BIO_JUST_BONE
+
+/**
+  * Handle direct blunt damage to the groin.
+  *
+  * * H - The human this species applies to
+  * * damage_amount - The amount of damage applied
+  * * sharpness - The sharpness of the attack
+  */
+/datum/species/proc/handle_groin_damage(mob/living/carbon/human/H, damage_amount, sharpness)
+	return

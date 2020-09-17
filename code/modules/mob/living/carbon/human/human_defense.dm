@@ -169,20 +169,19 @@
 	if(!I || !user)
 		return 0
 
-	var/obj/item/bodypart/affecting
-	if(user == src)
-		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
-	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
-	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
+	var/dam_zone = user.zone_selected
+	if(user != src) //stabbing yourself always hits the right target
+		dam_zone = ran_zone(dam_zone, precise = TRUE)
 
-	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
+	var/obj/item/bodypart/affecting = get_bodypart(check_zone(dam_zone))
+
+	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, dam_zone)
 
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))
-	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
+	SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(check_zone(dam_zone)))
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
+	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src, dam_zone)
 
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
@@ -207,7 +206,8 @@
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+	dam_zone = ran_zone(dam_zone, precise = TRUE)
+	var/obj/item/bodypart/affecting = get_bodypart(check_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 	if(M.a_intent == INTENT_HELP)
@@ -236,8 +236,11 @@
 								"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
 				to_chat(M, "<span class='danger'>You tackle [src] down!</span>")
 
-	if(M.limb_destroyer)
-		dismembering_strike(M, affecting.body_zone)
+	dam_zone = dismembering_strike(M, dam_zone, FALSE)
+	if(!dam_zone)
+		//dismembered
+		..() // handle disease
+		return TRUE
 
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
@@ -245,7 +248,7 @@
 			if(check_shields(M, damage, "the [M.name]"))
 				return 0
 			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+				apply_damage(damage, BRUTE, dam_zone, run_armor_check(affecting, "melee"))
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -266,7 +269,8 @@
 								"<span class='userdanger'>[M] lunges at you!</span>", "<span class='hear'>You hear a swoosh!</span>", null, M)
 				to_chat(M, "<span class='danger'>You lunge at [src]!</span>")
 				return 0
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+			var/def_zone = ran_zone(M.zone_selected, precise = TRUE)
+			var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 			if(!affecting)
 				affecting = get_bodypart(BODY_ZONE_CHEST)
 			var/armor_block = run_armor_check(affecting, "melee","","",10)
@@ -276,9 +280,9 @@
 							"<span class='userdanger'>[M] slashes at you!</span>", "<span class='hear'>You hear a sickening sound of a slice!</span>", null, M)
 			to_chat(M, "<span class='danger'>You slash at [src]!</span>")
 			log_combat(M, src, "attacked")
-			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
+			if(!dismembering_strike(M, def_zone, FALSE)) //Dismemberment successful
 				return 1
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, def_zone, armor_block)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
 			var/obj/item/I = get_active_held_item()
@@ -304,11 +308,13 @@
 			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
+			var/def_zone = ran_zone(L.zone_selected, precise = TRUE)
+			var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 			if(!affecting)
 				affecting = get_bodypart(BODY_ZONE_CHEST)
+				def_zone = affecting.body_zone
 			var/armor_block = run_armor_check(affecting, "melee")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, def_zone, armor_block)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
@@ -317,14 +323,12 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(M, damage, "the [M.name]", MELEE_ATTACK, M.armour_penetration))
 			return FALSE
-		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/dam_zone = dismembering_strike(M, M.zone_selected)
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
-		apply_damage(damage, M.melee_damage_type, affecting, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
+		var/obj/item/bodypart/affecting = get_bodypart(check_zone(dam_zone))
+		var/armor = run_armor_check(affecting || get_bodypart(BODY_ZONE_CHEST), "melee", armour_penetration = M.armour_penetration)
+		apply_damage(damage, M.melee_damage_type, affecting ? dam_zone : BODY_ZONE_CHEST, armor, wound_bonus = M.wound_bonus, bare_wound_bonus = M.bare_wound_bonus, sharpness = M.sharpness)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -338,7 +342,7 @@
 		if(check_shields(M, damage, "the [M.name]"))
 			return 0
 
-		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/dam_zone = dismembering_strike(M, M.zone_selected)
 		if(!dam_zone) //Dismemberment successful
 			return 1
 
@@ -465,8 +469,9 @@
 		return
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	var/obj/item/bodypart/affecting = get_bodypart(check_zone(dam_zone))
+	var/blocked = run_armor_check(affecting, "melee")
+	apply_damage(5, BRUTE, dam_zone, blocked)
 
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.

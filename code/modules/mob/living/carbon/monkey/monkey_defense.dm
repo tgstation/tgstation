@@ -8,24 +8,17 @@
 /mob/living/carbon/monkey/attack_paw(mob/living/M)
 	if(..()) //successful monkey bite.
 		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		if(M.limb_destroyer)
-			dismembering_strike(M, affecting.body_zone)
+		dam_zone = dismembering_strike(M, dam_zone)
 		if(stat != DEAD)
 			var/dmg = rand(1, 5)
-			apply_damage(dmg, BRUTE, affecting)
+			apply_damage(dmg, BRUTE, dam_zone)
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
-			if(!affecting)
-				affecting = get_bodypart(BODY_ZONE_CHEST)
-			apply_damage(damage, BRUTE, affecting)
+			apply_damage(damage, BRUTE, L.zone_selected)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
@@ -52,11 +45,8 @@
 						visible_message("<span class='danger'>[M] knocks [name] out!</span>", \
 										"<span class='userdanger'>[M] knocks you out!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", 5, M)
 						to_chat(M, "<span class='danger'>You knock [name] out!</span>")
-				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-				if(!affecting)
-					affecting = get_bodypart(BODY_ZONE_CHEST)
-				apply_damage(damage, BRUTE, affecting)
 				log_combat(M, src, "attacked")
+				apply_damage(damage, BRUTE, ran_zone(M.zone_selected, precise = TRUE))
 
 			else
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
@@ -97,13 +87,11 @@
 									"<span class='userdanger'>[M] slashes you!</span>", "<span class='hear'>You hear a sickening sound of a slice!</span>", COMBAT_MESSAGE_RANGE, M)
 					to_chat(M, "<span class='danger'>You slash [name]!</span>")
 
-				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 				log_combat(M, src, "attacked")
-				if(!affecting)
-					affecting = get_bodypart(BODY_ZONE_CHEST)
-				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
-					return 1
-				apply_damage(damage, BRUTE, affecting)
+				var/dam_zone = dismembering_strike(M, M.zone_selected)
+				if(!dam_zone) //Dismemberment successful
+					return TRUE
+				apply_damage(damage, BRUTE, dam_zone)
 
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
@@ -135,26 +123,20 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), FALSE)
 		if(!dam_zone) //Dismemberment successful
 			return TRUE
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		apply_damage(damage, M.melee_damage_type, affecting)
+		apply_damage(damage, M.melee_damage_type, dam_zone)
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)
 			damage = rand(20, 40)
-		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), FALSE)
 		if(!dam_zone) //Dismemberment successful
-			return 1
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		apply_damage(damage, BRUTE, affecting)
+			return TRUE
+		apply_damage(damage, BRUTE, dam_zone)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1

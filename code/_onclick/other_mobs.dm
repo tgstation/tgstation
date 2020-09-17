@@ -137,10 +137,10 @@
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML
-			affecting = H.get_bodypart(ran_zone(dam_zone))
+			affecting = H.get_bodypart(check_zone(dam_zone))
 		var/armor = ML.run_armor_check(affecting, "melee")
 		if(prob(75))
-			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
+			ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 							"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
 			to_chat(name, "<span class='danger'>You bite [ML]!</span>")

@@ -116,7 +116,7 @@
 	return TRUE
 
 /datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	target.apply_damage(50, BRUTE, "[target_zone]", wound_bonus=CANT_WOUND)
+	target.apply_damage(50, BRUTE, target_zone, wound_bonus=CANT_WOUND)
 	display_results(user, target, "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>",
 		"<span class='notice'>[user] saws [target]'s [parse_zone(target_zone)] open!</span>")

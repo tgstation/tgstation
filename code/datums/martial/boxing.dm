@@ -25,8 +25,8 @@
 		log_combat(A, D, "attempted to hit", atk_verb)
 		return 0
 
-
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/def_zone = ran_zone(A.zone_selected, precise = TRUE)
+	var/obj/item/bodypart/affecting = D.get_bodypart(check_zone(def_zone))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, TRUE, -1)
@@ -35,7 +35,7 @@
 					"<span class='userdanger'>You're [atk_verb]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You [atk_verb]ed [D]!</span>")
 
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, STAMINA, def_zone, armor_block)
 	log_combat(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)

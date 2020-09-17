@@ -26,7 +26,7 @@
 ///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/dam_zone = ran_zone(A.zone_selected, precise = TRUE)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
@@ -34,7 +34,7 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "strong punched (Sleeping Carp)")
-	D.apply_damage(20, A.dna.species.attack_type, affecting)
+	D.apply_damage(20, A.dna.species.attack_type, dam_zone)
 	return
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -79,13 +79,13 @@
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return TRUE
-	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
+	var/dam_zone = ran_zone(A.zone_selected, precise = TRUE)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(rand(10,15), BRUTE, affecting, wound_bonus = CANT_WOUND)
+	D.apply_damage(rand(10,15), BRUTE, dam_zone, wound_bonus = CANT_WOUND)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE

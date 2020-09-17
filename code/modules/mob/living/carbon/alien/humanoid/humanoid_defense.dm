@@ -29,8 +29,8 @@
 						visible_message("<span class='danger'>[M] knocks [src] down!</span>", \
 										"<span class='userdanger'>[M] knocks you down!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, M)
 						to_chat(M, "<span class='danger'>You knock [src] down!</span>")
-					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-					apply_damage(damage, BRUTE, affecting)
+					var/def_zone = ran_zone(M.zone_selected, precise = TRUE)
+					apply_damage(damage, BRUTE, def_zone)
 					log_combat(M, src, "attacked")
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)

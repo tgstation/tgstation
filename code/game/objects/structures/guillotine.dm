@@ -118,7 +118,7 @@
 		if (!H)
 			return
 
-		var/obj/item/bodypart/head/head = H.get_bodypart("head")
+		var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 
 		if (QDELETED(head))
 			return
