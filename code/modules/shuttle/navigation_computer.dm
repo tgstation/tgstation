@@ -33,7 +33,7 @@
 		for(var/port_u_id in SSshuttle.stationary)
 			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_u_id]
 			if(S.id == shuttleId)
-				jumpto_ports[S.u_id] = TRUE
+				jumpto_ports[S.id] = TRUE
 
 	for(var/V in SSshuttle.stationary)
 		if(!V)
@@ -351,7 +351,7 @@
 		if(!V)
 			stack_trace("SSshuttle.stationary have null entry!")
 			continue
-		var/obj/docking_port/stationary/S = V
+		var/obj/docking_port/stationary/S = SSshuttle.stationary[V]
 		if(console.z_lock.len && !(S.z in console.z_lock))
 			continue
 		if(console.jumpto_ports[S.id])
