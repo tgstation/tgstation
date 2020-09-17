@@ -1,10 +1,10 @@
 /datum/job/cargo_tech
-	title = "Cargo Technician"
+	title = "Deck Crewman"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the deck officer and the corporate liaison"
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/cargo_tech
@@ -17,11 +17,24 @@
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 
 /datum/outfit/job/cargo_tech
-	name = "Cargo Technician"
+	name = "Deck Crewman"
 	jobtype = /datum/job/cargo_tech
 
-	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/tech
+	belt = /obj/item/storage/belt/utility/syndicate
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/night
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/durathread
+	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	l_hand = /obj/item/export_scanner
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)

@@ -4,7 +4,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel and the chief medical officer"
+	supervisors = "the corporate liaison and the chief medical officer"
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/psychologist
@@ -21,15 +21,21 @@
 	jobtype = /datum/job/psychologist
 
 	ears = /obj/item/radio/headset/headset_srvmed
-	uniform = /obj/item/clothing/under/suit/black
-	shoes = /obj/item/clothing/shoes/laceup
-	id = /obj/item/card/id
-	belt = /obj/item/pda/medical
-	pda_slot = ITEM_SLOT_BELT
+	belt = /obj/item/storage/belt/utility/syndicate
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate/sniper
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/night
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/black
+	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	l_hand = /obj/item/clipboard
 
 	backpack_contents = list(/obj/item/storage/pill_bottle/mannitol, /obj/item/storage/pill_bottle/psicodine, /obj/item/storage/pill_bottle/paxpsych, /obj/item/storage/pill_bottle/happinesspsych, /obj/item/storage/pill_bottle/lsdpsych)
-
-	backpack = /obj/item/storage/backpack/medic
-	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med

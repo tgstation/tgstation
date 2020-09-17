@@ -1,10 +1,10 @@
 /datum/job/geneticist
-	title = "Geneticist"
+	title = "Genetics Researcher"
 	department_head = list("Research Director")
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the research director"
+	supervisors = "the chief research officer"
 	selection_color = "#ffeeff"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
@@ -20,15 +20,25 @@
 	bounty_types = CIV_JOB_SCI
 
 /datum/outfit/job/geneticist
-	name = "Geneticist"
+	name = "Genetics Researcher"
 	jobtype = /datum/job/geneticist
 
-	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
-	suit_store =  /obj/item/flashlight/pen
+	belt = /obj/item/storage/belt/military
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/night
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/durathread
+	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	l_pocket = /obj/item/sequence_scanner
 
 	backpack = /obj/item/storage/backpack/genetics

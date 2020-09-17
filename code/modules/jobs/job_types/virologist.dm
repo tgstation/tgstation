@@ -1,5 +1,5 @@
 /datum/job/virologist
-	title = "Virologist"
+	title = "Bioweapons Technician"
 	department_head = list("Chief Medical Officer")
 	faction = "Station"
 	total_positions = 1
@@ -20,18 +20,23 @@
 	bounty_types = CIV_JOB_VIRO
 
 /datum/outfit/job/virologist
-	name = "Virologist"
+	name = "Bioweapons Technician"
 	jobtype = /datum/job/virologist
 
-	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/virologist
 	mask = /obj/item/clothing/mask/surgical
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
-	suit_store =  /obj/item/flashlight/pen
+	belt = /obj/item/storage/belt/utility/syndicate
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate/combat
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/hud/health/night
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/sec
+	suit = /obj/item/clothing/suit/armor/vest
 
-	backpack = /obj/item/storage/backpack/virology
-	satchel = /obj/item/storage/backpack/satchel/vir
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	box = /obj/item/storage/box/survival/medical
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET

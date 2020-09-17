@@ -1,5 +1,5 @@
 /datum/job/chemist
-	title = "Chemist"
+	title = "Explosives Technician"
 	department_head = list("Chief Medical Officer")
 	faction = "Station"
 	total_positions = 2
@@ -20,19 +20,25 @@
 	bounty_types = CIV_JOB_CHEM
 
 /datum/outfit/job/chemist
-	name = "Chemist"
+	name = "Explosives Technician"
 	jobtype = /datum/job/chemist
 
-	glasses = /obj/item/clothing/glasses/science
-	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/chemist
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-	backpack = /obj/item/storage/backpack/chemistry
-	satchel = /obj/item/storage/backpack/satchel/chem
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	box = /obj/item/storage/box/survival/medical
+	belt = /obj/item/storage/belt/utility/syndicate
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/sunglasses/chemical
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/durathread
+	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 
 	chameleon_extras = /obj/item/gun/syringe
 
