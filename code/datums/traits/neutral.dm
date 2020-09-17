@@ -280,6 +280,6 @@
 
 /datum/quirk/bipolar/on_process(delta_time)
 	if(DT_PROB(0.1, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bipolar_sad", /datum/mood_event/bipolar_sad)
 	if(DT_PROB(0.1, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bipolar_happy", /datum/mood_event/bipolar_happy)

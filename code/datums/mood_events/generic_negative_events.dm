@@ -239,6 +239,11 @@
 	mood_change = -25
 	timeout = 4 MINUTES
 
+/datum/mood_event/bipolar_sad
+	description = "<span class='warning'>I'm feeling slightly sad for no reason at all.</span>\n"
+	mood_change = -12
+	timeout = 2 MINUTES
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"

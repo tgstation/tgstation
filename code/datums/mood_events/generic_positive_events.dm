@@ -203,3 +203,8 @@
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/bipolar_happy
+	description = "<span class='nicegreen'>I'm feeling a bit more happy than usual.</span>\n"
+	mood_change = 6
+	timeout = 2 MINUTES
