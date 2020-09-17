@@ -283,14 +283,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
 		user.reset_perspective(parentSphere)
-		user.set_machine(src)
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
-		user.unset_machine()
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
 			PHC.Trigger()
 
@@ -304,6 +303,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	qdel(src)
 
 /area/hilbertshotel
