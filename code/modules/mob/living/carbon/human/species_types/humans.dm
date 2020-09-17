@@ -12,9 +12,7 @@
 	payday_modifier = 1
 
 	var/groin_pain_timer
-
-	var/groin_pain_threshold = 20
-	var/groin_pain_nads_modifier = 2
+	var/groin_pain_threshold = 18
 
 /datum/species/human/handle_groin_damage(mob/living/carbon/human/H, damage_amount, sharpness)
 	if(damage_amount >= 10)
@@ -23,11 +21,7 @@
 	if (sharpness != SHARP_NONE)
 		return
 
-	var/pain_threshold = groin_pain_threshold
-	if (H.gender == MALE)
-		pain_threshold -= groin_pain_nads_modifier
-
-	if (groin_pain_timer || damage_amount < pain_threshold)
+	if (groin_pain_timer || damage_amount < groin_pain_threshold)
 		return
 
 	to_chat(H, "<span class='boldwarning'>That's <i>REALLY</i> going to hurt in a few seconds!<span>")
@@ -41,13 +35,12 @@
 
 #ifdef TESTING
 /datum/species/human/proc/print_potential_groin_pain_sources()
-	to_chat(usr, "Items ending with '!' are male only")
 	for(var/path in subtypesof(/obj/item))
 		var/obj/item/template = path
 		var/sharpness = initial(template.sharpness)
 		if(sharpness != SHARP_NONE)
 			continue
 		var/force = initial(template.force)
-		if(force >= groin_pain_threshold - groin_pain_nads_modifier)
-			to_chat(usr, "[path][(force >= groin_pain_threshold ? "" : " !")]")
+		if(force >= groin_pain_threshold)
+			to_chat(usr, "[path]")
 #endif
