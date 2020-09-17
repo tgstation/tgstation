@@ -44,8 +44,5 @@
 	loot = list(/obj/effect/decal/remains/human)
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
-	var/base_melee_damage = 20
-	var/dick_melee_damage_modifier = 5
-
 /mob/living/simple_animal/hostile/dick_kickem/SelectTargetZone()
 	zone_selected = BODY_ZONE_PRECISE_GROIN
