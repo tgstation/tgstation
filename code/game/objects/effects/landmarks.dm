@@ -106,7 +106,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Shaft Miner"
 
 /obj/effect/landmark/start/security_officer
-	name = "Security Officer"
+	name = "Master at Arms"
 	icon_state = "Security Officer"
 
 /obj/effect/landmark/start/botanist

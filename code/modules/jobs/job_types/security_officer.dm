@@ -1,5 +1,5 @@
 /datum/job/officer
-	title = "Security Officer"
+	title = "Master at Arms"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
 	faction = "Station"
@@ -32,7 +32,8 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 /datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	// Assign department security
-	var/department
+	var/department //force em to start in the brig
+	/*
 	if(M && M.client && M.client.prefs)
 		department = M.client.prefs.prefered_security_department
 		if(!LAZYLEN(GLOB.available_depts) || department == "None")
@@ -41,6 +42,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			LAZYREMOVE(GLOB.available_depts, department)
 		else
 			department = pick_n_take(GLOB.available_depts)
+	*/
 	var/ears = null
 	var/accessory = null
 	var/list/dep_access = null

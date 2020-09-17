@@ -501,7 +501,7 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
-	var/datum/job/J = SSjob.GetJob("Security Officer")
+	var/datum/job/J = SSjob.GetJob("Master At Arms")
 	if(!J)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
