@@ -136,13 +136,34 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+		tick_interval = -1
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_insomniac)
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_sleepy)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+		tick_interval = initial(tick_interval)
 	return ..()
 
+///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
+/datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	tick_interval = -1
+
+///If the mob has the TRAIT_SLEEPIMMUNE but somehow looses it we make him sleep and restart the tick()
+/datum/status_effect/incapacitating/sleeping/proc/on_owner_sleepy(mob/living/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	tick_interval = initial(tick_interval)
+
 /datum/status_effect/incapacitating/sleeping/tick()
+	if(HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		return
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = -0.2

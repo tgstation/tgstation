@@ -291,7 +291,7 @@
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
 /mob/living/proc/IsSleeping() //If we're asleep
-	return has_status_effect(STATUS_EFFECT_SLEEPING)
+	return has_status_effect(STATUS_EFFECT_SLEEPING) && !HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
@@ -302,7 +302,7 @@
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
+	if(ignore_canstun)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
@@ -313,7 +313,7 @@
 /mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
+	if(ignore_canstun)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(amount <= 0)
 			if(S)
@@ -327,7 +327,7 @@
 /mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
 		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
+	if(ignore_canstun)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration += amount
