@@ -26,9 +26,6 @@
 		networks = list()
 
 	networks[network_id] = src
-	if(!SSnetworks.register_network(src))
-		stack_trace("Network [type] with ID [network_id] failed to register and has been deleted.")
-		qdel(src)
 
 /datum/ntnet/Destroy()
 	networks.Remove(network_id)
@@ -37,6 +34,13 @@
 	networks = null
 	return ..()
 
+// creates a network as a child of this network
+/datum/ntnet/proc/create_or_find_domain(new_network)
+	var/datum/ntnet/net = networks[new_network]
+	if(!net)
+		net = new/datum/ntnet(new_network, src)
+		networks[new_network] = net
+	return net
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
 	if(device.network)
@@ -140,15 +144,13 @@
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New(network_id = "SS13-NTNET")
+/datum/ntnet/station/New(network_id = SYNDICATE_NETWORK_ROOT)
 	..()
 	build_software_lists()
 	add_log("NTNet logging system activated.")
 
 
-/datum/ntnet/station/syndicate
-
-/datum/ntnet/station/syndicate/New(network_id = "SYNDI-NTNET")
+/datum/ntnet/station/syndicate/New(network_id = STATION_NETWORK_ROOT)
 	..()
 	build_software_lists()
 	add_log("NTNet logging system activated.")

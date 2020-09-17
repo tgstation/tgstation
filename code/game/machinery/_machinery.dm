@@ -128,6 +128,11 @@ Class Procs:
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
 
+	// nntd networking stuff.  Set a network name and we will auto join the network under that name
+	var/network_id = null
+	// This is the station name we are joining too.  Make a custom name for like charlie or sindicate so their networks don't share
+	var/network_root_id = STATION_NETWORK_ROOT
+
 /obj/machinery/Initialize()
 	if(!armor)
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
@@ -145,6 +150,11 @@ Class Procs:
 		occupant_typecache = typecacheof(occupant_typecache)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/ComponentInitialize()
+	. = ..()
+	if(network_id)
+		AddComponent(/datum/component/ntnet_interface, network_id,  network_root_id)
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()

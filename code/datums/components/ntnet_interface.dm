@@ -13,17 +13,17 @@
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
 	var/list/regestered_scokets 		// list of call procs
 
-/datum/component/ntnet_interface/Initialize(network_name=null)			//Don't force ID unless you know what you're doing!
-	set_network(network_name)
+/datum/component/ntnet_interface/Initialize(network_name, network_root=null)			//Don't force ID unless you know what you're doing!
+	set_network(network_name, network_root)
 
 /datum/component/ntnet_interface/Destroy()
 	SSnetworks.unregister_interface(src)
 	return ..()
 
-/datum/component/ntnet_interface/proc/set_network(network_name=null)
+/datum/component/ntnet_interface/proc/set_network(network_name, network_root=null)
 	if(network)
 		SSnetworks.unregister_interface(src)
-	SSnetworks.register_interface(src, network_name)
+	SSnetworks.register_interface(src, network_name, network_root)
 
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
 	set waitfor = FALSE
@@ -36,7 +36,7 @@
 			__network_send(data)
 		// ok figure out how to detect a call.  do we want to use datum/callback?
 	else
-		SEND_SIGNAL(parent, COMSIG_COMPONENT_NTNET_RECEIVE, data)
+		parent.ntnet_receive(data)
 
 
 /datum/component/ntnet_interface/proc/__network_send(datum/netdata/data)			//Do not directly proccall!

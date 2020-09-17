@@ -5,31 +5,33 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	stat_tag = "NET"
 	flags = SS_KEEP_TIMING
 	init_order = INIT_ORDER_NETWORKS
+
+	// This is a tree network.  These are the trunks
 	var/datum/ntnet/station/station_network
-	var/datum/ntnet/station/syndicate_network
-	var/list/networks_by_id = list()				//id = network
+
 	var/list/interfaces_by_hardware_id = list()
 
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
-	syndicate_network = new
+
 	station_network.register_map_supremecy()
 	. = ..()
 
-/datum/controller/subsystem/processing/networks/proc/register_network(network=null, datum/ntnet/parent=null)
-	var/datum/ntnet/net = null
-	if(!network)
-		net = station_network
-	else if(istext(network))
-		if(!networks_by_id[network])
-			if(!parent)
-				parent = station_network
-			net = new/datum/ntnet(network, parent) // always a parrent to the main network
-			networks_by_id[network] = net
-			log_network("Network created for [parent] with the name '[network]'")
-	else if(istype(network, /datum/ntnet)) // custom network, like for sindies or charlie
-		net = network
-	if(!net)
+/datum/controller/subsystem/processing/networks/proc/register_network(network_id, network_parent=null)
+	var/datum/ntnet/net = station_network.networks[network_id]
+	if(net)
+		return net 		// if the net exists, just return
+	// net dosn't exist, lets create it
+	if(!network_parent)
+		net = station_network.create_or_find_domain(network_id)	// default to the roote network
+	else if(istext(network_parent))
+		net = station_network.networks[network_parent]
+		if(!net)	// the parrent dosn't exist, this is an error as it shoul assume you wanted to make the parrent of the main station network
+			net = station_network.create_or_find_domain(network_parent)
+			log_network("Network created for [network_parent] does not exist, creating [network_parent] off station network")
+		net = net.create_or_find_domain(network_id)
+		log_network("Network '[network_id]'")
+	else
 		log_runtime("No network created and not sure why?")
 	return net
 
@@ -49,16 +51,15 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	collision_check[.] = TRUE
 
 
-/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/ntnet_interface/I, network)
-		I.hardware_id = "[get_next_HID()]"
-		interfaces_by_hardware_id[I.hardware_id] = I
-		var/datum/ntnet/net = register_network(network)	// default to station
-		net.interface_connect(I)
+/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/ntnet_interface/interface, network_id, network_root=null)
+		interface.hardware_id = "[get_next_HID()]"
+		interfaces_by_hardware_id[interface.hardware_id] = interface
+		var/datum/ntnet/net = register_network(network_id, network_root)	// default to station
+		net.interface_connect(interface)
 
-/datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/ntnet_interface/I)
-		I.network.interface_disconnect(I)
-		interfaces_by_hardware_id[I.hardware_id] = null
-		interfaces_by_hardware_id.Remove(I.hardware_id)
+/datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/ntnet_interface/interface)
+		interface.network.interface_disconnect(interface)
+		interfaces_by_hardware_id.Remove(interface.hardware_id)
 
 
 
