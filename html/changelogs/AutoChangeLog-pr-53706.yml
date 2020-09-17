@@ -1,0 +1,4 @@
+author: "Azarak"
+delete-after: True
+changes: 
+  - tweak: "Messages based on sight aren't obscured by darkness if you're right next to the source"
