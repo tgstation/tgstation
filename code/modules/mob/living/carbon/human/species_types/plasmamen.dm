@@ -82,6 +82,9 @@
 
 		if("Bartender", "Lawyer")
 			O = new /datum/outfit/plasmaman/bar
+		
+		if("Psychologist")
+			O = new /datum/outfit/plasmaman/psychologist
 
 		if("Cook")
 			O = new /datum/outfit/plasmaman/chef

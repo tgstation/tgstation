@@ -3,6 +3,7 @@
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
+	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0

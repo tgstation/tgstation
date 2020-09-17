@@ -1,6 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "icons are back on alt clicks"
-  - bugfix: "horrible performance from alt clicking turfs with multiple objects
-tweak:browser should notify the SS when it's ready to receive data"
