@@ -365,11 +365,11 @@
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/smore
-	name = "Smores"
+	name = "S'more"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/cracker = 2,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
-		/datum/reagent/consumable/sugar = 1,
+		/datum/reagent/consumable/sugar = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/smore
 	subcategory = CAT_MISCFOOD

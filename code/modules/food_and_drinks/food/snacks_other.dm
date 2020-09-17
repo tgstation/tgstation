@@ -850,8 +850,8 @@
 	desc = "Toasted marshmallows and gooey chocolate sandwiched between a pair of graham crackers. A campfire classic!"
 	icon_state = "smore"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("chocolate" = 1, "marshmallows" = 1, "crackers" = 2)
-	foodtype = GRAIN | SUGAR | JUNKFOOD
+	tastes = list("chocolate" = 2, "marshmallows" = 2, "crackers" = 2)
+	foodtype = GRAIN | SUGAR
 	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/smore/examine(mob/user)
