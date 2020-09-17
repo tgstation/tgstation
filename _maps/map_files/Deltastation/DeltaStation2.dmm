@@ -3702,10 +3702,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/security/checkpoint)
-"akR" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/security/checkpoint)
 "akS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -29869,9 +29865,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Security - Office Fore"
 	},
@@ -31488,10 +31481,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/hallway/primary/fore)
-"blE" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/hallway/primary/fore)
 "blH" = (
 /obj/effect/turf_decal/tile/brown,
@@ -36444,10 +36433,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/light,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -39628,9 +39613,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/power/smes{
 	charge = 5e+006
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
@@ -48608,10 +48590,6 @@
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/crew_quarters/heads/chief)
-"bPX" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/crew_quarters/heads/chief)
 "bPY" = (
 /obj/structure/sign/warning/nosmoking,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -49767,10 +49745,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
-"bSq" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/storage/tech)
 "bSs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
@@ -62325,10 +62299,6 @@
 	},
 /obj/machinery/vending/cigarette/syndicate,
 /turf/open/floor/plasteel/dark,
-/area/security/courtroom)
-"crk" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/security/courtroom)
 "crl" = (
 /obj/structure/table/wood,
@@ -79404,10 +79374,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
-"cZq" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/science/lab)
 "cZr" = (
 /obj/machinery/light{
 	dir = 8
@@ -83610,10 +83576,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
-"dhU" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/science/xenobiology)
 "dhV" = (
 /obj/machinery/light{
 	dir = 8
@@ -85105,10 +85067,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
-"dkV" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ai_monitored/turret_protected/aisat_interior)
 "dkW" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/survival_pod{
@@ -85348,7 +85306,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/science/research)
 "dlD" = (
-/obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/crew_quarters/heads/hor)
 "dlF" = (
@@ -90308,9 +90265,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
-"dxW" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/crew_quarters/heads/hor)
 "dxX" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
@@ -103028,9 +102982,6 @@
 /turf/open/space/basic,
 /area/space)
 "eaf" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -103234,10 +103185,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
-"eaO" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/medical/virology)
 "eaP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green{
@@ -103378,10 +103325,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/maintenance/port/aft)
-"ebc" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/maintenance/port/aft)
 "ebd" = (
 /obj/structure/bodycontainer/morgue,
@@ -112361,9 +112304,6 @@
 	},
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/item/crowbar/power,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/bot,
 /obj/item/crowbar/power,
 /obj/item/crowbar/power,
@@ -120928,7 +120868,7 @@ bYa
 bVH
 bYa
 bRE
-dkV
+bRD
 cnx
 cft
 cho
@@ -138398,7 +138338,7 @@ bIa
 bKa
 bLV
 bNY
-bPX
+bHV
 bSh
 bTY
 bWp
@@ -142254,7 +142194,7 @@ bxY
 bxY
 bxY
 bxY
-bSq
+bxY
 bUv
 bWC
 bWC
@@ -144352,7 +144292,7 @@ cNc
 cNc
 cNc
 cNc
-dhU
+cNc
 djK
 djK
 dmF
@@ -145162,7 +145102,7 @@ dON
 dON
 dZJ
 dTv
-ebc
+dOM
 ebQ
 ecu
 ecP
@@ -146925,18 +146865,18 @@ dgC
 cQM
 oUW
 dlD
-dxW
-dxW
-dxW
-dxW
-dxW
+dlD
+dlD
+dlD
+dlD
+dlD
 kvf
-dxW
-dxW
-dxW
-dxW
-dxW
-dxW
+dlD
+dlD
+dlD
+dlD
+dlD
+dlD
 dEy
 dFP
 dHo
@@ -147181,7 +147121,7 @@ dfm
 dgD
 dib
 djS
-dxW
+dlD
 dmS
 doM
 dqC
@@ -147189,11 +147129,11 @@ drX
 dtq
 duK
 dwo
-dxW
+dlD
 dzA
 dAE
 dCi
-dxW
+dlD
 dEz
 dFQ
 dHp
@@ -147450,7 +147390,7 @@ dxX
 dzB
 dAF
 dCj
-dxW
+dlD
 dEA
 dEA
 dEA
@@ -147707,7 +147647,7 @@ dxY
 dzC
 dAG
 dCk
-dxW
+dlD
 dEB
 dFR
 dHq
@@ -148217,11 +148157,11 @@ dsb
 dtu
 duO
 dws
-dxW
+dlD
 dzE
 dAI
 dCm
-dxW
+dlD
 dED
 dFT
 dHs
@@ -148470,15 +148410,15 @@ dlH
 dlH
 dlH
 dqH
-dxW
-dxW
-dlH
-dxW
 dlD
-dxW
-dxW
-dxW
-dxW
+dlD
+dlH
+dlD
+dlD
+dlD
+dlD
+dlD
+dlD
 dEE
 dFU
 dEA
@@ -151799,7 +151739,7 @@ cSy
 cUn
 cNp
 cZi
-cZq
+cZm
 loI
 cZm
 loI
@@ -152772,7 +152712,7 @@ bfk
 bgx
 bhW
 bfk
-blE
+bdN
 bnu
 boP
 bqR
@@ -154274,7 +154214,7 @@ aiS
 aje
 ajH
 akj
-akR
+akP
 alB
 amx
 anx
@@ -158973,7 +158913,7 @@ ccZ
 ccZ
 ccZ
 ccZ
-crk
+cbk
 csN
 cbk
 cvN
@@ -162894,7 +162834,7 @@ dYg
 dZc
 dZE
 dQl
-eaO
+dQl
 ebx
 dQl
 dQl
