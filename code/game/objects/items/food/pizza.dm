@@ -17,6 +17,7 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/pizzaslice/Initialize()
 	. = ..()
