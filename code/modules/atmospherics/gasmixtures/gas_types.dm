@@ -188,12 +188,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/taburine
-	id = "taburine"
+/datum/gas/zauker
+	id = "zauker"
 	specific_heat = 350
-	name = "Taburine"
+	name = "Zauker"
 	dangerous = TRUE
-	gas_overlay = "taburine"
+	gas_overlay = "zauker"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 

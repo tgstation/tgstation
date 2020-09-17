@@ -67,7 +67,7 @@
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
 		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
-		"taburine" = /obj/machinery/portable_atmospherics/canister/taburine,
+		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
 		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	)
@@ -215,12 +215,12 @@
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/taburine
-	name = "Taburine canister"
-	desc = "Taburine, highly toxic"
-	icon_state = "taburine"
-	base_icon_state = "taburine"
-	gas_type = /datum/gas/taburine
+/obj/machinery/portable_atmospherics/canister/zauker
+	name = "Zauker canister"
+	desc = "Zauker, highly toxic"
+	icon_state = "zauker"
+	base_icon_state = "zauker"
+	gas_type = /datum/gas/zauker
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/halon
