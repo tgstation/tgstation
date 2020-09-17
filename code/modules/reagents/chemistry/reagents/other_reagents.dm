@@ -1373,7 +1373,18 @@
 
 /datum/reagent/healium/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.Sleeping(min(L.AmountSleeping() + rand(100, 150), rand(200, 400)))
+	L.PermaSleeping()
+
+/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
+	L.SetSleeping(10)
+	return ..()
+
+/datum/reagent/healium/on_mob_life(mob/living/L)
+	. = ..()
+	L.adjustOxyLoss(-5)
+	L.adjustFireLoss(-7)
+	L.adjustToxLoss(-7)
+	L.adjustBruteLoss(-10)
 
 /datum/reagent/halon
 	name = "Halon"

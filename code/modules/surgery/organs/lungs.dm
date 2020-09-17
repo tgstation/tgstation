@@ -349,10 +349,6 @@
 			if(healium_pp > healium_sleep_min)
 				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
 				H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
-				H.adjustOxyLoss(-5)
-				H.adjustFireLoss(-7)
-				H.adjustToxLoss(-7)
-				H.adjustBruteLoss(-10)
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
 
