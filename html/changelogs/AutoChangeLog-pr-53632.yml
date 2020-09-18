@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "New RPD device, the temperature gate"

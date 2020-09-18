@@ -117,6 +117,10 @@
 			cell = W
 			add_fingerprint(user)
 		return
+	else if (istype(W, /obj/item/light))
+		to_chat(user, "<span class='warning'>This [name] isn't finished being setup!</span>")
+		return
+
 	switch(stage)
 		if(1)
 			if(W.tool_behaviour == TOOL_WRENCH)
