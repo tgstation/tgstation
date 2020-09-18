@@ -436,7 +436,7 @@
 			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos(delta_time)
-	..()
+	. = ..()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
@@ -453,6 +453,14 @@
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
+
+	if(our_pressure > pressure_limit + TANK_FRAGMENT_PRESSURE)
+		var/range = (our_pressure - (pressure_limit + TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
+		var/turf/epicenter = get_turf(loc)
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		obj_break()
+		return
+
 
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(our_temperature > heat_limit || our_pressure > pressure_limit)
