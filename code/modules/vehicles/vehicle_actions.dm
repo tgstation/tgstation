@@ -228,7 +228,7 @@
 			playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
 			passtable_on(rider, VEHICLE_TRAIT)
 			vehicle.pass_flags |= PASSTABLE
-			rider.Move(landing_turf, vehicle_target.dir)
+			step(rider, vehicle_target.dir, 32)
 			passtable_off(rider, VEHICLE_TRAIT)
 			vehicle.pass_flags &= ~PASSTABLE
 		if(locate(/obj/structure/table) in vehicle.loc.contents)

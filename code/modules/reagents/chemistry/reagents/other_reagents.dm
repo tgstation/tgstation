@@ -888,7 +888,7 @@
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
-		step(M, pick(GLOB.cardinals))
+		walk_for(M, pick(GLOB.alldirs), until=0.25 SECONDS)
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
 	..()

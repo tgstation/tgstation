@@ -9,6 +9,7 @@
 	bound_width = 16
 	bound_x = 8
 	brotation = NONE
+	decel = 1 // a bit slower to stop, to allow drifting
 	var/legs_required = 2
 	var/arms_required = 1	//why not?
 	var/fall_off_if_missing_arms = FALSE //heh...

@@ -118,7 +118,7 @@
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
-	vehicle_move(dir)
+	add_velocity(dir, 16)
 	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
 		var/mob/living/L = buckled_mobs[1]
 		L.adjustStaminaLoss(instability*0.5)
