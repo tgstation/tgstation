@@ -290,7 +290,7 @@
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 				CentCom_announce(input, usr)
-				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
+				to_chat(usr, "<span class='notice'>Message transmitted to Syndicate Command.</span>")
 				usr.log_talk(input, LOG_SAY, tag="CentCom announcement")
 				deadchat_broadcast(" has messaged CentCom, \"[input]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type=DEADCHAT_ANNOUNCEMENT)
 				CM.lastTimeUsed = world.time
