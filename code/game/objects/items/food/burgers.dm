@@ -366,3 +366,10 @@
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
 
+/obj/item/food/burger/crazy
+	name = "crazy hamburger"
+	desc = "This looks like the sort of food that a demented clown in a trenchcoat would make."
+	icon_state = "crazyburger"
+	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking glowstick" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/condensedcapsaicin = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
+	foodtypes = GRAIN | MEAT | DAIRY
