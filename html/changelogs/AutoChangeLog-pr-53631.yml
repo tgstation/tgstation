@@ -1,0 +1,5 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Return on place shuttle rotating."
+  - bugfix: "No more shuttle crashing on rotating."
