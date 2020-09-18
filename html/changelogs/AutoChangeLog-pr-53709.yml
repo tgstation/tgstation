@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - rscadd: "Added a rest keybind! The default hotkey is U"
