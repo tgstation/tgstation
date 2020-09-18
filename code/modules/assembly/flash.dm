@@ -195,29 +195,35 @@
   * * attacker - Attacker
   */
 /obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
-	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
-	var/victim_to_attacker = get_dir(victim, attacker)
-	var/victim_dir = victim.dir
-
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
 	if(victim.loc == attacker.loc)
 		return DEVIATION_PARTIAL
 
-	// Is the victim looking directly at the attacker? and is the attacker looking at the victim?
-	if(victim_dir == victim_to_attacker)
+	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
+	var/victim_to_attacker = get_dir(victim, attacker)
+	// The victim's dir is necessarily a cardinal value.
+	var/victim_dir = victim.dir
+
+	// - - -
+	// - V - Victim facing south
+	// # # #
+	// Attacker within 45 degrees of where the victim is facing.
+	if(victim_dir & victim_to_attacker)
 		return DEVIATION_NONE
 
-	// Is the victim looking at the attacker within 45 degrees?
-	if(victim_dir == turn(victim_to_attacker, 45) || victim_dir == turn(victim_to_attacker, -45))
-		return DEVIATION_NONE
+	// # # #
+	// - V - Victim facing south
+	// - - -
+	// Attacker at 135 or more degrees of where the victim is facing.
+	if(victim_dir & REVERSE_DIR(victim_to_attacker))
+		return DEVIATION_FULL
 
-	// Is the is the victim looking perpendicular to the attacker?
-	if(victim_dir == turn(victim_to_attacker, 90) || victim_dir == turn(victim_to_attacker, -90))
-		return DEVIATION_PARTIAL
-
-	// This only leaves directions from directly behind and diagonal-behind. No flash bueno.
-	return DEVIATION_FULL
+	// - - -
+	// # V # Victim facing south
+	// - - -
+	// Attacker lateral to the victim.
+	return DEVIATION_PARTIAL
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
