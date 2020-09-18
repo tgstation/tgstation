@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Modular laptops and tablets will no longer experience abnormal behaviour including unclickable UI elements when placed in your bag, and will now close their interfaces appropriately."

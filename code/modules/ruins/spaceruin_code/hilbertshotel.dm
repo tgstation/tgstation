@@ -414,9 +414,10 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	name = "Hilbert Research Facility"
 
 /obj/item/analyzer/hilbertsanalyzer
-	name = "custom rigged analyzer"
-	desc = "A hand-held environmental scanner which reports current gas levels. This one seems custom rigged to additionally be able to analyze some sort of bluespace device."
-	icon_state = "hilbertsanalyzer"
+  name = "custom rigged analyzer"
+  desc = "A hand-held environmental scanner which reports current gas levels. This one seems custom rigged to additionally be able to analyze some sort of bluespace device."
+  icon_state = "hilbertsanalyzer"
+  worn_icon_state = "analyzer"
 
 /obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
 	. = ..()

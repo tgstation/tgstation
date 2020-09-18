@@ -37,8 +37,8 @@
 	if (!ui)
 		ui = new(user, src, "NtosMain")
 		ui.set_autoupdate(TRUE)
-		ui.open()
-		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
+		if(ui.open())
+			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 
 /obj/item/modular_computer/ui_data(mob/user)

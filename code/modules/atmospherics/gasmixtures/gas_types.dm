@@ -188,12 +188,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 
-/datum/gas/cyrion_b
-	id = "cyrion_b"
+/datum/gas/zauker
+	id = "zauker"
 	specific_heat = 350
-	name = "Cyrion B"
+	name = "Zauker"
 	dangerous = TRUE
-	gas_overlay = "cyrion_b"
+	gas_overlay = "zauker"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 100
 

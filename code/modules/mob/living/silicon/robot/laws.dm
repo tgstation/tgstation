@@ -37,7 +37,7 @@
 
 /mob/living/silicon/robot/proc/lawsync()
 	laws_sanity_check()
-	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null
+	var/datum/ai_laws/master = connected_ai?.laws
 	var/temp
 	if (master)
 		laws.devillaws.len = master.devillaws.len
