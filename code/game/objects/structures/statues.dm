@@ -275,7 +275,7 @@
 
 /obj/item/chisel
 	name = "chisel"
-	desc = "breaking and making art since 4000 BC"
+	desc = "breaking and making art since 4000 BC. This one uses advanced technology to allow creation of lifelike moving statues."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
