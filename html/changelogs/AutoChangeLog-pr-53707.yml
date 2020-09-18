@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - tweak: "As a ghost, you will not see emotes from mobs that dont have a client and are out of your range, while using ghost sight"

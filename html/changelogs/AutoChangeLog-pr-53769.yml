@@ -1,0 +1,4 @@
+author: "Joe Berry"
+delete-after: True
+changes: 
+  - bugfix: "The ice hermit ruin now properly falls from orbit onto icebox."

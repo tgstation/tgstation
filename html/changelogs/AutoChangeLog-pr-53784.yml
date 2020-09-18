@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Flashes are now more reliable and flashes hit by EMP will appropriately blind or not blind people based on whether they are facing the flash or not."
