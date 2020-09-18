@@ -1101,10 +1101,6 @@
 	if(connected_ai)
 		connected_ai.connected_robots |= src
 
-/mob/living/silicon/robot/post_lawchange(announce = TRUE)
-	. = ..()
-	logevent("Law update processed.")
-
 /**
   * Records an IC event log entry in the cyborg's internal tablet.
   *
@@ -1124,9 +1120,6 @@
 		stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
 	modularInterface.borglog += "[station_time_timestamp()] - [string]"
-	var/obj/item/computer_hardware/hard_drive/hard_drive = modularInterface.all_components[MC_HDD]
-	var/datum/computer_file/program/robotact/program = hard_drive.find_file_by_name("robotact")
-	if(!program)
-		stack_trace("Cyborg [src] ( [type] ) was somehow missing their self-manage app in their tablet. Please make a bug report.")
-		return
-	program.force_full_update()
+	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+	if(program)
+		program.force_full_update()

@@ -59,6 +59,8 @@
 	has_variants = FALSE
 	///Ref to the borg we're installed in. Set by the borg during our creation.
 	var/mob/living/silicon/robot/borgo
+	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
+	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
 
@@ -79,6 +81,31 @@
 	if(borgo?.stat != DEAD)
 		return ..()
 	return FALSE
+
+/**
+  * Returns a ref to the RoboTact app, creating the app if need be.
+  *
+  * The RoboTact app is important for borgs, and so should always be available.
+  * This proc will look for it in the tablet's robotact var, then check the
+  * hard drive if the robotact var is unset, and finally attempt to create a new
+  * copy if the hard drive does not contain the app. If the hard drive rejects
+  * the new copy (such as due to lack of space), the proc will crash with an error.
+  * RoboTact is supposed to be undeletable, so these will create runtime messages.
+  */
+/obj/item/modular_computer/tablet/integrated/proc/get_robotact()
+	if(!borgo)
+		return null
+	if(!robotact)
+		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
+		robotact = hard_drive.find_file_by_name("robotact")
+		if(!robotact)
+			stack_trace("Cyborg [borgo] ( [borgo.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+			robotact = new(hard_drive)
+			if(!hard_drive.store_file(robotact))
+				qdel(robotact)
+				robotact = null
+				CRASH("Cyborg [borgo]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	return robotact
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)

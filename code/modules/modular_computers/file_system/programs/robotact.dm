@@ -109,7 +109,7 @@
 		if("alertPower")
 			if(borgo.stat == CONSCIOUS)
 				if(!borgo.cell || !borgo.cell.charge)
-					borgo.visible_message("<span class='notice'>The power warning light on <span class='name'>[src]</span> flashes urgently.</span>", \
+					borgo.visible_message("<span class='notice'>The power warning light on <span class='name'>[borgo]</span> flashes urgently.</span>", \
 						"You announce you are operating in low power mode.")
 					playsound(borgo, 'sound/machines/buzz-two.ogg', 50, FALSE)
 
