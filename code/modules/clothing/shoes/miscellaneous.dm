@@ -185,6 +185,19 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
 
+/obj/item/clothing/shoes/gnomeboots
+	name = "gnome boots"
+	desc = "Nice shoes, my dude."
+	icon_state = "gnome_booties"
+	inhand_icon_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	permeability_coefficient = 0.15
+	strip_delay = 20
+	equip_delay_other = 40
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	can_be_tied = FALSE
+
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."

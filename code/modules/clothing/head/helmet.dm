@@ -209,6 +209,15 @@
 	worn_y_dimension = 64
 	custom_price = 350
 
+/obj/item/clothing/head/helmet/boatbomber
+	name = "gnome hat"
+	desc = "For those who bomb boats."
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "gnome_hat"
+	inhand_icon_state = "constable"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
