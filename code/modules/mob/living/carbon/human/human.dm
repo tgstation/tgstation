@@ -41,12 +41,11 @@
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(HAS_TRAIT(src, TRAIT_FREERUNNING) && levels <= 2) // falling off one level
-		visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
-						"<span class='userdanger'>You brace for the fall, making a hard landing on [T] but remaining unharmed.</span>")
-		Knockdown(levels * 50)
-		return
-	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1) // falling off one level
+		return ..()
+	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
+					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
+	Knockdown(levels * 50)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
