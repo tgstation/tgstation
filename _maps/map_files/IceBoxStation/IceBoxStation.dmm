@@ -49470,7 +49470,7 @@
 /area/science/mixing/chamber)
 "fep" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Pens Observastion - Starboard Aft";
+	c_tag = "Xenobiology Pens Observation - Starboard Aft";
 	dir = 8;
 	network = list("ss13","rd","xeno_pens")
 	},
@@ -49570,7 +49570,7 @@
 /area/science/mixing)
 "fwz" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Pens Observastion - Starboard Fore";
+	c_tag = "Xenobiology Pens Observation - Starboard Fore";
 	dir = 8;
 	network = list("ss13","rd","xeno_pens")
 	},
@@ -50252,7 +50252,7 @@
 /area/maintenance/starboard/aft)
 "hDb" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Pens Observastion - Port Fore";
+	c_tag = "Xenobiology Pens Observation - Port Fore";
 	dir = 4;
 	network = list("ss13","rd","xeno_pens")
 	},
@@ -52838,7 +52838,7 @@
 /area/science/misc_lab)
 "oLE" = (
 /obj/machinery/camera{
-	c_tag = "Xenobiology Pens Observastion - Port Aft";
+	c_tag = "Xenobiology Pens Observation - Port Aft";
 	dir = 4;
 	network = list("ss13","rd","xeno_pens")
 	},

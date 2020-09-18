@@ -2687,7 +2687,7 @@
 	name = "containment blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "lX" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -3004,6 +3004,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"pL" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "pT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -3050,6 +3054,11 @@
 /obj/item/cigbutt,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"qv" = (
+/obj/structure/cable,
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "qw" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -3365,7 +3374,7 @@
 	id = "xenobiomain";
 	name = "containment blast door"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "us" = (
 /obj/structure/cable,
@@ -4336,6 +4345,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"FT" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Xenobiology External Airlock";
+	opacity = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "FU" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/tile/green{
@@ -49687,7 +49704,7 @@ qX
 iJ
 qX
 qX
-gR
+pL
 Ay
 ZF
 Nn
@@ -49944,7 +49961,7 @@ qX
 qX
 qX
 qX
-gR
+pL
 Ay
 ZF
 ZF
@@ -50201,7 +50218,7 @@ qX
 qX
 XS
 qX
-gR
+pL
 Ay
 EJ
 ZF
@@ -50436,7 +50453,7 @@ Qs
 hh
 gR
 gR
-gR
+qv
 gR
 gR
 PA
@@ -52228,7 +52245,7 @@ Wr
 Jr
 Jr
 Jr
-TE
+FT
 Ob
 TE
 ZF
