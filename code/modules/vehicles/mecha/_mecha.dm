@@ -1,4 +1,4 @@
-//////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
+/***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
   * Mechs are now (finally) vehicles, this means you can make them multicrew

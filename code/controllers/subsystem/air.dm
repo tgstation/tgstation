@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/pipenets_needing_rebuilt = list()
+	/// A list of machines that will be processed when currentpart == SSAIR_ATMOSMACHINERY. Use SSair.begin_processing_machine and SSair.stop_processing_machine to add and remove machines.
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
 
@@ -31,7 +32,7 @@ SUBSYSTEM_DEF(air)
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
 
-
+	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_REBUILD_PIPENETS
 
@@ -437,6 +438,36 @@ GLOBAL_LIST_EMPTY(colored_images)
 	var/datum/atmosphere/mix = atmos_gen[gas_string]
 	return mix.gas_string
 
+/**
+  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+  *
+  * This should be fast, so no error checking is done.
+  * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
+  * object you added. Do not use irresponsibly.
+  * Arguments:
+  * * machine - The machine to start processing. Can be any /obj/machinery.
+  */
+/datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
+	atmos_machinery += machine
+
+/**
+  * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
+  *
+  * This should be fast, so no error checking is done.
+  * If you call this proc when your machine isn't processing, you're likely attempting to
+  * remove something that isn't in a list with over 1000 objects, twice. Do not use
+  * irresponsibly.
+  * Arguments:
+  * * machine - The machine to stop processing.
+  */
+/datum/controller/subsystem/air/proc/stop_processing_machine(obj/machinery/machine)
+	atmos_machinery -= machine
+
+	// If we're currently processing atmos machines, there's a chance this machine is in
+	// the currentrun list, which is a cache of atmos_machinery. Remove it from that list
+	// as well to prevent processing qdeleted objects in the cache.
+	if(currentpart == SSAIR_ATMOSMACHINERY)
+		currentrun -= machine
 
 /datum/controller/subsystem/air/ui_state(mob/user)
 	return GLOB.debug_state
