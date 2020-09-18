@@ -83,8 +83,6 @@
 	objectives += survival
 
 /proc/remove_ninja(mob/living/ninja)
-	if(!ninja || !ninja.mind)
-		return FALSE
 	var/datum/antagonist/datum = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	datum.on_removal()
 	return TRUE
