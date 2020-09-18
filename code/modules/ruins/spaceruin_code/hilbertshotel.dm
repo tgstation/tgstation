@@ -91,7 +91,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 				for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
 					if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
 						A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
-					turfNumber++
+				turfNumber++
 		for(var/obj/item/abstracthotelstorage/S in storageTurf)
 			if((S.roomNumber == roomNumber) && (S.parentSphere == src))
 				qdel(S)
