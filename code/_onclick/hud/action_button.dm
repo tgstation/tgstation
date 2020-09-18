@@ -67,7 +67,8 @@
 		var/selected_binding = FLOOR(input(usr, "Please selected a number from 1 to 10 to bind your action to", "Action Binding") as num|null, 1)
 		if(!selected_binding || selected_binding > 10 || selected_binding < 1)
 			return
-		linked_action.owner.action_bindings.Remove(src) //Remove previous entry
+		if(bound_number)
+			linked_action.owner.action_bindings[bound_number] = null //Remove previous entry
 
 		var/obj/screen/movable/action_button/previous_bound_action = linked_action.owner.action_bindings[selected_binding] //Get the previous key, update the icon so the number fucks off
 		if(previous_bound_action)

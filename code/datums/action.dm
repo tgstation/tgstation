@@ -79,6 +79,9 @@
 			M.client.screen -= button
 		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
+	if(button.bound_number)
+			owner.action_bindings[bound_number] = null //Remove previous entry
+	owner.action_bindings[button.
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
@@ -141,6 +144,8 @@
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
+		if(current_button.bound_number)
+			current_button.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi',"action[current_button.bound_number]"))
 		current_button.button_icon_state = button_icon_state
 
 /datum/action/proc/OnUpdatedIcon()
@@ -191,6 +196,8 @@
 		current_button.add_overlay(I)
 		I.layer = old_layer
 		I.plane = old_plane
+		if(current_button.bound_number)
+			current_button.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi',"action[current_button.bound_number]"))
 		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
