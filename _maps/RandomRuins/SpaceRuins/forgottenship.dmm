@@ -493,8 +493,8 @@
 	secure = 1
 	},
 /obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
@@ -690,8 +690,8 @@
 	secure = 1
 	},
 /obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m10mm,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bZ" = (
@@ -728,7 +728,7 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cf" = (
@@ -1114,7 +1114,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "da" = (
 /obj/structure/table/reinforced,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "db" = (
