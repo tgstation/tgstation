@@ -600,7 +600,7 @@
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
 
-	is_spinning = TRUE
+	flags_1 |= IS_SPINNING_1
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -614,7 +614,7 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-	is_spinning = FALSE
+	flags_1 &= ~IS_SPINNING_1
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
