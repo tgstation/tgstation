@@ -152,7 +152,6 @@
 	if(deviation == DEVIATION_FULL && !converter)
 		return
 
-
 	if(targeted)
 		if(M.flash_act(1, 1))
 			if(M.get_confusion() < power)
@@ -199,6 +198,10 @@
 	// or flashing someone they're stood on the same turf as, or a borg flashing someone buckled to them.
 	if(victim.loc == attacker.loc)
 		return DEVIATION_PARTIAL
+
+	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
+	if(victim.is_spinning)
+		return DEVIATION_NONE
 
 	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
 	var/victim_to_attacker = get_dir(victim, attacker)

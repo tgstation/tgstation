@@ -599,6 +599,8 @@
 	var/D = dir
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
+
+	is_spinning = TRUE
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -612,6 +614,7 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
+	is_spinning = FALSE
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()

@@ -221,3 +221,6 @@
 
 	///Whether the mob is updating glide size when movespeed updates or not
 	var/updating_glide_size = TRUE
+
+	/// Is the mob currently spinning with the spin emote or some other thing that forces a mob.spin()? Useful to counter tactical combat spinning.
+	var/is_spinning = FALSE
