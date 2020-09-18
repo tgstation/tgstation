@@ -101,7 +101,7 @@
 		return
 	var/current_confusion = user.get_confusion()
 	if(current_confusion > BEYBLADE_PUKE_THRESHOLD)
-		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, FALSE, TRUE, 0)
+		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
 		to_chat(user, "<span class='warning'>You feel woozy from spinning.</span>")
