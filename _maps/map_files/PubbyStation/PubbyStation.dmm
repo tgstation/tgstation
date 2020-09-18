@@ -16899,7 +16899,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -19050,7 +19050,7 @@
 "aYw" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -47490,8 +47490,7 @@
 "dyL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = "12;50";
-	req_one_access = null
+	req_access_txt = "12"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -51346,7 +51345,7 @@
 "kBu" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -53292,7 +53291,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -54366,7 +54365,7 @@
 "pIa" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55074,8 +55073,7 @@
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining";
-	req_access_txt = "41; 48";
-	req_one_access = null
+	req_access_txt = "48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -57736,8 +57734,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = "12;50";
-	req_one_access = null
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -57836,7 +57833,7 @@
 "vQz" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -58891,7 +58888,7 @@
 "xud" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
