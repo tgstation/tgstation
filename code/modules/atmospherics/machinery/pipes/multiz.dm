@@ -35,6 +35,7 @@
 /obj/machinery/atmospherics/pipe/multiz/update_icon()
 	cut_overlays()
 	pipe.color = front_node ? front_node.pipe_color : rgb(255, 255, 255)
+	pipe.icon_state = "pipe-[piping_layer]"
 	center.pixel_x = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
 	add_overlay(pipe)
 	add_overlay(center)
