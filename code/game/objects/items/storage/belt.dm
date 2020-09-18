@@ -170,6 +170,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
@@ -370,6 +371,13 @@
 		/obj/item/clothing/mask/luchador
 		))
 
+/obj/item/storage/belt/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = "cummerbund"
+	worn_icon_state = "cummerbund"
+
 /obj/item/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
@@ -416,7 +424,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesynachos,
 		/obj/item/reagent_containers/food/snacks/cubannachos,
 		/obj/item/reagent_containers/food/snacks/nugget,
-		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
+		/obj/item/food/spaghetti/pastatomato,
 		/obj/item/reagent_containers/food/snacks/rofflewaffles,
 		/obj/item/reagent_containers/food/snacks/donkpocket,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,

@@ -20,8 +20,10 @@
 					/obj/item/skillchip/wine_taster=2,
 					/obj/item/skillchip/light_remover=2,
 					/obj/item/skillchip/useless_adapter=5)
-	contraband = list(/obj/item/dice/fudge = 9)
+	contraband = list(/obj/item/dice/fudge = 9,
+					/obj/item/clothing/shoes/wheelys/skishoes=4)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
+					/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 					/obj/item/melee/skateboard/hoverboard = 1)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = 50

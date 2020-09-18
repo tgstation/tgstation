@@ -62,7 +62,17 @@
 				M.desc = "It's toast."
 		qdel(src)
 	else
+		SSmobs.cheeserats -= src // remove play controlled mouse also
 		..(gibbed)
+
+/mob/living/simple_animal/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
+	var/cap = CONFIG_GET(number/ratcap)
+	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
+		visible_message("<span class='warning'>[src] twitched but does not continue moving due to the overwhelming rodent population on the station!</span>")
+		return FALSE
+	. = ..()
+	if(.)
+		SSmobs.cheeserats += src
 
 /mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )

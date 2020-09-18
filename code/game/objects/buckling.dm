@@ -1,7 +1,7 @@
 /atom/movable
-	var/can_buckle = 0
+	var/can_buckle = FALSE
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
-	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_requires_restraints = FALSE //require people to be handcuffed before being able to buckle. eg: pipes
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
 	var/buckle_prevents_pull = FALSE
@@ -15,10 +15,10 @@
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
-				return 1
+				return TRUE
 		else
 			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return 1
+				return TRUE
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	if(!can_buckle || !istype(W, /obj/item/riding_offhand) || !user.Adjacent(src))
@@ -66,14 +66,9 @@
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
-	if(!istype(M))
+	if(!is_buckle_possible(M, force, check_loc))
 		return FALSE
 
-	if(check_loc && M.loc != loc)
-		return FALSE
-
-	if((!can_buckle && !force) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
-		return FALSE
 	M.buckling = src
 	if(!M.can_buckle() && !force)
 		if(M == usr)
@@ -99,6 +94,7 @@
 	buckled_mobs |= M
 	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
+	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
@@ -118,6 +114,7 @@
 		buckled_mob.set_anchored(initial(buckled_mob.anchored))
 		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
+		buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.total_multiplicative_slowdown()))
 		buckled_mobs -= buckled_mob
 		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
@@ -136,12 +133,94 @@
 //same but for unbuckle
 /atom/movable/proc/post_unbuckle_mob(mob/living/M)
 
+/**
+  * Simple helper proc that runs a suite of checks to test whether it is possible or not to buckle the target mob to src.
+  *
+  * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+  * Arguments:
+  * * target - Target mob to check against buckling to src.
+  * * force - Whether or not the buckle should be forced. If TRUE, ignores src's can_buckle var.
+  * * check_loc - Whether to do a proximity check or not. The proximity check looks for target.loc == src.loc.
+  */
+/atom/movable/proc/is_buckle_possible(mob/living/target, force = FALSE, check_loc = TRUE)
+	// Make sure target is mob/living
+	if(!istype(target))
+		return FALSE
+
+	// No bucking you to yourself.
+	if(target == src)
+		return FALSE
+
+	// Check if this atom can have things buckled to it.
+	if(!can_buckle && !force)
+		return FALSE
+
+	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
+	if(check_loc && target.loc != loc)
+		return FALSE
+
+	// Make sure the target isn't already buckled to something.
+	if(target.buckled)
+		return FALSE
+
+	// Make sure this atom can still have more things buckled to it.
+	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
+		return FALSE
+
+	// If the buckle requires restraints, make sure the target is actually restrained while ignoring grab restraint.
+	if(buckle_requires_restraints && !target.restrained(TRUE))
+		return FALSE
+
+	return TRUE
+
+/**
+  * Simple helper proc that runs a suite of checks to test whether it is possible or not for user to buckle target mob to src.
+  *
+  * Returns FALSE if any conditions that should prevent buckling are satisfied. Returns TRUE otherwise.
+  * Arguments:
+  * * target - Target mob to check against buckling to src.
+  * * user - The mob who is attempting to buckle the target to src.
+  * * check_loc - Whether to do a proximity check or not when calling is_buckle_possible().
+  */
+/atom/movable/proc/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
+	// Standard adjacency and other checks.
+	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
+		return FALSE
+
+	// In buckling even possible in the first place?
+	if(!is_buckle_possible(target, FALSE, check_loc))
+		return FALSE
+
+	// If the person attempting to buckle is stood on this atom's turf and they're not buckling themselves,
+	// buckling shouldn't be possible as they're blocking it.
+	if((target != user) && (get_turf(user) == get_turf(src)))
+		to_chat(target, "<span class='warning'>You are unable to buckle [target] to [src] while it is blocked!</span>")
+		return FALSE
+
+	return TRUE
+
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(!in_range(user, src) || !isturf(user.loc) || user.incapacitated() || M.anchored)
+	// Is buckling even possible? Do a full suite of checks.
+	if(!is_user_buckle_possible(M, user, check_loc))
 		return FALSE
 
 	add_fingerprint(user)
+
+	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
+	// we'll try it with a 2 second do_after delay.
+	if(M != user && (get_turf(M) != get_turf(src)))
+		M.visible_message("<span class='warning'>[user] starts buckling [M] to [src]!</span>",\
+			"<span class='userdanger'>[user] starts buckling you to [src]!</span>",\
+			"<span class='hear'>You hear metal clanking.</span>")
+		if(!do_after(user, 2 SECONDS, TRUE, M))
+			return FALSE
+
+		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
+		// Covers situations where, for example, the chair was moved or there's some other issue.
+		if(!is_user_buckle_possible(M, user, check_loc))
+			return FALSE
+
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
 		if(M == user)

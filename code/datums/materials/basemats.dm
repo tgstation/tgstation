@@ -217,8 +217,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.01
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1.1, ACID = 1)
 
-/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.adjust_disgust(17)
+/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
+	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
+	food?.reagents?.add_reagent(/datum/reagent/plastic_polymers, food.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Force decrease and mushy sound effect. (Not yet implemented)
@@ -346,6 +347,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
 	M.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 	return TRUE
+
+/datum/material/otherworld_crystal
+	name = "Otherworld Crystal"
+	desc = "An unkown crystal from an unkown dimension"
+	color = COLOR_YELLOW
+	strength_modifier = 0.95
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/otherworld_crystal
+	value_per_unit = 0.25
+	beauty_modifier = 0.4
+	alpha = 150
 
 //I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand

@@ -85,6 +85,13 @@
 	return held_items.Find(I)
 
 
+///Find number of held items, multihand compatible
+/mob/proc/get_num_held_items()
+	. = 0
+	for(var/i in 1 to held_items.len)
+		if(held_items[i])
+			.++
+
 //Sad that this will cause some overhead, but the alias seems necessary
 //*I* may be happy with a million and one references to "indexes" but others won't be
 /mob/proc/is_holding(obj/item/I)
@@ -148,25 +155,27 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
-	if(forced || can_put_in_hand(I, hand_index))
-		if(isturf(I.loc) && !ignore_anim)
-			I.do_pickup_animation(src)
-		if(hand_index == null)
-			return FALSE
-		if(get_item_for_held_index(hand_index) != null)
-			dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
-		I.forceMove(src)
-		held_items[hand_index] = I
-		I.layer = ABOVE_HUD_LAYER
-		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, ITEM_SLOT_HANDS)
-		if(I.pulledby)
-			I.pulledby.stop_pulling()
-		update_inv_hands()
-		I.pixel_x = initial(I.pixel_x)
-		I.pixel_y = initial(I.pixel_y)
-		return hand_index || TRUE
-	return FALSE
+	if(hand_index == null || (!forced && !can_put_in_hand(I, hand_index)))
+		return FALSE
+
+	if(isturf(I.loc) && !ignore_anim)
+		I.do_pickup_animation(src)
+	if(get_item_for_held_index(hand_index) != null)
+		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
+	I.forceMove(src)
+	held_items[hand_index] = I
+	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
+	I.equipped(src, ITEM_SLOT_HANDS)
+	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
+		held_items[hand_index] = null
+		return FALSE
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+	update_inv_hands()
+	I.pixel_x = initial(I.pixel_x)
+	I.pixel_y = initial(I.pixel_y)
+	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
@@ -355,7 +364,7 @@
 
 
 /mob/living/carbon/proc/check_obscured_slots(transparent_protection)
-	var/list/obscured = list()
+	var/obscured = NONE
 	var/hidden_slots = NONE
 
 	for(var/obj/item/I in get_equipped_items())
@@ -379,6 +388,8 @@
 		obscured |= ITEM_SLOT_FEET
 	if(hidden_slots & HIDESUITSTORAGE)
 		obscured |= ITEM_SLOT_SUITSTORE
+	if(hidden_slots & HIDEHEADGEAR)
+		obscured |= ITEM_SLOT_HEAD
 
 	return obscured
 
@@ -412,7 +423,7 @@
 
 /mob/verb/quick_equip()
 	set name = "quick-equip"
-	set hidden = 1
+	set hidden = TRUE
 
 	var/obj/item/I = get_active_held_item()
 	if (I)
@@ -420,7 +431,7 @@
 
 /mob/verb/equipment_swap()
 	set name = "equipment-swap"
-	set hidden = 1
+	set hidden = TRUE
 
 	var/obj/item/I = get_active_held_item()
 	if (I)

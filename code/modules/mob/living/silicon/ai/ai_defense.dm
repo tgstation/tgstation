@@ -24,8 +24,8 @@
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/emp_act(severity)
 	. = ..()

@@ -50,7 +50,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = apply_type)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)
 	return TRUE
 
@@ -73,13 +73,13 @@
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 
-/* 
+/*
  * On accidental consumption, consume the pill
  */
 /obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
 	to_chat(M, "<span class='warning'>You swallow something small. Was that in \the [source_item]?</span>")
 	if(reagents?.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = INGEST)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INGEST)
 
 	source_item?.contents -= src
 	qdel(src)

@@ -19,8 +19,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	wound_bonus = -30
-	bare_wound_bonus = 30
+	wound_bonus = -10
+	bare_wound_bonus = 20
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 	var/drawing_rune = FALSE
@@ -43,8 +43,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
-	wound_bonus = -80
-	bare_wound_bonus = 30
+	wound_bonus = -50
+	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
@@ -402,8 +402,8 @@
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()

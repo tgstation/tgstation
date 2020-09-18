@@ -638,7 +638,7 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK)
-		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER)
+		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
@@ -656,9 +656,10 @@
 
 		countdown(notify_admins)
 
-/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	set waitfor = 0
+/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
+	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
+		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
 		det_time--
 		sleep(5)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -679,7 +680,7 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
@@ -688,7 +689,7 @@
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
 		stage = GIBTONITE_DETONATE
-		explosion(bombturf,1,2,5, adminlog = 0)
+		explosion(bombturf,1,2,5, adminlog = FALSE)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)

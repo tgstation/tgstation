@@ -179,6 +179,9 @@
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
 
+/obj/item/assembly/signaler/crystal_anomaly/attack_self()
+	return
+
 /obj/item/assembly/signaler/cyborg
 
 /obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
