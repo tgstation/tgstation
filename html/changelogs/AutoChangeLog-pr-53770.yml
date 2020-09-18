@@ -1,0 +1,4 @@
+author: "Winterous"
+delete-after: True
+changes: 
+  - tweak: "Gibtonite ore now respects the disturbingly flexible flow of time, and will pulse once per countdown tick, instead of 1.25 or more depending upon time dilation."
