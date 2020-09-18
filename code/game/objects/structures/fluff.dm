@@ -310,3 +310,15 @@
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/thefuckinggate // this shit is 9 fucking tiles, dude. This is a bruh moment.
+	name = "Gate of The Toolbox Tournament"
+	desc = "Man, that looks really fancy! Now, how much of our wages were cut to afford this?"
+	icon = 'icons/obj/fancy_gate.dmi'
+	icon_state = "gateblue" // I LIKE BLUE SO MY BIAS IS BETTER - blue gang
+	max_integrity = 9999
+	layer = 5
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
