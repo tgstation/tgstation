@@ -132,6 +132,12 @@
 	icon_state = "villain"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/boatbomber
+	name = "gnome costume"
+	desc = "Chompski? Is that you?"
+	icon_state = "gnome_clothes"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/sailor
 	name = "sailor suit"
 	desc = "Skipper's in the wardroom drinkin gin'."
