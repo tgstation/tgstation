@@ -78,6 +78,10 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 
+	action_bindings = list()
+	for(var/i in 1 to 10)
+		action_bindings += null
+
 /**
   * Generate the tag for this mob
   *

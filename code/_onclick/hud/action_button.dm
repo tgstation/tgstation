@@ -10,6 +10,8 @@
 
 	var/id
 	var/ordered = TRUE //If the button gets placed into the default bar
+	///What hotkey number is bound to this action
+	var/bound_number = 0
 
 /obj/screen/movable/action_button/proc/can_use(mob/user)
 	if (linked_action)
@@ -38,6 +40,11 @@
 	else
 		return ..()
 
+/obj/screen/movable/action_button/update_overlays()
+	. = ..()
+	if(bound_number)
+		. += image('icons/mob/screen_gen.dmi',"action[bound_number]")
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
 		return FALSE
@@ -56,6 +63,22 @@
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
+	if(modifiers["alt"])
+		var/selected_binding = FLOOR(input(usr, "Please selected a number from 1 to 10 to bind your action to", "Action Binding") as num|null, 1)
+		if(!selected_binding || selected_binding > 10 || selected_binding < 1)
+			return
+		linked_action.owner.action_bindings.Remove(src) //Remove previous entry
+
+		var/obj/screen/movable/action_button/previous_bound_action = linked_action.owner.action_bindings[selected_binding] //Get the previous key, update the icon so the number fucks off
+		if(previous_bound_action)
+			previous_bound_action.bound_number = 0
+			previous_bound_action.update_icon()
+
+		bound_number = selected_binding //Now setup the new icon
+		linked_action.owner.action_bindings[selected_binding] = src
+		update_icon()
+		return TRUE
+
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
@@ -65,7 +88,7 @@
 //Hide/Show Action Buttons ... Button
 /obj/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
-	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click this button to reset all buttons to their default positions."
+	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click any button to assign it to a hotkey (From your preferences menu). Alt-click this button to reset all buttons to their default positions."
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = FALSE

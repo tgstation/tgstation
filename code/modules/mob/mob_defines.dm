@@ -156,6 +156,9 @@
 	/// Can this mob enter shuttles
 	var/move_on_shuttle = 1
 
+	/// List of all the action bindings you have. These are used for hotkeys
+	var/list/action_bindings
+
 	///The last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 

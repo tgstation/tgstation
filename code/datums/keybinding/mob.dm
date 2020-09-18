@@ -296,3 +296,84 @@
 		return
 	user.body_l_leg()
 	return TRUE
+
+
+
+/datum/keybinding/mob/action
+	description = "Alt click an action button and set it to the corresponding number to use this hotkey"
+	keybind_signal = "temp_lazy"
+	var/action_num = 0
+
+/datum/keybinding/mob/action/New()
+	keybind_signal = COMSIG_KB_MOB_ACTIONBINDING_DOWN(action_num)
+	return ..()
+
+
+/datum/keybinding/mob/action/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/user_mob = user.mob
+	var/obj/screen/movable/action_button/bound_button = user_mob.action_bindings[action_num]
+	if(bound_button)
+		bound_button.Click()
+
+/datum/keybinding/mob/action/action_binding_one
+	hotkey_keys = list()
+	name = "action_binding_one"
+	full_name = "Action button one"
+	action_num = 1
+
+/datum/keybinding/mob/action/action_binding_two
+	hotkey_keys = list()
+	name = "action_binding_two"
+	full_name = "Action button two"
+	action_num = 2
+
+/datum/keybinding/mob/action/action_binding_three
+	hotkey_keys = list()
+	name = "action_binding_three"
+	full_name = "Action button three"
+	action_num = 3
+
+/datum/keybinding/mob/action/action_binding_four
+	hotkey_keys = list()
+	name = "action_binding_four"
+	full_name = "Action button four"
+	action_num = 4
+
+/datum/keybinding/mob/action/action_binding_five
+	hotkey_keys = list("5")
+	name = "action_binding_five"
+	full_name = "Action button five"
+	action_num = 5
+
+/datum/keybinding/mob/action/action_binding_six
+	hotkey_keys = list("6")
+	name = "action_binding_six"
+	full_name = "Action button six"
+	action_num = 6
+
+/datum/keybinding/mob/action/action_binding_seven
+	hotkey_keys = list("7")
+	name = "action_binding_seven"
+	full_name = "Action button seven"
+	action_num = 7
+
+/datum/keybinding/mob/action/action_binding_eight
+	hotkey_keys = list("8")
+	name = "action_binding_eight"
+	full_name = "Action button eight"
+	action_num = 8
+
+/datum/keybinding/mob/action/action_binding_nine
+	hotkey_keys = list("9")
+	name = "action_binding_nine"
+	full_name = "Action button nine"
+	action_num = 9
+
+/datum/keybinding/mob/action/action_binding_ten
+	hotkey_keys = list("0")
+	name = "action_binding_ten"
+	full_name = "Action button ten"
+	action_num = 10
