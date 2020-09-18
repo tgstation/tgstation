@@ -169,7 +169,7 @@
 	message.pixel_y = owner.bound_height * 0.95
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
-	message.maptext_x = (CHAT_MESSAGE_WIDTH - (owner.bound_width + owner.bound_x)) * -0.5
+	message.maptext_x = (CHAT_MESSAGE_WIDTH - (owner.bound_width + owner.bound_x + 5)) * -0.5
 	message.maptext_y = owner.bound_height + owner.bound_y + 5
 	message.maptext = complete_text
 
