@@ -474,6 +474,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		tick_remaining = ((bg_calc) ? (TICK_LIMIT_RUNNING_BACKGROUND) : (TICK_LIMIT_RUNNING)) - TICK_USAGE
 		
+		if (tick_remaining > TICK_MIN_RUNTIME)
+			current_tick_budget -= queue_node_priority
+			queue_node = queue_node.queue_next
+			continue
+
 		if (current_tick_budget > 0 && queue_node_priority > 0)
 			tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
 		else
