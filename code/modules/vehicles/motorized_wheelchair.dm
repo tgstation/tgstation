@@ -5,12 +5,12 @@
 	var/speed = 2
 	var/power_efficiency = 1
 	var/power_usage = 100
+	can_fold = FALSE
 	var/panel_open = FALSE
 	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
-	can_fold = FALSE
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
 	..()

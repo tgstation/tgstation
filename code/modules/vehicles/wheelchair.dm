@@ -14,7 +14,7 @@
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
 	var/foldabletype = /obj/item/wheelchair
-	var/can_fold = TRUE
+	var/can_fold = TRUE //Determines that the object can fold up into something
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -131,7 +131,8 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	var/unfolded_type = /obj/vehicle/ridden/wheelchair/
+	var/unfolded_type = /obj/vehicle/ridden/wheelchair/ //Determines what the wheelchair unfolds into
+	custom_materials = list(/datum/material/iron = 10000)
 
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
