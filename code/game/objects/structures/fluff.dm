@@ -318,6 +318,18 @@
 	icon_state = "gateblue" // I LIKE BLUE SO MY BIAS IS BETTER - blue gang
 	max_integrity = 9999
 	layer = 5
+	bound_width = 288 // should hopefully be 9x1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/unfinished_placeholder // meant so I can reveal a missing structure more easily.
+	name = "FINISH THIS LATER"
+	desc = "guys, someone code it in pls"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "error" // don't fix the error on purpose
+	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
 	anchored = TRUE
