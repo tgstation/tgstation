@@ -64,7 +64,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
-	/// normalzied version of the byond internal tick usage metric to smooth out peaks.
+	/// normalized version of the byond internal tick usage metric to smooth out peaks.
 	var/normalized_internal_tick_usage = 0
 
 /datum/controller/master/New()
