@@ -307,6 +307,7 @@ All foods are distributed among various categories. Use common sense.
 
 	if(cooked_type)
 		result = new cooked_type(T)
+		SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, src, M.efficiency)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
 		else
