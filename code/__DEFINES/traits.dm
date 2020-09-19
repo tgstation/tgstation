@@ -79,6 +79,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
 #define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
+#define TRAIT_FORCE_STAND		"force-stand" //Makes the mob stand up regardless of other flags.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
@@ -331,3 +332,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
+#define CRYO_TRAIT "cryo"

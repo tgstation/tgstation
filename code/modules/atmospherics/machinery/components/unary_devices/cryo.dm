@@ -1,6 +1,7 @@
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
 
+/// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/cryo_occupant_vis
 	icon = 'icons/obj/cryogenics.dmi'
 	layer = ABOVE_WINDOW_LAYER + 0.01
@@ -9,25 +10,30 @@
 	var/animation = null
 	pixel_y = 23
 	appearance_flags = KEEP_TOGETHER
-	filters = filter(type="alpha", icon=icon('icons/obj/cryogenics.dmi', "mask"))
 
 /atom/movable/cryo_occupant_vis/New(obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
 	cryo = cryo_
 	return ..()
 
+/atom/movable/cryo_occupant_vis/Initialize()
+	. = ..()
+	// Alpha masking
+	filters += filter(type="alpha", icon=icon('icons/obj/cryogenics.dmi', "mask"))
+
 /atom/movable/cryo_occupant_vis/update_icon()
 	if(!cryo)
 		return
-	if(animation)
+	if(animation != null)
 		if(cryo.occupant && cryo.on && cryo.is_operational)
 			return
 		deltimer(animation)
 		animation = null
 	vis_contents.Cut()
-	cryo.occupant.dir = SOUTH
-	vis_contents += cryo.occupant
-	if(cryo.on && cryo.is_operational)
-		run_anim(TRUE)
+	if(cryo.occupant)
+		cryo.occupant.dir = SOUTH
+		vis_contents += cryo.occupant
+		if(cryo.on && cryo.is_operational)
+			run_anim(TRUE)
 
 /atom/movable/cryo_occupant_vis/proc/run_anim(anim_up)
 	if(pixel_y == 22)
@@ -40,7 +46,7 @@
 		pixel_y--
 	animation = addtimer(CALLBACK(src, .proc/run_anim, anim_up), 7, TIMER_UNIQUE | TIMER_STOPPABLE)
 
-
+/// Cryo cell
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -71,6 +77,7 @@
 	var/radio_key = /obj/item/encryptionkey/headset_med
 	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
+	/// Visual content - Occupant
 	var/atom/movable/cryo_occupant_vis/occupant_vis
 
 	var/escape_in_progress = FALSE
@@ -285,6 +292,7 @@
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
+			REMOVE_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
 			L.update_mobility()
 	occupant = null
 	flick("pod-open-anim", src)
@@ -296,6 +304,10 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
+		var/mob/living/L = occupant
+		if(L && istype(L))
+			ADD_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
+			L.update_mobility()
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)

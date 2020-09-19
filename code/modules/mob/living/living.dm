@@ -1232,7 +1232,8 @@
 	else
 		mobility_flags &= ~MOBILITY_MOVE
 	var/canstand_involuntary = !HAS_TRAIT(src, TRAIT_FLOORED)
-	var/canstand = canstand_involuntary && !resting
+	var/force_stand = HAS_TRAIT(src, TRAIT_FORCE_STAND)
+	var/canstand = force_stand || (canstand_involuntary && !resting)
 
 	if(buckled && buckled.buckle_lying != -1)
 		if(buckled.buckle_lying != 0)
