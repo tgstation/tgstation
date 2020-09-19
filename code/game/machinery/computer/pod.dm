@@ -134,6 +134,7 @@
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = "no_keyboard"
+	density = 0
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"

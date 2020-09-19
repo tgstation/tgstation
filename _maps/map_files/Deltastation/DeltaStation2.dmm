@@ -6684,7 +6684,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "trash";
@@ -97714,7 +97713,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "toxinsdriver";

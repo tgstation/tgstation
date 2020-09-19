@@ -31952,12 +31952,11 @@
 	dir = 4
 	},
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "toxinsdriver";
 	name = "Mass Driver Controller";
-	pixel_x = 28
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -45989,7 +45988,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "chapelgun";
@@ -48097,7 +48095,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "trash";

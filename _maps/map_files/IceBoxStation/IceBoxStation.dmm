@@ -13352,7 +13352,6 @@
 /area/chapel/main)
 "aFA" = (
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "chapelgun";
@@ -26430,7 +26429,6 @@
 	},
 /obj/structure/chair/stool,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "trash";
@@ -36573,7 +36571,6 @@
 	},
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "toxinsdriver";
@@ -55683,7 +55680,6 @@
 	icon_state = "markerburgundy-on"
 	},
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "chapelgun";

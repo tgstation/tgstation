@@ -4074,7 +4074,6 @@
 	dir = 8
 	},
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "trash";
@@ -53335,7 +53334,6 @@
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "toxinsdriver";
@@ -63339,7 +63337,6 @@
 	dir = 1
 	},
 /obj/machinery/computer/pod/old{
-	density = 0;
 	icon = 'icons/obj/airlock_machines.dmi';
 	icon_state = "airlock_control_standby";
 	id = "chapelgun";
