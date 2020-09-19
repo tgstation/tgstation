@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "Moves locking movement from being a hardcoded thing to being a customizable hotkey. The default for this is now Alt, moving movement toggle to C"
