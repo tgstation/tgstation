@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Severing and almost severing a body part should now always display the proper gruesome wounds messages instead of occasionally runtiming."
