@@ -1592,7 +1592,6 @@
 #include "code\modules\asset_cache\asset_list_items.dm"
 #include "code\modules\asset_cache\transports\asset_transport.dm"
 #include "code\modules\asset_cache\transports\webroot_transport.dm"
-#include "code\modules\atmospherics\multiz.dm"
 #include "code\modules\atmospherics\environmental\LINDA_fire.dm"
 #include "code\modules\atmospherics\environmental\LINDA_system.dm"
 #include "code\modules\atmospherics\environmental\LINDA_turf_tile.dm"
