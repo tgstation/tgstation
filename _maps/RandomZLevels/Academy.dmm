@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/wall/r_wall,
@@ -9,7 +9,7 @@
 /mob/living/simple_animal/hostile/carp/ranged{
 	faction = list("wizard")
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ad" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -179,7 +179,7 @@
 /area/awaymission/academy/headmaster)
 "aP" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "aQ" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -1086,7 +1086,7 @@
 /area/awaymission/academy/classrooms)
 "eu" = (
 /obj/singularity/academy,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ev" = (
 /obj/structure/window/reinforced{
@@ -2317,15 +2317,15 @@
 /area/awaymission/academy/academyaft)
 "iY" = (
 /obj/structure/shuttle/engine/propulsion/left,
-/turf/open/space,
+/turf/open/space/basic,
 /area/awaymission/academy/academyaft)
 "iZ" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
+/turf/open/space/basic,
 /area/awaymission/academy/academyaft)
 "ja" = (
 /obj/structure/shuttle/engine/propulsion/right,
-/turf/open/space,
+/turf/open/space/basic,
 /area/awaymission/academy/academyaft)
 "jc" = (
 /obj/effect/turf_decal/tile/red,
@@ -2491,7 +2491,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "jC" = (
 /obj/machinery/igniter/on,

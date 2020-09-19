@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible,
@@ -255,7 +255,7 @@
 /area/awaymission/wildwest/refine)
 "br" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bs" = (
 /obj/effect/mine/sound/bwoink,
@@ -272,12 +272,12 @@
 /area/awaymission/wildwest/mines)
 "bv" = (
 /obj/structure/window/reinforced/tinted/frosted,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bw" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/tinted/frosted,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bx" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
@@ -373,7 +373,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bP" = (
 /turf/closed/wall/mineral/sandstone,
@@ -417,7 +417,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bU" = (
 /obj/structure/chair/wood{
@@ -439,7 +439,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "bX" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -582,7 +582,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "cv" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -859,7 +859,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "dp" = (
 /obj/structure/bed,
@@ -1102,14 +1102,14 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ee" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ef" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -1118,7 +1118,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "eg" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -1143,7 +1143,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ej" = (
 /obj/effect/decal/cleanable/blood,
@@ -1551,14 +1551,14 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/tinted/frosted,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "fz" = (
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted/frosted,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "fA" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -1656,7 +1656,7 @@
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "fO" = (
 /mob/living/simple_animal/hostile/syndicate,
