@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
-/area/space)
+/area/template_noop)
 "ab" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -619,7 +619,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/template_noop)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -1196,7 +1196,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
-/area/space)
+/area/template_noop)
 "dk" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
