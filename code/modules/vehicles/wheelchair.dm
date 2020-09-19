@@ -129,6 +129,7 @@
 	icon_state = "wheelchair_folded"
 	inhand_icon_state = "wheelchair_folded"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair/ //Determines what the wheelchair unfolds into
@@ -139,6 +140,9 @@
 	desc = "A collapsed, shiny wheelchair that can be carried around."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "wheelchair_folded_gold"
+	inhand_icon_state = "wheelchair_folded_gold"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
