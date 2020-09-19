@@ -531,23 +531,3 @@
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
-
-/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
-/mob/proc/set_safe_hunger_level()
-	// Nutrition reset and alert clearing.
-	nutrition = NUTRITION_LEVEL_FED
-	clear_alert("nutrition")
-	satiety = 0
-
-	// Trait removal if obese
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(overeatduration >= 100)
-			to_chat(src, "<span class='notice'>Your transformation restores your body's natural fitness!</span>")
-
-		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
-		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-		update_inv_w_uniform()
-		update_inv_wear_suit()
-
-	// Reset overeat duration.
-	overeatduration = 0
