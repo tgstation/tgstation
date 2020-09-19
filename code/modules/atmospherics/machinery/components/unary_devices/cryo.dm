@@ -3,6 +3,10 @@
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/cryo_occupant_vis
+	icon = 'icons/obj/cryogenics.dmi'
+	// Must be tall, otherwise the filter will consider this as a 32x32 tile
+	// and will crop the head off.
+	icon_state = "mask_bg"
 	layer = ABOVE_WINDOW_LAYER + 0.01
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo
