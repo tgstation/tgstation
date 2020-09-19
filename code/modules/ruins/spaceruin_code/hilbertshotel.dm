@@ -225,6 +225,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 	explosion_block = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
+/turf/open/space/bluespace/Initialize()
+	. = ..()
+	update_icon_state()
+
+/turf/open/space/bluespace/update_icon_state()
+	icon_state = "bluespace"
+
 /turf/open/space/bluespace/Entered(atom/movable/A)
 	. = ..()
 	if(parentSphere && A.forceMove(get_turf(parentSphere)))
