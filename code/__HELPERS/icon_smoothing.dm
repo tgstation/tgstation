@@ -51,12 +51,14 @@
 			}; \
 		}; \
 		else { \
-			for(var/target in source.canSmoothWith) { \
-				if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
-					continue; \
+			if(!isnull(neighbor.smoothing_groups)) { \
+				for(var/target in source.canSmoothWith) { \
+					if(!(source.canSmoothWith[target] & neighbor.smoothing_groups[target])) { \
+						continue; \
+					}; \
+					junction |= direction_flag; \
+					break; \
 				}; \
-				junction |= direction_flag; \
-				break; \
 			}; \
 			if(!(junction & direction_flag) && source.smoothing_flags & SMOOTH_OBJ) { \
 				for(var/obj/thing in neighbor) { \
