@@ -15,7 +15,7 @@
 
 /mob/living/simple_animal/merchant/Initialize()
 	. = ..()
-	AddComponent(/datum/component/payment, product_cost, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_FRIENDLY, product_list)
+	AddComponent(/datum/component/payment/merchant, product_cost, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_FRIENDLY, product_list)
 
 /mob/living/simple_animal/merchant/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == INTENT_HELP)

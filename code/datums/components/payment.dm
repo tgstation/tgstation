@@ -16,20 +16,15 @@
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc
-	///Associated list of products if payment is setup on a mob.
-	var/list/products
 
-/datum/component/payment/Initialize(_cost, _target, _style, _products)
+/datum/component/payment/Initialize(_cost, _target, _style)
 	target_acc = _target
 	if(!target_acc)
 		target_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
-	if(_products)
-		products = _products
 	cost = _cost
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/purchase_item)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
@@ -77,7 +72,22 @@
 		CRASH("change_cost called with variable new_cost as not a number.")
 	cost = new_cost
 
-/datum/component/payment/proc/purchase_item(datum/source, atom/movable/customer)
+
+/**
+  * Handles simple payment operations where the parent can handle buying and selling items from a given keyed list.
+  * Used on the merchant simplemob NPCs primarily.
+  **/
+/datum/component/payment/merchant
+	///Associated list of products if payment is setup on a mob.
+	var/list/products
+
+/datum/component/payment/merchant/Initialize(_cost, _target, _style, _products)
+	. = ..()
+	if(_products)
+		products = _products
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/purchase_item)
+
+/datum/component/payment/merchant/proc/purchase_item(datum/source, atom/movable/customer)
 	SIGNAL_HANDLER
 	if(!LAZYLEN(products))
 		return
