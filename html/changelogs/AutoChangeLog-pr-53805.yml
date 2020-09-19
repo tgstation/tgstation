@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - rscadd: "Spinning while the emote is on cooldown will make you confused, dizzy, and eventually puke if you go too fast."

@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "The atmos subsystem costs represent the full use of the cost now, take a look and cry tears of blood"
