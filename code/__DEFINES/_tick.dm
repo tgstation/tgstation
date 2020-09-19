@@ -2,7 +2,7 @@
 #define MAPTICK_MC_MIN_RESERVE 60
 /// internal_tick_usage is updated every tick by extools
 #define MAPTICK_LAST_INTERNAL_TICK_USAGE ((Master.normalized_internal_tick_usage / world.tick_lag) * 100)
-/// Almount of a tick to reserve for byond regardless of its reported internal_tick_usage
+/// Amount of a tick to reserve for byond regardless of its reported internal_tick_usage
 #define TICK_BYOND_RESERVE 2
 /// Tick limit while running normally
 #define TICK_LIMIT_RUNNING (max(TICK_LIMIT_RUNNING_BACKGROUND, MAPTICK_MC_MIN_RESERVE))
