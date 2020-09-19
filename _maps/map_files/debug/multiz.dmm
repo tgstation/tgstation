@@ -1214,7 +1214,7 @@
 	},
 /area/hallway/secondary/service)
 "jb" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "jA" = (
@@ -1655,7 +1655,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "Hk" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/construction)
 "Hp" = (
@@ -1826,7 +1826,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "UH" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vm" = (
