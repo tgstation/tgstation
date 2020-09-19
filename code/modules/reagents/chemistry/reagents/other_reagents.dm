@@ -1381,10 +1381,10 @@
 
 /datum/reagent/healium/on_mob_life(mob/living/L)
 	. = ..()
-	L.adjustOxyLoss(-5, FALSE)
-	L.adjustFireLoss(-7, FALSE)
-	L.adjustToxLoss(-7, FALSE)
-	L.adjustBruteLoss(-10, FALSE)
+	L.adjustOxyLoss(-2, FALSE)
+	L.adjustFireLoss(-2, FALSE)
+	L.adjustToxLoss(-5, FALSE)
+	L.adjustBruteLoss(-2, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"
