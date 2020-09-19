@@ -373,3 +373,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/smore
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/cotton_candy
+	name = "Cotton Candy"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 15,
+		/obj/item/reagent_containers/food/drinks/sillycup = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cotton_candy
+	subcategory = CAT_MISCFOOD
+	
