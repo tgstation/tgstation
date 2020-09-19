@@ -645,9 +645,7 @@
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There's gibtonite inside! It's going to explode!</span>")
 
-		var/notify_admins = 0
-		if(z != 5)
-			notify_admins = TRUE
+		var/notify_admins = !is_mining_level(z)
 
 		if(!triggered_by_explosion)
 			log_bomber(user, "has trigged a gibtonite deposit reaction via", src, null, notify_admins)
