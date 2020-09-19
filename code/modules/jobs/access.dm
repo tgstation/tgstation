@@ -358,13 +358,19 @@
 			return "Code Scotch"
 
 /proc/get_all_jobs()
+	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
+				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist",
+				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
+
+/proc/get_all_syndicate_jobs()
 	return list("Lackey", "Admiral", "Corporate Liaison", "Bartender", "Cook", "Botanist", "Deck Officer", "Deck Crewman",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Corporate Lawyer", "Chaplain", "Chief Engineering Officer", "Engine Technician",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Corporate Lawyer", "Tiger Cooperative Representative", "Chief Engineering Officer", "Engine Technician",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Officer", "Paramedic", "Explosives Technician", "Genetics Researcher", "Bioweapons Technician", "Psychologist",
 				"Chief Research Officer", "Researcher", "Robotics Technician", "Chief Master at Arms", "Brig Officer", "Investigative Officer", "Master at Arms", "Prisoner")
 
 /proc/get_all_job_icons() //For all existing HUD icons
-	return get_all_jobs() + list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
+	return get_all_syndicate_jobs() + list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
 
 /proc/get_all_centcom_jobs()
 	return list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","CentCom Commander","CentCom Bartender","Private Security Force")

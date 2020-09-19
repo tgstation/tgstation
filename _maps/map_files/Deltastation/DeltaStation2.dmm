@@ -19209,7 +19209,6 @@
 /area/quartermaster/storage)
 "aPi" = (
 /obj/structure/bed,
-/obj/item/bedsheet/orange,
 /obj/machinery/camera{
 	c_tag = "Permabrig - Cell 2";
 	dir = 8;
@@ -19220,6 +19219,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/bedsheet/nanotrasen,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aPk" = (
@@ -22075,7 +22075,6 @@
 /area/quartermaster/qm)
 "aUw" = (
 /obj/structure/bed,
-/obj/item/bedsheet/orange,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Permabrig - Cell 1";
@@ -22087,6 +22086,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/bedsheet/nanotrasen,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aUy" = (
@@ -24205,7 +24205,6 @@
 /obj/item/clothing/suit/armor/vest/russian,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/color/black,
-/obj/item/uplink/nuclear,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/qm)
@@ -35822,7 +35821,6 @@
 	},
 /obj/item/ammo_box/magazine/m12g/slug,
 /obj/item/ammo_box/magazine/m12g/slug,
-/obj/item/uplink/nuclear,
 /obj/item/clothing/glasses/hud/security/night,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
@@ -36920,7 +36918,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/syndicate/resources/everything,
+/obj/structure/closet/syndicate/resources,
 /turf/open/floor/mineral/plastitanium,
 /area/security/nuke_storage)
 "bvQ" = (
@@ -36955,7 +36953,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/closet/syndicate/resources/everything,
+/obj/structure/closet/syndicate/resources,
 /turf/open/floor/mineral/plastitanium,
 /area/security/nuke_storage)
 "bvS" = (
@@ -40375,7 +40373,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/structure/closet/syndicate/resources/everything,
+/obj/structure/closet/syndicate/resources,
 /turf/open/floor/mineral/plastitanium,
 /area/security/nuke_storage)
 "bBW" = (
@@ -49760,7 +49758,6 @@
 /obj/item/clothing/suit/armor/vest/russian,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/color/black,
-/obj/item/uplink/nuclear,
 /obj/item/gun/ballistic/automatic/pistol,
 /obj/item/clothing/shoes/magboots/advance,
 /obj/item/clothing/glasses/hud/diagnostic/night,
@@ -50171,7 +50168,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/orange,
 /turf/open/floor/mineral/plastitanium,
 /area/security/brig)
 "bTd" = (
@@ -54879,7 +54876,6 @@
 /obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/storage/backpack/duffelbag/syndie,
 /obj/item/storage/toolbox/emergency/turret,
-/obj/item/uplink/nuclear,
 /obj/item/assembly/flash,
 /obj/item/melee/transforming/energy/sword/pirate,
 /turf/open/floor/carpet/black,
@@ -61745,7 +61741,6 @@
 /obj/item/clothing/suit/armor/vest/russian,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/color/black,
-/obj/item/uplink/nuclear,
 /obj/item/gun/ballistic/automatic/pistol/aps,
 /obj/item/door_remote/civilian,
 /obj/item/assembly/flash,
@@ -66752,7 +66747,10 @@
 /area/ai_monitored/storage/eva)
 "czS" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/syndicate{
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate;
+	suit_type = /obj/item/clothing/suit/space/syndicate
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "czT" = (
@@ -66801,7 +66799,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/syndicate{
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate;
+	suit_type = /obj/item/clothing/suit/space/syndicate
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "czY" = (
@@ -78098,6 +78099,16 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/book/granter/martial/cqc,
+/obj/item/book/granter/martial/cqc,
+/obj/item/book/granter/martial/cqc,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "cWy" = (
@@ -87089,7 +87100,6 @@
 "dpK" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
-/obj/item/uplink/nuclear,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/aft)
 "dpL" = (
@@ -90941,7 +90951,6 @@
 /obj/item/clothing/suit/armor/vest/russian,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/color/black,
-/obj/item/uplink/nuclear,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
@@ -91987,12 +91996,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"dCh" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/item/bedsheet/nanotrasen,
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "dCi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/syndicate{
+	name = "cybersun storage unit";
+	suit_type = /obj/item/clothing/suit/space/hardsuit/cybersun
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
 "dCj" = (
@@ -94105,7 +94126,6 @@
 /obj/item/clothing/suit/armor/vest/russian,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/color/black,
-/obj/item/uplink/nuclear,
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
@@ -104545,7 +104565,6 @@
 /obj/item/nullrod,
 /obj/item/organ/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor,
 /turf/open/floor/carpet/black,
 /area/chapel/office)
 "edn" = (
@@ -105039,11 +105058,11 @@
 /turf/open/floor/carpet/black,
 /area/chapel/office)
 "eey" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/camera{
 	c_tag = "Chapel Quarters";
 	name = "chapel camera"
 	},
+/obj/structure/dresser,
 /turf/open/floor/carpet/black,
 /area/chapel/office)
 "eez" = (
@@ -105377,6 +105396,9 @@
 "efk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/effect/turf_decal/arrows/white{
+	dir = 1
 	},
 /turf/open/floor/carpet/black,
 /area/chapel/office)
@@ -111442,7 +111464,6 @@
 /area/crew_quarters/kitchen)
 "sPv" = (
 /obj/structure/bed,
-/obj/item/bedsheet/orange,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/camera{
 	c_tag = "Permabrig - Cell 3";
@@ -111454,6 +111475,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/bedsheet/nanotrasen,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "sTz" = (
@@ -111867,7 +111889,6 @@
 /area/medical/chemistry)
 "tXx" = (
 /obj/structure/bed,
-/obj/item/bedsheet/orange,
 /obj/structure/sign/poster/official/obey{
 	pixel_x = 30
 	},
@@ -111877,6 +111898,7 @@
 	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/bedsheet/nanotrasen,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "uap" = (
@@ -112944,7 +112966,6 @@
 /area/security/prison)
 "wPe" = (
 /obj/structure/bed,
-/obj/item/bedsheet/orange,
 /obj/machinery/camera{
 	c_tag = "Permabrig - Cell 4";
 	dir = 8;
@@ -112955,6 +112976,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/bedsheet/nanotrasen,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "wQo" = (
@@ -164986,7 +165008,7 @@ bNj
 bFK
 bHC
 bJy
-bNl
+dCh
 bNl
 bNl
 bNl

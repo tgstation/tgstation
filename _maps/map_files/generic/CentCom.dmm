@@ -9842,22 +9842,6 @@
 /obj/item/clothing/head/helmet/space/plasmaman,
 /turf/open/floor/wood,
 /area/centcom/holding)
-"wg" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/evac)
 "wk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
@@ -17341,18 +17325,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"NI" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/evac)
 "NJ" = (
 /obj/structure/table,
 /obj/item/book/manual/hydroponics_pod_people,
@@ -18388,16 +18360,6 @@
 /obj/item/mop,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
-"SP" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/porta_turret/syndicate/energy/heavy{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/evac)
 "SS" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -68563,11 +68525,11 @@ Bc
 tT
 uB
 ft
+Bc
+Bc
 AX
-wg
-AX
-wg
-AX
+Bc
+Bc
 Qs
 uB
 At
@@ -68816,8 +68778,8 @@ Cg
 qA
 qy
 RW
-AX
-NI
+Bc
+WT
 Wg
 vW
 vW
@@ -68827,8 +68789,8 @@ vW
 vW
 vW
 Wg
-SP
-AX
+XQ
+Bc
 RW
 Cd
 BP

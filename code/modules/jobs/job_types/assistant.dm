@@ -29,13 +29,13 @@ Assistant
 
 	belt = /obj/item/storage/belt/utility/syndicate
 	l_pocket = /obj/item/pda/syndicate
-	uniform = /obj/item/clothing/under/syndicate/rus_army
-	r_pocket = /obj/item/flashlight/seclite
-	glasses = /obj/item/clothing/glasses/night
+	uniform = /obj/item/clothing/under/shorts/black
+	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/beret/black
-	suit = /obj/item/clothing/suit/armor/vest
+	head = /obj/item/clothing/head/hardhat/orange
+	suit = /obj/item/clothing/suit/armor/vest/russian
+	mask = /obj/item/clothing/mask/bandana/black
 
 	backpack = /obj/item/storage/backpack/duffelbag/syndie
 	satchel = /obj/item/storage/backpack/duffelbag/syndie

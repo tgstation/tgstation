@@ -23,14 +23,11 @@
 	jobtype = /datum/job/lawyer
 
 	ears = /obj/item/radio/headset/headset_srvsec
-	belt = /obj/item/storage/belt/military
-	l_pocket = /obj/item/pda/syndicate
-	uniform = /obj/item/clothing/under/syndicate/sniper
-	r_pocket = /obj/item/flashlight/seclite
-	glasses = /obj/item/clothing/glasses/hud/security/night
+	l_pocket = /obj/item/pda/lawyer
+	uniform = /obj/item/clothing/under/suit/black_really
+	glasses = /obj/item/clothing/glasses/sunglasses/big
 	gloves = /obj/item/clothing/gloves/color/black
-	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/beret/sec
+	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest
 
 	backpack = /obj/item/storage/backpack/duffelbag/syndie
