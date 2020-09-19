@@ -41,13 +41,13 @@
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
-	//offset by 1 because the buffer address is 0 indexed because the math was simpler
+	//offset by 1 because the buffer address is 0	 indexed because the math was simpler
 	keys_held[current_key_address + 1] = _key
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
 	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
 	var/movement = movement_keys[_key]
-	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
+	if(!(next_move_dir_sub & movement) && !movement_locked)
 		next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time

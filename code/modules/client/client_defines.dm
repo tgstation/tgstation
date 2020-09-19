@@ -170,6 +170,8 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 4
 	var/parallax_animate_timer
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
