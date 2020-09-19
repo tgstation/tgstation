@@ -17,9 +17,6 @@
 	icon_state = "white"
 	},
 /area/holodeck/rec_center/medical)
-"ad" = (
-/turf/open/space,
-/area/space)
 "ae" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3530,7 +3527,7 @@
 	name = "CentCom";
 	width = 20
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "jD" = (
 /obj/effect/turf_decal/loading_area{
@@ -6671,7 +6668,7 @@
 	name = "CentCom Ferry Dock";
 	width = 5
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/centcom/ferry)
 "pB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9488,7 +9485,7 @@
 	name = "CentCom Emergency Shuttle Dock";
 	width = 50
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "vj" = (
 /turf/open/floor/wood,
@@ -14845,7 +14842,7 @@
 /area/tdome/tdomeobserve)
 "GX" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
+/turf/open/space/basic,
 /area/wizard_station)
 "GY" = (
 /obj/structure/chair/wood/wings{
@@ -15180,13 +15177,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
-"HG" = (
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
-	desc = "I bet you think you're pretty clever... well you are.";
-	name = "easter egg"
-	},
-/turf/open/space,
-/area/space)
 "HH" = (
 /obj/machinery/light,
 /turf/open/floor/wood,
@@ -16760,7 +16750,7 @@
 	name = "recovery ship";
 	width = 3
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "KM" = (
 /obj/docking_port/stationary{
@@ -16770,7 +16760,7 @@
 	name = "recovery ship";
 	width = 3
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "KN" = (
 /obj/structure/window/reinforced,
@@ -16954,7 +16944,7 @@
 	name = "recovery ship";
 	width = 3
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "Lt" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -16993,7 +16983,7 @@
 	name = "recovery ship";
 	width = 5
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "LA" = (
 /obj/structure/table,
@@ -17159,7 +17149,7 @@
 /area/awaymission/errorroom)
 "Mc" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "Md" = (
 /obj/machinery/computer/secure_data{
@@ -20120,7 +20110,7 @@ aa
 "}
 (2,1,1) = {"
 aa
-ad
+aa
 aa
 aa
 aa
@@ -26742,7 +26732,7 @@ Gz
 GX
 lI
 lI
-HG
+fR
 aa
 aa
 aa
@@ -74162,7 +74152,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 aa
 aa
 aa

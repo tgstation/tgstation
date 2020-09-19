@@ -4,10 +4,10 @@
 /area/space)
 "ab" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ac" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ad" = (
 /turf/closed/wall/r_wall,
@@ -15,14 +15,14 @@
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "af" = (
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "ag" = (
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ah" = (
 /turf/closed/wall/r_wall,
@@ -53,12 +53,12 @@
 /area/engine/atmos)
 "an" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/space,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ap" = (
 /obj/machinery/airalarm{
