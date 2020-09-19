@@ -1268,7 +1268,12 @@ nobiliumsuppression = INFINITY
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/turf/open/location = isturf(holder) ? holder : null
+	var/turf/open/location
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/pipenet = holder
+		location = get_turf(pick(pipenet.members))
+	else
+		location = get_turf(holder)
 	var consumed_amount = min(5, cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
