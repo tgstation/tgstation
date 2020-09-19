@@ -365,7 +365,7 @@
 
 /proc/get_all_syndicate_jobs()
 	return list("Lackey", "Admiral", "Corporate Liaison", "Bartender", "Cook", "Botanist", "Deck Officer", "Deck Crewman",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Corporate Lawyer", "Tiger Cooperative Representative", "Chief Engineering Officer", "Engine Technician",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Corporate Lawyer", "Tiger Fanatic", "Chief Engineering Officer", "Engine Technician",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Officer", "Paramedic", "Explosives Technician", "Genetics Researcher", "Bioweapons Technician", "Psychologist",
 				"Chief Research Officer", "Researcher", "Robotics Technician", "Chief Master at Arms", "Brig Officer", "Investigative Officer", "Master at Arms", "Prisoner")
 

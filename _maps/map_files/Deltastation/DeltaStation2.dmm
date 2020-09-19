@@ -51386,7 +51386,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/vehicle/ridden/bicycle,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "bVq" = (
@@ -100356,9 +100355,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
-"dTw" = (
-/turf/closed/wall,
-/area/chapel/office)
 "dTx" = (
 /obj/structure/bodycontainer/morgue,
 /obj/effect/turf_decal/tile/neutral{
@@ -147880,7 +147876,7 @@ dVT
 dTA
 edp
 dZN
-dTw
+dZN
 efm
 dZN
 dZN

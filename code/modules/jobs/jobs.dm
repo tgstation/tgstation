@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(service_positions, list(
 	"Curator",
 	"Psychologist",
 	"Corporate Lawyer",
-	"Tiger Cooperative Representative",
+	"Tiger Fanatic",
 	"Clown",
 	"Mime",
 	"Prisoner",

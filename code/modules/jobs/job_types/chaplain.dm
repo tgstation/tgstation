@@ -1,5 +1,5 @@
 /datum/job/chaplain
-	title = "Tiger Cooperative Representative"
+	title = "Tiger Fanatic"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 1
@@ -29,7 +29,7 @@
 		B.name = GLOB.bible_name
 		B.icon_state = GLOB.bible_icon_state
 		B.inhand_icon_state = GLOB.bible_inhand_icon_state
-		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Main Rep.</span>")
+		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Main Fanatic.</span>")
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
@@ -115,7 +115,7 @@
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
 
 /datum/outfit/job/chaplain
-	name = "Tiger Cooperative Representative"
+	name = "Tiger Fanatic"
 	jobtype = /datum/job/chaplain
 
 	ears = /obj/item/radio/headset/headset_srv

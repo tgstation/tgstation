@@ -26,15 +26,14 @@
 	jobtype = /datum/job/detective
 
 	ears = /obj/item/radio/headset/headset_sec/alt
-	belt = /obj/item/storage/belt/military
 	l_pocket = /obj/item/pda/syndicate
-	uniform = /obj/item/clothing/under/syndicate
+	uniform = /obj/item/clothing/under/suit/black
 	r_pocket = /obj/item/flashlight/seclite
-	glasses = /obj/item/clothing/glasses/night
-	gloves = /obj/item/clothing/gloves/color/black
-	shoes = /obj/item/clothing/shoes/jackboots
+	glasses = /obj/item/clothing/glasses/hud/security/night
+	gloves = /obj/item/clothing/gloves/color/latex
+	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/beret/sec
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/det_suit/grey
 
 	backpack = /obj/item/storage/backpack/duffelbag/syndie
 	satchel = /obj/item/storage/backpack/duffelbag/syndie
