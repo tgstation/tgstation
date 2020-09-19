@@ -1983,17 +1983,17 @@
 /area/awaymission/cabin/caves/mountain)
 "fG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fH" = (
 /obj/effect/decal/cleanable/insectguts,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fI" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fJ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2019,7 +2019,7 @@
 /mob/living/simple_animal/mouse{
 	faction = list("sewer")
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fM" = (
 /obj/effect/turf_decal/tile/blue,
@@ -2380,7 +2380,7 @@
 /obj/effect/decal/cleanable/insectguts,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/security,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gv" = (
 /obj/structure/ladder/unbreakable{
@@ -2421,22 +2421,22 @@
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Sewer Ladder"
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gz" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/security,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gC" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -2509,7 +2509,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/item/mop,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gJ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2652,7 +2652,7 @@
 "gT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gU" = (
 /obj/structure/flora{
@@ -2944,7 +2944,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "hL" = (
 /obj/structure/sign/nanotrasen,
@@ -3710,7 +3710,7 @@
 "jL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "jM" = (
 /obj/machinery/space_heater,
@@ -4242,7 +4242,7 @@
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "kS" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4274,7 +4274,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "kY" = (
 /obj/effect/decal/remains/human,
@@ -4293,7 +4293,7 @@
 	name = "sewer skeleton";
 	wander = 0
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "la" = (
 /obj/effect/decal/cleanable/blood/old,

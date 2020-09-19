@@ -100,6 +100,10 @@
 	owned_by = owner.client
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_parent_qdel)
 
+	// Remove spans in the message from things like the recorder
+	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
+	text = replacetext(text, span_check, "")
+
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
 	if (length_char(text) > maxlen)
