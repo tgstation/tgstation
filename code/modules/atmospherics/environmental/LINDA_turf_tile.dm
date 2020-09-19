@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		QDEL_NULL(active_hotspot)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/T in atmos_adjacent_turfs)
-		SSair.add_to_active(T)
+		SSair.add_to_active(T, FALSE)
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////
@@ -102,20 +102,31 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /turf/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(exposed_temperature >= heat_capacity)
 		to_be_destroyed = TRUE
-	if(to_be_destroyed)
+	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
-		burn_tile()
-		var/chance_of_deletion
-		if (heat_capacity) //beware of division by zero
-			chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
-		else
-			chance_of_deletion = 100
-		if(prob(chance_of_deletion))
-			Melt()
-			max_fire_temperature_sustained = 0
-		else
-			to_be_destroyed = FALSE
+		burn()
+
+/turf/open/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(exposed_temperature >= heat_capacity)
+		to_be_destroyed = TRUE
+	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
+		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
+	if(to_be_destroyed && !changing_turf && !active_hotspot)
+		burn()
+
+/turf/proc/burn()
+	burn_tile()
+	var/chance_of_deletion
+	if (heat_capacity) //beware of division by zero
+		chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
+	else
+		chance_of_deletion = 100
+	if(prob(chance_of_deletion))
+		Melt()
+		max_fire_temperature_sustained = 0
+	else
+		to_be_destroyed = FALSE
 
 /turf/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	atmos_expose(air, exposed_temperature)
@@ -284,7 +295,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 ////////////////////Excited Group Cleanup///////////////////////
 /turf/open/proc/cleanup_group(fire_count)
-	current_cycle = fire_count + 0.5 //Shut up I'm testing
+	current_cycle = fire_count + 0.5 //It works, I know it's dumb but it works
 
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
@@ -293,7 +304,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
 
-		if(fire_count <= enemy_tile.current_cycle)
+		if(current_cycle <= enemy_tile.current_cycle)
 			continue
 
 		//cache for sanic speed
@@ -474,7 +485,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /datum/excited_group/proc/garbage_collect(rebuild_excited_groups = TRUE)
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
-	if(rebuild_excited_groups) //Move this about maybe
+	if(rebuild_excited_groups) //If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = null
@@ -482,6 +493,8 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 				SSair.add_to_cleanup(T) //Poke everybody in the group, just in case
 	turf_list.Cut()
 	SSair.excited_groups -= src
+	if(SSair.currentpart == SSAIR_EXCITEDGROUPS)
+		SSair.currentrun -= src
 
 /datum/excited_group/proc/display_turfs()
 	if(display_id == 0) //Hasn't been shown before

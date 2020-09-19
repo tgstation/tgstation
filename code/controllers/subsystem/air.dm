@@ -328,7 +328,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		if(T.excited)
-			if(blockchanges && T.excited_group)// Did someone forget to clean you up?
+			if(blockchanges && T.excited_group) //Not totally sure this is needed, but it might be
 				T.excited_group.garbage_collect()
 			return
 		#ifdef VISUALIZE_ACTIVE_TURFS
@@ -338,7 +338,7 @@ SUBSYSTEM_DEF(air)
 		active_turfs += T
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun += T
-		if(blockchanges && T.excited_group)// Did someone forget to clean you up?
+		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
 	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
