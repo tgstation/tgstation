@@ -295,11 +295,6 @@ All foods are distributed among various categories. Use common sense.
 				else
 					snackyfood.reagents.add_reagent(r_id, amount)
 		return
-	if(istype(S, /obj/item/food))
-		var/obj/item/food/non_snackyfood = S
-		non_snackyfood.create_reagents(non_snackyfood.max_volume)
-		if(reagents)
-			reagents.trans_to(non_snackyfood, reagents.total_volume)
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	var/turf/T = get_turf(src)
