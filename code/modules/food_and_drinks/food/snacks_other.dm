@@ -866,7 +866,6 @@
 	desc = "Pink strands of sugar on top of a bright looking cone. Perfect for carnivals!"
 	icon_state = "cottoncandy"
 	trash = /obj/item/reagent_containers/food/drinks/sillycup
-	bitesize = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/nutriment = 5)
 	tastes = list("sugar" = 1)
 	foodtype = JUNKFOOD | SUGAR
