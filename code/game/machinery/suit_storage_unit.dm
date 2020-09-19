@@ -3,7 +3,7 @@
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
-	icon_state = "close"
+	icon_state = "base"
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
@@ -159,29 +159,36 @@
 	QDEL_NULL(storage)
 	return ..()
 
+/obj/machinery/suit_storage_unit/update_icon()
+	icon_state = (machine_stat & BROKEN) ? "broken" : "base"
+	return ..()
+
 /obj/machinery/suit_storage_unit/update_overlays()
 	. = ..()
 
+	if(machine_stat & BROKEN)
+		return
+
+	if(suit)
+		. += "suit"
+	if(helmet)
+		. += "helm"
+	if(storage)
+		. += "storage"
+
+	if(state_open)
+		. += "open"
+		return
+
+	if(occupant)
+		. += "closed-human"
+	else
+		. += "closed"
 	if(uv)
 		if(uv_super)
-			. += "super"
-		else if(occupant)
-			. += "uvhuman"
+			. += "uv-super"
 		else
 			. += "uv"
-	else if(state_open)
-		if(machine_stat & BROKEN)
-			. += "broken"
-		else
-			. += "open"
-			if(suit)
-				. += "suit"
-			if(helmet)
-				. += "helm"
-			if(storage)
-				. += "storage"
-	else if(occupant)
-		. += "human"
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
@@ -197,6 +204,7 @@
 	mask = null
 	storage = null
 	occupant = null
+	update_icon()
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -280,6 +288,7 @@
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
 
+	update_icon()
 	interact(user)
 
 /obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
