@@ -2,7 +2,7 @@
 	name = "data disk"
 	desc = "Removable disk used to store data."
 	power_usage = 10
-	icon_state = "datadisk0"
+	icon_state = "datadisk6"
 	w_class = WEIGHT_CLASS_TINY
 	critical = FALSE
 	max_capacity = 16
