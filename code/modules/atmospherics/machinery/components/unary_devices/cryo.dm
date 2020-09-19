@@ -3,7 +3,6 @@
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/cryo_occupant_vis
-	icon = 'icons/obj/cryogenics.dmi'
 	layer = ABOVE_WINDOW_LAYER + 0.01
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo
@@ -18,7 +17,9 @@
 /atom/movable/cryo_occupant_vis/Initialize()
 	. = ..()
 	// Alpha masking
-	filters += filter(type="alpha", icon=icon('icons/obj/cryogenics.dmi', "mask"))
+	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
+	// already accounts for this.
+	filters += filter(type = "alpha", icon = icon('icons/obj/cryogenics.dmi', "mask"), y = -22)
 
 /atom/movable/cryo_occupant_vis/update_icon()
 	if(!cryo)
