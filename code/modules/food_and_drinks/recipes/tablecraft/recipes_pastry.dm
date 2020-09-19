@@ -114,6 +114,15 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/matcha
 
+/datum/crafting_recipe/food/donut/oreo
+	name = "Oreo Donut"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/reagent_containers/food/snacks/cookie = 1,
+		/obj/item/reagent_containers/food/snacks/donut/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donut/oreo
+
 ////////////////////////////////////////////////////JELLY DONUTS///////////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut/jelly/berry
@@ -180,6 +189,15 @@
 		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/jelly/matcha
+
+/datum/crafting_recipe/food/donut/jelly/oreo
+	name = "Oreo Jelly Donut"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/reagent_containers/food/snacks/cookie = 1,
+		/obj/item/reagent_containers/food/snacks/donut/jelly/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donut/jelly/oreo
 
 ////////////////////////////////////////////////////SLIME  DONUTS///////////////////////////////////////////////////////
 

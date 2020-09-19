@@ -158,6 +158,15 @@
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
 
+/obj/item/reagent_containers/food/snacks/donut/oreo
+	name = "oreo donut"
+	desc = "Goes great with a glass of moth milk."
+	icon_state = "donut_oreo"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 2)
+	tastes = list("donut" = 3, "cookie" = 1, "chocolate" = 1)
+	is_decorated = TRUE
+	value = FOOD_FAST
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -260,6 +269,16 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
+
+/obj/item/reagent_containers/food/snacks/donut/jelly/oreo
+	name = "oreo jelly donut"
+	desc = "Goes great with a glass of moth milk."
+	icon_state = "jelly_oreo"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 2)
+	tastes = list("jelly" = 1, "donut" = 3, "cookie" = 1)
+	is_decorated = TRUE
+	filling_color = "#ebeae4"
+	value = FOOD_FAST
 
 //////////////////////////SLIME DONUTS/////////////////////////
 
