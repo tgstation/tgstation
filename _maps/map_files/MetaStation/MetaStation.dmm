@@ -51265,7 +51265,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/department/science/central)
+/area/science/robotics/mechbay)
 "cuC" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/structure/cable,
@@ -51273,14 +51273,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/science/central)
+/area/science/robotics/mechbay)
 "cuD" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 31
 	},
 /obj/structure/cable,
 /turf/open/floor/mech_bay_recharge_floor,
-/area/maintenance/department/science/central)
+/area/science/robotics/mechbay)
 "cuE" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/item/radio/intercom{
@@ -51288,7 +51288,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
-/area/maintenance/department/science/central)
+/area/science/robotics/mechbay)
 "cuF" = (
 /obj/machinery/computer/nanite_cloud_controller,
 /obj/effect/turf_decal/bot,
@@ -51521,7 +51521,7 @@
 "cvI" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/maintenance/department/science/central)
+/area/science/robotics/mechbay)
 "cvJ" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/effect/turf_decal/bot,
@@ -65934,10 +65934,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"fiv" = (
-/obj/structure/sign/directions/evac,
-/turf/closed/wall,
-/area/maintenance/department/science/central)
 "fiI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -66834,9 +66830,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"gnd" = (
-/turf/closed/wall,
-/area/maintenance/department/science/central)
 "gnu" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
@@ -107917,8 +107910,8 @@ cpb
 cqv
 cgd
 csM
-fiv
-gnd
+cBf
+cvH
 cvH
 cvH
 cxC
@@ -108431,7 +108424,7 @@ cpd
 cqx
 cgd
 cLh
-gnd
+cvH
 cuC
 ctJ
 cwH
@@ -108688,7 +108681,7 @@ cpe
 cqy
 cgd
 csO
-gnd
+cvH
 cuD
 diL
 cwI
@@ -108945,7 +108938,7 @@ cpf
 cqz
 cgd
 csP
-gnd
+cvH
 cuE
 frY
 cwJ
