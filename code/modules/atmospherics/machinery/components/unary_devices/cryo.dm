@@ -7,8 +7,8 @@
 	layer = ABOVE_WINDOW_LAYER + 0.01
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo
-	var/animation = null
-	pixel_y = 23
+	var/animation = FALSE
+	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
 
 /atom/movable/cryo_occupant_vis/New(obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
@@ -23,28 +23,22 @@
 /atom/movable/cryo_occupant_vis/update_icon()
 	if(!cryo)
 		return
-	if(animation != null)
-		if(cryo.occupant && cryo.on && cryo.is_operational)
-			return
-		deltimer(animation)
-		animation = null
-	vis_contents.Cut()
-	if(cryo.occupant)
-		cryo.occupant.dir = SOUTH
-		vis_contents += cryo.occupant
-		if(cryo.on && cryo.is_operational)
-			run_anim(TRUE)
+	if(animation)
+		if(!cryo.occupant || !cryo.on || !cryo.is_operational)
+			animate(src)
+			animation = FALSE
+		return
 
-/atom/movable/cryo_occupant_vis/proc/run_anim(anim_up)
-	if(pixel_y == 22)
-		anim_up = TRUE
-	if(pixel_y == 24)
-		anim_up = FALSE
-	if(anim_up)
-		pixel_y++
-	else
-		pixel_y--
-	animation = addtimer(CALLBACK(src, .proc/run_anim, anim_up), 7, TIMER_UNIQUE | TIMER_STOPPABLE)
+	vis_contents.Cut()
+	if(!cryo.occupant)
+		return
+
+	cryo.occupant.dir = SOUTH
+	vis_contents += cryo.occupant
+	if(cryo.on && cryo.is_operational)
+		animate(src, pixel_y = 24, time = 20, loop = -1)
+		animate(pixel_y = 22, time = 20)
+		animation = TRUE
 
 /// Cryo cell
 /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -130,6 +124,7 @@
 		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
+	QDEL_NULL(occupant_vis)
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
 	///Take the turf the cryotube is on
@@ -167,7 +162,7 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	occupant_vis.update_icon()
+	occupant_vis?.update_icon()
 	icon_state = (state_open) ? "pod-open" : (on && is_operational) ? "pod-on" : "pod-off"
 	cut_overlays()
 	if(panel_open)
