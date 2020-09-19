@@ -1,7 +1,18 @@
-
-
 #define ADDRESS_TO_STRING(NETWORK,NODE,PORT) "[NETWORK].[NODE].[PORT]"
+/* This is the ntnet!  All network names must be unique.  While, in theory, they can have the same name and
+be under a diffrent parrent, it means we have to implment a proper routing protocal instad of just having a
+big list of networks to search under.  This also means evey device must know its network name and hardware id
+to find one another.  We also can query an entire network for devices so this works similarly to filter in
+the old radio.
 
+Now port is intresting.  Right now its a list of static data.  So if something querys a port and we have
+it in the list, we can either have it call a call back (not implmented) or return a list of data.
+
+Port 0 will be the "info" requiest.  It will return the obj.name, obj.type.  More data?
+Any other port will just fall down
+
+PS - This is just a temp explitaion, I am horiable on typing and documentation because of my dislex ass
+*/
 
 /datum/ntnet
 	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
@@ -10,37 +21,62 @@
 	var/static/list/relays = list()
 	var/static/list/logs = list()
 
+	// special case for network_id being null
+	// We are in general subspace, where all we are is a list of networks
+	//
 	var/network_id
 	var/list/linked_devices
-	var/list/networks
+	var/list/children
 	var/datum/ntnet/parent
 
-/datum/ntnet/New(network_id, datum/ntnet/parent = null)
+/datum/ntnet/New(network_id, parent_network_id)
+	if(SSnetworks.networks[network_id])
+		log_runtime("[network_id] already exists.  Please test this BEFORE running /datum/ntnet/New")
+		qdel(src)
 	src.linked_devices = list()
 	src.network_id = network_id
-	if(parent)
+	if(parent_network_id)
+		var/datum/ntnet/parent = SSnetworks.networks[parent_network_id]
+		if(!parent)
+			debug_world_log("Parent [parent_network_id] network does not exist.  Emergency create in subspace")
+			parent = new(parent_network_id)
 		src.parent = parent
-		networks = parent.networks	// kind of a hack so the network knows we can route to this
+		LAZYADDASSOC(src.parent.children, network_id, src)
 	else
 		src.parent = null
-		networks = list()
+		src.children = null
 
-	networks[network_id] = src
+	SSnetworks.networks[network_id] = src
 
 /datum/ntnet/Destroy()
-	networks.Remove(network_id)
-	parent = null
-	linked_devices = null
-	networks = null
+	if(length(linked_devices) > 0)
+		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
+		for(var/hid in linked_devices)
+			var/datum/component/ntnet_interface/device = linked_devices[hid]
+			device.network = null	// we just need to clear the refrence
+		linked_devices = null
+
+	if(length(children))
+		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
+		for(var/child in children)
+			qdel(children[child])
+		children = null
+
+	if(parent)
+		parent.children.Remove(network_id)
+		parent = null
+
+	SSnetworks.networks.Remove(network_id)
 	return ..()
 
 // creates a network as a child of this network
-/datum/ntnet/proc/create_or_find_domain(new_network)
-	var/datum/ntnet/net = networks[new_network]
-	if(!net)
-		net = new/datum/ntnet(new_network, src)
-		networks[new_network] = net
-	return net
+/datum/ntnet/proc/create_child(new_network)
+	var/datum/ntnet/net = SSnetworks.networks[new_network]
+	if(net)
+		log_runtime("[network_id] already exists.  Please test this BEFORE running /datum/ntnet/proc/create_child")
+		return null
+	return new/datum/ntnet(new_network, network_id)
+
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
 	if(device.network)
@@ -71,19 +107,19 @@
 	log_data_transfer(data)
 	ASSERT(network_id == data.receiver_network)
 	var/datum/component/ntnet_interface/target
-	var/list/targets = !data.receiver_id ? linked_devices : data.receiver_id
-	if(targets)// its null so its brodcas
-		for(var/hid in targets)
-			target = linked_devices[hid]
+	var/list/targets = data.receiver_id == null ? linked_devices : data.receiver_id
+	if(targets)
+		if(length(targets))
+			for(var/hid in targets)
+				target = linked_devices[hid]
+				if(!QDELETED(target)) // Do we need this or not? alot of async goes around
+					target.__network_receive(data)
+		else // then its a point to point
+			target = linked_devices[data.receiver_id]
 			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 				target.__network_receive(data)
-	else
-		target = linked_devices[data.receiver_id]
-		if(!QDELETED(target)) // Do we need this or not? alot of async goes around
-			target.__network_receive(data)
-		else
-			debug_world_log("Address not found, send return packet [data.receiver_id]")
 
+// better to drop packets or send an error reply? humm
 
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)

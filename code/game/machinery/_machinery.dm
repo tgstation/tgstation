@@ -151,6 +151,9 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/proc/connect_to_ntnet(network_id)
+	if(src.network_id != network_id)
+		AddComponent(/datum/component/ntnet_interface, src.network_id,  network_root_id)
 /obj/machinery/ComponentInitialize()
 	. = ..()
 	if(network_id)
