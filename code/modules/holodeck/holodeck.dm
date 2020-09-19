@@ -7,7 +7,17 @@
 	var/banned_areas
 	var/banned_objects
 	var/restricted = FALSE
+	var/list/spawned_atoms
 
+	/*
+	var/name = "Default Template Name"
+	var/width = 0
+	var/height = 0
+	var/mappath = null
+	var/loaded = 0 // Times loaded this round
+	var/datum/parsed_map/cached_map
+	var/keep_cached_map = FALSE
+	*/
 	var/obj/machinery/computer/holodeck/linked
 	 // if true, program goes on emag list
 
@@ -36,6 +46,7 @@
 				return SHELTER_DEPLOY_ANCHORED_OBJECTS
 	return SHELTER_DEPLOY_ALLOWED
 	*/
+
 
 /datum/map_template/holodeck/lounge//the l in lounge starts after space 29
 	name = "Holodeck - Lounge"
@@ -93,9 +104,9 @@
 
 /datum/map_template/holodeck/petpark
 	name = "Holodeck - Pet Park"
-	template_id = "holodeck_lounge"
+	template_id = "holodeck_petpark"
 	description = "benis"
-	mappath = "_maps/templates/holodeck_lounge.dmm"
+	mappath = "_maps/templates/holodeck_petpark.dmm"
 
 /datum/map_template/holodeck/photobooth
 	name = "Holodeck - Photobooth"

@@ -25,7 +25,7 @@
 			cached_map = parsed
 	return bounds
 
-/datum/parsed_map/proc/initTemplateBounds()
+/datum/parsed_map/proc/initTemplateBounds(var/bit_flags_1 = null)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -35,21 +35,25 @@
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
 							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	for(var/L in turfs)
+	//var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
+							//locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
 		var/turf/B = L
-		atoms += B
-		areas |= B.loc
-		for(var/A in B)
-			atoms += A
+		atoms += B//atoms = atoms + B, turfs are atoms
+		areas |= B.loc //areas = areas|B.loc
+		for(var/A in B)//does this look for the contents in the turf represented by B?
+			atoms += A//for each object in the contents of the current turf, add it to the atoms list
 			if(istype(A, /obj/structure/cable))
-				cables += A
+				cables += A//if A is a cable, add to the cable list
 				continue
-			if(istype(A, /obj/machinery/atmospherics))
+			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
 				atmos_machines += A
 	for(var/L in border)
 		var/turf/T = L
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
-
+	if (bit_flags_1)
+		for (var/atom/atom in atoms)
+			atom.flags_1 |= bit_flags_1
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
@@ -84,7 +88,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
 							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
 	for(var/L in border)
 		var/turf/turf_to_disable = L

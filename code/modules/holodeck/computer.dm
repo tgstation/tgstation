@@ -51,6 +51,8 @@
 	//var/template_id
 	var/turf/bottom_left
 	var/area/current_holodeck_area
+	var/list/before_load = list()
+	var/list/after_load = list()
 
 /obj/effect/mapping_helpers/holodeck_spawner
 	icon_state = ""
@@ -275,33 +277,119 @@
 		var/obj/effect/holodeck_effect/HE = e
 		HE.safety(active)
 
-/obj/machinery/computer/holodeck/proc/prepare_holodeck_area()//called AFTER the current template is selected in l_pro, but BEFORE template.load
+/*/obj/machinery/computer/holodeck/proc/prepare_holodeck_area()//called AFTER the current template is selected in l_pro, but BEFORE template.load
 	//spawned += template.get_affected_turfs(bottom_left)//get_a_f shoooould be a list
-	var/list/area_contents = get_area(bottom_left).contents
-	LAZYADD(spawned, area_contents)//THIS ONLY HAS FUCKIGN TURFS
-	for (var/atom/previous_item in spawned)
+	var/list/holodeck_turfs
+	LAZYADD(holodeck_turf_contents, get_area_turfs(current_holodeck_area))//THIS ONLY HAS FUCKIGN TURFS
+	for (var/atom/previous_item in holodeck_turfs.contents)
 		if (previous_item.flags_1 & HOLOGRAM_1)
 			if (!istype(previous_item,/turf/))
-				qdel(previous_item)
+				qdel(previous_item)*/
+
+/datum/map_template/holodeck/load(turf/T, centered = FALSE, )
+	if(centered)
+		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+	if(!T)
+		return
+	if(T.x+width > world.maxx)
+		return
+	if(T.y+height > world.maxy)
+		return
+
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
+							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+	for(var/L in border)
+		var/turf/turf_to_disable = L
+		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+		turf_to_disable.atmos_adjacent_turfs?.Cut()
+
+	// Accept cached maps, but don't save them automatically - we don't want
+	// ruins clogging up memory for the whole round.
+	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
+	cached_map = keep_cached_map ? parsed : null
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+		return
+	var/list/bounds = parsed.bounds//what exactly IS parsed.bounds mean? is it whatver is boing put into the world when load is called? or is it whats in the world after load is called?
+	if(!bounds)
+		return
+
+	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
+		repopulate_sorted_areas()
+
+	//initialize things that are normally initialized after map load
+	parsed.holodeckTemplateBounds()
+	/*var/list/atoms/atoms = parsed.initTemplateBounds().atoms
+	for (var/index in atoms)
+		index.flags_1 |= HOLOGRAM_1*/
+	//spawned_atoms = bounds
+	log_game("[name] loaded at [T.x],[T.y],[T.z]")
+	return bounds//i think its bad if this doesnt return bounds, so why?
+
+/datum/parsed_map/proc/holodeckTemplateBounds()
+	var/list/obj/machinery/atmospherics/atmos_machines = list()
+	var/list/obj/structure/cable/cables = list()
+	var/list/atom/atoms = list()
+	var/list/area/areas = list()
+
+	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
+							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
+	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
+		var/turf/B = L
+		atoms += B//atoms = atoms + B, turfs are atoms
+		areas |= B.loc //areas = areas|B.loc
+		for(var/A in B)//does this look for the contents in the turf represented by B?
+			atoms += A//for each object in the contents of the current turf, add it to the atoms list
+			if(istype(A, /obj/structure/cable))
+				cables += A//if A is a cable, add to the cable list
+				continue
+			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
+				atmos_machines += A
+	for(var/L in border)
+		var/turf/T = L
+		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
+	//for (var/atom/atom in atoms)
+	//	if ((flags_1))
+	//		atom.flags_1 |= HOLOGRAM_1
+	SSmapping.reg_in_areas_in_z(areas)
+	SSatoms.InitializeAtoms(atoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
+	SSmachines.setup_template_powernets(cables)
+	SSair.setup_template_machinery(atmos_machines)
+	//return atoms
+	//what if this returned a list of the atoms list, cables list, atmos_machines list, and areas list?
+
+/obj/machinery/computer/holodeck/proc/populate_spawned(turf/turfies)
+	var/list/obj/machinery/atmospherics/atmos_machines = list()
+	var/list/obj/structure/cable/cables = list()
+	var/list/atom/atoms = list()
+	var/list/area/areas = list()
+
+	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
+							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
+	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
+							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
+	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
+		var/turf/B = L
+		atoms += B//atoms = atoms + B, turfs are atoms
+		areas |= B.loc //areas = areas|B.loc
+		for(var/A in B)//does this look for the contents in the turf represented by B?
+			atoms += A//for each object in the contents of the current turf, add it to the atoms list
+			if(istype(A, /obj/structure/cable))
+				cables += A//if A is a cable, add to the cable list
+				continue
+			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
+				atmos_machines += A
 
 
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
-	//current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
-	//bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
 
-	//message_admins(world,"DEBUG -- load_program started")
-	//takes an area, finds what program that area corresponds to
-	//if (1==2)
-		///datum/map_template/holodeck/wildlifesim/load(get_turf(A))
-	//template.load(deploy_location, centered = TRUE)
-	/*
-	if(!is_operational)
+	/*if(!is_operational)
 		template = offline_program
 		force = TRUE
 
-	if(program == template)//if the program is the same as the corresponding area
-		return
-	*/
+	if(program == map_id)//if the program is the same as the corresponding area
+		return*/
 
 	program = map_id //<- dont forget this
 
@@ -309,6 +397,9 @@
 	template = SSmapping.holodeck_templates[map_id]
 	//prepare_holodeck_area()
 	template.load(bottom_left, FALSE)
+	//spawned = template.load(bottom_left, FALSE) //write another proc that just gets the atoms from holodeckTemplateBounds()?
+	spawned = template.spawned_atoms
+	current_holodeck_area = get_area(bottom_left)
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
 
