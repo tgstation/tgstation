@@ -2981,7 +2981,6 @@
 #include "code\modules\ruins\spaceruin_code\DJstation.dm"
 #include "code\modules\ruins\spaceruin_code\forgottenship.dm"
 #include "code\modules\ruins\spaceruin_code\hellfactory.dm"
-#include "code\modules\ruins\spaceruin_code\hilbertshotel.dm"
 #include "code\modules\ruins\spaceruin_code\listeningstation.dm"
 #include "code\modules\ruins\spaceruin_code\oldstation.dm"
 #include "code\modules\ruins\spaceruin_code\originalcontent.dm"
