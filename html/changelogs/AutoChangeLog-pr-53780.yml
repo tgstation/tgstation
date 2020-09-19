@@ -1,0 +1,7 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - rscadd: "Quartermaster spawnpoint on Pubbystation"
+  - rscadd: "Shaft Miner spawnpoints on Pubbystation"
+  - rscadd: "Cargo Tech spawnpoints on Pubbystation"
+  - bugfix: "Fixed Pubbystation delivery access and mining access"
