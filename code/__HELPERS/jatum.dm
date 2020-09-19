@@ -1,7 +1,7 @@
 // JATUM. System for making the serializing and deserializing of PoD types easier
 
 /**
-  * Gets the flat list that can be passed in a `new /type(argslist(retval))` expression to recreate the datum. Must only return a list containing values that can roundtrip with json_encode/json_decode
+  * Gets the flat list that can be passed in a `new /type(argslist(retval))` expression to recreate the datum. Must only return a list containing values that can be JATUM serialized
   */
 /datum/proc/jatum_new_arglist()
 	return null
@@ -57,14 +57,14 @@
 		return list(
 			"jatum\\id" = ref_id,
 			"type" = "/matrix",
-			"jatum\\new_arglist" = json_decode(json_encode(value)))
+			"jatum\\new_arglist" = _jatum_serialize_value(json_decode(json_encode(value))), seen_references)
 
 	if(istype(value, /savefile)) // Just store the path, rely on BYOND for the rest
 		var/savefile/save = value
 		return list(
 			"jatum\\id" = ref_id,
 			"type" = "/savefile",
-			"jatum\\new_arglist" = list(save.name)
+			"jatum\\new_arglist" = _jatum_serialize_value(list(save.name), seen_references)
 		)
 
 	if(istype(value, /regex)) // store construct params
@@ -121,7 +121,9 @@
 		)
 	var/new_arglist = D.jatum_new_arglist()
 	if(new_arglist)
-		json_structure["jatum\\new_arglist"] = new_arglist
+		if(!islist(new_arglist))
+			CRASH("Non-list return from jatum_new_arglist from [D.type]!")
+		json_structure["jatum\\new_arglist"] = _jatum_serialize_value(new_arglist, seen_references)
 
 	for(var/var_name in D.vars)
 		if(var_name == "vars" || var_name == "parent_type" || var_name == "type")
@@ -197,11 +199,12 @@
 
 		else
 			// everything else is a /datum and instantiates via reflection
-			var/new_arglist = structure["jatum\\new_arglist"]
+			var/list/jatum_arglist = structure["jatum\\new_arglist"]
 			var/full_type = text2path(entry_type)
 			if(!full_type)
 				CRASH("Invalid type: [entry_type]")
-			if(new_arglist)
+			if(jatum_arglist)
+				var/list/new_arglist = _jatum_deserialize_value(jatum_arglist, active_references)
 				. = new full_type(arglist(new_arglist))
 			else
 				. = new full_type
