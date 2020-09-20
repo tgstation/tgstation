@@ -169,7 +169,7 @@
 	if (istype(I))
 		inverted = !inverted
 		if(inverted)
-			to_chat(user, "<span class='notice'>You set the [src]'s sensors to release gases when the pressure is higher than the setted one.</span>")
+			to_chat(user, "<span class='notice'>You set [src]'s sensors to release gases when the pressure is higher than the set one.</span>")
 		else
 			to_chat(user, "<span class='notice'>You set the [src]'s sensors to the default settings.</span>")
 	return TRUE
