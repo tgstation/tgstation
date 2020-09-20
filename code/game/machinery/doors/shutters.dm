@@ -44,8 +44,8 @@
 	desc = "A shutter with a thick see-through polycarbonate window."
 	icon = 'icons/obj/doors/shutters_window.dmi'
 	icon_state = "closed"
-	opacity = 0
-	glass = 1
+	opacity = FALSE
+	glass = TRUE
 
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open"
