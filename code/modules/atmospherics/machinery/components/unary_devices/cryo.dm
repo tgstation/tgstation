@@ -64,6 +64,8 @@
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
 
+	showpipe = FALSE
+
 	var/autoeject = TRUE
 	var/volume = 100
 
@@ -171,14 +173,24 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+	. = ..()
+	plane = initial(plane)
 	occupant_vis?.update_icon()
 	icon_state = (state_open) ? "pod-open" : (on && is_operational) ? "pod-on" : "pod-off"
-	cut_overlays()
+
+GLOBAL_VAR_INIT(cryo_overlay_cover_on, mutable_appearance('icons/obj/cryogenics.dmi', "cover-on", layer = ABOVE_WINDOW_LAYER + 0.02))
+GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics.dmi', "cover-off", layer = ABOVE_WINDOW_LAYER + 0.02))
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("pod-panel")
-	if(!state_open)
-		var/overlay = (on && is_operational) ? "cover-on" : "cover-off"
-		add_overlay(mutable_appearance(icon, overlay, layer = ABOVE_WINDOW_LAYER + 0.02))
+		. += "pod-panel"
+	if(state_open)
+		return
+	if(on && is_operational)
+		. += GLOB.cryo_overlay_cover_on
+	else
+		. += GLOB.cryo_overlay_cover_off
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
