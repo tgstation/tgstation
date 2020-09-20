@@ -59,19 +59,20 @@
 	diag_hud_set_health()
 	add_sensors()
 
-/mob/living/silicon/med_hud_set_health()
-	return //we use a different hud
-
-/mob/living/silicon/med_hud_set_status()
-	return //we use a different hud
-
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
 	QDEL_NULL(aiPDA)
+	QDEL_NULL(laws)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
