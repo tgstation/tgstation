@@ -26,7 +26,7 @@
 	filters += filter(type = "alpha", icon = icon('icons/obj/cryogenics.dmi', "mask"), y = -22)
 
 /atom/movable/cryo_occupant_vis/Destroy()
-	qdel(cryo)
+	cryo = null
 	return ..()
 
 /atom/movable/cryo_occupant_vis/update_icon()
