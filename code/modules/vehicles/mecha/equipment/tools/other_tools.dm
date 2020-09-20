@@ -290,8 +290,7 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
 	if(equip_ready) //disabled
 		return
-	var/area/A = get_area(chassis)
-	var/pow_chan = get_chassis_area_power(A)
+	var/pow_chan = get_chassis_area_power(get_area(chassis))
 	if(pow_chan)
 		return 1000 //making magic
 
