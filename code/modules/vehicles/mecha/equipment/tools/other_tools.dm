@@ -44,13 +44,14 @@
 		return
 	var/list/validturfs = list()
 	var/turf/ourturf = get_turf(src)
-	for(var/turf/T in get_area_turfs(targetarea.type))
-		if(T.density || chassis.z != T.z)
+	for(var/t in get_area_turfs(targetarea.type))
+		var/turf/evaluated_turf = t
+		if(evaluated_turf.density || chassis.z != evaluated_turf.z)
 			continue
-		for(var/obj/O in T)
-			if(!O.density)
+		for(var/obj/evaluated_obj in evaluated_turf)
+			if(!evaluated_obj.density)
 				continue
-			validturfs += T
+			validturfs += evaluated_turf
 
 	var/turf/target_turf = pick(validturfs)
 	if(!target_turf)
