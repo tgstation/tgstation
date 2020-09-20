@@ -679,23 +679,24 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf()
 	if(takes_damage)
-		for(var/turf_to_check in RANGE_TURFS(1, loc))
-			if(isspaceturf(turf_to_check) && istype(loc))
-				var/is_open =  TRUE
-				for(var/obj/object_to_check in turf_to_check)
-					if(object_to_check.density == TRUE || object_to_check.CanAtmosPass == ATMOS_PASS_NO)
-						is_open = FALSE
-						break
-				if(is_open)
-					var/integrity = get_integrity()
-					if(integrity < 10)
-						damage += max((power * 0.004) * DAMAGE_INCREASE_MULTIPLIER, 0)
-					else if(integrity < 25)
-						damage += max((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0)
-					else if(integrity < 45)
-						damage += max((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0)
-					else if(integrity < 75)
-						damage += max((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0)
+		for(var/t in RANGE_TURFS(1, loc))
+			if(!isspaceturf(t))
+				continue
+			var/turf/turf_to_check = t
+			var/is_open =  TRUE
+			if(!LAZYLEN(turf_to_check.atmos_adjacent_turfs))
+				is_open = FALSE
+			if(is_open)
+				var/integrity = get_integrity()
+				if(integrity < 10)
+					damage += max((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0)
+				else if(integrity < 25)
+					damage += max((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0)
+				else if(integrity < 45)
+					damage += max((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0)
+				else if(integrity < 75)
+					damage += max((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			break
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
