@@ -54,7 +54,7 @@
 	if(T)
 		user.visible_message("<span class='notice'>[user] begins to clean \the [T] with [src].</span>", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 		var/clean_speedies = 1
-		if(user?.mind)
+		if(user.mind)
 			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")

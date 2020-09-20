@@ -750,7 +750,7 @@
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user
-	if(!(H?.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+	if(!(H.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
 		return
 	drop_ores()
 	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
@@ -760,7 +760,7 @@
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	H?.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
+	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))

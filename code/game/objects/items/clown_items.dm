@@ -119,7 +119,7 @@
 	if(!proximity || !check_allowed_items(target))
 		return
 	var/clean_speedies = 1 * cleanspeed
-	if(user?.mind)
+	if(user.mind)
 		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
