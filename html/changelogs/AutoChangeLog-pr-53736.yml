@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "EMP-shielded cameras will no longer runtime when destroyed."

@@ -387,7 +387,7 @@
 
 
 /datum/crafting_recipe/radiogloves
-	name = "Translation Gloves"
+	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
 	time = 15
 	reqs = list(/obj/item/clothing/gloves/color/black = 1,
