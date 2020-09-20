@@ -311,6 +311,7 @@
 	throw_speed = 3
 	throw_range = 5
 	flags_1 = CONDUCT_1
+	slot_flags = null
 	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()

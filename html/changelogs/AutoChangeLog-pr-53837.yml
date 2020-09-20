@@ -1,0 +1,5 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "fixed some foods getting the wrong reagent counts"
+  - bugfix: "fixed trash runtime"

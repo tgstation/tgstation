@@ -114,7 +114,7 @@
 						/datum/gas/hypernoblium,
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
-						/datum/gas/cyrion_b,
+						/datum/gas/zauker,
 						/datum/gas/halon,
 						/datum/gas/hexane
 						)
@@ -346,13 +346,15 @@
 
 	// Proto Nitrate
 		// Inert
-	// Cyrion B
-		var/cyrion_b_pp = breath.get_breath_partial_pressure(breath_cache[/datum/gas/cyrion_b][MOLES])
-		if(cyrion_b_pp > gas_stimulation_min)
+	// Zauker
+		var/zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
+		if(zauker_pp > gas_stimulation_min)
 			H.adjustBruteLoss(25)
 			H.adjustOxyLoss(5)
 			H.adjustFireLoss(8)
 			H.adjustToxLoss(8)
+		gas_breathed = breath_gases[/datum/gas/zauker][MOLES]
+		breath_gases[/datum/gas/zauker][MOLES]-=gas_breathed
 		gas_breathed = breath_cache[/datum/gas/cyrion_b][MOLES]
 		breath_cache[/datum/gas/cyrion_b][MOLES]-=gas_breathed
 
