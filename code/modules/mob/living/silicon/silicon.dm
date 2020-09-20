@@ -238,7 +238,7 @@
 			say("[radiomod] 0. [lawcache_zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= lawcache_hacked.len, index++)
+	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
@@ -246,7 +246,7 @@
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= lawcache_ion.len, index++)
+	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
@@ -254,7 +254,7 @@
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= lawcache_inherent.len, index++)
+	for (var/index in 1 to length(lawcache_inherent))
 		var/law = lawcache_inherent[index]
 
 		if (length(law) > 0)
@@ -263,7 +263,7 @@
 				number++
 				sleep(10)
 
-	for (var/index = 1, index <= lawcache_supplied.len, index++)
+	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
 
 		if (length(law) > 0)
