@@ -39,19 +39,24 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
+	var/input_moles = air_input.total_moles()
+	var/output_moles = air_output.total_moles()
+
 	var/input_heat_capacity = air_input.heat_capacity()
 	var/output_heat_capacity = air_output.heat_capacity()
 
 	var/input_temperature = air_input.temperature
 	var/output_temperature = air_output.temperature
 
-	var/flux_rate = (input_temperature - output_temperature) * heat_transfer_rate
+	var/flux_rate = ((input_temperature - output_temperature) * heat_transfer_rate) * min(input_moles, output_moles)
+	//equalization check
+	flux_rate = min(flux_rate, ((input_temperature * input_heat_capacity * input_moles) - (output_temperature * output_heat_capacity * output_moles)) / 2)
 	if(flux_rate <= 0)
 		return
 	var/input_temp_change = -(input_heat_capacity / flux_rate)
 	var/output_temp_change = output_heat_capacity / flux_rate
 
-	if(input_temperature - input_temp_change <= TCRYO)
+	if(input_temperature - input_temp_change < TCRYO)
 		return
 
 	air_input.temperature += input_temp_change
