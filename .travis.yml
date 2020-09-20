@@ -83,6 +83,9 @@ jobs:
     - name: "Generate Documentation"
       # Only run for non-PR commits to the real master branch.
       if: branch = master AND head_branch IS blank
+      cache:
+        directories:
+          - $HOME/SpacemanDMM
       install:
         - tools/travis/install_spaceman_dmm.sh dmdoc
       before_script:

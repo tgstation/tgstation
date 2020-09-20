@@ -26,7 +26,7 @@
 		/datum/gas/hydrogen,
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
-		/datum/gas/cyrion_b,
+		/datum/gas/zauker,
 		/datum/gas/halon,
 		/datum/gas/hexane,
 	)

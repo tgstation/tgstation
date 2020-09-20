@@ -1,6 +1,7 @@
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
+	slot_flags = null
 	projectile_type = /obj/projectile/bullet/dart/syringe
 	firing_effect_type = null
 
