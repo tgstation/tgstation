@@ -99,6 +99,9 @@
 	addMemories()
 	if(give_equipment)
 		equip_space_ninja(owner.current)
+
+	owner.current.mind.assigned_role = ROLE_NINJA
+	owner.current.mind.special_role = ROLE_NINJA
 	return ..()
 
 /datum/antagonist/ninja/admin_add(datum/mind/new_owner,mob/admin)
