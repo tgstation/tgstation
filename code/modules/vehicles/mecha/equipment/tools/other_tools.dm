@@ -75,8 +75,8 @@
 	equip_cooldown = 10
 	energy_drain = 100
 	range = MECHA_MELEE|MECHA_RANGED
-	///Which atom we are lockedatom onto for
-	var/atom/movable/lockedatom
+	///Which atom we are movable_target onto for
+	var/atom/movable/movable_target
 	///Whether we will throw movable atomstothrow by locking onto them or just throw them back from where we click
 	var/mode = GRAVSLING_MODE
 
@@ -86,7 +86,7 @@
 		return
 	switch(mode)
 		if(GRAVSLING_MODE)
-			if(!lockedatom)
+			if(!movable_target)
 				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					to_chat(source, "[icon2html(src, source)]<span class='warning'>Unable to lock on [target]!</span>")
 					return
@@ -95,20 +95,20 @@
 					if(M.mob_negates_gravity())
 						to_chat(source, "[icon2html(src, source)]<span class='warning'>[target] immune to gravitational impulses, unable to lock!</span>")
 						return
-				lockedatom = target
+				movable_target = target
 				to_chat(source, "[icon2html(src, source)]<span class='notice'>locked on [target].</span>")
 				send_byjax(source,"exosuit.browser","[REF(src)]", get_equip_info())
-			else if(target!=lockedatom)
-				if(lockedatom in view(chassis))
+			else if(target!=movable_target)
+				if(movable_target in view(chassis))
 					var/turf/targ = get_turf(target)
-					var/turf/orig = get_turf(lockedatom)
-					lockedatom.throw_at(target, 14, 1.5)
-					lockedatom = null
+					var/turf/orig = get_turf(movable_target)
+					movable_target.throw_at(target, 14, 1.5)
+					movable_target = null
 					send_byjax(source,"exosuit.browser","[REF(src)]", get_equip_info())
-					log_game("[key_name(source)] used a Gravitational Catapult to throw [lockedatom] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
+					log_game("[key_name(source)] used a Gravitational Catapult to throw [movable_target] (From [AREACOORD(orig)]) at [target] ([AREACOORD(targ)]).")
 					return ..()
-				lockedatom = null
-				to_chat(source, "[icon2html(src, source)]<span class='notice'>Lock on [lockedatom] disengaged.</span>")
+				movable_target = null
+				to_chat(source, "[icon2html(src, source)]<span class='notice'>Lock on [movable_target] disengaged.</span>")
 				send_byjax(source,"exosuit.browser","[REF(src)]", get_equip_info())
 
 		if(GRAVPUSH_MODE)
@@ -136,7 +136,7 @@
 		sleep(2)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
-	return "[..()] [mode==1?"([lockedatom||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
+	return "[..()] [mode==1?"([movable_target||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/Topic(href, href_list)
 	..()
