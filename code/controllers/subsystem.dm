@@ -97,9 +97,9 @@
 	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
+/datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	set waitfor = 0
+	set waitfor = FALSE
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
@@ -114,7 +114,7 @@
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //Sleeping in here prevents future fires until returned.
-/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/controller/subsystem/proc/fire(resumed = FALSE)
 	flags |= SS_NO_FIRE
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
