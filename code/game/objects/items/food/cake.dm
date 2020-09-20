@@ -12,10 +12,11 @@
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
-	//uncomment me when trash is merged trash = /obj/item/trash/plate
+	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cake/plain
 	name = "plain cake"
@@ -261,7 +262,7 @@
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 
-/obj/item/food/cake/apple/MakeProcessable()
+/obj/item/food/cake/slimecake/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/slimecake, 5, 30)
 
 /obj/item/food/cakeslice/slimecake
