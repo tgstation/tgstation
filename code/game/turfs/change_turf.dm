@@ -142,10 +142,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if (!.) // changeturf failed or didn't do anything
 			QDEL_NULL(stashed_air)
 			return
+		SSair.remove_from_active(src) //Turfs are fucking weird with refs, let's be safe yeah?
 		var/turf/open/newTurf = .
 		newTurf.air.copy_from(stashed_air)
 		QDEL_NULL(stashed_air)
-		SSair.add_to_active(newTurf)
+		SSair.add_to_active(newTurf, FALSE)
 	else
 		if(ispath(path,/turf/closed))
 			SSair.remove_from_active(src) //Turfs are fucking weird with refs, let's be safe yeah?

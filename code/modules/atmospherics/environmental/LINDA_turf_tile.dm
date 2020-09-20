@@ -294,6 +294,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	temperature_expose(our_air, our_air.temperature) //I should add some sanity checks to this thing
 
 ////////////////////Excited Group Cleanup///////////////////////
+
 /turf/open/proc/cleanup_group(fire_count)
 	current_cycle = fire_count + 0.5 //It works, I know it's dumb but it works
 
@@ -485,12 +486,13 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 /datum/excited_group/proc/garbage_collect(rebuild_excited_groups = TRUE)
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
-	if(rebuild_excited_groups) //If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
-		for(var/t in turf_list)
-			var/turf/open/T = t
-			T.excited_group = null
-			if(!istype(T.air, /datum/gas_mixture/immutable)) //I want my holes to space consistent you hear me?
-				SSair.add_to_cleanup(T) //Poke everybody in the group, just in case
+	for(var/t in turf_list)
+		var/turf/open/T = t
+		T.excited_group = null
+		//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
+		if(rebuild_excited_groups && !istype(T.air, /datum/gas_mixture/immutable)) //I want my holes to space consistent you hear me?
+			//There's still some bugs with cleanup, doesn't fully merge properly, but this'll do for now
+			SSair.add_to_cleanup(T) //Poke everybody in the group, just in case
 	turf_list.Cut()
 	SSair.excited_groups -= src
 	if(SSair.currentpart == SSAIR_EXCITEDGROUPS)

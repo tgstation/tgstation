@@ -426,13 +426,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(cached_gases))
 		return
 	var/list/reactions = list()
-	for(var/datum/gas_reaction/G in SSair.gas_reactions)
-		if(cached_gases[G.major_gas])
+	for(var/G in SSair.gas_reactions)
+		var/datum/gas_reaction/reaction = G
+		if(cached_gases[reaction.major_gas])
 			reactions += G
 	if(!length(reactions))
 		return
 	reaction_results = new
-
+	var/cached_temp = temperature
+	var/cached_energy = THERMAL_ENERGY(src)
 	reaction_loop:
 		for(var/r in reactions)
 			var/garbage = NO_REACTION
@@ -440,24 +442,25 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 			var/list/min_reqs = reaction.min_requirements
 
+			if((min_reqs["TEMP"] && cached_temp < min_reqs["TEMP"]) \
+			|| (min_reqs["MAX_TEMP"] && cached_temp > min_reqs["MAX_TEMP"]) \
+			|| (min_reqs["ENER"] && cached_energy < min_reqs["ENER"]))
+				continue
+
 			for(var/id in min_reqs)
 				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
 					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 
-			//Not sure on the order of these, I think we have enough reactions that relevant gas types has more effect then temperture
-			if((min_reqs["TEMP"] && temperature < min_reqs["TEMP"]) \
-			|| (min_reqs["MAX_TEMP"] && temperature > min_reqs["MAX_TEMP"]) \
-			|| (min_reqs["ENER"] && THERMAL_ENERGY(src) < min_reqs["ENER"]))
-				continue
-
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 
 			garbage = reaction.react(src, holder)
 
-			if(garbage)
-				garbage_collect() //Collect each reaction so some fuck doesn't STEAL ALL MY BZ YOU MOTHERFUCKE
+			if(garbage) // really garbage > NO_REACTION, but ehhhhhhhhhhhhhhhhhhh
+				garbage_collect() //Collect each reaction that changes the mix so some fuck doesn't STEAL ALL MY BZ YOU MOTHERFUCKE
+				cached_energy = THERMAL_ENERGY(src)
+				cached_temp = temperature
 
 			. |= garbage
 

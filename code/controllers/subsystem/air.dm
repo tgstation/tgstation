@@ -55,17 +55,18 @@ SUBSYSTEM_DEF(air)
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
-	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]|"
 	msg += "AO:[round(cost_atoms, 1)]"
+	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
 	msg += "CL:[cleanup_ex_groups.len]|"
 	msg += "EG:[excited_groups.len]|"
-	msg += "HS:[hotspots.len]|"
-	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
-	msg += "AS:[active_super_conductivity.len]|"
+	msg += "HS:[hotspots.len]|"
+	msg += "SC:[active_super_conductivity.len]|"
+	msg += "PN:[networks.len]|"
+	msg += "AM:[atmos_machinery.len]|"
 	msg += "AO:[atom_process_list.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
@@ -354,13 +355,13 @@ SUBSYSTEM_DEF(air)
 		T.excited = FALSE
 		if(T.excited_group && kill_excited)
 			//TODO: Make this whole chain suck less ass.
-			T.excited_group.garbage_collect() //Yes this means walls can be active for a tick, no I don't care.
+			T.excited_group.garbage_collect()
 
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = 1)
 	if(istype(T) && T.air)
 		if(T.excited)
-			if(blockchanges && T.excited_group) //Not totally sure this is needed, but it might be
-				T.excited_group.garbage_collect()
+			if(blockchanges && T.excited_group) //This is used almost exclusivly for shuttles, so the excited group doesn't stay behind
+				T.excited_group.garbage_collect(FALSE) //Nuke it
 			return
 		#ifdef VISUALIZE_ACTIVE_TURFS
 		T.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
@@ -370,7 +371,7 @@ SUBSYSTEM_DEF(air)
 		if(currentpart == SSAIR_ACTIVETURFS)
 			currentrun += T
 		if(blockchanges && T.excited_group)
-			T.excited_group.garbage_collect()
+			T.excited_group.garbage_collect(FALSE)
 	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
