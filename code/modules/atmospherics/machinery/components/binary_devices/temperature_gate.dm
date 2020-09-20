@@ -14,7 +14,7 @@
 	var/minimum_temperature = TCMB
 	///Maximum allowed temperature to be set
 	var/max_temperature = 4500
-	///Check if the sensor should let gas pass if temperature in the mix is less/higher than the target one
+	///Check if the sensor should let gas pass if the temperature in the mix is less/higher than the target one
 	var/inverted = FALSE
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE

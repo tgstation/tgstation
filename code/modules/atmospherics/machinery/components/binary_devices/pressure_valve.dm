@@ -16,6 +16,8 @@
 	var/datum/radio_frequency/radio_connection
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
+	///Check if the sensor should let gas pass if the pressure in the mix is less/higher than the target one
+	var/inverted = FALSE
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pvalve"
@@ -40,6 +42,14 @@
 	if(radio_connection)
 		radio_connection = null
 	return ..()
+
+/obj/machinery/atmospherics/components/binary/pressure_valve/examine(mob/user)
+	. = ..()
+	. += "This device will let gas flow if the pressure of the gas in the input is [inverted ? "higher" : "lower"] than the pressure set in the interface."
+	if(inverted)
+		. += "The device settings can be restored if a multitool is used on it."
+	else
+		. += "The sensor's settings can be changed by using a multitool on the device."
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)
@@ -154,6 +164,15 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
 
+/obj/machinery/atmospherics/components/binary/pressure_valve/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
+	if (istype(I))
+		inverted = !inverted
+		if(inverted)
+			to_chat(user, "<span class='notice'>You set the [src]'s sensors to release gases when the pressure is higher than the setted one.</span>")
+		else
+			to_chat(user, "<span class='notice'>You set the [src]'s sensors to the default settings.</span>")
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/layer2
 	piping_layer = 2

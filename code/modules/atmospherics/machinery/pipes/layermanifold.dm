@@ -19,6 +19,7 @@
 	front_nodes = list()
 	back_nodes = list()
 	icon_state = "manifoldlayer_center"
+	volume = 260
 	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Destroy()

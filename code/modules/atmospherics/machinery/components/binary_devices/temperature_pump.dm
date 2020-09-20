@@ -39,11 +39,24 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
-	if((air_output.temperature + heat_transfer_rate) >= air_input.temperature || (air_input.temperature - heat_transfer_rate) <= TCRYO)
+	var/input_heat_capacity = air_input.heat_capacity() //2000
+	var/output_heat_capacity = air_output.heat_capacity() //500
+
+	var/input_temperature = air_input.temperature //300
+	var/output_temperature = air_output.temperature //20
+
+	var/input_energy = input_temperature * input_heat_capacity //2000 * 300 = 600000
+	var/output_energy = output_temperature * output_heat_capacity //500 * 20 = 10000
+
+	var/input_temperature_change = output_energy / input_heat_capacity //10000 / 2000 = 5
+	var/output_temperature_change = input_energy / output_heat_capacity //600000 / 10000 = 60
+
+	if(	(output_temperature + (output_temperature_change * heat_transfer_rate)) >= air_input.temperature || \
+		(input_temperature - (input_temperature_change * heat_transfer_rate)) <= TCRYO)
 		return
 
-	air_input.temperature -= heat_transfer_rate
-	air_output.temperature += heat_transfer_rate
+	air_input.temperature -= input_temperature_change * heat_transfer_rate
+	air_output.temperature += output_temperature_change * heat_transfer_rate
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
