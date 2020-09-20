@@ -93,7 +93,8 @@
 
 /datum/hud/robot/New(mob/owner)
 	..()
-	var/mob/living/silicon/robot/mymobR = mymob
+	// i, Robit
+	var/mob/living/silicon/robot/robit = mymob
 	var/obj/screen/using
 
 	using = new/obj/screen/language_menu
@@ -107,23 +108,26 @@
 	static_inventory += using
 
 //Module select
-	using = new /obj/screen/robot/module1()
-	using.screen_loc = ui_inv1
-	using.hud = src
-	static_inventory += using
-	mymobR.inv1 = using
+	if(!robit.inv1)
+		robit.inv1 = new /obj/screen/robot/module1()
 
-	using = new /obj/screen/robot/module2()
-	using.screen_loc = ui_inv2
-	using.hud = src
-	static_inventory += using
-	mymobR.inv2 = using
+	robit.inv1.screen_loc = ui_inv1
+	robit.inv1.hud = src
+	static_inventory += robit.inv1
 
-	using = new /obj/screen/robot/module3()
-	using.screen_loc = ui_inv3
-	using.hud = src
-	static_inventory += using
-	mymobR.inv3 = using
+	if(!robit.inv2)
+		robit.inv2 = new /obj/screen/robot/module2()
+
+	robit.inv2.screen_loc = ui_inv2
+	robit.inv2.hud = src
+	static_inventory += robit.inv2
+
+	if(!robit.inv3)
+		robit.inv3 = new /obj/screen/robot/module3()
+
+	robit.inv3.screen_loc = ui_inv3
+	robit.inv3.hud = src
+	static_inventory += robit.inv3
 
 //End of module select
 
@@ -149,14 +153,14 @@
 	using.screen_loc = ui_borg_lamp
 	using.hud = src
 	static_inventory += using
-	mymobR.lamp_button = using
+	robit.lamp_button = using
 
 //Thrusters
 	using = new /obj/screen/robot/thrusters()
 	using.screen_loc = ui_borg_thrusters
 	using.hud = src
 	static_inventory += using
-	mymobR.thruster_button = using
+	robit.thruster_button = using
 
 //Intent
 	action_intent = new /obj/screen/act_intent/robot()
@@ -170,10 +174,10 @@
 	infodisplay += healths
 
 //Installed Module
-	mymobR.hands = new /obj/screen/robot/module()
-	mymobR.hands.screen_loc = ui_borg_module
-	mymobR.hands.hud = src
-	static_inventory += mymobR.hands
+	robit.hands = new /obj/screen/robot/module()
+	robit.hands.screen_loc = ui_borg_module
+	robit.hands.hud = src
+	static_inventory += robit.hands
 
 //Store
 	module_store_icon = new /obj/screen/robot/store()

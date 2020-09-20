@@ -407,7 +407,7 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/c2/synthflesh
 	name = "Synthflesh"
-	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
+	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). 100u or more can restore corpses husked by burns. Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
@@ -429,8 +429,8 @@
 	if(show_message)
 		to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
-	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= 100))
-		carbies.cure_husk("burn")
+	if(HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN) && carbies.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) + reac_volume >= SYNTHFLESH_UNHUSK_AMOUNT))
+		carbies.cure_husk(BURN)
 		carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 
 /******ORGAN HEALING******/

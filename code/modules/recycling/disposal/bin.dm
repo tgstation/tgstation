@@ -382,7 +382,7 @@
 
 //timed process
 //charge the gas reservoir and perform flush if ready
-/obj/machinery/disposal/bin/process()
+/obj/machinery/disposal/bin/process(delta_time)
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -415,7 +415,7 @@
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
 	if(env.temperature > 0)
-		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = 0.05 * delta_time * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
