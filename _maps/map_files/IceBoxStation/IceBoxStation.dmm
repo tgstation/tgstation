@@ -4728,12 +4728,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "akQ" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -31698,7 +31698,6 @@
 "bxi" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/item/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /obj/effect/turf_decal/bot,
@@ -48156,13 +48155,13 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -48213,13 +48212,13 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEA" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -48253,29 +48252,29 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEM" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/item/tank/internals/plasma,
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/engine/supermatter)
-"cET" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
+/turf/open/floor/plating,
+/area/engine/supermatter)
+"cET" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "cEW" = (
@@ -48336,12 +48335,12 @@
 	},
 /area/science/research)
 "cFj" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -51486,8 +51485,6 @@
 /area/science/genetics)
 "jzb" = (
 /obj/structure/extinguisher_cabinet{
-	dir = 2;
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -52829,7 +52826,6 @@
 	areastring = "/area/crew_quarters/heads/hor";
 	dir = 1;
 	name = "RD Office APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable,
