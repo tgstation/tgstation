@@ -25,6 +25,10 @@
 	// already accounts for this.
 	filters += filter(type = "alpha", icon = icon('icons/obj/cryogenics.dmi', "mask"), y = -22)
 
+/atom/movable/cryo_occupant_vis/Destroy()
+	qdel(cryo)
+	return ..()
+
 /atom/movable/cryo_occupant_vis/update_icon()
 	if(!cryo)
 		return
