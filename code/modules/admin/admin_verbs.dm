@@ -172,6 +172,9 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_cards,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
+	#ifdef TESTING
+	/client/proc/check_missing_sprites,
+	#endif
 	/datum/admins/proc/create_or_modify_area,
 #ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
