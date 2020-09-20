@@ -145,6 +145,7 @@ SUBSYSTEM_DEF(air)
 		cached_cost += TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
+		cleanup_ex_groups.Cut() //Only once you hear? we do this here cause of how the tick check works.
 		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
@@ -323,7 +324,6 @@ SUBSYSTEM_DEF(air)
 			T.cleanup_group(fire_count)
 		if (MC_TICK_CHECK)
 			return
-	cleanup_ex_groups.Cut() //Only once you hear?
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
