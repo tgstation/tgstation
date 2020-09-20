@@ -87,9 +87,6 @@
 	datum.on_removal()
 	return TRUE
 
-/proc/is_ninja(mob/living/possible_ninja)
-	return possible_ninja && possible_ninja.mind && possible_ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-
 /datum/antagonist/ninja/greet()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
 	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
