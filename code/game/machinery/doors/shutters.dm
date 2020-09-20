@@ -32,7 +32,7 @@
 	rad_insulation = 1
 
 /obj/machinery/door/poddoor/shutters/radiation/do_animate(animation)
-	..()
+	. = ..()
 	switch(animation)
 		if("opening")
 			rad_insulation = 1
