@@ -28,7 +28,7 @@
 /obj/machinery/door/poddoor/shutters/radiation/preopen
 	icon_state = "open"
 	density = FALSE
-	opacity = 0
+	opacity = FALSE
 	rad_insulation = 1
 
 /obj/machinery/door/poddoor/shutters/radiation/open()
