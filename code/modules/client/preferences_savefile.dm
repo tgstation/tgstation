@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	38
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -72,6 +72,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 37)
 		if(clientfps == 0)
 			clientfps = -1
+
+	if (current_version < 38)
+		var/found_block_movement = FALSE
+
+		look_through_bindings:
+			for (var/list/key in key_bindings)
+				for (var/bind in key)
+					if (bind == "block_movement")
+						found_block_movement = TRUE
+						break look_through_bindings
+
+		if (!found_block_movement)
+			LAZYADD(key_bindings["Ctrl"], "block_movement")
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return
