@@ -9,7 +9,7 @@
 	///Value of the amount of rate of heat exchange
 	var/heat_transfer_rate = 0
 	///Maximum allowed amount for the heat exchange
-	var/max_heat_transfer_rate = 4500
+	var/max_heat_transfer_rate = 10
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tpump"
@@ -39,24 +39,23 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
-	var/input_heat_capacity = air_input.heat_capacity() //2000
-	var/output_heat_capacity = air_output.heat_capacity() //500
+	var/input_heat_capacity = air_input.heat_capacity()
+	var/output_heat_capacity = air_output.heat_capacity()
 
-	var/input_temperature = air_input.temperature //300
-	var/output_temperature = air_output.temperature //20
+	var/input_temperature = air_input.temperature
+	var/output_temperature = air_output.temperature
 
-	var/input_energy = input_temperature * input_heat_capacity //2000 * 300 = 600000
-	var/output_energy = output_temperature * output_heat_capacity //500 * 20 = 10000
+	var/flux_rate = (input_temperature - output_temperature) * heat_transfer_rate
+	if(flux_rate <= 0)
+		return
+	var/input_temp_change = -(input_heat_capacity / flux_rate)
+	var/output_temp_change = output_heat_capacity / flux_rate
 
-	var/input_temperature_change = output_energy / input_heat_capacity //10000 / 2000 = 5
-	var/output_temperature_change = input_energy / output_heat_capacity //600000 / 10000 = 60
-
-	if(	(output_temperature + (output_temperature_change * heat_transfer_rate)) >= air_input.temperature || \
-		(input_temperature - (input_temperature_change * heat_transfer_rate)) <= TCRYO)
+	if(input_temperature - input_temp_change <= TCRYO)
 		return
 
-	air_input.temperature -= input_temperature_change * heat_transfer_rate
-	air_output.temperature += output_temperature_change * heat_transfer_rate
+	air_input.temperature += input_temp_change
+	air_output.temperature += output_temp_change
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
