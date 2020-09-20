@@ -122,6 +122,14 @@
 	if(burn_dam > DAMAGE_PRECISION)
 		. += "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
+	if(locate(/datum/wound/blunt) in wounds)
+		. += "<span class='warning'>The bones in this limb appear badly cracked.</span>"
+	if(locate(/datum/wound/slash) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly lacerated.</span>"
+	if(locate(/datum/wound/pierce) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly perforated.</span>"
+	if(locate(/datum/wound/burn) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly cooked.</span>"
 
 /obj/item/bodypart/blob_act()
 	take_damage(max_damage)

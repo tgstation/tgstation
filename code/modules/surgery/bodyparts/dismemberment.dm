@@ -360,11 +360,14 @@
 
 	for(var/i in wounds)
 		var/datum/wound/W = i
+		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
+		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
+		LAZYREMOVE(wounds, W)
 		W.apply_wound(src, TRUE)
 
 	for(var/thing in scars)
 		var/datum/scar/S = thing
-		if((S in C.all_scars))
+		if(S in C.all_scars) // prevent double scars from happening for whatever reason
 			continue
 		S.victim = C
 		LAZYADD(C.all_scars, thing)
