@@ -21,6 +21,7 @@
 	var/obj/vehicle/sealed/mecha/working/ripley/cargo_holder
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M)
+	. = ..()
 	if(!.)
 		return
 	if(!istype(M, /obj/vehicle/sealed/mecha/working/ripley))
