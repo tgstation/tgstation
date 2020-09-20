@@ -23,7 +23,7 @@
 	desc = "Lead-lined shutters with a raddiation hazard symbol on it. Once closed, this blocks some radiation."
 	icon = 'icons/obj/doors/shutters_radiation.dmi'
 	icon_state = "closed"
-	rad_insulation = 0.2
+	rad_insulation = -0.5
 
 /obj/machinery/door/poddoor/shutters/radiation/preopen
 	icon_state = "open"
@@ -31,13 +31,13 @@
 	opacity = 0
 	rad_insulation = 1
 
-/obj/machinery/door/poddoor/shutters/radiation/do_animate(animation)
+/obj/machinery/door/poddoor/shutters/radiation/open()
 	. = ..()
-	switch(animation)
-		if("opening")
-			rad_insulation = 1
-		if("closing")
-			rad_insulation = -0.5	//Rad insulation 0 to 1 doesn't really do anything to radiation, above 1 starts multiplying it, you need to go into negative numbers to start blocking radiation.
+	rad_insulation = 1
+
+/obj/machinery/door/poddoor/shutters/radiation/close()
+	. = ..()
+	rad_insulation = -0.5	//Rad insulation 0 to 1 doesn't really do anything to radiation, above 1 starts multiplying it, you need to go into negative numbers to start blocking radiation.
 
 /obj/machinery/door/poddoor/shutters/window
 	name = "windowed shutters"
