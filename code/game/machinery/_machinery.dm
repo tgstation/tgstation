@@ -527,7 +527,8 @@ Class Procs:
 		circuit = null
 	if((A in component_parts) && !QDELETED(src))
 		component_parts.Remove(A)
-		RefreshParts()
+		// It would be unusual for a component_part to be qdel'd ordinarily.
+		deconstruct(FALSE)
 	return ..()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
