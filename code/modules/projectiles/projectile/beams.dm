@@ -159,9 +159,13 @@
 		var/mob/living/carbon/carbon_target = target
 		for(var/i in 1 to 3)
 			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-			var/datum/wound/burnies = pick(GLOB.global_wound_types[WOUND_BURN])
+			var/type_found = pick(GLOB.global_wound_types[WOUND_BURN])
+			var/datum/wound/burnies = new type_found()
 			burnies.apply_wound(bodypart)
+
 	if(istype(target,/obj/machinery/power/supermatter_crystal))
+		return
+
 	explosion(target,rand(0,1),1+rand(0,1),2+rand(0,1))
 
 /obj/projectile/beam/emitter/heavy/on_range()
