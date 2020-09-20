@@ -20,12 +20,13 @@ map metastation
 	votable
 endmap
 
-map pubbystation
+map deltastation
+	minplayers 50
 	votable
 endmap
 
-map deltastation
-	minplayers 50
+map omegastation
+	maxplayers 25
 	votable
 endmap
 
