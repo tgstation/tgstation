@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/space_ninja
 	max_occurrences = 1
 	earliest_start = 20 MINUTES
-	min_players = 15
+	min_players = 20
 
 /datum/round_event/ghost_role/space_ninja
 	minimum_required = 1
@@ -28,24 +28,13 @@
 	var/mob/dead/selected_candidate = pick(candidates)
 	var/key = selected_candidate.key
 
-	//Prepare ninja player mind
-	var/datum/mind/Mind = new /datum/mind(key)
-	Mind.assigned_role = ROLE_NINJA
-	Mind.special_role = ROLE_NINJA
-	Mind.active = TRUE
-
 	//spawn the ninja and assign the candidate
-	var/mob/living/carbon/human/Ninja = create_space_ninja(pick(spawn_locs))
-	Mind.transfer_to(Ninja)
-	var/datum/antagonist/ninja/ninjadatum = new
-	Mind.add_antag_datum(ninjadatum)
-
-	if(Ninja.mind != Mind)			//something has gone wrong!
-		CRASH("Ninja created with incorrect mind")
-
-	spawned_mobs += Ninja
-	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a space ninja by an event.")
-	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
+	var/mob/living/carbon/human/ninja = create_space_ninja(pick(spawn_locs))
+	ninja.key = key
+	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
+	spawned_mobs += ninja
+	message_admins("[ADMIN_LOOKUPFLW(ninja)] has been made into a space ninja by an event.")
+	log_game("[key_name(ninja)] was spawned as a ninja by an event.")
 
 	return SUCCESSFUL_SPAWN
 
