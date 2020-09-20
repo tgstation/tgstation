@@ -31,8 +31,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
 	if(!owner)
-		CRASH("Destroy()ing antagonist datum when it has no owner.")
-	LAZYREMOVE(owner.antag_datums, src)
+		stack_trace("Destroy()ing antagonist datum when it has no owner.")
+	else
+		LAZYREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
 
