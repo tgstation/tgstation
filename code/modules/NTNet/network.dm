@@ -1,4 +1,4 @@
-#define ADDRESS_TO_STRING(NETWORK,NODE,PORT) "[NETWORK].[NODE].[PORT]"
+#define NETWORK_TO_STRING(NETWORK, NODE) "[NETWORK].[NODE].[PORT]"
 /* This is the ntnet!  All network names must be unique.  While, in theory, they can have the same name and
 be under a diffrent parrent, it means we have to implment a proper routing protocal instad of just having a
 big list of networks to search under.  This also means evey device must know its network name and hardware id
@@ -25,28 +25,24 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	// We are in general subspace, where all we are is a list of networks
 	//
 	var/network_id
+	// the string of this tree
+	var/network_tree
 	var/list/linked_devices
 	var/list/children
 	var/datum/ntnet/parent
 
-/datum/ntnet/New(network_id, parent_network_id)
-	if(SSnetworks.networks[network_id])
-		log_runtime("[network_id] already exists.  Please test this BEFORE running /datum/ntnet/New")
-		qdel(src)
+/datum/ntnet/New(network_id, datum/ntnet/parent = null)
 	src.linked_devices = list()
 	src.network_id = network_id
-	if(parent_network_id)
-		var/datum/ntnet/parent = SSnetworks.networks[parent_network_id]
-		if(!parent)
-			debug_world_log("Parent [parent_network_id] network does not exist.  Emergency create in subspace")
-			parent = new(parent_network_id)
+	if(parent)
 		src.parent = parent
 		LAZYADDASSOC(src.parent.children, network_id, src)
 	else
 		src.parent = null
 		src.children = null
 
-	SSnetworks.networks[network_id] = src
+	network_tree = SSnetworks.create_network_tree_string(src)
+	SSnetworks.networks[network_tree] = src
 
 /datum/ntnet/Destroy()
 	if(length(linked_devices) > 0)
@@ -66,16 +62,16 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		parent.children.Remove(network_id)
 		parent = null
 
-	SSnetworks.networks.Remove(network_id)
+	SSnetworks.networks.Remove(network_tree)
 	return ..()
 
 // creates a network as a child of this network
-/datum/ntnet/proc/create_child(new_network)
-	var/datum/ntnet/net = SSnetworks.networks[new_network]
+/datum/ntnet/proc/find_child(child_id, create_if_not_found = FALSE)
+	var/datum/ntnet/net = children[child_id]
 	if(net)
-		log_runtime("[network_id] already exists.  Please test this BEFORE running /datum/ntnet/proc/create_child")
-		return null
-	return new/datum/ntnet(new_network, network_id)
+		return net
+	if(create_if_not_found)
+		return new/datum/ntnet(child_id, network_id)
 
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
@@ -107,26 +103,18 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	log_data_transfer(data)
 	ASSERT(network_id == data.receiver_network)
 	var/datum/component/ntnet_interface/target
-	var/list/targets = data.receiver_id == null ? linked_devices : data.receiver_id
+	var/list/targets = data.receiver_id == null ?  SSnetorks.collect_interfaces(network_id) : list(data.receiver_id)
 	if(targets)
-		if(length(targets))
-			for(var/hid in targets)
-				target = linked_devices[hid]
-				if(!QDELETED(target)) // Do we need this or not? alot of async goes around
-					target.__network_receive(data)
-		else // then its a point to point
-			target = linked_devices[data.receiver_id]
+		for(var/hid in targets)
+			target = SSnetorks.interfaces_by_hardware_id[hid]
 			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 				target.__network_receive(data)
-
-// better to drop packets or send an error reply? humm
 
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
 	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
-	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
@@ -180,13 +168,13 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New(network_id = SYNDICATE_NETWORK_ROOT)
+/datum/ntnet/station/New(network_id = STATION_NETWORK_ROOT)
 	..()
 	build_software_lists()
 	add_log("NTNet logging system activated.")
 
 
-/datum/ntnet/station/syndicate/New(network_id = STATION_NETWORK_ROOT)
+/datum/ntnet/station/syndicate/New(network_id = SYNDICATE_NETWORK_ROOT)
 	..()
 	build_software_lists()
 	add_log("NTNet logging system activated.")

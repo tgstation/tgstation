@@ -261,9 +261,9 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 				break
 
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
-		U.broadcast_status()
+		U.update_status()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
-		U.broadcast_status()
+		U.update_status()
 
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()

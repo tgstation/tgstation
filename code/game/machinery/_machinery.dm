@@ -130,8 +130,6 @@ Class Procs:
 
 	// nntd networking stuff.  Set a network name and we will auto join the network under that name
 	var/network_id = null
-	// This is the station name we are joining too.  Make a custom name for like charlie or sindicate so their networks don't share
-	var/network_root_id = STATION_NETWORK_ROOT
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -151,13 +149,10 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/proc/connect_to_ntnet(network_id)
-	if(src.network_id != network_id)
-		AddComponent(/datum/component/ntnet_interface, src.network_id,  network_root_id)
 /obj/machinery/ComponentInitialize()
 	. = ..()
 	if(network_id)
-		AddComponent(/datum/component/ntnet_interface, network_id,  network_root_id)
+		AddComponent(/datum/component/ntnet_interface, network_id)
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()

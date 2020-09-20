@@ -41,6 +41,8 @@
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
 
+	network_id = NETWORK_ATMOS
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))

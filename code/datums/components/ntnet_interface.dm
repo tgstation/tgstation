@@ -16,6 +16,7 @@
 /datum/component/ntnet_interface/Initialize(network_name)			//Don't force ID unless you know what you're doing!
 	hardware_id = "[SSnetworks.get_next_HID()]"
 	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
+	regestered_scokets = list() 
 	if(network_name)
 		join_network(network_name)
 
@@ -30,8 +31,9 @@
 /datum/component/ntnet_interface/proc/join_network(network_name)
 	if(network)
 		network.interface_disconnect(src)
-	var/datum/ntnet/net =  SSnetworks.find_or_create_network(network_name)
-	net.interface_connect(src)
+	network = SSnetworks.find_network(network_name)
+	if(network)
+		network.interface_connect(src)
 
 /datum/component/ntnet_interface/proc/leave_network()
 	if(network)
@@ -41,7 +43,7 @@
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
 	set waitfor = FALSE
 	if(!network)
-		return 
+		return
 	if(length(regestered_scokets))
 		var/service = regestered_scokets[data.receiver_port]
 		if(islist(service))

@@ -13,6 +13,10 @@
 	var/list/data = list()
 	var/passkey = null // for encryption?  Originaly used for a silly rot13 encryption on the packet
 
+
+/datum/netdata/New(list/data = null)
+	src.data = data || list()
+	
 /datum/netdata/Destroy()
 	data = null
 	return ..()

@@ -6,7 +6,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	flags = SS_KEEP_TIMING
 	init_order = INIT_ORDER_NETWORKS
 
-	// This is a tree network.  These are the trunks
 	var/datum/ntnet/station/station_network
 
 	var/list/interfaces_by_hardware_id = list()
@@ -15,17 +14,59 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
 	station_network.register_map_supremecy()
+	// lets regester some basic networks
+	create_network_from_string(NETWORK_ATMOS)
+	create_network_from_string(NETWORK_ATMOS_AIRALARMS)
+	create_network_from_string(NETWORK_ATMOS_SCUBBERS)
+	create_network_from_string(NETWORK_ATMOS_ALARMS)
+	create_network_from_string(NETWORK_ATMOS_CONTROL)
 	. = ..()
 
-/datum/controller/subsystem/processing/networks/proc/find_or_create_network(network_id, network_parent_id=null)
-	var/datum/ntnet/net
-	if(network_parent_id == null)
-		net = station_network
-	else if(networks[network_parent_id])
-		net = networks[network_parent_id]
-	else
-		net = new(network_parent_id) // create the parent network
-	return net.create_child(network_id)
+/datum/controller/subsystem/processing/networks/proc/create_network_tree_string(datum/ntnet/net)
+	var/list/queue = list()
+	while(net)
+		queue += net.network_id
+		net = net.parent
+	return queue.Join(".")
+
+/datum/controller/subsystem/processing/networks/proc/create_network_from_string(network_name, datum/ntnet/root = null)
+	return create_network(splittext_char(network_name,"."), root)
+
+/datum/controller/subsystem/processing/networks/proc/create_network(list/tree, datum/ntnet/root = null)
+	var/datum/ntnet/net = root || station_network
+	for(var/i in tree.len)
+		var/network_id  = tree[i]
+		if(!net.children[network_id])
+			net.children[network_id] = new/datum/ntnet(network_id)
+		net = net.children[network_id]
+	return net
+
+
+/datum/controller/subsystem/processing/networks/proc/find_network(network_id)
+	if(istext(network_id))
+		return networks[network_id] // if we get text and the network exists, skip the search
+	var/list/net_tree = istext(network_id) ? splittext_char(network_id,".") : network_id
+	if(!length(net_tree))
+		return null
+	var/datum/ntnet/net = station_network
+	for(var/i in 1 to net_tree.len)
+		var/net_name = net_tree[i]
+		if(!net.children[net_name])
+			return null // network dosn't exist
+		net = net.children[net_name]
+	return net // and here it is
+
+
+// collect all interfaces as well as children.  It looks wonky to stop recursion
+/datum/controller/subsystem/processing/networks/proc/collect_interfaces(network_id)
+	. = list()
+	var/list/datum/ntnet/queue = list(find_network(network_id))
+	while(queue.len)
+		var/datum/ntnet/net = queue[queue.len--]
+		if(length(net.children))
+			for(var/net_id in net.children)
+				queue += networks[net_id]
+		. += net.linked_devices
 
 
 /// I think we should do this more like a routable ip address

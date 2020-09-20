@@ -24,16 +24,14 @@
 	var/pressure_checks = EXT_BOUND
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
+
+	var/list/status_cache
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound
-	// NO_BOUND: Do not pass either
-
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
-
+	// NO_BOUND: Do not pass eithe
 	pipe_state = "uvent"
+
+	network_id = NETWORK_ATMOS_SCUBBERS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -43,11 +41,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
-		vent_area.air_vent_info -= id_tag
-		GLOB.air_vent_names -= id_tag
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		vent_area.atmos_vents.Remove(net.hardware_id)
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
+	status_cache = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -137,54 +134,33 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency,radio_filter_in)
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
-		"device" = "VP",
-		"timestamp" = world.time,
-		"power" = on,
-		"direction" = pump_direction,
-		"checks" = pressure_checks,
-		"internal" = internal_pressure_bound,
-		"external" = external_pressure_bound,
-		"sigtype" = "status"
-	))
-
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/update_status()
 	var/area/vent_area = get_area(src)
-	if(!GLOB.air_vent_names[id_tag])
-		// If we do not have a name, assign one.
-		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		name = "\proper [vent_area.name] vent pump [assign_random_name()]"
-		GLOB.air_vent_names[id_tag] = name
+	if(!status_cache)
+		// If we do not have a name, assign one
+		name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		status_cache = list("hardware_id" = net.hardware_id, "name" = name, "tag" = id_tag, "device" = "VP")
+		vent_area.atmos_vents[net.hardware_id] = src
+		net.regestered_scokets["status"] = status_cache
 
-	vent_area.air_vent_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	status_cache["timestamp"] = world.time
+	status_cache["power"] = on
+	status_cache["direction"] = pump_direction
+	status_cache["checks"] = pressure_checks
+	status_cache["internal"] = internal_pressure_bound
+	status_cache["external"] = external_pressure_bound
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
-	//some vents work his own spesial way
-	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
-	if(frequency)
-		set_frequency(frequency)
-	broadcast_status()
+	update_status()
 	..()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_pump/ntnet_receive(datum/netdata/signal)
 	if(!is_operational)
 		return
-	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
+
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
@@ -244,13 +220,25 @@
 		name = signal.data["init"]
 		return
 
-	if("status" in signal.data)
-		broadcast_status()
-		return // do not update_icon
-
 		// log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-	broadcast_status()
-	update_icon()
+	update_status()
+	if(!("status" in signal.data))
+		update_icon() // do not update_icon
+
+/obj/machinery/atmospherics/components/unary/vent_pump/ui_data(mob/user)
+	. = list()
+	.["id_tag"]		= status_cache["hardware_id"]
+	.["long_name"] 	= sanitize(name)
+	.["power"]		= on
+	.["checks"]		= pressure_checks
+	.["excheck"]		= pressure_checks&1
+	.["incheck"]		= pressure_checks&2
+	.["direction"]	= pump_direction
+	.["external"]	= external_pressure_bound
+	.["internal"]	= internal_pressure_bound
+	.["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+	.["intdefault"]	= (internal_pressure_bound == 0)
+
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -357,7 +345,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
-	frequency = FREQ_ATMOS_STORAGE
+	network_id = NETWORK_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
 
@@ -382,11 +370,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
-	frequency = FREQ_ATMOS_CONTROL
+	network_id = NETWORK_ATMOS_CONTROL
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
 	name = "toxins mixing output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
-	frequency = FREQ_ATMOS_CONTROL
+	network_id = NETWORK_ATMOS_CONTROL
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
 	piping_layer = 2
@@ -435,7 +423,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
-	frequency = FREQ_ATMOS_STORAGE
+	network_id = NETWORK_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-2"
 

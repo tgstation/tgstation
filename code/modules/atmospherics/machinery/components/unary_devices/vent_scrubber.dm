@@ -23,12 +23,10 @@
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/datum/radio_frequency/radio_connection
-	var/radio_filter_out
-	var/radio_filter_in
-
 	pipe_state = "scrubber"
+
+	var/list/status_cache
+	network_id = NETWORK_SCUBBERS
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -43,12 +41,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
-		scrub_area.air_scrub_info -= id_tag
-		GLOB.air_scrub_names -= id_tag
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		scrub_area.atmos_scrubbers.Remove(net.hardware_id)
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
-	adjacent_turfs.Cut()
+	status_cache = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
@@ -91,50 +87,44 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
-	if(!radio_connection)
-		return FALSE
-
-	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
-
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
-		"device" = "VS",
-		"timestamp" = world.time,
-		"power" = on,
-		"scrubbing" = scrubbing,
-		"widenet" = widenet,
-		"filter_types" = f_types,
-		"sigtype" = "status"
-	))
-
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_status()
+	var/list/f_types
 	var/area/scrub_area = get_area(src)
-	if(!GLOB.air_scrub_names[id_tag])
+	if(!status_cache)
 		// If we do not have a name, assign one
-		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
-		GLOB.air_scrub_names[id_tag] = name
+		name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
+		f_types = list()
+		for(var/path in GLOB.meta_gas_info)
+			var/list/gas = GLOB.meta_gas_info[path]
+			f_types += list(list("path" = path, "gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME]))
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		status_cache = list("filter_types" = f_types, "hardware_id" = net.hardware_id, "name" = name, "tag" = id_tag, "device" = "VS")
+		scrub_area.atmos_scrubbers[net.hardware_id] = src
+		net.regestered_scokets["status"] = status_cache
 
-	scrub_area.air_scrub_info[id_tag] = signal.data
+	f_types = status_cache["filter_types"]
 
-	radio_connection.post_signal(src, signal, radio_filter_out)
+	for(var/I in 1 to f_types.len)
+		var/list/gas = f_types[I]
+		gas["enabled"] = (gas["path"] in filter_types)
 
-	return TRUE
+	status_cache["timestamp"] = world.time
+	status_cache["power"] = on
+	status_cache["scrubbing"] = scrubbing
+	status_cache["widenet"] = widenet
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/ui_data(mob/user)
+	. = list()
+	.["id_tag"]			= status_cache["hardware_id"]
+	.["long_name"]		= status_cache["name"]
+	.["power"]			= status_cache["power"]
+	.["scrubbing"]		= status_cache["scrubbing"]
+	.["widenet"]		= status_cache["widenet"]
+	.["filter_types"]	= status_cache["filter_types"]
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-	if(frequency)
-		set_frequency(frequency)
-	broadcast_status()
+	update_status()
 	check_turfs()
 	..()
 
@@ -219,7 +209,7 @@
 	if(istype(T))
 		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/ntnet_receive(datum/netdata/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
@@ -255,12 +245,10 @@
 		name = signal.data["init"]
 		return
 
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_icon
-
 	broadcast_status()
-	update_icon()
+	if(!("status" in signal.data))
+		update_icon()  //do not update_icon
+
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()

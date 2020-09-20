@@ -80,9 +80,8 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/alarm_frequency = FREQ_ATMOS_ALARMS
-	var/datum/radio_frequency/radio_connection
+	network_id = NETWORK_ATMOS_AIRALARMS
+	var/target_network = null
 
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min2, min1, max1, max2
@@ -207,8 +206,9 @@
 
 //all air alarms in area are connected via magic
 /area
-	var/list/air_vent_info = list()
-	var/list/air_scrub_info = list()
+	// These are associate lists of devices stored by their hardware_id
+	var/list/atmos_vents = list()
+	var/list/atmos_scrubbers = list()
 
 /obj/machinery/airalarm/New(loc, ndir, nbuild)
 	..()
@@ -228,14 +228,10 @@
 	update_icon()
 
 /obj/machinery/airalarm/Destroy()
-	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/Initialize(mapload)
-	. = ..()
-	set_frequency(frequency)
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -309,38 +305,19 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in A.air_vent_info)
-			var/long_name = GLOB.air_vent_names[id_tag]
-			var/list/info = A.air_vent_info[id_tag]
-			if(!info || info["frequency"] != frequency)
+		for(var/hid in A.atmos_vents)
+			var/obj/machinery/atmospherics/components/unary/vent_pump/vent = A.atmos_vents[hid]
+			if(QDELETED(vent))
 				continue
-			data["vents"] += list(list(
-					"id_tag"	= id_tag,
-					"long_name" = sanitize(long_name),
-					"power"		= info["power"],
-					"checks"	= info["checks"],
-					"excheck"	= info["checks"]&1,
-					"incheck"	= info["checks"]&2,
-					"direction"	= info["direction"],
-					"external"	= info["external"],
-					"internal"	= info["internal"],
-					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
-					"intdefault"= (info["internal"] == 0)
-				))
+			data["vents"] += list(vent.ui_data(user))
+
 		data["scrubbers"] = list()
-		for(var/id_tag in A.air_scrub_info)
-			var/long_name = GLOB.air_scrub_names[id_tag]
-			var/list/info = A.air_scrub_info[id_tag]
-			if(!info || info["frequency"] != frequency)
+		for(var/id_tag in A.atmos_scrubbers)
+			var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = A.atmos_scrubbers[hid]
+			if(QDELETED(scrubber))
 				continue
-			data["scrubbers"] += list(list(
-					"id_tag"				= id_tag,
-					"long_name" 			= sanitize(long_name),
-					"power"					= info["power"],
-					"scrubbing"				= info["scrubbing"],
-					"widenet"				= info["widenet"],
-					"filter_types"			= info["filter_types"]
-				))
+			data["scrubbers"] += list( scrubber.ui_data(user))
+
 		data["mode"] = mode
 		data["modes"] = list()
 		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
@@ -474,22 +451,14 @@
 	else
 		return FALSE
 
-/obj/machinery/airalarm/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-	if(!radio_connection)
-		return FALSE
+	var/datum/netdata/signal = new(command)
+	signal.receiver_id = target
+	signal.receiver_network = NETWORK_ATMOS_SCRUBBERS
+	ntnet_send(signal)
 
-	var/datum/signal/signal = new(command)
-	signal.data["tag"] = target
-	signal.data["sigtype"] = "command"
-	signal.data["user"] = user
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
-	return TRUE
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
@@ -516,21 +485,21 @@
 	var/area/A = get_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_CONTAMINATED)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(
@@ -556,34 +525,34 @@
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_VENTING)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE*2
 				), signal_source)
 		if(AALARM_MODE_REFILL)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -591,43 +560,43 @@
 				), signal_source)
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 1,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_SIPHON)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 
 		if(AALARM_MODE_OFF)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_FLOOD)
-			for(var/device_id in A.air_scrub_info)
+			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_info)
+			for(var/device_id in A.atmos_vents)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
@@ -699,15 +668,12 @@
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/alert_signal = new(list(
+	var/datum/netdata/alert_signal = new(list(
 		"zone" = get_area_name(src, TRUE),
 		"type" = "Atmospheric"
 	))
+	alert_signal.receiver_id = null
+	alert_signal.receiver_network = NETWORK_ATMOS_ALARMS
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)
@@ -715,7 +681,7 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal, range = -1)
+	ntnet_send(alert_signal)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)
