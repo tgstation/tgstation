@@ -15,7 +15,7 @@
 	//Give them meth and let it kick in
 	pill.reagents.add_reagent(meth, initial(meth.metabolization_rate) * 1.9)
 	pill.attack(human, human)
-	human.Life()
+	human.life_process()
 
 	TEST_ASSERT(belly.reagents.has_reagent(/datum/reagent/consumable/ketchup), "Stomach doesn't have ketchup after eating")
 	TEST_ASSERT(human.has_reagent(meth), "Human does not have meth in their system after consuming it")

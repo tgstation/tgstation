@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(mobs)
 				// This is a temporary error tracker to make sure we've caught everything
 			else if(L.registered_z != T.z)
 #ifdef TESTING
-				message_admins("[ADMIN_LOOKUPFLW(L)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+				message_admins("[ADMIN_LOOKUPFLW(L)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [L.registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
 #endif
 				log_game("Z-TRACKING: [L] has somehow ended up in Z-level [T.z] despite being registered in Z-level [L.registered_z].")
 				L.update_z(T.z)
