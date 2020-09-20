@@ -1381,7 +1381,6 @@
 
 /datum/reagent/healium/on_mob_life(mob/living/L)
 	. = ..()
-	L.adjustOxyLoss(-2, FALSE)
 	L.adjustFireLoss(-2, FALSE)
 	L.adjustToxLoss(-5, FALSE)
 	L.adjustBruteLoss(-2, FALSE)
