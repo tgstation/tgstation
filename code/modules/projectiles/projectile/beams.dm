@@ -148,8 +148,25 @@
 /obj/projectile/beam/emitter/heavy
 	name = "heavy emitter beam"
 	icon_state = "emitter_heavy"
-	damage = 450
-	wound_bonus = 40
+	damage = 600
+	wound_bonus = 70
+	armour_penetration = 100
+
+/obj/projectile/beam/emitter/heavy/on_hit(atom/target, blocked)
+	. = ..()
+
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		for(var/i in 1 to 3)
+			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+			var/datum/wound/burnies = pick(GLOB.global_wound_types[WOUND_BURN])
+			burnies.apply_wound(bodypart)
+	if(istype(target,/obj/machinery/power/supermatter_crystal))
+	explosion(target,rand(0,1),1+rand(0,1),2+rand(0,1))
+
+/obj/projectile/beam/emitter/heavy/on_range()
+	explosion(src,rand(1,2),1+rand(1,2),2+rand(1,2))
+	return ..()
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
