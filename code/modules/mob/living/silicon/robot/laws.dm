@@ -28,7 +28,7 @@
 
 
 /mob/living/silicon/robot/lawsync()
-	if(!connected_ai?.laws)
+	if(!connected_ai?.laws || connected_ai?.control_disabled)
 		return
 
 	laws_sanity_check()

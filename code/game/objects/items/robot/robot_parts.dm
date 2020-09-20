@@ -269,9 +269,11 @@
 				lawsync = FALSE
 				O.set_connected_ai(null)
 			else
-				O.notify_ai(NEW_BORG)
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
+				else
+					O.TryConnectToAI()
+				O.notify_ai(NEW_BORG)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				if(M.laws.id == DEFAULT_AI_LAWID)

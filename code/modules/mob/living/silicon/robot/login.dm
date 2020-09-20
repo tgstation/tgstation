@@ -4,3 +4,4 @@
 	if(!. || !client)
 		return FALSE
 	regenerate_icons()
+	show_laws(FALSE)
