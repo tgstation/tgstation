@@ -1277,3 +1277,10 @@
 		/obj/item/stack/sheet/metal/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/space
+	name = "boxed space suit and helmet"
+
+/obj/item/storage/box/space/PopulateContents()
+	new /obj/item/clothing/head/helmet/space(src)
+	new /obj/item/clothing/suit/space(src)

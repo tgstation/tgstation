@@ -15,7 +15,7 @@
 	startWhen = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
-	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce("Unidentified lifesigns detected nearby [station_name()]. We suggest you investigate.", "Lifesign Alert", 'sound/ai/aliens.ogg')
 
 
 /datum/round_event/carp_migration/start()
@@ -28,7 +28,7 @@
 			fishannounce(fish) //Prefer to announce the megacarps over the regular fishies
 	fishannounce(fish)
 
-/datum/round_event/carp_migration/proc/fishannounce(atom/fish)	
+/datum/round_event/carp_migration/proc/fishannounce(atom/fish)
 	if (!hasAnnounced)
 		announce_to_ghosts(fish) //Only anounce the first fish
 		hasAnnounced = TRUE

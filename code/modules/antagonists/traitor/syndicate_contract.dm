@@ -134,7 +134,7 @@
 				D.adjust_money(-points_to_check)
 
 			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, 'sound/ai/attention.ogg', null, "Nanotrasen Asset Protection")
+							You have failed to protect your crew. We are docking pay. Pray we do not act further.", null, 'sound/ai/attention.ogg', null, "Syndicate Asset Protection")
 
 			sleep(30)
 

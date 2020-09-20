@@ -1,4 +1,4 @@
-import { createSearch, decodeHtmlEntities } from 'common/string';
+import { createSearch, decodeHtmlEntities, multiline } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Input, Section, Table, Tabs, NoticeBox } from '../components';
@@ -14,9 +14,17 @@ export const Uplink = (props, context) => {
     <Window
       width={620}
       height={580}
-      theme="syndicate"
+      theme="ntos"
       resizable>
       <Window.Content scrollable>
+        <NoticeBox info>
+          {multiline`
+            Greetings, NT Agent. You are deep in a
+            syndicate controlled sector. This means
+            we cannot offer much in terms of our armory,
+            instead, many items in here have been smuggled
+            from captured syndicate traitors.`}
+        </NoticeBox>
         <GenericUplink
           currencyAmount={telecrystals}
           currencySymbol="TC" />

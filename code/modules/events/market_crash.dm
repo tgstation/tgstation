@@ -23,7 +23,7 @@
 		"speculative Terragov grants backfiring",\
 		"greatly exaggerated reports of Nanotrasen accountancy personnel committing mass suicide")
 	var/reason = pick(poss_reasons)
-	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
+	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Waffle Corporation")
 
 /datum/round_event/market_crash/start()
 	. = ..()

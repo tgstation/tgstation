@@ -402,9 +402,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
+/*
 /datum/uplink_item/dangerous/doublesword
-	name = "Double-Bladed Energy Sword"
-	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
+	name = "Double-Bladed Living Sword"
+	desc = "The double-bladed energy sword does slightly more damage than a standard living sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
 	item = /obj/item/dualsaber
 	player_minimum = 25
@@ -413,20 +414,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
+*/
 
 /datum/uplink_item/dangerous/sword
-	name = "Energy Sword"
-	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
+	name = "Living Sword"
+	desc = "The sword is an edged weapon... when you need it to be. When not in use, it's simply a blob of living metal and can be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/melee/transforming/energy/sword/saber
+	item = /obj/item/melee/transforming/energy/nanotrasen
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/shield
-	name = "Energy Shield"
-	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
-			against other attacks. Pair with an Energy Sword for a killer combination."
-	item = /obj/item/shield/energy
+	name = "Living Shield"
+	desc = "Living metal trained to memorize a shield, capable of reflecting bullets and defending \
+			against other attacks. Pair with an Living Sword for a killer combination."
+	item = /obj/item/shield/riot/tele/living
 	cost = 16
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
@@ -518,9 +520,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/revolver
-	name = "Syndicate Revolver"
-	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver
+	name = "Nanotrasen Laserolver"
+	desc = "An overly complicated Nanotrasen revolver that fires supercharged battery rounds and has 7 chambers."
+	item = /obj/item/gun/ballistic/revolver/nanotrasen
 	cost = 13
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -1039,8 +1041,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 
 /datum/uplink_item/explosives/syndicate_bomb
-	name = "Syndicate Bomb"
-	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
+	name = "Nanotrasen Bomb"
+	desc = "The NT bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
 			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
 			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
 			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
@@ -1293,33 +1295,34 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/space_suit
-	name = "Syndicate Space Suit"
-	desc = "This red and black Syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
-			sightings, however."
-	item = /obj/item/storage/box/syndie_kit/space
-	cost = 4
+	name = "Space Suit"
+	desc = "...We have not figured out why the syndicate space suits are so damn good... so you'll have to deal with ours. \
+			It doesn't fit inside bags... and... Syndicate crew members that spot you in this will gun you down real quick. \
+			We sell em pretty damn cheap, though!"
+	item = /obj/item/storage/box/space
+	cost = 1
 
 /datum/uplink_item/suits/hardsuit
-	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a Syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
-			that runs off standard atmospheric tanks. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
-			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
-			Nanotrasen crew who spot these suits are known to panic."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	name = "ERT Hardsuit"
+	desc = "Aha. Where we have failed you in our space suit tech, we rebound with our hardsuit tech. \
+			EMP proof, fire proof, bio proof, nothing will get inside this fortress of a suit. \
+			Syndicates may not gun you down on sight, instead running in fear! \
+			Unfortunately, this suit is not compact and so you must lug it around... \
+			Additionally, we cannot offer the built in hardsuit the syndicate hardsuits do."
+	item = /obj/item/clothing/suit/space/hardsuit/ert
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
 /datum/uplink_item/suits/hardsuit/elite
-	name = "Elite Syndicate Hardsuit"
-	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
-			provides the user with superior armor and mobility compared to the standard Syndicate hardsuit."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	name = "MK.III Deathsquad Hardsuit"
+	desc = "Rolling thunder. Shoot to kill. Leave no Syndicate alive. They will run in fear.  \
+			provides the user with far superior armor and mobility compared to the standard Syndicate hardsuit."
+	item = /obj/item/clothing/suit/space/hardsuit/deathsquad
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
 
+/* just grab the fucking deathsquad armor lmfao
 /datum/uplink_item/suits/hardsuit/shielded
 	name = "Shielded Syndicate Hardsuit"
 	desc = "An upgraded version of the standard Syndicate hardsuit. It features a built-in energy shielding system. \
@@ -1328,7 +1331,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
-
+*/
 // Devices and Tools
 /datum/uplink_item/device_tools
 	category = "Misc. Gadgets"

@@ -2587,6 +2587,7 @@
 #include "code\modules\movespeed\modifiers\mobs.dm"
 #include "code\modules\movespeed\modifiers\reagent.dm"
 #include "code\modules\movespeed\modifiers\status_effects.dm"
+#include "code\modules\nanotrasen_traitor\nanotrasen_traitor_items.dm"
 #include "code\modules\ninja\__ninjaDefines.dm"
 #include "code\modules\ninja\energy_katana.dm"
 #include "code\modules\ninja\ninja_event.dm"
