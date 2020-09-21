@@ -316,20 +316,31 @@
 	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
 		repopulate_sorted_areas()
 
+	//parsed.findSpawnedAtoms()
 	//initialize things that are normally initialized after map load
-	parsed.holodeckTemplateBounds()
+	if (parsed == lastparsed)
+		spawned_atoms = parsed.holodeckTemplateBounds()
+	else
+		for (var/atom/atom in spawned_atoms)
+			qdel(atom)
+		LAZYCLEARLIST(spawned_atoms)
+		spawned_atoms = parsed.holodeckTemplateBounds()
+
+	lastparsed = parsed
 	/*var/list/atoms/atoms = parsed.initTemplateBounds().atoms
 	for (var/index in atoms)
 		index.flags_1 |= HOLOGRAM_1*/
 	//spawned_atoms = bounds
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
-	return bounds//i think its bad if this doesnt return bounds, so why?
+	return bounds
 
 /datum/parsed_map/proc/holodeckTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
+	var/list/atom/newatoms = list()
 	var/list/area/areas = list()
+	LAZYCLEARLIST(newatoms)
 
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
@@ -339,8 +350,13 @@
 		var/turf/B = L
 		atoms += B//atoms = atoms + B, turfs are atoms
 		areas |= B.loc //areas = areas|B.loc
-		for(var/A in B)//does this look for the contents in the turf represented by B?
-			atoms += A//for each object in the contents of the current turf, add it to the atoms list
+		for(var/atom/A in B)//does this look for the contents in the turf represented by B?
+			if (!(A.flags_1 & INITIALIZED_1))
+				newatoms += A
+				//A.flags_1 |= HOLOGRAM_1
+			else
+				atoms += A//for each object in the contents of the current turf, add it to the atoms list
+
 			if(istype(A, /obj/structure/cable))
 				cables += A//if A is a cable, add to the cable list
 				continue
@@ -352,37 +368,21 @@
 	//for (var/atom/atom in atoms)
 	//	if ((flags_1))
 	//		atom.flags_1 |= HOLOGRAM_1
+
+	//for (var/atom/atom in atoms)
+	//	if (!(atom.flags_1 & INITIALIZED_1))
+	//		LAZYADD(newatoms, atom)
+	//		atom.flags_1 |= HOLOGRAM_1
+
+
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(atoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
+	//SSatoms.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(newatoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-	//return atoms
-	//what if this returned a list of the atoms list, cables list, atmos_machines list, and areas list?
+	return newatoms
 
-/obj/machinery/computer/holodeck/proc/populate_spawned(turf/turfies)
-	var/list/obj/machinery/atmospherics/atmos_machines = list()
-	var/list/obj/structure/cable/cables = list()
-	var/list/atom/atoms = list()
-	var/list/area/areas = list()
-
-	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
-	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
-							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
-		var/turf/B = L
-		atoms += B//atoms = atoms + B, turfs are atoms
-		areas |= B.loc //areas = areas|B.loc
-		for(var/A in B)//does this look for the contents in the turf represented by B?
-			atoms += A//for each object in the contents of the current turf, add it to the atoms list
-			if(istype(A, /obj/structure/cable))
-				cables += A//if A is a cable, add to the cable list
-				continue
-			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
-				atmos_machines += A
-
-
-/obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)//kyler, mainly replace this?
+/obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
 
 	/*if(!is_operational)
 		template = offline_program
@@ -396,9 +396,15 @@
 	//template = SSmapping.holodeck_templates[template_id]
 	template = SSmapping.holodeck_templates[map_id]
 	//prepare_holodeck_area()
-	template.load(bottom_left, FALSE)
+	//template.load(bottom_left, FALSE)
 	//spawned = template.load(bottom_left, FALSE) //write another proc that just gets the atoms from holodeckTemplateBounds()?
+
+	//BOUNDS ARE JUST COORDINATES AHHHHHHHHHHHHHHHHHHHHHHH
+	template.load(bottom_left, FALSE)
+	//if (!spawned.len)
 	spawned = template.spawned_atoms
+
+
 	current_holodeck_area = get_area(bottom_left)
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
@@ -422,7 +428,7 @@
 		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
-	// Emagging a machine creates an anomaly in the derez systems.
+	/*// Emagging a machine creates an anomaly in the derez systems.
 	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)
 		if((ismob(O) || ismob(O.loc)) && prob(50))
 			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
@@ -439,7 +445,7 @@
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
-		qdel(O)
+		qdel(O)*/
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD

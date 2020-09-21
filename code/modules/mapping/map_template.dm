@@ -25,7 +25,7 @@
 			cached_map = parsed
 	return bounds
 
-/datum/parsed_map/proc/initTemplateBounds(var/bit_flags_1 = null)
+/datum/parsed_map/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -51,9 +51,6 @@
 	for(var/L in border)
 		var/turf/T = L
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
-	if (bit_flags_1)
-		for (var/atom/atom in atoms)
-			atom.flags_1 |= bit_flags_1
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)

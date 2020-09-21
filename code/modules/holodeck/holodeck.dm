@@ -8,6 +8,7 @@
 	var/banned_objects
 	var/restricted = FALSE
 	var/list/spawned_atoms
+	var/datum/parsed_map/lastparsed
 
 	/*
 	var/name = "Default Template Name"
