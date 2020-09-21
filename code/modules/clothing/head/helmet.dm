@@ -218,6 +218,12 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
+/obj/item/clothing/head/helmet/chika
+	name = "anime hat"
+	desc = "Weeb."
+	icon_state = "chika_hat"
+	inhand_icon_state = "beret"
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
