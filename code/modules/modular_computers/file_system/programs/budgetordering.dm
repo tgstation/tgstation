@@ -15,7 +15,7 @@
 		cannot transport live organisms, human remains, classified nuclear weaponry, \
 		homing beacons or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	/// radio used by the console to send messages on supply channel
+	/// radio used by the app to send messages on supply channel
 	var/obj/item/radio/headset/radio
 	/// var that tracks message cooldown
 	var/message_cooldown
@@ -24,11 +24,13 @@
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
 
-/datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, var/list/access)
+/datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, var/list/access, var/contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
 	if(computer.obj_flags & EMAGGED)
 		return TRUE
+	else if(contraband) //Hide contrband when non-emagged.
+		return FALSE
 	if(!paccess_to_check) // No required_access, allow it.
 		return TRUE
 	if(isAdminGhostAI(user))
@@ -101,7 +103,7 @@
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(user, P.access_view) || P.hidden)
+		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
@@ -210,6 +212,11 @@
 					coupon_check.moveToNullspace()
 					applied_coupon = coupon_check
 					break
+
+			if(!self_paid && ishuman(usr) && !account)
+				var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+				var/obj/item/card/id/id_card = card_slot?.GetID()
+				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
