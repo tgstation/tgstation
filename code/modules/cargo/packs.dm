@@ -876,6 +876,25 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engine/heavy_emitter
+	name = "Heavy Emitter Crate"
+	desc = "2 weeks ago this bad boy was mounted on IWS 'Bashahar' over at Lizard Empire. Now it can power your sm for like 7500 bucks or something."
+	cost = 7500
+	access = ACCESS_CE
+	contains = list(/obj/machinery/power/heavy_emitter/centre,
+					/obj/machinery/power/heavy_emitter/arm,
+					/obj/machinery/power/heavy_emitter/arm,
+					/obj/machinery/power/heavy_emitter/arm,
+					/obj/machinery/power/heavy_emitter/arm,
+					/obj/machinery/power/heavy_emitter/interface,
+					/obj/machinery/power/heavy_emitter/vent,
+					/obj/machinery/power/heavy_emitter/vent,
+					/obj/machinery/power/heavy_emitter/cannon)
+	//This is supposed to give you mixed signals
+	crate_name = "IWS bashahar energy cannon"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
+
 /datum/supply_pack/engine/field_gen
 	name = "Field Generator Crate"
 	desc = "Typically the only thing standing between the station and a messy death. Powered by emitters. Contains two field generators."

@@ -166,7 +166,7 @@
 	if(istype(target,/obj/machinery/power/supermatter_crystal))
 		return
 
-	explosion(target,rand(0,1),1+rand(0,1),2+rand(0,1))
+	explosion(src,rand(0,1),1+rand(0,1),2+rand(0,1))
 
 /obj/projectile/beam/emitter/heavy/on_range()
 	explosion(src,rand(1,2),1+rand(1,2),2+rand(1,2))
