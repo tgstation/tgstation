@@ -956,19 +956,19 @@
 /area/ruin/space/has_grav/hellfactory)
 "cQ" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hellfactory)
 "cR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hellfactory)
 "cS" = (
 /obj/structure/lattice/catwalk,
 /obj/item/keycard/entry,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/hellfactory)
 "cT" = (
 /obj/machinery/light/broken,
