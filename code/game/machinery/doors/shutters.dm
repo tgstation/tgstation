@@ -20,10 +20,10 @@
 
 /obj/machinery/door/poddoor/shutters/radiation
 	name = "radiation shutters"
-	desc = "Lead-lined shutters with a raddiation hazard symbol on it. Once closed, this blocks some radiation."
+	desc = "Lead-lined shutters with a radiation hazard symbol. Whilst this won't stop you getting irradiated, it should stop radiation from travelling as far."
 	icon = 'icons/obj/doors/shutters_radiation.dmi'
 	icon_state = "closed"
-	rad_insulation = -0.5
+	rad_insulation = 0.1
 
 /obj/machinery/door/poddoor/shutters/radiation/preopen
 	icon_state = "open"
@@ -37,7 +37,7 @@
 
 /obj/machinery/door/poddoor/shutters/radiation/close()
 	. = ..()
-	rad_insulation = -0.5	//Rad insulation 0 to 1 doesn't really do anything to radiation, above 1 starts multiplying it, you need to go into negative numbers to start blocking radiation.
+	rad_insulation = 0.1
 
 /obj/machinery/door/poddoor/shutters/window
 	name = "windowed shutters"
