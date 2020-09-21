@@ -44,13 +44,6 @@
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	add_cell_sample()
-	initialize_whims()
-
-/mob/living/simple_animal/pet/dog/proc/initialize_whims()
-	for(var/i in whim_datums)
-		var/datum/whim/iter_whim = new i
-		iter_whim.owner = src
-		LAZYADD(live_whims, iter_whim)
 
 /mob/living/simple_animal/pet/dog/Life()
 	..()

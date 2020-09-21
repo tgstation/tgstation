@@ -42,6 +42,7 @@
 	pet_bonus_emote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift)
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -197,6 +198,7 @@
 	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/cat/Life()
+	/*
 	if(!stat && !buckled && !client)
 		if(prob(1))
 			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
@@ -216,30 +218,11 @@
 				set_resting(FALSE)
 			else
 				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+	*/
 
-	//MICE!
-	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
-					if (emote_cooldown < (world.time - 600))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
-						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
-					break
-				if(!M.stat && Adjacent(M))
-					manual_emote("splats \the [M]!")
-					M.splat()
-					movement_target = null
-					stop_automated_movement = 0
-					break
-			for(var/obj/item/toy/cattoy/T in view(1,src))
-				if (T.cooldown < (world.time - 400))
-					manual_emote("bats \the [T] around with its paw!")
-					T.cooldown = world.time
 
 	..()
-
+/*
 	make_babies()
 
 	if(!stat && !resting && !buckled)
@@ -260,6 +243,7 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
+				*/
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"

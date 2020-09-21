@@ -2,17 +2,18 @@
 
 /datum/whim/airbud_bball
 	name = "Airbud Mode"
+	scan_radius = 5
 	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
-	var/obj/item/precious_cargo
+	var/obj/item/carried_bball
 
 /datum/whim/airbud_bball/abandon()
-	precious_cargo = null
+	carried_bball = null
 	return ..()
 
 /datum/whim/airbud_bball/inner_can_start()
 	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
 
-	for(var/i in oview(owner, 5))
+	for(var/i in oview(owner, scan_radius))
 		//testing("[owner] searching whim [name], atom [i]")
 		if(istype(i, /obj/item/toy/beach_ball/holoball))
 			bball = i
@@ -26,14 +27,16 @@
 	return bball
 
 /datum/whim/airbud_bball/tick()
-	var/obj/item/toy/beach_ball/holoball/bball = concerned_target
-	var/mob/living/simple_animal/pet/dog/dog_owner = owner
+	. = ..()
+	if(state == WHIM_INACTIVE)
+		return
 
+	var/obj/item/toy/beach_ball/holoball/bball = concerned_target
 	if(!istype(bball) || (isturf(bball.loc) && get_dist(owner, bball) > 7))
 		abandon()
 		return
 
-	if(precious_cargo && precious_cargo == concerned_target)
+	if(carried_bball && carried_bball == concerned_target)
 		kobe()
 		return
 
@@ -44,35 +47,30 @@
 		owner.throw_at(bball_player, 10, 4, owner, FALSE, FALSE, ankle_breaking)
 	else
 		owner.visible_message("<span class='warning'>[owner] dashes to [bball], taking possession!</span>")
-		precious_cargo = bball
+		carried_bball = bball
 		var/datum/callback/kobe_callback = CALLBACK(src, .proc/kobe)
 		owner.throw_at(bball, 10, 4, owner, FALSE, FALSE, kobe_callback)
 
 /**
   * This proc is for when air bud steps up his game and destroys some poor assistant
   *
-  * If the mob we just tackled to steal the ball from wasn't a carbon, we just take the ball and that's it
-  *
-  * If their ankles aren't specifically destroyed, give them the special [/datum/wound/blunt/moderate/broken_ankle] wound on one of their legs.
-  * If they have a broken ankle already, just explode said leg and REALLY break it.
+  * If the mob we just tackled to steal the ball from wasn't a carbon, we just take the ball and that's it. Otherwise, we mess them up.
   */
 /datum/whim/airbud_bball/proc/ankle_breaker(mob/living/target)
 	var/obj/item/toy/beach_ball/holoball/bball = concerned_target
-	var/mob/living/simple_animal/pet/dog/dog_owner = owner
 	if(!target || !istype(bball))
 		abandon()
 		return
 
 	target.Knockdown(3 SECONDS)
-	precious_cargo = bball
-	precious_cargo.forceMove(get_turf(owner))
+	carried_bball = bball
+	carried_bball.forceMove(get_turf(owner))
 
-	//			 ~~~~Editor's Note~~~~			  //
-	// I'm aware that ankle breaking is offensive //
-	// and not defensive, but shhhhhhhhhhhhhhhhhh //
-	if(!iscarbon(target))
+	if(!iscarbon(target)) // the rest of this is just wound handling
 		return
 
+	// I know ankle breaking in basketball is used to describe sick offensive cross dribbles, and not stealing the ball on defense
+	// but this is a corgi flying at you, stealing your basketball, then flying 10 ft in the air and slam dunking it. Roll with it.
 	var/mob/living/carbon/carbon_target = target
 	var/datum/wound/blunt/moderate/broken_ankle/preexisting_condition = (locate(/datum/wound/blunt/moderate/broken_ankle) in carbon_target.all_wounds)
 
@@ -96,8 +94,7 @@
 
 /// Get ready to shoot/dunk if there's a hoop nearby. If not, we'll just give up and dribble a bit
 /datum/whim/airbud_bball/proc/kobe()
-	var/mob/living/simple_animal/pet/dog/dog_owner = owner
-	var/obj/item/toy/beach_ball/holoball/bball = precious_cargo
+	var/obj/item/toy/beach_ball/holoball/bball = carried_bball
 	if(!istype(bball))
 		abandon()
 		return
@@ -156,10 +153,15 @@
 
 /// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/snacks/tick()
+	. = ..()
+	if(state == WHIM_INACTIVE)
+		return
+
 	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > 3 || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)))
 		abandon()
 		return
 
+	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
 	//Feeding, chasing food, FOOOOODDDD
 	step_to(owner,concerned_target,1)
 	sleep(3)
@@ -172,7 +174,6 @@
 		return
 
 	owner.face_atom(concerned_target)
-
 	if(!owner.Adjacent(concerned_target)) //can't reach food through windows.
 		return
 

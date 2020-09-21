@@ -159,6 +159,14 @@
 	/// A string for an emote used when pet_bonus == true for the mob being pet.
 	var/pet_bonus_emote = ""
 
+	/// A list of the [/datum/whim] types that this mob has access to, which are instantiated on [/mob/living/simple_animal/proc/Initialize] in [/mob/living/simple_animal/var/live_whims]
+	var/list/whim_datums
+	/// The instantiated [whim datums][/datum/whim] that we consider during [/mob/living/simple_animal/proc/handle_whims]
+	var/list/live_whims
+	/// The current whim we're following
+	var/datum/whim/current_whim
+	/// How many ticks we've spent without a whim since we last checked if any of our live ones were viable to activate
+	var/turns_since_whim_scan
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -172,6 +180,8 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
+	if(whim_datums)
+		initialize_whims()
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -187,6 +197,55 @@
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	return ..()
+
+/mob/living/simple_animal/Life(seconds, times_fired)
+	. = ..()
+	if(live_whims)
+		handle_whims()
+
+/**
+  *
+  *
+  *
+  *
+  * Arguments:
+  * *
+  */
+/mob/living/simple_animal/proc/initialize_whims()
+	for(var/i in whim_datums)
+		var/datum/whim/iter_whim = new i
+		iter_whim.owner = src
+		LAZYADD(live_whims, iter_whim)
+
+/**
+  *
+  *
+  *
+  *
+  * Arguments:
+  * *
+  */
+/mob/living/simple_animal/proc/handle_whims()
+	if(stat || resting || buckled || mind) // these are (for now) automated only and require freedom of movement (and also being alive)
+		return
+
+	if(current_whim)
+		current_whim.tick()
+		return
+
+	turns_since_whim_scan++
+	if(turns_since_whim_scan < 3)
+		return
+	turns_since_whim_scan = 0
+
+	for(var/i in live_whims)
+		var/datum/whim/iter_whim = i
+		testing("[src] about to try starting [iter_whim.name]")
+		var/atom/possible_target = iter_whim.can_start()
+		if(possible_target)
+			testing("[src] found target [possible_target] for [iter_whim.name]")
+			iter_whim.activate(possible_target)
+			return
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
@@ -236,16 +295,19 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
-	if(!stop_automated_movement && wander)
-		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_move++
-			if(turns_since_move >= turns_per_move)
-				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(GLOB.cardinals)
-					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
-						turns_since_move = 0
-			return 1
+	if(stop_automated_movement || !wander || current_whim)
+		return FALSE
+
+	if(!((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE)))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		return FALSE
+
+	turns_since_move++
+	if(turns_since_move >= turns_per_move && !(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
+		var/anydir = pick(GLOB.cardinals)
+		if(Process_Spacemove(anydir))
+			Move(get_step(src, anydir), anydir)
+			turns_since_move = 0
+	return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE

@@ -9,7 +9,8 @@
 
 	var/state = WHIM_INACTIVE
 
-	var/mob/living/owner
+	//var/mob/living/owner
+	var/mob/living/simple_animal/owner
 
 	var/list/allowed_mobtypes
 
@@ -19,15 +20,21 @@
 
 	var/scan_every = 3
 
+	var/ticks_since_activation
+
+	var/ticks_to_frustrate = 15
+
 	var/abandon_rescan_length = 5 SECONDS
 	COOLDOWN_DECLARE(cooldown_abandon_rescan)
 
+	var/scan_radius = 3
 
 /datum/whim/proc/activate(atom/new_target)
 	testing("[owner] activating [name]")
 	state = WHIM_ACTIVE
 	concerned_target = new_target
 	owner.current_whim = src
+	ticks_since_activation = 0
 	return TRUE
 
 /// Returns the targeted atom or TRUE if we're valid to kickoff, or FALSE if we're not
@@ -51,6 +58,10 @@
 	COOLDOWN_START(src, cooldown_abandon_rescan, abandon_rescan_length)
 
 /datum/whim/proc/tick()
+	ticks_since_activation++
+	if(ticks_since_activation > ticks_to_frustrate)
+		abandon()
+		return FALSE
 	return
 
 
