@@ -226,11 +226,12 @@
   * *
   */
 /mob/living/simple_animal/proc/handle_whims()
-	if(stat || resting || buckled || mind) // these are (for now) automated only and require freedom of movement (and also being alive)
+	if(stat || buckled || mind) // these are (for now) automated only and require freedom of movement (and also being alive)
 		return
 
 	if(current_whim)
-		current_whim.tick()
+		if(!resting || current_whim.allow_resting)
+			current_whim.tick()
 		return
 
 	whim_scan_ticks++

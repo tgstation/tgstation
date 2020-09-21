@@ -6,6 +6,7 @@
 
 /datum/whim
 	var/name = "Generic Whim"
+
 	/// Whether this is currently the owner's current whim and running its ticks. See the above defines.
 	var/state = WHIM_INACTIVE
 
@@ -30,6 +31,9 @@
 	var/scan_radius = 3
 	/// We only check [/datum/whim/proc/can_start] every so many ticks. If your whim has a particularly expensive scan (large radius, lots of calcs, etc) you should scan less frequently.
 	var/scan_every = 3
+
+
+	var/allow_resting = FALSE
 
 /datum/whim/proc/activate(atom/new_target)
 	testing("[owner] activating [name]")
