@@ -1,4 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - code_imp: "Statpanel subsystem is now prioritized to run after the chat subsystem does"
