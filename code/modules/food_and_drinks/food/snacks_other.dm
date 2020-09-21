@@ -802,7 +802,7 @@
 
 /obj/item/reagent_containers/food/snacks/canned/catfood/open_can(mob/user)
 	. = ..()
-	AddComponent(/datum/component/catnip, horde_chance = 1.5)
+	AddComponent(/datum/component/catnip, horde_chance = 1.5) // make this go away if spilled
 
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"

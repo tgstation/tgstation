@@ -5,7 +5,7 @@
 	name = "Defend Office"
 	priority = 2
 	scan_radius = 4
-	scan_every = 5
+	scan_every = 8
 	/// Which areas this whim is valid for
 	var/list/defendable_areas = list(/area/crew_quarters/heads/hop)
 	/// Which assigned_roles this whim won't assault
@@ -18,9 +18,14 @@
 	for(var/i in oview(owner,scan_radius))
 	//	if(!is_type_in_list(get_area(i), defendable_areas))
 	//		continue
+		if(isliving(i))
+			var/mob/living/living_target = i
+			if(living_target.stat == DEAD)
+				continue
 		if(ishuman(i))
 			var/mob/living/carbon/human/potential_threat = i
-			if(!is_type_in_list(potential_threat.mind?.assigned_role, exempted_roles))
+			var/role = potential_threat.mind?.assigned_role
+			if(role && !(role in exempted_roles))
 				return potential_threat
 		else if(iscarbon(i))
 			var/mob/living/carbon/potential_threat = i
@@ -91,7 +96,8 @@
 	//		continue
 		if(ishuman(i))
 			var/mob/living/carbon/human/potential_target = i
-			if(potential_target.stat == DEAD && (potential_target.mind?.assigned_role in mournable_roles))
+			var/role = potential_target.mind?.assigned_role
+			if(potential_target.stat == DEAD && role && (role in mournable_roles))
 				return potential_target
 
 /datum/whim/mourn/tick()
@@ -116,7 +122,9 @@
 
 	// lots more work to do fleshing this out obv
 	if(owner.Adjacent(my_dead_friend))
-		owner.visible_message("<b>[owner]</b> nuzzles [my_dead_friend]'s corpse, trying to wake [my_dead_friend.p_them()] up...")
+		if(prob(10))
+			owner.visible_message("<b>[owner]</b> nuzzles [my_dead_friend]'s corpse, trying to wake [my_dead_friend.p_them()] up...")
+			playsound(owner.loc, "sound/effects/dog_whine1.ogg", 80)
 		return
 
 	switch(rand(1,5))
