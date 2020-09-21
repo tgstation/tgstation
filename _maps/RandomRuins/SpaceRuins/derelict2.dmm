@@ -7,7 +7,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "c" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
@@ -17,7 +17,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "e" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -52,7 +52,7 @@
 "k" = (
 /obj/structure/window/reinforced,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "l" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -92,7 +92,7 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "q" = (
 /obj/machinery/light/small{
 	dir = 8
