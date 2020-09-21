@@ -497,12 +497,14 @@
 	. = list()
 	if(!statue_costs)
 		statue_costs = build_statue_cost_table()
-	statue_loop:
-		for(var/statue_path in statue_costs)
-			var/list/carving_cost = statue_costs[statue_path]
-			for(var/required_material in carving_cost)
-				if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
-					continue statue_loop
+	for(var/statue_path in statue_costs)
+		var/list/carving_cost = statue_costs[statue_path]
+		var/enough_materials = TRUE
+		for(var/required_material in carving_cost)
+			if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
+				enough_materials = FALSE
+				break
+		if(enough_materials)
 			. += statue_path
 
 /obj/structure/carving_block/proc/build_statue_cost_table()
