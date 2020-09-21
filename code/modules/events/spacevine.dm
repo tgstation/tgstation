@@ -56,9 +56,6 @@
 /datum/spacevine_mutation/proc/on_cross(obj/structure/spacevine/holder, mob/crosser)
 	return
 
-/datum/spacevine_mutation/proc/on_prick(obj/structure/spacevine/holder, mob/pricked)
-	return
-
 /datum/spacevine_mutation/proc/on_chem(obj/structure/spacevine/holder, datum/reagent/R)
 	return
 
@@ -93,42 +90,16 @@
 	severity = 10
 	quality = NEGATIVE
 
-/datum/spacevine_mutation/toxicity/on_prick(obj/structure/spacevine/holder, mob/pricked)
-	if(issilicon(pricked))
+/datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
+	if(issilicon(crosser))
 		return
-	to_chat(pricked, "<span class='alert'>You feel a strange sensation.</span>")
-	pricked.adjustToxLoss(5)
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+		to_chat(crosser, "<span class='alert'>You accidentally touch the vine and feel a strange sensation.</span>")
+		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
 	if(!isvineimmune(eater))
 		eater.adjustToxLoss(5)
-
-/datum/spacevine_mutation/druggy
-	name = "druggy"
-	hue = "#db0079"
-	severity = 4
-	quality = NEGATIVE
-
-/datum/spacevine_mutation/druggy/on_prick(obj/structure/spacevine/holder, mob/pricked)
-	if(!iscarbon(pricked))
-		return
-	to_chat(pricked, "<span class='alert'>You feel a wild sensation.</span>")
-	var/mob/living/carbon/drugged = crosser
-	drugged.reagents.add_reagent(/datum/reagent/toxin/mindbreaker, 5)
-	drugged.reagents.add_reagent(/datum/reagent/drug/space_drugs, 5)
-
-/datum/spacevine_mutation/tosser
-	name = "restless"
-	hue = "#59c500"
-	severity = 8
-	quality = NEGATIVE
-
-/datum/spacevine_mutation/tosser/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
-	to_chat(buckled, "<span class='userdanger'>You are tossed by the vines very violently!</span>")
-	holder.unbuckle_all_mobs(force=1)
-	var/toss_dir = pick(GLOB.cardinals)
-	var/atom/throw_target = get_edge_target_turf(buckled, toss_dir)
-	buckled.throw_at(throw_target, 200, 4)
 
 /datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
@@ -293,6 +264,25 @@
 		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
 		GM.garbage_collect()
 
+/datum/spacevine_mutation/thorns
+	name = "thorny"
+	hue = "#666666"
+	severity = 10
+	quality = NEGATIVE
+
+/datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+		var/mob/living/M = crosser
+		M.adjustBruteLoss(5)
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+
+/datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
+	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
+		var/mob/living/M = hitter
+		M.adjustBruteLoss(5)
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
+	. =	expected_damage
+
 /datum/spacevine_mutation/woodening
 	name = "hardened"
 	hue = "#997700"
@@ -324,15 +314,6 @@
 	if(prob(25))
 		holder.entangle(crosser)
 
-/datum/spacevine_mutation/healing
-	name = "healthy"
-	hue = "#b4f1b7"
-	quality = POSITIVE
-	severity = 10
-
-/datum/spacevine_mutation/healing/on_eat()
-	if(!isvineimmune(eater))
-		eater.adjustBruteLoss(-5)
 
 // SPACE VINES (Note that this code is very similar to Biomass code)
 /obj/structure/spacevine
@@ -399,12 +380,6 @@
 	if(I.damtype == BURN)
 		damage_dealt *= 4
 
-	//this code pricks people who attack without a bonus weapon
-	if(damage_dealt != I.force && prob(10) && !isvineimmune(hitter))
-		user.adjustBruteLoss(5)
-		to_chat(user, "<span class='alert'>You cut yourself on the thorny vines.</span>")
-	. =	expected_damage
-
 	for(var/datum/spacevine_mutation/SM in mutations)
 		damage_dealt = SM.on_hit(src, user, I, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 	take_damage(damage_dealt, I.damtype, MELEE, 1)
@@ -423,15 +398,8 @@
 	. = ..()
 	if(!isliving(AM))
 		return
-	var/mob/living/crosser = AM
-	//just walking through spacevine is going to get you pricked
-	if(prob(10) && !isvineimmune(crosser))
-		crosser.adjustBruteLoss(5)
-		to_chat(crosser, "<span class='alert'>You cut yourself on the thorny vines.</span>")
-		for(var/datum/spacevine_mutation/SM in mutations)
-			SM.on_prick(src, crosser)
 	for(var/datum/spacevine_mutation/SM in mutations)
-		SM.on_cross(src, crosser)
+		SM.on_cross(src, AM)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user)
@@ -582,8 +550,6 @@
 
 /// Finds a target tile to spread to. If checks pass it will spread to it and also proc on_spread on target.
 /obj/structure/spacevine/proc/spread()
-	if(var/datum/spacevine_mutation/inert/inert_mutation = locate() in mutations //we will not spread if we are inert
-		return
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
 	if(!isspaceturf(stepturf) && stepturf.Enter(src))
