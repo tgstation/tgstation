@@ -1,16 +1,16 @@
+/// Broadly, the whims in these files are written with cats in mind
+
+/// The old code for cats hunting nearby mice, now modularized!
 /datum/whim/hunt_mice
 	name = "Hunt mice"
 	priority = 2
 	scan_radius = 3
 	scan_every = 3
 
-
-/// See if there's any snacks in the vicinity, if so, set to work after them
 /datum/whim/hunt_mice/inner_can_start()
 	//MICE!
 	var/atom/possible_target
 	for(var/i in oview(owner, scan_radius))
-		//testing("[owner] searching whim [name], atom [i]")
 		if(istype(i, /mob/living/simple_animal/mouse))
 			possible_target = i
 			break
@@ -20,7 +20,6 @@
 
 	return possible_target
 
-/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/hunt_mice/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
@@ -30,8 +29,6 @@
 		abandon()
 		return
 
-	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
-	//Feeding, chasing food, FOOOOODDDD
 	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
 
 	if(!concerned_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
@@ -45,19 +42,11 @@
 	if(isliving(concerned_target))
 		var/mob/living/living_target = concerned_target
 		if(istype(concerned_target, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry") && !living_target.stat) //Turns out there's no jerry subtype.
-			/*
-			if(owner.emote_cooldown < (world.time - 600))
-				owner.visible_message("<span class='warning'>[owner] chases [living_target] around, to no avail!</span>")
-				owner.step(living_target, pick(GLOB.cardinals))
-				owner.emote_cooldown = world.time
-				abandon()
-			*/
 			owner.visible_message("<span class='warning'>[owner] chases [living_target] around, to no avail!</span>")
 			step(living_target, pick(GLOB.cardinals))
 			abandon()
 		else if(istype(concerned_target, /mob/living/simple_animal/mouse))
 			var/mob/living/simple_animal/mouse/mouse_target = concerned_target
-			//if(mouse_target.sp)
 			owner.manual_emote("splats \the [mouse_target]!")
 			mouse_target.splat()
 			return
@@ -69,19 +58,18 @@
 			abandon()
 
 
-
-
-
+/// If a cat is near a dead mouse and sees that there's a carbon nearby, they will pick up the dead mouse and bring it to the person. Th-thanks, Runtime
 /datum/whim/deliver_gift
 	name = "Deliver gift"
 	priority = 1
 	scan_radius = 6
 	scan_every = 5
+	/// A mouse we're currently carrying in our mouth
 	var/obj/item/gift
-
+	/// Dead mice we've recently tried gifting
 	var/list/recent_gifts
 
-/// See if there's any snacks in the vicinity, if so, set to work after them
+/// We need both the dead mouse and a nearby person to greenlight this, though we save picking out the recepient for later
 /datum/whim/deliver_gift/inner_can_start()
 	var/obj/item/possible_gift
 	var/possible_recepient
@@ -90,7 +78,6 @@
 		LAZYCLEARLIST(recent_gifts)
 
 	for(var/i in oview(owner, scan_radius))
-		//testing("[owner] searching whim [name], atom [i]")
 		if(istype(i, /obj/item/reagent_containers/food/snacks/deadmouse) && !(i in recent_gifts))
 			var/obj/item/reagent_containers/food/snacks/deadmouse/for_tile_check = i
 			if(!locate(/mob/living/carbon) in get_turf(for_tile_check)) // don't gift a mouse that's already at someone's feet
@@ -101,7 +88,6 @@
 		if(possible_gift && possible_recepient)
 			return possible_gift
 
-/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/deliver_gift/abandon()
 	if(gift && owner && gift.loc == owner)
 		owner.visible_message("<b>[owner] drops [gift] from [owner.p_their()] mouth.")
@@ -109,7 +95,6 @@
 	gift = null
 	return ..()
 
-/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/deliver_gift/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
@@ -137,9 +122,18 @@
 		for(var/mob/living/carbon/C in oview(owner, scan_radius))
 			concerned_target = C
 			return
+
 	else if(gift && iscarbon(concerned_target))
 		var/mob/living/carbon/gift_recepient = concerned_target
 		owner.visible_message("<span class='notice'>[owner] presents a gift to [gift_recepient], dropping it at [gift_recepient.p_their()] feet! Oh... it's \a [gift]...")
 		gift.forceMove(get_turf(gift_recepient))
-		gift = null
+		gift = null // manually set the gift to null before abandoning so we don't do another message about dropping the mouse
 		abandon()
+
+/datum/whim/deliver_gift/owner_examined(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	if(state == WHIM_INACTIVE)
+		return
+
+	if(gift)
+		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [gift] in [owner.p_their()] mouth.</span>"

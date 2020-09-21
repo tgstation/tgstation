@@ -1,4 +1,8 @@
-
+/**
+  * Again, this component specifically mentions cats and catnip a lot, but if you make your own subtypes with different behavior, you can easily make this work for other mob types.
+  *
+  * This whim is assigned by [/datum/component/catnip], and no mob should have it naturally
+  */
 /datum/whim/catnip
 	name = "Chase catnip"
 	priority = 2
@@ -14,7 +18,6 @@
 	if(get_dist(owner, referring_source) < scan_radius)
 		return referring_source
 
-/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/catnip/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
@@ -25,8 +28,6 @@
 		abandon()
 		return
 
-	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
-	//Feeding, chasing food, FOOOOODDDD
 	walk_to(owner, get_turf(catnip_holder), 0, rand(15,25) * 0.1)
 
 	catnip_holder = concerned_target?.loc // just in case walk_to sleeps and might break things
@@ -61,8 +62,7 @@
 	else
 		harass_catnip_holder()
 
-
-///Somehow, whether by our frustration, the can ceasing to exist (including being finished off), or whatever, we have decided we don't want that food anymore, so we scrub references on both sides (as needed)
+/// Meow and paw at whoever we think has catfood
 /datum/whim/catnip/proc/harass_catnip_holder()
 	var/atom/catnip_holder = concerned_target.loc
 	switch(rand(1,3))

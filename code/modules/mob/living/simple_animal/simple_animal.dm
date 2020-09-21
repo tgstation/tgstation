@@ -203,39 +203,34 @@
 	if(live_whims)
 		handle_whims()
 
-/**
-  *
-  *
-  *
-  *
-  * Arguments:
-  * *
-  */
+/// This is where we instantiate all the whim types in [/mob/living/simple_animal/var/list/whim_datums] and store them in [/mob/living/simple_animal/var/list/live_whims]
 /mob/living/simple_animal/proc/initialize_whims()
-	for(var/i in whim_datums)
-		var/datum/whim/iter_whim = new i
-		iter_whim.owner = src
-		LAZYADD(live_whims, iter_whim)
+	for(var/whim_path in whim_datums)
+		new whim_path(src)
+
+	LAZYCLEARLIST(whim_datums) // We don't need this list anymore
 
 /**
+  * This is where we handle all of the [whim datums][/datum/whim] a simple_animal may have, and is called from [/mob/living/simple_animal/proc/Life].
   *
-  *
-  *
-  *
-  * Arguments:
-  * *
+  *	Note that lots of simple animals won't have any whims at all, these represent specialized behavior beyond the standard milling around and attacking that simple mobs
+  * usually do (especially hostile mobs). Whims are not meant to compete with Life() or other procs for control of the mob, try to make sure there's no other
+  * behavior code laying around for a given mob that may interfere if you want to give them whims
   */
 /mob/living/simple_animal/proc/handle_whims()
 	if(stat || buckled || mind) // these are (for now) automated only and require freedom of movement (and also being alive)
 		return
 
 	if(current_whim)
-		if(!resting || current_whim.allow_resting)
+		if(!resting || current_whim.allow_resting) // special case so that cats can eat catnip while resting
 			current_whim.tick()
 		return
 
+	// this ticker is used to track how often we run the full can_start() checks for whims, you'll note that it only increments when we don't have a current_whim driving us, and that it never resets
+	// (unlike cooldowns). Thus, the more ticks a mob spends running their current_whim, the less checks the other whims make while in waiting, even given the same [/datum/whim/var/scan_every] value
 	whim_scan_ticks++
 
+	// we run through live_whims from left to right, so if multiple whims want to run a check in the same tick, the whims earlier in the list have priority
 	for(var/i in live_whims)
 		var/datum/whim/iter_whim = i
 		var/atom/possible_target = iter_whim.can_start()

@@ -24,37 +24,6 @@
 	. = ..()
 	add_cell_sample()
 
-/*
-/mob/living/simple_animal/pet/dog/Life()
-	..()
-	if(stat || resting || buckled)
-		return
-
-	if(current_whim)
-		current_whim.tick()
-		return
-
-	for(var/i in live_whims)
-		var/datum/whim/iter_whim = i
-		testing("[src] about to try starting [iter_whim.name]")
-		var/atom/possible_target = iter_whim.can_start()
-		if(possible_target)
-			testing("[src] found target [possible_target] for [iter_whim.name]")
-			iter_whim.activate(possible_target)
-			return
-	/*
-	if(turns_since_scan < 5)
-		return
-	turns_since_scan = 0
-
-	if(seek_bball() || seek_snacks())
-		return
-
-	if(prob(1))
-		manual_emote(pick("dances around.","chases its tail!"))
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
-	*/
-*/
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
@@ -394,7 +363,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	whim_datums = list(/datum/whim/defend_office, /datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
+	whim_datums = list(/datum/whim/defend_office, /datum/whim/mourn, /datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE

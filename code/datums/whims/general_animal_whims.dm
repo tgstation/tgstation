@@ -1,3 +1,4 @@
+/// Animals making babies, ported over to whims so we don't have to scan a 7x7 box every single tick per female cat and dog. TODO: port runtime's special baby handling.
 /datum/whim/make_babies
 	name = "Make babies"
 	priority = 2
@@ -31,7 +32,6 @@
 
 	return partner
 
-
 /datum/whim/make_babies/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
@@ -43,6 +43,7 @@
 
 	form_babby()
 
+/// Diverted into its own proc so that gutlunches can add on their own stuff
 /datum/whim/make_babies/proc/form_babby()
 	var/childspawn = pickweight(owner.childtype)
 	var/turf/target = get_turf(owner)
@@ -50,6 +51,7 @@
 		. = new childspawn(target)
 		abandon() // abandon the baby making, not the baby (hopefully!)
 
+/// Gutlunches are special (and gross) and need some extra handling
 /datum/whim/make_babies/gutlunch
 	name = "Make babies (gutlunch)"
 
