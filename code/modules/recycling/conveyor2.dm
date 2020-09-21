@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
-	subsystem_type = /datum/controller/subsystem/processing/conveyors
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			if((zoommob.movement_type & FLYING) && !zoommob.stat)
 				continue
 		if(!movable_thing.anchored && movable_thing.has_gravity())
-			movable_thing.add_velocity(movedir, 8)
+			step(movable_thing, movedir, 8)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
