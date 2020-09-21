@@ -19,8 +19,8 @@
 	smoothing_flags = NONE
 	/// The amount of time it takes to create a venus human trap.
 	var/growth_time = 120 SECONDS
+	var/finish_time
 
-	var/growth_timer
 	var/obj/effect/countdown/flower_bud/countdown
 
 /obj/structure/alien/resin/flower_bud_enemy/Initialize()
@@ -35,7 +35,8 @@
 	for(var/turf/T in anchors)
 		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
-	growth_timer = addtimer(CALLBACK(src, .proc/bear_fruit), growth_time, TIMER_STOPPABLE)
+	finish_time = world.time + growth_time
+	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 	countdown.start()
 
 /**
