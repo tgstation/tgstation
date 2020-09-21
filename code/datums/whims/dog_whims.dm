@@ -5,10 +5,15 @@
 	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
 	var/obj/item/precious_cargo
 
+/datum/whim/airbud_bball/abandon()
+	precious_cargo = null
+	return ..()
+
 /datum/whim/airbud_bball/inner_can_start()
 	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
 
-	for(var/i in oview(owner, 6))
+	for(var/i in oview(owner, 5))
+		//testing("[owner] searching whim [name], atom [i]")
 		if(istype(i, /obj/item/toy/beach_ball/holoball))
 			bball = i
 			break
@@ -150,7 +155,7 @@
 			return S
 
 /// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
-/datum/whim/snacks/proc/handle_snackhunt()
+/datum/whim/snacks/tick()
 	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > 3 || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)))
 		abandon()
 		return

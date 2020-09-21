@@ -17,7 +17,7 @@
 
 	var/priority = 1
 
-	var/process_every = 2
+	var/scan_every = 3
 
 	var/abandon_rescan_length = 5 SECONDS
 	COOLDOWN_DECLARE(cooldown_abandon_rescan)

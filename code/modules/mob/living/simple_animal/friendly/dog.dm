@@ -49,6 +49,7 @@
 /mob/living/simple_animal/pet/dog/proc/initialize_whims()
 	for(var/i in whim_datums)
 		var/datum/whim/iter_whim = new i
+		iter_whim.owner = src
 		LAZYADD(live_whims, iter_whim)
 
 /mob/living/simple_animal/pet/dog/Life()
@@ -61,6 +62,10 @@
 		return
 
 	turns_since_scan++
+	if(turns_since_scan < 3)
+		return
+	turns_since_scan = 0
+
 	for(var/i in live_whims)
 		var/datum/whim/iter_whim = i
 		testing("[src] about to try starting [iter_whim.name]")
