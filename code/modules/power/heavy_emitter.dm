@@ -15,7 +15,12 @@
 	to_chat(user, "<span class='notice'>You start to rotate [src].</span>")
 	if(do_after(user,10 SECONDS,FALSE,src))
 		setDir(turn(dir,-90))
-		return TRUE
+	return TRUE
+
+/obj/machinery/power/heavy_emitter/examine(mob/user)
+	. = ..()
+	if(anchored)
+		. += "It is welded to the floor"
 
 /obj/machinery/power/heavy_emitter/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -23,7 +28,7 @@
 	to_chat(user, "<span class='notice'>You start welding [src].</span>")
 	if(do_after(user,10 SECONDS,FALSE,src))
 		anchored = !anchored
-		return TRUE
+	return TRUE
 
 /obj/machinery/power/heavy_emitter/proc/check_part_connectivity()
 	return TRUE
@@ -57,6 +62,10 @@
 	var/timer = 0
 	///Cooldown threshold
 	var/max_timer = 10
+
+/obj/machinery/power/heavy_emitter/centre/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj,src)
 
 /obj/machinery/power/heavy_emitter/centre/examine(mob/user)
 	. = ..()
@@ -182,9 +191,13 @@
 
 
 /obj/machinery/power/heavy_emitter/arm
+	name = "Seismic Stabilizer Arm"
+	desc = "Reduces the knockback from firing to virtually nothing."
 	icon_state = "arm"
 
 /obj/machinery/power/heavy_emitter/interface
+	name = "Kinetic Amplification Manipulation Interface"
+	desc = "Allows for control over the core."
 	icon_state = "interface_off"
 	///Core connected to this thing
 	var/connected_core
@@ -193,11 +206,12 @@
 	. = ..()
 	if(connected_core)
 		var/obj/machinery/power/heavy_emitter/centre/centre = connected_core
-		if(centre.firing)
-			centre.turn_off()
-		else
-			centre.turn_on()
-		return
+		if(!QDELETED(centre))
+			if(centre.firing)
+				centre.turn_off()
+			else
+				centre.turn_on()
+			return
 
 	var/turf/T = get_step(src,turn(dir,180))
 	var/obj/machinery/power/heavy_emitter/centre/centre = locate() in T
@@ -218,6 +232,8 @@
 	connected_core = null
 
 /obj/machinery/power/heavy_emitter/vent
+	name = "Energy Core Vent"
+	desc = "Circulates air around core preventing overheating"
 	icon_state = "vent"
 
 /obj/machinery/power/heavy_emitter/vent/proc/vent_gas()
@@ -225,11 +241,15 @@
 	if(!istype(open_turf))
 		return FALSE
 	var/datum/gas_mixture/gases = open_turf.return_air()
-	gases.temperature += 100
+	//Space can exist
+	if(gases)
+		gases.temperature += 100
 	flick("vent_on",src)
 	return TRUE
 
 /obj/machinery/power/heavy_emitter/cannon
+	name = "Energy Optic Converging Cannon"
+	desc = "Converges the energy of the core into singular destructive beam."
 	icon_state = "cannon"
 	var/warmup_sound = 'sound/machines/warmup1.ogg'
 	var/cooldown_sound = 'sound/machines/cooldown1.ogg'
