@@ -30,30 +30,46 @@
 	var/turns_since_scan = 0
 	/// Whatever object is holding our attention and that we're moving towards, be it snack or ball
 	var/obj/movement_target
-	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
-	var/obj/item/precious_cargo
+
 	/// Either null, DOG_MODE_SNACK, or DOG_MODE_AIRBUD. If it's either of the latter, we're currently on the hunt for a ball or snack
 	var/target_mode
+
+	whim_datums = list(/datum/whim/airbud_bball, /datum/whim/snacks)
+
+	//var/list/live_whims
+
+	//var/datum/whim/current_whim
 
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	add_cell_sample()
+	initialize_whims()
+
+/mob/living/simple_animal/pet/dog/proc/initialize_whims()
+	for(var/i in whim_datums)
+		var/datum/whim/iter_whim = new i
+		LAZYADD(live_whims, iter_whim)
 
 /mob/living/simple_animal/pet/dog/Life()
 	..()
 	if(stat || resting || buckled)
 		return
 
-	switch(target_mode)
-		if(DOG_MODE_SNACK)
-			handle_snackhunt()
-			return
-		if(DOG_MODE_AIRBUD)
-			handle_airbud()
-			return
+	if(current_whim)
+		current_whim.tick()
+		return
 
 	turns_since_scan++
+	for(var/i in live_whims)
+		var/datum/whim/iter_whim = i
+		testing("[src] about to try starting [iter_whim.name]")
+		var/atom/possible_target = iter_whim.can_start()
+		if(possible_target)
+			testing("[src] found target [possible_target] for [iter_whim.name]")
+			iter_whim.activate(possible_target)
+			return
+	/*
 	if(turns_since_scan < 5)
 		return
 	turns_since_scan = 0
@@ -64,194 +80,7 @@
 	if(prob(1))
 		manual_emote(pick("dances around.","chases its tail!"))
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
-
-/// We look around to see if there's a ball we can hoop with around us. If a person has it, we steal it from them. If it's on the ground, we grab possession. Either way, then we're ready for hooping
-/mob/living/simple_animal/pet/dog/proc/seek_bball()
-	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
-
-	for(var/i in oview(src, 6))
-		if(istype(i, /obj/item/toy/beach_ball/holoball))
-			bball = i
-			break
-		else if(isliving(i))
-			var/mob/living/check_mob = i
-			bball = (locate(/obj/item/toy/beach_ball/holoball) in check_mob)
-			if(bball)
-				break
-
-	if(bball)
-		target_mode = DOG_MODE_AIRBUD
-		movement_target = bball
-		stop_automated_movement = TRUE
-		return TRUE
-
-/// For whatever reason, we're no longer interested in hooping, so unset all the variables for it
-/mob/living/simple_animal/pet/dog/proc/abandon_bball()
-	precious_cargo = null
-	movement_target = null
-	target_mode = null
-	stop_automated_movement = FALSE
-
-/**
-  * This proc is the rough loop for handling dog basketball playing once we recognize a ball.
-  *
-  * If we have the ball, take a shot with it. Otherwise, if a living mob has it, steal it from them in an incredibly brutal fashion.
-  * Or if it's just on the ground, take it and go for a shot
-  */
-/mob/living/simple_animal/pet/dog/proc/handle_airbud()
-	var/obj/item/toy/beach_ball/holoball/bball = movement_target
-	if(!istype(bball) || (isturf(bball.loc) && get_dist(src, bball) > 7))
-		abandon_bball()
-		return
-
-	if(precious_cargo && precious_cargo == movement_target)
-		kobe()
-		return
-
-	if(isliving(bball.loc)) // some poor sucker is about to get taught a lesson they'll never forget
-		var/mob/living/bball_player = bball.loc
-		visible_message("<span class='warning'>[src] leaps at [bball_player], trying to steal [bball]!</span>")
-		var/datum/callback/ankle_breaking = CALLBACK(src, .proc/ankle_breaker, bball_player)
-		throw_at(bball_player, 10, 4, src, FALSE, FALSE, ankle_breaking)
-	else
-		visible_message("<span class='warning'>[src] dashes to [bball], taking possession!</span>")
-		precious_cargo = bball
-		var/datum/callback/kobe_callback = CALLBACK(src, .proc/kobe)
-		throw_at(bball, 10, 4, src, FALSE, FALSE, kobe_callback)
-
-/**
-  * This proc is for when air bud steps up his game and destroys some poor assistant
-  *
-  * If the mob we just tackled to steal the ball from wasn't a carbon, we just take the ball and that's it
-  *
-  * If their ankles aren't specifically destroyed, give them the special [/datum/wound/blunt/moderate/broken_ankle] wound on one of their legs.
-  * If they have a broken ankle already, just explode said leg and REALLY break it.
-  */
-/mob/living/simple_animal/pet/dog/proc/ankle_breaker(mob/living/target)
-	var/obj/item/toy/beach_ball/holoball/bball = movement_target
-	if(!target || !istype(bball))
-		abandon_bball()
-		return
-
-	target.Knockdown(3 SECONDS)
-	precious_cargo = bball
-	precious_cargo.forceMove(get_turf(src))
-
-	//			 ~~~~Editor's Note~~~~			  //
-	// I'm aware that ankle breaking is offensive //
-	// and not defensive, but shhhhhhhhhhhhhhhhhh //
-	if(!iscarbon(target))
-		return
-
-	var/mob/living/carbon/carbon_target = target
-	var/datum/wound/blunt/moderate/broken_ankle/preexisting_condition = (locate(/datum/wound/blunt/moderate/broken_ankle) in carbon_target.all_wounds)
-
-	if(carbon_target.client)
-		carbon_target.client.give_award(/datum/award/achievement/misc/airbud, carbon_target)
-
-	// if we've already got a broken ankle, just blast that leg
-	if(preexisting_condition)
-		var/obj/item/bodypart/ankle = preexisting_condition.limb
-		ankle.receive_damage(10, wound_bonus = rand(40,120))
-		target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift that it obliterates [target]'s [ankle.name]!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that it obliterates your [ankle.name]!</span>")
-		return
-
-	// otherwise, break an ankle
-	target.visible_message("<span class='warning'>[src] steals [bball] with moves so swift, [target] crumples painfully to the ground trying to keep up!</span>", "<span class='userdanger'>[src] steals [bball] from you so hard that you crumple painfully to the ground!</span>")
-	var/obj/item/bodypart/ankle = pick(list(target.get_bodypart(BODY_ZONE_L_LEG), target.get_bodypart(BODY_ZONE_R_LEG))) || target.get_bodypart(BODY_ZONE_L_LEG) || target.get_bodypart(BODY_ZONE_R_LEG)
-	if(ankle)
-		var/datum/wound/blunt/moderate/broken_ankle/ankle_wound = new
-		ankle_wound.apply_wound(ankle)
-		ankle.receive_damage(10, wound_bonus = CANT_WOUND)
-
-/// Get ready to shoot/dunk if there's a hoop nearby. If not, we'll just give up and dribble a bit
-/mob/living/simple_animal/pet/dog/proc/kobe()
-	var/obj/item/toy/beach_ball/holoball/bball = precious_cargo
-	if(!istype(bball))
-		abandon_bball()
-		return
-
-	var/obj/structure/holohoop/the_hoop = locate(/obj/structure/holohoop) in oview(7, src)
-	if(!the_hoop)
-		visible_message("<span class='notice'>[src] dribbles [bball] for a bit, then seems to grow bored by the lack of hoops.</span>")
-		abandon_bball()
-		return
-
-	shoot(bball, the_hoop)
-
-/// This is where we actually go to shoot/dunk the ball into our acquired hoop. What type of shot we do depends on our distance
-/mob/living/simple_animal/pet/dog/proc/shoot(obj/item/toy/beach_ball/holoball/bball, obj/structure/holohoop/the_hoop)
-	if(!istype(bball) || !istype(the_hoop))
-		abandon_bball()
-		return
-
-	var/datum/callback/shot_callback
-	var/atom/movable/what_gets_thrown // dunks throw the dog, shots throw the ball
-
-	switch(get_dist(src, the_hoop))
-		if(0 to 2)
-			visible_message("<span class='notice'>[src] grabs insane air as [p_they()] slam[p_s()] [bball] into [the_hoop]! Damn!</span>")
-			bball.forceMove(src)
-			what_gets_thrown = src
-			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/dunk, bball, src)
-
-		if(3 to 5)
-			visible_message("<span class='notice'>[src] does a sick flip while shooting [bball] at [the_hoop]!</span>")
-			SpinAnimation(10, 1)
-			what_gets_thrown = bball
-			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, src)
-
-		if(6 to INFINITY)
-			// behold: the only code ever written that actually references simple mob pronouns
-			visible_message("<span class='notice'>[src] is briefly overcome by grim determination as [p_they()] set[p_s()] on [p_their()] hind legs and shoot[p_s()] [bball] at [the_hoop] from downtown!</span>")
-			what_gets_thrown = bball
-			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, src)
-
-	what_gets_thrown.throw_at(get_turf(the_hoop), 10, 3, src, FALSE, FALSE, shot_callback)
-	abandon_bball()
-
-/// See if there's any snacks in the vicinity, if so, set to work after them
-/mob/living/simple_animal/pet/dog/proc/seek_snacks()
-	for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-		if(isturf(S.loc) || ishuman(S.loc))
-			movement_target = S
-			target_mode = DOG_MODE_SNACK
-			stop_automated_movement = TRUE
-			return TRUE
-
-/// Something or other made us give up on snacks :(, so do our best to forget about them
-/mob/living/simple_animal/pet/dog/proc/abandon_snacks()
-	movement_target = null
-	target_mode = null
-	stop_automated_movement = FALSE
-
-/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
-/mob/living/simple_animal/pet/dog/proc/handle_snackhunt()
-	if(!movement_target || isnull(movement_target.loc) || get_dist(src, movement_target.loc) > 3 || (!isturf(movement_target.loc) && !ishuman(movement_target.loc)))
-		abandon_snacks()
-		return
-
-	//Feeding, chasing food, FOOOOODDDD
-	step_to(src,movement_target,1)
-	sleep(3)
-	step_to(src,movement_target,1)
-	sleep(3)
-	step_to(src,movement_target,1)
-
-	if(!movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-		abandon_snacks()
-		return
-
-	face_atom(movement_target)
-
-	if(!Adjacent(movement_target)) //can't reach food through windows.
-		return
-
-	if(isturf(movement_target.loc))
-		movement_target.attack_animal(src)
-	else if(ishuman(movement_target.loc))
-		if(prob(20))
-			manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+	*/
 
 //Corgis and pugs are now under one dog subtype
 

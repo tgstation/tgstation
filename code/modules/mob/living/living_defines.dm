@@ -149,3 +149,10 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+
+	var/list/whim_datums
+
+	var/list/live_whims
+
+	var/datum/whim/current_whim

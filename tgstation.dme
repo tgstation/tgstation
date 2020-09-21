@@ -671,6 +671,8 @@
 #include "code\datums\weather\weather_types\floor_is_lava.dm"
 #include "code\datums\weather\weather_types\radiation_storm.dm"
 #include "code\datums\weather\weather_types\snow_storm.dm"
+#include "code\datums\whims\_whim.dm"
+#include "code\datums\whims\dog_whims.dm"
 #include "code\datums\wires\_wires.dm"
 #include "code\datums\wires\airalarm.dm"
 #include "code\datums\wires\airlock.dm"
