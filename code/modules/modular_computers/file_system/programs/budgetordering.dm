@@ -1,6 +1,6 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
-	filedesc = "GrandArk Department Orders"
+	filedesc = "Nanotrasen Internal Requisition Network (NIRN)"
 	program_icon_state = "request"
 	extended_desc = "A request network that utilizes the Nanotrasen Ordering network to purchase supplies using a department budget account."
 	requires_ntnet = TRUE
