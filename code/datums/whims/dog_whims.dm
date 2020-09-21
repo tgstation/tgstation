@@ -3,6 +3,8 @@
 /datum/whim/airbud_bball
 	name = "Airbud Mode"
 	scan_radius = 5
+	scan_every = 4
+	abandon_rescan_length = 12 SECONDS
 	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
 	var/obj/item/carried_bball
 

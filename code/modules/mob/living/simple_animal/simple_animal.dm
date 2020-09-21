@@ -166,7 +166,7 @@
 	/// The current whim we're following
 	var/datum/whim/current_whim
 	/// How many ticks we've spent without a whim since we last checked if any of our live ones were viable to activate
-	var/turns_since_whim_scan
+	var/whim_scan_ticks
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -233,14 +233,10 @@
 		current_whim.tick()
 		return
 
-	turns_since_whim_scan++
-	if(turns_since_whim_scan < 3)
-		return
-	turns_since_whim_scan = 0
+	whim_scan_ticks++
 
 	for(var/i in live_whims)
 		var/datum/whim/iter_whim = i
-		testing("[src] about to try starting [iter_whim.name]")
 		var/atom/possible_target = iter_whim.can_start()
 		if(possible_target)
 			testing("[src] found target [possible_target] for [iter_whim.name]")

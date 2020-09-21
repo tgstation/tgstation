@@ -2,6 +2,7 @@
 	name = "Hunt mice"
 	priority = 2
 	scan_radius = 3
+	scan_every = 3
 
 
 /// See if there's any snacks in the vicinity, if so, set to work after them
@@ -79,24 +80,30 @@
 	name = "Deliver gift"
 	priority = 1
 	scan_radius = 6
+	scan_every = 5
 	var/obj/item/gift
+
+	var/list/recent_gifts
 
 /// See if there's any snacks in the vicinity, if so, set to work after them
 /datum/whim/deliver_gift/inner_can_start()
 	var/obj/item/possible_gift
 	var/possible_recepient
 
+	if(prob(1)) // suitably lazy way to make sure we don't keep immediately regifting the same mouse again and again
+		LAZYCLEARLIST(recent_gifts)
+
 	for(var/i in oview(owner, scan_radius))
 		//testing("[owner] searching whim [name], atom [i]")
-		if(istype(i, /obj/item/reagent_containers/food/snacks/deadmouse))
+		if(istype(i, /obj/item/reagent_containers/food/snacks/deadmouse) && !(i in recent_gifts))
 			var/obj/item/reagent_containers/food/snacks/deadmouse/for_tile_check = i
 			if(!locate(/mob/living/carbon) in get_turf(for_tile_check)) // don't gift a mouse that's already at someone's feet
 				possible_gift = i
 		else if(iscarbon(i))
 			possible_recepient = TRUE
 
-	if(possible_gift && possible_recepient)
-		return possible_gift
+		if(possible_gift && possible_recepient)
+			return possible_gift
 
 /// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/deliver_gift/abandon()
