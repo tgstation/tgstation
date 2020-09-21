@@ -1,5 +1,3 @@
-#define MORPH_COOLDOWN 50
-
 /mob/living/simple_animal/hostile/morph
 	name = "morph"
 	real_name = "morph"
@@ -37,7 +35,6 @@
 	var/melee_damage_disguised = 0
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
-	var/morph_time = 0
 	var/static/list/blacklist_typecache = typecacheof(list(
 	/obj/screen,
 	/obj/singularity,
@@ -87,7 +84,7 @@
 	return FALSE
 
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
-	if(morph_time <= world.time && !stat)
+	if(!stat)
 		if(A == src)
 			restore()
 			return
@@ -118,7 +115,6 @@
 	melee_damage_upper = melee_damage_disguised
 	set_varspeed(0)
 
-	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 	return
@@ -147,7 +143,6 @@
 	melee_damage_upper = initial(melee_damage_upper)
 	set_varspeed(initial(speed))
 
-	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
