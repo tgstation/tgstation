@@ -163,6 +163,14 @@
 	inhand_icon_state = "bsing"
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/costume/chika
+	name = "anime uniform"
+	desc = "A school uniform from a popular anime."
+	icon_state = "chika_skirt"
+	inhand_icon_state = "chika_skirt"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
 	desc = "Return the slab or suffer my stale references."
