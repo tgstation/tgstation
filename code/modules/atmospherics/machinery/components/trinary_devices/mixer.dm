@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/trinary/mixer
-	icon_state = "mixer_off"
+	icon_state = "mixer_off-0"
 	density = FALSE
 
 	name = "gas mixer"
@@ -27,6 +27,7 @@
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+		to_chat(user, "<span class='notice'>You maximize the pressure output on [src] to [target_pressure] kPa.</span>")
 		update_icon()
 	return ..()
 
@@ -191,7 +192,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/on
 	on = TRUE
-	icon_state = "mixer_on"
+	icon_state = "mixer_on-0"
 
 /obj/machinery/atmospherics/components/trinary/mixer/on/layer2
 	piping_layer = 2
@@ -201,7 +202,7 @@
 	icon_state = "mixer_on_map-4"
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
-	icon_state = "mixer_off_f"
+	icon_state = "mixer_off-0_f"
 	flipped = TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/layer2
@@ -213,7 +214,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/on
 	on = TRUE
-	icon_state = "mixer_on_f"
+	icon_state = "mixer_on-0_f"
 
 /obj/machinery/atmospherics/components/trinary/mixer/flipped/on/layer2
 	piping_layer = 2
@@ -224,7 +225,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
 	name = "air mixer"
-	icon_state = "mixer_on"
+	icon_state = "mixer_on-0"
 	node1_concentration = N2STANDARD
 	node2_concentration = O2STANDARD
 	target_pressure = MAX_OUTPUT_PRESSURE
@@ -235,7 +236,7 @@
 	node2_concentration = N2STANDARD
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
-	icon_state = "mixer_on_f"
+	icon_state = "mixer_on-0_f"
 	flipped = TRUE
 
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse

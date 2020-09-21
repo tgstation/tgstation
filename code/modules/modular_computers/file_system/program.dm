@@ -77,7 +77,7 @@
 	return 0
 
 // Called by Process() on device that runs us, once every tick.
-/datum/computer_file/program/proc/process_tick()
+/datum/computer_file/program/proc/process_tick(delta_time)
 	return TRUE
 
 /**
@@ -179,8 +179,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
 		ui = new(user, src, tgui_id, filedesc)
-		ui.open()
-		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
+		if(ui.open())
+			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.
