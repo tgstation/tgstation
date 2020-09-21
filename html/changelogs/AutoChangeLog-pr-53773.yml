@@ -1,6 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "Keys no longer have a lifetime of 15 keypresses, meaning you can ctrl+movement keys ad infinitum again."
-  - rscadd: "Pressing Esc now has the same effect as releasing all held/pressed keys from the keyboard. Handy if one gets stuck."
-  - tweak: "Removed the old functionality in which Esc would delete what's on the input bar when not focused. Remove/backspace still does that."
