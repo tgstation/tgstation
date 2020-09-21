@@ -1841,21 +1841,21 @@
 	},
 /obj/structure/cable,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/door/window/westleft{
-	base_state = "right";
 	dir = 2;
-	icon_state = "right";
 	layer = 3.1;
 	name = "Upload Console Window";
 	req_access_txt = "16"
 	},
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
@@ -9351,23 +9351,27 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/door/window/westleft{
-	dir = 2;
-	layer = 3.1;
-	name = "Cyborg Upload Console Window";
-	req_access_txt = "16"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/door/window/westleft{
+	base_state = "right";
+	dir = 2;
+	icon_state = "right";
+	layer = 3.1;
+	name = "Cyborg Upload Console Window";
+	req_access_txt = "16"
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
