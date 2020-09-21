@@ -43,7 +43,7 @@
 
 	var/playstyle_string = "<span class='big bold'>You are a morph,</span></b> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything you can see by shift-clicking it. This process will alert any nearby \
-							observers. While morphed, you move faster, but deal [melee_damage_disguised <= 0 ? "no" : "less"] damage to living creatures.\
+							observers. While morphed, you move faster, but deal no damage to living creatures.\
 							In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
 							You can attack any item or dead creature to consume it - creatures will restore your health. \
 							Finally, you can restore yourself to your original form while morphed by shift-clicking yourself.</b>"
