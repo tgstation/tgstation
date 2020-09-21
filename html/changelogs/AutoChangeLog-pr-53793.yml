@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "increased the radiation amount of proto-nitrate bz response when less than 30 moles"
-  - balance: "increased the hallucination amount of the same reaction by a 0.2 factor"

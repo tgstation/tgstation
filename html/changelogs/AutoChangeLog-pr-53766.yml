@@ -1,9 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Added a minimum amount for healium knock down, added a warning when traces are present"
-  - tweak: "Remove knockdown, added sleep (less intense effect)
-refractor: refractored sleeping debuff to take in consideration the TRAIT_SLEEPIMMUNE
-refractor: moved the healing effects to the reagent"
-  - rscdel: "removed oxyloss from the reagent effect"
-  - tweak: "lowered the amount of healing done by the healium gas"
