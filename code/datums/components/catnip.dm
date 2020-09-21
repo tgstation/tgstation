@@ -51,6 +51,7 @@
 
 	var/datum/whim/catnip/new_catnip_whim = new
 	new_catnip_whim.owner = new_cat
+	new_catnip_whim.referring_source = parent
 	LAZYADD(new_cat.live_whims, new_catnip_whim)
 
 	LAZYADD(enticed_cats, new_cat)
@@ -63,9 +64,9 @@
 	if(!istype(bye_cat))
 		return
 
-	var/removable_whim = (locate(datum/whim/catnip) in bye_cat.live_whims)
+	var/removable_whim = (locate(/datum/whim/catnip) in bye_cat.live_whims)
 	if(removable_whim)
-		LAZYREMOVE(bye_cat.live_whims, removable_whim)
+		qdel(removable_whim)
 
 /datum/component/catnip/process()
 	if(!COOLDOWN_FINISHED(src, catscan_cooldown))
@@ -78,15 +79,14 @@
 	else
 		scannables = hearers(catscan_range, get_turf(parent))
 
-
 	for(var/i in scannables)
 		var/mob/living/simple_animal/itercat = i
-		if(!(itercat in enticed_cats) && !(locate(/datum/whim/catnip) in itercat.live_whims) && !itercat.stat)
+		if(istype(itercat) && !(itercat in enticed_cats) && !(locate(/datum/whim/catnip) in itercat.live_whims) && !itercat.stat)
 			register_cat(itercat)
 
 	for(var/i in enticed_cats)
 		var/mob/living/simple_animal/itercat = i
-		if(itercat.stat || !(src in itercat.live_whims) || get_dist(itercat, get_turf(parent)) > CATNIP_MAX_DISTANCE)
+		if(!istype(itercat) || itercat.stat || !(locate(/datum/whim/catnip) in itercat.live_whims) || get_dist(itercat, get_turf(parent)) > CATNIP_MAX_DISTANCE)
 			lose_cat(itercat)
 
 #undef CATSCAN_HORDE_MULT

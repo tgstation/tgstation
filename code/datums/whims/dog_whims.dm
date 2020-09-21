@@ -149,7 +149,7 @@
 
 /// See if there's any snacks in the vicinity, if so, set to work after them
 /datum/whim/snacks/inner_can_start()
-	for(var/obj/item/reagent_containers/food/snacks/S in oview(owner,3))
+	for(var/obj/item/reagent_containers/food/snacks/S in oview(owner,scan_radius))
 		if(isturf(S.loc) || ishuman(S.loc))
 			return S
 
@@ -159,7 +159,7 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > 3 || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)))
+	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > scan_radius || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)))
 		abandon()
 		return
 

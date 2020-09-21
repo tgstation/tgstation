@@ -1,14 +1,18 @@
 
 /datum/whim/catnip
-	name = "Seek snacks"
+	name = "Chase catnip"
 	priority = 2
 	allow_resting = TRUE
+	scan_radius = 10
+	var/atom/referring_source
 
 /// See if there's any snacks in the vicinity, if so, set to work after them
 /datum/whim/catnip/inner_can_start()
-	for(var/obj/item/reagent_containers/food/snacks/S in oview(owner,3))
-		if(isturf(S.loc) || ishuman(S.loc))
-			return S
+	if(!referring_source)
+		abandon()
+
+	if(get_dist(owner, referring_source) < scan_radius)
+		return referring_source
 
 /// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
 /datum/whim/catnip/tick()
@@ -17,13 +21,13 @@
 		return
 
 	var/atom/catnip_holder = concerned_target?.loc
-	if(!concerned_target || isnull(catnip_holder) || get_dist(owner, catnip_holder) > 7)
+	if(!concerned_target || isnull(catnip_holder) || get_dist(owner, catnip_holder) > 10)
 		abandon()
 		return
 
 	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
 	//Feeding, chasing food, FOOOOODDDD
-	walk_to(src, get_turf(catnip_holder), 0, rand(15,25) * 0.1)
+	walk_to(owner, get_turf(catnip_holder), 0, rand(15,25) * 0.1)
 
 	catnip_holder = concerned_target?.loc // just in case walk_to sleeps and might break things
 	if(!concerned_target || !catnip_holder)		//Does walk_to sleep??
@@ -49,8 +53,8 @@
 			actual_food.reagents.remove_any(1)
 			actual_food.bitecount++
 			actual_food.On_Consume(owner)
-		// else just meow at it
-		else
+
+		else // else just meow at it
 			owner.visible_message("<b>[owner]</b> meows [pick("directly", "defiantly", "suspiciously", "tiredly")] at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(owner), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10))
 
@@ -64,7 +68,7 @@
 	switch(rand(1,3))
 		if(1)
 			owner.visible_message("<b>[owner]</b> meows [pick("directly", "defiantly", "hungrily", "tiredly")] at [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10))
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(owner), pick('sound/effects/meow1.ogg', 'sound/effects/meow2.ogg'), 50, TRUE), rand(0, 10))
 		if(2)
 			owner.visible_message("<b>[owner]</b> rubs up against [catnip_holder]!", vision_distance=COMBAT_MESSAGE_RANGE)
 			new /obj/effect/temp_visual/heart(owner.loc)

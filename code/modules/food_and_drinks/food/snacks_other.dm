@@ -793,6 +793,17 @@
 	trash = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
 
+/obj/item/reagent_containers/food/snacks/canned/catfood
+	name = "cat food tin"
+	desc = "Purinya~ brand cat food, approved for both cat cats and people cats."
+	icon_state = "beans"
+	trash = /obj/item/trash/can/food/cat_food
+	tastes = list("organic slurry" = 5, "blended space carp" = 3)
+
+/obj/item/reagent_containers/food/snacks/canned/catfood/open_can(mob/user)
+	. = ..()
+	AddComponent(/datum/component/catnip, horde_chance = 1.5)
+
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."

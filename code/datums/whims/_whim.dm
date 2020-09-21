@@ -35,6 +35,12 @@
 
 	var/allow_resting = FALSE
 
+/// Note that
+/datum/whim/Destroy(force, ...)
+	abandon()
+	LAZYREMOVE(owner.live_whims, src)
+	return ..()
+
 /datum/whim/proc/activate(atom/new_target)
 	testing("[owner] activating [name]")
 	state = WHIM_ACTIVE
