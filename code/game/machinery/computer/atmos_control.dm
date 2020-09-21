@@ -9,76 +9,80 @@
 	resistance_flags = FIRE_PROOF
 
 	var/on = TRUE
-
-	var/id_tag
-	var/frequency = FREQ_ATMOS_STORAGE
-	var/datum/radio_frequency/radio_connection
+	network_id = NETWORK_ATMOS_STORAGE
+	var/list/status_cache
+	var/network_broadcast = NETWORK_ATMOS_CONTROL
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOX
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_TOX
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank
 	name = "toxins mixing gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB
 /obj/machinery/air_sensor/atmos/oxygen_tank
 	name = "oxygen tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_O2
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_O2
 /obj/machinery/air_sensor/atmos/nitrogen_tank
 	name = "nitrogen tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_N2
 /obj/machinery/air_sensor/atmos/mix_tank
 	name = "mix tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIX
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_MIX
 /obj/machinery/air_sensor/atmos/nitrous_tank
 	name = "nitrous oxide tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2O
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_N2O
 /obj/machinery/air_sensor/atmos/air_tank
 	name = "air mix tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_AIR
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_AIR
 /obj/machinery/air_sensor/atmos/carbon_tank
 	name = "carbon dioxide tank gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
 /obj/machinery/air_sensor/atmos/incinerator_tank
 	name = "incinerator chamber gas sensor"
-	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
+	network_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
 /obj/machinery/air_sensor/update_icon_state()
 	icon_state = "gsensor[on]"
 
+
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
-		var/datum/gas_mixture/air_sample = return_air()
+		var/datum/component/ntnet_interface/interface = GetComponent(/datum/component/ntnet_interface)
+		if(!interface)
+			return
+		if(!status_cache)
+			status_cache = list()
+			status_cache["gases"] = list()
+			interface.regester_port("status",status_cache)
 
-		var/datum/signal/signal = new(list(
-			"sigtype" = "status",
-			"id_tag" = id_tag,
-			"timestamp" = world.time,
-			"pressure" = air_sample.return_pressure(),
-			"temperature" = air_sample.temperature,
-			"gases" = list()
-		))
+		var/datum/gas_mixture/air_sample = return_air()
+		var/list/gasses = status_cache["gases"]
+
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
 			for(var/gas_id in air_sample.gases)
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
-				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
-
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+				status_cache["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
 
-/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+		status_cache["id_tag"] = network_tag
+		status_cache["timestamp"] = world.time
+		status_cache["pressure"] = air_sample.return_pressure()
+		status_cache["temperature"] = air_sample.temperature
+
+		if(network_broadcast)
+			var/datum/netdata/signal = new(status_cache)
+			signal.receiver_id = null
+			signal.receiver_network = network_broadcast
+			ntnet_send(signal)
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
 	SSair.start_processing_machine(src)
-	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
 	SSair.stop_processing_machine(src)
-	SSradio.remove_object(src, frequency)
+
 	return ..()
 
 /////////////////////////////////////////////////////////////
@@ -94,7 +98,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	circuit = /obj/item/circuitboard/computer/atmos_control
 	light_color = LIGHT_COLOR_CYAN
 
-	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
 		ATMOS_GAS_MONITOR_SENSOR_N2 = "Nitrogen Tank",
 		ATMOS_GAS_MONITOR_SENSOR_O2 = "Oxygen Tank",
@@ -109,17 +112,15 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
 	var/list/sensor_information = list()
-	var/datum/radio_frequency/radio_connection
-
+	network_id = NETWORK_ATMOS_CONTROL
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
 	GLOB.atmos_air_controllers += src
-	set_frequency(frequency)
+
 
 /obj/machinery/computer/atmos_control/Destroy()
 	GLOB.atmos_air_controllers -= src
-	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
@@ -146,20 +147,13 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		))
 	return data
 
-/obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
-
+/obj/machinery/computer/atmos_control/ntnet_receive(datum/netdata/signal)
 	var/id_tag = signal.data["id_tag"]
 	if(!id_tag || !sensors.Find(id_tag))
 		return
 
 	sensor_information[id_tag] = signal.data
 
-/obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
 //Incinerator sensor only
 /obj/machinery/computer/atmos_control/incinerator
@@ -180,10 +174,9 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
-	frequency = FREQ_ATMOS_STORAGE
-	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 	var/list/input_info
 	var/list/output_info
+
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -235,6 +228,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
+#if 0
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
 	var/datum/radio_frequency/freq = SSradio.return_frequency(frequency)
@@ -264,45 +258,52 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		U.update_status()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.update_status()
+#endif
 
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
-	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["inputRate"] = input_info ? input_info["volume_rate"] : FALSE
 	data["outputting"] = output_info ? output_info["power"] : FALSE
-	data["outputPressure"] = output_info ? output_info["internal"] : 0
+	data["outputPressure"] = output_info ? output_info["internal"] : FALSE
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
-	if(..() || !radio_connection)
+	if(..())
 		return
-	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
+	var/datum/netdata/signal = new(list("sigtype" = "command", "user" = usr))
+	signal.receiver_network = NETWORK_ATMOS_STORAGE
 	switch(action)
-		if("reconnect")
-			reconnect(usr)
-			. = TRUE
+		//if("reconnect")
+		//	reconnect(usr)
+		//		. = TRUE
 		if("input")
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
+			signal.receiver_id = input_tag
 			. = TRUE
 		if("rate")
 			var/target = text2num(params["rate"])
 			if(!isnull(target))
 				target = clamp(target, 0, MAX_TRANSFER_RATE)
 				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
+				signal.receiver_id = input_tag
 				. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
+			signal.receiver_id = output_tag
 			. = TRUE
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
 				target = clamp(target, 0, 4500)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
+				signal.receiver_id = output_tag
 				. = TRUE
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	ntnet_send(signal)
 
-/obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
+
+/obj/machinery/computer/atmos_control/tank/ntnet_receive(datum/netdata/signal)
 	if(!signal)
 		return
 

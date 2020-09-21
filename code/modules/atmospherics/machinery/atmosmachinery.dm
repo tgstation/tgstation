@@ -43,6 +43,7 @@
 
 	network_id = NETWORK_ATMOS
 
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
@@ -62,6 +63,7 @@
 	if(process)
 		SSair.start_processing_machine(src)
 	SetInitDirections()
+
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)

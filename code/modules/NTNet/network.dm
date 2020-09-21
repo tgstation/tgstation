@@ -44,6 +44,9 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	network_tree = SSnetworks.create_network_tree_string(src)
 	SSnetworks.networks[network_tree] = src
 
+
+
+
 /datum/ntnet/Destroy()
 	if(length(linked_devices) > 0)
 		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
@@ -98,15 +101,21 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 /datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
 	if(!check_relay_operation()) // mabye hold of on relays and refactor them as "routers"
 		return FALSE
+	var/datum/component/ntnet_interface/target
 	data.sender_network = sender.network.network_id
 	data.sender_id = sender.hardware_id
 	log_data_transfer(data)
-	ASSERT(network_id == data.receiver_network)
-	var/datum/component/ntnet_interface/target
-	var/list/targets = data.receiver_id == null ?  SSnetorks.collect_interfaces(network_id) : list(data.receiver_id)
+	if(istext(data.receiver_id)) // quick send
+		if(SSnetworks.network_tag_to_hardware_id[data.receiver_id])
+			data.receiver_id = SSnetworks.network_tag_to_hardware_id[data.receiver_id]
+		target = SSnetworks.interfaces_by_hardware_id[data.receiver_id ]
+		if(!QDELETED(target)) // Do we need this or not? alot of async goes around
+			target.__network_receive(data)
+
+	var/list/targets = data.receiver_id == null ?  SSnetworks.collect_interfaces(network_id) : data.receiver_id
 	if(targets)
 		for(var/hid in targets)
-			target = SSnetorks.interfaces_by_hardware_id[hid]
+			target = SSnetworks.interfaces_by_hardware_id[hid]
 			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 				target.__network_receive(data)
 

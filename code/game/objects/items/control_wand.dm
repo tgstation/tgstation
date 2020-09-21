@@ -18,7 +18,9 @@
 /obj/item/door_remote/Initialize()
 	. = ..()
 	access_list = get_region_accesses(region_access)
-	AddComponent(/datum/component/ntnet_interface)
+
+/obj/item/door_remote/ComponentInitialize()
+	AddComponent(/datum/component/ntnet_interface, NETWORK_TOOLS_REMOTES)
 
 /obj/item/door_remote/attack_self(mob/user)
 	switch(mode)
@@ -41,7 +43,7 @@
 	// Generate a control packet.
 	var/datum/netdata/data = new
 	data.receiver_id = target_interface.hardware_id
-	data.receiver_network = target_interface.network.network_id
+	data.receiver_network = target_interface.network.network_tree
 	switch(mode)
 		if(WAND_OPEN)
 			data.data["data"] = "open"

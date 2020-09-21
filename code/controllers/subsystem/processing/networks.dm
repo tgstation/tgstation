@@ -10,6 +10,8 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 
 	var/list/interfaces_by_hardware_id = list()
 	var/list/networks = list()
+	// Used with map tags to look up hardware address
+	var/list/network_tag_to_hardware_id = list()
 
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
@@ -20,6 +22,9 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	create_network_from_string(NETWORK_ATMOS_SCUBBERS)
 	create_network_from_string(NETWORK_ATMOS_ALARMS)
 	create_network_from_string(NETWORK_ATMOS_CONTROL)
+	create_network_from_string(NETWORK_TOOLS)
+	create_network_from_string(NETWORK_TOOLS_REMOTES)
+	create_network_from_string(NETWORK_AIRLOCKS)
 	. = ..()
 
 /datum/controller/subsystem/processing/networks/proc/create_network_tree_string(datum/ntnet/net)

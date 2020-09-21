@@ -26,7 +26,7 @@
 	pipe_state = "scrubber"
 
 	var/list/status_cache
-	network_id = NETWORK_SCUBBERS
+	network_id = NETWORK_ATMOS_SCUBBERS
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -90,8 +90,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_status()
 	var/list/f_types
-	var/area/scrub_area = get_area(src)
 	if(!status_cache)
+		var/area/scrub_area = get_area(src)
 		// If we do not have a name, assign one
 		name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
 		f_types = list()
@@ -101,7 +101,8 @@
 		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 		status_cache = list("filter_types" = f_types, "hardware_id" = net.hardware_id, "name" = name, "tag" = id_tag, "device" = "VS")
 		scrub_area.atmos_scrubbers[net.hardware_id] = src
-		net.regestered_scokets["status"] = status_cache
+		net.regester_port("status",status_cache)
+
 
 	f_types = status_cache["filter_types"]
 
@@ -245,7 +246,7 @@
 		name = signal.data["init"]
 		return
 
-	broadcast_status()
+	update_status()
 	if(!("status" in signal.data))
 		update_icon()  //do not update_icon
 

@@ -312,7 +312,7 @@
 			data["vents"] += list(vent.ui_data(user))
 
 		data["scrubbers"] = list()
-		for(var/id_tag in A.atmos_scrubbers)
+		for(var/hid in A.atmos_scrubbers)
 			var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = A.atmos_scrubbers[hid]
 			if(QDELETED(scrubber))
 				continue
@@ -455,7 +455,7 @@
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	var/datum/netdata/signal = new(command)
 	signal.receiver_id = target
-	signal.receiver_network = NETWORK_ATMOS_SCRUBBERS
+	signal.receiver_network = NETWORK_ATMOS_SCUBBERS
 	ntnet_send(signal)
 
 

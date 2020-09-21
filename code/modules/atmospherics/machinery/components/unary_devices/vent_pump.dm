@@ -136,14 +136,15 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/update_status()
-	var/area/vent_area = get_area(src)
 	if(!status_cache)
+		var/area/vent_area = get_area(src)
 		// If we do not have a name, assign one
 		name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
 		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 		status_cache = list("hardware_id" = net.hardware_id, "name" = name, "tag" = id_tag, "device" = "VP")
 		vent_area.atmos_vents[net.hardware_id] = src
-		net.regestered_scokets["status"] = status_cache
+		net.regester_port("status", status_cache)
+
 
 	status_cache["timestamp"] = world.time
 	status_cache["power"] = on

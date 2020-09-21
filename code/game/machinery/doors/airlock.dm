@@ -99,6 +99,8 @@
 
 	var/static/list/airlock_overlays = list()
 
+	network_id = NETWORK_AIRLOCKS
+
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
 	wires = set_wires()
@@ -155,7 +157,10 @@
 
 /obj/machinery/door/airlock/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
+	if(network_id)
+		var/area/A = get_area(src)
+		network_id = list(network_id,A.name).Join(".")
+		AddComponent(/datum/component/ntnet_interface, network_id)
 
 /obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(id_tag)
@@ -208,8 +213,8 @@
 		return
 
 	// Handle received packet.
-	var/command = lowertext(data.data["data"])
-	var/command_value = lowertext(data.data["data_secondary"])
+	var/command = data.data["data"]
+	var/command_value = data.data["data_secondary"]
 	switch(command)
 		if("open")
 			if(command_value == "on" && !density)
