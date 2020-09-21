@@ -676,6 +676,8 @@
 #include "code\datums\whims\cat_whims.dm"
 #include "code\datums\whims\catnip_whim.dm"
 #include "code\datums\whims\dog_whims.dm"
+#include "code\datums\whims\general_animal_whims.dm"
+#include "code\datums\whims\ian_whims.dm"
 #include "code\datums\wires\_wires.dm"
 #include "code\datums\wires\airalarm.dm"
 #include "code\datums\wires\airlock.dm"

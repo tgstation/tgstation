@@ -32,11 +32,7 @@
 
 	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
 	//Feeding, chasing food, FOOOOODDDD
-	step_to(owner,concerned_target,1)
-	sleep(3)
-	step_to(owner,concerned_target,1)
-	sleep(3)
-	step_to(owner,concerned_target,1)
+	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
 
 	if(!concerned_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 		abandon()
@@ -123,13 +119,7 @@
 		abandon()
 		return
 
-	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
-	//Feeding, chasing food, FOOOOODDDD
-	step_to(owner,concerned_target,1)
-	sleep(3)
-	step_to(owner,concerned_target,1)
-	sleep(3)
-	step_to(owner,concerned_target,1)
+	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
 
 	if(!concerned_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 		abandon()

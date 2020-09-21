@@ -44,6 +44,7 @@
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch = 100)
 
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
+	whim_datums = list(/datum/whim/make_babies/gutlunch)
 	var/obj/item/udder/gutlunch/udder = null
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
@@ -112,17 +113,6 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen
 	name = "guthen"
 	gender = FEMALE
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
-	..()
-	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
-		make_babies()
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
-	. = ..()
-	if(.)
-		udder.reagents.clear_reagents()
-		regenerate_icons()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch
 	name = "grublunch"

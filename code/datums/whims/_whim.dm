@@ -36,9 +36,17 @@
 	var/allow_resting = FALSE
 
 /// Note that
+/datum/whim/Initialize(mob/living/simple_animal/owner)
+	src.owner = owner
+	LAZYADD(owner.live_whims, src)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/owner_examined)
+
+/// Note that
 /datum/whim/Destroy(force, ...)
 	abandon()
-	LAZYREMOVE(owner.live_whims, src)
+	if(owner)
+		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+		LAZYREMOVE(owner.live_whims, src)
 	return ..()
 
 /datum/whim/proc/activate(atom/new_target)
@@ -79,4 +87,6 @@
 		return FALSE
 	return
 
-
+/datum/whim/proc/owner_examined(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	return

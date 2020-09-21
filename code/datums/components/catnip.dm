@@ -49,10 +49,8 @@
 	if(!istype(new_cat) || (new_cat in enticed_cats))
 		return
 
-	var/datum/whim/catnip/new_catnip_whim = new
-	new_catnip_whim.owner = new_cat
+	var/datum/whim/catnip/new_catnip_whim = new(new_cat)
 	new_catnip_whim.referring_source = parent
-	LAZYADD(new_cat.live_whims, new_catnip_whim)
 
 	LAZYADD(enticed_cats, new_cat)
 	RegisterSignal(new_cat, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/lose_cat)

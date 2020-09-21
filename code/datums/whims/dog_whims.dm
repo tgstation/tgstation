@@ -64,6 +64,9 @@
 		abandon()
 		return
 
+	if(!owner.Adjacent(target))
+		return
+
 	target.Knockdown(3 SECONDS)
 	carried_bball = bball
 	carried_bball.forceMove(get_turf(owner))
@@ -184,3 +187,64 @@
 	else if(ishuman(concerned_target.loc))
 		if(prob(20))
 			owner.manual_emote("stares at [concerned_target.loc]'s [concerned_target] with a sad puppy-face")
+
+
+
+
+
+
+/datum/whim/gnaw_bone
+	name = "Gnaw bone"
+	priority = 1
+	scan_radius = 4
+	scan_every = 5
+	abandon_rescan_length = 30 SECONDS
+	var/obj/item/bone
+
+/// See if there's any snacks in the vicinity, if so, set to work after them
+/datum/whim/gnaw_bone/inner_can_start()
+	for(var/i in oview(owner, scan_radius))
+		//testing("[owner] searching whim [name], atom [i]")
+		if(isbodypart(i))
+			return i
+
+/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
+/datum/whim/gnaw_bone/abandon()
+	if(bone && owner && bone.loc == owner)
+		owner.visible_message("<b>[owner]</b> drops [bone] from [owner.p_their()] mouth.")
+		bone.forceMove(owner.drop_location())
+	bone = null
+	return ..()
+
+/// A bunch of crappy old code neatened up a bit, this handles the actual moving and eating of snacks
+/datum/whim/gnaw_bone/tick()
+	. = ..()
+	if(state == WHIM_INACTIVE)
+		return
+
+	if(!concerned_target || !isturf(concerned_target.loc) || get_dist(owner, concerned_target.loc) > scan_radius * 2)
+		abandon()
+		return
+
+	if(bone && get_dist(owner, concerned_target) < 3) // found a nice place to gnaw (once we have the bone, the concerned_target refers to where we lay down)
+		if(prob(15))
+			owner.visible_message("<b>[owner]</b> gnaws on [bone].")
+		return
+
+	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
+
+	if(!concerned_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+		abandon()
+		return
+
+	owner.face_atom(concerned_target)
+	if(!owner.Adjacent(concerned_target) || !isturf(concerned_target.loc)) //can't reach food through windows.
+		return
+
+	if(!bone && isbodypart(concerned_target))
+		// make this its own proc to pick up the mouse and select a recepient
+		owner.visible_message("<b>[owner]</b> picks up [concerned_target] in [owner.p_their()] mouth, then looks around for a place to rest.")
+		bone = concerned_target
+		bone.forceMove(owner)
+		var/list/turf/spots = view(owner, 5)
+		concerned_target = pick(spots)

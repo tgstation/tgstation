@@ -30,10 +30,6 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	var/turns_since_scan = 0
-	var/mob/living/simple_animal/mouse/movement_target
-	///Limits how often cats can spam chasing mice.
-	var/emote_cooldown = 0
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE
@@ -42,7 +38,7 @@
 	pet_bonus_emote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
-	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift)
+	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift, /datum/whim/make_babies)
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -143,12 +139,13 @@
 		memory_saved = TRUE
 	..()
 
+/*
 /mob/living/simple_animal/pet/cat/runtime/make_babies()
 	var/mob/baby = ..()
 	if(baby)
 		children += baby
 		return baby
-
+*/
 /mob/living/simple_animal/pet/cat/runtime/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)

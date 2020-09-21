@@ -1,10 +1,3 @@
-/// If we're currently preoccupied snacking
-#define DOG_MODE_SNACK	1
-/// If we're currently preoccupied dunking on people
-#define DOG_MODE_AIRBUD	2
-
-//Dogs.
-
 /mob/living/simple_animal/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	response_help_continuous = "pets"
@@ -25,26 +18,13 @@
 	pet_bonus = TRUE
 	pet_bonus_emote = "woofs happily!"
 	footstep_type = FOOTSTEP_MOB_CLAW
-
-	/// We only actually scan for balls and snacks every 5 ticks if we're not otherwise engaged
-	var/turns_since_scan = 0
-	/// Whatever object is holding our attention and that we're moving towards, be it snack or ball
-	var/obj/movement_target
-
-	/// Either null, DOG_MODE_SNACK, or DOG_MODE_AIRBUD. If it's either of the latter, we're currently on the hunt for a ball or snack
-	var/target_mode
-
-	whim_datums = list(/datum/whim/airbud_bball, /datum/whim/snacks)
-
-	//var/list/live_whims
-
-	//var/datum/whim/current_whim
-
+	whim_datums = list(/datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
 	add_cell_sample()
 
+/*
 /mob/living/simple_animal/pet/dog/Life()
 	..()
 	if(stat || resting || buckled)
@@ -53,11 +33,6 @@
 	if(current_whim)
 		current_whim.tick()
 		return
-
-	turns_since_scan++
-	if(turns_since_scan < 3)
-		return
-	turns_since_scan = 0
 
 	for(var/i in live_whims)
 		var/datum/whim/iter_whim = i
@@ -79,7 +54,7 @@
 		manual_emote(pick("dances around.","chases its tail!"))
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 	*/
-
+*/
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
@@ -419,6 +394,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	whim_datums = list(/datum/whim/defend_office, /datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
@@ -652,11 +628,3 @@
 		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
-
-/mob/living/simple_animal/pet/dog/corgi/lisa/Life()
-	..()
-
-	make_babies()
-
-#undef DOG_MODE_SNACK
-#undef DOG_MODE_AIRBUD
