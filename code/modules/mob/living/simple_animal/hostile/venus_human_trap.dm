@@ -19,8 +19,9 @@
 	smoothing_flags = NONE
 	/// The amount of time it takes to create a venus human trap.
 	var/growth_time = 120 SECONDS
+	/// Used by countdown to check time, this is when the timer will complete and the venus trap will spawn.
 	var/finish_time
-
+	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
 
 /obj/structure/alien/resin/flower_bud_enemy/Initialize()
