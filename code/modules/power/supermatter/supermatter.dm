@@ -683,10 +683,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(!isspaceturf(t))
 				continue
 			var/turf/turf_to_check = t
-			var/is_open =  TRUE
-			if(!LAZYLEN(turf_to_check.atmos_adjacent_turfs))
-				is_open = FALSE
-			if(is_open)
+			if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
 				var/integrity = get_integrity()
 				if(integrity < 10)
 					damage += max((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0)
@@ -696,7 +693,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					damage += max((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0)
 				else if(integrity < 75)
 					damage += max((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0)
-			break
+				break
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
