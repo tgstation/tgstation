@@ -1,9 +1,3 @@
-/client
-	/// A rolling buffer of any keys held currently
-	var/list/keys_held = list()
-	///used to keep track of the current rolling buffer position
-	var/current_key_address = 0
-
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
 /datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
@@ -27,10 +21,9 @@
 /client/proc/set_macros()
 	set waitfor = FALSE
 
-	//Reset and populate the rolling buffer
-	keys_held.Cut()
-	for(var/i in 1 to HELD_KEY_BUFFER_LENGTH)
-		keys_held += null
+	//Reset the buffer
+	for(var/key in keys_held)
+		keyUp(key)
 
 	erase_all_macros()
 

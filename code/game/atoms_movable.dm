@@ -1234,19 +1234,10 @@
 
 /* End language procs */
 
-
-/atom/movable/proc/ConveyorMove(movedir)
-	set waitfor = FALSE
-	if(!anchored && has_gravity())
-		var/old_dir = dir
-		walk_for(src, movedir, 0, 7, until=1 SECONDS)
-		dir = old_dir
-		stoplag()
-
 /atom/movable/drop_location()
 	return list(get_turf(src), step_x, step_y)
 
-///Returns an atom's power cell, if it has one. Overload for individual items.
+//Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
 

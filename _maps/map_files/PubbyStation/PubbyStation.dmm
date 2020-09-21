@@ -442,6 +442,7 @@
 /area/maintenance/department/science)
 "abg" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/quartermaster,
 /turf/open/floor/wood,
 /area/quartermaster/qm)
 "abh" = (
@@ -16898,7 +16899,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -18574,6 +18575,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aXw" = (
@@ -19048,7 +19050,7 @@
 "aYw" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -22147,12 +22149,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgS" = (
@@ -47486,8 +47490,7 @@
 "dyL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = null;
-	req_one_access = "12;50"
+	req_access_txt = "12"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -47915,6 +47918,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "evB" = (
@@ -49808,6 +49812,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
+"hNd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "hOx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -50847,6 +50861,10 @@
 	},
 /turf/closed/wall,
 /area/maintenance/department/cargo)
+"jIM" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "jJn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -51327,7 +51345,7 @@
 "kBu" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -52915,6 +52933,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"nxG" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "nxT" = (
 /obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel,
@@ -53269,8 +53291,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_access_txt = null;
-	req_one_access = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -54344,7 +54365,7 @@
 "pIa" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54545,6 +54566,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"pXH" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "pXT" = (
 /obj/item/kirbyplants,
 /obj/machinery/power/apc{
@@ -55048,8 +55073,7 @@
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining";
-	req_access_txt = null;
-	req_one_access = "41; 48"
+	req_access_txt = "48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -57710,8 +57734,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = null;
-	req_one_access = "12;50"
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -57810,7 +57833,7 @@
 "vQz" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -58865,7 +58888,7 @@
 "xud" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -97217,7 +97240,7 @@ aVv
 pvZ
 dVK
 cdV
-aZn
+hNd
 seX
 nBt
 pvZ
@@ -100300,7 +100323,7 @@ aSk
 aVB
 aWB
 cCB
-cCB
+nxG
 baB
 baF
 bbK
@@ -100565,7 +100588,7 @@ bcG
 bdM
 beP
 bfH
-bfH
+pXH
 bhv
 bbI
 aEj
@@ -102348,7 +102371,7 @@ aLl
 cCY
 aTv
 cCY
-aTv
+jIM
 dqY
 ueu
 bcV

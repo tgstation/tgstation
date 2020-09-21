@@ -10,14 +10,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/conveyors
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
 	var/backwards		// hopefully self-explanatory
 	var/movedir			// the actual direction to move stuff in
-
-	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
 	var/conveying = FALSE
@@ -56,19 +54,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		setDir(newdir)
 	if(newid)
 		id = newid
-	STOP_PROCESSING(SSfastprocess, src)
-	for(var/i in loc.contents)
-		if(i == src)
-			continue
-		RegisterMover(i)
 	update_move_direction()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
-	STOP_PROCESSING(SSconveyors, src)
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
-	affecting = null
-	. = ..()
+	return ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
 	if (var_name == NAMEOF(src, id))
@@ -78,15 +69,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		LAZYADD(GLOB.conveyors_by_id[id], src)
 	else
 		return ..()
-
-/obj/machinery/conveyor/Moved(atom/OldLoc, Dir)
-	. = ..()
-	for(var/i in affecting)
-		UnregisterMover(i)
-	for(var/i in loc.contents)
-		if(i == src)
-			continue
-		RegisterMover(i)
 
 /obj/machinery/conveyor/setDir(newdir)
 	. = ..()
@@ -141,49 +123,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return FALSE
 	return TRUE
 
-/**
-  * Adds movables that cross over the conveyor belt to affecting list
-  *
-  * The conveyor starts processing when there are people in the affecting list
-  * Arguments:
-  * * mover - the movable that crossed us
-  */
-/obj/machinery/conveyor/proc/RegisterMover(atom/movable/mover)
-	if(istype(mover, /atom/movable/collider/slider)) // sliders shouldn't be moved
-		return
-	RegisterSignal(mover, COMSIG_PARENT_QDELETING, .proc/UnregisterMover)
-	if(!affecting)
-		affecting = list()
-	if(!mover.anchored && mover.has_gravity())
-		affecting += mover
-	if(LAZYLEN(affecting))
-		START_PROCESSING(SSconveyors, src)
-
-/**
-  * Removes movables that leave the conveyor belt from the affecting list
-  *
-  * The conveyor stops processing when there are no more movables on it
-  * Arguments:
-  * * mover - the movable that left us
-  */
-/obj/machinery/conveyor/proc/UnregisterMover(atom/movable/mover)
-	UnregisterSignal(mover, COMSIG_PARENT_QDELETING)
-	if(!affecting) // Some stuff like decal spawners get removed before init has happened
-		return
-	walk(mover, 0)
-	affecting -= mover
-	if(!length(affecting))
-		affecting = null
-		STOP_PROCESSING(SSconveyors, src)
-
-/obj/machinery/conveyor/Crossed(atom/movable/AM, oldloc)
-	. = ..()
-	RegisterMover(AM)
-
-/obj/machinery/conveyor/Uncrossed(atom/movable/AM)
-	. = ..()
-	UnregisterMover(AM)
-
 // machine process
 // move items to the target location
 /obj/machinery/conveyor/process()
@@ -197,24 +136,36 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use_power(6)
 
 	//get the first 30 items in contents
-	affecting = list()
-	var/i = 0
-	var/list/items = loc.contents - src
-	for(var/item in items)
-		i++ // we're sure it's a real target to move at this point
-		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
-			break
-		affecting.Add(item)
-
+	var/turf/locturf = loc
+	var/list/items = obounds() - locturf.lighting_object
+	if(!LAZYLEN(items))//Dont do anything at all if theres nothing there but the conveyor
+		return
+	var/list/affecting
+	if(length(items) > MAX_CONVEYOR_ITEMS_MOVE)
+		affecting = items.Copy(1, MAX_CONVEYOR_ITEMS_MOVE + 1)//Lists start at 1 lol
+	else
+		affecting = items
 	conveying = TRUE
-	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)//Movement effect
 
 /obj/machinery/conveyor/proc/convey(list/affecting)
-	for(var/atom/movable/A in affecting)
-		if(!QDELETED(A) && (A.loc == loc))
-			A.ConveyorMove(movedir)
-			//Give this a chance to yield if the server is busy
-			stoplag()
+	for(var/am in affecting)
+		if(!ismovable(am))	//This is like a third faster than for(var/atom/movable in affecting)
+			continue
+		var/atom/movable/movable_thing = am
+		//Give this a chance to yield if the server is busy
+		stoplag()
+		if(QDELETED(movable_thing) || (movable_thing.loc != loc))
+			continue
+		if(iseffect(movable_thing) || isdead(movable_thing))
+			continue
+		if(isliving(movable_thing))
+			var/mob/living/zoommob = movable_thing
+			if((zoommob.movement_type & FLYING) && !zoommob.stat)
+				continue
+		if(!movable_thing.anchored && movable_thing.has_gravity())
+			movable_thing.add_velocity(movedir, 8)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
@@ -252,7 +203,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(.)
 		return
-	user.Move_Pulled(src, user.client?.mouseParams)
+	user.Move_Pulled(src)
 
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
