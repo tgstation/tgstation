@@ -19,7 +19,7 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
 		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
-/obj/structure/strength_tester
+/obj/structure/betaversion_strength_tester // wyci
 	name = "Strongman Game"
 	desc = "An attraction commonly used in fairs for testing one's strength. All you have to do is pick up the nearby mallet then strike it with all of your might! Or you could just stomp down on it. Not like anyone is looking..."
 	icon = 'icons/mob/32x64.dmi'
@@ -28,7 +28,7 @@
 	layer = WALL_OBJ_LAYER
 	var/list/hit_sounds = list('sound/effects/bang.ogg', 'sound/weapons/resonator_blast.ogg', 'sound/mecha/mechstep.ogg') // only someone too afraid of sound copyright would think these sounds make any damn sense...
 
-/obj/structure/strength_tester/attack_hand(mob/user as mob)
+/obj/structure/betaversion_strength_tester/attack_hand(mob/user as mob)
 	. = ..()
 	if(.)
 		return
