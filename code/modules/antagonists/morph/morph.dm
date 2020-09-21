@@ -95,9 +95,6 @@
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
-	if(morphed)
-		to_chat(src, "<span class='warning'>You must restore to your original form first!</span>")
-		return
 	morphed = TRUE
 	form = target
 
