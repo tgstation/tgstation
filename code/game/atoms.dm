@@ -124,6 +124,8 @@
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
+	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
+	var/smoothing_junction = NONE
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable

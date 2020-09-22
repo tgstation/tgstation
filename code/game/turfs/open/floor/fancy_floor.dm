@@ -206,11 +206,11 @@
 	if(!.)
 		return
 	if(!broken && !burnt)
-		if(smoothing_flags)
+		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB))
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smoothing_flags)
+		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/black

@@ -1,15 +1,21 @@
 /* smoothing_flags */
-#define SMOOTH_CORNERS	(1<<0) //Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
-#define SMOOTH_BLOB		(1<<1) //Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
-#define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smoothing_flags' var
-#define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
-#define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
-#define SMOOTH_OBJ		(1<<5)	//smooths with objects, and will thus need to scan turfs for contents.
+/// Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
+#define SMOOTH_CORNERS	(1<<0)
+/// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
+#define SMOOTH_BLOB		(1<<1)
+/// Atom has diagonal corners, with underlays under them.
+#define SMOOTH_DIAGONAL	(1<<2)
+/// Atom will smooth with the borders of the map.
+#define SMOOTH_BORDER	(1<<3)
+/// Atom is currently queued to smooth.
+#define SMOOTH_QUEUED	(1<<4)
+/// Smooths with objects, and will thus need to scan turfs for contents.
+#define SMOOTH_OBJ		(1<<5)
 
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB)) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
 
@@ -75,6 +81,7 @@
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11)			///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13)		///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
 #define SMOOTH_GROUP_SURVIVAL_TIANIUM_POD S_OBJ(14)		///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod
+#define SMOOTH_GROUP_HIERO_WALL S_OBJ(15)				///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(20)				///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
