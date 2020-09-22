@@ -51,6 +51,10 @@
 	if(istype(inserted_item, /obj/item/storage) || IS_EDIBLE(inserted_item))
 		return
 
+	//Harm intent will bypass inserting for injecting food with syringes and such
+	if(user.a_intent == INTENT_HARM)
+		return
+
 	if(inserted_item.w_class > minimum_weight_class)
 		to_chat(user, "<span class='warning'>\The [inserted_item.name] won't fit in \the [parent].</span>")
 		return
