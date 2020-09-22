@@ -32,6 +32,7 @@
 /datum/component/food_storage/Destroy(force, silent)
 	if(stored_item)
 		stored_item.forceMove(stored_item.drop_location())
+		stored_item.dropped()
 		stored_item = null
 	. = ..()
 
@@ -56,6 +57,10 @@
 
 	if(!QDELETED(stored_item))
 		to_chat(user, "<span class='warning'>There's something in \the [parent].</span>")
+		return
+
+	if(HAS_TRAIT(inserted_item, TRAIT_NODROP))
+		to_chat(user, "<span class='warning'>\the [inserted_item] is stuck to your hand, you can't put into \the [parent]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user.name] begins inserting [inserted_item.name] into \the [parent].</span>", \
