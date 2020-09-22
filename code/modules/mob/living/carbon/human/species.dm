@@ -246,11 +246,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
 
-/** regenerate_organs
-  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
+/**
+  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
   *
-  * takes all organ slots, removes organs a species should not have, adds organs a species should have.
+  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
   * can use replace_current to refresh all organs, creating an entirely new set.
+  *
   * Arguments:
   * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
   * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
