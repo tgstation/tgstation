@@ -182,6 +182,7 @@
 	name = "red burger"
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
+	color = "#ff0000"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/red = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -189,6 +190,7 @@
 	name = "orange burger"
 	desc = "Contains 0% juice."
 	icon_state = "cburger"
+	color = "#FF9300"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/orange = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -196,6 +198,7 @@
 	name = "yellow burger"
 	desc = "Bright to the last bite."
 	icon_state = "cburger"
+	color = "#ffff00"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/yellow = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -203,6 +206,7 @@
 	name = "green burger"
 	desc = "It's not tainted meat, it's painted meat!"
 	icon_state = "cburger"
+	color = "#00c000"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/green = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -210,6 +214,7 @@
 	name = "blue burger"
 	desc = "Is this blue rare?"
 	icon_state = "cburger"
+	color = "#0000ff"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/blue = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -217,6 +222,7 @@
 	name = "purple burger"
 	desc = "Regal and low class at the same time."
 	icon_state = "cburger"
+	color = "#800080"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/purple = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -224,6 +230,7 @@
 	name = "black burger"
 	desc = "This is overcooked."
 	icon_state = "cburger"
+	color = "#1C1C1C"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/black = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -231,6 +238,7 @@
 	name = "white burger"
 	desc = "Delicous Titanium!"
 	icon_state = "cburger"
+	color = "#FFFFFF"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/white = 10)
 	foodtypes = GRAIN | MEAT
 
