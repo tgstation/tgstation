@@ -159,7 +159,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat
 	name = "synthmeat"
 	icon_state = "meat_old"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/synth
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain/synth
 	desc = "A synthetic slab of meat."
 	foodtype = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
 
@@ -427,7 +427,7 @@
 	icon_state = "meatproductsteak"
 	tastes = list("enhanced char" = 2, "suspicious tenderness" = 2, "natural & artificial dyes" = 2, "emulsifying agents" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/steak/synth
+/obj/item/reagent_containers/food/snacks/meat/steak/plain/synth
 	name = "synthsteak"
 	desc = "A synthetic meat steak. It doesn't look quite right, now does it?"
 	icon_state = "meatsteak_old"

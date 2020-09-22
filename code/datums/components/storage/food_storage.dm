@@ -58,6 +58,9 @@
 		to_chat(user, "<span class='warning'>There's something in \the [parent].</span>")
 		return
 
+	if(istype(inserted_item, /obj/item/pen) && user.a_intent == INTENT_HELP || iscyborg(user)) //Allows renaming and prevents borgs from breaking their modules by hiding them inside foods
+		return
+
 	user.visible_message("<span class='notice'>[user.name] begins inserting [inserted_item.name] into \the [parent].</span>", \
 					"<span class='notice'>You start to insert the [inserted_item.name] into \the [parent].</span>")
 
