@@ -355,6 +355,7 @@
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = ITEM_SLOT_BELT
