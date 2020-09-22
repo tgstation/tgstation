@@ -1373,11 +1373,17 @@
 
 /datum/reagent/healium/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	L.PermaSleeping()
 
 /datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_KNOCKEDOUT, type)
+	L.SetSleeping(10)
 	return ..()
+
+/datum/reagent/healium/on_mob_life(mob/living/L)
+	. = ..()
+	L.adjustFireLoss(-2, FALSE)
+	L.adjustToxLoss(-5, FALSE)
+	L.adjustBruteLoss(-2, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"

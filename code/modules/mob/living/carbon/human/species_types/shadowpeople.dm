@@ -50,6 +50,7 @@
 	to_chat(C, "[info_text]")
 
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
+	C.set_safe_hunger_level()
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc

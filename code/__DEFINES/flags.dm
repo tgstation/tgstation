@@ -46,6 +46,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALLOW_DARK_PAINTS_1 (1 << 19)
 /// Should this object be unpaintable?
 #define UNPAINTABLE_1 (1 << 20)
+/// Is the thing currently spinning?
+#define IS_SPINNING_1 (1 << 21)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
