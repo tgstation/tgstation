@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - tweak: "Added request console to meta bar"
