@@ -1,5 +1,0 @@
-author: "hannahscript"
-delete-after: True
-changes: 
-  - rscadd: "Botanists can now make rolling paper packs at the bio generator to support dank activities"
-  - tweak: "Bio generator interface is now 420 pixels high to prevent a scrollbar from appearing"

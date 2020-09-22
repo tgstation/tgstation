@@ -6,7 +6,7 @@
 /obj/item/circular_saw,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/bmpship/aft)
@@ -46,7 +46,7 @@
 "am" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "an" = (
 /obj/structure/window/reinforced,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -1897,12 +1897,6 @@
 "hE" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/bmpship/fore)
-"vh" = (
-/turf/template_noop,
-/area/space/nearstation)
-"wh" = (
-/turf/template_noop,
-/area/awaymission/bmpship)
 "xA" = (
 /turf/closed/mineral/random/no_caves,
 /area/awaymission/bmpship)
@@ -2261,7 +2255,7 @@ aa
 aa
 aa
 aa
-wh
+aa
 fS
 fS
 xA
@@ -3406,7 +3400,7 @@ aa
 aa
 am
 aa
-vh
+aa
 EQ
 gt
 at
