@@ -13351,11 +13351,8 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aFA" = (
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "chapelgun";
-	name = "Mass Driver Controller";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -26428,11 +26425,8 @@
 	req_access_txt = "12"
 	},
 /obj/structure/chair/stool,
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "trash";
-	name = "Mass Driver Controller";
 	pixel_x = -24;
 	pixel_y = -6
 	},
@@ -36570,11 +36564,8 @@
 	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "toxinsdriver";
-	name = "Mass Driver Controller";
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
@@ -55679,11 +55670,8 @@
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
 	},
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "chapelgun";
-	name = "Mass Driver Controller";
 	pixel_x = 24
 	},
 /turf/open/floor/plating/icemoon,

@@ -4073,11 +4073,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "trash";
-	name = "Mass Driver Controller";
 	pixel_x = -24
 	},
 /turf/open/floor/plating,
@@ -53333,11 +53330,8 @@
 "cBK" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "toxinsdriver";
-	name = "Mass Driver Controller";
 	pixel_x = 0;
 	pixel_y = -24
 	},
@@ -63336,11 +63330,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/computer/pod/old{
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "chapelgun";
-	name = "Mass Driver Controller";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
