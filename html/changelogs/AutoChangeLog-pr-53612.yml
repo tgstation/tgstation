@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - rscdel: "Removed devil and affiliated shitcode"
