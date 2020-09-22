@@ -1,6 +1,6 @@
 /obj/machinery/power/heavy_emitter
 	name = "Heavy Emitter Base"
-	desc = "This should never fucking exist!"
+	desc = "Message an admin if you see this!"
 	icon = 'icons/obj/heavy_emitter.dmi'
 	icon_state = "centre_off"
 	anchored = FALSE
