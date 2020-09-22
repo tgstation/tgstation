@@ -38,7 +38,7 @@
 
 /** Begins the process of inserted an item.
   *
-  * Clicking on the food storage with an item on disarm intent will begin a do_after, which if successful inserts the item.
+  * Clicking on the food storage with an item will begin a do_after, which if successful inserts the item.
   *
   * Arguments
   *	inserted_item - the item being placed into the food
