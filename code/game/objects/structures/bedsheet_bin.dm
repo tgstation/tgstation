@@ -249,6 +249,7 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+	slot_flags = null
 
 /obj/item/bedsheet/random/Initialize()
 	..()
@@ -260,6 +261,7 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	name = "random dorms bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+	slot_flags = null
 
 /obj/item/bedsheet/dorms/Initialize()
 	..()

@@ -35,6 +35,7 @@
 			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
 			var/datum/action/item_action/organ_action/dullahan/D = locate() in E?.actions
 			D?.Trigger()
+	H.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	H.flags_1 |= HEAR_1

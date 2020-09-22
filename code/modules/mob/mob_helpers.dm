@@ -256,7 +256,7 @@
   */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!possible_a_intents || !possible_a_intents.len)
 		return

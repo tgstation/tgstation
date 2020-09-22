@@ -911,6 +911,6 @@
 	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
 				/obj/item/grenade/gas_crystal/healium_crystal = 1,
 				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
-				/obj/item/grenade/gas_crystal/cyrion_b_crystal = 1
+				/obj/item/grenade/gas_crystal/zauker_crystal = 1
 				)
 	category = CAT_MISC
