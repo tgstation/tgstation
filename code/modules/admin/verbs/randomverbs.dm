@@ -815,8 +815,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSshuttle.lastMode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.mode = SSshuttle.lastMode
-	if(SSshuttle.lastCallTime < 100 && SSshuttle.lastMode != SHUTTLE_IDLE)
-		SSshuttle.lastCallTime = 100 //Make sure no insta departures.
+	if(SSshuttle.lastCallTime < 10 SECONDS && SSshuttle.lastMode != SHUTTLE_IDLE)
+		SSshuttle.lastCallTime = 10 SECONDS //Make sure no insta departures.
 	SSshuttle.emergency.setTimer(SSshuttle.lastCallTime)
 	priority_announce("Warning: Emergency Shuttle uplink reestablished, shuttle enabled.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
