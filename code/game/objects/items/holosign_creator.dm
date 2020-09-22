@@ -12,52 +12,138 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
-	var/list/signs = list()
+	var/list/signs
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
+	var/cell_type = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
+
+	var/open = FALSE
+
+	var/base_consumption = 10
+
+	var/in_holder = FALSE
+
+/obj/item/holosign_creator/get_cell()
+	return cell
+
+/obj/item/holosign_creator/Initialize()
 	. = ..()
-	if(flag)
-		if(!check_allowed_items(target, 1))
-			return
-		var/turf/T = get_turf(target)
-		var/obj/structure/holosign/H = locate(holosign_type) in T
-		if(H)
-			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
+	if(!cell && cell_type)
+		cell = new cell_type
+	START_PROCESSING(SSobj, src)
+
+/obj/item/holosign_creator/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/holosign_creator/examine(mob/user)
+	. = ..()
+	. += "[src] is emitting a total of [LAZYLEN(signs)] signs out of [max_signs]"
+	. += "The hatch is [open ? "open" : "closed"]."
+	if(cell)
+		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+	else
+		. += "There is no power cell installed."
+
+/obj/item/holosign_creator/update_overlays()
+	. = ..()
+	if(open)
+		. += "signmaker_open"
+
+/obj/item/holosign_creator/process()
+	if(open || !cell || in_holder)
+		return
+	var/cell_consumption = 0
+	if(LAZYLEN(signs))
+		for(var/h in signs)
+			cell_consumption += base_consumption
+	cell.use(cell_consumption)
+	if(cell.charge <= 0)
+		for(var/H in signs)
 			qdel(H)
-		else
-			if(!T.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
-				if(holocreator_busy)
-					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
-					return
-				if(signs.len < max_signs)
-					playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
-					if(creation_time)
-						holocreator_busy = TRUE
-						if(!do_after(user, creation_time, target = target))
-							holocreator_busy = FALSE
-							return
-						holocreator_busy = FALSE
-						if(signs.len >= max_signs)
-							return
-						if(T.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
-							return
-					H = new holosign_type(get_turf(target), src)
-					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
-				else
-					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+
+/obj/item/holosign_creator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stock_parts/cell))
+		if(!open)
+			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
+			return
+		if(cell)
+			to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		cell = I
+		user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(open)
+		to_chat(user, "<span class='warning'>You should close the hatch first!</span>")
+		return
+	if(!cell || cell.charge <= 0)
+		to_chat(user, "<span class='warning'>There is no [cell ? "power" : "cell"] in the [src]!</span>")
+		return
+	if(!proximity_flag)
+		return
+	if(!check_allowed_items(target, 1))
+		return
+	var/turf/target_turf = get_turf(target)
+	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
+	if(target_holosign)
+		to_chat(user, "<span class='notice'>You use [src] to deactivate [target_holosign].</span>")
+		qdel(target_holosign)
+		return
+	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
+		return
+	if(holocreator_busy)
+		to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
+		return
+	if(LAZYLEN(signs) >= max_signs)
+		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+		return
+	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
+	if(creation_time)
+		holocreator_busy = TRUE
+		if(!do_after(user, creation_time, target = target))
+			holocreator_busy = FALSE
+			return
+		holocreator_busy = FALSE
+		if(LAZYLEN(signs) >= max_signs)
+			return
+		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
+			return
+	target_holosign = new holosign_type(get_turf(target), src)
+	to_chat(user, "<span class='notice'>You create \a [target_holosign] with [src].</span>")
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/holosign_creator/attack_self(mob/user)
-	if(signs.len)
+	if(open && cell)
+		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
+		user.put_in_hands(cell)
+		cell = null
+		return
+	if(LAZYLEN(signs))
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+
+/obj/item/holosign_creator/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	open = !open
+	if(LAZYLEN(signs))
+		for(var/H in signs)
+			qdel(H)
+	update_icon()
+	return TRUE
 
 /obj/item/holosign_creator/janibarrier
 	name = "custodial holobarrier projector"
@@ -114,26 +200,101 @@
 			to_chat(user, "<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
-			if(signs.len)
-				for(var/H in signs)
-					qdel(H)
+			for(var/sign in signs)
+				qdel(sign)
 			shock = 0
 			return
-		else if(R.emagged&&!shock)
+		if(R.emagged&&!shock)
 			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
-			if(signs.len)
-				for(var/H in signs)
-					qdel(H)
+			for(var/sign in signs)
+				qdel(sign)
 			shock = 1
 			return
-		else
-			if(signs.len)
-				for(var/H in signs)
-					qdel(H)
-				to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
-	if(signs.len)
-		for(var/H in signs)
-			qdel(H)
+	for(var/sign in signs)
+		qdel(sign)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+
+/obj/machinery/holosign_holder
+	name = "holosign creator holder"
+	desc = "This device is used to hold a holosign creator to power it from the main powernet"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "holosign_holder-empty"
+	anchored = FALSE
+	density = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 40
+
+	var/full = FALSE
+
+	var/obj/item/holosign_creator/holo
+
+/obj/machinery/holosign_holder/Destroy()
+	if(holo)
+		holo = null
+	return ..()
+
+/obj/machinery/holosign_holder/examine(mob/user)
+	. = ..()
+	if(full)
+		. += "[src] is currently holding [holo.name]"
+
+/obj/machinery/holosign_holder/update_icon()
+	icon_state = "holosign_holder-[full ? "full" : "empty"]"
+
+/obj/machinery/holosign_holder/process(delta_time)
+	if(!powered())
+		idle_power_usage = 0
+		if(holo)
+			holo.forceMove(loc)
+			holo = null
+			update_icon()
+
+/obj/machinery/holosign_holder/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/holosign_creator))
+		var/obj/item/holosign_creator/holosign = I
+		if(full)
+			to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
+			return
+		else
+			holo = holosign
+			holosign.in_holder = TRUE
+			idle_power_usage = holosign.max_signs * 10
+			full = TRUE
+	else
+		return ..()
+	if(!user.transferItemToLoc(I, src))
+		return
+	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+	update_icon()
+
+/obj/machinery/holosign_holder/wrench_act(mob/user, obj/item/I)
+	if(..())
+		return TRUE
+	if(full)
+		to_chat(user, "<span class='notice'>Remove [holo] first.</span>")
+		return FALSE
+	anchored = !anchored
+	return TRUE
+
+/obj/machinery/holosign_holder/crowbar_act(mob/user, obj/item/I)
+	if(full)
+		var/obj/item/holosign_creator/stored = locate() in src
+		if(stored && Adjacent(usr))
+			stored.in_holder = FALSE
+			usr.put_in_hands(stored)
+			full = FALSE
+			holo = null
+			update_icon()
+		return TRUE
+	return FALSE
+
+/obj/machinery/holosign_holder/welder_act(mob/user, obj/item/I)
+	if(full)
+		to_chat(user, "<span class='notice'>Remove [holo] first.</span>")
+		return FALSE
+	if(do_after(user, 10, target = user))
+		new/obj/item/stack/sheet/metal(loc, 5)
+		qdel(src)
+

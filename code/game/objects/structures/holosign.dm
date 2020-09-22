@@ -12,7 +12,7 @@
 /obj/structure/holosign/New(loc, source_projector)
 	if(source_projector)
 		projector = source_projector
-		projector.signs += src
+		LAZYADD(projector.signs, src)
 	..()
 
 /obj/structure/holosign/Initialize()
@@ -22,7 +22,7 @@
 
 /obj/structure/holosign/Destroy()
 	if(projector)
-		projector.signs -= src
+		LAZYREMOVE(projector.signs, src)
 		projector = null
 	return ..()
 
