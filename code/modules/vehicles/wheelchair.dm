@@ -158,7 +158,7 @@
 		usr.put_in_hands(B)
 		qdel(src)
 
-/obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchaair on in-hand use
+/obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
