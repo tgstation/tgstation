@@ -123,6 +123,9 @@
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return
 	target_holosign = new holosign_type(get_turf(target), src)
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/borg = user
+		cell = borg.cell
 	to_chat(user, "<span class='notice'>You create \a [target_holosign] with [src].</span>")
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
