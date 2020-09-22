@@ -1,3 +1,48 @@
+
+// This netlink class shares a list to two devices
+// This allows skiping of all the messy connection interfaces
+//
+
+/datum/netlink
+	var/server_id
+	var/server_network
+	var/port
+	var/connections = 0 // total links to this
+	var/last_update
+	var/passkey = null // sends auth data used to check if we can connect or send data to a device
+	var/list/data
+
+/datum/netlink/New(list/data)
+	ASSERT(data != null)
+	src.data = data
+	last_update = world.time
+	..()
+
+// returns if the the data was refreshed
+/datum/netlink/proc/updated()
+	if(data["timestamp"] && data["timestamp"] > last_update)
+		last_update = data["timestamp"]
+		return TRUE
+
+/datum/netlink/Destroy()
+	passkey = null
+	last_update = null
+	return ..()
+
+/datum/netlink/proc/operator[](idx)
+	// is it posable to worry about racing conditions?
+	if(data || QDELETED(src))
+		return data[idx]
+	else
+		throw NETWORK_ERROR_DISCONNECTED
+
+/datum/netlink/proc/operator[]=(idx, V)
+	// is it posable to worry about racing conditions?
+	if(data  || QDELETED(src))
+		data[idx] = V
+	else
+		throw NETWORK_ERROR_DISCONNECTED
+
 /datum/netdata
 	//this requires some thought later on but for now it's fine. (WarlockD) ARRRRG
 	// Packets are kind of shaped like IPX.  IPX had a network, a node (aka id) and a port.
@@ -6,29 +51,36 @@
 	// them, then they should manualy go though SSnetworks and find the device there
 	var/sender_network
 	var/sender_id
-	var/sender_port = "normal_data"
 	var/receiver_network
 	var/receiver_id
-	var/receiver_port = "normal_data"
+	var/port = null
 	var/list/data = list()
-	var/passkey = null // for encryption?  Originaly used for a silly rot13 encryption on the packet
+	var/passkey = null // sends auth data used to check if we can connect or send data to a device
 
+/datum/netdata/proc/operator[](idx)
+	if(data)
+		return data[idx]
+
+/datum/netdata/proc/operator[]=(idx, V)
+	if(data)
+		return data[idx] = V
 
 /datum/netdata/New(list/data = null)
 	src.data = data || list()
-	
+
 /datum/netdata/Destroy()
 	data = null
 	return ..()
+
+
 
 /datum/netdata/proc/clone(deep_copy=FALSE)
 	var/datum/netdata/C = new
 	C.sender_network = sender_network
 	C.sender_id = sender_id
-	C.sender_port = sender_port
 	C.receiver_network = receiver_network
 	C.receiver_id = receiver_id
-	C.receiver_port = receiver_port
+	C.port = port
 	C.passkey = passkey
 	if(deep_copy)
 		C.data = deepCopyList(data)
@@ -44,9 +96,6 @@
 	temp = sender_id
 	sender_id = receiver_id
 	receiver_id = temp
-	temp = sender_port
-	sender_port = receiver_port
-	receiver_port = temp
 	data = new_data
 
 
@@ -72,10 +121,9 @@
 	. = list()
 	.["sender_network"] = sender_network
 	.["sender_id"] = sender_id
-	.["sender_port"] = sender_port
 	.["receiver_network"] = receiver_network
 	.["receiver_id"] = receiver_id
-	.["receiver_port"] = receiver_port
+	.["potr"] = port
 	.["data_list"] = data
 
 /datum/netdata/proc/generate_netlog()

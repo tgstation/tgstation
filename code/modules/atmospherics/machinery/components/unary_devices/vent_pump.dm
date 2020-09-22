@@ -25,13 +25,14 @@
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
 
-	var/list/status_cache
+
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass eithe
 	pipe_state = "uvent"
 
 	network_id = NETWORK_ATMOS_SCUBBERS
+
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -43,8 +44,6 @@
 	if(vent_area)
 		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 		vent_area.atmos_vents.Remove(net.hardware_id)
-
-	status_cache = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -132,31 +131,34 @@
 			air_update_turf()
 	update_parents()
 
-//Radio remote control
-
-
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/update_status()
-	if(!status_cache)
-		var/area/vent_area = get_area(src)
-		// If we do not have a name, assign one
-		name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
-		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-		status_cache = list("hardware_id" = net.hardware_id, "name" = name, "tag" = id_tag, "device" = "VP")
-		vent_area.atmos_vents[net.hardware_id] = src
-		net.regester_port("status", status_cache)
-
-
-	status_cache["timestamp"] = world.time
-	status_cache["power"] = on
-	status_cache["direction"] = pump_direction
-	status_cache["checks"] = pressure_checks
-	status_cache["internal"] = internal_pressure_bound
-	status_cache["external"] = external_pressure_bound
-
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	update_status()
 	..()
+
+//Radio remote control
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/update_status()
+	if(datalink)
+		datalink["power"]		= on
+		datalink["checks"]		= pressure_checks
+		datalink["excheck"]		= pressure_checks&1
+		datalink["incheck"]		= pressure_checks&2
+		datalink["direction"]	= pump_direction
+		datalink["external"]	= external_pressure_bound
+		datalink["internal"]	= internal_pressure_bound
+		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+		datalink["intdefault"]	= (internal_pressure_bound == 0)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/NetworkInitialize()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/vent_area = get_area(src)
+	// If we do not have a name, assign one
+	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
+	datalink = net.regester_port("status",  list("name" = name, "id_tag" = net.hardware_id, "device" = "VP", "long_name"= sanitize(name)))
+	vent_area.atmos_vents[net.hardware_id] = datalink
+	update_status()
+
 
 /obj/machinery/atmospherics/components/unary/vent_pump/ntnet_receive(datum/netdata/signal)
 	if(!is_operational)
@@ -227,18 +229,8 @@
 		update_icon() // do not update_icon
 
 /obj/machinery/atmospherics/components/unary/vent_pump/ui_data(mob/user)
-	. = list()
-	.["id_tag"]		= status_cache["hardware_id"]
-	.["long_name"] 	= sanitize(name)
-	.["power"]		= on
-	.["checks"]		= pressure_checks
-	.["excheck"]		= pressure_checks&1
-	.["incheck"]		= pressure_checks&2
-	.["direction"]	= pump_direction
-	.["external"]	= external_pressure_bound
-	.["internal"]	= internal_pressure_bound
-	.["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
-	.["intdefault"]	= (internal_pressure_bound == 0)
+	update_status()
+	return datalink.data
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
@@ -371,11 +363,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
-	network_id = NETWORK_ATMOS_CONTROL
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
 	name = "toxins mixing output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
-	network_id = NETWORK_ATMOS_CONTROL
+
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
 	piping_layer = 2

@@ -306,17 +306,17 @@
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
 		for(var/hid in A.atmos_vents)
-			var/obj/machinery/atmospherics/components/unary/vent_pump/vent = A.atmos_vents[hid]
+			var/datum/netlink/vent = A.atmos_vents[hid]
 			if(QDELETED(vent))
 				continue
-			data["vents"] += list(vent.ui_data(user))
+			data["vents"] += list(vent.data)
 
 		data["scrubbers"] = list()
 		for(var/hid in A.atmos_scrubbers)
-			var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = A.atmos_scrubbers[hid]
+			var/datum/netlink/scrubber = A.atmos_scrubbers[hid]
 			if(QDELETED(scrubber))
 				continue
-			data["scrubbers"] += list( scrubber.ui_data(user))
+			data["scrubbers"] += list(scrubber.data)
 
 		data["mode"] = mode
 		data["modes"] = list()

@@ -31,17 +31,18 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	var/list/children
 	var/datum/ntnet/parent
 
-/datum/ntnet/New(network_id, datum/ntnet/parent = null)
+/datum/ntnet/New(net_id, datum/ntnet/P = null)
 	src.linked_devices = list()
-	src.network_id = network_id
+	src.network_id = net_id
 	if(parent)
-		src.parent = parent
-		LAZYADDASSOC(src.parent.children, network_id, src)
+		src.parent = P
+		LAZYADDASSOC(src.parent.children, net_id, src)
+		network_tree = src.parent.network_id + "." + net_id
 	else
 		src.parent = null
 		src.children = null
+		network_tree = net_id
 
-	network_tree = SSnetworks.create_network_tree_string(src)
 	SSnetworks.networks[network_tree] = src
 
 
@@ -49,14 +50,14 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 
 /datum/ntnet/Destroy()
 	if(length(linked_devices) > 0)
-		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
+		debug_world_log("Network [network_tree] being deleted with linked devices.  Disconnecting Devices")
 		for(var/hid in linked_devices)
 			var/datum/component/ntnet_interface/device = linked_devices[hid]
 			device.network = null	// we just need to clear the refrence
 		linked_devices = null
 
 	if(length(children))
-		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
+		debug_world_log("Network [network_tree] being deleted with kids.  Killing the children")
 		for(var/child in children)
 			qdel(children[child])
 		children = null
@@ -74,7 +75,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	if(net)
 		return net
 	if(create_if_not_found)
-		return new/datum/ntnet(child_id, network_id)
+		return new/datum/ntnet(child_id, src)
 
 
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
@@ -177,10 +178,11 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
-/datum/ntnet/station/New(network_id = STATION_NETWORK_ROOT)
-	..()
+/datum/ntnet/station/New(netname = STATION_NETWORK_ROOT, datum/ntnet/parent=null)
+	. = ..(netname,  parent)
 	build_software_lists()
 	add_log("NTNet logging system activated.")
+
 
 
 /datum/ntnet/station/syndicate/New(network_id = SYNDICATE_NETWORK_ROOT)

@@ -55,6 +55,7 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "ao" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/machinery/light{
@@ -76,6 +77,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ar" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/structure/reagent_dispensers/beerkeg,
@@ -419,6 +421,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "be" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -487,6 +490,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -522,6 +526,7 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "br" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -532,6 +537,7 @@
 	req_access = null
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/item/storage/box/drinkingglasses,
@@ -548,6 +554,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -596,6 +603,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "bD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
@@ -762,7 +770,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
 "bV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/storage)
@@ -794,7 +804,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ca" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -804,7 +816,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cf" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
@@ -849,6 +863,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -926,7 +941,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
@@ -1176,6 +1193,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -1216,7 +1234,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cY" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/has_grav/deepstorage)
 "cZ" = (
@@ -1319,7 +1339,9 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "du" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dv" = (
@@ -1420,6 +1442,7 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "dy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1658,6 +1681,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1740,6 +1764,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ew" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -1763,6 +1788,7 @@
 "ez" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -1976,6 +2002,7 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2037,6 +2064,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fd" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/effect/turf_decal/sand/plating,
@@ -2058,7 +2086,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "fg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
+},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -2068,6 +2098,7 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "fj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2096,6 +2127,7 @@
 "fn" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/machinery/airalarm/away{
@@ -2218,6 +2250,7 @@
 "fC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
+	network_id = NETWORK_CHARLIE_ATMOS;
 	id_tag = "o2_out_bunker";
 	name = "oxygen out"
 	},
@@ -2282,7 +2315,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fL" = (
 /obj/machinery/air_sensor{
-	id_tag = "o2_sensor_bunker"
+	network_tag = "o2_sensor_bunker"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2308,6 +2341,7 @@
 "fP" = (
 /obj/structure/closet/wardrobe/pjs,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2315,6 +2349,7 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2428,6 +2463,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gd" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8;
 	id = "n2_in_bunker"
 	},
@@ -2490,6 +2526,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -2535,6 +2572,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8;
 	id_tag = "n2_out_bunker";
 	name = "nitrogen out"
@@ -2584,6 +2622,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2592,6 +2631,7 @@
 "gC" = (
 /obj/machinery/computer/atmos_control/tank{
 	dir = 8;
+	network_id = NETWORK_CHARLIE_ATMOS;
 	input_tag = "n2_in_bunker";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out_bunker";
@@ -2602,7 +2642,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gD" = (
 /obj/machinery/air_sensor{
-	id_tag = "n2_sensor_bunker"
+	network_tag = "n2_sensor_bunker"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2666,6 +2706,7 @@
 "gP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
+	network_id = NETWORK_CHARLIE_ATMOS;
 	id = "o2_in_bunker"
 	},
 /turf/open/floor/plating/airless,
@@ -2845,6 +2886,7 @@
 "hn" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,

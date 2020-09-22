@@ -14,28 +14,28 @@ Format:
 endmap
 
 map metastation
-	#default
+	default
 	minplayers 25
 	#voteweight 0.5
 	votable
 endmap
 
-map pubbystation
+#map pubbystation
 	votable
 endmap
 
-map deltastation
+#map deltastation
 	minplayers 50
 	votable
 endmap
 
-map icebox
+#map icebox
 	minplayers 25
 	votable
 endmap
 
-map runtimestation
+#map runtimestation
 endmap
 
-map multiz_debug
+#map multiz_debug
 endmap

@@ -128,10 +128,6 @@ Class Procs:
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
 
-	// nntd networking stuff.  Set a network name and we will auto join the network under that name
-	var/network_id = null
-	// id tag for this device.  Used mainly in mapping so we can look up this hardware id
-	var/network_tag = null
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -150,13 +146,6 @@ Class Procs:
 		occupant_typecache = typecacheof(occupant_typecache)
 
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/ComponentInitialize()
-	. = ..()
-	if(network_id)
-		AddComponent(/datum/component/ntnet_interface, network_id, network_tag)
-
-
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
