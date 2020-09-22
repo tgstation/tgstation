@@ -226,7 +226,7 @@
 "er" = (/turf/closed/indestructible/faketintedglass,/area/space)
 "es" = (/obj/structure/table/wood,/turf/open/floor/carpet/royalblack,/area/space)
 "et" = (/obj/structure/chair/sofa/right,/turf/open/floor/carpet/royalblack,/area/space)
-"eu" = (/obj/structure/chair/sofa/left,/turf/open/floor/carpet/royalblack,/area/space)
+"eu" = (/obj/structure/chair/sofa/left{icon = 'icons/obj/chairs.dmi'; icon_state = "widechair_l"; name = "bench"},/turf/open/floor/carpet/royalblack,/area/space)
 "ev" = (/turf/open/floor/plasteel/stairs/left,/area/space)
 "ew" = (/turf/open/floor/plasteel/stairs/right,/area/space)
 "ex" = (/turf/open/indestructible{color = "#FFFF00"; name = "HAUNTED HOUSE COLOR 4"},/area/space)
@@ -291,6 +291,7 @@
 "mR" = (/obj/structure/chair,/turf/open/floor/plating/asteroid,/area/space)
 "ni" = (/obj/structure/railing/corner/wooden{dir = 8},/turf/open/floor/plating/asteroid,/area/space)
 "nD" = (/obj/structure/fluff/support{pixel_x = 16; pixel_y = -11},/obj/machinery/photocopier,/turf/open/floor/carpet/black,/area/space)
+"nP" = (/obj/structure/chair/sofa/right{icon = 'icons/obj/chairs.dmi'; icon_state = "widechair_r"; name = "bench"},/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
 "oe" = (/obj/structure/table/wood/fancy,/obj/item/clothing/head/chefhat,/obj/item/clothing/head/chefhat,/obj/item/clothing/head/chefhat,/obj/item/clothing/head/chefhat,/turf/open/floor/carpet/orange,/area/space)
 "oh" = (/obj/structure/chair{dir = 4},/turf/open/floor/plating/asteroid,/area/space)
 "oG" = (/turf/open/floor/plasteel/rockvault,/area/space)
@@ -341,7 +342,6 @@
 "CG" = (/turf/open/transparent/glass/reinforced,/area/space)
 "CM" = (/obj/item/storage/bag/tray,/obj/item/reagent_containers/food/snacks/corndog{pixel_x = -4},/obj/item/reagent_containers/food/snacks/corndog,/obj/item/reagent_containers/food/snacks/corndog{pixel_x = 4},/obj/structure/table/wood,/turf/open/floor/wood,/area/space)
 "CQ" = (/turf/closed/indestructible/wood,/area/space)
-"CV" = (/obj/structure/chair{icon_state = "widechair_l"; name = "bench"},/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
 "Da" = (/obj/structure/table/wood/fancy/black,/turf/open/transparent/glass/reinforced,/area/space)
 "Dc" = (/obj/structure/chair,/turf/open/floor/wood,/area/space)
 "Di" = (/obj/structure/table/abductor,/obj/item/clothing/mask/joy{name = "ADD TOOLBOX BACK LATER"},/turf/open/floor/wood,/area/space)
@@ -370,11 +370,11 @@
 "Lx" = (/obj/structure/curtain/cloth{color = "#FFA500"},/turf/open/floor/wood,/area/space)
 "LH" = (/obj/structure/sign/poster/official/ian,/turf/closed/indestructible/oldshuttle{color = "#FFA500"; name = "tent wall"},/area/space)
 "Mn" = (/obj/structure/railing/wooden{dir = 5; icon_state = "fence"},/turf/open/floor/white,/area/space)
-"MB" = (/obj/structure/chair{icon_state = "widechair_r"; name = "bench"},/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
 "MC" = (/obj/structure/weightmachine/stacklifter,/turf/open/floor/plating/asteroid,/area/space)
 "MX" = (/obj/machinery/door/poddoor{id = "thunderdomegen"; name = "General Supply"},/obj/effect/turf_decal/loading_area{dir = 8},/turf/open/indestructible,/area/space)
 "MY" = (/obj/structure/table/abductor,/turf/open/transparent/glass/reinforced,/area/space)
 "Nc" = (/obj/effect/turf_decal/trimline/red/line{dir = 9},/turf/open/floor/plating/asteroid,/area/space)
+"NF" = (/obj/structure/chair/sofa/left{icon = 'icons/obj/chairs.dmi'; icon_state = "widechair_l"; name = "bench"},/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
 "NG" = (/obj/effect/turf_decal/trimline/red/line{dir = 6},/turf/open/floor/plating/asteroid,/area/space)
 "NH" = (/obj/structure/railing/corner/wooden{dir = 4},/turf/open/floor/white{color = "#800080"},/area/space)
 "NL" = (/obj/structure/railing/corner/wooden{dir = 1},/turf/open/floor/white{color = "#FFA500"},/area/space)
@@ -576,7 +576,7 @@ CQCQaaaaaaaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 CQCQaaabaaaaaaaaaraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacDcEcDdIcDcxcxcxcDaaaaulululululaabexkbeiTbexkbeaaaaaaaxaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaraaaaaaaaaaaaCQCQ
 CQCQaaaaaaaaaaaaaqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacDcDcDcDcDcDcDcDcDaaaaulululululaaxkaQaQaQaQaQxkaaaaaaaaaaaaaaaaaaaaaaululululaaaaaxaaaaaaaaaaaaaaaaaCaJaKaLaMaaaaaaaxaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqaaaaabaaaaabCQCQ
 CQCQaaabaaaaaaaaaqCQCQCQCQCQCQCQCQaaaaaaCQCQCQCQCQCQCQCQaaaaaaCQCQCQCQCQCQCQCQaaaaaaCQCQCQCQCQCQCQCQaaaaaaCQCQCQCQCQCQCQCQaaaaaaCQCQCQCQCQCQCQCQaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaabeaQaQaQaQaQbeaaaaaaaaaaaaaaaaaxaaaaululululaaaaaaaaaaaaaaaaaaaaaaaNaNaNaNaNaaaaaaaaaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqaaaaaaaaaaaaCQCQ
-CQCQaaaaaaaaaaaaarCQaFcGbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHCQaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaxkaQaQaQaQaQxkaaaaaaaaaxaaaaaaaaaaaaululululaaaaaaaaaaaxaaaaaaaaaaCVMBaaCVMBaaaaaaaaaaaaaaaxaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaraaaaababaaaaCQCQ
+CQCQaaaaaaaaaaaaarCQaFcGbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHCQaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaxkaQaQaQaQaQxkaaaaaaaaaxaaaaaaaaaaaaululululaaaaaaaaaaaxaaaaaaaaaaNFnPaaNFnPaaaaaaaaaaaaaaaxaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaraaaaababaaaaCQCQ
 CQCQabaaaaaaaaaaaqCQaFbBbBbBcOcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHulaaaaaaulaFbBbBbBbBcHCQaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaabeSHSHSHSHSHbeaaaaaaaaaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaadwaaaaaaaaaaaaaaaaaaaaaaaaaaululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqaaaaaaaaaaabCQCQ
 CQCQaaaaaaaaaaaaaqCQcPcQcQbBcQcRululaaululcPcQbBcQcQcRululaaululcPcQcQbBcQcRululaaululcPcQbBcQcQcRululaaululcPcQcQbBcQcRululaaululcPcQbBcQcQcRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulcmcmulaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulcmcmulaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaulululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqaaaaaaabaaaaCQCQ
 CQCQababaaaaaaaaaraaulululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululululaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaraaaaaaaaaaaaCQCQ
