@@ -125,6 +125,7 @@
 		user.visible_message("<span class='warning'>[user.name] slowly pulls [stored_item.name] out of \the [parent].</span>", \
 							"<span class='warning'>You slowly pull [stored_item.name] out of \the [parent].</span>")
 	else
+		stored_item.dropped()
 		stored_item.visible_message("<span class='warning'>[stored_item.name] falls out of \the [parent].</span>")
 
 	update_stored_item()
