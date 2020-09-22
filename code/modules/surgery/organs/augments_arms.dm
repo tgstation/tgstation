@@ -5,7 +5,7 @@
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-
+	var/obj/hand //A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/list/items_list = list()
 	// Used to store a list of all items inside, for multi-item implants.
 	// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
@@ -54,8 +54,17 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_icon()
 
+/obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
+	hand = owner.hand_bodyparts[side]
+	if(hand)
+		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
+	if(hand)
+		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
 	..()
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
@@ -80,6 +89,7 @@
 		F.set_light(0)
 
 	owner.transferItemToLoc(holder, src, TRUE)
+	UnregisterSignal(holder, COMSIG_ITEM_DROPPED)
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
@@ -88,8 +98,8 @@
 		return
 
 	holder = item
+	RegisterSignal(holder, COMSIG_ITEM_DROPPED, .proc/Retract) //Drop it to put away.
 
-	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.set_custom_materials(null)
@@ -168,6 +178,11 @@
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
+/obj/item/organ/cyberimp/arm/gun/laser/Initialize
+	. = ..()
+	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/organ/cyberimp/arm/gun/laser) in contents
+	laserphasergun.icon = icon //No invisible laser guns kthx
+	laserphasergun.icon_state = icon
 
 /obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
