@@ -17,14 +17,15 @@
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
-
+	///Var to choose which cell to give to each creators
 	var/cell_type = /obj/item/stock_parts/cell/high
+	///Store the type of cell in the item
 	var/obj/item/stock_parts/cell/cell
-
+	///Check if the cell hatch is open
 	var/open = FALSE
-
+	///Base consumption for each barrier made
 	var/base_consumption = 10
-
+	///Check if the holosign creator is inside a holosign holder
 	var/in_holder = FALSE
 
 /obj/item/holosign_creator/get_cell()
@@ -227,10 +228,10 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
-
+	idle_power_usage = 0
+	///Check if the holder has one holosign creator
 	var/full = FALSE
-
+	///Store the informations of the holosign creator
 	var/obj/item/holosign_creator/holo
 
 /obj/machinery/holosign_holder/Destroy()
@@ -241,7 +242,7 @@
 /obj/machinery/holosign_holder/examine(mob/user)
 	. = ..()
 	if(full)
-		. += "[src] is currently holding [holo.name]"
+		. += "[src] is currently holding [holo.name], it can be removed with a prying tool"
 
 /obj/machinery/holosign_holder/update_icon()
 	icon_state = "holosign_holder-[full ? "full" : "empty"]"
