@@ -100,9 +100,6 @@
 /mob/living/silicon/robot/get_cell()
 	return cell
 
-/mob/living/silicon/robot/New(loc, connect_to_ai = TRUE)
-	. = ..()
-
 /mob/living/silicon/robot/Initialize(mapload, connect_to_ai = TRUE)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
