@@ -84,10 +84,6 @@
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='hear'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(0)
-
 	owner.transferItemToLoc(holder, src, TRUE)
 	UnregisterSignal(holder, COMSIG_ITEM_DROPPED)
 	holder = null
@@ -103,10 +99,6 @@
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.set_custom_materials(null)
-
-	if(istype(holder, /obj/item/assembly/flash/armimplant))
-		var/obj/item/assembly/flash/F = holder
-		F.set_light(7)
 
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	var/hand = owner.get_empty_held_index_for_side(side)
@@ -180,9 +172,9 @@
 
 /obj/item/organ/cyberimp/arm/gun/laser/Initialize()
 	. = ..()
-	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/organ/cyberimp/arm/gun/laser) in contents
+	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/gun/energy/laser/mounted) in contents
 	laserphasergun.icon = icon //No invisible laser guns kthx
-	laserphasergun.icon_state = icon
+	laserphasergun.icon_state = icon_state
 
 /obj/item/organ/cyberimp/arm/gun/taser
 	name = "arm-mounted taser implant"
@@ -230,6 +222,15 @@
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
+
+/obj/item/organ/cyberimp/arm/flash/Extend()
+	. = ..()
+	holder.set_light_range(7)
+	holder.set_light_on(TRUE)
+
+/obj/item/organ/cyberimp/arm/flash/Retract()
+	holder.set_light_on(FALSE)
+	..()
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
