@@ -37,6 +37,9 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/holosign_creator/Destroy()
+	if(LAZYLEN(signs))
+		for(var/h in signs)
+			qdel(h)
 	if(cell)
 		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
