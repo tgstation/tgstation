@@ -65,7 +65,7 @@
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
-	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
+	desc = "Your mansus grasp now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your eldritch blade on it."
 	gain_text = "Rusted Hills help those in dire need at a cost."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)

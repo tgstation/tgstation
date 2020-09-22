@@ -142,7 +142,7 @@
 /datum/reality_smash_tracker/proc/_Generate()
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
-	var/number = max(targ_len * (5-(targ_len-1)) - smash_len,2)
+	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
 
 	for(var/i in 0 to number)
 
@@ -188,6 +188,15 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	alpha = 0
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+
+///Makes this obj appear out of nothing
+/obj/effect/broken_illusion/proc/show_presence()
+	animate(src,alpha = 255,time = 15 SECONDS)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))

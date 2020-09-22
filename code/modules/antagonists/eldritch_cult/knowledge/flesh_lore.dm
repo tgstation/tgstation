@@ -136,7 +136,7 @@
 /datum/eldritch_knowledge/flesh_mark
 	name = "Mark of flesh"
 	gain_text = "I saw them, the marked ones. The screams.. the silence."
-	desc = "Your sickly blade now applies mark of flesh status effect. To proc the mark, use your mansus grasp on the marked. Mark of flesh when procced causeds additional bleeding."
+	desc = "Your mansus grasp now applies mark of flesh status effect. To proc the mark, use your sickly blade on the marked. Mark of flesh when procced causeds additional bleeding."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark)

@@ -63,7 +63,7 @@
 /datum/eldritch_knowledge/ash_mark
 	name = "Mark of ash"
 	gain_text = "Nightwatcher was a very particular man, always watching, in the night. In spite of his duty, he has tranced through the manse, with his blazing lantern."
-	desc = "Your sickly blade now applies ash mark on hit. Use your mansus grasp to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage decreases with how many times the mark has spread."
+	desc = "Your mansus grasp now applies ash mark on hit. Use your sickly blade to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage decreases with how many times the mark has spread."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark)
