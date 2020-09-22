@@ -36855,9 +36855,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bLK" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -36870,11 +36867,11 @@
 "bLN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/beerkeg,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/structure/sign/poster/random{
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -64615,7 +64612,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/navbeacon/wayfinding/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -64624,6 +64620,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/glass/rag,
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "dDf" = (
@@ -65226,11 +65223,11 @@
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "ege" = (
@@ -68489,7 +68486,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "iJH" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -68501,6 +68497,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "iKA" = (
@@ -69270,7 +69267,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
 	pixel_x = 6;
 	pixel_y = 6
@@ -69282,6 +69278,12 @@
 	c_tag = "Bar - Counter";
 	dir = 1
 	},
+/obj/machinery/requests_console{
+	department = "Bar";
+	departmentType = 2;
+	pixel_y = -30
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "jOh" = (
@@ -69470,7 +69472,6 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -69478,6 +69479,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "jYJ" = (
@@ -70922,11 +70924,11 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
 	pixel_y = 7
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "lWY" = (
@@ -73971,10 +73973,13 @@
 /obj/machinery/camera{
 	c_tag = "Bar - Backroom"
 	},
-/obj/structure/sink/kitchen{
-	pixel_y = 24
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror{
+	pixel_y = 34
+	},
+/obj/structure/sink{
+	pixel_y = 22
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "qcN" = (
@@ -75234,15 +75239,15 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
