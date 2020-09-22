@@ -1015,7 +1015,7 @@
 	if(.)
 		end_multicam()
 
-/mob/living/silicon/ai/verb/up()
+/mob/living/silicon/ai/up()
 	set name = "Move Upwards"
 	set category = "IC"
 
