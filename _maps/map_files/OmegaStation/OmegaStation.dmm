@@ -27157,7 +27157,17 @@
 /area/hallway/primary/aft)
 "eXn" = (
 /obj/machinery/holopad,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/medical/virology)
 "eYe" = (
 /obj/machinery/door/firedoor,
@@ -34466,7 +34476,17 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "qGj" = (
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/medical/virology)
 "qGE" = (
 /obj/structure/cable,
@@ -38790,7 +38810,17 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/virologist,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/medical/virology)
 "txx" = (
 /obj/structure/closet/crate,
