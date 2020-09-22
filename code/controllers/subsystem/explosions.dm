@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(explosions)
 					var/echo_volume = 40
 					if(devastation_range)
 						baseshakeamount = devastation_range
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+					shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
 						echo_volume = 60
 					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
 
