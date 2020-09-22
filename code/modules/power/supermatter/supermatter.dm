@@ -98,6 +98,8 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
+#define MAX_SPACE_EXPOSURE_DAMAGE 2
+
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -686,13 +688,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
 				var/integrity = get_integrity()
 				if(integrity < 10)
-					damage += max((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0)
+					damage += clamp((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
 				else if(integrity < 25)
-					damage += max((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0)
+					damage += clamp((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
 				else if(integrity < 45)
-					damage += max((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0)
+					damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
 				else if(integrity < 75)
-					damage += max((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0)
+					damage += clamp((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
 				break
 
 	//Makes em go mad and accumulate rads.
