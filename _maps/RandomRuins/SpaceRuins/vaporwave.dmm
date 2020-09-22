@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
+/turf/template_noop,
+/area/template_noop)
 "c" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/airless,
@@ -130,6 +130,7 @@
 /area/ruin/unpowered/no_grav)
 "C" = (
 /obj/structure/statue/sandstone/venus{
+	anchored = 1;
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
@@ -150,6 +151,7 @@
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/statue/sandstone/venus{
+	anchored = 1;
 	dir = 4
 	},
 /obj/effect/turf_decal/sand/plating,

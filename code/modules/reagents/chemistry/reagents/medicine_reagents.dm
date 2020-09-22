@@ -1198,7 +1198,7 @@
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)
-			M.Sleeping(100, 0, TRUE)
+			M.Sleeping(100, FALSE)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
