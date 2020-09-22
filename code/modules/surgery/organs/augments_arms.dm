@@ -178,7 +178,7 @@
 /obj/item/organ/cyberimp/arm/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/gun/laser/Initialize
+/obj/item/organ/cyberimp/arm/gun/laser/Initialize()
 	. = ..()
 	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/organ/cyberimp/arm/gun/laser) in contents
 	laserphasergun.icon = icon //No invisible laser guns kthx
