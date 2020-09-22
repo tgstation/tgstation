@@ -46,6 +46,7 @@
 	. = ..()
 	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
 	summoner.AddElement(/datum/element/forced_gravity, 1)
+	AddElement(/datum/element/forced_gravity, 1)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
 	. = ..()
