@@ -127,7 +127,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 
-	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
 	var/list/attack_verb_continuous
 	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -984,7 +984,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	SEND_SIGNAL(src, COMSIG_ITEM_DISABLE_EMBED)
 	return
 
-///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
+///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/var/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
 	if(!LAZYLEN(embedding))
 		return
