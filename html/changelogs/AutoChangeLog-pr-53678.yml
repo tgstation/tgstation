@@ -1,4 +1,0 @@
-author: "Donkie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed max transfer rate/max output pressure in the gui of atmos devices not working correctly"
