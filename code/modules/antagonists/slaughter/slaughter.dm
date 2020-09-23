@@ -18,7 +18,7 @@
 	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'

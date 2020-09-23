@@ -59,8 +59,6 @@
 
 	if(suiciding)
 		O.set_suicide(suiciding)
-	if(hellbound)
-		O.hellbound = hellbound
 	O.set_combat_mode(TRUE, TRUE)
 
 	//keep viruses?
