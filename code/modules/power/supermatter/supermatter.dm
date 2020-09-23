@@ -464,7 +464,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = 200 //Gets us about 9 balls
 			return //No boom for me sir
-	if(prob(SEVERE_POWER_PENALTY_THRESHOLD/70)) //near the threshold we have around 100% that the crystal will create the event
+	if(prob(power/70)) //near the threshold we have around 100% that the crystal will create the event
 		var/datum/round_event_control/crystal_invasion/crystals = new/datum/round_event_control/crystal_invasion
 		crystals.runEvent()
 		return //No boom for me sir
