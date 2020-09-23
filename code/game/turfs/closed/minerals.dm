@@ -740,7 +740,7 @@
 	if(!ishuman(user))
 		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
 		return FALSE
-	if(user?.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
+	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
