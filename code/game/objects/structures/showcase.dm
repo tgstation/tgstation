@@ -54,7 +54,9 @@
 	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot_old"
-	density = FALSE
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
 
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
