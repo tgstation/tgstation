@@ -172,6 +172,17 @@ SUBSYSTEM_DEF(explosions)
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	. = SSexplosions.explode(arglist(args))
 
+#define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
+#define DEVISTATION_PROB 30 //The probability modifier for devistation, maths!
+#define HEAVY_IMPACT_PROB 5 //ditto
+#define FAR_UPPER 60 //Upper limit for the far_volume, distance, clamped.
+#define FAR_LOWER 40 //lower limit for the far_volume, distance, clamped.
+#define PROB_SOUND 75 //The probability modifier for a sound to be an echo, or a far sound. (0-100)
+#define SHAKE_CLAMP 2.5 //The limit for how much the camera can shake for out of view booms.
+#define FREQ_UPPER 40 //The upper limit for the randomly selected frequency.
+#define FREQ_LOWER 25 //The lower of the above.
+
+
 /datum/controller/subsystem/explosions/proc/explode(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
@@ -233,7 +244,7 @@ SUBSYSTEM_DEF(explosions)
 		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
 		var/creaking_explosion = FALSE
 
-		if(prob(devastation_range*30+heavy_impact_range*5) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
+		if(prob(devastation_range*DEVISTATION_PROB+heavy_impact_range*HEAVY_IMPACT_PROB) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
 			creaking_explosion = TRUE // prob over 100 always returns true
 
 		for(var/MN in GLOB.player_list)
@@ -252,10 +263,10 @@ SUBSYSTEM_DEF(explosions)
 						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = clamp(far_dist/2, 40, 60) // Volume is based on explosion size and dist
+					var/far_volume = clamp(far_dist/2, FAR_LOWER, FAR_UPPER) // Volume is based on explosion size and dist
 					if(creaking_explosion)
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = creaking_explosion_sound, distance_multiplier = 0)
-					else if(prob(75)) // Sound variety during meteor storm/tesloose/other bad event
+					else if(prob(PROB_SOUND)) // Sound variety during meteor storm/tesloose/other bad event
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound, distance_multiplier = 0) // Far sound
 					else
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0) // Echo sound
@@ -263,17 +274,17 @@ SUBSYSTEM_DEF(explosions)
 					if(baseshakeamount > 0 || devastation_range)
 						if(!baseshakeamount) // Devastating explosions rock the station and ground
 							baseshakeamount = devastation_range*3
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
 				else if(M.can_hear() && !isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
 					var/echo_volume = 40
 					if(devastation_range)
 						baseshakeamount = devastation_range
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
 						echo_volume = 60
 					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
 
 				if(creaking_explosion) // 5 seconds after the bang, the station begins to creak
-					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(25, 40), 1, frequency, null, null, FALSE, hull_creaking_sound, 0), 5 SECONDS)
+					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), 1, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
 
 	if(heavy_impact_range > 1)
 		var/datum/effect_system/explosion/E
@@ -373,6 +384,15 @@ SUBSYSTEM_DEF(explosions)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
+#undef CREAK_DELAY
+#undef DEVISTATION_PROB
+#undef HEAVY_IMPACT_PROB
+#undef FAR_UPPER
+#undef FAR_LOWER
+#undef PROB_SOUND
+#undef SHAKE_CLAMP
+#undef FREQ_UPPER
+#undef FREQ_LOWER
 
 /datum/controller/subsystem/explosions/proc/GatherSpiralTurfs(range, turf/epicenter)
 	var/list/outlist = list()
