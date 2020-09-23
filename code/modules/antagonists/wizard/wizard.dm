@@ -54,7 +54,9 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
-	if(!owner || !owner.current)
+	if(!owner)
+		CRASH("Antag datum with no owner.")
+	if(!owner.current)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.SendToLateJoin(owner.current)
@@ -114,7 +116,7 @@
 
 /datum/antagonist/wizard/proc/equip_wizard()
 	if(!owner)
-		return
+		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -191,7 +193,7 @@
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
 	if(!owner)
-		return
+		CRASH("Antag datum with no owner.")
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
