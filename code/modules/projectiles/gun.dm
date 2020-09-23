@@ -516,6 +516,7 @@
 /**
   * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
   *
+  * Returns the former gun_light that has now been replaced by this proc.
   * Arguments:
   * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
   */
@@ -523,6 +524,8 @@
 	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
 	if(gun_light == new_light)
 		CRASH("Tried to set a new gun light when the old gun light was also the new gun light.")
+
+	. = gun_light
 
 	// If there's an old gun light that isn't being QDELETED, detatch and drop it to the floor.
 	if(!QDELETED(gun_light))
