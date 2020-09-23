@@ -4,7 +4,7 @@
 /// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
 #define SMOOTH_BLOB		(1<<1)
 /// Atom has diagonal corners, with underlays under them.
-#define SMOOTH_DIAGONAL	(1<<2)
+#define SMOOTH_DIAGONAL_CORNERS	(1<<2)
 /// Atom will smooth with the borders of the map.
 #define SMOOTH_BORDER	(1<<3)
 /// Atom is currently queued to smooth.

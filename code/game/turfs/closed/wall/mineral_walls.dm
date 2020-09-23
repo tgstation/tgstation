@@ -217,7 +217,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
 
@@ -233,7 +233,7 @@
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -253,7 +253,7 @@
 
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
 //sub-type to be used for interior shuttle walls
@@ -285,7 +285,7 @@
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "survival_pod_walls-0"
 	base_icon_state = "survival_pod_walls"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_FULLTILE, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
@@ -308,7 +308,7 @@
 	base_icon_state = "plastitanium_wall"
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -328,7 +328,7 @@
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
 

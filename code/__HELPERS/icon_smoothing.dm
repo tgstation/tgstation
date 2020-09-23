@@ -11,7 +11,7 @@
 
 	DIAGONAL SMOOTHING INSTRUCTIONS
 	To make your atom smooth diagonally you need all the proper icon states (see 'smooth_wall.dmi' for a template) and
-	to add the 'SMOOTH_DIAGONAL' flag to the atom's smoothing_flags var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
+	to add the 'SMOOTH_DIAGONAL_CORNERS' flag to the atom's smoothing_flags var (in addition to either SMOOTH_TRUE or SMOOTH_MORE).
 
 	For turfs, what appears under the diagonal corners depends on the turf that was in the same position previously: if you make a wall on
 	a plating floor, you will see plating under the diagonal wall corner, if it was space, you will see space.
@@ -45,7 +45,7 @@
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BLOB" = SMOOTH_BLOB,
-	"SMOOTH_DIAGONAL" = SMOOTH_DIAGONAL,
+	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
 	"SMOOTH_OBJ" = SMOOTH_OBJ,
@@ -164,7 +164,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	if (!z)
 		CRASH("[type] called smooth_icon() without being on a z-level")
 	if(smoothing_flags & SMOOTH_CORNERS)
-		if(smoothing_flags & SMOOTH_DIAGONAL)
+		if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
@@ -349,7 +349,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 /turf/closed/blob_smooth()
 	. = ..()
-	if(!(smoothing_flags & SMOOTH_DIAGONAL) || fixed_underlay)
+	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || fixed_underlay)
 		return
 	switch(smoothing_junction)
 		if(NORTH_JUNCTION|WEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION, NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION)
@@ -455,7 +455,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'
 	icon_state = "smooth"
-	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL|SMOOTH_BORDER
+	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
 

@@ -341,6 +341,6 @@
 	base_icon_state = "plastitanium_nodiag_wall"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL
+	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
