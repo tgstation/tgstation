@@ -15,7 +15,7 @@
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
 
-This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
+This is the codebase for the /tg/station flavoured fork of SpaceStation 13. Forked for use by the TCP.
 
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
