@@ -33,12 +33,11 @@
 		return
 	if(!(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))) //We're using the same trick that tables use for placing objects x and y onto the click location.
 		return
-	if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-		var/list/click_params = params2list(params)
-		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-			return
-		I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-		I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-		return TRUE
-	else
-		return ..()
+	if(!user.transferItemToLoc(I, drop_location(), silent = FALSE))
+		return
+	var/list/click_params = params2list(params)
+	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+		return
+	I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	return TRUE
