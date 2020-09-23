@@ -41,6 +41,25 @@
 	if(C.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
 		deconstruct()
+	else if(istype(C, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = C
+		if(!G.use(1))
+			to_chat(user, "<span class='warning'>You need a glass sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You create a glass floor.</span>")
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/open/transparent/glass, flags = CHANGETURF_INHERIT_AIR)
+		qdel(src)
+
+	else if(istype(C, /obj/item/stack/sheet/rglass))
+		var/obj/item/stack/sheet/glass/G = C
+		if(!G.use(1))
+			to_chat(user, "<span class='warning'>You need a glass sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You create a glass floor.</span>")
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/open/transparent/glass/reinforced, flags = CHANGETURF_INHERIT_AIR)
+		qdel(src)
 	else
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
