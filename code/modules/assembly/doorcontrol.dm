@@ -147,7 +147,7 @@
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
-//purposefully keeping this deciseconds because we divide it
+//how long it spends on each floor when moving somewhere, so it'd take 4 seconds to reach you if it had to travel up 2 floors
 #define FLOOR_TRAVEL_TIME 2 SECONDS
 /obj/item/assembly/control/elevator
 	name = "elevator controller"
@@ -181,3 +181,4 @@
 	lift.visible_message("<span class='notice'>[src] clicks, ready to be manually operated again.</span")
 	lift.lift_master_datum.set_controls(UNLOCKED)
 
+#undef FLOOR_TRAVEL_TIME
