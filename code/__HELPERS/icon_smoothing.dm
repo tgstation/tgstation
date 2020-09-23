@@ -346,24 +346,26 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 /turf/closed/blob_smooth()
 	. = ..()
-	//No diagonal corner behavior, no changes since last smoothing or underlays immutable? No need to update if so.
-	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || . == smoothing_junction || fixed_underlay)
+	// No diagonal corner behavior or no changes since last smoothing?
+	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || . == smoothing_junction)
 		return
 	switch(smoothing_junction)
 		if(NORTH_JUNCTION|WEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION, NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION)
-			var/junction_dir = reverse_ndir(smoothing_junction)
-			var/turned_adjacency = REVERSE_DIR(junction_dir)
-			var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
-			var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
-			if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-				neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
+			icon_state = "[base_icon_state]-[smoothing_junction]-d"
+			if(!fixed_underlay) // Mutable underlays?
+				var/junction_dir = reverse_ndir(smoothing_junction)
+				var/turned_adjacency = REVERSE_DIR(junction_dir)
+				var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
+				var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
 				if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-					neighbor_turf = get_step(src, turned_adjacency)
+					neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
 					if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
-						if(!get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency)) //if all else fails, ask our own turf
-							underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
-							underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
-			underlays = list(underlay_appearance)
+						neighbor_turf = get_step(src, turned_adjacency)
+						if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
+							if(!get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency)) //if all else fails, ask our own turf
+								underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
+								underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+				underlays = list(underlay_appearance)
 
 
 //Icon smoothing helpers

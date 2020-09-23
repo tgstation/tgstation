@@ -248,9 +248,9 @@
 	return FALSE
 
 /turf/closed/wall/r_wall/syndicate/nodiagonal
-	icon = 'icons/turf/walls/plastitanium_nodiag_wall.dmi'
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_nodiag_wall"
+	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BLOB
 
 /turf/closed/wall/r_wall/syndicate/nosmooth

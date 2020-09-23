@@ -241,9 +241,9 @@
 	return // titanium does not rust
 
 /turf/closed/wall/mineral/titanium/nodiagonal
-	icon = 'icons/turf/walls/shuttle_nodiag_wall.dmi'
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle_nd"
-	base_icon_state = "shuttle_nodiag_wall"
+	base_icon_state = "shuttle_wall"
 	smoothing_flags = SMOOTH_BLOB
 
 /turf/closed/wall/mineral/titanium/nosmooth
@@ -289,9 +289,9 @@
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_WINDOW_FULLTILE, SMOOTH_GROUP_SHUTTLE_PARTS)
 
 /turf/closed/wall/mineral/titanium/survival/nodiagonal
-	icon = 'icons/turf/walls/survival_pod_nodiag_walls.dmi'
-	icon_state = "survival_pod_nodiag_walls-0"
-	base_icon_state = "survival_pod_nodiag_walls"
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival_pod_walls-0"
+	base_icon_state = "survival_pod_walls"
 	smoothing_flags = SMOOTH_BLOB
 
 /turf/closed/wall/mineral/titanium/survival/pod
@@ -316,9 +316,9 @@
 	return // plastitanium does not rust
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
-	icon = 'icons/turf/walls/plastitanium_nodiag_wall.dmi'
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_nodiag_wall"
+	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BLOB
 
 /turf/closed/wall/mineral/plastitanium/nosmooth

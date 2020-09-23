@@ -312,9 +312,9 @@
 /obj/structure/falsewall/abductor
 	name = "alien wall"
 	desc = "A wall with alien alloy plating."
-	icon = 'icons/turf/walls/abductor_nodiag_wall.dmi'
-	icon_state = "abductor_nodiag_wall-0"
-	base_icon_state = "abductor_nodiag_wall"
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor_wall-0"
+	base_icon_state = "abductor_wall"
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	walltype = /turf/closed/wall/mineral/abductor
 	smoothing_flags = SMOOTH_BLOB
@@ -324,9 +324,9 @@
 /obj/structure/falsewall/titanium
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
-	icon = 'icons/turf/walls/shuttle_nodiag_wall.dmi'
-	icon_state = "shuttle_nodiag_wall-0"
-	base_icon_state = "shuttle_nodiag_wall"
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle_wall-0"
+	base_icon_state = "shuttle_wall"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
 	smoothing_flags = SMOOTH_BLOB
@@ -336,11 +336,11 @@
 /obj/structure/falsewall/plastitanium
 	name = "wall"
 	desc = "An evil wall of plasma and titanium."
-	icon = 'icons/turf/walls/plastitanium_nodiag_wall.dmi'
-	icon_state = "plastitanium_nodiag_wall-0"
-	base_icon_state = "plastitanium_nodiag_wall"
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "plastitanium_wall-0"
+	base_icon_state = "plastitanium_wall"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BLOB
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
