@@ -19826,6 +19826,9 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
+/obj/item/chisel{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTH" = (
