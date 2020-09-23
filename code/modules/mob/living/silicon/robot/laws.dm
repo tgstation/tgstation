@@ -48,12 +48,6 @@
 	var/datum/ai_laws/master = connected_ai?.laws
 	var/temp
 	if (master)
-		laws.devillaws.len = master.devillaws.len
-		for (var/index = 1, index <= master.devillaws.len, index++)
-			temp = master.devillaws[index]
-			if (length(temp) > 0)
-				laws.devillaws[index] = temp
-
 		laws.ion.len = master.ion.len
 		for (var/index = 1, index <= master.ion.len, index++)
 			temp = master.ion[index]

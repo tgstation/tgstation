@@ -374,7 +374,7 @@
 	if(HasSymptom(S))
 		return
 
-	if(!(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1)))
+	if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 		RemoveSymptom(pick(symptoms))
 	symptoms += S
 	S.OnAdd(src)

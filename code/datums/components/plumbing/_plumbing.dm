@@ -36,6 +36,11 @@
 		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
 		addtimer(CALLBACK(src, .proc/enable), 0)
 
+/datum/component/plumbing/Destroy()
+	ducts = null
+	reagents = null
+	return ..()
+
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
 		STOP_PROCESSING(SSfluids, src)

@@ -154,7 +154,7 @@
 	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
 	var/list/parallax_layers
@@ -192,3 +192,13 @@
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
 
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
