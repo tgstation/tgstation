@@ -1,5 +1,5 @@
 
-/// Process asset cache client topic calls for "asset_cache_confirm_arrival=[INT]"
+/// Process asset cache client topic calls for `"asset_cache_confirm_arrival=[INT]"`
 /client/proc/asset_cache_confirm_arrival(job_id)
 	var/asset_cache_job = round(text2num(job_id))
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us into letting them append to a list without limit.
@@ -10,7 +10,7 @@
 		return asset_cache_job || TRUE
 
 
-/// Process asset cache client topic calls for "asset_cache_preload_data=[HTML+JSON_STRING]
+/// Process asset cache client topic calls for `"asset_cache_preload_data=[HTML+JSON_STRING]"`
 /client/proc/asset_cache_preload_data(data)
 	var/json = data
 	var/list/preloaded_assets = json_decode(json)

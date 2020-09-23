@@ -129,7 +129,7 @@
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
-		if(isalien(M) || istruedevil(M))
+		if(isalien(M))
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
