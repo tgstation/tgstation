@@ -73,11 +73,11 @@
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
@@ -270,8 +270,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
 	data["outputPressure"] = output_info ? output_info["internal"] : 0
+	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
@@ -297,7 +299,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = clamp(target, 0, 4500)
+				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

@@ -133,7 +133,7 @@
 	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
-	to_chat(owner,"<B>Remember:</B> do not forget to prepare your spells.")
+	to_chat(owner,"<B>Remember:</B> Do not forget to prepare your spells.")
 
 /datum/antagonist/wizard/farewell()
 	to_chat(owner, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")

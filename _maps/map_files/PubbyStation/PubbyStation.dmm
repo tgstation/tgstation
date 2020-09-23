@@ -442,6 +442,7 @@
 /area/maintenance/department/science)
 "abg" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/quartermaster,
 /turf/open/floor/wood,
 /area/quartermaster/qm)
 "abh" = (
@@ -449,6 +450,10 @@
 	dir = 1
 	},
 /obj/structure/filingcabinet,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/wood,
 /area/quartermaster/qm)
 "abi" = (
@@ -14789,6 +14794,10 @@
 /area/quartermaster/warehouse)
 "aMw" = (
 /obj/structure/cable,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -15555,6 +15564,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aOV" = (
@@ -15946,6 +15958,10 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 9
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aQp" = (
@@ -16858,6 +16874,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 32
 	},
+/obj/machinery/light_switch{
+	pixel_x = 22
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aSZ" = (
@@ -16880,7 +16899,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -16940,6 +16959,10 @@
 "aTk" = (
 /obj/item/radio/intercom{
 	pixel_y = -26
+	},
+/obj/machinery/light_switch{
+	pixel_x = 8;
+	pixel_y = -34
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -17757,6 +17780,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = -4;
+	pixel_y = -25
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aVz" = (
@@ -18548,6 +18575,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aXw" = (
@@ -19022,7 +19050,7 @@
 "aYw" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -19969,6 +19997,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/firealarm{
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "baF" = (
@@ -21742,6 +21773,11 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -26;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bfE" = (
@@ -22113,12 +22149,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bgS" = (
@@ -22354,7 +22392,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/science/robotics/mechbay)
 "bhq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -44122,7 +44160,7 @@
 /area/crew_quarters/kitchen)
 "cpn" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/item/food/spaghetti,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cpo" = (
@@ -47452,7 +47490,7 @@
 "dyL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Docking Arm Maintenance";
-	req_access_txt = "50"
+	req_access_txt = "12"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -47630,6 +47668,10 @@
 "dVK" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "dWk" = (
@@ -47876,6 +47918,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "evB" = (
@@ -49769,6 +49812,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
+"hNd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "hOx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -50030,6 +50083,10 @@
 	},
 /obj/machinery/disposal/delivery_chute{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -50804,6 +50861,10 @@
 	},
 /turf/closed/wall,
 /area/maintenance/department/cargo)
+"jIM" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "jJn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -51181,6 +51242,10 @@
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "kvj" = (
@@ -51280,7 +51345,7 @@
 "kBu" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -52868,6 +52933,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"nxG" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "nxT" = (
 /obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel,
@@ -54296,7 +54365,7 @@
 "pIa" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54497,6 +54566,10 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
+"pXH" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "pXT" = (
 /obj/item/kirbyplants,
 /obj/machinery/power/apc{
@@ -54999,8 +55072,8 @@
 /area/construction/mining/aux_base)
 "qXb" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster";
-	req_access_txt = "41"
+	name = "Mining";
+	req_access_txt = "48"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -55365,6 +55438,10 @@
 	},
 /obj/item/radio/intercom{
 	pixel_x = 32
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = -9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -56400,6 +56477,13 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"tvh" = (
+/obj/machinery/light_switch{
+	pixel_x = -20;
+	pixel_y = 34
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "tvj" = (
 /obj/structure/festivus{
 	anchored = 1;
@@ -57644,6 +57728,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"vHj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	name = "Docking Arm Maintenance";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "vIc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -57739,7 +57833,7 @@
 "vQz" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -58794,7 +58888,7 @@
 "xud" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	req_access_txt = "31"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -97143,10 +97237,10 @@ dTT
 aVp
 bgB
 aVv
-aWw
+pvZ
 dVK
 cdV
-aZn
+hNd
 seX
 nBt
 pvZ
@@ -97915,7 +98009,7 @@ xau
 aVp
 aVv
 aWw
-bat
+tvh
 aYu
 aZn
 aOV
@@ -100229,7 +100323,7 @@ aSk
 aVB
 aWB
 cCB
-cCB
+nxG
 baB
 baF
 bbK
@@ -100494,7 +100588,7 @@ bcG
 bdM
 beP
 bfH
-bfH
+pXH
 bhv
 bbI
 aEj
@@ -102277,7 +102371,7 @@ aLl
 cCY
 aTv
 cCY
-aTv
+jIM
 dqY
 ueu
 bcV
@@ -103312,7 +103406,7 @@ dyL
 saR
 saR
 saR
-dyL
+vHj
 beR
 mXc
 beR
