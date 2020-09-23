@@ -46,7 +46,7 @@
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
 		G.garbage_collect()
-		T.air_update_turf()
+		T.air_update_turf(FALSE, FALSE)
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -267,7 +267,11 @@
 
 /obj/structure/foamedmetal/Initialize()
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/foamedmetal/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
@@ -318,7 +322,6 @@
 					continue
 				G_gases[I][MOLES] = 0
 			G.garbage_collect()
-			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)
 				U.welded = TRUE

@@ -49,7 +49,7 @@
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	var/turf/floor = get_turf(src)
-	floor.air_update_turf(1)
+	floor.air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
@@ -155,7 +155,7 @@
 	icon_state ="[base_state]open"
 	sleep(10)
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 
 	if(operating == 1) //emag again
@@ -177,7 +177,7 @@
 	icon_state = base_state
 
 	density = TRUE
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
 	sleep(10)
 

@@ -186,7 +186,7 @@
 
 /turf/open/proc/TakeTemperature(temp)
 	air.temperature += temp
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
@@ -279,12 +279,12 @@
 		air.assert_gas(/datum/gas/pluoxium)
 		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.004)
 		air.garbage_collect()
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 	if (air.gases[/datum/gas/hydrogen])
 		pulse_strength = min(pulse_strength, air.gases[/datum/gas/hydrogen][MOLES] * 1000)
 		air.gases[/datum/gas/hydrogen][MOLES] = max(air.gases[/datum/gas/hydrogen][MOLES] - (pulse_strength * 0.001), 0)
 		air.assert_gas(/datum/gas/tritium)
 		air.gases[/datum/gas/tritium][MOLES] += (pulse_strength * 0.001)
 		air.garbage_collect()
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 

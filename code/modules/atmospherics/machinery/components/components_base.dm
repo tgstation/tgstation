@@ -137,7 +137,7 @@
 				continue
 			to_release.merge(air.remove(shared_loss))
 		T.assume_air(to_release)
-		air_update_turf(1)
+		air_update_turf(FALSE, FALSE)
 
 /obj/machinery/atmospherics/components/proc/safe_input(title, text, default_set)
 	var/new_value = input(usr,text,title,default_set) as num|null

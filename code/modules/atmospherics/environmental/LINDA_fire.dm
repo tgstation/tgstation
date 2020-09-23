@@ -71,7 +71,7 @@
 		temperature = starting_temperature
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc

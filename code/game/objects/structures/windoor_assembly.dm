@@ -34,11 +34,11 @@
 	if(set_dir)
 		setDir(set_dir)
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/windoor_assembly/Destroy()
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/structure/windoor_assembly/Move()

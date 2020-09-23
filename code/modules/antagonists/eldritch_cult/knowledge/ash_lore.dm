@@ -186,10 +186,7 @@
 	. = ..()
 	if(!finished)
 		return
-	var/turf/L = get_turf(user)
-	var/datum/gas_mixture/env = L.return_air()
 	for(var/turf/T in range(1,user))
-		env = T.return_air()
+		var/datum/gas_mixture/env = T.return_air()
 		env.temperature += 25
-		T.air_update_turf()
-	L.air_update_turf()
+		T.air_update_turf(FALSE, FALSE)

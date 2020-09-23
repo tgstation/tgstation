@@ -76,7 +76,7 @@
 					return
 
 				loc.assume_air(removed)
-				air_update_turf()
+				air_update_turf(FALSE, FALSE)
 
 				var/datum/pipeline/parent1 = parents[1]
 				parent1.update = 1
@@ -99,7 +99,7 @@
 					return
 
 				air2.merge(removed)
-				air_update_turf()
+				air_update_turf(FALSE, FALSE)
 
 				var/datum/pipeline/parent2 = parents[2]
 				parent2.update = 1

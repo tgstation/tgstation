@@ -373,7 +373,7 @@
 					heat_capacity = 1
 				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -419,7 +419,7 @@
 					heat_capacity = 1
 				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))

@@ -69,7 +69,7 @@
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 		loc.assume_air(removed)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 		update_parents()
 

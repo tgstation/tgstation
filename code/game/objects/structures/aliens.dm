@@ -67,7 +67,11 @@
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/alien/resin/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc

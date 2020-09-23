@@ -116,7 +116,7 @@
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				loc.assume_air(removed)
-				air_update_turf()
+				air_update_turf(FALSE, FALSE)
 
 	else // external -> internal
 		var/pressure_delta = 10000
@@ -133,7 +133,7 @@
 				return
 
 			air_contents.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 	update_parents()
 
 //Radio remote control

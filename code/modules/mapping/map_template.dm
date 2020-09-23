@@ -48,7 +48,7 @@
 				atmos_machines += A
 	for(var/L in border)
 		var/turf/T = L
-		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
+		T.air_update_turf(TRUE, TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)

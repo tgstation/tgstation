@@ -27,7 +27,7 @@
 
 /obj/structure/falsewall/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -51,7 +51,7 @@
 		set_opacity(density)
 		opening = FALSE
 		update_icon()
-		air_update_turf(TRUE)
+		air_update_turf(TRUE, !density)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)

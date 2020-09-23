@@ -79,7 +79,7 @@
 		if(istype(T))
 			var/datum/gas_mixture/leaked = removed.remove_ratio(DT_PROB_RATE(VOLUME_PUMP_LEAK_AMOUNT, delta_time))
 			T.assume_air(leaked)
-			T.air_update_turf()
+			T.air_update_turf(FALSE, FALSE)
 
 	air2.merge(removed)
 

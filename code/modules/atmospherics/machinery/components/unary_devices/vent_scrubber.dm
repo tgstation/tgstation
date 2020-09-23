@@ -189,7 +189,7 @@
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
-			tile.air_update_turf()
+			tile.air_update_turf(FALSE, FALSE)
 
 	else //Just siphoning all air
 
@@ -198,7 +198,7 @@
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 
 		air_contents.merge(removed)
-		tile.air_update_turf()
+		tile.air_update_turf(FALSE, FALSE)
 
 	update_parents()
 

@@ -420,7 +420,7 @@
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 	obj_break()
 	density = FALSE
@@ -455,7 +455,7 @@
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()

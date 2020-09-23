@@ -102,7 +102,11 @@
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/holosign/barrier/atmos/Destroy()
+	. = ..()
+	air_update_turf(TRUE, FALSE)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
