@@ -320,7 +320,7 @@
 
 /datum/keybinding/mob/action
 	description = "Alt click an action button and set it to the corresponding number to use this hotkey"
-	keybind_signal = "temp_lazy"
+	keybind_signal = ""
 	var/action_num = 0
 
 /datum/keybinding/mob/action/New()
