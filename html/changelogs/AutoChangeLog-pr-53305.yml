@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Every single thing that should have a belt/suit/worn sprite, now once again correctly has a worn sprite on the player's body."
-  - rscadd: "Admins can run a debug verb to see what things are missing icon_states on the player's worn body."

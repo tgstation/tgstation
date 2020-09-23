@@ -33,6 +33,7 @@
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
+	ventcrawler = VENTCRAWLER_ALWAYS
 
 /mob/living/simple_animal/shade/Initialize()
 	. = ..()

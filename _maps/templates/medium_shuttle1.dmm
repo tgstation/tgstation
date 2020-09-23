@@ -6,7 +6,7 @@
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_1)
 "c" = (
 /obj/structure/shuttle/engine/heater{
@@ -145,7 +145,7 @@
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_1)
 
 (1,1,1) = {"

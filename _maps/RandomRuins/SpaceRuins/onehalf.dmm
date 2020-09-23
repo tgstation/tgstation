@@ -6,16 +6,16 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ad" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ae" = (
 /obj/item/stack/cable_coil/cut,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ag" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -244,7 +244,7 @@
 /obj/structure/lattice,
 /obj/item/storage/toolbox/syndicate,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aT" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless{
@@ -738,7 +738,7 @@
 	icon_state = "small"
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -799,7 +799,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ct" = (
 /obj/structure/lattice,
 /obj/item/shard{
@@ -980,19 +980,19 @@
 /obj/item/stack/sheet/plasteel,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "di" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "dj" = (
 /obj/item/stack/rods,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "dl" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -1008,18 +1008,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
-"Ky" = (
-/turf/template_noop,
-/area/space/nearstation)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
-"Me" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "Vh" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1030,10 +1023,10 @@ aa
 aa
 aa
 aa
-Me
+aw
 aa
 aS
-Me
+aw
 aa
 aa
 aa
@@ -1193,7 +1186,7 @@ bO
 bR
 aa
 cs
-Me
+aw
 aa
 aa
 cr
@@ -1219,7 +1212,7 @@ cA
 cr
 cN
 aa
-Me
+aw
 aa
 dl
 "}
@@ -1234,11 +1227,11 @@ ag
 bi
 bx
 bQ
-Me
+aw
 bV
 aa
 aa
-Me
+aw
 cA
 aa
 cL
@@ -1344,13 +1337,13 @@ aX
 bo
 bp
 bU
-Ky
+aa
 cj
 bU
 cF
 bU
-Me
-Ky
+aw
+aa
 bU
 ad
 aa
@@ -1564,7 +1557,7 @@ ar
 br
 ar
 ar
-Me
+aw
 ad
 ad
 ad

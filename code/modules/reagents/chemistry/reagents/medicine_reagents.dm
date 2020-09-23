@@ -774,7 +774,7 @@
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(exposed_mob.stat != DEAD)
 		return ..()
-	if(exposed_mob.suiciding || exposed_mob.hellbound) //they are never coming back
+	if(exposed_mob.suiciding) //they are never coming back
 		exposed_mob.visible_message("<span class='warning'>[exposed_mob]'s body does not react...</span>")
 		return
 	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
@@ -1198,7 +1198,7 @@
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)
-			M.Sleeping(100, 0, TRUE)
+			M.Sleeping(100, FALSE)
 			M.adjustOxyLoss(1.5*REM, 0)
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()

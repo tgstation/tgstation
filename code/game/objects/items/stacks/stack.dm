@@ -9,7 +9,6 @@
  * Stacks
  */
 
-
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
@@ -40,7 +39,6 @@
 	var/absorption_rate
 	/// Amount of matter for RCD
 	var/matter_amount = 0
-
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -95,7 +93,6 @@
 	else
 		w_class = full_w_class
 
-
 /obj/item/stack/update_icon_state()
 	if(novariants)
 		return
@@ -105,12 +102,6 @@
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-
-
-/obj/item/stack/Destroy()
-	if (usr && usr.machine==src)
-		usr << browse(null, "window=stack")
-	. = ..()
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
@@ -133,145 +124,153 @@
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
-		. = round(source.energy / cost)
+		. = round(source?.energy / cost)
 	else
 		. = (amount)
+
+/**
+  * Builds all recipes in a given recipe list and returns an association list containing them
+  *
+  * Arguments:
+  * * recipe_to_iterate - The list of recipes we are using to build recipes
+  */
+/obj/item/stack/proc/recursively_build_recipes(list/recipe_to_iterate)
+	var/list/L = list()
+	for(var/recipe in recipe_to_iterate)
+		if(istype(recipe, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/R = recipe
+			L["[R.title]"] = recursively_build_recipes(R.recipes)
+		if(istype(recipe, /datum/stack_recipe))
+			var/datum/stack_recipe/R = recipe
+			L["[R.title]"] = build_recipe(R)
+	return L
+
+/**
+  * Returns a list of properties of a given recipe
+  *
+  * Arguments:
+  * * R - The stack recipe we are using to get a list of properties
+  */
+/obj/item/stack/proc/build_recipe(datum/stack_recipe/R)
+	return list(
+		"res_amount" = R.res_amount,
+		"max_res_amount" = R.max_res_amount,
+		"req_amount" = R.req_amount,
+		"ref" = "\ref[R]",
+	)
+
+/**
+  * Checks if the recipe is valid to be used
+  *
+  * Arguments:
+  * * R - The stack recipe we are checking if it is valid
+  * * recipe_list - The list of recipes we are using to check the given recipe
+  */
+/obj/item/stack/proc/is_valid_recipe(datum/stack_recipe/R, list/recipe_list)
+	for(var/S in recipe_list)
+		if(S == R)
+			return TRUE
+		if(istype(S, /datum/stack_recipe_list))
+			var/datum/stack_recipe_list/L = S
+			if(is_valid_recipe(R, L.recipes))
+				return TRUE
+	return FALSE
 
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
 
-/obj/item/stack/interact(mob/user, sublist)
-	ui_interact(user, sublist)
+/obj/item/stack/interact(mob/user)
+	ui_interact(user)
 
-/obj/item/stack/ui_interact(mob/user, recipes_sublist)
+/obj/item/stack/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/stack/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Stack", name)
+		ui.open()
+
+/obj/item/stack/ui_data(mob/user)
+	var/list/data = list()
+	data["amount"] = get_amount()
+	return data
+
+/obj/item/stack/ui_static_data(mob/user)
+	var/list/data = list()
+	data["recipes"] = recursively_build_recipes(recipes)
+	return data
+
+/obj/item/stack/ui_act(action, params)
 	. = ..()
-	if (!recipes)
+	if(.)
 		return
-	if (!src || get_amount() <= 0)
-		user << browse(null, "window=stack")
-	user.set_machine(src) //for correct work of onclose
-	var/list/recipe_list = recipes
-	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
-		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
-		recipe_list = srl.recipes
-	var/t1 = "Amount Left: [get_amount()]<br>"
-	for(var/i in 1 to length(recipe_list))
-		var/E = recipe_list[i]
-		if (isnull(E))
-			t1 += "<hr>"
-			continue
-		if (i>1 && !isnull(recipe_list[i-1]))
-			t1+="<br>"
 
-		if (istype(E, /datum/stack_recipe_list))
-			var/datum/stack_recipe_list/srl = E
-			t1 += "<a href='?src=[REF(src)];sublist=[i]'>[srl.title]</a>"
-
-		if (istype(E, /datum/stack_recipe))
-			var/datum/stack_recipe/R = E
-			var/max_multiplier = round(get_amount() / R.req_amount)
-			var/title
-			var/can_build = 1
-			can_build = can_build && (max_multiplier>0)
-
-			if (R.res_amount>1)
-				title+= "[R.res_amount]x [R.title]\s"
-			else
-				title+= "[R.title]"
-			title+= " ([R.req_amount] [singular_name]\s)"
-			if (can_build)
-				t1 += text("<A href='?src=[REF(src)];sublist=[recipes_sublist];make=[i];multiplier=1'>[title]</A>  ")
-			else
-				t1 += text("[]", title)
-				continue
-			if (R.max_res_amount>1 && max_multiplier>1)
-				max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
-				t1 += " |"
-				var/list/multipliers = list(5,10,25)
-				for (var/n in multipliers)
-					if (max_multiplier>=n)
-						t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-				if (!(max_multiplier in multipliers))
-					t1 += " <A href='?src=[REF(src)];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
-
-	var/datum/browser/popup = new(user, "stack", name, 400, 400)
-	popup.set_content(t1)
-	popup.open(FALSE)
-	onclose(user, "stack")
-
-/obj/item/stack/Topic(href, href_list)
-	..()
-	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
-		return
-	if (href_list["sublist"] && !href_list["make"])
-		interact(usr, text2num(href_list["sublist"]))
-	if (href_list["make"])
-		if (get_amount() < 1 && !is_cyborg)
-			qdel(src)
-
-		var/list/recipes_list = recipes
-		if (href_list["sublist"])
-			var/datum/stack_recipe_list/srl = recipes_list[text2num(href_list["sublist"])]
-			recipes_list = srl.recipes
-		var/datum/stack_recipe/R = recipes_list[text2num(href_list["make"])]
-		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier ||(multiplier <= 0)) //href protection
-			return
-		if(!building_checks(R, multiplier))
-			return
-		if (R.time)
-			var/adjusted_time = 0
-			usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
-			if(HAS_TRAIT(usr, R.trait_booster))
-				adjusted_time = (R.time * R.trait_modifier)
-			else
-				adjusted_time = R.time
-			if (!do_after(usr, adjusted_time, target = usr))
+	switch(action)
+		if("make")
+			if(get_amount() < 1 && !is_cyborg)
+				qdel(src)
+				return
+			var/datum/stack_recipe/R = locate(params["ref"])
+			if(!is_valid_recipe(R, recipes)) //href exploit protection
+				return
+			var/multiplier = text2num(params["multiplier"])
+			if(!multiplier || (multiplier <= 0)) //href exploit protection
 				return
 			if(!building_checks(R, multiplier))
 				return
+			if(R.time)
+				var/adjusted_time = 0
+				usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
+				if(HAS_TRAIT(usr, R.trait_booster))
+					adjusted_time = (R.time * R.trait_modifier)
+				else
+					adjusted_time = R.time
+				if(!do_after(usr, adjusted_time, target = usr))
+					return
+				if(!building_checks(R, multiplier))
+					return
 
-		var/obj/O
-		if(R.max_res_amount > 1) //Is it a stack?
-			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
-		else if(ispath(R.result_type, /turf))
-			var/turf/T = usr.drop_location()
-			if(!isturf(T))
-				return
-			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
-		else
-			O = new R.result_type(usr.drop_location())
-		if(O)
-			O.setDir(usr.dir)
-		use(R.req_amount * multiplier)
+			var/obj/O
+			if(R.max_res_amount > 1) //Is it a stack?
+				O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+			else if(ispath(R.result_type, /turf))
+				var/turf/T = usr.drop_location()
+				if(!isturf(T))
+					return
+				T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
+			else
+				O = new R.result_type(usr.drop_location())
+			if(O)
+				O.setDir(usr.dir)
+			use(R.req_amount * multiplier)
 
-		if(R.applies_mats && custom_materials && custom_materials.len)
-			var/list/used_materials = list()
-			for(var/i in custom_materials)
-				used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
-			O.set_custom_materials(used_materials)
+			if(R.applies_mats && custom_materials && custom_materials.len)
+				var/list/used_materials = list()
+				for(var/i in custom_materials)
+					used_materials[SSmaterials.GetMaterialRef(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				O.set_custom_materials(used_materials)
 
-		//START: oh fuck i'm so sorry
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			W.ini_dir = W.dir
-		else if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			W.ini_dir = W.dir
-		//END: oh fuck i'm so sorry
+			if(istype(O, /obj/structure/windoor_assembly))
+				var/obj/structure/windoor_assembly/W = O
+				W.ini_dir = W.dir
+			else if(istype(O, /obj/structure/window))
+				var/obj/structure/window/W = O
+				W.ini_dir = W.dir
 
-		if (QDELETED(O))
-			return //It's a stack and has already been merged
+			if(QDELETED(O))
+				return //It's a stack and has already been merged
 
-		if (isitem(O))
-			usr.put_in_hands(O)
-		O.add_fingerprint(usr)
+			if(isitem(O))
+				usr.put_in_hands(O)
+			O.add_fingerprint(usr)
 
-		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/storage) )
-			for (var/obj/item/I in O)
-				qdel(I)
-		//BubbleWrap END
+			//BubbleWrap - so newly formed boxes are empty
+			if(istype(O, /obj/item/storage))
+				for (var/obj/item/I in O)
+					qdel(I)
+			//BubbleWrap END
+			return TRUE
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
@@ -282,7 +281,6 @@
 		add((max_amount < amount) ? (max_amount - amount) : 0) //update icon, weight, ect
 		return TRUE
 	return ..()
-
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
 	if (get_amount() < R.req_amount*multiplier)

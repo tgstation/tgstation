@@ -24,7 +24,7 @@
 #define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
-#define CYRION_B_HEAT_PENALTY 8
+#define ZAUKER_HEAT_PENALTY 8
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -37,7 +37,7 @@
 #define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
 #define HEALIUM_TRANSMIT_MODIFIER 2.4
 #define PROTO_NITRATE_TRANSMIT_MODIFIER 15
-#define CYRION_B_TRANSMIT_MODIFIER 20
+#define ZAUKER_TRANSMIT_MODIFIER 20
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -167,7 +167,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen,
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
-		/datum/gas/cyrion_b,
+		/datum/gas/zauker,
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -184,7 +184,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = 0,
 		/datum/gas/healium = 0,
 		/datum/gas/proto_nitrate = 0,
-		/datum/gas/cyrion_b = 0,
+		/datum/gas/zauker = 0,
 	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
 	var/list/gas_trans = list(
@@ -197,7 +197,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
 		/datum/gas/healium = HEALIUM_TRANSMIT_MODIFIER,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_TRANSMIT_MODIFIER,
-		/datum/gas/cyrion_b = CYRION_B_TRANSMIT_MODIFIER,
+		/datum/gas/zauker = ZAUKER_TRANSMIT_MODIFIER,
 	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(
@@ -213,7 +213,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
 		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
-		/datum/gas/cyrion_b = CYRION_B_HEAT_PENALTY,
+		/datum/gas/zauker = ZAUKER_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
@@ -235,7 +235,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/hydrogen = 1,
 		/datum/gas/healium = 1,
 		/datum/gas/proto_nitrate = 1,
-		/datum/gas/cyrion_b = 1,
+		/datum/gas/zauker = 1,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -647,7 +647,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 
-		if(prob(gas_comp[/datum/gas/cyrion_b]))
+		if(prob(gas_comp[/datum/gas/zauker]))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN)
 

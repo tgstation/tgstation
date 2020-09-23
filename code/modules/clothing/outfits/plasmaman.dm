@@ -98,6 +98,13 @@
 	uniform = /obj/item/clothing/under/plasmaman/paramedic
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 
+/datum/outfit/plasmaman/psychologist
+	name = "Psychologist Plasmaman"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
+	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
+	gloves = /obj/item/clothing/gloves/color/plasmaman/white
+
 /datum/outfit/plasmaman/viro
 	name = "Virology Plasmaman"
 
