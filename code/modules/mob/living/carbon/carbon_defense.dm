@@ -252,6 +252,8 @@
 			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
 				"<span class='notice'>You slap [target] in the face! </span>",\
 			"You hear a slap.")
+			if(target.dna && target.dna.species)
+				target.dna.species.stop_wagging_tail(target)
 			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
