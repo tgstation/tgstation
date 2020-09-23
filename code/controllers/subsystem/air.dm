@@ -321,7 +321,7 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
-		if (T && !T.excited_group)
+		if (T && !T.excited)
 			T.cleanup_group(fire_count)
 		if (MC_TICK_CHECK)
 			return
