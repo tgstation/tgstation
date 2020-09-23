@@ -1,4 +1,0 @@
-author: "Whoneedspacee"
-delete-after: True
-changes: 
-  - bugfix: "Fix ruins overlapping the station and away missions increasing world size."

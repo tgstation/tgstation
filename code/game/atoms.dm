@@ -194,8 +194,8 @@
   * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
-  * * [/turf/Initialize]
-  * * [/turf/open/space/Initialize]
+  * * [/turf/proc/Initialize]
+  * * [/turf/open/space/proc/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -883,7 +883,7 @@
 	return null
 
 /**
-  * This proc is called when an atom in our contents has it's [Destroy][/atom/Destroy] called
+  * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
   *
   * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
   */
@@ -1555,3 +1555,4 @@
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)
+		return TRUE

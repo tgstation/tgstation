@@ -25,6 +25,7 @@ jobs:
       install:
         - tools/travis/install_build_tools.sh
         - tools/travis/install_spaceman_dmm.sh dreamchecker
+        - python3 -m pip install -r tools/mapmerge2/requirements.txt
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/check_changelogs.sh
@@ -32,6 +33,7 @@ jobs:
         - find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
         - tools/travis/build_tgui.sh
         - tools/travis/check_grep.sh
+        - python3 tools/mapmerge2/dmi.py --test
         - ~/dreamchecker
 
     - name: "Compile All Maps"
@@ -82,6 +84,9 @@ jobs:
     - name: "Generate Documentation"
       # Only run for non-PR commits to the real master branch.
       if: branch = master AND head_branch IS blank
+      cache:
+        directories:
+          - $HOME/SpacemanDMM
       install:
         - tools/travis/install_spaceman_dmm.sh dmdoc
       before_script:

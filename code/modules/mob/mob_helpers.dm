@@ -256,7 +256,7 @@
   */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
-	set hidden = 1
+	set hidden = TRUE
 
 	if(!possible_a_intents || !possible_a_intents.len)
 		return
@@ -434,6 +434,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(0)
 		M.key = C.key
+		M.client?.init_verbs()
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -447,7 +448,6 @@
 ///Is the mob a floating mob
 /mob/proc/is_floating()
 	return (movement_type & FLOATING)
-
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()
@@ -510,6 +510,8 @@
 		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
 			dissectionmsg = " via Thorough Dissection"
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
+	if(HAS_TRAIT(src,TRAIT_HUSK))
+		. += "<span class='warning'>This body has been reduced to a grotesque husk.</span>"
 
 /**
   * Get the list of keywords for policy config
