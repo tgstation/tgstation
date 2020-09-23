@@ -1028,6 +1028,7 @@
 #include "code\game\objects\items\singularityhammer.dm"
 #include "code\game\objects\items\spear.dm"
 #include "code\game\objects\items\stunbaton.dm"
+#include "code\game\objects\items\tail_pin.dm"
 #include "code\game\objects\items\taster.dm"
 #include "code\game\objects\items\teleportation.dm"
 #include "code\game\objects\items\teleprod.dm"
