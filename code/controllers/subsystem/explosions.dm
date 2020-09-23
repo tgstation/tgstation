@@ -173,7 +173,7 @@ SUBSYSTEM_DEF(explosions)
 	. = SSexplosions.explode(arglist(args))
 
 #define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
-#define DEVISTATION_PROB 30 //The probability modifier for devistation, maths!
+#define DEVASTATION_PROB 30 //The probability modifier for devistation, maths!
 #define HEAVY_IMPACT_PROB 5 //ditto
 #define FAR_UPPER 60 //Upper limit for the far_volume, distance, clamped.
 #define FAR_LOWER 40 //lower limit for the far_volume, distance, clamped.
@@ -243,7 +243,7 @@ SUBSYSTEM_DEF(explosions)
 		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
 		var/creaking_explosion = FALSE
 
-		if(prob(devastation_range*DEVISTATION_PROB+heavy_impact_range*HEAVY_IMPACT_PROB) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
+		if(prob(devastation_range*DEVASTATION_PROB+heavy_impact_range*HEAVY_IMPACT_PROB) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
 			creaking_explosion = TRUE // prob over 100 always returns true
 
 		for(var/MN in GLOB.player_list)
@@ -384,7 +384,7 @@ SUBSYSTEM_DEF(explosions)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
 #undef CREAK_DELAY
-#undef DEVISTATION_PROB
+#undef DEVASTATION_PROB
 #undef HEAVY_IMPACT_PROB
 #undef FAR_UPPER
 #undef FAR_LOWER
