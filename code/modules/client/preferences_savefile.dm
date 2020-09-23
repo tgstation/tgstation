@@ -76,12 +76,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 38)
 		var/found_block_movement = FALSE
 
-		look_through_bindings:
-			for (var/list/key in key_bindings)
-				for (var/bind in key)
-					if (bind == "block_movement")
-						found_block_movement = TRUE
-						break look_through_bindings
+		for (var/list/key in key_bindings)
+			for (var/bind in key)
+				if (bind == "block_movement")
+					found_block_movement = TRUE
+					break
+			if (found_block_movement)
+				break
 
 		if (!found_block_movement)
 			LAZYADD(key_bindings["Ctrl"], "block_movement")
