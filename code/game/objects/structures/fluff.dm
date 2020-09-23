@@ -283,7 +283,7 @@
 	max_integrity = 5000
 	mouse_opacity = 0
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = TABLE_LAYER
+	layer = 3.9
 	pass_flags = LETPASSTHROW
 	density = FALSE
 	anchored = TRUE
@@ -296,7 +296,18 @@
 	icon_state = "books"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	density = FALSE
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/hop_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the the symbol of a HoP's hat drawn."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "paperwork"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
 
