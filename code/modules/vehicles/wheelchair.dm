@@ -153,9 +153,9 @@
 			return FALSE
 		if(has_buckled_mobs())
 			return FALSE
-		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
-		var/obj/vehicle/ridden/wheelchair/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
+		usr.visible_message("<span class='notice'>[usr] collapses [src].</span>", "<span class='notice'>You collapse [src].</span>")
+		var/obj/vehicle/ridden/wheelchair/W = new foldabletype(get_turf(src))
+		usr.put_in_hands(W)
 		qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use

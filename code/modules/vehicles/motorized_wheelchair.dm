@@ -1,11 +1,11 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
+	can_fold = FALSE
 	max_integrity = 150
 	var/speed = 2
 	var/power_efficiency = 1
 	var/power_usage = 100
-	can_fold = FALSE
 	var/panel_open = FALSE
 	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/manipulator,
