@@ -317,39 +317,46 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	return NO_ADJ_FOUND
 
 
-///Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
+/**
+  * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
+  *
+  * Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
+  *
+*/
 /atom/proc/blob_smooth()
-	. = NONE //junction
+	var/new_junction = NONE
+	. = smoothing_junction
 
 	for(var/direction in GLOB.cardinals) //Cardinal case first.
-		SET_ADJ_IN_DIR(src, ., direction, direction)
+		SET_ADJ_IN_DIR(src, new_junction, direction, direction)
 
-	if(!(. & (NORTH|SOUTH)) || !(. & (EAST|WEST)))
-		smoothing_junction = .
-		icon_state = "[base_icon_state]-[.]"
+	if(!(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
+		smoothing_junction = new_junction
+		icon_state = "[base_icon_state]-[new_junction]"
 		return
 
-	if(. & NORTH_JUNCTION)
-		if(. & WEST_JUNCTION)
-			SET_ADJ_IN_DIR(src, ., NORTHWEST, NORTHWEST_JUNCTION)
+	if(new_junction & NORTH_JUNCTION)
+		if(new_junction & WEST_JUNCTION)
+			SET_ADJ_IN_DIR(src, new_junction, NORTHWEST, NORTHWEST_JUNCTION)
+
+		if(new_junction & EAST_JUNCTION)
+			SET_ADJ_IN_DIR(src, new_junction, NORTHEAST, NORTHEAST_JUNCTION)
+
+	if(new_junction & SOUTH_JUNCTION)
+		if(new_junction & WEST_JUNCTION)
+			SET_ADJ_IN_DIR(src, new_junction, SOUTHWEST, SOUTHWEST_JUNCTION)
 
 		if(. & EAST_JUNCTION)
-			SET_ADJ_IN_DIR(src, ., NORTHEAST, NORTHEAST_JUNCTION)
+			SET_ADJ_IN_DIR(src, new_junction, SOUTHEAST, SOUTHEAST_JUNCTION)
 
-	if(. & SOUTH_JUNCTION)
-		if(. & WEST_JUNCTION)
-			SET_ADJ_IN_DIR(src, ., SOUTHWEST, SOUTHWEST_JUNCTION)
-
-		if(. & EAST_JUNCTION)
-			SET_ADJ_IN_DIR(src, ., SOUTHEAST, SOUTHEAST_JUNCTION)
-
-	smoothing_junction = .
-	icon_state = "[base_icon_state]-[.]"
+	smoothing_junction = new_junction
+	icon_state = "[base_icon_state]-[new_junction]"
 
 
 /turf/closed/blob_smooth()
 	. = ..()
-	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || fixed_underlay)
+	//No diagonal corner behavior, no changes since last smoothing or underlays immutable? No need to update if so.
+	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || . == smoothing_junction || fixed_underlay)
 		return
 	switch(smoothing_junction)
 		if(NORTH_JUNCTION|WEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION, NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION)
