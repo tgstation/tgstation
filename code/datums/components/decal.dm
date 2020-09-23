@@ -13,19 +13,19 @@
 	cleanable = _cleanable
 
 	target.add_overlay(pic)
-	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_icon() //could use some queuing here now maybe.
 	else
-		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon)
+		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
 	if(isitem(target))
-		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon)
-	if(target)
-		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
-	if(target != FALSE)
-		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
-	if(target)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine)
+		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
+	if(_dir)
+		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
+	if(_cleanable)
+		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
+	if(_description)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
