@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes: 
+  - rscadd: "Added custom statues. Create carving block from 5 sheets of material then use a chisel on it."
