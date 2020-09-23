@@ -56,7 +56,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/species_language_holder = /datum/language_holder
 	/// Default mutant bodyparts for this species, like horns. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/default_features = list()
-	/// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by [datum/species/handle_mutant_bodyparts()] below.
+	/// Visible CURRENT bodyparts that are unique to a species.
+	///
+	/// DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
+	/// SHIT UP! Changes to this list for non-species specific bodyparts (ie
+	/// cat ears and tails) should be assigned at organ level if possible.
+	/// Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts]
+	/// below.
 	var/list/mutant_bodyparts = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
@@ -197,7 +203,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * Checks if a species is eligible to be picked at roundstart.
   *
   * Checks the config to see if this species is allowed to be picked in the character setup menu.
-  * Used by [proc/generate_selectable_species].
+  * Used by [/proc/generate_selectable_species].
   */
 /datum/species/proc/check_roundstart_eligible()
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
@@ -240,11 +246,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
 
-/** regenerate_organs
-  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
+/**
+  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
   *
-  * takes all organ slots, removes organs a species should not have, adds organs a species should have.
+  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
   * can use replace_current to refresh all organs, creating an entirely new set.
+  *
   * Arguments:
   * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
   * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.

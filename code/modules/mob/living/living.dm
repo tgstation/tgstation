@@ -709,7 +709,7 @@
 		return
 	..()
 
-///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
 /mob/living/proc/bleedDragAmount()
 	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 	return max(1, brute_ratio * 2)
