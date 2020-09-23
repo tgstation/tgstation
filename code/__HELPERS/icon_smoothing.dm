@@ -34,23 +34,6 @@
 #define SOUTHWEST_JUNCTION	(1<<6)
 #define NORTHWEST_JUNCTION	(1<<7)
 
-#define NO_ADJ_FOUND 0
-#define ADJ_FOUND 1
-#define NULLTURF_BORDER 2
-
-#define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
-#define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
-
-
-DEFINE_BITFIELD(smoothing_flags, list(
-	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
-	"SMOOTH_BLOB" = SMOOTH_BLOB,
-	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
-	"SMOOTH_BORDER" = SMOOTH_BORDER,
-	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
-	"SMOOTH_OBJ" = SMOOTH_OBJ,
-))
-
 DEFINE_BITFIELD(smoothing_junction, list(
 	"NORTH_JUNCTION" = NORTH_JUNCTION,
 	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
@@ -61,6 +44,14 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	"SOUTHWEST_JUNCTION" = SOUTHWEST_JUNCTION,
 	"NORTHWEST_JUNCTION" = NORTHWEST_JUNCTION,
 ))
+
+
+#define NO_ADJ_FOUND 0
+#define ADJ_FOUND 1
+#define NULLTURF_BORDER 2
+
+#define DEFAULT_UNDERLAY_ICON 			'icons/turf/floors.dmi'
+#define DEFAULT_UNDERLAY_ICON_STATE 	"plating"
 
 
 #define SET_ADJ_IN_DIR(source, junction, direction, direction_flag) \
