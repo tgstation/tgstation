@@ -74094,6 +74094,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"qns" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/main)
 "qoc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
