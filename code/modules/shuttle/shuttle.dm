@@ -713,10 +713,7 @@
 
 // returns 5-letter timer string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getTimerStr()
-	if(mode == SHUTTLE_STRANDED)
-		return "--:--"
-
-	if(mode == SHUTTLE_DISABLED)
+	if(mode == SHUTTLE_STRANDED || mode == SHUTTLE_DISABLED)
 		return "--:--"
 
 	var/timeleft = timeLeft()
