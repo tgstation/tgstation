@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Vatbeasts, gelatinous cubes, and sholean grapes are visible after being revived now"

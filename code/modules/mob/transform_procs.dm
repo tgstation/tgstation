@@ -135,7 +135,7 @@
 		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
 		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
 		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
-		O.Sleeping(AmountSleeping(), ignore_canstun = TRUE)
+		O.Sleeping(AmountSleeping())
 
 	//transfer reagents
 	if(tr_flags & TR_KEEPREAGENTS)
@@ -238,8 +238,6 @@
 
 	if(suiciding)
 		O.set_suicide(suiciding)
-	if(hellbound)
-		O.hellbound = hellbound
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
@@ -314,7 +312,7 @@
 		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
 		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
 		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
-		O.Sleeping(AmountSleeping(), ignore_canstun = TRUE)
+		O.Sleeping(AmountSleeping())
 
 	//transfer reagents
 	if(tr_flags & TR_KEEPREAGENTS)

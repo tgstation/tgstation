@@ -60,6 +60,21 @@
 	L.end_look_down()
 	return TRUE
 
+/datum/keybinding/living/rest
+	hotkey_keys = list("U")
+	name = "rest"
+	full_name = "Rest"
+	description = "Lay down, or get up."
+	keybind_signal = COMSIG_KB_LIVING_REST_DOWN
+
+/datum/keybinding/living/rest/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_mob = user.mob
+	living_mob.lay_down()
+	return TRUE
+
 /datum/keybinding/living/toggle_combat_mode
 	hotkey_keys = list("F", "4")
 	name = "toggle combat_mode"

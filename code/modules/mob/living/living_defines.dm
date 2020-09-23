@@ -50,7 +50,7 @@
 
 	var/list/surgeries = list()	///a list of surgery datums. generally empty, they're added when the player wants them.
 
-	var/now_pushing = null ///used by [living/Bump()][/mob/living/Bump] and [living/PushAM()][/mob/living/PushAM] to prevent potential infinite loop.
+	var/now_pushing = null //! Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
@@ -97,8 +97,6 @@
 	var/list/guaranteed_butcher_results = null ///these will always be yielded from butchering
 	var/butcher_difficulty = 0 ///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 
-	var/hellbound = 0 ///People who've signed infernal contracts are unrevivable.
-
 	var/list/weather_immunities
 
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
@@ -137,9 +135,6 @@
 	var/list/disease_resistances
 
 	var/slowed_by_drag = TRUE ///Whether the mob is slowed down when dragging another prone mob
-
-	var/list/ownedSoullinks //soullinks we are the owner of
-	var/list/sharedSoullinks //soullinks we are a/the sharer of
 
 	/// List of changes to body temperature, used by desease symtoms like fever
 	var/list/body_temp_changes = list()
