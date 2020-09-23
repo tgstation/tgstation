@@ -14,12 +14,9 @@
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
 
-/atom/movable/cryo_occupant_vis/New(obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
-	cryo = cryo_
-	return ..()
-
-/atom/movable/cryo_occupant_vis/Initialize()
+/atom/movable/cryo_occupant_vis/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
 	. = ..()
+	cryo = cryo_
 	// Alpha masking
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
@@ -106,7 +103,7 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-	occupant_vis = new(src)
+	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
