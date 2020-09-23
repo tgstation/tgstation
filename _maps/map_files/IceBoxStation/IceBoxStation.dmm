@@ -14091,12 +14091,8 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aFA" = (
-/obj/machinery/computer/pod/old{
-	density = 0;
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "chapelgun";
-	name = "Mass Driver Controller";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -19826,6 +19822,9 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
+/obj/item/chisel{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTH" = (
@@ -26952,12 +26951,12 @@
 	pixel_y = 4;
 	req_access_txt = "12"
 	},
-/obj/machinery/button/massdriver{
+/obj/structure/chair/stool,
+/obj/machinery/computer/pod/old/mass_driver_controller{
 	id = "trash";
-	pixel_x = -26;
+	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/structure/chair/stool,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bkC" = (
@@ -36799,6 +36798,10 @@
 	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/loading_area,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "toxinsdriver";
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bKi" = (
@@ -47833,10 +47836,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cBA" = (
-/obj/machinery/button/massdriver{
-	id = "toxinsdriver";
-	pixel_y = 24
-	},
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
