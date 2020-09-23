@@ -20268,6 +20268,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/storage/box/syringes,
+/obj/item/toy/figure/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bbS" = (
@@ -20552,13 +20554,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "bcs" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	req_access_txt = "48;50"
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "bct" = (
 /obj/effect/turf_decal/tile/brown{
@@ -21356,27 +21352,6 @@
 /turf/open/floor/grass,
 /area/science/genetics)
 "bfo" = (
-/obj/item/crowbar/red,
-/obj/item/cultivator,
-/obj/item/shovel/spade,
-/obj/item/hatchet,
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/reagent_containers/spray/plantbgone{
-	pixel_x = 12;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/bucket,
-/obj/structure/closet/crate/hydroponics,
-/obj/effect/turf_decal/delivery,
-/obj/item/wrench,
-/obj/item/wirecutters,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/hydroponics)
-"bfp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
@@ -21757,6 +21732,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bgz" = (
@@ -21774,6 +21750,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+/obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bgA" = (
@@ -21784,6 +21761,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bgC" = (
@@ -21942,6 +21920,7 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bgX" = (
@@ -23993,16 +23972,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/hallway/secondary/exit)
-"bsJ" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "bsM" = (
 /obj/machinery/power/port_gen/pacman,
@@ -29798,15 +29767,25 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "jqM" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/syringes,
-/obj/effect/turf_decal/bot,
-/obj/item/toy/figure/botanist,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/item/crowbar/red,
+/obj/item/cultivator,
+/obj/item/shovel/spade,
+/obj/item/hatchet,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = 12;
+	pixel_y = 3
 	},
+/obj/item/reagent_containers/glass/bucket,
+/obj/structure/closet/crate/hydroponics,
+/obj/effect/turf_decal/delivery,
+/obj/item/wrench,
+/obj/item/wirecutters,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/hydroponics";
@@ -29814,7 +29793,6 @@
 	name = "Hydroponics APC";
 	pixel_x = -26
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "jti" = (
@@ -34885,6 +34863,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "rmj" = (
@@ -37159,14 +37138,6 @@
 "sKP" = (
 /turf/closed/wall,
 /area/hallway/secondary/exit)
-"sKQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/engine/engineering)
 "sKW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -37544,7 +37515,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -37853,7 +37823,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "sNo" = (
@@ -37973,7 +37942,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "sNB" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -68922,7 +68890,7 @@ gPY
 ndg
 rVs
 sFY
-sKQ
+bjQ
 sMD
 sNB
 aMA
@@ -72793,7 +72761,7 @@ sMZ
 prL
 nFj
 xTH
-uWc
+gax
 rjg
 kwu
 xDj
@@ -73797,7 +73765,7 @@ aOr
 sJG
 aKG
 baZ
-bfp
+bao
 bhY
 bmb
 byl
@@ -85107,8 +85075,8 @@ aZa
 blr
 sKP
 bys
+sKP
 bcs
-blr
 sKP
 sKP
 wdt
@@ -85363,7 +85331,7 @@ aYi
 aZb
 aZU
 baN
-blr
+bcs
 bct
 bdl
 beg
@@ -86392,7 +86360,7 @@ aXC
 bbM
 bcx
 blr
-bsJ
+bbL
 bdp
 kit
 sKP
