@@ -608,7 +608,7 @@
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasmawindow"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 250
+	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_CORNERS
@@ -706,7 +706,7 @@
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 350
+	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
