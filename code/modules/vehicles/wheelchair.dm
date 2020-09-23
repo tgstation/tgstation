@@ -132,7 +132,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
-	var/unfolded_type = /obj/vehicle/ridden/wheelchair/ //Determines what the wheelchair unfolds into
+	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 	custom_materials = list(/datum/material/iron = 10000)
 
 /obj/item/wheelchair/gold
@@ -154,14 +154,14 @@
 		if(has_buckled_mobs())
 			return FALSE
 		usr.visible_message("<span class='notice'>[usr] collapses [src].</span>", "<span class='notice'>You collapse [src].</span>")
-		var/obj/vehicle/ridden/wheelchair/W = new foldabletype(get_turf(src))
-		usr.put_in_hands(W)
+		var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
+		usr.put_in_hands(wheelchair_folded)
 		qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
-	var/obj/vehicle/ridden/wheelchair/R = new unfolded_type(location)
-	R.add_fingerprint(user)
+	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)
+	wheelchair_unfolded.add_fingerprint(user)
 	qdel(src)
