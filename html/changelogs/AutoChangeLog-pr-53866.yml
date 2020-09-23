@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being unable to build scooters from manually crafted skateboards"
