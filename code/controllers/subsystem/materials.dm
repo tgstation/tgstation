@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(materials)
 	material_combos = list()
 	for(var/type in subtypesof(/datum/material))
 		var/datum/material/ref = type
-		if(!(initial(ref.material_flags) & MATERIAL_INIT_MAPLOAD))
+		if(!(initial(ref.init_flags) & MATERIAL_INIT_MAPLOAD))
 			continue // Do not initialize
 
 		ref = new ref
