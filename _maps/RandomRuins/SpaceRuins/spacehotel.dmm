@@ -1931,8 +1931,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/item/gps{
-	gpstag = "Twin-Nexus Hotel Retreat";
+/obj/item/gps/spaceruin{
 	name = "hotel gps"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -1943,6 +1942,7 @@
 "gx" = (
 /obj/structure/table,
 /obj/item/screwdriver,
+/obj/item/gps/spaceruin,
 /obj/item/multitool,
 /obj/item/wirecutters,
 /obj/machinery/light{

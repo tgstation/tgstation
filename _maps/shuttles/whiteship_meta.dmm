@@ -1688,11 +1688,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/gps{
-	gpstag = "NTREC1";
-	pixel_x = -9;
-	pixel_y = 7
-	},
 /obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 7

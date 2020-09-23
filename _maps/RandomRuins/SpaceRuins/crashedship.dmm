@@ -1066,6 +1066,7 @@
 /area/awaymission/bmpship/fore)
 "ee" = (
 /obj/structure/table,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/carpet,
 /area/awaymission/bmpship/fore)
 "ef" = (
@@ -1263,6 +1264,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "eS" = (
@@ -1701,7 +1703,7 @@
 /area/awaymission/bmpship/aft)
 "gE" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/head/helmet/space/syndicate/green/dark,
+/obj/item/clothing/head/helmet/space/eva,
 /obj/effect/gibspawner/generic,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
@@ -1760,7 +1762,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "gQ" = (
-/obj/item/clothing/suit/space/syndicate/green/dark,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plating/asteroid/airless,
 /area/awaymission/bmpship)
 "gR" = (
@@ -1837,15 +1839,9 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
-"hj" = (
-/obj/structure/closet/crate,
-/obj/item/stack/spacecash/c10,
-/obj/item/stack/spacecash/c200,
-/turf/open/floor/plasteel,
-/area/awaymission/bmpship/aft)
 "hk" = (
 /obj/structure/closet/crate,
-/obj/item/stack/spacecash/c10,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/aft)
 "hl" = (
@@ -1920,6 +1916,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
+"IA" = (
+/obj/structure/table,
+/obj/item/gps/spaceruin,
+/turf/open/floor/carpet,
+/area/awaymission/bmpship/fore)
 "Kj" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2340,7 +2341,7 @@ aa
 aI
 hE
 bV
-ee
+IA
 Xc
 Xc
 ee
@@ -4088,7 +4089,7 @@ gz
 gg
 dl
 cE
-hj
+hk
 ht
 ho
 aj

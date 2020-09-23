@@ -5,6 +5,10 @@
 	shuttleId = "whiteship"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;whiteship_custom"
 
+/obj/machinery/computer/shuttle/white_ship/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	AddComponent(/datum/component/gps/item, SPACE_SIGNAL_GPSTAG)
+
 /obj/machinery/computer/shuttle/white_ship/pod
 	name = "Salvage Pod Console"
 	desc = "Used to control the Salvage Pod."

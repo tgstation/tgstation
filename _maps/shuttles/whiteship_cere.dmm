@@ -327,11 +327,6 @@
 /area/shuttle/abandoned)
 "aP" = (
 /obj/structure/table,
-/obj/item/gps{
-	gpstag = "NTCONST1";
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light{
 	dir = 1

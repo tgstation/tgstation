@@ -104,7 +104,8 @@
 /obj/structure/table/glass,
 /obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/hardsuit/engine/elite,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
