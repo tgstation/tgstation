@@ -1986,7 +1986,6 @@
 "eF" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
-/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eG" = (

@@ -13,7 +13,7 @@
 		return
 
 	if(user.has_language(language))
-		to_chat(user, "<span class='boldwarning'>You start skimming through [src], but you already know [language].</span>")
+		to_chat(user, "<span class='boldwarning'>You start skimming through [src], but you already know [initial(language.name)].</span>")
 		return
 
 	to_chat(user, "<span class='boldannounce'>You start skimming through [src], and [flavour_text].</span>")

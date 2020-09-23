@@ -1942,7 +1942,6 @@
 "gx" = (
 /obj/structure/table,
 /obj/item/screwdriver,
-/obj/item/gps/spaceruin,
 /obj/item/multitool,
 /obj/item/wirecutters,
 /obj/machinery/light{
