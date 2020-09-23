@@ -1,7 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Dismemberment will no longer lead to phantom scars showing up on a person's missing limbs. Insert your own MGSV joke here."
-  - bugfix: "Fixed some bad logic that made self-treating severe/critical broken bones with bone gel have 63%/83% base fail rates, instead of 25%/45% as intended. As such, self-treating these wounds is now far less likely to fail, though you'll still have to wait for the effect."
-  - tweak: "The bonuses to the above self-treatment success rates from drunkenness, morphine, and determination are a bit higher as well."
-  - tweak: "You can now see what wound types a detached limb is suffering by inspecting it"

@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Projectiles now properly display impact messages on people as well as blood impact splatters"
-  - bugfix: "Embedded objects now properly use the \"a\" article rather than \"the\" when relevant"

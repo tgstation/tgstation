@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Some fixes to map_template.load() to make it less runtime."

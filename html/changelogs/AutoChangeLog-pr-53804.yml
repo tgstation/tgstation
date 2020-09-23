@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - tweak: "Makes the darkblade fit on your back instead of your belt."
-  - imageadd: "Adds a whole bunch of missing sprites for: the nullrod, cult blade, spellblade, claymores and dark scythe, among others."
-  - imageadd: "Updates the on-mobs for shotguns a little, and fixes several high powered firearms being concealable in suit storage slots."
-  - imageadd: "Makes stunprods visible in suit storage slots."
-  - imageadd: "Knife sprites for you belt and suit storage!"
