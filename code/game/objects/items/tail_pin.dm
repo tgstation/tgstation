@@ -19,13 +19,13 @@
 	name = "party game poster"
 	poster_type = /obj/structure/sign/poster/party_game
 	icon_state = "rolled_poster"
-	poster_item_name = "party game poster"
-	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
 /obj/structure/sign/poster/party_game
 	name = "pin the tail on the corgi"
 	desc = "The rules are simple, pin the tail on the corgi, while blindfolded. Are you a bad enough dude to hit the target?"
 	icon_state = "pinningposter"
+	poster_item_name = "party game poster"
+	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
 /obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
 	. = ..()
