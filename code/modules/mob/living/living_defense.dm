@@ -405,6 +405,18 @@
 	..()
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
+/mob/living/proc/do_slap_animation(atom/A)
+	do_attack_animation(A, no_effect=TRUE)
+	var/image/I = image('icons/effects/effects.dmi', A, "slapglove", A.layer + 0.1)
+	I.pixel_y = 10 // should line up with head
+	I.pixel_x = 10
+	flick_overlay(I, GLOB.clients, 10)
+
+	// And animate the attack!
+	animate(I, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
+
 /** Handles exposing a mob to reagents.
   *
   * If the methods include INGEST the mob tastes the reagents.

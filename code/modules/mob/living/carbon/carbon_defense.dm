@@ -242,9 +242,19 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
+	var/aimming_for_mouth  = zone_selected == BODY_ZONE_PRECISE_MOUTH
+	if(aimming_for_mouth)
+		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+		var/target_restrained = target.restrained()
+		if(target_on_help_and_unarmed || target_restrained)
+			do_slap_animation(target)
+			playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
+				"<span class='notice'>You slap [target] in the face! </span>",\
+			"You hear a slap.")
+			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -431,11 +441,11 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		
+
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-					
+
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
