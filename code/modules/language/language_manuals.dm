@@ -4,7 +4,7 @@
 	/// Number of charges the book has, limits the number of times it can be used.
 	var/charges = 1
 	/// Path to a language datum that the book teaches.
-	var/language = /datum/language/common
+	var/datum/language/language = /datum/language/common
 	/// Flavour text to display when the language is successfully learned.
 	var/flavour_text = "suddenly your mind is filled with codewords and responses"
 
@@ -70,23 +70,23 @@
 		/datum/language/moffic, \
 		/datum/language/calcic \
 	)
-	name = "[language] manual"
-	desc = "The book's cover reads: \"[language] for Xenos - Learn common galactic tongues in seconds.\""
-	flavour_text = "you feel empowered with a mastery over [language]"
+	name = "[initial(language.name)] manual"
+	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
+	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"
 
 /obj/item/language_manual/roundstart_species/unlimited
 	charges = INFINITY
 
 /obj/item/language_manual/roundstart_species/unlimited/Initialize()
 	. = ..()
-	name = "deluxe [language] manual"
+	name = "deluxe [initial(language.name)] manual"
 
 /obj/item/language_manual/roundstart_species/five
 	charges = 5
 
 /obj/item/language_manual/roundstart_species/five/Initialize()
 	. = ..()
-	name = "extended [language] manual"
+	name = "extended [initial(language.name)] manual"
 
 // So drones can teach borgs and AI dronespeak. For best effect, combine with mother drone lawset.
 /obj/item/language_manual/dronespeak_manual

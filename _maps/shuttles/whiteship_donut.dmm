@@ -491,7 +491,7 @@
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "bs" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,

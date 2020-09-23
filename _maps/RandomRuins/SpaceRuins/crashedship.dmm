@@ -827,6 +827,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "dg" = (
@@ -1906,9 +1907,29 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/midship)
+"DS" = (
+/obj/machinery/hydroponics,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/space/rareseed,
+/turf/open/floor/plasteel,
+/area/awaymission/bmpship/midship)
 "EQ" = (
 /obj/structure/lattice,
 /turf/template_noop,
+/area/awaymission/bmpship/midship)
+"GF" = (
+/obj/machinery/hydroponics,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/space/rareseed,
+/turf/open/floor/plasteel,
 /area/awaymission/bmpship/midship)
 "Hy" = (
 /obj/machinery/door/poddoor/shutters{
@@ -2899,7 +2920,7 @@ bv
 aq
 bZ
 bZ
-bZ
+GF
 dc
 dg
 dB
@@ -3152,7 +3173,7 @@ aa
 aa
 aa
 aq
-cd
+DS
 cd
 cd
 df

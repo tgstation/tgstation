@@ -561,7 +561,6 @@
 
 /obj/effect/spawner/lootdrop/space
 	name = "generic space ruin loot spawner"
-	lootdoubles = FALSE
 	lootcount = 1
 
 /// Space loot spawner. Randomlu picks 5 wads of space cash.
@@ -611,12 +610,31 @@
 		/obj/item/crowbar/red/caravan = 1
 	)
 
-/// Space loot spawner. Intended for use in ruin storage rooms. Few random bits and bobs.
-/obj/effect/spawner/lootdrop/space/storageroom
-	lootcount = 3
+/// Space loot spawner. A bunch of rarer seeds. /obj/item/seeds/random is not a random seed, but an exotic seed.
+/obj/effect/spawner/lootdrop/space/rareseed
+	lootcount = 5
 	loot = list(
-		/obj/item/seeds/random = 300,
-		/obj/item/language_manual/roundstart_species = 20,
+		/obj/item/seeds/random = 30,
+		/obj/item/seeds/angel = 1,
+		/obj/item/seeds/glowshroom/glowcap = 1,
+		/obj/item/seeds/glowshroom/shadowshroom = 1,
+		/obj/item/seeds/liberty = 5,
+		/obj/item/seeds/nettle/death = 1,
+		/obj/item/seeds/plump/walkingmushroom = 1,
+		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/cannabis/rainbow = 1,
+		/obj/item/seeds/cannabis/death = 1,
+		/obj/item/seeds/cannabis/white = 1,
+		/obj/item/seeds/cannabis/ultimate = 1,
+		/obj/item/seeds/replicapod = 5,
+		/obj/item/seeds/kudzu = 1
+	)
+
+/// Space loot spawner. A single roundstart species language book.
+/obj/effect/spawner/lootdrop/space/languagebook
+	lootcount = 1
+	loot = list(
+		/obj/item/language_manual/roundstart_species = 100,
 		/obj/item/language_manual/roundstart_species/five = 3,
 		/obj/item/language_manual/roundstart_species/unlimited = 1
 	)

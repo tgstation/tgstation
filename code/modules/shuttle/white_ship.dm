@@ -5,7 +5,10 @@
 	shuttleId = "whiteship"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;whiteship_custom"
 
-/obj/machinery/computer/shuttle/white_ship/Initialize(mapload, obj/item/circuitboard/C)
+/// Console used on the whiteship bridge. Comes with GPS pre-baked.
+/obj/machinery/computer/shuttle/white_ship/bridge
+
+/obj/machinery/computer/shuttle/white_ship/bridge/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	AddComponent(/datum/component/gps, SPACE_SIGNAL_GPSTAG)
 

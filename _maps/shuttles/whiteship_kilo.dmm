@@ -1182,7 +1182,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "cf" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 4
 	},
 /obj/machinery/light{

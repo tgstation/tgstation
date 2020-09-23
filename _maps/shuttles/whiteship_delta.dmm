@@ -1186,7 +1186,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "ch" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
