@@ -349,6 +349,7 @@
 	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
 		var/turf/B = L
 		atoms += B//atoms = atoms + B, turfs are atoms
+		//newatoms += B //WHY GOD WHY DO YOU HATE ME FOR TRYIIIIIIIIIIING
 		areas |= B.loc //areas = areas|B.loc
 		for(var/atom/A in B)//does this look for the contents in the turf represented by B?
 			if (!(A.flags_1 & INITIALIZED_1))
@@ -376,7 +377,7 @@
 
 
 	SSmapping.reg_in_areas_in_z(areas)
-	//SSatoms.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(atoms)
 	SSatoms.InitializeAtoms(newatoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
@@ -391,21 +392,32 @@
 	if(program == map_id)//if the program is the same as the corresponding area
 		return*/
 
-	program = map_id //<- dont forget this
-
+	program = map_id
+	/*if (spawned)
+		for (var/atom/item in spawned)
+			if(item.type != /turf)
+				derez(item, !force)//this is what actually deletes everything when programs change
+				*/
 	//template = SSmapping.holodeck_templates[template_id]
 	template = SSmapping.holodeck_templates[map_id]
 	//prepare_holodeck_area()
 	//template.load(bottom_left, FALSE)
 	//spawned = template.load(bottom_left, FALSE) //write another proc that just gets the atoms from holodeckTemplateBounds()?
 
-	//BOUNDS ARE JUST COORDINATES AHHHHHHHHHHHHHHHHHHHHHHH
 	template.load(bottom_left, FALSE)
 	//if (!spawned.len)
 	spawned = template.spawned_atoms
-
-
+	for (var/atom/atom in spawned)
+		if (atom.flags_1 & INITIALIZED_1)
+			atom.flags_1 |= HOLOGRAM_1
+	//finish_spawn()
 	current_holodeck_area = get_area(bottom_left)
+
+	/*for(var/obj/machinery/M in spawned)
+		M.flags_1 |= NODECONSTRUCT_1
+	for(var/obj/structure/S in spawned)
+		S.flags_1 |= NODECONSTRUCT_1
+	effects = list()*/
 	//linked is the argument in place of the copy_contents area/A parameter
 	//map.load places templates on a TURF, copy_contents copies to an entire area
 
@@ -428,8 +440,8 @@
 		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
-	/*// Emagging a machine creates an anomaly in the derez systems.
-	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)
+	// Emagging a machine creates an anomaly in the derez systems.
+	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)//if O exists, and the holodeck computer is emagged, and machine_stat is FALSE, and forced is FALSE
 		if((ismob(O) || ismob(O.loc)) && prob(50))
 			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
 			return
@@ -445,7 +457,7 @@
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
-		qdel(O)*/
+		qdel(O)
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
