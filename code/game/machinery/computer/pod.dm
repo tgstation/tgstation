@@ -134,10 +134,9 @@
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = "no_keyboard"
-	density = 0
 
 /obj/machinery/computer/pod/old/mass_driver_controller
-	name = "Mass Driver Controller"
+	name = "\improper Mass Driver Controller"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	icon_keyboard = "no_keyboard"

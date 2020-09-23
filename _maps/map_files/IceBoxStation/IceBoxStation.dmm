@@ -55666,16 +55666,6 @@
 	dir = 8
 	},
 /area/science/research)
-"vdL" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "chapelgun";
-	pixel_x = 24
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
 "vdT" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -108746,7 +108736,7 @@ bky
 boP
 boP
 boP
-vdL
+bwo
 asU
 bwo
 boP
