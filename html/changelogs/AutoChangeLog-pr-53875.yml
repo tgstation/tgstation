@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The AI can now move its camera up z-levels as well as down by using the option in the IC tab. If you're an AI and you can't see anything, your camera may be on the wrong Z-level. Try moving it up or returning hitting the button to return to your core."
