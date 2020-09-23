@@ -335,6 +335,17 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/haunted_tv
+	name = "Television"
+	desc = "Hey, where did the signal go?"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "haunted_tv"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/unfinished_placeholder // meant so I can reveal a missing structure more easily.
 	name = "FINISH THIS LATER"
 	desc = "guys, someone code it in pls"
