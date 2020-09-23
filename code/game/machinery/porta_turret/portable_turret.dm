@@ -37,7 +37,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
 	power_channel = AREA_USAGE_EQUIP	//drains power from the EQUIPMENT channel
-	max_integrity = 160		//the turret's health
+	max_integrity = 9999		//the turret's health
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
@@ -282,75 +282,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		update_icon()
 		remove_control()
 	check_should_process()
-
-/obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
-	if(machine_stat & BROKEN)
-		if(I.tool_behaviour == TOOL_CROWBAR)
-			//If the turret is destroyed, you can remove it with a crowbar to
-			//try and salvage its components
-			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
-			if(I.use_tool(src, user, 20))
-				if(prob(70))
-					if(stored_gun)
-						stored_gun.forceMove(loc)
-						stored_gun = null
-					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
-					if(prob(50))
-						new /obj/item/stack/sheet/metal(loc, rand(1,4))
-					if(prob(50))
-						new /obj/item/assembly/prox_sensor(loc)
-				else
-					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
-				qdel(src)
-
-	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
-		if(raised)
-			return
-
-		//This code handles moving the turret around. After all, it's a portable turret!
-		if(!anchored && !isinspace())
-			set_anchored(TRUE)
-			invisibility = INVISIBILITY_MAXIMUM
-			update_icon()
-			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
-				cover.parent_turret = src //make the cover's parent src
-		else if(anchored)
-			set_anchored(FALSE)
-			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
-			power_change()
-			invisibility = 0
-			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
-
-	else if(I.GetID())
-		//Behavior lock/unlock mangement
-		if(allowed(user))
-			locked = !locked
-			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
-		else
-			to_chat(user, "<span class='alert'>Access denied.</span>")
-	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
-	else
-		return ..()
-
-/obj/machinery/porta_turret/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	audible_message("<span class='hear'>[src] hums oddly...</span>")
-	obj_flags |= EMAGGED
-	controllock = TRUE
-	toggle_on(FALSE) //turns off the turret temporarily
-	update_icon()
-	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	addtimer(CALLBACK(src, .proc/toggle_on, TRUE), 6 SECONDS)
-	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 /obj/machinery/porta_turret/emp_act(severity)
 	. = ..()
@@ -748,10 +679,10 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
 	shot_delay = 3
-	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
-	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
-	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile = /obj/projectile/curse_hand
+	lethal_projectile = /obj/projectile/curse_hand
+	lethal_projectile_sound = list('sound/hallucinations/im_here2.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/look_up1.ogg')
+	stun_projectile_sound = list('sound/hallucinations/im_here2.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/look_up1.ogg')
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
