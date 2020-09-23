@@ -19,6 +19,8 @@
 	name = "party game poster"
 	poster_type = /obj/structure/sign/poster/party_game
 	icon_state = "rolled_poster"
+	poster_item_name = "party game poster"
+	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
 /obj/structure/sign/poster/party_game
 	name = "pin the tail on the corgi"
