@@ -176,7 +176,7 @@
   *
   * Use for atoms performing visible actions
   *
-  * message is output to anyone who can see, e.g. "The [src] does something!"
+  * message is output to anyone who can see, e.g. `"The [src] does something!"`
   *
   * Vars:
   * * self_message (optional) is what the src mob sees e.g. "You do something!"
@@ -603,6 +603,8 @@
 	var/D = dir
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
+
+	flags_1 |= IS_SPINNING_1
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -616,6 +618,7 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
+	flags_1 &= ~IS_SPINNING_1
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()

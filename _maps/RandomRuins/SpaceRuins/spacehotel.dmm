@@ -3,13 +3,14 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
+/obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ad" = (
 /obj/machinery/power/solar,
 /obj/structure/cable,
