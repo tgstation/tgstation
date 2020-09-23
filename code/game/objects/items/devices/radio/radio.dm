@@ -199,7 +199,7 @@
 				return FALSE
 			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
 				return FALSE
-			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED)
+			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED))
 				return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
