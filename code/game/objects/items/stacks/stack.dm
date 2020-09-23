@@ -76,6 +76,9 @@
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_BASE_RECIPES)
+					var/list/temp = SSmaterials.base_stack_recipes.Copy()
+					recipes += temp
+				if(MAT_CATEGORY_RIGID)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
