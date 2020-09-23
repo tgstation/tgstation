@@ -107,12 +107,10 @@
 		if(100 to 200)
 			. += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>"
 
-	var/appears_dead = FALSE
+	var/appears_dead = looks_dead()
 	var/just_sleeping = FALSE
 
-	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-		appears_dead = TRUE
-
+	if(appears_dead)
 		var/obj/item/clothing/glasses/G = get_item_by_slot(ITEM_SLOT_EYES)
 		var/are_we_in_weekend_at_bernies = G?.tint && buckled && istype(buckled, /obj/vehicle/ridden/wheelchair)
 

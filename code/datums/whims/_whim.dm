@@ -28,6 +28,8 @@
 	var/list/allowed_mobtypes
 	/// Most whims are based around some kind of atom the owner moves or interacts with (like the mouse a cat is hunting). This should refer to their primary target.
 	var/atom/concerned_target
+	/// Some whims require the owner to "carry" an item with them for some time. This is a convenience var you can store it in
+	var/obj/item/carried_cargo
 	/// How many times this whim has ticked since it was first activated, for use with checking if we're too frustrated to continue
 	var/ticks_since_activation
 	/// How many ticks it takes without any intervention for us to give up and abandon this whim
@@ -36,7 +38,7 @@
 	var/abandon_rescan_length = 5 SECONDS
 	/// The actual cooldown tracker
 	COOLDOWN_DECLARE(cooldown_abandon_rescan)
-	/// Not currently in use, would let you prioritize lower numbers over higher numbers for activation
+	/// Not currently in use, would let you prioritize lower numbers over higher numbers for activation given multiple whims trying to scan the same tick
 	var/priority = 1
 
 	/// Most whims involve scanning the area around you for stuff. Use this for your most frequent scan, so we can tell how expensive this whim is per scan at a glance.
@@ -44,12 +46,13 @@
 	/// We only check [/datum/whim/proc/can_start] every so many ticks. If your whim has a particularly expensive scan (large radius, lots of calcs, etc) you should scan less frequently.
 	var/scan_every = 3
 
-
+	/// i was dumb and made catnip make cats lay down to eat catfood, so i need this, will probably remove soon
 	var/allow_resting = FALSE
+	/// Whims automatically block [/mob/living/simple_animal/proc/handle_automated_action] and [/mob/living/simple_animal/proc/handle_automated_movement] when active, this lets you choose whether to block speech & emotes too
+	var/blocks_auto_speech = FALSE
 
 /// Sets up the connections between the owner and their live_whims lists and such
 /datum/whim/New(mob/living/simple_animal/attached_owner)
-	testing("hi [attached_owner]")
 	owner = attached_owner
 	LAZYADD(owner.live_whims, src)
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/owner_examined)
@@ -80,7 +83,26 @@
 	concerned_target = new_target
 	owner.current_whim = src
 	ticks_since_activation = 0
+	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/abandon)
 	return TRUE
+
+/**
+  * The counterpart to [/datum/whim/proc/activate], this is what retires our whim from the mob's current_whim and allows the mob's own Life() or another whim to take control
+  *
+  * As mentioned in activate(), you should be resetting any instance variables you won't need in future iterations of this behavior, so that no loose ends are left behind.
+  */
+/datum/whim/proc/abandon()
+	SHOULD_CALL_PARENT(TRUE)
+	if(owner)
+		testing("[owner] abandoning [name]")
+		owner.current_whim = null
+		UnregisterSignal(owner, COMSIG_MOB_DEATH)
+		if(carried_cargo && owner && carried_cargo.loc == owner)
+			carried_cargo.forceMove(owner.drop_location())
+	carried_cargo = null
+	concerned_target = null
+	state = WHIM_INACTIVE
+	COOLDOWN_START(src, cooldown_abandon_rescan, abandon_rescan_length)
 
 /**
   * Don't change this or overwrite it in child procs (unless you have a reason I guess). This performs standard scan freq and abandon cooldown checks, then passes the torch to [/datum/whim/proc/inner_can_start]
@@ -107,20 +129,6 @@
 	return TRUE
 
 /**
-  * The counterpart to [/datum/whim/proc/activate], this is what retires our whim from the mob's current_whim and allows the mob's own Life() or another whim to take control
-  *
-  * As mentioned in activate(), you should be resetting any instance variables you won't need in future iterations of this behavior, so that no loose ends are left behind.
-  */
-/datum/whim/proc/abandon()
-	SHOULD_CALL_PARENT(TRUE)
-	if(owner)
-		testing("[owner] abandoning [name]")
-		owner.current_whim = null
-	concerned_target = null
-	state = WHIM_INACTIVE
-	COOLDOWN_START(src, cooldown_abandon_rescan, abandon_rescan_length)
-
-/**
   * The actual ticking behavior that drives the whim's behavior. This is nominally run every Life() tick, but certain conditions may interrupt a running whim like the mob being buckled or gaining a mind
   *
   * While your control being paused because someone tied Ian to a chair can be jarring, at least you won't have to write constant checks for seeing if your mob is alive and conscious and unrestricted.
@@ -129,7 +137,7 @@
   */
 /datum/whim/proc/tick()
 	ticks_since_activation++
-	if(ticks_since_activation > ticks_to_frustrate)
+	if(ticks_to_frustrate && (ticks_since_activation > ticks_to_frustrate))
 		abandon()
 		return FALSE
 	return

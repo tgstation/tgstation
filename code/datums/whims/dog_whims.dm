@@ -6,12 +6,6 @@
 	scan_radius = 5
 	scan_every = 4
 	abandon_rescan_length = 12 SECONDS
-	/// If the dog is in possession of a ball, it's stored here, though there's no reason it can't be expanded to other stuff to.
-	var/obj/item/carried_bball
-
-/datum/whim/airbud_bball/abandon()
-	carried_bball = null
-	return ..()
 
 /datum/whim/airbud_bball/inner_can_start()
 	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
@@ -39,7 +33,7 @@
 		abandon()
 		return
 
-	if(carried_bball && carried_bball == concerned_target)
+	if(carried_cargo && carried_cargo == concerned_target)
 		kobe()
 		return
 
@@ -50,7 +44,7 @@
 		owner.throw_at(bball_player, 10, 4, owner, FALSE, FALSE, ankle_breaking)
 	else
 		owner.visible_message("<span class='warning'>[owner] dashes to [bball], taking possession!</span>")
-		carried_bball = bball
+		carried_cargo = bball
 		var/datum/callback/kobe_callback = CALLBACK(src, .proc/kobe)
 		owner.throw_at(bball, 10, 4, owner, FALSE, FALSE, kobe_callback)
 
@@ -69,8 +63,8 @@
 		return
 
 	target.Knockdown(3 SECONDS)
-	carried_bball = bball
-	carried_bball.forceMove(get_turf(owner))
+	carried_cargo = bball
+	carried_cargo.forceMove(get_turf(owner))
 
 	if(!iscarbon(target)) // the rest of this is just wound handling
 		return
@@ -100,7 +94,7 @@
 
 /// Get ready to shoot/dunk if there's a hoop nearby. If not, we'll just give up and dribble a bit
 /datum/whim/airbud_bball/proc/kobe()
-	var/obj/item/toy/beach_ball/holoball/bball = carried_bball
+	var/obj/item/toy/beach_ball/holoball/bball = carried_cargo
 	if(!istype(bball))
 		abandon()
 		return
@@ -136,7 +130,6 @@
 			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, owner)
 
 		if(6 to INFINITY)
-			// behold: the only code ever written that actually references simple mob pronouns
 			owner.visible_message("<span class='notice'>[owner] is briefly overcome by grim determination as [owner.p_they()] set[owner.p_s()] on [owner.p_their()] hind legs and shoot[owner.p_s()] [bball] at [the_hoop] from downtown!</span>")
 			what_gets_thrown = bball
 			shot_callback = CALLBACK(the_hoop, /obj/structure/holohoop/.proc/swish, bball, owner)
@@ -190,14 +183,19 @@
 			owner.manual_emote("stares at [concerned_target.loc]'s [concerned_target] with a sad puppy-face")
 
 
-/// By bone, I mean dismembered bodyparts. If the mob sees a bodypart laying around, they'll pick it up in their mouth then run away to go gnaw on it. Letting dogs loose in medbay has never been so fun!
+#define WHIM_BONE_MODE_APPROACH		0
+#define WHIM_BONE_MODE_HIDE			1
+#define WHIM_BONE_MODE_RELAX		2 // hehe
+
+/// By carried_cargo, I mean dismembered bodyparts. If the mob sees a bodypart laying around, they'll pick it up in their mouth then run away to go gnaw on it. Letting dogs loose in medbay has never been so fun!
 /datum/whim/gnaw_bone
 	name = "Gnaw bone"
 	priority = 1
 	scan_radius = 5
 	scan_every = 5
 	abandon_rescan_length = 30 SECONDS
-	var/obj/item/bone
+
+	var/stage = WHIM_BONE_MODE_APPROACH
 
 /datum/whim/gnaw_bone/inner_can_start()
 	for(var/i in oview(owner, scan_radius))
@@ -205,10 +203,8 @@
 			return i
 
 /datum/whim/gnaw_bone/abandon()
-	if(bone && owner && bone.loc == owner)
-		owner.visible_message("<b>[owner]</b> drops [bone] from [owner.p_their()] mouth.")
-		bone.forceMove(owner.drop_location())
-	bone = null
+	if(carried_cargo && owner && carried_cargo.loc == owner) //bleh
+		owner.visible_message("<b>[owner]</b> drops [carried_cargo] from [owner.p_their()] mouth.")
 	return ..()
 
 /datum/whim/gnaw_bone/tick()
@@ -216,36 +212,44 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > (scan_radius * 2))
+	if(!concerned_target || isnull(concerned_target.loc) || (stage == WHIM_BONE_MODE_APPROACH && (get_dist(owner, concerned_target.loc) > scan_radius)))
 		abandon()
 		return
 
-	if(bone && get_dist(owner, concerned_target) < 3) // found a nice place to gnaw (once we have the bone, the concerned_target refers to where we lay down)
+	if(stage == WHIM_BONE_MODE_HIDE && (get_dist(owner, concerned_target) < 3 || (ticks_to_frustrate - ticks_since_activation < 5)))
+		stage = WHIM_BONE_MODE_RELAX
+
+	if(stage == WHIM_BONE_MODE_RELAX) // found a nice place to gnaw (once we have the carried_cargo, the concerned_target refers to where we lay down)
 		if(prob(15))
-			owner.visible_message("<b>[owner]</b> gnaws on [bone].")
+			owner.visible_message("<b>[owner]</b> gnaws on [carried_cargo].")
 		return
 
 	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
 
-	if(!concerned_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-		abandon()
+	if(!owner.Adjacent(concerned_target) || !isturf(concerned_target.loc))
 		return
 
-	owner.face_atom(concerned_target)
-	if(!owner.Adjacent(concerned_target) || !isturf(concerned_target.loc)) //can't reach food through windows.
-		return
-
-	if(!bone && isbodypart(concerned_target))
+	if(stage == WHIM_BONE_MODE_APPROACH)
 		owner.visible_message("<b>[owner]</b> picks up [concerned_target] in [owner.p_their()] mouth, then looks around for a place to rest.")
-		bone = concerned_target
-		bone.forceMove(owner)
-		var/list/turf/spots = view(owner, 5)
-		concerned_target = pick(spots)
+		stage = WHIM_BONE_MODE_HIDE
+		carried_cargo = concerned_target
+		carried_cargo.forceMove(owner)
+
+		var/list/turf/spots = RANGE_TURFS(8, owner) - RANGE_TURFS(4, owner)
+		for(var/i in 1 to 5)
+			var/turf/T = pick(spots)
+			if(T.density)
+				continue
+			concerned_target = T
 
 /datum/whim/gnaw_bone/owner_examined(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(bone)
-		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [bone] in [owner.p_their()] mouth.</span>"
+	if(carried_cargo)
+		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [carried_cargo] in [owner.p_their()] mouth.</span>"
+
+#undef WHIM_BONE_MODE_APPROACH
+#undef WHIM_BONE_MODE_HIDE
+#undef WHIM_BONE_MODE_RELAX

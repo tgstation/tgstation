@@ -64,8 +64,6 @@
 	priority = 1
 	scan_radius = 6
 	scan_every = 5
-	/// A mouse we're currently carrying in our mouth
-	var/obj/item/gift
 	/// Dead mice we've recently tried gifting
 	var/list/recent_gifts
 
@@ -89,10 +87,8 @@
 			return possible_gift
 
 /datum/whim/deliver_gift/abandon()
-	if(gift && owner && gift.loc == owner)
-		owner.visible_message("<b>[owner] drops [gift] from [owner.p_their()] mouth.")
-		gift.forceMove(owner.drop_location())
-	gift = null
+	if(carried_cargo && owner && carried_cargo.loc == owner) //bleh
+		owner.visible_message("<b>[owner] drops [carried_cargo] from [owner.p_their()] mouth.")
 	return ..()
 
 /datum/whim/deliver_gift/tick()
@@ -114,20 +110,20 @@
 	if(!owner.Adjacent(concerned_target) || !isturf(concerned_target.loc)) //can't reach food through windows.
 		return
 
-	if(!gift && istype(concerned_target, /obj/item/reagent_containers/food/snacks/deadmouse))
+	if(!carried_cargo && istype(concerned_target, /obj/item/reagent_containers/food/snacks/deadmouse))
 		// make this its own proc to pick up the mouse and select a recepient
 		owner.visible_message("<b>[owner]</b> picks up [concerned_target] in [owner.p_their()] mouth.")
-		gift = concerned_target
-		gift.forceMove(owner)
+		carried_cargo = concerned_target
+		carried_cargo.forceMove(owner)
 		for(var/mob/living/carbon/C in oview(owner, scan_radius))
 			concerned_target = C
 			return
 
-	else if(gift && iscarbon(concerned_target))
+	else if(carried_cargo && iscarbon(concerned_target))
 		var/mob/living/carbon/gift_recepient = concerned_target
-		owner.visible_message("<span class='notice'>[owner] presents a gift to [gift_recepient], dropping it at [gift_recepient.p_their()] feet! Oh... it's \a [gift]...")
-		gift.forceMove(get_turf(gift_recepient))
-		gift = null // manually set the gift to null before abandoning so we don't do another message about dropping the mouse
+		owner.visible_message("<span class='notice'>[owner] presents a gift to [gift_recepient], dropping it at [gift_recepient.p_their()] feet! Oh... it's \a [carried_cargo]...")
+		carried_cargo.forceMove(get_turf(gift_recepient))
+		carried_cargo = null // manually set the carried_cargo to null before abandoning so we don't do another message about dropping the mouse
 		abandon()
 
 /datum/whim/deliver_gift/owner_examined(datum/source, mob/user, list/examine_list)
@@ -135,5 +131,43 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(gift)
-		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [gift] in [owner.p_their()] mouth.</span>"
+	if(carried_cargo)
+		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [carried_cargo] in [owner.p_their()] mouth.</span>"
+
+
+
+/// How am I supposed to believe these are real cats if they're not constantly knocking over open beverages?
+/datum/whim/spill_container
+	name = "Spill container"
+	priority = 2
+	scan_radius = 3
+	scan_every = 6
+
+/// See if there's any spillable containers we like
+/datum/whim/spill_container/inner_can_start()
+	for(var/obj/item/reagent_containers/container in oview(owner,scan_radius))
+		if(prob(60) || !container.spillable || !container.reagents.total_volume)
+			continue
+		return container
+
+/// Just walk straight up and knock it over, hell yeah
+/datum/whim/spill_container/tick()
+	. = ..()
+	if(state == WHIM_INACTIVE)
+		return
+
+	var/obj/item/reagent_containers/container = concerned_target
+	if(!container || !isturf(container.loc) || get_dist(owner, container.loc) > scan_radius)
+		abandon()
+		return
+
+	walk_to(owner, get_turf(concerned_target), 0, rand(20,35) * 0.1)
+
+	owner.face_atom(concerned_target)
+	if(!owner.Adjacent(concerned_target)) //can't reach through windows.
+		return
+
+	owner.visible_message("<span class='notice'>[owner] knocks over [container], spilling it!</span>")
+	var/atom/spill_target = pick(get_turf(container))
+	container.SplashReagents(spill_target, TRUE)
+	abandon()

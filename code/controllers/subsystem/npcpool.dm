@@ -29,12 +29,14 @@ SUBSYSTEM_DEF(npcpool)
 			log_world("Found a null in simple_animals list!")
 			continue
 
+		// note the repeated dead checks are necessary since the automated movement and action may cause a death
 		if(!SA.ckey && !SA.notransform)
-			if(SA.stat != DEAD)
-				SA.handle_automated_movement()
-			if(SA.stat != DEAD)
-				SA.handle_automated_action()
-			if(SA.stat != DEAD)
+			if(!SA.current_whim)
+				if(SA.stat != DEAD)
+					SA.handle_automated_movement()
+				if(SA.stat != DEAD)
+					SA.handle_automated_action()
+			if(SA.stat != DEAD && !(SA.current_whim?.blocks_auto_speech))
 				SA.handle_automated_speech()
 		if (MC_TICK_CHECK)
 			return

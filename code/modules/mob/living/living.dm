@@ -1781,3 +1781,8 @@
 
 	// Reset overeat duration.
 	overeatduration = 0
+
+/// If we are dead or are faking it. Note that humans may not look dead in examines in certain cases, search for this proc in [/mob/living/carbon/human/proc/examine]
+/mob/living/proc/looks_dead()
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH)
+

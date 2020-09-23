@@ -38,7 +38,7 @@
 	pet_bonus_emote = "purrs!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
-	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift, /datum/whim/make_babies)
+	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift, /datum/whim/spill_container, /datum/whim/make_babies)
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -117,6 +117,7 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	whim_datums = list(/datum/whim/hunt_mice, /datum/whim/deliver_gift, /datum/whim/spill_container, /datum/whim/make_babies/runtime) // special runtime make_babies behavior
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -139,13 +140,6 @@
 		memory_saved = TRUE
 	..()
 
-/*
-/mob/living/simple_animal/pet/cat/runtime/make_babies()
-	var/mob/baby = ..()
-	if(baby)
-		children += baby
-		return baby
-*/
 /mob/living/simple_animal/pet/cat/runtime/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)

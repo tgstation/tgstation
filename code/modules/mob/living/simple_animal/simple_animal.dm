@@ -287,7 +287,7 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
-	if(stop_automated_movement || !wander || current_whim)
+	if(stop_automated_movement || !wander)
 		return FALSE
 
 	if(!((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE)))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
@@ -303,38 +303,40 @@
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
-	if(speak_chance)
-		if(prob(speak_chance) || override)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
-					var/length = speak.len
-					if(emote_hear && emote_hear.len)
-						length += emote_hear.len
-					if(emote_see && emote_see.len)
-						length += emote_see.len
-					var/randomValue = rand(1,length)
-					if(randomValue <= speak.len)
-						say(pick(speak), forced = "poly")
-					else
-						randomValue -= speak.len
-						if(emote_see && randomValue <= emote_see.len)
-							manual_emote(pick(emote_see))
-						else
-							manual_emote(pick(emote_hear))
-				else
-					say(pick(speak), forced = "poly")
+
+	if(!(prob(speak_chance) || override))
+		return
+
+	if(speak && speak.len)
+		if(emote_hear?.len || emote_see?.len)
+			var/length = speak.len
+			if(emote_hear?.len)
+				length += emote_hear.len
+			if(emote_see?.len)
+				length += emote_see.len
+			var/randomValue = rand(1,length)
+			if(randomValue <= speak.len)
+				say(pick(speak), forced = "poly")
 			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				randomValue -= speak.len
+				if(emote_see && randomValue <= emote_see.len)
 					manual_emote(pick(emote_see))
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
+				else
 					manual_emote(pick(emote_hear))
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
-					if(pick <= emote_see.len)
-						manual_emote(pick(emote_see))
-					else
-						manual_emote(pick(emote_hear))
+		else
+			say(pick(speak), forced = "poly")
+	else
+		if(!(emote_hear?.len) && (emote_see?.len))
+			manual_emote(pick(emote_see))
+		if((emote_hear?.len) && !(emote_see?.len))
+			manual_emote(pick(emote_hear))
+		if((emote_hear?.len) && (emote_see?.len))
+			var/length = emote_hear.len + emote_see.len
+			var/pick = rand(1,length)
+			if(pick <= emote_see.len)
+				manual_emote(pick(emote_see))
+			else
+				manual_emote(pick(emote_hear))
 
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE

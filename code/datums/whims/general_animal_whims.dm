@@ -13,11 +13,11 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 
-	for(var/mob/potential_partner in view(owner, scan_radius))
+	for(var/mob/living/potential_partner in view(owner, scan_radius))
 		if(potential_partner.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
 
-		if(is_type_in_list(potential_partner, (owner.childtype))) //Check for children SECOND.
+		if(is_type_in_list(potential_partner, owner.childtype)) //Check for children SECOND.
 			children++
 			if(children > 3)
 				return FALSE
@@ -25,7 +25,7 @@
 			if(potential_partner.ckey)
 				continue
 			else if(potential_partner.gender == MALE && !(potential_partner.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
-				partner = potential_partner
+				partner = potential_partner // hurray, we found a partner, but we still have to keep checking for too many children or people we're shy of
 
 		else if(isliving(potential_partner) && !owner.faction_check_mob(potential_partner)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
@@ -43,7 +43,7 @@
 
 	form_babby()
 
-/// Diverted into its own proc so that gutlunches can add on their own stuff
+/// Diverted into its own proc so that gutlunches and runtime can add on their own stuff (make this a callback somehow?)
 /datum/whim/make_babies/proc/form_babby()
 	var/childspawn = pickweight(owner.childtype)
 	var/turf/target = get_turf(owner)
@@ -66,7 +66,24 @@
 
 /datum/whim/make_babies/gutlunch/form_babby()
 	. = ..()
+	var/mob/living/simple_animal/hostile/asteroid/gutlunch/our_gutlunch = owner
+	if(!istype(our_gutlunch))
+		CRASH("Non-Gutlunch mob [owner] trying to use Gutlunch's special make_babies datum")
+		return
 	if(.)
-		var/mob/living/simple_animal/hostile/asteroid/gutlunch/our_gutlunch = owner
 		our_gutlunch.udder.reagents.clear_reagents()
 		our_gutlunch.regenerate_icons()
+
+/// Runtime keeps track of her babies (make this a callback somehow?)
+/datum/whim/make_babies/runtime
+	name = "Make babies (Runtime)"
+
+/datum/whim/make_babies/runtime/form_babby()
+	. = ..()
+	var/mob/baby = .
+	var/mob/living/simple_animal/pet/cat/runtime/our_runtime = owner
+	if(!istype(our_runtime))
+		CRASH("Non-Runtime mob [owner] trying to use Runtime's special make_babies datum")
+		return
+	if(baby)
+		our_runtime.children += baby
