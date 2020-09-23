@@ -135,6 +135,13 @@
 	icon_screen = "library"
 	icon_keyboard = "no_keyboard"
 
+/obj/machinery/computer/pod/old/mass_driver_controller
+	name = "\improper Mass Driver Controller"
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "airlock_control_standby"
+	icon_keyboard = "no_keyboard"
+	density = FALSE
+
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
