@@ -80,8 +80,7 @@
 		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
 	if(button.bound_number)
-			owner.action_bindings[bound_number] = null //Remove previous entry
-	owner.action_bindings[button.
+		owner.action_bindings[button.bound_number] = null //Remove previous entry
 	owner = null
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	button.locked = FALSE
