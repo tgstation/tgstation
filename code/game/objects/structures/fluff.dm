@@ -313,9 +313,20 @@
 
 /obj/structure/fluff/medieval_sign
 	name = "crude sign"
-	desc = "A crudely-made sign with the the symbol of a crown, implying that this is a medieval stand.."
+	desc = "A crudely-made sign with the the symbol of a crown, implying that this is a medieval stand."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "medieval"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/oranges_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with the a drawn orange. Has the day of the juicer finally arrived?"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "juicer"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
