@@ -120,7 +120,7 @@
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	. = ..()
-	if(intact && smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB))
+	if(intact && smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood

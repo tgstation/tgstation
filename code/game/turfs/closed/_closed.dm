@@ -51,7 +51,7 @@
 	icon_state = "sandstone_wall-0"
 	base_icon_state = "sandstone_wall"
 	baseturfs = /turf/closed/indestructible/sandstone
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
@@ -81,7 +81,7 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted-0"
 	base_icon_state = "riveted"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS)
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 
@@ -89,7 +89,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -97,7 +97,7 @@
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium_wall-0"
 	base_icon_state = "uranium_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/indestructible/riveted/plastinum
 	name = "plastinum wall"
@@ -105,13 +105,13 @@
 	icon = 'icons/turf/walls/plastinum_wall.dmi'
 	icon_state = "plastinum_wall-0"
 	base_icon_state = "plastinum_wall"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 
 /turf/closed/indestructible/wood
 	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = "wood_wall-0"
 	base_icon_state = "wood_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
@@ -128,7 +128,7 @@
 	icon_state = "fake_window"
 	base_icon_state = "reinforced_window"
 	opacity = FALSE
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 
@@ -144,7 +144,7 @@
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"
 	opacity = FALSE
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
 
@@ -183,7 +183,7 @@
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock_wall-0"
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BLOB | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	pixel_x = -4
 	pixel_y = -4
@@ -214,7 +214,7 @@
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "boss_wall-0"
 	base_icon_state = "boss_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_BOSS_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BOSS_WALLS)
 	explosion_block = 50

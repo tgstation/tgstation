@@ -108,7 +108,7 @@
 	pass_flags = LETPASSTHROW
 	bar_material = SAND
 	climbable = TRUE
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SANDBAGS)
 	canSmoothWith = list(SMOOTH_GROUP_SANDBAGS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SECURITY_BARRICADE)
 

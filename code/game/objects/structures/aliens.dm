@@ -58,7 +58,7 @@
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 	max_integrity = 200
@@ -122,7 +122,7 @@
 	icon_state = "weeds1-0"
 	base_icon_state = "weeds1"
 	max_integrity = 15
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
 	var/last_expand = 0 //last world.time this weed expanded

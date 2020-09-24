@@ -4,7 +4,7 @@
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
@@ -47,7 +47,7 @@
 	icon_state = "icedmetal_wall-0"
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -59,7 +59,7 @@
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	icon_state = "rusty_wall-0"
 	base_icon_state = "rusty_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
 
 /turf/closed/wall/rust/rust_heretic_act()
@@ -71,7 +71,7 @@
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	icon_state = "rusty_reinforced_wall-0"
 	base_icon_state = "rusty_reinforced_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
 
 /turf/closed/wall/r_wall/rust/rust_heretic_act()
@@ -85,7 +85,7 @@
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
-	smoothing_flags = SMOOTH_BLOB
+	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/tile/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze

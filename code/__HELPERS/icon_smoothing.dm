@@ -159,7 +159,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
-	else if(smoothing_flags & SMOOTH_BLOB)
+	else if(smoothing_flags & SMOOTH_BITMASK)
 		blob_smooth()
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
@@ -373,14 +373,14 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
 		var/turf/T = V
-		if(T.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB))
+		if(T.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			if(now)
 				T.smooth_icon()
 			else
 				QUEUE_SMOOTH(T)
 		for(var/R in T)
 			var/atom/A = R
-			if(A.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB))
+			if(A.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 				if(now)
 					A.smooth_icon()
 				else

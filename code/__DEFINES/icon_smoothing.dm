@@ -2,7 +2,7 @@
 /// Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
 #define SMOOTH_CORNERS	(1<<0)
 /// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
-#define SMOOTH_BLOB		(1<<1)
+#define SMOOTH_BITMASK		(1<<1)
 /// Atom has diagonal corners, with underlays under them.
 #define SMOOTH_DIAGONAL_CORNERS	(1<<2)
 /// Atom will smooth with the borders of the map.
@@ -14,7 +14,7 @@
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
-	"SMOOTH_BLOB" = SMOOTH_BLOB,
+	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
 	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
@@ -24,7 +24,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BLOB)) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
 
