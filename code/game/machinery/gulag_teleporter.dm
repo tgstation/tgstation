@@ -26,6 +26,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
 		/obj/item/implant,
+		/obj/item/organ,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
