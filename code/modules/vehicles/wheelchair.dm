@@ -148,15 +148,16 @@
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
 	. = ..()
-	if(over_object == usr && Adjacent(usr) && foldabletype)
-		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return FALSE
-		if(has_buckled_mobs())
-			return FALSE
-		usr.visible_message("<span class='notice'>[usr] collapses [src].</span>", "<span class='notice'>You collapse [src].</span>")
-		var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
-		usr.put_in_hands(wheelchair_folded)
-		qdel(src)
+	if(over_object != usr || !Adjacent(usr) || !foldabletype)
+		return FALSE
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return FALSE
+	if(has_buckled_mobs())
+		return FALSE
+	usr.visible_message("<span class='notice'>[usr] collapses [src].</span>", "<span class='notice'>You collapse [src].</span>")
+	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
+	usr.put_in_hands(wheelchair_folded)
+	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
