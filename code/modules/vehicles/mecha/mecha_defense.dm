@@ -327,6 +327,9 @@
 
 
 /obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/living/user)
+	if(!user.combat_mode)
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack objects!</span>")
+		return
 	if(!has_charge(melee_energy_drain))
 		return NONE
 	use_power(melee_energy_drain)

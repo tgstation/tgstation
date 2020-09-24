@@ -189,6 +189,18 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+/obj/item/gun/attack(mob/M, mob/living/user, params)
+	if(user.combat_mode)
+		var/list/modifiers = params2list(params)
+		if(ismob(M) && modifiers["right"]) //Right click to hold someone up
+			if(user.GetComponent(/datum/component/gunpoint))
+				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
+				return
+			user.AddComponent(/datum/component/gunpoint, M, src)
+			return TRUE
+		return TRUE
+	return ..()
+
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
 	if(QDELETED(target))
@@ -198,16 +210,9 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.combat_mode) //melee attack
+		if(!ismob(target) || !user.combat_mode) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-		var/list/modifiers = params2list(params)
-		if(ismob(target) && modifiers["right"]) //Right click to hold someone up
-			if(user.GetComponent(/datum/component/gunpoint))
-				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
-				return
-			user.AddComponent(/datum/component/gunpoint, target, src)
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -240,7 +245,10 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	if(ishuman(user) && user.combat_mode)
+	if(ishuman(user))
+		if(!user.combat_mode)
+			to_chat(user, "<span class='warning'>You need to turn on combat mode to fire your gun!</span>")
+			return
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -264,6 +272,8 @@
 
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
+	if(!user.combat_mode)
+		return FALSE //Cant shoot out of combat mode
 	if(!handle_pins(user))
 		return FALSE
 

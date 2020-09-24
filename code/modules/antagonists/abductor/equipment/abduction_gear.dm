@@ -8,7 +8,7 @@
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
-	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
+	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth. Left click to harm, right click to stun."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"

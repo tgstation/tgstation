@@ -2,7 +2,10 @@
 /atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
 	return
 
-/turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
+/turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack objects!</span>")
+		return
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
@@ -20,7 +23,10 @@
 			playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 			return FALSE
 
-/obj/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker)
+/obj/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack objects!</span>")
+		return
 	mecha_attacker.do_attack_animation(src)
 	var/play_soundeffect = 0
 	var/mech_damtype = mecha_attacker.damtype

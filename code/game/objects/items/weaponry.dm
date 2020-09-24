@@ -646,6 +646,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
+	if(!user.combat_mode)
+		return
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	if(homerun_ready)
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")

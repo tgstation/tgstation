@@ -548,9 +548,13 @@
 	var/mob/living/L = user
 	if(selected)
 		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
-			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
-				to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
-				return
+			if(selected.harmful)
+				if(HAS_TRAIT(L, TRAIT_PACIFISM) )
+					to_chat(L, "<span class='warning'>You don't want to harm other living beings!</span>")
+					return
+				if(!L.combat_mode)
+					to_chat(user, "<span class='warning'>You need to turn on combat mode to attack people!</span>")
+					return
 			selected.action(user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
