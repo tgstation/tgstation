@@ -19878,27 +19878,21 @@
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bap" = (
 /obj/machinery/computer/slot_machine,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "baq" = (
 /obj/machinery/computer/arcade,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bar" = (
 /obj/structure/extinguisher_cabinet{
@@ -20284,17 +20278,13 @@
 /area/crew_quarters/bar)
 "bbo" = (
 /obj/structure/table/wood/fancy,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbp" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbq" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -20314,17 +20304,13 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbs" = (
 /obj/item/cane,
 /obj/item/clothing/head/that,
 /obj/structure/table/wood/fancy,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbt" = (
 /obj/structure/disposalpipe/segment,
@@ -20342,22 +20328,16 @@
 "bbv" = (
 /obj/structure/chair/stool,
 /obj/item/trash/can,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbw" = (
 /obj/effect/landmark/start/assistant,
 /obj/structure/chair/stool,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bbx" = (
 /obj/structure/chair/stool,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bby" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -20621,17 +20601,13 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bcq" = (
 /obj/item/clothing/glasses/monocle,
 /obj/item/instrument/recorder,
 /obj/structure/table/wood/fancy,
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/crew_quarters/bar)
 "bcr" = (
 /obj/structure/disposalpipe/segment,

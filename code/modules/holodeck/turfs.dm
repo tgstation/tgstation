@@ -109,7 +109,7 @@
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
-	smoothing_flags = SMOOTH_CORNERS
+	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE

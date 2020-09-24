@@ -1828,9 +1828,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/dock)
 "gg" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/ruin/space/has_grav/hotel/dock)
 "gh" = (
 /obj/item/kirbyplants{

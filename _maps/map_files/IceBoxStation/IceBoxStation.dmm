@@ -22777,9 +22777,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "baA" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/chapel/main)
 "baB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

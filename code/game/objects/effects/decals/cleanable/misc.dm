@@ -52,7 +52,9 @@
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
+	icon = 'icons/effects/dirt.dmi'
 	icon_state = "dirt"
+	base_icon_state = "dirt"
 	smoothing_flags = NONE
 	smoothing_groups = list(SMOOTH_GROUP_CLEANABLE_DIRT)
 	canSmoothWith = list(SMOOTH_GROUP_CLEANABLE_DIRT, SMOOTH_GROUP_WALLS)
@@ -63,9 +65,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.tiled_dirt)
-		smoothing_flags = SMOOTH_CORNERS
-		icon = 'icons/effects/dirt.dmi'
-		icon_state = ""
+		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
