@@ -14,7 +14,6 @@
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
 	var/foldabletype = /obj/item/wheelchair //Determines what the object folds into
-	var/can_fold = TRUE //Determines that the object can fold up into something
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -148,7 +147,7 @@
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
 	. = ..()
-	if(over_object == usr && Adjacent(usr) && can_fold)
+	if(over_object == usr && Adjacent(usr) && foldabletype)
 		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 			return FALSE
 		if(has_buckled_mobs())

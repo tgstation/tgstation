@@ -1,7 +1,7 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
-	can_fold = FALSE
+	foldabletype = null
 	max_integrity = 150
 	var/speed = 2
 	var/power_efficiency = 1
