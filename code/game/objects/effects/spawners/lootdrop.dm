@@ -583,9 +583,9 @@
 /obj/effect/spawner/lootdrop/space/fancytech
 	lootcount = 2
 	loot = list(
-		/obj/item/raw_anomaly_core/random,
-		/obj/item/disk/tech_disk/major,
-		/obj/item/camera_bug,
+		/obj/item/raw_anomaly_core/random = 1,
+		/obj/item/disk/tech_disk/spaceloot = 1,
+		/obj/item/camera_bug = 1
 	)
 
 /// Space loot spawner. Some sort of random and rare tool. Only a single drop.
