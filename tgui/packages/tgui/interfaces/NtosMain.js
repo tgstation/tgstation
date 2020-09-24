@@ -29,6 +29,7 @@ export const NtosMain = (props, context) => {
     light_on,
     comp_light_color,
     removable_media = [],
+    cardholder,
     login = [],
   } = data;
   return (
@@ -58,25 +59,27 @@ export const NtosMain = (props, context) => {
             </Button>
           </Section>
         )}
-        <Section
-          title="User Login"
-          buttons={(
-            <Button
-              icon="eject"
-              content="Eject ID"
-              disabled={!login.IDName}
-              onClick={() => act('PC_Eject_Disk', { name: "ID" })}
-            />
-          )}>
-          <Table>
-            <Table.Row>
-              ID Name: {login.IDName}
-            </Table.Row>
-            <Table.Row>
-              Assignment: {login.IDJob}
-            </Table.Row>
-          </Table>
-        </Section>
+        {!!cardholder && (
+          <Section
+            title="User Login"
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject ID"
+                disabled={!login.IDName}
+                onClick={() => act('PC_Eject_Disk', { name: "ID" })}
+              />
+            )}>
+            <Table>
+              <Table.Row>
+                ID Name: {login.IDName}
+              </Table.Row>
+              <Table.Row>
+                Assignment: {login.IDJob}
+              </Table.Row>
+            </Table>
+          </Section>
+        )}
         {!!removable_media.length && (
           <Section title="Media Eject">
             <Table>
