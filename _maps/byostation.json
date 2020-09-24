@@ -1,0 +1,8 @@
+{
+    "map_name": "BYOStation",
+    "map_path": "map_files/BYOStation",
+    "map_file": "BYOStation.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}
