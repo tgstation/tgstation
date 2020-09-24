@@ -527,8 +527,13 @@
 					else
 						if(cached_my_atom.type == C.required_container)
 							matching_container = TRUE
-					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						matching_container = FALSE
+					if(!C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						if(isliving(cached_my_atom))
+							matching_container = FALSE
+						else if(istype(cached_my_atom, /obj/item/organ))
+							var/obj/item/organ/the_organ = cached_my_atom
+							if(isliving(the_organ.owner))
+								matching_container = FALSE
 					if(!C.required_other)
 						matching_other = TRUE
 
