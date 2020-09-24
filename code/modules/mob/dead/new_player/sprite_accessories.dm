@@ -1862,9 +1862,9 @@
 	name = "White Fly"
 	icon_state = "whitefly"
 
-/datum/sprite_accessory/moth_wings/punished
+/datum/sprite_accessory/moth_wings/burnt_off
 	name = "Burnt Off"
-	icon_state = "punished"
+	icon_state = "burnt_off"
 	locked = TRUE
 
 /datum/sprite_accessory/moth_wings/firewatch
@@ -1931,9 +1931,9 @@
 	name = "Lovers"
 	icon_state = "lovers"
 
-/datum/sprite_accessory/moth_antennae/punished
-	name = "Punished"
-	icon_state = "punished"
+/datum/sprite_accessory/moth_antennae/burnt_off
+	name = "Burnt Off"
+	icon_state = "burnt_off"
 
 /datum/sprite_accessory/moth_antennae/firewatch
 	name = "Firewatch"
@@ -1999,9 +1999,9 @@
 	name = "Lovers"
 	icon_state = "lovers"
 
-/datum/sprite_accessory/moth_markings/punished
-	name = "Punished"
-	icon_state = "punished"
+/datum/sprite_accessory/moth_markings/burnt_off
+	name = "Burnt Off"
+	icon_state = "burnt_off"
 
 /datum/sprite_accessory/moth_markings/firewatch
 	name = "Firewatch"

@@ -47,7 +47,7 @@
 		H.dna.features["original_moth_wings"] = H.dna.features["moth_wings"] //Fire apparently destroys DNA, so let's preserve that elsewhere
 		H.dna.features["moth_wings"] = "Burnt Off"
 		H.dna.features["original_moth_antennae"] = H.dna.features["moth_antennae"]
-		H.dna.features["moth_antennae"] = "Punished"
+		H.dna.features["moth_antennae"] = "Burnt Off"
 		if(flying_species) //This is all exclusive to if the person has the effects of a potion of flight
 			if(H.movement_type & FLYING)
 				ToggleFlight(H)
@@ -87,6 +87,6 @@
 	if(H.dna.features["original_moth_antennae"] != null)
 		H.dna.features["moth_antennae"] = H.dna.features["original_moth_antennae"]
 
-	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae" == "Punished"])
+	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae" == "Burnt Off"])
 		H.dna.features["moth_antennae"] = "Plain"
 	handle_mutant_bodyparts(H)
