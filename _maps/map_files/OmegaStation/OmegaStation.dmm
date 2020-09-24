@@ -11651,7 +11651,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aEx" = (
-/obj/machinery/shieldgen,
 /obj/machinery/button/door{
 	id = "teleportershutters";
 	name = "Teleporter Shutters";
@@ -11663,6 +11662,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aEy" = (
@@ -11689,7 +11689,6 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aEB" = (
-/obj/machinery/shieldgen,
 /obj/machinery/camera{
 	c_tag = "Teleporter"
 	},
@@ -11700,6 +11699,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aEC" = (
@@ -12973,7 +12973,6 @@
 /turf/closed/wall/r_wall,
 /area/storage/primary)
 "aIp" = (
-/obj/machinery/shieldgen,
 /obj/machinery/light_switch{
 	pixel_x = -24
 	},
@@ -12985,6 +12984,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aIq" = (
@@ -13009,7 +13009,6 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aIs" = (
-/obj/machinery/shieldgen,
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 28
@@ -13024,6 +13023,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/shieldwallgen,
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "aIu" = (
