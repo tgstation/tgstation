@@ -67,6 +67,7 @@
 /obj/item/gun/energy/pulse/destroyer
 	name = "pulse destroyer"
 	desc = "A heavy-duty energy rifle built for pure destruction."
+	worn_icon_state = "pulse"
 	cell_type = "/obj/item/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 

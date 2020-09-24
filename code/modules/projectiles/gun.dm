@@ -513,22 +513,33 @@
 	return TRUE
 
 
-///Called when gun_light value changes.
+/**
+  * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
+  *
+  * Returns the former gun_light that has now been replaced by this proc.
+  * Arguments:
+  * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
+  */
 /obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
+	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
 	if(gun_light == new_light)
-		return
-	. = gun_light
-	gun_light = new_light
-	if(gun_light)
-		gun_light.set_light_flags(gun_light.light_flags | LIGHT_ATTACHED)
-		if(gun_light.loc != src)
-			gun_light.forceMove(src)
-	else if(.)
-		var/obj/item/flashlight/seclite/old_gun_light = .
-		old_gun_light.set_light_flags(old_gun_light.light_flags & ~LIGHT_ATTACHED)
-		if(old_gun_light.loc == src)
-			old_gun_light.forceMove(get_turf(src))
+		CRASH("Tried to set a new gun light when the old gun light was also the new gun light.")
 
+	. = gun_light
+
+	// If there's an old gun light that isn't being QDELETED, detatch and drop it to the floor.
+	if(!QDELETED(gun_light))
+		gun_light.set_light_flags(gun_light.light_flags & ~LIGHT_ATTACHED)
+		if(gun_light.loc == src)
+			gun_light.forceMove(get_turf(src))
+
+	// If there's a new gun light to be added, attach and move it to the gun.
+	if(new_light)
+		new_light.set_light_flags(new_light.light_flags | LIGHT_ATTACHED)
+		if(new_light.loc != src)
+			new_light.forceMove(src)
+
+	gun_light = new_light
 
 /obj/item/gun/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, alight))

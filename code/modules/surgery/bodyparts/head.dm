@@ -263,11 +263,6 @@
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
-/obj/item/bodypart/head/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
-
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_head"
