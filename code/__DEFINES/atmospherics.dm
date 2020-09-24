@@ -240,11 +240,6 @@
 /// just check density
 #define ATMOS_PASS_DENSITY -2
 
-//Excited states
-#define EXCITED_ASLEEP 0 //This turf isn't processing
-#define EXCITED_AWAKE 1 //This turf is fully processing
-#define EXCITED_DROWSY 2 //This turf is just here to rebuild excited groups, it's about to fall back to sleep.
-
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 #define CLEAR_FROM_ATMOS_ADJACENT_TURFS(T) \
