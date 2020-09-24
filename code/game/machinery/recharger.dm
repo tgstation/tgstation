@@ -16,7 +16,8 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/modular_computer))
+		/obj/item/modular_computer,
+		/obj/item/holosign_creator/atmos))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -82,6 +83,13 @@
 					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
 					return 1
 
+			if(istype(G, /obj/item/holosign_creator/atmos))
+				var/obj/item/holosign_creator/atmos/holofan = G
+				if(!holofan.cell)
+					to_chat(user, "<span class='notice'>There is no cell in the projector.</span>")
+					return TRUE
+				holofan.in_holder = TRUE
+
 			if(!user.transferItemToLoc(G, src))
 				return 1
 			setCharging(G)
@@ -108,6 +116,9 @@
 
 	add_fingerprint(user)
 	if(charging)
+		if(istype(charging, /obj/item/holosign_creator/atmos))
+			var/obj/item/holosign_creator/atmos/holofan = charging
+			holofan.remove_from_holder()
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
@@ -115,6 +126,9 @@
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
+		if(istype(charging, /obj/item/holosign_creator/atmos))
+			var/obj/item/holosign_creator/atmos/holofan = charging
+			holofan.remove_from_holder()
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		setCharging(null)

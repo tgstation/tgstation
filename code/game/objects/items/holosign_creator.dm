@@ -105,6 +105,10 @@
 /obj/item/holosign_creator/atmos/get_cell()
 	return cell
 
+/obj/item/holosign_creator/atmos/proc/remove_from_holder()
+	in_holder = FALSE
+	return
+
 /obj/item/holosign_creator/atmos/Initialize()
 	. = ..()
 	if(!cell && cell_type)
@@ -228,86 +232,3 @@
 	for(var/sign in signs)
 		qdel(sign)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
-
-/obj/machinery/holosign_holder
-	name = "holosign creator holder"
-	desc = "This device is used to hold a holosign creator to power it from the main powernet"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "holosign_holder-empty"
-	anchored = FALSE
-	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
-	///Check if the holder has one holosign creator
-	var/full = FALSE
-	///Store the informations of the holosign creator
-	var/obj/item/holosign_creator/atmos/holo
-
-/obj/machinery/holosign_holder/Destroy()
-	if(holo)
-		holo = null
-	return ..()
-
-/obj/machinery/holosign_holder/examine(mob/user)
-	. = ..()
-	if(full)
-		. += "[src] is currently holding [holo.name], it can be removed with a prying tool"
-
-/obj/machinery/holosign_holder/update_icon()
-	icon_state = "holosign_holder-[full ? "full" : "empty"]"
-
-/obj/machinery/holosign_holder/process(delta_time)
-	if(!powered())
-		idle_power_usage = 0
-		if(holo)
-			holo.forceMove(loc)
-			holo = null
-			update_icon()
-
-/obj/machinery/holosign_holder/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/holosign_creator/atmos))
-		var/obj/item/holosign_creator/atmos/holosign = I
-		if(full)
-			to_chat(user, "<span class='notice'>[src] can't hold any more of [I].</span>")
-			return
-		else
-			holo = holosign
-			holosign.in_holder = TRUE
-			idle_power_usage = holosign.max_signs * 10
-			full = TRUE
-	else
-		return ..()
-	if(!user.transferItemToLoc(I, src))
-		return
-	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	update_icon()
-
-/obj/machinery/holosign_holder/wrench_act(mob/user, obj/item/I)
-	if(..())
-		return TRUE
-	if(full)
-		to_chat(user, "<span class='notice'>Remove [holo] first.</span>")
-		return FALSE
-	anchored = !anchored
-	return TRUE
-
-/obj/machinery/holosign_holder/crowbar_act(mob/user, obj/item/I)
-	if(full)
-		var/obj/item/holosign_creator/atmos/stored = locate() in src
-		if(stored && Adjacent(usr))
-			stored.in_holder = FALSE
-			usr.put_in_hands(stored)
-			full = FALSE
-			holo = null
-			update_icon()
-		return TRUE
-	return FALSE
-
-/obj/machinery/holosign_holder/welder_act(mob/user, obj/item/I)
-	if(full)
-		to_chat(user, "<span class='notice'>Remove [holo] first.</span>")
-		return FALSE
-	if(do_after(user, 10, target = user))
-		new/obj/item/stack/sheet/metal(loc, 5)
-		qdel(src)
-
