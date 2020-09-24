@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - code_imp: "vis dir changes are now handled by vis_flags"

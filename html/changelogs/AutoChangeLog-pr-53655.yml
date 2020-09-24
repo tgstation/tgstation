@@ -1,0 +1,17 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Ash ascension now deals 5 times less damage"
+  - rscadd: "Ascension achievments for heretics."
+  - balance: "Flesh ascension was reworked to now allow for you to transform into armsy and into human at will."
+  - balance: "Marks are now applied using the mansus grasp and procced using the sickly blade"
+  - rscadd: "You can now shatter your sickly blade, which teleports you to a random safe turf on the station."
+  - balance: "Blood siphon is a pointed spell"
+  - balance: "you can now choose your sacrifice out of 3 random people."
+  - balance: "sacrifices now give you 2 charges"
+  - balance: "less influences now spawn on the station"
+  - balance: "Changed a few summon recipes."
+  - balance: "Flesh ascension now triples your max amount of ghouls"
+  - rscdel: "heretics no longer have stalk objective"
+  - rscadd: "heretics now can roll die a glorius death or hijack objective."
+  - tweak: "pierced realities start to appear 10 seconds after being harvested."

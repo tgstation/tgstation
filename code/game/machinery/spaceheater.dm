@@ -43,7 +43,7 @@
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
-		component_parts += cell
+		LAZYADD(component_parts, cell)
 		cell = null
 	return ..()
 
