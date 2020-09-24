@@ -1,0 +1,7 @@
+author: "Floof Ball / Kathrin Morrison"
+delete-after: True
+changes: 
+  - rscadd: "Craftable jumbo chess pieces. Have an 8x8 space on the station? Have a public match people can watch!"
+  - rscadd: "New shutter sprites. Adds windowed and radiation-proofed shutters."
+  - rscadd: "New sofa, craftable in-game with metal like the regular sofas."
+  - tweak: "Sofas now have working armrests."
