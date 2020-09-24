@@ -43,8 +43,7 @@
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
-	if(isitem(parent))
-		SEND_SIGNAL(src, COMSIG_WIPE_BLOOD_DNA)
+	SEND_SIGNAL(src, COMSIG_WIPE_BLOOD_DNA)
 	return TRUE
 
 /datum/component/forensics/proc/wipe_fibers()
