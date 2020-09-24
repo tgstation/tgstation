@@ -2251,7 +2251,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
 	network_id = NETWORK_CHARLIE_ATMOS;
-	id_tag = "o2_out_bunker";
+	network_tag= "o2_out_bunker";
 	name = "oxygen out"
 	},
 /turf/open/floor/plating/airless,
@@ -2574,7 +2574,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8;
-	id_tag = "n2_out_bunker";
+	network_tag= "n2_out_bunker";
 	name = "nitrogen out"
 	},
 /turf/open/floor/plating/airless,

@@ -475,7 +475,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "by" = (
 /obj/machinery/door/airlock/security/glass{
-	id_tag = "innerbrig";
+	network_tag= "innerbrig";
 	name = "Security Checkpoint";
 	req_access_txt = "63"
 	},

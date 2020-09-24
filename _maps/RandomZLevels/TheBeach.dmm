@@ -389,14 +389,14 @@
 /area/awaymission/beach)
 "bs" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "changlinhut2";
+	network_tag= "changlinhut2";
 	name = "changing room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bt" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "changlinhut1";
+	network_tag= "changlinhut1";
 	name = "changing room"
 	},
 /turf/open/floor/wood,
@@ -447,21 +447,21 @@
 /area/awaymission/beach)
 "bB" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "theloveshack1";
+	network_tag= "theloveshack1";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bC" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "theloveshack2";
+	network_tag= "theloveshack2";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bD" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "theloveshack3";
+	network_tag= "theloveshack3";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
@@ -497,21 +497,21 @@
 /area/awaymission/beach)
 "bI" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "loveshack";
+	network_tag= "loveshack";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bJ" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "theloveshack4";
+	network_tag= "theloveshack4";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bK" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "theloveshack5";
+	network_tag= "theloveshack5";
 	name = "Beach Hut"
 	},
 /turf/open/floor/wood,
@@ -625,7 +625,7 @@
 /area/awaymission/beach)
 "bX" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "toilet1";
+	network_tag= "toilet1";
 	name = "restroom stall"
 	},
 /obj/effect/turf_decal/sand,
@@ -633,7 +633,7 @@
 /area/awaymission/beach)
 "bY" = (
 /obj/machinery/door/airlock/sandstone{
-	id_tag = "toilet2";
+	network_tag= "toilet2";
 	name = "restroom stall"
 	},
 /obj/effect/turf_decal/sand,

@@ -128,7 +128,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	id_tag = "syndie_listeningpost_external";
+	network_tag= "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
 /obj/structure/cable,
@@ -148,7 +148,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	id_tag = "syndie_listeningpost_external";
+	network_tag= "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
 /obj/structure/cable,

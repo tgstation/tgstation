@@ -587,7 +587,7 @@
 /area/ruin/space/has_grav/hotel)
 "cl" = (
 /obj/machinery/door/airlock{
-	id_tag = "a3";
+	network_tag= "a3";
 	name = "Guest Room A3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -600,7 +600,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "cn" = (
 /obj/machinery/door/airlock{
-	id_tag = "a4";
+	network_tag= "a4";
 	name = "Guest Room A4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -613,7 +613,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "cp" = (
 /obj/machinery/door/airlock{
-	id_tag = "a5";
+	network_tag= "a5";
 	name = "Guest Room A5"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -626,7 +626,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "cr" = (
 /obj/machinery/door/airlock{
-	id_tag = "a6";
+	network_tag= "a6";
 	name = "Guest Room A6"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -867,7 +867,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "da" = (
 /obj/machinery/door/airlock{
-	id_tag = "a2";
+	network_tag= "a2";
 	name = "Guest Room A2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -883,7 +883,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dd" = (
 /obj/machinery/door/airlock{
-	id_tag = "a1";
+	network_tag= "a1";
 	name = "Guest Room A1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

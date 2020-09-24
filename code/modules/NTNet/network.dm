@@ -21,72 +21,58 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	var/static/list/relays = list()
 	var/static/list/logs = list()
 
-	// special case for network_id being null
-	// We are in general subspace, where all we are is a list of networks
-	//
 	var/network_id
-	// the string of this tree
-	var/network_tree
+	var/list/root_devices // shared list of devices on the entire network
 	var/list/linked_devices
 	var/list/children
 	var/datum/ntnet/parent
 
 /datum/ntnet/New(net_id, datum/ntnet/P = null)
+	if(SSnetworks.networks[net_id])
+		log_runtime("Network [net_id] already exists")
+		qdel(src)
+		return
 	src.linked_devices = list()
 	src.network_id = net_id
+	src.children = list()
 	if(parent)
 		src.parent = P
-		LAZYADDASSOC(src.parent.children, net_id, src)
-		network_tree = src.parent.network_id + "." + net_id
+		src.parent.children += src
+		src.root_devices = src.parent.root_devices
 	else
 		src.parent = null
-		src.children = null
-		network_tree = net_id
+		src.root_devices = list() // we are a root network
 
-	SSnetworks.networks[network_tree] = src
-
-
+	SSnetworks.networks[network_id] = src
 
 
 /datum/ntnet/Destroy()
 	if(length(linked_devices) > 0)
-		debug_world_log("Network [network_tree] being deleted with linked devices.  Disconnecting Devices")
+		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
 		for(var/hid in linked_devices)
 			var/datum/component/ntnet_interface/device = linked_devices[hid]
 			device.network = null	// we just need to clear the refrence
+			root_devices.Remove(hid)
 		linked_devices = null
 
 	if(length(children))
-		debug_world_log("Network [network_tree] being deleted with kids.  Killing the children")
-		for(var/child in children)
-			qdel(children[child])
+		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
+		for(var/datum/ntnet/child in children)
+			qdel(child)
 		children = null
 
 	if(parent)
-		parent.children.Remove(network_id)
+		parent.children -= src
 		parent = null
 
-	SSnetworks.networks.Remove(network_tree)
+	SSnetworks.networks.Remove(network_id)
 	return ..()
 
-// creates a network as a child of this network
-/datum/ntnet/proc/find_child(child_id, create_if_not_found = FALSE)
-	var/datum/ntnet/net = children[child_id]
-	if(net)
-		return net
-	if(create_if_not_found)
-		return new/datum/ntnet(child_id, src)
-
-
-/datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
-	if(device.network)
-		device.network.interface_disconnect(device)
-	linked_devices[device.hardware_id] = device
-	device.network = src
-
-/datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
-	linked_devices.Remove(device.hardware_id)
-	device.network = null
+/datum/ntnet/proc/get_interface(tag_or_hid)
+	var/hid = SSnetworks.network_tag_to_hardware_id[tag_or_hid]
+	if(!hid)
+		hid = tag_or_hid // its not a tag
+	return root_devices[hid]
 
 
 /datum/ntnet/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.

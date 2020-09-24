@@ -155,16 +155,10 @@
 				panel_open = TRUE
 	update_icon()
 
-/obj/machinery/door/airlock/ComponentInitialize()
-	. = ..()
-	if(network_id)
-		var/area/A = get_area(src)
-		network_id = list(network_id,A.name).Join(".")
-		AddComponent(/datum/component/ntnet_interface, network_id)
 
 /obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	if(id_tag)
-		id_tag = "[idnum][id_tag]"
+	if(network_tag)
+		network_tag= "[idnum][network_tag]"
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
@@ -299,7 +293,7 @@
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
-	if(id_tag)
+	if(network_tag)
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
 	QDEL_NULL(note)

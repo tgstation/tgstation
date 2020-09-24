@@ -1669,7 +1669,7 @@
 /area/mine/living_quarters)
 "fg" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm1";
+	network_tag= "miningdorm1";
 	name = "Room 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1896,7 +1896,7 @@
 /area/mine/living_quarters)
 "fH" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm2";
+	network_tag= "miningdorm2";
 	name = "Room 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1974,7 +1974,7 @@
 /area/mine/living_quarters)
 "fO" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm3";
+	network_tag= "miningdorm3";
 	name = "Room 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2094,7 +2094,7 @@
 /area/mine/living_quarters)
 "hY" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag3";
+	network_tag= "gulag3";
 	name = "Cell 3"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3193,7 +3193,7 @@
 "Cf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
+	network_tag= "cellblock1";
 	name = "Labor Camp Cellblock"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
@@ -3210,7 +3210,7 @@
 /area/storage/mining)
 "Cr" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag1";
+	network_tag= "gulag1";
 	name = "Cell 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -3901,7 +3901,7 @@
 "Ol" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
+	network_tag= "cellblock1";
 	name = "Labor Camp Operations"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -4593,7 +4593,7 @@
 /area/mine/laborcamp)
 "Zf" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningbathroom";
+	network_tag= "miningbathroom";
 	name = "Restroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4606,7 +4606,7 @@
 /area/mine/living_quarters)
 "Zk" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag2";
+	network_tag= "gulag2";
 	name = "Cell 2"
 	},
 /obj/effect/decal/cleanable/dirt,

@@ -62,7 +62,7 @@
 /area/shuttle/caravan/syndicate3)
 "gl" = (
 /obj/machinery/door/airlock/hatch{
-	id_tag = "caravansyndicate3_bolt_port";
+	network_tag= "caravansyndicate3_bolt_port";
 	name = "External Airlock";
 	normalspeed = 0;
 	req_access_txt = "150"
@@ -399,7 +399,7 @@
 "IR" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
-	id_tag = "caravansyndicate3_bolt_bridge";
+	network_tag= "caravansyndicate3_bolt_bridge";
 	name = "Bridge";
 	req_access_txt = "150"
 	},
@@ -423,7 +423,7 @@
 /area/template_noop)
 "KS" = (
 /obj/machinery/door/airlock/hatch{
-	id_tag = "caravansyndicate3_bolt_starboard";
+	network_tag= "caravansyndicate3_bolt_starboard";
 	name = "External Airlock";
 	normalspeed = 0;
 	req_access_txt = "150"

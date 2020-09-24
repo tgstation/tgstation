@@ -53,7 +53,7 @@
 			controller = A
 			break
 	for(var/obj/machinery/door/airlock/I in GLOB.machines)
-		if(I.id_tag == idDoor)
+		if(I.network_tag== idDoor)
 			door = I
 			break
 
@@ -238,9 +238,9 @@
 
 /obj/machinery/door_buttons/airlock_controller/findObjsByTag()
 	for(var/obj/machinery/door/airlock/A in GLOB.machines)
-		if(A.id_tag == idInterior)
+		if(A.network_tag== idInterior)
 			interiorAirlock = A
-		else if(A.id_tag == idExterior)
+		else if(A.network_tag== idExterior)
 			exteriorAirlock = A
 
 /obj/machinery/door_buttons/airlock_controller/update_icon_state()

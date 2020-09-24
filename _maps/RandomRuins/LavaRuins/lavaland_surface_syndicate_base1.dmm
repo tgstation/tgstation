@@ -13,7 +13,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/virology{
 	frequency = 1449;
-	id_tag = "lavaland_syndie_virology_interior";
+	network_tag= "lavaland_syndie_virology_interior";
 	name = "Virology Lab Interior Airlock";
 	req_access_txt = "150"
 	},
@@ -179,7 +179,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1442;
-	id_tag = "syndie_lavaland_o2_out";
+	network_tag= "syndie_lavaland_o2_out";
 	internal_pressure_bound = 5066;
 	name = "Plasma Out"
 	},
@@ -1846,7 +1846,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
 	frequency = 1449;
-	id_tag = "lavaland_syndie_virology_exterior";
+	network_tag= "lavaland_syndie_virology_exterior";
 	name = "Virology Lab Exterior Airlock";
 	req_access_txt = "150"
 	},
@@ -2949,7 +2949,7 @@
 "iI" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
-	id_tag = "syndie_lavaland_vault";
+	network_tag= "syndie_lavaland_vault";
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -3929,7 +3929,7 @@
 "kE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	frequency = 1442;
-	id_tag = "syndie_lavaland_co2_out";
+	network_tag= "syndie_lavaland_co2_out";
 	internal_pressure_bound = 5066;
 	name = "CO2 out"
 	},
@@ -5856,7 +5856,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1442;
-	id_tag = "syndie_lavaland_n2_out";
+	network_tag= "syndie_lavaland_n2_out";
 	internal_pressure_bound = 5066;
 	name = "Nitrogen Out"
 	},
@@ -5943,7 +5943,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1442;
-	id_tag = "syndie_lavaland_o2_out";
+	network_tag= "syndie_lavaland_o2_out";
 	internal_pressure_bound = 5066;
 	name = "Oxygen Out"
 	},

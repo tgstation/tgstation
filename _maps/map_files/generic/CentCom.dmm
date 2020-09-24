@@ -19587,7 +19587,7 @@
 /area/centcom/evac)
 "Za" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "lmrestroom"
+	network_tag= "lmrestroom"
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)

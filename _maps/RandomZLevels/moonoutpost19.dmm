@@ -1364,7 +1364,7 @@
 /obj/machinery/door/airlock{
 	density = 0;
 	icon_state = "open";
-	id_tag = "awaydorm4";
+	network_tag= "awaydorm4";
 	name = "Dorm 1";
 	opacity = 0;
 	set_obj_flags = "EMAGGED"
@@ -1377,7 +1377,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cU" = (
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm5";
+	network_tag= "awaydorm5";
 	name = "Dorm 2"
 	},
 /turf/open/floor/wood{
@@ -5289,7 +5289,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "lm" = (
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm1";
+	network_tag= "awaydorm1";
 	name = "Dorm 1"
 	},
 /turf/open/floor/plasteel{
@@ -5964,7 +5964,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mR" = (
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm2";
+	network_tag= "awaydorm2";
 	name = "Dorm 2"
 	},
 /obj/effect/decal/cleanable/blood/tracks{
@@ -6412,7 +6412,7 @@
 "nO" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm3";
+	network_tag= "awaydorm3";
 	name = "Dorm 3"
 	},
 /turf/open/floor/plasteel{

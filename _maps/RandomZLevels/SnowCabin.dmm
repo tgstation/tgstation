@@ -416,7 +416,7 @@
 /area/awaymission/cabin)
 "bi" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "WheresTheSyndiBalloon";
+	network_tag= "WheresTheSyndiBalloon";
 	name = "Manager's Bedroom"
 	},
 /turf/open/floor/wood,
@@ -445,7 +445,7 @@
 /area/awaymission/cabin)
 "bm" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse5";
+	network_tag= "snowdinbutworse5";
 	name = "Cabin 5"
 	},
 /obj/structure/cable,
@@ -3339,7 +3339,7 @@
 /area/awaymission/cabin)
 "iV" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse1";
+	network_tag= "snowdinbutworse1";
 	name = "Cabin 1"
 	},
 /obj/structure/cable,
@@ -3347,7 +3347,7 @@
 /area/awaymission/cabin)
 "iW" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse2";
+	network_tag= "snowdinbutworse2";
 	name = "Cabin 2"
 	},
 /obj/structure/cable,
@@ -3355,7 +3355,7 @@
 /area/awaymission/cabin)
 "iX" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse3";
+	network_tag= "snowdinbutworse3";
 	name = "Cabin 3"
 	},
 /obj/structure/cable,
@@ -3363,7 +3363,7 @@
 /area/awaymission/cabin)
 "iY" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse4";
+	network_tag= "snowdinbutworse4";
 	name = "Cabin 4"
 	},
 /obj/structure/cable,

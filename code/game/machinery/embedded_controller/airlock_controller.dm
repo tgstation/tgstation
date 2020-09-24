@@ -6,7 +6,8 @@
 #define AIRLOCK_STATE_OUTOPEN		2
 
 /datum/computer/file/embedded_program/airlock_controller
-	var/id_tag
+	var/network_id	// airlock controlers network
+	var/network_tag // tag for this controlers network
 	var/exterior_door_tag //Burn chamber facing door
 	var/interior_door_tag //Station facing door
 	var/airpump_tag //See: dp_vent_pump.dm
@@ -38,7 +39,7 @@
 		else
 			memory["pump_status"] = "off"
 
-	else if(receive_tag==id_tag)
+	else if(receive_tag==network_tag)
 		switch(signal.data["command"])
 			if("cycle")
 				if(state < AIRLOCK_STATE_CLOSED)
@@ -204,7 +205,6 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
-	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
 	var/airpump_tag
@@ -215,7 +215,7 @@
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
+	network_tag= INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
 	interior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
@@ -224,7 +224,7 @@
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_ATMOS_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
-	id_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
+	network_tag= INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
 	interior_door_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
@@ -233,7 +233,7 @@
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
-	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
+	network_tag= INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 	interior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
@@ -245,8 +245,7 @@
 
 	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
 
-	new_prog.id_tag = id_tag
-	new_prog.exterior_door_tag = exterior_door_tag
+	new_prog.network_tag = network_tag = new_prog.exterior_door_tag = exterior_door_tag
 	new_prog.interior_door_tag = interior_door_tag
 	new_prog.airpump_tag = airpump_tag
 	new_prog.sensor_tag = sensor_tag

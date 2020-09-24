@@ -1301,7 +1301,7 @@
 "cZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm2";
+	network_tag= "awaydorm2";
 	name = "Dorm 2"
 	},
 /turf/open/floor/plasteel{
@@ -1320,7 +1320,7 @@
 "db" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm1";
+	network_tag= "awaydorm1";
 	name = "Dorm 1"
 	},
 /turf/open/floor/plasteel{
@@ -2773,7 +2773,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm3";
+	network_tag= "awaydorm3";
 	name = "Dorm 3"
 	},
 /turf/open/floor/plasteel{
@@ -6933,7 +6933,7 @@
 "nB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm5";
+	network_tag= "awaydorm5";
 	name = "Dorm 5"
 	},
 /turf/open/floor/plasteel{
@@ -6943,7 +6943,7 @@
 "nC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm7";
+	network_tag= "awaydorm7";
 	name = "Dorm 7"
 	},
 /turf/open/floor/plasteel{
@@ -8026,7 +8026,7 @@
 "po" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm4";
+	network_tag= "awaydorm4";
 	name = "Dorm 4"
 	},
 /turf/open/floor/plasteel{
@@ -8040,7 +8040,7 @@
 "pq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm6";
+	network_tag= "awaydorm6";
 	name = "Dorm 6"
 	},
 /turf/open/floor/plasteel{
@@ -8177,7 +8177,7 @@
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
 	icon_state = "in";
-	id_tag = "UO45_air_out";
+	network_tag= "UO45_air_out";
 	name = "air out"
 	},
 /turf/open/floor/engine{
@@ -9120,7 +9120,7 @@
 "rq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /obj/machinery/meter/atmos{
-	id_tag = "UO45_distro_meter";
+	network_tag= "UO45_distro_meter";
 	name = "Distribution Loop"
 	},
 /turf/open/floor/plasteel{
@@ -9768,7 +9768,7 @@
 "sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	id_tag = "UO45_mix_in";
+	network_tag= "UO45_mix_in";
 	name = "distro out"
 	},
 /turf/open/floor/engine/vacuum,
@@ -10478,7 +10478,7 @@
 	dir = 8
 	},
 /obj/machinery/meter/atmos{
-	id_tag = "UO45_waste_meter";
+	network_tag= "UO45_waste_meter";
 	name = "Waste Loop"
 	},
 /turf/open/floor/plasteel{
@@ -11276,7 +11276,7 @@
 "ve" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	id_tag = "UO45_n2_out";
+	network_tag= "UO45_n2_out";
 	name = "nitrogen out"
 	},
 /turf/open/floor/engine/n2,
@@ -11291,7 +11291,7 @@
 "vg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	id_tag = "UO45_o2_out";
+	network_tag= "UO45_o2_out";
 	name = "oxygen out"
 	},
 /turf/open/floor/engine/o2,
@@ -11886,7 +11886,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm8";
+	network_tag= "awaydorm8";
 	name = "Mining Dorm 1"
 	},
 /turf/open/floor/plasteel{
@@ -12169,7 +12169,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock{
-	id_tag = "awaydorm9";
+	network_tag= "awaydorm9";
 	name = "Mining Dorm 2"
 	},
 /turf/open/floor/plasteel{

@@ -1853,7 +1853,7 @@
 /area/mine/living_quarters)
 "fg" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm1";
+	network_tag= "miningdorm1";
 	name = "Room 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -2077,7 +2077,7 @@
 /area/mine/living_quarters)
 "fH" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm2";
+	network_tag= "miningdorm2";
 	name = "Room 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -2166,7 +2166,7 @@
 /area/mine/living_quarters)
 "fO" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningdorm3";
+	network_tag= "miningdorm3";
 	name = "Room 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -3677,7 +3677,7 @@
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
+	network_tag= "cellblock1";
 	name = "Labor Camp Cellblock"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -3746,7 +3746,7 @@
 /area/mine/living_quarters)
 "rG" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag1";
+	network_tag= "gulag1";
 	name = "Cell 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -4160,7 +4160,7 @@
 /area/mine/production)
 "Bj" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag2";
+	network_tag= "gulag2";
 	name = "Cell 2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4316,7 +4316,7 @@
 "FO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "cellblock1";
+	network_tag= "cellblock1";
 	name = "Labor Camp Operations"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -4343,7 +4343,7 @@
 /area/mine/living_quarters)
 "Gz" = (
 /obj/machinery/door/airlock/public/glass{
-	id_tag = "gulag3";
+	network_tag= "gulag3";
 	name = "Cell 3"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5210,7 +5210,7 @@
 /area/mine/living_quarters)
 "Zf" = (
 /obj/machinery/door/airlock{
-	id_tag = "miningbathroom";
+	network_tag= "miningbathroom";
 	name = "Restroom"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{

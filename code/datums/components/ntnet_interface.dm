@@ -11,23 +11,23 @@
 
 /datum/component/ntnet_interface
 	var/hardware_id						//text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
-	var/network_tag = null  			// named tag for looking up on mapping objects
+	var/device_tag = null  			// named tag for looking up on mapping objects
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
 	var/list/regestered_scokets 		// list of connections
 
-/datum/component/ntnet_interface/Initialize(network_name,network_tag)			//Don't force ID unless you know what you're doing!
+/datum/component/ntnet_interface/Initialize(network_id, tag = null)			//Don't force ID unless you know what you're doing!
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	hardware_id = "[SSnetworks.get_next_HID()]"
 	SSnetworks.interfaces_by_hardware_id[hardware_id] = src
 	regestered_scokets = list()
+	join_network(network_id)
+	
+	if(tag)
+		SSnetworks.network_tag_to_hardware_id[tag] = hardware_id
+		src.device_tag = tag
+		to_chat(world,"New Interface [hardware_id] with tag [tag]")
 
-	if(network_tag)
-		SSnetworks.network_tag_to_hardware_id[network_tag] = hardware_id
-		src.network_tag = network_tag
-		to_chat(world,"New Interface [hardware_id] with tage [network_tag]")
-	if(network_name)
-		join_network(network_name)
 
 
 /datum/component/ntnet_interface/proc/debug_port(port)
@@ -64,37 +64,27 @@
 	regestered_scokets[port] = link
 
 /datum/component/ntnet_interface/Destroy()
-	if(isatom(parent))
-		UnregisterFromParent(parent, COMSIG_AREA_ENTERED)
 	if(network)
-		leave_network()
-	if(network_tag)
-		SSnetworks.network_tag_to_hardware_id.Remove(network_tag)
-		network_tag = null
+		SSnetworks.interface_disconnect(src)
+	if(device_tag)
+		SSnetworks.network_tag_to_hardware_id.Remove(device_tag)
+		device_tag = null
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
-	network = null
 	for(var/port in regestered_scokets)
-		regestered_scokets[port]["connected"] = FALSE // just in case of any open connections
+		qdel(regestered_scokets) // should these be qdeleted or should we have some message system?
 	regestered_scokets = null
 	return ..()
 
-/datum/component/ntnet_interface/proc/join_network(network_name)
-	if(network)
-		leave_network()
-	network = SSnetworks.find_network(network_name)
-	if(network)
-		network.interface_connect(src)
+/datum/component/ntnet_interface/proc/join_network(network_id)
+	SSnetworks.interface_connect(src, network_id)
 
-/datum/component/ntnet_interface/proc/leave_network()
-	if(network)
-		network.interface_disconnect(src)
 
 /datum/component/ntnet_interface/proc/__network_receive(datum/netdata/data)			//Do not directly proccall!
 	set waitfor = FALSE
 	if(!network)
 		return
-	if(length(regestered_scokets))
-		var/service = regestered_scokets[data.port]
+	var/service = regestered_scokets[data.port]
+	if(service)
 		if(islist(service))
 			// if we are a list, this is a static return (like static data about the device)
 			// Just make a new packet and return the list

@@ -137,6 +137,11 @@
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
 
+	// nntd networking stuff.  Set a network name and we will auto join the network under that name
+	// You can use this to connect two obj's together not knowing where the other is
+	var/network_id = null
+	// id tag for this device.  Used mainly in mapping but can be used to give the device a human name
+	var/network_tag = null
 
 /**
   * Called when an atom is created in byond (built in engine proc)
@@ -226,6 +231,9 @@
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
+	if(network_id)
+		AddComponent(/datum/component/ntnet_interface, network_id, network_tag)
+		
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
