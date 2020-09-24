@@ -490,6 +490,15 @@
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 
+	//Lets track if we are in a mob or not
+	var/in_mob = FALSE
+	if(isliving(cached_my_atom))
+		in_mob = TRUE
+	else if(istype(cached_my_atom, /obj/item/organ))
+		var/obj/item/organ/the_organ = cached_my_atom
+		if(isliving(the_organ.owner))
+			in_mob = TRUE
+
 	var/reaction_occurred = 0
 	do
 		var/list/possible_reactions = list()
@@ -527,13 +536,8 @@
 					else
 						if(cached_my_atom.type == C.required_container)
 							matching_container = TRUE
-					if(!C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						if(isliving(cached_my_atom))
-							matching_container = FALSE
-						else if(istype(cached_my_atom, /obj/item/organ))
-							var/obj/item/organ/the_organ = cached_my_atom
-							if(isliving(the_organ.owner))
-								matching_container = FALSE
+					if(in_mob && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						matching_container = FALSE
 					if(!C.required_other)
 						matching_other = TRUE
 
@@ -582,7 +586,7 @@
 			var/list/seen = viewers(4, get_turf(my_atom))
 			var/iconhtml = icon2html(cached_my_atom, seen)
 			if(cached_my_atom)
-				if(!ismob(cached_my_atom)) // No bubbling mobs
+				if(!in_mob) // No bubbling mobs
 					if(selected_reaction.mix_sound)
 						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
