@@ -2550,6 +2550,7 @@
 #include "code\modules\modular_computers\file_system\programs\powermonitor.dm"
 #include "code\modules\modular_computers\file_system\programs\radar.dm"
 #include "code\modules\modular_computers\file_system\programs\robocontrol.dm"
+#include "code\modules\modular_computers\file_system\programs\robotact.dm"
 #include "code\modules\modular_computers\file_system\programs\sm_monitor.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\contract_uplink.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\dos.dm"
