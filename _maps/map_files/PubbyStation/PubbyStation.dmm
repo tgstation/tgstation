@@ -48642,16 +48642,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-"hNd" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/effect/landmark/start/cargo_technician,
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "hMt" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -48669,6 +48659,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"hNd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "hNl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -56686,13 +56686,6 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"tvh" = (
-/obj/machinery/light_switch{
-	pixel_x = -20;
-	pixel_y = 34
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "tuM" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/green/line,
@@ -56700,6 +56693,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"tvh" = (
+/obj/machinery/light_switch{
+	pixel_x = -20;
+	pixel_y = 34
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "tvj" = (
 /obj/structure/festivus{
 	anchored = 1;
@@ -57287,7 +57287,6 @@
 	name = "Medbay Front Desk";
 	req_access_txt = "5"
 	},
-/obj/machinery/door/poddoor/shutters/preopen,
 /turf/open/floor/plasteel/white,
 /area/medical/paramedic)
 "ulu" = (
@@ -58364,10 +58363,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"vIa" = (
-/obj/machinery/smartfridge/organ,
-/turf/closed/wall,
-/area/medical/morgue)
 "vHj" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -58378,6 +58373,10 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"vIa" = (
+/obj/machinery/smartfridge/organ,
+/turf/closed/wall,
+/area/medical/morgue)
 "vIc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
