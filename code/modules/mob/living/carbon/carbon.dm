@@ -569,7 +569,7 @@
 	update_stat()
 	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD*2) && stat == DEAD )
-		become_husk("burn")
+		become_husk(BURN)
 
 	med_hud_set_health()
 
@@ -897,9 +897,6 @@
 /mob/living/carbon/proc/can_defib()
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
-
-	if (hellbound)
-		return DEFIB_FAIL_HELLBOUND
 
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK

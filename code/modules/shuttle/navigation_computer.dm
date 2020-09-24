@@ -36,6 +36,14 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
+	if(my_port && my_port.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = null
+		my_port.name = "Old [my_port.name]"
+		my_port = null
+	else
+		QDEL_NULL(my_port)
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
@@ -227,9 +235,9 @@
 	// Too close to the map edge is never allowed
 	if(!T || T.x <= 10 || T.y <= 10 || T.x >= world.maxx - 10 || T.y >= world.maxy - 10)
 		return SHUTTLE_DOCKER_BLOCKED
-	/* // If it's one of our shuttle areas assume it's ok to be there
+	// If it's one of our shuttle areas assume it's ok to be there
 	if(shuttle_port.shuttle_areas[T.loc])
-		return SHUTTLE_DOCKER_LANDING_CLEAR */
+		return SHUTTLE_DOCKER_LANDING_CLEAR
 	. = SHUTTLE_DOCKER_LANDING_CLEAR
 	// See if the turf is hidden from us
 	var/list/hidden_turf_info

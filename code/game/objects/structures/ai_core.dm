@@ -25,16 +25,13 @@
 			update_icon()
 	if(A == brain)
 		brain = null
-	. = ..()
+	return ..()
 
 
 /obj/structure/ai_core/Destroy()
-	if(circuit)
-		qdel(circuit)
-		circuit = null
-	if(brain)
-		qdel(brain)
-		brain = null
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	QDEL_NULL(laws)
 	return ..()
 
 /obj/structure/ai_core/deactivated

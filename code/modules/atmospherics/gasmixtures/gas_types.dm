@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	specific_heat = 15
 	name = "Hydrogen"
 	dangerous = TRUE
-	rarity = 700
+	rarity = 600
 
 /datum/gas/healium
 	id = "healium"
@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	gas_overlay = "healium"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 100
+	rarity = 300
 
 /datum/gas/proto_nitrate
 	id = "proto_nitrate"
@@ -186,16 +186,16 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	gas_overlay = "proto_nitrate"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 100
+	rarity = 200
 
-/datum/gas/cyrion_b
-	id = "cyrion_b"
+/datum/gas/zauker
+	id = "zauker"
 	specific_heat = 350
-	name = "Cyrion B"
+	name = "Zauker"
 	dangerous = TRUE
-	gas_overlay = "cyrion_b"
+	gas_overlay = "zauker"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 100
+	rarity = 1
 
 /datum/gas/halon
 	id = "halon"
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	gas_overlay = "halon"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 100
+	rarity = 300
 
 /datum/gas/hexane
 	id = "hexane"
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	gas_overlay = "hexane"
 	moles_visible = MOLES_GAS_VISIBLE
-	rarity = 100
+	rarity = 500
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
