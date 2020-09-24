@@ -546,6 +546,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/chisel{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel/dark,
 /area/library)
 "abp" = (
@@ -6674,12 +6677,6 @@
 	pixel_y = 4;
 	req_access_txt = "12"
 	},
-/obj/machinery/button/massdriver{
-	id = "trash";
-	name = "Trash Ejector Control";
-	pixel_x = -26;
-	pixel_y = -6
-	},
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
 	dir = 8
@@ -6689,6 +6686,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "trash";
+	pixel_x = -24;
+	pixel_y = -7
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "aqG" = (
@@ -10323,13 +10325,13 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "axv" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -10382,12 +10384,12 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axD" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -11054,14 +11056,14 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "ayM" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/oil,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -11584,12 +11586,12 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "azS" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
@@ -97709,11 +97711,11 @@
 	req_access_txt = "8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/massdriver{
-	id = "toxinsdriver";
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/loading_area,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "toxinsdriver";
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dKD" = (
@@ -111425,14 +111427,14 @@
 	},
 /area/security/prison)
 "nZm" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engsm";
-	name = "Radiation Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
 	},
 /turf/open/floor/plating,
 /area/engine/supermatter)

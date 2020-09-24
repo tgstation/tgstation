@@ -32,7 +32,7 @@
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		component_parts -= circuit
+		LAZYREMOVE(component_parts, circuit)
 		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
@@ -267,12 +267,18 @@
 
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts
+
 	component_parts = list()
-	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
-	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(src)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(src)
+	component_parts += new /obj/item/stack/sheet/glass(src, 2)
+	component_parts += new /obj/item/stack/cable_coil(src, 1)
+
+	QDEL_LIST(old_parts)
 	RefreshParts()
 
 /obj/machinery/sleeper/old

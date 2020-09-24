@@ -61,8 +61,8 @@
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))
-		return 1 //Whips deal 2x damage to vampires. Vampire killer.
-	return 0
+		return 2 //Whips deal 2x damage to vampires. Vampire killer.
+	return 1
 
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"

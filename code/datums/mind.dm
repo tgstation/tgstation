@@ -52,8 +52,6 @@
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/damnation_type = 0
-	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
-	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
@@ -80,9 +78,8 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
-/datum/mind/New(key)
-	src.key = key
-	soulOwner = src
+/datum/mind/New(_key)
+	key = _key
 	martial_art = default_martial_art
 	init_known_skills()
 
@@ -91,7 +88,6 @@
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	current = null
-	soulOwner = null
 	return ..()
 
 /datum/mind/proc/get_language_holder()
@@ -708,9 +704,6 @@
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
-
-/datum/mind/proc/owns_soul()
-	return soulOwner == src
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
