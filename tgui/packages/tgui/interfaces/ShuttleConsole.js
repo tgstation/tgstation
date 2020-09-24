@@ -59,6 +59,16 @@ const getLocationIdByName = (locations, name) => {
   return locations?.find(location => location.name === name)?.id;
 };
 
+const STATUS_COLOR_KEYS = {
+  "In Transit": "good",
+  "Idle": "average",
+  "Igniting": "average",
+  "Recharging": "average",
+  "Missing": "bad",
+  "Unauthorized Access": "bad",
+  "Locked": "bad",
+};
+
 const ShuttleConsoleContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -90,15 +100,7 @@ const ShuttleConsoleContent = (props, context) => {
         </Box>
         <Box
           inline
-          color={status==="In Transit"
-            ? 'good'
-            : status==="Idle"
-              ? 'average'
-              : status==="Igniting"
-                ? 'average'
-                : status==="Recharging"
-                  ? 'average'
-                  : 'bad'}
+          color={STATUS_COLOR_KEYS[status] || "bad"}
           ml={1}>
           {status || "Not Available"}
         </Box>
