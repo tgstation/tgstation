@@ -190,8 +190,8 @@
 		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/dump_contents()
-	dropContents()
+/obj/machinery/suit_storage_unit/drop_stored_items()
+	. = ..()
 	helmet = null
 	suit = null
 	mask = null

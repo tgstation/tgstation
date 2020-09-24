@@ -69,18 +69,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/Initialize()
-	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
-	// circuit board for it and make the new machine
+	// circuit board for it
 	if(!circuit)
 		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
 							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
 							/obj/item/circuitboard/computer/arcade/amputation = 2)
-		var/thegame = pickweight(gameodds)
-		var/obj/item/circuitboard/new_board = new thegame()
-		var/obj/new_cabinet = new new_board.build_path(loc, new_board)
-		new_cabinet.setDir(dir)
-		return INITIALIZE_HINT_QDEL
+		circuit = pickweight(gameodds)
+
+	. = ..()
+
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
