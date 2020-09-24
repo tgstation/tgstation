@@ -2191,7 +2191,6 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/item/gun/energy/e_gun/hos,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -3776,6 +3775,7 @@
 	},
 /obj/structure/closet/secure_closet/warden,
 /obj/item/toy/figure/warden,
+/obj/item/gun/energy/e_gun/hos,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aiN" = (
