@@ -1,7 +1,7 @@
 /* smoothing_flags */
 /// Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
 #define SMOOTH_CORNERS	(1<<0)
-/// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by the blob tileset pattern.
+/// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.
 #define SMOOTH_BITMASK		(1<<1)
 /// Atom has diagonal corners, with underlays under them.
 #define SMOOTH_DIAGONAL_CORNERS	(1<<2)
