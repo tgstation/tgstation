@@ -7,7 +7,14 @@
 /datum/job/assistant/New()
     ..()
     MAP_JOB_CHECK
-    supervisors = "<span class='danger'>each other</span>. There are 0 impostors among us."
+    supervisors = "<span class='danger'>each other</span>"
+
+/datum/job/cyborg/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "<span class='danger'>your laws and the crew</span>"
 
 MAP_REMOVE_JOB(captain) //job_types/captain.dm
 MAP_REMOVE_JOB(hop) //job_types/cargo_service.dm
@@ -41,3 +48,4 @@ MAP_REMOVE_JOB(ai) //job_types/si
 MAP_REMOVE_JOB(prisoner)
 MAP_REMOVE_JOB(psychologist)
 MAP_REMOVE_JOB(paramedic)
+MAP_REMOVE_JOB(officer)
