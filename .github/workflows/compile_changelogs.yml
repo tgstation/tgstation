@@ -12,7 +12,7 @@ jobs:
       - name: "Check for CHANGELOG_ENABLER secret and pass true to output if it exists to be checked by later steps"
         id: value_holder
         env:
-          CHANGELOG_ENABLER: ${{ secrets.ChangelogEnabler }}
+          CHANGELOG_ENABLER: ${{ secrets.CHANGELOG_ENABLER }}
         run: |
           unset SECRET_EXISTS
           if [-n $CHANGELOG_ENABLER]; then SECRET_EXISTS='true' ; fi
