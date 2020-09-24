@@ -34,6 +34,8 @@ Assistant
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	l_pocket = /obj/item/pda/heads/ce
+	mask = /obj/item/clothing/mask/gas/atmos
+	suit_store = /obj/item/tank/internals/oxygen/yellow
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced/command=1, /obj/item/construction/rcd/combat/admin=1, /obj/item/rcd_upgrade/frames=1, /obj/item/rcd_upgrade/simple_circuits=1, /obj/item/pipe_dispenser=1, /obj/item/lightreplacer=1)
 
 	backpack = /obj/item/storage/backpack/industrial
