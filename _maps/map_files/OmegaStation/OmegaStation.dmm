@@ -32768,7 +32768,7 @@
 	dir = 6
 	},
 /obj/machinery/button/door{
-	id = "commissaryshutter";
+	id = "commissaryshutters";
 	name = "Commissary Shutter Control";
 	pixel_x = -6;
 	pixel_y = -24
