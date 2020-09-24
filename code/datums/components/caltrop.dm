@@ -48,11 +48,6 @@
 		if(!(flags & CALTROP_BYPASS_SHOES) && (H.shoes || feetCover))
 			return
 
-		var/damage = rand(min_damage, max_damage)
-		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
-			damage *= 0.75
-
-
 		if(!(flags & CALTROP_SILENT) && COOLDOWN_FINISHED(src, caltrop_cooldown))
 			COOLDOWN_START(src, caltrop_cooldown, 1 SECONDS) //cooldown to avoid message spam.
 			var/atom/A = parent
@@ -63,5 +58,10 @@
 				H.visible_message("<span class='danger'>[H] slides on [A]!</span>", \
 						"<span class='userdanger'>You slide on [A]!</span>")
 
-		H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
-		H.Paralyze(60)
+		var/damage = rand(min_damage, max_damage)
+		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+			H.apply_damage(damage*0.5, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND) //halved damage
+			H.Paralyze(30) //halved stun length
+		else
+			H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
+			H.Paralyze(60)
