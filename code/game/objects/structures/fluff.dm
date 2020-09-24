@@ -143,8 +143,16 @@
 	name = "conversion altar"
 	desc = "An altar dedicated to a deity."
 	icon_state = "convertaltar"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = FALSE
 	can_buckle = 1
+
+/obj/structure/fluff/divine/forge
+	name = "Ruinous Forge"
+	desc = "A forge dedicated to producing corrupting pieces of armor and weaponry... Bah, I'm sure we'll be fine using whatever comes out of it!"
+	icon_state = "forge-blue"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
 
 /obj/structure/fluff/divine/powerpylon
 	name = "power pylon"
