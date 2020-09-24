@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1 << 21)
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1 << 21)
+#define ATMOS_IS_PROCESSING_1 (1 << 22)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
