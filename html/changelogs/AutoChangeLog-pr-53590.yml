@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - tweak: "RCDing the top 2 levels of icebox's snow will create an open gap, where you can fall between z-levels."
-  - tweak: "Bombing an area heavily on icebox's top 2 floors can also result in chasms leading to the second level."
-  - bugfix: "Building atop openspace on icebox no longer produces magical snow under your lattices."
