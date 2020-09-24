@@ -194,6 +194,8 @@
 
 	/// A buffer of currently held keys.
 	var/list/keys_held = list()
+	/// A list of currently held keys. Assoc by type || Instance
+	var/list/keybinds_held = list()
 	/*
 	** These next two vars are to apply movement for keypresses and releases made while move delayed.
 	** Because discarding that input makes the game less responsive.

@@ -315,3 +315,11 @@
 	if(.)
 		return
 	user.movement_locked = FALSE
+
+
+/datum/keybinding/mob/ctrl_click
+	hotkey_keys = list("Ctrl")
+	name = "ctrl_click_override"
+	full_name = "CTRL click override"
+	description = "Hotkey to override the behavior for ctrl-clicking, these are things like grabbing."
+	keybind_signal = COMSIG_KB_MOB_CTRLCLICK_DOWN

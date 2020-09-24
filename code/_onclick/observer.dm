@@ -36,7 +36,7 @@
 	if(modifiers["alt"])
 		AltClickNoInteract(src, A)
 		return
-	if(modifiers["ctrl"])
+	if(client?.keybinds_held[/datum/keybinding/mob/ctrl_click])
 		CtrlClickOn(A)
 		return
 

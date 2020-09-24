@@ -18,9 +18,11 @@
 
 /datum/keybinding/proc/down(client/user)
 	SHOULD_CALL_PARENT(TRUE)
+	user.keybinds_held[type] = src
 	return SEND_SIGNAL(user.mob, keybind_signal) & COMSIG_KB_ACTIVATED
 
 /datum/keybinding/proc/up(client/user)
+	user.keybinds_held[type] = null
 	return FALSE
 
 /datum/keybinding/proc/can_use(client/user)

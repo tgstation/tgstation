@@ -12,7 +12,7 @@
 	if(modifiers["alt"])
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(client?.keybinds_held[/datum/keybinding/mob/ctrl_click])
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)

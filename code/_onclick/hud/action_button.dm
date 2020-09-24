@@ -50,7 +50,7 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return TRUE
-	if(modifiers["ctrl"])
+	if(usr.client?.keybinds_held[/datum/keybinding/mob/ctrl_click])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
 		if(id && usr.client) //try to (un)remember position
@@ -102,7 +102,7 @@
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		return TRUE
-	if(modifiers["ctrl"])
+	if(usr.client?.keybinds_held[/datum/keybinding/mob/ctrl_click])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
 		if(id && usr.client) //try to (un)remember position
