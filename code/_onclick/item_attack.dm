@@ -84,7 +84,7 @@
 		return
 
 	if(force && !user.combat_mode)
-		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack things!</span>")
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack people!</span>")
 		return
 
 	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
@@ -113,6 +113,9 @@
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
+		return
+	if(force && !user.combat_mode)
+		to_chat(user, "<span class='warning'>You need to turn on combat mode to attack objects!</span>")
 		return
 	if(item_flags & NOBLUDGEON)
 		return
