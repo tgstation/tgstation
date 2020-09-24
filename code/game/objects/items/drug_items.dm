@@ -18,7 +18,7 @@
 /obj/item/food/drug/moon_rock
 	name = "moon rock"
 	desc = "A small hard lump of kronkaine freebase."
-	ícon_state = "moon_rock1"
+	icon_state = "moon_rock1"
 	food_reagents = list() //add kronkcaine here. ANTLION
 
 /obj/item/food/drug/moon_rock/Initialize()
@@ -36,22 +36,22 @@
 
 /obj/item/reagent_containers/glass/blaztoff_ampoule/update_icon_state()
 	if(!reagents.total_volume)
-		icon_state = "blastoff_empty"
-	else if(reagent_flags & OPEN_CONTAINER)
-		icon_state = "blastoff_open"
+		icon_state = "blastoff_empty" //add sprite to DMI. ANTLION
+	else if(is_open_container())
+		icon_state = "blastoff_open" //add sprite to DMI. ANTLION
 	else
 		icon_state = "blastoff_ampoule"
 
 /obj/item/reagent_containers/glass/blaztoff_ampoule/attack_self(mob/user)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !(reagent_flags & OPEN_CONTAINER))
-		reagent_flags = OPEN_CONTAINER
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !is_open_container())
+		reagent_flags = OPENCONTAINER
 		spillable = TRUE
 		return update_icon()
 
 /obj/item/reagent_containers/food/drinks/blaztoff_ampoule/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!.) //if the bottle wasn't caught
-		if(QDELING(src) || !target)		//Invalid loc
+		if(QDELING(src) || !hit_atom)		//Invalid loc
 			return
 		var/obj/item/shard/ampoule_shard = new(drop_location())
 		playsound(src, "shatter", 40, TRUE)
@@ -59,5 +59,5 @@
 		spillable = TRUE
 		SplashReagents(hit_atom, TRUE)
 		qdel(src)
-		target.Bumped(ampoule_shard)
+		hit_atom.Bumped(ampoule_shard)
 
