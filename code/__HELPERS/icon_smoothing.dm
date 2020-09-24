@@ -160,7 +160,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
 	else if(smoothing_flags & SMOOTH_BITMASK)
-		blob_smooth()
+		bitmask_smooth()
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
 
@@ -314,7 +314,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
   * Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
   *
 */
-/atom/proc/blob_smooth()
+/atom/proc/bitmask_smooth()
 	var/new_junction = NONE
 	. = smoothing_junction
 
@@ -344,7 +344,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	icon_state = "[base_icon_state]-[new_junction]"
 
 
-/turf/closed/blob_smooth()
+/turf/closed/bitmask_smooth()
 	. = ..()
 	// No diagonal corner behavior or no changes since last smoothing?
 	if(!(smoothing_flags & SMOOTH_DIAGONAL_CORNERS) || . == smoothing_junction)
