@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
 			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
-			if(length(empty_indexes) == 0 || length(empty_indexes) == 1 && !mute.get_bodypart(BODY_ZONE_L_ARM) || length(empty_indexes) == 1 && !mute.get_bodypart(BODY_ZONE_R_ARM))//All existing hands full, can't sign
+			if(length(empty_indexes) == 0 || length(empty_indexes) == 1 && (!mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM)))//All existing hands full, can't sign
 				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands full!</span.?>")
 				return FALSE
 			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
