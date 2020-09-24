@@ -14672,7 +14672,6 @@
 "aMd" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /obj/machinery/light{
@@ -51932,12 +51931,12 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "lBJ" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Supermatter";
-	name = "supermatter shielding"
-	},
 /obj/item/wrench,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "supermatter";
+	name = "supermatter shielding"
+	},
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "lBP" = (
@@ -52837,11 +52836,11 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "nmp" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Supermatter";
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "supermatter";
 	name = "supermatter shielding"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "nnf" = (
@@ -53812,11 +53811,11 @@
 	},
 /area/maintenance/department/science)
 "oEN" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Supermatter";
+/obj/effect/landmark/event_spawn,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "supermatter";
 	name = "supermatter shielding"
 	},
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "oEW" = (
@@ -54931,9 +54930,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "qJB" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -56249,8 +56246,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "tbC" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Supermatter";
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "supermatter";
 	name = "supermatter shielding"
 	},
 /turf/open/floor/plating,

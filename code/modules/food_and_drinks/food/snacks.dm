@@ -197,7 +197,8 @@ All foods are distributed among various categories. Use common sense.
 	var/list/modifiers = params2list(params)
 	if(!(user.combat_mode && modifiers["right"]))
 		var/sharp = W.get_sharpness()
-		return sharp && slice(sharp, W, user)
+		if (sharp == SHARP_EDGED)
+			return slice(sharp, W, user)
 	else
 		return ..()
 

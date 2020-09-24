@@ -35,13 +35,6 @@
 /turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
-/turf/open/floor/plating/astplate
-	icon_state = "asteroidplating"
-
-/turf/open/floor/plating/airless/astplate
-	icon_state = "asteroidplating"
-
-
 /turf/open/floor/plating/ashplanet
 	icon = 'icons/turf/mining.dmi'
 	gender = PLURAL
