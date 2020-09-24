@@ -20071,6 +20071,7 @@
 	dir = 8
 	},
 /obj/machinery/light,
+/obj/machinery/plumbing/receiver,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "aUs" = (
@@ -30531,8 +30532,8 @@
 	dir = 1
 	},
 /obj/machinery/button/door{
-	id = "chemistry_stair_shutters";
-	name = "Chemistry Stairs Control";
+	id = "chemistry_shutters";
+	name = "Chemistry Shutter Control";
 	pixel_x = 25;
 	req_access_txt = "33"
 	},
@@ -33892,6 +33893,7 @@
 /area/maintenance/aft)
 "bCE" = (
 /obj/item/storage/cans/sixbeer,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bCF" = (
@@ -51514,6 +51516,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"jJE" = (
+/turf/closed/wall/r_wall,
+/area/medical/cryo)
 "jMY" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -51673,6 +51678,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"kjy" = (
+/turf/open/floor/plasteel/white,
+/area/medical/cryo)
 "kjH" = (
 /obj/machinery/light,
 /obj/structure/closet/firecloset,
@@ -53259,6 +53267,7 @@
 /obj/effect/turf_decal/siding/yellow/end{
 	dir = 4
 	},
+/obj/machinery/plumbing/receiver,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "orP" = (
@@ -53411,6 +53420,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"oVx" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/white,
+/area/medical/cryo)
 "oVV" = (
 /obj/machinery/button/door{
 	id = "xenobio10";
@@ -53653,10 +53666,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"psq" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/white,
-/area/medical/cryo)
 "psy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
@@ -54223,9 +54232,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"qWJ" = (
-/turf/open/floor/plasteel/white,
-/area/medical/cryo)
 "rdP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -55902,9 +55908,6 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"wkk" = (
-/turf/closed/wall/r_wall,
-/area/medical/cryo)
 "wkN" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -92670,9 +92673,9 @@ hTU
 bzU
 bCF
 bCS
-qWJ
-psq
-wkk
+kjy
+oVx
+jJE
 hxs
 bzs
 buf
@@ -92927,9 +92930,9 @@ hTU
 bCQ
 bDZ
 bCP
-qWJ
+kjy
 xFt
-wkk
+jJE
 hxs
 bzs
 buf
@@ -93186,7 +93189,7 @@ mrM
 bCT
 bwE
 bwE
-wkk
+jJE
 hxs
 bzs
 buf
@@ -93443,7 +93446,7 @@ jtt
 hTU
 urC
 urC
-wkk
+jJE
 hxs
 bzs
 buf
@@ -93700,7 +93703,7 @@ lOZ
 caS
 kbG
 kbG
-wkk
+jJE
 hxs
 bzs
 bug
