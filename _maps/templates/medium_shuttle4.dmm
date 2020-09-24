@@ -40,7 +40,7 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 1
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_4)
 "k" = (
 /turf/closed/indestructible/oldshuttle{
@@ -63,11 +63,11 @@
 /area/ruin/powered/shuttle/medium_4)
 "t" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_4)
 "u" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_4)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
@@ -75,7 +75,7 @@
 /area/ruin/powered/shuttle/medium_4)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_4)
 
 (1,1,1) = {"

@@ -1,6 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes: 
-  - bugfix: "Mechs once again use power when moving and properly show errors when failing to move"
-  - bugfix: "Gygax Leg Actuator Overload button now works correctly"
-  - bugfix: "Orbital Mech Pads can once again send mechs"

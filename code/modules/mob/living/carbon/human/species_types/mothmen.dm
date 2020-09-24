@@ -63,8 +63,8 @@
 
 /datum/species/moth/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 9 //flyswatters deal 10x damage to moths
-	return 0
+		return 10 //flyswatters deal 10x damage to moths
+	return 1
 
 /datum/species/moth/space_move(mob/living/carbon/human/H)
 	. = ..()

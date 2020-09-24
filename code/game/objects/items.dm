@@ -127,7 +127,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 
-	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	///Used in [atom/proc/attackby] to say how something was attacked `"[x] has been [z.attack_verb] by [y] with [z]"`
 	var/list/attack_verb_continuous
 	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -820,7 +820,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	closeToolTip(usr)
 
 
-/// Called when a mob tries to use the item as a tool.Handles most checks.
+/// Called when a mob tries to use the item as a tool. Handles most checks.
 /obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
@@ -830,11 +830,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/skill_modifier = 1
 
 	if(tool_behaviour == TOOL_MINING && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		skill_modifier = H.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+		if(user.mind)
+			skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
-		if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(H.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
-			mineral_scan_pulse(get_turf(H), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
+			if(user.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(user.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
+				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
 
 	delay *= toolspeed * skill_modifier
 
@@ -939,13 +939,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
-///In case we want to do something special (like self delete) upon failing to embed in something. Returns a bitflag.
+///In case we want to do something special (like self delete) upon failing to embed in something.
 /obj/item/proc/failedEmbed()
 	if(item_flags & DROPDEL)
 		qdel(src)
-		return COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE
-	return NONE
-
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
@@ -962,7 +959,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   *
   * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
   *
-  * Returns bitflags informing whether the item was able to embed itself, deleted itself in the process, or nothing happened.
+  * Returns TRUE if it embedded successfully, nothing otherwise
   *
   * Arguments:
   * * target- Either a body part or a carbon. What are we hitting?
@@ -975,16 +972,15 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
-		return COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS
-	return failedEmbed()
-
+		return COMPONENT_EMBED_SUCCESS
+	failedEmbed()
 
 ///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
 /obj/item/proc/disableEmbedding()
 	SEND_SIGNAL(src, COMSIG_ITEM_DISABLE_EMBED)
 	return
 
-///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
+///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/var/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
 /obj/item/proc/updateEmbedding()
 	if(!LAZYLEN(embedding))
 		return
@@ -1036,13 +1032,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		M.losebreath += 2
-		switch(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
-			if(COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
-				return
-			if(COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS)
-				M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
-				M.losebreath += 6
-				discover_after = FALSE
+		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds successfully in their chest, cause a lot of pain
+			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+			M.losebreath += 6
+			discover_after = FALSE
+		if(QDELETED(src)) // in case trying to embed it caused its deletion (say, if it's DROPDEL)
+			return
 
 		if(S?.tastes?.len) //is that blood in my mouth?
 			S.tastes += "iron"

@@ -26,8 +26,13 @@
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
-		for(var/obj/effect/decal/cleanable/cleanable_decal in A)
-			cleaner?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)) //it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
+		// If there's a cleaner with a mind, let's gain some experience!
+		if(cleaner?.mind)
+			var/total_experience_gain = 0
+			for(var/obj/effect/decal/cleanable/cleanable_decal in A)
+				//it is intentional that the mop rounds xp but soap does not, USE THE SACRED TOOL
+				total_experience_gain += max(round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT, 1), 0)
+			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
 		A.wash(CLEAN_SCRUB)
 
 	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
@@ -53,7 +58,9 @@
 
 	if(T)
 		user.visible_message("<span class='notice'>[user] begins to clean \the [T] with [src].</span>", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-		var/clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+		var/clean_speedies = 1
+		if(user.mind)
+			clean_speedies = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
 			clean(T, user)

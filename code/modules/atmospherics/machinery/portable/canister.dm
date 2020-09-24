@@ -67,7 +67,7 @@
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
 		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
-		"cyrion_b" = /obj/machinery/portable_atmospherics/canister/cyrion_b,
+		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
 		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	)
@@ -215,12 +215,12 @@
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/cyrion_b
-	name = "Cyrion B canister"
-	desc = "Cyrion B, highly toxic"
-	icon_state = "cyrion_b"
-	base_icon_state = "cyrion_b"
-	gas_type = /datum/gas/cyrion_b
+/obj/machinery/portable_atmospherics/canister/zauker
+	name = "Zauker canister"
+	desc = "Zauker, highly toxic"
+	icon_state = "zauker"
+	base_icon_state = "zauker"
+	gas_type = /datum/gas/zauker
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/halon

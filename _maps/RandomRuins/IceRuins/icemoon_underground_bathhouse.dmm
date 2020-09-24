@@ -48,9 +48,9 @@
 	icon_state = "bulb";
 	dir = 1
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
+/obj/item/food/spaghetti/pastatomato{
 	desc = "Just how mom used to make it.";
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/pax = 5, /datum/reagent/medicine/psicodine = 10, /datum/reagent/medicine/morphine = 5);
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/pax = 5, /datum/reagent/medicine/psicodine = 10, /datum/reagent/medicine/morphine = 5);
 	name = "soul food";
 	tastes = list("nostalgia" = 1, "happiness" = 1)
 	},

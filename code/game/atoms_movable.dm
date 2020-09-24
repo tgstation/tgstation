@@ -598,7 +598,7 @@
   *
   * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
   *
-  * Mobs should return 1 if they should be able to move of their own volition, see [/client/Move]
+  * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
   *
   * Arguments:
   * * movement_dir - 0 when stopping or any dir when trying to move
@@ -624,7 +624,7 @@
 
 /// Only moves the object if it's under no gravity
 /atom/movable/proc/newtonian_move(direction)
-	if(!loc || Process_Spacemove(0))
+	if(!isturf(loc) || Process_Spacemove(0))
 		inertia_dir = 0
 		return FALSE
 
@@ -992,13 +992,7 @@
 
 /* End language procs */
 
-
-/atom/movable/proc/ConveyorMove(movedir)
-	set waitfor = FALSE
-	if(!anchored && has_gravity())
-		step(src, movedir)
-
-///Returns an atom's power cell, if it has one. Overload for individual items.
+//Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
 

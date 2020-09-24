@@ -33,14 +33,14 @@
 	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	target = null
 	return ..()
 
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
 	return ..()

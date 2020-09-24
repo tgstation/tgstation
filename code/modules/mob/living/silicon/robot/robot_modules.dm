@@ -219,6 +219,7 @@
 	R.notransform = TRUE
 	R.SetLockdown(1)
 	R.set_anchored(TRUE)
+	R.logevent("Chassis configuration has been set to [name].")
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
@@ -229,7 +230,7 @@
 	R.set_anchored(FALSE)
 	R.notransform = FALSE
 	R.updatehealth()
-	R.update_headlamp(FALSE, BORG_LAMP_CD_RESET)
+	R.update_icons()
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
