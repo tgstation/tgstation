@@ -41142,6 +41142,11 @@
 	dir = 4
 	},
 /area/chapel/main)
+"xip" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/turf/open/floor/wood,
+/area/maintenance/port)
 "xiW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -68587,7 +68592,7 @@ lsQ
 faZ
 krp
 uEb
-nSe
+xip
 rNB
 uEb
 ifX
