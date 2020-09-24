@@ -13,7 +13,8 @@
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
 	var/overlay_icon = "wheelchair_overlay"
-	var/foldabletype = /obj/item/wheelchair //Determines what the object folds into
+	//Determines what the object folds into
+	var/foldabletype = /obj/item/wheelchair
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
