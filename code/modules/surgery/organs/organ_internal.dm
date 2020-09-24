@@ -52,7 +52,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	moveToNullspace()
+	forceMove(M)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
