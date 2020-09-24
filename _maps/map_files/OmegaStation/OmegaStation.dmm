@@ -38303,6 +38303,7 @@
 	pixel_y = 3
 	},
 /obj/structure/cable,
+/obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "sPo" = (
