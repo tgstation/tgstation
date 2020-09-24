@@ -23274,7 +23274,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Entrance";
+	c_tag = "Central Primary Hallway Medbay";
 	dir = 8;
 	network = list("ss13","medbay")
 	},
@@ -31051,6 +31051,7 @@
 /area/medical/virology)
 "bFJ" = (
 /obj/effect/landmark/xeno_spawn,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFK" = (
@@ -49420,6 +49421,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
+"iQW" = (
+/mob/living/carbon/monkey,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/medical/virology)
 "iRs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -50096,6 +50104,12 @@
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer4{
+	dir = 10
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
@@ -51311,8 +51325,12 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "lNy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden/layer4{
+	dir = 8
+	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -57375,6 +57393,12 @@
 	name = "Monkey Pen";
 	req_one_access_txt = "39"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "uok" = (
@@ -57598,6 +57622,13 @@
 	},
 /turf/closed/wall,
 /area/quartermaster/storage)
+"uAs" = (
+/mob/living/carbon/monkey,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/medical/virology)
 "uAx" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -57936,6 +57967,9 @@
 	pixel_y = 1
 	},
 /mob/living/carbon/monkey,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "vcJ" = (
@@ -83080,7 +83114,7 @@ wLl
 bGW
 htq
 bGW
-bGW
+htq
 bKn
 lkK
 bQS
@@ -83595,7 +83629,7 @@ iJI
 mxV
 fWl
 jVS
-bFI
+uAs
 bQj
 bFI
 bEr
@@ -83853,7 +83887,7 @@ bEr
 ozc
 vbv
 bFJ
-bFI
+iQW
 bFL
 bEr
 aaa
