@@ -368,7 +368,9 @@
 		if(victim.has_reagent(/datum/reagent/determination))
 			painkiller_bonus += 10
 		if(victim.has.reagent(/datum/reagent/consumable/ethanol/painkiller))
-			painkiller_bonus += 10
+			painkiller_bonus += 5
+		if(victim.has.reagent(/datum/reagent/medicine/mine_salve))
+			painkiller_bonus += 20
 
 		if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
 			victim.visible_message("<span class='danger'>[victim] fails to finish applying [I] to [victim.p_their()] [limb.name], passing out from the pain!</span>", "<span class='notice'>You black out from the pain of applying [I] to your [limb.name] before you can finish!</span>")
