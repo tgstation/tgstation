@@ -23391,6 +23391,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "blj" = (
@@ -28182,7 +28183,6 @@
 	name = "engineering plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/glasses/meson/engine,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -28402,7 +28402,6 @@
 /obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
-/obj/item/clothing/glasses/meson/engine,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
