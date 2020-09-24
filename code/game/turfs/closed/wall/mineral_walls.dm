@@ -2,7 +2,7 @@
 	name = "mineral wall"
 	desc = "This shouldn't exist"
 	icon_state = ""
-	smoothing_flags = SMOOTH_CORNERS
+	smoothing_flags = SMOOTH_BLOB
 	canSmoothWith = null
 	var/last_event = 0
 	var/active = null
