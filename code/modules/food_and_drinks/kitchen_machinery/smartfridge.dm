@@ -218,7 +218,7 @@
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
 						if(O in component_parts)
-							CRASH("Attempted removal of [O] compoent_part from vending machine via vending interface.")
+							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 						dispense(O, usr)
 						break
 				if (visible_contents)
@@ -230,7 +230,7 @@
 					break
 				if(O.name == params["name"])
 					if(O in component_parts)
-						CRASH("Attempted removal of [O] compoent_part from vending machine via vending interface.")
+						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 					dispense(O, usr)
 					desired--
 			if (visible_contents)
