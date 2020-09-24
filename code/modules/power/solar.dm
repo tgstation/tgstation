@@ -15,9 +15,9 @@
 
 	var/id
 	var/obscured = FALSE
-	///[0-1] measure of obscuration -- multipllier against power generation
+	///`[0-1]` measure of obscuration -- multipllier against power generation
 	var/sunfrac = 0
-	///[0-360) degrees, which direction are we facing?
+	///`[0-360)` degrees, which direction are we facing?
 	var/azimuth_current = 0
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
