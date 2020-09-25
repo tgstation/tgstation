@@ -76,7 +76,8 @@
 	var/list/access = list()
 	var/trim = NONE // Department access flags wont take away wildcards when using the appropriate trim
 	var/card_level = CARD_LEVEL_GREY
-	var/common_wildcards = 2
+	// get_common_wildcards() returns the number being a used
+	var/common_wildcards = 2 // N of wildcards possible. see get_common_wildcards() for wc being used.
 	var/command_wildcards = 0
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -281,23 +282,36 @@
 
 	return msg
 
-//Returns the number of already used wildcards
-/obj/item/card/id/GetCommonWildcards()
-	if(card_level >= CARD_LEVEL_GOLD) // Gold cards and above have no restriction
-		return 0
+/obj/item/card/id/proc/get_command_wildcards()
 	var/count = 0
-	var/list/t_access
+	var/list/a_region = get_region_accesses(trim)
+	var/list/c_access = get_command_accesses()
 	if(trim && trim != NONE)
-		var/list/t_access = get_region_accesses(trim)
 		for(var/a in access)
-			if(!LAZYFIND(t_access, var/a)) // if their card is trimmed, we dont count those access flags as wildcards
+			if(!LAZYFIND(a_region, a) && LAZYFIND(c_access, a))
 				count++
 		return count
 	else
-		return LAZYLEN(access)
+		for(var/a in access)
+			if(LAZYFIND(c_access, a))
+				count++
+	return count
 
-/obj/item/card/id/GetCommandWildcards()
-
+//Returns the number of already used wildcards.
+/obj/item/card/id/proc/get_common_wildcards()
+	var/count = get_command_wildcards() - command_wildcards // unused command wildcards can be used as common ones
+	var/list/a_region = get_region_accesses(trim)
+	var/list/c_access = get_common_accesses()
+	if(trim && trim != NONE)
+		for(var/a in access) // if their card is trimmed, we dont count those access flags as wildcards
+			if(!LAZYFIND(a_region, a) && LAZYFIND(c_access, a))
+				count++
+		return count
+	else
+		for(var/a in access)
+			if(LAZYFIND(c_access, a))
+				count++
+	return count
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -317,9 +331,9 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, "assigned")
 	if(job)
-		. += mutable_appearance(icon, "id[job]")
+		. += mutable_appearance(icon, "id[job]") // TODO: make special mime and clown trim display
 	if(trim)
-		. += mutable_appearance(icon, "cardtrim[trim]")
+		. += mutable_appearance(icon, "trim[ckey(get_region_accesses_name(trim))]")
 
 /obj/item/card/id/proc/update_in_wallet()
 	SIGNAL_HANDLER
@@ -375,6 +389,8 @@ update_label()
 	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	card_level = CARD_LEVEL_GOLD
+	common_wildcards = 100
+	command_wildcards = 100
 	// wildcards don't matter at this card level
 	icon_state = "gold"
 	inhand_icon_state = "gold_id"

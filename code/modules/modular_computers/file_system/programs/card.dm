@@ -210,6 +210,9 @@
 					if(!job)
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
+					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.get_card_trim())) // Grey & Silver cards don't have enough wildcards if the trims don't match
+						to_chat(user, "<span class='warning'>Card trim doesn't match the selected job.</span>")
+						return
 					new_access = job.get_access()
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
@@ -224,12 +227,21 @@
 			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
 				if(access_type in target_id_card.access)
 					target_id_card.access -= access_type
+				if(access_type in get_common_accesses())
+					if(!(target_id_card.get_common_wildcards() < target_id_card.common_wildcards))
+						target_id_card.access |= access_type
+				if(access_type in get_command_accesses())
+					if(!(target_id_card.get_command_wildcards() < target_id_card.command_wildcards))
+						target_id_card.access |= access_type
 				else
-					target_id_card.access |= access_type
+					to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.</span>")
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
+				return
+			if(target_id_card.card_level < CARD_LEVEL_GOLD) // cards below gold can't hold every access anyway so there is no point in testing wildcards.
+				to_chat(user, "<span class='warning'>This card cannot hold every access.</span>")
 				return
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -244,6 +256,9 @@
 			if(!computer || !authenticated)
 				return
 			var/region = text2num(params["region"])
+			if(target_id_card.card_level >= CARD_LEVEL_GOLD || target_id_card.trim != region) // you will need the correct trim for a whole department
+				to_chat(user, "<span class='warning'>This card cannot hold every access.</span>")
+				return
 			if(isnull(region))
 				return
 			target_id_card.access |= get_region_accesses(region)
