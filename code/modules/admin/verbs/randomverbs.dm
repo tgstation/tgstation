@@ -804,7 +804,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<span class='warning'>Error, shuttle not disabled.</span>")
 		return
 
-	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
+	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+		return
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] enabled the emergency shuttle.</span>")
 	SSshuttle.adminEmergencyNoRecall = FALSE
