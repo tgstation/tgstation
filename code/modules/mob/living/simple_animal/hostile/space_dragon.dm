@@ -577,3 +577,7 @@
 		set_light_color(LIGHT_COLOR_BLUE)
 		update_light()
 	return TRUE
+
+#undef CHARGE_ONGOING
+#undef CHARGE_FINALWARNING
+#undef CHARGE_COMPLETED
