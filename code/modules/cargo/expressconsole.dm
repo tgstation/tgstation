@@ -129,7 +129,6 @@
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
 	. = ..()
-
 	if(.)
 		return
 

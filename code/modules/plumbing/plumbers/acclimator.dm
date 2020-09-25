@@ -82,7 +82,8 @@
 	return data
 
 /obj/machinery/plumbing/acclimator/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

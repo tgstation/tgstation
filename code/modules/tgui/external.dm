@@ -77,7 +77,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
-		return 1
+		return TRUE
 
 /**
  * public
