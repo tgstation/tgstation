@@ -78,29 +78,22 @@
 	else
 		for(var/X in sorted) //these are clones
 			var/obj/effect/appearance_clone/clone = X
-			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp
-			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp
-			xo += clone.step_x
-			yo += clone.step_y
+			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
+			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
+			if(clone.transform)
+				xo -= world.icon_size * (clone.transform.get_x_scale() - 1) / 2
+				yo -= world.icon_size * (clone.transform.get_y_scale() - 1) / 2
+				xo += clone.transform.get_x_shift()
+				yo += clone.transform.get_x_shift()
 			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
 			if(img)
 				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.'
 					var/sx = clone.transform.get_x_scale()
 					var/sy = clone.transform.get_y_scale()
 					if(sx != 1 || sy != 1)
-						var/wi = img.Width() * sx
-						var/he = img.Width() * sx
-						img.Scale(wi, he)
-						img.Shift(WEST, wi / 2, wrap=1)
-						img.Shift(SOUTH, he / 2, wrap=1)
+						img.Scale(img.Width() * sx, img.Height() * sy)
 					if(clone.transform.get_rotation() != 0)
 						img.Turn(clone.transform.get_rotation())
-					var/dx = clone.transform.get_x_shift()
-					if(dx != 0)
-						img.Shift(EAST, dx, wrap=1)
-					var/dy = clone.transform.get_y_shift()
-					if(dy != 0)
-						img.Shift(NORTH, dy, wrap=1)
 				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
