@@ -92,8 +92,9 @@
 					var/sy = clone.transform.get_y_scale()
 					if(sx != 1 || sy != 1)
 						img.Scale(img.Width() * sx, img.Height() * sy)
-					if(clone.transform.get_rotation() != 0)
-						img.Turn(clone.transform.get_rotation())
+					var/rx = clone.transform.get_rotation()
+					if(rx != 0)
+						img.Turn(rx)
 				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
