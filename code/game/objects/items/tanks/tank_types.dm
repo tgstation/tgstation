@@ -18,6 +18,7 @@
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
+	mode = TANK_TIER_1
 
 
 /obj/item/tank/internals/oxygen/populate_gas()
@@ -47,6 +48,7 @@
 	icon_state = "anesthetic"
 	inhand_icon_state = "an_tank"
 	force = 10
+	mode = TANK_TIER_1
 
 /obj/item/tank/internals/anesthetic/populate_gas()
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
@@ -64,7 +66,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = null	//they have no straps!
 	force = 8
-
+	mode = TANK_TIER_1
 
 /obj/item/tank/internals/plasma/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -101,6 +103,7 @@
 	inhand_icon_state = "plasmaman_tank"
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	mode = TANK_TIER_1
 
 /obj/item/tank/internals/plasmaman/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -145,7 +148,7 @@
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
-
+	mode = TANK_TIER_1
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
 	air_contents.assert_gas(/datum/gas/oxygen)
@@ -184,6 +187,7 @@
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
+	mode = TANK_TIER_1
 
 /obj/item/tank/internals/generic/populate_gas()
 	return

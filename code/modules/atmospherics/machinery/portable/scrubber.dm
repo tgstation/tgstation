@@ -63,6 +63,9 @@
 		return
 
 	if(holding)
+		if(holding.air_contents == null)
+			holding = null //the tank exploded or got deleted
+			return
 		scrub(holding.air_contents, delta_time)
 	else
 		var/turf/T = get_turf(src)
@@ -121,7 +124,7 @@
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+		data["holding"]["pressure"] = round(holding.air_contents ? holding.air_contents.return_pressure() : 0)
 	else
 		data["holding"] = null
 	return data

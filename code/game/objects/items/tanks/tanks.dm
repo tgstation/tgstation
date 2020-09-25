@@ -1,5 +1,6 @@
 /obj/item/tank
 	name = "tank"
+	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
 	icon = 'icons/obj/tank.dmi'
 	icon_state = "generic"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
@@ -20,6 +21,22 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	var/mode = TANK_TIER_1
+
+/obj/item/tank/tier_1
+	name = "tier 1 tank"
+	mode = TANK_TIER_1
+	integrity = 3
+
+/obj/item/tank/tier_2
+	name = "tier 2 tank"
+	mode = TANK_TIER_2
+	integrity = 5
+
+/obj/item/tank/tier_3
+	name = "tier 3 tank"
+	mode = TANK_TIER_3
+	integrity = 7
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -85,6 +102,8 @@
 		return
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
+	if(mode)
+		. += "<span class='notice'>This tank is tier [(mode * 2 <= 2) ? mode * 2 : mode]. A sticker on its side says <b>MAX PRESSURE: [siunit((TANK_LEAK_PRESSURE * mode) * 1000, "Pa", 0)]</b>.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -232,13 +251,13 @@
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 
-	if(pressure > TANK_FRAGMENT_PRESSURE)
+	if(pressure > TANK_FRAGMENT_PRESSURE * mode)
 		if(!istype(src.loc, /obj/item/transfer_valve))
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+		var/range = (pressure-TANK_FRAGMENT_PRESSURE * mode)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
 
@@ -248,7 +267,7 @@
 		else
 			qdel(src)
 
-	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
+	else if(pressure > TANK_RUPTURE_PRESSURE * mode || temperature > TANK_MELT_TEMPERATURE)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)
@@ -259,7 +278,7 @@
 		else
 			integrity--
 
-	else if(pressure > TANK_LEAK_PRESSURE)
+	else if(pressure > TANK_LEAK_PRESSURE * mode)
 		if(integrity <= 0)
 			var/turf/T = get_turf(src)
 			if(!T)

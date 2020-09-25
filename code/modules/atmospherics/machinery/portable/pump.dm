@@ -60,6 +60,9 @@
 		sending = (holding ? air_contents : T.return_air())
 		receiving = (holding ? holding.air_contents : air_contents)
 
+	if(holding && holding.air_contents == null)
+		holding = null //the tank exploded or got deleted
+		return
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf() // Update the environment if needed.
@@ -106,7 +109,7 @@
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+		data["holding"]["pressure"] = round(holding.air_contents ? holding.air_contents.return_pressure() : 0)
 	else
 		data["holding"] = null
 	return data

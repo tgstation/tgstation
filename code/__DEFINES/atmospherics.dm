@@ -425,3 +425,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 
 #define MIASMA_CORPSE_MOLES 0.02
 #define MIASMA_GIBS_MOLES 0.005
+
+#define TANK_TIER_1			0.5
+#define TANK_TIER_2			1
+#define TANK_TIER_3			2

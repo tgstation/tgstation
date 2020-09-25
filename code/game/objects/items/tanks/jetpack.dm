@@ -13,6 +13,7 @@
 	var/stabilizers = FALSE
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
+	mode = TANK_TIER_2
 
 /obj/item/tank/jetpack/Initialize()
 	. = ..()

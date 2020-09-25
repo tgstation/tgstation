@@ -447,6 +447,9 @@
 	if(valve_open)
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
+		if(holding && holding.air_contents == null)
+			holding = null //the tank exploded or got deleted
+			return
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
 			air_update_turf()
@@ -492,7 +495,7 @@
 	if (holding)
 		data["holdingTank"] = list()
 		data["holdingTank"]["name"] = holding.name
-		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
+		data["holdingTank"]["tankPressure"] = round(holding.air_contents ? holding.air_contents.return_pressure() : 0)
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
