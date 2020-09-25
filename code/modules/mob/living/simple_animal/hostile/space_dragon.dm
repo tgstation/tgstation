@@ -434,7 +434,7 @@
 	layer = MASSIVE_OBJ_LAYER
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
-	/// The maximum charge the rift can have.  It actually goes to max_charge + 1, as to prevent constantly retriggering the effects on full charge.
+	/// The maximum charge the rift can have.
 	var/max_charge = 480
 	/// How many carp spawns it has available.
 	var/carp_stored = 0
@@ -448,7 +448,9 @@
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
 	carp_stored = 1
-	time_charged = 1
+	icon_state = "carp_rift_carpspawn"
+	set_light_color(LIGHT_COLOR_PURPLE)
+	time_charged = 0
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/carp_rift/examine(mob/user)
@@ -513,7 +515,7 @@
 	if(last_carp_inc >= 40)
 		carp_stored++
 		icon_state = "carp_rift_carpspawn"
-		light_color = LIGHT_COLOR_PURPLE
+		set_light_color(LIGHT_COLOR_PURPLE)
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 		last_carp_inc -= 40
 
@@ -524,7 +526,7 @@
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Spatial Corps")
 		obj_integrity = INFINITY
 		icon_state = "carp_rift_charged"
-		light_color = LIGHT_COLOR_YELLOW
+		set_light_color(LIGHT_COLOR_YELLOW)
 		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
@@ -569,5 +571,5 @@
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"
-		light_color = LIGHT_COLOR_BLUE
+		set_light_color(LIGHT_COLOR_BLUE)
 	return TRUE
