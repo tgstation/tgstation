@@ -17,7 +17,7 @@
 	// Alpha masking
 	// It will follow this as the animation goes, but that's no problem as the "mask" icon state
 	// already accounts for this.
-	filters += filter(type = "alpha", icon = icon('icons/obj/cryogenics.dmi', "mask"), y = -22)
+	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/cryogenics.dmi', "mask"), "y" = -22))
 
 /atom/movable/visual/cryo_occupant/proc/on_occupant_enter(mob/occupant)
 	occupant.setDir(SOUTH)
