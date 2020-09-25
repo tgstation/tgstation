@@ -213,8 +213,18 @@
 
 	return
 
-
 /mob/living/silicon/proc/statelaws(force = 0)
+	// Create a cache of our laws and lawcheck flags before we do anything else.
+	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
+	var/lawcache_zeroth = laws.zeroth
+	var/list/lawcache_hacked = laws.hacked.Copy()
+	var/list/lawcache_ion = laws.ion.Copy()
+	var/list/lawcache_inherent = laws.inherent.Copy()
+	var/list/lawcache_supplied = laws.supplied.Copy()
+
+	var/list/lawcache_lawcheck = lawcheck.Copy()
+	var/list/lawcache_ioncheck = ioncheck.Copy()
+	var/list/lawcache_hackedcheck = hackedcheck.Copy()
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:")
@@ -223,42 +233,42 @@
 	var/number = 1
 	sleep(10)
 
-	if (laws.zeroth)
-		if (force || lawcheck[1] == "Yes")
-			say("[radiomod] 0. [laws.zeroth]")
+	if (lawcache_zeroth)
+		if (force || lawcache_lawcheck[1] == "Yes")
+			say("[radiomod] 0. [lawcache_zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
-		var/law = laws.hacked[index]
+	for (var/index in 1 to length(lawcache_hacked))
+		var/law = lawcache_hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || hackedcheck[index] == "Yes")
+			if (force || lawcache_hackedcheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.ion.len, index++)
-		var/law = laws.ion[index]
+	for (var/index in 1 to length(lawcache_ion))
+		var/law = lawcache_ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || ioncheck[index] == "Yes")
+			if (force || lawcache_ioncheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.inherent.len, index++)
-		var/law = laws.inherent[index]
+	for (var/index in 1 to length(lawcache_inherent))
+		var/law = lawcache_inherent[index]
 
 		if (length(law) > 0)
-			if (force || lawcheck[index+1] == "Yes")
+			if (force || lawcache_lawcheck[index+1] == "Yes")
 				say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
-		var/law = laws.supplied[index]
+	for (var/index in 1 to length(lawcache_supplied))
+		var/law = lawcache_supplied[index]
 
 		if (length(law) > 0)
-			if(lawcheck.len >= number+1)
-				if (force || lawcheck[number+1] == "Yes")
+			if(lawcache_lawcheck.len >= number+1)
+				if (force || lawcache_lawcheck[number+1] == "Yes")
 					say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)

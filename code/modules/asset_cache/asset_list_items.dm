@@ -48,7 +48,8 @@
 		"smmon_4.gif" = 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" = 'icons/program_icons/smmon_5.gif',
 		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif'
+		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif',
+		"robotact.gif" = 'icons/program_icons/robotact.gif'
 	)
 
 /datum/asset/simple/radar_assets
@@ -245,6 +246,9 @@
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
+		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
+		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
+		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',

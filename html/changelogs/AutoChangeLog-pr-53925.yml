@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - rscdel: "remove obsolete face-direction keybinds"

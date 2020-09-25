@@ -1,14 +1,17 @@
-/datum/component/decal/blood
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+/datum/element/decal/blood
+	//dupe_mode = COMPONENT_DUPE_UNIQUE
 
-/datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_TYPE_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
+/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _cleanable=CLEAN_TYPE_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
+	if(!isitem(target))
+		return ELEMENT_INCOMPATIBLE
+
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
 
-/datum/component/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
-	var/obj/item/I = parent
+	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
+	RegisterSignal(target, COMSIG_WIPE_BLOOD_DNA, .proc/Detach)
+
+/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
+	var/obj/item/I = source
 	if(!_icon)
 		_icon = 'icons/effects/blood.dmi'
 	if(!_icon_state)
@@ -32,10 +35,10 @@
 		blood_splatter_appearances[index] = pic
 	return TRUE
 
-/datum/component/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
+/datum/element/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
 	SIGNAL_HANDLER
 
-	var/atom/A = parent
+	var/atom/A = source
 	override[EXAMINE_POSITION_ARTICLE] = A.gender == PLURAL? "some" : "a"
 	override[EXAMINE_POSITION_BEFORE] = " blood-stained "
 	return COMPONENT_EXNAME_CHANGED

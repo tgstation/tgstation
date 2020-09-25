@@ -29,19 +29,19 @@
 	dir = 4
 	},
 /obj/docking_port/mobile{
-	name = "Salvage Ship";
-	icon_state = "pinonclose";
-	dir = 8;
-	id = "whiteship";
-	width = 33;
-	height = 17;
-	dwidth = 11;
 	callTime = 250;
-	preferred_direction = 4;
-	port_direction = 8;
+	can_move_docking_ports = 1;
+	dir = 8;
+	dwidth = 11;
+	height = 17;
+	icon_state = "pinonclose";
+	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	can_move_docking_ports = 1
+	name = "Salvage Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 33
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -487,8 +487,8 @@
 /area/shuttle/abandoned/engine)
 "aP" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
-	dir = 4
+	dir = 4;
+	icon_state = "heater"
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -500,8 +500,8 @@
 /area/shuttle/abandoned/engine)
 "aQ" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 4;
+	icon_state = "propulsion_l"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -617,8 +617,8 @@
 "bb" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
-	dir = 1
+	dir = 1;
+	icon_state = "box_corners"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -944,8 +944,8 @@
 /area/shuttle/abandoned/engine)
 "bC" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
-	dir = 4
+	dir = 4;
+	icon_state = "large_engine"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1049,11 +1049,6 @@
 /obj/item/paper/crumpled/bloody{
 	info = "We struck gold, literally. We found some good rocks out near Centurai-II rich with the stuff. Kae said he and Milos found something out while prospecting, some sort of glowing cube. It's jammed in there good, so we're anchoring until we sort this out...";
 	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/gps{
-	gpstag = "NTMS-037";
-	pixel_x = -9;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -1166,8 +1161,8 @@
 /area/shuttle/abandoned/crew)
 "cc" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
-	dir = 4
+	dir = 4;
+	icon_state = "heater"
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1187,7 +1182,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "cf" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -1355,8 +1350,8 @@
 /area/shuttle/abandoned/crew)
 "ct" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
-	dir = 4
+	dir = 4;
+	icon_state = "large_engine"
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
@@ -1558,8 +1553,8 @@
 /area/shuttle/abandoned/crew)
 "cL" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
-	dir = 4
+	dir = 4;
+	icon_state = "propulsion_l"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1689,8 +1684,8 @@
 "cV" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -1707,8 +1702,8 @@
 "cW" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/machinery/airalarm/all_access{
 	dir = 1;
@@ -1723,8 +1718,8 @@
 "cX" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -1736,9 +1731,9 @@
 /area/shuttle/abandoned/crew)
 "cY" = (
 /obj/structure/frame/computer{
-	icon_state = "0";
+	anchored = 1;
 	dir = 1;
-	anchored = 1
+	icon_state = "0"
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -1747,9 +1742,9 @@
 /area/shuttle/abandoned/bridge)
 "cZ" = (
 /obj/structure/frame/computer{
-	icon_state = "0";
+	anchored = 1;
 	dir = 1;
-	anchored = 1
+	icon_state = "0"
 	},
 /obj/machinery/light,
 /obj/machinery/computer/security/telescreen{
@@ -1774,8 +1769,8 @@
 "db" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -1794,8 +1789,8 @@
 "dc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/donkpockets{
@@ -1830,8 +1825,8 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /obj/item/reagent_containers/food/snacks/sandwich,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
+	dir = 1;
+	icon_state = "trimline_fill"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)

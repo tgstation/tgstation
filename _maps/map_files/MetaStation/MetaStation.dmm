@@ -3769,7 +3769,6 @@
 /obj/structure/chair/stool,
 /obj/machinery/camera{
 	c_tag = "Prison Visitation";
-	dir = 2;
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/trimline/red/warning{
@@ -7923,10 +7922,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "arb" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "armory shutters"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7936,6 +7931,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "armory shutters"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
@@ -63400,7 +63399,7 @@
 /turf/open/space,
 /area/science/xenobiology)
 "djt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
@@ -63408,11 +63407,11 @@
 /area/engine/supermatter)
 "djx" = (
 /obj/item/crowbar,
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "djz" = (
@@ -68036,11 +68035,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "hWp" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "hWR" = (
@@ -69881,7 +69880,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
