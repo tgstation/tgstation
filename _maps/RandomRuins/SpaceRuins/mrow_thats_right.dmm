@@ -350,9 +350,7 @@
 	dir = 4
 	},
 /obj/structure/closet/cabinet,
-/obj/item/gps{
-	gpstag = "kitty"
-	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
