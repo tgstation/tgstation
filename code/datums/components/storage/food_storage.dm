@@ -32,12 +32,13 @@
 /datum/component/food_storage/Destroy(force, silent)
 	if(stored_item)
 		stored_item.forceMove(stored_item.drop_location())
+		stored_item.dropped()
 		stored_item = null
 	. = ..()
 
 /** Begins the process of inserted an item.
   *
-  * Clicking on the food storage with an item on disarm intent will begin a do_after, which if successful inserts the item.
+  * Clicking on the food storage with an item will begin a do_after, which if successful inserts the item.
   *
   * Arguments
   *	inserted_item - the item being placed into the food
@@ -50,12 +51,20 @@
 	if(istype(inserted_item, /obj/item/storage) || IS_EDIBLE(inserted_item))
 		return
 
+	//Harm intent will bypass inserting for injecting food with syringes and such
+	if(user.a_intent == INTENT_HARM)
+		return
+
 	if(inserted_item.w_class > minimum_weight_class)
 		to_chat(user, "<span class='warning'>\The [inserted_item.name] won't fit in \the [parent].</span>")
 		return
 
 	if(!QDELETED(stored_item))
 		to_chat(user, "<span class='warning'>There's something in \the [parent].</span>")
+		return
+
+	if(HAS_TRAIT(inserted_item, TRAIT_NODROP))
+		to_chat(user, "<span class='warning'>\the [inserted_item] is stuck to your hand, you can't put into \the [parent]!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user.name] begins inserting [inserted_item.name] into \the [parent].</span>", \
@@ -120,6 +129,7 @@
 		user.visible_message("<span class='warning'>[user.name] slowly pulls [stored_item.name] out of \the [parent].</span>", \
 							"<span class='warning'>You slowly pull [stored_item.name] out of \the [parent].</span>")
 	else
+		stored_item.dropped()
 		stored_item.visible_message("<span class='warning'>[stored_item.name] falls out of \the [parent].</span>")
 
 	update_stored_item()

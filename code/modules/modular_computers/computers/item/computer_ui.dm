@@ -47,7 +47,9 @@
 
 	data["login"] = list()
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+	data["cardholder"] = FALSE
 	if(cardholder)
+		data["cardholder"] = TRUE
 		var/obj/item/card/id/stored_card = cardholder.GetID()
 		if(stored_card)
 			var/stored_name = stored_card.registered_name

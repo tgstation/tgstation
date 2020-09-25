@@ -1,0 +1,4 @@
+author: "NotRanged, Gandalf2k15"
+delete-after: True
+changes: 
+  - tweak: "Changed explosion sound code to be more noticeable and terrifying throughout the station during siginificant explosive events."
