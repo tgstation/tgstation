@@ -548,11 +548,10 @@ CREATE TABLE `ticket` (
   `recipient` varchar(32) DEFAULT NULL,
   `sender` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_ticket_round_tid` (round_id, ticket),
-  KEY `idx_ticket_act_recipient` (action, recipient),
-  KEY `idx_ticket_act_sender` (action, sender),
-  KEY `idx_ticket_recipient` (recipient),
-  KEY `idx_ticket_sender` (sender)
+  KEY `idx_ticket_act_recip` (`action`, `recipient`),
+  KEY `idx_ticket_act_send` (`action`, `sender`),
+  KEY `idx_ticket_tic_rid` (`ticket`, `round_id`),
+  KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELIMITER $$
