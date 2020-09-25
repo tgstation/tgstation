@@ -243,47 +243,6 @@ if (!String.prototype.trim) {
   }, 0, 'test');
 }())
 
-// Polyfill for filter from Mozilla
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-if (!Array.prototype.filter){
-  Array.prototype.filter = function(func, thisArg) {
-    'use strict';
-    if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
-        throw new TypeError();
-
-    var len = this.length >>> 0,
-        res = new Array(len), // preallocate array
-        t = this, c = 0, i = -1;
-
-    var kValue;
-    if (thisArg === undefined){
-      while (++i !== len){
-        // checks to see if the key was set
-        if (i in this){
-          kValue = t[i]; // in case t is changed in callback
-          if (func(t[i], i, t)){
-            res[c++] = kValue;
-          }
-        }
-      }
-    }
-    else{
-      while (++i !== len){
-        // checks to see if the key was set
-        if (i in this){
-          kValue = t[i];
-          if (func.call(thisArg, t[i], i, t)){
-            res[c++] = kValue;
-          }
-        }
-      }
-    }
-
-    res.length = c; // shrink down array to proper size
-    return res;
-  };
-}
-
 // Browser passthrough code ---------------------------------------------------
 if (window.location) {
 	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
@@ -994,26 +953,28 @@ function draw_verbs(cat){
 	var table = document.createElement("div");
 	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
-	var command = ""; // typecast name to string
 	sortVerbs();
 	verbs.reverse(); // sort verbs backwards before we draw
-	verbs.filter(function(x) {
-		return x[1] && x[0].lastIndexOf(cat, 0) != -1 && (x[0].length == cat.length || x[0].charAt(cat.length) == ".")
-	}).forEach(function (part) {
-		subCat = part[0].lastIndexOf(".") != -1 ? part[0].split(".")[1] : null;
-		if (subCat && !additions[subCat]) {
-			var newTable = document.createElement("div");
-			newTable.className = "grid-container";
-			additions[subCat] = newTable;
-		}
+	for (var i = 0; i < verbs.length; ++i) {
+		var part = verbs[i];
+		var name = part[0];
+		var command = part[1];
 
-		command = part[1];
-		var a = document.createElement("a");
-		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
-		a[textContentKey] = command;
-		a.className = "grid-item";
-		(subCat ? additions[subCat] : table).appendChild(a);
-	});
+		if (command && name.lastIndexOf(cat, 0) != -1 && (name.length == cat.length || name.charAt(cat.length) == ".")) {
+			var subCat = name.lastIndexOf(".") != -1 ? name.split(".")[1] : null;
+			if (subCat && !additions[subCat]) {
+				var newTable = document.createElement("div");
+				newTable.className = "grid-container";
+				additions[subCat] = newTable;
+			}
+
+			var a = document.createElement("a");
+			a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
+			a[textContentKey] = command;
+			a.className = "grid-item";
+			(subCat ? additions[subCat] : table).appendChild(a);
+		}
+	}
 
 	// Append base table to view
 	var content = document.getElementById("statcontent");
@@ -1024,7 +985,7 @@ function draw_verbs(cat){
 		if (additions.hasOwnProperty(cat)) {
 			// do addition here
 			var header = document.createElement("h3");
-			header.textContent = cat;
+			header[textContentKey] = cat;
 			content.appendChild(header);
 			content.appendChild(additions[cat]);
 		}
