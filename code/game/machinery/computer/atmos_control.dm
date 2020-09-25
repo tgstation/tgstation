@@ -236,10 +236,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
-	data["inputting"] = input_info ? input_info["power"] : FALSE
-	data["inputRate"] = input_info ? input_info["volume_rate"] : FALSE
-	data["outputting"] = output_info ? output_info["power"] : FALSE
-	data["outputPressure"] = output_info ? output_info["internal"] : FALSE
+	data["inputting"] = input_info ? input_info["power"] : 0
+	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
+	data["outputting"] = output_info ? output_info["power"] : 0
+	data["outputPressure"] = output_info ? output_info["internal"] : 0
+	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
@@ -282,7 +284,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = clamp(target, 0, 4500)
+				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				signal.receiver_id = output_tag
 				. = TRUE

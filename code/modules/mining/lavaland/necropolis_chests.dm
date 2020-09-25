@@ -614,6 +614,7 @@
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
 			exposed_carbon.dna.features["moth_wings"] = "None"
+			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)

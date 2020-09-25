@@ -287,6 +287,7 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/snow/underground
+	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	// abundant ore and caves
 	mineralChance = 20
 	mineralSpawnChanceList = list(
@@ -645,9 +646,7 @@
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There's gibtonite inside! It's going to explode!</span>")
 
-		var/notify_admins = 0
-		if(z != 5)
-			notify_admins = TRUE
+		var/notify_admins = !is_mining_level(z)
 
 		if(!triggered_by_explosion)
 			log_bomber(user, "has trigged a gibtonite deposit reaction via", src, null, notify_admins)
@@ -741,8 +740,7 @@
 	if(!ishuman(user))
 		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
 		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
+	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
@@ -752,7 +750,7 @@
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user
-	if(!(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+	if(!(H.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
 		return
 	drop_ores()
 	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
@@ -762,7 +760,7 @@
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
+	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))

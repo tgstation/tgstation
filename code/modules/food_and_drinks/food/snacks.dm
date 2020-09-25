@@ -196,7 +196,8 @@ All foods are distributed among various categories. Use common sense.
 			return FALSE
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
-		return sharp && slice(sharp, W, user)
+		if (sharp == SHARP_EDGED)
+			return slice(sharp, W, user)
 	else
 		return ..()
 
@@ -295,11 +296,6 @@ All foods are distributed among various categories. Use common sense.
 				else
 					snackyfood.reagents.add_reagent(r_id, amount)
 		return
-	if(istype(S, /obj/item/food))
-		var/obj/item/food/non_snackyfood = S
-		non_snackyfood.create_reagents(non_snackyfood.max_volume)
-		if(reagents)
-			reagents.trans_to(non_snackyfood, reagents.total_volume)
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
 	var/turf/T = get_turf(src)
@@ -307,6 +303,7 @@ All foods are distributed among various categories. Use common sense.
 
 	if(cooked_type)
 		result = new cooked_type(T)
+		SEND_SIGNAL(result, COMSIG_ITEM_MICROWAVE_COOKED, src, M.efficiency)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
 		else

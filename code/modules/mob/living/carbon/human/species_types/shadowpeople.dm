@@ -50,6 +50,7 @@
 	to_chat(C, "[info_text]")
 
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
+	C.set_safe_hunger_level()
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -194,13 +195,12 @@
 		if(isethereal(L))
 			AM.emp_act(EMP_LIGHT)
 
-		else if(iscyborg(L))
-			var/mob/living/silicon/robot/borg = L
-			if(borg.lamp_intensity)
-				borg.update_headlamp(TRUE, INFINITY)
-				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-		else if(ishuman(L))
-			var/mob/living/carbon/human/H = L
+		else if(iscyborg(AM))
+			var/mob/living/silicon/robot/borg = AM
+			if(borg.lamp_enabled)
+				borg.smash_headlamp()
+		else if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
 			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
 				light_item_check(O, H)
 		else
