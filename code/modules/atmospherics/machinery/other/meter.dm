@@ -10,14 +10,13 @@
 	active_power_usage = 4
 	max_integrity = 150
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
+	var/frequency = 0
 	var/atom/target
+	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
 
-	network_tag = NETWORK_ATMOS
-	var/datum/netlink/datalink
-
 /obj/machinery/meter/atmos
-
+	frequency = FREQ_ATMOS_STORAGE
 
 /obj/machinery/meter/atmos/layer2
 	target_layer = 2
@@ -27,11 +26,11 @@
 
 /obj/machinery/meter/atmos/atmos_waste_loop
 	name = "waste loop gas flow meter"
-	network_tag= ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
+	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
 
 /obj/machinery/meter/atmos/distro_loop
 	name = "distribution loop gas flow meter"
-	network_tag= ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
+	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
 	SSair.stop_processing_machine(src)
@@ -44,9 +43,7 @@
 	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
-	..()
-	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.regester_port("status", list("device" = "AM", "presure" = 0, "sigtype" = "status"))
+	return ..()
 
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate
@@ -92,9 +89,19 @@
 	else
 		icon_state = "meter4"
 
-	if(datalink) // because we cannot trust this function not running BEFORE Initialize.
-		datalink["presure"] = round(env_pressure)
+	if(frequency)
+		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
 
+		if(!radio_connection)
+			return
+
+		var/datum/signal/signal = new(list(
+			"id_tag" = id_tag,
+			"device" = "AM",
+			"pressure" = round(env_pressure),
+			"sigtype" = "status"
+		))
+		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
 	if (target)

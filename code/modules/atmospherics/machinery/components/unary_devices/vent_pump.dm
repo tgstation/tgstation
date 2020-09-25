@@ -18,6 +18,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
+	var/id_tag = null
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -31,20 +32,12 @@
 	pipe_state = "uvent"
 
 	network_id = NETWORK_ATMOS_SCUBBERS
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
-	if(!network_tag)
-		network_tag = assign_uid_vents()
-	return ..()
 
-	
-/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
-	. = ..()
-	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	var/area/vent_area = get_area(src)
-	// If we do not have a name, assign one
-	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
-	datalink = net.regester_port("status",  list("name" = name, "id_tag" = net.hardware_id, "device" = "VP", "long_name"= sanitize(name)))
-	vent_area.atmos_vents[net.hardware_id] = datalink
+
+/obj/machinery/atmospherics/components/unary/vent_pump/New()
+	..()
+	if(!id_tag)
+		id_tag = assign_uid_vents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
@@ -157,12 +150,21 @@
 		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
 		datalink["intdefault"]	= (internal_pressure_bound == 0)
 
+/obj/machinery/atmospherics/components/unary/vent_pump/NetworkInitialize()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/vent_area = get_area(src)
+	// If we do not have a name, assign one
+	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
+	datalink = net.regester_port("status",  list("name" = name, "id_tag" = net.hardware_id, "device" = "VP", "long_name"= sanitize(name)))
+	vent_area.atmos_vents[net.hardware_id] = datalink
+	update_status()
+
 
 /obj/machinery/atmospherics/components/unary/vent_pump/ntnet_receive(datum/netdata/signal)
 	if(!is_operational)
 		return
 
-	if(!signal.data["tag"] || (signal.data["tag"] != network_tag) || (signal.data["sigtype"]!="command"))
+	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
 
 	var/atom/signal_sender = signal.data["user"]
@@ -342,28 +344,28 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
 	name = "plasma tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
 	name = "oxygen tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output
 	name = "nitrogen tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output
 	name = "mix tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output
 	name = "nitrous oxide tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output
 	name = "carbon dioxide tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
 	name = "toxins mixing output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer2
@@ -419,7 +421,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
 	name = "air mix tank output inlet"
-	network_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
 
 #undef INT_BOUND
 #undef EXT_BOUND

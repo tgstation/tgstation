@@ -43,7 +43,7 @@
 	// Generate a control packet.
 	var/datum/netdata/data = new
 	data.receiver_id = target_interface.hardware_id
-	data.receiver_network = target_interface.network.network_id
+	data.receiver_network = target_interface.network.network_tree
 	switch(mode)
 		if(WAND_OPEN)
 			data.data["data"] = "open"

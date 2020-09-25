@@ -219,7 +219,7 @@
 /area/shuttle/labor)
 "u" = (
 /obj/machinery/door/airlock/titanium{
-	network_tag= "prisonshuttle";
+	id_tag = "prisonshuttle";
 	name = "Labor Shuttle Airlock"
 	},
 /obj/docking_port/mobile{

@@ -264,7 +264,7 @@
 "aA" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/hatch{
-	network_tag= "infiltrator_bridge";
+	id_tag = "infiltrator_bridge";
 	name = "Infiltrator Bridge";
 	req_access_txt = "150"
 	},
@@ -998,7 +998,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	network_tag= "infiltrator_portdoor";
+	id_tag = "infiltrator_portdoor";
 	name = "Infiltrator Port Airlock"
 	},
 /turf/open/floor/pod/dark,

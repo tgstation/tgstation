@@ -2251,7 +2251,7 @@
 	name = "cell blast door"
 	},
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt2";
+	id_tag = "permabolt2";
 	name = "Cell 2"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2280,7 +2280,7 @@
 	name = "cell blast door"
 	},
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt1";
+	id_tag = "permabolt1";
 	name = "Cell 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -4349,7 +4349,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
 /obj/machinery/door/airlock{
-	network_tag= "mainthideout";
+	id_tag = "mainthideout";
 	name = "Hideout"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -7588,7 +7588,7 @@
 "atE" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "innerbrig";
+	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -7610,7 +7610,7 @@
 "atG" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "innerbrig";
+	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -8923,7 +8923,7 @@
 /area/crew_quarters/dorms)
 "awq" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm3";
+	id_tag = "Dorm3";
 	name = "Dorm 3"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -9086,7 +9086,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -9105,7 +9105,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -10155,7 +10155,7 @@
 /area/crew_quarters/dorms)
 "azu" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm2";
+	id_tag = "Dorm2";
 	name = "Dorm 2"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -11521,7 +11521,7 @@
 /area/crew_quarters/dorms)
 "aDe" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm1";
+	id_tag = "Dorm1";
 	name = "Dorm 1"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -14261,7 +14261,7 @@
 /area/crew_quarters/toilet/auxiliary)
 "aKR" = (
 /obj/machinery/door/airlock{
-	network_tag= "Potty1";
+	id_tag = "Potty1";
 	name = "Unisex Restrooms"
 	},
 /obj/machinery/door/firedoor,
@@ -21841,7 +21841,7 @@
 /area/maintenance/department/cargo)
 "bga" = (
 /obj/machinery/door/airlock{
-	network_tag= "commissarydoor";
+	id_tag = "commissarydoor";
 	name = "Commissary"
 	},
 /obj/machinery/door/firedoor,
@@ -25307,7 +25307,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer"
+	id_tag = "MedbayFoyer"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/navbeacon/wayfinding/med,
@@ -27496,7 +27496,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor,
@@ -29701,7 +29701,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_exterior";
+	id_tag = "virology_airlock_exterior";
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
 	},
@@ -31631,7 +31631,7 @@
 /area/medical/exam_room)
 "bEL" = (
 /obj/machinery/door/airlock/command{
-	network_tag= "CMOCell";
+	id_tag = "CMOCell";
 	name = "Personal Examination Room";
 	req_access_txt = "40"
 	},
@@ -32075,7 +32075,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_interior";
+	id_tag = "virology_airlock_interior";
 	name = "Virology Interior Airlock";
 	req_access_txt = "39"
 	},
@@ -42297,7 +42297,7 @@
 /area/chapel/main/monastery)
 "chp" = (
 /obj/machinery/door/airlock{
-	network_tag= "Cell1";
+	id_tag = "Cell1";
 	name = "Cell 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -42550,7 +42550,7 @@
 /area/hydroponics/garden/monastery)
 "ciF" = (
 /obj/machinery/door/airlock{
-	network_tag= "Cell2";
+	id_tag = "Cell2";
 	name = "Cell 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -54729,7 +54729,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor,
@@ -55364,7 +55364,7 @@
 /area/maintenance/department/cargo)
 "rxQ" = (
 /obj/machinery/door/airlock{
-	network_tag= "PottySci";
+	id_tag = "PottySci";
 	name = "Science Bathroom"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -56518,7 +56518,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer"
+	id_tag = "MedbayFoyer"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -58224,7 +58224,7 @@
 /area/science/explab)
 "wBg" = (
 /obj/machinery/door/airlock/maintenance{
-	network_tag= "Potty1";
+	id_tag = "Potty1";
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,

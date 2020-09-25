@@ -653,7 +653,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormresearch3";
+	id_tag = "snowdindormresearch3";
 	name = "Jouslen McGee's Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -666,7 +666,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormresearch2";
+	id_tag = "snowdindormresearch2";
 	name = "Elizabeth Queef's Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -679,7 +679,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormresearch1";
+	id_tag = "snowdindormresearch1";
 	name = "Jacob Ullman's Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -692,7 +692,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormhydro2";
+	id_tag = "snowdindormhydro2";
 	name = "Rachel Migro's Private Quarters"
 	},
 /turf/open/floor/wood{
@@ -707,7 +707,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormhydro1";
+	id_tag = "snowdindormhydro1";
 	name = "Katherine Esterdeen's Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -2067,7 +2067,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormsec";
+	id_tag = "snowdindormsec";
 	name = "James Reed's Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -3263,7 +3263,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormcap";
+	id_tag = "snowdindormcap";
 	name = "Overseer's Private Quarters"
 	},
 /turf/open/floor/carpet,
@@ -7572,7 +7572,7 @@
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	network_tag= "snowdin_turbine_exterior";
+	id_tag = "snowdin_turbine_exterior";
 	name = "Turbine Exterior Airlock";
 	req_access_txt = "32"
 	},
@@ -7737,7 +7737,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
 	frequency = 1442;
-	network_tag= "snowdin_toxins_out";
+	id_tag = "snowdin_toxins_out";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,
@@ -7854,7 +7854,7 @@
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	network_tag= "snowdin_turbine_interior";
+	id_tag = "snowdin_turbine_interior";
 	name = "Turbine Interior Airlock";
 	req_access_txt = "32"
 	},
@@ -9946,7 +9946,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1442;
-	network_tag= "snowdin_toxins_mine_1";
+	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,
@@ -10175,7 +10175,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
 	frequency = 1442;
-	network_tag= "snowdin_toxins_mine_1";
+	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,
@@ -10818,7 +10818,7 @@
 /area/awaymission/snowdin/post/minipost)
 "AP" = (
 /obj/machinery/door/airlock{
-	network_tag= "snowdindormabandoned1";
+	id_tag = "snowdindormabandoned1";
 	name = "Private Quarters"
 	},
 /turf/open/floor/wood,
@@ -13302,7 +13302,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
 	frequency = 1442;
-	network_tag= "snowdin_toxins_mine_1";
+	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
 /turf/open/floor/engine/plasma,

@@ -57,7 +57,7 @@
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()
 	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
-		if(A.network_tag== "derelictvault")
+		if(A.id_tag == "derelictvault")
 			if(!door1)
 				door1 = A
 				continue
@@ -140,7 +140,7 @@
 	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	network_tag= "derelictvault"
+	id_tag = "derelictvault"
 
 ///Overrides screwdriver attack to prevent all deconstruction and hacking.
 /obj/machinery/door/airlock/vault/derelict/attackby(obj/item/C, mob/user, params)

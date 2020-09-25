@@ -46,7 +46,7 @@
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
 	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
-		if(D.network_tag== src.id)
+		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
 				if(!D.density)

@@ -265,7 +265,7 @@
 "ax" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/external{
-	network_tag= "ntms_exterior";
+	id_tag = "ntms_exterior";
 	name = "NTMS-037 Mining Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -511,7 +511,7 @@
 "aR" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/external{
-	network_tag= "ntms_exterior";
+	id_tag = "ntms_exterior";
 	name = "NTMS-037 Mining Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,

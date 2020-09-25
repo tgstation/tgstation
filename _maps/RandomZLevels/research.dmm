@@ -2150,7 +2150,7 @@
 /area/awaymission/research/interior/security)
 "eS" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -2611,7 +2611,7 @@
 /area/awaymission/research/interior)
 "fS" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -3224,7 +3224,7 @@
 /area/awaymission/research/interior)
 "hb" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -4762,21 +4762,21 @@
 /area/awaymission/research/interior/dorm)
 "kq" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm1";
+	id_tag = "Dorm1";
 	name = "Dorm 1"
 	},
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "kr" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm2";
+	id_tag = "Dorm2";
 	name = "Dorm 2"
 	},
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "ks" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm3";
+	id_tag = "Dorm3";
 	name = "Dorm 3"
 	},
 /turf/open/floor/wood,
@@ -5323,21 +5323,21 @@
 /area/awaymission/research/interior/medbay)
 "lK" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm6";
+	id_tag = "Dorm6";
 	name = "Dorm 6"
 	},
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lL" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm5";
+	id_tag = "Dorm5";
 	name = "Dorm 5"
 	},
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lM" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm4";
+	id_tag = "Dorm4";
 	name = "Dorm 4"
 	},
 /turf/open/floor/wood,
@@ -5985,7 +5985,7 @@
 /area/awaymission/research/interior/maint)
 "Km" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -6015,7 +6015,7 @@
 /area/awaymission/research/interior)
 "Qz" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -6057,7 +6057,7 @@
 /area/awaymission/research/interior/escapepods)
 "Uu" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -6081,7 +6081,7 @@
 /area/awaymission/research/interior/maint)
 "WR" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},

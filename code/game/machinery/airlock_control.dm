@@ -1,7 +1,8 @@
 #define AIRLOCK_CONTROL_RANGE 5
 
-// This code allows for airlocks to be controlled externally by setting an network_tagand comm frequency (disables ID access)
+// This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 /obj/machinery/door/airlock
+	var/id_tag
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
@@ -10,7 +11,7 @@
 	if(!signal)
 		return
 
-	if(network_tag!= signal.data["tag"] || !signal.data["command"])
+	if(id_tag != signal.data["tag"] || !signal.data["command"])
 		return
 
 	switch(signal.data["command"])
@@ -52,7 +53,7 @@
 /obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new(list(
-			"tag" = network_tag,
+			"tag" = id_tag,
 			"timestamp" = world.time,
 			"door_status" = density ? "closed" : "open",
 			"lock_status" = locked ? "locked" : "unlocked"
@@ -91,6 +92,7 @@
 
 	power_channel = AREA_USAGE_ENVIRON
 
+	var/id_tag
 	var/master_tag
 	var/frequency = FREQ_AIRLOCK_CONTROL
 
@@ -100,15 +102,15 @@
 	var/alert = FALSE
 
 /obj/machinery/airlock_sensor/incinerator_toxmix
-	network_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+	id_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
 
 /obj/machinery/airlock_sensor/incinerator_atmos
-	network_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
+	id_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_ATMOS_AIRLOCK_CONTROLLER
 
 /obj/machinery/airlock_sensor/incinerator_syndicatelava
-	network_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
+	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 
 /obj/machinery/airlock_sensor/update_icon_state()
@@ -139,7 +141,7 @@
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
 		var/datum/signal/signal = new(list(
-			"tag" = network_tag,
+			"tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = num2text(pressure)
 		))

@@ -12,10 +12,5 @@
 
 	"files.eol": "\n",
 
-	"gitlens.advanced.blame.customArguments": [
-		"-w"
-	],
-	"cSpell.words": [
-		"ntnet"
-	]
+	"gitlens.advanced.blame.customArguments": ["-w"]
 }

@@ -805,7 +805,7 @@
 "cl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
-	network_tag= "n2o_out_cat";
+	id_tag = "n2o_out_cat";
 	name = "n2o out"
 	},
 /turf/open/floor/plating/airless,
@@ -839,7 +839,7 @@
 "cs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	network_tag= "o2_out_cat";
+	id_tag = "o2_out_cat";
 	name = "freezer vent"
 	},
 /obj/structure/closet/crate/freezer{

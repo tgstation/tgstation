@@ -377,7 +377,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravantrade1_bolt"
+	id_tag = "caravantrade1_bolt"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter1)
@@ -969,7 +969,7 @@
 /area/shuttle/caravan/freighter1)
 "Rw" = (
 /obj/machinery/door/airlock{
-	network_tag= "caravantrade1_cabin2";
+	id_tag = "caravantrade1_cabin2";
 	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1037,7 +1037,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravantrade1_bolt"
+	id_tag = "caravantrade1_bolt"
 	},
 /obj/docking_port/mobile{
 	callTime = 250;
@@ -1070,7 +1070,7 @@
 /area/shuttle/caravan/freighter1)
 "Wm" = (
 /obj/machinery/door/airlock{
-	network_tag= "caravantrade1_cabin1";
+	id_tag = "caravantrade1_cabin1";
 	name = "Cabin 1"
 	},
 /obj/effect/decal/cleanable/dirt,

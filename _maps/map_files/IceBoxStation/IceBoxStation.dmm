@@ -4794,7 +4794,7 @@
 "akW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "innerbrig";
+	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -4810,7 +4810,7 @@
 "akX" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "innerbrig";
+	id_tag = "innerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -5678,7 +5678,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -5697,7 +5697,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "outerbrig";
+	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
@@ -6045,7 +6045,7 @@
 "anP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	network_tag= "laborexit";
+	id_tag = "laborexit";
 	name = "Labor Shuttle";
 	req_access_txt = "63"
 	},
@@ -8153,7 +8153,7 @@
 /area/crew_quarters/dorms)
 "atg" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm4";
+	id_tag = "Dorm4";
 	name = "Dorm 4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -8423,7 +8423,7 @@
 /area/hallway/secondary/entry)
 "atQ" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm5";
+	id_tag = "Dorm5";
 	name = "Cabin 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -8613,7 +8613,7 @@
 /area/chapel/main)
 "aup" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm6";
+	id_tag = "Dorm6";
 	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -9425,7 +9425,7 @@
 /area/maintenance/fore/secondary)
 "awo" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm3";
+	id_tag = "Dorm3";
 	name = "Dorm 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -10764,7 +10764,7 @@
 /area/security/prison)
 "azJ" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "permainner";
+	id_tag = "permainner";
 	name = "Permabrig Transfer"
 	},
 /turf/open/floor/plasteel,
@@ -10777,7 +10777,7 @@
 /area/gateway)
 "azL" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "permainner";
+	id_tag = "permainner";
 	name = "Permabrig Transfer"
 	},
 /obj/structure/cable,
@@ -10909,7 +10909,7 @@
 /area/hallway/primary/fore)
 "aAb" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm2";
+	id_tag = "Dorm2";
 	name = "Dorm 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -12499,7 +12499,7 @@
 /area/security/prison/safe)
 "aDK" = (
 /obj/machinery/door/airlock{
-	network_tag= "Dorm1";
+	id_tag = "Dorm1";
 	name = "Dorm 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -15338,7 +15338,7 @@
 /area/crew_quarters/bar)
 "aJD" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "permaouter";
+	id_tag = "permaouter";
 	name = "Permabrig Transfer";
 	req_access_txt = "2"
 	},
@@ -15509,7 +15509,7 @@
 /area/storage/primary)
 "aKb" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "permaouter";
+	id_tag = "permaouter";
 	name = "Permabrig Transfer";
 	req_access_txt = "2"
 	},
@@ -35197,7 +35197,7 @@
 /area/maintenance/port/aft)
 "bGr" = (
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior{
-	network_tag= "atmos_incinerator_airlock_exterior";
+	id_tag = "atmos_incinerator_airlock_exterior";
 	name = "Turbine Exterior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -35775,7 +35775,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_exterior";
+	id_tag = "virology_airlock_exterior";
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
 	},
@@ -38727,7 +38727,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_interior";
+	id_tag = "virology_airlock_interior";
 	name = "Virology Interior Airlock";
 	req_access_txt = "39"
 	},
@@ -51591,7 +51591,7 @@
 "jTu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock{
-	network_tag= "commissarydoor";
+	id_tag = "commissarydoor";
 	name = "Commissary"
 	},
 /obj/machinery/door/firedoor,
@@ -53884,7 +53884,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
 	},
@@ -56491,7 +56491,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
 	},

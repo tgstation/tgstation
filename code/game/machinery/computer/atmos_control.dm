@@ -10,8 +10,14 @@
 
 	var/on = TRUE
 	network_id = NETWORK_ATMOS_STORAGE
-	var/datum/netlink/datalink
+	var/list/status_cache
 	var/network_broadcast = NETWORK_ATMOS_CONTROL
+
+/obj/machinery/air_sensor/NetworkInitialize()
+	var/datum/component/ntnet_interface/interface = GetComponent(/datum/component/ntnet_interface)
+	status_cache = list()
+	status_cache["gases"] = list()
+	interface.regester_port("status",status_cache)
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
@@ -47,14 +53,8 @@
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
-		if(!datalink)
-			var/datum/component/ntnet_interface/interface = GetComponent(/datum/component/ntnet_interface)
-			var/list/status_cache = list()
-			status_cache["gases"] = list()
-			datalink = interface.regester_port("status",status_cache)
-
 		var/datum/gas_mixture/air_sample = return_air()
-		var/list/gasses = datalink["gases"]
+		var/list/gasses = status_cache["gases"]
 
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
@@ -62,10 +62,10 @@
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 				gasses[gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-		datalink["id_tag"] = network_tag
-		datalink["timestamp"] = world.time
-		datalink["pressure"] = air_sample.return_pressure()
-		datalink["temperature"] = air_sample.temperature
+		status_cache["id_tag"] = network_tag
+		status_cache["timestamp"] = world.time
+		status_cache["pressure"] = air_sample.return_pressure()
+		status_cache["temperature"] = air_sample.temperature
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -110,6 +110,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	GLOB.atmos_air_controllers += src
 
 
+/obj/machinery/computer/atmos_control/NetworkInitialize()
+	// alright, we are assuming all the sensors are hooked up
+	for(var/tag in sensors) // should throw a runtime here
+		sensor_information[tag]	= SSnetworks.connect_port(tag, "status")
+
 /obj/machinery/computer/atmos_control/Destroy()
 	GLOB.atmos_air_controllers -= src
 	for(var/tag in sensor_information)
@@ -118,15 +123,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	return ..()
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
-	if(!sensor_information)
-		sensor_information = list()
-		var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-		var/datum/component/ntnet_interface/other
-		// alright, we are assuming all the sensors are hooked up
-		for(var/tag in sensors) // should throw a runtime here
-			other = conn.network.get_interface(tag)
-			sensor_information[tag]	= other.connect_port("status")
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosControlConsole", name)
@@ -136,13 +132,13 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/data = list()
 
 	data["sensors"] = list()
-	for(var/tag in  sensors)
-		var/long_name = sensors[tag]
-		var/list/info = sensor_information[tag]
+	for(var/id_tag in sensors)
+		var/long_name = sensors[id_tag]
+		var/list/info = sensor_information[id_tag]
 		if(!info)
 			continue
 		data["sensors"] += list(list(
-			"id_tag"		= tag,
+			"id_tag"		= id_tag,
 			"long_name" 	= sanitize(long_name),
 			"pressure"		= info["pressure"],
 			"temperature"	= info["temperature"],
@@ -170,35 +166,20 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
+	var/input_hid
+	var/output_hid
 	var/datum/netlink/input_info
 	var/datum/netlink/output_info
 
-/obj/machinery/computer/atmos_control/tank/proc/check_connection()
-	var/datum/component/ntnet_interface/my_conn
-	if(!input_info && input_tag)
-		my_conn = GetComponent(/datum/component/ntnet_interface)
-		var/datum/component/ntnet_interface/input_conn = my_conn.network.get_interface(input_tag)
-		if(!input_conn)
-			debug_world_log("Input tag [input_tag] for [name] does not exist")
-			input_tag = null // deleted so it dosn't show up again
-			return
-		input_info = input_conn.connect_port("status")
-		if(!input_info)
-			debug_world_log("Input tag [input_tag] for [name] port 'status' does not exist'")
-			input_tag = null
-			return
-	if(!output_info && output_tag)
-		my_conn = GetComponent(/datum/component/ntnet_interface)
-		var/datum/component/ntnet_interface/output_conn = my_conn.network.get_interface(output_tag)
-		if(!output_conn)
-			debug_world_log("Output tag [output_tag] for [name] does not exist")
-			input_tag = null // deleted so it dosn't show up again
-			return
-		output_info = output_conn.connect_port("status")
-		if(!output_info)
-			debug_world_log("Output tag [output_tag] for [name] port 'status' does not exist'")
-			input_tag = null
-			return
+/obj/machinery/computer/atmos_control/tank/NetworkInitialize()
+	if(input_tag)
+		input_hid = SSnetworks.network_tag_to_hardware_id[input_tag]
+		ASSERT(input_hid !=null)
+		input_info = SSnetworks.connect_port(input_tag, "status")
+	if(output_tag)
+		output_hid = SSnetworks.network_tag_to_hardware_id[output_hid]
+		ASSERT(output_hid !=null)
+		output_info = SSnetworks.connect_port(output_tag, "status")
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -253,7 +234,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 // WarlockD - Not a hacky madness anymore!  If the user knows the hid address, it will just connect
 
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
-	check_connection()
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
@@ -262,18 +242,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["outputPressure"] = output_info ? output_info["internal"] : FALSE
 	return data
 
-/obj/machinery/computer/atmos_control/tank/proc/send_update(tag, list/data)
-	data["sigtype"] = "command"
-	data["tag"] = tag
-	var/datum/component/ntnet_interface/my_conn = GetComponent(/datum/component/ntnet_interface)
-	var/datum/netdata/signal = new(data)
-	signal.receiver_id = tag
-	signal.receiver_network = my_conn.network.network_id
-	ntnet_send(signal)
-
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..())
 		return
+	var/datum/netdata/signal = new(list("sigtype" = "command", "user" = usr))
+	signal.receiver_network = NETWORK_ATMOS_STORAGE
 	switch(action)
 		if("update_output")
 			var/hid = params["hid"]
@@ -281,8 +254,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			if(!istype(I, /obj/machinery/atmospherics/components/unary/vent_pump))
 				to_chat(usr,"Device not found or invalid for vent pump")
 			else
-				output_tag = hid
-				output_info = null // reconnected on next update
+				output_info = I.connect_port("status")
 				. = TRUE
 		if("update_input")
 			var/hid = params["hid"]
@@ -290,26 +262,29 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			if(!istype(I, /obj/machinery/atmospherics/components/unary/outlet_injector))
 				to_chat(usr,"Device not found or invalid for input injector")
 			else
-				input_tag = hid
-				input_info = null // reconnected on next update
+				input_info = I.connect_port("status")
 				. = TRUE
 		if("input")
-			send_update(input_tag, list("power_toggle" = TRUE))
+			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
+			signal.receiver_id = input_tag
 			. = TRUE
 		if("rate")
 			var/target = text2num(params["rate"])
 			if(!isnull(target))
 				target = clamp(target, 0, MAX_TRANSFER_RATE)
-				send_update(input_tag, list("set_volume_rate" = target))
+				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
+				signal.receiver_id = input_tag
 				. = TRUE
 		if("output")
-			send_update(output_tag, list("power_toggle" = TRUE))
+			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
+			signal.receiver_id = output_tag
 			. = TRUE
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
 				target = clamp(target, 0, 4500)
-				send_update(output_tag, list("set_internal_pressure" = target))
+				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
+				signal.receiver_id = output_tag
 				. = TRUE
-
+	ntnet_send(signal)
 

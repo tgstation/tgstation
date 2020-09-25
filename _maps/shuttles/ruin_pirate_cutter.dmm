@@ -663,7 +663,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravanpirate_bolt_starboard"
+	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -837,7 +837,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravanpirate_bolt_port"
+	id_tag = "caravanpirate_bolt_port"
 	},
 /obj/docking_port/mobile{
 	callTime = 150;
@@ -871,7 +871,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravanpirate_bolt_starboard"
+	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -932,7 +932,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	network_tag= "caravanpirate_bolt_port"
+	id_tag = "caravanpirate_bolt_port"
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)

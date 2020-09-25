@@ -76,7 +76,7 @@
 "wV" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/hatch{
-	network_tag= "caravansyndicate1_bolt";
+	id_tag = "caravansyndicate1_bolt";
 	name = "External Airlock";
 	normalspeed = 0;
 	req_access_txt = "150"

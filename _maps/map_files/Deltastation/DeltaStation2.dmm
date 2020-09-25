@@ -13963,7 +13963,7 @@
 /area/hallway/secondary/service)
 "aEL" = (
 /obj/machinery/door/airlock{
-	network_tag= "AuxCabinA";
+	id_tag = "AuxCabinA";
 	name = "Cabin A";
 	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
@@ -16985,7 +16985,7 @@
 /area/hallway/secondary/service)
 "aKq" = (
 /obj/machinery/door/airlock{
-	network_tag= "AuxCabinB";
+	id_tag = "AuxCabinB";
 	name = "Cabin B";
 	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
@@ -17963,7 +17963,7 @@
 /area/security/prison/safe)
 "aMf" = (
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt3";
+	id_tag = "permabolt3";
 	name = "Cell 3"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -20541,7 +20541,7 @@
 /area/security/prison/safe)
 "aRb" = (
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt2";
+	id_tag = "permabolt2";
 	name = "Cell 2"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -21084,7 +21084,7 @@
 "aSj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "cardoor";
+	id_tag = "cardoor";
 	name = "Cargo Cell";
 	req_access_txt = "63"
 	},
@@ -23646,7 +23646,7 @@
 /area/security/prison/safe)
 "aWf" = (
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt1";
+	id_tag = "permabolt1";
 	name = "Cell 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -43451,7 +43451,7 @@
 /area/security/execution/transfer)
 "bFH" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "gulagdoor";
+	id_tag = "gulagdoor";
 	name = "Security Transferring Center";
 	req_access_txt = "63"
 	},
@@ -47239,7 +47239,7 @@
 /area/maintenance/aft)
 "bMc" = (
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "engdoor";
+	id_tag = "engdoor";
 	name = "Engineering Cell";
 	req_access_txt = "63"
 	},
@@ -72132,7 +72132,7 @@
 "cIf" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm5";
+	id_tag = "Dorm5";
 	name = "Cabin 1"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -72143,7 +72143,7 @@
 "cIh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm2";
+	id_tag = "Dorm2";
 	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -72153,7 +72153,7 @@
 "cIj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm3";
+	id_tag = "Dorm3";
 	name = "Cabin 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -74852,7 +74852,7 @@
 "cNT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm4";
+	id_tag = "Dorm4";
 	name = "Cabin 4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -74862,7 +74862,7 @@
 "cNU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm5";
+	id_tag = "Dorm5";
 	name = "Cabin 5"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -74872,7 +74872,7 @@
 "cNV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	network_tag= "Dorm6";
+	id_tag = "Dorm6";
 	name = "Cabin 6"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -77267,7 +77267,7 @@
 "cSJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
 	},
@@ -78369,7 +78369,7 @@
 "cUC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	network_tag= "MedbayFoyer";
+	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
 	},
@@ -82650,7 +82650,7 @@
 "dcy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	network_tag= "scidoor";
+	id_tag = "scidoor";
 	name = "Security Post - Science";
 	req_access_txt = "63"
 	},
@@ -84098,7 +84098,7 @@
 "dfE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
-	network_tag= "meddoor";
+	id_tag = "meddoor";
 	name = "Medical Cell";
 	req_access_txt = "63"
 	},
@@ -100114,7 +100114,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_exterior";
+	id_tag = "virology_airlock_exterior";
 	name = "Virology Exterior Airlock";
 	req_access_txt = "39"
 	},
@@ -100937,7 +100937,7 @@
 /obj/machinery/door/airlock/virology{
 	autoclose = 0;
 	frequency = 1449;
-	network_tag= "virology_airlock_interior";
+	id_tag = "virology_airlock_interior";
 	name = "Virology Interior Airlock";
 	req_access_txt = "39"
 	},
@@ -109731,7 +109731,7 @@
 /area/security/prison)
 "jAK" = (
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt3";
+	id_tag = "permabolt3";
 	name = "Cell 4"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -110876,7 +110876,7 @@
 /area/space/nearstation)
 "mIv" = (
 /obj/machinery/door/airlock/public/glass{
-	network_tag= "permabolt3";
+	id_tag = "permabolt3";
 	name = "Cell 5"
 	},
 /obj/structure/cable,
@@ -112266,7 +112266,7 @@
 /obj/structure/barricade/wooden,
 /obj/structure/cable,
 /obj/machinery/door/airlock{
-	network_tag= "commissarydoor";
+	id_tag = "commissarydoor";
 	name = "Commissary"
 	},
 /turf/open/floor/plating,

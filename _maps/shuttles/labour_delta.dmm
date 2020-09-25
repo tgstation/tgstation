@@ -231,7 +231,7 @@
 /area/shuttle/labor)
 "w" = (
 /obj/machinery/door/airlock/shuttle{
-	network_tag= "prisonshuttle";
+	id_tag = "prisonshuttle";
 	name = "Labor Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
