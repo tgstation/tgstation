@@ -12,7 +12,6 @@
 	description = _description
 	cleanable = _cleanable
 
-	target.add_overlay(pic)
 	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_icon() //could use some queuing here now maybe.
@@ -51,10 +50,12 @@
 		source.update_icon()
 		UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
+
 /datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)
 	SIGNAL_HANDLER
 
-	source.add_overlay(pic)
+	overlay_list += pic
+
 
 /datum/element/decal/proc/rotate_react(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
