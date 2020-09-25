@@ -77,6 +77,15 @@
 /obj/effect/turf_decal/siding/wideplating/dark,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
+"B" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/supply)
 "D" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -85,6 +94,15 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
+/area/shuttle/supply)
+"Y" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 
 (1,1,1) = {"
@@ -103,13 +121,13 @@ a
 (2,1,1) = {"
 a
 g
+B
 t
 t
 t
 t
 t
-t
-t
+B
 f
 a
 "}
@@ -155,13 +173,13 @@ D
 (6,1,1) = {"
 a
 j
+Y
 w
 w
 w
 w
 w
-w
-w
+Y
 k
 a
 "}
