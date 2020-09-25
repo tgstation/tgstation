@@ -44,7 +44,7 @@
   *	inserted_item - the item being placed into the food
   *	user - the person inserting the item
   */
-/datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
+/datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/living/user, params)
 	SIGNAL_HANDLER
 
 	// No matryoshka-ing food storage

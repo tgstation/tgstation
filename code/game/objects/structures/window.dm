@@ -141,7 +141,7 @@
 		return
 	. = ..()
 
-/obj/structure/window/attack_hand(mob/user)
+/obj/structure/window/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
@@ -149,7 +149,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
 			"<span class='notice'>You knock on [src].</span>")
 		playsound(src, knocksound, 50, TRUE)
