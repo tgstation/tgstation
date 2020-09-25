@@ -19,9 +19,8 @@ body.dark {
 }
 
 #menu {
-	background-color: white;
+	background-color: rgb(240, 240, 240);
 	position: fixed;
-	padding: 7px;
 	width: 100%;
 }
 .dark #menu {
@@ -29,7 +28,7 @@ body.dark {
 }
 
 #statcontent {
-	padding: 0 7px 7px 7px;
+	padding: 7px 7px 7px 7px;
 }
 
 a {
@@ -68,28 +67,29 @@ li a:hover:not(.active) {
 
 .button-container {
 	display: inline-flex;
-	flex-wrap: wrap;
+	flex-wrap: wrap-reverse;
 	flex-direction: row;
-	justify-content: flex-start;
 	align-items: flex-start;
-	min-width: 0;
-	min-height: 0;
+	overflow-x: hidden;
 	white-space: pre-wrap;
+	padding: 0 4px;
 }
+
 .button {
-	background-color: #FFFFFE;
-	border-color: rgba(255, 255, 254, 0.5);
+	background-color: #dfdfdf;
+	border-color: #cecece;
 	border-width: 1px;
-	color: black;
-	padding: 7px 14px;
+	border-style: solid;
+	color: rgba(0, 0, 0, 0.7);
+	padding: 6px 4px;
 	text-align: center;
 	text-decoration: none;
 	font-size: 12px;
-	margin: 2px 2px;
+	margin: 0;
 	cursor: pointer;
-	border-radius: 10%;
 	transition-duration: 0.25s;
 	order: 3;
+	min-width: 40px;
 }
 .dark button {
 	background-color: #252525;
@@ -97,17 +97,19 @@ li a:hover:not(.active) {
 	color: white;
 }
 .button:hover {
-	border-color: rgba(255, 255, 254, 0.5);
-	background-color: #252525;
-	color: white;
+	background-color: #ececec;
 }
 .dark button:hover {
-	border-color: rgba(37, 37, 36, 0.5);
-	background-color: #FFFFFE;
+	background-color: #ffffff;
 	color: #252525;
 }
 .button:active, .button.active {
-	text-decoration: underline;
+	background-color: #ffffff;
+	color: black;
+	border-top: 1px solid #cecece;
+	border-left: 1px solid #cecece;
+	border-right: 1px solid #cecece;
+	border-bottom: 1px solid white;
 }
 .grid-container {
 	display: inline-flex;
@@ -219,6 +221,47 @@ if (!String.prototype.trim) {
   }, 0, 'test');
 }())
 
+// Polyfill for filter from Mozilla
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+if (!Array.prototype.filter){
+  Array.prototype.filter = function(func, thisArg) {
+    'use strict';
+    if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
+        throw new TypeError();
+
+    var len = this.length >>> 0,
+        res = new Array(len), // preallocate array
+        t = this, c = 0, i = -1;
+
+    var kValue;
+    if (thisArg === undefined){
+      while (++i !== len){
+        // checks to see if the key was set
+        if (i in this){
+          kValue = t[i]; // in case t is changed in callback
+          if (func(t[i], i, t)){
+            res[c++] = kValue;
+          }
+        }
+      }
+    }
+    else{
+      while (++i !== len){
+        // checks to see if the key was set
+        if (i in this){
+          kValue = t[i];
+          if (func.call(thisArg, t[i], i, t)){
+            res[c++] = kValue;
+          }
+        }
+      }
+    }
+
+    res.length = c; // shrink down array to proper size
+    return res;
+  };
+}
+
 // Browser passthrough code ---------------------------------------------------
 if (window.location) {
 	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
@@ -267,9 +310,9 @@ if (window.location) {
 }); */
 
 // Status panel implementation ------------------------------------------------
-var status_tab_parts = ["loading..."];
+var status_tab_parts = ["Loading..."];
 var current_tab = null;
-var mc_tab_parts = [["loading...", ""]];
+var mc_tab_parts = [["Loading...", ""]];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -288,6 +331,8 @@ var statcontentdiv = document.querySelector('#statcontent');
 var storedimages = [];
 
 function createStatusTab(name) {
+	if (name.indexOf(".") != -1)
+		name = name.split(".")[0];
 	if(document.getElementById(name) || name.trim() == "")
 		return;
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
@@ -302,12 +347,8 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
-	if(name == "Status" || name == "MC") {
-		if(name == "Status")
-			B.style.order = 1;
-		else
-			B.style.order = 2;
-	}
+	if(name == "Status" || name == "MC")
+		B.style.order = name == "Status" ? 1 : 2;
 	//END ORDERING
 	menu.appendChild(B);
 	SendTabToByond(name);
@@ -365,19 +406,19 @@ function check_verbs() {
 	for(var v = verb_tabs.length - 1; v >= 0; v--){
 		verbs_cat_check(verb_tabs[v]);
 	}
-	//checkStatusTab(); // removes any empty status tabs
 }
 
 function verbs_cat_check(cat) {
+	var tabCat = cat.indexOf(".") != -1 ? cat.split(".")[0] : cat;
 	var verbs_in_cat = 0;
 	var verbcat = "";
-	if(!verb_tabs.includes(cat)){
-		removeStatusTab(cat);
+	if(!verb_tabs.includes(tabCat)){
+		removeStatusTab(tabCat);
 		return;
 	}
 	for(var v = 0; v < verbs.length; v++){
 		var part = verbs[v];
-		verbcat = part[0];
+		verbcat = part[0].indexOf(".") != -1 ? part[0].split(".") : part[0];
 		if(verbcat != cat || verbcat.trim() == ""){
 			continue;
 		}
@@ -387,8 +428,8 @@ function verbs_cat_check(cat) {
 		}
 	}
 	if(verbs_in_cat != 1) {
-		removeStatusTab(cat);
-		if(current_tab == cat)
+		removeStatusTab(tabCat);
+		if(current_tab == tabCat)
 			tab_change("Status");
 	}
 }
@@ -411,17 +452,20 @@ function add_verb_list(v) {
 	to_add.sort(); // sort what we're adding
 	for(var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
+		if (!part[0])
+			continue;
+		var category = part[0].indexOf(".") == -1 ? part[0] : part[0].split(".")[0]
 		if(findVerbindex(part[1], verbs))
 			continue;
-		if(verb_tabs.includes(part[0])){
+		if(verb_tabs.includes(category)){
 			verbs.push(part);
-			if(current_tab == part[0]) {
-				draw_verbs(part[0]); // redraw if we added a verb to the tab we're currently in
+			if(current_tab == category) {
+				draw_verbs(category); // redraw if we added a verb to the tab we're currently in
 			}
-		} else if(part[0]) {
-			verb_tabs.push(part[0]);
+		} else if(category) {
+			verb_tabs.push(category);
 			verbs.push(part);
-			createStatusTab(part[0]);
+			createStatusTab(category);
 		}
 	}
 }
@@ -586,7 +630,7 @@ function tab_change(tab) {
 	}else if(tab == turfname) {
 		draw_listedturf();
 	} else {
-		statcontentdiv[textContentKey] = "loading...";
+		statcontentdiv[textContentKey] = "Loading...";
 	}
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
 }
@@ -917,23 +961,16 @@ function draw_verbs(cat){
 	var command = ""; // typecast name to string
 	verbs.sort();
 	verbs.reverse(); // sort verbs backwards before we draw
-	for(var i = verbs.length - 1; i >= 0; i--) {
-		var part = verbs[i]; // should be a list containing category and command
-		if(!part[1]) continue;
-		if(part[0] != cat){
-			continue;
-		}
-		if(part[0].trim() == ""){
-			verbs.splice(i, 1);
-			continue;
-		}
+	verbs.filter(function(x) {
+		return x[1] && x[0].lastIndexOf(cat, 0) != -1 && (x[0].length == cat.length || x[0].charAt(cat.length) == ".")
+	}).forEach(function (part) {
 		command = part[1];
 		var a = document.createElement("a");
 		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
 		a[textContentKey] = command;
 		a.className = "grid-item";
 		table.appendChild(a);
-	}
+	});
 	document.getElementById("statcontent").appendChild(table);
 }
 

@@ -1,7 +1,7 @@
 // Proc taken from yogstation, credit to nichlas0010 for the original
 /client/proc/fix_air(turf/open/T in world)
 	set name = "Fix Air"
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set desc = "Fixes air in specified radius."
 
 	if(!holder)
