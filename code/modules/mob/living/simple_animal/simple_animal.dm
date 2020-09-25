@@ -182,7 +182,7 @@
 	if(emote_see)
 		emote_see = string_list(emote_hear)
 	if(atmos_requirements)
-		atmos_requirements = string_assoc_list(damage_coeff)
+		atmos_requirements = string_assoc_list(atmos_requirements)
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 
