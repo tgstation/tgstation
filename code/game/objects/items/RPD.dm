@@ -18,7 +18,8 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple, TRUE),
 		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold, TRUE),
 		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w, TRUE),
-		new /datum/pipe_info/pipe("Layer Manifold",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
+		new /datum/pipe_info/pipe("Layer Adapter",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
+		new /datum/pipe_info/pipe("Multi-Deck Adapter",	/obj/machinery/atmospherics/pipe/multiz, TRUE),
 	),
 	"Devices" = list(
 		new /datum/pipe_info/pipe("Connector",			/obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
@@ -359,21 +360,21 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 
 	if((mode & PAINT_MODE))
-		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
-			var/obj/machinery/atmospherics/pipe/P = A
-			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
+		var/obj/machinery/atmospherics/M = A
+		if(istype(M) && M.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [M] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = M))
+				M.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [M] [paint_color].</span>","<span class='notice'>You paint \the [M] [paint_color].</span>")
 			return
-		var/obj/item/pipe/P = A
-		if(istype(P) && findtext("[P.pipe_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[P.pipe_type]", "layer_manifold"))
-			to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
+		var/obj/item/pipe/I = A
+		if(istype(I) && I.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [I] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = I))
+				I.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [I] [paint_color].</span>","<span class='notice'>You paint \the [I] [paint_color].</span>")
 			return
 
 	if(mode & BUILD_MODE)
