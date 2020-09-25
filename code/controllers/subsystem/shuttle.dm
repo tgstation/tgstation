@@ -203,10 +203,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SHUTTLE_ESCAPE)
 			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
 			return FALSE
-		if(SHUTTLE_STRANDED)
-			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
-			return FALSE
-		if(SHUTTLE_DISABLED)
+		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
 			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
 			return FALSE
 
@@ -904,4 +901,3 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
-
