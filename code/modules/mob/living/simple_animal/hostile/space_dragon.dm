@@ -440,6 +440,13 @@
 	time_charged = 1
 	START_PROCESSING(SSobj, src)
 
+/obj/structure/carp_rift/examine(mob/user)
+	. = ..()
+	if(time_charged < max_charge)
+		. += "<span class='notice'>It seems to be [(time_charged / max_charge) * 100]% charged.</span>"
+	else
+		. += "<span class='warning'>This one is fully charged, and is capable of bringing many carp to the station's location.</span>"
+
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
 
@@ -454,7 +461,7 @@
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)
-	time_charged = min(time_charged + delta_time, max_charge + 1)
+	time_charged = min(time_charged + delta_time, max_charge)
 	update_check()
 	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
 		if("carp" in hostilehere.faction)
@@ -492,11 +499,11 @@
 	if(time_charged == (max_charge - 120))
 		var/area/A = get_area(src)
 		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Spatial Corps", 'sound/ai/spanomalies.ogg')
-	if(time_charged == max_charge)
+	if(time_charged >= max_charge)
 		var/area/A = get_area(src)
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Spatial Corps")
 		obj_integrity = INFINITY
-		desc = "A rift akin to the ones space carp use to travel long distances.  This one is fully charged, and is capable of bringing many carp to the station's location."
+		desc = "A rift akin to the ones space carp use to travel long distances."
 		icon_state = "carp_rift_charged"
 		light_color = LIGHT_COLOR_YELLOW
 		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
