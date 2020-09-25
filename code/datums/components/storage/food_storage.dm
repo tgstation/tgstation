@@ -51,8 +51,7 @@
 	if(istype(inserted_item, /obj/item/storage) || IS_EDIBLE(inserted_item))
 		return
 
-	//Harm intent will bypass inserting for injecting food with syringes and such
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return
 
 	if(inserted_item.w_class > minimum_weight_class)
