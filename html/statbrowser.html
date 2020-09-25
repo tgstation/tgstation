@@ -7,151 +7,173 @@
 <meta http-equiv="Cache-Control" content="max-age=15; must-revalidate" />
 <link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
 <style>
-body {
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: 12px !important;
-	margin: 0 !important;
-	padding: 0 !important;
-}
-body.dark {
-	background-color: #131313;
-	color: #abc6ec;
-}
+	body {
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
+		font-size: 12px !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
 
-#menu {
-	background-color: rgb(240, 240, 240);
-	position: fixed;
-	width: 100%;
-}
-.dark #menu {
-	background-color: #131313;
-}
+	body.dark {
+		background-color: #131313;
+		color: #abc6ec;
+	}
 
-#statcontent {
-	padding: 7px 7px 7px 7px;
-}
+	#menu {
+		background-color: #F0F0F0;
+		position: fixed;
+		width: 100%;
+	}
 
-a {
-	color: black;
-	text-decoration: none
-}
-.dark a {
-	color: #abc6ec;
-}
-a:hover, .dark a:hover {
-	text-decoration: underline;
-}
+	.dark #menu {
+		background-color: #202020;
+	}
 
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	background-color: #333;
-}
+	#statcontent {
+		padding: 7px 7px 7px 7px;
+	}
 
-li {
-	float: left;
-}
+	a {
+		color: black;
+		text-decoration: none
+	}
 
-li a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
+	.dark a {
+		color: #abc6ec;
+	}
 
-li a:hover:not(.active) {
-	background-color: #111;
-}
+	a:hover, .dark a:hover {
+		text-decoration: underline;
+	}
 
-.button-container {
-	display: inline-flex;
-	flex-wrap: wrap-reverse;
-	flex-direction: row;
-	align-items: flex-start;
-	overflow-x: hidden;
-	white-space: pre-wrap;
-	padding: 0 4px;
-}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		background-color: #333;
+	}
 
-.button {
-	background-color: #dfdfdf;
-	border-color: #cecece;
-	border-width: 1px;
-	border-style: solid;
-	color: rgba(0, 0, 0, 0.7);
-	padding: 6px 4px;
-	text-align: center;
-	text-decoration: none;
-	font-size: 12px;
-	margin: 0;
-	cursor: pointer;
-	transition-duration: 0.25s;
-	order: 3;
-	min-width: 40px;
-}
-.dark button {
-	background-color: #252525;
-	border-color: rgba(37, 37, 36, 0.5);
-	color: white;
-}
-.button:hover {
-	background-color: #ececec;
-}
-.dark button:hover {
-	background-color: #ffffff;
-	color: #252525;
-}
-.button:active, .button.active {
-	background-color: #ffffff;
-	color: black;
-	border-top: 1px solid #cecece;
-	border-left: 1px solid #cecece;
-	border-right: 1px solid #cecece;
-	border-bottom: 1px solid white;
-}
-.grid-container {
-	display: inline-flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	min-width: 0;
-	min-height: 0;
-	white-space: pre-wrap;
-}
-.grid-item {
-	color: black;
-	width: 150px;
-	font-size: 11px;
-	line-height: 24px;
-	text-align: left;
-	min-width: 0;
-	min-height: 0;
-	white-space: pre-wrap;
-	padding-right: 12px; /* A little more than two spaces, to look good in IE8 where flex-justify does nothing */
-}
-.link {
-	display: inline;
-	background: none;
-	border: none;
-	padding: 7px 14px;
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-	font-size: 13px;
-	margin: 2px 2px;
-}
-.dark .link {
-	color: #abc6ec;
-}
-.link:hover {
-	text-decoration: underline;
-}
-img {
-	-ms-interpolation-mode: nearest-neighbor;
-	image-rendering: pixelated;
-}
+	li {
+		float: left;
+	}
+
+	li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+	li a:hover:not(.active) {
+		background-color: #111;
+	}
+
+	.button-container {
+		display: inline-flex;
+		flex-wrap: wrap-reverse;
+		flex-direction: row;
+		align-items: flex-start;
+		overflow-x: hidden;
+		white-space: pre-wrap;
+		padding: 0 4px;
+	}
+
+	.button {
+		background-color: #dfdfdf;
+		border-color: #cecece;
+		border-width: 1px;
+		border-style: solid;
+		color: rgba(0, 0, 0, 0.7);
+		padding: 6px 4px;
+		text-align: center;
+		text-decoration: none;
+		font-size: 12px;
+		margin: 0;
+		cursor: pointer;
+		transition-duration: 0.25s;
+		order: 3;
+		min-width: 40px;
+	}
+
+	.dark button {
+		background-color: #444444;
+		border-color: #343434;
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	.button:hover {
+		background-color: #ececec;
+	}
+
+	.dark button:hover {
+		background-color:  #4d4d4d;
+	}
+
+	.button:active, .button.active {
+		background-color: #ffffff;
+		color: black;
+		border-top: 1px solid #cecece;
+		border-left: 1px solid #cecece;
+		border-right: 1px solid #cecece;
+		border-bottom: 1px solid #ffffff;
+	}
+
+	.dark .button:active, .dark .button.active {
+		background-color: #131313;
+		color: white;
+		border-top: 1px solid #343434;
+		border-left: 1px solid #343434;
+		border-right: 1px solid #343434;
+		border-bottom: 1px solid #131313;
+	}
+
+	.grid-container {
+		display: inline-flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: flex-start;
+		min-width: 0;
+		min-height: 0;
+		white-space: pre-wrap;
+	}
+
+	.grid-item {
+		color: black;
+		width: 150px;
+		font-size: 11px;
+		line-height: 24px;
+		text-align: left;
+		min-width: 0;
+		min-height: 0;
+		white-space: pre-wrap;
+		padding-right: 12px; /* A little more than two spaces, to look good in IE8 where flex-justify does nothing */
+	}
+
+	.link {
+		display: inline;
+		background: none;
+		border: none;
+		padding: 7px 14px;
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+		font-size: 13px;
+		margin: 2px 2px;
+	}
+
+	.dark .link {
+		color: #abc6ec;
+	}
+
+	.link:hover {
+		text-decoration: underline;
+	}
+
+	img {
+		-ms-interpolation-mode: nearest-neighbor;
+		image-rendering: pixelated;
+	}
 </style>
 </head>
 <body>
@@ -368,6 +390,19 @@ function removeStatusTab(name) {
 	under_menu.style.height = menu.clientHeight + 'px';
 }
 
+function sortVerbs() {
+	verbs.sort(function (a, b) {
+		var selector = a[0] == b[0] ? 1 : 0;
+		if (a[selector].toUpperCase() < b[selector].toUpperCase()) {
+			return 1;
+		}
+		else if (a[selector].toUpperCase() > b[selector].toUpperCase()) {
+			return -1;
+		}
+		return 0;
+	})
+}
+
 window.onresize = function () {
 	under_menu.style.height = menu.clientHeight + 'px';
 }
@@ -476,7 +511,7 @@ function remove_verb_list(v) {
 		remove_verb(to_remove[i]);
 	}
 	check_verbs();
-	verbs.sort();
+	sortVerbs();
 	if(verb_tabs.includes(current_tab))
 		draw_verbs(current_tab);
 }
@@ -499,7 +534,7 @@ function init_verbs(c, v) {
 	}
 	if(v) {
 		add_verb_list(v);
-		verbs.sort(); // sort them
+		sortVerbs(); // sort them
 		if(do_update) {
 			draw_verbs(current_tab);
 		}
@@ -956,22 +991,44 @@ function draw_spells(cat) {
 
 function draw_verbs(cat){
 	statcontentdiv[textContentKey] = "";
-	var table = document.createElement("newdiv");
+	var table = document.createElement("div");
+	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
 	var command = ""; // typecast name to string
-	verbs.sort();
+	sortVerbs();
 	verbs.reverse(); // sort verbs backwards before we draw
 	verbs.filter(function(x) {
 		return x[1] && x[0].lastIndexOf(cat, 0) != -1 && (x[0].length == cat.length || x[0].charAt(cat.length) == ".")
 	}).forEach(function (part) {
+		subCat = part[0].lastIndexOf(".") != -1 ? part[0].split(".")[1] : null;
+		if (subCat && !additions[subCat]) {
+			var newTable = document.createElement("div");
+			newTable.className = "grid-container";
+			additions[subCat] = newTable;
+		}
+
 		command = part[1];
 		var a = document.createElement("a");
 		a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
 		a[textContentKey] = command;
 		a.className = "grid-item";
-		table.appendChild(a);
+		(subCat ? additions[subCat] : table).appendChild(a);
 	});
-	document.getElementById("statcontent").appendChild(table);
+
+	// Append base table to view
+	var content = document.getElementById("statcontent");
+	content.appendChild(table);
+
+	// Append additional sub-categories if relevant
+	for (var cat in additions) {
+		if (additions.hasOwnProperty(cat)) {
+			// do addition here
+			var header = document.createElement("h3");
+			header.textContent = cat;
+			content.appendChild(header);
+			content.appendChild(additions[cat]);
+		}
+	}
 }
 
 function set_theme(which) {
