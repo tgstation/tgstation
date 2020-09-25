@@ -771,7 +771,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	return
 
 /client/proc/admin_disable_shuttle()
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	set name = "Disable Shuttle"
 
 	if(!check_rights(R_ADMIN))
@@ -794,7 +794,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	priority_announce("Warning: Emergency Shuttle uplink failure, shuttle disabled until further notice.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
 /client/proc/admin_enable_shuttle()
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	set name = "Enable Shuttle"
 
 	if(!check_rights(R_ADMIN))
