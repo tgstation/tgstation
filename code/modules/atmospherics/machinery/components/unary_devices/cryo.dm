@@ -2,19 +2,19 @@
 #define MAX_TEMPERATURE 4000
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
-/atom/movable/cryo_occupant_vis
+/atom/movable/visual/cryo_occupant
 	icon = 'icons/obj/cryogenics.dmi'
 	// Must be tall, otherwise the filter will consider this as a 32x32 tile
 	// and will crop the head off.
 	icon_state = "mask_bg"
 	layer = ABOVE_WINDOW_LAYER + 0.01
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo
-	var/animation = FALSE
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
+	var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo
+	var/animation = FALSE
 
-/atom/movable/cryo_occupant_vis/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
+/atom/movable/visual/cryo_occupant/Initialize(mapload, obj/machinery/atmospherics/components/unary/cryo_cell/cryo_)
 	. = ..()
 	cryo = cryo_
 	// Alpha masking
@@ -22,25 +22,31 @@
 	// already accounts for this.
 	filters += filter(type = "alpha", icon = icon('icons/obj/cryogenics.dmi', "mask"), y = -22)
 
-/atom/movable/cryo_occupant_vis/Destroy()
+/atom/movable/visual/cryo_occupant/Destroy()
 	cryo = null
 	return ..()
 
-/atom/movable/cryo_occupant_vis/update_icon()
+/atom/movable/visual/cryo_occupant/update_icon()
 	if(!cryo)
+		// Should only happen at init
 		return
 	if(animation)
 		if(!cryo.occupant || !cryo.on || !cryo.is_operational)
 			animate(src)
 			animation = FALSE
-		return
+		else
+			// Animation running: return early
+			return
 
-	vis_contents.Cut()
+	// If there's no occupant, just make sure there are no vis_contents
 	if(!cryo.occupant)
+		vis_contents.Cut()
 		return
 
-	cryo.occupant.dir = SOUTH
-	vis_contents += cryo.occupant
+	// If there's an occupant, we only need to repopulate vis_contents if it's empty
+	if(vis_contents.len == 0)
+		cryo.occupant.setDir(SOUTH)
+		vis_contents += cryo.occupant
 	if(cryo.on && cryo.is_operational)
 		animate(src, pixel_y = 24, time = 20, loop = -1)
 		animate(pixel_y = 22, time = 20)
@@ -80,7 +86,7 @@
 	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	/// Visual content - Occupant
-	var/atom/movable/cryo_occupant_vis/occupant_vis
+	var/atom/movable/visual/cryo_occupant/occupant_vis
 
 	var/escape_in_progress = FALSE
 	var/message_cooldown
@@ -107,10 +113,14 @@
 	vis_contents += occupant_vis
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
-	var/mob/oldoccupant = occupant
+	var/oldoccupant = occupant
 	. = ..() // Parent proc takes care of removing occupant if necessary
 	if (AM == oldoccupant)
 		update_icon()
+		if(oldoccupant && isliving(oldoccupant))
+			var/mob/living/L = oldoccupant
+			REMOVE_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
+			L.update_mobility()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
@@ -305,7 +315,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
-			REMOVE_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
 			L.update_mobility()
 	occupant = null
 	flick("pod-open-anim", src)
