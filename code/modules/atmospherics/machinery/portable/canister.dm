@@ -457,8 +457,8 @@
 	if(our_pressure > pressure_limit + TANK_FRAGMENT_PRESSURE)
 		var/range = (our_pressure - (pressure_limit + TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		obj_break()
+		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		return
 
 
