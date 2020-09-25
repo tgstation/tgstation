@@ -55,29 +55,34 @@
 	. += f
 	. += 1
 
-//The X pixel offset of this matrix
+///The X scale of the matrix
+/matrix/proc/get_x_scale()
+	return sqrt(a * a + d * d)
+
+///The Y scale of the matrix
+/matrix/proc/get_y_scale()
+	return sqrt(b * b + e * e)
+
+/// Gets the rotation of the matrix, in degrees.
+/// Will produce correct results if the matrix is only being translated, scaled
+/// and rotated. Otherwise this is a best attempt.
+/matrix/proc/get_rotation()
+	var/xs = get_x_scale()
+	var/ys = get_y_scale()
+	if(!xs || !ys)
+		return 0
+	// If only translated, scaled and rotated, a/xs == e/ys and -d/xs == b/xy
+	var/cossine = (a/xs + e/ys) / 2
+	var/sine = (b/ys - d/xs) / 2
+	return arctan(cossine, sine)
+
+///The X pixel offset of this matrix
 /matrix/proc/get_x_shift()
 	. = c
 
-//The Y pixel offset of this matrix
+///The Y pixel offset of this matrix
 /matrix/proc/get_y_shift()
 	. = f
-
-/matrix/proc/get_x_skew()
-	. = b
-
-/matrix/proc/get_y_skew()
-	. = d
-
-//Skews a matrix in a particular direction
-//Missing arguments are treated as no skew in that direction
-
-//As Rotation is defined as a scale+skew, these procs will break any existing rotation
-//Unless the result is multiplied against the current matrix
-/matrix/proc/set_skew(x = 0, y = 0)
-	b = x
-	d = y
-
 
 /////////////////////
 // COLOUR MATRICES //

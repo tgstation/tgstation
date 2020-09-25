@@ -1,5 +1,4 @@
 /obj/effect/appearance_clone
-	var/turn_angle = 0
 
 /obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
 	if(istype(A))
@@ -9,9 +8,6 @@
 			var/atom/movable/AM = A
 			step_x = AM.step_x
 			step_y = AM.step_y
-			if(iscarbon(A))
-				var/mob/living/carbon/C = A
-				UNLINT(turn_angle = C.lying_angle) // this is the only place its okay to read lying directly
 	. = ..()
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
@@ -88,8 +84,23 @@
 			yo += clone.step_y
 			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
 			if(img)
-				if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
-					img.Turn(clone.turn_angle)
+				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.'
+					var/sx = clone.transform.get_x_scale()
+					var/sy = clone.transform.get_y_scale()
+					if(sx != 1 || sy != 1)
+						var/wi = img.Width() * sx
+						var/he = img.Width() * sx
+						img.Scale(wi, he)
+						img.Shift(WEST, wi / 2, wrap=1)
+						img.Shift(SOUTH, he / 2, wrap=1)
+					if(clone.transform.get_rotation() != 0)
+						img.Turn(clone.transform.get_rotation())
+					var/dx = clone.transform.get_x_shift()
+					if(dx != 0)
+						img.Shift(EAST, dx, wrap=1)
+					var/dy = clone.transform.get_y_shift()
+					if(dy != 0)
+						img.Shift(NORTH, dy, wrap=1)
 				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
