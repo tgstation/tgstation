@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Machine boards and components are now stored in the machine contents list instead of in nullspace. This allows for new interactions with the contents of machines. To give context - C4 attached to a circuitboard that is then used to build a machine will actually explode inside the machine instead of exploding off the map in the hypothetical nullspace. Find new and creative ways to murder your friends!"

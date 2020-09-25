@@ -1,4 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "Cleaned up the gain of the no breath trait to clear moods and alerts"

@@ -15,6 +15,9 @@
 	. = ..()
 	AddComponent(/datum/component/gps/item, gpstag)
 
+/obj/item/gps/spaceruin
+	gpstag = SPACE_SIGNAL_GPSTAG
+
 /obj/item/gps/science
 	icon_state = "gps-s"
 	gpstag = "SCI0"
