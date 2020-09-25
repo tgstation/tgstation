@@ -711,6 +711,9 @@
 ///called when you clear a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
+///called if you want to directly imapct sanity, without adding mood events.
+#define COMSIG_DRAIN_SANITY "sanity_drain"
+
 //NTnet
 
 ///called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))

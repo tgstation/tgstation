@@ -26,6 +26,8 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
 
+	RegisterSignal(parent, COMSIG_DRAIN_SANITY, .proc/direct_sanity_drain)
+
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
@@ -400,5 +402,9 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+/datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	setSanity(sanity + amount, override = TRUE)
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+
