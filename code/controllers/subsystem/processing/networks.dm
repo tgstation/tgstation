@@ -1,35 +1,3 @@
-/*  So why are we doing this here?  Because its a mess I tell you.
-First, eveything on the network must BE on the network for it to be resolved.
-This cannot be done in LateInitlize because that is run PER map template.
-So if we have many map templates in a station, ruins and such, the network
-dosn't get created and runtimes out when it cannot find the map tags to build
-devices.  So, FUCK IT.  We have an atmosinit to get around this problem, why
-not have one for the network as well!
-
-Networks InitializeNetwork runs on Init, UNLESS its on mapload.  On mapload we don't
-run it and wait for the subsystem to run it.
-
-If LateInitialize worked AFTER full map load worked, we wouldn't be in this mess
-*/
-/atom
-	// nntd networking stuff.  Set a network name and we will auto join the network under that name
-	var/network_id = null
-	// id tag for this device.  Used mainly in mapping so we can look up this hardware id
-	var/network_tag = null
-
-/atom/proc/NetworkInitialize()
-	return
-
-/atom/Initialize(mapload, ...)
-	. = ..()
-	if(network_id)
-		if(!mapload)
-			AddComponent(/datum/component/ntnet_interface, network_id, network_tag)
-			NetworkInitialize()
-		else
-			SSnetworks.init_interface_queue += src // add it to the delayed interface queued
-
-
 PROCESSING_SUBSYSTEM_DEF(networks)
 	name = "Networks"
 	priority = FIRE_PRIORITY_NETWORKS
@@ -39,7 +7,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	init_order = INIT_ORDER_NETWORKS
 
 	var/datum/ntnet/station/station_network
-	var/list/init_interface_queue = list()
+	var/list/network_initialize_queue = list()
 
 	var/list/interfaces_by_hardware_id = list()
 	var/list/networks = list()
@@ -49,33 +17,25 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
 	station_network.register_map_supremecy()
-	// lets regester some basic networks
-	create_network_from_string(NETWORK_ATMOS)
-	create_network_from_string(NETWORK_ATMOS_AIRALARMS)
-	create_network_from_string(NETWORK_ATMOS_SCUBBERS)
-	create_network_from_string(NETWORK_ATMOS_ALARMS)
-	create_network_from_string(NETWORK_ATMOS_CONTROL)
-	create_network_from_string(NETWORK_TOOLS)
-	create_network_from_string(NETWORK_TOOLS_REMOTES)
-	create_network_from_string(NETWORK_AIRLOCKS)
 	for(var/atom/V in init_interface_queue)
 		V.AddComponent(/datum/component/ntnet_interface, V.network_id, V.network_tag)
 		V.NetworkInitialize()
 	init_interface_queue = null // kill the refrences
-	. = ..()
+	return ..()
 
-/datum/controller/subsystem/processing/networks/proc/lookup_interface(tag_or_hid)
-	var/datum/component/ntnet_interface/interface = interfaces_by_hardware_id[tag_or_hid]
-	if(!interface) // might be a map tag
-		tag_or_hid = network_tag_to_hardware_id[tag_or_hid]
-		interface = interfaces_by_hardware_id[tag_or_hid]
-	return interface
+/datum/controller/subsystem/processing/networks/proc/fire(resumed = 0)
+	// so life sucks.  Can't be in Initialize because Initialize is run async and we must start
+	// when everything is built and working.
+	if(SSmapping.initialized)
+		if(network_initialize_queue.len)
+			for(var/datum/component/ntnet_interface/conn in network_initialize_queue)
+				if(conn.network) // we really should runtime if there is no network
+					SEND_SIGNAL(conn.parent, COMSIG_COMPONENT_NTNET_JOIN_NETWORK, conn.network)
+			network_initialize_queue.Cut()
+		flags |= SS_NO_FIRE // never have to run again yea!
+	else
+		to_chat(world, "Holly fuck those maps take a while to load")
 
-/datum/controller/subsystem/processing/networks/proc/connect_port(tag_or_hid, port)
-	var/datum/component/ntnet_interface/interface = lookup_interface(tag_or_hid)
-	if(!interface)
-		return null // throw NO_INTERFACE_FOUND
-	return interface.connect_port(port)
 
 
 /datum/controller/subsystem/processing/networks/proc/create_network_tree_string(datum/ntnet/net)

@@ -26,67 +26,101 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	//
 	var/network_id
 	// the string of this tree
-	var/network_tree
+	// All devices that can be found on this network.  It is shared with all the children so we
+	// don't have to do a full tree transverse to find a single network item.
+	var/list/root_devices
+	// This lists has all the networks in this node.  they all should be like ATMOS, ATMOS.AIRALARM, ATMOS.SCRUBBER, etc
+	var/list/networks
+	/// devices on this leaf
 	var/list/linked_devices
 	var/list/children
 	var/datum/ntnet/parent
 
 /datum/ntnet/New(net_id, datum/ntnet/P = null)
 	src.linked_devices = list()
+	src.children = list()
 	src.network_id = net_id
 	if(parent)
 		src.parent = P
-		LAZYADDASSOC(src.parent.children, net_id, src)
-		network_tree = src.parent.network_id + "." + net_id
+		src.parent.children += src
+		root_devices = src.parent.root_devices
+		networks = src.parent.networks
 	else
 		src.parent = null
-		src.children = null
-		network_tree = net_id
+		src.networks = list()
+		src.root_devices = list()
 
-	SSnetworks.networks[network_tree] = src
+	SSnetworks.networks[network_id] = src
 
-
-
-
+// we shouldn't ever need to delete networks.  If we ever have a interface or debug menu to show networks
+// they should just return it as non existent
 /datum/ntnet/Destroy()
-	if(length(linked_devices) > 0)
-		debug_world_log("Network [network_tree] being deleted with linked devices.  Disconnecting Devices")
+	if(linked_devices.len > 0)
+		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
 		for(var/hid in linked_devices)
 			var/datum/component/ntnet_interface/device = linked_devices[hid]
 			device.network = null	// we just need to clear the refrence
+			root_devices.Remove(hid)
 		linked_devices = null
 
 	if(length(children))
-		debug_world_log("Network [network_tree] being deleted with kids.  Killing the children")
+		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
 		for(var/child in children)
 			qdel(children[child])
+			networks.Remove(child)
 		children = null
 
 	if(parent)
-		parent.children.Remove(network_id)
+		parent.children -= src
 		parent = null
 
-	SSnetworks.networks.Remove(network_tree)
+	SSnetworks.networks.Remove(network_id)
 	return ..()
 
-// creates a network as a child of this network
-/datum/ntnet/proc/find_child(child_id, create_if_not_found = FALSE)
-	var/datum/ntnet/net = children[child_id]
+// collect all interfaces as well as children.  It looks wonky to save on calls
+/datum/ntnet/proc/collect_interfaces(include_children=TRUE)
+	var/list/devices
+	if(children.len == 0 || !include_children)
+		devices = linked_devices
+	else
+		devices = list()
+		var/list/datum/ntnet/queue = list(network)
+		while(queue.len)
+			var/datum/ntnet/net = queue[queue.len--]
+			if(net.children)
+				for(var/net_id in net.children)
+					queue += networks[net_id]
+			devices += net.linked_devices
+	return devices
+
+/// find a network
+/datum/ntnet/proc/find_network(child_id, create_if_not_found = FALSE)
+	var/datum/ntnet/net = networks[child_id]
 	if(net)
 		return net
-	if(create_if_not_found)
-		return new/datum/ntnet(child_id, src)
+	// if the first part of the child_id exists in this network_id
+	// then we can create it as a child
+	if(create_if_not_found && findtext(network_id,child_id) == 1)
+		return SSnetworks.create_network_simple(child_id)
 
-
+/// connects the component to the network
 /datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
 	if(device.network)
 		device.network.interface_disconnect(device)
 	linked_devices[device.hardware_id] = device
+	root_devices[device.hardware_id] = device
 	device.network = src
 
 /datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
 	linked_devices.Remove(device.hardware_id)
+	root_devices.Remove(device.hardware_id)
 	device.network = null
+
+/datum/ntnet/proc/interface_find(tag_or_hid)
+	var/hid = SSnetworks.network_tag_to_hardware_id[tag_or_hid]
+	if(!hid)
+		hid = tag_or_hid
+	return root_devices[hid]
 
 
 /datum/ntnet/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.
@@ -99,19 +133,25 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	return FALSE
 
 
-/datum/ntnet/proc/process_data_transmit(datum/component/ntnet_interface/sender, datum/netdata/data)
+
+/// send a brodcast packet to in this network leaf
+/datum/ntnet/proc/_process_data_brodcast(datum/component/ntnet_interface/sender, datum/netdata/data, include_children = TRUE)
+	set waitfor = FALSE				// Its a broadcast so this should be fine?
+	log_data_transfer(data)
+
+	var/datum/component/ntnet_interface/target
+	var/list/targets = collect_interfaces(include_children)
+	for(var/hid in targets)
+		target = targets[hid]
+		if(!QDELETED(target)) // Do we need this or not? allot of async goes around
+			target.__network_receive(data)
+
+
+/datum/ntnet/proc/_process_data_transmit(datum/netdata/data)
 	if(!check_relay_operation()) // mabye hold of on relays and refactor them as "routers"
 		return FALSE
 	var/datum/component/ntnet_interface/target
-	data.sender_network = sender.network.network_id
-	data.sender_id = sender.hardware_id
 	log_data_transfer(data)
-	if(istext(data.receiver_id)) // quick send
-		if(SSnetworks.network_tag_to_hardware_id[data.receiver_id])
-			data.receiver_id = SSnetworks.network_tag_to_hardware_id[data.receiver_id]
-		target = SSnetworks.interfaces_by_hardware_id[data.receiver_id ]
-		if(!QDELETED(target)) // Do we need this or not? alot of async goes around
-			target.__network_receive(data)
 
 	var/list/targets = data.receiver_id == null ?  SSnetworks.collect_interfaces(network_id) : data.receiver_id
 	if(targets)
@@ -119,6 +159,12 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 			target = SSnetworks.interfaces_by_hardware_id[hid]
 			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
 				target.__network_receive(data)
+
+// does basic checks before sending
+/datum/ntnet/proc/process_data(datum/netdata/data)
+	if(!check_relay_operation())
+		return FALSE
+	if(networks[child_id])
 
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)

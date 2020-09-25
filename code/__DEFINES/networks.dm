@@ -3,6 +3,12 @@
 #define NETWORK_ERROR_DISCONNECTED "exception_disconnected"
 #define NETWORK_BROADCAST_ID "ALL"
 
+/// Any device under limbo can only be found in LIMBO with knowing its hardware id
+/// Limbo cannot be broadcasted or searched in.  Used for things like assembly or
+/// point to point buttons.
+
+#define NETWORK_LIMBO			"LIMBO"
+
 #define STATION_NETWORK_ROOT 	"SS13_NTNET"
 #define SYNDICATE_NETWORK_ROOT 	"SYNDI_NTNET"
 
