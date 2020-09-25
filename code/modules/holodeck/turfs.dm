@@ -19,6 +19,25 @@
 	name = "holodeck projector floor"
 	icon_state = "engine"
 
+/turf/open/floor/holofloor/chapel/bottom_left
+	name = "chapel floor"
+	icon_state = "chapel"
+	dir = 8
+
+/turf/open/floor/holofloor/chapel/top_right
+	name = "chapel floor"
+	icon_state = "chapel"
+	dir = 4
+
+/turf/open/floor/holofloor/chapel/bottom_right
+	name = "chapel floor"
+	icon_state = "chapel"
+
+/turf/open/floor/holofloor/chapel/top_left
+	name = "chapel floor"
+	icon_state = "chapel"
+	dir = 1
+
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
 	initial_gas_mix = BURNMIX_ATMOS

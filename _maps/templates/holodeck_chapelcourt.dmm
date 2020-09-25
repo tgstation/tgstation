@@ -28,10 +28,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	dir = 8;
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/bottom_left,
 /area/holodeck/rec_center/chapelcourt)
 "d" = (
 /obj/structure/table/wood/fancy,
@@ -54,10 +51,7 @@
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "g" = (
-/turf/open/floor/holofloor{
-	dir = 1;
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/top_left,
 /area/holodeck/rec_center/chapelcourt)
 "h" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -85,9 +79,7 @@
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "i" = (
-/turf/open/floor/holofloor{
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/bottom_right,
 /area/holodeck/rec_center/chapelcourt)
 "j" = (
 /obj/structure/chair{
@@ -102,10 +94,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	dir = 4;
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/top_right,
 /area/holodeck/rec_center/chapelcourt)
 "l" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -235,18 +224,13 @@
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "A" = (
-/turf/open/floor/holofloor{
-	dir = 8;
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/bottom_left,
 /area/holodeck/rec_center/chapelcourt)
 "C" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/bottom_right,
 /area/holodeck/rec_center/chapelcourt)
 "F" = (
 /obj/item/clothing/suit/judgerobe,
@@ -289,10 +273,7 @@
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "K" = (
-/turf/open/floor/holofloor{
-	dir = 4;
-	icon_state = "chapel"
-	},
+/turf/open/floor/holofloor/chapel/top_right,
 /area/holodeck/rec_center/chapelcourt)
 "L" = (
 /obj/structure/chair{
@@ -344,6 +325,12 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
+"T" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/holofloor/chapel/top_left,
+/area/holodeck/rec_center/chapelcourt)
 "U" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -387,7 +374,7 @@ g
 A
 g
 c
-j
+T
 A
 L
 L
@@ -411,7 +398,7 @@ I
 N
 g
 c
-j
+T
 A
 L
 L
@@ -471,7 +458,7 @@ g
 A
 g
 c
-j
+T
 A
 L
 L

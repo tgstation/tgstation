@@ -44,8 +44,6 @@
 	var/list/spawned = list()
 	var/list/effects = list()
 	var/current_cd = 0
-	//use template.load(deploy_location, centered = TRUE) somehow
-	//use get_turf(atom reference) and define a mapping helper on the wanted spot on every holodeck
 	var/datum/map_template/holodeck/template
 	var/turf/spawn_tile
 	//var/template_id
@@ -56,19 +54,6 @@
 
 /obj/effect/mapping_helpers/holodeck_spawner
 	icon_state = ""
-	var/this
-
-/obj/machinery/computer/holodeck/proc/get_spawn_tile(var/obj/effect/Spawn)
-	spawn_tile = get_turf(Spawn)
-
-/obj/machinery/computer/holodeck/proc/get_template()//now i need to create template ids for all sims and match them with the program lists, however theyre done
-	//if(template)//i think this is bad if we want to have more than one template loaded throughout the round
-	//	return
-	//template = SSmapping.holodeck_templates[template_id]
-	//if(!template)
-	//	WARNING("Shelter template ([template_id]) not found!")
-	//	qdel(src)
-
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -165,16 +150,16 @@
 			if(program_to_load)
 				//var/id = initial(program_to_load.template_id)
 				load_program(program_to_load)//do i only need to replace this? NO EASYNESS, ONLY PAIN
-		/*if("safety")
+		if("safety")
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
 			obj_flags ^= EMAGGED
-			say("Safeties restored. Restarting...")*/
+			say("Safeties restored. Restarting...")
 
 
 /obj/machinery/computer/holodeck/process()
-	if(damaged && prob(10))
+	/*if(damaged && prob(10))
 		for(var/turf/T in linked)
 			if(prob(5))
 				do_sparks(2, 1, T)
@@ -194,16 +179,16 @@
 				do_sparks(2, 1, T)
 			SSexplosions.lowturf += T
 			T.hotspot_expose(1000,500,1)
-
+		*/
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
-			if(!(get_turf(item) in linked))
-				derez(item, 0)
+			if(!(get_turf(item) in current_holodeck_area))
+				derez(item)
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
 		HE.tick()
 
-	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
+	//active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
@@ -251,8 +236,9 @@
 		return
 
 	if(toggleOn)
-		if(last_program && last_program != offline_program)
-			addtimer(CALLBACK(src, .proc/load_program, TRUE), 25)
+		if(last_program && (last_program != offline_program))
+			load_program(last_program)
+			//addtimer(CALLBACK(src, .proc/load_program(last_program), TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -285,6 +271,24 @@
 		if (previous_item.flags_1 & HOLOGRAM_1)
 			if (!istype(previous_item,/turf/))
 				qdel(previous_item)*/
+/datum/map_template/holodeck/proc/recursive_contents_adder(var/obj/base_container, var/list/object_list)
+	var/no_more_descendants = FALSE
+	if (!base_container)
+		return
+	//object_list += base_container //assume the base_container is already in spawned
+	if (length(base_container.contents) > 0)
+		no_more_descendants = FALSE
+		for (var/obj/contained_object in base_container.contents)
+			object_list += contained_object
+			if (length(contained_object.contents) > 0)
+				no_more_descendants = FALSE
+				..(contained_object, object_list)
+			else
+				no_more_descendants = TRUE
+	else
+		no_more_descendants = TRUE
+	if (no_more_descendants)
+		return
 
 /datum/map_template/holodeck/load(turf/T, centered = FALSE, )
 	if(centered)
@@ -309,22 +313,20 @@
 	cached_map = keep_cached_map ? parsed : null
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
 		return
-	var/list/bounds = parsed.bounds//what exactly IS parsed.bounds mean? is it whatver is boing put into the world when load is called? or is it whats in the world after load is called?
+	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
 
 	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
 		repopulate_sorted_areas()
 
-	//parsed.findSpawnedAtoms()
 	//initialize things that are normally initialized after map load
-	if (parsed == lastparsed)
-		spawned_atoms = parsed.holodeckTemplateBounds()
-	else
-		for (var/atom/atom in spawned_atoms)
-			qdel(atom)
-		LAZYCLEARLIST(spawned_atoms)
-		spawned_atoms = parsed.holodeckTemplateBounds()
+
+	spawned_atoms = parsed.holodeckTemplateBounds()
+	for (var/obj/base_container in spawned_atoms)
+		if (length(base_container.contents) > 0)
+			spawned_atoms -= base_container
+			spawned_atoms += base_container.GetAllContents()
 
 	lastparsed = parsed
 	/*var/list/atoms/atoms = parsed.initTemplateBounds().atoms
@@ -340,7 +342,6 @@
 	var/list/atom/atoms = list()
 	var/list/atom/newatoms = list()
 	var/list/area/areas = list()
-	LAZYCLEARLIST(newatoms)
 
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
@@ -349,11 +350,20 @@
 	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
 		var/turf/B = L
 		atoms += B//atoms = atoms + B, turfs are atoms
-		//newatoms += B //WHY GOD WHY DO YOU HATE ME FOR TRYIIIIIIIIIIING
+		//newatoms += B
 		areas |= B.loc //areas = areas|B.loc
-		for(var/atom/A in B)//does this look for the contents in the turf represented by B?
+		for(var/atom/A in B)
 			if (!(A.flags_1 & INITIALIZED_1))
 				newatoms += A
+				/*if (length(A.contents) > 0)//the reason why it doesnt work here is that closets get populateContents
+					newatoms += A.contents
+					for (var/atom/inner_item in A.contents)
+						if (length(inner_item.contents) > 0)
+							newatoms += inner_item.contents
+							for (var/atom/second_inner_item in inner_item.contents)
+								if (length(second_inner_item.contents) > 0)
+									newatoms += second_inner_item.contents*/
+
 				//A.flags_1 |= HOLOGRAM_1
 			else
 				atoms += A//for each object in the contents of the current turf, add it to the atoms list
@@ -381,48 +391,24 @@
 	SSatoms.InitializeAtoms(newatoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
 	return newatoms
 
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
-
-	/*if(!is_operational)
-		template = offline_program
-		force = TRUE
-
-	if(program == map_id)//if the program is the same as the corresponding area
-		return*/
-
 	program = map_id
-	/*if (spawned)
+	if (spawned)
 		for (var/atom/item in spawned)
-			if(item.type != /turf)
-				derez(item, !force)//this is what actually deletes everything when programs change
-				*/
-	//template = SSmapping.holodeck_templates[template_id]
+			//spawned -= item
+			//qdel(item)//ol' reliable
+			derez(item)
 	template = SSmapping.holodeck_templates[map_id]
-	//prepare_holodeck_area()
-	//template.load(bottom_left, FALSE)
-	//spawned = template.load(bottom_left, FALSE) //write another proc that just gets the atoms from holodeckTemplateBounds()?
-
 	template.load(bottom_left, FALSE)
-	//if (!spawned.len)
-	spawned = template.spawned_atoms
+	spawned += template.spawned_atoms
 	for (var/atom/atom in spawned)
 		if (atom.flags_1 & INITIALIZED_1)
 			atom.flags_1 |= HOLOGRAM_1
-	//finish_spawn()
 	current_holodeck_area = get_area(bottom_left)
-
-	/*for(var/obj/machinery/M in spawned)
-		M.flags_1 |= NODECONSTRUCT_1
-	for(var/obj/structure/S in spawned)
-		S.flags_1 |= NODECONSTRUCT_1
-	effects = list()*/
-	//linked is the argument in place of the copy_contents area/A parameter
-	//map.load places templates on a TURF, copy_contents copies to an entire area
-
-	//spawned = A.copy_contents_to(linked, 1, nerf_weapons = !(obj_flags & EMAGGED))
-	//message_admins(world,"DEBUG -- load_program ended")
+	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()
 	//kyler, finish_spwn allows effects to work (at least spawning ones). without it pet park will not spawn anything for example
@@ -441,14 +427,15 @@
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.
-	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)//if O exists, and the holodeck computer is emagged, and machine_stat is FALSE, and forced is FALSE
-		if((ismob(O) || ismob(O.loc)) && prob(50))
-			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
-			return
-
-	spawned -= O
+	//if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)//if O exists, and the holodeck computer is emagged, and machine_stat is FALSE, and forced is FALSE
+		//if((ismob(O) || ismob(O.loc)) && prob(50))
+			//addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
+			//return
 	if(!O)
 		return
+
+	spawned -= O
+
 	var/turf/T = get_turf(O)
 	for(var/atom/movable/AM in O) // these should be derezed if they were generated
 		AM.forceMove(T)
@@ -457,6 +444,8 @@
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
+		qdel(O)
+	else
 		qdel(O)
 
 #undef HOLODECK_CD

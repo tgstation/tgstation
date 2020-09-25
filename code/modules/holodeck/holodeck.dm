@@ -10,56 +10,23 @@
 	var/list/spawned_atoms
 	var/datum/parsed_map/lastparsed
 
-	/*
-	var/name = "Default Template Name"
-	var/width = 0
-	var/height = 0
-	var/mappath = null
-	var/loaded = 0 // Times loaded this round
-	var/datum/parsed_map/cached_map
-	var/keep_cached_map = FALSE
-	*/
 	var/obj/machinery/computer/holodeck/linked
-	 // if true, program goes on emag list
-
-/datum/map_template/holodeck/New()
-	. = ..()
-	/*blacklisted_turfs = typecacheof(/turf/closed)
-	whitelisted_turfs = list()
-	banned_areas = typecacheof(/area/shuttle)
-	banned_objects = list()*/
-
-/*
-/datum/map_template/holodeck/proc/check_deploy(turf/deploy_location)
-	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
-	for(var/turf/T in affected)
-		var/area/A = get_area(T)
-		if(is_type_in_typecache(A, banned_areas))
-			return SHELTER_DEPLOY_BAD_AREA
-
-		var/banned = is_type_in_typecache(T, blacklisted_turfs)
-		var/permitted = is_type_in_typecache(T, whitelisted_turfs)
-		if(banned && !permitted)
-			return SHELTER_DEPLOY_BAD_TURFS
-
-		for(var/obj/O in T)
-			if((O.density && O.anchored) || is_type_in_typecache(O, banned_objects))
-				return SHELTER_DEPLOY_ANCHORED_OBJECTS
-	return SHELTER_DEPLOY_ALLOWED
-	*/
 
 
-/datum/map_template/holodeck/lounge//the l in lounge starts after space 29
-	name = "Holodeck - Lounge"
-	template_id = "holodeck_lounge"
-	description = "benis"
-	mappath = "_maps/templates/holodeck_lounge.dmm"
+
+
 
 /datum/map_template/holodeck/offline
 	name = "Holodeck - Offline"
 	template_id = "holodeck_offline"
 	description = "benis"
 	mappath = "_maps/templates/holodeck_offline.dmm"
+
+/datum/map_template/holodeck/lounge//the l in lounge starts after space 29
+	name = "Holodeck - Lounge"
+	template_id = "holodeck_lounge"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_lounge.dmm"
 
 /datum/map_template/holodeck/anime_school
 	name = "Holodeck - Anime School"
