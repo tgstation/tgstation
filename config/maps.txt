@@ -34,10 +34,6 @@ map icebox
 	votable
 endmap
 
-map byostation
-	votable
-endmap
-
 map runtimestation
 endmap
 
