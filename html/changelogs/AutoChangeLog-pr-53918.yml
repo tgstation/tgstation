@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - balance: "Rebalanced Plastanium windows integrity and damage_deflection"

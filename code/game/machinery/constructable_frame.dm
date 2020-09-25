@@ -176,28 +176,33 @@
 				return
 
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
-				var/component_check = 1
+				var/component_check = TRUE
 				for(var/R in req_components)
 					if(req_components[R] > 0)
-						component_check = 0
+						component_check = FALSE
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/potential_machine = new circuit.build_path(loc)
-					if(ismachinery(potential_machine))
-						var/obj/machinery/new_machine = potential_machine
+					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					if(istype(new_machine))
+						// Machines will init with a set of default components. Move to nullspace to we don't trigger handle_atom_del, then qdel.
+						// Finally, replace with this frame's parts.
 						if(new_machine.circuit)
+							// Move to nullspace and delete.
+							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
+						circuit.forceMove(new_machine)
 						new_machine.circuit = circuit
 						new_machine.set_anchored(anchored)
 						new_machine.on_construction()
-						for(var/obj/O in new_machine.component_parts)
-							qdel(O)
+						for(var/obj/old_part in new_machine.component_parts)
+							// Move to nullspace and delete.
+							old_part.moveToNullspace()
+							qdel(old_part)
 						new_machine.component_parts = list()
-						for(var/obj/O in src)
-							O.moveToNullspace()
-							new_machine.component_parts += O
-						circuit.moveToNullspace()
+						for(var/obj/new_part in src)
+							new_part.forceMove(new_machine)
+							new_machine.component_parts += new_part
 						new_machine.RefreshParts()
 					qdel(src)
 				return
@@ -238,6 +243,7 @@
 							S.merge(NS)
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
+						part.forceMove(src)
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()

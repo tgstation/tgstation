@@ -1135,7 +1135,7 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/codespeak_manual/unlimited,
+/obj/item/language_manual/codespeak_manual/unlimited,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "de" = (
