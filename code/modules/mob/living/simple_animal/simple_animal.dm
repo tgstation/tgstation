@@ -163,6 +163,8 @@
 	var/list/whim_datums
 	/// The instantiated [whim datums][/datum/whim] that we consider during [/mob/living/simple_animal/proc/handle_whims]
 	var/list/live_whims
+	/// The instantiated [whim datums][/datum/whim] that don't scan for activation by themselves, but are still possible to activate by other means
+	var/list/passive_whims
 	/// The current whim we're following
 	var/datum/whim/current_whim
 	/// How many ticks we've spent without a whim since we last checked if any of our live ones were viable to activate
@@ -195,6 +197,10 @@
 	var/turf/T = get_turf(src)
 	if (T && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+
+	for(var/i in (live_whims + passive_whims))
+		var/datum/whim/iter_whim = i
+		qdel(iter_whim)
 
 	return ..()
 

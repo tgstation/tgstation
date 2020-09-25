@@ -86,11 +86,6 @@
 		if(possible_gift && possible_recepient)
 			return possible_gift
 
-/datum/whim/deliver_gift/abandon()
-	if(carried_cargo && owner && carried_cargo.loc == owner) //bleh
-		owner.visible_message("<b>[owner] drops [carried_cargo] from [owner.p_their()] mouth.")
-	return ..()
-
 /datum/whim/deliver_gift/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
@@ -125,14 +120,6 @@
 		carried_cargo.forceMove(get_turf(gift_recepient))
 		carried_cargo = null // manually set the carried_cargo to null before abandoning so we don't do another message about dropping the mouse
 		abandon()
-
-/datum/whim/deliver_gift/owner_examined(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	if(state == WHIM_INACTIVE)
-		return
-
-	if(carried_cargo)
-		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [carried_cargo] in [owner.p_their()] mouth.</span>"
 
 
 

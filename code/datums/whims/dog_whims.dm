@@ -4,7 +4,7 @@
 /datum/whim/airbud_bball
 	name = "Airbud Mode"
 	scan_radius = 5
-	scan_every = 4
+	scan_every = 8
 	abandon_rescan_length = 12 SECONDS
 
 /datum/whim/airbud_bball/inner_can_start()
@@ -191,8 +191,8 @@
 /datum/whim/gnaw_bone
 	name = "Gnaw bone"
 	priority = 1
-	scan_radius = 5
-	scan_every = 5
+	scan_radius = 4
+	scan_every = 7
 	abandon_rescan_length = 30 SECONDS
 
 	var/stage = WHIM_BONE_MODE_APPROACH
@@ -201,11 +201,6 @@
 	for(var/i in oview(owner, scan_radius))
 		if(isbodypart(i))
 			return i
-
-/datum/whim/gnaw_bone/abandon()
-	if(carried_cargo && owner && carried_cargo.loc == owner) //bleh
-		owner.visible_message("<b>[owner]</b> drops [carried_cargo] from [owner.p_their()] mouth.")
-	return ..()
 
 /datum/whim/gnaw_bone/tick()
 	. = ..()
@@ -241,14 +236,6 @@
 			if(T.density)
 				continue
 			concerned_target = T
-
-/datum/whim/gnaw_bone/owner_examined(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	if(state == WHIM_INACTIVE)
-		return
-
-	if(carried_cargo)
-		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying \a [carried_cargo] in [owner.p_their()] mouth.</span>"
 
 #undef WHIM_BONE_MODE_APPROACH
 #undef WHIM_BONE_MODE_HIDE

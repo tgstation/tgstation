@@ -44,7 +44,7 @@
 	/// Most whims involve scanning the area around you for stuff. Use this for your most frequent scan, so we can tell how expensive this whim is per scan at a glance.
 	var/scan_radius = 3
 	/// We only check [/datum/whim/proc/can_start] every so many ticks. If your whim has a particularly expensive scan (large radius, lots of calcs, etc) you should scan less frequently.
-	var/scan_every = 3
+	var/scan_every = 4
 
 	/// i was dumb and made catnip make cats lay down to eat catfood, so i need this, will probably remove soon
 	var/allow_resting = FALSE
@@ -54,7 +54,10 @@
 /// Sets up the connections between the owner and their live_whims lists and such
 /datum/whim/New(mob/living/simple_animal/attached_owner)
 	owner = attached_owner
-	LAZYADD(owner.live_whims, src)
+	if(scan_every)
+		LAZYADD(owner.live_whims, src)
+	else
+		LAZYADD(owner.passive_whims, src)
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/owner_examined)
 
 /**
@@ -68,10 +71,11 @@
 	if(owner)
 		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 		LAZYREMOVE(owner.live_whims, src)
+		LAZYREMOVE(owner.passive_whims, src)
 	return ..()
 
 /**
-  * Set the mob's current_whim to this, giving us control of the mob (as long as the mob isn't dead or buckled or whatever prevents Life() from reaching whims)
+  * Set the mob's current_whim to this, giving us control of the mob. Forces any existing current_whim to abandon itself before we activate.
   *
   * Note that this proc should set up all of the instance vars you need to kick off once we get to tick(), and [/datum/whim/proc/abandon] should then unset all of those
   * instance vars when we're done running. Unless you have a good reason to be carrying over variables from activation to activation (like caching or long term memory),
@@ -81,6 +85,8 @@
 	testing("[owner] activating [name]")
 	state = WHIM_ACTIVE
 	concerned_target = new_target
+	if(owner.current_whim)
+		owner.current_whim.abandon()
 	owner.current_whim = src
 	ticks_since_activation = 0
 	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/abandon)
@@ -98,7 +104,9 @@
 		owner.current_whim = null
 		UnregisterSignal(owner, COMSIG_MOB_DEATH)
 		if(carried_cargo && owner && carried_cargo.loc == owner)
+			owner.visible_message("<b>[owner]</b> drops [carried_cargo].")
 			carried_cargo.forceMove(owner.drop_location())
+
 	carried_cargo = null
 	concerned_target = null
 	state = WHIM_INACTIVE
@@ -111,7 +119,7 @@
   * That shouldn't matter to you for this proc, though, all you care about here is passing along what inner_can_start returns if we call it.
   */
 /datum/whim/proc/can_start()
-	if(owner.whim_scan_ticks % scan_every != 0)
+	if(owner.whim_scan_ticks % scan_every != 0) // passive whims with scan_every = 0 call activate() directly, so no need to worry about divide by 0
 		return FALSE
 	testing("[owner] about to try starting [name]")
 	if(!COOLDOWN_FINISHED(src, cooldown_abandon_rescan))
@@ -123,7 +131,7 @@
   * The individualized logic that controls whether a whim can activate once it's given the green light by [/datum/whim/proc/inner_can_start]
   *
   * Returning FALSE means that this whim didn't meet the requirements to activate, while returning a datum reference (or any truthy value) signals that we have the okay to take control. Note that whatever you
-  * return will be passed as the /datum/whim/var/concerned_target] in [/datum/whim/proc/activate], which is likely whatever initial target you'll be dealing with once we kick off
+  * return will be passed as the [/datum/whim/var/concerned_target] in [/datum/whim/proc/activate], which is likely whatever initial target you'll be dealing with once we kick off
   */
 /datum/whim/proc/inner_can_start()
 	return TRUE
@@ -145,4 +153,8 @@
 /// In case you want to add on extra info to the owner's examine based on the state of the whim
 /datum/whim/proc/owner_examined(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	return
+	if(state == WHIM_INACTIVE)
+		return
+
+	if(carried_cargo)
+		examine_list += "<span class='notice'>[owner.p_they(TRUE)] [owner.p_are()] carrying [icon2html(carried_cargo, user)] \a [carried_cargo].</span>"

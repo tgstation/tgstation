@@ -18,7 +18,7 @@
 	pet_bonus = TRUE
 	pet_bonus_emote = "woofs happily!"
 	footstep_type = FOOTSTEP_MOB_CLAW
-	whim_datums = list(/datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
+	whim_datums = list(/datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies, /datum/whim/inactive/flee_danger)
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
