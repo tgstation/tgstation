@@ -746,10 +746,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSshuttle.emergency.request()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
-	if(confirm == "Yes (No Recall)")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-called the emergency shuttle (non-recallable).</span>")
-	else
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-called the emergency shuttle.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""].</span>")
 	return
 
 /client/proc/admin_cancel_shuttle()
