@@ -262,6 +262,10 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"X" = (
+/obj/machinery/stasis,
+/turf/open/floor/plasteel/cult,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -473,9 +477,9 @@ j
 j
 j
 c
+X
 j
-j
-j
+X
 U
 V
 "}
