@@ -49,7 +49,7 @@
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = NONE
+	vis_flags = VIS_INHERIT_DIR
 	///When detected to be unused it gets set to world.time, after a while it gets removed
 	var/unused = 0
 	///overlays which go unused for this amount of time get cleaned up

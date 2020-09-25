@@ -101,7 +101,7 @@
 
 /datum/quirk/freerunning
 	name = "Freerunning"
-	desc = "You're great at quick moves! You can climb tables more quickly."
+	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
 	value = 2
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"

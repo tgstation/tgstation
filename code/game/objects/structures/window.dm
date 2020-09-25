@@ -25,6 +25,8 @@
 	var/mutable_appearance/crack_overlay
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
+	var/knocksound = 'sound/effects/Glassknock.ogg'
+	var/bashsound = 'sound/effects/Glassbash.ogg'
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
@@ -132,7 +134,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
+	playsound(src, knocksound, 50, TRUE)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
@@ -146,10 +148,15 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
-		"<span class='notice'>You knock on [src].</span>")
-	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
+
+	if(user.a_intent != INTENT_HARM)
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+			"<span class='notice'>You knock on [src].</span>")
+		playsound(src, knocksound, 50, TRUE)
+	else
+		user.visible_message("<span class='warning'>[user] bashes [src]!</span>", \
+			"<span class='warning'>You bash [src]!</span>")
+		playsound(src, bashsound, 100, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -706,7 +713,7 @@
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 200
+	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -716,7 +723,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = null
 	explosion_block = 3
-	damage_deflection = 11 //The same as normal reinforced windows.3
+	damage_deflection = 21 //The same as reinforced plasma windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
@@ -745,6 +752,8 @@
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	knocksound = "pageturn"
+	bashsound = 'sound/weapons/slashmiss.ogg'
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
@@ -768,16 +777,9 @@
 	. = ..()
 	if(.)
 		return
-	add_fingerprint(user)
-	if(user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
-		playsound(src, "pageturn", 50, TRUE)
-	else
+	if(user.a_intent == INTENT_HARM)
 		take_damage(4,BRUTE,MELEE, 0)
-		playsound(src, hitsound, 50, TRUE)
 		if(!QDELETED(src))
-			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
 
 /obj/structure/window/paperframe/update_icon()
