@@ -736,12 +736,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "Yes (No Recall)", "No")
-	if(confirm == "No")
-		return
-
-	if(confirm == "Yes (No Recall)")
-		SSshuttle.adminEmergencyNoRecall = TRUE
-		SSshuttle.emergency.mode = SHUTTLE_IDLE
+	switch(confirm)
+		if(null, "No")
+			return
+		if("Yes (No Recall)")
+			SSshuttle.adminEmergencyNoRecall = TRUE
+			SSshuttle.emergency.mode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.request()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Call Shuttle") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
