@@ -134,32 +134,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
 
-/obj/machinery/computer/arcade/random
-	name = "random arcade machine"
-	desc = "Automagically transforms into a random arcade machine. If you see this, please create a bug report."
-
-/obj/machinery/computer/arcade/random/Initialize()
-	// This is just a shell for a random arcade machine. We're not going to do anything
-	// with it, so don't call parent.
-	SHOULD_CALL_PARENT(FALSE)
-
-	var/list/gameodds = list(
-		/obj/item/circuitboard/computer/arcade/battle = 49,
-		/obj/item/circuitboard/computer/arcade/orion_trail = 49,
-		/obj/item/circuitboard/computer/arcade/amputation = 2)
-	circuit = pickweight(gameodds)
-	var/new_build_path = initial(circuit.build_path)
-
-	if(!ispath(new_build_path))
-		stack_trace("Circuit with incorrect build path: [circuit]")
-		return INITIALIZE_HINT_QDEL
-
-	// Create a new machine.
-	new new_build_path(loc)
-
-	// And request a qdel.
-	return INITIALIZE_HINT_QDEL
-
 // ** BATTLE ** //
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
