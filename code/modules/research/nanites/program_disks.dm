@@ -12,6 +12,12 @@
 	if(program_type)
 		program = new program_type
 
+/obj/item/disk/nanite_program/mind_control
+	name = "suspicious-looking disk"
+	desc = "A sinisterly colored nanite program disk. Comes preloaded with a brainwashing program."
+	icon_state = "datadisk_syndie"
+	program_type = /datum/nanite_program/comm/mind_control
+
 /obj/item/disk/nanite_program/aggressive_replication
 	program_type = /datum/nanite_program/aggressive_replication
 

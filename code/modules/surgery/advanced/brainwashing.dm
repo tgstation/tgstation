@@ -1,6 +1,7 @@
 /obj/item/disk/surgery/brainwashing
 	name = "Brainwashing Surgery Disk"
 	desc = "The disk provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
+	icon_state = "datadisk_syndie"
 	surgeries = list(/datum/surgery/advanced/brainwashing)
 
 /datum/surgery/advanced/brainwashing

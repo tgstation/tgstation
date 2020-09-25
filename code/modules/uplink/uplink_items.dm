@@ -1800,6 +1800,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
+/datum/uplink_item/role_restricted/brainwash_nanites
+	name = "Nanite Brainwash Program"
+	desc = "A nanite disk preloaded with a program that can be used by an experienced nanite programer to brainwash people to do their bidding. It functions as a normal nanite disk so try not to override it."
+	item = /obj/item/disk/nanite_program/mind_control
+	cost = 9
+	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
