@@ -789,7 +789,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	SSshuttle.lastMode = SSshuttle.emergency.mode
 	SSshuttle.lastCallTime = SSshuttle.emergency.timeLeft(1)
 	SSshuttle.adminEmergencyNoRecall = TRUE
-	SSshuttle.emergency.setTimer(null)
+	SSshuttle.emergency.setTimer(0)
 	SSshuttle.emergency.mode = SHUTTLE_DISABLED
 	priority_announce("Warning: Emergency Shuttle uplink failure, shuttle disabled until further notice.", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
 
