@@ -426,8 +426,8 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
-	icon_state = "carp_rift"
-	light_color = LIGHT_COLOR_BLUE
+	icon_state = "carp_rift_carpspawn"
+	light_color = LIGHT_COLOR_PURPLE
 	light_range = 10
 	anchored = TRUE
 	density = FALSE
@@ -437,7 +437,7 @@
 	/// The maximum charge the rift can have.
 	var/max_charge = 480
 	/// How many carp spawns it has available.
-	var/carp_stored = 0
+	var/carp_stored = 1
 	/// A reference to the Space Dragon that created it.
 	var/mob/living/simple_animal/hostile/space_dragon/dragon
 	/// Current charge state of the rift.
@@ -447,11 +447,6 @@
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
-	carp_stored = 1
-	icon_state = "carp_rift_carpspawn"
-	set_light_color(LIGHT_COLOR_PURPLE)
-	update_light()
-	time_charged = 0
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/carp_rift/examine(mob/user)
@@ -516,8 +511,9 @@
 	if(last_carp_inc >= 40)
 		carp_stored++
 		icon_state = "carp_rift_carpspawn"
-		set_light_color(LIGHT_COLOR_PURPLE)
-		update_light()
+		if(light_color != LIGHT_COLOR_PURPLE)
+			set_light_color(LIGHT_COLOR_PURPLE)
+			update_light()
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 		last_carp_inc -= 40
 
