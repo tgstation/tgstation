@@ -26715,10 +26715,6 @@
 	pixel_x = -26;
 	pixel_y = 26
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bce" = (
@@ -72377,18 +72373,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/plaque{
 	icon_state = "L1"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cIK" = (
-/obj/effect/turf_decal/plaque{
-	icon_state = "L3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
