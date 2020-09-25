@@ -37,10 +37,10 @@
 	suittoggled = FALSE
 	if(ishuman(hood.loc))
 		var/mob/living/carbon/H = hood.loc
-		H.transferItemToLoc(hood, src, TRUE)
+		H.transferItemToLoc(hood, null, TRUE)
 		H.update_inv_wear_suit()
 	else
-		hood.forceMove(src)
+		hood.forceMove(null)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

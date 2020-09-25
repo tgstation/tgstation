@@ -181,7 +181,7 @@
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast i have not seen before. Ever shapeshifting mass of flesh, it well knew my goals."
 	desc = "You can now summon a Stalker using a knife, a candle, a pen and a piece of paper. Stalkers can shapeshift into harmeless animals and get close to the victim."
 	cost = 1
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/pen,/obj/item/paper,/obj/item/candle)
+	required_atoms = list(/obj/item/shard,/obj/item/pen,/obj/item/paper,/obj/item/candle)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
 	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/final/flesh_final)
 	route = PATH_FLESH

@@ -129,6 +129,12 @@
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"
 
+/obj/item/melee/sickly_blade/void
+	name = "Void Blade"
+	desc = "Devoid of any substance, this blade reflects nothingness. It is a real depiction of purity, and chaos that ensues after its implementation."
+	icon_state = "void_blade"
+	inhand_icon_state = "flesh_blade"
+
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
 	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulse of a thousand others."
@@ -169,7 +175,7 @@
 	inhand_icon_state = "eldritch_armor"
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book)
+	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// slightly better than normal cult robes
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, RAD = 0, FIRE = 20, ACID = 20)
@@ -180,3 +186,36 @@
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eldrich_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
+
+/obj/item/clothing/head/hooded/cult_hoodie/void
+	name = "void hood"
+	icon_state = "void_cloak"
+	flags_inv = NONE
+	flags_cover = NONE
+	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you loose comprehension of what you are seeing."
+	item_flags = EXAMINE_SKIP
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+
+/obj/item/clothing/suit/hooded/cultrobes/void
+	name = "void cloak"
+	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you loose comprehension of what you are seeing."
+	icon_state = "void_cloak"
+	inhand_icon_state = "void_cloak"
+	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
+	// slightly worse than normal cult robes
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
+
+/obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
+	if(!iscarbon(src.loc))
+		return
+	var/mob/living/carbon/carbon_user = src.loc
+	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
+		. = ..()
+		if(suittoggled)
+			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
+	else
+		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
+
+	item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP

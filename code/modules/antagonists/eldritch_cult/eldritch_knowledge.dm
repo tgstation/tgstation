@@ -228,7 +228,7 @@
 	name = "Break of dawn"
 	desc = "Starts your journey in the mansus. Allows you to select a target using a living heart on a transmutation rune."
 	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something weird in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
-	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
+	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/base_void)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	required_atoms = list(/obj/item/living_heart)

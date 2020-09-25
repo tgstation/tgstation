@@ -1507,6 +1507,7 @@
 #include "code\modules\antagonists\eldritch_cult\knowledge\ash_lore.dm"
 #include "code\modules\antagonists\eldritch_cult\knowledge\flesh_lore.dm"
 #include "code\modules\antagonists\eldritch_cult\knowledge\rust_lore.dm"
+#include "code\modules\antagonists\eldritch_cult\knowledge\void_lore.dm"
 #include "code\modules\antagonists\ert\ert.dm"
 #include "code\modules\antagonists\fugitive\fugitive.dm"
 #include "code\modules\antagonists\fugitive\fugitive_outfits.dm"
