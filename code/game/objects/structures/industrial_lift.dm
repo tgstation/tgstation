@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(going_up)
 		user.visible_message("<span class='notice'>[user] moves the lift upwards.</span>", "<span class='notice'>You move the lift upwards.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] moves lift downwards.</span>", "<span class='notice'>You move the lift downwards.</span>")
+		user.visible_message("<span class='notice'>[user] moves the lift downwards.</span>", "<span class='notice'>You move the lift downwards.</span>")
 
 /obj/structure/industrial_lift/Destroy()
 	GLOB.lifts.Remove(src)
