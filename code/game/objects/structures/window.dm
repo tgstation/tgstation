@@ -713,7 +713,7 @@
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 200
+	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -723,7 +723,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS)
 	canSmoothWith = null
 	explosion_block = 3
-	damage_deflection = 11 //The same as normal reinforced windows.3
+	damage_deflection = 21 //The same as reinforced plasma windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
