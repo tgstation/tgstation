@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(string_assoc_lists)
 	var/list/string_id = list()
 	for(var/val in values)
 		string_id += "[val]_[values[val]]"
-	string_id.Join("-")
+	string_id = string_id.Join("-")
 
 	. = GLOB.string_assoc_lists[string_id]
 
