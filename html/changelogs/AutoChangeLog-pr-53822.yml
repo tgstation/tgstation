@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - balance: "The Freerunning quirk now lets you avoid brute damage from falling"
-  - bugfix: "Fixed falling from z-levels causing more damage than intended"
