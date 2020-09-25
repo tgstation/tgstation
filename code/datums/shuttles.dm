@@ -248,7 +248,7 @@
 	var/arena_loaded = FALSE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	return SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM]
 
 /datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
 	. = ..()
@@ -335,7 +335,7 @@
 	credit_cost = 6667
 
 /datum/map_template/shuttle/emergency/narnar/prerequisites_met()
-	return SHUTTLE_UNLOCK_NARNAR in SSshuttle.shuttle_purchase_requirements_met
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR]
 
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
@@ -515,7 +515,7 @@
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
-	return SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
