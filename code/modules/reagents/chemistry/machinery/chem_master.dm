@@ -218,10 +218,12 @@
 			amount = text2num(input(
 				"Enter the amount you want to transfer:",
 				name, ""))
+		if (amount == null || amount <= 0)
+			return FALSE
 		if (to_container == "beaker" && !mode)
 			reagents.remove_reagent(reagent, amount)
 			return TRUE
-		if (!beaker || amount == null || amount <= 0)
+		if (!beaker)
 			return FALSE
 		if (to_container == "buffer")
 			beaker.reagents.trans_id_to(src, reagent, amount)
