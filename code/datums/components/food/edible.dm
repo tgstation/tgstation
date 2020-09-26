@@ -417,6 +417,5 @@ Behavior that's still missing from this component that original food items had t
 	L.taste(owner.reagents) // why should carbons get all the fun?
 	if(bitecount >= 5)
 		var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [parent] was.")
-		if(satisfaction_text)
-			L.manual_emote(satisfaction_text)
+		L.manual_emote(satisfaction_text)
 		qdel(parent)
