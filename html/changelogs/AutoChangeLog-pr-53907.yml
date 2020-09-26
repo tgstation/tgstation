@@ -1,6 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "Suit storage unit radial menus now close when you walk away."
-  - rscadd: "Clicking a suit storage unit slot will try to put the item inside."
-  - bugfix: "You can now use suit storage units while the power is out."

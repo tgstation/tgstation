@@ -140,8 +140,6 @@
 		clear_alert("not_enough_oxy")
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		failed_last_breath = FALSE
-		clear_alert("not_enough_oxy")
 		return FALSE
 
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
