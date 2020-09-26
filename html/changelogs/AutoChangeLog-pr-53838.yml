@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Skeletons and other bloodless and/or heartless creatures should no longer suffer from heart attacks. This includes those whose hearts have been rendered obsolete via surgery."

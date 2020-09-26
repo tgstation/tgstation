@@ -31,7 +31,8 @@
 	return data
 
 /datum/computer_file/program/bounty/ui_act(action,params)	//When a button is clicked (claim or Print bounties)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("ClaimBounty")

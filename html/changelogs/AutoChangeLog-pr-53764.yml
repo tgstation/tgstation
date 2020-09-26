@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes issue where overweight characters would be eternally fat and starving characters would become eternally starving on changing species to one that doesn't eat."

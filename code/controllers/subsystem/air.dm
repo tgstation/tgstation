@@ -543,7 +543,8 @@ GLOBAL_LIST_EMPTY(colored_images)
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(..() || !check_rights_for(usr.client, R_DEBUG))
+	. = ..()
+	if(. || !check_rights_for(usr.client, R_DEBUG))
 		return
 	switch(action)
 		if("move-to-target")

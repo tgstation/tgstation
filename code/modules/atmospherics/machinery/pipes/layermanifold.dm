@@ -11,6 +11,7 @@
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
+	paintable = FALSE
 
 	var/list/front_nodes
 	var/list/back_nodes
@@ -37,7 +38,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
 	return front_nodes + back_nodes + nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
+/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	cut_overlays()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
 
