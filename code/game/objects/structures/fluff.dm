@@ -398,6 +398,29 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/skeletal_bodybody
+	name = "remains"
+	desc = "A fake pile of bones and a skull. Spooky!"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	layer = 3
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/skeletal_showcase
+	name = "skeleton showcase"
+	desc = "A totally fake replica of a spooky skeleton! On second thought, wait, is it fake?"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "showcase_6"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/unfinished_placeholder // meant so I can reveal a missing structure more easily.
 	name = "FINISH THIS LATER"
 	desc = "guys, someone code it in pls"
