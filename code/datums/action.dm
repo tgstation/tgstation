@@ -91,24 +91,22 @@
 		return FALSE
 	return TRUE
 
+
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
-	if(check_flags & AB_CHECK_HANDS_BLOCKED)
-		if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+	if(check_flags & AB_CHECK_HANDS_BLOCKED && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+		return FALSE
+	if(check_flags & AB_CHECK_IMMOBILE && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+		return FALSE
+	if(check_flags & AB_CHECK_LYING && isliving(owner))
+		var/mob/living/action_user = owner
+		if(!(action_user.mobility_flags & MOBILITY_STAND))
 			return FALSE
-	if(check_flags & AB_CHECK_IMMOBILE)
-		if(HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
-			return FALSE
-	if(check_flags & AB_CHECK_LYING)
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(!(L.mobility_flags & MOBILITY_STAND))
-				return FALSE
-	if(check_flags & AB_CHECK_CONSCIOUS)
-		if(owner.stat)
-			return FALSE
+	if(check_flags & AB_CHECK_CONSCIOUS && owner.stat != CONSCIOUS)
+		return FALSE
 	return TRUE
+
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
