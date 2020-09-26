@@ -363,7 +363,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	whim_datums = list(/datum/whim/defend_office, /datum/whim/mourn, /datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
+	whim_datums = list(/datum/whim/defend_area, /datum/whim/mourn, /datum/whim/airbud_bball, /datum/whim/snacks, /datum/whim/gnaw_bone, /datum/whim/make_babies)
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE

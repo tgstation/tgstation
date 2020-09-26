@@ -1,23 +1,24 @@
 /// These whims are written specifically with Ian in mind, in his role as the HoP's beloved pet. I used assigned_role to identify the HoP because i'm lazy, I need to account for changeling disguises as well
 
 /// If someone who isn't the HoP or Captain is in the HoP's office, Ian will get all territorial, fun!
-/datum/whim/defend_office
-	name = "Defend Office"
+/datum/whim/defend_area
+	name = "Defend Area"
 	priority = 2
-	scan_radius = 4
-	scan_every = 8
+	scan_radius = 5
+	scan_every = 6
 	/// Which areas this whim is valid for
-	var/list/defendable_areas = list(/area/crew_quarters/heads/hop)
+	var/list/defendable_areas = list(/area/hallway/secondary/entry)
 	/// Which assigned_roles this whim won't assault
 	var/list/exempted_roles = list("Head of Personnel", "Captain")
 
-/datum/whim/defend_office/inner_can_start()
-	//if(!is_type_in_list(get_area(owner), defendable_areas))
-	//	return FALSE
-
+/datum/whim/defend_area/inner_can_start()
+	testing("owner area [get_area(owner)]")
+	if(!is_type_in_list(get_area(owner), defendable_areas))
+		return FALSE
+	testing("owner in area right")
 	for(var/i in oview(owner,scan_radius))
-	//	if(!is_type_in_list(get_area(i), defendable_areas))
-	//		continue
+		if(!is_type_in_list(get_area(i), defendable_areas))
+			continue
 		if(isliving(i))
 			var/mob/living/living_target = i
 			if(living_target.stat == DEAD)
@@ -25,13 +26,13 @@
 		if(ishuman(i))
 			var/mob/living/carbon/human/potential_threat = i
 			var/role = potential_threat.mind?.assigned_role
-			if(role && !(role in exempted_roles))
+			if(!role || !(role in exempted_roles))
 				return potential_threat
 		else if(iscarbon(i))
 			var/mob/living/carbon/potential_threat = i
 			return potential_threat
 
-/datum/whim/defend_office/tick()
+/datum/whim/defend_area/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
 		return
@@ -47,20 +48,14 @@
 		owner.throw_at(concerned_target, 10, 4, owner, FALSE, FALSE, tackle)
 		return
 
-	walk_to(owner, get_step_towards(concerned_target, owner), 0, rand(15,25) * 0.1)
-
-	owner.face_atom(concerned_target)
-	if(!owner.Adjacent(concerned_target)) //can't reach food through windows.
-		return
-
-	if(isturf(concerned_target.loc))
-		concerned_target.attack_animal(owner)
-	else if(ishuman(concerned_target.loc))
-		if(prob(20))
-			owner.manual_emote("stares at [concerned_target.loc]'s [concerned_target] with a sad puppy-face")
+	if(get_dist(owner, concerned_target) > 3)
+		walk_to(owner, get_step_towards(concerned_target, owner), 3, rand(15,25) * 0.1)
+	else
+		walk(owner, 0)
+		intimidate()
 
 /// For the callback from Ian throwing himself at an intruder, to tackle them into a disposal bin and flush it
-/datum/whim/defend_office/proc/bin_threat(obj/machinery/disposal/bin/convenient_bin)
+/datum/whim/defend_area/proc/bin_threat(obj/machinery/disposal/bin/convenient_bin)
 	var/mob/living/carbon/carbon_target = concerned_target
 	if(!istype(carbon_target) || !owner.Adjacent(carbon_target) || !concerned_target.Adjacent(carbon_target))
 		return
@@ -74,6 +69,15 @@
 	owner.SpinAnimation(10, 1) // flair on 'em
 	abandon()
 
+/datum/whim/defend_area/proc/intimidate()
+	owner.face_atom(concerned_target)
+	switch(rand(1,4))
+		if(1)
+			owner.manual_emote("barks at [concerned_target]!")
+		if(2)
+			owner.manual_emote("growls at [concerned_target]!")
+		if(3)
+			owner.manual_emote("stares menacingly at [concerned_target]!")
 
 /// Awkwardly named, if our friend is on a tile whose lumcount is below this, we'll see about getting them to a better lit place
 #define WHIM_MOURN_MAX_LIGHT_DRAG	0.4

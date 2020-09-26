@@ -206,6 +206,8 @@
 
 /mob/living/simple_animal/Life(seconds, times_fired)
 	. = ..()
+	// note that there may need to be some kind of control on how many simple animals can be processing whims at any given time. I have no clue how expensive all of this is in execution, but
+	// i'd imagine it'd get very problematic very quickly if you spawned 100-200 corgis processing multiple whims each life tick. If you want controls, this would be the place
 	if(current_whim || live_whims)
 		handle_whims()
 

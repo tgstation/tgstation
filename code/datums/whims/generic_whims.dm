@@ -30,7 +30,7 @@
 			losing_control.activate(owner)
 		testing("A panic breaks out! Num: [length(possible_panickers)]")
 
-/datum/whim/inactive/flee_danger/New(mob/living/simple_animal/attached_owner)
+/datum/whim/inactive/flee_danger/New(mob/living/simple_animal/attaching_owner)
 	. = ..()
 	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/receive_damage)
 	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, .proc/receive_damage_hand)
@@ -108,7 +108,6 @@
 /datum/whim/inactive/panic
 	name = "Panic!"
 	ticks_to_frustrate = 4
-	scan_every = 0
 	abandon_rescan_length = 30 SECONDS
 
 /datum/whim/inactive/panic/abandon()

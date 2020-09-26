@@ -26,10 +26,12 @@
 	var/mob/living/simple_animal/owner
 	/// Unused currently, will allow you to prevent whims from running if the owner's type is not included here
 	var/list/allowed_mobtypes
+
 	/// Most whims are based around some kind of atom the owner moves or interacts with (like the mouse a cat is hunting). This should refer to their primary target.
 	var/atom/concerned_target
 	/// Some whims require the owner to "carry" an item with them for some time. This is a convenience var you can store it in
 	var/obj/item/carried_cargo
+
 	/// How many times this whim has ticked since it was first activated, for use with checking if we're too frustrated to continue
 	var/ticks_since_activation
 	/// How many ticks it takes without any intervention for us to give up and abandon this whim
@@ -51,9 +53,13 @@
 	/// Whims automatically block [/mob/living/simple_animal/proc/handle_automated_action] and [/mob/living/simple_animal/proc/handle_automated_movement] when active, this lets you choose whether to block speech & emotes too
 	var/blocks_auto_speech = FALSE
 
-/// Sets up the connections between the owner and their live_whims lists and such
-/datum/whim/New(mob/living/simple_animal/attached_owner)
-	owner = attached_owner
+/// Sets up the connections between the owner and their live_whims and passive_whims lists and such
+/datum/whim/New(mob/living/simple_animal/attaching_owner)
+	if(allowed_mobtypes && !is_type_in_list(attaching_owner, allowed_mobtypes))
+		qdel(src)
+		return
+
+	owner = attaching_owner
 	if(scan_every)
 		LAZYADD(owner.live_whims, src)
 	else
@@ -119,7 +125,7 @@
   * That shouldn't matter to you for this proc, though, all you care about here is passing along what inner_can_start returns if we call it.
   */
 /datum/whim/proc/can_start()
-	if(owner.whim_scan_ticks % scan_every != 0) // passive whims with scan_every = 0 call activate() directly, so no need to worry about divide by 0
+	if(owner.whim_scan_ticks % scan_every != 0) // passive whims with scan_every = 0 call activate directly, so no need to worry about divide by 0
 		return FALSE
 	testing("[owner] about to try starting [name]")
 	if(!COOLDOWN_FINISHED(src, cooldown_abandon_rescan))

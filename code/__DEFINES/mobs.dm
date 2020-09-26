@@ -357,7 +357,7 @@
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 #define INTERACTING_WITH(X, Y) (Y in X.do_afters)
 
-/// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
+/// If you examine the same atom twice in this timeframe, we call [/atom/proc/examine_more] instead of [/atom/proc/examine]
 #define EXAMINE_MORE_TIME	1 SECONDS
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE	5
