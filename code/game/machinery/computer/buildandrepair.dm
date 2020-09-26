@@ -113,9 +113,45 @@
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
-				var/obj/B = new circuit.build_path(loc)
-				B.setDir(dir)
-				transfer_fingerprints_to(B)
+
+				var/obj/machinery/new_machine = new circuit.build_path(loc)
+				new_machine.setDir(dir)
+				transfer_fingerprints_to(new_machine)
+
+				if(istype(new_machine, /obj/machinery/computer))
+					var/obj/machinery/computer/new_computer = new_machine
+
+					// Machines will init with a set of default components.
+					// Triggering handle_atom_del will make the machine realise it has lost a component_parts and then deconstruct.
+					// Move to nullspace so we don't trigger handle_atom_del, then qdel.
+					// Finally, replace new machine's parts with this frame's parts.
+					if(new_computer.circuit)
+						// Move to nullspace and delete.
+						new_computer.circuit.moveToNullspace()
+						QDEL_NULL(new_computer.circuit)
+					for(var/old_part in new_computer.component_parts)
+						var/atom/movable/movable_part = old_part
+						// Move to nullspace and delete.
+						movable_part.moveToNullspace()
+						qdel(movable_part)
+
+					// Set anchor state and move the frame's parts over to the new machine.
+					// Then refresh parts and call on_construction().
+					new_computer.set_anchored(anchored)
+					new_computer.component_parts = list()
+
+					circuit.forceMove(new_computer)
+					new_computer.component_parts += circuit
+					new_computer.circuit = circuit
+
+					for(var/new_part in src)
+						var/atom/movable/movable_part = new_part
+						movable_part.forceMove(new_computer)
+						new_computer.component_parts += movable_part
+
+					new_computer.RefreshParts()
+					new_computer.on_construction()
+
 				qdel(src)
 				return
 	if(user.a_intent == INTENT_HARM)

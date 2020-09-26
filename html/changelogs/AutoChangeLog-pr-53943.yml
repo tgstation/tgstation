@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Built machines capable of being opened no longer vomit out their circuit boards on opening."
+  - bugfix: "Smartfridges and smartfridge variants no longer vend their own components."

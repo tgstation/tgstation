@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "admins can now edit the delays for reversing supplypods"
