@@ -20042,7 +20042,7 @@
 "aUn" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
@@ -33062,10 +33062,17 @@
 /obj/machinery/holopad{
 	name = "chemistry requests holopad"
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/end{
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bAr" = (
 /obj/machinery/camera{
@@ -33080,7 +33087,7 @@
 /obj/machinery/shower{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/filled/warning{
+/obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -33090,8 +33097,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -33944,11 +33951,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bCS" = (
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
@@ -41524,11 +41528,8 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/filled/warning{
-	dir = 4
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
@@ -53434,10 +53435,10 @@
 	pixel_x = -25;
 	req_access_txt = "33"
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/end{
+/obj/effect/turf_decal/trimline/yellow/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "peL" = (
 /obj/effect/turf_decal/stripes/line,
@@ -55269,7 +55270,11 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemistry Lab";
+	req_access_txt = "69"
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "chemistry_stair_shutters";
 	name = "Chemistry Stairs Shutter"
 	},

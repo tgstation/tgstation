@@ -2565,6 +2565,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"kd" = (
+/obj/machinery/light/small,
+/turf/open/transparent/glass,
+/area/maintenance/port/aft)
 "ks" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -5065,6 +5069,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"Ro" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/transparent/glass,
+/area/maintenance/port/aft)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -33256,7 +33266,7 @@ Pm
 Pm
 TS
 yB
-yB
+hP
 yB
 TS
 ah
@@ -33769,9 +33779,9 @@ ah
 Pm
 Pm
 yB
-lu
+Ro
 uH
-lu
+kd
 yB
 Pm
 Pm
@@ -34283,9 +34293,9 @@ Pm
 ah
 Pm
 TS
-TS
+yB
 hP
-TS
+yB
 TS
 ah
 Pm
