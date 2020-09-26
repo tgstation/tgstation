@@ -39539,6 +39539,17 @@
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/grass,
 /area/hallway/secondary/entry)
+"uMG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sink{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "uNw" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -73710,7 +73721,7 @@ aOr
 sJG
 aKG
 baZ
-bao
+uMG
 bhY
 bmb
 byl
