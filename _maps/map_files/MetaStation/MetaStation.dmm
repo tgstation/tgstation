@@ -5714,7 +5714,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "amk" = (
-/obj/machinery/computer/card/minor/hos{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -20608,7 +20608,7 @@
 	name = "Chief Engineer RC";
 	pixel_y = 32
 	},
-/obj/machinery/computer/card/minor/ce,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -23540,7 +23540,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bda" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -25240,7 +25240,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bhh" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -29431,7 +29431,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bqZ" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -31387,7 +31387,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwn" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -51053,7 +51053,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "csx" = (
-/obj/machinery/computer/card/minor/cmo{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -51971,7 +51971,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cuM" = (
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,

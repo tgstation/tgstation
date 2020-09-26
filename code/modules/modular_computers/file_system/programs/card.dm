@@ -210,7 +210,7 @@
 					if(!job)
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
-					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.get_card_trim())) // Grey & Silver cards don't have enough wildcards if the trims don't match
+					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.get_card_trim() || job.get_card_trim() != NONE)) // Grey & Silver cards don't have enough wildcards if the trims don't match
 						to_chat(user, "<span class='warning'>Card trim doesn't match the selected job.</span>")
 						return
 					new_access = job.get_access()
@@ -223,18 +223,21 @@
 		if("PRG_access")
 			if(!computer || !authenticated)
 				return
+			var/list/r_access = get_region_accesses(target_id_card.trim)
 			var/access_type = text2num(params["access_target"])
 			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
 				if(access_type in target_id_card.access)
 					target_id_card.access -= access_type
-				if(access_type in get_common_accesses())
-					if(!(target_id_card.get_common_wildcards() < target_id_card.common_wildcards))
+				else if(access_type in get_common_accesses())
+					if((target_id_card.get_common_wildcards() < target_id_card.common_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
 						target_id_card.access |= access_type
-				if(access_type in get_command_accesses())
-					if(!(target_id_card.get_command_wildcards() < target_id_card.command_wildcards))
+					else
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommon Slots: [target_id_card.get_common_wildcards()]/[target_id_card.common_wildcards]</span>")
+				else if(access_type in get_command_accesses())
+					if((target_id_card.get_command_wildcards() < target_id_card.command_wildcards) || (target_id_card.trim != NONE && r_access.Find(access_type)))
 						target_id_card.access |= access_type
-				else
-					to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.</span>")
+					else
+						to_chat(user, "<span class='warning'>Insufficient number of wildcard slots.\nCommand Slots: [target_id_card.get_command_wildcards()]/[target_id_card.command_wildcards]</span>")
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
@@ -256,8 +259,8 @@
 			if(!computer || !authenticated)
 				return
 			var/region = text2num(params["region"])
-			if(target_id_card.card_level >= CARD_LEVEL_GOLD || target_id_card.trim != region) // you will need the correct trim for a whole department
-				to_chat(user, "<span class='warning'>This card cannot hold every access.</span>")
+			if(target_id_card.card_level < CARD_LEVEL_GOLD || target_id_card.trim != region) // you will need the correct trim for a whole department
+				to_chat(user, "<span class='warning'>This card cannot hold every access in one region without a trim.</span>")
 				return
 			if(isnull(region))
 				return

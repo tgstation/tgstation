@@ -253,6 +253,8 @@
 	. = ..()
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+	if(trim != NONE)
+		. += "The card is trimmed with a [get_region_accesses_name(trim)] trim."
 	. += "<span class='notice'><i>There's more information below, you can look again to take a closer look...</i></span>"
 
 /obj/item/card/id/examine_more(mob/user)
@@ -282,34 +284,32 @@
 
 	return msg
 
+//Returns the number of already used wildcards.
+/obj/item/card/id/proc/get_common_wildcards()
+	var/count = 0
+	var/list/a_region = get_region_accesses(trim)
+	var/list/c_access = get_common_accesses()
+	if(trim != NONE)
+		for(var/a in access)
+			if(!a_region.Find(a) && c_access.Find(a)) // if their card is trimmed, we dont count those access flags as wildcards
+				count++
+	else
+		for(var/a in access)
+			if(c_access.Find(a))
+				count++
+	return count
+
 /obj/item/card/id/proc/get_command_wildcards()
 	var/count = 0
 	var/list/a_region = get_region_accesses(trim)
 	var/list/c_access = get_command_accesses()
-	if(trim && trim != NONE)
+	if(trim != NONE)
 		for(var/a in access)
-			if(!LAZYFIND(a_region, a) && LAZYFIND(c_access, a))
+			if(!a_region.Find(a) && c_access.Find(a))
 				count++
-		return count
 	else
 		for(var/a in access)
-			if(LAZYFIND(c_access, a))
-				count++
-	return count
-
-//Returns the number of already used wildcards.
-/obj/item/card/id/proc/get_common_wildcards()
-	var/count = get_command_wildcards() - command_wildcards // unused command wildcards can be used as common ones
-	var/list/a_region = get_region_accesses(trim)
-	var/list/c_access = get_common_accesses()
-	if(trim && trim != NONE)
-		for(var/a in access) // if their card is trimmed, we dont count those access flags as wildcards
-			if(!LAZYFIND(a_region, a) && LAZYFIND(c_access, a))
-				count++
-		return count
-	else
-		for(var/a in access)
-			if(LAZYFIND(c_access, a))
+			if(c_access.Find(a))
 				count++
 	return count
 
@@ -371,8 +371,8 @@ update_label()
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	card_level = CARD_LEVEL_SILVER
-	common_wildcards = 4
-	command_wildcards = 1
+	common_wildcards = 5
+	command_wildcards = 2
 	icon_state = "silver"
 	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'

@@ -5222,7 +5222,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "ank" = (
-/obj/machinery/computer/card/minor/hos{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -6805,7 +6805,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "arL" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/camera{
 	c_tag = "Bridge - Central"
 	},
@@ -9547,7 +9547,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "axU" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
@@ -12319,7 +12319,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "aEP" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -20374,7 +20374,7 @@
 	},
 /area/hallway/secondary/entry)
 "aZF" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -30336,7 +30336,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bAc" = (
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
@@ -31961,7 +31961,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
 "bDF" = (
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
@@ -39394,7 +39394,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "bUM" = (
-/obj/machinery/computer/card/minor/ce,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
