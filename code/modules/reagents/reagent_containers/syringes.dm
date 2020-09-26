@@ -73,12 +73,15 @@
 		var/mob/living/carbon/monkey/M
 		M = target
 		M.retaliate(user)
-
+	var/obj/item/reagent_containers/syringe/whippedcream/W = src
 	switch(mode)
 		if(SYRINGE_DRAW)
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>The syringe is full.</span>")
+				if(istype(W))
+					to_chat(user, "<span class='notice'>The canister is full.</span>")
+				else
+					to_chat(user, "<span class='notice'>The syringe is full.</span>")
 				return
 
 			if(L) //living mob
@@ -143,7 +146,11 @@
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!</span>", \
+					if(istype(W))
+						L.visible_message("<span class='danger'>[user] sprays [L] with the canister!</span>", \
+									"<span class='userdanger'>[user] sprays you with the canister!</span>")
+					else
+						L.visible_message("<span class='danger'>[user] injects [L] with the syringe!</span>", \
 									"<span class='userdanger'>[user] injects you with the syringe!</span>")
 
 				if(L != user)
@@ -151,17 +158,21 @@
 				else
 					L.log_message("injected themselves ([contained]) with [src.name]", LOG_ATTACK, color="orange")
 			reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, method = INJECT)
-			to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
+			if(istype(W))
+				to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The canister now contains [reagents.total_volume] units.</span>")
+				playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+			else
+				to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
 
-/* 
+/*
  * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
  */
 /obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
-	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD) 
+	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 	if(reagents?.total_volume)
 		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, method = INJECT)
 
@@ -261,6 +272,43 @@
 	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
 	volume = 60
+
+/obj/item/reagent_containers/syringe/whippedcream
+	name = "Whipped Cream Canister"
+	desc = "An advanced form of condiment spreading, allowing for the foaming of a reagent over a dish."
+	amount_per_transfer_from_this = 2
+	volume = 20
+	icon_state = "cream_bottle"
+	inhand_icon_state = "cream_bottle"
+
+/obj/item/reagent_containers/syringe/whippedcream/afterattack(atom/target, mob/user , proximity)
+	. = ..()
+	var/obj/item/reagent_containers/food/snacks/S = target
+	if(istype(S))
+		var/mutable_appearance/whipped_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whipped")
+		whipped_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		S.add_overlay(whipped_overlay)
+
+
+/obj/item/reagent_containers/syringe/whippedcream/update_icon_state()
+	icon_state = "cream_bottle"
+	inhand_icon_state = "cream_bottle"
+
+/obj/item/reagent_containers/syringe/whippedcream/update_overlays()
+	if(reagents)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whippedbottle")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
+		add_overlay(filling_overlay)
+	if(ismob(loc))
+		var/injoverlay
+		switch(mode)
+			if (SYRINGE_DRAW)
+				injoverlay = "draw"
+			if (SYRINGE_INJECT)
+				injoverlay = "inject"
+		. += injoverlay
+		add_overlay(injoverlay)
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
