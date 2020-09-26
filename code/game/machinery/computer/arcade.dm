@@ -69,18 +69,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/Initialize()
-	. = ..()
 	// If it's a generic arcade machine, pick a random arcade
-	// circuit board for it and make the new machine
+	// circuit board for it
 	if(!circuit)
 		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
 							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
 							/obj/item/circuitboard/computer/arcade/amputation = 2)
-		var/thegame = pickweight(gameodds)
-		var/obj/item/circuitboard/new_board = new thegame()
-		var/obj/new_cabinet = new new_board.build_path(loc, new_board)
-		new_cabinet.setDir(dir)
-		return INITIALIZE_HINT_QDEL
+		circuit = pickweight(gameodds)
+
+	. = ..()
+
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
@@ -284,7 +282,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
-	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
@@ -614,7 +614,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
-	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
 	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
@@ -858,9 +860,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
-	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
-	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-	var/gamerSkillRands = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/gamerSkillLevel = 0
+	var/gamerSkill = 0
+	var/gamerSkillRands = 0
+
+	if(usr?.mind)
+		gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+		gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+		gamerSkillRands = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+
+
 	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)

@@ -68,19 +68,23 @@
 				if(R.shell)
 					R.undeploy()
 				R.set_connected_ai(null)
+			R.logevent("AI connection fault [mend?"cleared":"detected"]")
 		if(WIRE_LAWSYNC) // Cut the law wire, and the borg will no longer receive law updates from its AI. Repair and it will re-sync.
 			if(mend)
 				if(!R.emagged)
 					R.lawupdate = TRUE
 			else if(!R.deployed) //AI shells must always have the same laws as the AI
 				R.lawupdate = FALSE
+			R.logevent("Lawsync Module fault [mend?"cleared":"detected"]")
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.status = mend
 				R.builtInCamera.toggle_cam(usr, 0)
 				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
+				R.logevent("Camera Module fault [mend?"cleared":"detected"]")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
+			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")
 		if(WIRE_RESET_MODULE)
 			if(R.has_module() && !mend)
 				R.ResetModule()

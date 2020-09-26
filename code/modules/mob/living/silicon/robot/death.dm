@@ -16,7 +16,9 @@
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)
 		return
-
+	if(!gibbed)
+		logevent("FATAL -- SYSTEM HALT")
+		modularInterface.shutdown_computer()
 	. = ..()
 
 	locked = FALSE //unlock cover
@@ -25,7 +27,7 @@
 
 	if(!QDELETED(builtInCamera) && builtInCamera.status)
 		builtInCamera.toggle_cam(src,0)
-	update_headlamp(1) //So borg lights are disabled when killed.
+	toggle_headlamp(TRUE) //So borg lights are disabled when killed.
 
 	uneq_all() // particularly to ensure sight modes are cleared
 

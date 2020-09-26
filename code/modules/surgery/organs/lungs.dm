@@ -35,6 +35,10 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
+	///Minimum amount of healium to make you unconscious for 4 seconds
+	var/healium_para_min = 3
+	///Minimum amount of healium to knock you down for good
+	var/healium_sleep_min = 6
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -72,6 +76,8 @@
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)
+		H.failed_last_breath = FALSE //clear oxy issues
+		H.clear_alert("not_enough_oxy")
 		return
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		return
@@ -113,7 +119,7 @@
 						/datum/gas/hypernoblium,
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
-						/datum/gas/cyrion_b,
+						/datum/gas/zauker,
 						/datum/gas/halon,
 						/datum/gas/hexane
 						)
@@ -334,26 +340,31 @@
 	// Healium
 		var/healium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/healium][MOLES])
 		if(healium_pp > gas_stimulation_min)
-			var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
-			H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
-			H.adjustOxyLoss(-5)
-			H.adjustFireLoss(-7)
-			H.adjustToxLoss(-7)
-			H.adjustBruteLoss(-10)
+			if(prob(15))
+				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
+				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+				H.emote("gasp")
+		else
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		if(healium_pp > healium_para_min)
+			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
+			if(healium_pp > healium_sleep_min)
+				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
+				H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
 
 	// Proto Nitrate
 		// Inert
-	// Cyrion B
-		var/cyrion_b_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/cyrion_b][MOLES])
-		if(cyrion_b_pp > gas_stimulation_min)
+	// Zauker
+		var/zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
+		if(zauker_pp > gas_stimulation_min)
 			H.adjustBruteLoss(25)
 			H.adjustOxyLoss(5)
 			H.adjustFireLoss(8)
 			H.adjustToxLoss(8)
-		gas_breathed = breath_gases[/datum/gas/cyrion_b][MOLES]
-		breath_gases[/datum/gas/cyrion_b][MOLES]-=gas_breathed
+		gas_breathed = breath_gases[/datum/gas/zauker][MOLES]
+		breath_gases[/datum/gas/zauker][MOLES]-=gas_breathed
 
 	// Halon
 		var/halon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/halon][MOLES])

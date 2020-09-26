@@ -41,14 +41,15 @@
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
-	//offset by 1 because the buffer address is 0 indexed because the math was simpler
-	keys_held[current_key_address + 1] = _key
+	if(length(keys_held) >= HELD_KEY_BUFFER_LENGTH && !keys_held[_key])
+		keyUp(keys_held[1]) //We are going over the number of possible held keys, so let's remove the first one.
+
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
-	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
-	var/movement = movement_keys[_key]
-	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
-		next_move_dir_add |= movement
+	if(!movement_locked)
+		var/movement = movement_keys[_key]
+		if(!(next_move_dir_sub & movement))
+			next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
@@ -75,14 +76,13 @@
 	set instant = TRUE
 	set hidden = TRUE
 
-	//Can't just do a remove because it would alter the length of the rolling buffer, instead search for the key then null it out if it exists
-	for(var/i in 1 to HELD_KEY_BUFFER_LENGTH)
-		if(keys_held[i] == _key)
-			keys_held[i] = null
-			break
-	var/movement = movement_keys[_key]
-	if(!(next_move_dir_add & movement))
-		next_move_dir_sub |= movement
+	if(!keys_held[_key])
+		return
+	keys_held -= _key
+	if(!movement_locked)
+		var/movement = movement_keys[_key]
+		if(!(next_move_dir_add & movement))
+			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
