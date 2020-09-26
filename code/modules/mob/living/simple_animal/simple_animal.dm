@@ -206,7 +206,7 @@
 
 /mob/living/simple_animal/Life(seconds, times_fired)
 	. = ..()
-	if(live_whims)
+	if(current_whim || live_whims)
 		handle_whims()
 
 /// This is where we instantiate all the whim types in [/mob/living/simple_animal/var/list/whim_datums] and store them in [/mob/living/simple_animal/var/list/live_whims]

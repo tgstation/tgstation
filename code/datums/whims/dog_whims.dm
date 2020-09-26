@@ -187,7 +187,7 @@
 #define WHIM_BONE_MODE_HIDE			1
 #define WHIM_BONE_MODE_RELAX		2 // hehe
 
-/// By carried_cargo, I mean dismembered bodyparts. If the mob sees a bodypart laying around, they'll pick it up in their mouth then run away to go gnaw on it. Letting dogs loose in medbay has never been so fun!
+/// By bones, I mean dismembered bodyparts. If the mob sees a bodypart laying around, they'll pick it up in their mouth then run away to go gnaw on it. Letting dogs loose in medbay has never been so fun!
 /datum/whim/gnaw_bone
 	name = "Gnaw bone"
 	priority = 1
