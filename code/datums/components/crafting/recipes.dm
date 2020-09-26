@@ -387,7 +387,7 @@
 
 
 /datum/crafting_recipe/radiogloves
-	name = "Translation Gloves"
+	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
 	time = 15
 	reqs = list(/obj/item/clothing/gloves/color/black = 1,
@@ -428,7 +428,7 @@
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
-	result = /obj/vehicle/ridden/scooter/skateboard
+	result = /obj/vehicle/ridden/scooter/skateboard/improvised
 	time = 60
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 10)
@@ -911,6 +911,6 @@
 	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
 				/obj/item/grenade/gas_crystal/healium_crystal = 1,
 				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
-				/obj/item/grenade/gas_crystal/cyrion_b_crystal = 1
+				/obj/item/grenade/gas_crystal/zauker_crystal = 1
 				)
 	category = CAT_MISC

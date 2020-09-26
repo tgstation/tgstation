@@ -3,6 +3,7 @@
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "gelatinous"
+	icon_living = "gelatinous"
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
@@ -276,6 +277,7 @@
 	name = "Sholean grapes"
 	desc = "A botryoidal ooze from Sholus VII.\nXenobiologists consider it to be one of the calmer and more agreeable species on the planet, but so far little is known about its behaviour in the wild.\nIt undulates in a comforting manner."
 	icon_state = "grapes"
+	icon_living = "grapes"
 	icon_dead = "grapes_dead"
 	speed = 1
 	health = 200

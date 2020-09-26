@@ -310,7 +310,8 @@
 	return data
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)

@@ -291,7 +291,8 @@
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
 /mob/living/proc/IsSleeping() //If we're asleep
-	return has_status_effect(STATUS_EFFECT_SLEEPING)
+	if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
+		return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
@@ -299,41 +300,49 @@
 		return S.duration - world.time
 	return 0
 
-/mob/living/proc/Sleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+/mob/living/proc/Sleeping(amount, updating = TRUE) //Can't go below remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating) & COMPONENT_NO_STUN)
 		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		S.duration = max(world.time + amount, S.duration)
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
+	return S
 
-/mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
+/mob/living/proc/SetSleeping(amount, updating = TRUE) //Sets remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating) & COMPONENT_NO_STUN)
 		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(amount <= 0)
-			if(S)
-				qdel(S)
-		else if(S)
-			S.duration = world.time + amount
-		else
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating, ignore_canstun) & COMPONENT_NO_STUN)
-		return
-	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(amount <= 0)
 		if(S)
-			S.duration += amount
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
+			qdel(S)
+	else if(S)
+		S.duration = world.time + amount
+	else
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
+	return S
+
+/mob/living/proc/AdjustSleeping(amount, updating = TRUE) //Adds to remaining duration
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount, updating) & COMPONENT_NO_STUN)
+		return
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		S.duration += amount
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
+	return S
+
+///Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)
+/mob/living/proc/PermaSleeping(updating = TRUE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, -1, updating) & COMPONENT_NO_STUN)
+		return
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		S.duration = -1
+	else
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING, -1, updating)
+	return S
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 

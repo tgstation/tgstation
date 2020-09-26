@@ -1,0 +1,14 @@
+name: Update TGS DMAPI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-dmapi:
+    runs-on: ubuntu-latest
+    name: Update the TGS DMAPI
+    steps:
+    - uses: tgstation/tgs-dmapi-updater@v1
+      with:
+        header-path: 'code/__DEFINES/tgs.dm'
+        library-path: 'code/modules/tgs'

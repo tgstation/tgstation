@@ -7,6 +7,8 @@
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
 
+	paintable = TRUE
+
 	//Buckling
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
@@ -90,8 +92,9 @@
 /obj/machinery/atmospherics/pipe/returnPipenets()
 	. = list(parent)
 
-/obj/machinery/atmospherics/pipe/proc/paint(paint_color)
-	add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-	pipe_color = paint_color
-	update_node_icon()
-	return TRUE
+/obj/machinery/atmospherics/pipe/paint(paint_color)
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		pipe_color = paint_color
+		update_node_icon()
+	return paintable

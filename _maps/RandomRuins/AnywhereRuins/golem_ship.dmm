@@ -55,7 +55,7 @@
 /area/ruin/powered/golem_ship)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8
+	dir = 4
 	},
 /turf/template_noop,
 /area/ruin/powered/golem_ship)

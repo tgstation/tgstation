@@ -190,8 +190,8 @@
 		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/dump_contents()
-	dropContents()
+/obj/machinery/suit_storage_unit/drop_stored_items()
+	. = ..()
 	helmet = null
 	suit = null
 	mask = null
@@ -247,6 +247,7 @@
 		src,
 		choices,
 		custom_check = CALLBACK(src, .proc/check_interactable, user),
+		require_near = !issilicon(user),
 	)
 
 	if (!choice)
@@ -279,13 +280,14 @@
 			if (item_to_dispense)
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
+			else
+				var/obj/item/in_hands = user.get_active_held_item()
+				if (in_hands)
+					attackby(in_hands, user)
 
 	interact(user)
 
 /obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
-	if (state_open && !powered())
-		return FALSE
-
 	if (!state_open && !can_interact(user))
 		return FALSE
 

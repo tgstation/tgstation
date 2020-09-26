@@ -104,7 +104,8 @@
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

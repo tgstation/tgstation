@@ -95,7 +95,7 @@
 		QDEL_NULL(attached_surgery)
 	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
-	limb = null
+	set_limb(null)
 	victim = null
 	return ..()
 
@@ -129,7 +129,7 @@
 			return
 
 	victim = L.owner
-	limb = L
+	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
@@ -192,12 +192,44 @@
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(limb, old_wound = src, smited = smited)
+	. = new_wound
 	qdel(src)
-	return new_wound
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null)
 	return
+
+
+/// Proc called to change the variable `limb` and react to the event.
+/datum/wound/proc/set_limb(new_value)
+	if(limb == new_value)
+		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+	. = limb
+	limb = new_value
+	if(. && disabling)
+		var/obj/item/bodypart/old_limb = .
+		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, src)
+	if(limb)
+		if(disabling)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+
+
+/// Proc called to change the variable `disabling` and react to the event.
+/datum/wound/proc/set_disabling(new_value)
+	if(disabling == new_value)
+		return
+	. = disabling
+	disabling = new_value
+	if(disabling)
+		if(!. && limb) //Gained disabling.
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+	else if(. && limb) //Lost disabling.
+		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()

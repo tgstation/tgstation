@@ -120,7 +120,7 @@
 								/datum/gas/hydrogen,
 								/datum/gas/healium,
 								/datum/gas/proto_nitrate,
-								/datum/gas/cyrion_b,
+								/datum/gas/zauker,
 								/datum/gas/halon,
 								/datum/gas/hexane
 								)
@@ -135,7 +135,7 @@
 	worth += gases[/datum/gas/hydrogen][MOLES]*1
 	worth += gases[/datum/gas/healium][MOLES]*19
 	worth += gases[/datum/gas/proto_nitrate][MOLES]*5
-	worth += gases[/datum/gas/cyrion_b][MOLES]*1050
+	worth += gases[/datum/gas/zauker][MOLES]*1050
 	worth += gases[/datum/gas/halon][MOLES]*9
 	worth += gases[/datum/gas/hexane][MOLES]*6
 	return worth

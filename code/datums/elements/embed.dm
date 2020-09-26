@@ -153,7 +153,7 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	. = payload.tryEmbed(limb)
+	payload.tryEmbed(limb) // at this point we've created our shrapnel baby and set them up to embed in the target, we can now die in peace as they handle their embed try on their own
 	Detach(P)
 
 /**
@@ -187,5 +187,4 @@
 		hit_zone = limb.body_zone
 		C = limb.owner
 
-	checkEmbed(I, C, hit_zone, forced=TRUE)
-	return TRUE
+	return checkEmbed(I, C, hit_zone, forced=TRUE)
