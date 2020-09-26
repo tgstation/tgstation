@@ -21,21 +21,27 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	///Set the tier of the tanks
 	var/mode = TANK_TIER_1
 
 /obj/item/tank/tier_1
 	name = "tier 1 tank"
 	mode = TANK_TIER_1
-	integrity = 3
+	integrity = 1
 
 /obj/item/tank/tier_2
 	name = "tier 2 tank"
 	mode = TANK_TIER_2
-	integrity = 5
+	integrity = 3
 
 /obj/item/tank/tier_3
 	name = "tier 3 tank"
 	mode = TANK_TIER_3
+	integrity = 5
+
+/obj/item/tank/tier_4
+	name = "tier 4 tank"
+	mode = TANK_TIER_4
 	integrity = 7
 
 /obj/item/tank/ui_action_click(mob/user)
@@ -102,8 +108,16 @@
 		return
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
-	if(mode)
-		. += "<span class='notice'>This tank is tier [(mode * 2 <= 2) ? mode * 2 : mode]. A sticker on its side says <b>MAX PRESSURE: [siunit((TANK_LEAK_PRESSURE * mode) * 1000, "Pa", 0)]</b>.</span>"
+	switch(mode)
+		if(TANK_TIER_1)
+			. += "<span class='notice'>This is a tier 1 tank.</span>"
+		if(TANK_TIER_2)
+			. += "<span class='notice'>This is a tier 2 tank.</span>"
+		if(TANK_TIER_3)
+			. += "<span class='notice'>This is a tier 3 tank.</span>"
+		if(TANK_TIER_4)
+			. += "<span class='notice'>This is a tier 4 tank.</span>"
+	. += "<span class='notice'>A sticker on its side says <b>MAX PRESSURE: [siunit((TANK_LEAK_PRESSURE * mode) * 1000, "Pa", 3)]</b>.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive

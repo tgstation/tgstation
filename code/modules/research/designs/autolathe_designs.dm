@@ -302,7 +302,7 @@
 /datum/design/generic_gas_tank_t2
 	name = "Generic Tier 2 Gas Tank"
 	id = "generic_tank_t2"
-	build_type = AUTOLATHE | PROTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/plasma = 1000)
 	build_path = /obj/item/tank/tier_2
 	category = list("Misc","Equipment")
@@ -311,9 +311,18 @@
 /datum/design/generic_gas_tank_t3
 	name = "Generic Tier 3 Gas Tank"
 	id = "generic_tank_t3"
-	build_type = AUTOLATHE | PROTOLATHE
+	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/plasma = 1000, /datum/material/bluespace = 500)
 	build_path = /obj/item/tank/tier_3
+	category = list("Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/generic_gas_tank_t4
+	name = "Generic Tier 4 Gas Tank"
+	id = "generic_tank_t4"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/titanium = 1000, /datum/material/plasma = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/tank/tier_4
 	category = list("Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE
 
