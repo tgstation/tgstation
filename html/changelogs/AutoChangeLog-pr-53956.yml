@@ -1,0 +1,4 @@
+author: "Hamcha"
+delete-after: True
+changes: 
+  - bugfix: "Scrubber and gas filters windows are now slightly larger so all the gasses are visible without scrolling"
