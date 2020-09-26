@@ -245,7 +245,6 @@
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 12.5 * delta_time, methods = VAPOR) // Transfer reagents.
 				air1.gases[/datum/gas/oxygen][MOLES] -= max(0, air1.gases[/datum/gas/oxygen][MOLES] - delta_time / efficiency) //Let's use gas for this
-				air1.garbage_collect()
 			reagent_transfer += 0.5 * delta_time
 			if(reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
@@ -283,7 +282,6 @@
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
-		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)

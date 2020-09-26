@@ -96,7 +96,6 @@
 	if(!removed)
 		return
 
-	removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
 	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], (1.5 * delta_time * workingPower))//Works to max 12 moles at a time.
 	removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
 	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower

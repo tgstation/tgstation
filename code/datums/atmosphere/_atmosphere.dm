@@ -19,14 +19,13 @@
 /datum/atmosphere/proc/generate_gas_string()
 	var/target_pressure = rand(minimum_pressure, maximum_pressure)
 	var/pressure_scalar = target_pressure / maximum_pressure
-	
+
 	// First let's set up the gasmix and base gases for this template
 	// We make the string from a gasmix in this proc because gases need to calculate their pressure
 	var/datum/gas_mixture/gasmix = new
 	var/list/gaslist = gasmix.gases
 	gasmix.temperature = rand(minimum_temp, maximum_temp)
 	for(var/i in base_gases)
-		ADD_GAS(i, gaslist)
 		gaslist[i][MOLES] = base_gases[i]
 
 	// Now let the random choices begin
@@ -41,19 +40,17 @@
 			amount = restricted_gases[gastype]
 			if(gaslist[gastype])
 				continue
-		
+
 		amount *= rand(50, 200) / 100	// Randomly modifes the amount from half to double the base for some variety
 		amount *= pressure_scalar		// If we pick a really small target pressure we want roughly the same mix but less of it all
 		amount = CEILING(amount, 0.1)
-		
-		ASSERT_GAS(gastype, gasmix)
+
 		gaslist[gastype][MOLES] += amount
 
 	// That last one put us over the limit, remove some of it
 	while(gasmix.return_pressure() > target_pressure)
 		gaslist[gastype][MOLES] -= gaslist[gastype][MOLES] * 0.1
 	gaslist[gastype][MOLES] = FLOOR(gaslist[gastype][MOLES], 0.1)
-	gasmix.garbage_collect()
 
 	// Now finally lets make that string
 	var/list/gas_string_builder = list()

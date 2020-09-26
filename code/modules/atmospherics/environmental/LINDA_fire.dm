@@ -10,21 +10,15 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	//If the air doesn't exist we just return false
-	var/list/air_gases = air?.gases
-	if(!air_gases)
+	if(!air)
 		return
 
-	. = air_gases[/datum/gas/oxygen]
-	var/oxy = . ? .[MOLES] : 0
+	var/oxy = air.get_moles(/datum/gas/oxygen)
 	if (oxy < 0.5)
 		return
-	. = air_gases[/datum/gas/plasma]
-	var/tox = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/tritium]
-	var/trit = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/hydrogen]
-	var/h2 = . ? .[MOLES] : 0
+	var/tox = air.get_moles(/datum/gas/plasma)
+	var/trit = air.get_moles(/datum/gas/tritium)
+	var/h2 = air.get_moles(/datum/gas/hydrogen)
 	if(active_hotspot)
 		if(soh)
 			if(tox > 0.5 || trit > 0.5 || h2 > 0.5)
@@ -84,13 +78,13 @@
 
 	if(bypassing)
 		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-		temperature = location.air.temperature
+		temperature = location.air.return_temperature()
 	else
-		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
+		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.return_volume())
 		if(affected) //in case volume is 0
-			affected.temperature = temperature
+			affected.set_temperature(temperature)
 			affected.react(src)
-			temperature = affected.temperature
+			temperature = affected.return_temperature()
 			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 			location.assume_air(affected)
 
@@ -158,7 +152,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (location.air.get_moles(path) < 0.5)
 /obj/effect/hotspot/process()
 	if(just_spawned)
 		just_spawned = FALSE
@@ -169,8 +163,7 @@
 		qdel(src)
 		return
 
-	if(location.excited_group)
-		location.excited_group.reset_cooldowns()
+	location.eg_reset_cooldowns()
 
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		qdel(src)
@@ -188,8 +181,8 @@
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
-			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
+		if(location.air.return_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+			var/radiated_temperature = location.air.return_temperature() * FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
 				if(!T.active_hotspot)

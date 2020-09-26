@@ -45,7 +45,6 @@
 			absorbed_plasma += plas_amt
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
-		G.garbage_collect()
 		T.air_update_turf()
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
@@ -318,7 +317,6 @@
 				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
 					continue
 				G_gases[I][MOLES] = 0
-			G.garbage_collect()
 			O.air_update_turf()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)

@@ -217,7 +217,6 @@
 		if(!GM.gases[/datum/gas/oxygen])
 			return
 		GM.gases[/datum/gas/oxygen][MOLES] = max(GM.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
 	name = "nitrogen consuming"
@@ -232,7 +231,6 @@
 		if(!GM.gases[/datum/gas/nitrogen])
 			return
 		GM.gases[/datum/gas/nitrogen][MOLES] = max(GM.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
@@ -247,7 +245,6 @@
 		if(!GM.gases[/datum/gas/carbon_dioxide])
 			return
 		GM.gases[/datum/gas/carbon_dioxide][MOLES] = max(GM.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
 	name = "toxins consuming"
@@ -262,7 +259,6 @@
 		if(!GM.gases[/datum/gas/plasma])
 			return
 		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
-		GM.garbage_collect()
 
 /datum/spacevine_mutation/thorns
 	name = "thorny"

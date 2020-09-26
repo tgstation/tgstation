@@ -29,9 +29,8 @@ GLOBAL_VAR(restart_counter)
   *			All atoms in both compiled and uncompiled maps are initialized()
   */
 /world/New()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
+	if (fexists(EXTOOLS))
+		call(EXTOOLS, "maptick_initialize")()
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
@@ -340,6 +339,9 @@ GLOBAL_VAR(restart_counter)
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
+	refresh_atmos_grid()
+
+/world/proc/refresh_atmos_grid()
 
 
 /world/proc/change_fps(new_value = 20)

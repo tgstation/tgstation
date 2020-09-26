@@ -29,6 +29,5 @@
 #endif
 
 /world/proc/enable_debugger()
-    var/dll = world.GetConfig("env", "EXTOOLS_DLL")
-    if (dll)
-        call(dll, "debug_initialize")()
+    if (fexists(EXTOOLS))
+        call(EXTOOLS, "debug_initialize")()

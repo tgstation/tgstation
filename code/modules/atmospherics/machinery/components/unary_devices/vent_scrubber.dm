@@ -101,9 +101,8 @@
 		return FALSE
 
 	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
+	for(var/path in GLOB.meta_gas_ids)
+		f_types += list(list("gas_id" = path, "gas_name" = GLOB.meta_gas_names[path], "enabled" = (path in filter_types)))
 
 	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
@@ -180,11 +179,9 @@
 			filtered_out.temperature = removed.temperature
 
 			for(var/gas in filter_types & removed_gases)
-				filtered_out.add_gas(gas)
 				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
 				removed_gases[gas][MOLES] = 0
 
-			removed.garbage_collect()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)

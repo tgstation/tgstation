@@ -47,9 +47,7 @@
 	else
 		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
 		loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-		loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 		loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
-		loaded_tank.air_contents.garbage_collect()
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
 		add_avail(power_produced)

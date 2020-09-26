@@ -566,7 +566,6 @@ GENE SCANNER
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(GLOB.hardcoded_gases))
 		var/o2_concentration = env_gases[/datum/gas/oxygen][MOLES]/total_moles
 		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
 		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
@@ -577,7 +576,6 @@ GENE SCANNER
 			\n<span class='[co2_concentration > 0.01 ? "alert" : "info"]'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>\
 			\n<span class='[plasma_concentration > 0.005 ? "alert" : "info"]'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>\n"
 
-		environment.garbage_collect()
 
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)
