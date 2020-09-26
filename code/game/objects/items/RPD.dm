@@ -286,8 +286,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	var/playeffect = TRUE

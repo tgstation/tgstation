@@ -28,7 +28,7 @@ export const ExosuitControlConsole = (props, context) => {
               <Fragment>
                 <Button
                   icon="envelope"
-                  content="Send Message"
+                  content="Message"
                   disabled={!mech.pilot}
                   onClick={() => act('send_message', {
                     tracker_ref: mech.tracker_ref,
@@ -76,7 +76,14 @@ export const ExosuitControlConsole = (props, context) => {
                 ) || 'Not Equipped'}
               </LabeledList.Item>
               <LabeledList.Item label="Pilot">
-                {mech.pilot || 'None'}
+                {mech.pilot.length > 0 && (
+                  mech.pilot.map(pilot => (
+                    <Box
+                      key={pilot}
+                      inline>
+                      {pilot}{mech.pilot.length > 1 ? '|' : ''}
+                    </Box>
+                  ))) || 'None'}
               </LabeledList.Item>
               <LabeledList.Item label="Location">
                 {mech.location || 'Unknown'}

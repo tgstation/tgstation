@@ -207,8 +207,10 @@
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/mob/living/mob_occupant = occupant
 	check_nap_violations()
 	switch(action)

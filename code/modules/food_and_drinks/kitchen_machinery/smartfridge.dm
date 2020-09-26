@@ -173,6 +173,10 @@
 
 	var/listofitems = list()
 	for (var/I in src)
+		// We do not vend our own components.
+		if(I in component_parts)
+			continue
+
 		var/atom/movable/O = I
 		if (!QDELETED(O))
 			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
@@ -213,6 +217,8 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
+						if(O in component_parts)
+							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 						dispense(O, usr)
 						break
 				if (visible_contents)
@@ -223,6 +229,8 @@
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
+					if(O in component_parts)
+						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 					dispense(O, usr)
 					desired--
 			if (visible_contents)
