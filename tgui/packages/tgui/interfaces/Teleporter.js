@@ -14,8 +14,8 @@ export const Teleporter = (props, context) => {
   } = data;
   return (
     <Window
-      width={470}
-      height={140}>
+      width={360}
+      height={130}>
       <Window.Content>
         <Section>
           {!power_station && (
@@ -28,29 +28,22 @@ export const Teleporter = (props, context) => {
             </Box>
           )) || (
             <LabeledList>
-              <LabeledList.Item label="Current Regime"
-                buttons={(
-                  <Button
-                    icon="tools"
-                    content="Change Regime"
-                    onClick={() => act('regimeset')} />
-                )}>
-                {regime_set}
+              <LabeledList.Item label="Regime">
+                <Button
+                  content={regime_set}
+                  onClick={() => act('regimeset')} />
               </LabeledList.Item>
-              <LabeledList.Item label="Current Target"
-                buttons={(
-                  <Button
-                    icon="tools"
-                    content="Set Target"
-                    onClick={() => act('settarget')} />
-                )}>
-                {target}
+              <LabeledList.Item label="Target">
+                <Button
+                  icon="edit"
+                  content={target}
+                  onClick={() => act('settarget')} />
               </LabeledList.Item>
               <LabeledList.Item label="Calibration"
                 buttons={(
                   <Button
                     icon="tools"
-                    content="Calibrate Hub"
+                    content="Calibrate"
                     onClick={() => act('calibrate')} />
                 )}>
                 {calibrating && (
