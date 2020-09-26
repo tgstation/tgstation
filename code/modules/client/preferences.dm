@@ -783,7 +783,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>[category]</h3>"
 				for (var/i in kb_categories[category])
 					var/datum/keybinding/kb = i
-					if(!length(user_binds[kb.name]))
+					if(!length(user_binds[kb.name]) || user_binds[kb.name][1] == "Unbound")
 						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
 						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
 						if(LAZYLEN(default_keys))
@@ -1652,6 +1652,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							full_key = "[AltMod][CtrlMod][new_key]"
 						else
 							full_key = "[AltMod][CtrlMod][ShiftMod][numpad][new_key]"
+					if(kb_name in key_bindings[full_key]) //We pressed the same key combination that was already bound here, so let's remove to re-add and re-sort.
+						key_bindings[full_key] -= kb_name
 					if(key_bindings[old_key])
 						key_bindings[old_key] -= kb_name
 						if(!length(key_bindings[old_key]))
