@@ -242,17 +242,15 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
-	var/aimming_for_mouth  = zone_selected == BODY_ZONE_PRECISE_MOUTH
-	if(aimming_for_mouth)
+	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
-		var/target_restrained = target.restrained()
-		if(target_on_help_and_unarmed || target_restrained)
+		if(target_on_help_and_unarmed || target.restrained())
 			do_slap_animation(target)
 			playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
 				"<span class='notice'>You slap [target] in the face! </span>",\
 			"You hear a slap.")
-			if(target.dna && target.dna.species)
+			if(target.dna?.species)
 				target.dna.species.stop_wagging_tail(target)
 			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
