@@ -114,12 +114,10 @@
 	.["light_on"] = borgo?.lamp_enabled
 	.["comp_light_color"] = borgo?.lamp_color
 
-//Overrides the ui_act to make the flashlight controls link to the borg instead
+//Overrides the ui_act to make the flashlight controls link to the borg instead.
+//No need to call parent, as this device is made inaccessable from anyone that shouldn't
+//be using it via other means (inaccessable to ghosts, shuts down while borg is offline, etc).
 /obj/item/modular_computer/tablet/integrated/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
 	switch(action)
 		if("PC_toggle_light")
 			if(!borgo)
