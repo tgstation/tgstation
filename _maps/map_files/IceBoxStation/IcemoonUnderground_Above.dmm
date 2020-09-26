@@ -5379,6 +5379,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
+"PG" = (
+/turf/open/floor/plating/snowed/smoothed,
+/area/icemoon/underground/explored)
 "PR" = (
 /obj/machinery/requests_console{
 	department = "Hydroponics";
@@ -5430,6 +5433,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"Qh" = (
+/obj/structure/marker_beacon{
+	icon_state = "markerburgundy-on"
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Qv" = (
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
@@ -49121,7 +49130,7 @@ Et
 Fp
 Fp
 Fp
-Fp
+PG
 Fp
 Fp
 Fp
@@ -49383,9 +49392,9 @@ Fp
 Fp
 Fp
 Fp
+PG
 Fp
-Fp
-Fp
+PG
 Fp
 HQ
 Et
@@ -49644,8 +49653,8 @@ Fp
 Fp
 Fp
 Fp
-Fp
-Fp
+PG
+Qh
 Fp
 Fp
 ah
@@ -49902,7 +49911,7 @@ Et
 Et
 Fp
 Fp
-Fp
+PG
 Fp
 Et
 Et
@@ -50162,7 +50171,7 @@ Et
 Fp
 Fp
 Fp
-Fp
+PG
 Fp
 Et
 Et
@@ -50420,7 +50429,7 @@ Et
 Et
 HQ
 Fp
-Fp
+PG
 Fp
 Et
 Et
@@ -50677,7 +50686,7 @@ ah
 Et
 Et
 Et
-Fp
+Qh
 Fp
 Fp
 Fp
@@ -50938,7 +50947,7 @@ Fp
 Fp
 Fp
 Fp
-Fp
+PG
 Fp
 HQ
 Et
@@ -51455,7 +51464,7 @@ Et
 Et
 Et
 Fp
-Fp
+PG
 Fp
 Et
 Fp
@@ -51969,10 +51978,10 @@ ah
 ah
 ah
 Et
+Qh
 Fp
 Fp
-Fp
-Fp
+PG
 Fp
 Fp
 Fp
@@ -52230,8 +52239,8 @@ Et
 Et
 Fp
 Fp
-Fp
-Fp
+PG
+PG
 EY
 hM
 hM
@@ -52488,7 +52497,7 @@ Et
 Et
 Et
 Fp
-Fp
+PG
 Fa
 Up
 Vj
@@ -52745,7 +52754,7 @@ Et
 Et
 Fp
 Fp
-Fp
+PG
 EY
 hM
 hM
