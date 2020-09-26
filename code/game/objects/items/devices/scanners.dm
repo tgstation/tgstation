@@ -145,7 +145,11 @@ GENE SCANNER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(isliving(user) && (user.incapacitated() || user.is_blind()))
+	if(user.incapacitated())
+		return
+
+	if(user.is_blind())
+		to_chat(user, "<span class='warning'>You realize that [scanner] has no accessibility support for the blind!</span>")
 		return
 
 	// the final list of strings to render
@@ -457,6 +461,10 @@ GENE SCANNER
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
 	if(!istype(patient))
+		return
+
+	if(scanner && user.is_blind())
+		to_chat(user, "<span class='warning'>You realize that [scanner] has no accessibility support for the blind!</span>")
 		return
 
 	var/render_list = ""
