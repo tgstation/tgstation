@@ -405,6 +405,14 @@
 	..()
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
+/**
+  * Does a slap animation on an atom
+  *
+  * Uses do_attack_animation to animate the attacker attacking
+  * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+  * Arguments:
+  * * atom/A - atom being slapped
+  */
 /mob/living/proc/do_slap_animation(atom/A)
 	do_attack_animation(A, no_effect=TRUE)
 	var/image/I = image('icons/effects/effects.dmi', A, "slapglove", A.layer + 0.1)
