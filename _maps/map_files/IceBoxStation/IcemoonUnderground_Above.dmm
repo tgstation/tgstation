@@ -995,6 +995,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"cY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "cZ" = (
 /obj/machinery/mineral/equipment_vendor,
 /obj/effect/turf_decal/tile/brown{
@@ -2527,6 +2533,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"mj" = (
+/turf/open/floor/plating,
+/area/storage/mining)
+"mn" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall,
+/area/storage/mining)
 "mL" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -2586,6 +2599,12 @@
 /area/mine/laborcamp)
 "nB" = (
 /obj/structure/ladder,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "nE" = (
@@ -2657,6 +2676,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"oM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "oO" = (
 /obj/structure/table,
 /obj/item/gps/mining,
@@ -2982,6 +3007,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"tB" = (
+/turf/open/floor/plasteel/elevatorshaft,
+/area/storage/mining)
 "tI" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3003,6 +3031,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"up" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Public Mining Storage"
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "uG" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/red{
@@ -3135,6 +3169,9 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "xn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
 "xH" = (
@@ -3274,8 +3311,8 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "AT" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
@@ -3384,6 +3421,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/storage/mining)
+"Ck" = (
+/obj/structure/sign/warning,
+/turf/closed/wall,
+/area/storage/mining)
 "Cr" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag1";
@@ -3422,6 +3463,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"CS" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "Dh" = (
 /obj/machinery/light{
 	dir = 4
@@ -3482,10 +3529,15 @@
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "DZ" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Public Mining Storage"
+/obj/structure/cable,
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = /area/storage/mining;
+	dir = 1;
+	name = "Public Mining APC";
+	pixel_y = 23
 	},
-/turf/open/floor/plasteel/dark,
+/obj/item/reagent_containers/food/drinks/bottle/hooch,
+/turf/open/floor/plating,
 /area/storage/mining)
 "Ee" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3551,8 +3603,8 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Fc" = (
-/obj/structure/sign/warning,
-/turf/closed/wall,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/storage/mining)
 "Fd" = (
 /obj/structure/cable,
@@ -3861,6 +3913,9 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"Kf" = (
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "KE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3873,6 +3928,12 @@
 /obj/structure/closet/crate,
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored/rivers)
+"Lb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "Lg" = (
 /obj/item/clothing/under/color/jumpskirt/random,
 /obj/effect/turf_decal/tile/brown{
@@ -3929,6 +3990,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"LX" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "Ml" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
@@ -4227,6 +4294,10 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Re" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/open/floor/plating,
+/area/storage/mining)
+"Rg" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/storage/mining)
@@ -4555,6 +4626,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"Wd" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "Wn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -4661,10 +4738,9 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Yl" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
 /area/storage/mining)
 "Ym" = (
 /obj/structure/chair{
@@ -31130,11 +31206,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+wd
+wd
+wd
 ah
 ah
 ah
@@ -31386,13 +31462,13 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+wd
+wd
+wd
+wd
+wd
 ah
 ah
 ah
@@ -31642,15 +31718,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+wd
+CS
+wd
+CS
+wd
+wd
+wd
 ah
 ah
 ah
@@ -31899,15 +31975,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+Ck
+up
+Ck
+YF
+Rg
+wd
 ah
 ah
 ah
@@ -32156,15 +32232,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+mn
+tB
+tB
+tB
+YF
+Rg
+wd
 ah
 ah
 ah
@@ -32413,15 +32489,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+YF
+YF
+YF
+tB
+tB
+tB
+YF
+Rg
+wd
 ah
 ah
 ah
@@ -32670,15 +32746,15 @@ ah
 ah
 ah
 ah
-ah
-ah
+YF
+DZ
+YF
+YF
+YF
+YF
+Ck
+Wd
 wd
-wd
-wd
-wd
-wd
-ah
-ah
 ah
 ah
 ah
@@ -32927,15 +33003,15 @@ ah
 ah
 ah
 ah
-ah
-wd
-wd
+YF
+Fc
+mj
 Re
-Re
-Re
+Kf
+Kf
+up
 wd
 wd
-ah
 ah
 ah
 ah
@@ -33184,14 +33260,14 @@ ah
 ah
 ah
 ah
-wd
-wd
+YF
+Yl
 YF
 YF
+Kf
 YF
-YF
-YF
-wd
+Ck
+Wd
 wd
 ah
 ah
@@ -33441,14 +33517,14 @@ ah
 ah
 ah
 ah
-wd
-wd
+YF
+YF
 YF
 xn
-xn
-xn
-Fc
-Yl
+cY
+Lb
+YF
+wd
 wd
 ah
 ah
@@ -33703,8 +33779,8 @@ wd
 YF
 AT
 nB
-xn
-DZ
+oM
+YF
 wd
 wd
 ah
@@ -33958,11 +34034,11 @@ ah
 wd
 wd
 YF
-xn
-xn
-xn
-Fc
-Yl
+YF
+YF
+YF
+YF
+wd
 wd
 ah
 ah
@@ -34214,11 +34290,11 @@ ah
 ah
 wd
 wd
-YF
-YF
-YF
-YF
-YF
+LX
+Rg
+Rg
+Rg
+LX
 wd
 wd
 ah
@@ -34472,9 +34548,9 @@ ah
 ah
 wd
 wd
-Re
-Re
-Re
+wd
+wd
+wd
 wd
 wd
 ah
