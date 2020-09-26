@@ -1,0 +1,9 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Added a search bar to the Stack Menu UI."
+  - tweak: "Improvements to the Teleporter UI layout."
+  - tweak: "Turret Control UI window height will now scale depending if you are a silicon or not."
+  - tweak: "Shuttle Console UI will now properly show recharging status, and will not wildly shift window upon dropdown selection."
+  - bugfix: "Exosuit Control Console UI will now properly show multiple pilots."
+  - spellcheck: "Fixed a minor grammar mistake in the Holopad UI."
