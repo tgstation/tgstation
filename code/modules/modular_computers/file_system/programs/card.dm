@@ -94,8 +94,9 @@
 	return FALSE
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2

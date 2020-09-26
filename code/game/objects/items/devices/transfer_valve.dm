@@ -210,7 +210,8 @@
 	return data
 
 /obj/item/transfer_valve/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

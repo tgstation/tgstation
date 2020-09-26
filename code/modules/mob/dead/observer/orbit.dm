@@ -15,7 +15,8 @@
 		ui.open()
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if (..())
+	. = ..()
+	if(.)
 		return
 
 	if (action == "orbit")
