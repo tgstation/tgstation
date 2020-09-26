@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "The orbit menu now shows the total number of ghosts orbiting something"
