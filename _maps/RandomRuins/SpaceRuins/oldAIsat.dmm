@@ -403,6 +403,7 @@
 /area/template_noop)
 "bt" = (
 /obj/structure/table,
+/obj/item/gps/spaceruin,
 /obj/item/radio/off,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -894,6 +895,16 @@
 "da" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
+/area/tcommsat/oldaisat)
+"jZ" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/turf/open/floor/plasteel/airless,
+/area/tcommsat/oldaisat)
+"AX" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/spawner/lootdrop/space/fancytool,
+/turf/open/floor/plasteel/airless/dark,
 /area/tcommsat/oldaisat)
 
 (1,1,1) = {"
@@ -2573,7 +2584,7 @@ bB
 bH
 bw
 bw
-bw
+AX
 bT
 bw
 bw
@@ -3458,7 +3469,7 @@ ag
 ag
 ag
 bQ
-aD
+jZ
 bY
 az
 aD

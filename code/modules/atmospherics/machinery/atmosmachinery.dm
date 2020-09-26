@@ -41,6 +41,9 @@
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
 
+	/// Whether it can be painted
+	var/paintable = FALSE
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
@@ -339,3 +342,6 @@
 
 /obj/machinery/atmospherics/proc/update_layer()
 	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE
+
+/obj/machinery/atmospherics/proc/paint(paint_color)
+	return FALSE

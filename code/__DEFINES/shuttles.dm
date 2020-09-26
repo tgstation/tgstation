@@ -5,6 +5,7 @@
 #define SHUTTLE_CALL		"called"
 #define SHUTTLE_DOCKED		"docked"
 #define SHUTTLE_STRANDED	"stranded"
+#define SHUTTLE_DISABLED	"disabled"
 #define SHUTTLE_ESCAPE		"escape"
 #define SHUTTLE_ENDGAME		"endgame: game over"
 #define SHUTTLE_RECHARGING		"recharging"
