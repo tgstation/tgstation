@@ -36707,9 +36707,12 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQH" = (
-/obj/machinery/portable_atmospherics/canister/bz,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

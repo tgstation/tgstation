@@ -25718,7 +25718,13 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bad" = (
-/obj/machinery/portable_atmospherics/canister/bz,
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bae" = (
@@ -26518,6 +26524,9 @@
 /obj/structure/table/reinforced,
 /obj/item/analyzer,
 /obj/item/analyzer,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbJ" = (
@@ -27303,6 +27312,9 @@
 /area/engine/atmos)
 "bdj" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bdk" = (
