@@ -8,18 +8,20 @@
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	size = 20
 	tgui_id = "NtosCargo"
+	///Are you actually placing orders with it?
 	var/requestonly = TRUE
+	///Can the tablet see or buy illegal stuff?
 	var/contraband = FALSE
+	///Is it being bought from a personal account, or is it being done via a budget/cargo?
 	var/self_paid = FALSE
+	///Can this console approve purchase requests?
+	var/can_approve_requests = FALSE
+	///What do we say when the shuttle moves with living beings on it.
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
 		cannot transport live organisms, human remains, classified nuclear weaponry, \
 		homing beacons or machinery housing any form of artificial intelligence."
+	///If you're being raided by pirates, what do you tell the crew?
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	/// radio used by the app to send messages on supply channel
-	var/obj/item/radio/headset/radio
-	/// var that tracks message cooldown
-	var/message_cooldown
-	var/list/loaded_coupons
 
 /datum/computer_file/program/budgetorders/proc/get_export_categories()
 	. = EXPORT_CARGO
@@ -63,8 +65,12 @@
 		if(ACCESS_HEADS in id_card.access)
 			requestonly = FALSE
 			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+			can_approve_requests = TRUE
 		else
 			requestonly = TRUE
+			can_approve_requests = FALSE
+	else
+		requestonly = TRUE
 	if(buyer)
 		data["points"] = buyer.account_balance
 
@@ -98,7 +104,9 @@
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
-	data["can_send"] = FALSE
+	data["can_send"] = FALSE	//There is no situation where I want the app to be able to send the shuttle AWAY from the station, but conversely is fine.
+	data["can_approve_requests"] = can_approve_requests
+	data["app_cost"] = TRUE
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -210,21 +218,12 @@
 				computer.say("ERROR: Small crates may only be purchased by private accounts.")
 				return
 
-			var/obj/item/coupon/applied_coupon
-			for(var/i in loaded_coupons)
-				var/obj/item/coupon/coupon_check = i
-				if(pack.type == coupon_check.discounted_pack)
-					computer.say("Coupon found! [round(coupon_check.discount_pct_off * 100)]% off applied!")
-					coupon_check.moveToNullspace()
-					applied_coupon = coupon_check
-					break
-
 			if(!self_paid && ishuman(usr) && !account)
 				var/obj/item/card/id/id_card = card_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
 			if((requestonly && !self_paid) || !(card_slot?.GetID()))
 				SSshuttle.requestlist += SO
@@ -232,17 +231,11 @@
 				SSshuttle.shoppinglist += SO
 				if(self_paid)
 					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
-			if(requestonly && message_cooldown < world.time)
-				radio.talk_into(src, "A new order has been requested.", RADIO_CHANNEL_SUPPLY)
-				message_cooldown = world.time + 30 SECONDS
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 				if(SO.id == id)
-					if(SO.applied_coupon)
-						computer.say("Coupon refunded.")
-						SO.applied_coupon.forceMove(get_turf(src))
 					SSshuttle.shoppinglist -= SO
 					. = TRUE
 					break
@@ -253,6 +246,9 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.requestlist)
 				if(SO.id == id)
+					var/obj/item/card/id/id_card = card_slot?.GetID()
+					if(id_card && id_card?.registered_account)
+						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 					SSshuttle.requestlist -= SO
 					SSshuttle.shoppinglist += SO
 					. = TRUE

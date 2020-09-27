@@ -131,6 +131,7 @@ export const CargoCatalog = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     self_paid,
+    app_cost,
   } = data;
   const supplies = toArray(data.supplies);
   const [
@@ -199,7 +200,7 @@ export const CargoCatalog = (props, context) => {
                       onClick={() => act('add', {
                         id: pack.id,
                       })}>
-                      {formatMoney(self_paid && !pack.goody
+                      {formatMoney((self_paid && !pack.goody) || app_cost
                         ? Math.round(pack.cost * 1.1)
                         : pack.cost)}
                       {' cr'}
@@ -220,6 +221,7 @@ const CargoRequests = (props, context) => {
   const {
     requestonly,
     can_send,
+    can_approve_requests,
   } = data;
   const requests = data.requests || [];
   // Labeled list reimplementation to squeeze extra columns out of it
@@ -259,7 +261,7 @@ const CargoRequests = (props, context) => {
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
-              {!requestonly || can_send &&(
+              {(!requestonly || can_send)&& can_approve_requests &&(
                 <Table.Cell collapsing>
                   <Button
                     icon="check"
@@ -288,10 +290,11 @@ const CargoCartButtons = (props, context) => {
   const {
     requestonly,
     can_send,
+    can_approve_requests,
   } = data;
   const cart = data.cart || [];
   const total = cart.reduce((total, entry) => total + entry.cost, 0);
-  if (requestonly || !can_send) {
+  if (requestonly || !can_send || !can_approve_requests) {
     return null;
   }
   return (
