@@ -154,29 +154,29 @@ GLOBAL_LIST_EMPTY_TYPED(corners_diagonal_smooth_effect_holder, /atom/movable/cor
 	adjacencies = reverse_ndir(adjacencies)
 	if(adjacencies == NONE)
 		return
-	var/atom/movable/corner_diagonal_smooth_effect/corner_appearance = new()
-	var/list/U = list(corner_appearance)
-	vis_contents.Cut()
+	var/list/corner_appearance_vars = list()
 
 	if(fixed_underlay)
 		if(fixed_underlay["space"])
-			corner_appearance.icon = 'icons/turf/space.dmi'
-			corner_appearance.icon_state = SPACE_ICON_STATE
-			corner_appearance.plane = PLANE_SPACE
+			corner_appearance_vars[icon] = 'icons/turf/space.dmi'
+			corner_appearance_vars[icon_state] = SPACE_ICON_STATE
+			corner_appearance_vars[plane] = PLANE_SPACE
 		else
-			corner_appearance.icon = fixed_underlay["icon"]
-			corner_appearance.icon_state = fixed_underlay["icon_state"]
+			corner_appearance_vars[icon] = fixed_underlay["icon"]
+			corner_appearance_vars[icon_state] = fixed_underlay["icon_state"]
 	else
 		var/turned_adjacency = turn(adjacencies, 180)
 		var/turf/neighbor_turf = get_step(src, turned_adjacency)
-		if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance, src, turned_adjacency))
+		if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency))
 			neighbor_turf = get_step(src, turn(adjacencies, 135))
-			if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance, src, turned_adjacency))
+			if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency))
 				neighbor_turf = get_step(src, turn(adjacencies, 225))
 		//if all else fails, ask our own turf
-		if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance, src, turned_adjacency) && !get_smooth_underlay_icon(corner_appearance, src, turned_adjacency))
-			corner_appearance.icon = DEFAULT_UNDERLAY_ICON
-			corner_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
+		if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency) && !get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency))
+			corner_appearance_vars[icon] = DEFAULT_UNDERLAY_ICON
+			corner_appearance_vars[icon_state] = DEFAULT_UNDERLAY_ICON_STATE
+
+	vis_contents.Cut()
 	vis_contents = U
 
 	// Drop posters which were previously placed on this wall.
