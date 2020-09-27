@@ -190,7 +190,7 @@
 		oxygen_used = breath.get_moles(/datum/gas/oxygen)
 		clear_alert("not_enough_oxy")
 
-	breath.adjust_moles(/datum/gas/oxygen, oxygen_used)
+	breath.adjust_moles(/datum/gas/oxygen, -oxygen_used)
 	breath.adjust_moles(/datum/gas/carbon_dioxide, oxygen_used)
 
 	//CARBON DIOXIDE
