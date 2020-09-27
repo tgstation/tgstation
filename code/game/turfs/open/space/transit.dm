@@ -6,10 +6,10 @@
 	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
 
-/turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open/space/transit/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
 	. = ..()
-	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
-	underlay_appearance.transform = turn(matrix(), get_transit_angle(asking_turf))
+	corner_appearance_vars["icon_state"] = "speedspace_ns_[get_transit_state(asking_turf)]"
+
 
 /turf/open/space/transit/south
 	dir = SOUTH

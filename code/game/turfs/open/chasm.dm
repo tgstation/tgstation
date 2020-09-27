@@ -48,9 +48,9 @@
 			return TRUE
 	return FALSE
 
-/turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
+/turf/open/chasm/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/floors.dmi'
+	corner_appearance_vars["icon_state"] = "basalt"
 	return TRUE
 
 /turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
@@ -108,7 +108,7 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/jungle
 
-/turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "dirt"
+/turf/open/chasm/jungle/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/floors.dmi'
+	corner_appearance_vars["icon_state"] = "dirt"
 	return TRUE

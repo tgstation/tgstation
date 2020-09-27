@@ -315,7 +315,7 @@
 	burnt = TRUE
 	update_icon()
 
-/turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open/floor/carpet/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
 	return FALSE
 
 
@@ -328,9 +328,9 @@
 	icon_state = "smooth"
 	tiled_dirt = FALSE
 
-/turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
+/turf/open/floor/fakepit/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/floors.dmi'
+	corner_appearance_vars["icon_state"] = "basalt"
 	return TRUE
 
 /turf/open/floor/fakespace
@@ -345,8 +345,8 @@
 	. = ..()
 	icon_state = SPACE_ICON_STATE
 
-/turf/open/floor/fakespace/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
-	underlay_appearance.plane = PLANE_SPACE
+/turf/open/floor/fakespace/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/space.dmi'
+	corner_appearance_vars["icon_state"] = SPACE_ICON_STATE
+	corner_appearance_vars["plane"] = PLANE_SPACE
 	return TRUE

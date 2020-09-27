@@ -127,7 +127,7 @@
 
 /turf/open/indestructible/hierophant/two
 
-/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
 	return FALSE
 
 /turf/open/indestructible/paper

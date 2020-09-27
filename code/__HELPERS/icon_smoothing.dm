@@ -158,12 +158,12 @@ GLOBAL_LIST_EMPTY_TYPED(corners_diagonal_smooth_effect_holder, /atom/movable/cor
 
 	if(fixed_underlay)
 		if(fixed_underlay["space"])
-			corner_appearance_vars[icon] = 'icons/turf/space.dmi'
-			corner_appearance_vars[icon_state] = SPACE_ICON_STATE
-			corner_appearance_vars[plane] = PLANE_SPACE
+			corner_appearance_vars["icon"] = 'icons/turf/space.dmi'
+			corner_appearance_vars["icon_state"] = SPACE_ICON_STATE
+			corner_appearance_vars["plane"] = PLANE_SPACE
 		else
-			corner_appearance_vars[icon] = fixed_underlay["icon"]
-			corner_appearance_vars[icon_state] = fixed_underlay["icon_state"]
+			corner_appearance_vars["icon"] = fixed_underlay["icon"]
+			corner_appearance_vars["icon_state"] = fixed_underlay["icon_state"]
 	else
 		var/turned_adjacency = turn(adjacencies, 180)
 		var/turf/neighbor_turf = get_step(src, turned_adjacency)
@@ -173,11 +173,23 @@ GLOBAL_LIST_EMPTY_TYPED(corners_diagonal_smooth_effect_holder, /atom/movable/cor
 				neighbor_turf = get_step(src, turn(adjacencies, 225))
 		//if all else fails, ask our own turf
 		if(!neighbor_turf.get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency) && !get_smooth_underlay_icon(corner_appearance_vars, src, turned_adjacency))
-			corner_appearance_vars[icon] = DEFAULT_UNDERLAY_ICON
-			corner_appearance_vars[icon_state] = DEFAULT_UNDERLAY_ICON_STATE
+			corner_appearance_vars["icon"] = DEFAULT_UNDERLAY_ICON
+			corner_appearance_vars["icon_state"] = DEFAULT_UNDERLAY_ICON_STATE
+
+	var/corner_vars = "[corner_appearance_vars["icon"]];[corner_appearance_vars["icon_state"]];[corner_appearance_vars["dir"]];[corner_appearance_vars["layer"]];[corner_appearance_vars["plane"]];[corner_appearance_vars["vis_flags"]]"
+	var/atom/movable/corner_diagonal_smooth_effect/cdse = GLOB.corners_diagonal_smooth_effect_holder[corner_vars]
+	if(!cdse)
+		cdse = new()
+		cdse.icon = corner_appearance_vars["icon"]
+		cdse.icon_state = corner_appearance_vars["icon_state"]
+		cdse.dir = corner_appearance_vars["dir"]
+		cdse.layer = corner_appearance_vars["layer"]
+		cdse.plane = corner_appearance_vars["plane"]
+		cdse.vis_flags = corner_appearance_vars["vis_flags"]
+		GLOB.corners_diagonal_smooth_effect_holder[corner_vars] = cdse
 
 	vis_contents.Cut()
-	vis_contents = U
+	vis_contents = list(cdse)
 
 	// Drop posters which were previously placed on this wall.
 	for(var/obj/structure/sign/poster/wall_poster in src)

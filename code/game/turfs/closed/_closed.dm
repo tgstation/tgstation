@@ -10,7 +10,7 @@
 	. = ..()
 	SSair.high_pressure_delta -= src
 
-/turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/closed/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
 	return FALSE
 
 /turf/closed/CanAllowThrough(atom/movable/mover, turf/target)
@@ -187,9 +187,9 @@
 	explosion_block = 50
 	baseturfs = /turf/closed/indestructible/necropolis
 
-/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "necro1"
+/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/floors.dmi'
+	corner_appearance_vars["icon_state"] = "necro1"
 	return TRUE
 
 /turf/closed/indestructible/riveted/boss
@@ -205,9 +205,9 @@
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE
 
-/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/floors.dmi'
-	underlay_appearance.icon_state = "basalt"
+/turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/floors.dmi'
+	corner_appearance_vars["icon_state"] = "basalt"
 	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant

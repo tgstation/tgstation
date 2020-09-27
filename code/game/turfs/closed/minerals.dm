@@ -48,10 +48,10 @@
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
 		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 
-/turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+/turf/closed/mineral/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
 	if(turf_type)
-		underlay_appearance.icon = initial(turf_type.icon)
-		underlay_appearance.icon_state = initial(turf_type.icon_state)
+		corner_appearance_vars["icon"] = initial(turf_type.icon)
+		corner_appearance_vars["icon_state"] = initial(turf_type.icon_state)
 		return TRUE
 	return ..()
 

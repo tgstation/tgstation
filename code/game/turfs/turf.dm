@@ -475,10 +475,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(ismob(A) || .)
 			A.narsie_act()
 
-/turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = icon
-	underlay_appearance.icon_state = icon_state
-	underlay_appearance.dir = adjacency_dir
+/turf/proc/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = icon
+	corner_appearance_vars["icon_state"] = icon_state
+	corner_appearance_vars["dir"] = adjacency_dir
+	corner_appearance_vars["layer"] = layer
+	corner_appearance_vars["plane"] = plane
+	corner_appearance_vars["vis_flags"] = vis_flags
 	return TRUE
 
 /turf/proc/add_blueprints(atom/movable/AM)

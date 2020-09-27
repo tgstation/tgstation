@@ -217,10 +217,12 @@
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return FALSE
 
-/turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
-	underlay_appearance.plane = PLANE_SPACE
+/turf/open/space/get_smooth_underlay_icon(list/corner_appearance_vars, turf/asking_turf, adjacency_dir)
+	corner_appearance_vars["icon"] = 'icons/turf/space.dmi'
+	corner_appearance_vars["icon_state"] = icon_state	
+	corner_appearance_vars["layer"] = layer
+	corner_appearance_vars["plane"] = plane
+	corner_appearance_vars["vis_flags"] = vis_flags
 	return TRUE
 
 
