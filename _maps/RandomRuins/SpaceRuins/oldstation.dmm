@@ -401,7 +401,7 @@
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "bf" = (
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "bg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue{
@@ -1384,7 +1384,7 @@
 "dF" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "dG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2019,7 +2019,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "fg" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -2649,9 +2649,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
-"gK" = (
-/turf/template_noop,
-/area/space/nearstation)
 "gL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
@@ -3474,7 +3471,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "iw" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical/old,
@@ -3690,7 +3687,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "iP" = (
 /obj/structure/chair{
 	dir = 1
@@ -4760,7 +4757,7 @@
 "lg" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "lh" = (
 /turf/closed/mineral/plasma,
 /area/ruin/unpowered)
@@ -4932,12 +4929,12 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "lI" = (
 /obj/structure/transit_tube,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "lJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/space/nasavoid/old,
@@ -5667,7 +5664,7 @@
 "nr" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -5996,10 +5993,6 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"nZ" = (
-/mob/living/simple_animal/hostile/carp,
-/turf/template_noop,
-/area/space/nearstation)
 "oa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -6384,7 +6377,7 @@
 "oR" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "oS" = (
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -6480,7 +6473,7 @@
 	icon_state = "small"
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "pf" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -6680,7 +6673,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "tn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair,
@@ -7496,7 +7489,7 @@
 /obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "Tk" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -7739,33 +7732,33 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
 aa
 ac
 ac
-gK
-nZ
+aa
+ab
 mH
 mH
 mH
 mH
 mH
-nZ
+ab
 kQ
 mH
 mH
 kQ
-gK
+aa
 aa
 aa
 aa
@@ -7786,7 +7779,7 @@ ab
 ac
 ac
 Td
-gK
+aa
 dF
 AK
 AK
@@ -7795,7 +7788,7 @@ bF
 lV
 AK
 AK
-gK
+aa
 aa
 aa
 ac
@@ -7814,7 +7807,7 @@ mH
 qk
 GP
 kQ
-gK
+aa
 aa
 aa
 aa
@@ -7844,7 +7837,7 @@ oA
 oE
 nC
 Ck
-gK
+aa
 aa
 ac
 ac
@@ -7863,7 +7856,7 @@ nB
 nK
 EV
 kQ
-gK
+aa
 aa
 nr
 aa
@@ -7942,11 +7935,11 @@ kb
 eH
 nD
 AK
-gK
-gK
+aa
+aa
 dF
-gK
-gK
+aa
+aa
 ac
 ac
 nk
@@ -7961,7 +7954,7 @@ le
 pp
 mH
 kQ
-gK
+aa
 ac
 ac
 aa
@@ -8027,7 +8020,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 lt
 me
 bw
@@ -8107,7 +8100,7 @@ Zg
 pv
 uT
 kQ
-gK
+aa
 ac
 ac
 ac
@@ -8191,13 +8184,13 @@ jk
 oP
 Cs
 oR
-gK
+aa
 dF
-gK
+aa
 dF
 pe
 dF
-gK
+aa
 kQ
 Tk
 Mt
@@ -8205,7 +8198,7 @@ qF
 Tk
 Mt
 mH
-gK
+aa
 aa
 aa
 aa
@@ -8225,7 +8218,7 @@ aa
 aa
 aa
 ni
-gK
+aa
 ch
 zJ
 mS
@@ -8239,22 +8232,22 @@ YN
 nE
 nG
 GU
-gK
+aa
 aa
 dF
 aa
 dF
 aa
 dF
-gK
+aa
 dF
-gK
-gK
+aa
+aa
 LY
-gK
-gK
+aa
+aa
 dF
-gK
+aa
 aa
 aa
 aa
@@ -8323,7 +8316,7 @@ aa
 aa
 dF
 aa
-gK
+aa
 ch
 np
 mV
@@ -8337,7 +8330,7 @@ bG
 GU
 DF
 GU
-gK
+aa
 aa
 dF
 aa
@@ -8372,21 +8365,21 @@ aa
 aa
 dF
 aa
-gK
+aa
 ch
 cr
 dM
 ch
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 dF
 aa
@@ -8421,12 +8414,12 @@ aa
 aa
 dF
 aa
-gK
+aa
 ch
 Cq
 dM
 ch
-gK
+aa
 aa
 aa
 aa
@@ -8465,17 +8458,17 @@ aa
 aa
 aa
 aa
-gK
+aa
 nr
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 bK
 mW
 mV
 bJ
-gK
+aa
 aa
 aa
 aa
@@ -8514,7 +8507,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 ga
 ga
 jE
@@ -8524,7 +8517,7 @@ jE
 mW
 mV
 bJ
-gK
+aa
 aa
 aa
 aa
@@ -8563,7 +8556,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 gb
 jV
 mp
@@ -8573,7 +8566,7 @@ jE
 mW
 mS
 ch
-gK
+aa
 aa
 aa
 aa
@@ -8609,10 +8602,10 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
 iT
 lk
 mG
@@ -8622,7 +8615,7 @@ ga
 mX
 nc
 mv
-gK
+aa
 aa
 aa
 aa
@@ -8658,7 +8651,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aZ
 dK
 dK
@@ -8671,7 +8664,7 @@ mF
 zJ
 mS
 mw
-gK
+aa
 aa
 aa
 aa
@@ -8707,7 +8700,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 RX
 fX
 fX
@@ -8720,7 +8713,7 @@ mM
 gi
 mZ
 mw
-gK
+aa
 aa
 aa
 aa
@@ -8756,7 +8749,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aZ
 dK
 dK
@@ -8769,7 +8762,7 @@ mF
 zJ
 mS
 mw
-gK
+aa
 aa
 aa
 aa
@@ -8805,10 +8798,10 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
 iT
 mD
 mF
@@ -8818,15 +8811,15 @@ jE
 uR
 uB
 mx
-gK
 aa
 aa
 aa
-gK
-gK
+aa
+aa
+aa
 my
-gK
-gK
+aa
+aa
 aa
 aa
 dF
@@ -8857,7 +8850,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 gL
 mA
 mA
@@ -8867,15 +8860,15 @@ jE
 zJ
 na
 ch
-gK
 aa
 aa
 aa
-gK
+aa
+aa
 fB
 vM
 fB
-gK
+aa
 aa
 aa
 dF
@@ -8906,7 +8899,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 jE
 jE
 jE
@@ -8916,15 +8909,15 @@ ga
 zJ
 mS
 bJ
-gK
 aa
 aa
 aa
-gK
+aa
+aa
 fC
 XJ
 fC
-gK
+aa
 aa
 aa
 dF
@@ -8955,29 +8948,29 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 bK
 zJ
 mV
 bJ
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
 fC
 XJ
 fC
-gK
-gK
-gK
+aa
+aa
+aa
 dF
-gK
+aa
 dF
 aa
 dF
@@ -9009,12 +9002,12 @@ aa
 dF
 aa
 aa
-gK
+aa
 ch
 np
 mV
 bJ
-gK
+aa
 eI
 eI
 eI
@@ -9026,7 +9019,7 @@ hk
 eI
 eI
 eI
-gK
+aa
 dF
 aa
 dF
@@ -9058,12 +9051,12 @@ aa
 dF
 aa
 aa
-gK
+aa
 ch
 mW
 mS
 bJ
-gK
+aa
 eI
 bv
 eK
@@ -9075,13 +9068,13 @@ hl
 hO
 id
 eI
-gK
+aa
 dF
-gK
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 dF
 aa
@@ -9107,7 +9100,7 @@ aa
 dF
 aa
 aa
-gK
+aa
 ch
 mW
 mS
@@ -9130,7 +9123,7 @@ eI
 eI
 eI
 eI
-gK
+aa
 aa
 dF
 aa
@@ -9156,7 +9149,7 @@ aa
 dF
 aa
 aa
-gK
+aa
 ch
 mW
 mS
@@ -9179,7 +9172,7 @@ iU
 ji
 gH
 eI
-gK
+aa
 aa
 dF
 aa
@@ -9205,7 +9198,7 @@ aa
 dF
 aa
 aa
-gK
+aa
 ch
 zJ
 mY
@@ -9228,7 +9221,7 @@ iV
 XJ
 pg
 dl
-gK
+aa
 aa
 dF
 aa
@@ -9250,11 +9243,11 @@ aa
 aa
 aa
 aa
-gK
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 bJ
 zJ
 mY
@@ -9277,10 +9270,10 @@ iW
 jj
 ie
 eI
-gK
-gK
+aa
+aa
 dF
-gK
+aa
 aa
 aa
 aa
@@ -9297,9 +9290,9 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
+aa
+aa
+aa
 aT
 aT
 aG
@@ -9329,9 +9322,9 @@ aG
 aT
 aT
 aT
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 aa
 aa
@@ -9346,7 +9339,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aT
 aT
 bb
@@ -9380,7 +9373,7 @@ kC
 aT
 aT
 aT
-gK
+aa
 aa
 aa
 aa
@@ -9394,8 +9387,8 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 aT
 ed
 aY
@@ -9429,8 +9422,8 @@ aU
 aU
 jQ
 aT
-gK
-gK
+aa
+aa
 aa
 aa
 ac
@@ -9442,8 +9435,8 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 as
 as
 as
@@ -9479,8 +9472,8 @@ kM
 aG
 aT
 aT
-gK
-gK
+aa
+aa
 lh
 ac
 ac
@@ -9491,7 +9484,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 as
 as
 dW
@@ -9529,7 +9522,7 @@ kD
 mz
 aT
 aG
-gK
+aa
 lh
 ac
 ac
@@ -9540,7 +9533,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aS
 aO
 bg
@@ -9589,7 +9582,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 al
 at
 bi
@@ -9638,7 +9631,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 am
 au
 aJ
@@ -9687,7 +9680,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 am
 av
 aK
@@ -9736,7 +9729,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 am
 aw
 aL
@@ -9785,7 +9778,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 an
 ax
 aI
@@ -9823,7 +9816,7 @@ bN
 kp
 pk
 bL
-gK
+aa
 ac
 aa
 aa
@@ -9834,7 +9827,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aS
 bP
 ax
@@ -9872,7 +9865,7 @@ bN
 bN
 ns
 aG
-gK
+aa
 aa
 aa
 aa
@@ -9883,7 +9876,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 as
 as
 fP
@@ -9921,7 +9914,7 @@ kF
 jP
 aG
 aG
-gK
+aa
 aa
 aa
 aa
@@ -9932,8 +9925,8 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 as
 as
 as
@@ -9969,8 +9962,8 @@ aG
 aT
 aT
 aG
-gK
-gK
+aa
+aa
 aa
 aa
 aa
@@ -9982,8 +9975,8 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 aT
 NK
 OC
@@ -10017,8 +10010,8 @@ aY
 aY
 la
 aT
-gK
-gK
+aa
+aa
 aa
 aa
 aa
@@ -10032,7 +10025,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aT
 fR
 It
@@ -10066,7 +10059,7 @@ jM
 aT
 aT
 aT
-gK
+aa
 aa
 aa
 aa
@@ -10081,7 +10074,7 @@ aa
 aa
 aa
 aa
-gK
+aa
 aT
 aT
 aT
@@ -10113,9 +10106,9 @@ aG
 aG
 aT
 aT
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10130,12 +10123,12 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 az
 cK
 cK
@@ -10158,11 +10151,11 @@ cW
 ia
 bN
 aG
-gK
-gK
-gK
+aa
+aa
+aa
 dF
-gK
+aa
 aa
 aa
 aa
@@ -10207,7 +10200,7 @@ bN
 ic
 bN
 aG
-gK
+aa
 aa
 aa
 dF
@@ -10256,7 +10249,7 @@ bL
 ij
 bL
 aT
-gK
+aa
 aa
 aa
 dF
@@ -10287,7 +10280,7 @@ az
 az
 az
 ff
-gK
+aa
 eJ
 fd
 ew
@@ -10301,11 +10294,11 @@ OV
 il
 eJ
 eJ
-gK
+aa
 iv
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 aa
 dF
@@ -10336,8 +10329,8 @@ az
 az
 bd
 lg
-gK
-gK
+aa
+aa
 eJ
 ex
 eV
@@ -10349,8 +10342,8 @@ hB
 hX
 im
 eJ
-gK
-gK
+aa
+aa
 iv
 aa
 aa
@@ -10386,7 +10379,7 @@ aa
 aa
 lH
 bd
-gK
+aa
 eJ
 eJ
 eJ
@@ -10398,7 +10391,7 @@ dv
 dv
 dv
 eJ
-gK
+aa
 aa
 iv
 aa
@@ -10435,19 +10428,19 @@ bd
 aa
 lg
 aa
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
 dF
 bf
 dF
-gK
-gK
+aa
+aa
 dF
-gK
-gK
+aa
+aa
 aa
 iO
 aa
@@ -10577,29 +10570,29 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
+aa
+aa
+aa
 ff
-gK
-gK
+aa
+aa
 ac
 fU
 ac
-gK
+aa
 dF
 bf
 dF
-gK
-gK
+aa
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 iv
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 aa
 dF
@@ -10626,13 +10619,13 @@ aa
 dF
 aa
 aa
-gK
+aa
 bE
 bY
 cv
 bY
 bE
-gK
+aa
 ac
 ac
 bE
@@ -10640,15 +10633,15 @@ bE
 bY
 bD
 bE
-gK
+aa
 dF
-gK
+aa
 bE
 bY
 jp
 bY
 bE
-gK
+aa
 aa
 aa
 dF
@@ -10675,29 +10668,29 @@ aa
 aa
 aa
 aa
-gK
+aa
 bE
 bZ
 cw
 lq
 bE
-gK
+aa
 ac
-gK
+aa
 bD
 he
 nR
 nn
 bE
-gK
+aa
 dF
-gK
+aa
 bE
 pb
 jq
 lA
 bE
-gK
+aa
 aa
 aa
 dF
@@ -10724,29 +10717,29 @@ dF
 aa
 aa
 aa
-gK
+aa
 bE
 Re
 cx
 cX
 bE
-gK
-gK
-gK
+aa
+aa
+aa
 bD
 Ve
 fV
 dh
 bE
-gK
+aa
 dF
-gK
+aa
 bD
 lB
 jr
 lw
 bE
-gK
+aa
 aa
 aa
 dF
@@ -10773,7 +10766,7 @@ aa
 aa
 nr
 aa
-gK
+aa
 bE
 ct
 cy
@@ -10795,7 +10788,7 @@ cb
 js
 cb
 bD
-gK
+aa
 aa
 aa
 dF
@@ -10822,8 +10815,8 @@ aa
 aa
 aa
 aa
-gK
-gK
+aa
+aa
 bE
 om
 cA
@@ -10844,7 +10837,7 @@ cD
 jr
 jJ
 bD
-gK
+aa
 aa
 aa
 dF
@@ -10861,18 +10854,18 @@ ab
 (65,1,1) = {"
 aa
 aa
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 bE
 cA
 ee
@@ -10893,13 +10886,13 @@ qI
 jw
 cD
 bD
-gK
-gK
-gK
+aa
+aa
+aa
 dF
-gK
-gK
-gK
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10909,8 +10902,8 @@ aa
 "}
 (66,1,1) = {"
 aa
-gK
-gK
+aa
+aa
 ad
 ad
 ad
@@ -10920,8 +10913,8 @@ ad
 ad
 ad
 ad
-gK
-gK
+aa
+aa
 bE
 dC
 ei
@@ -10948,7 +10941,7 @@ jA
 jA
 jA
 jA
-gK
+aa
 aa
 aa
 aa
@@ -10958,7 +10951,7 @@ aa
 "}
 (67,1,1) = {"
 aa
-gK
+aa
 ad
 ad
 ag
@@ -10970,7 +10963,7 @@ cz
 cz
 ad
 ad
-gK
+aa
 bE
 cD
 dc
@@ -10997,7 +10990,7 @@ jA
 kR
 kZ
 jA
-gK
+aa
 aa
 aa
 aa
@@ -11007,7 +11000,7 @@ aa
 "}
 (68,1,1) = {"
 aa
-gK
+aa
 ad
 af
 ag
@@ -11056,7 +11049,7 @@ aa
 "}
 (69,1,1) = {"
 aa
-gK
+aa
 ad
 ad
 ad
@@ -11105,7 +11098,7 @@ aa
 "}
 (70,1,1) = {"
 aa
-gK
+aa
 ad
 ag
 aH
@@ -11154,7 +11147,7 @@ aa
 "}
 (71,1,1) = {"
 aa
-gK
+aa
 ad
 ag
 ap
@@ -11193,7 +11186,7 @@ lF
 kS
 lb
 li
-gK
+aa
 aa
 aa
 aa
@@ -11203,7 +11196,7 @@ aa
 "}
 (72,1,1) = {"
 aa
-gK
+aa
 ad
 ad
 ad
@@ -11242,7 +11235,7 @@ ki
 cl
 cJ
 lj
-gK
+aa
 aa
 aa
 aa
@@ -11252,7 +11245,7 @@ aa
 "}
 (73,1,1) = {"
 aa
-gK
+aa
 ad
 ah
 ao
@@ -11301,7 +11294,7 @@ aa
 "}
 (74,1,1) = {"
 aa
-gK
+aa
 ad
 ai
 aq
@@ -11313,7 +11306,7 @@ ag
 de
 ag
 ad
-gK
+aa
 bE
 oq
 fW
@@ -11350,7 +11343,7 @@ aa
 "}
 (75,1,1) = {"
 aa
-gK
+aa
 ad
 ag
 ag
@@ -11362,7 +11355,7 @@ ag
 ag
 ag
 ad
-gK
+aa
 bE
 ca
 dc
@@ -11399,7 +11392,7 @@ aa
 "}
 (76,1,1) = {"
 aa
-gK
+aa
 ad
 ag
 ai
@@ -11411,7 +11404,7 @@ ag
 lm
 ai
 ad
-gK
+aa
 bE
 ca
 dc
@@ -11438,7 +11431,7 @@ jA
 kU
 lc
 jA
-gK
+aa
 aa
 aa
 aa
@@ -11448,7 +11441,7 @@ aa
 "}
 (77,1,1) = {"
 aa
-gK
+aa
 ad
 ag
 ai
@@ -11460,7 +11453,7 @@ ai
 aq
 ai
 ad
-gK
+aa
 bE
 dV
 hJ
@@ -11487,7 +11480,7 @@ jA
 jA
 jA
 jA
-gK
+aa
 aa
 aa
 aa
@@ -11497,7 +11490,7 @@ aa
 "}
 (78,1,1) = {"
 aa
-gK
+aa
 ad
 ao
 ag
@@ -11509,7 +11502,7 @@ xP
 ag
 dB
 ad
-gK
+aa
 bE
 ca
 je
@@ -11530,13 +11523,13 @@ nX
 ob
 ca
 bE
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
 dF
-gK
-gK
+aa
+aa
 aa
 aa
 aa
@@ -11546,7 +11539,7 @@ aa
 "}
 (79,1,1) = {"
 aa
-gK
+aa
 ad
 ad
 ad
@@ -11558,7 +11551,7 @@ ad
 ad
 ad
 ad
-gK
+aa
 bE
 ou
 ca
@@ -11579,7 +11572,7 @@ nY
 Yh
 od
 bE
-gK
+aa
 aa
 aa
 aa
@@ -11595,8 +11588,8 @@ aa
 "}
 (80,1,1) = {"
 aa
-gK
-gK
+aa
+aa
 ad
 ar
 aE
@@ -11606,7 +11599,7 @@ gk
 Ws
 vX
 ad
-gK
+aa
 bE
 bE
 cI
@@ -11628,7 +11621,7 @@ bD
 cI
 bE
 bE
-gK
+aa
 aa
 aa
 aa
@@ -11645,7 +11638,7 @@ aa
 (81,1,1) = {"
 aa
 aa
-gK
+aa
 ad
 ad
 aF
@@ -11655,7 +11648,7 @@ cF
 cY
 fy
 ad
-gK
+aa
 bE
 dh
 dh
@@ -11677,7 +11670,7 @@ Ve
 dh
 dh
 bE
-gK
+aa
 aa
 aa
 aa
@@ -11694,8 +11687,8 @@ aa
 (82,1,1) = {"
 aa
 aa
-gK
-gK
+aa
+aa
 ad
 ad
 ad
@@ -11703,8 +11696,8 @@ bA
 ad
 ad
 ad
-gK
-gK
+aa
+aa
 bE
 he
 os
@@ -11744,16 +11737,16 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
+aa
+aa
+aa
 ad
 ad
 ad
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
 bE
 bE
 bE
@@ -11775,7 +11768,7 @@ bE
 bE
 bE
 bE
-gK
+aa
 aa
 aa
 aa
@@ -11795,21 +11788,21 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
-gK
-gK
 aa
 aa
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 bE
 bE
 bE
@@ -11820,11 +11813,11 @@ bE
 bE
 bE
 bE
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11858,18 +11851,18 @@ aa
 aa
 aa
 aa
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
-gK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa

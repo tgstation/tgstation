@@ -17,7 +17,7 @@
 
 /obj/machinery/air_sensor/setup_network()
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.regester_port("status", list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag)) 
+	datalink = conn.regester_port("status", list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag))
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
@@ -240,10 +240,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
-	data["inputting"] =  input_info ? input_info["power"] : 0
+	data["inputting"] = input_info ? input_info["power"] : 0
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
 	data["outputting"] = output_info ? output_info["power"] : 0
-	data["outputPressure"] =  output_info ? output_info["internal"] : 0
+	data["outputPressure"] = output_info ? output_info["internal"] : 0
+	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
 	return data
 
 /obj/machinery/computer/atmos_control/tank/proc/send_update(tag, list/data)
@@ -273,8 +275,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = clamp(target, 0, 4500)
+				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 				send_update(output_tag, list("set_internal_pressure" = target))
 				. = TRUE
-
-

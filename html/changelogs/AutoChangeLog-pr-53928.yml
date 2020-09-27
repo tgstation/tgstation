@@ -1,0 +1,5 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - rscadd: "Mothpeople now have a preference to choose their antennae type from."
+  - bugfix: "Mothpeople will no longer have floating antennae when decapitated."

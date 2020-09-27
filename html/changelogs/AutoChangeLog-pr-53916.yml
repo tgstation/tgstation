@@ -1,0 +1,7 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - rscadd: "Additional language manuals available from certain space ruins. Lets you learn a new basic language from the roundstart species language pool - And if you're lucky, your friends can too."
+  - bugfix: "Pubby and Ceres whiteships now have nav consoles."
+  - bugfix: "All whiteships now emit GPS signals from their nav consoles. As a result, the Pubby whiteship now has a GPS signal."
+  - balance: "Space exploration got a number of tweaks. Expect to see some old loot vanish and some new loot to appear in its place. New random loot spawns have been added in various ruins. More ruins have GPS signals. Space-ruin and whiteship GPS signals are no longer uniquely named."

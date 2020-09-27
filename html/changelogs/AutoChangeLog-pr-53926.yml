@@ -1,0 +1,4 @@
+author: "YoYoBatty"
+delete-after: True
+changes: 
+  - bugfix: "Wall mounted sparkers should now work"

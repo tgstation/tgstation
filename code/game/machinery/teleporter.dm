@@ -99,9 +99,9 @@
 
 /obj/machinery/teleport/hub/syndicate/Initialize()
 	. = ..()
-	component_parts += new /obj/item/stock_parts/matter_bin/super(null)
+	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
+	LAZYADD(component_parts, super_bin)
 	RefreshParts()
-
 
 /obj/machinery/teleport/station
 	name = "teleporter station"

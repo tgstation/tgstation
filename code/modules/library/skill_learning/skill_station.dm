@@ -92,9 +92,15 @@
 		return
 	return ..()
 
-/obj/machinery/skill_station/dropContents(list/subset)
+/obj/machinery/skill_station/drop_contents()
+	. = ..()
+	inserted_skillchip = null
+
+/obj/machinery/skill_station/drop_stored_items(list/subset = null)
+	// Don't drop the skillchip, it's directly inserted into the machine.
+	// drop_contents() will drop everything including the skillchip.
 	subset = contents - inserted_skillchip
-	return ..() //This is kinda annoying
+	return ..()
 
 /obj/machinery/skill_station/proc/toggle_open(mob/user)
 	state_open ? close_machine() : open_machine()

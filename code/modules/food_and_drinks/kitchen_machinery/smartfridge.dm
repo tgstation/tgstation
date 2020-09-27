@@ -248,9 +248,16 @@
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
 	. = ..()
-	if(component_parts && component_parts.len)
-		component_parts.Cut()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts
+
 	component_parts = null
+	circuit = null
+
+	QDEL_LIST(old_parts)
+	RefreshParts()
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
