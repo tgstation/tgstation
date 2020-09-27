@@ -62,12 +62,12 @@
 			var/w = portrait_icon.Width()
 			var/h = portrait_icon.Height()
 			if((w != 23 || h != 23))// && (w != 24 || h != 25))//remove 23x23 for final merge
-				to_chat(ai, "span class='warning'>Sorry, only 23x23 Portraits are accepted.</span>")//and 24x25 Portraits
+				to_chat(ai, "<span class='warning'>Sorry, only 23x23 Portraits are accepted.</span>")//and 24x25 Portraits
 				return
 			to_chat(ai, "<span class='notice'>Portrait Accepted. Enjoy!</span>")
 			ai.icon_state = "ai-portrait-active"//background
 			var/mutable_appearance/MA = mutable_appearance(portrait_icon)
 			MA.pixel_x = 5//set to 4 for final merge
-			MA.pixel_y = 5
+			MA.pixel_y = 5 //set to 4 for final merge
 			ai.add_overlay(MA)
 			ui_close()
