@@ -238,6 +238,11 @@
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	credit_cost = 10000
 
+/datum/map_template/shuttle/emergency/discoinferno/prerequisites_met()
+	if(SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
+
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
