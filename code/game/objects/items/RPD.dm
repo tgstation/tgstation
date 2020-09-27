@@ -238,14 +238,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	ui_interact(user)
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rpd_upgrade))
-		var/obj/item/rpd_upgrade/rpd_up = W
-		if(!(upgrade & rpd_up.upgrade))
-			upgrade |= rpd_up.upgrade
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			qdel(W)
-	else
-		return ..()
+	if(!istype(W, /obj/item/rpd_upgrade))
+		return ..()	
+	var/obj/item/rpd_upgrade/rpd_up = W
+	if(!(upgrade & rpd_up.upgrade))
+		upgrade |= rpd_up.upgrade
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		qdel(W)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -351,9 +350,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it.
-	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH))
-		if(istype(A, /obj/machinery/atmospherics))
-			A = A.wrench_act(user, src)	
+	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
+		A = A.wrench_act(user, src)	
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
