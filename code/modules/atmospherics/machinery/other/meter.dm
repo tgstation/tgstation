@@ -47,7 +47,7 @@
 
 /obj/machinery/meter/setup_network()
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.regester_port("status", list("pressure" = 0))
+	datalink = conn.register_port("status", list("pressure" = 0))
 
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate

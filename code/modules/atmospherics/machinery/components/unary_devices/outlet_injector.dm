@@ -24,7 +24,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/setup_network()
 	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	datalink = net.regester_port("status", list(
+	datalink = net.register_port("status", list(
 		"id_tag" = id_tag,
 		"device" = "AO",
 		"power" = on,
@@ -69,12 +69,12 @@
 	if(!on || !is_operational)
 		return
 
-	ar/datum/gas_mixture/air_contents = airs[1]
+	var/datum/gas_mixture/air_contents = airs[1]
 
 	// updated by remote port
 	if(datalink && datalink.data["_updated"])
 		on = datalink.data["power"]
-		volume_rate = clamp(datalink.data["set_volume_rate"] , 0, MAX_TRANSFER_RATE)
+		volume_rate = clamp(datalink.data["volume_rate"] , 0, MAX_TRANSFER_RATE)
 		datalink.data["_updated"] = FALSE
 
 	if(air_contents.temperature > 0)
@@ -88,29 +88,25 @@
 		update_parents()
 
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ntnet_receive(datum/netdata/data)
+/obj/machinery/atmospherics/components/unary/outlet_injector/ntnet_receive(datum/netdata/signal)
 
 	if(signal.data["sigtype"]!="command")
 		return
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
-		if(datalink)
-			datalink.data["power"] =  on
+		datalink?.put("power",on)
 
 	if("power_toggle" in signal.data)
 		on = !on
-		if(datalink)
-			datalink.data["power"] =  on
+		datalink?.put("power",on)
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
 		volume_rate = clamp(number, 0, air_contents.volume)
-		if(datalink)
-			datalink.data["set_volume_rate"] =  number
+		datalink?.put("volume_rate",volume_rate)
 
-	datalink.clean() // clean the update flag
 	if(!("status" in signal.data)) //do not update_icon
 		update_icon()
 
@@ -135,6 +131,7 @@
 	switch(action)
 		if("power")
 			on = !on
+			datalink?.put("power",on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
@@ -147,11 +144,9 @@
 				. = TRUE
 			if(.)
 				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
+				datalink?.put("volume_rate",volume_rate)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	if(.)
-		if(datalink)
-			datalink.data["power"] =  on
-			datalink.data["set_volume_rate"] =  volume_rate
 		update_icon()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
@@ -182,7 +177,6 @@
 	icon_state = "inje_map-4"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos
-	frequency = NETWORK_ATMOS
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
 

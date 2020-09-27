@@ -17,7 +17,7 @@
 
 /obj/machinery/air_sensor/setup_network()
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.regester_port("status", list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag))
+	datalink = conn.register_port("status", list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag))
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
@@ -55,7 +55,7 @@
 	if(on)
 		if(datalink)
 			var/datum/gas_mixture/air_sample = return_air()
-			var/list/gasses = datalink["gases"]
+			var/list/gasses = datalink.data["gases"]
 			var/total_moles = air_sample.total_moles()
 
 			if(total_moles)
@@ -63,9 +63,9 @@
 					var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 					gasses[gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-			datalink["timestamp"] = world.time
-			datalink["pressure"] = air_sample.return_pressure()
-			datalink["temperature"] = air_sample.temperature
+			datalink.data["pressure"] = air_sample.return_pressure()
+			datalink.data["temperature"] = air_sample.temperature
+			datalink.data["_updated"] = TRUE // always updated
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -139,11 +139,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if(!datalink)
 			continue
 		data["sensors"] += list(list(
-			"id_tag"		= datalink["id_tag"],
+			"id_tag"		= datalink.data["id_tag"],
 			"long_name" 	= sanitize(long_name),
-			"pressure"		= datalink["pressure"],
-			"temperature"	= datalink["temperature"],
-			"gases"			= datalink["gases"]
+			"pressure"		= datalink.data["pressure"],
+			"temperature"	= datalink.data["temperature"],
+			"gases"			= datalink.data["gases"]
 		))
 	return data
 
@@ -240,41 +240,57 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
-	data["inputting"] = input_info ? input_info["power"] : 0
-	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
-	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
-	data["outputting"] = output_info ? output_info["power"] : 0
-	data["outputPressure"] = output_info ? output_info["internal"] : 0
-	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
+	if(input_info)
+		data["inputting"] = input_info.data["power"]
+		data["inputRate"] = input_info.data["volume_rate"]
+	else
+		data["inputting"] = 0
+		data["inputRate"] = 0
+	data["maxInputRate"] =  MAX_TRANSFER_RATE
+
+	if(output_info)
+		data["outputting"] = output_info["power"]
+		data["outputPressure"] = output_info["internal"]
+	else
+		data["outputting"] = 0
+		data["outputPressure"] = 0
+	data["maxOutputPressure"] = MAX_OUTPUT_PRESSURE
+
 	return data
 
-/obj/machinery/computer/atmos_control/tank/proc/send_update(tag, list/data)
-	var/datum/netdata/ndata = new(data)
-	ndata.receiver_id = tag
-	ndata.network_id = network_id
-	ndata.sender_id = hardware_id
-	ntnet_send(data)
-
-
-/obj/machinery/computer/atmos_control/tank/ui_act(action, params)
+/obj/machinery/computer/atmos_control/tank/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
 		if("input")
-			send_update(input_tag, list("power_toggle" = TRUE))
+			if(!input_info)
+				to_chat(ui.user, "ERROR: No input connection for the terminal detected")
+			else
+				input_info.data["power"] = !input_info.data["power"]
+				input_info.data["_updated"] = TRUE
 			. = TRUE
 		if("rate")
-			var/target = text2num(params["rate"])
-			if(!isnull(target))
-				target = clamp(target, 0, MAX_TRANSFER_RATE)
-				send_update(input_tag, list("set_volume_rate" = target))
-				. = TRUE
+			if(!input_info)
+				to_chat(ui.user, "ERROR: No input connection for the terminal detected")
+			else
+				var/target = text2num(params["rate"])
+				if(target != null)
+					input_info.data["volume_rate"] = clamp(target, 0, MAX_TRANSFER_RATE)
+					input_info.data["_updated"] = TRUE
+			. = TRUE
 		if("output")
-			send_update(output_tag, list("power_toggle" = TRUE))
+			if(!output_info)
+				to_chat(ui.user, "ERROR: No output connection for the terminal detected")
+			else
+				output_info.data["power"] = !output_info.data["power"]
+				output_info.data["_updated"] = TRUE
 			. = TRUE
 		if("pressure")
-			var/target = text2num(params["pressure"])
-			if(!isnull(target))
-				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
-				send_update(output_tag, list("set_internal_pressure" = target))
-				. = TRUE
+			if(!output_info)
+				to_chat(ui.user, "ERROR: No output connection for the terminal detected")
+			else
+				var/target = text2num(params["pressure"])
+				if(target != null)
+					output_info.data["internal"] = clamp(target, 0, MAX_OUTPUT_PRESSURE)
+					output_info.data["_updated"] = TRUE
+			. = TRUE

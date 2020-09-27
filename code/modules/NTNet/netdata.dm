@@ -22,7 +22,6 @@
 /datum/netlink/Destroy()
 	passkey = null
 	data = null
-	server = null
 	return ..()
 
 // I hate you all.  I want to operator overload []

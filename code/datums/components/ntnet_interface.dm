@@ -19,7 +19,7 @@
 	var/hardware_id						//text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
 	var/id_tag = null  			// named tag for looking up on mapping objects
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
-	var/list/regestered_scokets 		// list of connections
+	var/list/registered_sockets 		// list of connections
 
 /datum/component/ntnet_interface/Initialize(network_name, network_tag=null)
 	if(!network_name)
@@ -29,7 +29,7 @@
 	src.hardware_id = "[SSnetworks.get_next_HID()]"
 	src.id_tag = network_tag
 	SSnetworks.interfaces_by_hardware_id[src.hardware_id] = src
-	src.regestered_scokets = list()
+	src.registered_sockets = list()
 
 	if(isatom(parent))
 		var/atom/A = parent
@@ -46,32 +46,32 @@
 // can tell if the data has been updated by a latter timestamp and if the
 // list is missing the timestamp
 /datum/component/ntnet_interface/proc/connect_port(port)
-	if(regestered_scokets[port])
+	if(registered_sockets[port])
 		// Make a copy, it wil get rid of data once the component is removed
 		// So now you can qdel it like anything else
-		var/datum/netlink/original = regestered_scokets[link.port]
-		return new/datum/netlink/new(src, regestered_scokets[port].data)
+		var/datum/netlink/original = registered_sockets[port]
+		return new/datum/netlink(src, original.data)
 
 // just for a consitant interface
-/datum/component/ntnet_interface/proc/unregester_port(port)
-	if(regestered_scokets[link.port]) // should I runtime if this isn't in here?
-		var/datum/netlink/original = regestered_scokets[port]
+/datum/component/ntnet_interface/proc/deregister_port(port)
+	if(registered_sockets[port]) // should I runtime if this isn't in here?
+		var/datum/netlink/original = registered_sockets[port]
 		SEND_SIGNAL(src, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, port, original.data)
-		regestered_scokets.Remove(port)
+		registered_sockets.Remove(port)
 		qdel(original)
 
-/datum/component/ntnet_interface/proc/regester_port(port, list/data)
+/datum/component/ntnet_interface/proc/register_port(port, list/data)
 	if(!port || !length(data))
 		log_runtime("port is null or data is empty")
 		return
-	if(regestered_scokets[port])
+	if(registered_sockets[port])
 		log_runtime("port already regestered")
 		return
 	var/datum/netlink/original = new(src, data)
-	link.server_id = hardware_id
-	link.server_network = network.network_id
-	link.port = port
-	regestered_scokets[port] = original
+	original.server_id = hardware_id
+	original.server_network = network.network_id
+	original.port = port
+	registered_sockets[port] = original
 	return original
 
 /datum/component/ntnet_interface/Destroy()
@@ -81,10 +81,10 @@
 		var/atom/A = parent
 		A.hardware_id = null
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
-	for(var/port in regestered_scokets)
-		unregester_port(port)
-		qdel(regestered_scokets[port])  // hummm
-	regestered_scokets = null
+	for(var/port in registered_sockets)
+		deregister_port(port)
+		qdel(registered_sockets[port])  // hummm
+	registered_sockets = null
 	return ..()
 
 /datum/component/ntnet_interface/proc/join_network(network_name)

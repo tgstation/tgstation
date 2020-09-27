@@ -46,7 +46,7 @@
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
 		f_types += list(list("path" = path, "gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME]))
-	datalink = net.regester_port("status", list(
+	datalink = net.register_port("status", list(
 		"filter_types" = f_types,
 		"hardware_id" = net.hardware_id,
 		"long_name" = name,
@@ -118,7 +118,6 @@
 	.["filter_types"]	= datalink.data["filter_types"]
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
-	update_status()
 	check_turfs()
 	..()
 
@@ -196,7 +195,7 @@
 		scrubbing = datalink.data["scrubbing"]
 		widenet = datalink.data["widenet"]
 		filter_types = list()
-		for(var/gas in signal.data["filter_types"])
+		for(var/gas in datalink.data["filter_types"])
 			filter_types += gas_id2path(gas)
 		datalink.data["_updated"] = FALSE
 
@@ -221,42 +220,37 @@
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
-		if(datalink)
-			datalink.data["on"] = on
+		datalink?.put("on", on)
 
 	if("power_toggle" in signal.data)
 		on = !on
-		if(datalink)
-			datalink.data["on"] = on
+		datalink?.put("on", on)
 
 	if("widenet" in signal.data)
 		widenet = text2num(signal.data["widenet"])
-		if(datalink)
-			datalink.data["widenet"] = widenet
+		datalink?.put("widenet", widenet)
 
 	if("toggle_widenet" in signal.data)
 		widenet = !widenet
-		if(datalink)
-			datalink.data["widenet"] = widenet
+		datalink?.put("widenet", widenet)
 
 	var/old_scrubbing = scrubbing
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
-		if(datalink)
-			datalink.data["scrubbing"] = scrubbing
+		datalink?.put("widenet", scrubbing)
 
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
-		if(datalink)
-			datalink.data["scrubbing"] = scrubbing
 
 	if(scrubbing != old_scrubbing)
+		datalink?.put("scrubbing", scrubbing)
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("toggle_filter" in signal.data)
 		filter_types ^= gas_id2path(signal.data["toggle_filter"])
 		if(datalink)
 			datalink.data["filter_types"] = filter_types
+			datalink.data["_updated"] = TRUE
 
 	if("set_filters" in signal.data)
 		filter_types = list()
@@ -264,6 +258,7 @@
 			filter_types += gas_id2path(gas)
 		if(datalink)
 			datalink.data["filter_types"] = filter_types
+			datalink.data["_updated"] = TRUE
 
 	if("init" in signal.data)
 		name = signal.data["init"]

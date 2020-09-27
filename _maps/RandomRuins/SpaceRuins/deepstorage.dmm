@@ -2458,7 +2458,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	network_id = NETWORK_CHARLIE_ATMOS;
 	dir = 8;
-	id = "n2_in_bunker"
+	id_tag = "n2_in_bunker"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2700,7 +2700,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
 	network_id = NETWORK_CHARLIE_ATMOS;
-	id = "o2_in_bunker"
+	id_tag = "o2_in_bunker"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)

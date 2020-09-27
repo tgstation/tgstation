@@ -294,10 +294,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(console.input_tag == console.output_tag)
 			dat += "Error: input_tag is the same as the output_tag, \"[console.input_tag]\"!<br>"
 			bad_shit++
-		if(!LAZYLEN(console.input_info))
+		if(!console.input_info)
 			dat += "Failed to find a valid outlet injector as an input with the tag [console.input_tag].<br>"
 			bad_shit++
-		if(!LAZYLEN(console.output_info))
+		if(!console.output_info)
 			dat += "Failed to find a valid siphon pump as an outlet with the tag [console.output_tag].<br>"
 			bad_shit++
 		if(!bad_shit)
