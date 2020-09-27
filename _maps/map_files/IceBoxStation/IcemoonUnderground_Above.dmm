@@ -2298,6 +2298,9 @@
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
 "gs" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
 "gG" = (
@@ -2341,6 +2344,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
 "hv" = (
@@ -2579,6 +2583,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "jA" = (
@@ -2806,6 +2811,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
 "mL" = (
@@ -2943,6 +2951,12 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"ou" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/freezer,
+/area/science/xenobiology)
 "ov" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -3549,6 +3563,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
+"uc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/science/xenobiology)
 "uk" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
@@ -3560,6 +3580,12 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/storage/mining)
+"ur" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/freezer,
+/area/science/xenobiology)
 "uz" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -4168,6 +4194,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"CG" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "CK" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/decal/cleanable/dirt,
@@ -4448,6 +4478,11 @@
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"Fx" = (
+/obj/structure/cable,
+/obj/item/wrench,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "Fy" = (
 /obj/structure/chair/stool,
 /obj/machinery/flasher{
@@ -5084,6 +5119,9 @@
 	dir = 4;
 	network = list("ss13","rd","xeno_pens")
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
 "Ml" = (
@@ -5410,6 +5448,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"OT" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Pa" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red,
@@ -5703,6 +5745,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/passive_vent,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel/freezer,
 /area/science/xenobiology)
 "RW" = (
@@ -48049,7 +48094,7 @@ eJ
 Fa
 Fa
 Fa
-Fa
+CG
 sX
 Fa
 Fa
@@ -48313,7 +48358,7 @@ Fa
 Fa
 Fa
 pY
-Fa
+OT
 Fa
 Fa
 Fa
@@ -48584,7 +48629,7 @@ Fa
 Fa
 zS
 pY
-Fa
+CG
 Fa
 Fa
 Fa
@@ -49084,7 +49129,7 @@ YV
 Jd
 Qv
 gs
-gs
+uc
 Mk
 Qv
 LS
@@ -49597,9 +49642,9 @@ Ah
 Wb
 pF
 Qv
-gs
+ur
 mG
-gs
+ou
 Qv
 AY
 Wb
@@ -50361,7 +50406,7 @@ ah
 hM
 Fa
 Qv
-cA
+Fx
 ZY
 ki
 MZ
@@ -52176,7 +52221,7 @@ Ld
 pY
 LC
 Fa
-Fa
+OT
 pY
 kH
 Fa
