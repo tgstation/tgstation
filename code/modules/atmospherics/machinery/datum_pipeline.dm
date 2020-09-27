@@ -184,7 +184,8 @@
 			else
 				return 1
 
-			air.set_temperature(air.return_temperature() + self_temperature_delta)
+			if(self_temperature_delta)
+				air.set_temperature(air.return_temperature() + self_temperature_delta)
 			modeled_location.TakeTemperature(sharer_temperature_delta)
 
 
@@ -243,7 +244,8 @@
 
 		total_thermal_energy += G.thermal_energy()
 
-	total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0)
+	if(total_heat_capacity)
+		total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy / total_heat_capacity : 0)
 
 	if(total_gas_mixture.return_volume() > 0)
 		//Update individual gas_mixtures by volume ratio
