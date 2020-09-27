@@ -287,7 +287,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine/ICP // dear lady, please don't let anything remotely resembling a clown enter my DMs for this.
 	name = "wine jug-galo"
 	desc = "Who the fuck names these things? Thank the gods that there is at least some wine in it to deal with this shit."
-	icon_state = "old_winejug" // JERRY, REPLACE THE BLOODYFUCKINGTHING LATER
+	icon_state = "winejug"
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/ICP/generate_vintage()
 	var/current_year = GLOB.year_integer + 540
