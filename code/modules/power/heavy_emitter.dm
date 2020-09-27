@@ -134,10 +134,6 @@
 			if(linked_cannon && linked_cannon != object)
 				. =  FALSE
 			linked_cannon = object
-	if(.)
-		turn_on()
-	else
-		turn_off()
 
 /obj/machinery/power/heavy_emitter/centre/should_have_node()
 	return anchored
@@ -148,25 +144,21 @@
 	. = ..()
 
 /obj/machinery/power/heavy_emitter/centre/turn_on()
-	if(firing || surplus() < active_power_usage || !is_fully_constructed)
-		return
+	if(!is_fully_constructed)
+		return linked_interface.turn_off()
 	use_power = IDLE_POWER_USE
 	firing = TRUE
 	icon_state = "centre"
 
 /obj/machinery/power/heavy_emitter/centre/turn_off()
-	if(!firing)
-		return
-	linked_interface.turn_off()
 	firing = FALSE
 	icon_state = "centre_off"
 
 /obj/machinery/power/heavy_emitter/centre/process(delta_time)
-	if(!firing || machine_stat & BROKEN)
+	if(!firing || machine_stat & BROKEN || surplus() < active_power_usage)
 		return
-	if(surplus() < active_power_usage || !check_part_connectivity())
-		turn_off()
-		return
+	if(!check_part_connectivity())
+		return linked_interface.turn_off()
 
 	timer += delta_time
 
@@ -175,6 +167,7 @@
 		timer = 0
 		add_load(active_power_usage)
 		radiation_pulse(src,500,can_contaminate=FALSE)
+		visible_message("<span class='notice'>Heavy Emitter Core is powering the cannon....</span>")
 		INVOKE_ASYNC(linked_cannon,/obj/machinery/power/heavy_emitter/cannon.proc/fire)
 		heat += 500
 
@@ -200,39 +193,34 @@
 	desc = "Allows for control over the core."
 	icon_state = "interface_off"
 	///Core connected to this thing
-	var/connected_core
+	var/obj/machinery/power/heavy_emitter/centre/connected_core
 
 /obj/machinery/power/heavy_emitter/interface/attack_hand(mob/living/user)
 	. = ..()
-	if(connected_core)
-		var/obj/machinery/power/heavy_emitter/centre/centre = connected_core
-		if(!QDELETED(centre))
-			if(centre.firing)
-				centre.turn_off()
-			else
-				centre.turn_on()
-			return
-
 	var/turf/T = get_step(src,turn(dir,180))
 	var/obj/machinery/power/heavy_emitter/centre/centre = locate() in T
-	if(!centre)
 
+	if(!centre || !centre.check_part_connectivity())
 		turn_off()
 		return
-	if(centre.check_part_connectivity())
-		connected_core = centre
+
+	connected_core = centre
+
+	if(connected_core.firing)
 		to_chat(user, "<span class='warning'>You power on the Heavy Emitter!</span>")
-		turn_on()
+		turn_off()
 	else
 		to_chat(user, "<span class='warning'>You disable the Heavy Emitter!</span>")
-		turn_off()
+		turn_on()
+
 
 /obj/machinery/power/heavy_emitter/interface/turn_on()
 	icon_state = "interface"
+	connected_core.turn_on()
 
 /obj/machinery/power/heavy_emitter/interface/turn_off()
 	icon_state = "interface_off"
-	connected_core = null
+	connected_core.turn_off()
 
 /obj/machinery/power/heavy_emitter/vent
 	name = "Energy Core Vent"
