@@ -7,10 +7,6 @@
 	scan_every = 20 // make it so it scans more often for a few minutes after it's triggered since this would happen so rarely
 	abandon_rescan_length = 12 SECONDS
 
-/datum/whim/airbud_bball/abandon()
-	. = ..()
-	COOLDOWN_RESET(src, extra_sensitive, extra_sensitive_length)
-
 /datum/whim/airbud_bball/inner_can_start()
 
 	for(var/i in oview(owner, scan_radius))
