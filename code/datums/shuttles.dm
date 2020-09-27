@@ -239,7 +239,7 @@
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/discoinferno/prerequisites_met()
-	if(SHUTTLE_UNLOCK_DISCOINFERNO in SSshuttle.shuttle_purchase_requirements_met)
+	if(SHUTTLE_UNLOCK_EMAGGED in SSshuttle.shuttle_purchase_requirements_met)
 		return TRUE
 	return FALSE
 
@@ -369,14 +369,23 @@
 	credit_cost = 100000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
+/datum/map_template/shuttle/emergency/supermatter/prerequisites_met()
+	if(SHUTTLE_UNLOCK_EMAGGED in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
+
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
-	can_be_bought = FALSE
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+
+/datum/map_template/shuttle/emergency/imfedupwiththisworld/prerequisites_met()
+	if(SHUTTLE_UNLOCK_EMAGGED in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
