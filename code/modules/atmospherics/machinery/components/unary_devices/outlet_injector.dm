@@ -238,6 +238,51 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input
 	name = "carbon dioxide tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_CO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/bz_input
+	name = "bz tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_BZ
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/freon_input
+	name = "freon tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_FREON
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/halon_input
+	name = "halon tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HALON
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/healium_input
+	name = "healium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HEALIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hexane_input
+	name = "hexane tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HEXANE
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hydrogen_input
+	name = "hydrogen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_H2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/hypernoblium_input
+	name = "hypernoblium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_HYPERNOBLIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/miasma_input
+	name = "miasma tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_MIASMA
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitryl_input
+	name = "nitryl tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_NO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/pluoxium_input
+	name = "pluoxium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/proto_nitrate_input
+	name = "proto-nitrate tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/stimulum_input
+	name = "stimulum tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_STIMULUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/tritium_input
+	name = "tritium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TRITIUM
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/water_vapor_input
+	name = "water vapor tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_H2O
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/zauker_input
+	name = "zauker tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ZAUKER
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
 	name = "incinerator chamber input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR

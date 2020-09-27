@@ -177,3 +177,68 @@
 	name = "\improper Water Vapor Gas Miner"
 	overlay_color = "#99928E"
 	spawn_id = /datum/gas/water_vapor
+
+/obj/machinery/atmospherics/miner/freon
+	name = "\improper Freon Gas Miner"
+	overlay_color = "#61edff"
+	spawn_id = /datum/gas/freon
+
+/obj/machinery/atmospherics/miner/halon
+	name = "\improper Halon Gas Miner"
+	overlay_color = "#5f0085"
+	spawn_id = /datum/gas/halon
+
+/obj/machinery/atmospherics/miner/healium
+	name = "\improper Healium Gas Miner"
+	overlay_color = "#da4646"
+	spawn_id = /datum/gas/healium
+
+/obj/machinery/atmospherics/miner/hexane
+	name = "\improper Hexane Gas Miner"
+	overlay_color = "#d113e2"
+	spawn_id = /datum/gas/hexane
+
+/obj/machinery/atmospherics/miner/hydrogen
+	name = "\improper Hydrogen Gas Miner"
+	overlay_color = "#ffffff"
+	spawn_id = /datum/gas/hydrogen
+
+/obj/machinery/atmospherics/miner/hypernoblium
+	name = "\improper Hypernoblium Gas Miner"
+	overlay_color = "#00f7ff"
+	spawn_id = /datum/gas/hypernoblium
+
+/obj/machinery/atmospherics/miner/miasma
+	name = "\improper Miasma Gas Miner"
+	overlay_color = "#395806"
+	spawn_id = /datum/gas/miasma
+
+/obj/machinery/atmospherics/miner/nitryl
+	name = "\improper Nitryl Gas Miner"
+	overlay_color = "#752b00"
+	spawn_id = /datum/gas/nitryl
+
+/obj/machinery/atmospherics/miner/pluoxium
+	name = "\improper Pluoxium Gas Miner"
+	overlay_color = "#4b54a3"
+	spawn_id = /datum/gas/pluoxium
+
+/obj/machinery/atmospherics/miner/proto_nitrate
+	name = "\improper Proto-Nitrate Gas Miner"
+	overlay_color = "#00571d"
+	spawn_id = /datum/gas/proto_nitrate
+
+/obj/machinery/atmospherics/miner/stimulum
+	name = "\improper Stimulum Gas Miner"
+	overlay_color = "#d577dd"
+	spawn_id = /datum/gas/stimulum
+
+/obj/machinery/atmospherics/miner/tritium
+	name = "\improper Tritium Gas Miner"
+	overlay_color = "#15ff00"
+	spawn_id = /datum/gas/tritium
+
+/obj/machinery/atmospherics/miner/zauker
+	name = "\improper Zauker Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/zauker

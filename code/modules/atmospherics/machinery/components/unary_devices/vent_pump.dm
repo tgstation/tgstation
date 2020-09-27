@@ -379,6 +379,51 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output
 	name = "carbon dioxide tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/bz_output
+	name = "bz tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_BZ
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/freon_output
+	name = "freon tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_FREON
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/halon_output
+	name = "halon tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HALON
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/healium_output
+	name = "healium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HEALIUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hexane_output
+	name = "hexane tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HEXANE
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hydrogen_output
+	name = "hydrogen tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_H2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/hypernoblium_output
+	name = "hypernoblium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_HYPERNOBLIUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/miasma_output
+	name = "miasma tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitryl_output
+	name = "nitryl tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/pluoxium_output
+	name = "pluoxium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/proto_nitrate_output
+	name = "proto-nitrate tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/stimulum_output
+	name = "stimulum tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_STIMULUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/tritium_output
+	name = "tritium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TRITIUM
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/water_vapor_output
+	name = "water vapor tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_H2O
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/zauker_output
+	name = "zauker tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_ZAUKER
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
