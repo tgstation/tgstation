@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - tweak: "Any interfaces that were previously usable when they shouldn't have been are now no longer usable in those scenarios. If an interface isn't usable when you believe it should be, please make an issue report."
-  - bugfix: "Observers can no longer order things on express supply consoles."
