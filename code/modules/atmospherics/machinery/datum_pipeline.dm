@@ -43,10 +43,10 @@
 	if(!air)
 		air = new
 	var/list/possible_expansions = list(base)
-	while(possible_expansions.len)
+	while(possible_expansions.len > 0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
 			var/list/result = borderline.pipeline_expansion(src)
-			if(result && result.len)
+			if(result && result.len > 0)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P
@@ -56,7 +56,7 @@
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
 									log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
-									pipenetwarnings--
+									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
 										log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
@@ -138,7 +138,9 @@
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.set_volume(member.volume)
-		member.air_temporary.copy_from(air, member.volume/air.return_volume())
+		member.air_temporary.copy_from(air)
+
+		member.air_temporary.multiply(member.volume/air.return_volume())
 
 		member.air_temporary.set_temperature(air.return_temperature())
 
@@ -184,14 +186,13 @@
 			else
 				return 1
 
-			if(self_temperature_delta)
-				air.set_temperature(air.return_temperature() + self_temperature_delta)
+			air.set_temperature(air.return_temperature() + self_temperature_delta)
 			modeled_location.TakeTemperature(sharer_temperature_delta)
 
 
 	else
 		if((target.heat_capacity>0) && (partial_heat_capacity>0))
-			var/delta_temperature = air.return_temperature() - target.temperature
+			var/delta_temperature = air.return_temperature() - target.return_temperature()
 
 			var/heat = thermal_conductivity*delta_temperature* \
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
@@ -202,7 +203,7 @@
 /datum/pipeline/proc/return_air()
 	. = other_airs + air
 	if(null in .)
-		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		stack_trace("[src]([REF(src)]) has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
 /datum/pipeline/proc/reconcile_air()
@@ -214,8 +215,7 @@
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
-		GL += P.other_airs
-		GL += P.air
+		GL += P.return_air()
 		for(var/atmosmch in P.other_atmosmch)
 			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
 				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
@@ -235,20 +235,16 @@
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.set_volume(total_gas_mixture.return_volume() + G.return_volume())
 
-		// This is sort of a combined merge + heat_capacity calculation
-
-		//gas transfer
-		for(var/giver_id in G.get_gases())
-			total_gas_mixture.adjust_moles(giver_id, G.get_moles(giver_id))
-			total_heat_capacity += G.get_moles(giver_id) * GLOB.meta_gas_specific_heats[giver_id]
+		total_gas_mixture.merge(G)
 
 		total_thermal_energy += G.thermal_energy()
+		total_heat_capacity += G.heat_capacity()
 
-	if(total_heat_capacity)
-		total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy / total_heat_capacity : 0)
+	total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy / total_heat_capacity : 0)
 
 	if(total_gas_mixture.return_volume() > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/i in GL)
 			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture, G.return_volume()/total_gas_mixture.return_volume())
+			G.copy_from(total_gas_mixture)
+			G.multiply(G.return_volume() / total_gas_mixture.return_volume())
