@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - admin: "Fixed deadmins getting a worse looking Who menu."
