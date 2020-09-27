@@ -96,10 +96,10 @@
 	if(!removed)
 		return
 
-	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], (1.5 * delta_time * workingPower))//Works to max 12 moles at a time.
-	removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
-	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
-	removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
+	var/proportion = min(removed.get_moles(/datum/gas/water_vapor), (1.5 * delta_time * workingPower))//Works to max 12 moles at a time.
+	removed.adjust_moles(/datum/gas/water_vapor, -(proportion * 2 * workingPower))
+	removed.adjust_moles(/datum/gas/oxygen, proportion * workingPower)
+	removed.adjust_moles(/datum/gas/hydrogen, proportion * 2 * workingPower)
 	env.merge(removed) //put back the new gases in the turf
 	air_update_turf()
 	cell.use((5 * proportion * workingPower) / (efficiency + workingPower))

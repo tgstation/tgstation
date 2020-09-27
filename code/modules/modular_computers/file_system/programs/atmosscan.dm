@@ -21,16 +21,15 @@
 	var/obj/item/computer_hardware/sensorpackage/sensors = computer?.get_modular_computer_part(MC_SENSORS)
 	if(T && sensors?.check_functionality())
 		var/datum/gas_mixture/environment = T.return_air()
-		var/list/env_gases = environment.gases
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
 		data["AirPressure"] = round(pressure,0.1)
 		data["AirTemp"] = round(environment.return_temperature()-T0C)
 		if (total_moles)
-			for(var/id in env_gases)
-				var/gas_level = env_gases[id][MOLES]/total_moles
+			for(var/id in environment.get_gases())
+				var/gas_level = environment.get_moles(id)/total_moles
 				if(gas_level > 0)
-					airlist += list(list("name" = "[env_gases[id][GAS_META][META_GAS_NAME]]", "percentage" = round(gas_level*100, 0.01)))
+					airlist += list(list("name" = "[GLOB.meta_gas_names[id]]", "percentage" = round(gas_level*100, 0.01)))
 		data["AirData"] = airlist
 	else
 		data["AirPressure"] = 0

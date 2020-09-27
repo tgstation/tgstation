@@ -368,9 +368,9 @@ This section is for the destabilized SM
 		return
 
 	if(!removed || !removed.total_moles() || isspaceturf(loc_turf))
-		removed.gases[/datum/gas/bz][MOLES] += 0.5
-	removed.gases[/datum/gas/bz][MOLES] += 15.5
-	removed.gases[/datum/gas/miasma][MOLES] += 5.5
+		removed.adjust_moles(/datum/gas/bz, 0.5)
+	removed.adjust_moles(/datum/gas/bz, 15.5)
+	removed.adjust_moles(/datum/gas/miasma, 5.5)
 	env.merge(removed)
 	air_update_turf()
 

@@ -98,13 +98,13 @@
 		else
 			filtering = FALSE
 
-	if(filtering && removed.gases[filter_type])
+	if(filtering && removed.get_moles(filter_type))
 		var/datum/gas_mixture/filtered_out = new
 
 		filtered_out.set_temperature(removed.return_temperature())
-		filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+		filtered_out.set_moles(filter_type, removed.get_moles(filter_type))
 
-		removed.gases[filter_type][MOLES] = 0
+		removed.set_moles(filter_type, 0)
 
 		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 		target.merge(filtered_out)

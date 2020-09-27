@@ -567,7 +567,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Prevents huge bursts of gas/heat when a large amount of something is introduced
 		//They range between 0 and 1
 		for(var/gasID in gases_we_care_about)
-			gas_comp[gasID] = clamp(removed.gases[gasID][MOLES] / combined_gas, 0, 1)
+			gas_comp[gasID] = clamp(removed.get_moles(gasID) / combined_gas, 0, 1)
 
 		var/list/heat_mod = gases_we_care_about.Copy()
 		var/list/transit_mod = gases_we_care_about.Copy()
@@ -668,9 +668,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Calculate how much gas to release
 		//Varies based on power and gas content
-		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
+		removed.adjust_moles(/datum/gas/plasma, max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0))
 		//Varies based on power, gas content, and heat
-		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		removed.adjust_moles(/datum/gas/oxygen, max(((device_energy + removed.return_temperature() * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0))
 
 		if(produces_gas)
 			env.merge(removed)

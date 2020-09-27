@@ -118,10 +118,9 @@
 
 	var/t =	"<span class='notice'>Coordinates: [x],[y] \n</span>"
 	t +=	"<span class='danger'>Temperature: [environment.return_temperature()] \n</span>"
-	for(var/id in environment.gases)
-		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
+	for(var/id in environment.get_gases())
+		if(environment.get_moles(id))
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]] : [environment.get_moles(id)] \n</span>"
 
 	to_chat(usr, t)
 

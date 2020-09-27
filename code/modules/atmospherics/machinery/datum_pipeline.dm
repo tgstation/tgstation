@@ -230,20 +230,16 @@
 	var/total_heat_capacity = 0
 	var/datum/gas_mixture/total_gas_mixture = new(0)
 
-	var/list/total_gases = total_gas_mixture.gases
-
 	for(var/i in GL)
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.set_volume(total_gas_mixture.return_volume() + G.return_volume())
 
 		// This is sort of a combined merge + heat_capacity calculation
 
-		var/list/giver_gases = G.gases
 		//gas transfer
-		for(var/giver_id in giver_gases)
-			var/giver_gas_data = giver_gases[giver_id]
-			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		for(var/giver_id in G.get_gases())
+			total_gas_mixture.adjust_moles(giver_id, G.get_moles(giver_id))
+			total_heat_capacity += G.get_moles(giver_id) * GLOB.meta_gas_specific_heats[giver_id]
 
 		total_thermal_energy += G.thermal_energy()
 

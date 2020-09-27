@@ -40,14 +40,14 @@
 /obj/machinery/power/rad_collector/process(delta_time)
 	if(!loaded_tank)
 		return
-	if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+	if(!loaded_tank.air_contents.get_moles(/datum/gas/plasma))
 		investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 	else
-		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
-		loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-		loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
+		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.get_moles(/datum/gas/plasma))
+		loaded_tank.air_contents.adjust_moles(/datum/gas/plasma, -(gasdrained))
+		loaded_tank.air_contents.adjust_moles(/datum/gas/tritium, gasdrained)
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
 		add_avail(power_produced)
@@ -61,7 +61,7 @@
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
 			var/fuel
 			if(loaded_tank)
-				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
+				fuel = loaded_tank.air_contents.get_moles(/datum/gas/plasma)
 			fuel = fuel ? fuel[MOLES] : 0
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
