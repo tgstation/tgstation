@@ -5570,8 +5570,8 @@
 	pixel_x = -32
 	},
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/structure/bed/dogbed/mcgriff,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoq" = (
@@ -29208,13 +29208,13 @@
 /obj/machinery/door/window/eastleft{
 	name = "Petting Garden"
 	},
-/mob/living/simple_animal/pet/dog/corgi/puppy,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/mob/living/simple_animal/pet/dog/corgi/puppy,
 /turf/open/floor/grass,
 /area/medical/medbay/zone2)
 "bzG" = (
@@ -32067,8 +32067,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFL" = (
@@ -32614,8 +32614,8 @@
 /area/medical/virology)
 "bGP" = (
 /obj/structure/window/reinforced,
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bGQ" = (
@@ -49388,10 +49388,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "gOV" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "gPV" = (
@@ -51439,8 +51439,8 @@
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "kHO" = (
-/mob/living/simple_animal/pet/fox/renault,
 /obj/structure/bed/dogbed/renault,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "kHP" = (
@@ -51752,11 +51752,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/mob/living/simple_animal/butterfly,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/science/genetics)
 "lhu" = (
@@ -51934,7 +51934,7 @@
 /obj/item/wrench,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "supermatter";
+	id = "Supermatter";
 	name = "supermatter shielding"
 	},
 /turf/open/floor/plating,
@@ -52838,7 +52838,7 @@
 "nmp" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "supermatter";
+	id = "Supermatter";
 	name = "supermatter shielding"
 	},
 /turf/open/floor/plating,
@@ -53813,7 +53813,7 @@
 "oEN" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "supermatter";
+	id = "Supermatter";
 	name = "supermatter shielding"
 	},
 /turf/open/floor/plating,
@@ -56247,7 +56247,7 @@
 /area/science/xenobiology)
 "tbC" = (
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
-	id = "supermatter";
+	id = "Supermatter";
 	name = "supermatter shielding"
 	},
 /turf/open/floor/plating,
