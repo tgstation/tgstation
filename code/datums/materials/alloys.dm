@@ -40,6 +40,21 @@
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 
+/datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
+	. = ..()
+	if(!isitem(target_item))
+		return
+
+	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / MINERAL_MATERIAL_AMOUNT
+
+/datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, material_flags)
+	. = ..()
+
+	if(!isitem(target_item))
+		return
+
+	target_item.slowdown = initial(target_item.slowdown)
+
 /** Plastitanium
   *
   * An alloy of titanium and plasma.
@@ -129,12 +144,20 @@
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 
-/datum/material/alloy/alien/on_applied_obj(obj/target_obj, amount, material_flags)
+/datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	target_obj.AddElement(/datum/element/alloy_regen, _rate=0.02) // 2% regen per tick.
+	target_item.AddElement(/datum/element/alloy_regen, _rate=0.02) // 2% regen per tick.
+	if(!isitem(target_item))
+		return
 
-/datum/material/alloy/alien/on_removed_obj(obj/target_obj, material_flags)
+	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / MINERAL_MATERIAL_AMOUNT
+
+/datum/material/alloy/alien/on_removed_obj(obj/item/target_item, material_flags)
 	. = ..()
 
-	target_obj.RemoveElement(/datum/element/alloy_regen, _rate=0.02)
+	target_item.RemoveElement(/datum/element/alloy_regen, _rate=0.02)
+	if(!isitem(target_item))
+		return
+
+	target_item.slowdown = initial(target_item.slowdown)
