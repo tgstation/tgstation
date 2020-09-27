@@ -140,7 +140,7 @@
 		member.air_temporary.volume = member.volume
 		member.air_temporary.copy_from(air, member.volume/air.volume)
 
-		member.air_temporary.temperature = air.temperature
+		member.air_temporary.set_temperature(air.return_temperature())
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
@@ -157,19 +157,19 @@
 		if(modeled_location.blocks_air)
 
 			if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - target_temperature
+				var/delta_temperature = air.return_temperature() - target_temperature
 
 				var/heat = thermal_conductivity*delta_temperature* \
 					(partial_heat_capacity*target_heat_capacity/(partial_heat_capacity+target_heat_capacity))
 
-				air.temperature -= heat/total_heat_capacity
+				air.set_temperature(air.return_temperature() - heat/total_heat_capacity)
 				modeled_location.TakeTemperature(heat/target_heat_capacity)
 
 		else
 			var/delta_temperature = 0
 			var/sharer_heat_capacity = 0
 
-			delta_temperature = (air.temperature - target_temperature)
+			delta_temperature = (air.return_temperature() - target_temperature)
 			sharer_heat_capacity = target_heat_capacity
 
 			var/self_temperature_delta = 0
@@ -184,18 +184,18 @@
 			else
 				return 1
 
-			air.temperature += self_temperature_delta
+			air.set_temperature(air.return_temperature() + self_temperature_delta)
 			modeled_location.TakeTemperature(sharer_temperature_delta)
 
 
 	else
 		if((target.heat_capacity>0) && (partial_heat_capacity>0))
-			var/delta_temperature = air.temperature - target.temperature
+			var/delta_temperature = air.return_temperature() - target.temperature
 
 			var/heat = thermal_conductivity*delta_temperature* \
 				(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
 
-			air.temperature -= heat/total_heat_capacity
+			air.set_temperature(air.return_temperature() - heat/total_heat_capacity)
 	update = TRUE
 
 /datum/pipeline/proc/return_air()
@@ -247,7 +247,7 @@
 
 		total_thermal_energy += G.thermal_energy()
 
-	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
+	total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0)
 
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio

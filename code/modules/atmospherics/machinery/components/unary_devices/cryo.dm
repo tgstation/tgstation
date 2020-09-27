@@ -267,24 +267,24 @@
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
-		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+		var/temperature_delta = air1.return_temperature() - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
-			cold_protection = H.get_cold_protection(air1.temperature)
+			cold_protection = H.get_cold_protection(air1.return_temperature())
 
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
-			air1.temperature = clamp(air1.temperature - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE)
+			air1.set_temperature(clamp(air1.return_temperature() - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE))
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 
-		if(air1.temperature > 2000)
-			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
+		if(air1.return_temperature() > 2000)
+			take_damage(clamp((air1.return_temperature())/200, 10, 20), BURN)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
@@ -422,7 +422,7 @@
 			data["occupant"]["temperaturestatus"] = "bad"
 
 	var/datum/gas_mixture/air1 = airs[1]
-	data["cellTemperature"] = round(air1.temperature, 1)
+	data["cellTemperature"] = round(air1.return_temperature(), 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var/beakerContents = list()
@@ -490,7 +490,7 @@
 	var/datum/gas_mixture/G = airs[1]
 
 	if(G.total_moles() > 10)
-		return G.temperature
+		return G.return_temperature()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)

@@ -1,4 +1,4 @@
-#define AIR_CONTENTS	((25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
+#define AIR_CONTENTS	((25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.return_temperature()))
 /obj/machinery/atmospherics/components/unary/tank
 	icon = 'icons/obj/atmospherics/pipes/pressure_tank.dmi'
 	icon_state = "generic"
@@ -18,7 +18,7 @@
 	..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = volume
-	air_contents.temperature = T20C
+	air_contents.set_temperature(T20C)
 	if(gas_type)
 		air_contents.gases[gas_type][MOLES] = AIR_CONTENTS
 		name = "[name] ([air_contents.gases[gas_type][GAS_META][META_GAS_NAME]])"

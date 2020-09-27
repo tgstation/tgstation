@@ -133,7 +133,7 @@
 			continue
 
 		// Aim for goldilocks temperatures and pressure
-		if((A.temperature <= 270) || (A.temperature >= 360))
+		if((A.return_temperature() <= 270) || (A.return_temperature() >= 360))
 			continue
 		var/pressure = A.return_pressure()
 		if((pressure <= 20) || (pressure >= 550))

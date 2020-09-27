@@ -62,7 +62,7 @@
 	if (internal_tank)
 		int_tank_air = internal_tank.return_air()
 		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+		tank_temperature = internal_tank ? int_tank_air.return_temperature() : "Unknown"
 		cabin_pressure = round(return_pressure(),0.01)
 	. =	{"[report_internal_damage()]
 		[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]

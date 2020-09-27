@@ -136,7 +136,7 @@ nobiliumsuppression = INFINITY
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
 
@@ -157,7 +157,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
@@ -182,11 +182,11 @@ nobiliumsuppression = INFINITY
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
-		temperature = air.temperature
+		temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
@@ -213,7 +213,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
@@ -256,11 +256,11 @@ nobiliumsuppression = INFINITY
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+			air.set_temperature((temperature*old_heat_capacity + energy_released)/new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
-		temperature = air.temperature
+		temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
@@ -288,7 +288,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -324,7 +324,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 
 /datum/gas_reaction/h2fire
 	priority = -3 //fire should ALWAYS be last, but tritium fires happen before plasma fires
@@ -342,7 +342,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
@@ -365,11 +365,11 @@ nobiliumsuppression = INFINITY
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature*old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature*old_heat_capacity + energy_released) / new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
-		temperature = air.temperature
+		temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
@@ -396,7 +396,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -413,7 +413,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released)/new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released)/new_heat_capacity)
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
@@ -494,8 +494,8 @@ nobiliumsuppression = INFINITY
 			radiation_pulse(location,rad_power)
 
 		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
-			air.temperature = clamp(((air.temperature * old_heat_capacity + reaction_energy) / new_heat_capacity), TCMB, INFINITY)
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.return_temperature() <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
+			air.set_temperature(clamp(((air.return_temperature() * old_heat_capacity + reaction_energy) / new_heat_capacity), TCMB, INFINITY))
 		return REACTING
 
 /datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
@@ -514,7 +514,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nitrousformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
 	var/energy_used = heat_efficency * NITROUS_FORMATION_ENERGY
@@ -527,7 +527,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB) //the air heats up when reacting
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)) //the air heats up when reacting
 		return REACTING
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
@@ -546,7 +546,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
@@ -561,7 +561,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB) //the air cools down when reacting
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)) //the air cools down when reacting
 		return REACTING
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
@@ -578,7 +578,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/pressure = air.return_pressure()
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1 / ((pressure / (0.1 * ONE_ATMOSPHERE)) * (max(cached_gases[/datum/gas/plasma][MOLES] / cached_gases[/datum/gas/nitrous_oxide][MOLES], 1))), cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * 0.5)
@@ -597,7 +597,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB))
 		return REACTING
 
 /datum/gas_reaction/metalhydrogen
@@ -614,7 +614,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/metalhydrogen/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	if(!isturf(holder))
 		return NO_REACTION
@@ -637,7 +637,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
 		return REACTING
 
 /datum/gas_reaction/freonformation
@@ -655,7 +655,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/bz][MOLES])
 	var/energy_used = heat_efficency * 100
@@ -669,7 +669,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used)/new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used)/new_heat_capacity), TCMB))
 		return REACTING
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
@@ -688,7 +688,7 @@ nobiliumsuppression = INFINITY
 	var/list/cached_gases = air.gases
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
+	var/heat_scale = min(air.return_temperature()/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium][MOLES],cached_gases[/datum/gas/plasma][MOLES],cached_gases[/datum/gas/nitryl][MOLES])
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 ) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -699,7 +699,7 @@ nobiliumsuppression = INFINITY
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((air.temperature * old_heat_capacity + stim_energy_change) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((air.return_temperature() * old_heat_capacity + stim_energy_change) / new_heat_capacity), TCMB))
 		return REACTING
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
@@ -728,7 +728,7 @@ nobiliumsuppression = INFINITY
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((air.temperature * old_heat_capacity - energy_taken) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((air.return_temperature() * old_heat_capacity - energy_taken) / new_heat_capacity), TCMB))
 
 
 /datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
@@ -749,12 +749,12 @@ nobiliumsuppression = INFINITY
 		return
 
 	//Replace miasma with oxygen
-	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
+	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.return_temperature() - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
 	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
-	air.temperature += cleaned_air * 0.002
+	air.set_temperature(air.return_temperature() + cleaned_air * 0.002)
 
 /datum/gas_reaction/stim_ball
 	priority = 7
@@ -793,7 +793,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = clamp((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB, INFINITY)
+			air.set_temperature(clamp((air.return_temperature() * old_heat_capacity + energy_released) / new_heat_capacity, TCMB, INFINITY))
 		return REACTING
 
 /datum/gas_reaction/halon_formation
@@ -811,7 +811,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/halon_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/bz][MOLES])
 	var/energy_used = heat_efficency * 300
@@ -824,7 +824,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/hexane_formation
@@ -842,7 +842,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/hexane_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/bz][MOLES])
 	var/energy_used = heat_efficency * 600
@@ -855,7 +855,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/healium_formation
@@ -873,7 +873,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/healium_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.3, cached_gases[/datum/gas/freon][MOLES], cached_gases[/datum/gas/bz][MOLES])
 	var/energy_used = heat_efficency * 9000
@@ -886,7 +886,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_formation
@@ -904,7 +904,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.005, cached_gases[/datum/gas/pluoxium][MOLES], cached_gases[/datum/gas/hydrogen][MOLES])
 	var/energy_used = heat_efficency * 650
@@ -917,7 +917,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/zauker_formation
@@ -935,7 +935,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/zauker_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.000005, cached_gases[/datum/gas/hypernoblium][MOLES], cached_gases[/datum/gas/stimulum][MOLES])
 	var/energy_used = heat_efficency * 5000
@@ -948,7 +948,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/halon_o2removal
@@ -965,7 +965,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / ( FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES])
 	var/energy_used = heat_efficency * 2500
@@ -978,7 +978,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/hexane_plasma_filtering
@@ -995,7 +995,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/hexane_plasma_filtering/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/hexane][MOLES], cached_gases[/datum/gas/plasma][MOLES])
 	var/energy_used = heat_efficency * 250
@@ -1008,7 +1008,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/hexane_n2o_filtering
@@ -1024,7 +1024,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/hexane_n2o_filtering/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/hexane][MOLES], cached_gases[/datum/gas/nitrous_oxide][MOLES])
 	var/energy_used = heat_efficency * 100
@@ -1038,7 +1038,7 @@ nobiliumsuppression = INFINITY
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
 
 /datum/gas_reaction/zauker_decomp
@@ -1056,7 +1056,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/burned_fuel = 0
 	burned_fuel = min(20, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
 	if(cached_gases[/datum/gas/zauker][MOLES] - burned_fuel < 0)
@@ -1071,7 +1071,7 @@ nobiliumsuppression = INFINITY
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
 
@@ -1092,7 +1092,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -1108,7 +1108,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_crystal_formation
@@ -1128,7 +1128,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -1144,7 +1144,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/zauker_crystal_formation
@@ -1164,7 +1164,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -1180,7 +1180,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_plasma_response
@@ -1200,7 +1200,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -1217,7 +1217,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_bz_response
@@ -1237,7 +1237,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
@@ -1257,7 +1257,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_freon_fire_response
@@ -1278,7 +1278,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	if(cached_gases[/datum/gas/freon][MOLES] > 100 && cached_gases[/datum/gas/oxygen][MOLES] > 100)
 		var fuel_consumption = min(5, temperature * 0.03, cached_gases[/datum/gas/freon][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 		if(cached_gases[/datum/gas/proto_nitrate][MOLES] - fuel_consumption < 0)
@@ -1289,7 +1289,7 @@ nobiliumsuppression = INFINITY
 		if(energy_released)
 			var/new_heat_capacity = air.heat_capacity()
 			if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-				air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+				air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
 
@@ -1310,7 +1310,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var/turf/open/location = isturf(holder) ? holder : null
 	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
@@ -1323,7 +1323,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response
@@ -1341,7 +1341,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var produced_amount = min(5, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0)
 		return NO_REACTION
@@ -1351,7 +1351,7 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_zauker_response
@@ -1392,7 +1392,7 @@ nobiliumsuppression = INFINITY
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
+	var/temperature = air.return_temperature()
 	var produced_amount = min(5, cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/oxygen][MOLES])
 	if(cached_gases[/datum/gas/carbon_dioxide][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/oxygen][MOLES] - produced_amount * 0.5 < 0 || cached_gases[/datum/gas/tritium][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
@@ -1405,5 +1405,5 @@ nobiliumsuppression = INFINITY
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
 	return REACTING

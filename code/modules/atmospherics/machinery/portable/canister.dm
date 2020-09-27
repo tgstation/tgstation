@@ -250,7 +250,7 @@
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 500
 	air_contents.gases[/datum/gas/plasma][MOLES] = 500
 	air_contents.gases[/datum/gas/tritium][MOLES] = 350
-	air_contents.temperature = 10000
+	air_contents.set_temperature(10000)
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -323,14 +323,14 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		if(starter_temp)
-			air_contents.temperature = starter_temp
-		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+			air_contents.set_temperature(starter_temp)
+		air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature())
 		if(starter_temp)
-			air_contents.temperature = starter_temp
+			air_contents.set_temperature(starter_temp)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature())
+	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature())
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(machine_stat & BROKEN)

@@ -545,7 +545,7 @@
 				var/gas_level = env_gases[id][MOLES]/total_moles
 				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
-		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
+		dat += "Temperature: [round(environment.return_temperature()-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
 	return dat

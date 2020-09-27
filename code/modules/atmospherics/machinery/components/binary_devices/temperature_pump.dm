@@ -39,11 +39,11 @@
 	var/datum/gas_mixture/air_input = airs[1]
 	var/datum/gas_mixture/air_output = airs[2]
 
-	if((air_output.temperature + heat_transfer_rate) >= air_input.temperature || (air_input.temperature - heat_transfer_rate) <= TCRYO)
+	if((air_output.return_temperature() + heat_transfer_rate) >= air_input.return_temperature() || (air_input.return_temperature() - heat_transfer_rate) <= TCRYO)
 		return
 
-	air_input.temperature -= heat_transfer_rate
-	air_output.temperature += heat_transfer_rate
+	air_input.set_temperature(air_input.return_temperature() - heat_transfer_rate)
+	air_output.set_temperature(air_output.return_temperature() + heat_transfer_rate)
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)

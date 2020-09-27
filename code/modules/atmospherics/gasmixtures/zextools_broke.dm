@@ -65,7 +65,7 @@
 	//Filter it
 	var/datum/gas_mixture/filtered_out = new
 	var/list/filtered_gases = filtered_out.gases
-	filtered_out.temperature = removed.temperature
+	filtered_out.set_temperature(removed.temperature)
 	for(var/gas in filter_types & removed_gases)
 		filtered_gases[gas] = removed_gases[gas]
 		removed_gases[gas] = 0
@@ -123,7 +123,7 @@
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
-	removed.temperature = temperature
+	removed.set_temperature(temperature)
 	for(var/id in cached_gases)
 		removed_gases[id] = QUANTIZE((cached_gases[id] / sum) * amount)
 		cached_gases[id] -= removed_gases[id]
@@ -140,7 +140,7 @@
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
-	removed.temperature = temperature
+	removed.set_temperature(temperature)
 	for(var/id in cached_gases)
 		removed_gases[id] = QUANTIZE(cached_gases[id] * ratio)
 		cached_gases[id] -= removed_gases[id]
@@ -154,7 +154,7 @@
 	var/datum/gas_mixture/copy = new type
 	var/list/copy_gases = copy.gases
 
-	copy.temperature = temperature
+	copy.set_temperature(temperature)
 	for(var/id in cached_gases)
 		copy_gases[id] = cached_gases[id]
 
@@ -238,7 +238,7 @@
 			temperature = (old_self_heat_capacity*temperature - heat_capacity_self_to_sharer*temperature_archived + heat_capacity_sharer_to_self*sharer.temperature_archived)/new_self_heat_capacity
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			sharer.temperature = (old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity
+			sharer.set_temperature((old_sharer_heat_capacity*sharer.temperature-heat_capacity_sharer_to_self*sharer.temperature_archived + heat_capacity_self_to_sharer*temperature_archived)/new_sharer_heat_capacity)
 		//thermal energy of the system (self and sharer) is unchanged
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
@@ -270,7 +270,7 @@
 			temperature = max(temperature - heat/self_heat_capacity, TCMB)
 			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
-				sharer.temperature = sharer_temperature
+				sharer.set_temperature(sharer_temperature)
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 

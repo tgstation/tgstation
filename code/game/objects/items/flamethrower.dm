@@ -219,7 +219,7 @@
 		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
-	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
+	target.hotspot_expose((ptank.air_contents.return_temperature()*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
 	SSair.add_to_active(target, 0)
 

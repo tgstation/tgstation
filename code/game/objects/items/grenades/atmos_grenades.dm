@@ -63,9 +63,9 @@
 			continue
 		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		if(floor_loc.air.temperature > 260 && floor_loc.air.temperature < 370)
+		if(floor_loc.air.return_temperature() > 260 && floor_loc.air.return_temperature() < 370)
 			floor_loc.atmos_spawn_air("n2=[(gas_amount - 150) / distance_from_center];TEMP=273")
-		if(floor_loc.air.temperature > 370)
+		if(floor_loc.air.return_temperature() > 370)
 			floor_loc.atmos_spawn_air("n2=[gas_amount / distance_from_center];TEMP=30")
 			floor_loc.MakeSlippery(TURF_WET_PERMAFROST, (5 / distance_from_center) MINUTES)
 		if(floor_loc.air.gases[/datum/gas/plasma])

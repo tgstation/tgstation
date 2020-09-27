@@ -286,7 +286,7 @@
 							"unit" = "kPa",
 							"danger_level" = cur_tlv.get_danger_level(pressure)
 	))
-	var/temperature = environment.temperature
+	var/temperature = environment.return_temperature()
 	cur_tlv = TLV["temperature"]
 	data["environment_data"] += list(list(
 							"name" = "Temperature",
@@ -295,7 +295,7 @@
 							"danger_level" = cur_tlv.get_danger_level(temperature)
 	))
 	var/total_moles = environment.total_moles()
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.return_temperature() / environment.volume
 	for(var/gas_id in environment.gases)
 		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 			continue
@@ -670,14 +670,14 @@
 
 	var/datum/gas_mixture/environment = location.return_air()
 	var/list/env_gases = environment.gases
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.return_temperature() / environment.volume
 
 	cur_tlv = TLV["pressure"]
 	var/environment_pressure = environment.return_pressure()
 	var/pressure_dangerlevel = cur_tlv.get_danger_level(environment_pressure)
 
 	cur_tlv = TLV["temperature"]
-	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.temperature)
+	var/temperature_dangerlevel = cur_tlv.get_danger_level(environment.return_temperature())
 
 	var/gas_dangerlevel = 0
 	for(var/gas_id in env_gases)

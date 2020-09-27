@@ -162,7 +162,7 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.return_temperature())/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
 	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
@@ -308,7 +308,7 @@
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
 	// The air you breathe out should match your body temperature
-	breath.temperature = bodytemperature
+	breath.set_temperature(bodytemperature)
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)

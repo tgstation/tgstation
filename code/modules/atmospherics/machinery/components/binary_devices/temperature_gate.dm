@@ -61,14 +61,14 @@
 	var/datum/gas_mixture/air2 = airs[2]
 
 	if(!inverted)
-		if(air1.temperature < target_temperature)
+		if(air1.return_temperature() < target_temperature)
 			if(air1.release_gas_to(air2, air1.return_pressure()))
 				update_parents()
 				is_gas_flowing = TRUE
 		else
 			is_gas_flowing = FALSE
 	else
-		if(air1.temperature > target_temperature)
+		if(air1.return_temperature() > target_temperature)
 			if(air1.release_gas_to(air2, air1.return_pressure()))
 				update_parents()
 				is_gas_flowing = TRUE

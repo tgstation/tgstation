@@ -133,7 +133,7 @@
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
-	merger.temperature = spawn_temp
+	merger.set_temperature(spawn_temp)
 	O.assume_air(merger)
 	O.air_update_turf(TRUE)
 

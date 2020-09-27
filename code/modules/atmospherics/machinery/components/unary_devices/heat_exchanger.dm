@@ -59,18 +59,18 @@
 	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
 	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
-	var/old_temperature = air_contents.temperature
-	var/other_old_temperature = partner_air_contents.temperature
+	var/old_temperature = air_contents.return_temperature()
+	var/other_old_temperature = partner_air_contents.return_temperature()
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = partner_air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = partner_air_contents.return_temperature()*other_air_heat_capacity + air_heat_capacity*air_contents.return_temperature()
 
 		var/new_temperature = combined_energy/combined_heat_capacity
-		air_contents.temperature = new_temperature
-		partner_air_contents.temperature = new_temperature
+		air_contents.set_temperature(new_temperature)
+		partner_air_contents.set_temperature(new_temperature)
 
-	if(abs(old_temperature-air_contents.temperature) > 1)
+	if(abs(old_temperature-air_contents.return_temperature()) > 1)
 		update_parents()
 
-	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
+	if(abs(other_old_temperature-partner_air_contents.return_temperature()) > 1)
 		partner.update_parents()

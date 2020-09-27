@@ -67,8 +67,8 @@
 			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
 		if(pressure_delta > 0)
-			if(air1.temperature > 0)
-				var/transfer_moles = pressure_delta*environment.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+			if(air1.return_temperature() > 0)
+				var/transfer_moles = pressure_delta*environment.volume/(air1.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 				//Removed can be null if there is no atmosphere in air1
@@ -90,8 +90,8 @@
 			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
 		if(pressure_delta > 0)
-			if(environment.temperature > 0)
-				var/transfer_moles = pressure_delta*air2.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
+			if(environment.return_temperature() > 0)
+				var/transfer_moles = pressure_delta*air2.volume/(environment.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 				//removed can be null if there is no air in the location

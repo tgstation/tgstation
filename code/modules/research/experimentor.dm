@@ -371,7 +371,7 @@
 				var/heat_capacity = removed.heat_capacity()
 				if(heat_capacity == 0 || heat_capacity == null)
 					heat_capacity = 1
-				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
+				removed.set_temperature(min((removed.return_temperature()*heat_capacity + 100000)/heat_capacity, 1000))
 			env.merge(removed)
 			air_update_turf()
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
@@ -417,7 +417,7 @@
 				var/heat_capacity = removed.heat_capacity()
 				if(heat_capacity == 0 || heat_capacity == null)
 					heat_capacity = 1
-				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
+				removed.set_temperature((removed.return_temperature()*heat_capacity - 75000)/heat_capacity)
 			env.merge(removed)
 			air_update_turf()
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)

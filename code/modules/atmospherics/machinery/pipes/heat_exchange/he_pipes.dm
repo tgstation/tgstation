@@ -34,7 +34,7 @@
 	else
 		environment_temperature = T.temperature
 
-	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
+	if(abs(environment_temperature-pipe_air.return_temperature()) > minimum_temperature_difference)
 		parent.temperature_interact(T, volume, thermal_conductivity)
 
 
@@ -43,11 +43,11 @@
 		var/hc = pipe_air.heat_capacity()
 		var/mob/living/heat_source = buckled_mobs[1]
 		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
-		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs ? buckled_mobs.len * 3500 : 0))
+		var/avg_temp = (pipe_air.return_temperature() * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs ? buckled_mobs.len * 3500 : 0))
 		for(var/m in buckled_mobs)
 			var/mob/living/L = m
 			L.bodytemperature = avg_temp
-		pipe_air.temperature = avg_temp
+		pipe_air.set_temperature(avg_temp)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process(delta_time)
 	if(!parent)
@@ -56,9 +56,9 @@
 	var/datum/gas_mixture/pipe_air = return_air()
 
 	//Heat causes pipe to glow
-	if(pipe_air.temperature && (icon_temperature > 500 || pipe_air.temperature > 500)) //glow starts at 500K
-		if(abs(pipe_air.temperature - icon_temperature) > 10)
-			icon_temperature = pipe_air.temperature
+	if(pipe_air.return_temperature() && (icon_temperature > 500 || pipe_air.return_temperature() > 500)) //glow starts at 500K
+		if(abs(pipe_air.return_temperature() - icon_temperature) > 10)
+			icon_temperature = pipe_air.return_temperature()
 
 			var/h_r = heat2colour_r(icon_temperature)
 			var/h_g = heat2colour_g(icon_temperature)
@@ -75,7 +75,7 @@
 	//burn any mobs buckled based on temperature
 	if(has_buckled_mobs())
 		var/heat_limit = 1000
-		if(pipe_air.temperature > heat_limit + 1)
+		if(pipe_air.return_temperature() > heat_limit + 1)
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.return_temperature() - heat_limit), BURN, BODY_ZONE_CHEST)

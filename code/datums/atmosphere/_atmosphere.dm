@@ -24,7 +24,7 @@
 	// We make the string from a gasmix in this proc because gases need to calculate their pressure
 	var/datum/gas_mixture/gasmix = new
 	var/list/gaslist = gasmix.gases
-	gasmix.temperature = rand(minimum_temp, maximum_temp)
+	gasmix.set_temperature(rand(minimum_temp, maximum_temp))
 	for(var/i in base_gases)
 		gaslist[i][MOLES] = base_gases[i]
 
@@ -57,5 +57,5 @@
 	for(var/i in gaslist)
 		var/list/gas = gaslist[i]
 		gas_string_builder += "[gas[GAS_META][META_GAS_ID]]=[gas[MOLES]]"
-	gas_string_builder += "TEMP=[gasmix.temperature]"
+	gas_string_builder += "TEMP=[gasmix.return_temperature()]"
 	gas_string = gas_string_builder.Join(";")

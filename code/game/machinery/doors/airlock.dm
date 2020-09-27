@@ -82,18 +82,22 @@
 	var/boltUp = 'sound/machines/boltsup.ogg'
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
-	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
-	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
+ 	///what airlock assembly mineral plating was applied to
+	var/previous_airlock = /obj/structure/door_assembly
+ 	///material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/airlock_material
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
+ 	///Used for papers and photos pinned to the airlock
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
-	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
-	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
+	/// TRUE means the door will automatically close the next time it's opened.
+	var/delayed_close_requested = FALSE
 	var/prying_so_hard = FALSE
 
+	air_tight = FALSE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 

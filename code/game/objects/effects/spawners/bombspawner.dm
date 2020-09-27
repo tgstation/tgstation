@@ -20,10 +20,10 @@
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
 	PT.air_contents.gases[/datum/gas/plasma][MOLES] = pressure_p*PT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_p))
-	PT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_p)
+	PT.air_contents.set_temperature(CELSIUS_TO_KELVIN(temp_p))
 
 	OT.air_contents.gases[/datum/gas/oxygen][MOLES] = pressure_o*OT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_o))
-	OT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_o)
+	OT.air_contents.set_temperature(CELSIUS_TO_KELVIN(temp_o))
 
 	V.tank_one = PT
 	V.tank_two = OT

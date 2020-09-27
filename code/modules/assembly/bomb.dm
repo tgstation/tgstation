@@ -55,7 +55,7 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.temperature-T0C]")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bombtank.air_contents.return_temperature()-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
@@ -152,7 +152,7 @@
 		qdel(master)
 	qdel(src)
 
-	if(bomb_mixture.temperature > (T0C + 400))
+	if(bomb_mixture.return_temperature() > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=2)
@@ -167,7 +167,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 250))
+	else if(bomb_mixture.return_temperature() > (T0C + 250))
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
@@ -178,7 +178,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 100))
+	else if(bomb_mixture.return_temperature() > (T0C + 100))
 		strength = (fuel_moles/25)
 
 		if(strength >=1)

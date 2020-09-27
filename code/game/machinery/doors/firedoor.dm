@@ -21,6 +21,8 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+	air_tight = TRUE
+	var/emergency_close_timer = 0
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
@@ -132,6 +134,17 @@
 		return
 
 	if(density)
+		if(is_holding_pressure())
+			// tell the user that this is a bad idea, and have a do_after as well
+			to_chat(user, "<span class='warning'>As you begin crowbarring \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
+			if(!do_after(user, 15, TRUE, src)) // give them a few seconds to reconsider their decision.
+				return
+			log_game("[key_name_admin(user)] has opened a firelock with a pressure difference at [AREACOORD(loc)]") // there bibby I made it logged just for you. Enjoy.
+			// since we have high-pressure-ness, close all other firedoors on the tile
+			whack_a_mole()
+		if(welded || operating || !density)
+			return // in case things changed during our do_after
+		emergency_close_timer = world.time + 60 // prevent it from instaclosing again if in space
 		open()
 	else
 		close()
@@ -186,6 +199,61 @@
 	. = ..()
 	latetoggle()
 
+/obj/machinery/door/firedoor/proc/whack_a_mole(reconsider_immediately = FALSE)
+	set waitfor = 0
+	for(var/cdir in GLOB.cardinals)
+		if((flags_1 & ON_BORDER_1) && cdir != dir)
+			continue
+		whack_a_mole_part(get_step(src, cdir), reconsider_immediately)
+	if(flags_1 & ON_BORDER_1)
+		whack_a_mole_part(get_turf(src), reconsider_immediately)
+
+/obj/machinery/door/firedoor/proc/whack_a_mole_part(turf/start_point, reconsider_immediately)
+	set waitfor = 0
+	var/list/doors_to_close = list()
+	var/list/turfs = list()
+	turfs[start_point] = 1
+	for(var/i = 1; (i <= turfs.len && i <= 11); i++) // check up to 11 turfs.
+		var/turf/open/T = turfs[i]
+		if(istype(T, /turf/open/space))
+			return -1
+		for(var/T2 in T.atmos_adjacent_turfs)
+			if(turfs[T2])
+				continue
+			var/is_cut_by_unopen_door = FALSE
+			for(var/obj/machinery/door/firedoor/FD in T2)
+				if((FD.flags_1 & ON_BORDER_1) && get_dir(T2, T) != FD.dir)
+					continue
+				if(FD.operating || FD == src || FD.welded || FD.density)
+					continue
+				doors_to_close += FD
+				is_cut_by_unopen_door = TRUE
+
+			for(var/obj/machinery/door/firedoor/FD in T)
+				if((FD.flags_1 & ON_BORDER_1) && get_dir(T, T2) != FD.dir)
+					continue
+				if(FD.operating || FD == src || FD.welded || FD.density)
+					continue
+				doors_to_close += FD
+				is_cut_by_unopen_door= TRUE
+			if(!is_cut_by_unopen_door)
+				turfs[T2] = 1
+	if(turfs.len > 10)
+		return // too big, don't bother
+	for(var/obj/machinery/door/firedoor/FD in doors_to_close)
+		FD.emergency_pressure_stop(FALSE)
+		if(reconsider_immediately)
+			var/turf/open/T = FD.loc
+			if(istype(T))
+				T.ImmediateCalculateAdjacentTurfs()
+
+/obj/machinery/door/firedoor/proc/emergency_pressure_stop(consider_timer = TRUE)
+	set waitfor = 0
+	if(density || operating || welded)
+		return
+	if(world.time >= emergency_close_timer || !consider_timer)
+		close()
+
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
@@ -225,6 +293,61 @@
 	opacity = TRUE
 	density = TRUE
 
+/obj/machinery/door/firedoor/border_only/close()
+	if(density)
+		return TRUE
+	if(operating || welded)
+		return
+	var/turf/T1 = get_turf(src)
+	var/turf/T2 = get_step(T1, dir)
+	for(var/mob/living/M in T1)
+		if(M.stat == CONSCIOUS && M.pulling && M.pulling.loc == T2 && !M.pulling.anchored && M.pulling.move_resist <= M.move_force)
+			var/mob/living/M2 = M.pulling
+			if(!istype(M2) || !M2.buckled || !M2.buckled.buckle_prevents_pull)
+				to_chat(M, "<span class='notice'>You pull [M.pulling] through [src] right as it closes</span>")
+				M.pulling.forceMove(T1)
+				M.start_pulling(M2)
+
+	for(var/mob/living/M in T2)
+		if(M.stat == CONSCIOUS && M.pulling && M.pulling.loc == T1 && !M.pulling.anchored && M.pulling.move_resist <= M.move_force)
+			var/mob/living/M2 = M.pulling
+			if(!istype(M2) || !M2.buckled || !M2.buckled.buckle_prevents_pull)
+				to_chat(M, "<span class='notice'>You pull [M.pulling] through [src] right as it closes</span>")
+				M.pulling.forceMove(T2)
+				M.start_pulling(M2)
+	. = ..()
+
+/*
+/obj/machinery/door/firedoor/border_only/allow_hand_open(mob/user)
+	var/area/A = get_area(src)
+	if((!A || !A.fire) && !is_holding_pressure())
+		return TRUE
+	whack_a_mole(TRUE) // WOOP WOOP SIDE EFFECTS
+	var/turf/T = loc
+	var/turf/T2 = get_step(T, dir)
+	if(!T || !T2)
+		return
+	var/status1 = check_door_side(T)
+	var/status2 = check_door_side(T2)
+	if((status1 == 1 && status2 == -1) || (status1 == -1 && status2 == 1))
+		to_chat(user, "<span class='warning'>Access denied. Try closing another firedoor to minimize decompression, or using a crowbar.</span>")
+		return FALSE
+	return TRUE
+*/
+
+/obj/machinery/door/firedoor/border_only/proc/check_door_side(turf/open/start_point)
+	var/list/turfs = list()
+	turfs[start_point] = 1
+	for(var/i = 1; (i <= turfs.len && i <= 11); i++) // check up to 11 turfs.
+		var/turf/open/T = turfs[i]
+		if(istype(T, /turf/open/space))
+			return -1
+		for(var/T2 in T.atmos_adjacent_turfs)
+			turfs[T2] = 1
+	if(turfs.len <= 10)
+		return 0 // not big enough to matter
+	return start_point.air.return_pressure() < 20 ? -1 : 1
+
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
@@ -254,6 +377,15 @@
 	assemblytype = /obj/structure/firelock_frame/heavy
 	max_integrity = 550
 
+/obj/machinery/door/firedoor/window
+	name = "window shutter"
+	icon = 'icons/obj/doors/doorfirewindow.dmi'
+	desc = "A second window that slides in when the original window is broken, designed to protect against hull breaches. Truly a work of genius by NT engineers."
+	glass = TRUE
+	explosion_block = 0
+	max_integrity = 50
+	resistance_flags = 0 // not fireproof
+	heat_proof = FALSE
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"

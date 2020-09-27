@@ -449,7 +449,7 @@
 
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/H) // called by human/life, handles temperatures
-	var/breath_temperature = breath.temperature
+	var/breath_temperature = breath.return_temperature()
 
 	if(!HAS_TRAIT(H, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = H.dna.species.coldmod
@@ -476,7 +476,7 @@
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
 	// The air you breathe out should match your body temperature
-	breath.temperature = H.bodytemperature
+	breath.set_temperature(H.bodytemperature)
 
 /obj/item/organ/lungs/on_life()
 	. = ..()

@@ -67,7 +67,7 @@
 
 	//Early return
 	var/datum/gas_mixture/air1 = airs[1]
-	if(!air1 || air1.temperature <= 0)
+	if(!air1 || air1.return_temperature() <= 0)
 		return
 
 	var/datum/gas_mixture/air2 = airs[2]
@@ -101,7 +101,7 @@
 	if(filtering && removed.gases[filter_type])
 		var/datum/gas_mixture/filtered_out = new
 
-		filtered_out.temperature = removed.temperature
+		filtered_out.set_temperature(removed.return_temperature())
 		filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
 		removed.gases[filter_type][MOLES] = 0

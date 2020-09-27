@@ -414,8 +414,8 @@
 	var/datum/gas_mixture/env = L.return_air()
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	if(env.temperature > 0)
-		var/transfer_moles = 0.05 * delta_time * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+	if(env.return_temperature() > 0)
+		var/transfer_moles = 0.05 * delta_time * pressure_delta*air_contents.volume/(env.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)

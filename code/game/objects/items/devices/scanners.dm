@@ -582,7 +582,7 @@ GENE SCANNER
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			render_list += "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id][MOLES], 0.01)] mol)</span>\n"
-		render_list += "<span class='info'>Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)</span>\n"
+		render_list += "<span class='info'>Temperature: [round(environment.return_temperature()-T0C, 0.01)] &deg;C ([round(environment.return_temperature(), 0.01)] K)</span>\n"
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
@@ -667,7 +667,7 @@ GENE SCANNER
 		var/total_moles = air_contents.total_moles()
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
-		var/temperature = air_contents.temperature
+		var/temperature = air_contents.return_temperature()
 		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)

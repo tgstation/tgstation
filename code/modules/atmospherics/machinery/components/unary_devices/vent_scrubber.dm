@@ -176,7 +176,7 @@
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new
 			var/list/filtered_gases = filtered_out.gases
-			filtered_out.temperature = removed.temperature
+			filtered_out.set_temperature(removed.return_temperature())
 
 			for(var/gas in filter_types & removed_gases)
 				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]

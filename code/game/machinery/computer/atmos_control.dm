@@ -54,7 +54,7 @@
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = air_sample.return_pressure(),
-			"temperature" = air_sample.temperature,
+			"temperature" = air_sample.return_temperature(),
 			"gases" = list()
 		))
 		var/total_moles = air_sample.total_moles()

@@ -81,24 +81,24 @@
 	//Calculate necessary moles to transfer using PV=nRT
 	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
 
-	var/transfer_moles1 = air1.temperature ? node1_concentration * general_transfer / air1.temperature : 0
-	var/transfer_moles2 = air2.temperature ? node2_concentration * general_transfer / air2.temperature : 0
+	var/transfer_moles1 = air1.return_temperature() ? node1_concentration * general_transfer / air1.return_temperature() : 0
+	var/transfer_moles2 = air2.return_temperature() ? node2_concentration * general_transfer / air2.return_temperature() : 0
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
 	if(!node2_concentration)
-		if(air1.temperature <= 0)
+		if(air1.return_temperature() <= 0)
 			return
 		transfer_moles1 = min(transfer_moles1, air1_moles)
 		transfer_moles2 = 0
 	else if(!node1_concentration)
-		if(air2.temperature <= 0)
+		if(air2.return_temperature() <= 0)
 			return
 		transfer_moles2 = min(transfer_moles2, air2_moles)
 		transfer_moles1 = 0
 	else
-		if(air1.temperature <= 0 || air2.temperature <= 0)
+		if(air1.return_temperature() <= 0 || air2.return_temperature() <= 0)
 			return
 		if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
 			return

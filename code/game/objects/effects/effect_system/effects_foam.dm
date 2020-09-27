@@ -43,8 +43,8 @@
 			var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
 			G.gases[/datum/gas/plasma][MOLES] -= plas_amt
 			absorbed_plasma += plas_amt
-		if(G.temperature > T20C)
-			G.temperature = max(G.temperature/2,T20C)
+		if(G.return_temperature() > T20C)
+			G.set_temperature(max(G.return_temperature()/2,T20C))
 		T.air_update_turf()
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
@@ -309,7 +309,7 @@
 		O.ClearWet()
 		if(O.air)
 			var/datum/gas_mixture/G = O.air
-			G.temperature = 293.15
+			G.set_temperature(293.15)
 			for(var/obj/effect/hotspot/H in O)
 				qdel(H)
 			var/list/G_gases = G.gases

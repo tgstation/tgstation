@@ -25,10 +25,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture
 	var/list/gases
-	var/temperature = 0 //kelvins
-	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
-	var/last_share = 0
 	var/initial_gas_mix = CELL_VOLUME
 	/// Do not directly set this var. Externally hooked by extools, used for inspection in VV
 	var/gas_list_view_only
@@ -397,7 +394,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		return FALSE
 
 	//Calculate necessary moles to transfer using PV=nRT
-	if((total_moles() > 0) && (temperature>0))
+	if((total_moles() > 0) && (return_temperature() >0))
 		var/pressure_delta = target_pressure - output_starting_pressure
 		var/transfer_moles = pressure_delta*output_air.volume/(return_temperature() * R_IDEAL_GAS_EQUATION)
 
