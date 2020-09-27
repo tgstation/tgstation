@@ -18,7 +18,6 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
-	var/id_tag = null
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND
@@ -32,18 +31,45 @@
 	pipe_state = "uvent"
 
 	network_id = NETWORK_ATMOS_SCUBBERS
-
+	var/datum/netlink/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
+
+/obj/machinery/atmospherics/components/unary/vent_pump/setup_network()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/vent_area = get_area(src)
+	// If we do not have a name, assign one
+	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
+	datalink = net.regester_port("status",
+		list(
+			"name" = name,
+			"id_tag" = net.hardware_id,
+			"device" = "VP",
+			 "long_name"= sanitize(name),
+			"power"			= on,
+			"checks"		= pressure_checks,
+			"excheck"		= pressure_checks&1,
+			"incheck"		= pressure_checks&2,
+			"direction"		= pump_direction,
+			"external"		= external_pressure_bound,
+			"internal"		= internal_pressure_bound,
+			"extdefault"	= (external_pressure_bound == ONE_ATMOSPHERE),
+			"intdefault"	= (internal_pressure_bound == 0)
+		))
+	ASSERT(datalink != null)
+	vent_area.atmos_vents[net.hardware_id] = datalink
+
+
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
-		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-		vent_area.atmos_vents.Remove(net.hardware_id)
+		vent_area.atmos_vents.Remove(hardware_id)
+	datalink = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -150,21 +176,12 @@
 		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
 		datalink["intdefault"]	= (internal_pressure_bound == 0)
 
-/obj/machinery/atmospherics/components/unary/vent_pump/NetworkInitialize()
-	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	var/area/vent_area = get_area(src)
-	// If we do not have a name, assign one
-	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
-	datalink = net.regester_port("status",  list("name" = name, "id_tag" = net.hardware_id, "device" = "VP", "long_name"= sanitize(name)))
-	vent_area.atmos_vents[net.hardware_id] = datalink
-	update_status()
-
 
 /obj/machinery/atmospherics/components/unary/vent_pump/ntnet_receive(datum/netdata/signal)
 	if(!is_operational)
 		return
 
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(signal.data["sigtype"]!="command")
 		return
 
 	var/atom/signal_sender = signal.data["user"]

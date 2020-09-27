@@ -37,18 +37,18 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	var/datum/ntnet/parent
 
 /datum/ntnet/New(net_id, datum/ntnet/P = null)
-	src.linked_devices = list()
-	src.children = list()
-	src.network_id = net_id
-	if(parent)
-		src.parent = P
-		src.parent.children += src
-		root_devices = src.parent.root_devices
-		networks = src.parent.networks
+	linked_devices = list()
+	children = list()
+	network_id = net_id
+	if(P)
+		parent = P
+		parent.children += src
+		root_devices = parent.root_devices
+		networks = parent.networks
 	else
-		src.parent = null
-		src.networks = list()
-		src.root_devices = list()
+		parent = null
+		networks = list()
+		root_devices = list()
 
 	SSnetworks.networks[network_id] = src
 
@@ -59,16 +59,14 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		debug_world_log("Network [network_id] being deleted with linked devices.  Disconnecting Devices")
 		for(var/hid in linked_devices)
 			var/datum/component/ntnet_interface/device = linked_devices[hid]
-			device.network = null	// we just need to clear the refrence
-			root_devices.Remove(hid)
-		linked_devices = null
+			interface_disconnect(device)
+		linked_devices.Cut()
 
 	if(length(children))
 		debug_world_log("Network [network_id] being deleted with kids.  Killing the children")
 		for(var/child in children)
 			qdel(children[child])
-			networks.Remove(child)
-		children = null
+		children.Cut()
 
 	if(parent)
 		parent.children -= src
@@ -84,7 +82,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		devices = linked_devices
 	else
 		devices = list()
-		var/list/datum/ntnet/queue = list(network)
+		var/list/queue = list(src)
 		while(queue.len)
 			var/datum/ntnet/net = queue[queue.len--]
 			if(net.children)
@@ -109,18 +107,26 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		device.network.interface_disconnect(device)
 	linked_devices[device.hardware_id] = device
 	root_devices[device.hardware_id] = device
+	if(device.id_tag)
+		// if we have a tag just put it in root devices
+		if(!root_devices[device.id_tag])
+			root_devices[device.id_tag] = device
+#ifdef DEBUG_NETWORKS
+		else
+			throw EXCEPTION("interface_connect: [device.id_tag] already exists")
+#endif
 	device.network = src
 
 /datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
 	linked_devices.Remove(device.hardware_id)
 	root_devices.Remove(device.hardware_id)
+	if(device.id_tag)
+		if(root_devices[device.id_tag] && root_devices[device.id_tag] == device)
+			root_devices.Remove(device.id_tag)
 	device.network = null
 
 /datum/ntnet/proc/interface_find(tag_or_hid)
-	var/hid = SSnetworks.network_tag_to_hardware_id[tag_or_hid]
-	if(!hid)
-		hid = tag_or_hid
-	return root_devices[hid]
+	return root_devices[tag_or_hid]
 
 
 /datum/ntnet/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.
@@ -132,39 +138,31 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 			return TRUE
 	return FALSE
 
-
-
-/// send a brodcast packet to in this network leaf
-/datum/ntnet/proc/_process_data_brodcast(datum/component/ntnet_interface/sender, datum/netdata/data, include_children = TRUE)
-	set waitfor = FALSE				// Its a broadcast so this should be fine?
-	log_data_transfer(data)
-
-	var/datum/component/ntnet_interface/target
-	var/list/targets = collect_interfaces(include_children)
-	for(var/hid in targets)
-		target = targets[hid]
-		if(!QDELETED(target)) // Do we need this or not? allot of async goes around
-			target.__network_receive(data)
-
-
-/datum/ntnet/proc/_process_data_transmit(datum/netdata/data)
-	if(!check_relay_operation()) // mabye hold of on relays and refactor them as "routers"
-		return FALSE
-	var/datum/component/ntnet_interface/target
-	log_data_transfer(data)
-
-	var/list/targets = data.receiver_id == null ?  SSnetworks.collect_interfaces(network_id) : data.receiver_id
-	if(targets)
-		for(var/hid in targets)
-			target = SSnetworks.interfaces_by_hardware_id[hid]
-			if(!QDELETED(target)) // Do we need this or not? alot of async goes around
-				target.__network_receive(data)
-
 // does basic checks before sending
-/datum/ntnet/proc/process_data(datum/netdata/data)
+/datum/ntnet/proc/process_data_transmit(datum/netdata/data)
+	set waitfor = FALSE
+	to_chat(world,"process_data_transmit([data.sender_id]): start ")
 	if(!check_relay_operation())
-		return FALSE
-	if(networks[child_id])
+		to_chat(world,"process_data_transmit([data.sender_id]): check_relay_operation")
+		return FALSE					// relay or router dead
+	if(!networks[data.network_id])
+		to_chat(world,"process_data_transmit([data.sender_id]): networks [data.network_id]")
+		return FALSE					// target not in the right network
+	// log_data_transfer(data) // might need to profile this first
+	var/datum/component/ntnet_interface/target
+	var/list/targets = data.receiver_id == null ?  collect_interfaces() : list(data.receiver_id)
+	for(var/hid in targets)
+		target = root_devices[hid]
+		// FOUND IT
+		to_chat(world,"process_data_transmit([data.sender_id]): target [hid]")
+		if(!QDELETED(target)) 		// Do we need this or not? allot of async goes around
+			if(data.passkey && isobj(target.parent))
+				var/obj/O = target.parent
+				if(!O.check_access_ntnet(data))
+					continue // should return
+			target.parent.ntnet_receive(data)
+			to_chat(world,"process_data_transmit([data.sender_id]): transmitted [hid]")
+
 
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)

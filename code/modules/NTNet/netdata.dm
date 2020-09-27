@@ -1,4 +1,3 @@
-
 // This netlink class shares a list to two devices
 // This allows skipping of sending many many packets
 // just to update simple data
@@ -6,35 +5,50 @@
 	var/server_id
 	var/server_network
 	var/port
-	var/connections = 0 // total links to this
-	var/updated = 0 // counts data has been udpate, use to test if things have changed
 	var/passkey = null // sends auth data used to check if we can connect or send data to a device
 	var/list/data
 
-/datum/netlink/New(list/data)
+/datum/netlink/New(datum/component/ntnet_interface/server, list/data)
 	ASSERT(data != null)
 	src.data = data
+	if(!("_updated" in data))
+		data["_updated"] = FALSE
+	RegisterSignal(server, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
 	..()
+
+/datum/netlink/proc/_server_disconnected(datum/component/com)
+	data = null
 
 /datum/netlink/Destroy()
 	passkey = null
 	data = null
+	server = null
 	return ..()
 
-/datum/netlink/proc/operator[](idx)
-	if(QDELETED(src))
-		return data[idx]
-	else
-		throw NETWORK_ERROR_DISCONNECTED
+// I hate you all.  I want to operator overload []
+// So fuck you all, Do NOT access data directly you freaks
+// or this breaks god knows what.
+// FINE, you don't have to use get, is dirty or even clean
+// proc overhead is WAY more important than fucking clarity or
+// sealed classes.   But for the LOVE OF GOD make sure _updated
+// is set if your going to do this.
+/datum/netlink/proc/get(idx)
+	return data ? data[idx] : null
 
-/datum/netlink/proc/operator[]=(idx, V)
-	// is it posable to worry about racing conditions?
-	if(QDELETED(src))
-		if(data[idx] != V)
-			updated++
-			data[idx] = V
-	else
-		throw NETWORK_ERROR_DISCONNECTED
+/datum/netlink/proc/put(idx, V)
+	// is it posable to do this async without worry about racing conditions?
+	if(data && data[idx] != V)
+		data["_updated"] = TRUE
+		data[idx] = V
+
+/datum/netlink/proc/is_dirty()
+	return data["_updated"]
+
+/datum/netlink/proc/clean()
+	data["_updated"] = FALSE
+
+/datum/netlink/proc/is_connected()
+	return data != null
 
 /datum/netdata
 	//this requires some thought later on but for now it's fine. (WarlockD) ARRRRG
@@ -44,14 +58,14 @@
 	var/sender_id
 	var/receiver_id
 	var/network_id
-	var/list/data = list()
 	var/passkey = null // sends auth data used to check if we can connect or send data to a device
+	var/list/data = list()
 
-/datum/netdata/proc/operator[](idx)
+/datum/netdata/proc/get(idx)
 	if(data)
 		return data[idx]
 
-/datum/netdata/proc/operator[]=(idx, V)
+/datum/netdata/proc/put(idx, V)
 	if(data)
 		return data[idx] = V
 

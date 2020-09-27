@@ -208,10 +208,6 @@
 	if(!hasPower() || !canAIControl())
 		return
 
-	// Check packet access level.
-	if(!check_access_ntnet(data))
-		return
-
 	// Handle received packet.
 	var/command = data.data["data"]
 	var/command_value = data.data["data_secondary"]

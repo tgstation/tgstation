@@ -7864,7 +7864,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "pa" = (
 /obj/machinery/air_sensor{
-	network_tag = "UO45_air_sensor"
+	id_tag = "UO45_air_sensor"
 	},
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
@@ -10205,7 +10205,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tf" = (
 /obj/machinery/air_sensor{
-	network_tag = "UO45_mix_sensor"
+	id_tag = "UO45_mix_sensor"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
@@ -11507,7 +11507,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vD" = (
 /obj/machinery/air_sensor{
-	network_tag = "UO45_n2_sensor"
+	id_tag = "UO45_n2_sensor"
 	},
 /obj/machinery/light/small,
 /turf/open/floor/engine/n2,
@@ -11518,7 +11518,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vF" = (
 /obj/machinery/air_sensor{
-	network_tag = "UO45_o2_sensor"
+	id_tag = "UO45_o2_sensor"
 	},
 /obj/machinery/light/small,
 /turf/open/floor/engine/o2,

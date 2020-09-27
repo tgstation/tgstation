@@ -12,7 +12,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
 	var/frequency = 0
 	var/atom/target
-	var/id_tag
+	var/datum/netlink/datalink = null
 	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/atmos
@@ -45,6 +45,10 @@
 		reattach_to_layer()
 	return ..()
 
+/obj/machinery/meter/setup_network()
+	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
+	datalink = conn.regester_port("status", list("pressure" = 0))
+
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate
 	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
@@ -74,34 +78,25 @@
 		icon_state = "meterX"
 		return FALSE
 
+	var/val = 0
 	var/env_pressure = environment.return_pressure()
 	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
 		icon_state = "meter0"
 	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
+		val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
 		icon_state = "meter1_[val]"
 	else if(env_pressure <= 30*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
+		val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
 		icon_state = "meter2_[val]"
 	else if(env_pressure <= 59*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
+		val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
 
-	if(frequency)
-		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
+	if(datalink)
+		datalink["pressure"] = round(env_pressure)
 
-		if(!radio_connection)
-			return
-
-		var/datum/signal/signal = new(list(
-			"id_tag" = id_tag,
-			"device" = "AM",
-			"pressure" = round(env_pressure),
-			"sigtype" = "status"
-		))
-		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()
 	if (target)

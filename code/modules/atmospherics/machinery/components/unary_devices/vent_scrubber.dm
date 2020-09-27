@@ -15,7 +15,6 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
-	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
@@ -25,8 +24,8 @@
 
 	pipe_state = "scrubber"
 
-	var/datum/netlink/link = null
 	network_id = NETWORK_ATMOS_SCUBBERS
+	var/datum/netlink/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -38,12 +37,34 @@
 			filter_types -= f
 			filter_types += gas_id2path(f)
 
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/setup_network()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/scrub_area = get_area(src)
+	name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
+	var/list/f_types = list()
+	for(var/path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[path]
+		f_types += list(list("path" = path, "gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME]))
+	datalink = net.regester_port("status", list(
+		"filter_types" = f_types,
+		"hardware_id" = net.hardware_id,
+		"long_name" = name,
+		"id_tag" = id_tag,
+		"device" = "VS",
+		"timestamp" = world.time,
+		"power" = on,
+		"scrubbing" = scrubbing,
+		"widenet" = widenet,
+	))
+	scrub_area.atmos_scrubbers[net.hardware_id] = datalink // magic!
+
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
-		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-		scrub_area.atmos_scrubbers.Remove(net.hardware_id)
-
+		scrub_area.atmos_scrubbers.Remove(hardware_id)
+	QDEL_NULL(datalink)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
@@ -89,12 +110,12 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/ui_data(mob/user)
 	. = list()
-	.["id_tag"]			= link["id_tag"]
-	.["long_name"]		= link["long_name"]
-	.["power"]			= link["power"]
-	.["scrubbing"]		= link["scrubbing"]
-	.["widenet"]		= link["widenet"]
-	.["filter_types"]	= link["filter_types"]
+	.["id_tag"]			= datalink.data["id_tag"]
+	.["long_name"]		= datalink.data["long_name"]
+	.["power"]			= datalink.data["power"]
+	.["scrubbing"]		= datalink.data["scrubbing"]
+	.["widenet"]		= datalink.data["widenet"]
+	.["filter_types"]	= datalink.data["filter_types"]
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
 	update_status()
@@ -170,6 +191,15 @@
 //There is no easy way for an object to be notified of changes to atmos can pass flags
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
+	if(datalink && datalink.data["_updated"])
+		on = datalink.data["power"]
+		scrubbing = datalink.data["scrubbing"]
+		widenet = datalink.data["widenet"]
+		filter_types = list()
+		for(var/gas in signal.data["filter_types"])
+			filter_types += gas_id2path(gas)
+		datalink.data["_updated"] = FALSE
+
 	if(widenet)
 		check_turfs()
 
@@ -183,68 +213,62 @@
 		adjacent_turfs = T.GetAtmosAdjacentTurfs(alldir = 1)
 
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_status()
-	if(datalink)
-		var/list/f_types = datalink["filter_types"]
-		for(var/I in 1 to f_types.len)
-			var/list/gas = f_types[I]
-			gas["enabled"] = (gas["path"] in filter_types)
-
-		datalink["timestamp"] = world.time
-		datalink["power"] = on
-		datalink["scrubbing"] = scrubbing
-		datalink["widenet"] = widenet
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/NetworkInitialize()
-	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	var/area/scrub_area = get_area(src)
-	name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
-	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("path" = path, "gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME]))
-	datalink = net.regester_port("status", list("filter_types" = f_types, "hardware_id" = net.hardware_id, "long_name" = name, "id_tag" = id_tag, "device" = "VS"))
-	scrub_area.atmos_scrubbers[net.hardware_id] = datalink // magic!
-	update_status()
-
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/ntnet_receive(datum/netdata/signal)
-	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
+	if(!is_operational || signal.data["sigtype"]!="command")
 		return
 
 	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
+		if(datalink)
+			datalink.data["on"] = on
+
 	if("power_toggle" in signal.data)
 		on = !on
+		if(datalink)
+			datalink.data["on"] = on
 
 	if("widenet" in signal.data)
 		widenet = text2num(signal.data["widenet"])
+		if(datalink)
+			datalink.data["widenet"] = widenet
+
 	if("toggle_widenet" in signal.data)
 		widenet = !widenet
+		if(datalink)
+			datalink.data["widenet"] = widenet
 
 	var/old_scrubbing = scrubbing
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
+		if(datalink)
+			datalink.data["scrubbing"] = scrubbing
+
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
+		if(datalink)
+			datalink.data["scrubbing"] = scrubbing
+
 	if(scrubbing != old_scrubbing)
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("toggle_filter" in signal.data)
 		filter_types ^= gas_id2path(signal.data["toggle_filter"])
+		if(datalink)
+			datalink.data["filter_types"] = filter_types
 
 	if("set_filters" in signal.data)
 		filter_types = list()
 		for(var/gas in signal.data["set_filters"])
 			filter_types += gas_id2path(gas)
+		if(datalink)
+			datalink.data["filter_types"] = filter_types
 
 	if("init" in signal.data)
 		name = signal.data["init"]
 		return
 
-	update_status()
 	if(!("status" in signal.data))
 		update_icon()  //do not update_icon
 

@@ -238,6 +238,8 @@
 	set_custom_materials(custom_materials)
 
 	if(network_id)
+		/// This signal will not run till after all maps set up...hopefuly
+		RegisterSignal(src, COMSIG_COMPONENT_NTNET_JOIN_NETWORK, .proc/setup_network)
 		/// See ntnet_join_network wordy comment on why this is here
 		ntnet_join_network(network_id, id_tag)
 
@@ -297,6 +299,12 @@
 		SSicon_smooth.remove_from_queues(src)
 
 	return ..()
+
+
+/// Override this if you need some extra network setup like ports and such
+/// Guaranteed to run after all machines have been placed and have a connection on mapload
+/atom/proc/setup_network()
+	return
 
 /atom/proc/handle_ricochet(obj/projectile/P)
 	var/turf/p_turf = get_turf(P)

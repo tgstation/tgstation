@@ -178,7 +178,6 @@
 "cP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1442;
 	id_tag = "syndie_lavaland_o2_out";
 	internal_pressure_bound = 5066;
 	name = "Plasma Out"
@@ -3928,7 +3927,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	frequency = 1442;
 	id_tag = "syndie_lavaland_co2_out";
 	internal_pressure_bound = 5066;
 	name = "CO2 out"
@@ -5855,7 +5853,6 @@
 "pJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1442;
 	id_tag = "syndie_lavaland_n2_out";
 	internal_pressure_bound = 5066;
 	name = "Nitrogen Out"
@@ -5942,7 +5939,6 @@
 "yg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1442;
 	id_tag = "syndie_lavaland_o2_out";
 	internal_pressure_bound = 5066;
 	name = "Oxygen Out"

@@ -41,9 +41,6 @@
 	var/pipe_state //icon_state as a pipe item
 	var/on = FALSE
 
-	network_id = NETWORK_ATMOS
-	var/datum/netlink/datalink = null // link is commenly used and just here to  be nulled properly
-
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
@@ -76,9 +73,7 @@
 	dropContents()
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
-		
-	datalink.connections-- // just for debugging
-	datalink = null
+
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
 

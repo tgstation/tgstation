@@ -1,6 +1,6 @@
-#define WAND_OPEN "Open Door"
-#define WAND_BOLT "Toggle Bolts"
-#define WAND_EMERGENCY "Toggle Emergency Access"
+#define WAND_OPEN "open"
+#define WAND_BOLT "bolt"
+#define WAND_EMERGENCY "emergency"
 
 /obj/item/door_remote
 	icon_state = "gangtool-white"
@@ -23,36 +23,30 @@
 	AddComponent(/datum/component/ntnet_interface, NETWORK_TOOLS_REMOTES)
 
 /obj/item/door_remote/attack_self(mob/user)
+	var/desc
 	switch(mode)
 		if(WAND_OPEN)
+			desc = "Toggle Emergency Access"
 			mode = WAND_BOLT
 		if(WAND_BOLT)
+			desc = "Toggle Bolts"
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
+			desc = "Open Door"
 			mode = WAND_OPEN
-	to_chat(user, "<span class='notice'>Now in mode: [mode].</span>")
+	to_chat(user, "<span class='notice'>Now in mode: [desc].</span>")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
-	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
-
-	if(!target_interface)
+	if(!A.hardware_id) // not on network
 		return
 
 	// Generate a control packet.
-	var/datum/netdata/data = new
-	data.receiver_id = target_interface.hardware_id
-	data.receiver_network = target_interface.network.network_tree
-	switch(mode)
-		if(WAND_OPEN)
-			data.data["data"] = "open"
-		if(WAND_BOLT)
-			data.data["data"] = "bolt"
-		if(WAND_EMERGENCY)
-			data.data["data"] = "emergency"
-
-	data.data["data_secondary"] = "toggle"
+	var/datum/netdata/data = new("data" = mode)
+	data.sender_id = A.hardware_id
+	data.receiver_id = hardware_id
+	data.network_id = A.network_id
 	data.passkey = access_list
 
 	ntnet_send(data)

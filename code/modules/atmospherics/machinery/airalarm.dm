@@ -307,14 +307,14 @@
 		data["vents"] = list()
 		for(var/hid in A.atmos_vents)
 			var/datum/netlink/vent = A.atmos_vents[hid]
-			if(QDELETED(vent))
+			if(QDELETED(vent) && vent.data)
 				continue
 			data["vents"] += list(vent.data)
 
 		data["scrubbers"] = list()
 		for(var/hid in A.atmos_scrubbers)
 			var/datum/netlink/scrubber = A.atmos_scrubbers[hid]
-			if(QDELETED(scrubber))
+			if(QDELETED(scrubber) && scrubber.data)
 				continue
 			data["scrubbers"] += list(scrubber.data)
 
@@ -452,10 +452,12 @@
 		return FALSE
 
 
-/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-	var/datum/netdata/signal = new(command)
+/obj/machinery/airalarm/proc/send_signal(target, list/data, atom/user)
+	var/datum/netdata/signal = new(data)
+	signal.data["sigtype"] = "command"
 	signal.receiver_id = target
-	signal.receiver_network = NETWORK_ATMOS_SCUBBERS
+	signal.sender_id = hardware_id
+	signal.network_id = network_id
 	ntnet_send(signal)
 
 
@@ -673,7 +675,7 @@
 		"type" = "Atmospheric"
 	))
 	alert_signal.receiver_id = null
-	alert_signal.receiver_network = NETWORK_ATMOS_ALARMS
+	alert_signal.network_id = network_id
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)

@@ -7736,7 +7736,6 @@
 "rM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	frequency = 1442;
 	id_tag = "snowdin_toxins_out";
 	name = "toxin out"
 	},
@@ -7744,7 +7743,7 @@
 /area/awaymission/snowdin/post/engineering)
 "rN" = (
 /obj/machinery/air_sensor{
-	network_tag = "snowdin_toxins";
+	id_tag = "snowdin_toxins";
 	name = "gas sensor (toxins)"
 	},
 /turf/open/floor/engine/plasma,
@@ -7752,14 +7751,14 @@
 "rO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	network_tag = "snowdin_oxygen_out";
+	id_tag = "snowdin_oxygen_out";
 	name = "oxygen out"
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rP" = (
 /obj/machinery/air_sensor{
-	network_tag = "snowdin_oxygen";
+	id_tag = "snowdin_oxygen";
 	name = "gas sensor (oxygen)"
 	},
 /turf/open/floor/engine/o2,
@@ -7767,14 +7766,14 @@
 "rQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	network_tag = "snowdin_nitrogen_out";
+	id_tag = "snowdin_nitrogen_out";
 	name = "nitrogen out"
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "rR" = (
 /obj/machinery/air_sensor{
-	network_tag = "snowdin_nitrogen";
+	id_tag = "snowdin_nitrogen";
 	name = "gas sensor (nitrogen)"
 	},
 /turf/open/floor/engine/n2,
@@ -9945,7 +9944,6 @@
 "yu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1442;
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
@@ -10174,7 +10172,6 @@
 "za" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
-	frequency = 1442;
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
@@ -13301,7 +13298,6 @@
 "Hp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	frequency = 1442;
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
