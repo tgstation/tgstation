@@ -432,7 +432,7 @@
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
-	SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_DISCOINFERNO
+	SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_EMAGGED
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	. = ..()
