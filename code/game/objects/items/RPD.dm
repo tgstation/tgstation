@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	///Hold upgrade flags
-	var/upgrade
+	var/upgrade_flags
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -241,8 +241,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(!istype(W, /obj/item/rpd_upgrade))
 		return ..()	
 	var/obj/item/rpd_upgrade/rpd_up = W
-	if(!(upgrade & rpd_up.upgrade))
-		upgrade |= rpd_up.upgrade
+	if(!(upgrade_flags & rpd_up.upgrade_flags))
+		upgrade_flags |= rpd_up.upgrade_flags
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		qdel(W)
 
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it.
-	if((mode & DESTROY_MODE) && (upgrade & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
+	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
 		A = A.wrench_act(user, src)	
 
 	//make sure what we're clicking is valid for the current category
@@ -503,8 +503,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	desc = "It seems to be empty."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
-	var/upgrade
+	var/upgrade_flags
 
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
-	upgrade = RPD_UPGRADE_UNWRENCH
+	upgrade_flags = RPD_UPGRADE_UNWRENCH
