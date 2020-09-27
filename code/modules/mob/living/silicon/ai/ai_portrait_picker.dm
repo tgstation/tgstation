@@ -11,7 +11,6 @@
 
 /datum/portrait_picker
 	var/client/holder //client of whoever is using this datum
-	var/datum/tgui/_ui //we use this to close it when done selecting
 
 /datum/portrait_picker/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
@@ -25,7 +24,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortraitPicker")
-		_ui = ui
 		ui.open()
 
 /datum/portrait_picker/ui_close()
@@ -63,13 +61,13 @@
 			var/mob/living/ai = holder.mob
 			var/w = portrait_icon.Width()
 			var/h = portrait_icon.Height()
-			if(w != 23 || h != 23)
-				to_chat(ai, "span class='warning'>Sorry, only 23x23 Portraits are accepted.</span>")
+			if((w != 23 || h != 23))// && (w != 24 || h != 25))//remove 23x23 for final merge
+				to_chat(ai, "span class='warning'>Sorry, only 23x23 Portraits are accepted.</span>")//and 24x25 Portraits
 				return
-			to_chat(ai, "span class='notice'>Portrait Accepted. Enjoy!</span>")
+			to_chat(ai, "<span class='notice'>Portrait Accepted. Enjoy!</span>")
 			ai.icon_state = "ai-portrait-active"//background
 			var/mutable_appearance/MA = mutable_appearance(portrait_icon)
-			MA.pixel_x = 5
+			MA.pixel_x = 5//set to 4 for final merge
 			MA.pixel_y = 5
 			ai.add_overlay(MA)
-			_ui.close()
+			ui_close()
