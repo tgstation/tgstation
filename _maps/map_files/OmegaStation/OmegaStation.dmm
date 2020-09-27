@@ -35162,7 +35162,7 @@
 /area/science/mixing)
 "rQN" = (
 /obj/machinery/power/apc{
-	areastring = "area/security/prison/safe;
+	areastring = "area/security/prison/safe";
 	name = "Prison Cells APC";
 	pixel_x = 25
 	},
