@@ -41,7 +41,7 @@
 
 /obj/machinery/power/heavy_emitter/centre
 	name = "Heavy Emitter Core"
-	desc = "Dangerously unstable, military grade capacitor that eats power like it's candy and then releases an incredibly potent burst of energy that can anihiliate anything."
+	desc = "A dangerously unstable, military grade capacitor that eats power like it's candy, before releasing an incredibly potent burst of energy that can annihilate anything."
 	idle_power_usage = 500
 	active_power_usage = 2000
 	///bool to check if the machine is fully constructed
@@ -192,7 +192,7 @@
 
 /obj/machinery/power/heavy_emitter/arm
 	name = "Seismic Stabilizer Arm"
-	desc = "Reduces the knockback from firing to virtually nothing."
+	desc = "Dampens the recoil from firing to virtually nothing"
 	icon_state = "arm"
 
 /obj/machinery/power/heavy_emitter/interface
@@ -216,12 +216,15 @@
 	var/turf/T = get_step(src,turn(dir,180))
 	var/obj/machinery/power/heavy_emitter/centre/centre = locate() in T
 	if(!centre)
+
 		turn_off()
 		return
 	if(centre.check_part_connectivity())
 		connected_core = centre
+		to_chat(user, "<span class='warning'>You power on the Heavy Emitter!</span>")
 		turn_on()
 	else
+		to_chat(user, "<span class='warning'>You disable the Heavy Emitter!</span>")
 		turn_off()
 
 /obj/machinery/power/heavy_emitter/interface/turn_on()
@@ -233,7 +236,7 @@
 
 /obj/machinery/power/heavy_emitter/vent
 	name = "Energy Core Vent"
-	desc = "Circulates air around core preventing overheating"
+	desc = "Circulates air around the core, preventing it from overheating."
 	icon_state = "vent"
 
 /obj/machinery/power/heavy_emitter/vent/proc/vent_gas()
@@ -249,7 +252,7 @@
 
 /obj/machinery/power/heavy_emitter/cannon
 	name = "Energy Optic Converging Cannon"
-	desc = "Converges the energy of the core into singular destructive beam."
+	desc = "Converges the energy from the core into a singular destructive beam."
 	icon_state = "cannon"
 	var/warmup_sound = 'sound/machines/warmup1.ogg'
 	var/cooldown_sound = 'sound/machines/cooldown1.ogg'
