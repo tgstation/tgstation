@@ -162,7 +162,7 @@
 
 	if(scrubbing & SCRUBBING)
 		if(length(env_gases & filter_types))
-			var/transfer_moles = min(1, volume_rate * delta_time / environment.volume)*environment.total_moles()
+			var/transfer_moles = min(1, volume_rate * delta_time / environment.return_volume())*environment.total_moles()
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
@@ -190,7 +190,7 @@
 
 	else //Just siphoning all air
 
-		var/transfer_moles = environment.total_moles() * (volume_rate * delta_time / environment.volume)
+		var/transfer_moles = environment.total_moles() * (volume_rate * delta_time / environment.return_volume())
 
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 

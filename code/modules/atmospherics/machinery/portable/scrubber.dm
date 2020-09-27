@@ -69,7 +69,7 @@
 		scrub(T.return_air(), delta_time)
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture, delta_time = 2)
-	var/transfer_moles = min(1, volume_rate * delta_time / mixture.volume) * mixture.total_moles()
+	var/transfer_moles = min(1, volume_rate * delta_time / mixture.return_volume()) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
 	if(!filtering)

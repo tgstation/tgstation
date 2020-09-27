@@ -4,9 +4,9 @@
 // node2, air2, network2 correspond to output
 //
 // Thus, the two variables affect pump operation are set in New():
-//   air1.volume
+//   air1.return_volume()
 //     This is the volume of gas available to the pump that may be transfered to the output
-//   air2.volume
+//   air2.return_volume()
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
 
@@ -70,7 +70,7 @@
 		return
 
 
-	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
+	var/transfer_ratio = (transfer_rate * delta_time) / air1.return_volume()
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
@@ -162,7 +162,7 @@
 
 	if("set_transfer_rate" in signal.data)
 		var/datum/gas_mixture/air1 = airs[1]
-		transfer_rate = clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
+		transfer_rate = clamp(text2num(signal.data["set_transfer_rate"]),0,air1.return_volume())
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

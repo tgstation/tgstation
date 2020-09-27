@@ -4,9 +4,9 @@
 // node2, air2, network2 correspond to output
 //
 // Thus, the two variables affect pump operation are set in New():
-//   air1.volume
+//   air1.return_volume()
 //     This is the volume of gas available to the pump that may be transfered to the output
-//   air2.volume
+//   air2.return_volume()
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
 

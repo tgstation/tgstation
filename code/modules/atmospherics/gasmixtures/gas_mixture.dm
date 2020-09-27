@@ -25,7 +25,6 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 /datum/gas_mixture
 	var/list/gases
-	var/volume = CELL_VOLUME //liters
 
 	/// Do not directly set this var. Externally hooked by extools, used for inspection in VV
 	var/gas_list_view_only
@@ -379,7 +378,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	var/list/gas_list = get_gases() | other.get_gases()
 	for(var/gas_id in gas_list)
 		//math is under the assumption temperatures are equal
-		if(abs(get_moles(gas_id) / volume - other.get_moles(gas_id) / other.return_volume()) > min_p_delta / (R_IDEAL_GAS_EQUATION * return_temperature()))
+		if(abs(get_moles(gas_id) / return_volume() - other.get_moles(gas_id) / other.return_volume()) > min_p_delta / (R_IDEAL_GAS_EQUATION * return_temperature()))
 			. = TRUE
 			var/total_moles = get_moles(gas_id) + other.get_moles(gas_id)
 			set_moles(gas_id, total_moles * (return_volume() / total_volume))
@@ -396,7 +395,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	//Calculate necessary moles to transfer using PV=nRT
 	if((total_moles() > 0) && (return_temperature() >0))
 		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*output_air.volume/(return_temperature() * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*output_air.return_volume()/(return_temperature() * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = remove(transfer_moles)

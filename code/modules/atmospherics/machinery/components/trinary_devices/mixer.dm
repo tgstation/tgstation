@@ -55,7 +55,7 @@
 /obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
 	var/datum/gas_mixture/air3 = airs[3]
-	air3.volume = 300
+	air3.set_volume(300)
 	airs[3] = air3
 
 /obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
@@ -79,7 +79,7 @@
 		return
 
 	//Calculate necessary moles to transfer using PV=nRT
-	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
+	var/general_transfer = (target_pressure - output_starting_pressure) * air3.return_volume() / R_IDEAL_GAS_EQUATION
 
 	var/transfer_moles1 = air1.return_temperature() ? node1_concentration * general_transfer / air1.return_temperature() : 0
 	var/transfer_moles2 = air2.return_temperature() ? node2_concentration * general_transfer / air2.return_temperature() : 0

@@ -25,7 +25,7 @@
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
-					active_hotspot.volume = exposed_volume
+					active_hotspot.volume += exposed_volume
 		return
 
 	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5 || h2 > 0.5))

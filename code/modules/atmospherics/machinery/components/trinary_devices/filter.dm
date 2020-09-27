@@ -79,7 +79,7 @@
 		//No need to transfer if target is already full!
 		return
 
-	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
+	var/transfer_ratio = (transfer_rate * delta_time) / air1.return_volume()
 
 	//Actually transfer the gas
 
