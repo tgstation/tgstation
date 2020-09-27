@@ -40961,6 +40961,10 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 5
 	},
+/obj/item/assembly/signaler,
+/obj/item/wrench,
+/obj/item/clothing/head/helmet,
+/obj/item/screwdriver,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "wVk" = (
