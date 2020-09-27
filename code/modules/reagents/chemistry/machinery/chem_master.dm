@@ -1,5 +1,5 @@
 /obj/machinery/chem_master
-	name = "ChemMaster 3001"
+	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
