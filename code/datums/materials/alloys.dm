@@ -42,18 +42,18 @@
 
 /datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
-	if(!isitem(target_item))
+	if(!istype(target_item))
 		return
 
 	target_item.slowdown += MATERIAL_SLOWDOWN_PLASTEEL * amount / MINERAL_MATERIAL_AMOUNT
 
-/datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, material_flags)
+/datum/material/alloy/plasteel/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	if(!isitem(target_item))
+	if(!istype(target_item))
 		return
 
-	target_item.slowdown = initial(target_item.slowdown)
+	target_item.slowdown -= MATERIAL_SLOWDOWN_PLASTEEL * amount / MINERAL_MATERIAL_AMOUNT
 
 /** Plastitanium
   *
@@ -148,16 +148,16 @@
 	. = ..()
 
 	target_item.AddElement(/datum/element/alloy_regen, _rate=0.02) // 2% regen per tick.
-	if(!isitem(target_item))
+	if(!istype(target_item))
 		return
 
 	target_item.slowdown += MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / MINERAL_MATERIAL_AMOUNT
 
-/datum/material/alloy/alien/on_removed_obj(obj/item/target_item, material_flags)
+/datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
 	target_item.RemoveElement(/datum/element/alloy_regen, _rate=0.02)
-	if(!isitem(target_item))
+	if(!istype(target_item))
 		return
 
-	target_item.slowdown = initial(target_item.slowdown)
+	target_item.slowdown -= MATERIAL_SLOWDOWN_ALIEN_ALLOY * amount / MINERAL_MATERIAL_AMOUNT

@@ -13,7 +13,7 @@
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
 
-/datum/material/meat/on_removed(atom/source, material_flags)
+/datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/edible))
 
