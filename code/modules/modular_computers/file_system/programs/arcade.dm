@@ -91,8 +91,10 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
+
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]

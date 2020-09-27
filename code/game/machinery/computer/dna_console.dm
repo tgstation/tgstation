@@ -359,8 +359,9 @@
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	. = TRUE
 
