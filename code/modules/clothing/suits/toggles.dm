@@ -16,7 +16,7 @@
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/hooded/W = new hoodtype()
+		var/obj/item/clothing/head/hooded/W = new hoodtype(src)
 		W.suit = src
 		hood = W
 
@@ -35,13 +35,12 @@
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
 	suittoggled = FALSE
-	if(hood)
-		if(hood.loc && ishuman(hood.loc))
-			var/mob/living/carbon/H = hood.loc
-			H.transferItemToLoc(hood, src, TRUE)
-			H.update_inv_wear_suit()
-		else
-			hood.forceMove(src)
+	if(ishuman(hood.loc))
+		var/mob/living/carbon/H = hood.loc
+		H.transferItemToLoc(hood, src, TRUE)
+		H.update_inv_wear_suit()
+	else
+		hood.forceMove(src)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

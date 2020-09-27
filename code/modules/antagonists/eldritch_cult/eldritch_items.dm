@@ -213,8 +213,13 @@
 	var/mob/living/carbon/carbon_user = src.loc
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
 		. = ..()
+		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
+		var/datum/component/storage/concrete/pockets/void_cloak/cloak = GetComponent(/datum/component/storage/concrete/pockets/void_cloak)
 		if(suittoggled)
+			cloak.max_items = 3
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
+		else
+			cloak.max_items = 4
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
