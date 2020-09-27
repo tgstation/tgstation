@@ -11,6 +11,7 @@
 
 /datum/portrait_picker
 	var/client/holder //client of whoever is using this datum
+	var/datum/tgui/_ui //we use this to close it when done selecting
 
 /datum/portrait_picker/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
@@ -24,6 +25,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortraitPicker")
+		_ui = ui
 		ui.open()
 
 /datum/portrait_picker/ui_close()
@@ -34,7 +36,6 @@
 
 /datum/portrait_picker/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/ai_shell),
 		get_asset_datum(/datum/asset/simple/portraits/library),
 		get_asset_datum(/datum/asset/simple/portraits/library_secure),
 		get_asset_datum(/datum/asset/simple/portraits/library_private)
@@ -60,6 +61,15 @@
 			var/png = "data/paintings/[folder]/[chosen_portrait["md5"]].png"
 			var/icon/portrait_icon = new(png)
 			var/mob/living/ai = holder.mob
+			var/w = portrait_icon.Width()
+			var/h = portrait_icon.Height()
+			if(w != 23 || h != 23)
+				to_chat(ai, "span class='warning'>Sorry, only 23x23 Portraits are accepted.</span>")
+				return
+			to_chat(ai, "span class='notice'>Portrait Accepted. Enjoy!</span>")
 			ai.icon_state = "ai-portrait-active"//background
-			ai.add_overlay(image(png, pixel_x = 3, pixel_y = 4))
-			qdel(src)
+			var/mutable_appearance/MA = mutable_appearance(portrait_icon)
+			MA.pixel_x = 5
+			MA.pixel_y = 5
+			ai.add_overlay(MA)
+			_ui.close()

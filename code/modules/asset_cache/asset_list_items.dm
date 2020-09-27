@@ -468,9 +468,8 @@
 	..()
 
 /datum/asset/simple/portraits
-	var/tab = "stop"
-	assets = list(
-	)
+	var/tab = "use subtypes of this please"
+	assets = list()
 
 /datum/asset/simple/portraits/New()
 	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
@@ -479,7 +478,7 @@
 		var/list/portrait = p
 		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
 		if(fexists(png))
-			assets["[portrait["title"]]"] = png
+			assets[portrait["title"]] = png
 	..() //this is where it registers all these assets we added to the list
 
 /datum/asset/simple/portraits/library
