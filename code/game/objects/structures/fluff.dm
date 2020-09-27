@@ -341,6 +341,18 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+
+/obj/structure/fluff/ruinous_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with an even more crude symbol. Who made this crap? A bunch of evil lunatics?"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "evil"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/headstone
 	name = "headstone"
 	desc = "R.I.P"
