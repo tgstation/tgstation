@@ -27,50 +27,48 @@ export const CargoContent = (props, context) => {
   const cart = data.cart || [];
   const requests = data.requests || [];
   return (
-    <Window>
-      <Window.Content scrollable>
-        <CargoStatus />
-        <Section fitted>
-          <Tabs>
+    <Box>
+      <CargoStatus />
+      <Section fitted>
+        <Tabs>
+          <Tabs.Tab
+            icon="list"
+            selected={tab === 'catalog'}
+            onClick={() => setTab('catalog')}>
+            Catalog
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="envelope"
+            textColor={tab !== 'requests'
+              && requests.length > 0
+              && 'yellow'}
+            selected={tab === 'requests'}
+            onClick={() => setTab('requests')}>
+            Requests ({requests.length})
+          </Tabs.Tab>
+          {!requestonly && (
             <Tabs.Tab
-              icon="list"
-              selected={tab === 'catalog'}
-              onClick={() => setTab('catalog')}>
-              Catalog
-            </Tabs.Tab>
-            <Tabs.Tab
-              icon="envelope"
-              textColor={tab !== 'requests'
-                && requests.length > 0
+              icon="shopping-cart"
+              textColor={tab !== 'cart'
+                && cart.length > 0
                 && 'yellow'}
-              selected={tab === 'requests'}
-              onClick={() => setTab('requests')}>
-              Requests ({requests.length})
+              selected={tab === 'cart'}
+              onClick={() => setTab('cart')}>
+              Checkout ({cart.length})
             </Tabs.Tab>
-            {!requestonly && (
-              <Tabs.Tab
-                icon="shopping-cart"
-                textColor={tab !== 'cart'
-                  && cart.length > 0
-                  && 'yellow'}
-                selected={tab === 'cart'}
-                onClick={() => setTab('cart')}>
-                Checkout ({cart.length})
-              </Tabs.Tab>
-            )}
-          </Tabs>
-        </Section>
-        {tab === 'catalog' && (
-          <CargoCatalog />
-        )}
-        {tab === 'requests' && (
-          <CargoRequests />
-        )}
-        {tab === 'cart' && (
-          <CargoCart />
-        )}
-      </Window.Content>
-    </Window>
+          )}
+        </Tabs>
+      </Section>
+      {tab === 'catalog' && (
+        <CargoCatalog />
+      )}
+      {tab === 'requests' && (
+        <CargoRequests />
+      )}
+      {tab === 'cart' && (
+        <CargoCart />
+      )}
+    </Box>
   );
 };
 
@@ -85,6 +83,7 @@ const CargoStatus = (props, context) => {
     message,
     points,
     requestonly,
+    can_send,
   } = data;
   return (
     <Section
@@ -99,7 +98,7 @@ const CargoStatus = (props, context) => {
       )}>
       <LabeledList>
         <LabeledList.Item label="Shuttle">
-          {docked && !requestonly && (
+          {docked && !requestonly && can_send &&(
             <Button
               content={location}
               onClick={() => act('send')} />
@@ -220,6 +219,7 @@ const CargoRequests = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     requestonly,
+    can_send,
   } = data;
   const requests = data.requests || [];
   // Labeled list reimplementation to squeeze extra columns out of it
@@ -259,7 +259,7 @@ const CargoRequests = (props, context) => {
               <Table.Cell collapsing textAlign="right">
                 {formatMoney(request.cost)} cr
               </Table.Cell>
-              {!requestonly && (
+              {!requestonly || can_send &&(
                 <Table.Cell collapsing>
                   <Button
                     icon="check"
@@ -287,10 +287,11 @@ const CargoCartButtons = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     requestonly,
+    can_send,
   } = data;
   const cart = data.cart || [];
   const total = cart.reduce((total, entry) => total + entry.cost, 0);
-  if (requestonly) {
+  if (requestonly || !can_send) {
     return null;
   }
   return (
@@ -318,6 +319,7 @@ const CargoCart = (props, context) => {
     away,
     docked,
     location,
+    can_send,
   } = data;
   const cart = data.cart || [];
   return (
@@ -352,11 +354,13 @@ const CargoCart = (props, context) => {
                 {formatMoney(entry.cost)} cr
               </Table.Cell>
               <Table.Cell collapsing>
-                <Button
-                  icon="minus"
-                  onClick={() => act('remove', {
-                    id: entry.id,
-                  })} />
+                {can_send &&(
+                  <Button
+                    icon="minus"
+                    onClick={() => act('remove', {
+                      id: entry.id,
+                    })} />
+                )}
               </Table.Cell>
             </Table.Row>
           ))}

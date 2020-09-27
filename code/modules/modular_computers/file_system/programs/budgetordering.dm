@@ -53,6 +53,7 @@
 	return FALSE
 
 /datum/computer_file/program/budgetorders/ui_data()
+	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -62,13 +63,42 @@
 		if(ACCESS_HEADS in id_card.access)
 			requestonly = FALSE
 			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+		else
+			requestonly = TRUE
 	if(buyer)
 		data["points"] = buyer.account_balance
+
+//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
+	data["requestonly"] = requestonly
+	data["supplies"] = list()
+	for(var/pack in SSshuttle.supply_packs)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
+		if(!is_visible_pack(usr, P.access_view , null, P.contraband) || P.hidden)
+			continue
+		if(!data["supplies"][P.group])
+			data["supplies"][P.group] = list(
+				"name" = P.group,
+				"packs" = list()
+			)
+		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly))
+			continue
+		data["supplies"][P.group]["packs"] += list(list(
+			"name" = P.name,
+			"cost" = P.cost,
+			"id" = pack,
+			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"goody" = P.goody,
+			"access" = P.access
+		))
+
+//Data regarding the User's capability to buy things.
+	data["has_id"] = id_card
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["self_paid"] = self_paid
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
+	data["can_send"] = FALSE
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
@@ -97,34 +127,10 @@
 
 	return data
 
-/datum/computer_file/program/budgetorders/ui_static_data(mob/user)
-	var/list/data = list()
-	data["requestonly"] = requestonly
-	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(user, P.access_view , null, P.contraband) || P.hidden)
-			continue
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
-			)
-		if((P.hidden && (P.contraband && !contraband) || (P.special && !P.special_enabled) || P.DropPodOnly))
-			continue
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.cost,
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"goody" = P.goody,
-			"access" = P.access
-		))
-	return data
-
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())
@@ -194,7 +200,7 @@
 					return
 
 			var/reason = ""
-			if(requestonly && !self_paid)
+			if((requestonly && !self_paid) || !(card_slot?.GetID()))
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
@@ -214,14 +220,13 @@
 					break
 
 			if(!self_paid && ishuman(usr) && !account)
-				var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 				var/obj/item/card/id/id_card = card_slot?.GetID()
 				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
 			SO.generateRequisition(T)
-			if(requestonly && !self_paid)
+			if((requestonly && !self_paid) || !(card_slot?.GetID()))
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
