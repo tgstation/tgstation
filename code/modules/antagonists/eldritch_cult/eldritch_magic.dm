@@ -34,7 +34,7 @@
 	desc = "Touch spell that let's you channel the power of the old gods through you."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = "evocation"
-	charge_max = 150
+	charge_max = 100
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
@@ -103,10 +103,9 @@
 	desc = "Spreads rust onto nearby turfs."
 	range = 2
 
-/obj/effect/proc_holder/spell/targeted/touch/blood_siphon
+/obj/effect/proc_holder/spell/pointed/blood_siphon
 	name = "Blood Siphon"
 	desc = "Touch spell that heals you while damaging the enemy, has a chance to transfer wounds between you and your enemy."
-	hand_path = /obj/item/melee/touch_attack/blood_siphon
 	school = "evocation"
 	charge_max = 150
 	clothes_req = FALSE
@@ -115,17 +114,11 @@
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "blood_siphon"
 	action_background_icon_state = "bg_ecult"
+	range = 9
 
-/obj/item/melee/touch_attack/blood_siphon
-	name = "Blood Siphon"
-	desc = "A sinister looking aura that distorts the flow of reality around it."
-	icon_state = "disintegrate"
-	inhand_icon_state = "disintegrate"
-	catchphrase = "R'BRTH"
-
-/obj/item/melee/touch_attack/blood_siphon/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
+/obj/effect/proc_holder/spell/pointed/blood_siphon/cast(list/targets, mob/user)
+	. = ..()
+	var/target = targets[1]
 	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
@@ -154,7 +147,17 @@
 		carbon_target.blood_volume -= 20
 		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
 			carbon_user.blood_volume += 20
-		return ..()
+		return
+
+/obj/effect/proc_holder/spell/pointed/blood_siphon/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target,/mob/living))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to siphon [target]!</span>")
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
 	name = "Patron's Reach"
@@ -409,7 +412,7 @@
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
 			for(var/mob/living/livies in T.contents - centre)
-				livies.adjustFireLoss(10)
+				livies.adjustFireLoss(5)
 		_range++
 		sleep(3)
 
@@ -458,7 +461,7 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(25 * delta_time)
+			livies.adjustFireLoss(2.5 * delta_time)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
@@ -477,6 +480,7 @@
 	. = ..()
 	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
 		to_chat(user, "<span class='userdanger'>You try to contract your muscles but nothing happens...</span>")
+		return
 	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
 	armsy.contract_next_chain_into_single_tile()
 
@@ -667,3 +671,46 @@
 		return 3
 	else
 		return 2
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form
+	name = "Shed form"
+	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
+	invocation_type = INVOCATION_SHOUT
+	invocation = "REALITY UNCOIL!"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "worm_ascend"
+	var/segment_length = 10
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/target = user
+	var/mob/living/mob_inside = locate() in target.contents - target
+
+	if(!mob_inside)
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		target.mind.transfer_to(outside, TRUE)
+		target.forceMove(outside)
+		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
+		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
+			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
+				continue
+			SEND_SIGNAL(humie, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			///They see the very reality uncoil before their eyes.
+			if(prob(25))
+				var/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
+				humie.gain_trauma(new trauma(), TRAUMA_RESILIENCE_LOBOTOMY)
+		return
+
+	if(iscarbon(mob_inside))
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
+		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
+			mob_inside.forceMove(armsy.loc)
+		armsy.mind.transfer_to(mob_inside, TRUE)
+		segment_length = armsy.get_length()
+		qdel(armsy)
+		return

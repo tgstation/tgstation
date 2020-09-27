@@ -134,7 +134,8 @@
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!pad)
 		return

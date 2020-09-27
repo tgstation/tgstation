@@ -149,7 +149,7 @@
 		qdel(W)
 		qdel(src)
 
-/obj/item/hemostat/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/nuke_core/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!isliving(hit_atom))
 		return ..()
 	var/mob/living/victim = hit_atom

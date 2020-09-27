@@ -593,7 +593,7 @@
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
-		return TRUE
+		return
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

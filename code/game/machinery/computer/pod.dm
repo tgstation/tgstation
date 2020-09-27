@@ -78,7 +78,8 @@
 	return data
 
 /obj/machinery/computer/pod/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
@@ -134,6 +135,13 @@
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = "no_keyboard"
+
+/obj/machinery/computer/pod/old/mass_driver_controller
+	name = "\improper Mass Driver Controller"
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "airlock_control_standby"
+	icon_keyboard = "no_keyboard"
+	density = FALSE
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"

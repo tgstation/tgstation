@@ -1202,7 +1202,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acK" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -2395,7 +2395,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "afB" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3714,7 +3714,7 @@
 /area/maintenance/disposal)
 "aik" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ail" = (
@@ -3769,7 +3769,6 @@
 /obj/structure/chair/stool,
 /obj/machinery/camera{
 	c_tag = "Prison Visitation";
-	dir = 2;
 	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/trimline/red/warning{
@@ -4079,21 +4078,13 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ajd" = (
-/obj/machinery/button/door{
-	id = "Disposal Exit";
-	name = "Disposal Vent Control";
-	pixel_x = -25;
-	pixel_y = 4;
-	req_access_txt = "12"
-	},
-/obj/machinery/button/massdriver{
-	id = "trash";
-	pixel_x = -26;
-	pixel_y = -6
-	},
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "trash";
+	pixel_x = -24
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -4657,6 +4648,13 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/button/door{
+	id = "Disposal Exit";
+	name = "Disposal Vent Control";
+	pixel_x = -25;
+	pixel_y = 4;
+	req_access_txt = "12"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aki" = (
@@ -7924,10 +7922,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "arb" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "armory shutters"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7937,6 +7931,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "armory shutters"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
@@ -27076,10 +27074,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"blt" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/maintenance/disposal)
 "blu" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved/flipped{
@@ -29460,6 +29454,9 @@
 /obj/item/canvas,
 /obj/item/canvas,
 /obj/item/canvas,
+/obj/item/chisel{
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/storage/art)
 "bro" = (
@@ -30830,7 +30827,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "buR" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/machinery/camera{
 	c_tag = "Bar - Starboard"
 	},
@@ -36855,9 +36852,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bLK" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -36870,11 +36864,11 @@
 "bLN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/beerkeg,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/structure/sign/poster/random{
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -50860,7 +50854,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ctn" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -53367,21 +53361,17 @@
 /area/science/mixing)
 "cBK" = (
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "toxinsdriver";
+	pixel_x = 0;
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cBL" = (
 /obj/structure/chair{
 	dir = 4
-	},
-/obj/machinery/button/massdriver{
-	id = "toxinsdriver";
-	pixel_x = 24;
-	pixel_y = -24
 	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the test chamber.";
@@ -55929,7 +55919,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "cJA" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -58805,6 +58795,10 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -59358,12 +59352,6 @@
 /obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/item/reagent_containers/food/snacks/grown/harebell,
 /obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/machinery/button/massdriver{
-	id = "chapelgun";
-	name = "Chapel Mass Driver";
-	pixel_x = -4;
-	pixel_y = -26
-	},
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -63373,16 +63361,16 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Chapel - Funeral Parlour";
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller{
+	id = "chapelgun";
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -63411,7 +63399,7 @@
 /turf/open/space,
 /area/science/xenobiology)
 "djt" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
@@ -63419,11 +63407,11 @@
 /area/engine/supermatter)
 "djx" = (
 /obj/item/crowbar,
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "djz" = (
@@ -64615,7 +64603,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/navbeacon/wayfinding/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -64624,6 +64611,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/glass/rag,
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "dDf" = (
@@ -65226,11 +65214,11 @@
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "ege" = (
@@ -68047,11 +68035,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "hWp" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
 	name = "Radiation Chamber Shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "hWR" = (
@@ -68489,7 +68477,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "iJH" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -68501,6 +68488,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "iKA" = (
@@ -69270,7 +69258,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
 	pixel_x = 6;
 	pixel_y = 6
@@ -69282,6 +69269,12 @@
 	c_tag = "Bar - Counter";
 	dir = 1
 	},
+/obj/machinery/requests_console{
+	department = "Bar";
+	departmentType = 2;
+	pixel_y = -30
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "jOh" = (
@@ -69470,7 +69463,6 @@
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -69478,6 +69470,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "jYJ" = (
@@ -69887,7 +69880,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
-	req_access_txt = "0";
 	req_one_access_txt = "10;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -70916,11 +70908,11 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
 	pixel_y = 7
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "lWY" = (
@@ -73965,10 +73957,13 @@
 /obj/machinery/camera{
 	c_tag = "Bar - Backroom"
 	},
-/obj/structure/sink/kitchen{
-	pixel_y = 24
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror{
+	pixel_y = 34
+	},
+/obj/structure/sink{
+	pixel_y = 22
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "qcN" = (
@@ -74091,6 +74086,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"qns" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/main)
 "qoc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -75228,15 +75233,15 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -97116,7 +97121,7 @@ aaa
 ahq
 ahq
 ahp
-blt
+ahp
 ahp
 amP
 anV
@@ -100570,7 +100575,7 @@ cLa
 cMI
 cQa
 cOP
-cRj
+qns
 cRG
 cMI
 aaa

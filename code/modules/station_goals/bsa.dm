@@ -261,8 +261,10 @@
 	return data
 
 /obj/machinery/computer/bsa_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("build")
 			cannon = deploy()

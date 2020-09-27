@@ -9,7 +9,7 @@ export const AtmosFilter = (props, context) => {
   return (
     <Window
       width={390}
-      height={187}>
+      height={221}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -27,7 +27,7 @@ export const AtmosFilter = (props, context) => {
                 width="63px"
                 unit="L/s"
                 minValue={0}
-                maxValue={200}
+                maxValue={data.max_rate}
                 onDrag={(e, value) => act('rate', {
                   rate: value,
                 })} />

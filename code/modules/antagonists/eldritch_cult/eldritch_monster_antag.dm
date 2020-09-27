@@ -2,6 +2,7 @@
 /datum/antagonist/heretic_monster
 	name = "Eldritch Horror"
 	roundend_category = "Heretics"
+	can_hijack = HIJACK_NEUTRAL
 	antagpanel_category = "Heretic Beast"
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
@@ -19,9 +20,9 @@
 	to_chat(owner, "<span class='boldannounce'>You became an Eldritch Horror!</span>")
 
 /datum/antagonist/heretic_monster/on_removal()
-	if(owner)
-		to_chat(owner, "<span class='boldannounce'>Your master is no longer [master.owner.current.real_name]</span>")
-		owner = null
+	if(master)
+		to_chat(master, "<span class='boldannounce'>Your master is no longer [master.owner.current.real_name]</span>")
+		master = null
 	return ..()
 
 /datum/antagonist/heretic_monster/proc/set_owner(datum/antagonist/_master)

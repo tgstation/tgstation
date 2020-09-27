@@ -308,7 +308,8 @@
 	return data
 
 /obj/machinery/biogenerator/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

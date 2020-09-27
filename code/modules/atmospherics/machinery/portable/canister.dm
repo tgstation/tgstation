@@ -501,7 +501,8 @@
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("relabel")

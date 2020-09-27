@@ -16,7 +16,8 @@
 	var/effectmod ///Which type of crossbred
 	var/list/activate_reagents = list() ///Reagents required for activation
 	var/recurring = FALSE
-	var/research ///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
+	/// Research point value for slime cores. These are defines stored in [code/__DEFINES/research.dm] - the actual values are updated there.
+	var/research
 
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()

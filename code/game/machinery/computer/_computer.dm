@@ -17,11 +17,8 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+
 	power_change()
-	if(!QDELETED(C))
-		qdel(circuit)
-		circuit = C
-		C.moveToNullspace()
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -96,6 +93,7 @@
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.setDir(dir)
 			A.circuit = circuit
+			circuit.forceMove(A)
 			A.set_anchored(TRUE)
 			if(machine_stat & BROKEN)
 				if(user)

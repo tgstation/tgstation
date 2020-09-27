@@ -80,8 +80,10 @@
 	return data
 
 /obj/machinery/computer/apc_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("log-in")
 			if(obj_flags & EMAGGED)

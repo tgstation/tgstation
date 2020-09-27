@@ -84,7 +84,7 @@
 	user.forceMove(T)
 	if(AM)
 		user.start_pulling(AM)
-	
+
 	//reopening ladder radial menu ahead
 	T = get_turf(user)
 	var/obj/structure/ladder/ladder_structure = locate() in T
@@ -103,7 +103,7 @@
 	if (!length(tool_list))
 		to_chat(user, "<span class='warning'>[src] doesn't seem to lead anywhere!</span>")
 		return
-	
+
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, is_ghost), require_near = !is_ghost, tooltips = TRUE)
 	if (!is_ghost && !in_range(src, user))
 		return  // nice try

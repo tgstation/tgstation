@@ -129,7 +129,8 @@
 					.["user"]["job"] = "No Job"
 
 /obj/machinery/mineral/equipment_vendor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
