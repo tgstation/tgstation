@@ -30,7 +30,7 @@
 
 /obj/vehicle/sealed/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	if(. && !HAS_TRAIT(M, TRAIT_DIAGNOSTIC_HUD))
+	if(. && !HAS_TRAIT(H, TRAIT_DIAGNOSTIC_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.add_hud_to(H)
 

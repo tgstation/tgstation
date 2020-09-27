@@ -14,7 +14,7 @@
 
 /obj/vehicle/sealed/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	if(. && !HAS_TRAIT(M, TRAIT_MEDICAL_HUD))
+	if(. && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		hud.add_hud_to(H)
 
