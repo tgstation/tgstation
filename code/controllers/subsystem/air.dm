@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(air)
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]|"
-	msg += "AO:[round(cost_atoms, 1)]"
+	msg += "AO:[round(cost_atoms, 1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
