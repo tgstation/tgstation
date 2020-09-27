@@ -193,7 +193,7 @@
 	SSair.remove_from_active(src)
 
 /turf/open/proc/equalize_pressure_in_zone(cyclenum)
-/*
+
 /turf/open/proc/consider_firelocks(turf/T2)
 	var/reconsider_adj = FALSE
 	for(var/obj/machinery/door/firedoor/FD in T2)
@@ -208,7 +208,6 @@
 		reconsider_adj = TRUE
 	if(reconsider_adj)
 		T2.ImmediateCalculateAdjacentTurfs() // We want those firelocks closed yesterday.
-		*/
 
 /turf/proc/handle_decompression_floor_rip()
 /turf/open/floor/handle_decompression_floor_rip(sum)
