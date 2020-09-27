@@ -32,8 +32,8 @@
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
 	var/datum/gas_mixture/air_contents = airs[1]
-	air_contents.gases[/datum/gas/oxygen][MOLES] = AIR_CONTENTS * 0.2
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = AIR_CONTENTS * 0.8
+	air_contents.set_moles(/datum/gas/oxygen, AIR_CONTENTS * 0.2)
+	air_contents.set_moles(/datum/gas/nitrogen, AIR_CONTENTS * 0.8)
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide

@@ -281,7 +281,7 @@
 			air1.set_temperature(clamp(air1.return_temperature() - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE))
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
 
-		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+		air1.set_moles(/datum/gas/oxygen, max(0, air1.get_moles(/datum/gas/oxygen) - 0.5 / efficiency)) // Magically consume gas? Why not, we run on cryo magic.
 
 		if(air1.return_temperature() > 2000)
 			take_damage(clamp((air1.return_temperature())/200, 10, 20), BURN)
