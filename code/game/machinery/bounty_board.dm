@@ -84,8 +84,10 @@ GLOBAL_LIST_EMPTY(request_list)
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target

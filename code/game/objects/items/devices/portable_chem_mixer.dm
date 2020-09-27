@@ -177,7 +177,8 @@
 	return data
 
 /obj/item/storage/portable_chem_mixer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("amount")

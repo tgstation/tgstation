@@ -179,12 +179,6 @@
 				return TRUE
 	return FALSE
 
-/obj/item/stack/attack_self(mob/user)
-	interact(user)
-
-/obj/item/stack/interact(mob/user)
-	ui_interact(user)
-
 /obj/item/stack/ui_state(mob/user)
 	return GLOB.hands_state
 

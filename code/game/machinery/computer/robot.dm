@@ -72,7 +72,8 @@
 	return data
 
 /obj/machinery/computer/robotics/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
