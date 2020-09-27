@@ -307,6 +307,12 @@
 	credit_cost = 1000
 	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
+/datum/map_template/shuttle/emergency/lava
+	suffix = "lava"
+	name = "Lavastation emergency shuttle"
+	credit_cost = 1000
+	description = "It's definitely not just the ministation shuttle repurposed. Why would you think that? You should think higher of us."
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -575,6 +581,10 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+
+/datum/map_template/shuttle/arrival/lava
+	suffix = "lava"
+	name = "arrival shuttle (Lava)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"

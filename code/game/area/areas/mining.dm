@@ -52,6 +52,11 @@
 	name = "Mining Station Port Wing"
 	icon_state = "mining_living"
 
+/area/mine/engineering
+	name = "Mining Engineering"
+	icon_state ="LS_engine"
+	ambientsounds = ENGINEERING
+
 /area/mine/eva
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
@@ -62,6 +67,28 @@
 /area/mine/cafeteria
 	name = "Mining Station Cafeteria"
 	icon_state = "mining_labor_cafe"
+
+/area/mine/hallA
+	name = "Mining Aft Hall"
+	icon_state ="LS_hallA"
+
+/area/mine/hallF
+	name = "Mining Fore Hall"
+	icon_state ="LS_hallF"
+
+/area/mine/med
+	name = "Mining Medical"
+	icon_state ="LS_medbay1"
+	ambientsounds = MEDICAL
+
+/area/mine/maint
+	name = "Mining Maintenance"
+	icon_state ="LS_maint"
+	ambientsounds = MAINTENANCE
+
+/area/mine/research
+	name = "Mining Research"
+	icon_state ="LS_science"
 
 /area/mine/hydroponics
 	name = "Mining Station Hydroponics"

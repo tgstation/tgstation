@@ -145,7 +145,6 @@
 					/obj/item/clothing/head/medjed = 1,
 					/obj/item/clothing/suit/gambler_jacket = 1,
 					/obj/item/clothing/shoes/practical_boots = 1,
-					/obj/item/clothing/suit/toggle/labcoat/trenchcoat_brown = 1,
 					/obj/item/clothing/mask/golden = 5)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,

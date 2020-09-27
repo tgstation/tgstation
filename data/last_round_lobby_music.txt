@@ -89,3 +89,7 @@ config/title_music/sounds/THE REAL FOLK BLUES.ogg
 config/title_music/sounds/It Was At That Point I Realised.ogg
 config/title_music/sounds/Icarus.ogg
 config/title_music/sounds/Raceway.ogg
+config/title_music/sounds/Time to do Something.ogg
+config/title_music/sounds/Hopeless Romantic.ogg
+config/title_music/sounds/CrazyBus.ogg
+config/title_music/sounds/Lil B Station.ogg

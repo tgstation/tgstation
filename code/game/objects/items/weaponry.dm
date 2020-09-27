@@ -1112,3 +1112,37 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return 1
 	return 0
+
+/obj/item/melee/sinnersoath
+	name = "Sinner's Oath"
+	icon_state = "sinnersoath_0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A flashy golden box, it seems to hold mysical properties that seals away a weapon. "
+	force = 1
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 1
+	hitsound = 'sound/weapons/genhit.ogg'
+	attack_verb = list("smacked", "poked")
+	resistance_flags = FIRE_PROOF
+	var/extended = 0
+
+/obj/item/melee/sinnersoath/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/weapons/bladetransform.ogg', 50, TRUE)
+	if(extended)
+		force = 2500
+		w_class = WEIGHT_CLASS_BULKY
+		throwforce = 100
+		icon_state = "sinnersoath_1"
+		attack_verb = list("cut", "sliced", "diced","tore", "lacerated", "ripped")
+		hitsound = 'sound/weapons/bladeslice.ogg'
+		sharpness = SHARP_EDGED
+	else
+		force = 3
+		w_class = WEIGHT_CLASS_SMALL
+		throwforce = 5
+		icon_state = "sinnersoath_0"
+		attack_verb = list("smacked", "poked")
+		hitsound = 'sound/weapons/genhit.ogg'
+		sharpness = SHARP_NONE

@@ -526,3 +526,9 @@
 	body_parts_covered = CHEST|GROIN|LEGS|HEAD|ARMS|HANDS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
+
+/obj/item/clothing/head/valor_crown
+    name = "Valor's Crown"
+    desc = "A seemingly ordinary crown. But you feel as if this particular item is also hiding something."
+    icon_state = "valor_crown"
+    inhand_icon_state = "crown"

@@ -16,6 +16,7 @@
 	reagent_flags = TRANSPARENT
 	custom_price = 150
 	sharpness = SHARP_POINTY
+	var/whippedcolor = null
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -111,6 +112,7 @@
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
+				whippedcolor = mix_color_from_reagents(reagents.reagent_list)
 
 				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
@@ -161,6 +163,11 @@
 			if(istype(W))
 				to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The canister now contains [reagents.total_volume] units.</span>")
 				playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+				var/obj/item/reagent_containers/food/snacks/S = target
+				if(istype(S))
+					var/mutable_appearance/whipped_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whipped")
+					whipped_overlay.color = whippedcolor
+					S.add_overlay(whipped_overlay)
 			else
 				to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
@@ -280,15 +287,6 @@
 	volume = 20
 	icon_state = "cream_bottle"
 	inhand_icon_state = "cream_bottle"
-
-/obj/item/reagent_containers/syringe/whippedcream/afterattack(atom/target, mob/user , proximity)
-	. = ..()
-	var/obj/item/reagent_containers/food/snacks/S = target
-	if(istype(S))
-		var/mutable_appearance/whipped_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "whipped")
-		whipped_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		S.add_overlay(whipped_overlay)
-
 
 /obj/item/reagent_containers/syringe/whippedcream/update_icon_state()
 	icon_state = "cream_bottle"

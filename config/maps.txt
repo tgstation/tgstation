@@ -44,6 +44,12 @@ map omegastation
 	votable
 endmap
 
+map lavastation
+	maxplayers 25
+	votable
+endmap
+
+
 map runtimestation
 endmap
 

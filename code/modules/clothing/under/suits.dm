@@ -157,6 +157,14 @@
 	icon_state = "beige_suit"
 	inhand_icon_state = "beige_suit"
 
+/obj/item/clothing/under/suit/valor_suit
+	name = "Valor's Suit"
+	desc = "A peculiar suit, made from an unknown material. Are they hiding something?"
+	icon_state = "valor_suit"
+	inhand_icon_state = "black_suit"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+
 /obj/item/clothing/under/suit/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."

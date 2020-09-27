@@ -851,3 +851,15 @@
 	icon_state = "cloak"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
+/obj/item/clothing/suit/hooded/travelercloak
+	name = "Traveler's Cloak"
+	desc = "A durable cloak that shelters its wearer from the elements, the collar seems to be made from decayed flowers."
+	icon_state = "travelercloak"
+	inhand_icon_state = "travelercloak"
+	allowed = list(/obj/item/tank/internals)
+	armor = list("melee" = 40, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 0)
+	hoodtype = /obj/item/clothing/head/hooded/travelerhood
+
+/obj/item/clothing/head/hooded/travelerhood
+	icon_state = "travelerhood"
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 0)

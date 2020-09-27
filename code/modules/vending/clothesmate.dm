@@ -114,7 +114,10 @@
 		            /obj/item/clothing/under/suit/casual_outfit = 1,
 		            /obj/item/clothing/suit/comfy_jacket = 1,
 		            /obj/item/clothing/under/suit/repurposed_nurse_outfit = 1,
-		            /obj/item/clothing/suit/toggle/labcoat/black = 1,)
+		            /obj/item/clothing/suit/toggle/labcoat/black = 1,
+					/obj/item/clothing/suit/toggle/labcoat/trenchcoat_brown = 1,
+					/obj/item/clothing/under/suit/valor_suit = 1,
+					/obj/item/clothing/head/valor_crown = 1)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,
