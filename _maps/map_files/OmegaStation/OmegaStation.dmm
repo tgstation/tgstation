@@ -1951,6 +1951,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aep" = (
@@ -26310,6 +26311,12 @@
 /obj/effect/turf_decal/tile/red,
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/spray/pepper,
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/security/prison";
+	name = "Prison APC";
+	pixel_y = -23
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "dHp" = (
@@ -35155,7 +35162,8 @@
 /area/science/mixing)
 "rQN" = (
 /obj/machinery/power/apc{
-	name = "Prison APC";
+	areastring = "area/security/prison/safe;
+	name = "Prison Cells APC";
 	pixel_x = 25
 	},
 /obj/structure/cable,
