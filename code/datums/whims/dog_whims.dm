@@ -4,24 +4,23 @@
 /datum/whim/airbud_bball
 	name = "Airbud Mode"
 	scan_radius = 5
-	scan_every = 8
+	scan_every = 20 // make it so it scans more often for a few minutes after it's triggered since this would happen so rarely
 	abandon_rescan_length = 12 SECONDS
 
+/datum/whim/airbud_bball/abandon()
+	. = ..()
+	COOLDOWN_RESET(src, extra_sensitive, extra_sensitive_length)
+
 /datum/whim/airbud_bball/inner_can_start()
-	var/obj/item/toy/beach_ball/holoball/bball// = locate(/obj/item/toy/beach_ball/holoball in oview(src,  7))
 
 	for(var/i in oview(owner, scan_radius))
-		//testing("[owner] searching whim [name], atom [i]")
 		if(istype(i, /obj/item/toy/beach_ball/holoball))
-			bball = i
-			break
+			return i
 		else if(isliving(i))
 			var/mob/living/check_mob = i
-			bball = (locate(/obj/item/toy/beach_ball/holoball) in check_mob)
+			var/obj/item/bball = (locate(/obj/item/toy/beach_ball/holoball) in check_mob)
 			if(bball)
-				break
-
-	return bball
+				return bball
 
 /datum/whim/airbud_bball/tick()
 	. = ..()
@@ -160,7 +159,7 @@
 		abandon()
 		return
 
-	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, feel free to change it later -ryll, 2020
+	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, will change -ryll, 2020
 	//Feeding, chasing food, FOOOOODDDD
 	step_to(owner,concerned_target,1)
 	sleep(3)

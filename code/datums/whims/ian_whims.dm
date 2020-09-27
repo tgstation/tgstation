@@ -12,10 +12,9 @@
 	var/list/exempted_roles = list("Head of Personnel", "Captain")
 
 /datum/whim/defend_area/inner_can_start()
-	testing("owner area [get_area(owner)]")
 	if(!is_type_in_list(get_area(owner), defendable_areas))
 		return FALSE
-	testing("owner in area right")
+
 	for(var/i in oview(owner,scan_radius))
 		if(!is_type_in_list(get_area(i), defendable_areas))
 			continue
@@ -37,7 +36,7 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > scan_radius)
+	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > scan_radius || !is_type_in_list(get_area(concerned_target), defendable_areas))
 		abandon()
 		return
 
