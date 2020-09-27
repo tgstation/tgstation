@@ -105,6 +105,7 @@
 "x" = (
 /obj/structure/closet/crate/bin,
 /obj/item/tape/random,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
@@ -210,6 +211,11 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
+"Q" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 "R" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -309,7 +315,7 @@ a
 a
 a
 c
-d
+Q
 f
 h
 q

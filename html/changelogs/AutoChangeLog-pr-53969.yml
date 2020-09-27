@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Moths won't have limb-shaped holes in their wings when facing certain directions if they have lost a limb any more."

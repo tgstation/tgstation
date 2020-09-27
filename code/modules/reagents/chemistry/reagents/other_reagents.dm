@@ -928,15 +928,6 @@
 		C.blood_volume += 0.5
 	..()
 
-/datum/reagent/iron/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!exposed_mob.has_bane(BANE_IRON)) //If the target is weak to cold iron, then poison them.
-		return
-	if(!holder || (holder.chem_temp >= 100)) // COLD iron.
-		return
-
-	exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
-
 /datum/reagent/gold
 	name = "Gold"
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
@@ -952,11 +943,6 @@
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
 	material = /datum/material/silver
-
-/datum/reagent/silver/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	. = ..()
-	if(exposed_mob.has_bane(BANE_SILVER))
-		exposed_mob.reagents.add_reagent(/datum/reagent/toxin, reac_volume)
 
 /datum/reagent/uranium
 	name ="Uranium"

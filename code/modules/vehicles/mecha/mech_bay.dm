@@ -96,7 +96,8 @@
 		ui.open()
 
 /obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("reconnect")

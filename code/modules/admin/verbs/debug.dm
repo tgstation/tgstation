@@ -243,6 +243,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(M.ckey)
 		M.ghostize(FALSE)
 	M.ckey = ckey
+	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -267,6 +268,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(M.ckey)
 		M.ghostize(FALSE)
 	M.ckey = newkey.key
+	M.client?.init_verbs()
 	if(delmob)
 		qdel(oldmob)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave away direct control of [M] to [newkey].</span>")

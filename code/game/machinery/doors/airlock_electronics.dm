@@ -53,8 +53,10 @@
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("clear_all")
 			accesses = list()

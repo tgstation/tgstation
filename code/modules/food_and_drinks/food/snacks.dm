@@ -196,7 +196,8 @@ All foods are distributed among various categories. Use common sense.
 			return FALSE
 	if(user.a_intent != INTENT_DISARM)
 		var/sharp = W.get_sharpness()
-		return sharp && slice(sharp, W, user)
+		if (sharp == SHARP_EDGED)
+			return slice(sharp, W, user)
 	else
 		return ..()
 
@@ -327,15 +328,13 @@ All foods are distributed among various categories. Use common sense.
 		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
-				M.manual_emote("nibbles away at \the [src]")
+				M.manual_emote("nibbles away at \the [src].")
 			bitecount++
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where \the [src] was")
-				if(sattisfaction_text)
-					M.manual_emote(sattisfaction_text)
+				var/satisfaction_text = pick("burps from enjoyment.", "yaps for more!", "woofs twice.", "looks at the area where \the [src] was.")
+				M.manual_emote(satisfaction_text)
 				qdel(src)
-
 
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.

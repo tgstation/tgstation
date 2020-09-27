@@ -100,7 +100,8 @@
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("set_code")
@@ -215,7 +216,8 @@
 	return data
 
 /obj/item/nanite_remote/comm/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("set_message")

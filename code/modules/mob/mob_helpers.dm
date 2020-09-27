@@ -434,6 +434,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(0)
 		M.key = C.key
+		M.client?.init_verbs()
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
@@ -447,7 +448,6 @@
 ///Is the mob a floating mob
 /mob/proc/is_floating()
 	return (movement_type & FLOATING)
-
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()

@@ -25,8 +25,9 @@
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 	if(!computer)
 		return
 
