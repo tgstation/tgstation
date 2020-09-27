@@ -137,6 +137,14 @@
 	icon_state = ""
 	return TRUE
 
+GLOBAL_LIST_EMPTY_TYPED(corners_diagonal_smooth_effect_holder, /atom/movable/corner_diagonal_smooth_effect)
+
+/atom/movable/corner_diagonal_smooth_effect
+	move_resist 	= INFINITY
+	anchored 		= TRUE
+	icon 			= 'icons/turf/floors.dmi'
+	icon_state 		= "transparent"
+	vis_flags 		= VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 //only walls should have a need to handle underlays
 /turf/closed/wall/corners_diagonal_smooth(adjacencies)
@@ -146,7 +154,7 @@
 	adjacencies = reverse_ndir(adjacencies)
 	if(adjacencies == NONE)
 		return
-	var/atom/movable/corners_diagonal_smooth_effect/corner_appearance = new()
+	var/atom/movable/corner_diagonal_smooth_effect/corner_appearance = new()
 	var/list/U = list(corner_appearance)
 	vis_contents.Cut()
 
