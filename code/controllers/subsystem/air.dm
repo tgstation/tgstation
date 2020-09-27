@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(air)
 
 	var/monstermos_turf_limit = 10
 	var/monstermos_hard_turf_limit = 2000
-	var/monstermos_enabled = TRUE
+	var/monstermos_enabled = FALSE
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
