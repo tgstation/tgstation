@@ -428,7 +428,11 @@
 	if(!is_viable_target(target))
 		to_chat(user,"You won't be able to carve that.")
 		return
-	current_target = target.appearance
+	if(istype(target,/obj/structure/statue/custom))
+		var/obj/structure/statue/custom/original = target
+		current_target = original.content_ma
+	else
+		current_target = target.appearance
 	var/mutable_appearance/ma = current_target
 	to_chat(user,"<span class='notice'>You decide to sculpt [src] into [ma.name].</span>",type=MESSAGE_TYPE_INFO)
 
