@@ -36707,7 +36707,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQH" = (
-/obj/machinery/pipedispenser,
+/obj/machinery/portable_atmospherics/canister/bz,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQI" = (
@@ -36998,12 +37001,17 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRv" = (
-/obj/machinery/pipedispenser/disposal,
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Central";
+	dir = 4
+	},
+/obj/item/analyzer,
+/obj/item/analyzer,
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -37307,7 +37315,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSe" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSf" = (

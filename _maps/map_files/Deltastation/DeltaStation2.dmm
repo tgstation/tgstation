@@ -14457,7 +14457,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aFH" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -14467,14 +14466,13 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aFI" = (
-/obj/structure/table/reinforced,
-/obj/item/crowbar/red,
-/obj/item/wrench,
-/obj/item/clothing/mask/gas,
 /obj/machinery/light/small,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
+	},
+/obj/machinery/modular_computer/console/preset/engineering{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
@@ -25720,10 +25718,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bad" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bae" = (
@@ -26520,10 +26515,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbI" = (
-/obj/machinery/pipedispenser/disposal,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/structure/table/reinforced,
+/obj/item/analyzer,
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbJ" = (
@@ -27308,10 +27302,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bdj" = (
-/obj/machinery/pipedispenser,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bdk" = (

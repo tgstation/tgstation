@@ -36276,7 +36276,12 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bIH" = (
-/obj/machinery/pipedispenser/disposal,
+/obj/item/analyzer,
+/obj/item/analyzer,
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bIJ" = (
@@ -36578,7 +36583,10 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bJF" = (
-/obj/machinery/pipedispenser/disposal/transit_tube,
+/obj/machinery/portable_atmospherics/canister/bz,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bJG" = (
@@ -37671,12 +37679,15 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bMR" = (
-/obj/machinery/pipedispenser,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

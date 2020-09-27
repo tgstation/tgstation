@@ -40203,10 +40203,10 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bUA" = (
-/obj/machinery/pipedispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUB" = (
@@ -40216,18 +40216,20 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/analyzer,
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUC" = (
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUD" = (
