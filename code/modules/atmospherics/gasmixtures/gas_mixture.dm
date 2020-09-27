@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
 	var/list/gases
 	var/volume = CELL_VOLUME //liters
-	var/initial_gas_mix = CELL_VOLUME
+
 	/// Do not directly set this var. Externally hooked by extools, used for inspection in VV
 	var/gas_list_view_only
 	var/initial_volume = CELL_VOLUME
