@@ -1,4 +1,5 @@
 /obj/vehicle/sealed
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/enter_delay = 20
 	var/mouse_pointer
 
@@ -93,6 +94,7 @@
 
 /obj/vehicle/sealed/obj_destruction(damage_flag)
 	explosion(loc, 0, 1, 2, 3, 0)
+	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 
 /obj/vehicle/sealed/Destroy()
