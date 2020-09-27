@@ -239,7 +239,7 @@
 	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/discoinferno/prerequisites_met()
-	if(SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met)
+	if(SHUTTLE_UNLOCK_DISCOINFERNO in SSshuttle.shuttle_purchase_requirements_met)
 		return TRUE
 	return FALSE
 
