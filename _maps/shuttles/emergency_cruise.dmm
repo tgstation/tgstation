@@ -739,7 +739,7 @@
 /area/shuttle/escape)
 "wf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/salad/fruit{
+/obj/item/food/salad/fruit{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -897,7 +897,7 @@
 /area/shuttle/escape)
 "Dq" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/salad/jungle{
+/obj/item/food/salad/jungle{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,

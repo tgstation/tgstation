@@ -222,11 +222,11 @@
 			/obj/item/food/soup/nettle,
 			/obj/item/food/soup/meatball)
 	var/salads = list(
-			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
-			/obj/item/reagent_containers/food/snacks/salad/validsalad,
-			/obj/item/reagent_containers/food/snacks/salad/fruit,
-			/obj/item/reagent_containers/food/snacks/salad/jungle,
-			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
+			/obj/item/food/salad/herbsalad,
+			/obj/item/food/salad/validsalad,
+			/obj/item/food/salad/fruit,
+			/obj/item/food/salad/jungle,
+			/obj/item/food/salad/aesirsalad)
 	var/mains = list(
 			/obj/item/food/bearsteak,
 			/obj/item/food/enchiladas,
