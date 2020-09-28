@@ -266,3 +266,29 @@
 /obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
 	new /obj/item/stack/medical/aloe(drop_location(), 2)
 	qdel(src)
+
+/obj/item/seeds/kronkus
+	name = "pack of kronkus seeds"
+	desc = "A pack of highly illegal kronkus seeds.\nPossession of these seeds carries the death penalty in 7 sectors."
+	icon_state = "seed-kronkus"
+	species = "kronkus"
+	plantname = "Kronkus Vine"
+	product = /obj/item/reagent_containers/food/snacks/grown/kronkus
+	//shitty stats, because botany is easy
+	lifespan = 60
+	endurance = 10
+	maturation = 8
+	production = 4
+	yield = 3
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/kronkus
+	seed = /obj/item/seeds/kronkus
+	name = "kronkus vine segment"
+	desc = "A piece of mature kronkus vine. It exudes a sharp and noxious odor."
+	icon_state = "kronkus"
+	filling_color = "#37946e"
+	foodtype = VEGETABLES | TOXIC
+	distill_reagent = /datum/reagent/kronkus_extract

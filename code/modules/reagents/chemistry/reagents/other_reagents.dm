@@ -2408,3 +2408,28 @@
 		M.adjustOxyLoss(2, FALSE)
 		M.adjustBruteLoss(2, FALSE)
 	..()
+
+//This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
+/datum/reagent/lead
+	name = "lead"
+	description = "A dull metalltic element with a low melting point."
+	taste_description = "metal"
+	reagent_state = SOLID
+	color = "#80919d"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/lead/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
+
+//The main feedstock for kroncaine production, also a shitty stamina healer.
+/datum/reagent/kronkus_extract
+	name = "kronkus extract"
+	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
+	taste_description = "bitterness"
+	color = "#228f63"
+
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3)
+	M.adjustStaminaLoss(-2, FALSE)
