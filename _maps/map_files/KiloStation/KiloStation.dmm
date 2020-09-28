@@ -43534,6 +43534,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bnU" = (
@@ -44160,18 +44164,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/central)
-"boS" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/chair/office/light{
-	dir = 8
-	},
-/obj/effect/landmark/start/botanist,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "boT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/old,
@@ -129360,7 +129352,7 @@ bGV
 bod
 bzC
 bzC
-boS
+bAs
 bCF
 bFW
 bOk
