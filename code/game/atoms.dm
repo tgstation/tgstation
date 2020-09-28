@@ -7,6 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -1559,7 +1560,7 @@
 
 /**
   * Recursive getter method to return a list of all ghosts orbitting this atom
-  * 
+  *
   * This will work fine without manually passing arguments.
   */
 /atom/proc/get_all_orbiters(list/processed, source = TRUE)
