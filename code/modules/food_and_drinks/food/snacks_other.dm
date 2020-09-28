@@ -864,9 +864,15 @@
 /obj/item/reagent_containers/food/snacks/cotton_candy
 	name = "Cotton Candy"
 	desc = "Pink strands of sugar on top of a bright looking cone. Perfect for carnivals!"
-	icon_state = "cottoncandy"
+	icon_state = "cottoncandy1"
 	trash = /obj/item/reagent_containers/food/drinks/sillycup
 	list_reagents = list(/datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/nutriment = 5)
 	tastes = list("sugar" = 1)
 	foodtype = JUNKFOOD | SUGAR
 	value = FOOD_JUNK
+
+/obj/item/reagent_containers/food/snacks/cotton_candy/Initialize()
+	. = ..()
+	if(prob(50))
+		desc = "Blue strands of sugar on top of a bright looking cone. Perfect for carnivals!"
+		icon_state = "cottoncandy2"
