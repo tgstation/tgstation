@@ -20,6 +20,11 @@
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -142,3 +147,4 @@
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		possible_destinations += ";[port.id]_custom"
