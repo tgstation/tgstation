@@ -241,6 +241,8 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
+	gas_string = SSair.preprocess_gas_string(gas_string)
+
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		set_temperature(text2num(gas["TEMP"]))
