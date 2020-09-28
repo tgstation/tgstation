@@ -19,16 +19,13 @@
 	. = ..()
 	if(tank)
 		density = TRUE
+		tank = new tank(src)
 
 /obj/structure/tank_holder/Destroy()
 	if(tank)
 		tank.forceMove(get_turf(src))
 		tank = null
 	return ..()
-
-/obj/structure/tank_holder/PopulateContents()
-	if(tank)
-		tank = new tank(src)
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
