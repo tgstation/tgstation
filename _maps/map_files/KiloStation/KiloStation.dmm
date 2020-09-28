@@ -2923,7 +2923,7 @@
 /obj/item/melee/baseball_bat{
 	desc = "Don't tell anyone you put any points into dex, though.";
 	icon_state = "swordon";
-	item_state = "swordon";
+	inhand_icon_state = "swordon";
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi';
 	name = "moonlight greatsword";
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
