@@ -704,6 +704,7 @@
 		"zone" = get_area_name(src, TRUE),
 		"type" = "Atmospheric"
 	))
+	var/area/A = get_area(src)
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 		A.set_vacuum_alarm_effect()
