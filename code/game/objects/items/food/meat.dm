@@ -868,7 +868,7 @@
 
 ///This proc handles setting up the correct meat name for the cutlet, this should definitely be changed with the food rework.
 /obj/item/food/meat/cutlet/proc/OnMicrowaveCooked(datum/source, atom/source_item, cooking_efficiency)
-	..()
+	SIGNAL_HANDLER
 	if(istype(source_item, /obj/item/food/meat/rawcutlet))
 		var/obj/item/food/meat/rawcutlet/original_cutlet = source_item
 		name = "[original_cutlet.meat_type] cutlet"
