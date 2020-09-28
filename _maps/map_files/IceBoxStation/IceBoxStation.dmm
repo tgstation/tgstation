@@ -49609,7 +49609,7 @@
 	pixel_x = -27
 	},
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
+/area/science/misc_lab)
 "fif" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50801,7 +50801,7 @@
 	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
+/area/science/misc_lab)
 "iYg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -51210,7 +51210,7 @@
 "jRD" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/science/research)
 "jTu" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock{
@@ -51604,7 +51604,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/science/research)
 "kFN" = (
 /obj/structure/table/glass,
 /obj/structure/window/reinforced{
@@ -52825,7 +52825,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
+/area/science/misc_lab)
 "nzh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
@@ -53850,7 +53850,7 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
+/area/science/misc_lab)
 "pTF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -56359,7 +56359,7 @@
 "xfd" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/science/research)
 "xfl" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -102588,13 +102588,13 @@ bJN
 jRD
 kBu
 xfd
-bJN
-bJN
+bhA
+bPN
 fie
 iVn
 pTj
 nyR
-bDb
+bQZ
 kKU
 bAw
 stP
