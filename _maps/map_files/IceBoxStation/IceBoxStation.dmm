@@ -37600,6 +37600,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bNq" = (
@@ -38310,6 +38311,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPD" = (
@@ -38326,6 +38328,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPK" = (
@@ -38638,6 +38641,7 @@
 /area/tcommsat/computer)
 "bQL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bQN" = (
@@ -49413,6 +49417,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "eja" = (
@@ -54661,15 +54666,18 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "szF" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -31
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/machinery/power/apc{
+	areastring = "/area/science/xenobiology";
+	name = "Xenobiology APC";
+	pixel_y = -25
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "sBI" = (
@@ -99485,10 +99493,10 @@ ija
 kcg
 iPt
 nka
-bJH
 nka
 nka
 bJH
+nka
 nka
 bDb
 lyC
@@ -99508,7 +99516,7 @@ nka
 nka
 ylY
 nka
-bJH
+nka
 nka
 uyS
 boP
@@ -102078,7 +102086,7 @@ nka
 nka
 fep
 nka
-xAv
+nka
 nka
 pCj
 boP

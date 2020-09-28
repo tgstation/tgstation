@@ -3302,13 +3302,6 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/power/apc{
-	areastring = "/area/science/xenobiology";
-	dir = 1;
-	name = "Xenobiology APC";
-	pixel_y = 25
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "rX" = (
@@ -4281,6 +4274,9 @@
 	dir = 4;
 	network = list("ss13","test","rd","xeno")
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "DP" = (
@@ -5239,9 +5235,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "Nl" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 11
@@ -5597,7 +5590,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/light,
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Hall - Aft";
@@ -49122,10 +49114,10 @@ hM
 Fa
 Qv
 jw
-YV
+Wb
 Wb
 DM
-YV
+Wb
 Jd
 Qv
 gs
@@ -50423,10 +50415,10 @@ ZY
 QI
 ZY
 ZY
-QI
 ZY
 ZY
-QI
+ZY
+ZY
 ZY
 VJ
 QI
