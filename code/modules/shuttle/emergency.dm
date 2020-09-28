@@ -260,9 +260,19 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/proc/is_hijacked(filter_by_human = TRUE)
+/**
+  * Proc that handles checking if the emergency shuttle was successfully hijacked
+  *
+  * Checks for all mobs on the shuttle, checks their status, and checks if they're
+  * borgs or simple animals. Depending on the args, certain mobs may be ignored,
+  * and the presence of other antags may or may not invalidate a hijack.
+  * Args:
+  * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
+  * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
+ */
+/obj/docking_port/mobile/emergency/proc/is_hijacked(filter_by_human = TRUE, solo_hijack = FALSE)
 	var/has_people = FALSE
-	var/hijacker_present = FALSE
+	var/hijacker_count = 0
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
@@ -282,7 +292,7 @@
 					var/prevent = FALSE
 					for(var/datum/antagonist/A in player.mind.antag_datums)
 						if(A.can_hijack == HIJACK_HIJACKER)
-							hijacker_present = TRUE
+							hijacker_count += 1
 							prevent = FALSE
 							break //If we have both prevent and hijacker antags assume we want to hijack.
 						else if(A.can_hijack == HIJACK_PREVENT)
@@ -290,8 +300,8 @@
 					if(prevent)
 						return FALSE
 
-
-	return has_people && hijacker_present
+	//has people AND either there's only one hijacker or there's any but solo_hijack is disabled
+	return has_people && ((hijacker_count == 1) || (hijacker_count && !solo_hijack))
 
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
 	set waitfor = FALSE

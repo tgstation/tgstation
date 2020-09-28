@@ -87,6 +87,10 @@
 /datum/antagonist/highlander/robot
 	name="highlander"
 
+/datum/antagonist/highlander/robot/greet()
+	to_chat(owner, "<span class='boldannounce'>Your integrated claymore cries out for blood. Claim the lives of others, and your own will be restored!\n\
+	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
+
 /datum/antagonist/highlander/robot/give_equipment()
 	var/mob/living/silicon/robot/robotlander = owner.current
 	if(!istype(robotlander))
@@ -97,6 +101,4 @@
 	robotlander.laws.set_zeroth_law("THERE CAN BE ONLY ONE")
 	robotlander.laws.show_laws(robotlander)
 	robotlander.module.transform_to(/obj/item/robot_module/syndicate/kiltborg)
-	robotlander.place_on_head(new /obj/item/clothing/head/beret/highlander(robotlander))
-	ADD_TRAIT(robotlander.hat, TRAIT_NODROP, HIGHLANDER)
 	sword = locate(/obj/item/claymore/highlander/robot) in robotlander.module.basic_modules

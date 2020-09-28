@@ -372,7 +372,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	for(var/datum/mind/M in owners)
 		if(!considered_alive(M, enforce_human = FALSE) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
 			return FALSE
-	return SSshuttle.emergency.is_hijacked(filter_by_human = FALSE)
+	return SSshuttle.emergency.is_hijacked(filter_by_human = FALSE, solo_hijack = TRUE)
 
 /datum/objective/block
 	name = "no organics on shuttle"
