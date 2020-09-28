@@ -1,7 +1,7 @@
-#define STATE_MAIN 1
-#define STATE_MESSAGES 2
-#define STATE_BUYING_SHUTTLE 3
-#define STATE_CHANGING_STATUS 4
+#define STATE_MAIN "main"
+#define STATE_MESSAGES "messages"
+#define STATE_BUYING_SHUTTLE "buying_shuttle"
+#define STATE_CHANGING_STATUS "changing_status"
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -23,7 +23,7 @@
 	var/ai_state = STATE_MAIN
 
 	/// The name of the user who logged in
-	var/authorize_name = "None"
+	var/authorize_name
 
 	/// The access that the card had on login
 	var/list/authorize_access
@@ -67,11 +67,12 @@
 
 	if (authenticated || isAI(user))
 		data["authenticated"] = TRUE
+		data["canLogOut"] = !isAI(user)
 		data["page"] = ui_state
 
 		switch (ui_state)
 			if (STATE_MAIN)
-				data["alertLevel"] = GLOB.security_level
+				data["alertLevel"] = get_security_level()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !isAI(user)
 
