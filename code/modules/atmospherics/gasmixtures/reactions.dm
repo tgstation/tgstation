@@ -487,7 +487,7 @@ nobiliumsuppression = INFINITY
 	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
 		reaction_energy = max(reaction_energy, 0) //Stable reactions don't end up endothermic.
 	else if (reaction_energy < 0)
-		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.5
+		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.3*min(1,(total_gas/FUSION_MOLAR_SOFTCAP)
 
 	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
 		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma

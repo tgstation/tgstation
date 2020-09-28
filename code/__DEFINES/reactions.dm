@@ -65,3 +65,4 @@
 #define FUSION_INSTABILITY_ENDOTHERMALITY   2
 #define FUSION_MAXIMUM_TEMPERATURE			1e8
 #define FUSION_TOROIDAL_SIZE				2*PI	///The maximum size of the phase space hypertorus. Do not alter unless you know what you are doing.
+#define FUSION_MOLAR_SOFTCAP				5000
