@@ -288,7 +288,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aV" = (
-/obj/item/reagent_containers/food/snacks/honkdae{
+/obj/item/food/honkdae{
 	pixel_y = 8
 	},
 /obj/structure/table/wood/fancy/black,

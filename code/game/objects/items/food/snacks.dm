@@ -38,9 +38,9 @@
 				bite_consumption = bite_consumption,\
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
-				on_consume = CALLBACK(src, .proc/On_Consume))
+				after_eat = CALLBACK(src, .proc/after_eat))
 
-/obj/item/food/candy/bronx/proc/On_Consume(mob/living/eater)
+/obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	. = ..()
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater

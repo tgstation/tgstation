@@ -30,14 +30,14 @@
 	description = "Upper management has been screaming non-stop for ice cream. Please send some."
 	reward = 4000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/icecreamsandwich)
+	wanted_types = list(/obj/item/food/icecreamsandwich)
 
 /datum/bounty/item/chef/strawberryicecreamsandwich
 	name = " Strawberry Ice Cream Sandwiches"
 	description = "Upper management has been screaming non-stop for more flavourful ice cream. Please send some."
 	reward = 5000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich)
+	wanted_types = list(/obj/item/food/strawberryicecreamsandwich)
 
 /datum/bounty/item/chef/bread
 	name = "Bread"

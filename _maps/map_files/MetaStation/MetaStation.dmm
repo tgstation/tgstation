@@ -65674,7 +65674,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "eMU" = (
-/obj/item/reagent_containers/food/snacks/snowcones/clown,
+/obj/item/food/snowcones/clown,
 /turf/open/floor/grass/snow/safe,
 /area/maintenance/port/aft)
 "eNA" = (

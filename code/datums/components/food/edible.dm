@@ -340,7 +340,7 @@ Behavior that's still missing from this component that original food items had t
 
 		//Invoke our after eat callback if it is valid
 		if(after_eat)
-			after_eat.Invoke(eater, feeder)
+			after_eat.Invoke(eater, feeder, bitecount)
 
 		return TRUE
 
