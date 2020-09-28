@@ -38,16 +38,16 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(contents.len != 0)
-		to_chat(W, "<span class='warning'>There's already something in \the [src].</span>")
+		to_chat(user, "<span class='warning'>There's already something in \the [src].</span>")
 		return
 
 	if(!W.tank_holder_icon_state)
-		to_chat(W, "<span class='warning'>\The [W] does not fit in \the [src].</span>")
+		to_chat(user, "<span class='warning'>\The [W] does not fit in \the [src].</span>")
 		return
 
 	if(!user.transferItemToLoc(W, src))
 		return
-	to_chat(W, "<span class='notice'>You put \the [W] into \the [src].</span>")
+	to_chat(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 	tank = W
 	icon_state = W.tank_holder_icon_state
 	density = TRUE
@@ -71,7 +71,7 @@
 /obj/structure/tank_holder/attack_hand(mob/user)
 	if(!tank)
 		return ..()
-	to_chat(W, "<span class='notice'>You take \the [W] from \the [src].</span>")
+	to_chat(user, "<span class='notice'>You take \the [tank] from \the [src].</span>")
 	add_fingerprint(user)
 	user.put_in_hands(tank)
 	tank = null
@@ -81,6 +81,11 @@
 	icon_state = "holder_oxygen"
 	density = TRUE
 	tank = /obj/item/tank/internals/oxygen
+
+/obj/structure/tank_holder/anesthetic
+	icon_state = "holder_anesthetic"
+	density = TRUE
+	tank = /obj/item/tank/internals/anesthetic
 
 /obj/structure/tank_holder/oxygen/yellow
 	icon_state = "holder_oxygen_f"
@@ -106,3 +111,13 @@
 	icon_state = "holder_generic"
 	density = TRUE
 	tank = /obj/item/tank/internals/generic
+
+/obj/structure/tank_holder/extinguisher
+	icon_state = "holder_extinguisher"
+	density = TRUE
+	tank = /obj/item/extinguisher
+
+/obj/structure/tank_holder/extinguisher/advanced
+	icon_state = "holder_foam_extinguisher"
+	density = TRUE
+	tank = /obj/item/extinguisher/advanced
