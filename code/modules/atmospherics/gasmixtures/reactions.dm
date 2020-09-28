@@ -523,7 +523,8 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
-	priority = "Nitryl formation"
+	priority = 3
+	name = "Nitryl formation"
 	id = "nitrylformation"
 
 /datum/gas_reaction/nitrylformation/init_reqs()
