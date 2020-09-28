@@ -155,6 +155,7 @@
 
 	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
 	if(my_port && my_port.get_docked())
+		my_port.unregister()
 		my_port.delete_after = TRUE
 		my_port.id = null
 		my_port.name = "Old [my_port.name]"
@@ -162,6 +163,7 @@
 
 	if(!my_port)
 		my_port = new()
+		my_port.unregister()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
@@ -169,6 +171,7 @@
 		my_port.dheight = shuttle_port.dheight
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
+		my_port.register()
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 
