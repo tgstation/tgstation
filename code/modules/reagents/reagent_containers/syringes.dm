@@ -284,7 +284,7 @@
 	name = "Whipped Cream Canister"
 	desc = "An advanced form of condiment spreading, allowing for the foaming of a reagent over a dish."
 	amount_per_transfer_from_this = 2
-	volume = 20
+	volume = 10
 	icon_state = "cream_bottle"
 	inhand_icon_state = "cream_bottle"
 
