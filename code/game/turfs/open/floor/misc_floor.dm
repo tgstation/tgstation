@@ -31,10 +31,10 @@
 	if(on)
 		if(LAZYLEN(SSmapping.nuke_threats))
 			icon_state = "rcircuitanim"
-			light_color = LIGHT_COLOR_FLARE
+			set_light_color(LIGHT_COLOR_FLARE)
 		else
 			icon_state = icon_normal
-			light_color = initial(light_color)
+			set_light_color(initial(light_color))
 		set_light(1.4, 0.5)
 	else
 		icon_state = "[icon_normal]off"

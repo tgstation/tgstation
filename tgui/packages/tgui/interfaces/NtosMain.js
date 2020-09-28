@@ -28,9 +28,19 @@ export const NtosMain = (props, context) => {
     has_light,
     light_on,
     comp_light_color,
+    removable_media = [],
+    cardholder,
+    login = [],
   } = data;
   return (
-    <NtosWindow resizable theme={device_theme}>
+    <NtosWindow
+      title={device_theme === 'syndicate'
+        && 'Syndix Main Menu'
+        || 'NtOS Main Menu'}
+      theme={device_theme}
+      width={400}
+      height={500}
+      resizable>
       <NtosWindow.Content scrollable>
         {!!has_light && (
           <Section>
@@ -49,6 +59,46 @@ export const NtosMain = (props, context) => {
             </Button>
           </Section>
         )}
+        {!!cardholder && (
+          <Section
+            title="User Login"
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject ID"
+                disabled={!login.IDName}
+                onClick={() => act('PC_Eject_Disk', { name: "ID" })}
+              />
+            )}>
+            <Table>
+              <Table.Row>
+                ID Name: {login.IDName}
+              </Table.Row>
+              <Table.Row>
+                Assignment: {login.IDJob}
+              </Table.Row>
+            </Table>
+          </Section>
+        )}
+        {!!removable_media.length && (
+          <Section title="Media Eject">
+            <Table>
+              {removable_media.map(device => (
+                <Table.Row key={device}>
+                  <Table.Cell>
+                    <Button
+                      fluid
+                      color="transparent"
+                      icon="eject"
+                      content={device}
+                      onClick={() => act('PC_Eject_Disk', { name: device })}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
+          </Section>
+        )}
         <Section title="Programs">
           <Table>
             {programs.map(program => (
@@ -56,7 +106,6 @@ export const NtosMain = (props, context) => {
                 <Table.Cell>
                   <Button
                     fluid
-                    lineHeight="24px"
                     color="transparent"
                     icon={PROGRAM_ICONS[program.name]
                       || 'window-maximize-o'}
@@ -68,7 +117,6 @@ export const NtosMain = (props, context) => {
                 <Table.Cell collapsing width="18px">
                   {!!program.running && (
                     <Button
-                      lineHeight="24px"
                       color="transparent"
                       icon="times"
                       tooltip="Close program"

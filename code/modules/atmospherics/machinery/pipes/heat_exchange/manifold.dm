@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
 	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
-	icon_state = "manifold-2"
+	icon_state = "manifold-3"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/SetInitDirections()
-	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
@@ -39,10 +39,10 @@
 
 	update_layer()
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer1
-	piping_layer = 1
-	icon_state = "manifold-1"
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2
+	piping_layer = 2
+	icon_state = "manifold-2"
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer3
-	piping_layer = 3
-	icon_state = "manifold-3"
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer4
+	piping_layer = 4
+	icon_state = "manifold-4"

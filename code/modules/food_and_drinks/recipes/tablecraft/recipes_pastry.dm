@@ -23,7 +23,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/chaos
 
-datum/crafting_recipe/food/donut/meat
+/datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"
 	reqs = list(
@@ -474,7 +474,7 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
 	subcategory = CAT_PASTRY

@@ -40,7 +40,7 @@
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
-		return
+		return FALSE
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
@@ -68,7 +68,7 @@
 	desc = "Shift-click any button to reset its position, and Control-click it to lock it in place. Alt-click this button to reset all buttons to their default positions."
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
-	var/hidden = 0
+	var/hidden = FALSE
 	var/hide_icon = 'icons/mob/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
@@ -78,7 +78,7 @@
 /obj/screen/movable/action_button/hide_toggle/Initialize()
 	. = ..()
 	var/static/list/icon_cache = list()
-	
+
 	var/cache_key = "[hide_icon][hide_state]"
 	hide_appearance = icon_cache[cache_key]
 	if(!hide_appearance)

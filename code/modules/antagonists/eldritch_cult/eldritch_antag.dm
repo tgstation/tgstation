@@ -6,9 +6,11 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
+	can_hijack = HIJACK_HIJACKER
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
@@ -47,7 +49,6 @@
 		EK.on_lose(owner.current)
 
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
@@ -91,8 +92,9 @@
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
+	var/choose_list = list("assasinate","hjiack","protect","glory")
 	for(var/i in 1 to 2)
-		var/pck = pick("assasinate","stalk","protect")
+		var/pck = pick(choose_list)
 		switch(pck)
 			if("assasinate")
 				var/datum/objective/assassinate/A = new
@@ -101,11 +103,18 @@
 				A.find_target(owners,protection)
 				assasination += A.target
 				objectives += A
-			if("stalk")
-				var/datum/objective/stalk/S = new
-				S.owner = owner
-				S.find_target()
-				objectives += S
+			if("hjiack")
+				var/datum/objective/hijack/hijack = new
+				hijack.owner = owner
+				objectives += hijack
+				choose_list -= "hijack"
+				choose_list -=  "glory"
+			if("glory")
+				var/datum/objective/martyr/martyrdom = new
+				martyrdom.owner = owner
+				objectives += martyrdom
+				choose_list -= "hijack"
+				choose_list -=  "glory"
 			if("protect")
 				var/datum/objective/protect/P = new
 				P.owner = owner
@@ -133,7 +142,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	remove_antag_hud(antag_hud_type, antag_hud_name, current)
+	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 
@@ -159,11 +168,13 @@
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				cultiewin = FALSE
 			count++
-
-	if(cultiewin)
-		parts += "<span class='greentext'>The heretic was successful!</span>"
+	if(ascended)
+		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
 	else
-		parts += "<span class='redtext'>The heretic has failed.</span>"
+		if(cultiewin)
+			parts += "<span class='greentext'>The heretic was successful!</span>"
+		else
+			parts += "<span class='redtext'>The heretic has failed.</span>"
 
 	parts += "<b>Knowledge Researched:</b> "
 
@@ -207,33 +218,6 @@
 ////////////////
 // Objectives //
 ////////////////
-
-/datum/objective/stalk
-	name = "spendtime"
-	var/timer = 5 MINUTES
-
-/datum/objective/stalk/process()
-	if(owner?.current.stat != DEAD && target?.current.stat != DEAD && (target in view(5,owner.current)))
-		timer -= 1 SECONDS
-	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
-	if(timer <= 0)
-		STOP_PROCESSING(SSprocessing,src)
-
-/datum/objective/stalk/Destroy(force, ...)
-	STOP_PROCESSING(SSprocessing,src)
-	return ..()
-
-/datum/objective/stalk/update_explanation_text()
-	//we want to start processing after we set the timer
-	timer += rand(-3 MINUTES, 3 MINUTES)
-	START_PROCESSING(SSprocessing,src)
-	if(target?.current)
-		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
-	else
-		explanation_text = "Free Objective"
-
-/datum/objective/stalk/check_completion()
-	return timer <= 0 || explanation_text == "Free Objective"
 
 /datum/objective/sacrifice_ecult
 	name = "sacrifice"

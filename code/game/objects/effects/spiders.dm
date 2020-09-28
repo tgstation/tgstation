@@ -15,7 +15,7 @@
 
 
 /obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee")
+	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
 				damage_amount *= 2
@@ -89,10 +89,10 @@
 	START_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/spider/eggcluster/process()
-	amount_grown += rand(0,2)
+/obj/structure/spider/eggcluster/process(delta_time)
+	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100)
-		var/num = rand(3,12)
+		var/num = round(rand(1.5, 6) * delta_time)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
 			S.faction = faction.Copy()
@@ -243,7 +243,7 @@
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 
-/obj/structure/spider/cocoon/container_resist(mob/living/user)
+/obj/structure/spider/cocoon/container_resist_act(mob/living/user)
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT

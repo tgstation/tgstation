@@ -27,3 +27,12 @@ export const debounce = (fn, time, immediate = false) => {
     }
   };
 };
+
+/**
+ * Suspends an asynchronous function for N milliseconds.
+ *
+ * @param {number} time
+ */
+export const sleep = time => (
+  new Promise(resolve => setTimeout(resolve, time))
+);

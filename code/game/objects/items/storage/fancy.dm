@@ -16,13 +16,12 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/cardboard = 2000)
 	var/icon_type = "donut"
 	var/spawn_type = null
 	var/fancy_open = FALSE
+	var/obj/fold_result = /obj/item/stack/sheet/cardboard
 
 /obj/item/storage/fancy/PopulateContents()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -47,6 +46,11 @@
 	fancy_open = !fancy_open
 	update_icon()
 	. = ..()
+	if(!contents.len)
+		new fold_result(user.drop_location())
+		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		user.put_in_active_hand(fold_result)
+		qdel(src)
 
 /obj/item/storage/fancy/Exited()
 	. = ..()
@@ -58,23 +62,57 @@
 	fancy_open = TRUE
 	update_icon()
 
+#define DONUT_INBOX_SPRITE_WIDTH 3
+
 /*
  * Donut Box
  */
 
 /obj/item/storage/fancy/donut_box
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Mmm. Donuts."
+	icon = 'icons/obj/food/donuts.dmi'
+	icon_state = "donutbox_inner"
+	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
+	appearance_flags = KEEP_TOGETHER
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donut))
+
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
+	update_icon()
+
+/obj/item/storage/fancy/donut_box/update_icon_state()
+	if(fancy_open)
+		icon_state = "donutbox_inner"
+	else
+		icon_state = "donutbox"
+
+/obj/item/storage/fancy/donut_box/update_overlays()
+	. = ..()
+
+	if (!fancy_open)
+		return
+
+	var/donuts = 0
+
+	for (var/_donut in contents)
+		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		if (!istype(donut))
+			continue
+
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		donuts += 1
+
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
+
+#undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
  * Egg Box
@@ -108,6 +146,7 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	inhand_icon_state = "candlebox5"
+	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -118,8 +157,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
 
-/obj/item/storage/fancy/candle_box/attack_self(mob_user)
-	return
+/obj/item/storage/fancy/candle_box/attack_self(mob/user)
+	if(!contents.len)
+		new fold_result(user.drop_location())
+		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		user.put_in_active_hand(fold_result)
+		qdel(src)
 
 ////////////
 //CIG PACK//
@@ -130,6 +173,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
+	worn_icon_state = "cigpack"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT

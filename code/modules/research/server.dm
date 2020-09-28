@@ -3,7 +3,6 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
-	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
@@ -23,9 +22,6 @@
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
-	stored_research = SSresearch.science_tech
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
 	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
@@ -62,12 +58,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	machine_stat |= EMPED
+	set_machine_stat(machine_stat | EMPED)
 	addtimer(CALLBACK(src, .proc/unemp), 600)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
-	machine_stat &= ~EMPED
+	set_machine_stat(machine_stat & ~EMPED)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/toggle_disable()
@@ -186,7 +182,6 @@
 
 	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)

@@ -27,7 +27,8 @@ SUBSYSTEM_DEF(input)
 	"M" = "me",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
+	"Escape" = "Reset-Held-Keys",
+	)
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()

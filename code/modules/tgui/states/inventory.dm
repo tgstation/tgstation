@@ -1,7 +1,11 @@
 /**
  * tgui state: inventory_state
  *
- * Checks that the src_object is in the user's top-level (hand, ear, pocket, belt, etc) inventory.
+ * Checks that the src_object is in the user's top-level
+ * (hand, ear, pocket, belt, etc) inventory.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 GLOBAL_DATUM_INIT(inventory_state, /datum/ui_state/inventory_state, new)

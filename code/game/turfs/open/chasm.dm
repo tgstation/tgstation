@@ -3,10 +3,11 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturfs = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/chasms.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_TURF_CHASM)
+	canSmoothWith = list(SMOOTH_GROUP_TURF_CHASM)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
 

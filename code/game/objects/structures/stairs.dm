@@ -117,6 +117,8 @@
 		T.ChangeTurf(/turf/open/transparent/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
+	SIGNAL_HANDLER
+
 	if(dir == UP)
 		var/turf/open/transparent/openspace/T = get_step_multiz(get_turf(src), UP)
 		if(T && !istype(T))

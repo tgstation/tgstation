@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
 	if(length(movespeed_modification))
-		BINARY_INSERT(type_or_datum.id, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, COMPARE_VALUE)
+		BINARY_INSERT(type_or_datum.id, movespeed_modification, /datum/movespeed_modifier, type_or_datum, priority, COMPARE_VALUE)
 	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
 	if(update)
 		update_movespeed()
@@ -144,6 +144,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, control_object))
+		var/obj/O = var_value
+		if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
+			return FALSE
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff
 	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))

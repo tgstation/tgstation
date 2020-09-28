@@ -3,8 +3,8 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
+	smoothing_flags = SMOOTH_CORNERS
 	canSmoothWith = null
-	smooth = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult

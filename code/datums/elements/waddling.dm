@@ -14,11 +14,15 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)
+	SIGNAL_HANDLER
+
 	if(target.incapacitated() || !(target.mobility_flags & MOBILITY_STAND))
 		return
 	Waddle(target)
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
+	SIGNAL_HANDLER
+
 	animate(target, pixel_z = 4, time = 0)
 	var/prev_trans = matrix(target.transform)
 	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)

@@ -128,7 +128,7 @@
 //Carpets
 /obj/item/stack/tile/carpet
 	name = "carpet"
-	singular_name = "carpet"
+	singular_name = "carpet tile"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	inhand_icon_state = "tile-carpet"
@@ -233,7 +233,7 @@
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
-	singular_name = "astral carpet"
+	singular_name = "astral carpet tile"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	inhand_icon_state = "tile-space"
@@ -337,8 +337,9 @@
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
+	matter_amount = 1
 
 /obj/item/stack/tile/plasteel/cyborg
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR

@@ -1,4 +1,6 @@
 /mob/living/carbon/proc/handle_tongueless_speech(mob/living/carbon/speaker, list/speech_args)
+	SIGNAL_HANDLER
+
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
 	var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
@@ -9,7 +11,10 @@
 
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
-		return 0
+		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+			return ..()
+		else
+			return FALSE
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)

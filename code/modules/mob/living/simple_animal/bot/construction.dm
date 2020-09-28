@@ -256,7 +256,7 @@
 				S.robot_arm = robot_arm
 				S.healthanalyzer = healthanalyzer
 				var/obj/item/storage/firstaid/FA = firstaid
-				S.damagetype_healer = initial(FA.damagetype_healed)
+				S.damagetype_healer = initial(FA.damagetype_healed) ? initial(FA.damagetype_healed) : BRUTE
 				qdel(src)
 
 
@@ -287,7 +287,7 @@
 				to_chat(user, "<span class='notice'>You add the [I] to [src]! Honk!</span>")
 				var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
 				S.name = created_name
-				S.spam_flag = TRUE // only long enough to hear the first ping.
+				S.limiting_spam = TRUE // only long enough to hear the first ping.
 				addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
 				S.bikehorn = I.type
 				qdel(I)

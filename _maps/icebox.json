@@ -41,7 +41,7 @@
          "Gravity":true,
          "Ice Ruins":true,
          "Weather_Snowstorm":true,
-         "Baseturf":"/turf/open/floor/plating/asteroid/snow/icemoon"
+         "Baseturf":"/turf/open/transparent/openspace/icemoon"
       }
    ],
    "minetype":"none"

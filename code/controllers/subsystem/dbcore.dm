@@ -88,7 +88,6 @@ SUBSYSTEM_DEF(dbcore)
 		"user" = user,
 		"pass" = pass,
 		"db_name" = db,
-		"max_threads" = 5,
 		"read_timeout" = timeout,
 		"write_timeout" = timeout,
 		"max_threads" = thread_limit,
@@ -338,7 +337,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	. = run_query(async)
 	var/timed_out = !. && findtext(last_error, "Operation timed out")
 	if(!. && log_error)
-		log_sql("[last_error] | Query used: [sql]")
+		log_sql("[last_error] | Query used: [sql] | Arguments: [json_encode(arguments)]")
 	if(!async && timed_out)
 		log_query_debug("Query execution started at [start_time]")
 		log_query_debug("Query execution ended at [REALTIMEOFDAY]")

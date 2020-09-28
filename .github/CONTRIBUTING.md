@@ -18,6 +18,7 @@ First things first, we want to make it clear how you can contribute (if you've n
 /tg/station doesn't have a list of goals and features to add; we instead allow freedom for contributors to suggest and create their ideas for the game. That doesn't mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful starting guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
+After setting it up, optionally navigate your git commandline to the project folder and run the command: 'git config blame.ignoreRevsFile .git-blame-ignore-revs'
 
 We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/index.php/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
@@ -151,7 +152,7 @@ There are two key points here:
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
 ### Prefer `Initialize()` over `New()` for atoms
-Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
+Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
 ### No magic numbers or strings
@@ -261,6 +262,12 @@ This is good:
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
 * Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+
+* The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
+
+* Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
+	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
+	* if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.
 
 ### Mapping Standards
 * TGM Format & Map Merge
@@ -407,7 +414,7 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * Make sure your pull request complies to the requirements outlined here
 
-* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data.
+* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
 
 * We ask that you use the changelog system to document your change, which prevents our players from being caught unaware by changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
 
@@ -437,6 +444,8 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
-Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
+This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
 
-Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
+Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
+
+Note: VSC requires an [extension](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to take advantage of editorconfig.

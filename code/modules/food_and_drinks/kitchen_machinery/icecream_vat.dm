@@ -225,7 +225,7 @@
 	. = ..()
 	reagents.maximum_volume = 20
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
+/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(cone_name)
 	cone_type = cone_name
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)
@@ -278,7 +278,7 @@
 		src.add_overlay("icecream_[flavour_name]")
 	ice_creamed = 1
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_mob_flavor(var/mob/M)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_mob_flavor(mob/M)
 	add_ice_cream("mob")
 	name = "[M.name] icecream"
 

@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/prize/ripley = 1,
 		/obj/item/toy/prize/fireripley = 1,
 		/obj/item/toy/prize/deathripley = 1,
@@ -61,24 +62,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	icon_keyboard = "no_keyboard"
 	icon_screen = "invaders"
-	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
+	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
 /obj/machinery/computer/arcade/Initialize()
 	. = ..()
-	// If it's a generic arcade machine, pick a random arcade
-	// circuit board for it and make the new machine
-	if(!circuit)
-		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
-							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
-							/obj/item/circuitboard/computer/arcade/amputation = 2)
-		var/thegame = pickweight(gameodds)
-		var/obj/item/circuitboard/CB = new thegame()
-		new CB.build_path(loc, CB)
-		return INITIALIZE_HINT_QDEL
+
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
@@ -142,10 +134,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
 
-
 // ** BATTLE ** //
-
-
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
@@ -276,14 +265,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(user.client) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
 		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 		popup.set_content(dat)
-		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
-	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
@@ -596,6 +586,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	last_three_move = null
 	return ..() //well boys we did it, lists are no more
 
+/obj/machinery/computer/arcade/battle/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
+	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
+	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
+	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
+	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
+	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
+	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -605,7 +603,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
-	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = 0
+	if(usr?.mind)
+		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
 	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
@@ -835,7 +835,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -850,9 +849,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
-	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
-	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
-	var/gamerSkillRands = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/gamerSkillLevel = 0
+	var/gamerSkill = 0
+	var/gamerSkillRands = 0
+
+	if(usr?.mind)
+		gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+		gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+		gamerSkillRands = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+
+
 	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
@@ -1415,7 +1421,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 //Add Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(var/specific = "")
+/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "")
 	var/newcrew = ""
 	if(specific)
 		newcrew = specific

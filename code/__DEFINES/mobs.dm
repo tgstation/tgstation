@@ -40,10 +40,6 @@
 #define VENTCRAWLER_NUDE   1
 #define VENTCRAWLER_ALWAYS 2
 
-//Bloodcrawling defines
-#define BLOODCRAWL 1 /// bloodcrawling, see: [/mob/living/var/bloodcrawl]
-#define BLOODCRAWL_EAT 2 /// crawling+mob devour
-
 //Mob bio-types flags
 #define MOB_ORGANIC 	(1 << 0)
 #define MOB_MINERAL		(1 << 1)
@@ -63,18 +59,12 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
-#define BODYPART_NOT_DISABLED 0
-#define BODYPART_DISABLED_DAMAGE 1
-#define BODYPART_DISABLED_PARALYSIS 2
-#define BODYPART_DISABLED_WOUND 3
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
-#define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines for carbon mobs
@@ -227,6 +217,9 @@
 #define AI_OFF		3
 #define AI_Z_OFF	4
 
+//The range at which a mob should wake up if you spawn into the z level near it
+#define MAX_SIMPLEMOB_WAKEUP_RANGE 5
+
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE			0
 #define ENVIRONMENT_SMASH_STRUCTURES	(1<<0) 	//crates, lockers, ect
@@ -366,5 +359,13 @@
 
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_TIME	1 SECONDS
+/// How far away you can be to make eye contact with someone while examining
+#define EYE_CONTACT_RANGE	5
 
 #define SILENCE_RANGED_MESSAGE (1<<0)
+
+///Swarmer flags
+#define SWARMER_LIGHT_ON (1<<0)
+
+/// Returns whether or not the given mob can succumb
+#define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))

@@ -2,7 +2,7 @@
 	name = "Vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
@@ -15,9 +15,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
-
-
-
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -32,6 +29,7 @@
 	if(isnull(batform))
 		batform = new
 		C.AddSpell(batform)
+	C.set_safe_hunger_level()
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -63,8 +61,8 @@
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))
-		return 1 //Whips deal 2x damage to vampires. Vampire killer.
-	return 0
+		return 2 //Whips deal 2x damage to vampires. Vampire killer.
+	return 1
 
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"
@@ -102,7 +100,7 @@
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
-			if(victim?.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+			if(victim.has_reagent(/datum/reagent/consumable/garlic))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
 				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
@@ -121,13 +119,11 @@
 #undef VAMP_DRAIN_AMOUNT
 
 
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
-		if(darkheart)
-			stat(null, "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
-			return 1
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	if(darkheart)
+		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
 
 
 /obj/item/organ/heart/vampire

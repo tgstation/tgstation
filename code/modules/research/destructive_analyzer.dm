@@ -1,5 +1,3 @@
-
-
 /*
 Destructive Analyzer
 
@@ -27,10 +25,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/rnd/destructive_analyzer/disconnect_console()
-	linked_console.linked_destroy = null
-	..()
-
 /obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM)
 		. = 1
@@ -44,8 +38,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
-		if (linked_console)
-			linked_console.updateUsrDialog()
+		updateUsrDialog()
 
 /obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
 	update_icon()
@@ -57,19 +50,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
-	. = 0
-	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
-	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in thing.custom_materials)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
-			storage.insert_amount_mat(can_insert, material)
-			. += can_insert
-		if (.)
-			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.custom_materials)
-
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
-	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
+	if(QDELETED(thing) || QDELETED(src))
 		return FALSE
 	if(!innermode)
 		flick("d_analyzer_process", src)
@@ -81,34 +63,27 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
-	reclaim_materials_from(thing)
 	for(var/mob/M in thing)
 		M.death()
-	if(istype(thing, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = thing
-		if(S.amount > 1 && !innermode)
-			S.amount--
-			loaded_item = S
-		else
-			qdel(S)
-	else
-		qdel(thing)
+
+	qdel(thing)
+	loaded_item = null
 	if (!innermode)
 		update_icon()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)
-	if(!istype(loaded_item) || !istype(linked_console))
+	if(!istype(loaded_item))
 		return FALSE
 
-	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
+	if (id && id != RESEARCH_MATERIAL_DESTROY_ID)
 		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
 		var/dpath = loaded_item.type
 		var/list/worths = TN.boost_item_paths[dpath]
 		var/list/differences = list()
-		var/list/already_boosted = linked_console.stored_research.boosted_nodes[TN.id]
+		var/list/already_boosted = stored_research.boosted_nodes[TN.id]
 		for(var/i in worths)
 			var/used = already_boosted? already_boosted[i] : 0
 			var/value = min(worths[i], TN.research_costs[i]) - used
@@ -119,30 +94,29 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
 			return FALSE
-		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
+		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
+			stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)
-		if(linked_console.stored_research.deconstructed_items[loaded_item.type])
+		if(stored_research.deconstructed_items[loaded_item.type])
 			point_value = list()
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		else if(length(loaded_item.custom_materials))
-			user_mode_string = " for material reclamation"
 		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
 			return FALSE
-		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
+		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
 		var/loaded_type = loaded_item.type
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.add_point_list(point_value)
-			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
+			stored_research.add_point_list(point_value)
+			stored_research.deconstructed_items[loaded_type] = point_value
+
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
@@ -152,3 +126,100 @@ Note: Must be placed within 3 tiles of the R&D Console
 	loaded_item = null
 	update_icon()
 	return TRUE
+
+/obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user)
+	. = ..()
+	var/datum/browser/popup = new(user, "destructive_analyzer", name, 900, 600)
+	popup.set_content(ui_deconstruct())
+	popup.open()
+
+/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct()		//Legacy code
+	var/list/l = list()
+	if(!loaded_item)
+		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
+	else
+		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+		l += "<table><tr><td>[icon2html(loaded_item, usr)]</td><td><b>[loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
+		l += "Select a node to boost by deconstructing this item. This item can boost:"
+
+		var/anything = FALSE
+		var/list/boostable_nodes = techweb_item_boost_check(loaded_item)
+		for(var/id in boostable_nodes)
+			anything = TRUE
+			var/list/worth = boostable_nodes[id]
+			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
+
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.researched_nodes[N.id])  // already researched
+				l += "<span class='linkOff'>[N.display_name]</span>"
+				l += "This node has already been researched."
+			else if(!length(worth))  // reveal only
+				if (stored_research.hidden_nodes[N.id])
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be revealed."
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been revealed."
+			else  // boost by the difference
+				var/list/differences = list()
+				var/list/already_boosted = stored_research.boosted_nodes[N.id]
+				for(var/i in worth)
+					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : 0
+					var/amt = min(worth[i], N.research_costs[i]) - already_boosted_amount
+					if(amt > 0)
+						differences[i] = amt
+				if (length(differences))
+					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
+					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
+				else
+					l += "<span class='linkOff'>[N.display_name]</span>"
+					l += "This node has already been boosted.</span>"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		var/list/point_values = techweb_item_point_check(loaded_item)
+		if(point_values)
+			anything = TRUE
+			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
+			if (stored_research.deconstructed_items[loaded_item.type])
+				l += "<span class='linkOff'>Point Deconstruction</span>"
+				l += "This item's points have already been claimed."
+			else
+				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Point Deconstruction</A>"
+				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
+			l += "</div>[RDSCREEN_NOBREAK]"
+
+		if(!(loaded_item.resistance_flags & INDESTRUCTIBLE))
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Destroy Item</A>"
+			l += "</div>[RDSCREEN_NOBREAK]"
+			anything = TRUE
+
+		if (!anything)
+			l += "Nothing!"
+
+		l += "</div>"
+
+	for(var/i in 1 to length(l))
+		if(!findtextEx(l[i], RDSCREEN_NOBREAK))
+			l[i] += "<br>"
+	. = l.Join("")
+	return replacetextEx(., RDSCREEN_NOBREAK, "")
+
+/obj/machinery/rnd/destructive_analyzer/Topic(raw, ls)
+	. = ..()
+	if(.)
+		return
+
+	add_fingerprint(usr)
+	usr.set_machine(src)
+
+	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
+		if(busy)
+			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
+			return
+		if(loaded_item)
+			unload_item()
+	if(ls["deconstruct"])
+		if(!user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
+
+	updateUsrDialog()

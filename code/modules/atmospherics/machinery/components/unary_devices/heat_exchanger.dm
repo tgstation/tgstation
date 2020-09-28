@@ -14,14 +14,14 @@
 	var/update_cycle
 
 	pipe_state = "heunary"
-	
-/obj/machinery/atmospherics/components/unary/heat_exchanger/layer1
-	piping_layer = 1
-	icon_state = "he_map-1"
 
-/obj/machinery/atmospherics/components/unary/heat_exchanger/layer3
-	piping_layer = 3
-	icon_state = "he_map-3"
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer2
+	piping_layer = 2
+	icon_state = "he_map-2"
+
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer4
+	piping_layer = 4
+	icon_state = "he_map-4"
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(nodes[1])

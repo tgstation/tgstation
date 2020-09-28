@@ -23,7 +23,7 @@
 
 /obj/machinery/research/explosive_compressor/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-Click to remove an inserted core.</span>"
+	. += "<span class='notice'>Ctrl-Click to remove an inserted core.</span>"
 	. += "<span class='notice'>Click with an empty hand to gather information about the required radius of an inserted core. Insert a ready TTV to start the implosion process if a core is inserted.</span>"
 
 /obj/machinery/research/explosive_compressor/attack_hand(mob/living/user)
@@ -124,7 +124,9 @@
 	if(mix.return_pressure() < TANK_FRAGMENT_PRESSURE)
 		// They failed so miserably we're going to give them their bomb back.
 		inserted_bomb.forceMove(drop_location())
+		inserted_bomb = null
 		inserted_core.forceMove(drop_location())
+		inserted_core = null
 		say("Transfer valve resulted in negligible explosive power. Items ejected.")
 		return
 	mix.react()		// build more pressure

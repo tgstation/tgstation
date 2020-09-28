@@ -1,9 +1,11 @@
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
+#define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
+#define READ_FILE(file, text) DIRECT_INPUT(file, text)
 //This is an external call, "true" and "false" are how rust parses out booleans
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
@@ -200,10 +202,37 @@
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
-/* ui logging */
-
-/proc/log_tgui(text)
-	WRITE_LOG(GLOB.tgui_log, text)
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = ""
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "\nUsing: [src_object.type] [REF(src_object)]"
+	// Insert message
+	if(message)
+		entry += "\n[message]"
+	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* For logging round startup. */
 /proc/start_log(log)

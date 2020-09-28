@@ -58,8 +58,8 @@
 	icon_state = "black"
 	inhand_icon_state = "blackgloves"
 
-	tackle_stam_cost = 35
-	base_knockdown = 1.5 SECONDS
+	tackle_stam_cost = 30
+	base_knockdown = 1.25 SECONDS
 	tackle_range = 5
 	skill_mod = 2
 

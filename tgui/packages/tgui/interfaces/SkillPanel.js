@@ -1,29 +1,40 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
+
 const skillgreen = {
   color: 'lightgreen',
   fontWeight: 'bold',
 };
+
 const skillyellow = {
   color: '#FFDB58',
   fontWeight: 'bold',
 };
+
 export const SkillPanel = (props, context) => {
   const { act, data } = useBackend(context);
   const skills = data.skills || [];
   return (
-    <Window resizable>
+    <Window
+      title="Manage Skills"
+      width={600}
+      height={500}
+      resizable>
       <Window.Content scrollable>
         <Section title={skills.playername}>
           <LabeledList>
             {skills.map(skill => (
-              <LabeledList.Item key={skill.name} label={skill.name}>
+              <LabeledList.Item
+                key={skill.name}
+                label={skill.name}>
                 <span style={skillyellow}>
                   {skill.desc}
                 </span>
                 <br />
-                <Level skill_lvl_num={skill.lvlnum} skill_lvl={skill.lvl} />
+                <Level
+                  skill_lvl_num={skill.lvlnum}
+                  skill_lvl={skill.lvl} />
                 <br />
                 Total Experience: [{skill.exp} XP]
                 <br />
@@ -33,7 +44,7 @@ export const SkillPanel = (props, context) => {
                     [{skill.exp_prog} / {skill.exp_req}]
                   </span>
                 ) : (
-                  <span style={skillgreen}> 
+                  <span style={skillgreen}>
                     [MAXXED]
                   </span>
                 )}
@@ -68,31 +79,22 @@ export const SkillPanel = (props, context) => {
     </Window>
   );
 };
-const Level = (props, context) => {
-  const { act, data } = useBackend(context);
+
+const Level = props => {
   const {
     skill_lvl_num,
     skill_lvl,
   } = props;
-  let textstyle="font-weight:bold; color:hsl("+skill_lvl_num*50+", 50%, 50%)";
   return (
-    <span>Level: [<span style={textstyle}>{skill_lvl}</span>]</span>
-  );
-};
-const XPToNextLevel = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    xp_req,
-    xp_prog,
-  } = props;
-  if (xp_req === 0) {
-    return (
-      <span style={skillgreen}> 
-        to next level: MAXXED
-      </span>
-    );
-  }
-  return (
-    <span>XP to next level: [{xp_prog} / {xp_req}]</span>
+    <Box inline>
+      Level: [
+      <Box
+        inline
+        bold
+        textColor={`hsl(${skill_lvl_num * 50}, 50%, 50%)`}>
+        {skill_lvl}
+      </Box>
+      ]
+    </Box>
   );
 };

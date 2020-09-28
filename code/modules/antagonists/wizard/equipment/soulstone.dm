@@ -79,9 +79,6 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if((M.mind && !M.mind.hasSoul) || is_devil(M))
-		to_chat(user, "<span class='warning'>This... THING has no soul! It's filled with evil!</span>")
-		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
@@ -297,7 +294,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
@@ -310,7 +307,8 @@
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
 	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
-	S.copy_languages(user, LANGUAGE_MASTER)
+	if(user)
+		S.copy_languages(user, LANGUAGE_MASTER)
 	S.update_atom_languages()
 	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 	if(user)

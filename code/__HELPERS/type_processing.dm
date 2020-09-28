@@ -1,4 +1,4 @@
-/proc/make_types_fancy(var/list/types)
+/proc/make_types_fancy(list/types)
 	if (ispath(types))
 		types = list(types)
 	. = list()

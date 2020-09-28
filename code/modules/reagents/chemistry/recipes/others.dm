@@ -31,6 +31,11 @@
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
 
+/datum/chemical_reaction/stable_plasma
+	results = list(/datum/reagent/stable_plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
+
 /datum/chemical_reaction/plasmasolidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
@@ -401,14 +406,14 @@
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
 
 /datum/chemical_reaction/life
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/instabitaluri = 1, /datum/reagent/blood = 1)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
 	chemical_mob_spawn(holder, rand(1, round(created_volume, 1)), "Life (hostile)") //defaults to HOSTILE_SPAWN
 
 /datum/chemical_reaction/life_friendly
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/instabitaluri = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/consumable/sugar = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)
@@ -438,11 +443,11 @@
 		cube.Expand()
 	else
 		var/location = get_turf(holder.my_atom)
-		new /mob/living/carbon/monkey(location)
+		new /mob/living/carbon/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
-	results = list(/datum/reagent/oxygen = 10, /datum/reagent/hydrogen = 20)
+	results = list(/datum/reagent/oxygen = 1.5, /datum/reagent/hydrogen = 3)
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
 
 //butterflium

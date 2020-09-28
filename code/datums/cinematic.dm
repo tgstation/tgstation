@@ -24,7 +24,8 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = SPLASHSCREEN_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "1,1"
+	screen_loc = "BOTTOM,LEFT+50%"
+	appearance_flags = APPEARANCE_UI | TILE_BOUND
 
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
@@ -44,6 +45,7 @@
 		if(!CC)
 			continue
 		var/client/C = CC
+		C.mob.clear_fullscreen("cinematic")
 		C.screen -= screen
 	watching = null
 	QDEL_NULL(screen)
@@ -91,12 +93,15 @@
 		toggle_ooc(TRUE)
 
 /datum/cinematic/proc/show_to(mob/M, client/C)
+	SIGNAL_HANDLER
+
 	if(!M.notransform)
 		locked += M
 		M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
 	if(!C)
 		return
 	watching += C
+	M.overlay_fullscreen("cinematic",/obj/screen/fullscreen/cinematic_backdrop)
 	C.screen += screen
 
 //Sound helper
@@ -117,6 +122,8 @@
 	sleep(50)
 
 /datum/cinematic/proc/replacement_cinematic(datum/source, datum/cinematic/other)
+	SIGNAL_HANDLER
+
 	if(!is_global && other.is_global) //Allow it to play if we're local and it's global
 		return NONE
 	return COMPONENT_GLOB_BLOCK_CINEMATIC

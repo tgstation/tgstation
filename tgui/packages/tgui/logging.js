@@ -5,7 +5,6 @@
  */
 
 import { sendLogEntry } from 'tgui-dev-server/link/client';
-import { callByond } from './byond';
 
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
@@ -33,10 +32,12 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    callByond('', {
-      src: window.__ref__,
-      action: 'tgui:log',
-      log: logEntry,
+    Byond.topic({
+      tgui: 1,
+      window_id: window.__windowId__,
+      type: 'log',
+      ns,
+      message: logEntry,
     });
   }
 };

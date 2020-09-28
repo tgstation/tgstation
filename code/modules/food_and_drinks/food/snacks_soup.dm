@@ -35,7 +35,8 @@
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
 	icon_state = "meatballsoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("meat" = 1)
 	foodtype = MEAT
 	value = FOOD_RARE
@@ -54,8 +55,8 @@
 	name = "tomato soup"
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/blood = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/blood = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("iron" = 1)
 	foodtype = GROSS
 	value = FOOD_EXOTIC
@@ -65,8 +66,8 @@
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
 	trash = /obj/item/reagent_containers/glass/bowl
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/soysauce = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("soy" = 1)
 	foodtype = MEAT
 	value = FOOD_EXOTIC
@@ -94,7 +95,8 @@
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("nettles" = 1)
 	foodtype = VEGETABLES
 	value = FOOD_EXOTIC
@@ -104,7 +106,7 @@
 	desc = "The mystery is, why aren't you eating it?"
 	icon_state = "mysterysoup"
 	var/extra_reagent = null
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("chaos" = 1)
 	value = FOOD_EXOTIC
 
@@ -119,8 +121,8 @@
 	name = "hot chili"
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1)
 	foodtype = VEGETABLES | MEAT
 	value = FOOD_RARE
@@ -129,8 +131,8 @@
 	name = "cold chili"
 	desc = "This slush is barely a liquid!"
 	icon_state = "coldchili"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/frostoil = 3, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("tomato" = 1, "mint" = 1)
 	foodtype = VEGETABLES | MEAT
 	value = FOOD_EXOTIC
@@ -149,8 +151,8 @@
 	name = "monkey's delight"
 	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2,  /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("the jungle" = 1, "banana" = 1)
 	foodtype = FRUIT
 	value = FOOD_RARE
@@ -169,7 +171,8 @@
 	name = "eyeball soup"
 	desc = "It looks back at you..."
 	icon_state = "eyeballsoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/liquidgibs = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/liquidgibs = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("tomato" = 1, "squirming" = 1)
 	foodtype = MEAT | GROSS
 	value = FOOD_RARE
@@ -178,7 +181,8 @@
 	name = "milosoup"
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("milo" = 1) // wtf is milo
 	foodtype = VEGETABLES
 	value = FOOD_FAST
@@ -262,7 +266,8 @@
 	name = "french onion soup"
 	desc = "Good enough to make a grown mime cry."
 	icon_state = "onionsoup"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/tomatojuice = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/tomatojuice = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("caramelized onions" = 1)
 	foodtype = VEGETABLES
 	value = FOOD_FAST
@@ -271,7 +276,8 @@
 	name = "bisque"
 	desc = "A classic entree from Space-France."
 	icon_state = "bisque"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("creamy texture" = 1, "crab" = 4)
 	foodtype = MEAT
 	value = FOOD_EXOTIC
@@ -291,7 +297,7 @@
 	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
 	icon_state = "bungocurry"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/bungojuice = 6)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/bungojuice = 6, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
 	foodtype = VEGETABLES | FRUIT | DAIRY

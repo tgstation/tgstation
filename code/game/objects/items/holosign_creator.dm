@@ -29,7 +29,7 @@
 			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
 			qdel(H)
 		else
-			if(!is_blocked_turf(T, TRUE)) //can't put holograms on a tile that has dense stuff
+			if(!T.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
 					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
 					return
@@ -43,7 +43,7 @@
 						holocreator_busy = FALSE
 						if(signs.len >= max_signs)
 							return
-						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
+						if(T.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
 					H = new holosign_type(get_turf(target), src)
 					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")

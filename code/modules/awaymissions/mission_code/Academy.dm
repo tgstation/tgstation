@@ -62,16 +62,16 @@
 
 
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	dissipate = FALSE
+	move_self = FALSE
+	grav_pull = TRUE
 
 /obj/singularity/academy/admin_investigate_setup()
 	return
 
-/obj/singularity/academy/process()
+/obj/singularity/academy/process(delta_time)
 	eat()
-	if(prob(1))
+	if(DT_PROB(0.5, delta_time))
 		mezzer()
 
 
@@ -221,13 +221,12 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
-			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death
@@ -363,7 +362,7 @@
 	charge_max = 100
 	clothes_req = 0
 	invocation = "JE VES"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100

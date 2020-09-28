@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -21,8 +21,6 @@
 		if(isliving(M))
 			var/mob/living/L = M
 			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-				if(L.hellbound && L.stat == DEAD)
-					return BULLET_ACT_BLOCK
 				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
 					L.grab_ghost(force = TRUE) // even suicides
 					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
@@ -49,8 +47,6 @@
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.death(0)
 		else
-			if(target.hellbound && target.stat == DEAD)
-				return BULLET_ACT_BLOCK
 			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE) // even suicides
 				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
@@ -134,7 +130,7 @@
 	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
-/obj/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+/obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
@@ -313,7 +309,7 @@
 	target.animate_atom_living(firer)
 	..()
 
-/atom/proc/animate_atom_living(var/mob/living/owner = null)
+/atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
@@ -352,7 +348,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -372,7 +368,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -389,7 +385,7 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -545,7 +541,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind || !L.mind.hasSoul)
+		if(L.anti_magic_check() || !L.mind)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		to_chat(L, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
@@ -553,7 +549,7 @@
 		L.health = min(L.health, L.maxHealth)
 		if(L.maxHealth <= 0)
 			to_chat(L, "<span class='userdanger'>Your weakened soul is completely consumed by the [src]!</span>")
-			L.mind.hasSoul = FALSE
+			return
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
@@ -578,7 +574,7 @@
 		possession_test(M)
 		return BULLET_ACT_HIT
 
-/obj/projectile/magic/wipe/proc/possession_test(var/mob/living/carbon/M)
+/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
@@ -627,7 +623,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
@@ -650,6 +646,11 @@
 			return BULLET_ACT_BLOCK
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
+
+/obj/projectile/magic/aoe/lightning/no_zap
+	zap_power = 10000
+	zap_range = 4
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
@@ -679,22 +680,6 @@
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 
-/obj/projectile/magic/aoe/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
-/obj/projectile/magic/aoe/fireball/infernal/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			return BULLET_ACT_BLOCK
-	var/turf/T = get_turf(target)
-	for(var/i=0, i<50, i+=10)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
 
 //still magic related, but a different path
 
@@ -706,7 +691,7 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

@@ -60,7 +60,7 @@ var/admin_substr  = "admins=" // search for this to locate # of admins
 
 	src << link(serverlink)
 
-/proc/extract(var/data, var/type = PLAYERS)
+/proc/extract(data, type = PLAYERS)
 
 	var/nextpos = 0
 

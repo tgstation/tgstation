@@ -114,15 +114,6 @@
 /datum/tgs_api/v4/OnInitializationComplete()
 	Export(TGS4_COMM_SERVER_PRIMED)
 
-	var/tgs4_secret_sleep_offline_sauce = 29051994
-	var/old_sleep_offline = world.sleep_offline
-	world.sleep_offline = tgs4_secret_sleep_offline_sauce
-	sleep(1)
-	if(world.sleep_offline == tgs4_secret_sleep_offline_sauce)	//if not someone changed it
-		world.sleep_offline = old_sleep_offline
-	else
-		TGS_WARNING_LOG("world.sleep_offline unexpectedly changed!")
-
 /datum/tgs_api/v4/OnTopic(T)
 	var/list/params = params2list(T)
 	var/their_sCK = params[TGS4_INTEROP_ACCESS_IDENTIFIER]
@@ -257,7 +248,7 @@
 	return instance_name
 
 /datum/tgs_api/v4/TestMerges()
-	return cached_test_merges
+	return cached_test_merges.Copy()
 
 /datum/tgs_api/v4/EndProcess()
 	Export(TGS4_COMM_END_PROCESS)

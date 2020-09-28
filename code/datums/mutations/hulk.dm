@@ -27,6 +27,8 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!proximity)
 		return
 	if(source.a_intent != INTENT_HARM)
@@ -39,16 +41,26 @@
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
 
-		var/obj/item/bodypart/arm = source.hand_bodyparts[source.active_hand_index]
-		switch(arm.brute_dam)
-			if(45 to 50)
-				arm.force_wound_upwards(/datum/wound/brute/bone/critical)
-			if(41 to 45)
-				arm.force_wound_upwards(/datum/wound/brute/bone/severe)
-			if(35 to 41)
-				arm.force_wound_upwards(/datum/wound/brute/bone/moderate)
-
 		return COMPONENT_NO_ATTACK_HAND
+
+
+/**
+  *Checks damage of a hulk's arm and applies bone wounds as necessary.
+  *
+  *Called by specific atoms being attacked, such as walls. If an atom
+  *does not call this proc, than punching that atom will not cause
+  *arm breaking (even if the atom deals recoil damage to hulks).
+  *Arguments:
+  *arg1 is the arm to evaluate damage of and possibly break.
+  */
+/datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
+	switch(arm.brute_dam)
+		if(45 to 50)
+			arm.force_wound_upwards(/datum/wound/blunt/critical)
+		if(41 to 45)
+			arm.force_wound_upwards(/datum/wound/blunt/severe)
+		if(35 to 41)
+			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)
@@ -69,6 +81,8 @@
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
+	SIGNAL_HANDLER
+
 	var/message = wrapped_message[1]
 	if(message)
 		message = "[replacetext(message, ".", "!")]!!"

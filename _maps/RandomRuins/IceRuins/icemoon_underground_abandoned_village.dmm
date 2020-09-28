@@ -384,7 +384,7 @@
 "GK" = (
 /obj/item/clothing/head/bearpelt,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/burger/fish,
+/obj/item/food/burger/fish,
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -4
 	},

@@ -15,6 +15,8 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
 /datum/component/caltrop/proc/Crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(!prob(probability))
 		return
 
@@ -51,7 +53,7 @@
 			damage *= 0.75
 
 
-		if(COOLDOWN_FINISHED(src, caltrop_cooldown))
+		if(!(flags & CALTROP_SILENT) && COOLDOWN_FINISHED(src, caltrop_cooldown))
 			COOLDOWN_START(src, caltrop_cooldown, 1 SECONDS) //cooldown to avoid message spam.
 			var/atom/A = parent
 			if(!H.incapacitated(ignore_restraints = TRUE))

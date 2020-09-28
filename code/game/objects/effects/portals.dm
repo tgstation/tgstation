@@ -154,8 +154,6 @@
 		return FALSE
 	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
 		return
-	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
 	var/no_effect = FALSE
 	if(last_effect == world.time)
 		no_effect = TRUE

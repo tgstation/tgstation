@@ -3,6 +3,7 @@
 	desc = "A scroll for moving around."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
+	worn_icon_state = "scroll"
 	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "paper"
@@ -59,7 +60,7 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!is_blocked_turf(T))
+		if(!T.is_blocked_turf())
 			L += T
 
 	if(!L.len)

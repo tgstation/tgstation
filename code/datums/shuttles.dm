@@ -176,7 +176,7 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
 
@@ -231,24 +231,30 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
-/datum/map_template/shuttle/emergency/discoinferno
-	suffix = "discoinferno"
-	name = "Disco Inferno"
-	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
-	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = 10000
-
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
 	credit_cost = 10000
+	/// Whether the arena z-level has been created
+	var/arena_loaded = FALSE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
 	if(SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met)
 		return TRUE
 	return FALSE
+
+/datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
+	. = ..()
+	if(!arena_loaded)
+		arena_loaded = TRUE
+		var/datum/map_template/arena/arena_template = new()
+		arena_template.load_new_z()
+
+/datum/map_template/arena
+	name = "The Arena"
+	mappath = "_maps/templates/the_arena.dmm"
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -388,7 +394,7 @@
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
 	credit_cost = 50000
 
-/datum/map_template/shuttle/emergency/cruise
+/datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
 	name = "Dynamic Environmental Interaction Shuttle"
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
@@ -470,6 +476,10 @@
 /datum/map_template/shuttle/cargo/donut
 	suffix = "donut"
 	name = "supply shuttle (Donut)"
+
+/datum/map_template/shuttle/cargo/pubby
+	suffix = "pubby"
+	name = "supply shuttle (Pubby)"
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"

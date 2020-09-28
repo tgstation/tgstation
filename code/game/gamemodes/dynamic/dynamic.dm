@@ -612,6 +612,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
+					// If admins have disabled dynamic from picking from the ghost pool
+					if(rule.ruletype == "Latejoin" && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
+						continue
 					rule.trim_candidates()
 					if (rule.ready())
 						drafted_rules[rule] = rule.get_weight()

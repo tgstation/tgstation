@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(ticker)
 	var/start_immediately = FALSE
 	var/setup_done = FALSE //All game setup done including mode post setup and
 
-	var/hide_mode = 0
+	var/hide_mode = FALSE
 	var/datum/game_mode/mode = null
 
 	var/login_music							//music played in pregame lobby
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-	var/delay_end = 0						//if set true, the round will not restart on it's own
+	var/delay_end = FALSE						//if set true, the round will not restart on it's own
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(ticker)
 	///Boolean to see if the game needs to set up a triumvirate ai (see tripAI.dm)
 	var/triai = FALSE
 
-	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/tipped = FALSE							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft						//pregame timer
@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(ticker)
 		if(!mode)
 			if(!runnable_modes.len)
 				to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
-				return 0
+				return FALSE
 			mode = pickweight(runnable_modes)
 			if(!mode)	//too few roundtypes all run too recently
 				mode = pick(runnable_modes)
@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(ticker)
 			qdel(mode)
 			mode = null
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(ticker)
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
-			return 0
+			return FALSE
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
@@ -325,15 +325,20 @@ SUBSYSTEM_DEF(ticker)
 		else
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
+	// handle persistence stuff that requires ckeys, in this case hardcore mode and temporal scarring
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
-		var/mob/living/carbon/human/hardcore_player = i
-		if(!hardcore_player.hardcore_survival_score)
+		var/mob/living/carbon/human/iter_human = i
+
+		iter_human.increment_scar_slot()
+		iter_human.load_persistent_scars()
+
+		if(!iter_human.hardcore_survival_score)
 			continue
-		if(hardcore_player.mind?.special_role)
-			hardcore_player.hardcore_survival_score *= 2 //Double for antags
-		to_chat(hardcore_player, "<span class='notice'>You will gain [round(hardcore_player.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
+		if(iter_human.mind?.special_role)
+			iter_human.hardcore_survival_score *= 2 //Double for antags
+		to_chat(iter_human, "<span class='notice'>You will gain [round(iter_human.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -402,6 +407,7 @@ SUBSYSTEM_DEF(ticker)
 			if(living.client)
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
+				living.client.init_verbs()
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)

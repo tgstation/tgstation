@@ -62,25 +62,26 @@
 		return
 	to_chat(user, "<span class='notice'>You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor...</span>")
 	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-		setAnchored(!anchored)
+		set_anchored(!anchored)
 		to_chat(user, "<span class='notice'>You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor.</span>")
 	return TRUE
 
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
-	..()
+	. = ..()
 	if(get_dir(loc, target) & dir)
-		var/checking = UNSTOPPABLE | FLYING | FLOATING
-		return !density || mover.movement_type & checking
+		var/checking = FLYING | FLOATING
+		return . || mover.movement_type & checking
 	return TRUE
 
 /obj/structure/railing/corner/CanPass()
 	..()
 	return TRUE
 
-/obj/structure/railing/CheckExit(atom/movable/O, turf/target)
+/obj/structure/railing/CheckExit(atom/movable/mover, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		return FALSE
+		var/checking = UNSTOPPABLE | FLYING | FLOATING
+		return !density || mover.movement_type & checking || mover.move_force >= MOVE_FORCE_EXTREMELY_STRONG
 	return TRUE
 
 /obj/structure/railing/corner/CheckExit()

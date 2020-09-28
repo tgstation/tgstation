@@ -32,8 +32,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/draining = 0
-	var/candrain = 0
+	var/draining = FALSE
+	var/candrain = FALSE
 	var/mindrain = 200
 	var/maxdrain = 400
 

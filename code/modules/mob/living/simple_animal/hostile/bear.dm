@@ -29,7 +29,7 @@
 	melee_damage_upper = 15
 	wound_bonus = -5
 	bare_wound_bonus = 10 // BEAR wound bonus am i right
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -51,12 +51,16 @@
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/bear/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
 	if(!rideable && mind)
 		can_buckle = TRUE
-		buckle_lying = FALSE
+		buckle_lying = 0
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
 		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
@@ -128,7 +132,7 @@
 		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
 
-mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
+/mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Several functions used from it.
 	name = "Terrygold"
 	icon_state = "butterbear"
 	icon_living = "butterbear"
@@ -146,6 +150,9 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/butter = 6, /obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
 	attack_verb_continuous = "slaps"
+
+/mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
+	return //You cannot grow a real bear from butter.
 
 /mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
 	if(stat)
@@ -173,7 +180,7 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
 		name = new_name
 
-mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
 	if(isliving(target))
 		var/mob/living/L = target
 		if((L.mobility_flags & MOBILITY_STAND))

@@ -1,3 +1,7 @@
+#define CELL_DRAIN_TIME 20
+#define CELL_POWER_GAIN 3
+#define CELL_POWER_DRAIN 100
+
 /obj/item/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
@@ -15,7 +19,8 @@
 	var/maxcharge = 1000
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
-	var/rigged = FALSE	// true if rigged to explode
+	var/rigged = FALSE	/// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
+	var/corrupted = FALSE /// If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
@@ -41,16 +46,16 @@
 
 /obj/item/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("self_recharge")
+		if(NAMEOF(src, self_recharge))
 			if(var_value)
 				START_PROCESSING(SSobj, src)
 			else
 				STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/stock_parts/cell/process()
+/obj/item/stock_parts/cell/process(delta_time)
 	if(self_recharge)
-		give(chargerate * 0.25)
+		give(chargerate * 0.125 * delta_time)
 	else
 		return PROCESS_KILL
 
@@ -72,13 +77,13 @@
 /obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
-		return 0
+		return FALSE
 	if(charge < amount)
-		return 0
+		return FALSE
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
-	return 1
+	return TRUE
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
@@ -103,8 +108,8 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
-	..()
+	rigged = (corrupted || reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
+	return ..()
 
 
 /obj/item/stock_parts/cell/proc/explode()
@@ -128,6 +133,7 @@
 	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
 		rigged = TRUE //broken batterys are dangerous
+		corrupted = TRUE
 
 /obj/item/stock_parts/cell/emp_act(severity)
 	. = ..()
@@ -152,31 +158,32 @@
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
+		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
 		if(E.drain_time > world.time)
 			return
-		if(charge < 100)
-			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
+		if(charge < CELL_POWER_DRAIN)
+			to_chat(H, "<span class='warning'>[src] doesn't have enough power!</span>")
 			return
 		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if(stomach.crystal_charge > 146)
+		if(stomach.crystal_charge > charge_limit)
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
-		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
-		E.drain_time = world.time + 20
-		if(do_after(user, 20, target = src))
-			if((charge < 100) || (stomach.crystal_charge > 146))
+		to_chat(H, "<span class='notice'>You clumsily channel power through [src] and into your body, wasting some in the process.</span>")
+		E.drain_time = world.time + CELL_DRAIN_TIME
+		if(do_after(user, CELL_DRAIN_TIME, target = src))
+			if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
 				return
 			if(istype(stomach))
-				to_chat(H, "<span class='notice'>You receive some charge from the [src].</span>")
-				stomach.adjust_charge(3)
-				charge -= 100 //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+				to_chat(H, "<span class='notice'>You receive some charge from [src].</span>")
+				stomach.adjust_charge(CELL_POWER_GAIN)
+				charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
 			else
-				to_chat(H, "<span class='warning'>You can't receive charge from the [src]!</span>")
+				to_chat(H, "<span class='warning'>You can't receive charge from [src]!</span>")
 		return
 
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
-	SSexplosions.highobj += src
+	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
@@ -396,3 +403,7 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+#undef CELL_DRAIN_TIME
+#undef CELL_POWER_GAIN
+#undef CELL_POWER_DRAIN

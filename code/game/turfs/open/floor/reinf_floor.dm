@@ -49,7 +49,7 @@
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
-	. = ..()
+	return ..()
 
 /turf/open/floor/engine/ex_act(severity,target)
 	var/shielded = is_shielded()
@@ -148,8 +148,7 @@
 	return ..()
 
 /turf/open/floor/engine/cult/proc/be_removed()
-	qdel(realappearance)
-	realappearance = null
+	QDEL_NULL(realappearance)
 
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS
