@@ -40,8 +40,8 @@
 /// liters in a cell
 #define CELL_VOLUME				2500
 
-/// liters in a normal breath
-#define BREATH_VOLUME			0.5
+/// liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
+#define BREATH_VOLUME			2
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)
 
@@ -95,7 +95,7 @@
 #define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST	273 //fire will start if the temperature is 0 °C
 #define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
 #define COLD_FIRE_GROWTH_RATE					40000
-#define FREON_MAXIMUM_BURN_TEMPERATURE			293
+#define FREON_MAXIMUM_BURN_TEMPERATURE			283
 #define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
 #define FREON_OXYGEN_FULLBURN					10
 
@@ -208,9 +208,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE					4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE					200
-/// 10% of an overclocked volume pump leaks into the air
-#define VOLUME_PUMP_LEAK_AMOUNT				0.1
+#define MAX_TRANSFER_RATE					400
+/// How many percent of the contents that an overclocked volume pumps leak into the air
+#define VOLUME_PUMP_LEAK_AMOUNT				0.2
 //used for device_type vars
 #define UNARY		1
 #define BINARY 		2

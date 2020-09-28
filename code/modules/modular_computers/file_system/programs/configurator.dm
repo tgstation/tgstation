@@ -57,7 +57,8 @@
 
 
 /datum/computer_file/program/computerconfig/ui_act(action,params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PC_toggle_component")

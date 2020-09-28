@@ -9,7 +9,7 @@
 	var/list/spectators = list()
 	///all roles in the game, dead or alive. check their game status if you only want living or dead.
 	var/list/all_roles = list()
-	///exists to speed up role retrieval, it's a dict. player_role_lookup[player ckey] will give you the role they play
+	///exists to speed up role retrieval, it's a dict. `player_role_lookup[player ckey]` will give you the role they play
 	var/list/player_role_lookup = list()
 	///what part of the game you're playing in. day phases, night phases, judgement phases, etc.
 	var/phase = MAFIA_PHASE_SETUP

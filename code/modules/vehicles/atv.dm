@@ -79,10 +79,10 @@
 	START_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/vehicle/ridden/atv/process()
+/obj/vehicle/ridden/atv/process(delta_time)
 	if(obj_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
-	if(prob(20))
+	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, src)

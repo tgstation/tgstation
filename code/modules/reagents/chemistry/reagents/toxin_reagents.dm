@@ -87,21 +87,13 @@
 		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 		holder.del_reagent(type)
 
-/datum/reagent/toxin/plasma/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if((!exposed_obj) || (!reac_volume))
-		return
-	var/temp = holder ? holder.chem_temp : T20C
-	if(temp >= LIQUID_PLASMA_BP)
-		exposed_obj.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
 	if(!istype(exposed_turf))
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
 		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+	return ..()
 
 /datum/reagent/toxin/plasma/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	. = ..()

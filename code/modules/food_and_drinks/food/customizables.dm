@@ -42,7 +42,7 @@
 			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
 			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
-		else if(istype(I, /obj/item/reagent_containers/food/snacks/pizzaslice/custom) || istype(I, /obj/item/reagent_containers/food/snacks/cakeslice/custom))
+		else if(istype(I, /obj/item/reagent_containers/food/snacks/pizzaslice/custom))
 			to_chat(user, "<span class='warning'>Adding [I.name] to [src] would make a mess.</span>")
 		else
 			if(!user.transferItemToLoc(I, src))
@@ -160,17 +160,6 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "custburg"
 	foodtype = GRAIN
-
-
-/obj/item/reagent_containers/food/snacks/customizable/cake
-	name = "cake"
-	ingMax = 6
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/custom
-	slices_num = 5
-	icon = 'icons/obj/food/piecake.dmi'
-	icon_state = "plaincake"
-	foodtype = GRAIN | DAIRY
-
 
 /obj/item/reagent_containers/food/snacks/customizable/kebab
 	name = "kebab"

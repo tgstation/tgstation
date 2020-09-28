@@ -206,8 +206,8 @@
   * * no_react - passed through to [/datum/reagents/proc/add_reagent]
   * * mob/transfered_by - used for logging
   * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
-  * * methods - passed through to [/datum/reagents/proc/react_single] and [/datum/reagent/proc/on_transfer]
-  * * show_message - passed through to [/datum/reagents/proc/react_single]
+  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
+  * * show_message - passed through to [/datum/reagents/proc/expose_single]
   * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
   * * ignore_stomach - when using methods INGEST will not use the stomach as the target
   */
@@ -614,12 +614,20 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.type == reagent)
-			if(my_atom && isliving(my_atom))
-				var/mob/living/M = my_atom
+			var/mob/living/mob_consumer
+
+			if (isliving(my_atom))
+				mob_consumer = my_atom
+			else if (istype(my_atom, /obj/item/organ))
+				var/obj/item/organ/organ = my_atom
+				mob_consumer = organ.owner
+
+			if (mob_consumer)
 				if(R.metabolizing)
 					R.metabolizing = FALSE
-					R.on_mob_end_metabolize(M)
-				R.on_mob_delete(M)
+					R.on_mob_end_metabolize(mob_consumer)
+				R.on_mob_delete(mob_consumer)
+
 			//Clear from relevant lists
 			addiction_list -= R
 			reagent_list -= R

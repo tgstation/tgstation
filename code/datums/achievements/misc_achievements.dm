@@ -123,3 +123,21 @@
 	desc = "Just a taste, for science!"
 	database_id = MEDAL_FRENCHING
 	icon = "frenching"
+
+/datum/award/achievement/misc/ash_ascension
+	name = "Nightwatcher's Eyes"
+	desc = "You've risen above the flames, became one with the ashes. You've been reborn as one with the Nightwatcher."
+	database_id = MEDAL_ASH_ASCENSION
+	icon = "ashascend"
+
+/datum/award/achievement/misc/flesh_ascension
+	name = "Vortex of Arms"
+	desc = "You've became something more, something greater. A piece of the emperor resides within you, and you within him."
+	database_id = MEDAL_FLESH_ASCENSION
+	icon = "fleshascend"
+
+/datum/award/achievement/misc/rust_ascension
+	name = "Hills of Rust"
+	desc = "You've summoned a piece of the Hill of rust, and so the Hills welcome you."
+	database_id = MEDAL_RUST_ASCENSION
+	icon = "rustascend"

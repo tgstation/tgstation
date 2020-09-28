@@ -48,7 +48,8 @@
 		"smmon_4.gif" = 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" = 'icons/program_icons/smmon_5.gif',
 		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif'
+		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif',
+		"robotact.gif" = 'icons/program_icons/robotact.gif'
 	)
 
 /datum/asset/simple/radar_assets
@@ -245,6 +246,9 @@
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
+		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
+		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
+		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
@@ -306,6 +310,35 @@
 	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
 		InsertAll("", each, GLOB.alldirs)
 	..()
+
+/datum/asset/spritesheet/supplypods
+	name = "supplypods"
+
+/datum/asset/spritesheet/supplypods/register()
+	for (var/style in 1 to length(GLOB.podstyles))
+		if (style == STYLE_SEETHROUGH)
+			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi' , "seethrough-icon"))
+			continue
+		var/base = GLOB.podstyles[style][POD_BASE]
+		if (!base)
+			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi', "invisible-icon"))
+			continue
+		var/icon/podIcon = icon('icons/obj/supplypods.dmi', base)
+		var/door = GLOB.podstyles[style][POD_DOOR]
+		if (door)
+			door = "[base]_door"
+			podIcon.Blend(icon('icons/obj/supplypods.dmi', door), ICON_OVERLAY)
+		var/shape = GLOB.podstyles[style][POD_SHAPE]
+		if (shape == POD_SHAPE_NORML)
+			var/decal = GLOB.podstyles[style][POD_DECAL]
+			if (decal)
+				podIcon.Blend(icon('icons/obj/supplypods.dmi', decal), ICON_OVERLAY)
+			var/glow = GLOB.podstyles[style][POD_GLOW]
+			if (glow)
+				glow = "pod_glow_[glow]"
+				podIcon.Blend(icon('icons/obj/supplypods.dmi', glow), ICON_OVERLAY)
+		Insert("pod_asset[style]", podIcon)
+	return ..()
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs

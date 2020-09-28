@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/abductor,
 /area/shuttle/escape)

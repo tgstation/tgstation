@@ -41,8 +41,8 @@
 		structureclimber.visible_message("<span class='warning'>[structureclimber] is knocked off [src].</span>", "<span class='warning'>You're knocked off [src]!</span>", "<span class='warning'>You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)
-	. = ..()
 	add_fingerprint(usr)
+	return ..()
 
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
@@ -131,4 +131,10 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, MELEE, 1)
+	take_damage(500, BRUTE, "melee", 1)
+
+/obj/structure/zap_act(power, zap_flags)
+	if(zap_flags & ZAP_OBJ_DAMAGE)
+		take_damage(power/8000, BURN, "energy")
+	power -= power/2000 //walls take a lot out of ya
+	. = ..()

@@ -61,7 +61,7 @@
 	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
 	ethereal_light = ethereal.mob_light()
 	spec_updatehealth(ethereal)
-
+	C.set_safe_hunger_level()
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)

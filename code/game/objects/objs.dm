@@ -22,7 +22,6 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
-	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 

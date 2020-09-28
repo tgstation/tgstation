@@ -144,11 +144,17 @@
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-	/// list of tabs containing verbs
-	var/list/verb_tabs = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
 	var/list/parallax_layers
@@ -164,6 +170,8 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 4
 	var/parallax_animate_timer
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
@@ -184,3 +192,13 @@
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
 
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub

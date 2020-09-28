@@ -810,7 +810,7 @@
 /area/shuttle/escape)
 "Aq" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/cakeslice/chocolate{
+/obj/item/food/cakeslice/chocolate{
 	pixel_x = 16;
 	pixel_y = -8
 	},

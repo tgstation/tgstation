@@ -678,8 +678,8 @@
 		H.open_language_menu(usr)
 
 /datum/action/item_action/wheelys
-	name = "Toggle Wheely-Heel's Wheels"
-	desc = "Pops out or in your wheely-heel's wheels."
+	name = "Toggle Wheels"
+	desc = "Pops out or in your shoes' wheels."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "wheelys"
 

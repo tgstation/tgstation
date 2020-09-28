@@ -431,6 +431,11 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
+		
+	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
+		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
+					"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+					
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
@@ -545,14 +550,10 @@
 
 			else
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
-		if(has_bane(BANE_LIGHT))
-			mind.disrupt_spells(-500)
 		return 1
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
-		if(has_bane(BANE_LIGHT))
-			mind.disrupt_spells(0)
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)

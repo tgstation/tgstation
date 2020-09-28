@@ -48,7 +48,7 @@
 	/// How long it takes to break out of the SSU.
 	var/breakout_time = 300
 	/// How fast it charges cells in a suit
-	var/charge_rate = 500
+	var/charge_rate = 250
 
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
@@ -190,8 +190,8 @@
 		dump_contents()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/dump_contents()
-	dropContents()
+/obj/machinery/suit_storage_unit/drop_stored_items()
+	. = ..()
 	helmet = null
 	suit = null
 	mask = null
@@ -247,6 +247,7 @@
 		src,
 		choices,
 		custom_check = CALLBACK(src, .proc/check_interactable, user),
+		require_near = !issilicon(user),
 	)
 
 	if (!choice)
@@ -279,13 +280,14 @@
 			if (item_to_dispense)
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
+			else
+				var/obj/item/in_hands = user.get_active_held_item()
+				if (in_hands)
+					attackby(in_hands, user)
 
 	interact(user)
 
 /obj/machinery/suit_storage_unit/proc/check_interactable(mob/user)
-	if (state_open && !powered())
-		return FALSE
-
 	if (!state_open && !can_interact(user))
 		return FALSE
 
@@ -407,7 +409,7 @@
 		if(occupant)
 			dump_contents()
 
-/obj/machinery/suit_storage_unit/process()
+/obj/machinery/suit_storage_unit/process(delta_time)
 	if(!suit)
 		return
 	if(!istype(suit, /obj/item/clothing/suit/space))
@@ -416,8 +418,8 @@
 		return
 
 	var/obj/item/stock_parts/cell/C = suit.cell
-	use_power(charge_rate)
-	C.give(charge_rate)
+	use_power(charge_rate * delta_time)
+	C.give(charge_rate * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))

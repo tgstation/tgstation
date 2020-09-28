@@ -165,4 +165,5 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	var/turf/closed/mineral/M = T
 	M.mineralAmt = 0
 	M.gets_drilled()
+	baseturfs = /turf/open/transparent/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 

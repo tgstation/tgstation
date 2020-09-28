@@ -142,7 +142,7 @@
 /datum/reality_smash_tracker/proc/_Generate()
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
-	var/number = targ_len * 6 - smash_len
+	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
 
 	for(var/i in 0 to number)
 
@@ -188,6 +188,15 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	alpha = 0
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+
+///Makes this obj appear out of nothing
+/obj/effect/broken_illusion/proc/show_presence()
+	animate(src,alpha = 255,time = 15 SECONDS)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))
@@ -230,7 +239,8 @@
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
+		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"

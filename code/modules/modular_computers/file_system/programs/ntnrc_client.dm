@@ -20,7 +20,8 @@
 	username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)

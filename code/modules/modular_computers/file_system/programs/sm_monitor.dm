@@ -105,8 +105,9 @@
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	switch(action)
 		if("PRG_clear")

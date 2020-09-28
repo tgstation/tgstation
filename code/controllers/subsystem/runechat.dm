@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(runechat)
 	if (MC_TICK_CHECK)
 		return
 
+
 	// Check for when we need to loop the buckets, this occurs when
 	// the head_offset is approaching BUCKET_LEN ticks in the past
 	if (practical_offset > BUCKET_LEN)
@@ -57,6 +58,11 @@ SUBSYSTEM_DEF(runechat)
 		practical_offset = 1
 		resumed = FALSE
 
+	// Check for when we have to reset buckets, typically from auto-reset
+	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
+		reset_buckets()
+		bucket_list = src.bucket_list
+		resumed = FALSE
 	// Store a reference to the 'working' chatmessage so that we can resume if the MC
 	// has us stop mid-way through processing
 	var/static/datum/chatmessage/cm
@@ -118,6 +124,11 @@ SUBSYSTEM_DEF(runechat)
 /datum/controller/subsystem/runechat/Recover()
 	bucket_list |= SSrunechat.bucket_list
 	second_queue |= SSrunechat.second_queue
+
+/datum/controller/subsystem/runechat/proc/reset_buckets()
+	bucket_list.len = BUCKET_LEN
+	head_offset = world.time
+	bucket_resolution = world.tick_lag
 
 /**
   * Enters the runechat subsystem with this chatmessage, inserting it into the end-of-life queue
