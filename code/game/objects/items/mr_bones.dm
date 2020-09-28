@@ -3,7 +3,7 @@
 	desc = "It sounds like an early era Source game."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "voicebox"
-	inhand_icon_state = "voicebox"
+	inhand_icon_state = "nothing"
 	mouse_opacity = 0
 	var/list/bone_phrases = list("ERROR: Incorrect Answer","Roleplay","No","Solve the Riddle","Repeat","Your Problem")
 
