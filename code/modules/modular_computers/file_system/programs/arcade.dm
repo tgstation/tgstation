@@ -6,6 +6,7 @@
 	requires_ntnet = FALSE
 	size = 6
 	tgui_id = "NtosArcade"
+	program_icon = "gamepad"
 
 	///Returns TRUE if the game is being played.
 	var/game_active = TRUE

@@ -2,24 +2,6 @@ import { useBackend } from '../backend';
 import { Button, ColorBox, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
-const PROGRAM_ICONS = {
-  compconfig: 'cog',
-  ntndownloader: 'download',
-  filemanager: 'folder',
-  smmonitor: 'radiation',
-  alarmmonitor: 'bell',
-  cardmod: 'id-card',
-  arcade: 'gamepad',
-  ntnrc_client: 'comment-alt',
-  nttransfer: 'exchange-alt',
-  powermonitor: 'plug',
-  job_manage: 'address-book',
-  crewmani: 'clipboard-list',
-  robocontrol: 'robot',
-  atmosscan: 'thermometer-half',
-  shipping: 'tags',
-};
-
 export const NtosMain = (props, context) => {
   const { act, data } = useBackend(context);
   const {

@@ -8,6 +8,7 @@
 	available_on_ntnet = FALSE
 	undeletable = TRUE
 	tgui_id = "NtosFileManager"
+	program_icon = "folder"
 
 	var/open_file
 	var/error
