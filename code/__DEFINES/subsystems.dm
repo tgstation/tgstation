@@ -225,15 +225,15 @@
 #define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
 // Air subsystem subtasks
-#define SSAIR_PIPENETS 1
-#define SSAIR_ATMOSMACHINERY 2
-#define SSAIR_EXCITEDGROUPS 3
-#define SSAIR_HIGHPRESSURE 4
-#define SSAIR_HOTSPOTS 5
-#define SSAIR_SUPERCONDUCTIVITY 6
-#define SSAIR_REBUILD_PIPENETS 7
-#define SSAIR_EQUALIZE 8
-#define SSAIR_ACTIVETURFS 9
+#define SSAIR_REBUILD_PIPENETS 1
+#define SSAIR_PIPENETS 2
+#define SSAIR_ATMOSMACHINERY 3
+#define SSAIR_EQUALIZE 4
+#define SSAIR_ACTIVETURFS 5
+#define SSAIR_EXCITEDGROUPS 6
+#define SSAIR_HIGHPRESSURE 7
+#define SSAIR_HOTSPOTS 8
+#define SSAIR_SUPERCONDUCTIVITY 9
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1
