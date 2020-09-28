@@ -17,7 +17,7 @@
 	name = "Meat pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 4,
+		/obj/item/food/meat/cutlet = 4,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -28,7 +28,7 @@
 	name = "Arnold pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 3,
+		/obj/item/food/meat/cutlet = 3,
 		/obj/item/ammo_casing/c9mm = 8,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
@@ -94,7 +94,7 @@
 	name = "Hawaiian pizza"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pizzabread = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/pineappleslice = 3,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1

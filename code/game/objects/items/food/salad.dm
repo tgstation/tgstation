@@ -106,3 +106,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+
+
+/obj/item/reagent_containers/glass/bowl
+	name = "bowl"
+	desc = "A simple bowl, used for soups and salads."
+	icon = 'icons/obj/food/soupsalad.dmi'
+	icon_state = "bowl"
+	reagent_flags = OPENCONTAINER
+	custom_materials = list(/datum/material/glass = 500)
+	w_class = WEIGHT_CLASS_NORMAL

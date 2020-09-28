@@ -21,7 +21,7 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	food_type = list(/obj/item/reagent_containers/food/snacks/meat)
+	food_type = list(/obj/item/food/meat)
 	tame_chance = 10
 	bonus_tame_chance = 5
 	search_objects = 1

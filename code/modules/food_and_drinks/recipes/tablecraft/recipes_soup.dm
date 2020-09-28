@@ -45,7 +45,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 2
+		/obj/item/food/meat/cutlet/xeno = 2
 	)
 	result = /obj/item/food/soup/wingfangchu
 	subcategory = CAT_SOUP
@@ -63,7 +63,7 @@
 	name = "Hot chili"
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -74,7 +74,7 @@
 	name = "Cold chili"
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/grown/icepepper = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -85,7 +85,7 @@
 	name = "Chili con carnival"
 	reqs = list(
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
 		/obj/item/clothing/shoes/clown_shoes = 1
@@ -198,7 +198,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 3,
+		/obj/item/food/meat/cutlet = 3,
 		/obj/item/reagent_containers/food/snacks/grown/potato = 1,
 		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/reagent_containers/food/snacks/grown/eggplant = 1,
@@ -265,7 +265,7 @@
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
-		/obj/item/reagent_containers/food/snacks/meat/crab = 1,
+		/obj/item/food/meat/crab = 1,
 		/obj/item/food/salad/boiledrice = 1
 	)
 	result = /obj/item/food/soup/bisque

@@ -961,7 +961,7 @@
 
 /obj/item/storage/box/papersack/meat/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
+		new /obj/item/food/meat/slab(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"

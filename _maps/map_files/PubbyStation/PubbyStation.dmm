@@ -47676,7 +47676,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "dWk" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "dWp" = (
@@ -55769,7 +55769,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "sij" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "siF" = (
@@ -55927,7 +55927,7 @@
 /area/hallway/primary/central)
 "sww" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "swE" = (

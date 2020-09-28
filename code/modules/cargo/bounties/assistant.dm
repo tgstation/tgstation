@@ -171,7 +171,7 @@
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's Corgi meat. Ship out a replacement immediately."
 	reward = 3000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi)
+	wanted_types = list(/obj/item/food/meat/slab/corgi)
 
 /datum/bounty/item/assistant/action_figures
 	name = "Action Figures"

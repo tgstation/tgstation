@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/reagent_containers/food/drinks/bottle/lizardwine, /obj/item/clothing/head/lizard, /obj/item/clothing/shoes/cowboy/lizard)),
 
 						"skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
-												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+												 /obj/item/food/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
 
 						"conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/security/head_of_security,

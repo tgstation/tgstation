@@ -10,7 +10,7 @@
 	name = "Sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+		/obj/item/food/meat/steak = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1
 	)
 	result = /obj/item/food/sandwich

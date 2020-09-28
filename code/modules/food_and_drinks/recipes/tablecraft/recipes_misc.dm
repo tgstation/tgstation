@@ -166,7 +166,7 @@
 	name ="Carne de asada burrito"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/carneburrito
@@ -249,7 +249,7 @@
 	name = "Stuffed legion"
 	time = 40
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/steak/goliath = 1,
+		/obj/item/food/meat/steak/goliath = 1,
 		/obj/item/organ/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
@@ -275,7 +275,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/food/meat/cutlet = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/taco
@@ -286,7 +286,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/food/meat/cutlet = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/taco/plain
 	subcategory = CAT_MISCFOOD
@@ -316,7 +316,7 @@
 		/obj/item/organ/brain = 1,
 		/obj/item/organ/heart = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 10,
-		/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
@@ -329,7 +329,7 @@
 		/obj/item/reagent_containers/food/snacks/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/meat/rawcrab = 1
+		/obj/item/food/meat/rawcrab = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/crab_rangoon
 	subcategory = CAT_MISCFOOD

@@ -41,7 +41,7 @@
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	egg_type = /obj/item/food/egg/loaded
 	food_type = /obj/item/reagent_containers/food/snacks/grown/carrot
 	eggsleft = 10

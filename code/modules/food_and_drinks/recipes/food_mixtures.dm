@@ -83,7 +83,7 @@
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat(location)
+		new /obj/item/food/meat/slab/synthmeat(location)
 
 /datum/chemical_reaction/hot_ramen
 	results = list(/datum/reagent/consumable/hot_ramen = 3)

@@ -19,7 +19,7 @@
 		/datum/reagent/consumable/blackpepper = 1,
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1
+		/obj/item/food/meat/steak/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/meatpie
 	subcategory = CAT_PIE
@@ -37,7 +37,7 @@
 	name = "Xeno pie"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/xeno = 1
+		/obj/item/food/meat/cutlet/xeno = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/xemeatpie
 	subcategory = CAT_PIE
@@ -65,7 +65,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries = 1,
-		/obj/item/reagent_containers/food/snacks/meat/steak/bear = 1
+		/obj/item/food/meat/steak/bear = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/bearypie
 	subcategory = CAT_PIE

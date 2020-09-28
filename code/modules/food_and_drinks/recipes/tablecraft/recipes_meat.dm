@@ -6,7 +6,7 @@
 	name = "Human kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/meat/steak/plain/human = 2
+		/obj/item/food/meat/steak/plain/human = 2
 	)
 	result = /obj/item/food/kebab/human
 	subcategory = CAT_MEAT
@@ -15,7 +15,7 @@
 	name = "Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/meat/steak = 2
+		/obj/item/food/meat/steak = 2
 	)
 	result = /obj/item/food/kebab/monkey
 	subcategory = CAT_MEAT
@@ -43,7 +43,7 @@
 	reqs = list(
 		/obj/item/stack/rods = 1,
 		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/food/meat/cutlet = 1,
 		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
@@ -98,7 +98,7 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet/spider = 2
+		/obj/item/food/meat/cutlet/spider = 2
 	)
 	result = /obj/item/food/spidereggsham
 	subcategory = CAT_MEAT
@@ -109,7 +109,7 @@
 	name = "Corned beef"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
-		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+		/obj/item/food/meat/steak = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 2
 	)
 	result = /obj/item/food/cornedbeef
@@ -119,7 +119,7 @@
 	name = "Filet migrawr"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
-		/obj/item/reagent_containers/food/snacks/meat/steak/bear = 1,
+		/obj/item/food/meat/steak/bear = 1,
 	)
 	tools = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
@@ -128,7 +128,7 @@
 /datum/crafting_recipe/food/enchiladas
 	name = "Enchiladas"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/food/meat/cutlet = 2,
 		/obj/item/reagent_containers/food/snacks/grown/chili = 2,
 		/obj/item/reagent_containers/food/snacks/tortilla = 2
 	)
@@ -149,7 +149,7 @@
 	name = "Sausage"
 	reqs = list(
 		/obj/item/food/meatball = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
+		/obj/item/food/meat/cutlet = 2
 	)
 	result = /obj/item/food/sausage
 	subcategory = CAT_MEAT
@@ -157,7 +157,7 @@
 /datum/crafting_recipe/food/nugget
 	name = "Chicken nugget"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
+		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/nugget
 	subcategory = CAT_MEAT
@@ -177,7 +177,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/bun = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1
+		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/pigblanket
 	subcategory = CAT_MEAT
@@ -204,7 +204,7 @@
 	name = "Rice and Pork"
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
+		/obj/item/food/meat/cutlet = 2
 	)
 	result = /obj/item/food/salad/ricepork
 	subcategory = CAT_MEAT
@@ -213,7 +213,7 @@
 	name = "BBQ Ribs"
 	reqs = list(
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 2,
+		/obj/item/food/meat/steak/plain = 2,
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/food/bbqribs
@@ -222,7 +222,7 @@
 /datum/crafting_recipe/food/meatclown
 	name = "Meat Clown"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+		/obj/item/food/meat/steak/plain = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
