@@ -42,23 +42,20 @@
 // in datum/netlink.  I am trying my best to not have hard references in any of these data
 // objects
 
-// this creates a virtual connection to the device.  The user
-// can tell if the data has been updated by a latter timestamp and if the
-// list is missing the timestamp
-/datum/component/ntnet_interface/proc/connect_port(port)
-	if(registered_sockets[port])
-		// Make a copy, it wil get rid of data once the component is removed
-		// So now you can qdel it like anything else
-		var/datum/netlink/original = registered_sockets[port]
-		return new/datum/netlink(src, original.data)
+/datum/component/ntnet_interface/proc/connect_port(hid_or_tag, port)
+	ASSERT(hid_or_tag && port)
+	var/datum/component/ntnet_interface/target = network.root_devices[hid_or_tag]
+	if(target && target.registered_sockets[port])
+		return new/datum/netlink/new(target, port)
 
-// just for a consitant interface
+
 /datum/component/ntnet_interface/proc/deregister_port(port)
 	if(registered_sockets[port]) // should I runtime if this isn't in here?
-		var/datum/netlink/original = registered_sockets[port]
-		SEND_SIGNAL(src, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, port, original.data)
+		var/list/datalink = registered_sockets[port]
+		// this should remove all outstanding ports
+		SEND_SIGNAL(src, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, port, datalink)
 		registered_sockets.Remove(port)
-		qdel(original)
+
 
 /datum/component/ntnet_interface/proc/register_port(port, list/data)
 	if(!port || !length(data))
@@ -67,11 +64,8 @@
 	if(registered_sockets[port])
 		log_runtime("port already regestered")
 		return
-	var/datum/netlink/original = new(src, data)
-	original.server_id = hardware_id
-	original.server_network = network.network_id
-	original.port = port
-	registered_sockets[port] = original
+	data["_updated"] = FALSE
+	registered_sockets[port] = data
 	return original
 
 /datum/component/ntnet_interface/Destroy()

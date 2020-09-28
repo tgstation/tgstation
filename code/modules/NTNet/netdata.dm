@@ -8,21 +8,25 @@
 	var/passkey = null // sends auth data used to check if we can connect or send data to a device
 	var/list/data
 
-/datum/netlink/New(datum/component/ntnet_interface/server, list/data)
+/datum/netlink/New(datum/component/ntnet_interface/conn, port)
+	data = conn.regestered_ports[port]
 	ASSERT(data != null)
-	src.data = data
-	if(!("_updated" in data))
-		data["_updated"] = FALSE
-	RegisterSignal(server, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
+	server_id = conn.hardware_id
+	server_network = conn.network.network_id
+	src.port = port
+	RegisterSignal(conn, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
 	..()
 
 /datum/netlink/proc/_server_disconnected(datum/component/com)
+	SIGNAL_HANDLER
 	data = null
 
 /datum/netlink/Destroy()
 	passkey = null
 	data = null
 	return ..()
+
+// If you don't want to use this fine, but this just shows how the system works
 
 // I hate you all.  I want to operator overload []
 // So fuck you all, Do NOT access data directly you freaks
@@ -40,14 +44,18 @@
 		data["_updated"] = TRUE
 		data[idx] = V
 
+
 /datum/netlink/proc/is_dirty()
-	return data["_updated"]
+	return data && data["_updated"]
 
 /datum/netlink/proc/clean()
-	data["_updated"] = FALSE
+	if(data)
+		data["_updated"] = FALSE
 
 /datum/netlink/proc/is_connected()
 	return data != null
+
+
 
 /datum/netdata
 	//this requires some thought later on but for now it's fine. (WarlockD) ARRRRG
