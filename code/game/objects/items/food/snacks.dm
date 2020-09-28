@@ -41,7 +41,6 @@
 				after_eat = CALLBACK(src, .proc/after_eat))
 
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
-	. = ..()
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
 		var/datum/disease/P = new /datum/disease/parasite()

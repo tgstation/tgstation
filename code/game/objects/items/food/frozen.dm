@@ -229,7 +229,6 @@
 		. += initial(overlay_state)
 
 /obj/item/food/popsicle/proc/after_bite(mob/living/eater, mob/living/feeder, bitecount)
-	. = ..()
 	src.bitecount = bitecount
 	update_icon()
 
