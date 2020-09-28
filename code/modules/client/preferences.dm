@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C?.update_movement_keys(src)
+	C?.update_special_keybinds(src)
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -1660,7 +1660,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					key_bindings[full_key] = sortList(key_bindings[full_key])
 
 					user << browse(null, "window=capturekeypress")
-					user.client.update_movement_keys()
+					user.client.update_special_keybinds()
 					save_preferences()
 
 				if("keybindings_reset")
@@ -1670,7 +1670,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						return
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
-					user.client.update_movement_keys()
+					user.client.update_special_keybinds()
 
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
