@@ -319,6 +319,7 @@
 	name = "skub"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "skub"
+	tank_holder_icon_state = "holder_skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("skubs")
 	attack_verb_simple = list("skub")
