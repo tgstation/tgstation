@@ -38275,10 +38275,9 @@
 	dir = 10
 	},
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4;
 	external_pressure_bound = 140;
-	name = "server vent";
 	pressure_checks = 0
 	},
 /turf/open/floor/circuit/telecomms,
@@ -61956,7 +61955,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bPp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord,
@@ -74237,7 +74236,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "cii" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -82462,7 +82461,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/solars/port/aft)
 "cvs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -90569,7 +90568,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -90663,7 +90662,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "cJf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -91458,7 +91457,7 @@
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/fore)
 "cKE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
@@ -91509,7 +91508,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -92047,7 +92046,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -94585,7 +94584,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
 "vHi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
 "vLf" = (
