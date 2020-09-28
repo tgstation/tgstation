@@ -16,6 +16,8 @@
 	/// stationary ports and whatnot to tell them your ship's mobile
 	/// port can be used in these places, or the docking port is compatible, etc.
 	var/id
+	/// Possible destinations
+	var/port_destinations
 	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
 	///size of covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
@@ -186,6 +188,8 @@
 /obj/docking_port/stationary/register()
 	if(!id)
 		id = "dock"
+	else 
+		port_destinations = id
 	if(!name)
 		name = "dock"
 	var/counter = 1
@@ -195,6 +199,8 @@
 		counter++
 		id = "[tmp_id]_[counter]"
 		name = "[tmp_name] [counter]"
+	if(!port_destinations)
+		port_destinations = id
 
 	SSshuttle.stationary += src
 
@@ -204,6 +210,7 @@
 		if(S && S.id == check_id)
 			return TRUE
 	return FALSE
+
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	register()
