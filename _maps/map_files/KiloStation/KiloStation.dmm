@@ -2817,10 +2817,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"aeE" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/hallway/secondary/command)
 "aeF" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -3100,9 +3096,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"afh" = (
-/turf/open/space/basic,
-/area/hallway/secondary/command)
 "afi" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -9539,7 +9532,7 @@
 "app" = (
 /obj/machinery/light,
 /turf/open/space,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "apq" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
@@ -11383,7 +11376,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "ask" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -14592,7 +14585,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "axg" = (
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/tile/neutral,
@@ -20985,7 +20978,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "aHA" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -23871,7 +23864,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "aLX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -25367,7 +25360,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "aOl" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -30851,7 +30844,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "aVP" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
@@ -34179,7 +34172,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bax" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -35442,7 +35435,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bcx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -35834,7 +35827,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bcZ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -35872,7 +35865,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bdb" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -36468,7 +36461,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bdQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -36556,7 +36549,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bdX" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -37460,7 +37453,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bfg" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
@@ -37525,7 +37518,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bfl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -38610,7 +38603,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bgQ" = (
 /obj/structure/window/reinforced,
 /obj/machinery/light/small{
@@ -38618,7 +38611,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bgR" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -38638,7 +38631,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bgT" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -40397,7 +40390,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
-/area/hallway/secondary/command)
+/area/space/nearstation)
 "bjn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -92858,19 +92851,6 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
 /area/maintenance/starboard)
-"cOc" = (
-/obj/structure/lattice/catwalk,
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
-	},
-/turf/open/space/basic,
-/area/space)
 "cOd" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -123165,12 +123145,12 @@ aox
 aeD
 apX
 aox
-aeE
-afh
+acm
+cry
 aLW
-aeE
-afh
-aeE
+acm
+cry
+acm
 aox
 bqZ
 aox
@@ -123419,8 +123399,8 @@ aNy
 aPv
 aKe
 aTR
-aeE
-aeE
+acm
+acm
 asj
 axf
 axf
@@ -123676,7 +123656,7 @@ aRk
 aPw
 aSn
 aTR
-afh
+cry
 app
 arl
 arl
@@ -123933,7 +123913,7 @@ aRl
 aPz
 aKg
 aTR
-aeE
+acm
 arl
 arl
 boi
@@ -124711,7 +124691,7 @@ byH
 byK
 byT
 bdQ
-afh
+cry
 axf
 bpf
 brs
@@ -125475,7 +125455,7 @@ aRv
 aQf
 aLk
 aTR
-aeE
+acm
 arl
 arl
 byM
@@ -125732,7 +125712,7 @@ aRw
 aPw
 aSn
 aTR
-afh
+cry
 app
 bha
 arl
@@ -125989,8 +125969,8 @@ aRy
 aQg
 aKe
 aTR
-aeE
-aeE
+acm
+acm
 asj
 aHz
 aHQ
@@ -126249,13 +126229,13 @@ aox
 aeD
 aox
 aox
-afh
-aeE
+cry
+acm
 aOk
-afh
-aeE
-afh
-aeE
+cry
+acm
+cry
+acm
 bgP
 baa
 atT
@@ -126909,8 +126889,8 @@ aaa
 aaa
 aaa
 aaa
-cmJ
-cmJ
+acm
+acm
 aaa
 aaa
 aaa
@@ -127167,7 +127147,7 @@ aaa
 aaa
 aaa
 aaa
-cOc
+bUG
 aaa
 aaa
 aaa
