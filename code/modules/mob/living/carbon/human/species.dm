@@ -637,6 +637,40 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += eye_overlay
 
+	// organic body markings
+	if(HAS_MARKINGS in species_traits)
+		var/obj/item/bodypart/chest/CH = H.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/r_arm/RA = H.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/l_arm/LA = H.get_bodypart(BODY_ZONE_L_ARM)
+		var/obj/item/bodypart/r_leg/RL = H.get_bodypart(BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/l_leg/LL = H.get_bodypart(BODY_ZONE_L_LEG)
+		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
+		var/HUSKED = HAS_TRAIT(H, TRAIT_HUSK)
+
+		if(HD && !HUSKED && (HD.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
+			standing += markings_head_overlay
+
+		if(CH && !HUSKED && (CH.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
+			standing += markings_chest_overlay
+
+		if(RA && !HUSKED && (RA.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
+			standing += markings_r_arm_overlay
+
+		if(LA && !HUSKED && (LA.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
+			standing += markings_l_arm_overlay
+
+		if(RL && !HUSKED && (RL.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
+			standing += markings_r_leg_overlay
+
+		if(LL && !HUSKED && (LL.status != BODYPART_ROBOTIC))
+			var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
+			standing += markings_l_leg_overlay
+
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
 		if(H.underwear)
@@ -818,8 +852,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 				if("moth_antennae")
 					S = GLOB.moth_antennae_list[H.dna.features["moth_antennae"]]
-				if("moth_markings")
-					S = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 			if(!S || S.icon_state == "none")
