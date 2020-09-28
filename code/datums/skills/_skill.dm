@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 		to_chat(mind.current, "<span class='nicegreen'>It seems the Professional [title] Association won't send me another status symbol.</span>")
 		return
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-	pod.landingDelay = 150
+	pod.delays[POD_TRANSIT] = 150
 	pod.explosionSize = list(0,0,0,0)
 	to_chat(mind.current, "<span class='nicegreen'>My legendary skill has attracted the attention of the Professional [title] Association. It seems they are sending me a status symbol to commemorate my abilities.</span>")
 	var/turf/T = get_turf(mind.current)

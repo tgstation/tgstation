@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Non-gameplay impacting runtime related to antag datums."
-  - tweak: "Code causing antag datums to silently fail when unusual error states occur has been replaced. This will cause errors that were previously ignored to now generate runtimes."

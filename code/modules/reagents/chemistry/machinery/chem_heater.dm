@@ -113,7 +113,8 @@
 	return data
 
 /obj/machinery/chem_heater/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")
