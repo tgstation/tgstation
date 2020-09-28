@@ -176,7 +176,7 @@
 /area/holodeck/rec_center/winterwonderland)
 "aH" = (
 /obj/structure/table,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/bunker)
 "aI" = (
@@ -2039,7 +2039,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -2051,7 +2051,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -16135,7 +16135,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -16150,7 +16150,7 @@
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

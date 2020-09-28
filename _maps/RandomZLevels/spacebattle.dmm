@@ -1702,7 +1702,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gC" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gD" = (
@@ -2137,8 +2137,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
+/obj/item/gun/energy/laser/rifle,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ii" = (
@@ -2391,7 +2391,7 @@
 "ju" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/rifle,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jv" = (
