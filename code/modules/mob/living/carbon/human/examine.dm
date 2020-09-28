@@ -144,9 +144,9 @@
 		missing -= body_part.body_zone
 		for(var/obj/item/I in body_part.embedded_objects)
 			if(I.isEmbedHarmless())
-				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] stuck to [t_his] [body_part.name]!</B>\n"
+				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [body_part.name]!</B>\n"
 			else
-				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [body_part.name]!</B>\n"
+				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [body_part.name]!</B>\n"
 
 		for(var/i in body_part.wounds)
 			var/datum/wound/iter_wound = i

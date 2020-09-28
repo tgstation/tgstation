@@ -142,7 +142,8 @@
 	return data
 
 /obj/item/radio/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("frequency")

@@ -172,7 +172,7 @@
   *
   * Use for atoms performing visible actions
   *
-  * message is output to anyone who can see, e.g. "The [src] does something!"
+  * message is output to anyone who can see, e.g. `"The [src] does something!"`
   *
   * Vars:
   * * self_message (optional) is what the src mob sees e.g. "You do something!"

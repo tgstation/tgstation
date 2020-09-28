@@ -112,6 +112,7 @@
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
 				if(!N.owner)
+					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
 					continue
 				if(N.nuke_team)
 					nuke_team = N.nuke_team
