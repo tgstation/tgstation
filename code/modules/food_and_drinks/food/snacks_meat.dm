@@ -350,6 +350,20 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 30)
 
+/obj/item/reagent_containers/food/snacks/friedchicken
+	name = "fried chicken"
+	desc = "A juicy hunk of chicken meat, fried to perfection."
+	icon_state = "friedchicken1"
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("chicken" = 3, "fried batter" = 1)
+	foodtype = MEAT
+	value = FOOD_FAST
+
+/obj/item/reagent_containers/food/snacks/friedchicken/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "friedchicken2"
+
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/kebab
