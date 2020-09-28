@@ -62,35 +62,35 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/proc/network_string_to_list(name)
 #ifdef DEBUG_NETWORKS
 	if(!verify_network_name(name))
-		throw EXCEPTION("network_string_to_list: [name] IS INVALID")
+		log_runtime("network_string_to_list: [name] IS INVALID")
 #endif
 	return splittext(name,".") // should we do a splittext_char?  I doubt we really need unicode in network names
 
 // finds OR creates a network from a simple string like "SS13.ATMOS.AIRALRM", runtimes if error
 /datum/controller/subsystem/processing/networks/proc/create_network_simple(network_id)
-	if(network_id in networks)
-		return networks[network_id] // don't worry about it	if(network_id in networks)
+	var/datum/ntnet/network = networks[network_id]
+	if(network)
+		return network // don't worry about it	if(network_id in networks)
 
 #ifdef DEBUG_NETWORKS
 	if(!verify_network_name(network_id))
 		log_runtime("create_network_simple: [network_id] IS INVALID")
 		return null
 #endif
-
 	var/list/network_tree = network_string_to_list(network_id)
 	ASSERT(network_tree.len > 0)
 	var/network_name_part = ""
 	var/datum/ntnet/parent = null
-	var/datum/ntnet/network = null
+
 	for(var/i in 1 to network_tree.len)
-		if(i>1)
+		if(i!=1)
 			network_name_part += "."
 		network_name_part += network_tree[i]
 		network = networks[network_name_part]
 		if(!network)
 			network = new(network_name_part, parent)
 		parent = network
-	to_chat(world, "Netowrk created final [network.network_id]")
+	to_chat(world, "create_network_simple:  created final [network.network_id]")
 	return network // and we are done!
 
 

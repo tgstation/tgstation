@@ -23,7 +23,7 @@
 
 /datum/component/ntnet_interface/Initialize(network_name, network_tag=null)
 	if(!network_name)
-		to_chat(world, "Bad network name [network_name], going to limbo it")
+		log_runtime("Bad network name [network_name], going to limbo it")
 		network_name = NETWORK_LIMBO
 
 	src.hardware_id = "[SSnetworks.get_next_HID()]"
@@ -46,7 +46,7 @@
 	ASSERT(hid_or_tag && port)
 	var/datum/component/ntnet_interface/target = network.root_devices[hid_or_tag]
 	if(target && target.registered_sockets[port])
-		return new/datum/netlink/new(target, port)
+		return new/datum/netlink(target, port)
 
 
 /datum/component/ntnet_interface/proc/deregister_port(port)
@@ -66,7 +66,6 @@
 		return
 	data["_updated"] = FALSE
 	registered_sockets[port] = data
-	return original
 
 /datum/component/ntnet_interface/Destroy()
 	if(network)

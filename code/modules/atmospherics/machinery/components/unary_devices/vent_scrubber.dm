@@ -25,7 +25,7 @@
 	pipe_state = "scrubber"
 
 	network_id = NETWORK_ATMOS_SCUBBERS
-	var/datum/netlink/datalink = null
+	var/datum/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -37,18 +37,15 @@
 			filter_types -= f
 			filter_types += gas_id2path(f)
 
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/setup_network()
-	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 	var/area/scrub_area = get_area(src)
 	name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
 		f_types += list(list("path" = path, "gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME]))
-	datalink = net.register_port("status", list(
+	datalink =  list(
 		"filter_types" = f_types,
-		"hardware_id" = net.hardware_id,
+		"hardware_id" = null,
 		"long_name" = name,
 		"id_tag" = id_tag,
 		"device" = "VS",
@@ -56,15 +53,22 @@
 		"power" = on,
 		"scrubbing" = scrubbing,
 		"widenet" = widenet,
-	))
+	)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/setup_network()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/scrub_area = get_area(src)
+	datalink["hardware_id"] = net.hardware_id
+	net.register_port("status", datalink)
 	scrub_area.atmos_scrubbers[net.hardware_id] = datalink // magic!
+
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
 		scrub_area.atmos_scrubbers.Remove(hardware_id)
-	QDEL_NULL(datalink)
+	datalink = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
@@ -107,15 +111,6 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/ui_data(mob/user)
-	. = list()
-	.["id_tag"]			= datalink.data["id_tag"]
-	.["long_name"]		= datalink.data["long_name"]
-	.["power"]			= datalink.data["power"]
-	.["scrubbing"]		= datalink.data["scrubbing"]
-	.["widenet"]		= datalink.data["widenet"]
-	.["filter_types"]	= datalink.data["filter_types"]
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atmosinit()
 	check_turfs()
@@ -190,14 +185,14 @@
 //There is no easy way for an object to be notified of changes to atmos can pass flags
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
-	if(datalink && datalink.data["_updated"])
-		on = datalink.data["power"]
-		scrubbing = datalink.data["scrubbing"]
-		widenet = datalink.data["widenet"]
+	if(datalink["_updated"]) // handle port updates
+		on = datalink["power"]
+		scrubbing = datalink["scrubbing"]
+		widenet = datalink["widenet"]
 		filter_types = list()
-		for(var/gas in datalink.data["filter_types"])
+		for(var/gas in datalink["filter_types"])
 			filter_types += gas_id2path(gas)
-		datalink.data["_updated"] = FALSE
+		datalink["_updated"] = FALSE
 
 	if(widenet)
 		check_turfs()
@@ -220,45 +215,42 @@
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
-		datalink?.put("on", on)
+		datalink["on"] = on
 
 	if("power_toggle" in signal.data)
 		on = !on
-		datalink?.put("on", on)
+		datalink["on"] = on
 
 	if("widenet" in signal.data)
 		widenet = text2num(signal.data["widenet"])
-		datalink?.put("widenet", widenet)
+		datalink["widenet"] = widenet
 
 	if("toggle_widenet" in signal.data)
 		widenet = !widenet
-		datalink?.put("widenet", widenet)
+		datalink["widenet"] = widenet
 
 	var/old_scrubbing = scrubbing
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
-		datalink?.put("widenet", scrubbing)
+		datalink["scrubbing"] = scrubbing
 
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
+		datalink["scrubbing"] = scrubbing
 
 	if(scrubbing != old_scrubbing)
-		datalink?.put("scrubbing", scrubbing)
+		datalink["scrubbing"] = scrubbing
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("toggle_filter" in signal.data)
 		filter_types ^= gas_id2path(signal.data["toggle_filter"])
-		if(datalink)
-			datalink.data["filter_types"] = filter_types
-			datalink.data["_updated"] = TRUE
+		datalink["filter_types"] = filter_types
 
 	if("set_filters" in signal.data)
 		filter_types = list()
 		for(var/gas in signal.data["set_filters"])
 			filter_types += gas_id2path(gas)
-		if(datalink)
-			datalink.data["filter_types"] = filter_types
-			datalink.data["_updated"] = TRUE
+		datalink["filter_types"] = filter_types
 
 	if("init" in signal.data)
 		name = signal.data["init"]

@@ -12,7 +12,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
 	var/frequency = 0
 	var/atom/target
-	var/datum/netlink/datalink = null
+	var/list/datalink = null
 	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/atmos
@@ -37,6 +37,10 @@
 	target = null
 	return ..()
 
+/obj/machinery/meter/New()
+	datalink = list("pressure" = 0)
+	..()
+
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
@@ -47,7 +51,7 @@
 
 /obj/machinery/meter/setup_network()
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.register_port("status", list("pressure" = 0))
+	conn.register_port("status",datalink)
 
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate
@@ -94,8 +98,7 @@
 	else
 		icon_state = "meter4"
 
-	if(datalink)
-		datalink["pressure"] = round(env_pressure)
+	datalink["pressure"] = round(env_pressure)
 
 
 /obj/machinery/meter/proc/status()

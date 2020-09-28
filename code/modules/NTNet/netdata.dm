@@ -9,7 +9,7 @@
 	var/list/data
 
 /datum/netlink/New(datum/component/ntnet_interface/conn, port)
-	data = conn.regestered_ports[port]
+	data = conn.registered_sockets[port]
 	ASSERT(data != null)
 	server_id = conn.hardware_id
 	server_network = conn.network.network_id

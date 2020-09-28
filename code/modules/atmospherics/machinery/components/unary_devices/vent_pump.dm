@@ -31,38 +31,36 @@
 	pipe_state = "uvent"
 
 	network_id = NETWORK_ATMOS_SCUBBERS
-	var/datum/netlink/datalink = null
+	var/list/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
-
-/obj/machinery/atmospherics/components/unary/vent_pump/setup_network()
-	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 	var/area/vent_area = get_area(src)
-	// If we do not have a name, assign one
 	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
-	datalink = net.register_port("status",
-		list(
+	datalink = 	list(
 			"name" = name,
-			"id_tag" = net.hardware_id,
+			"id_tag" = null,
 			"device" = "VP",
 			 "long_name"= sanitize(name),
 			"power"			= on,
 			"checks"		= pressure_checks,
-			"excheck"		= pressure_checks&1,
-			"incheck"		= pressure_checks&2,
+			"excheck"		= pressure_checks&1,		// tgui
+			"incheck"		= pressure_checks&2,		// tgui
 			"direction"		= pump_direction,
 			"external"		= external_pressure_bound,
 			"internal"		= internal_pressure_bound,
-			"extdefault"	= (external_pressure_bound == ONE_ATMOSPHERE),
-			"intdefault"	= (internal_pressure_bound == 0)
-		))
-	ASSERT(datalink != null)
+			"extdefault"	= (external_pressure_bound == ONE_ATMOSPHERE), 	// tgui
+			"intdefault"	= (internal_pressure_bound == 0)				// tgui
+)
+/obj/machinery/atmospherics/components/unary/vent_pump/setup_network()
+	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+	var/area/vent_area = get_area(src)
+	 net.register_port("status", datalink)
+	datalink["id_tag"] = net.hardware_id
 	vent_area.atmos_vents[net.hardware_id] = datalink
-
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
@@ -116,13 +114,18 @@
 	if(!nodes[1])
 		on = FALSE
 
-	if(datalink && datalink.data["_updated"])
-		on = datalink.data["power"]
-		pressure_checks = datalink.data["checks"]
-		pump_direction = datalink.data["direction"]
-		external_pressure_bound = datalink.data["external"]
-		internal_pressure_bound = datalink.data["internal"]
-		datalink.data["_updated"] = FALSE
+	if(datalink["_updated"])
+		on = datalink["power"]
+		pressure_checks = datalink["checks"]
+		pump_direction = datalink["direction"]
+		external_pressure_bound = datalink["external"]
+		internal_pressure_bound = datalink["internal"]
+		// for tgui
+		datalink["excheck"] = pressure_checks&1
+		datalink["incheck"] = pressure_checks&2
+		datalink["intdefault"]	= (internal_pressure_bound == 0)
+		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+		datalink["_updated"] = FALSE
 
 	if(!on || welded)
 		return
@@ -183,86 +186,78 @@
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
-		datalink?.put("direction", pump_direction)
-		datalink?.put("pressure_checks", pressure_checks)
+		datalink["direction"] = pump_direction
+		datalink["pressure_checks"] = pressure_checks
 
 	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
-		datalink?.put("direction", pump_direction)
-		if(datalink)
-			datalink.data["pressure_checks"] = pressure_checks
-			datalink.data["excheck"] = pressure_checks&1
-			datalink.data["incheck"] = pressure_checks&2
+		datalink["direction"] = pump_direction
+		datalink["pressure_checks"] = pressure_checks
+		datalink["excheck"] = pressure_checks&1
+		datalink["incheck"] = pressure_checks&2
 
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
-		datalink?.put("on", on)
+		datalink["on"] = on
 
 	if("power_toggle" in signal.data)
 		on = !on
-		datalink?.put("on", on)
+		datalink["on"] = on
 
 	if("checks" in signal.data)
 		var/old_checks = pressure_checks
 		pressure_checks = text2num(signal.data["checks"])
 		if(pressure_checks != old_checks)
-			if(datalink)
-				datalink.data["pressure_checks"] = pressure_checks
-				datalink.data["excheck"] = pressure_checks&1
-				datalink.data["incheck"] = pressure_checks&2
+			datalink["pressure_checks"] = pressure_checks
+			datalink["excheck"] = pressure_checks&1
+			datalink["incheck"] = pressure_checks&2
 			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("checks_toggle" in signal.data)
 		pressure_checks = (pressure_checks?0:NO_BOUND)
-		datalink?.put("pressure_checks", pressure_checks)
+		datalink["pressure_checks"] = pressure_checks
 
 	if("direction" in signal.data)
 		pump_direction = text2num(signal.data["direction"])
-		datalink?.put("direction", pump_direction)
+		datalink["direction"] = pump_direction
 
 	if("set_internal_pressure" in signal.data)
 		var/old_pressure = internal_pressure_bound
 		internal_pressure_bound = clamp(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
 		if(old_pressure != internal_pressure_bound)
-			if(datalink)
-				datalink.data["intdefault"]	= (internal_pressure_bound == 0)
-				datalink.data["internal"] =  internal_pressure_bound
+			datalink["intdefault"]	= (internal_pressure_bound == 0)
+			datalink["internal"] =  internal_pressure_bound
 			investigate_log(" internal pressure was set to [internal_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("set_external_pressure" in signal.data)
 		var/old_pressure = external_pressure_bound
 		external_pressure_bound = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
 		if(old_pressure != external_pressure_bound)
-			if(datalink)
-				datalink.data["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
-				datalink.data["external"] =  external_pressure_bound
+			datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+			datalink["external"] =  external_pressure_bound
 			investigate_log(" external pressure was set to [external_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("reset_external_pressure" in signal.data)
 		external_pressure_bound = ONE_ATMOSPHERE
-		if(datalink)
-			datalink.data["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
-			datalink.data["external"] =  external_pressure_bound
+		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+		datalink["external"] =  external_pressure_bound
 
 	if("reset_internal_pressure" in signal.data)
 		internal_pressure_bound = 0
-		if(datalink)
-			datalink.data["intdefault"]	= (internal_pressure_bound == 0)
-			datalink.data["internal"] =  internal_pressure_bound
+		datalink["intdefault"]	= (internal_pressure_bound == 0)
+		datalink["internal"] =  internal_pressure_bound
 
 	if("adjust_internal_pressure" in signal.data)
 		internal_pressure_bound = clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(datalink)
-			datalink.data["intdefault"]	= (internal_pressure_bound == 0)
-			datalink.data["internal"] =  internal_pressure_bound
+		datalink["intdefault"]	= (internal_pressure_bound == 0)
+		datalink["internal"] =  internal_pressure_bound
 
 	if("adjust_external_pressure" in signal.data)
 		external_pressure_bound = clamp(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(datalink)
-			datalink.data["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
-			datalink.data["external"] =  external_pressure_bound
+		datalink["extdefault"]	= (external_pressure_bound == ONE_ATMOSPHERE)
+		datalink["external"] =  external_pressure_bound
 
 	if("init" in signal.data)
 		name = signal.data["init"]
