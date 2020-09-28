@@ -15885,8 +15885,6 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/extinguisher,
-/obj/item/extinguisher,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -22380,19 +22378,27 @@
 "aZJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/table,
-/obj/item/clothing/suit/hooded/wintercoat/security,
-/obj/item/clothing/suit/hooded/wintercoat/security,
-/obj/item/clothing/suit/hooded/wintercoat/security{
-	pixel_x = 5
-	},
-/obj/item/clothing/suit/hooded/wintercoat{
-	pixel_x = -5
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/item/clothing/suit/hooded/wintercoat{
+	pixel_x = -5
+	},
+/obj/item/clothing/suit/hooded/wintercoat/security{
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/hooded/wintercoat/security{
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/hooded/wintercoat/security{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -22413,6 +22419,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/tank_holder/anesthetic,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "aZO" = (
@@ -23175,18 +23182,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bbJ" = (
-/obj/structure/rack,
-/obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/tank/internals/anesthetic{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/tank/internals/oxygen/red{
-	pixel_x = 3
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -23194,6 +23189,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/tank_holder/oxygen/red,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
 "bbK" = (
@@ -23567,7 +23563,7 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bcI" = (
-/obj/structure/closet/emcloset,
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bcK" = (
@@ -36142,6 +36138,7 @@
 	pixel_y = 27;
 	receive_ore_updates = 1
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bIv" = (
@@ -39053,12 +39050,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bSt" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/camera{
 	c_tag = "Telecomms Monitoring";
 	dir = 8;
 	network = list("tcomms")
 	},
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bSv" = (
@@ -39881,10 +39878,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bVC" = (
@@ -43479,7 +43476,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "cjV" = (
-/obj/structure/closet/emcloset,
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjX" = (
@@ -49604,6 +49601,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"ffa" = (
+/obj/structure/tank_holder/oxygen/red,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "fie" = (
 /obj/structure/closet/bombcloset,
 /obj/structure/extinguisher_cabinet{
@@ -50326,6 +50327,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"hhu" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "hjZ" = (
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -50368,6 +50373,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"hyy" = (
+/obj/structure/tank_holder/extinguisher{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/ai_monitored/storage/eva)
 "hzQ" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -50728,7 +50739,6 @@
 /area/security/detectives_office)
 "iLK" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/item/extinguisher,
 /obj/item/radio/intercom{
 	pixel_y = 23
 	},
@@ -50836,6 +50846,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
+"jbq" = (
+/obj/structure/cable,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "jcM" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -53899,6 +53914,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/medbay)
+"pYU" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "pZN" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -54603,6 +54622,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"srU" = (
+/obj/structure/tank_holder,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "stP" = (
 /obj/machinery/atmospherics/pipe/multiz/layer2{
 	color = "#ff0000";
@@ -55619,6 +55642,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/aft)
+"vhE" = (
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "vjZ" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/power/apc{
@@ -55810,6 +55837,10 @@
 	},
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"vKc" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "vLr" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
@@ -56483,6 +56514,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"xpA" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "xqe" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -72483,7 +72518,7 @@ aPz
 aPz
 aPz
 aPz
-aSg
+pYU
 aWj
 aXP
 aZr
@@ -82495,7 +82530,7 @@ aAW
 aCa
 aDB
 aDI
-azW
+hyy
 azW
 azW
 ayW
@@ -83523,7 +83558,7 @@ aBq
 apX
 aDE
 aFc
-azW
+hyy
 azW
 aJf
 ayW
@@ -96953,7 +96988,7 @@ bzs
 bAw
 bzs
 bAw
-bAw
+vKc
 bzs
 bAw
 bAw
@@ -98941,7 +98976,7 @@ alP
 anf
 vvP
 alP
-anf
+ffa
 aFm
 aGF
 aIp
@@ -100471,7 +100506,7 @@ boP
 boP
 boP
 alO
-anf
+hhu
 anf
 asy
 anf
@@ -102019,7 +102054,7 @@ anf
 anf
 anf
 alP
-arr
+jbq
 arr
 arr
 arr
@@ -102601,7 +102636,7 @@ pTj
 nyR
 bDb
 kKU
-bAw
+srU
 stP
 xMA
 caK
@@ -103641,7 +103676,7 @@ hBY
 cmr
 tkC
 bYs
-cOe
+vhE
 kZR
 cNW
 cOe
@@ -108002,7 +108037,7 @@ cOe
 cOe
 cfv
 cBL
-cOe
+xpA
 cNW
 boP
 boP
