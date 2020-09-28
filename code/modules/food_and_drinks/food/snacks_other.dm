@@ -95,6 +95,19 @@
 	. = ..()
 	eatverb = pick("bite","nibble","gnaw","gobble","chomp")
 
+
+/obj/item/reagent_containers/food/snacks/caramel_corn
+	name = "caramel corn"
+	desc = "Popping with caramel."
+	icon_state = "caramel_corn"
+	trash = /obj/item/trash/caramel_corn
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 3)
+	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
+	filling_color = "#FFEFD5"
+	tastes = list("popcorn" = 3, "caramel" = 3)
+	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
+
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."
@@ -831,3 +844,35 @@
 	popper.visible_message("<span class='danger'>[popper] steps on \the [src], popping the bag!</span>", "<span class='danger'>You step on \the [src], popping the bag!</span>", "<span class='danger'>You hear a sharp crack!</span>", COMBAT_MESSAGE_RANGE)
 	generate_trash(loc)
 	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/smore
+	name = "s'more"
+	desc = "Toasted marshmallows and gooey chocolate sandwiched between a pair of graham crackers. A campfire classic!"
+	icon_state = "smore"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("chocolate" = 2, "marshmallows" = 2, "crackers" = 2)
+	foodtype = GRAIN | SUGAR
+	value = FOOD_FAST
+
+/obj/item/reagent_containers/food/snacks/smore/examine(mob/user)
+	. = ..()
+	if (prob(10))
+		desc = "Some more what?"
+	else
+		desc = initial(desc)
+
+/obj/item/reagent_containers/food/snacks/cotton_candy
+	name = "Cotton Candy"
+	desc = "Pink strands of sugar on top of a bright looking cone. Perfect for carnivals!"
+	icon_state = "cottoncandy1"
+	trash = /obj/item/reagent_containers/food/drinks/sillycup
+	list_reagents = list(/datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/nutriment = 5)
+	tastes = list("sugar" = 1)
+	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
+
+/obj/item/reagent_containers/food/snacks/cotton_candy/Initialize()
+	. = ..()
+	if(prob(50))
+		desc = "Blue strands of sugar on top of a bright looking cone. Perfect for carnivals!"
+		icon_state = "cottoncandy2"

@@ -33,8 +33,7 @@
 		. = ..()
 
 	if(stat == DEAD)
-		stop_sound_channel(CHANNEL_HEARTBEAT)
-		LoadComponent(/datum/component/rot/corpse)
+		stop_sound_channel(CHANNEL_HEARTBEAT) // i removed the miasma, boys - jerry
 
 	check_cremation()
 

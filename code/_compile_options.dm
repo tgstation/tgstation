@@ -1,6 +1,8 @@
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
+#define EVENTMODE ///Special compiler flag that turns on the event mode
+
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
 // Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
@@ -41,9 +43,15 @@
 #endif							//	1 to use the default behaviour;
 								//	2 for preloading absolutely everything;
 
+//#ifndef EVENTMODE
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "_maps/runtimestation.json"
 #endif
+
+#ifdef EVENTMODE
+#define FORCE_MAP "_maps/fall_festival.json"
+#endif
+//#endif
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 513

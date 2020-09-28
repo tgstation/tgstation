@@ -54,7 +54,9 @@
 	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot_old"
-	density = FALSE
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
 
 /obj/structure/showcase/mecha/marauder
 	name = "combat mech exhibit"
@@ -89,6 +91,13 @@
 /obj/structure/showcase/perfect_employee
 	name = "'Perfect Man' employee exhibit"
 	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal."
+
+/obj/structure/showcase/yendor
+	name = "wizard of yendor showcase"
+	desc = "A historical figure of great importance to wizards (of the wizard federation). He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "nim"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/showcase/machinery/tv
 	name = "\improper Nanotrasen corporate newsfeed"

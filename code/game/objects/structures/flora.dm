@@ -131,6 +131,14 @@
 	pixel_x = -48
 	pixel_y = -20
 
+/obj/structure/flora/tree/jungle/fall
+	name = "tree"
+	icon_state = "tree"
+	desc = "It's seriously hampering your view of the festivities."
+	icon = 'icons/obj/flora/falljungletrees.dmi'
+	pixel_x = -48
+	pixel_y = -20
+
 /obj/structure/flora/tree/jungle/Initialize()
 	icon_state = "[icon_state][rand(1, 6)]"
 	. = ..()

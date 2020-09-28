@@ -64,11 +64,10 @@
 	else
 		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
 
-/obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
+/obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE) // i removed the miasma, boys - jerry
 	if(rename)
 		name = "rotting [initial(name)]"
 		desc += " They smell terrible."
-	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return

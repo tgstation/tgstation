@@ -8,10 +8,10 @@
 	hitsound = 'sound/effects/curse4.ogg'
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
-	damage = 10
-	paralyze = 20
+	damage = 0
+	paralyze = 0
 	speed = 2
-	range = 16
+	range = 10
 	var/datum/beam/arm
 	var/handedness = 0
 
@@ -26,7 +26,7 @@
 
 /obj/projectile/curse_hand/fire(setAngle)
 	if(starting)
-		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = 10, beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
 /obj/projectile/curse_hand/prehit(atom/target)
@@ -48,7 +48,7 @@
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
 		qdel(G)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
-	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
+	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = 10, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
 	for(var/b in D.elements)
 		var/obj/effect/ebeam/B = b
 		animate(B, alpha = 0, time = 32)

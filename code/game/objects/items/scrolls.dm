@@ -3,7 +3,6 @@
 	desc = "A scroll for moving around."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
-	worn_icon_state = "scroll"
 	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "paper"
@@ -69,6 +68,37 @@
 
 	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		smoke.start()
+		uses--
+	else
+		to_chat(user, "The spell matrix was disrupted by something near the destination.")
+
+/obj/item/teleportation_scroll/no_smoke
+	uses = 6
+
+/obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user)
+
+	var/A
+	var/list/acceptable_locations = GLOB.teleportlocs
+	for(var/L in acceptable_locations)
+		var/area/T = acceptable_locations[L]
+		if(istype(T, /area/security) || istype(T, /area/shuttle/arrival) || istype(T, /area/crew_quarters/dorms)) // areas you aren't allowed to teleport to
+			acceptable_locations -= L
+
+	A = input(user, "Area to jump to", "*citrus laugh*", A) as null|anything in acceptable_locations
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+		return
+	var/area/thearea = GLOB.teleportlocs[A]
+
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.is_blocked_turf())
+			L += T
+
+	if(!L.len)
+		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+		return
+
+	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		uses--
 	else
 		to_chat(user, "The spell matrix was disrupted by something near the destination.")
