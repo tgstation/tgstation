@@ -71,10 +71,10 @@
 /datum/crafting_recipe/food/wrap
 	name = "Wrap"
 	reqs = list(/datum/reagent/consumable/soysauce = 10,
-		/obj/item/reagent_containers/food/snacks/friedegg = 1,
+		/obj/item/food/friedegg = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
-	result = /obj/item/reagent_containers/food/snacks/eggwrap
+	result = /obj/item/food/eggwrap
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/beans
@@ -92,7 +92,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/reagent_containers/food/snacks/grown/eggplant = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/eggplantparm
+	result = /obj/item/food/eggplantparm
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/baguette

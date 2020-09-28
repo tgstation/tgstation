@@ -2010,7 +2010,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
 "fR" = (
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
+/obj/item/food/egg/rainbow{
 	desc = "I bet you think you're pretty clever... well you are.";
 	name = "easter egg"
 	},
@@ -15139,7 +15139,7 @@
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "HG" = (
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
+/obj/item/food/egg/rainbow{
 	desc = "I bet you think you're pretty clever... well you are.";
 	name = "easter egg"
 	},

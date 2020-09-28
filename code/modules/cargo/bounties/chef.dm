@@ -94,7 +94,7 @@
 	description = "A famous singer will be arriving at CentCom, and their contract demands that they only be served Eggplant Parmigiana. Ship some, please!"
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/eggplantparm)
+	wanted_types = list(/obj/item/food/eggplantparm)
 
 /datum/bounty/item/chef/muffin
 	name = "Muffins"

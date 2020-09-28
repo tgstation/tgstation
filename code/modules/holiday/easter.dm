@@ -42,7 +42,7 @@
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
-	egg_type = /obj/item/reagent_containers/food/snacks/egg/loaded
+	egg_type = /obj/item/food/egg/loaded
 	food_type = /obj/item/reagent_containers/food/snacks/grown/carrot
 	eggsleft = 10
 	eggsFertile = FALSE
@@ -69,7 +69,7 @@
 /obj/item/storage/basket/easter/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg, /obj/item/reagent_containers/food/snacks/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
+	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
 
 /obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
@@ -110,18 +110,18 @@
 	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
-/obj/item/reagent_containers/food/snacks/egg
+/obj/item/food/egg
 	var/containsPrize = FALSE
 
-/obj/item/reagent_containers/food/snacks/egg/loaded
+/obj/item/food/egg/loaded
 	containsPrize = TRUE
 
-/obj/item/reagent_containers/food/snacks/egg/loaded/Initialize()
+/obj/item/food/egg/loaded/Initialize()
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 
-/obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
+/obj/item/food/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/storage/backpack/satchel/bunnysatchel,
@@ -154,9 +154,9 @@
 	/obj/item/toy/windup_toolbox,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
-	new/obj/item/reagent_containers/food/snacks/chocolateegg(where)
+	new/obj/item/food/chocolateegg(where)
 
-/obj/item/reagent_containers/food/snacks/egg/attack_self(mob/user)
+/obj/item/food/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
 		to_chat(user, "<span class='notice'>You unwrap [src] and find a prize inside!</span>")

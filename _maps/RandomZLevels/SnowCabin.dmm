@@ -2538,7 +2538,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
+/obj/item/food/egg/rainbow{
 	anchored = 0;
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"

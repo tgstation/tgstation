@@ -169,7 +169,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aE" = (
-/obj/item/reagent_containers/food/snacks/benedict{
+/obj/item/food/benedict{
 	pixel_y = 1
 	},
 /obj/structure/table/wood/fancy/black,
@@ -183,7 +183,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aG" = (
-/obj/item/reagent_containers/food/snacks/eggplantparm{
+/obj/item/food/eggplantparm{
 	pixel_y = 3
 	},
 /obj/structure/table/wood/fancy/black,

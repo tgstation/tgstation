@@ -352,7 +352,7 @@
 /datum/crafting_recipe/food/mcguffin
 	name = "McGuffin"
 	reqs = list(
-			/obj/item/reagent_containers/food/snacks/friedegg = 1,
+			/obj/item/food/friedegg = 1,
 			/obj/item/reagent_containers/food/snacks/meat/bacon = 2,
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)

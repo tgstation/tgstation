@@ -14480,7 +14480,7 @@
 /area/storage/art)
 "aLA" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/friedegg,
+/obj/item/food/friedegg,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria)

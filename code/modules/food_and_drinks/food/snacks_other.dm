@@ -207,7 +207,7 @@
 	foodtype = TOXIC | SUGAR
 	value = FOOD_EXOTIC
 
-/obj/item/reagent_containers/food/snacks/eggwrap
+/obj/item/food/eggwrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "eggwrap"
@@ -283,7 +283,7 @@
 	foodtype = JUNKFOOD | SUGAR
 	value = FOOD_RARE
 
-/obj/item/reagent_containers/food/snacks/eggplantparm
+/obj/item/food/eggplantparm
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
