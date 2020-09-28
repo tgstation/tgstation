@@ -20880,6 +20880,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/computer/card/minor/rd{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
 "aWu" = (
@@ -21877,10 +21880,9 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "aYy" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/rack,
+/obj/item/crowbar/red,
+/obj/item/storage/box/lights/tubes,
 /obj/item/crowbar/red,
 /turf/open/transparent/glass/reinforced,
 /area/science/xenobiology)
@@ -36148,7 +36150,9 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/cytology,
+/obj/machinery/shower{
+	pixel_y = 16
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bIw" = (
@@ -49548,12 +49552,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
-"eKi" = (
-/obj/machinery/computer/card/minor/rd{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/heads/hor)
 "eNr" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -50050,14 +50048,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/lawoffice)
-"grk" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/transparent/glass/reinforced,
-/area/science/xenobiology)
 "gsz" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room South";
@@ -50312,8 +50302,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "heL" = (
-/obj/structure/rack,
-/obj/item/storage/box/lights/tubes,
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/transparent/glass/reinforced,
 /area/science/xenobiology)
 "hgK" = (
@@ -50727,10 +50716,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "iLK" = (
-/obj/structure/closet/l3closet/scientist,
-/obj/item/extinguisher,
-/obj/item/radio/intercom{
-	pixel_y = 23
+/obj/structure/sink{
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -54664,12 +54651,18 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "szF" = (
-/obj/structure/railing,
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -31
 	},
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/closet/l3closet/scientist,
+/obj/item/extinguisher,
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "sBI" = (
 /obj/structure/window/reinforced{
@@ -56538,9 +56531,6 @@
 "xzr" = (
 /obj/item/radio/intercom{
 	pixel_x = -25
-	},
-/obj/machinery/shower{
-	dir = 4
 	},
 /turf/open/transparent/glass/reinforced,
 /area/science/xenobiology)
@@ -99506,7 +99496,7 @@ nka
 bDb
 lyC
 xzr
-grk
+bRT
 jni
 nka
 hDb
@@ -102325,7 +102315,7 @@ mPs
 bDf
 bEc
 bGY
-eKi
+bEc
 rRX
 bvK
 lRS
