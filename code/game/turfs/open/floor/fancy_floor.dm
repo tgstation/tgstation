@@ -69,7 +69,7 @@
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
-	icon_state = "grass"
+	icon_state = "grass0"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
@@ -84,7 +84,10 @@
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
-	update_icon()
+	spawniconchange()
+
+/turf/open/floor/grass/proc/spawniconchange()
+	icon_state = "grass[rand(0,3)]"
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if((C.tool_behaviour == TOOL_SHOVEL) && params)
@@ -98,11 +101,14 @@
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
 	desc = "Something about this grass makes you want to frolic. Or get high."
-	icon_state = "fairygrass"
+	icon_state = "fairygrass0"
 	floor_tile = /obj/item/stack/tile/fairygrass
 	light_range = 2
 	light_power = 0.80
 	light_color = COLOR_BLUE_LIGHT
+
+/turf/open/floor/grass/fairy/spawniconchange()
+	icon_state = "fairygrass[rand(0,3)]"
 
 /turf/open/floor/grass/snow
 	gender = PLURAL
@@ -122,6 +128,9 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/grass/snow/spawniconchange()
+	return
+
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
@@ -137,8 +146,7 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	slowdown = 0
 
-/turf/open/floor/grass/snow/basalt/Initialize()
-	. = ..()
+/turf/open/floor/grass/snow/basalt/spawniconchange()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -162,12 +170,10 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/grass/fakebasalt/Initialize()
-	. = ..()
+/turf/open/floor/grass/fakebasalt/spawniconchange()
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
-
 
 /turf/open/floor/carpet
 	name = "carpet"

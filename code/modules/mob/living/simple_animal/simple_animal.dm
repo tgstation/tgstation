@@ -16,7 +16,7 @@
 	var/flip_on_death = FALSE
 
 	var/list/speak = list()
-	///Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
+	///Emotes while speaking IE: `Ian [emote], [text]` -- `Ian barks, "WOOF!".` Spoken text is generated from the speak variable.
 	var/list/speak_emote = list()
 	var/speak_chance = 0
 	///Hearable emotes
@@ -461,7 +461,7 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/ExtinguishMob()
+/mob/living/simple_animal/extinguish_mob()
 	return
 
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)

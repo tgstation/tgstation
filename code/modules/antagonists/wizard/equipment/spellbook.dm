@@ -269,6 +269,11 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/bees
+	name = "Lesser Summon Bees"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	category = "Defensive"
+
 
 /datum/spellbook_entry/item
 	name = "Buy Item"

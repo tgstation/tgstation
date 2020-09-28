@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/zombie/Initialize(mapload)
 	. = ..()
-	setup_visuals()
+	INVOKE_ASYNC(src, .proc/setup_visuals)
 
 /mob/living/simple_animal/hostile/zombie/proc/setup_visuals()
 	var/datum/preferences/dummy_prefs = new

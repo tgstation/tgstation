@@ -82,7 +82,8 @@
 	return data
 
 /obj/machinery/photocopier/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -98,10 +99,6 @@
 				// Basic paper
 				if(istype(paper_copy, /obj/item/paper))
 					do_copy_loop(CALLBACK(src, .proc/make_paper_copy), usr)
-					return TRUE
-				// Devil contract paper.
-				if(istype(paper_copy, /obj/item/paper/contract/employment))
-					do_copy_loop(CALLBACK(src, .proc/make_devil_paper_copy), usr)
 					return TRUE
 			// Copying photo.
 			if(photo_copy)
@@ -342,15 +339,10 @@
 
 	else if(istype(O, /obj/item/paper))
 		if(copier_empty())
-			if(istype(O, /obj/item/paper/contract/infernal))
-				to_chat(user, "<span class='warning'>[src] smokes, smelling of brimstone!</span>")
-				resistance_flags |= FLAMMABLE
-				fire_act()
-			else
-				if(!user.temporarilyRemoveItemFromInventory(O))
-					return
-				paper_copy = O
-				do_insertion(O, user)
+			if(!user.temporarilyRemoveItemFromInventory(O))
+				return
+			paper_copy = O
+			do_insertion(O, user)
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 

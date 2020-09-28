@@ -151,31 +151,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
-	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-
-		if(!acid_level)
-			SSacid.processing[src] = src
-			update_icon()
-		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
-		if(acid_level < acid_cap)
-			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
-		return 1
-
-///the proc called by the acid subsystem to process the acid that's on the obj
-/obj/proc/acid_processing()
-	. = TRUE
-	if(!(resistance_flags & ACID_PROOF))
-		if(prob(33))
-			playsound(loc, 'sound/items/welder.ogg', 150, TRUE)
-		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, ACID, 0)
-
-	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
-	if(!acid_level)
+	. = ..()
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
 		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	return TRUE
 
 ///called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	SSacid.processing -= src
 	deconstruct(FALSE)
 
 //// FIRE

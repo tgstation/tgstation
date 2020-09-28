@@ -9,12 +9,14 @@
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
-
+	if(L.has_quirk(/datum/quirk/nonviolent))
+		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner

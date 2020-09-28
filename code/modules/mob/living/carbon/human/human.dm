@@ -10,7 +10,7 @@
 	setup_human_dna()
 
 	if(dna.species)
-		set_species(dna.species.type)
+		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -40,6 +40,12 @@
 	GLOB.human_list -= src
 	return ..()
 
+/mob/living/carbon/human/ZImpactDamage(turf/T, levels)
+	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1) // falling off one level
+		return ..()
+	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
+					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
+	Knockdown(levels * 50)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -533,12 +539,16 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
-	. = 1 // Default to returning true.
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, ignore_species = FALSE)
+	. = TRUE // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-		. = 0
+	// we may choose to ignore species trait pierce immunity in case we still want to check skellies for thick clothing without insta failing them (wounds)
+	if(ignore_species)
+		if(HAS_TRAIT_NOT_FROM(src, TRAIT_PIERCEIMMUNE, SPECIES_TRAIT))
+			. = FALSE
+	else if(HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
+		. = FALSE
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if (!penetrate_thick)
@@ -546,12 +556,12 @@
 			if(head && istype(head, /obj/item/clothing))
 				var/obj/item/clothing/CH = head
 				if (CH.clothing_flags & THICKMATERIAL)
-					. = 0
+					. = FALSE
 		else
 			if(wear_suit && istype(wear_suit, /obj/item/clothing))
 				var/obj/item/clothing/CS = wear_suit
 				if (CS.clothing_flags & THICKMATERIAL)
-					. = 0
+					. = FALSE
 	if(!. && error_msg && user)
 		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
@@ -918,11 +928,6 @@
 			dna.remove_mutation(HM.name)
 	return ..()
 
-/mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
-	. = ..()
-	if (dna && dna.species)
-		. += dna.species.check_species_weakness(weapon, attacker)
-
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
@@ -1196,7 +1201,7 @@
 
 /mob/living/carbon/human/species/Initialize()
 	. = ..()
-	set_species(race)
+	INVOKE_ASYNC(src, .proc/set_species, race)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

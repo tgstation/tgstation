@@ -3886,7 +3886,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 4;
 	req_access = null
 	},

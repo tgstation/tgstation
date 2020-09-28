@@ -34,16 +34,6 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LIST(diseases)
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(FALSE)
-		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
-	ownedSoullinks = null
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(FALSE)
-		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
-	sharedSoullinks = null
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
@@ -385,6 +375,7 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
+		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
 		return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -620,7 +611,7 @@
 	cure_husk()
 	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
-	ExtinguishMob()
+	extinguish_mob()
 	fire_stacks = 0
 	set_confusion(0)
 	dizziness = 0
@@ -719,7 +710,7 @@
 		return
 	..()
 
-///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
 /mob/living/proc/bleedDragAmount()
 	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 	return max(1, brute_ratio * 2)
@@ -1038,33 +1029,6 @@
 /mob/living/carbon/alien/update_stamina()
 	return
 
-/mob/living/proc/owns_soul()
-	if(mind)
-		return mind.soulOwner == mind
-	return TRUE
-
-/mob/living/proc/return_soul()
-	hellbound = 0
-	if(mind)
-		var/datum/antagonist/devil/devilInfo = mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
-		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
-			devilInfo.remove_soul(mind)
-		mind.soulOwner = mind
-
-/mob/living/proc/has_bane(banetype)
-	var/datum/antagonist/devil/devilInfo = is_devil(src)
-	return devilInfo && banetype == devilInfo.bane
-
-/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(mind && mind.has_antag_datum(/datum/antagonist/devil))
-		return check_devil_bane_multiplier(weapon, attacker)
-	return 1 //This is not a boolean, it's the multiplier for the damage the weapon does.
-
-/mob/living/proc/check_acedia()
-	if(mind && mind.has_objective(/datum/objective/sintouched/acedia))
-		return TRUE
-	return FALSE
-
 /mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	stop_pulling()
 	. = ..()
@@ -1120,7 +1084,7 @@
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
-		on_fire = 1
+		on_fire = TRUE
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
@@ -1130,21 +1094,48 @@
 		return TRUE
 	return FALSE
 
-/mob/living/proc/ExtinguishMob()
-	if(on_fire)
-		on_fire = FALSE
-		fire_stacks = 0
-		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
-			qdel(F)
-		clear_alert("fire")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
-		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
-		update_fire()
+/**
+ * Extinguish all fire on the mob
+ *
+ * This removes all fire stacks, fire effects, alerts, and moods
+ * Signals the extinguishing.
+ */
+/mob/living/proc/extinguish_mob()
+	if(!on_fire)
+		return
+	on_fire = FALSE
+	fire_stacks = 0 //If it is not called from set_fire_stacks()
+	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
+		qdel(F)
+	clear_alert("fire")
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
+	update_fire()
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
-	if(on_fire && fire_stacks <= 0)
-		ExtinguishMob()
+/**
+ * Adjust the amount of fire stacks on a mob
+ *
+ * This modifies the fire stacks on a mob.
+ *
+ * Vars:
+ * * add_fire_stacks: int The amount to modify the fire stacks
+ */
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks)
+	set_fire_stacks(fire_stacks + add_fire_stacks)
+
+/**
+ * Set the fire stacks on a mob
+ *
+ * This sets the fire stacks on a mob, stacks are clamped between -20 and 20.
+ * If the fire stacks are reduced to 0 then we will extinguish the mob.
+ *
+ * Vars:
+ * * stacks: int The amount to set fire_stacks to
+ */
+/mob/living/proc/set_fire_stacks(stacks)
+	fire_stacks = clamp(stacks, -20, 20)
+	if(fire_stacks <= 0)
+		extinguish_mob()
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
@@ -1155,17 +1146,17 @@
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
 			var/firesplit = (fire_stacks + L.fire_stacks)/2
-			fire_stacks = firesplit
-			L.fire_stacks = firesplit
+			set_fire_stacks(firesplit)
+			L.set_fire_stacks(firesplit)
 		else // If they were not
-			fire_stacks /= 2
-			L.fire_stacks += fire_stacks
+			set_fire_stacks(fire_stacks / 2)
+			L.adjust_fire_stacks(fire_stacks)
 			if(L.IgniteMob()) // Ignite them
 				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	else if(L.on_fire) // If they were on fire and we were not
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
+		L.set_fire_stacks(L.fire_stacks / 2)
+		adjust_fire_stacks(L.fire_stacks)
 		IgniteMob() // Ignite us
 
 //Mobs on Fire end
@@ -1181,11 +1172,6 @@
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
 	C.Paralyze(40)
-
-/mob/living/ConveyorMove()
-	if((movement_type & FLYING) && !stat)
-		return
-	..()
 
 /mob/living/can_be_pulled()
 	return ..() && !(buckled && buckled.buckle_prevents_pull)
@@ -1739,3 +1725,23 @@
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()
 	return FALSE
+
+/// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
+/mob/living/proc/set_safe_hunger_level()
+	// Nutrition reset and alert clearing.
+	nutrition = NUTRITION_LEVEL_FED
+	clear_alert("nutrition")
+	satiety = 0
+
+	// Trait removal if obese
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
+		if(overeatduration >= 100)
+			to_chat(src, "<span class='notice'>Your transformation restores your body's natural fitness!</span>")
+
+		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+		remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
+		update_inv_w_uniform()
+		update_inv_wear_suit()
+
+	// Reset overeat duration.
+	overeatduration = 0

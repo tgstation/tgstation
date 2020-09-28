@@ -42,8 +42,8 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/airless,
@@ -69,15 +69,15 @@
 /area/shuttle/abandoned)
 "am" = (
 /obj/structure/shuttle/engine/propulsion/right{
-	icon_state = "propulsion_r";
-	dir = 1
+	dir = 1;
+	icon_state = "propulsion_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
-	dir = 1
+	dir = 1;
+	icon_state = "propulsion_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -154,8 +154,8 @@
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil,
 /obj/machinery/light/broken{
-	icon_state = "tube-broken";
-	dir = 4
+	dir = 4;
+	icon_state = "tube-broken"
 	},
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
@@ -332,8 +332,8 @@
 "ba" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	icon_state = "paperstack";
-	dir = 4
+	dir = 4;
+	icon_state = "paperstack"
 	},
 /obj/item/folder/yellow,
 /turf/open/floor/plasteel/airless,
@@ -396,9 +396,6 @@
 	dir = 4
 	},
 /obj/machinery/cell_charger,
-/obj/item/gps{
-	gpstag = "whiteship"
-	},
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "bi" = (
@@ -415,8 +412,8 @@
 "bk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	icon_state = "paperstack";
-	dir = 1
+	dir = 1;
+	icon_state = "paperstack"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -438,8 +435,8 @@
 "bm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
-	icon_state = "paperstack";
-	dir = 8
+	dir = 8;
+	icon_state = "paperstack"
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -482,8 +479,8 @@
 /area/shuttle/abandoned)
 "br" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	icon_state = "computer";
-	dir = 1
+	dir = 1;
+	icon_state = "computer"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/disk/holodisk/donutstation/whiteship,
@@ -494,7 +491,7 @@
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "bs" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,

@@ -26,9 +26,13 @@
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
-	icon_state = "grass"
+	icon_state = "grass0"
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/grass/Initialize()
+	. = ..()
+	icon_state = "grass[rand(0,3)]"
 
 /turf/open/floor/holofloor/beach
 	gender = PLURAL

@@ -173,6 +173,10 @@
 
 	var/listofitems = list()
 	for (var/I in src)
+		// We do not vend our own components.
+		if(I in component_parts)
+			continue
+
 		var/atom/movable/O = I
 		if (!QDELETED(O))
 			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
@@ -213,6 +217,8 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
+						if(O in component_parts)
+							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 						dispense(O, usr)
 						break
 				if (visible_contents)
@@ -223,6 +229,8 @@
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
+					if(O in component_parts)
+						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 					dispense(O, usr)
 					desired--
 			if (visible_contents)
@@ -248,9 +256,16 @@
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
 	. = ..()
-	if(component_parts && component_parts.len)
-		component_parts.Cut()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts
+
 	component_parts = null
+	circuit = null
+
+	QDEL_LIST(old_parts)
+	RefreshParts()
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
@@ -422,14 +437,14 @@
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
+		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
 
-/obj/machinery/smartfridge/organ/process()
+/obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/organ in contents)
 		var/obj/item/organ/O = organ
 		if(!istype(O))
 			return
-		O.applyOrganDamage(-repair_rate)
+		O.applyOrganDamage(-repair_rate * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()

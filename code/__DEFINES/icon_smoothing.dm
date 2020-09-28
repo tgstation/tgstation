@@ -29,10 +29,11 @@
 
 #define SMOOTH_GROUP_OPEN_FLOOR S_TURF(4)				///turf/open/floor
 
-#define SMOOTH_GROUP_FLOOR_ASH S_TURF(5)				///turf/open/floor/plating/ashplanet/ash
-#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(6)			///turf/open/floor/plating/ashplanet/rocky
-#define SMOOTH_GROUP_FLOOR_ICE S_TURF(7)				///turf/open/floor/plating/ice
-#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(8)				///turf/open/floor/plating/snowed
+#define SMOOTH_GROUP_FLOOR_GRASS S_TURF(5)				///turf/open/floor/plating/grass
+#define SMOOTH_GROUP_FLOOR_ASH S_TURF(6)				///turf/open/floor/plating/ashplanet/ash
+#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(7)			///turf/open/floor/plating/ashplanet/rocky
+#define SMOOTH_GROUP_FLOOR_ICE S_TURF(8)				///turf/open/floor/plating/ice
+#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(9)				///turf/open/floor/plating/snowed
 
 #define SMOOTH_GROUP_CARPET S_TURF(10)					///turf/open/floor/carpet
 #define SMOOTH_GROUP_CARPET_BLACK S_TURF(11)			///turf/open/floor/carpet/black

@@ -15,7 +15,8 @@
 		ui.open()
 
 /datum/orbit_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if (..())
+	. = ..()
+	if(.)
 		return
 
 	if (action == "orbit")
@@ -46,13 +47,16 @@
 		var/mob/M = poi
 		if (istype(M))
 			if (isobserver(M))
+				var/number_of_orbiters = length(M.get_all_orbiters())
+				if (number_of_orbiters)
+					serialized["orbiters"] = number_of_orbiters
 				ghosts += list(serialized)
 			else if (M.stat == DEAD)
 				dead += list(serialized)
 			else if (M.mind == null)
 				npcs += list(serialized)
 			else
-				var/number_of_orbiters = M.orbiters?.orbiters?.len
+				var/number_of_orbiters = length(M.get_all_orbiters())
 				if (number_of_orbiters)
 					serialized["orbiters"] = number_of_orbiters
 
@@ -80,8 +84,7 @@
 	data["npcs"] = npcs
 
 	return data
-	
+
 /datum/orbit_menu/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/orbit)
-

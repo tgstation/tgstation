@@ -87,11 +87,11 @@
 		return ..()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process()
+/obj/machinery/modular_computer/process(delta_time)
 	if(cpu)
 		// Keep names in sync.
 		cpu.name = name
-		cpu.process()
+		cpu.process(delta_time)
 
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
@@ -110,6 +110,10 @@
 		update_icon()
 		return
 	. = ..()
+
+/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	if(cpu)
+		return cpu.screwdriver_act(user, tool)
 
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))

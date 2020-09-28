@@ -201,7 +201,8 @@
 	return data
 
 /obj/item/assembly/infra/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

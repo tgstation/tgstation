@@ -132,7 +132,7 @@
 	return
 
 /obj/machinery/gibber/proc/go_out()
-	dropContents()
+	drop_stored_items()
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)

@@ -44,10 +44,12 @@
 		M.visible_message("<span class='danger'>[user] fed [M] the contents of [src].</span>", \
 			"<span class='userdanger'>[user] fed you the contents of [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
+
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	checkLiked(fraction, M)
 	reagents.trans_to(M, gulp_size, transfered_by = user, methods = INGEST)
+	checkLiked(fraction, M)
+
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(iscarbon(M))
 		var/mob/living/carbon/carbon_drinker = M

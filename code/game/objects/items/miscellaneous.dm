@@ -51,10 +51,9 @@
 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	var/obj/new_item = new choice()
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	new choice(pod)
 	pod.explosionSize = list(0,0,0,0)
-	new_item.forceMove(pod)
 	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -63,6 +62,172 @@
 	to_chat(M, msg)
 
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
+
+/obj/item/choice_beacon/ingredient
+	name = "ingredient delivery beacon"
+	desc = "Summon a box of ingredients to help you get started cooking."
+	icon_state = "gangtool-white"
+
+/obj/item/choice_beacon/ingredient/generate_display_names()
+	var/list/ingredients = list()
+	for(var/V in subtypesof(/obj/item/storage/box/ingredients))
+		var/obj/item/storage/box/ingredients/A = V
+		ingredients[initial(A.theme_name)] = A
+	return ingredients
+
+/obj/item/choice_beacon/ingredient/spawn_option(obj/choice,mob/living/M)
+	new choice(get_turf(M))
+	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!</b> Message ends.\"</span>")
+
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
+	name = "ingredients box"
+	illustration = "fruit"
+	var/theme_name
+
+/obj/item/storage/box/ingredients/Initialize()
+	. = ..()
+	if(theme_name)
+		name = "[name] ([theme_name])"
+		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
+		inhand_icon_state = "syringe_kit"
+
+/obj/item/storage/box/ingredients/wildcard
+	theme_name = "wildcard"
+
+/obj/item/storage/box/ingredients/wildcard/PopulateContents()
+	for(var/i in 1 to 7)
+		var/randomFood = pick(/obj/item/reagent_containers/food/snacks/grown/chili,
+							  /obj/item/reagent_containers/food/snacks/grown/tomato,
+							  /obj/item/reagent_containers/food/snacks/grown/carrot,
+							  /obj/item/reagent_containers/food/snacks/grown/potato,
+							  /obj/item/reagent_containers/food/snacks/grown/potato/sweet,
+							  /obj/item/reagent_containers/food/snacks/grown/apple,
+							  /obj/item/reagent_containers/food/snacks/chocolatebar,
+							  /obj/item/reagent_containers/food/snacks/grown/cherries,
+							  /obj/item/reagent_containers/food/snacks/grown/banana,
+							  /obj/item/reagent_containers/food/snacks/grown/cabbage,
+							  /obj/item/reagent_containers/food/snacks/grown/soybeans,
+							  /obj/item/reagent_containers/food/snacks/grown/corn,
+							  /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+							  /obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle)
+		new randomFood(src)
+
+/obj/item/storage/box/ingredients/fiesta
+	theme_name = "fiesta"
+
+/obj/item/storage/box/ingredients/fiesta/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/tortilla(src)
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
+		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/italian
+	theme_name = "italian"
+
+/obj/item/storage/box/ingredients/italian/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/reagent_containers/food/snacks/meatball(src)
+	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
+
+/obj/item/storage/box/ingredients/vegetarian
+	theme_name = "vegetarian"
+
+/obj/item/storage/box/ingredients/vegetarian/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/carrot(src)
+	new /obj/item/reagent_containers/food/snacks/grown/eggplant(src)
+	new /obj/item/reagent_containers/food/snacks/grown/potato(src)
+	new /obj/item/reagent_containers/food/snacks/grown/apple(src)
+	new /obj/item/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
+
+/obj/item/storage/box/ingredients/american
+	theme_name = "american"
+
+/obj/item/storage/box/ingredients/american/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
+		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
+		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
+
+/obj/item/storage/box/ingredients/fruity
+	theme_name = "fruity"
+
+/obj/item/storage/box/ingredients/fruity/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/apple(src)
+		new /obj/item/reagent_containers/food/snacks/grown/citrus/orange(src)
+	new /obj/item/reagent_containers/food/snacks/grown/citrus/lemon(src)
+	new /obj/item/reagent_containers/food/snacks/grown/citrus/lime(src)
+	new /obj/item/reagent_containers/food/snacks/grown/watermelon(src)
+
+/obj/item/storage/box/ingredients/sweets
+	theme_name = "sweets"
+
+/obj/item/storage/box/ingredients/sweets/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/cherries(src)
+		new /obj/item/reagent_containers/food/snacks/grown/banana(src)
+	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/reagent_containers/food/snacks/grown/apple(src)
+
+/obj/item/storage/box/ingredients/delights
+	theme_name = "delights"
+
+/obj/item/storage/box/ingredients/delights/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/grown/potato/sweet(src)
+		new /obj/item/reagent_containers/food/snacks/grown/bluecherries(src)
+	new /obj/item/reagent_containers/food/snacks/grown/vanillapod(src)
+	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/reagent_containers/food/snacks/grown/berries(src)
+
+/obj/item/storage/box/ingredients/grains
+	theme_name = "grains"
+
+/obj/item/storage/box/ingredients/grains/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/grown/oat(src)
+	new /obj/item/reagent_containers/food/snacks/grown/wheat(src)
+	new /obj/item/reagent_containers/food/snacks/grown/cocoapod(src)
+	new /obj/item/reagent_containers/honeycomb(src)
+	new /obj/item/seeds/poppy(src)
+
+/obj/item/storage/box/ingredients/carnivore
+	theme_name = "carnivore"
+
+/obj/item/storage/box/ingredients/carnivore/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/meat/slab/bear(src)
+	new /obj/item/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/reagent_containers/food/snacks/spidereggs(src)
+	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
+	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
+
+/obj/item/storage/box/ingredients/exotic
+	theme_name = "exotic"
+
+/obj/item/storage/box/ingredients/exotic/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
+		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
+	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+
+/obj/item/storage/box/ingredients/random
+	theme_name = "random"
+	desc = "This box should not exist, contact the proper authorities."
+
+/obj/item/storage/box/ingredients/random/Initialize()
+	.=..()
+	var/chosen_box = pick(subtypesof(/obj/item/storage/box/ingredients) - /obj/item/storage/box/ingredients/random)
+	new chosen_box(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
@@ -77,6 +242,10 @@
 			var/atom/A = V
 			hero_item_list[initial(A.name)] = A
 	return hero_item_list
+
+/obj/item/choice_beacon/hero/spawn_option(obj/choice,mob/living/M)
+	new choice(get_turf(M))
+	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from Sophronia Broadcasting. Message as follows: <b>Please enjoy your Sophronia Broadcasting's 'History Comes Alive branded' Costume Set, exactly as shown in the hit show!</b> Message ends.\"</span>")
 
 
 /obj/item/storage/box/hero

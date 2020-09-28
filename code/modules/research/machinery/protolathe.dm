@@ -19,7 +19,3 @@
 								)
 	production_animation = "protolathe_n"
 	allowed_buildtypes = PROTOLATHE
-
-/obj/machinery/rnd/production/protolathe/disconnect_console()
-	linked_console.linked_lathe = null
-	..()

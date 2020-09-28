@@ -1,3 +1,8 @@
+
+//Booleans in arguments are confusing, so I made them defines.
+#define LOCKED 1
+#define UNLOCKED 0
+
 ///Collect and command
 /datum/lift_master
 	var/list/lift_platforms
@@ -43,18 +48,33 @@
 					possible_expansions |= lift_platform
 			possible_expansions -= borderline
 
-///Move all platforms together
+/**
+  * Moves the lift UP or DOWN, this is what users invoke with their hand.
+  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+  * Arguments:
+  * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
+  * user - Whomever made the lift movement.
+  */
 /datum/lift_master/proc/MoveLift(going, mob/user)
+	set_controls(LOCKED)
 	for(var/p in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = p
 		lift_platform.travel(going)
+	set_controls(UNLOCKED)
 
+/**
+  * Moves the lift, this is what users invoke with their hand.
+  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
+  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
+  */
 /datum/lift_master/proc/MoveLiftHorizontal(going, z)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 
+	set_controls(LOCKED)
 	for(var/p in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = p
 		max_x = max(max_x, lift_platform.x)
@@ -89,15 +109,28 @@
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 					lift_platform.travel(going)
+	set_controls(UNLOCKED)
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
-	for(var/lift_platform in lift_platforms)
+	for(var/l in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = l
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
-		if(!T)// || !isopenturf(T))
+		if(!T)//the edges of multi-z maps
+			return FALSE
+		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/transparent/openspace))
 			return FALSE
 	return TRUE
 
+/**
+  * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
+  */
+/datum/lift_master/proc/set_controls(state)
+	for(var/l in lift_platforms)
+		var/obj/structure/industrial_lift/lift_platform = l
+		lift_platform.controls_locked = state
+
+GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift
 	name = "lift platform"
 	desc = "A lightweight lift platform. It moves up and down."
@@ -114,12 +147,18 @@
 	canSmoothWith = null
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
+	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
+	var/pass_through_floors = FALSE //if true, the elevator works through floors
+	var/controls_locked = FALSE //if true, the lift cannot be manually moved.
 	var/list/atom/movable/lift_load //things to move
 	var/datum/lift_master/lift_master_datum    //control from
 
+/obj/structure/industrial_lift/New()
+	GLOB.lifts.Add(src)
+	..()
+
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
-
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
@@ -159,51 +198,46 @@
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	if(going == DOWN)//make sure this stays pre-item moving, or you'll crush anything on the lift under the lift.
+		for(var/mob/living/crushed in destination.contents)
+			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
+			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 	forceMove(destination)
 	for(var/am in things2move)
 		var/atom/movable/thing = am
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/user, is_ghost=FALSE)
-	if (is_ghost && !in_range(src, user))
+	if(is_ghost && !in_range(src, user))
 		return
 
-	var/static/list/tool_list = list(
-		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
-		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
-		)
-
-	var/turf/can_move_up = lift_master_datum.Check_lift_move(UP)
-	var/turf/can_move_up_down = lift_master_datum.Check_lift_move(DOWN)
-
-	if (!can_move_up && !can_move_up_down)
-		to_chat(user, "<span class='warning'>[src] doesn't seem to able move anywhere!</span>")
+	var/list/tool_list = list()
+	if(lift_master_datum.Check_lift_move(UP))
+		tool_list["Up"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+	if(lift_master_datum.Check_lift_move(DOWN))
+		tool_list["Down"] = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+	if(!length(tool_list))
+		to_chat(user, "<span class='warning'>[src] doesn't seem to able to move anywhere!</span>")
 		add_fingerprint(user)
 		return
-
+	if(controls_locked)
+		to_chat(user, "<span class='warning'>[src] has its controls locked! It must already be trying to do something!</span>")
+		add_fingerprint(user)
+		return
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if (!is_ghost && !in_range(src, user))
+	if(!is_ghost && !in_range(src, user))
 		return  // nice try
 	switch(result)
 		if("Up")
-			if(can_move_up)
-				lift_master_datum.MoveLift(UP, user)
-				show_fluff_message(TRUE, user)
-				use(user)
-			else
-				to_chat(user, "<span class='warning'>[src] doesn't seem to able move up!</span>")
-				use(user)
+			lift_master_datum.MoveLift(UP, user)
+			show_fluff_message(TRUE, user)
+			use(user)
 		if("Down")
-			if(can_move_up_down)
-				lift_master_datum.MoveLift(DOWN, user)
-				show_fluff_message(FALSE, user)
-				use(user)
-			else
-				to_chat(user, "<span class='warning'>[src] doesn't seem to able move down!</span>")
-				use(user)
+			lift_master_datum.MoveLift(DOWN, user)
+			show_fluff_message(FALSE, user)
+			use(user)
 		if("Cancel")
 			return
-
 	add_fingerprint(user)
 
 /obj/structure/industrial_lift/proc/check_menu(mob/user)
@@ -217,6 +251,14 @@
 		return
 	use(user)
 
+//ai probably shouldn't get to use lifts but they sure are great for admins to crush people with
+/obj/structure/industrial_lift/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(isAdminGhostAI(user))
+		use(user)
+
 /obj/structure/industrial_lift/attack_paw(mob/user)
 	return use(user)
 
@@ -229,11 +271,12 @@
 
 /obj/structure/industrial_lift/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("<span class='notice'>[user] move lift up.</span>", "<span class='notice'>Lift move up.</span>")
+		user.visible_message("<span class='notice'>[user] moves the lift upwards.</span>", "<span class='notice'>You move the lift upwards.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] move lift down.</span>", "<span class='notice'>Lift move down.</span>")
+		user.visible_message("<span class='notice'>[user] moves the lift downwards.</span>", "<span class='notice'>You move the lift downwards.</span>")
 
 /obj/structure/industrial_lift/Destroy()
+	GLOB.lifts.Remove(src)
 	QDEL_NULL(lift_master_datum)
 	var/list/border_lift_platforms = lift_platform_expansion()
 	moveToNullspace()

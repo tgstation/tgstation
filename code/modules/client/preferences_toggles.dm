@@ -162,7 +162,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggleendofroundsounds)()
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
 	set name = "Hear/Silence Midis"
 	set category = "Preferences"
-	set desc = "Hear Admin Triggered Sounds (Midis)"
+	set desc = "Hear Admin Triggered Music/Sounds"
 	usr.client.prefs.toggles ^= SOUND_MIDI
 	usr.client.prefs.save_preferences()
 	if(usr.client.prefs.toggles & SOUND_MIDI)

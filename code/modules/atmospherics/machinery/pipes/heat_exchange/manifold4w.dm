@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
-	icon_state = "manifold4w-2"
+	icon_state = "manifold4w-3"
 
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of heat-exchanging pipes."
@@ -37,10 +37,10 @@
 
 	update_layer()
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer1
-	piping_layer = 1
-	icon_state = "manifold4w-1"
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer2
+	piping_layer = 2
+	icon_state = "manifold4w-2"
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer3
-	piping_layer = 3
-	icon_state = "manifold4w-3"
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer4
+	piping_layer = 4
+	icon_state = "manifold4w-4"

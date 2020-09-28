@@ -45,12 +45,8 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	desc = "Greener on the other side."
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "junglegrass"
-
-/turf/open/floor/plating/grass/jungle/Initialize()
-	.=..()
-	icon_state = "[initial(icon_state)][rand(1,3)]"
+	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
 
 /turf/closed/mineral/random/jungle
 	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
