@@ -21,9 +21,18 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/port_id in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+			if(S.id == shuttleId)
+				jumpto_ports[S.id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
