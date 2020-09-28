@@ -113,7 +113,7 @@
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/food/breadslice/plain = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
+	result = /obj/item/food/jelliedtoast/slime
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/jelliedyoast
@@ -122,7 +122,7 @@
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/food/breadslice/plain = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	result = /obj/item/food/jelliedtoast/cherry
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butteredtoast
@@ -131,7 +131,7 @@
 		/obj/item/food/breadslice/plain = 1,
 		/obj/item/reagent_containers/food/snacks/butter = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/butteredtoast
+	result = /obj/item/food/butteredtoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
@@ -140,7 +140,7 @@
 		/datum/reagent/consumable/ethanol/wine = 5,
 		/obj/item/food/breadslice/plain = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/twobread
+	result = /obj/item/food/twobread
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/burrito

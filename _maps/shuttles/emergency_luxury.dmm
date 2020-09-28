@@ -218,7 +218,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aL" = (
-/obj/item/reagent_containers/food/snacks/notasandwich{
+/obj/item/food/notasandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
@@ -302,14 +302,14 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aX" = (
-/obj/item/reagent_containers/food/snacks/grilledcheese{
+/obj/item/food/grilledcheese{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aY" = (
-/obj/item/reagent_containers/food/snacks/jelliedtoast/cherry{
+/obj/item/food/jelliedtoast/cherry{
 	pixel_y = 6
 	},
 /obj/structure/table/wood/fancy/black,
