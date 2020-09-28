@@ -2,7 +2,7 @@
 ////////////////////////////////////////////SALAD////////////////////////////////////////////
 /obj/item/food/salad
 	icon = 'icons/obj/food/soupsalad.dmi'
-	tras_type = /obj/item/reagent_containers/glass/bowl
+	trash_type = /obj/item/reagent_containers/glass/bowl
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
