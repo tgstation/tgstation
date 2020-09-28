@@ -18,7 +18,8 @@
 /obj/structure/tank_holder/Initialize()
 	. = ..()
 	if(tank)
-		put_tank(new tank(src))
+		density = TRUE
+		tank = new tank(src)
 
 /obj/structure/tank_holder/Destroy()
 	if(tank)
@@ -49,7 +50,9 @@
 	if(!user.transferItemToLoc(W, src))
 		return
 	to_chat(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
-	put_tank(W)
+	if(!user.transferItemToLoc(W, src))
+		return
+	after_put_tank(W)
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -75,9 +78,7 @@
 	user.put_in_hands(tank)
 	after_remove_tank()
 
-/obj/structure/tank_holder/proc/put_tank(obj/item/tank)
-	if(!user.transferItemToLoc(W, src))
-		return
+/obj/structure/tank_holder/proc/after_put_tank(obj/item/tank)
 	tank = tank
 	icon_state = tank.tank_holder_icon_state
 	density = TRUE
