@@ -409,7 +409,7 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/snacks/soup/monkeysdelight{
+/obj/item/food/soup/monkeysdelight{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy{
@@ -885,7 +885,7 @@
 	pixel_y = 10;
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/monkeycube{
+/obj/item/food/monkeycube{
 	pixel_x = 5
 	},
 /obj/item/paicard{

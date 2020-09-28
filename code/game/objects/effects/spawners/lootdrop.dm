@@ -215,12 +215,12 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/reagent_containers/food/snacks/soup/beet,
-			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
-			/obj/item/reagent_containers/food/snacks/soup/stew,
-			/obj/item/reagent_containers/food/snacks/soup/hotchili,
-			/obj/item/reagent_containers/food/snacks/soup/nettle,
-			/obj/item/reagent_containers/food/snacks/soup/meatball)
+			/obj/item/food/soup/beet,
+			/obj/item/food/soup/sweetpotato,
+			/obj/item/food/soup/stew,
+			/obj/item/food/soup/hotchili,
+			/obj/item/food/soup/nettle,
+			/obj/item/food/soup/meatball)
 	var/salads = list(
 			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
 			/obj/item/reagent_containers/food/snacks/salad/validsalad,
@@ -228,9 +228,9 @@
 			/obj/item/reagent_containers/food/snacks/salad/jungle,
 			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/reagent_containers/food/snacks/bearsteak,
-			/obj/item/reagent_containers/food/snacks/enchiladas,
-			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
+			/obj/item/food/bearsteak,
+			/obj/item/food/enchiladas,
+			/obj/item/food/stewedsoymeat,
 			/obj/item/food/burger/bigbite,
 			/obj/item/food/burger/superbite,
 			/obj/item/food/burger/fivealarm)

@@ -82,8 +82,8 @@ at the cost of risking a vicious bite.**/
 		return ..()
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers))
-		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
-			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+		if(istype(I, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
 			return
 		var/obj/item/reagent_containers/reagent_container = I

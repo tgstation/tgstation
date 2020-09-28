@@ -24,7 +24,7 @@
 	name = "Spaghetti meatball"
 	reqs = list(
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 2
+		/obj/item/food/meatball = 2
 	)
 	result = /obj/item/food/spaghetti/meatballspaghetti
 	subcategory = CAT_SPAGHETTI
@@ -33,7 +33,7 @@
 	name = "Spesslaw"
 	reqs = list(
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 4
+		/obj/item/food/meatball = 4
 	)
 	result = /obj/item/food/spaghetti/spesslaw
 	subcategory = CAT_SPAGHETTI

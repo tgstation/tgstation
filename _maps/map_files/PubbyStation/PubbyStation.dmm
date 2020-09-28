@@ -20582,7 +20582,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
-/obj/item/reagent_containers/food/snacks/monkeycube,
+/obj/item/food/monkeycube,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bce" = (

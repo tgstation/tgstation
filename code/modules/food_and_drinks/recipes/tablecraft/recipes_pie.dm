@@ -28,7 +28,7 @@
 	name = "Tofu pie"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
-		/obj/item/reagent_containers/food/snacks/tofu = 1
+		/obj/item/food/tofu = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/pie/tofupie
 	subcategory = CAT_PIE

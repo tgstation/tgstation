@@ -322,7 +322,7 @@
 	name = "Donk-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1
+		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket
 	subcategory = CAT_PASTRY
@@ -342,7 +342,7 @@
 	name = "Spicy-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/food/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/chili
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
@@ -353,7 +353,7 @@
 	name = "Teriyaki-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/food/meatball = 1,
 		/datum/reagent/consumable/soysauce = 3
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
@@ -364,7 +364,7 @@
 	name = "Pizza-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/food/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
@@ -396,7 +396,7 @@
 	name = "Gondola-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/food/meatball = 1,
 		/datum/reagent/tranquility = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
@@ -453,7 +453,7 @@
 	reqs = list(
 		/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/sausage = 1
+		/obj/item/food/sausage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotdog
 	subcategory = CAT_PASTRY
@@ -463,7 +463,7 @@
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/meatball = 1,
+		/obj/item/food/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun

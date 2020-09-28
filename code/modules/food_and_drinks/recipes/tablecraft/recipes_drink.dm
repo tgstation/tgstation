@@ -129,7 +129,7 @@
 	result = /obj/item/reagent_containers/food/drinks/bottle/kong
 	time = 30
 	reqs = list(/datum/reagent/consumable/ethanol/whiskey = 100,
-				/obj/item/reagent_containers/food/snacks/monkeycube = 1,
+				/obj/item/food/monkeycube = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	category = CAT_DRINK
 

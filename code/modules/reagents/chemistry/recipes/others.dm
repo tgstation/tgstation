@@ -438,7 +438,7 @@
 	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/reagent_containers/food/snacks/monkeycube/cube = holder.my_atom
+	var/obj/item/food/monkeycube/cube = holder.my_atom
 	if(istype(cube))
 		cube.Expand()
 	else

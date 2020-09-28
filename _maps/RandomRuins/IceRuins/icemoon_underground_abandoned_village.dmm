@@ -26,7 +26,7 @@
 /area/icemoon/underground/explored)
 "cj" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/fishandchips,
+/obj/item/food/fishandchips,
 /turf/open/floor/plasteel/checker,
 /area/ruin/powered)
 "cB" = (
@@ -46,7 +46,7 @@
 /area/ruin/powered)
 "gG" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/sashimi{
+/obj/item/food/sashimi{
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/mug/coco{
@@ -182,9 +182,9 @@
 /area/ruin/powered)
 "rC" = (
 /obj/structure/closet/secure_closet/freezer,
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/food/carpmeat,
+/obj/item/food/carpmeat,
+/obj/item/food/carpmeat,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,

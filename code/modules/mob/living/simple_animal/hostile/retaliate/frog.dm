@@ -25,7 +25,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")
 	attack_sound = 'sound/effects/reee.ogg'
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/nugget = 1)
+	butcher_results = list(/obj/item/food/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -39,7 +39,7 @@
 		icon_state = "rare_frog"
 		icon_living = "rare_frog"
 		icon_dead = "rare_frog_dead"
-		butcher_results = list(/obj/item/reagent_containers/food/snacks/nugget = 5)
+		butcher_results = list(/obj/item/food/nugget = 5)
 
 /mob/living/simple_animal/hostile/retaliate/frog/Crossed(AM as mob|obj)
 	. = ..()

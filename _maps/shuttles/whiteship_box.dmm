@@ -350,7 +350,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/muffin/berry,
-/obj/item/reagent_containers/food/snacks/tofu,
+/obj/item/food/tofu,
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/machinery/power/apc{
 	dir = 1;

@@ -9,7 +9,7 @@
 	description = "To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup."
 	reward = 3000
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/soup)
+	wanted_types = list(/obj/item/food/soup)
 
 /datum/bounty/item/chef/popcorn
 	name = "Popcorn Bags"
@@ -81,7 +81,7 @@
 	name = "Cuban Carp"
 	description = "To celebrate the birth of Castro XXVII, ship one cuban carp to CentCom."
 	reward = 8000
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/cubancarp)
+	wanted_types = list(/obj/item/food/cubancarp)
 
 /datum/bounty/item/chef/hotdog
 	name = "Hot Dog"
@@ -114,7 +114,7 @@
 	description = "Remove all kebab from station you are best food. Ship to CentCom to remove from the premises."
 	reward = 3500
 	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/kebab)
+	wanted_types = list(/obj/item/food/kebab)
 
 /datum/bounty/item/chef/soylentgreen
 	name = "Soylent Green"
@@ -134,7 +134,7 @@
 	description = "The vice president's son won't shut up about chicken nuggies. Would you mind shipping some?"
 	reward = 4000
 	required_count = 6
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/nugget)
+	wanted_types = list(/obj/item/food/nugget)
 
 /datum/bounty/item/chef/corgifarming //Butchering is a chef's job.
 	name = "Corgi Hides"

@@ -1721,8 +1721,8 @@
 					/obj/item/reagent_containers/food/snacks/meat/slab/spider,
 					/obj/item/reagent_containers/food/snacks/meat/rawbacon,
 					/obj/item/reagent_containers/food/snacks/meat/slab/penguin,
-					/obj/item/reagent_containers/food/snacks/spiderleg,
-					/obj/item/reagent_containers/food/snacks/carpmeat,
+					/obj/item/food/spiderleg,
+					/obj/item/food/carpmeat,
 					/obj/item/reagent_containers/food/snacks/meat/slab/human)
 	crate_name = "food crate"
 

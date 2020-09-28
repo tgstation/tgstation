@@ -1817,7 +1817,7 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = 3

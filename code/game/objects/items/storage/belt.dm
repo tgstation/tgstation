@@ -423,7 +423,7 @@
 		/obj/item/reagent_containers/food/snacks/nachos,
 		/obj/item/reagent_containers/food/snacks/cheesynachos,
 		/obj/item/reagent_containers/food/snacks/cubannachos,
-		/obj/item/reagent_containers/food/snacks/nugget,
+		/obj/item/food/nugget,
 		/obj/item/food/spaghetti/pastatomato,
 		/obj/item/reagent_containers/food/snacks/rofflewaffles,
 		/obj/item/reagent_containers/food/snacks/donkpocket,

@@ -7,7 +7,7 @@
 
 /datum/food_processor_process/meat
 	input = /obj/item/reagent_containers/food/snacks/meat/slab
-	output = /obj/item/reagent_containers/food/snacks/meatball
+	output = /obj/item/food/meatball
 
 /datum/food_processor_process/bacon
 	input = /obj/item/reagent_containers/food/snacks/meat/rawcutlet
