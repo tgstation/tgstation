@@ -5128,7 +5128,7 @@
 /area/security/brig)
 "akP" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/energybar,
+/obj/item/food/energybar,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "akQ" = (
@@ -17220,7 +17220,7 @@
 /area/hydroponics)
 "aMO" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)

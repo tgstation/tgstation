@@ -8,7 +8,7 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
-	dried_type = /obj/item/reagent_containers/food/snacks/sosjerky/healthy
+	dried_type = /obj/item/food/sosjerky/healthy
 	bitesize = 3
 	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/cooking_oil = 2) //Meat has fats that a food processor can process into cooking oil
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/plain

@@ -42,23 +42,21 @@
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
 	value = FOOD_WORTHLESS
 
-/obj/item/reagent_containers/food/snacks/candy_corn
+/obj/item/food/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
 	icon_state = "candy_corn"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
-	filling_color = "#FF8C00"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
 	tastes = list("candy corn" = 1)
-	foodtype = JUNKFOOD | SUGAR
-	value = FOOD_JUNK
+	foodtypes = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/candy_corn/prison
+/obj/item/food/candy_corn/prison
 	name = "desiccated candy corn"
 	desc = "If this candy corn were any harder Security would confiscate it for being a potential shiv."
 	force = 1 // the description isn't lying
 	throwforce = 1 // if someone manages to bust out of jail with candy corn god bless them
 	tastes = list("bitter wax" = 1)
-	foodtype = GROSS
+	foodtypes = GROSS
 
 /obj/item/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"

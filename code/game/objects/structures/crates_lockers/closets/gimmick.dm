@@ -127,4 +127,4 @@
 	if(prob(40))
 		new /obj/item/reagent_containers/food/snacks/pizzaslice/moldy(src)
 	else if(prob(30))
-		new /obj/item/reagent_containers/food/snacks/syndicake(src)
+		new /obj/item/food/syndicake(src)

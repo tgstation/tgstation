@@ -413,13 +413,13 @@
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/food/candy,
 		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/snacks/chips,
-		/obj/item/reagent_containers/food/snacks/sosjerky,
-		/obj/item/reagent_containers/food/snacks/syndicake,
-		/obj/item/reagent_containers/food/snacks/spacetwinkie,
-		/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+		/obj/item/food/chips,
+		/obj/item/food/sosjerky,
+		/obj/item/food/syndicake,
+		/obj/item/food/spacetwinkie,
+		/obj/item/food/cheesiehonkers,
 		/obj/item/reagent_containers/food/snacks/nachos,
 		/obj/item/reagent_containers/food/snacks/cheesynachos,
 		/obj/item/reagent_containers/food/snacks/cubannachos,

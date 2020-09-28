@@ -227,12 +227,12 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy,
+/obj/item/food/candy{
 	pixel_x = 3;
 	pixel_y = -1
 	},

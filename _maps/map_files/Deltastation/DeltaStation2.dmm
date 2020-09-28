@@ -6446,7 +6446,7 @@
 /area/security/checkpoint/customs)
 "aqm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aqn" = (
@@ -20170,7 +20170,7 @@
 /area/crew_quarters/bar/atrium)
 "aQt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -22968,7 +22968,7 @@
 /area/crew_quarters/bar/atrium)
 "aVr" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

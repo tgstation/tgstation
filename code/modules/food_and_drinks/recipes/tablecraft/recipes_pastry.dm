@@ -554,7 +554,7 @@
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/no_raisin = 1,
+		/obj/item/food/no_raisin = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
