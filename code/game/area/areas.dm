@@ -20,6 +20,7 @@
 	var/atmosalm = FALSE
 	var/poweralm = FALSE
 	var/lightswitch = TRUE
+	var/vacuum = FALSE
 
 	/// All beauty in this area combined, only includes indoor area.
 	var/totalbeauty = 0
@@ -67,7 +68,7 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-    
+
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
@@ -420,6 +421,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/alarm in firealarms)
 		var/obj/machinery/firealarm/F = alarm
 		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
+
+/area/proc/set_vacuum_alarm_effect() //Just like fire alarm but blue
+	vacuum = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/obj/machinery/light/L in src)
+		L.update()
+
+/area/proc/unset_vacuum_alarm_effect()
+	vacuum = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	for(var/obj/machinery/light/L in src)
 		L.update()
 
