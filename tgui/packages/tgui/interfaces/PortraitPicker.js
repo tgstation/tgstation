@@ -1,7 +1,7 @@
 import { resolveAsset } from '../assets';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, NoticeBox, Section, Tabs } from '../components';
+import { Box, Button, Flex, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const PortraitPicker = (props, context) => {
@@ -34,19 +34,21 @@ export const PortraitPicker = (props, context) => {
       theme="ntos"
       title="Portrait Picker"
       width={400}
-      height={405}>
+      height={406}>
       <Window.Content>
         <Flex height="100%" direction="column">
           <Flex.Item mb={1}>
             <Section fitted>
               <Tabs fluid={1}>
                 {TABS.map((tabObj, i) => (
-                  <Tabs.Tab
+                  !!tabObj.list != 0 && (
+                    <Tabs.Tab
                     key={i}
                     selected={i === tabIndex}
                     onClick={() => { setListIndex(0); setTabIndex(i); }}>
                     {tabObj.name}
-                  </Tabs.Tab>
+                    </Tabs.Tab>
+                  )
                 ))}
               </Tabs>
             </Section>
@@ -120,10 +122,10 @@ export const PortraitPicker = (props, context) => {
             <Flex.Item mt={1}>
               <NoticeBox info>
                 {multiline`
-                  Art that does not follow the 23x23 canvas size requirements
-                  will not be able to be displayed. Make sure you read the
-                  warning below before embracing the wide wonderful world
-                  of artistic expression!`}
+                  Only the 23x23 or 24x24 canvas size art can be
+                  displayed. Make sure you read the warning below
+                  before embracing the wide wonderful world of
+                  artistic expression!`}
               </NoticeBox>
             </Flex.Item>
             <Flex.Item>
