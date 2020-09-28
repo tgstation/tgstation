@@ -21880,10 +21880,8 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "aYy" = (
-/obj/structure/rack,
-/obj/item/crowbar/red,
-/obj/item/storage/box/lights/tubes,
-/obj/item/crowbar/red,
+/obj/structure/closet/l3closet/scientist,
+/obj/item/extinguisher,
 /turf/open/transparent/glass/reinforced,
 /area/science/xenobiology)
 "aYz" = (
@@ -41039,9 +41037,12 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "bZb" = (
-/obj/machinery/processor/slime,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 1;
+	networks = list("xeno_pens")
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bZc" = (
@@ -42037,11 +42038,6 @@
 "ccP" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
-"ccQ" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
-/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "ccR" = (
 /obj/item/paper_bin{
@@ -50089,9 +50085,18 @@
 /area/vacant_room/commissary)
 "gFU" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -4
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -50684,8 +50689,9 @@
 /area/hallway/secondary/entry)
 "iFN" = (
 /obj/structure/chair/comfy/black{
-	dir = 8
+	dir = 1
 	},
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "iHT" = (
@@ -54438,11 +54444,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "rUR" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/obj/effect/landmark/start/scientist,
+/obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "rUV" = (
@@ -54636,6 +54640,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"swQ" = (
+/obj/machinery/computer/camera_advanced/xenobio{
+	networks = list("xeno_pens")
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "swV" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -54660,9 +54670,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/closet/l3closet/scientist,
-/obj/item/extinguisher,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "sBI" = (
 /obj/structure/window/reinforced{
@@ -55042,10 +55050,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8;
-	networks = list("xeno_pens")
-	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "tyB" = (
@@ -55875,10 +55881,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 4;
-	networks = list("xeno_pens")
-	},
+/obj/structure/table/glass,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "wac" = (
@@ -56206,18 +56210,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "wPv" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = -4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/processor/slime,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "wQy" = (
@@ -56532,6 +56526,9 @@
 /obj/item/radio/intercom{
 	pixel_x = -25
 	},
+/obj/structure/rack,
+/obj/item/storage/box/lights/tubes,
+/obj/item/crowbar/red,
 /turf/open/transparent/glass/reinforced,
 /area/science/xenobiology)
 "xzN" = (
@@ -100535,9 +100532,9 @@ bMi
 dFp
 dFp
 ksk
-nIQ
+swQ
 iFN
-ccQ
+nIQ
 fRg
 sUX
 ddD
