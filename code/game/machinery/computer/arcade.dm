@@ -69,14 +69,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/Initialize()
-	// If it's a generic arcade machine, pick a random arcade
-	// circuit board for it
-	if(!circuit)
-		var/list/gameodds = list(/obj/item/circuitboard/computer/arcade/battle = 49,
-							/obj/item/circuitboard/computer/arcade/orion_trail = 49,
-							/obj/item/circuitboard/computer/arcade/amputation = 2)
-		circuit = pickweight(gameodds)
-
 	. = ..()
 
 	Reset()
@@ -142,10 +134,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
 
-
 // ** BATTLE ** //
-
-
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."

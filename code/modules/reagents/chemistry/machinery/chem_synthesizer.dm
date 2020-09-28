@@ -18,7 +18,8 @@
 		ui.open()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("ejectBeaker")

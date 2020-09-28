@@ -1444,8 +1444,10 @@
 	return data
 
 /obj/machinery/door/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	if(!user_allowed(usr))
 		return
 	switch(action)

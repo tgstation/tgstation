@@ -182,7 +182,8 @@
 	.["seeds"] = V
 
 /obj/machinery/seed_extractor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

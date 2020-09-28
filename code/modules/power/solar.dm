@@ -371,7 +371,8 @@
 	return data
 
 /obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(action == "azimuth")
 		var/adjust = text2num(params["adjust"])

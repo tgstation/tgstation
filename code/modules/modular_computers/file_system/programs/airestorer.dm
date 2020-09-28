@@ -31,7 +31,8 @@
 	return
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/living/silicon/ai/A = get_ai()

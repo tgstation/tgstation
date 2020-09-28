@@ -27,7 +27,8 @@
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/printer/printer

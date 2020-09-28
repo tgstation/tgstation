@@ -835,7 +835,8 @@ SUBSYSTEM_DEF(shuttle)
 	return data
 
 /datum/controller/subsystem/shuttle/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/user = usr
