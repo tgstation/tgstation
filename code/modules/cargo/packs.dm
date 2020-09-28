@@ -2419,6 +2419,102 @@
 		new cardpacktype(C)
 
 //////////////////////////////////////////////////////////////////////////////
+////////////////////////// Pre-Built Machines ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/machine
+	group = "Pre-Built Machines"
+
+//******Service******
+/datum/supply_pack/machine/beer_dispenser
+	name = "Beer Dispenser Beacon"
+	desc = "Contains a beacon that will drop a finished beer dispenser to your location."
+	cost = 2500
+	contains = list(/obj/item/sup_beacon/beer_dispenser)
+	crate_name = "Beer Dispenser Beacon Crate"
+
+/datum/supply_pack/machine/soda_dispenser
+	name = "Soda Dispenser Beacon"
+	desc = "Contains a beacon that will drop a finished soda dispenser to your location."
+	cost = 2500
+	contains = list(/obj/item/sup_beacon/soda_dispenser)
+	crate_name = "Soda Dispenser Beacon Crate"
+
+/datum/supply_pack/machine/microwave
+	name = "Microwave Beacon"
+	desc = "Contains a beacon that will drop a finished microwave to your location."
+	cost = 4000
+	contains = list(/obj/item/sup_beacon/microwave)
+	crate_name = "Microwave Beacon Crate"
+
+/datum/supply_pack/machine/processor
+	name = "Food Processor Beacon"
+	desc = "Contains a beacon that will drop a finished food processor to your location."
+	cost = 4000
+	contains = list(/obj/item/sup_beacon/processor)
+	crate_name = "Food Processor Beacon Crate"
+
+//******Medical******
+/datum/supply_pack/machine/stasis
+	name = "Stasis Bed Beacon"
+	desc = "Contains a beacon that will drop a finished stasis bed to your location."
+	cost = 4000
+	contains = list(/obj/item/sup_beacon/stasis)
+	crate_name = "Stasis Bed Beacon Crate"
+
+/datum/supply_pack/machine/chem_dispenser
+	name = "Chemistry Dispenser Beacon"
+	desc = "Contains a beacon that will drop a finished chemistry dispenser to your location."
+	cost = 7500
+	contains = list(/obj/item/sup_beacon/chem_dispenser)
+	crate_name = "Chemistry Dispenser Beacon Crate"
+
+/datum/supply_pack/machine/chem_heater
+	name = "Chemistry Heater Beacon"
+	desc = "Contains a beacon that will drop a finished chemistry heater to your location."
+	cost = 2000
+	contains = list(/obj/item/sup_beacon/chem_heater)
+	crate_name = "Chemistry Heater Beacon Crate"
+
+/datum/supply_pack/machine/chem_master
+	name = "Chemistry Master Beacon"
+	desc = "Contains a beacon that will drop a finished chemistry master to your location."
+	cost = 3000
+	contains = list(/obj/item/sup_beacon/chem_master)
+	crate_name = "Chemistry Master Beacon Crate"
+
+//******Engineering******
+
+/datum/supply_pack/machine/emitter
+	name = "Emitter Beacon"
+	desc = "Contains a beacon that will drop a finished emitter to your location."
+	cost = 5000
+	contains = list(/obj/item/sup_beacon/emitter)
+	crate_name = "Emitter Beacon Crate"
+
+/datum/supply_pack/machine/freezer
+	name = "Atmospherics Freezer Beacon"
+	desc = "Contains a beacon that will drop a finished freezer to your location."
+	cost = 4000
+	contains = list(/obj/item/sup_beacon/freezer)
+	crate_name = "Atmospherics Freezer Beacon Crate"
+
+//******Security******
+/datum/supply_pack/machine/weapon_recharger
+	name = "Weapon Recharger Beacon"
+	desc = "Contains a beacon that will drop a finished recharger to your location."
+	cost = 6000
+	contains = list(/obj/item/sup_beacon/weapon_recharger)
+	crate_name = "Weapon Recharger Beacon Crate"
+
+/datum/supply_pack/machine/cameras
+	name = "Camera Console Beacon"
+	desc = "Contains a beacon that will drop a finished camera console to your location."
+	cost = 6000
+	contains = list(/obj/item/sup_beacon/cameras)
+	crate_name = "Camera Console Beacon Crate"
+
+//////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 

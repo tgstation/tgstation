@@ -951,6 +951,7 @@
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\airlock_painter.dm"
 #include "code\game\objects\items\apc_frame.dm"
+#include "code\game\objects\items\beacons.dm"
 #include "code\game\objects\items\binoculars.dm"
 #include "code\game\objects\items\blueprints.dm"
 #include "code\game\objects\items\body_egg.dm"
