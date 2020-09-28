@@ -11,6 +11,10 @@
 	flight_y_offset = 10
 	dual_wield_spread = 60
 
+/obj/item/gun/energy/e_gun/rifle
+	desc = "A bulky hybrid energy gun with two settings: disable and kill."
+	w_class = WEIGHT_CLASS_BULKY //no two hand required because lasers don't have knockback
+
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: disable and kill."
