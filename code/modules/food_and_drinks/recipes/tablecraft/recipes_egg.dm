@@ -25,7 +25,7 @@
 /datum/crafting_recipe/food/chocolateegg
 	name = "Chocolate egg"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/food/boiledegg = 1,
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolateegg
@@ -45,7 +45,7 @@
 	name = "Egg bowl"
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/food/boiledegg = 1,
 		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
 		/obj/item/reagent_containers/food/snacks/grown/corn = 1
 	)

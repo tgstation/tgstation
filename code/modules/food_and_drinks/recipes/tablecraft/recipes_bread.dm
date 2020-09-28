@@ -38,7 +38,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 3,
+		/obj/item/food/boiledegg = 3,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/food/bread/banana

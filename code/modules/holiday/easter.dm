@@ -69,7 +69,7 @@
 /obj/item/storage/basket/easter/Initialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/reagent_containers/food/snacks/boiledegg))
+	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg))
 
 /obj/item/storage/basket/easter/proc/countEggs()
 	cut_overlays()
@@ -203,7 +203,7 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg

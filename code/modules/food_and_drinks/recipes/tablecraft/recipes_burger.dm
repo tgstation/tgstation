@@ -235,7 +235,7 @@
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 5,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 4,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 3,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/food/boiledegg = 1,
 		/obj/item/reagent_containers/food/snacks/meat/bacon = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 
