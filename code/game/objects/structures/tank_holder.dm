@@ -26,6 +26,11 @@
 		tank = null
 	return ..()
 
+/obj/structure/tank_holder/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(istype(mover) && mover.throwing)
+		return TRUE
+
 /obj/structure/closet/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
