@@ -46,10 +46,8 @@
 /// Diverted into its own proc so that gutlunches and runtime can add on their own stuff (make this a callback somehow?)
 /datum/whim/make_babies/proc/form_babby()
 	var/childspawn = pickweight(owner.childtype)
-	var/turf/target = get_turf(owner)
-	if(target)
-		. = new childspawn(target)
-		abandon() // abandon the baby making, not the baby (hopefully!)
+	. = new childspawn(get_turf(owner))
+	abandon() // abandon the baby making, not the baby (hopefully!)
 
 /// Gutlunches are special (and gross) and need some extra handling
 /datum/whim/make_babies/gutlunch

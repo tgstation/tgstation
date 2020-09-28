@@ -68,7 +68,9 @@
 	owner.SpinAnimation(10, 1) // flair on 'em
 	abandon()
 
+/// Make a bunch of noise and possibly draw attention to this intruder from nearby people
 /datum/whim/defend_area/proc/intimidate()
+	// todo: get sounds and make sure this doesn't constantly fire every tick
 	owner.face_atom(concerned_target)
 	switch(rand(1,4))
 		if(1)
@@ -165,6 +167,7 @@
 		step_towards(owner, my_dead_friend)
 		return
 
+	// todo: make this not so spammy, work on tone
 	switch(rand(1,6))
 		if(1)
 			owner.manual_emote("stares uncomprehendingly at [my_dead_friend]'s lifeless body.")

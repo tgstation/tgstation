@@ -1,9 +1,9 @@
 /// These datums get added to [/mob/living/simple_animal/var/passive_whims] instead of [/mob/living/simple_animal/var/live_whims], and need to be manually activated
-/datum/whim/inactive
+/datum/whim/passive
 	scan_every = 0
 
 /// For peaceful mobs, this makes them try to run away when attacked
-/datum/whim/inactive/flee_danger
+/datum/whim/passive/flee_danger
 	name = "Flee danger"
 	ticks_to_frustrate = 2
 	abandon_rescan_length = 30 SECONDS
@@ -12,7 +12,7 @@
 	/// How long the above cooldown lasts
 	var/flee_emote_length = 10 SECONDS
 
-/datum/whim/inactive/flee_danger/activate(atom/new_target)
+/datum/whim/passive/flee_danger/activate(atom/new_target)
 	. = ..()
 	var/list/possible_panickers = list()
 	for(var/mob/living/simple_animal/iter_simple in view(6, owner))
@@ -24,40 +24,36 @@
 
 	if(length(possible_panickers) > 3)
 		for(var/mob/living/simple_animal/panicked in possible_panickers)
-			if(locate(/datum/whim/inactive/panic) in panicked.passive_whims)
+			if(locate(/datum/whim/passive/panic) in panicked.passive_whims)
 				continue
-			var/datum/whim/inactive/panic/losing_control = new(panicked)
+			var/datum/whim/passive/panic/losing_control = new(panicked)
 			losing_control.activate(owner)
 		testing("A panic breaks out! Num: [length(possible_panickers)]")
 
-/datum/whim/inactive/flee_danger/New(mob/living/simple_animal/attaching_owner)
+/datum/whim/passive/flee_danger/New(mob/living/simple_animal/attaching_owner)
 	. = ..()
 	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/receive_damage)
 	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, .proc/receive_damage_hand)
 
-/datum/whim/inactive/flee_danger/Destroy(force, ...)
+/datum/whim/passive/flee_danger/Destroy(force, ...)
 	if(owner)
 		UnregisterSignal(owner, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND))
 	return ..()
 
-/datum/whim/inactive/flee_danger/abandon()
-	walk(owner, 0)
-	return ..()
-
-/// Just hands off control to [/datum/whim/inactive/flee_danger/proc/check_spook]
-/datum/whim/inactive/flee_danger/proc/receive_damage(datum/source, obj/item/weapon, mob/living/user, params)
+/// Just hands off control to [/datum/whim/passive/flee_danger/proc/check_spook]
+/datum/whim/passive/flee_danger/proc/receive_damage(datum/source, obj/item/weapon, mob/living/user, params)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/check_spook, weapon, user, params)
 
-/// Filters out non-bad-touches then hands off control to [/datum/whim/inactive/flee_danger/proc/check_spook]
-/datum/whim/inactive/flee_danger/proc/receive_damage_hand(datum/source, mob/living/carbon/user)
+/// Filters out non-bad-touches then hands off control to [/datum/whim/passive/flee_danger/proc/check_spook]
+/datum/whim/passive/flee_danger/proc/receive_damage_hand(datum/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 	if(!istype(user) || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 		return FALSE
 	INVOKE_ASYNC(src, .proc/check_spook, null, user)
 
 /// I
-/datum/whim/inactive/flee_danger/proc/check_spook(obj/item/weapon, mob/living/user, params)
+/datum/whim/passive/flee_danger/proc/check_spook(obj/item/weapon, mob/living/user, params)
 	if(!istype(user) || owner.stat || user == owner || owner.mind)
 		return FALSE
 
@@ -90,7 +86,7 @@
 	owner.visible_message("<span class='danger'>[owner] jolts away from [user]!</span>")
 	activate(user)
 
-/datum/whim/inactive/flee_danger/proc/continued_assault(mob/living/user)
+/datum/whim/passive/flee_danger/proc/continued_assault(mob/living/user)
 	var/speed = 5
 	speed += (1 - (owner.health / owner.maxHealth)) * 30
 	walk_away(owner, user, 4, speed)
@@ -105,18 +101,17 @@
   *	assigning Whims to other mobs, meaning you could shoestring together a sort of "coordination" simply by forcing similar Whims on a cluster of similar mobs, giving the
   *	player the illusion of more mechanical depth than actually exists if we're clever with our Whim scripting.
   */
-/datum/whim/inactive/panic
+/datum/whim/passive/panic
 	name = "Panic!"
 	ticks_to_frustrate = 4
 	abandon_rescan_length = 30 SECONDS
 
-/datum/whim/inactive/panic/abandon()
-	walk(owner, 0)
+/datum/whim/passive/panic/abandon()
 	if(!QDELING(src))
 		addtimer(CALLBACK(src, .proc/panic_cooldown), abandon_rescan_length) // no more panicking for this long
 	return ..()
 
-/datum/whim/inactive/panic/activate(atom/new_target)
+/datum/whim/passive/panic/activate(atom/new_target)
 	if(!COOLDOWN_FINISHED(src, cooldown_abandon_rescan))
 		qdel(src)
 		return
@@ -129,19 +124,19 @@
 	speed += (1 - (owner.health / owner.maxHealth)) * 20
 	walk_rand(owner, speed)
 
-/datum/whim/inactive/panic/tick()
+/datum/whim/passive/panic/tick()
 	. = ..()
 	if(state == WHIM_INACTIVE)
 		return
 
 	if(prob(50))
 		walk(owner, 0)
-		owner.SpinAnimation(rand(6, 14), 1)
+		owner.spin(2 SECONDS, 1)
 	else
 		var/speed = 5
 		speed += (1 - (owner.health / owner.maxHealth)) * 20
 		walk_rand(owner, speed)
 
-/datum/whim/inactive/panic/proc/panic_cooldown()
+/datum/whim/passive/panic/proc/panic_cooldown()
 	if(!QDELING(src))
 		qdel(src)

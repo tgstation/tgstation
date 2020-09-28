@@ -6,15 +6,20 @@
 /**
   * Whims are datums that handle specialized AI behavior for when we want to do behaviors more complex than standing around doing nothing, but don't want to hardcode it in Life()
   *
-  * Up to one whim at a time can be active in a simple_animal (their current_whim), and that behavior's [/datum/whim/proc/tick] will run each Life() tick that the mob isn't dead, restrained,
+  * Up to one Whim at a time can be active in a simple_animal (their current_whim), and that behavior's [/datum/whim/proc/tick] will run each Life() tick that the mob isn't dead, restrained,
   * or inhabited by a player (mostly). Whims are expected to play nice with each other and not hog control: Since dormant whims have no easy way of overthrowing the currently running whim,
-  * it's expected that a whim take control for up to ~30-60 seconds at once at most (mostly less than that), with a sizeable cooldown afterwards.
+  * it's expected that a whim take control for up to ~20-50 seconds at once at most (mostly less than that), with a sizeable cooldown afterwards.
   *
-  * There's no goal oriented planning or robust priority system for which whim will take over at a given time: Each whim is set to perform checks of the surrounding area for environmental factors that
-  * would trigger the behavior (ex: a cat might scan for mice, and enter a mice hunting routine upon sighting one nearby). Some whims may have simple and inexpensive checks, like scanning the 8 adjacent
-  * tiles for food items, which means they're fine to be run more often. Other whims may be more complex or search a much wider area, at which point it's better for that check to run less frequently to
-  * lessen the burden. Basically, the system is chaotic and somewhat unpredictable in busy environments, so try and keep your whim behaviors clean and well defined, so that they function well-enough
-  * alongside each other without stepping on each other's toes.
+  *	Here are the main things that define a Whim:
+  * *	Live or Passive- Do we scan at all? Or do we only trigger if a signal activates us?
+  * *	Scanning- How often do we check if we can trigger? How expensive is our calculation? (esp how large of an area around us we check)
+  * *	Behavior- What do we have our mob do during each tick?
+  * *	End Condition- When are we done? Either we call abandon() ourselves, we run out of ticks and get frustrated, or another Whim overrides us (see: flee_danger)
+  *
+  *	And here's a few random tips/thoughts:
+  *	* Try to make your Whim as lightweight as possible, especially the inner_can_start() logic.
+  *	* If you have to make your Whim scan expensive, compensate by making it check less often.
+  *	* Don't stick too many Whims on one mobtype, especially if it's a common one. Try not to be too obnoxious with it.
   */
 /datum/whim
 	var/name = "Generic Whim"
@@ -106,6 +111,7 @@
 /datum/whim/proc/abandon()
 	SHOULD_CALL_PARENT(TRUE)
 	if(owner)
+		walk(owner, 0)
 		testing("[owner] abandoning [name]")
 		owner.current_whim = null
 		UnregisterSignal(owner, COMSIG_MOB_DEATH)
@@ -134,7 +140,7 @@
 	return inner_can_start()
 
 /**
-  * The individualized logic that controls whether a whim can activate once it's given the green light by [/datum/whim/proc/inner_can_start]
+  * The individualized logic that controls whether a whim can activate once it's given the green light by [/datum/whim/proc/can_start]
   *
   * Returning FALSE means that this whim didn't meet the requirements to activate, while returning a datum reference (or any truthy value) signals that we have the okay to take control. Note that whatever you
   * return will be passed as the [/datum/whim/var/concerned_target] in [/datum/whim/proc/activate], which is likely whatever initial target you'll be dealing with once we kick off

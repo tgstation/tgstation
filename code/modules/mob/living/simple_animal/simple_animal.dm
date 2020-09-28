@@ -213,6 +213,7 @@
 
 /// This is where we instantiate all the whim types in [/mob/living/simple_animal/var/list/whim_datums] and store them in [/mob/living/simple_animal/var/list/live_whims]
 /mob/living/simple_animal/proc/initialize_whims()
+	whim_scan_ticks = rand(0, 15) // add an offset so if multiple mobs are spawned at the same moment, they won't proceed in lockstep
 	for(var/whim_path in whim_datums)
 		new whim_path(src)
 

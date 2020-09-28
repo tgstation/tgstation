@@ -8,7 +8,6 @@
 	abandon_rescan_length = 12 SECONDS
 
 /datum/whim/airbud_bball/inner_can_start()
-
 	for(var/i in oview(owner, scan_radius))
 		if(istype(i, /obj/item/toy/beach_ball/holoball))
 			return i
@@ -36,7 +35,7 @@
 		var/mob/living/bball_player = bball.loc
 		owner.visible_message("<span class='warning'>[owner] leaps at [bball_player], trying to steal [bball]!</span>")
 		var/datum/callback/ankle_breaking = CALLBACK(src, .proc/ankle_breaker, bball_player)
-		owner.throw_at(bball_player, 10, 4, owner, FALSE, FALSE, ankle_breaking)
+		owner.throw_at(bball_player, 10, 4, owner, FALSE, FALSE, ankle_breaking, gentle=TRUE)
 	else
 		owner.visible_message("<span class='warning'>[owner] dashes to [bball], taking possession!</span>")
 		carried_cargo = bball
@@ -151,11 +150,11 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(!concerned_target || isnull(concerned_target.loc) || get_dist(owner, concerned_target.loc) > scan_radius || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)))
+	if(!concerned_target || (!isturf(concerned_target.loc) && !ishuman(concerned_target.loc)) || get_dist(owner, concerned_target.loc) > scan_radius)
 		abandon()
 		return
 
-	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, will change -ryll, 2020
+	// The below sleeps are how dog snack code already was, i'm just preserving it for my own simplicity, will change when i settle on how to handle moving -ryll, 2020
 	//Feeding, chasing food, FOOOOODDDD
 	step_to(owner,concerned_target,1)
 	sleep(3)
@@ -180,7 +179,7 @@
 
 #define WHIM_BONE_MODE_APPROACH		0
 #define WHIM_BONE_MODE_HIDE			1
-#define WHIM_BONE_MODE_RELAX		2 // hehe
+#define WHIM_BONE_MODE_RELAX		2
 
 /// By bones, I mean dismembered bodyparts. If the mob sees a bodypart laying around, they'll pick it up in their mouth then run away to go gnaw on it. Letting dogs loose in medbay has never been so fun!
 /datum/whim/gnaw_bone
@@ -202,7 +201,7 @@
 	if(state == WHIM_INACTIVE)
 		return
 
-	if(!concerned_target || isnull(concerned_target.loc) || (stage == WHIM_BONE_MODE_APPROACH && (get_dist(owner, concerned_target.loc) > scan_radius)))
+	if(!concerned_target || !get_turf(concerned_target) || (isliving(concerned_target.loc) && concerned_target.loc != owner) || (stage == WHIM_BONE_MODE_APPROACH && get_dist(owner, concerned_target.loc) > scan_radius))
 		abandon()
 		return
 
