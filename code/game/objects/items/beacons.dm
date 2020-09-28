@@ -1,7 +1,7 @@
 ///The all new home for beacons that spawn objects, structures, atoms, whatever to the station via supply pods.
 /obj/item/sup_beacon
 	name = "beacon"
-	desc = "N.T. approved supply beacon, but this one shouldn't exist!"
+	desc = "N.T. approved supply beacon, but this one shouldn't exist! Use the 'Report Issue' button if you see this!"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "supply_beacon"
 	///Has the beacon been used already?
@@ -15,14 +15,15 @@
 	loc.visible_message("<span class='warning'>\The [src] begins to beep loudly!</span>")
 	used = TRUE
 	addtimer(CALLBACK(src, .proc/launch_payload), 40)
+	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 
 /**
-  * Creates a new beacon_contents object, shoves it in a supply pod, and launches it at the station from nullspace.
+  * Creates a new beacon_contents object, shoves it in a supply pod, and launches it at the station.
   */
 /obj/item/sup_beacon/proc/launch_payload()
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
 	if(!beacon_contents)
-		return
+		CRASH("Missing beacon_contents when calling launch_payload()!")
 	new beacon_contents(toLaunch)
 	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
 	qdel(src)
@@ -61,7 +62,7 @@
 
 /obj/item/sup_beacon/hydroponics
 	name = "hydroponics tray beacon"
-	desc = "N.T. approved hydroponics tray beacon, toss it down and you'll have a fully ready hydroponics tray. Grow's just about anything the stomache desires."
+	desc = "N.T. approved hydroponics tray beacon, toss it down and you'll have a fully ready hydroponics tray. Grows just about anything the stomache desires."
 	beacon_contents = /obj/machinery/hydroponics
 
 //******Medical******
@@ -69,7 +70,7 @@
 ///Statis Bed
 /obj/item/sup_beacon/stasis
 	name = "stasis bed beacon"
-	desc = "N.T. approved stasis bed beacon, toss it down and you'll have a fully ready statis bed. Turn anywhere into an operating theator! Or don't!"
+	desc = "N.T. approved stasis bed beacon, toss it down and you'll have a fully ready stasis bed. Turn anywhere into an operating theatre! Or don't!"
 	beacon_contents = /obj/machinery/stasis
 
 /obj/item/sup_beacon/chem_dispenser
@@ -79,12 +80,12 @@
 
 /obj/item/sup_beacon/chem_heater
 	name = "chemistry heater beacon"
-	desc = "N.T. approved chemistery heater beacon, toss it down and you'll have a fully ready chemistry heater. Infinitely safer than doing it on the stove."
+	desc = "N.T. approved chemistry heater beacon, toss it down and you'll have a fully ready chemistry heater. Infinitely safer than doing it on the stove."
 	beacon_contents = /obj/machinery/chem_heater
 
 /obj/item/sup_beacon/chem_master
-	name = "chemistry master beacon"
-	desc = "N.T. approved chemistry master beacon, toss it down and you'll have a fully ready chemistry master. Even we don't know where all those little bottles come from."
+	name = "chem-master beacon"
+	desc = "N.T. approved chem-master beacon, toss it down and you'll have a fully ready ChemMaster 3000. Even we don't know where all those little bottles come from."
 	beacon_contents = /obj/machinery/chem_master
 
 //******Engineering******
@@ -96,18 +97,17 @@
 
 /obj/item/sup_beacon/freezer
 	name = "atmospherics freezer beacon"
-	desc = "N.T. approved freezer beacon, toss it down and you'll have a fully ready atmospherics freezer. Keep cool, "
+	desc = "N.T. approved freezer beacon, toss it down and you'll have a fully ready atmospherics freezer. Stay frosty. Note that with some simple user service, this machine can be turned into a heater."
 	beacon_contents = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 //******Security******
 
 /obj/item/sup_beacon/weapon_recharger
 	name = "weapon recharger beacon"
-	desc = "N.T. approved weapon recharger beacon, toss it down and you'll have a fully ready recharger. Makes short work of shorter stunpod cells."
+	desc = "N.T. approved weapon recharger beacon, toss it down and you'll have a fully ready recharger. Makes short work of shorter stunprod cells."
 	beacon_contents = /obj/machinery/recharger
 
 /obj/item/sup_beacon/cameras
 	name = "camera console beacon"
-	desc = "N.T. approved camera console beacon, toss it down and you'll have a fully ready camera console. Home survailance... anywhere!"
+	desc = "N.T. approved camera console beacon, toss it down and you'll have a fully ready camera console. Home surveillance... anywhere!"
 	beacon_contents = /obj/machinery/computer/security
-
