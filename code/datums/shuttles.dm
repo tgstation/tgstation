@@ -220,13 +220,8 @@
 	name = "Asteroid With Engines Strapped To It"
 	description = "A hollowed out asteroid with engines strapped to it, the hollowing procedure makes it very difficult to hijack but is very expensive. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = 50000
+	credit_cost = 40000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-
-/datum/map_template/shuttle/emergency/meteor/prerequisites_met()
-	if(SHUTTLE_UNLOCK_EMAGGED in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -241,7 +236,7 @@
 	name = "Disco Inferno"
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = 50000
+	credit_cost = 40000
 
 /datum/map_template/shuttle/emergency/discoinferno/prerequisites_met()
 	if(SHUTTLE_UNLOCK_EMAGGED in SSshuttle.shuttle_purchase_requirements_met)
@@ -371,7 +366,7 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
-	credit_cost = 50000
+	credit_cost = 40000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/supermatter/prerequisites_met()
@@ -385,7 +380,7 @@
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
-	credit_cost = 50000
+	credit_cost = 40000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld/prerequisites_met()
