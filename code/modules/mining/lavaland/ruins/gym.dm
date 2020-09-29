@@ -39,6 +39,25 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
 		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
+/obj/structure/lazy_mr_bones
+	name = "Animatronic Mr. Bones"
+	desc = "This animatronic of Mr. Bones isn't quite like the real deal however he'll still work as a reminder that there's a riddle to solve if you want out! Just punch his shoulder or something, I guess."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "skeletonman"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	layer = 3
+	var/list/hit_sounds = list('sound/voice/mrbones/roleplay.ogg', 'sound/voice/mrbones/solve_the_riddle.ogg', 'sound/voice/mrbones/error_incorrect.ogg', 'sound/voice/mrbones/repeat.ogg')
+
+/obj/structure/lazy_mr_bones/attack_hand(mob/user as mob)
+	. = ..()
+	if(.)
+		return
+	playsound(loc, pick(hit_sounds), 25)
+	new /obj/effect/temp_visual/source_mic(get_turf(src))
+
 /obj/structure/weightmachine
 	name = "weight machine"
 	desc = "Just looking at this thing makes you feel tired."
