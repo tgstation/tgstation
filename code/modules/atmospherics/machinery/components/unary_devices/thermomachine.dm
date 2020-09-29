@@ -142,8 +142,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
-
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

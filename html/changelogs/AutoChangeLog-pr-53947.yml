@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Re-styled the statpanel for an improved UI experience."
+  - admin: "Put all admin buttons under one roof, now with subcategories within the statpanel."

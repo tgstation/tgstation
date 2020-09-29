@@ -31,8 +31,6 @@
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -3)
 
-/mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	return handcuffed
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)

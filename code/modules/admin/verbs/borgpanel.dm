@@ -1,5 +1,5 @@
 /datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set name = "Show Borg Panel"
 	set desc = "Show borg panel"
 
@@ -79,7 +79,8 @@
 
 
 /datum/borgpanel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch (action)
 		if ("set_charge")

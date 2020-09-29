@@ -16,6 +16,28 @@
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
+	if(LAZYLEN(M.component_parts))
+		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
+		stack_trace("apply_defauly_parts called on machine that already had component_parts: [M]")
+
+		// Move to nullspace so you don't trigger handle_atom_del logic and remove existing parts.
+		for(var/obj/item/part in M.component_parts)
+			part.moveToNullspace(loc)
+			qdel(part)
+
+	// List of components always contains the circuit board used to build it.
+	M.component_parts = list(src)
+	forceMove(M)
+
+	if(M.circuit != src)
+		// This really shouldn't happen. If it somehow does, print out a stack trace and gracefully handle it.
+		stack_trace("apply_default_parts called from a circuit board that does not belong to machine: [M]")
+
+		// Move to nullspace so you don't trigger handle_atom_del logic, remove old circuit, add new circuit.
+		M.circuit.moveToNullspace()
+		qdel(M.circuit)
+		M.circuit = src
+
 	return
 
 // Circuitboard/machine
@@ -36,8 +58,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	if(!req_components)
 		return
 
-	M.component_parts = list(src) // List of components always contains a board
-	forceMove(M)
+	. = ..()
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]

@@ -1,5 +1,0 @@
-author: "Gandalf2k15"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new admin shuttle call option: No recall."
-  - admin: "Gives admins the option to enable or disable the shuttle."
