@@ -6,7 +6,7 @@
 	still_recharging_msg = "<span class='notice'>You need to wait for awhile between objective requests.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
-	charge_max	= 5 SECONDS
+	charge_max	= 10 MINUTES
 	charge_counter = 0
 
 /obj/effect/proc_holder/spell/self/add_objectives/cast(list/targets, mob/living/carbon/human/user)
