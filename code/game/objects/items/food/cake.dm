@@ -262,7 +262,7 @@
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 
-/obj/item/food/cake/apple/MakeProcessable()
+/obj/item/food/cake/slimecake/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/slimecake, 5, 30)
 
 /obj/item/food/cakeslice/slimecake

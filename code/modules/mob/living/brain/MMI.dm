@@ -14,6 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
+/obj/item/mmi/Initialize()
+	. = ..()
+	radio = new(src) //Spawns a radio inside the MMI.
+	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	laws.set_laws_config()
+
+/obj/item/mmi/Destroy()
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/borg = loc
+		borg.mmi = null
+	mecha = null
+	QDEL_NULL(brainmob)
+	QDEL_NULL(brain)
+	QDEL_NULL(radio)
+	QDEL_NULL(laws)
+	return ..()
+
 /obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
@@ -31,12 +48,6 @@
 		. += "mmi_alive"
 	else if(brain)
 		. += "mmi_dead"
-
-/obj/item/mmi/Initialize()
-	. = ..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-	laws.set_laws_config()
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -183,23 +194,6 @@
 			if(3)
 				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
 		brainmob.emote("alarm")
-
-/obj/item/mmi/Destroy()
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/borg = loc
-		borg.mmi = null
-	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
-	if(brain)
-		qdel(brain)
-		brain = null
-	if(mecha)
-		mecha = null
-	if(radio)
-		qdel(radio)
-		radio = null
-	return ..()
 
 /obj/item/mmi/deconstruct(disassembled = TRUE)
 	if(brain)

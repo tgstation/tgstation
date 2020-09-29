@@ -363,28 +363,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<i>Thank you for choosing ExperTrak® brand software! ExperTrak® inc. is proud to be a NanoTrasen employee expertise and effectiveness department subsidary!</i>"
 				dat += "<br><br>This software is designed to track and monitor your skill development as a NanoTrasen employee. Your job performance across different fields has been quantified and categorized below.<br>"
 				var/datum/mind/targetmind = user.mind
-				for (var/type in GLOB.skill_types)
-					var/datum/skill/S = GetSkillRef(type)
-					var/lvl_num = targetmind.get_skill_level(type)
-					var/lvl_name = uppertext(targetmind.get_skill_level_name(type))
-					var/exp = targetmind.get_skill_exp(type)
-					var/xp_prog_to_level = targetmind.exp_needed_to_level_up(type)
-					var/xp_req_to_level = 0
-					if (xp_prog_to_level)//is it even possible to level up?
-						xp_req_to_level = SKILL_EXP_LIST[lvl_num+1] - SKILL_EXP_LIST[lvl_num]
-					dat += "<HR><b>[S.name]</b>"
-					dat += "<br><i>[S.desc]</i>"
-					dat += "<ul><li>EMPLOYEE SKILL LEVEL: <b>[lvl_name]</b>"
-					if (exp && xp_req_to_level)
-						var/progress_percent = (xp_req_to_level-xp_prog_to_level)/xp_req_to_level
-						var/overall_percent = exp / SKILL_EXP_LIST[length(SKILL_EXP_LIST)]
-						dat += "<br>PROGRESS TO NEXT SKILL LEVEL:"
-						dat += "<br>" + num2loadingbar(progress_percent) + "([progress_percent*100])%"
-						dat += "<br>OVERALL DEVELOPMENT PROGRESS:"
-						dat += "<br>" + num2loadingbar(overall_percent) + "([overall_percent*100])%"
-					if (lvl_num >= length(SKILL_EXP_LIST) && !(type in targetmind.skills_rewarded))
-						dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
-					dat += "</li></ul>"
+				if(targetmind)
+					for (var/type in GLOB.skill_types)
+						var/datum/skill/S = GetSkillRef(type)
+						var/lvl_num = targetmind.get_skill_level(type)
+						var/lvl_name = uppertext(targetmind.get_skill_level_name(type))
+						var/exp = targetmind.get_skill_exp(type)
+						var/xp_prog_to_level = targetmind.exp_needed_to_level_up(type)
+						var/xp_req_to_level = 0
+						if (xp_prog_to_level)//is it even possible to level up?
+							xp_req_to_level = SKILL_EXP_LIST[lvl_num+1] - SKILL_EXP_LIST[lvl_num]
+						dat += "<HR><b>[S.name]</b>"
+						dat += "<br><i>[S.desc]</i>"
+						dat += "<ul><li>EMPLOYEE SKILL LEVEL: <b>[lvl_name]</b>"
+						if (exp && xp_req_to_level)
+							var/progress_percent = (xp_req_to_level-xp_prog_to_level)/xp_req_to_level
+							var/overall_percent = exp / SKILL_EXP_LIST[length(SKILL_EXP_LIST)]
+							dat += "<br>PROGRESS TO NEXT SKILL LEVEL:"
+							dat += "<br>" + num2loadingbar(progress_percent) + "([progress_percent*100])%"
+							dat += "<br>OVERALL DEVELOPMENT PROGRESS:"
+							dat += "<br>" + num2loadingbar(overall_percent) + "([overall_percent*100])%"
+						if (lvl_num >= length(SKILL_EXP_LIST) && !(type in targetmind.skills_rewarded))
+							dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
+						dat += "</li></ul>"
 			if(21)
 				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"

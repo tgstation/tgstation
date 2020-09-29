@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_PAIN_CHANCE 					15
 ///Chance for embedded object to fall out (causing pain but removing the object)
 #define EMBEDDED_ITEM_FALLOUT 					5
-///Chance for an object to embed into somebody when thrown (if it's sharp)
+///Chance for an object to embed into somebody when thrown
 #define EMBED_CHANCE							45
 ///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
 #define EMBEDDED_PAIN_MULTIPLIER				2

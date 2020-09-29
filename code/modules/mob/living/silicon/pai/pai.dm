@@ -186,7 +186,7 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
+
 	client.perspective = EYE_PERSPECTIVE
 	if(holoform)
 		client.eye = src
@@ -200,8 +200,6 @@
 	else
 		. += text("Systems nonfunctional")
 
-/mob/living/silicon/pai/restrained(ignore_grab)
-	. = FALSE
 
 // See software.dm for Topic()
 

@@ -21,6 +21,9 @@
 	var/spreadIntoAdjacentChance = 75
 	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
+
+	/// If we fail to spread this many times we stop trying to spread
+	var/max_failed_spreads = 5
 	/// Turfs where the glowshroom cannot spread to
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/lava,
@@ -92,39 +95,59 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
-	addtimer(CALLBACK(src, .proc/Spread), delay_spread)
-	addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Start decaying the plant
+
+	addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+	addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /**
   * Causes glowshroom spreading across the floor/walls.
   */
 
 /obj/structure/glowshroom/proc/Spread()
+
+	//We could be deleted at any point and the timers might not be cleaned up
+	if(QDELETED(src))
+		return
+
 	var/turf/ownturf = get_turf(src)
 	var/shrooms_planted = 0
+	var/list/possibleLocs = list()
+	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
+	//times when there's no real chance of the viewable range changing, really you could do this once on item
+	//spawn and most people probably would not notice.
+	for(var/turf/open/floor/earth in view(3,src))
+		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
+			continue
+		if(!ownturf.CanAtmosPass(earth))
+			continue
+		possibleLocs += earth
+
+	//Lets not even try to spawn again if somehow we have ZERO possible locations
+	if(!possibleLocs.len)
+		return
+
 	for(var/i in 1 to myseed.yield)
 		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
 		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
-		if(prob(max(chance_stats, chance_generation))) // Whatever is the higher chance we use it
-			var/list/possibleLocs = list()
-			var/spreadsIntoAdjacent = FALSE
 
-			if(prob(spreadIntoAdjacentChance))
-				spreadsIntoAdjacent = TRUE
+		 // Whatever is the higher chance we use it (this is really stupid as the diminishing returns are effectively pointless???)
+		if(prob(max(chance_stats, chance_generation)))
+			var/spreadsIntoAdjacent = prob(spreadIntoAdjacentChance)
+			var/turf/newLoc = null
 
-			for(var/turf/open/floor/earth in view(3,src))
-				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
-					continue
-				if(!ownturf.CanAtmosPass(earth))
-					continue
-				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
-					possibleLocs += earth
-				CHECK_TICK
+			//Try three random locations to spawn before giving up tradeoff
+			//between running view(1, earth) on every single collected possibleLoc
+			//and failing to spread if we get 3 bad picks, which should only be a problem
+			//if there's a lot of glow shroom clustered about
+			for(var/Potato in 1 to 3)
+				var/turf/possibleLoc = pick(possibleLocs)
+				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,possibleLoc))
+					newLoc = possibleLoc
+					break
 
-			if(!possibleLocs.len)
+			//We failed to find any location, skip trying to yield
+			if(newLoc == null)
 				break
-
-			var/turf/newLoc = pick(possibleLocs)
 
 			var/shroomCount = 0 //hacky
 			var/placeCount = 1
@@ -144,10 +167,14 @@
 			child.generation = generation + 1
 			shrooms_planted++
 
-			CHECK_TICK
-	if(shrooms_planted <= myseed.yield) //if we didn't get all possible shrooms planted, try again later
+	if(!shrooms_planted)
+		max_failed_spreads--
+
+	//if we didn't get all possible shrooms planted or we haven't failed to spread at least 5 times then try to spread again later
+	if( (shrooms_planted <= myseed.yield) && (max_failed_spreads >= 0)  )
 		myseed.adjust_yield(-shrooms_planted)
-		addtimer(CALLBACK(src, .proc/Spread), delay_spread)
+		//Lets make this a unique hash
+		addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
@@ -194,7 +221,7 @@
 	else // Timed decay
 		myseed.endurance -= 1
 		if (myseed.endurance > 0)
-			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
+			addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT) // Recall decay timer
 			return
 	if (myseed.endurance < 1) // Plant is gone
 		qdel(src)

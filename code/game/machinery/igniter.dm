@@ -37,8 +37,8 @@
 	update_icon()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (src.on && !(machine_stat & NOPOWER) )
-		var/turf/location = src.loc
+	if (on && !(machine_stat & NOPOWER) )
+		var/turf/location = loc
 		if (isturf(location))
 			location.hotspot_expose(1000,500,1)
 	return 1
@@ -91,17 +91,17 @@
 		icon_state = "[initial(icon_state)]-p"
 
 /obj/machinery/sparker/powered()
-	if(!disable)
+	if(disable)
 		return FALSE
 	return ..()
 
 /obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		add_fingerprint(user)
-		src.disable = !src.disable
-		if (src.disable)
+		disable = !disable
+		if (disable)
 			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
-		if (!src.disable)
+		if (!disable)
 			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
 		update_icon()
 	else
@@ -109,7 +109,7 @@
 
 /obj/machinery/sparker/attack_ai()
 	if (anchored)
-		return src.ignite()
+		return ignite()
 	else
 		return
 
@@ -117,7 +117,7 @@
 	if (!(powered()))
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if ((disable) || (last_spark && world.time < last_spark + 50))
 		return
 
 
@@ -125,7 +125,7 @@
 	spark_system.start()
 	last_spark = world.time
 	use_power(1000)
-	var/turf/location = src.loc
+	var/turf/location = loc
 	if (isturf(location))
 		location.hotspot_expose(1000,2500,1)
 	return 1

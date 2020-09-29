@@ -36,6 +36,7 @@
 	..()
 	assume_disguise(old_species, H)
 	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
+	H.set_safe_hunger_level()
 
 /datum/species/synth/on_species_loss(mob/living/carbon/human/H)
 	. = ..()

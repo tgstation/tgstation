@@ -179,8 +179,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
 		ui = new(user, src, tgui_id, filedesc)
-		ui.open()
-		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
+		if(ui.open())
+			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
 // Topic calls are automagically forwarded from NanoModule this program contains.
@@ -188,18 +188,20 @@
 // Calls beginning with "PC_" are reserved for computer handling (by whatever runs the program)
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
 /datum/computer_file/program/ui_act(action,list/params,datum/tgui/ui)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
+
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_shutdown")
 				computer.shutdown_computer()
 				ui.close()
-				return 1
+				return TRUE
 			if("PC_minimize")
 				var/mob/user = usr
 				if(!computer.active_program || !computer.all_components[MC_CPU])
