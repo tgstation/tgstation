@@ -98,6 +98,22 @@
 	if(..())
 		return
 
+/turf/open/floor/astroturf
+	name = "astroturf patch"
+	desc = "This is definitely a cheap plastic imitation."
+	icon_state = "old_grass"
+	floor_tile = /obj/item/stack/tile/astroturf
+	broken_states = list("sand")
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	var/ore_type = /obj/item/stack/ore/glass
+	var/turfverb = "uproot"
+	tiled_dirt = FALSE
+
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
 	desc = "Something about this grass makes you want to frolic. Or get high."
