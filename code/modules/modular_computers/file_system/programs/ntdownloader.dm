@@ -171,7 +171,9 @@
 				"filename" = P.filename,
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
+				"compatibility" = check_compatibility(P),
 				"size" = P.size,
+				"access" = TRUE,
 			)))
 		data["hacked_programs"] = hacked_programs
 

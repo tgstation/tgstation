@@ -43,11 +43,20 @@ export const NtosNetDownloader = (props, context) => {
           </LabeledList>
         </Section>
         <Section>
-          {downloadable_programs.map(program => (
-            <Program
-              key={program.filename}
-              program={program} />
-          ))}
+          {downloadable_programs
+            .filter(program => program.access)
+            .map(program => (
+              <Program
+                key={program.filename}
+                program={program} />
+            ))}
+          {downloadable_programs
+            .filter(program => !program.access)
+            .map(program => (
+              <Program
+                key={program.filename}
+                program={program} />
+            ))}
         </Section>
         {!!hackedavailable && (
           <Section title="UNKNOWN Software Repository">
