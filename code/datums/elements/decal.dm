@@ -4,6 +4,7 @@
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
+	var/last_dir
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255)
 	. = ..()
@@ -20,11 +21,14 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
+		last_dir = _dir
 		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
+
+	RegisterSignal(target, COMSIG_ON_SHOTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
@@ -36,7 +40,7 @@
 	return TRUE
 
 /datum/element/decal/Detach(atom/source, force)
-	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS))
+	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ON_SHOTTLE_MOVE))
 	source.update_icon()
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
@@ -61,6 +65,7 @@
 
 	if(old_dir == new_dir)
 		return
+	last_dir = new_dir
 	Detach(source)
 	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
 
@@ -76,3 +81,11 @@
 	SIGNAL_HANDLER
 
 	examine_list += description
+
+/datum/element/decal/proc/shuttle_move_react(datum/source, turf/newT)
+	SIGNAL_HANDLER
+
+	if(newT == source)
+		return
+	Detach(source)
+	newT.AddElement(/datum/element/decal, pic.icon, pic.icon_state, last_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
