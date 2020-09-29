@@ -366,3 +366,20 @@
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
 
+/obj/item/food/burger/crazy
+	name = "crazy hamburger"
+	desc = "This looks like the sort of food that a demented clown in a trenchcoat would make."
+	icon_state = "crazyburger"
+	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/condensedcapsaicin = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
+	foodtypes = GRAIN | MEAT | DAIRY
+
+/obj/item/food/burger/crazy/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
+	if(DT_PROB(2.5, delta_time))
+		var/datum/effect_system/smoke_spread/bad/green/smoke = new
+		smoke.set_up(0, src)
+		smoke.start()

@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "ac" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -33,7 +33,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ag" = (
 /obj/effect/mob_spawn/human/syndicatespace/captain,
@@ -72,7 +72,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ap" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aq" = (
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
@@ -92,7 +92,7 @@
 /obj/structure/shuttle/engine/huge{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "at" = (
 /obj/structure/chair/comfy/shuttle,
@@ -312,7 +312,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "aY" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "aZ" = (
 /turf/closed/indestructible/syndicate,
@@ -493,8 +493,8 @@
 	secure = 1
 	},
 /obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
@@ -618,8 +618,8 @@
 "bN" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/space/basic,
-/area/space/nearstation)
+/turf/template_noop,
+/area/template_noop)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -690,8 +690,8 @@
 	secure = 1
 	},
 /obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m10mm,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bZ" = (
@@ -728,7 +728,7 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cf" = (
@@ -1114,7 +1114,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "da" = (
 /obj/structure/table/reinforced,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "db" = (
@@ -1135,7 +1135,7 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/codespeak_manual/unlimited,
+/obj/item/language_manual/codespeak_manual/unlimited,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "de" = (
@@ -1196,7 +1196,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
-/area/space)
+/area/template_noop)
 "dk" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"

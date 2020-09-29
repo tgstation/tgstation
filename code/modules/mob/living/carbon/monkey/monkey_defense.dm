@@ -1,4 +1,9 @@
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+	if(M == src)
+		//monkey's currently don't have check_self_for_injuries() and this is the next best thing
+		to_chat(src, "<span class='notice'>You examine yourself.</span>")
+		M.examinate(src)
+		return
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.do_cpr(src)

@@ -656,10 +656,6 @@
 
 		..()
 
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	. = ..()
-	if(src == A)
-		check_self_for_injuries()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
@@ -717,7 +713,7 @@
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
 		var/isdisabled = ""
-		if(LB.is_disabled())
+		if(LB.bodypart_disabled)
 			isdisabled = " is disabled"
 			if(no_damage)
 				isdisabled += " but otherwise"

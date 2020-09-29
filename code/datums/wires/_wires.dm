@@ -297,7 +297,8 @@
 	return data
 
 /datum/wires/ui_act(action, params)
-	if(..() || !interactable(usr))
+	. = ..()
+	if(. || !interactable(usr))
 		return
 	var/target_wire = params["wire"]
 	var/mob/living/L = usr
