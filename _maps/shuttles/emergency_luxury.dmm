@@ -190,14 +190,14 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aH" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/copypasta{
+/obj/item/food/spaghetti/copypasta{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aI" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti{
+/obj/item/food/spaghetti/boiledspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -211,7 +211,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aK" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti{
+/obj/item/food/spaghetti/meatballspaghetti{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -274,7 +274,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "aT" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
+/obj/item/food/spaghetti/pastatomato{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,
@@ -295,7 +295,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aW" = (
-/obj/item/reagent_containers/food/snacks/spaghetti/chowmein{
+/obj/item/food/spaghetti/chowmein{
 	pixel_y = 5
 	},
 /obj/structure/table/wood/fancy/black,

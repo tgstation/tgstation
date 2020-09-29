@@ -137,10 +137,14 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(!language)
 		language = get_selected_language()
-
+	var/mob/living/carbon/human/H = src
 	if(!can_speak_vocal(message))
-		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
-		return
+		if (HAS_TRAIT(src, TRAIT_SIGN_LANG) && H.mind.miming)
+			to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
+			return
+		else
+			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
+			return
 
 	var/message_range = 7
 
@@ -231,7 +235,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			deaf_type = 2
 
 		// Create map text prior to modifying message for goonchat, sign lang edition
-		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		if (client?.prefs.chat_on_map && !(stat == UNCONSCIOUS || stat == HARD_CRIT || is_blind(src)) && (client.prefs.see_chat_non_mob || ismob(speaker)))
 			create_chat_message(speaker, message_language, raw_message, spans)
 
 		if(is_blind(src))
@@ -293,9 +297,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(M.stat != DEAD) //not dead, not important
 				continue
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
-				if(eavesdrop_range && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
-					continue
-				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				if(eavesdrop_range)
+					if(!(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+						continue
+				else if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= M
 			the_dead[M] = TRUE

@@ -229,8 +229,10 @@
 	.["current_colour"] = paint_color
 
 /obj/item/toy/crayon/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("toggle_cap")
 			if(has_cap)

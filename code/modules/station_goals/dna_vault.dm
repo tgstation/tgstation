@@ -210,8 +210,10 @@
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("gene")
 			upgrade(usr,params["choice"])

@@ -96,8 +96,9 @@
 	if(istype(target,src))
 		copy_extra_settings_to(target)
 
-///Register extra settings by overriding this.
-///extra_settings[name] = new typepath() for each extra setting
+/// Register extra settings by overriding this.
+///
+/// `extra_settings[name] = new typepath()` for each extra setting.
 /datum/nanite_program/proc/register_extra_settings()
 	return
 

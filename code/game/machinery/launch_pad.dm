@@ -356,8 +356,10 @@
 	pad.doteleport(user, sending)
 
 /obj/item/launchpad_remote/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])

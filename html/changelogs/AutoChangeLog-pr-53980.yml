@@ -1,0 +1,4 @@
+author: "Hulkamania"
+delete-after: True
+changes: 
+  - rscadd: "Other stations will now receive your emergency shuttle request reason! Tell them just how much plasma you're breathing!"

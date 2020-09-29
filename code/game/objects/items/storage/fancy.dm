@@ -146,6 +146,7 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	inhand_icon_state = "candlebox5"
+	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -172,6 +173,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
+	worn_icon_state = "cigpack"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT

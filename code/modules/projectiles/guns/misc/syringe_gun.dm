@@ -18,6 +18,7 @@
 /obj/item/gun/syringe/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
+	recharge_newshot()
 
 /obj/item/gun/syringe/handle_atom_del(atom/A)
 	. = ..()
@@ -95,6 +96,7 @@
 	force = 2 //Also very weak because it's smaller
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
+	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"

@@ -373,7 +373,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
-	do_alert_animation(src)
+	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 50, TRUE, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
 		if(faction_check_mob(M, TRUE))

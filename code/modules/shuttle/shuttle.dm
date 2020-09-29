@@ -40,7 +40,7 @@
 	// may result.
 	if(force)
 		..()
-		. = QDEL_HINT_QUEUE
+		return QDEL_HINT_QUEUE
 	else
 		return QDEL_HINT_LETMELIVE
 
@@ -57,7 +57,7 @@
 /obj/docking_port/shuttleRotate()
 	return //we don't rotate with shuttles via this code.
 
-//returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
+///returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(_dir == null)
 		_dir = dir
@@ -87,15 +87,14 @@
 		_y + (-dwidth+width-1)*sin + (-dheight+height-1)*cos
 		)
 
-//returns turfs within our projected rectangle in no particular order
+///returns turfs within our projected rectangle in no particular order
 /obj/docking_port/proc/return_turfs()
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
 	return block(T0,T1)
 
-//returns turfs within our projected rectangle in a specific order.
-//this ensures that turfs are copied over in the same order, regardless of any rotation
+///returns turfs within our projected rectangle in a specific order.this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir)
 	var/cos = 1
 	var/sin = 0
@@ -124,7 +123,9 @@
 
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
-/obj/docking_port/proc/highlight(_color)
+/obj/docking_port/proc/highlight(_color = "#f00")
+	invisibility = 0
+	layer = GHOST_LAYER
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -246,6 +247,28 @@
 		reserved_area = null
 	return ..()
 
+/obj/docking_port/stationary/picked
+	///Holds a list of map name strings for the port to pick from
+	var/list/shuttlekeys
+
+/obj/docking_port/stationary/picked/Initialize(mapload)
+	. = ..()
+	if(!LAZYLEN(shuttlekeys))
+		WARNING("Random docking port [id] loaded with no shuttle keys")
+		return
+	var/selectedid = pick(shuttlekeys)
+	roundstart_template = SSmapping.shuttle_templates[selectedid]
+
+/obj/docking_port/stationary/picked/whiteship
+	name = "Deep Space"
+	id = "whiteship_away"
+	dheight = 0
+	dir = 2
+	dwidth = 11
+	height = 22
+	width = 35
+	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta")
+
 /obj/docking_port/mobile
 	name = "shuttle"
 	icon_state = "pinonclose"
@@ -268,11 +291,9 @@
 	/// time spent after transit 'landing' before actually arriving
 	var/prearrivalTime = 0
 
-	/// The direction the shuttle prefers to travel in, ie what direction
-	/// the animation will cause it to appear to be traveling in
+	/// The direction the shuttle prefers to travel in, ie what direction the animation will cause it to appear to be traveling in
 	var/preferred_direction = NORTH
-	/// relative direction of the docking port from the front of the shuttle
-	/// NORTH is towards front, EAST would be starboard side, WEST port, etc.
+	/// relative direction of the docking port from the front of the shuttle. NORTH is towards front, EAST would be starboard side, WEST port, etc.
 	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
@@ -549,13 +570,6 @@
 	else
 		. = null
 
-/obj/effect/landmark/shuttle_import
-	name = "Shuttle Import"
-
-// Never move the shuttle import landmark, otherwise things get WEIRD
-/obj/effect/landmark/shuttle_import/onShuttleMove()
-	return FALSE
-
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	check_effects()
@@ -693,11 +707,13 @@
 			return "RCH"
 		if(SHUTTLE_PREARRIVAL)
 			return "LDN"
+		if(SHUTTLE_DISABLED)
+			return "DIS"
 	return ""
 
 // returns 5-letter timer string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getTimerStr()
-	if(mode == SHUTTLE_STRANDED)
+	if(mode == SHUTTLE_STRANDED || mode == SHUTTLE_DISABLED)
 		return "--:--"
 
 	var/timeleft = timeLeft()
@@ -724,8 +740,6 @@
 			else
 				dst = destination
 			return "In transit to [dst?.name || "unknown location"]"
-	else if(mode == SHUTTLE_RECHARGING)
-		return "[docked_at], recharging [getTimerStr()]"
 	else
 		return docked_at
 
