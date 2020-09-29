@@ -16,22 +16,23 @@
   * radium by calling a different proc.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
-	if(!ninjacost(0,N_ADRENALINE))
-		var/mob/living/carbon/human/ninja = affecting
-		ninja.SetUnconscious(0)
-		ninja.SetStun(0)
-		ninja.SetKnockdown(0)
-		ninja.SetImmobilized(0)
-		ninja.SetParalyzed(0)
-		ninja.adjustStaminaLoss(-75)
-		ninja.stuttering = 0
-		ninja.update_mobility()
-		ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
-		ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
-		a_boost = FALSE
-		to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
-		s_coold = 6
-		addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
+	if(ninjacost(0,N_ADRENALINE))
+		return
+	var/mob/living/carbon/human/ninja = affecting
+	ninja.SetUnconscious(0)
+	ninja.SetStun(0)
+	ninja.SetKnockdown(0)
+	ninja.SetImmobilized(0)
+	ninja.SetParalyzed(0)
+	ninja.adjustStaminaLoss(-75)
+	ninja.stuttering = 0
+	ninja.update_mobility()
+	ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
+	ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
+	a_boost = FALSE
+	to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
+	s_coold = 6
+	addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
 
 /**
   * Proc called to inject the ninja with radium.

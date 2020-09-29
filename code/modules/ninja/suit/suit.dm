@@ -59,11 +59,13 @@
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	. = ..()
-	if(s_initialized)
-		if(user == affecting)
-			. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\
-			"The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n"+\
-			"[a_boost?"An adrenaline boost is available to use.":"There is no adrenaline boost available.  Try refilling the suit with 20 units of radium."]"
+	if(!s_initialized)
+		return
+	if(!user == affecting)
+		return
+	. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\
+	"The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.\n"+\
+	"[a_boost?"An adrenaline boost is available to use.":"There is no adrenaline boost available.  Try refilling the suit with 20 units of radium."]"
 
 /obj/item/clothing/suit/space/space_ninja/Initialize()
 	. = ..()
@@ -107,9 +109,6 @@
 			cancel_stealth()
 
 	user.adjust_bodytemperature(BODYTEMP_NORMAL - user.bodytemperature)
-
-/obj/item/clothing/suit/space/space_ninja/get_cell()
-	return cell
 
 /obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
 	if(IS_NINJA_SUIT_INITIALIZATION(action))
@@ -182,6 +181,7 @@
   * If the person in the suit isn't a ninja when this is called, this proc just gibs them instead.
   * Arguments:
   * * ninja - The person wearing the suit.
+  * * Returns false if the locking fails due to lack of all suit parts, and true if it succeeds.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/ninja)
 	if(!istype(ninja))

@@ -12,15 +12,16 @@
   * as the target moves around, forcing a finish or flee scenario.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
-	if(!ninjacost(10))
-		var/mob/living/carbon/human/ninja = affecting
-		var/obj/item/throwing_star/stamina/ninja/ninja_star = new(ninja)
-		if(ninja.put_in_hands(ninja_star))
-			to_chat(ninja, "<span class='notice'>A throwing star has been created in your hand!</span>")
-		else
-			qdel(ninja_star)
-			to_chat(ninja, "<span class='notice'>You can't create a throwing star, your hands are full!</span>")
-		ninja.throw_mode_on() //So they can quickly throw it.
+	if(ninjacost(10))
+		return
+	var/mob/living/carbon/human/ninja = affecting
+	var/obj/item/throwing_star/stamina/ninja/ninja_star = new(ninja)
+	if(ninja.put_in_hands(ninja_star))
+		to_chat(ninja, "<span class='notice'>A throwing star has been created in your hand!</span>")
+	else
+		qdel(ninja_star)
+		to_chat(ninja, "<span class='notice'>You can't create a throwing star, your hands are full!</span>")
+	ninja.throw_mode_on() //So they can quickly throw it.
 
 /**
   * # Ninja Throwing Star

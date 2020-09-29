@@ -21,13 +21,21 @@
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/toggle_glove)
+	///Whether or not we're currently draining something
 	var/draining = FALSE
+	///Whether or not we can currently drain something
 	var/candrain = FALSE
+	///Minimum amount of power we can drain in a single drain action
 	var/mindrain = 200
+	///Maximum amount of power we can drain in a single drain action
 	var/maxdrain = 400
+	///Remaining amount of times that the gloves can be used to hyjack a cyborg
 	var/cyborg_hijacks = 1
+	///Remaining amount of times that the gloves can be used to hyjack a security console
 	var/security_console_hacks = 1
+	///Remaining amount of times that the gloves can be used to hyjack a communication console
 	var/communication_console_hacks = 1
+	///How many times the gloves have been used to force open doors.
 	var/door_hack_counter = 0
 
 

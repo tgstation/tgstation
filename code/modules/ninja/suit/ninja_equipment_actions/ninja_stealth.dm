@@ -30,6 +30,8 @@
   *
   * Called to cancel the stealth effect if it is ongoing.
   * Does nothing otherwise.
+  * Arguments:
+  * * Returns false if either the ninja no longer exists or is already visible, returns true if we successfully made the ninja visible.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
 	var/mob/living/carbon/human/ninja = affecting
