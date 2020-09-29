@@ -275,15 +275,20 @@
 	tile_covered = intact
 	AM.update_icon()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/O, new_layer = DUCT_LAYER_DEFAULT)
-	disable()
-
+/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/O, new_layer = DUCT_LAYER_DEFAULT)
 	ducting_layer = new_layer
+
+	if(ismovable(parent))
+		var/atom/movable/AM = parent
+		AM.update_icon()
 
 	if(O)
 		playsound(O, 'sound/items/ratchet.ogg', 5, TRUE) //sound
 
-	enable()
+	//quickly disconnect and reconnect the network.
+	if(active)
+		disable()
+		enable()
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
