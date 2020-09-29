@@ -1128,7 +1128,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_SCARIFY,
 									ADMIN_PUNISHMENT_SHOES,
 									ADMIN_PUNISHMENT_DOCK,
-									ADMIN_PUNISHMENT_BREAD
+									ADMIN_PUNISHMENT_BREAD,
+									ADMIN_PUNISHMENT_BADLUCK
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1325,6 +1326,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
 			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
+		if(ADMIN_PUNISHMENT_BADLUCK)
+			if(!isliving(target))
+				to_chat(usr, "<span class='warning'>This must be used on a /mob/living type of mob.</span>", confidential = TRUE)
+				return
+			var/silent = alert("Do you want to apply the omen with a player notification?", "Notify Player?", "Notify", "Silent") == "Silent"
+			var/permanent = alert("Would you like this to be permanent or removed automatically after the first accident?", "Permanent?", "Permanent", "Temporary") == "Permanent"
+			target.AddComponent(/datum/component/omen, silent, null, permanent)
 
 	punish_log(target, punishment)
 

@@ -1139,7 +1139,7 @@
 	return TRUE
 
 
-/obj/machinery/door/airlock/close(forced=0)
+/obj/machinery/door/airlock/close(forced = FALSE, force_crush = FALSE)
 	if(operating || welded || locked || seal)
 		return
 	if(density)
@@ -1147,7 +1147,9 @@
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
 			return
-	if(safe)
+
+	var/dangerous_close = !safe || force_crush
+	if(!dangerous_close)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
@@ -1178,7 +1180,7 @@
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(4)
-	if(!safe)
+	if(dangerous_close)
 		crush()
 	if(visible && !glass)
 		set_opacity(1)
@@ -1187,7 +1189,7 @@
 	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
-	if(safe)
+	if(!dangerous_close)
 		CheckForMobs()
 	return TRUE
 
