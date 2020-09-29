@@ -33,7 +33,7 @@
 	return TRUE
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.stat || M.restrained())
+	if(M.stat != CONSCIOUS || HAS_TRAIT(M, TRAIT_HANDS_BLOCKED))
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/L = dropping

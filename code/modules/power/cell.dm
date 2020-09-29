@@ -1,6 +1,6 @@
-#define CELL_DRAIN_TIME 20
-#define CELL_POWER_GAIN 3
-#define CELL_POWER_DRAIN 100
+#define CELL_DRAIN_TIME 35
+#define CELL_POWER_GAIN 60
+#define CELL_POWER_DRAIN 750
 
 /obj/item/stock_parts/cell
 	name = "power cell"
@@ -168,13 +168,13 @@
 		if(stomach.crystal_charge > charge_limit)
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
-		to_chat(H, "<span class='notice'>You clumsily channel power through [src] and into your body, wasting some in the process.</span>")
+		to_chat(H, "<span class='notice'>You begin clumsily channeling power from [src] into your body.</span>")
 		E.drain_time = world.time + CELL_DRAIN_TIME
 		if(do_after(user, CELL_DRAIN_TIME, target = src))
 			if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
 				return
 			if(istype(stomach))
-				to_chat(H, "<span class='notice'>You receive some charge from [src].</span>")
+				to_chat(H, "<span class='notice'>You receive some charge from [src], wasting some in the process.</span>")
 				stomach.adjust_charge(CELL_POWER_GAIN)
 				charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
 			else

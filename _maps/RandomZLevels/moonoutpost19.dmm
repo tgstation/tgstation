@@ -5812,7 +5812,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mB" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (

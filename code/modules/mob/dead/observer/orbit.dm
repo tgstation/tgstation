@@ -47,13 +47,16 @@
 		var/mob/M = poi
 		if (istype(M))
 			if (isobserver(M))
+				var/number_of_orbiters = length(M.get_all_orbiters())
+				if (number_of_orbiters)
+					serialized["orbiters"] = number_of_orbiters
 				ghosts += list(serialized)
 			else if (M.stat == DEAD)
 				dead += list(serialized)
 			else if (M.mind == null)
 				npcs += list(serialized)
 			else
-				var/number_of_orbiters = M.orbiters?.orbiter_list?.len
+				var/number_of_orbiters = length(M.get_all_orbiters())
 				if (number_of_orbiters)
 					serialized["orbiters"] = number_of_orbiters
 
