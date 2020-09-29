@@ -221,6 +221,7 @@
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aI" = (
 /obj/structure/table/reinforced,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "aJ" = (
@@ -505,15 +506,13 @@
 /area/ruin/space/has_grav/hellfactory)
 "bz" = (
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "bA" = (
 /obj/structure/closet/crate,
-/obj/item/stack/package_wrap,
+/obj/effect/spawner/lootdrop/space/languagebook,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "bB" = (
@@ -611,8 +610,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/stack/sheet/mineral/wood/fifty,
-/obj/item/plunger,
+/obj/effect/spawner/lootdrop/space/languagebook,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bP" = (
@@ -731,11 +729,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
-"cg" = (
-/obj/structure/closet/crate,
-/obj/item/stack/ore/glass,
-/turf/open/floor/plasteel,
-/area/ruin/space/has_grav/hellfactory)
 "ch" = (
 /obj/machinery/light{
 	dir = 8
@@ -751,7 +744,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cj" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/cloth/five,
+/obj/effect/spawner/lootdrop/space/material,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)
 "ck" = (
@@ -1609,7 +1602,7 @@ aA
 aB
 ab
 GE
-cg
+cj
 cj
 by
 Sz

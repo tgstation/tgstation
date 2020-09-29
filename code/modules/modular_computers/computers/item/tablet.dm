@@ -116,6 +116,10 @@
 
 //Overrides the ui_act to make the flashlight controls link to the borg instead
 /obj/item/modular_computer/tablet/integrated/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if("PC_toggle_light")
 			if(!borgo)

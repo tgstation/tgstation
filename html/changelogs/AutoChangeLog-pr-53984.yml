@@ -1,0 +1,5 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - tweak: "Ethereal power capacity and interactions with power sources has been scaled upwards. Ethereals will now have a more significant impact upon the sources they choose to receive power from."
+  - balance: "The time it takes for an ethereal to drain a power cell has been increased a little, and the time for lights has been decreased a little."

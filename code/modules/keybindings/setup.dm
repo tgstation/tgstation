@@ -22,8 +22,7 @@
 	set waitfor = FALSE
 
 	//Reset the buffer
-	for(var/key in keys_held)
-		keyUp(key)
+	reset_held_keys()
 
 	erase_all_macros()
 

@@ -63,7 +63,8 @@
 	return data
 
 /datum/language_menu/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/user = usr
 	var/atom/movable/AM = language_holder.get_atom()
