@@ -384,6 +384,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	if(!(mobility_flags & MOBILITY_USE)) // If can't use items, you can't press the button
+		to_chat(src, "<span class='warning'>You can't use the radio now!</span>")
 		return TRUE
 	var/obj/item/implant/radio/imp = locate() in src
 	if(imp && imp.radio.on)
