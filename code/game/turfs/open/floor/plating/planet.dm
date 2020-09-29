@@ -46,6 +46,7 @@
 	planetary_atmos = TRUE
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
+	base_icon_state = "junglegrass"
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
 
 /turf/closed/mineral/random/jungle
