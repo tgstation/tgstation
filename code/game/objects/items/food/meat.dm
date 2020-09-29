@@ -784,7 +784,7 @@
 		filling.color = original_slab.slab_color
 		add_overlay(filling)
 		name = "raw [original_atom.name] cutlet"
-		meat_type = name
+		meat_type = original_atom.name
 
 /obj/item/food/meat/rawcutlet/plain
     foodtypes = MEAT
