@@ -19,8 +19,6 @@
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
-	/// Can items fit in the folded instance. Subtypes that have type-specific restrictions still want to set this to TRUE to avoid double messages.
-	var/foldedbag_can_store = FALSE
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -70,19 +68,40 @@
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-		if(!ishuman(usr))
+		if(!attempt_fold(usr))
 			return
-		if(opened)
-			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
-			return
-		if(contents.len && !foldedbag_can_store)
-			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
-			return
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-		usr.put_in_hands(B)
+		perform_fold(usr)
 		qdel(src)
 
+		/**
+		  * Checks to see if we can fold. Return TRUE to actually perform the fold and delete.
+			*
+		  * Arguments:
+		  * * the_folder - over_object of MouseDrop aka usr
+		  */
+/obj/structure/closet/body_bag/proc/attempt_fold(mob/living/carbon/human/the_folder)
+	. = FALSE
+	if(!istype(the_folder))
+		return
+	if(opened)
+		to_chat(the_folder, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+		return
+	if(contents.len)
+		to_chat(the_folder, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
+		return
+	// toto we made it!
+	return TRUE
+
+	/**
+		* Performs the actual folding. Deleting is automatic, please do not include.
+		*
+		* Arguments:
+		* * the_folder - over_object of MouseDrop aka usr
+		*/
+/obj/structure/closet/body_bag/proc/perform_fold(mob/living/carbon/human/the_folder)
+	visible_message("<span class='notice'>[usr] folds up [src].</span>")
+	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
+	the_folder.put_in_hands(B)
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"
@@ -92,36 +111,38 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
-	foldedbag_can_store = TRUE
 
-/obj/structure/closet/body_bag/bluespace/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
-		if(!ishuman(usr))
-			return
-		if(opened)
-			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
-			return
-		if(contents.len >= mob_storage_capacity / 2)
-			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
-			return
-		for(var/obj/item/bodybag/bluespace/B in src)
-			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
-			return
-		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-		var/max_weight_of_contents = NONE
-		for(var/atom/movable/A in contents)
-			A.forceMove(B)
-			if(isliving(A))
-				to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
-			if(!isitem(A))
-				max_weight_of_contents = max(WEIGHT_CLASS_BULKY,max_weight_of_contents)
-				continue
-			var/obj/item/A_is_item = A
-			if(A_is_item.w_class < max_weight_of_contents)
-				continue
-			max_weight_of_contents = A_is_item.w_class
-		B.w_class = max_weight_of_contents
-		usr.put_in_hands(B)
-		qdel(src)
+/obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
+	. = FALSE
+	//copypaste zone, we do not want the content check so we don't want inheritance
+	if(!istype(the_folder))
+		return
+	if(opened)
+		to_chat(the_folder, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+		return
+	//end copypaste zone
+	if(contents.len >= mob_storage_capacity / 2)
+		to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
+		return
+	for(var/obj/item/bodybag/bluespace/B in src)
+		to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
+		return
+	return TRUE
+
+/obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
+	visible_message("<span class='notice'>[usr] folds up [src].</span>")
+	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
+	var/max_weight_of_contents = NONE
+	for(var/atom/movable/A in contents)
+		A.forceMove(B)
+		if(isliving(A))
+			to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
+		if(!isitem(A))
+			max_weight_of_contents = max(WEIGHT_CLASS_BULKY,max_weight_of_contents)
+			continue
+		var/obj/item/A_is_item = A
+		if(A_is_item.w_class < max_weight_of_contents)
+			continue
+		max_weight_of_contents = A_is_item.w_class
+	B.w_class = max_weight_of_contents
+	usr.put_in_hands(B)
