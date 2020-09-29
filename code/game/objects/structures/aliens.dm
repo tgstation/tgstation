@@ -108,7 +108,6 @@
  */
 
 #define NODERANGE 3
-#define WEED_ICON "weed"
 
 /obj/structure/alien/weeds
 	gender = PLURAL
@@ -150,6 +149,7 @@
 
 ///Randomizes the weeds' starting icon, gets redefined by children for them not to share the behavior.
 /obj/structure/alien/weeds/proc/set_base_icon()
+	. = base_icon_state
 	switch(rand(1,3))
 		if(1)
 			icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
@@ -160,7 +160,7 @@
 		if(3)
 			icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 			base_icon_state = "weeds3"
-	icon = "[base_icon_state]-[smoothing_junction]"
+	set_smoothed_icon_state(smoothing_junction)
 
 
 /obj/structure/alien/weeds/proc/expand()

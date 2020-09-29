@@ -316,14 +316,12 @@ DEFINE_BITFIELD(smoothing_junction, list(
 */
 /atom/proc/bitmask_smooth()
 	var/new_junction = NONE
-	. = smoothing_junction
 
 	for(var/direction in GLOB.cardinals) //Cardinal case first.
 		SET_ADJ_IN_DIR(src, new_junction, direction, direction)
 
 	if(!(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
-		smoothing_junction = new_junction
-		icon_state = "[base_icon_state]-[new_junction]"
+		set_smoothed_icon_state(new_junction)
 		return
 
 	if(new_junction & NORTH_JUNCTION)
@@ -340,19 +338,28 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		if(new_junction & EAST_JUNCTION)
 			SET_ADJ_IN_DIR(src, new_junction, SOUTHEAST, SOUTHEAST_JUNCTION)
 
-	smoothing_junction = new_junction
-	set_smoothed_icon_state(.)
+	set_smoothed_icon_state(new_junction)
 
 
 ///Changes the icon state based on the new junction bitmask.
-/atom/proc/set_smoothed_icon_state(old_junction)
+/atom/proc/set_smoothed_icon_state(new_junction)
+	smoothing_junction = new_junction
 	icon_state = "[base_icon_state]-[smoothing_junction]"
 
 
-/turf/closed/set_smoothed_icon_state(old_junction)
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && old_junction != smoothing_junction)
+/turf/closed/set_smoothed_icon_state(new_junction)
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && new_junction != smoothing_junction)
 		switch(smoothing_junction)
-			if(NORTH_JUNCTION|WEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION, NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION, NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION, SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION, SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION)
+			if(
+				NORTH_JUNCTION|WEST_JUNCTION,
+				NORTH_JUNCTION|EAST_JUNCTION,
+				SOUTH_JUNCTION|WEST_JUNCTION,
+				SOUTH_JUNCTION|EAST_JUNCTION,
+				NORTH_JUNCTION|WEST_JUNCTION|NORTHWEST_JUNCTION,
+				NORTH_JUNCTION|EAST_JUNCTION|NORTHEAST_JUNCTION,
+				SOUTH_JUNCTION|WEST_JUNCTION|SOUTHWEST_JUNCTION,
+				SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION
+				)
 				icon_state = "[base_icon_state]-[smoothing_junction]-d"
 				if(!fixed_underlay) // Mutable underlays?
 					var/junction_dir = reverse_ndir(smoothing_junction)
@@ -371,7 +378,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	return ..()
 
 
-/turf/open/floor/set_smoothed_icon_state(old_junction)
+/turf/open/floor/set_smoothed_icon_state(new_junction)
 	if(broken || burnt)
 		return
 	return ..()
