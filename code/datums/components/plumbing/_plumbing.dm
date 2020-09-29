@@ -36,6 +36,7 @@
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
 	if(start)
 		//timer 0 so it can finish returning initialize, after which we're added to the parent.
@@ -273,6 +274,16 @@
 
 	tile_covered = intact
 	AM.update_icon()
+
+/datum/component/plumbing/proc/change_ducting_layer(obj/O, new_layer = DUCT_LAYER_DEFAULT)
+	disable()
+
+	ducting_layer = new_layer
+
+	if(O)
+		playsound(O, 'sound/items/ratchet.ogg', 5, TRUE) //sound
+
+	enable()
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
