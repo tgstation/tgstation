@@ -310,6 +310,7 @@
 /obj/item/nullrod/claymore
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
+	worn_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "holy claymore"
@@ -336,7 +337,7 @@
 	inhand_y_dimension = 64
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -354,6 +355,7 @@
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = ITEM_SLOT_BELT
@@ -588,6 +590,7 @@
 	desc = "What a terrible night to be on Space Station 13."
 	icon_state = "chain"
 	inhand_icon_state = "chain"
+	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT

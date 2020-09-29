@@ -355,11 +355,6 @@
 	taste_description = "salt"
 	penetrates_skin = NONE
 
-/datum/reagent/consumable/sodiumchloride/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	if(exposed_mob.has_bane(BANE_SALT))
-		exposed_mob.mind.disrupt_spells(-200)
-
 /datum/reagent/consumable/sodiumchloride/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))

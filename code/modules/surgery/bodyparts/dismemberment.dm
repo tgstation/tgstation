@@ -5,11 +5,9 @@
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
-	if(!owner)
+	if(!owner || !dismemberable)
 		return FALSE
 	var/mob/living/carbon/C = owner
-	if(!dismemberable)
-		return FALSE
 	if(C.status_flags & GODMODE)
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
@@ -77,74 +75,75 @@
 
 
 
-//limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
+///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
 		return
 	var/atom/Tsec = owner.drop_location()
-	var/mob/living/carbon/C = owner
-	SEND_SIGNAL(C, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
+
+	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	update_limb(1)
-	C.remove_bodypart(src)
+	owner.remove_bodypart(src)
 
 	if(held_index)
-		if(C.hand_bodyparts[held_index] == src)
+		if(owner.hand_bodyparts[held_index] == src)
 			// We only want to do this if the limb being removed is the active hand part.
 			// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
-			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
-			C.hand_bodyparts[held_index] = null
+			owner.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
+			owner.hand_bodyparts[held_index] = null
+
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		W.remove_wound(TRUE)
 
 	for(var/thing in scars)
 		var/datum/scar/S = thing
 		S.victim = null
 		LAZYREMOVE(owner.all_scars, S)
 
-	for(var/thing in wounds)
-		var/datum/wound/W = thing
-		W.remove_wound(TRUE)
-
+	var/mob/living/carbon/phantom_owner = owner // so we can still refer to the guy who lost their limb after said limb forgets 'em
 	owner = null
 
-	for(var/X in C.surgeries) //if we had an ongoing surgery on that limb, we stop it.
+	for(var/X in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
 		var/datum/surgery/S = X
 		if(S.operated_bodypart == src)
-			C.surgeries -= S
+			phantom_owner.surgeries -= S
 			qdel(S)
 			break
 
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
 		I.forceMove(src)
-	if(!C.has_embedded_objects())
-		C.clear_alert("embeddedobject")
-		SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	if(!phantom_owner.has_embedded_objects())
+		phantom_owner.clear_alert("embeddedobject")
+		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 	if(!special)
-		if(C.dna)
-			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
+		if(phantom_owner.dna)
+			for(var/X in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					C.dna.force_lose(MT)
+					phantom_owner.dna.force_lose(MT)
 
-		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
+		for(var/X in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
 			var/org_zone = check_zone(O.zone)
 			if(org_zone != body_zone)
 				continue
-			O.transfer_to_limb(src, C)
+			O.transfer_to_limb(src, phantom_owner)
 
 	update_icon_dropped()
-	C.update_health_hud() //update the healthdoll
-	C.update_body()
-	C.update_hair()
-	C.update_mobility()
+	phantom_owner.update_health_hud() //update the healthdoll
+	phantom_owner.update_body()
+	phantom_owner.update_hair()
+	phantom_owner.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
 		return
 
 	if(is_pseudopart)
-		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
+		drop_organs(phantom_owner)	//Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
 		return
 
@@ -359,14 +358,19 @@
 	for(var/obj/item/organ/O in contents)
 		O.Insert(C)
 
-	for(var/thing in scars)
-		var/datum/scar/S = thing
-		S.victim = C
-		LAZYADD(C.all_scars, thing)
-
 	for(var/i in wounds)
 		var/datum/wound/W = i
+		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
+		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
+		LAZYREMOVE(wounds, W)
 		W.apply_wound(src, TRUE)
+
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		if(S in C.all_scars) // prevent double scars from happening for whatever reason
+			continue
+		S.victim = C
+		LAZYADD(C.all_scars, thing)
 
 	update_bodypart_damage_state()
 

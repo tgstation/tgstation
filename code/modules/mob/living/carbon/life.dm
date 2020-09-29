@@ -136,6 +136,8 @@
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
+		failed_last_breath = FALSE
+		clear_alert("not_enough_oxy")
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -150,7 +152,7 @@
 			return FALSE
 		adjustOxyLoss(1)
 
-		failed_last_breath = 1
+		failed_last_breath = TRUE
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return FALSE
 
@@ -176,15 +178,15 @@
 		if(O2_partialpressure > 0)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
-			failed_last_breath = 1
+			failed_last_breath = TRUE
 			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
-			failed_last_breath = 1
+			failed_last_breath = TRUE
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
-		failed_last_breath = 0
+		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]

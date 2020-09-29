@@ -39,7 +39,8 @@
 	..()
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PRG_target_relay")

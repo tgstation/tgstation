@@ -208,7 +208,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used for limbs.
 #define TRAIT_DISABLED_BY_WOUND		"disabled-by-wound"
 
-///Used for managing KEEP_TOGETHER in [appearance_flags]
+///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
 
 // item traits

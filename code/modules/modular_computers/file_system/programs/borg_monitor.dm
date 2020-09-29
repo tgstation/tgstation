@@ -43,7 +43,8 @@
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -54,10 +55,14 @@
 			var/ID = checkID()
 			if(!ID)
 				return
+			if(R.stat == DEAD) //Dead borgs will listen to you no longer
+				to_chat(usr, "<span class='warn'>Error -- Could not open a connection to unit:[R]</span>")
 			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
 			if(!message)
 				return
 			to_chat(R, "<br><br><span class='notice'>Message from [ID] -- \"[message]\"</span><br>")
+			to_chat(usr, "Message sent to [R]: [message]")
+			R.logevent("Message from [ID] -- \"[message]\"")
 			SEND_SOUND(R, 'sound/machines/twobeep_high.ogg')
 			if(R.connected_ai)
 				to_chat(R.connected_ai, "<br><br><span class='notice'>Message from [ID] to [R] -- \"[message]\"</span><br>")
