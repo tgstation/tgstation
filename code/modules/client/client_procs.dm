@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				return
 
 	if(SSinput.initialized)
-		update_special_keybinds()
+		set_macros()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
