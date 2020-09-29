@@ -16,6 +16,8 @@
 #define COMSIG_KB_ADMIN_READMIN_DOWN "keybinding_admin_readmin_down"
 
 //Carbon
+#define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_DOWN "keybinding_carbon_holdrunmoveintent_down"
+#define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_UP "keybinding_carbon_holdrunmoveintent_up"
 #define COMSIG_KB_CARBON_TOGGLETHROWMODE_DOWN "keybinding_carbon_togglethrowmode_down"
 #define COMSIG_KB_CARBON_HOLDTHROWMODE_DOWN "keybinding_carbon_holdthrowmode_down"
 #define COMSIG_KB_CARBON_SELECTHELPINTENT_DOWN "keybinding_carbon_selecthelpintent_down"
