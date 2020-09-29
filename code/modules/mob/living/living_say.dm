@@ -383,9 +383,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return message
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
-	if(!(mobility_flags & MOBILITY_USE)) // If can't use items, you can't press the button
-		to_chat(src, "<span class='warning'>You can't use the radio now!</span>")
-		return TRUE
+	if((message_mods[MODE_HEADSET] || message_mods[RADIO_EXTENSION]) && !(mobility_flags & MOBILITY_USE)) // If can't use items, you can't press the button
+		to_chat(src, "<span class='warning'>You can't use the radio right now!</span>")
+		return ITALICS | REDUCE_RANGE
 	var/obj/item/implant/radio/imp = locate() in src
 	if(imp && imp.radio.on)
 		if(message_mods[MODE_HEADSET])
