@@ -101,24 +101,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/notadded = list()
 	for (var/name in GLOB.keybindings_by_name)
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
-		if(!length(user_binds[kb.name])) // key is not unbound and not bound to anything
-			var/addedbind = FALSE
-			if(hotkeys)
-				for(var/hotkeytobind in kb.classic_keys)
-					if(!length(key_bindings[hotkeytobind]))
-						LAZYADD(key_bindings[hotkeytobind], kb.name)
-						addedbind = TRUE
-			else
-				for(var/classickeytobind in kb.classic_keys)
-					if(!length(key_bindings[classickeytobind]))
-						LAZYADD(key_bindings[classickeytobind], kb.name)
-						addedbind = TRUE
-			if(!addedbind)
-				notadded += kb
+		if(length(user_binds[kb.name]))
+			continue // key is unbound and or bound to something
+		var/addedbind = FALSE
+		if(hotkeys)
+			for(var/hotkeytobind in kb.classic_keys)
+				if(!length(key_bindings[hotkeytobind]))
+					LAZYADD(key_bindings[hotkeytobind], kb.name)
+					addedbind = TRUE
+		else
+			for(var/classickeytobind in kb.classic_keys)
+				if(!length(key_bindings[classickeytobind]))
+					LAZYADD(key_bindings[classickeytobind], kb.name)
+					addedbind = TRUE
+		if(!addedbind)
+			notadded += kb
 	if(length(notadded))
-		to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!</span>")
-		to_chat(parent, "<span class='userdanger'>There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences</span>")
-		to_chat(parent, "<span class='userdanger'><a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
+		to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n
+		There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n
+		<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
 		for(var/item in notadded)
 			var/datum/keybinding/conflicted = item
 			to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating")
