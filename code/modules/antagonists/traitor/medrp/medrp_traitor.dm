@@ -4,6 +4,7 @@
 //2. Gives them refreshing objectives so they can continually antagonize the round.
 
 /datum/antagonist/traitor/roleplay
+	name = "MRP Traitor"
 	var/role_title = "Bugged Antagonist. Report this!"
 	var/hijacking
 
