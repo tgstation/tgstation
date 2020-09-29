@@ -7,7 +7,9 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
+	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
+	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
 
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
@@ -18,9 +20,22 @@
 	var/mob/living/ninja = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, ninja)
 
+/**
+  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
+  *
+  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
+  * Arguments:
+  * * ninja - The human to receive the gear
+  * * Returns a proc call on the given human which will equip them with all the gear.
+  */
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
 	return ninja.equipOutfit(/datum/outfit/ninja)
 
+/**
+  * Proc that adds the proper memories to the antag datum
+  *
+  * Proc that adds the ninja starting memories to the owner of the antagonist datum.
+  */
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
 	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
@@ -29,10 +44,11 @@
 	explanation_text = "Use your gloves to convert a cyborg to aide you in sabotaging the station."
 	
 /datum/objective/door_jack
+	///How many doors that need to be opened using the gloves to pass the objective
 	var/doors_required = 0
 
 /datum/objective/plant_explosive
-	var/area/detonation_location = null
+	var/area/detonation_location
 
 /datum/objective/security_scramble
 	explanation_text = "Use your gloves on a security console to set everyone to arrest.  Note that the AI will be alerted once you begin!"
@@ -40,6 +56,11 @@
 /datum/objective/terror_message
 	explanation_text = "Use your gloves on a communication console to announce a fake warning from Centcom."
 
+/**
+  * Proc that adds all the ninja's objectives to the antag datum.
+  *
+  * Proc that adds all the ninja's objectives to the antag datum.  Called when the datum is gained.
+  */
 /datum/antagonist/ninja/proc/addObjectives()
 	//Cyborg Hijack: Flag set to complete in the DrainAct in ninjaDrainAct.dm
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
@@ -81,11 +102,6 @@
 	var/datum/objective/survival = new /datum/objective/survive()
 	survival.owner = owner
 	objectives += survival
-
-/proc/remove_ninja(mob/living/ninja)
-	var/datum/antagonist/datum = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	datum.on_removal()
-	return TRUE
 
 /datum/antagonist/ninja/greet()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
