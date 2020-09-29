@@ -731,19 +731,20 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
+	if(!module.breakable_modules)
+		return
 
 	/// the current percent health of the robot (-1 to 1)
 	var/percent_hp = health/maxHealth
 	if(health <= previous_health) //if change in health is negative (we're losing hp)
-		if(module.breakable_modules)
-			if(percent_hp <= 0.5)
-				break_cyborg_slot(3)
+		if(percent_hp <= 0.5)
+			break_cyborg_slot(3)
 
-			if(percent_hp <= 0)
-				break_cyborg_slot(2)
+		if(percent_hp <= 0)
+			break_cyborg_slot(2)
 
-			if(percent_hp <= -0.5)
-				break_cyborg_slot(1)
+		if(percent_hp <= -0.5)
+			break_cyborg_slot(1)
 
 	else //if change in health is positive (we're gaining hp)
 		if(percent_hp >= 0.5)
