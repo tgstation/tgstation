@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Whiteships no longer lose their GPS signal when their bridge consoles get deconstructed and rebuilt."
