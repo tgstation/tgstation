@@ -3,15 +3,11 @@
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=2000)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
-
-/obj/item/gun/energy/laser/rifle
-	desc = "An older model laser gun that fires concentrated beams of light which pass through glass and thin metal. There are many better options, but Nanotrasen enjoys the cheap production cost."
-	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"

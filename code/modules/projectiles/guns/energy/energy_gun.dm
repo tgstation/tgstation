@@ -2,6 +2,7 @@
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = 1
@@ -10,10 +11,6 @@
 	flight_x_offset = 15
 	flight_y_offset = 10
 	dual_wield_spread = 60
-
-/obj/item/gun/energy/e_gun/rifle
-	desc = "A bulky hybrid energy gun with two settings: disable and kill."
-	w_class = WEIGHT_CLASS_BULKY //no two hand required because lasers don't have knockback
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
@@ -71,6 +68,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
+	w_class = WEIGHT_CLASS_NORMAL
 	can_flashlight = FALSE
 	ammo_x_offset = 1
 
