@@ -72,7 +72,7 @@
 			. += "<span class='notice'>The Syndicate have graciously given one of their uplinks to see if we are worthy.</span>"
 		if("Cybersun Industries")
 			. += "<span class='userdanger'>You are from Cybersun Industries.</span>"
-			. += "<span class='big bold'>All other syndicate operatives are not to be trusted. Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted.</span>"
+			. += "<span class='big bold'>Fellow Cybersun operatives are to be trusted. Members of the MI13 organization can be trusted. All other syndicate operatives are not to be trusted. </span>"
 			. += "<span class='warning'>Do not establish substantial presence on the designated facility, as larger incidents are harder to cover up.</span>"
 			. += "<span class='notice'>You have been supplied the tools for the job in the form of a standard syndicate uplink.</span>"
 		if("MI13")
