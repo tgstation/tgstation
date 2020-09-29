@@ -1162,7 +1162,7 @@
 	if (!client)
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(client?.hotkeys_held["shift_click_interact"]) //mouse shit is hardcoded, make this non hard-coded once we get held-hotkeys over held-keys and make an examine hotkey. thanks.
+	if(client?.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 	else if (ismecha(loc))
 		var/obj/vehicle/sealed/mecha/M = loc
