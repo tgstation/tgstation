@@ -27,7 +27,6 @@
 	var/chem_recharge_rate = 1
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
-	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/was_absorbed = FALSE //if they were absorbed by another ling already.
 	var/isabsorbing = FALSE
@@ -62,28 +61,12 @@
 	QDEL_NULL(emporium_action)
 	. = ..()
 
-/datum/antagonist/changeling/proc/generate_name()
-	var/honorific
-	if(owner.current.gender == FEMALE)
-		honorific = "Ms."
-	else if(owner.current.gender == MALE)
-		honorific = "Mr."
-	else
-		honorific = "Mx."
-	if(GLOB.possible_changeling_IDs.len)
-		changelingID = pick(GLOB.possible_changeling_IDs)
-		GLOB.possible_changeling_IDs -= changelingID
-		changelingID = "[honorific] [changelingID]"
-	else
-		changelingID = "[honorific] [rand(1,999)]"
-
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
 	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
-	generate_name()
 	create_actions()
 	reset_powers()
 	create_initial_profile()
@@ -383,7 +366,7 @@
 
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
-		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
+		to_chat(owner.current, "<span class='boldannounce'>You are a changeling! You have absorbed and taken the form of a human.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -468,7 +451,7 @@
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
-	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [changelingID], a changeling!</span>")
+	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are a changeling!</span>")
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()
@@ -552,7 +535,6 @@
 	parts += printplayer(owner)
 
 	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-	parts += "<b>Changeling ID:</b> [changelingID]."
 	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
 	parts += " "
 	if(objectives.len)
@@ -571,9 +553,6 @@
 		parts += "<span class='redtext'>The changeling has failed.</span>"
 
 	return parts.Join("<br>")
-
-/datum/antagonist/changeling/antag_listing_name()
-	return ..() + "([changelingID])"
 
 /datum/antagonist/changeling/xenobio/antag_listing_name()
 	return ..() + "(Xenobio)"
