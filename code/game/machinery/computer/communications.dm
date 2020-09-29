@@ -485,7 +485,7 @@
 						for(var/server in cross_servers)
 							if(server == our_id)
 								continue
-							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver=all;cross_dest=[server]'>Send a message to station in [server] sector.</A> \]"
+							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver;cross_dest=[server]'>Send a message to station in [server] sector.</A> \]"
 						if(cross_servers.len > 2)
 							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver;cross_dest=all'>Send a message to all allied stations</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
