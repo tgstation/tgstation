@@ -44195,12 +44195,12 @@
 /area/engine/engineering)
 "coS" = (
 /obj/structure/rack,
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/laser/rifle,
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
 	pixel_x = 3;
 	pixel_y = -3
 	},

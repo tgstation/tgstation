@@ -315,9 +315,9 @@
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns. Requires Security access to open."
 	cost = 2000
-	contains = list(/obj/item/gun/energy/laser/rifle,
-					/obj/item/gun/energy/laser/rifle,
-					/obj/item/gun/energy/laser/rifle)
+	contains = list(/obj/item/gun/energy/laser,
+					/obj/item/gun/energy/laser,
+					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
 
 

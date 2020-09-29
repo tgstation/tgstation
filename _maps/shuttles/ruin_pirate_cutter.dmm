@@ -165,7 +165,7 @@
 	icon_state = "right";
 	name = "Weapon Storage"
 	},
-/obj/item/gun/energy/laser/rifle,
+/obj/item/gun/energy/laser,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

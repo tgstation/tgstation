@@ -534,11 +534,11 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser{
 	pixel_y = 3
 	},
 /obj/machinery/recharger,
@@ -567,11 +567,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/item/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser{
 	pixel_y = 3
 	},
 /turf/open/floor/pod/light,
