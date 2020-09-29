@@ -590,13 +590,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		send2otherserver(source,final)
 
 /// Sends a message to other servers.
-/proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
+/proc/send2otherserver(source, msg, type = "Ahelp", target_servers, list/additional_data)
 	if(!CONFIG_GET(string/comms_key))
 		debug_world_log("Server cross-comms message not sent for lack of configured key")
 		return
 
 	var/our_id = CONFIG_GET(string/cross_comms_name)
-	var/list/message = list()
+	var/list/message = additional_data != null ? additional_data : list()
 	message["message_sender"] = source
 	message["message"] = msg
 	message["source"] = "([our_id])"

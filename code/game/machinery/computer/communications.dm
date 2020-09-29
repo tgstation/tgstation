@@ -138,13 +138,14 @@
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-				if(dest == "all")
-					send2otherserver("[station_name()]", input,"Comms_Console")
-				else
-					send2otherserver("[station_name()]", input,"Comms_Console", list(dest))
+				var/payload = list()
+				var/network_name = CONFIG_GET(string/cross_comms_network)
+				if (network_name)
+					payload["network"] = network_name
+				send2otherserver("[station_name()]", input,"Comms_Console", dest == "all" ? null : list(dest), additional_data = payload)
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
-				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
 				deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type=DEADCHAT_ANNOUNCEMENT)
 				CM.lastTimeUsed = world.time
 
