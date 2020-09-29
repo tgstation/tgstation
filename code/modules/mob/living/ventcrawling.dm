@@ -11,11 +11,11 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(stat)
 		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
 		return
-	if(IsStun() || IsParalyzed())
-		to_chat(src, "<span class='warning'>You can't vent crawl while you're stunned!</span>")
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+		to_chat(src, "<span class='warning'>You can't move into the vent!</span>")
 		return
-	if(restrained())
-		to_chat(src, "<span class='warning'>You can't vent crawl while you're restrained!</span>")
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		to_chat(src, "<span class='warning'>You need to be able to use your hands to ventcrawl!</span>")
 		return
 	if(has_buckled_mobs())
 		to_chat(src, "<span class='warning'>You can't vent crawl with other creatures on you!</span>")

@@ -1021,11 +1021,13 @@
 			if(grab_state >= GRAB_NECK)
 				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
 	switch(grab_state) //Current state.
 		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK)
 				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
 
 
 /obj/item/proc/do_pickup_animation(atom/target)

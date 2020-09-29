@@ -92,7 +92,7 @@
 /***************** ACTION DATUMS *****************/
 
 /datum/action/vehicle
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	button_icon_state = "vehicle_eject"
 	var/obj/vehicle/vehicle_target

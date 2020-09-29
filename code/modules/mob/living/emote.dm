@@ -14,7 +14,7 @@
 	key_third_person = "bows"
 	message = "bows."
 	message_param = "bows to %t."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/burp
 	key = "burp"
@@ -32,7 +32,7 @@
 	key = "cross"
 	key_third_person = "crosses"
 	message = "crosses their arms."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/chuckle
 	key = "chuckle"
@@ -67,7 +67,7 @@
 	key = "dance"
 	key_third_person = "dances"
 	message = "dances around happily."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/deathgasp
 	key = "deathgasp"
@@ -116,7 +116,7 @@
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	var/wing_time = 20
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
@@ -136,7 +136,7 @@
 	key = "aflap"
 	key_third_person = "aflaps"
 	message = "flaps their wings ANGRILY!"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	wing_time = 10
 
 /datum/emote/living/frown
@@ -191,7 +191,7 @@
 	key = "jump"
 	key_third_person = "jumps"
 	message = "jumps!"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/kiss
 	key = "kiss"
@@ -240,7 +240,7 @@
 	key_third_person = "points"
 	message = "points."
 	message_param = "points at %t."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/point/run_emote(mob/user, params, type_override, intentional)
 	message_param = initial(message_param) // reset

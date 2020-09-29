@@ -11,7 +11,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)
-				if(on_fire || buckled || restrained())
+				if(on_fire || buckled || HAS_TRAIT(src, TRAIT_RESTRAINED) || (pulledby && pulledby.grab_state > GRAB_PASSIVE))
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)

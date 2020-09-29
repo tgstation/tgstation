@@ -134,7 +134,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(storedpda)
