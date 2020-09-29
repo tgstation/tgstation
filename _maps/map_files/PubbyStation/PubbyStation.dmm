@@ -31033,9 +31033,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-/mob/living/carbon/monkey,
 "bFL" = (
 /obj/machinery/light/small,
+/mob/living/carbon/monkey,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFM" = (
@@ -57755,7 +57755,6 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "uAs" = (
-/mob/living/carbon/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
