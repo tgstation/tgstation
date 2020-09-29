@@ -6,13 +6,87 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
+
+	/// The rate (in moles/s) this machine transfers gas.
 	var/transfer_rate = MAX_TRANSFER_RATE
+	/// The default filter type this machine has. Used for mapping.
 	var/filter_type = null
+	/// The list of gases this filter can filter. If not hardcoded this defaults to all gas types.
+	var/list/possible_filter_types
+	/// Lazy list of gas types this filter is actively filtering from the input gases.
+	var/list/active_filter_types
+	/// The radio frequency this filter broadcasts and receives on.
 	var/frequency = 0
+	/// The radio connection this filter broadcasts and receives on.
 	var/datum/radio_frequency/radio_connection
 
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
+
+/obj/machinery/atmospherics/components/trinary/filter/Initialize()
+	. = ..()
+	if(length(possible_filter_types))
+		return
+
+	possible_filter_types = list()
+	for(var/gas_type in subtypesof(/datum/gas))
+		possible_filter_types[gas_type] = TRUE
+
+	if(filter_type)
+		enable_filter(filter_type)
+
+/obj/machinery/atmospherics/components/trinary/filter/Destroy()
+	clear_active_filters()
+	if(length(possible_filter_types))
+		possible_filter_types.Cut()
+		possible_filter_types = null
+	SSradio.remove_object(src,frequency)
+	return ..()
+
+/** Adds a filter type to the list of active filter types.
+  *
+  * Arguments:
+  * - filter_type: The filter type to add.
+  */
+/obj/machinery/atmospherics/components/trinary/filter/proc/enable_filter(filter_type)
+	if(!ispath(filter_type, /datum/gas))
+		filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+	if(!filter_type || !possible_filter_types[filter_type])
+		return FALSE
+
+	if(LAZYACCESS(active_filter_types, filter_type) || !LAZYACCESS(possible_filter_types, filter_type))
+		return FALSE
+
+	LAZYSET(active_filter_types, filter_type, TRUE)
+	return TRUE
+
+/** Removes a filter type from the list of active filter types.
+  *
+  * Arguments:
+  * - filter_type: The filter type to add.
+  */
+/obj/machinery/atmospherics/components/trinary/filter/proc/disable_filter(filter_type)
+	if(!ispath(filter_type, /datum/gas))
+		filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+	if(!filter_type || !possible_filter_types[filter_type])
+		return FALSE
+
+	if(!LAZYACCESS(active_filter_types, filter_type) || !LAZYACCESS(possible_filter_types, filter_type))
+		return FALSE
+
+	LAZYREMOVE(active_filter_types, filter_type)
+	return TRUE
+
+/** Clears the list of active filter types.
+  */
+/obj/machinery/atmospherics/components/trinary/filter/proc/clear_active_filters()
+	if(!length(active_filter_types))
+		return FALSE
+
+	active_filter_types.Cut()
+	active_filter_types = null
+	return TRUE
+
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -34,10 +108,6 @@
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/trinary/filter/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
@@ -91,28 +161,26 @@
 	if(!removed)
 		return
 
-	var/filtering = TRUE
-	if(!ispath(filter_type))
-		if(filter_type)
-			filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
-		else
-			filtering = FALSE
-
-	if(filtering && removed.gases[filter_type])
+	if(length(active_filter_types))
 		var/datum/gas_mixture/filtered_out = new
-
 		filtered_out.temperature = removed.temperature
-		filtered_out.add_gas(filter_type)
-		filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
-		removed.gases[filter_type][MOLES] = 0
+		var/list/removed_gases = removed.gases
+		var/list/filtered_gases = filtered_out.gases
+		for(var/filter_type in active_filter_types)
+			if(!removed_gases[filter_type])
+				continue
+
+			ADD_GAS(filter_type, filtered_gases)
+			filtered_gases[filter_type][MOLES] = removed_gases[filter_type][MOLES]
+			removed_gases[filter_type][MOLES] = 0
+
 		removed.garbage_collect()
 
 		var/datum/gas_mixture/target = (air2.return_pressure() < MAX_OUTPUT_PRESSURE ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 		target.merge(filtered_out)
 
 	air3.merge(removed)
-
 	update_parents()
 
 /obj/machinery/atmospherics/components/trinary/filter/atmosinit()
@@ -133,9 +201,12 @@
 
 	data["filter_types"] = list()
 	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
-	for(var/path in GLOB.meta_gas_info)
+	for(var/path in possible_filter_types)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(filter_type))))
+		if(!gas)
+			continue
+
+		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = LAZYACCESS(active_filter_types, path)))
 
 	return data
 
@@ -163,8 +234,15 @@
 			filter_type = null
 			var/filter_name = "nothing"
 			var/gas = gas_id2path(params["mode"])
-			if(gas in GLOB.meta_gas_info)
-				filter_type = gas
+			if(!gas)
+				clear_active_filters()
+
+			if(LAZYACCESS(possible_filter_types, gas))
+				if(LAZYACCESS(active_filter_types, gas))
+					disable_filter(gas)
+				else
+					enable_filter(gas)
+
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
