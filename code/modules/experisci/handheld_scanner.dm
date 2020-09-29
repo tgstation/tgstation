@@ -8,7 +8,7 @@
 	desc = "A handheld scanner used for completing the many experiments of modern science."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "experiscanner"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 
 /obj/item/experi_scanner/Initialize()
 	. = ..()
