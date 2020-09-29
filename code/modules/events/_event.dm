@@ -51,6 +51,10 @@
 		return FALSE
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return FALSE
+	if(ispath(typepath, /datum/round_event/ghost_role) && GHOSTROLE_MIDROUND_EVENT)
+		return FALSE
 	return TRUE
 
 /datum/round_event_control/proc/preRunEvent()

@@ -26,6 +26,8 @@
 		_archdrops[I] += other_archdrops[I]
 
 /datum/component/archaeology/proc/Dig(datum/source, obj/item/I, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(dug)
 		to_chat(user, "<span class='warning'>Looks like someone has dug here already!</span>")
 		return
@@ -73,6 +75,8 @@
 		callback.Invoke()
 
 /datum/component/archaeology/proc/SingDig(datum/source, S, current_size)
+	SIGNAL_HANDLER
+
 	switch(current_size)
 		if(STAGE_THREE)
 			if(prob(30))
@@ -85,6 +89,8 @@
 				gets_dug()
 
 /datum/component/archaeology/proc/BombDig(datum/source, severity, target)
+	SIGNAL_HANDLER
+
 	switch(severity)
 		if(3)
 			return

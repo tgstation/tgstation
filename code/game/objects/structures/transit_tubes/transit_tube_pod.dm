@@ -58,15 +58,21 @@
 		empty_pod()
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
-	for(var/atom/movable/AM in contents)
-		AM.ex_act(severity, target)
+	for(var/thing in contents)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube_pod/container_resist(mob/living/user)
+/obj/structure/transit_tube_pod/container_resist_act(mob/living/user)
 	if(!user.incapacitated())
 		empty_pod()
 		return
@@ -92,7 +98,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
-	set waitfor = 0
+	set waitfor = FALSE
 	if(moving)
 		return
 
@@ -130,16 +136,17 @@
 
 		if(current_tube == null)
 			setDir(next_dir)
-			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
+		set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
-		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
 
@@ -172,28 +179,33 @@
 /obj/structure/transit_tube_pod/remove_air(amount)
 	return air_contents.remove(amount)
 
-/obj/structure/transit_tube_pod/relaymove(mob/mob, direction)
-	if(istype(mob) && mob.client)
-		if(!moving)
-			for(var/obj/structure/transit_tube/station/station in loc)
-				if(!station.pod_moving)
-					if(direction == turn(station.boarding_dir,180))
-						if(station.open_status == STATION_TUBE_OPEN)
-							mob.forceMove(loc)
-							update_icon()
-						else
-							station.open_animation()
 
-					else if(direction in station.tube_dirs)
-						setDir(direction)
-						station.launch_pod()
-				return
+/obj/structure/transit_tube_pod/relaymove(mob/living/user, direction)
+	if(!user.client || moving)
+		return
 
-			for(var/obj/structure/transit_tube/TT in loc)
-				if(dir in TT.tube_dirs)
-					if(TT.has_exit(direction))
-						setDir(direction)
-						return
+	for(var/obj/structure/transit_tube/station/station in loc)
+		if(station.pod_moving)
+			return
+		if(direction == turn(station.boarding_dir,180))
+			if(station.open_status == STATION_TUBE_OPEN)
+				user.forceMove(loc)
+				update_icon()
+			else
+				station.open_animation()
+		else if(direction in station.tube_dirs)
+			setDir(direction)
+			station.launch_pod()
+		return
+
+	for(var/obj/structure/transit_tube/transit_tube in loc)
+		if(!(dir in transit_tube.tube_dirs))
+			continue
+		if(!transit_tube.has_exit(direction))
+			continue
+		setDir(direction)
+		return
+
 
 /obj/structure/transit_tube_pod/return_temperature()
 	return air_contents.temperature

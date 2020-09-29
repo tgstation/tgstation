@@ -321,13 +321,15 @@
 	ui_interact(user)
 	to_chat(user, "<span class='notice'>[src] projects a display onto your retina.</span>")
 
-/obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
-		ui.set_style("syndicate")
-		ui.open()
 
+/obj/item/launchpad_remote/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/obj/item/launchpad_remote/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LaunchpadRemote")
+		ui.open()
 	ui.set_autoupdate(TRUE)
 
 /obj/item/launchpad_remote/ui_data(mob/user)
@@ -354,8 +356,10 @@
 	pad.doteleport(user, sending)
 
 /obj/item/launchpad_remote/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("set_pos")
 			var/new_x = text2num(params["x"])

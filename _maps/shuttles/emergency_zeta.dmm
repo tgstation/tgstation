@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/abductor,
 /area/shuttle/escape)
@@ -68,7 +68,7 @@
 /obj/structure/table/abductor,
 /obj/machinery/recharger,
 /obj/item/melee/baton/abductor{
-	desc = "Even aliens can see the use of a good old fashioned beating stick."
+	desc = "Even aliens can see the use of a good old-fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)

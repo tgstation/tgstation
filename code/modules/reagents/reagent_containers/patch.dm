@@ -3,7 +3,7 @@
 	desc = "A chemical patch for touch based applications."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bandaid"
-	item_state = "bandaid"
+	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()
 	volume = 40
 	apply_type = PATCH
@@ -24,23 +24,23 @@
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
+		return FALSE
+	return TRUE // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
 /obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"
 	desc = "A pain reliever. Does minor liver damage. Diluted with Granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 2, /datum/reagent/medicine/granibitaluri = 8) //10 iterations
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 2, /datum/reagent/medicine/granibitaluri = 8) //10 iterations
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/aiuri
 	name = "aiuri patch (burn)"
 	desc = "Helps with burn injuries. Does minor eye damage. Diluted with Granibitaluri."
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 1, /datum/reagent/medicine/granibitaluri = 9)
+	list_reagents = list(/datum/reagent/medicine/c2/aiuri = 2, /datum/reagent/medicine/granibitaluri = 8)
 	icon_state = "bandaid_burn"
 
-/obj/item/reagent_containers/pill/patch/instabitaluri
-	name = "instabitaluri patch"
+/obj/item/reagent_containers/pill/patch/synthflesh
+	name = "synthflesh patch"
 	desc = "Helps with brute and burn injuries. Slightly toxic."
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 20)
+	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	icon_state = "bandaid_both"

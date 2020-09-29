@@ -11,7 +11,7 @@
 	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
-	var/static/list/mutable_appearance/visual_indicators = list()
+	var/static/list/visual_indicators = list()
 	var/obj/effect/proc_holder/spell/power
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed //to restrict mutation to only certain species
@@ -23,7 +23,7 @@
 	var/instability = 0 //instability the holder gets when the mutation is not native
 	var/blocks = 4 //Amount of those big blocks with gene sequences
 	var/difficulty = 8 //Amount of missing sequences. Sometimes it removes an entire pair for 2 points
-	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
+	var/timed = FALSE   //Boolean to easily check if we're going to self-destruct
 	var/alias           //'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/scrambled = FALSE //Wheter we can read it if it's active. To avoid cheesing with mutagen
 	var/class           //Decides player accesibility, sorta
@@ -176,23 +176,23 @@
 	power.panel = "Genetic"
 	owner.AddSpell(power)
 	return TRUE
-	
+
 // Runs through all the coefficients and uses this to determine which chromosomes the
 // mutation can take. Stores these as text strings in a list.
 /datum/mutation/human/proc/update_valid_chromosome_list()
 	valid_chrom_list.Cut()
-	
+
 	if(can_chromosome == CHROMOSOME_NEVER)
 		valid_chrom_list += "none"
 		return
-	
-	valid_chrom_list += "reinforcement"
-	
+
+	valid_chrom_list += "Reinforcement"
+
 	if(stabilizer_coeff != -1)
-		valid_chrom_list += "stabilizer"
+		valid_chrom_list += "Stabilizer"
 	if(synchronizer_coeff != -1)
-		valid_chrom_list += "synchronizer"
+		valid_chrom_list += "Synchronizer"
 	if(power_coeff != -1)
-		valid_chrom_list += "power"
+		valid_chrom_list += "Power"
 	if(energy_coeff != -1)
-		valid_chrom_list += "energetic"
+		valid_chrom_list += "Energetic"

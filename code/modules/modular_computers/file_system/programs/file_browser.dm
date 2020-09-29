@@ -7,13 +7,14 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	undeletable = TRUE
-	tgui_id = "ntos_file_manager"
+	tgui_id = "NtosFileManager"
 
 	var/open_file
 	var/error
 
 /datum/computer_file/program/filemanager/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]

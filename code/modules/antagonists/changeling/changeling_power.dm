@@ -13,14 +13,15 @@
 	var/req_dna = 0  //amount of dna needed to use this ability. Changelings always have atleast 1
 	var/req_human = 0 //if you need to be human to use this ability
 	var/req_absorbs = 0 //similar to req_dna, but only gained from absorbing, not DNA sting
-	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
+	///Maximum stat before the ability is blocked. For example, `UNCONSCIOUS` prevents it from being used when in hard crit or dead, while `DEAD` allows the ability to be used on any stat values.
+	var/req_stat = CONSCIOUS
 	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 	var/active = FALSE//used by a few powers that toggle
 
 /*
 changeling code now relies on on_purchase to grant powers.
 if you override it, MAKE SURE you call parent or it will not be usable
-the same goes for Remove(). if you override Remove(), call parent or else your power wont be removed on respec
+the same goes for Remove(). if you override Remove(), call parent or else your power won't be removed on respec
 */
 
 /datum/action/changeling/proc/on_purchase(mob/user, is_respec)
@@ -57,10 +58,10 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 
 /datum/action/changeling/proc/sting_action(mob/user, mob/target)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
-	return 0
+	return FALSE
 
 /datum/action/changeling/proc/sting_feedback(mob/user, mob/target)
-	return 0
+	return FALSE
 
 //Fairly important to remember to return 1 on success >.<
 
@@ -90,7 +91,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 
 /datum/action/changeling/proc/can_be_used_by(mob/user)
 	if(!user || QDELETED(user))
-		return 0
+		return FALSE
 	if(!ishuman(user) && !ismonkey(user))
 		return FALSE
 	if(req_human && !ishuman(user))

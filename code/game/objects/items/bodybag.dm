@@ -45,10 +45,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/bodybag/bluespace/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/CanReachReact)
-
 /obj/item/bodybag/bluespace/examine(mob/user)
 	. = ..()
 	if(contents.len)
@@ -62,9 +58,6 @@
 			to_chat(A, "<span class='notice'>You suddenly feel the space around you torn apart! You're free!</span>")
 	return ..()
 
-/obj/item/bodybag/bluespace/proc/CanReachReact(atom/movable/source, list/next)
-	return COMPONENT_BLOCK_REACH
-
 /obj/item/bodybag/bluespace/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	for(var/atom/movable/A in contents)
@@ -76,7 +69,7 @@
 	R.foldedbag_instance = src
 	moveToNullspace()
 
-/obj/item/bodybag/bluespace/container_resist(mob/living/user)
+/obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return

@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Attempting to fireman's carry someone that is buckled to an object will fail."

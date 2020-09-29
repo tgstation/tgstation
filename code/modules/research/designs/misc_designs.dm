@@ -105,7 +105,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
 	build_path = /obj/item/reagent_containers/glass/maunamug
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/rolling_table
 	name = "Rolly poly"
@@ -115,7 +115,7 @@
 	materials = list(/datum/material/iron = 4000)
 	build_path = /obj/structure/table/rolling
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
@@ -135,7 +135,7 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
 	build_path = /obj/item/bikehorn/airhorn
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL			//HONK!
+
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -323,7 +323,16 @@
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/bikehorn/rubberducky/plasticducky
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/pneumatic_seal
+	name = "Pneumatic Seal"
+	desc = "A heavy brace used to seal doors. Useful for keeping out people without the dexterity to remove it."
+	id = "pneumatic_seal"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 10000)
+	build_path = /obj/item/door_seal
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

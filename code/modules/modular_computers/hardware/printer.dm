@@ -5,6 +5,7 @@
 	icon_state = "printer"
 	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
+	expansion_hw = TRUE
 	var/stored_paper = 20
 	var/max_paper = 30
 
@@ -33,7 +34,6 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
-	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE

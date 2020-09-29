@@ -1,11 +1,12 @@
 /*Power cells are in code\modules\power\cell.dm
 
-If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fit with the clamp to not confuse the user or cause possible exploits.*/
+If you create T5+ please take a pass at mech_fabricator.dm. The parts being good enough allows it to go into minus values and create materials out of thin air when printing stuff.*/
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
+	worn_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -60,6 +61,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -71,6 +73,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/electrolite/adv(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -82,6 +85,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/electrolite/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -93,6 +97,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/electrolite/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -103,12 +108,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -162,6 +168,12 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "matter_bin"
 	custom_materials = list(/datum/material/iron=80)
 
+/obj/item/stock_parts/electrolite
+	name = "electrolite"
+	desc = "An electrolite component to separate matters into others"
+	icon_state = "electrolite"
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+
 //Rating 2
 
 /obj/item/stock_parts/capacitor/adv
@@ -198,6 +210,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "advanced_matter_bin"
 	rating = 2
 	custom_materials = list(/datum/material/iron=80)
+
+/obj/item/stock_parts/electrolite/adv
+	name = "advanced electrolite"
+	desc = "An electrolite component to separate matters into others"
+	icon_state = "adv_electrolite"
+	rating = 2
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 
 //Rating 3
 
@@ -236,11 +255,18 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	rating = 3
 	custom_materials = list(/datum/material/iron=80)
 
+/obj/item/stock_parts/electrolite/super
+	name = "super electrolite"
+	desc = "An electrolite component to separate matters into others"
+	icon_state = "super_electrolite"
+	rating = 3
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+
 //Rating 4
 
 /obj/item/stock_parts/capacitor/quadratic
 	name = "quadratic capacitor"
-	desc = "An capacity capacitor used in the construction of a variety of devices."
+	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
@@ -272,6 +298,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "bluespace_matter_bin"
 	rating = 4
 	custom_materials = list(/datum/material/iron=80)
+
+/obj/item/stock_parts/electrolite/bluespace
+	name = "bluespace electrolite"
+	desc = "An electrolite component to separate matters into others"
+	icon_state = "bluespace_electrolite"
+	rating = 4
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 
 // Subspace stock parts
 
@@ -317,11 +350,19 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	custom_materials = list(/datum/material/iron=50)
 
+// Misc. Parts
+
 /obj/item/stock_parts/card_reader
 	name = "card reader"
 	icon_state = "card_reader"
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+
+/obj/item/stock_parts/water_recycler
+	name = "water recycler"
+	icon_state = "water_recycler"
+	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
+	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

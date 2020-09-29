@@ -31,12 +31,22 @@
 	. = ..()
 	stored_research = new /datum/techweb/bepis
 
+/obj/item/disk/tech_disk/spaceloot
+	name = "Old experimental technology disk"
+	desc = "A disk containing some long-forgotten technology from a past age. You hope it still works after all these years. Upload the disk to an R&D Console to redeem the tech."
+	icon_state = "rndmajordisk"
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
+
+/obj/item/disk/tech_disk/spaceloot/Initialize()
+	. = ..()
+	stored_research = new /datum/techweb/bepis(remove_tech = FALSE)
+
 /obj/item/research_notes
 	name = "research notes"
 	desc = "Valuable scientific data. Use it in a research console to scan it."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_SMALL
 	///research points it holds
 	var/value = 69

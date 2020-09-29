@@ -37,18 +37,18 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
-/datum/quirk/drunkhealing/on_process()
+/datum/quirk/drunkhealing/on_process(delta_time)
 	var/mob/living/carbon/C = quirk_holder
 	switch(C.drunkenness)
 		if (6 to 40)
-			C.adjustBruteLoss(-0.1, FALSE)
-			C.adjustFireLoss(-0.05, FALSE)
+			C.adjustBruteLoss(-0.1*delta_time, FALSE)
+			C.adjustFireLoss(-0.05*delta_time, FALSE)
 		if (41 to 60)
-			C.adjustBruteLoss(-0.4, FALSE)
-			C.adjustFireLoss(-0.2, FALSE)
+			C.adjustBruteLoss(-0.4*delta_time, FALSE)
+			C.adjustFireLoss(-0.2*delta_time, FALSE)
 		if (61 to INFINITY)
-			C.adjustBruteLoss(-0.8, FALSE)
-			C.adjustFireLoss(-0.4, FALSE)
+			C.adjustBruteLoss(-0.8*delta_time, FALSE)
+			C.adjustFireLoss(-0.4*delta_time, FALSE)
 
 /datum/quirk/empath
 	name = "Empath"
@@ -59,7 +59,7 @@
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
-datum/quirk/fan_clown
+/datum/quirk/fan_clown
 	name = "Clown Fan"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
 	value = 1
@@ -76,8 +76,10 @@ datum/quirk/fan_clown
 		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
+	fan.add_hud_to(H)
 
-datum/quirk/fan_mime
+/datum/quirk/fan_mime
 	name = "Mime Fan"
 	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
 	value = 1
@@ -94,10 +96,12 @@ datum/quirk/fan_mime
 		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
+	fan.add_hud_to(H)
 
 /datum/quirk/freerunning
 	name = "Freerunning"
-	desc = "You're great at quick moves! You can climb tables more quickly."
+	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
 	value = 2
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
@@ -122,8 +126,8 @@ datum/quirk/fan_mime
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
-/datum/quirk/jolly/on_process()
-	if(prob(0.05))
+/datum/quirk/jolly/on_process(delta_time)
+	if(DT_PROB(0.05, delta_time))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step

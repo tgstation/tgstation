@@ -12,7 +12,7 @@
 	id = "arcade_battle"
 	build_path = /obj/item/circuitboard/computer/arcade/battle
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/orion_trail
 	name = "Computer Design (Orion Trail Arcade Machine)"
@@ -20,7 +20,7 @@
 	id = "arcade_orion"
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"
@@ -89,12 +89,12 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/board/scan_console
-	name = "Computer Design (DNA Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
+	name = "Computer Design (DNA Console)"
+	desc = "Allows for the construction of circuit boards used to build a new DNA console."
 	id = "scan_console"
 	build_path = /obj/item/circuitboard/computer/scan_consolenew
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/comconsole
 	name = "Computer Design (Communications)"
@@ -158,7 +158,7 @@
 	id = "slotmachine"
 	build_path = /obj/item/circuitboard/computer/slot_machine
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/powermonitor
 	name = "Computer Design (Power Monitor)"
@@ -278,7 +278,7 @@
 	id = "libraryconsole"
 	build_path = /obj/item/circuitboard/computer/libraryconsole
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/apc_control
 	name = "Computer Design (APC Control)"
@@ -311,3 +311,10 @@
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/bountypad_control
+	name = "Computer Design (Civilian Bounty Pad Control)"
+	desc = "Allows for the construction of circuit boards used to build a new civilian bounty pad console."
+	id = "bounty_pad_control"
+	build_path = /obj/item/circuitboard/computer/bountypad
+	category = list("Computer Boards")

@@ -19,9 +19,9 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
-	if(isliving(target) && target != src)
+	if(isliving(target) && target != src && target != summoner)
 		to_chat(src, "<span class='danger'><B>Your punch has applied heavy gravity to [target]!</span></B>")
-		add_gravity(target, 2)
+		add_gravity(target, 5)
 		to_chat(target, "<span class='userdanger'>Everything feels really heavy!</span>")
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
@@ -32,7 +32,7 @@
 			return
 		visible_message("<span class='danger'>[src] slams their fist into the [T]!</span>", "<span class='notice'>You modify the gravity of the [T].</span>")
 		do_attack_animation(T)
-		add_gravity(T, 4)
+		add_gravity(T, 3)
 		return
 	return ..()
 
@@ -42,13 +42,19 @@
 	for(var/i in gravito_targets)
 		remove_gravity(i)
 
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/Manifest(forced)
+	. = ..()
+	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
+	summoner.AddElement(/datum/element/forced_gravity, 1)
+	AddElement(/datum/element/forced_gravity, 1)
+
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
 	. = ..()
 	for(var/i in gravito_targets)
 		if(get_dist(src, i) > gravity_power_range)
 			remove_gravity(i)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 2)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 3)
 	if(gravito_targets[A])
 		return
 	A.AddElement(/datum/element/forced_gravity, new_gravity)

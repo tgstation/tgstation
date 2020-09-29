@@ -12,9 +12,9 @@
 /obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	. = ..()
 	if(head_icon)
-		mob_overlay_icon = head_icon
+		worn_icon = head_icon
 	if(worn_state)
-		item_state = worn_state
+		inhand_icon_state = worn_state
 	if(lh_icon)
 		lefthand_file = lh_icon
 	if(rh_icon)
@@ -48,29 +48,38 @@
 	if(held_mob && isturf(loc))
 		release()
 
-/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
+/obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE, display_messages = TRUE)
 	if(!held_mob)
 		if(del_on_release && !destroying)
 			qdel(src)
 		return FALSE
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
+		if(display_messages)
+			to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
 		L.dropItemToGround(src)
 	held_mob.forceMove(get_turf(held_mob))
 	held_mob.reset_perspective()
 	held_mob.setDir(SOUTH)
-	held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
+	if(display_messages)
+		held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
 	held_mob = null
 	if(del_on_release && !destroying)
 		qdel(src)
 	return TRUE
 
-/obj/item/clothing/head/mob_holder/relaymove(mob/user)
+/obj/item/clothing/head/mob_holder/relaymove(mob/living/user, direction)
 	release()
 
-/obj/item/clothing/head/mob_holder/container_resist()
+/obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
+
+/obj/item/clothing/head/mob_holder/on_found(mob/finder)
+	if(held_mob?.will_escape_storage())
+		to_chat(finder, "<span class='warning'>\A [held_mob.name] pops out! </span>")
+		finder.visible_message("<span class='warning'>\A [held_mob.name] pops out of the container [finder] is opening!</span>", ignored_mobs = finder)
+		release(TRUE, FALSE)
+		return
 
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()
@@ -85,3 +94,15 @@
 		return ..()
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "[D.visualAppearance]_hat"
+
+/obj/item/clothing/head/mob_holder/destructible
+
+/obj/item/clothing/head/mob_holder/destructible/Destroy()
+	if(held_mob)
+		release(FALSE, TRUE, TRUE)
+	return ..()
+
+/obj/item/clothing/head/mob_holder/destructible/release(del_on_release = TRUE, display_messages = TRUE, delete_mob = FALSE)
+	if(delete_mob && held_mob)
+		QDEL_NULL(held_mob)
+	return ..()

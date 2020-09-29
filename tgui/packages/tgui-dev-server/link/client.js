@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 let socket;
 const queue = [];
 const subscribers = [];
@@ -31,42 +37,61 @@ if (process.env.NODE_ENV !== 'production') {
   window.onunload = () => socket && socket.close();
 }
 
-const subscribe = fn => subscribers.push(fn);
+export const subscribe = fn => subscribers.push(fn);
 
 /**
  * A json serializer which handles circular references and other junk.
  */
 const serializeObject = obj => {
   let refs = [];
-  const json = JSON.stringify(obj, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
+  const primitiveReviver = value => {
+    if (typeof value === 'number' && !Number.isFinite(value)) {
+      return {
+        __number__: String(value),
+      };
+    }
+    if (typeof value === 'undefined') {
+      return {
+        __undefined__: true,
+      };
+    }
+    return value;
+  };
+  const objectReviver = (key, value) => {
+    if (typeof value === 'object') {
+      if (value === null) {
+        return value;
+      }
       // Circular reference
       if (refs.includes(value)) {
         return '[circular ref]';
       }
       refs.push(value);
       // Error object
-      if (value instanceof Error) {
+      const isError = value instanceof Error || (
+        value.code && value.message && value.message.includes('Error')
+      );
+      if (isError) {
         return {
           __error__: true,
           string: String(value),
           stack: value.stack,
         };
       }
+      // Array
+      if (Array.isArray(value)) {
+        return value.map(primitiveReviver);
+      }
       return value;
     }
-    if (typeof value === 'number' && !Number.isFinite(value)) {
-      return {
-        __number__: String(value),
-      };
-    }
-    return value;
-  });
+    return primitiveReviver(value);
+  };
+  const json = JSON.stringify(obj, objectReviver);
   refs = null;
   return json;
 };
 
-const sendRawMessage = msg => {
+export const sendMessage = msg => {
   if (process.env.NODE_ENV !== 'production') {
     const json = serializeObject(msg);
     // Send message using WebSocket
@@ -76,8 +101,8 @@ const sendRawMessage = msg => {
         socket.send(json);
       }
       else {
-        // Keep only 10 latest messages in the queue
-        if (queue.length > 10) {
+        // Keep only 100 latest messages in the queue
+        if (queue.length > 100) {
           queue.shift();
         }
         queue.push(json);
@@ -87,8 +112,8 @@ const sendRawMessage = msg => {
     else {
       const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
       const req = new XMLHttpRequest();
-      req.open('POST', `http://${DEV_SERVER_IP}:3001`);
-      req.timeout = 500;
+      req.open('POST', `http://${DEV_SERVER_IP}:3001`, true);
+      req.timeout = 250;
       req.send(json);
     }
   }
@@ -97,7 +122,7 @@ const sendRawMessage = msg => {
 export const sendLogEntry = (level, ns, ...args) => {
   if (process.env.NODE_ENV !== 'production') {
     try {
-      sendRawMessage({
+      sendMessage({
         type: 'log',
         payload: {
           level,

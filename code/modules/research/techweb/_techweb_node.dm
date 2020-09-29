@@ -28,8 +28,6 @@
 	var/list/boost_item_paths = list()
 	/// Boosting this will autounlock this node
 	var/autounlock_by_boost = TRUE
-	/// Cargo export price
-	var/export_price = 0
 	/// The points cost to research the node, type = amount
 	var/list/research_costs = list()
 	/// The category of the node
@@ -66,7 +64,6 @@
 	VARSET_TO_LIST(., assoc_list_strip_value(unlock_ids))
 	VARSET_TO_LIST(., boost_item_paths)
 	VARSET_TO_LIST(., autounlock_by_boost)
-	VARSET_TO_LIST(., export_price)
 	VARSET_TO_LIST(., research_costs)
 	VARSET_TO_LIST(., category)
 	VARSET_TO_LIST(., experiments)
@@ -83,7 +80,6 @@
 	VARSET_FROM_LIST(input, unlock_ids)
 	VARSET_FROM_LIST(input, boost_item_paths)
 	VARSET_FROM_LIST(input, autounlock_by_boost)
-	VARSET_FROM_LIST(input, export_price)
 	VARSET_FROM_LIST(input, research_costs)
 	VARSET_FROM_LIST(input, category)
 	VARSET_FROM_LIST(input, experiments)

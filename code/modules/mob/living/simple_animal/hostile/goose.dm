@@ -151,7 +151,7 @@
 		return
 	if(prob(25))
 		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
-		emote("me", 1, "gags!")
+		manual_emote("gags!")
 		addtimer(CALLBACK(src, .proc/vomit), 300)
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)

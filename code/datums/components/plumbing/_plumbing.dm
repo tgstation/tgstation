@@ -36,6 +36,11 @@
 		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
 		addtimer(CALLBACK(src, .proc/enable), 0)
 
+/datum/component/plumbing/Destroy()
+	ducts = null
+	reagents = null
+	return ..()
+
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
 		STOP_PROCESSING(SSfluids, src)
@@ -99,6 +104,8 @@
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
+	SIGNAL_HANDLER
+
 	if(tile_covered || !use_overlays)
 		return
 
@@ -113,25 +120,30 @@
 			continue
 
 		var/image/I
+
+		switch(D)
+			if(NORTH)
+				direction = "north"
+			if(SOUTH)
+				direction = "south"
+			if(EAST)
+				direction = "east"
+			if(WEST)
+				direction = "west"
+
 		if(turn_connects)
-			switch(D)
-				if(NORTH)
-					direction = "north"
-				if(SOUTH)
-					direction = "south"
-				if(EAST)
-					direction = "east"
-				if(WEST)
-					direction = "west"
 			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
 
 		else
-			I = image('icons/obj/plumbing/plumbers.dmi', color,layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
+			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]-s", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
 			I.dir = D
+
 		overlays += I
 
 ///we stop acting like a plumbing thing and disconnect if we are, so we can safely be moved and stuff
 /datum/component/plumbing/proc/disable()
+	SIGNAL_HANDLER
+
 	if(!active)
 		return
 
@@ -158,7 +170,7 @@
 	active = TRUE
 
 	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self destruct if placed under a plumbing machine. machines disable when they get moved
+	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
 		if(D.anchored)								//that should cover everything
 			D.disconnect_duct()
 
@@ -180,6 +192,8 @@
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/O, new_state)
+	SIGNAL_HANDLER
+
 	if(new_state)
 		enable()
 	else
@@ -226,16 +240,18 @@
 		net.add_plumber(P, opposite_dir)
 
 /datum/component/plumbing/proc/hide(atom/movable/AM, intact)
+	SIGNAL_HANDLER
+
 	tile_covered = intact
 	AM.update_icon()
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
-	demand_connects = NORTH
+	demand_connects = SOUTH
 
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
-	supply_connects = NORTH
+	supply_connects = SOUTH
 
 ///input and output, like a holding tank
 /datum/component/plumbing/tank

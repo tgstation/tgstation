@@ -110,14 +110,14 @@
 	var/spent = FALSE
 
 /datum/nanite_program/sensor/crit/check_event()
-	if(host_mob.InCritical())
-		if(!spent)
-			spent = TRUE
-			return TRUE
-		return FALSE
-	else
-		spent = FALSE
-		return FALSE
+	if(HAS_TRAIT(host_mob, TRAIT_CRITICAL_CONDITION))
+		if(spent)
+			return FALSE
+		spent = TRUE
+		return TRUE
+	spent = FALSE
+	return FALSE
+
 
 /datum/nanite_program/sensor/crit/make_rule(datum/nanite_program/target)
 	var/datum/nanite_rule/crit/rule = new(target)

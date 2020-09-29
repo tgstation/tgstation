@@ -1,11 +1,12 @@
-//////////////////The Monster
+//////////////////Imp
 
-/mob/living/simple_animal/slaughter
-	name = "slaughter demon"
-	real_name = "slaughter demon"
+/mob/living/simple_animal/hostile/imp
+	name = "imp"
+	real_name = "imp"
+	unique_name = TRUE
 	desc = "A large, menacing creature covered in armored black scales."
-	speak_emote = list("gurgles")
-	emote_hear = list("wails","screeches")
+	speak_emote = list("cackles")
+	emote_hear = list("cackles","screeches")
 	response_help_continuous = "thinks better of touching"
 	response_help_simple = "think better of touching"
 	response_disarm_continuous = "flails at"
@@ -13,49 +14,127 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "daemon"
-	icon_living = "daemon"
+	icon_state = "imp"
+	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	var/feast_sound = 'sound/magic/demon_consume.ogg'
-	deathsound = 'sound/magic/demon_dies.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
+	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
-	faction = list("slaughter")
+	faction = list("hell")
 	attack_verb_continuous = "wildly tears into"
 	attack_verb_simple = "wildly tear into"
 	maxHealth = 200
 	health = 200
 	healable = 0
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	obj_damage = 50
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	obj_damage = 40
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill. \
+	del_on_death = TRUE
+	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
+	deathsound = 'sound/magic/demon_dies.ogg'
+	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
+							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable	\
+							of intentionally harming a fellow devil.</B>"
+
+/datum/antagonist/imp
+	name = "Imp"
+	antagpanel_category = "Other"
+	show_in_roundend = FALSE
+
+/datum/antagonist/imp/on_gain()
+	. = ..()
+	give_objectives()
+
+/datum/antagonist/imp/proc/give_objectives()
+	var/datum/objective/newobjective = new
+	newobjective.explanation_text = "Try to get a promotion to a higher devilish rank."
+	newobjective.owner = owner
+	objectives += newobjective
+
+//////////////////The Man Behind The Slaughter
+
+/mob/living/simple_animal/hostile/imp/slaughter
+	name = "slaughter demon"
+	real_name = "slaughter demon"
+	unique_name = FALSE
+	speak_emote = list("gurgles")
+	emote_hear = list("wails","screeches")
+	icon_state = "daemon"
+	icon_living = "daemon"
+	minbodytemp = 0
+	obj_damage = 50
+	melee_damage_lower = 15 // reduced from 30 to 15 with wounds since they get big buffs to slicing wounds
+	melee_damage_upper = 15
+	wound_bonus = -10
+	bare_wound_bonus = 0
+	sharpness = SHARP_EDGED
+	playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill. \
 							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
-							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
+							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. \
+							You gain strength the more attacks you land on live humanoids, though this resets when you return to the blood zone. You can also \
+							launch a devastating slam attack with ctrl+shift+click, capable of smashing bones in one strike.</B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
-	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
+	///Sound played when consuming a body
+	var/feast_sound = 'sound/magic/demon_consume.ogg'
+	/// How long it takes for the alt-click slam attack to come off cooldown
+	var/slam_cooldown_time = 45 SECONDS
+	/// The actual instance var for the cooldown
+	var/slam_cooldown = 0
+	/// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
+	var/current_hitstreak = 0
+	/// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
+	var/wound_bonus_per_hit = 5
+	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
+	var/wound_bonus_hitstreak_max = 12
 
-/mob/living/simple_animal/slaughter/Initialize()
+/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/slaughter/bloodpool)//Bloodpool is the blood pool we spawn in
 	..()
 	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
+	if(bloodpool)
+		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/slaughter/.proc/deleteself)
+
+/mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
+	if(!isliving(A))
+		return ..()
+	if(slam_cooldown + slam_cooldown_time > world.time)
+		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
+		return
+
+	face_atom(A)
+	var/mob/living/victim = A
+	victim.take_bodypart_damage(brute=20, wound_bonus=wound_bonus) // don't worry, there's more punishment when they hit something
+	visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
+	var/turf/yeet_target = get_edge_target_turf(victim, dir)
+	victim.throw_at(yeet_target, 10, 5, src)
+	slam_cooldown = world.time
+	log_combat(src, victim, "slaughter slammed")
+
+/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity)
+	if(iscarbon(A))
+		var/mob/living/carbon/target = A
+		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
+			current_hitstreak++
+			wound_bonus += wound_bonus_per_hit
+			bare_wound_bonus += wound_bonus_per_hit
+
+	return ..()
 
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
@@ -65,7 +144,7 @@
 	icon_state = "innards"
 	random_icon_states = null
 
-/mob/living/simple_animal/slaughter/phasein()
+/mob/living/simple_animal/hostile/imp/slaughter/phasein()
 	. = ..()
 	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
 	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -111,7 +190,7 @@
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.
 
-/mob/living/simple_animal/slaughter/laughter
+/mob/living/simple_animal/hostile/imp/slaughter/laughter
 	// The laughter demon! It's everyone's best friend! It just wants to hug
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
@@ -150,11 +229,16 @@
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
 
-/mob/living/simple_animal/slaughter/laughter/Destroy()
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		icon_state = "honkmon"
+
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/Destroy()
 	release_friends()
 	. = ..()
 
-/mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(1)
 			death()
@@ -163,23 +247,23 @@
 		if(3)
 			adjustBruteLoss(30)
 
-/mob/living/simple_animal/slaughter/laughter/proc/release_friends()
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)
 		return
+
+	var/turf/T = get_turf(src)
 
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
 			continue
-		var/turf/T = find_safe_turf()
-		if(!T)
-			T = get_turf(src)
+
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, TRUE, -1)
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
-/mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/bloodcrawl_swallow(mob/living/victim)
 	if(consumed_mobs)
 		// Keep their corpse so rescue is possible
 		consumed_mobs += victim
@@ -188,3 +272,7 @@
 		victim.forceMove(get_turf(victim))
 		victim.exit_blood_effect()
 		victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, looking highly confused. And dead.</span>")
+
+/mob/living/simple_animal/hostile/imp/slaughter/engine_demon
+	name = "engine demon"
+	faction = list("hell", "neutral")

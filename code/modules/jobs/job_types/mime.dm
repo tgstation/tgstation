@@ -1,8 +1,6 @@
 /datum/job/mime
 	title = "Mime"
-	flag = MIME
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -32,11 +30,16 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/toggle/suspenders
-	backpack_contents = list(/obj/item/book/mimery=1, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
+	backpack_contents = list(
+		/obj/item/stamp/mime = 1,
+		/obj/item/book/mimery = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1
+		)
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
+	chameleon_extras = /obj/item/stamp/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -48,36 +51,46 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = TRUE
 
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
+	fan.add_hud_to(H)
+
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"
-	desc = "A primer on basic pantomime."
-	icon_state ="bookmime"
+	desc = "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence. One use only."
+	icon_state = "bookmime"
 
-/obj/item/book/mimery/attack_self(mob/user,)
-	user.set_machine(src)
-	var/dat = "<B>Guide to Dank Mimery</B><BR>"
-	dat += "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence.<BR>"
-	dat += "Once you have mastered your routine, this book will have no more to say to you.<BR>"
-	dat += "<HR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_wall=1'>Invisible Wall</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_chair=1'>Invisible Chair</A><BR>"
-	dat += "<A href='byond://?src=[REF(src)];invisible_box=1'>Invisible Box</A><BR>"
-	user << browse(dat, "window=book")
-
-/obj/item/book/mimery/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
-		return
-	if (!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.is_holding(src) && H.mind)
-		H.set_machine(src)
-		if (href_list["invisible_wall"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
-		if (href_list["invisible_chair"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
-		if (href_list["invisible_box"])
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
-	to_chat(usr, "<span class='notice'>The book disappears into thin air.</span>")
+/obj/item/book/mimery/attack_self(mob/user)
+	var/list/spell_icons = list(
+		"Invisible Wall" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_wall"),
+		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
+		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
+		)
+	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	switch(picked_spell)
+		if("Invisible Wall")
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
+		if("Invisible Chair")
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
+		if("Invisible Box")
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
+		else
+			return
+	to_chat(user, "<span class='warning'>The book disappears into thin air.</span>")
 	qdel(src)
+
+/**
+  * Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The human mob interacting with the menu
+  */
+/obj/item/book/mimery/proc/check_menu(mob/living/carbon/human/user)
+	if(!istype(user))
+		return FALSE
+	if(!user.is_holding(src))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(!user.mind)
+		return FALSE
+	return TRUE

@@ -11,17 +11,16 @@
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
-	ui_x = 400
-	ui_y = 305
-
+	/// We don't use area power, we always use the cell
+	use_power = NO_POWER_USE
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
-	var/heatingPower = 40000
+	var/heatingPower = 20000
 	var/efficiency = 20000
 	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
@@ -44,7 +43,7 @@
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
-		component_parts += cell
+		LAZYADD(component_parts, cell)
 		cell = null
 	return ..()
 
@@ -56,7 +55,7 @@
 	else
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.</span>" //100%, 75%, 50%, 25%
+		. += "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[siunit(heatingPower, "W", 1)]</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.</span>" //100%, 75%, 50%, 25%
 
 /obj/machinery/space_heater/update_icon_state()
 	if(on)
@@ -70,8 +69,8 @@
 	if(panel_open)
 		. += "sheater-open"
 
-/obj/machinery/space_heater/process()
-	if(!on || !is_operational())
+/obj/machinery/space_heater/process(delta_time)
+	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
 		return PROCESS_KILL
@@ -100,19 +99,19 @@
 			return
 
 		var/heat_capacity = env.heat_capacity()
-		var/requiredPower = abs(env.temperature - targetTemperature) * heat_capacity
-		requiredPower = min(requiredPower, heatingPower)
+		var/requiredEnergy = abs(env.temperature - targetTemperature) * heat_capacity
+		requiredEnergy = min(requiredEnergy, heatingPower * delta_time)
 
-		if(requiredPower < 1)
+		if(requiredEnergy < 1)
 			return
 
-		var/deltaTemperature = requiredPower / heat_capacity
+		var/deltaTemperature = requiredEnergy / heat_capacity
 		if(mode == HEATER_MODE_COOL)
 			deltaTemperature *= -1
 		if(deltaTemperature)
 			env.temperature += deltaTemperature
 			air_update_turf()
-		cell.use(requiredPower / efficiency)
+		cell.use(requiredEnergy / efficiency)
 	else
 		on = FALSE
 		update_icon()
@@ -126,7 +125,7 @@
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	heatingPower = laser * 40000
+	heatingPower = laser * 20000
 
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
@@ -170,11 +169,10 @@
 	else
 		return ..()
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "space_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SpaceHeater", name)
 		ui.open()
 
 /obj/machinery/space_heater/ui_data()
@@ -203,8 +201,10 @@
 	return data
 
 /obj/machinery/space_heater/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("power")
 			on = !on

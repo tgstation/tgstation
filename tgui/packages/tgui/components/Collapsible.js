@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { Component } from 'inferno';
 import { Box } from './Box';
 import { Button } from './Button';

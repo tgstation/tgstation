@@ -1186,7 +1186,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "ch" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1237,11 +1237,6 @@
 /obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 14
-	},
-/obj/item/gps{
-	gpstag = "NTREC1";
-	pixel_x = -9;
-	pixel_y = 15
 	},
 /obj/item/megaphone,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2207,7 +2202,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/random,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,

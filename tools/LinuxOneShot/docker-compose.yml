@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./Database:/var/lib/mysql"
+    logging:
+      driver: none
+    environment:
+      MYSQL_INITDB_SKIP_TZINFO: 1
+      MYSQL_ROOT_PASSWORD: ChangeThisInBothMariaDBAndTgsConnectionString
+  tgs:
+    environment:
+      MYSQL_ROOT_PASSWORD: ChangeThisInBothMariaDBAndTgsConnectionString
+      Database__ConnectionString: "Password=ChangeThisInBothMariaDBAndTgsConnectionString;Server=mariadb;User Id=root;Database=tgs4"
+      TGS_ADMIN_CKEY: <YOUR BYOND USERNAME HERE>
+      TGS_PREFIXED_SCHEMA_FILE: SQL/tgstation_schema_prefixed.sql
+      TGS_SCHEMA_MAJOR_VERSION: 5
+      TGS_SCHEMA_MINOR_VERSION: 9
+    cap_add:
+      - SYS_NICE
+    image: "tgstation/server:latest"
+    depends_on:
+      - mariadb
+    ports:
+      - "1337:1337"
+      - "5000:80"
+    restart: always
+    init: true
+    volumes:
+      - "./TGS_Logs:/tgs_logs"
+      - "./TGS_Config:/config_data"
+      - "./TGS_Instances:/tgs4_instances"
+    logging:
+      driver: none
+  setup:
+    environment:
+      TGS_BYOND: 513.1514
+      TGS_REPO: https://github.com/tgstation/tgstation
+    build:
+      context: ./SetupProgram
+      dockerfile: Dockerfile
+    depends_on:
+      - tgs
+      - mariadb
+    restart: "no"

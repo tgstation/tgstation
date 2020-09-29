@@ -16,7 +16,7 @@
 	if(!F.check_variables() && !override_checks)
 		QDEL_NULL(F)
 	if(start_field && (F || override_checks))
-		F.Initialize()
+		F.begin_field()
 	return F
 
 /datum/proximity_monitor/advanced
@@ -78,11 +78,11 @@
 
 /datum/proximity_monitor/advanced/proc/process_edge_turf(turf/T)
 
-/datum/proximity_monitor/advanced/New()
+/datum/proximity_monitor/advanced/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	if(requires_processing)
 		START_PROCESSING(SSfields, src)
 
-/datum/proximity_monitor/advanced/proc/Initialize()
+/datum/proximity_monitor/advanced/proc/begin_field()
 	setup_field()
 	post_setup_field()
 
@@ -319,6 +319,8 @@
 		listeningTo = null
 
 /obj/item/multitool/field_debug/proc/on_mob_move()
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	check_turf(get_turf(src))
 
 /obj/item/multitool/field_debug/process()

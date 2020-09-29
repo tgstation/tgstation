@@ -40,19 +40,55 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	GLOB.rollovercheck_last_timeofday = world.timeofday
 	return GLOB.midnight_rollovers
 
-/proc/weekdayofthemonth()
-	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	switch(DD)
-		if(8 to 13)
-			return 2
-		if(14 to 20)
-			return 3
-		if(21 to 27)
-			return 4
-		if(28 to INFINITY)
-			return 5
-		else
-			return 1
+
+///Returns the current week of the current month, from 1 to 5.
+/proc/week_of_the_month()
+	var/day = time2text(world.timeofday, "DDD") 	// get the current day
+	var/date = text2num(time2text(world.timeofday, "DD")) 	// get the current date
+
+	switch(day)
+		if(MONDAY)
+			date -= 1
+		if(TUESDAY)
+			date -= 2
+		if(WEDNESDAY)
+			date -= 3
+		if(THURSDAY)
+			date -= 4
+		if(FRIDAY)
+			date -= 5
+		if(SATURDAY)
+			date -= 6
+		if(SUNDAY)
+			date -= 7
+
+	return CEILING(date / 7, 1) + 1
+
+
+///Returns the first day of the current month in number format, from 1 (monday) - 7 (sunday).
+/proc/first_day_of_month()
+	var/year = text2num(time2text(world.timeofday, "YY"))
+	var/month = text2num(time2text(world.timeofday, "MM"))
+
+	var/day = (1 + (((13 * month) + (13 * 1)) / 5) + (year) + (year/4) + (20/4) + (5 * 20)) % 7 //Zeller's congruence
+
+	switch(day) //convert to 1-7 monday first format
+		if(0)
+			day = 6
+		if(1)
+			day = 7
+		if(2)
+			day = 1
+		if(3)
+			day = 2
+		if(4)
+			day = 3
+		if(5)
+			day = 4
+		if(6)
+			day = 5
+	return day
+
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.

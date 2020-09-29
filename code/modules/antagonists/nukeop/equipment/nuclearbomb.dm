@@ -7,10 +7,6 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	ui_style = "nanotrasen"
-	ui_x = 350
-	ui_y = 442
-
 	var/timer_set = 90
 	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600
@@ -261,11 +257,10 @@
 
 	ui_mode = NUKEUI_AWAIT_TIMER
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/nuclearbomb/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "nuclear_bomb", name, ui_x, ui_y, master_ui, state)
-		ui.set_style(ui_style)
+		ui = new(user, src, "NuclearBomb", name)
 		ui.open()
 
 /obj/machinery/nuclearbomb/ui_data(mob/user)
@@ -315,7 +310,8 @@
 	return data
 
 /obj/machinery/nuclearbomb/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
@@ -398,7 +394,7 @@
 	if(isinspace() && !anchored)
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 	else
-		anchored = !anchored
+		set_anchored(!anchored)
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -446,7 +442,7 @@
 	qdel(src)
 
 /obj/machinery/nuclearbomb/zap_act(power, zap_flags)
-	..()
+	. = ..()
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
@@ -541,13 +537,10 @@
 		disarm()
 		return
 	if(is_station_level(bomb_location.z))
-		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
-		if(E)
-			E.runEvent()
 		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
 	else
 		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
-		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
+		addtimer(CALLBACK(src, .proc/local_foam), 110)
 
 /obj/machinery/nuclearbomb/beer/proc/disarm()
 	detonation_timer = null
@@ -560,7 +553,7 @@
 	countdown.stop()
 	update_icon()
 
-/obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
+/obj/machinery/nuclearbomb/beer/proc/local_foam()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	R.my_atom = src
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
@@ -570,8 +563,24 @@
 	foam.start()
 	disarm()
 
+/obj/machinery/nuclearbomb/beer/proc/stationwide_foam()
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent in GLOB.machines)
+		var/turf/vent_turf = get_turf(vent)
+		if (!vent_turf || !is_station_level(vent_turf.z) || vent.welded)
+			continue
+
+		var/datum/reagents/beer = new /datum/reagents(1000)
+		beer.my_atom = vent
+		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
+		beer.create_foam(/datum/effect_system/foam_spread, 200)
+
+		CHECK_TICK
+
 /obj/machinery/nuclearbomb/beer/really_actually_explode()
 	disarm()
+	stationwide_foam()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
@@ -605,7 +614,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/disk
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
@@ -616,9 +625,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
 	var/turf/lastlocation
@@ -666,6 +674,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 	if(isobserver(user) || HAS_TRAIT(user.mind, TRAIT_DISK_VERIFIER))
 		. += "<span class='warning'>The serial numbers on [src] are incorrect.</span>"
+
+/*
+ * You can't accidentally eat the nuke disk, bro
+ */
+/obj/item/disk/nuclear/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
+	M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something important.</span>", \
+						"<span class='warning'>Wait, is this the nuke disk?</span>")
+
+	return discover_after
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/claymore/highlander) && !fake)

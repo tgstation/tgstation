@@ -12,9 +12,9 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /list(FACTOR_GAS_VISIBLE_MAX)
-			for(var/i in 1 to FACTOR_GAS_VISIBLE_MAX)
-				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), i * 255 / FACTOR_GAS_VISIBLE_MAX)
+			gas_info[META_GAS_OVERLAY] = new /list(TOTAL_VISIBLE_STATES)
+			for(var/i in 1 to TOTAL_VISIBLE_STATES)
+				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
 
 		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
@@ -162,6 +162,58 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
 	rarity = 10
+
+/datum/gas/hydrogen
+	id = "hydrogen"
+	specific_heat = 15
+	name = "Hydrogen"
+	dangerous = TRUE
+	rarity = 600
+
+/datum/gas/healium
+	id = "healium"
+	specific_heat = 10
+	name = "Healium"
+	dangerous = TRUE
+	gas_overlay = "healium"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 300
+
+/datum/gas/proto_nitrate
+	id = "proto_nitrate"
+	specific_heat = 30
+	name = "Proto Nitrate"
+	dangerous = TRUE
+	gas_overlay = "proto_nitrate"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 200
+
+/datum/gas/zauker
+	id = "zauker"
+	specific_heat = 350
+	name = "Zauker"
+	dangerous = TRUE
+	gas_overlay = "zauker"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 1
+
+/datum/gas/halon
+	id = "halon"
+	specific_heat = 175
+	name = "Halon"
+	dangerous = TRUE
+	gas_overlay = "halon"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 300
+
+/datum/gas/hexane
+	id = "hexane"
+	specific_heat = 5
+	name = "Hexane"
+	dangerous = TRUE
+	gas_overlay = "hexane"
+	moles_visible = MOLES_GAS_VISIBLE
+	rarity = 500
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'

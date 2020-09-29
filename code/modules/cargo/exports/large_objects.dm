@@ -81,16 +81,6 @@
 	unit_name = "tesla coil"
 	export_types = list(/obj/machinery/power/tesla_coil)
 
-/datum/export/large/pa
-	cost = 350
-	unit_name = "particle accelerator part"
-	export_types = list(/obj/structure/particle_accelerator)
-
-/datum/export/large/pa/controls
-	cost = 500
-	unit_name = "particle accelerator control console"
-	export_types = list(/obj/machinery/particle_accelerator/control_box)
-
 /datum/export/large/supermatter
 	cost = 8000
 	unit_name = "supermatter shard"
@@ -100,17 +90,6 @@
 	cost = 350
 	unit_name = "grounding rod"
 	export_types = list(/obj/machinery/power/grounding_rod)
-
-/datum/export/large/tesla_gen
-	cost = 4000
-	unit_name = "energy ball generator"
-	export_types = list(/obj/machinery/the_singularitygen/tesla)
-
-/datum/export/large/singulo_gen
-	cost = 4000
-	unit_name = "gravitational singularity generator"
-	export_types = list(/obj/machinery/the_singularitygen)
-	include_subtypes = FALSE
 
 /datum/export/large/iv
 	cost = 50
@@ -126,17 +105,37 @@
 	cost = 10 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
+
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
 	var/gases = C.air_contents.gases
-	C.air_contents.assert_gases(/datum/gas/bz,/datum/gas/stimulum,/datum/gas/hypernoblium,/datum/gas/miasma,/datum/gas/tritium,/datum/gas/pluoxium,/datum/gas/freon)
+	C.air_contents.assert_gases(/datum/gas/bz,
+								/datum/gas/stimulum,
+								/datum/gas/hypernoblium,
+								/datum/gas/miasma,
+								/datum/gas/tritium,
+								/datum/gas/pluoxium,
+								/datum/gas/freon,
+								/datum/gas/hydrogen,
+								/datum/gas/healium,
+								/datum/gas/proto_nitrate,
+								/datum/gas/zauker,
+								/datum/gas/halon,
+								/datum/gas/hexane
+								)
 
-	worth += gases[/datum/gas/bz][MOLES]*4
-	worth += gases[/datum/gas/stimulum][MOLES]*100
 	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
-	worth += gases[/datum/gas/miasma][MOLES]*10
+	worth += gases[/datum/gas/stimulum][MOLES]*100
+	worth += gases[/datum/gas/freon][MOLES]*15
 	worth += gases[/datum/gas/tritium][MOLES]*5
 	worth += gases[/datum/gas/pluoxium][MOLES]*5
-	worth += gases[/datum/gas/freon][MOLES]*15
+	worth += gases[/datum/gas/bz][MOLES]*4
+	worth += gases[/datum/gas/miasma][MOLES]*2
+	worth += gases[/datum/gas/hydrogen][MOLES]*1
+	worth += gases[/datum/gas/healium][MOLES]*19
+	worth += gases[/datum/gas/proto_nitrate][MOLES]*5
+	worth += gases[/datum/gas/zauker][MOLES]*1050
+	worth += gases[/datum/gas/halon][MOLES]*9
+	worth += gases[/datum/gas/hexane][MOLES]*6
 	return worth

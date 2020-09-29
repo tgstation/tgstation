@@ -40,8 +40,8 @@
 /// liters in a cell
 #define CELL_VOLUME				2500
 
-/// liters in a normal breath
-#define BREATH_VOLUME			0.5
+/// liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
+#define BREATH_VOLUME			2
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)
 
@@ -86,13 +86,16 @@
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
 #define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
 #define PLASMA_OXYGEN_FULLBURN				10
+#define HYDROGEN_MINIMUM_BURN_TEMPERATURE	(100+T0C)
+#define HYDROGEN_UPPER_TEMPERATURE			(1370+T0C)
+#define HYDROGEN_OXYGEN_FULLBURN			10
 
 //COLD FIRE (this is used only for the freon-o2 reaction, there is no fire still)
 #define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_SPREAD	263 //fire will spread if the temperature is -10 °C
 #define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST	273 //fire will start if the temperature is 0 °C
 #define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
 #define COLD_FIRE_GROWTH_RATE					40000
-#define FREON_MAXIMUM_BURN_TEMPERATURE			293
+#define FREON_MAXIMUM_BURN_TEMPERATURE			283
 #define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
 #define FREON_OXYGEN_FULLBURN					10
 
@@ -106,6 +109,8 @@
 #define FACTOR_GAS_VISIBLE_MAX				20
 /// Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 #define MOLES_GAS_VISIBLE_STEP				0.25
+/// The total visible states
+#define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -203,9 +208,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE					4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE					200
-/// 10% of an overclocked volume pump leaks into the air
-#define VOLUME_PUMP_LEAK_AMOUNT				0.1
+#define MAX_TRANSFER_RATE					400
+/// How many percent of the contents that an overclocked volume pumps leak into the air
+#define VOLUME_PUMP_LEAK_AMOUNT				0.2
 //used for device_type vars
 #define UNARY		1
 #define BINARY 		2
@@ -248,8 +253,8 @@
 #define AIRLESS_ATMOS				"TEMP=2.7"
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180"
-/// -80°C kitchen coldroom; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS		"o2=33;n2=124;TEMP=193.15"
+/// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
+#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=259.15"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370"
 
@@ -259,6 +264,21 @@
 #define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
+#define ATMOS_TANK_BZ				"bz=100000;TEMP=293.15"
+#define ATMOS_TANK_FREON			"freon=100000;TEMP=293.15"
+#define ATMOS_TANK_HALON			"halon=100000;TEMP=293.15"
+#define ATMOS_TANK_HEALIUM			"healium=100000;TEMP=293.15"
+#define ATMOS_TANK_HEXANE			"hexane=100000;TEMP=293.15"
+#define ATMOS_TANK_H2				"hydrogen=100000;TEMP=293.15"
+#define ATMOS_TANK_HYPERNOBLIUM		"nob=100000;TEMP=293.15"
+#define ATMOS_TANK_MIASMA			"miasma=100000;TEMP=293.15"
+#define ATMOS_TANK_NO2				"no2=100000;TEMP=293.15"
+#define ATMOS_TANK_PLUOXIUM			"pluox=100000;TEMP=293.15"
+#define ATMOS_TANK_PROTO_NITRATE	"proto_nitrate=100000;TEMP=293.15"
+#define ATMOS_TANK_STIMULUM			"stim=100000;TEMP=293.15"
+#define ATMOS_TANK_TRITIUM			"tritium=100000;TEMP=293.15"
+#define ATMOS_TANK_H2O				"water_vapor=100000;TEMP=293.15"
+#define ATMOS_TANK_ZAUKER			"zauker=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
 
 //LAVALAND
@@ -267,6 +287,7 @@
 
 //ATMOS MIX IDS
 #define LAVALAND_DEFAULT_ATMOS		"LAVALAND_ATMOS"
+#define ICEMOON_DEFAULT_ATMOS		"ICEMOON_ATMOS"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -296,6 +317,66 @@
 #define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_BZ "bz_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_BZ "bz_out"
+#define ATMOS_GAS_MONITOR_SENSOR_BZ "bz_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_FREON "freon_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_FREON "freon_out"
+#define ATMOS_GAS_MONITOR_SENSOR_FREON "freon_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HALON "halon_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HALON "halon_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HALON "halon_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HEALIUM "healium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HEALIUM "healium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HEALIUM "healium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HEXANE "hexane_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HEXANE "hexane_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HEXANE "hexane_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_H2 "h2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_H2 "h2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_H2 "h2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HYPERNOBLIUM "hypernoblium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HYPERNOBLIUM "hypernoblium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM "hypernoblium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_MIASMA "miasma_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_MIASMA "miasma_out"
+#define ATMOS_GAS_MONITOR_SENSOR_MIASMA "miasma_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_NO2 "no2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_NO2 "no2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_NO2 "no2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_PLUOXIUM "pluoxium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM "pluoxium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM "pluoxium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE "proto-nitrate_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE "proto-nitrate_out"
+#define ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE "proto-nitrate_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_STIMULUM "stimulum_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_STIMULUM "stimulum_out"
+#define ATMOS_GAS_MONITOR_SENSOR_STIMULUM "stimulum_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TRITIUM "tritium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TRITIUM "tritium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TRITIUM "tritium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_H2O "h2o_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_H2O "h2o_out"
+#define ATMOS_GAS_MONITOR_SENSOR_H2O "h2o_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_ZAUKER "zauker_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_ZAUKER "zauker_out"
+#define ATMOS_GAS_MONITOR_SENSOR_ZAUKER "zauker_sensor"
 
 #define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
@@ -344,9 +425,10 @@
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
+//layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define PIPING_LAYER_MIN 1
-#define PIPING_LAYER_MAX 3
-#define PIPING_LAYER_DEFAULT 2
+#define PIPING_LAYER_MAX 5
+#define PIPING_LAYER_DEFAULT 3
 #define PIPING_LAYER_P_X 5
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
@@ -367,6 +449,14 @@
 	}																		\
 	if(T.dir & (EAST|WEST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	}
+
+#define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
+	if(T.dir & (NORTH|SOUTH)) {									\
+		T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+	}																		\
+	if(T.dir & (EAST|WEST)) {										\
+		T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
 	}
 
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \

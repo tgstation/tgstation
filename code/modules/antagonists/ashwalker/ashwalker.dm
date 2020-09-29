@@ -7,6 +7,7 @@
 	name = "Ash Walker"
 	job_rank = ROLE_LAVALAND
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	prevent_roundtype_conversion = FALSE
 	antagpanel_category = "Ash Walkers"
 	var/datum/team/ashwalkers/ashie_team
@@ -35,5 +36,7 @@
 	UnregisterSignal(owner.current, COMSIG_MOB_EXAMINATE)
 
 /datum/antagonist/ashwalker/proc/on_examinate(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	if(istype(A, /obj/structure/headpike))
 		SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)

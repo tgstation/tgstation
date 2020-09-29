@@ -201,7 +201,7 @@
 	density = FALSE
 
 	frequency = FREQ_AIRLOCK_CONTROL
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
 	var/id_tag

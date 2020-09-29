@@ -2,13 +2,12 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
-	item_state = "ttv"
+	inhand_icon_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks."
 	w_class = WEIGHT_CLASS_BULKY
-	var/ui_x = 310
-	var/ui_y = 320
+
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/assembly/attached_device
@@ -193,23 +192,26 @@
 /obj/item/transfer_valve/proc/c_state()
 	return
 
-/obj/item/transfer_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/transfer_valve/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/transfer_valve/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "transfer_valve", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "TransferValve", name)
 		ui.open()
 
 /obj/item/transfer_valve/ui_data(mob/user)
 	var/list/data = list()
-	data["tank_one"] = tank_one
-	data["tank_two"] = tank_two
-	data["attached_device"] = attached_device
+	data["tank_one"] = tank_one ? tank_one.name : null
+	data["tank_two"] = tank_two ? tank_two.name : null
+	data["attached_device"] = attached_device ? attached_device.name : null
 	data["valve"] = valve_open
 	return data
 
 /obj/item/transfer_valve/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -241,3 +243,9 @@
 				. = TRUE
 
 	update_icon()
+
+/**
+  * Returns if this is ready to be detonated. Checks if both tanks are in place.
+  */
+/obj/item/transfer_valve/proc/ready()
+	return tank_one && tank_two

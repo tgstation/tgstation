@@ -32,7 +32,7 @@ Bonus
 		"Stage Speed 10" = "Further increases cooling speed."
 	)
 
-/datum/symptom/fever/Start(datum/disease/advance/A)
+/datum/symptom/shivering/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["stage_rate"] >= 5) //dangerous cold

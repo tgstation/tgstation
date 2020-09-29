@@ -20,7 +20,7 @@
 	return attack_hand(user)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA))
+	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
@@ -249,14 +249,6 @@
 	name = "\improper DNA injector (Mute)"
 	add_mutations = list(MUT_MUTE)
 
-/obj/item/dnainjector/antismile
-	name = "\improper DNA injector (Anti-Smile)"
-	remove_mutations = list(SMILE)
-
-/obj/item/dnainjector/smilemut
-	name = "\improper DNA injector (Smile)"
-	add_mutations = list(SMILE)
-
 /obj/item/dnainjector/unintelligiblemut
 	name = "\improper DNA injector (Unintelligible)"
 	add_mutations = list(UNINTELLIGIBLE)
@@ -360,12 +352,12 @@
 	name = "\improper DNA injector (Anti-Shock Touch)"
 	remove_mutations = list(SHOCKTOUCH)
 
-/obj/item/dnainjector/spacialinstability
-	name = "\improper DNA injector (Spacial Instability)"
+/obj/item/dnainjector/spatialinstability
+	name = "\improper DNA injector (Spatial Instability)"
 	add_mutations = list(BADBLINK)
 
-/obj/item/dnainjector/antispacialinstability
-	name = "\improper DNA injector (Anti-Spacial Instability)"
+/obj/item/dnainjector/antispatialinstability
+	name = "\improper DNA injector (Anti-Spatial Instability)"
 	remove_mutations = list(BADBLINK)
 
 /obj/item/dnainjector/acidflesh
@@ -508,12 +500,14 @@
 	var/doitanyway = FALSE
 	var/research = FALSE //Set to true to get expended and filled injectors for chromosomes
 	var/filled = FALSE
+	var/crispr_charge = FALSE // Look for viruses, look at symptoms, if research and Dormant DNA Activator or Viral Evolutionary Acceleration, set to true
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_RADIMMUNE) && !HAS_TRAIT(M, TRAIT_BADDNA))
+	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/pref = ""
+		var/suff = ""
 		for(var/mutation in add_mutations)
 			var/datum/mutation/human/HM = mutation
 			if(istype(HM, /datum/mutation/human))
@@ -529,8 +523,13 @@
 				pref = "filled"
 			else
 				pref = "expended"
+			for(var/datum/disease/advance/disease in M.diseases)
+				for(var/datum/symptom/symp in disease.symptoms)
+					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
+						crispr_charge = TRUE
+			suff = (crispr_charge ? "with CRISPR charge" : "")
 			log_msg += "([mutation])"
-		name = "[pref] [name]"
+		name = "[pref] [name] [suff]"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE

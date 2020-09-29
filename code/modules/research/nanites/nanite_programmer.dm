@@ -10,8 +10,6 @@
 	density = TRUE
 	flags_1 = HEAR_1
 	circuit = /obj/item/circuitboard/machine/nanite_programmer
-	ui_x = 420
-	ui_y = 550
 
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -25,6 +23,18 @@
 			program = N.program
 	else
 		..()
+
+/obj/machinery/nanite_programmer/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_screwdriver(user, "nanite_programmer_t", "nanite_programmer", I)
+
+/obj/machinery/nanite_programmer/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_crowbar(I)
 
 /obj/machinery/nanite_programmer/proc/eject(mob/living/user)
 	if(!disk)
@@ -40,10 +50,10 @@
 		eject(user)
 	return
 
-/obj/machinery/nanite_programmer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/nanite_programmer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_programmer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "NaniteProgrammer", name)
 		ui.open()
 
 /obj/machinery/nanite_programmer/ui_data()
@@ -76,7 +86,8 @@
 	return data
 
 /obj/machinery/nanite_programmer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject")
@@ -137,7 +148,7 @@
 				program.timer_trigger_delay = timer
 			. = TRUE
 
-/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/machinery/nanite_programmer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	var/static/regex/when = regex("(?:^\\W*when|when\\W*$)", "i") //starts or ends with when
 	if(findtext(raw_message, when) && !istype(speaker, /obj/machinery/nanite_programmer))

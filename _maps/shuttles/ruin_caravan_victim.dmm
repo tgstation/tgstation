@@ -359,7 +359,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/stack/packageWrap,
+/obj/item/stack/package_wrap,
 /obj/item/crowbar,
 /obj/item/flashlight{
 	pixel_x = 1;

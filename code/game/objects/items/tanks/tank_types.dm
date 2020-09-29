@@ -45,7 +45,7 @@
 	name = "anesthetic tank"
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
-	item_state = "an_tank"
+	inhand_icon_state = "an_tank"
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
@@ -60,6 +60,7 @@
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
 	icon_state = "plasma"
+	worn_icon_state = "plasmatank"
 	flags_1 = CONDUCT_1
 	slot_flags = null	//they have no straps!
 	force = 8
@@ -97,7 +98,7 @@
 	name = "plasma internals tank"
 	desc = "A tank of plasma gas designed specifically for use as internals, particularly for plasma-based lifeforms. If you're not a Plasmaman, you probably shouldn't use this."
 	icon_state = "plasmaman_tank"
-	item_state = "plasmaman_tank"
+	inhand_icon_state = "plasmaman_tank"
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 
@@ -112,10 +113,12 @@
 
 /obj/item/tank/internals/plasmaman/belt
 	icon_state = "plasmaman_tank_belt"
-	item_state = "plasmaman_tank_belt"
+	inhand_icon_state = "plasmaman_tank_belt"
+	worn_icon_state = "plasmaman_tank_belt"
+	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
-	volume = 6
+	volume = 24	//enough so they need to refill but not that often to be a chore
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
@@ -134,12 +137,14 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
+	worn_icon_state = "emergency"
+	worn_icon = null
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
-	volume = 1 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
@@ -153,7 +158,9 @@
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
-	volume = 2 // should last a bit over 30 minutes if full
+	worn_icon_state = "emergency_engi"
+	worn_icon = null
+	volume = 6 // should last 24 minutes if full
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -161,7 +168,7 @@
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
-	volume = 8
+	volume = 24
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

@@ -15,6 +15,7 @@
 
 	density = TRUE
 
+	circuit = /obj/item/circuitboard/machine/circulator
 
 	var/flipped = 0
 	var/mode = CIRCULATOR_HOT
@@ -23,10 +24,6 @@
 //default cold circ for mappers
 /obj/machinery/atmospherics/components/binary/circulator/cold
 	mode = CIRCULATOR_COLD
-
-/obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
-	.=..()
-	component_parts = list(new /obj/item/circuitboard/machine/circulator)
 
 /obj/machinery/atmospherics/components/binary/circulator/ComponentInitialize()
 	. = ..()
@@ -73,7 +70,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
-	if(!is_operational())
+	if(!is_operational)
 		icon_state = "circ-p-[flipped]"
 	else if(last_pressure_delta > 0)
 		if(last_pressure_delta > ONE_ATMOSPHERE)
@@ -86,7 +83,7 @@
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
 		return
-	anchored = !anchored
+	set_anchored(!anchored)
 	I.play_tool_sound(src)
 	if(generator)
 		disconnectFromGenerator()
@@ -116,7 +113,7 @@
 		if(node2)
 			node2.atmosinit()
 			node2.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 
 	return TRUE
 

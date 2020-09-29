@@ -1,7 +1,7 @@
 /client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 
 	if(holder)
 		holder.one_click_antag()
@@ -69,10 +69,10 @@
 			H.mind.make_Traitor()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
 
-	return 0
+	return FALSE
 
 
 /datum/admins/proc/makeChangelings()
@@ -101,9 +101,9 @@
 			H.mind.make_Changeling()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/makeRevs()
 
@@ -130,9 +130,9 @@
 			H = pick(candidates)
 			H.mind.make_Rev()
 			candidates.Remove(H)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/makeWizard()
 
@@ -170,9 +170,9 @@
 			H.mind.make_Cultist()
 			candidates.Remove(H)
 
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 
@@ -200,7 +200,7 @@
 				break
 		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
 		if(agentcount < 3)
-			return 0
+			return FALSE
 
 		//Let's find the spawn locations
 		var/leader_chosen = FALSE
@@ -213,9 +213,9 @@
 				nuke_team = N.nuke_team
 			else
 				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 
@@ -303,7 +303,7 @@
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
 	return preview_icon
 
-/datum/admins/proc/makeEmergencyresponseteam(var/datum/ert/ertemplate = null)
+/datum/admins/proc/makeEmergencyresponseteam(datum/ert/ertemplate = null)
 	if (ertemplate)
 		ertemplate = new ertemplate
 	else

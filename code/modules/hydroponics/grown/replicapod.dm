@@ -24,6 +24,7 @@
 	var/list/quirks
 	var/sampleDNA
 	var/contains_sample = FALSE
+	var/being_harvested = FALSE
 
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
@@ -83,9 +84,6 @@
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
 						make_podman = TRUE
-						if(isliving(M))
-							var/mob/living/L = M
-							make_podman = !L.hellbound
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
@@ -95,34 +93,28 @@
 						if(!O.can_reenter_corpse)
 							break
 					make_podman = TRUE
-					if(isliving(M))
-						var/mob/living/L = M
-						make_podman = !L.hellbound
 					ckey_holder = M.ckey
 					break
 
-	if(make_podman)	//all conditions met!
-		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
-		if(realName)
-			podman.real_name = realName
-		else
-			podman.real_name = "Pod Person ([rand(1,999)])"
-		mind.transfer_to(podman)
-		if(ckey)
-			podman.ckey = ckey
-		else
-			podman.ckey = ckey_holder
-		podman.gender = blood_gender
-		podman.faction |= factions
-		if(!features["mcolor"])
-			features["mcolor"] = "#59CE00"
-		for(var/V in quirks)
-			new V(podman)
-		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
-		podman.set_cloned_appearance()
-		log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
+	// No podman player, give one or two seeds.
+	if(!make_podman)
+		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
+		if(mind || ckey)
+			var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
+			if(choice == "Cancel")
+				return result
 
-	else //else, one packet of seeds. maybe two
+		// If this plant has already been harvested, return early.
+		// parent.update_tray() qdels this seed.
+		if(QDELETED(src))
+			to_chat(user, text = "This pod has already had its seeds harvested!", type = MESSAGE_TYPE_INFO)
+			return result
+
+		// Make sure they can still interact with the parent hydroponics tray.
+		if(!parent.can_interact(user))
+			to_chat(user, text = "You are no longer able to harvets the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
+			return result
+
 		var/seed_count = 1
 		if(prob(getYield() * 20))
 			seed_count++
@@ -131,6 +123,30 @@
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
+		parent.update_tray()
+		return result
+
+	// Congratulations! %Do you want to build a pod man?%
+	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
+
+	if(realName)
+		podman.real_name = realName
+	else
+		podman.real_name = "Pod Person ([rand(1,999)])"
+	mind.transfer_to(podman)
+	if(ckey)
+		podman.ckey = ckey
+	else
+		podman.ckey = ckey_holder
+	podman.gender = blood_gender
+	podman.faction |= factions
+	if(!features["mcolor"])
+		features["mcolor"] = "#59CE00"
+	for(var/V in quirks)
+		new V(podman)
+	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+	podman.set_cloned_appearance()
+	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
 	parent.update_tray()
 	return result

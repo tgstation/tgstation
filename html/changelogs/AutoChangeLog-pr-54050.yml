@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - tweak: "Newly added keybinds try to bind to their defaults when added and fail if the key is already taken"

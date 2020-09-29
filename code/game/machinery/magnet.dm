@@ -201,8 +201,8 @@
 	var/speed = 1 // lowest = 1, highest = 10
 	var/list/rpath = list() // real path of the magnet, used in iterator
 
-	var/moving = 0 // 1 if scheduled to loop
-	var/looping = 0 // 1 if looping
+	var/moving = TRUE // true if scheduled to loop
+	var/looping = TRUE // true if looping
 
 	var/datum/radio_frequency/radio_connection
 
@@ -301,7 +301,7 @@
 			if("setpath")
 				var/newpath = stripped_input(usr, "Please define a new path!", "New Path", path, MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
-					moving = 0 // stop moving
+					moving = FALSE // stop moving
 					path = newpath
 					pathpos = 1 // reset position
 					filter_path() // renders rpath
@@ -323,7 +323,7 @@
 		if(machine_stat & (BROKEN|NOPOWER))
 			break
 
-		looping = 1
+		looping = TRUE
 
 		// Prepare the radio signal
 		var/datum/signal/signal = new(list("code" = code))
@@ -353,7 +353,7 @@
 		else
 			sleep(12-speed)
 
-	looping = 0
+	looping = FALSE
 
 
 /obj/machinery/magnetic_controller/proc/filter_path()

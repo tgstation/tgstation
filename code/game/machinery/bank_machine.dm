@@ -3,8 +3,7 @@
 	desc = "A machine used to deposit and withdraw station funds."
 	icon = 'goon/icons/obj/goon_terminals.dmi'
 	idle_power_usage = 100
-	ui_x = 335
-	ui_y = 160
+
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio
@@ -40,32 +39,32 @@
 		return
 	return ..()
 
-/obj/machinery/computer/bank_machine/process()
+/obj/machinery/computer/bank_machine/process(delta_time)
 	..()
 	if(siphoning)
 		if (machine_stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			end_syphon()
+		var/siphon_am = 100 * delta_time
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(!D.has_money(200))
+		if(!D.has_money(siphon_am))
 			say("Cargo budget depleted. Halting siphon.")
 			end_syphon()
 			return
 
 		playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
-		syphoning_credits += 200
-		D.adjust_money(-200)
+		syphoning_credits += siphon_am
+		D.adjust_money(-siphon_am)
 		if(next_warning < world.time && prob(15))
 			var/area/A = get_area(loc)
-			var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
+			var/message = "Unauthorized credit withdrawal underway in [initial(A.name)]!!"
 			radio.talk_into(src, message, radio_channel)
 			next_warning = world.time + minimum_time_between_warnings
 
-/obj/machinery/computer/bank_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/bank_machine/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "bank_machine", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "BankMachine", name)
 		ui.open()
 
 /obj/machinery/computer/bank_machine/ui_data(mob/user)
@@ -82,7 +81,8 @@
 	return data
 
 /obj/machinery/computer/bank_machine/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

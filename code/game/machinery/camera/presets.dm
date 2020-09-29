@@ -92,7 +92,7 @@
 /obj/machinery/camera/proc/removeEmpProof(ignore_malf_upgrades)
 	if(ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		return
-	emp_component.RemoveComponent()
+	QDEL_NULL(emp_component)
 	upgrades &= ~CAMERA_UPGRADE_EMP_PROOF
 
 
@@ -133,8 +133,11 @@
 	if(!assembly.proxy_module)
 		assembly.proxy_module = new(assembly)
 	upgrades |= CAMERA_UPGRADE_MOTION
+	create_prox_monitor()
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
 		name = "security camera"
 	upgrades &= ~CAMERA_UPGRADE_MOTION
+	if(!area_motion)
+		QDEL_NULL(proximity_monitor)

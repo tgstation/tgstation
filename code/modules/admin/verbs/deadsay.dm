@@ -1,14 +1,14 @@
 /client/proc/dsay(msg as text)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set name = "Dsay"
-	set hidden = 1
+	set hidden = TRUE
 	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	if(!mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>")
+		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>", confidential = TRUE)
 		return
 
 	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
@@ -30,7 +30,7 @@
 		if(isnewplayer(M))
 			continue
 		if (M.stat == DEAD || (M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			to_chat(M, rendered)
+			to_chat(M, rendered, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

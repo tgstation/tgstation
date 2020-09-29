@@ -8,16 +8,13 @@
 	range = -1
 	include_user = TRUE
 	invocation = "CLANG!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "immrod"
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)
 	var/area/A = get_area(user)
 	if(istype(A, /area/wizard_station))
 		to_chat(user, "<span class='warning'>You know better than to trash Wizard Federation property. Best wait until you leave to use [src].</span>")
-		return
-	else if(istype(A, /area/ruin/powered/kinggoat_arena))
-		to_chat(user, "<span class='warning'>Some foul goat based magic is preventing you from using rod form here!. You must beat the king goat or escape the arena somehow before you can use [src].</span>")
 		return
 	for(var/mob/living/M in targets)
 		var/turf/start = get_turf(M)

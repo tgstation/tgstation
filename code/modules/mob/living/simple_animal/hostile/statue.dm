@@ -20,7 +20,6 @@
 	maxHealth = 50000
 	health = 50000
 	healable = 0
-
 	harm_intent_damage = 10
 	obj_damage = 100
 	melee_damage_lower = 68
@@ -61,6 +60,7 @@
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
+	LAZYINITLIST(mob_spell_list)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
@@ -79,7 +79,7 @@
 	if(can_be_seen(NewLoc))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
-		return 0
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/statue/Life()
@@ -109,6 +109,9 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
+/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+	return FALSE
+
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
@@ -131,16 +134,17 @@
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.is_blind())
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.is_blind())
-					return M.occupant
+		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			for(var/O in M.occupants)
+				var/mob/mechamob = O
+				if(mechamob.client && !mechamob.is_blind())
+					return mechamob
 	return null
 
 // Cannot talk
 
 /mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return 0
+	return
 
 // Turn to dust when gibbed
 
@@ -154,7 +158,7 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
-			return 0
+			return FALSE
 	return ..()
 
 // Don't attack your creator if there is one
@@ -228,8 +232,3 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
-
-/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
-	. = ..()
-	if(can_be_seen(loc))
-		return 1

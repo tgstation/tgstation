@@ -12,17 +12,15 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	ui_x = 375
-	ui_y = 125
 
 	var/datum/callback/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
-	var/waiting = 0
+	var/waiting = FALSE
 
 /obj/machinery/keycard_auth/Initialize()
 	. = ..()
@@ -33,11 +31,13 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	QDEL_NULL(ev)
 	return ..()
 
-/obj/machinery/keycard_auth/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-					datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/keycard_auth/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/keycard_auth/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "keycard_auth", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "KeycardAuth", name)
 		ui.open()
 
 /obj/machinery/keycard_auth/ui_data()
@@ -58,7 +58,9 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
-	if(..() || waiting || !allowed(usr))
+	. = ..()
+
+	if(. || waiting || !allowed(usr))
 		return
 	switch(action)
 		if("red_alert")
@@ -82,14 +84,14 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr
 	event = event_type
-	waiting = 1
+	waiting = TRUE
 	GLOB.keycard_events.fireEvent("triggerEvent", src)
 	addtimer(CALLBACK(src, .proc/eventSent), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
 	event = ""
-	waiting = 0
+	waiting = FALSE
 
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"

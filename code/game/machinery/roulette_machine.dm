@@ -29,9 +29,7 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	max_integrity = 500
-	ui_x = 603
-	ui_y = 475
-	armor = list("melee" = 45, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 10, "bio" = 30, "rad" = 30, "fire" = 30, "acid" = 30)
+	armor = list(MELEE = 45, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 30, RAD = 30, FIRE = 30, ACID = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
 	"2" = "black", "4" = "black", "6" = "black", "8" = "black", "10" = "black", "11" = "black", "13" = "black", "15" = "black", "17" = "black", "20" = "black",\
@@ -60,12 +58,12 @@
 	prize_theft(0.05)
 	. = ..()
 
-/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/roulette/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & MAINT)
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "roulette", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Roulette", name)
 		ui.open()
 
 /obj/machinery/roulette/ui_data(mob/user)
@@ -88,11 +86,13 @@
 	return data
 
 /obj/machinery/roulette/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("anchor")
-			anchored = !anchored
+			set_anchored(!anchored)
 			. = TRUE
 		if("ChangeBetAmount")
 			chosen_bet_amount = clamp(text2num(params["amount"]), 10, 500)
@@ -289,7 +289,7 @@
 		if(ROULETTE_BET_1TO18)
 			return (rolled_number >= 1 && rolled_number <= 18) //between 1 to 18
 		if(ROULETTE_BET_19TO36)
-			return rolled_number > 18 //between 19 to 36, no need to check bounds because we wont go higher anyways
+			return rolled_number > 18 //between 19 to 36, no need to check bounds because we won't go higher anyways
 		if(ROULETTE_BET_BLACK)
 			return "black" == numbers["[rolled_number]"]//Check if our number is black in the numbers dict
 		if(ROULETTE_BET_RED)
@@ -362,7 +362,7 @@
 		if("green")
 			set_light(2,2, LIGHT_COLOR_GREEN)
 		if("red")
-			set_light(2,2, LIGHT_COLOR_RED)
+			set_light(2,2, COLOR_SOFT_RED)
 
 /obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -370,13 +370,13 @@
 		to_chat(user, "<span class='notice'>You start re-attaching the top section of [src]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			to_chat(user, "<span class='notice'>You re-attach the top section of [src].</span>")
-			machine_stat &= ~MAINT
+			set_machine_stat(machine_stat & ~MAINT)
 			icon_state = "idle"
 	else
 		to_chat(user, "<span class='notice'>You start welding the top section from [src]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			to_chat(user, "<span class='notice'>You removed the top section of [src].</span>")
-			machine_stat |= MAINT
+			set_machine_stat(machine_stat | MAINT)
 			icon_state = "open"
 
 /obj/machinery/roulette/proc/shock(mob/user, prb)
@@ -409,7 +409,7 @@
 
 	new /obj/machinery/roulette(toLaunch)
 
-	new /obj/effect/DPtarget(drop_location(), toLaunch)
+	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
 	qdel(src)
 
 #undef ROULETTE_SINGLES_PAYOUT

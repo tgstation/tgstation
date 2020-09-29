@@ -1,15 +1,3 @@
-/client
-	/// A rolling buffer of any keys held currently
-	var/list/keys_held = list()
-	///used to keep track of the current rolling buffer position
-	var/current_key_address = 0
-	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
-	/// Because discarding that input makes the game less responsive.
- 	/// On next move, add this dir to the move that would otherwise be done
-	var/next_move_dir_add
- 	/// On next move, subtract this dir from the move that would otherwise be done
-	var/next_move_dir_sub
-
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
 /datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
@@ -33,10 +21,8 @@
 /client/proc/set_macros()
 	set waitfor = FALSE
 
-	//Reset and populate the rolling buffer
-	keys_held.Cut()
-	for(var/i in 1 to HELD_KEY_BUFFER_LENGTH)
-		keys_held += null
+	//Reset the buffer
+	reset_held_keys()
 
 	erase_all_macros()
 

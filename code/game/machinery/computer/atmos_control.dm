@@ -38,6 +38,51 @@
 /obj/machinery/air_sensor/atmos/carbon_tank
 	name = "carbon dioxide tank gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
+/obj/machinery/air_sensor/atmos/bz_tank
+	name = "bz tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_BZ
+/obj/machinery/air_sensor/atmos/freon_tank
+	name = "freon tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_FREON
+/obj/machinery/air_sensor/atmos/halon_tank
+	name = "halon tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HALON
+/obj/machinery/air_sensor/atmos/healium_tank
+	name = "healium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEALIUM
+/obj/machinery/air_sensor/atmos/hexane_tank
+	name = "hexane tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HEXANE
+/obj/machinery/air_sensor/atmos/hydrogen_tank
+	name = "hydrogen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2
+/obj/machinery/air_sensor/atmos/hypernoblium_tank
+	name = "hypernoblium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM
+/obj/machinery/air_sensor/atmos/miasma_tank
+	name = "miasma tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIASMA
+/obj/machinery/air_sensor/atmos/nitryl_tank
+	name = "nitryl tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_NO2
+/obj/machinery/air_sensor/atmos/pluoxium_tank
+	name = "pluoxium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM
+/obj/machinery/air_sensor/atmos/proto_nitrate_tank
+	name = "proto-nitrate tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE
+/obj/machinery/air_sensor/atmos/stimulum_tank
+	name = "stimulum tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_STIMULUM
+/obj/machinery/air_sensor/atmos/tritium_tank
+	name = "tritium tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TRITIUM
+/obj/machinery/air_sensor/atmos/water_vapor_tank
+	name = "water vapor tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_H2O
+/obj/machinery/air_sensor/atmos/zauker_tank
+	name = "zauker tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_ZAUKER
 /obj/machinery/air_sensor/atmos/incinerator_tank
 	name = "incinerator chamber gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
@@ -73,11 +118,11 @@
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	set_frequency(frequency)
 
 /obj/machinery/air_sensor/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
@@ -92,8 +137,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
-	ui_x = 400
-	ui_y = 925
+	light_color = LIGHT_COLOR_CYAN
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
@@ -104,6 +148,21 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank",
 		ATMOS_GAS_MONITOR_SENSOR_AIR = "Mixed Air Tank",
 		ATMOS_GAS_MONITOR_SENSOR_MIX = "Mix Tank",
+		ATMOS_GAS_MONITOR_SENSOR_BZ = "BZ Tank",
+		ATMOS_GAS_MONITOR_SENSOR_FREON = "Freon Tank",
+		ATMOS_GAS_MONITOR_SENSOR_HALON = "Halon Tank",
+		ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank",
+		ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank",
+		ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank",
+		ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank",
+		ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank",
+		ATMOS_GAS_MONITOR_SENSOR_NO2 = "Nitryl Tank",
+		ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM = "Pluoxium Tank",
+		ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE = "Proto-Nitrate Tank",
+		ATMOS_GAS_MONITOR_SENSOR_STIMULUM = "Stimulum Tank",
+		ATMOS_GAS_MONITOR_SENSOR_TRITIUM = "Tritium Tank",
+		ATMOS_GAS_MONITOR_SENSOR_H2O = "Water Vapor Tank",
+		ATMOS_GAS_MONITOR_SENSOR_ZAUKER = "Zauker Tank",
 		ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION = "Distribution Loop",
 		ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE = "Atmos Waste Loop",
 		ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber",
@@ -112,7 +171,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
 
-	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
@@ -124,11 +182,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -169,16 +226,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	name = "Incinerator Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/incinerator
-	ui_x = 400
-	ui_y = 300
 
 //Toxins mix sensor only
 /obj/machinery/computer/atmos_control/toxinsmix
 	name = "Toxins Mixing Air Control"
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber")
 	circuit = /obj/item/circuitboard/computer/atmos_control/toxinsmix
-	ui_x = 400
-	ui_y = 300
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -189,12 +242,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/output_tag
 	frequency = FREQ_ATMOS_STORAGE
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
-
 	var/list/input_info
 	var/list/output_info
-
-	ui_x = 500
-	ui_y = 315
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -245,6 +294,111 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 
+/obj/machinery/computer/atmos_control/tank/bz_tank
+	name = "BZ Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_BZ
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_BZ
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_BZ = "BZ Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/bz_tank
+
+/obj/machinery/computer/atmos_control/tank/freon_tank
+	name = "Freon Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_FREON
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_FREON
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_FREON = "Freon Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/freon_tank
+
+/obj/machinery/computer/atmos_control/tank/halon_tank
+	name = "Halon Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_HALON
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HALON
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HALON = "Halon Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/halon_tank
+
+/obj/machinery/computer/atmos_control/tank/healium_tank
+	name = "Healium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_HEALIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HEALIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEALIUM = "Healium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/healium_tank
+
+/obj/machinery/computer/atmos_control/tank/hexane_tank
+	name = "Hexane Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_HEXANE
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HEXANE
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HEXANE = "Hexane Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
+
+/obj/machinery/computer/atmos_control/tank/hydrogen_tank
+	name = "Hydrogen Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_H2
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_H2
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_H2 = "Hydrogen Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/hydrogen_tank
+
+/obj/machinery/computer/atmos_control/tank/hypernoblium_tank
+	name = "Hypernoblium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_HYPERNOBLIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_HYPERNOBLIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM = "Hypernoblium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/hypernoblium_tank
+
+/obj/machinery/computer/atmos_control/tank/miasma_tank
+	name = "Miasma Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_MIASMA
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_MIASMA = "Miasma Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/miasma_tank
+
+/obj/machinery/computer/atmos_control/tank/nitryl_tank
+	name = "Nitryl Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_NO2
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_NO2
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_NO2 = "Nitryl Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
+
+/obj/machinery/computer/atmos_control/tank/pluoxium_tank
+	name = "Pluoxium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM = "Pluoxium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
+
+/obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
+	name = "Proto-Nitrate Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE = "Proto-Nitrate Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
+
+/obj/machinery/computer/atmos_control/tank/stimulum_tank
+	name = "Stimulum Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_STIMULUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_STIMULUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_STIMULUM = "Stimulum Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
+
+/obj/machinery/computer/atmos_control/tank/tritium_tank
+	name = "Tritium Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_TRITIUM
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_TRITIUM
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TRITIUM = "Tritium Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
+
+/obj/machinery/computer/atmos_control/tank/water_vapor
+	name = "Water Vapor Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_H2O
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_H2O
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_H2O = "Water Vapor Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/water_vapor
+
+/obj/machinery/computer/atmos_control/tank/zauker_tank
+	name = "Zauker Supply Control"
+	input_tag = ATMOS_GAS_MONITOR_INPUT_ZAUKER
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_ZAUKER
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_ZAUKER = "Zauker Tank")
+	circuit = /obj/item/circuitboard/computer/atmos_control/tank/zauker_tank
+
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
@@ -276,25 +430,21 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, ui_x, ui_y, master_ui, state)
-		ui.open()
-
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	data["inputting"] = input_info ? input_info["power"] : FALSE
 	data["inputRate"] = input_info ? input_info["volume_rate"] : 0
+	data["maxInputRate"] = input_info ? MAX_TRANSFER_RATE : 0
 	data["outputting"] = output_info ? output_info["power"] : FALSE
 	data["outputPressure"] = output_info ? output_info["internal"] : 0
-
+	data["maxOutputPressure"] = output_info ? MAX_OUTPUT_PRESSURE : 0
 	return data
 
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
-	if(..() || !radio_connection)
+	. = ..()
+
+	if(. || !radio_connection)
 		return
 	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
 	switch(action)
@@ -316,7 +466,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = clamp(target, 0, 4500)
+				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

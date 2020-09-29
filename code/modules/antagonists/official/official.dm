@@ -5,6 +5,7 @@
 	var/datum/objective/mission
 	var/datum/team/ert/ert_team
 	can_hijack = HIJACK_PREVENT
+	show_to_ghosts = TRUE
 
 /datum/antagonist/official/greet()
 	to_chat(owner, "<B><font size=3 color=red>You are a CentCom Official.</font></B>")

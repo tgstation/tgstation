@@ -31,9 +31,11 @@
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/was_absorbed = FALSE //if they were absorbed by another ling already.
-	var/isabsorbing = 0
-	var/islinking = 0
+	var/isabsorbing = FALSE
+	var/islinking = FALSE
 	var/geneticpoints = 10
+	var/total_geneticspoints = 10
+	var/total_chem_storage = 75
 	var/purchasedpowers = list()
 
 	var/mimicing = ""
@@ -107,9 +109,9 @@
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+	geneticpoints = total_geneticspoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
+	chem_storage = total_chem_storage
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
@@ -147,6 +149,8 @@
 
 ///Handles stinging without verbs.
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	SIGNAL_HANDLER
+
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
 	if(!chosen_sting.try_to_sting(ling, A))
@@ -206,12 +210,12 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		canrespec = 0
+		canrespec = FALSE
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
-		return 1
+		return TRUE
 	else
 		to_chat(owner.current, "<span class='warning'>You lack the power to readapt your evolutions!</span>")
-		return 0
+		return FALSE
 
 //Called in life()
 /datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
@@ -272,7 +276,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	return 1
+	return TRUE
 
 
 /datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)
@@ -289,6 +293,8 @@
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
 
+	prof.skillchips = H.clone_skillchip_list(TRUE)
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
@@ -298,8 +304,11 @@
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_state_list[slot] = I.item_state
-			prof.mob_overlay_icon_list[slot] = I.mob_overlay_icon
+			prof.lefthand_file_list[slot] = I.lefthand_file
+			prof.righthand_file_list[slot] = I.righthand_file
+			prof.inhand_icon_state_list[slot] = I.inhand_icon_state
+			prof.worn_icon_list[slot] = I.worn_icon
+			prof.worn_icon_state_list[slot] = I.worn_icon_state
 			prof.exists_list[slot] = 1
 		else
 			continue
@@ -339,8 +348,8 @@
 	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
 	if(removeprofile)
 		stored_profiles -= removeprofile
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/antagonist/changeling/proc/create_initial_profile()
@@ -509,12 +518,17 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
-	var/list/item_state_list = list()
-	var/list/mob_overlay_icon_list = list()
+	var/list/lefthand_file_list = list()
+	var/list/righthand_file_list = list()
+	var/list/inhand_icon_state_list = list()
+	var/list/worn_icon_list = list()
+	var/list/worn_icon_state_list = list()
 
 	var/underwear
 	var/undershirt
 	var/socks
+
+	var/list/skillchips = list()
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
@@ -529,12 +543,15 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
-	newprofile.item_state_list = item_state_list.Copy()
+	newprofile.lefthand_file_list = lefthand_file_list.Copy()
+	newprofile.righthand_file_list = righthand_file_list.Copy()
+	newprofile.inhand_icon_state_list = inhand_icon_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
-	newprofile.mob_overlay_icon_list = mob_overlay_icon_list.Copy()
-
+	newprofile.worn_icon_list = worn_icon_list.Copy()
+	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
+	newprofile.skillchips = skillchips.Copy()
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
@@ -545,9 +562,9 @@
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
 
-	var/changelingwin = 1
+	var/changelingwin = TRUE
 	if(!owner.current)
-		changelingwin = 0
+		changelingwin = FALSE
 
 	parts += printplayer(owner)
 
@@ -562,7 +579,7 @@
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				changelingwin = FALSE
 			count++
 
 	if(changelingwin)

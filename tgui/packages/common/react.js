@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+/**
  * Helper for conditionally adding/removing classes in React
  *
  * @param {any[]} classNames
@@ -58,10 +64,10 @@ export const pureComponentHooks = {
 };
 
 /**
- * A helper to determine whether to render an item.
+ * A helper to determine whether the object is renderable by React.
  */
-export const isFalsy = value => {
-  return value === undefined
-    || value === null
-    || value === false;
+export const canRender = value => {
+  return value !== undefined
+    && value !== null
+    && typeof value !== 'boolean';
 };

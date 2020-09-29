@@ -1,6 +1,7 @@
 /obj/item/ammo_casing/magic
 	name = "magic casing"
 	desc = "I didn't even know magic needed ammo..."
+	slot_flags = null
 	projectile_type = /obj/projectile/magic
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
 	heavy_metal = FALSE
@@ -67,5 +68,5 @@
 	projectile_type = /obj/projectile/magic/wipe
 
 /obj/item/ammo_casing/magic/nothing
-	/obj/projectile/magic/nothing
+	projectile_type = /obj/projectile/magic/nothing
 	harmful = FALSE

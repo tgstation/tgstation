@@ -24,8 +24,6 @@
 	icon_screen = "holocontrol"
 	idle_power_usage = 10
 	active_power_usage = 50
-	ui_x = 400
-	ui_y = 500
 
 	var/area/holodeck/linked
 	var/area/holodeck/program
@@ -67,6 +65,11 @@
 		return
 	else
 		linked.linked = src
+		var/area/my_area = get_area(src)
+		if(my_area)
+			linked.power_usage = my_area.power_usage
+		else
+			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
 	load_program(offline_program, FALSE, FALSE)
@@ -75,16 +78,17 @@
 	emergency_shutdown()
 	if(linked)
 		linked.linked = null
+		linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
 	toggle_power(!machine_stat)
 
-/obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "holodeck", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Holodeck", name)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)
@@ -95,12 +99,13 @@
 		data["emagged"] = TRUE
 		data["emag_programs"] = emag_programs
 	data["program"] = program
-	data["can_toggle_safety"] = issilicon(user) || IsAdminGhost(user)
+	data["can_toggle_safety"] = issilicon(user) || isAdminGhostAI(user)
 
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)
@@ -130,10 +135,10 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/obj/machinery/computer/holodeck/process()
-	if(damaged && prob(10))
+/obj/machinery/computer/holodeck/process(delta_time)
+	if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/T in linked)
-			if(prob(5))
+			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, T)
 				return
 
@@ -149,7 +154,7 @@
 		for(var/turf/T in linked)
 			if(prob(30))
 				do_sparks(2, 1, T)
-			T.ex_act(EXPLODE_LIGHT)
+			SSexplosions.lowturf += T
 			T.hotspot_expose(1000,500,1)
 
 	if(!(obj_flags & EMAGGED))
@@ -234,7 +239,7 @@
 		HE.safety(active)
 
 /obj/machinery/computer/holodeck/proc/load_program(area/A, force = FALSE, add_delay = TRUE)
-	if(!is_operational())
+	if(!is_operational)
 		A = offline_program
 		force = TRUE
 

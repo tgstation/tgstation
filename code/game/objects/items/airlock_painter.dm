@@ -3,8 +3,8 @@
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paint sprayer"
-	item_state = "paint sprayer"
-
+	inhand_icon_state = "paint sprayer"
+	worn_icon_state = "painter"
 	w_class = WEIGHT_CLASS_SMALL
 
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
@@ -44,9 +44,9 @@
 	if(can_use(user))
 		ink.charges--
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 //This proc only checks if the painter can be used.
 //Call this if you don't want the painter to be used right after this check, for example
@@ -54,12 +54,12 @@
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
 		to_chat(user, "<span class='warning'>There is no toner cartridge installed in [src]!</span>")
-		return 0
+		return FALSE
 	else if(ink.charges < 1)
 		to_chat(user, "<span class='warning'>[src] is out of ink!</span>")
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/item/airlock_painter/suicide_act(mob/user)
 	var/obj/item/organ/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
@@ -87,7 +87,7 @@
 		// make some colorful reagent, and apply it to the lungs
 		L.create_reagents(10)
 		L.reagents.add_reagent(/datum/reagent/colorful_reagent, 10)
-		L.reagents.reaction(L, TOUCH, 1)
+		L.reagents.expose(L, TOUCH, 1)
 
 		// TODO maybe add some colorful vomit?
 
@@ -100,7 +100,7 @@
 	else if(can_use(user) && !L)
 		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
 		user.reagents.add_reagent(/datum/reagent/colorful_reagent, 1)
-		user.reagents.reaction(user, TOUCH, 1)
+		user.reagents.expose(user, TOUCH, 1)
 		return TOXLOSS
 
 	else
@@ -149,8 +149,8 @@
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to change design."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
-	item_state = "decalsprayer"
-	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
+	inhand_icon_state = "decalsprayer"
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	var/stored_dir = 2
 	var/stored_color = ""
 	var/stored_decal = "warningline"
@@ -174,13 +174,7 @@
 		to_chat(user, "<span class='notice'>You need to get closer!</span>")
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
-
-/obj/item/airlock_painter/decal/attack_self(mob/user)
-	if((ink) && (ink.charges >= 1))
-		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
-		return
-	. = ..()
+		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_TYPE_PAINT, color, null, null, alpha)
 
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()
@@ -197,10 +191,10 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
-/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/airlock_painter/decal/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "decal_painter", name, 500, 400, master_ui, state)
+		ui = new(user, src, "DecalPainter", name)
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)
@@ -228,8 +222,10 @@
 	return data
 
 /obj/item/airlock_painter/decal/ui_act(action,list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		//Lists of decals and designs
 		if("select decal")

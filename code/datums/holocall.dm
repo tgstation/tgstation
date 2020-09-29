@@ -9,7 +9,7 @@
 
 #define HOLORECORD_MAX_LENGTH 200
 
-/mob/camera/aiEye/remote/holo/setLoc()
+/mob/camera/ai_eye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
 	H?.move_hologram(eye_user, loc)
@@ -27,12 +27,12 @@
 	var/obj/machinery/holopad/connected_holopad	//the one that answered the call (may be null)
 	var/list/dialed_holopads	//all things called, will be cleared out to just connected_holopad once answered
 
-	var/mob/camera/aiEye/remote/holo/eye	//user's eye, once connected
+	var/mob/camera/ai_eye/remote/holo/eye	//user's eye, once connected
 	var/obj/effect/overlay/holo_pad_hologram/hologram	//user's hologram, once connected
 	var/datum/action/innate/end_holocall/hangup	//hangup action
 
 	var/call_start_time
-	var/head_call = FALSE //calls from a head of staff autoconnect, if the recieving pad is not secure.
+	var/head_call = FALSE //calls from a head of staff autoconnect, if the receiving pad is not secure.
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
 /datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
@@ -45,7 +45,7 @@
 
 	for(var/I in callees)
 		var/obj/machinery/holopad/H = I
-		if(!QDELETED(H) && H.is_operational())
+		if(!QDELETED(H) && H.is_operational)
 			dialed_holopads += H
 			if(head_call)
 				if(H.secure)
@@ -88,6 +88,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
+		calling_holopad.calling = FALSE
 		calling_holopad.outgoing_call = null
 		calling_holopad.SetLightsAndPower()
 		calling_holopad = null
@@ -154,6 +155,7 @@
 	if(!Check())
 		return
 
+	calling_holopad.calling = FALSE
 	hologram = H.activate_holo(user)
 	hologram.HC = src
 
@@ -176,20 +178,19 @@
 /datum/holocall/proc/Check()
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
-		if(!H.is_operational())
+		if(!H.is_operational)
 			ConnectionFailure(H)
 
 	if(QDELETED(src))
 		return FALSE
 
-	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational() && user.loc == calling_holopad.loc
+	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
 
 	if(.)
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer received.")
-				calling_holopad.temp = ""
 
 	if(!.)
 		testing("Holocall Check fail")
@@ -236,7 +237,7 @@
 /obj/item/disk/holodisk/Initialize(mapload)
 	. = ..()
 	if(preset_record_text)
-		build_record()
+		INVOKE_ASYNC(src, .proc/build_record)
 
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)
@@ -422,3 +423,44 @@
 	SOUND explosion
 
 	"}
+
+/obj/item/disk/holodisk/ruin/snowengieruin
+    name = "Blackbox Print-out #EB412"
+    desc = "A holodisk containing the last moments of EB412. There's a bloody fingerprint on it."
+    preset_image_type = /datum/preset_holoimage/engineer
+    preset_record_text = {"
+    NAME Dave Tundrale
+    SAY Maria, how's Build?
+    DELAY 10
+    NAME Maria Dell
+    PRESET /datum/preset_holoimage/engineer/atmos
+    SAY It's fine, don't worry. I've got Plastic on it. And frankly, i'm kinda busy with, the, uhhm, incinerator.
+    DELAY 30
+    NAME Dave Tundrale
+    PRESET /datum/preset_holoimage/engineer
+    SAY Aight, wonderful. The science mans been kinda shit though. No RCDs-
+    DELAY 20
+    NAME Maria Dell
+    PRESET /datum/preset_holoimage/engineer/atmos
+    SAY Enough about your RCDs. They're not even that important, just bui-
+    DELAY 15
+    SOUND explosion
+    DELAY 10
+    SAY Oh, shit!
+    DELAY 10
+    PRESET /datum/preset_holoimage/engineer/atmos/rig
+    LANGUAGE /datum/language/narsie
+    NAME Unknown
+    SAY RISE, MY LORD!!
+    DELAY 10
+    LANGUAGE /datum/language/common
+    NAME Plastic
+    PRESET /datum/preset_holoimage/engineer/rig
+    SAY Fuck, fuck, fuck!
+    DELAY 20
+    SAY It's loose! CALL THE FUCKING SHUTT-
+    DELAY 10
+    PRESET /datum/preset_holoimage/corgi
+    NAME Blackbox Automated Message
+    SAY Connection lost. Dumping audio logs to disk.
+    DELAY 50"}

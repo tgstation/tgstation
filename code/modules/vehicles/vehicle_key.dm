@@ -24,7 +24,7 @@
 	icon_state = "keyjanitor"
 
 /obj/item/key/janitor/suicide_act(mob/living/carbon/user)
-	switch(user.mind.get_skill_level(/datum/skill/cleaning))
+	switch(user.mind?.get_skill_level(/datum/skill/cleaning))
 		if(SKILL_LEVEL_NONE to SKILL_LEVEL_NOVICE) //Their mind is too weak to ascend as a janny
 			user.visible_message("<span class='suicide'>[user] is putting \the [src] in [user.p_their()] mouth and is trying to become one with the janicart, but has no idea where to start! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 			user.gib()
@@ -55,7 +55,7 @@
 	if(user)
 		user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		user.visible_message("<span class='suicide'>[user] forgot [user.p_they()] isn't actually a janicart! That's a paddlin'!</span>")
-		if(user.mind.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
+		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
 		user.adjustOxyLoss(200)
 		user.death(0)
@@ -65,9 +65,11 @@
 	desc = "Perfect for taming all kinds of supernatural beasts! (Warning: only perfect for taming one kind of supernatural beast.)"
 	force = 12
 	icon_state = "lasso"
-	item_state = "chain"
+	inhand_icon_state = "chain"
+	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
+	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/weapons/whip.ogg'
 	slot_flags = ITEM_SLOT_BELT

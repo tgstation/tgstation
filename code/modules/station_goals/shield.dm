@@ -40,20 +40,19 @@
 	name = "satellite control"
 	desc = "Used to control the satellite network."
 	circuit = /obj/item/circuitboard/computer/sat_control
-	ui_x = 400
-	ui_y = 305
-
 	var/notice
 
-/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/sat_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "sat_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SatelliteControl", name)
 		ui.open()
 
 /obj/machinery/computer/sat_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("toggle")
 			toggle(text2num(params["id"]))
@@ -105,6 +104,19 @@
 /obj/machinery/satellite/interact(mob/user)
 	toggle(user)
 
+/obj/machinery/satellite/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return //no need to process if we didn't change anything.
+	active = anchorvalue
+	if(anchorvalue)
+		begin_processing()
+		animate(src, pixel_y = 2, time = 10, loop = -1)
+	else
+		end_processing()
+		animate(src, pixel_y = 0, time = 10)
+	update_icon()
+
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
@@ -112,16 +124,8 @@
 		return FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
-	active = !active
-	if(active)
-		begin_processing()
-		animate(src, pixel_y = 2, time = 10, loop = -1)
-		anchored = TRUE
-	else
-		end_processing()
-		animate(src, pixel_y = 0, time = 10)
-		anchored = FALSE
-	update_icon()
+	set_anchored(!anchored)
+	return TRUE
 
 /obj/machinery/satellite/update_icon_state()
 	icon_state = active ? "sat_active" : "sat_inactive"
@@ -167,9 +171,9 @@
 			change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
-	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevents.control
-	if(E)
-		E.weight *= mod
+	// Update the weight of all meteor events
+	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
+		meteors.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()

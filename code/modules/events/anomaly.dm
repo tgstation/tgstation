@@ -23,7 +23,8 @@
 		/area/solar,
 		/area/holodeck,
 		/area/shuttle,
-		/area/maintenance)
+		/area/maintenance,
+		/area/science/test_area)
 		)
 
 		//Subtypes from the above that actually should explode.

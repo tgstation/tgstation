@@ -21,7 +21,7 @@
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
-	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
+	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	var/oldloc = loc
@@ -34,9 +34,9 @@
 /obj/structure/closet/cardboard/proc/ResetMoveDelay()
 	move_delay = FALSE
 
-/obj/structure/closet/cardboard/open()
-	if(opened || !can_open())
-		return 0
+/obj/structure/closet/cardboard/open(mob/living/user, force = TRUE)
+	if(opened || !can_open(user, force))
+		return FALSE
 	var/list/alerted = null
 	if(egged < world.time)
 		var/mob/living/Snake = null
@@ -52,12 +52,13 @@
 			if(!L.stat)
 				if(!L.incapacitated(ignore_restraints = 1))
 					L.face_atom(src)
-				L.do_alert_animation(L)
+				L.do_alert_animation()
 		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
-/mob/living/proc/do_alert_animation(atom/A)
-	var/image/I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
-	flick_overlay_view(I, A, 8)
+/// Does the MGS ! animation
+/atom/proc/do_alert_animation()
+	var/image/I = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
+	flick_overlay_view(I, src, 8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 

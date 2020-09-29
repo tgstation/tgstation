@@ -173,7 +173,7 @@
 "bd" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "be" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
@@ -393,7 +393,7 @@
 "bV" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/aiModule/core/full/drone{
+/obj/item/ai_module/core/full/drone{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -431,7 +431,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "cd" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/airless,
@@ -673,7 +673,7 @@
 "de" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/space/nearstation)
+/area/template_noop)
 "df" = (
 /obj/item/wallframe/apc,
 /turf/open/floor/plating/airless,
@@ -688,7 +688,7 @@
 /area/ruin/space/derelict/gravity_generator)
 "dj" = (
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/space/nearstation)
+/area/template_noop)
 "dk" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -1116,7 +1116,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "eY" = (
-/obj/item/clothing/suit/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "eZ" = (
@@ -1186,7 +1186,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fk" = (
-/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "fl" = (
@@ -1861,7 +1861,7 @@
 	},
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "hR" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -1920,11 +1920,11 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "ib" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "ic" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -2002,7 +2002,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged4"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "ir" = (
 /obj/structure/chair{
 	dir = 1
@@ -2027,7 +2027,7 @@
 	dir = 6
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "iv" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -2158,7 +2158,7 @@
 	},
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "iU" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -2598,7 +2598,7 @@
 "kL" = (
 /obj/structure/window/fulltile,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "kM" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -2691,7 +2691,7 @@
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "le" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
@@ -3470,7 +3470,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oc" = (
@@ -3499,7 +3499,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oh" = (
-/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "oi" = (
@@ -3589,7 +3589,7 @@
 "vf" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "vo" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/gold{
@@ -3605,7 +3605,7 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "wK" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
@@ -3629,9 +3629,9 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "CZ" = (
-/obj/item/clothing/suit/space/syndicate/black/green,
+/obj/item/clothing/suit/space/eva,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -3664,7 +3664,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "ES" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -3674,7 +3674,7 @@
 "Gu" = (
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "GM" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -3721,7 +3721,7 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched2"
 	},
-/area/space/nearstation)
+/area/template_noop)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3736,7 +3736,7 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
 "KP" = (
-/obj/item/dronespeak_manual,
+/obj/item/language_manual/dronespeak_manual,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "KS" = (
@@ -3765,7 +3765,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "Lv" = (
 /turf/closed/wall,
-/area/space/nearstation)
+/area/template_noop)
 "LX" = (
 /obj/machinery/power/smes/engineering{
 	charge = 0
@@ -3796,7 +3796,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Ob" = (
-/obj/item/clothing/head/helmet/space/syndicate/black/green,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Oj" = (
@@ -3836,9 +3836,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/gravity_generator)
-"Sv" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3851,7 +3848,7 @@
 /area/ruin/space/derelict/medical)
 "Uz" = (
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "UG" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -3909,9 +3906,9 @@
 "ZB" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ZM" = (
-/obj/machinery/droneDispenser/derelict,
+/obj/machinery/drone_dispenser/derelict,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
 
@@ -7227,7 +7224,7 @@ aa
 aa
 aa
 ZB
-Sv
+ci
 ZB
 dr
 dr
@@ -7339,7 +7336,7 @@ aa
 aa
 aa
 aa
-Sv
+ci
 de
 dr
 dr
@@ -8695,7 +8692,7 @@ aa
 aa
 aa
 aa
-Sv
+ci
 dj
 dr
 dr
@@ -8809,7 +8806,7 @@ aa
 aa
 aa
 ZB
-Sv
+ci
 ZB
 dr
 dr
@@ -9804,7 +9801,7 @@ aa
 aa
 aa
 aa
-Sv
+ci
 ax
 bj
 bj
@@ -10595,7 +10592,7 @@ ZB
 aa
 aa
 ZB
-Sv
+ci
 ax
 bj
 bj

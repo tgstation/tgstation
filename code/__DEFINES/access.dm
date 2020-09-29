@@ -10,10 +10,10 @@
 #define ACCESS_MEDICAL 5
 /// Morgue access
 #define ACCESS_MORGUE 6
-/// R&D department, R&D console, burn chamber on some maps
-#define ACCESS_TOX 7
-/// Toxins storage, burn chamber on some maps
-#define ACCESS_TOX_STORAGE 8
+/// R&D department and R&D console
+#define ACCESS_RND 7
+/// Toxins lab and burn chamber
+#define ACCESS_TOXINS 8
 /// Genetics access
 #define ACCESS_GENETICS 9
 /// Engineering area, power monitor, power flow control console
@@ -80,6 +80,8 @@
 /// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY 69 ///Nice.
 #define ACCESS_PSYCHOLOGY 70
+/// Toxins tank storage room access
+#define ACCESS_TOXINS_STORAGE 71
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

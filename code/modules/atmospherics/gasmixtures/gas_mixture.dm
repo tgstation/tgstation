@@ -5,8 +5,14 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+#define MOLAR_ACCURACY  1E-7
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))/*I feel the need to document what happens here. Basically this is used
+															to catch most rounding errors, however its previous value made it so that
+                                                            once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
+															counts would get rounded away. Thus, we lowered it a few orders of magnitude
+                                                            Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
+                                                            So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
+                                                            and any attempts to fix it just killed atmos. I leave this to a greater man then I*/
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -69,13 +75,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0)
 			cached_gases -= id
 
 	//PV = nRT
 
 	///joules per kelvin
-/datum/gas_mixture/proc/heat_capacity(data = MOLES) 
+/datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -83,7 +89,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 	/// Same as above except vacuums return HEAT_CAPACITY_VACUUM
-/datum/gas_mixture/turf/heat_capacity(data = MOLES) 
+/datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -99,7 +105,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	/// Calculate pressure in kilopascals
 /datum/gas_mixture/proc/return_pressure()
-	if(volume > 0) // to prevent division by zero
+	if(volume) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
 		. *= R_IDEAL_GAS_EQUATION * temperature / volume
@@ -126,12 +132,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		cached_gases[id][ARCHIVE] = cached_gases[id][MOLES]
 
-	return 1
+	return TRUE
 
 	///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	//heat transfer
 	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -148,7 +154,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	return 1
+	return TRUE
 
 	///Proportionally removes amount of gas from the gas_mixture.
 	///Returns: gas_mixture with the gases removed
@@ -191,6 +197,49 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	garbage_collect()
 
 	return removed
+
+	///Removes an amount of a specific gas from the gas_mixture.
+	///Returns: gas_mixture with the gas removed
+/datum/gas_mixture/proc/remove_specific(gas_id, amount)
+	var/list/cached_gases = gases
+	amount = min(amount, cached_gases[gas_id][MOLES])
+	if(amount <= 0)
+		return null
+	var/datum/gas_mixture/removed = new type
+	var/list/removed_gases = removed.gases
+	removed.temperature = temperature
+	ADD_GAS(gas_id, removed.gases)
+	removed_gases[gas_id][MOLES] = amount
+	cached_gases[gas_id][MOLES] -= amount
+
+	garbage_collect(list(gas_id))
+	return removed
+
+	///Distributes the contents of two mixes equally between themselves
+	//Returns: bool indicating whether gases moved between the two mixes
+/datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+	. = FALSE
+	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		. = TRUE
+		var/self_heat_cap = heat_capacity()
+		var/other_heat_cap = other.heat_capacity()
+		var/new_temp = (temperature * self_heat_cap + other.temperature * other_heat_cap) / (self_heat_cap + other_heat_cap)
+		temperature = new_temp
+		other.temperature = new_temp
+
+	var/min_p_delta = 0.1
+	var/total_volume = volume + other.volume
+	var/list/gas_list = gases | other.gases
+	for(var/gas_id in gas_list)
+		assert_gas(gas_id)
+		other.assert_gas(gas_id)
+		//math is under the assumption temperatures are equal
+		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
+			. = TRUE
+			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
+			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
+			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+
 
 	///Creates new, identical gas mixture
 	///Returns: duplicate gas mixture
@@ -316,11 +365,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	if (initial(sharer.gc_share))
-		sharer.garbage_collect()
+	garbage_collect()
+	sharer.garbage_collect()
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
@@ -402,12 +448,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
-			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
+			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
+				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
+				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
+			)
 				continue
 
 			for(var/id in min_reqs)
-				if (id == "TEMP" || id == "ENER")
+				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
 					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
@@ -440,3 +488,46 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 10/20*5 = 2.5
 10 = 2.5/5*20
 **/
+
+/// Pumps gas from src to output_air. Amount depends on target_pressure
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+	var/output_starting_pressure = output_air.return_pressure()
+
+	if((target_pressure - output_starting_pressure) < 0.01)
+		//No need to pump gas if target is already reached!
+		return FALSE
+
+	//Calculate necessary moles to transfer using PV=nRT
+	if((total_moles() > 0) && (temperature>0))
+		var/pressure_delta = target_pressure - output_starting_pressure
+		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = remove(transfer_moles)
+		output_air.merge(removed)
+		return TRUE
+	return FALSE
+
+/// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+	var/output_starting_pressure = output_air.return_pressure()
+	var/input_starting_pressure = return_pressure()
+
+	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
+		//No need to pump gas if target is already reached or input pressure is too low
+		//Need at least 10 KPa difference to overcome friction in the mechanism
+		return FALSE
+
+	//Calculate necessary moles to transfer using PV = nRT
+	if((total_moles() > 0) && (temperature>0))
+		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
+		//Can not have a pressure delta that would cause output_pressure > input_pressure
+
+		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = remove(transfer_moles)
+		output_air.merge(removed)
+
+		return TRUE
+	return FALSE

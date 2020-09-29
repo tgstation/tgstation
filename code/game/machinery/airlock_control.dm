@@ -90,7 +90,7 @@
 	name = "airlock sensor"
 	resistance_flags = FIRE_PROOF
 
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 
 	var/id_tag
 	var/master_tag

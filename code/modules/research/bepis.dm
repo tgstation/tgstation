@@ -4,8 +4,8 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 5500
-#define MINOR_THRESHOLD 3500
+#define MAJOR_THRESHOLD 3000
+#define MINOR_THRESHOLD 2000
 #define STANDARD_DEVIATION 1000
 
 /obj/machinery/rnd/bepis
@@ -33,20 +33,22 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
-	var/minor_rewards = list(/obj/item/stack/circuit_stack/full,	//To add a new minor reward, add it here.
-					/obj/item/airlock_painter/decal,
-					/obj/item/pen/survival,
-					/obj/item/circuitboard/machine/sleeper/party,
-					/obj/item/toy/sprayoncan)
+	var/minor_rewards = list(
+		//To add a new minor reward, add it here.
+		/obj/item/stack/circuit_stack/full,
+		/obj/item/pen/survival,
+		/obj/item/circuitboard/machine/sleeper/party,
+		/obj/item/toy/sprayoncan,
+	)
 	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
-		update_icon_state()
+		update_icon()
 		return
 	if(default_deconstruction_crowbar(O))
 		return
-	if(!is_operational())
+	if(!is_operational)
 		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
 		return
 	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
@@ -54,7 +56,7 @@
 		banked_cash += deposit_value
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
-		update_icon_state()
+		update_icon()
 		return
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/Card = O
@@ -89,10 +91,10 @@
 	var/deposit_value = 0
 	deposit_value = banking_amount
 	if(deposit_value == 0)
-		update_icon_state()
+		update_icon()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
-	deposit_value = clamp(round(deposit_value, 1), 1, 15000)
+	deposit_value = clamp(round(deposit_value, 1), 1, 10000)
 	if(!account)
 		say("Cannot find user account. Please swipe a valid ID.")
 		return
@@ -100,10 +102,12 @@
 		say("You do not possess enough credits.")
 		return
 	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
+	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
 	say("Cash deposit successful. There is [banked_cash] in the chamber.")
-	update_icon_state()
+	update_icon()
 	return
 
 /obj/machinery/rnd/bepis/proc/withdrawcash()
@@ -115,7 +119,7 @@
 		banked_cash -= withdraw_value
 		new /obj/item/holochip(src.loc, withdraw_value)
 		say("Withdrawing [withdraw_value] credits from the chamber.")
-	update_icon_state()
+	update_icon()
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
@@ -126,7 +130,7 @@
 	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
-		if(is_blocked_turf(T, exclude_mobs=TRUE))
+		if(T.is_blocked_turf(TRUE))
 			continue
 		else
 			dropturf = T
@@ -138,7 +142,7 @@
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
-	update_icon_state()
+	update_icon()
 	banked_cash = 0
 	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
@@ -165,23 +169,23 @@
 	if(panel_open == TRUE)
 		icon_state = "chamber_open"
 		return
-	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational()))
+	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
 		icon_state = "chamber_active_loaded"
 		return
-	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
 		icon_state = "chamber_loaded"
 		return
-	if(use_power == ACTIVE_POWER_USE && is_operational())
+	if(use_power == ACTIVE_POWER_USE && is_operational)
 		icon_state = "chamber_active"
 		return
-	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational()))
+	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
 		icon_state = "chamber"
 		return
 
-/obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "bepis", name, 500, 480, master_ui, state)
+		ui = new(user, src, "Bepis", name)
 		ui.open()
 	RefreshParts()
 
@@ -229,7 +233,8 @@
 	return data
 
 /obj/machinery/rnd/bepis/ui_act(action,params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("deposit_cash")
@@ -249,7 +254,7 @@
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
 			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
-			update_icon_state()
+			update_icon()
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
@@ -259,7 +264,7 @@
 				use_power = IDLE_POWER_USE
 			else
 				use_power = ACTIVE_POWER_USE
-			update_icon_state()
+			update_icon()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)
 				return

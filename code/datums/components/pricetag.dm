@@ -8,14 +8,18 @@
 	owner = _owner
 	if(_profit_ratio)
 		profit_ratio = _profit_ratio
-	RegisterSignal(parent, list(COMSIG_ITEM_SOLD, COMSIG_ITEM_SOLD_MATERIAL), .proc/split_profit)
+	RegisterSignal(parent, list(COMSIG_ITEM_SOLD), .proc/split_profit)
 	RegisterSignal(parent, list(COMSIG_STRUCTURE_UNWRAPPED, COMSIG_ITEM_UNWRAPPED), .proc/Unwrapped)
-	RegisterSignal(parent, list(COMSIG_ITEM_SPLIT_PROFIT, COMSIG_ITEM_SPLIT_PROFIT_DRY, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL), .proc/return_ratio)
+	RegisterSignal(parent, list(COMSIG_ITEM_SPLIT_PROFIT, COMSIG_ITEM_SPLIT_PROFIT_DRY), .proc/return_ratio)
 
 /datum/component/pricetag/proc/Unwrapped()
+	SIGNAL_HANDLER
+
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
-/datum/component/pricetag/proc/split_profit(var/item_value)
+/datum/component/pricetag/proc/split_profit(item_value)
+	SIGNAL_HANDLER
+
 	var/price = item_value
 	if(price)
 		var/adjusted_value = price*(profit_ratio/100)

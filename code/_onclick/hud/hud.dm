@@ -11,7 +11,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Plasmafire" = 'icons/mob/screen_plasmafire.dmi',
 	"Slimecore" = 'icons/mob/screen_slimecore.dmi',
 	"Operative" = 'icons/mob/screen_operative.dmi',
-	"Clockwork" = 'icons/mob/screen_clockwork.dmi'
+	"Clockwork" = 'icons/mob/screen_clockwork.dmi',
+	"Glass" = 'icons/mob/screen_glass.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -33,7 +34,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/alien_queen_finder
 
-	var/obj/screen/devil/soul_counter/devilsouldisplay
 
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
-	var/obj/screen/wanted_lvl
+	var/obj/screen/wanted/wanted_lvl
 	var/obj/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
@@ -81,11 +81,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	wanted_lvl = new /obj/screen()
-	wanted_lvl.icon = 'icons/obj/gang/wanted_160x32.dmi'
-	wanted_lvl.icon_state = "wanted_0"
-	wanted_lvl.screen_loc = ui_wanted_lvl
-	infodisplay += wanted_lvl
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 /datum/hud/Destroy()
@@ -112,7 +107,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	internals = null
 	spacesuit = null
 	lingchemdisplay = null
-	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null

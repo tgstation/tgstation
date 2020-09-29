@@ -96,13 +96,17 @@
 		var/mob/living/carbon/human/H = owner
 		H.dna.species.start_wagging_tail(H)
 		addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 30)
-		description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
+		description = "<span class='nicegreen'>They want to play on the table!</span>\n"
 		mood_change = 2
 
-/datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurts...</span>"
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
 	mood_change = -3
 	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/brain_damage
   mood_change = -3
@@ -191,7 +195,7 @@
 
 /datum/mood_event/sad_empath
 	description = "<span class='warning'>Someone seems upset...</span>\n"
-	mood_change = -2
+	mood_change = -1
 	timeout = 60 SECONDS
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)
@@ -229,6 +233,11 @@
 	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
 	mood_change = -5
 	timeout = 1 MINUTES
+
+/datum/mood_event/gates_of_mansus
+	description = "<span class='boldwarning'>I HAD A GLIMPSE OF THE HORROR BEYOND THIS WORLD. REALITY UNCOILED BEFORE MY EYES!</span>\n"
+	mood_change = -25
+	timeout = 4 MINUTES
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery

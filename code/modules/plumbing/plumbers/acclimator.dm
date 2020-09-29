@@ -16,7 +16,7 @@
 	///I cant find a good name for this. Basically if target is 300, and this is 10, it will still target 300 but will start emptying itself at 290 and 310.
 	var/allowed_temperature_difference = 1
 	///cool/heat power
-	var/heater_coefficient = 0.1
+	var/heater_coefficient = 0.05
 	///Are we turned on or off? this is from the on and off button
 	var/enabled = TRUE
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
@@ -26,14 +26,11 @@
 	*/
 	var/emptying = FALSE
 
-	ui_x = 320
-	ui_y = 271
-
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/acclimator, bolt)
 
-/obj/machinery/plumbing/acclimator/process()
+/obj/machinery/plumbing/acclimator/process(delta_time)
 	if(machine_stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)
 		if(acclimate_state != NEUTRAL)
 			acclimate_state = NEUTRAL
@@ -54,7 +51,7 @@
 		if(reagents.chem_temp <= target_temperature && target_temperature - allowed_temperature_difference <= reagents.chem_temp) //heating here
 			emptying = TRUE
 
-	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+	reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 	reagents.handle_reactions()
 
 /obj/machinery/plumbing/acclimator/update_icon_state()
@@ -65,10 +62,10 @@
 		if(HEATING)
 			icon_state += "_hot"
 
-/obj/machinery/plumbing/acclimator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/acclimator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "acclimator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemAcclimator", name)
 		ui.open()
 
 /obj/machinery/plumbing/acclimator/ui_data(mob/user)
@@ -85,7 +82,8 @@
 	return data
 
 /obj/machinery/plumbing/acclimator/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

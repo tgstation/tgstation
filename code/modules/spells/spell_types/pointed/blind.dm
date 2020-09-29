@@ -5,7 +5,7 @@
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "STI KALY"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
 	cooldown_min = 50 //12 deciseconds reduction per rank
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind", "/obj/effect/proc_holder/spell/targeted/genetic/blind")

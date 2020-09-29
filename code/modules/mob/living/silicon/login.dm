@@ -4,7 +4,7 @@
 		var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(TRUE)
-	..()
+	return ..()
 
 
 /mob/living/silicon/auto_deadmin_on_login()

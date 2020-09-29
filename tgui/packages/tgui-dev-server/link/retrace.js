@@ -1,8 +1,14 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import { basename } from 'path';
 import SourceMap from 'source-map';
-import StackTraceParser from 'stacktrace-parser';
+import { parse as parseStackTrace } from 'stacktrace-parser';
 import { resolveGlob } from '../util.js';
 
 const logger = createLogger('retrace');
@@ -33,8 +39,12 @@ export const loadSourceMaps = async bundleDir => {
 };
 
 export const retrace = stack => {
+  if (typeof stack !== 'string') {
+    logger.log('ERROR: Stack is not a string!', stack);
+    return stack;
+  }
   const header = stack.split(/\n\s.*at/)[0];
-  const mappedStack = StackTraceParser.parse(stack)
+  const mappedStack = parseStackTrace(stack)
     .map(frame => {
       if (!frame.file) {
         return frame;

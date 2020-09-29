@@ -1,5 +1,8 @@
 /obj/item/gun/magic/staff
 	slot_flags = ITEM_SLOT_BACK
+	ammo_type = /obj/item/ammo_casing/magic/nothing
+	worn_icon_state = null
+	icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
@@ -10,7 +13,7 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
-	item_state = "staffofchange"
+	inhand_icon_state = "staffofchange"
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -18,7 +21,7 @@
 	fire_sound = 'sound/magic/staff_animation.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
-	item_state = "staffofanimation"
+	inhand_icon_state = "staffofanimation"
 
 /obj/item/gun/magic/staff/healing
 	name = "staff of healing"
@@ -26,7 +29,7 @@
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
-	item_state = "staffofhealing"
+	inhand_icon_state = "staffofhealing"
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -37,7 +40,7 @@
 	fire_sound = 'sound/magic/staff_chaos.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/chaos
 	icon_state = "staffofchaos"
-	item_state = "staffofchaos"
+	inhand_icon_state = "staffofchaos"
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
@@ -57,7 +60,7 @@
 	fire_sound = 'sound/magic/staff_door.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "staffofdoor"
-	item_state = "staffofdoor"
+	inhand_icon_state = "staffofdoor"
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
@@ -68,7 +71,7 @@
 	fire_sound = 'sound/items/airhorn.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/honk
 	icon_state = "honker"
-	item_state = "honker"
+	inhand_icon_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
 
@@ -78,14 +81,14 @@
 	fire_sound = 'sound/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/spellblade
 	icon_state = "spellblade"
-	item_state = "spellblade"
+	inhand_icon_state = "spellblade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	max_charges = 4
 
 /obj/item/gun/magic/staff/spellblade/Initialize()
@@ -103,7 +106,8 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/locker
 	icon_state = "locker"
-	item_state = "locker"
+	inhand_icon_state = "locker"
+	worn_icon_state = "lockerstaff"
 	max_charges = 6
 	recharge_rate = 4
 
@@ -115,7 +119,8 @@
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
-	item_state = "staffofflight"
+	inhand_icon_state = "staffofchange"
+	worn_icon_state = "flightstaff"
 
 /obj/item/gun/magic/staff/sapping
 	name = "staff of sapping"
@@ -123,7 +128,8 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/sapping
 	icon_state = "staffofsapping"
-	item_state = "staffofsapping"
+	inhand_icon_state = "staffofdoor"
+	worn_icon_state = "sapstaff"
 
 /obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
@@ -131,7 +137,8 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/necropotence
 	icon_state = "staffofnecropotence"
-	item_state = "staffofnecropotence"
+	inhand_icon_state = "staffofchaos"
+	worn_icon_state = "necrostaff"
 
 /obj/item/gun/magic/staff/wipe
 	name = "staff of possession"
@@ -139,4 +146,5 @@
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/wipe
 	icon_state = "staffofwipe"
-	item_state = "staffofwipe"
+	inhand_icon_state = "pharoah_sceptre"
+	worn_icon_state = "wipestaff"

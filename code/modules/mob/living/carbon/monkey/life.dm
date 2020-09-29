@@ -4,8 +4,6 @@
 
 
 /mob/living/carbon/monkey/Life()
-	set invisibility = 0
-
 	if (notransform)
 		return
 
@@ -13,7 +11,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)
-				if(on_fire || buckled || restrained())
+				if(on_fire || buckled || HAS_TRAIT(src, TRAIT_RESTRAINED) || (pulledby && pulledby.grab_state > GRAB_PASSIVE))
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -69,7 +67,7 @@
 
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the enviroment and natural stabilization
+	// this balances body temp to the environment and natural stabilization
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
@@ -142,10 +140,10 @@
 	//the fire tries to damage the exposed clothes and items
 	var/list/burning_items = list()
 	//HEAD//
-	var/list/obscured = check_obscured_slots(TRUE)
-	if(wear_mask && !(ITEM_SLOT_MASK in obscured))
+	var/obscured = check_obscured_slots(TRUE)
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
 		burning_items += wear_mask
-	if(wear_neck && !(ITEM_SLOT_NECK in obscured))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
 		burning_items += wear_neck
 	if(head)
 		burning_items += head

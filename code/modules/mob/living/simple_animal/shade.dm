@@ -3,7 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/cult.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
 	mob_biotypes = MOB_SPIRIT
@@ -33,6 +33,7 @@
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
+	ventcrawler = VENTCRAWLER_ALWAYS
 
 /mob/living/simple_animal/shade/Initialize()
 	. = ..()
@@ -44,7 +45,7 @@
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
-		return 0
+		return FALSE
 	return ..()
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)

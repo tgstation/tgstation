@@ -10,6 +10,8 @@
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
+	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
+	var/hardcore_value = 0
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
@@ -27,7 +29,24 @@
 	add()
 	if(spawn_effects)
 		on_spawn()
-		addtimer(CALLBACK(src, .proc/post_add), 30)
+	if(quirk_holder.client)
+		post_add()
+	else
+		RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+
+
+/**
+  * On client connection set quirk preferences.
+  *
+  * Run post_add to set the client preferences for the quirk.
+  * Clear the attached signal for login.
+  * Used when the quirk has been gained and no client is attached to the mob.
+  */
+/datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
+		SIGNAL_HANDLER
+
+		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		post_add()
 
 /datum/quirk/Destroy()
 	STOP_PROCESSING(SSquirks, src)
@@ -56,31 +75,50 @@
 /datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 /datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
 
-/datum/quirk/process()
+/datum/quirk/process(delta_time)
 	if(QDELETED(quirk_holder))
 		quirk_holder = null
 		qdel(src)
 		return
 	if(quirk_holder.stat == DEAD)
 		return
-	on_process()
+	on_process(delta_time)
 
-/mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
+/**
+  * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+  *
+  * Arguments:
+  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+  * * Category- Which types of quirks we want to print out. Defaults to everything
+  */
+/mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
-	if(!medical)
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.name
-		if(!dat.len)
-			return "None"
-		return dat.Join(", ")
-	else
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.medical_record_text
-		if(!dat.len)
-			return "None"
-		return dat.Join("<br>")
+	switch(category)
+		if(CAT_QUIRK_ALL)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				dat += medical ? T.medical_record_text : T.name
+		//Major Disabilities
+		if(CAT_QUIRK_MAJOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value < -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Minor Disabilities
+		if(CAT_QUIRK_MINOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value == -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Neutral and Positive quirks
+		if(CAT_QUIRK_NOTES)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value > -1)
+					dat += medical ? T.medical_record_text : T.name
+	if(!dat.len)
+		return medical ? "No issues have been declared." : "None"
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)

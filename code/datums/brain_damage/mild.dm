@@ -90,7 +90,7 @@
 			if(2,3)
 				owner.dizziness += 10
 			if(4,5)
-				owner.confused += 10
+				owner.add_confusion(10)
 				owner.blur_eyes(10)
 			if(6 to 9)
 				owner.slurring += 30

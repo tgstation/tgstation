@@ -190,7 +190,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -210,7 +210,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -272,7 +272,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -312,7 +312,7 @@
 "aA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -390,7 +390,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -399,7 +399,7 @@
 "aF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -408,7 +408,7 @@
 "aG" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -464,7 +464,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -495,7 +495,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -568,7 +568,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -581,7 +581,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -597,7 +597,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -609,7 +609,7 @@
 "aT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -631,7 +631,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -651,7 +651,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -676,7 +676,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -696,7 +696,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -760,7 +760,7 @@
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -779,7 +779,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -811,7 +811,7 @@
 "bf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -820,7 +820,7 @@
 "bg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -842,7 +842,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -871,7 +871,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -905,7 +905,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -923,7 +923,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -955,15 +955,15 @@
 /area/ruin/space/has_grav/listeningstation)
 "bs" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/OMinus{
+/obj/item/reagent_containers/blood/o_minus{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/o_minus,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -975,7 +975,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -1038,7 +1038,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -1101,7 +1101,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "bD" = (
 /obj/structure/table/wood,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
 /obj/item/paper/fluff/ruins/listeningstation/briefing,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/listeningstation)
@@ -1125,7 +1125,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	piping_layer = 3;
+	piping_layer = 4;
 	pixel_x = 5;
 	pixel_y = 5
 	},

@@ -31,10 +31,10 @@
 	if(on)
 		if(LAZYLEN(SSmapping.nuke_threats))
 			icon_state = "rcircuitanim"
-			light_color = LIGHT_COLOR_FLARE
+			set_light_color(LIGHT_COLOR_FLARE)
 		else
 			icon_state = icon_normal
-			light_color = initial(light_color)
+			set_light_color(initial(light_color))
 		set_light(1.4, 0.5)
 	else
 		icon_state = "[icon_normal]off"
@@ -180,3 +180,11 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
+
+/turf/open/floor/plating/rust
+	name = "rusted plating"
+	desc = "Corrupted steel."
+	icon_state = "plating_rust"
+
+/turf/open/floor/plating/rust/rust_heretic_act()
+	return
