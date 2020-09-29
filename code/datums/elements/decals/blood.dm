@@ -1,5 +1,4 @@
 /datum/element/decal/blood
-	//dupe_mode = COMPONENT_DUPE_UNIQUE
 
 /datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _cleanable=CLEAN_TYPE_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(target))
@@ -7,8 +6,11 @@
 
 	. = ..()
 
-	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
-	RegisterSignal(target, COMSIG_WIPE_BLOOD_DNA, .proc/Detach)
+	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name, TRUE)
+
+/datum/element/decal/blood/Detach(atom/source, force)
+	UnregisterSignal(source, COMSIG_ATOM_GET_EXAMINE_NAME)
+	return ..()
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	var/obj/item/I = source

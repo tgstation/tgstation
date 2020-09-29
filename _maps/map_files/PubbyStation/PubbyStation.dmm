@@ -1986,7 +1986,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afI" = (
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -6452,7 +6452,7 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "aqT" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -12894,7 +12894,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -13119,7 +13119,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "aHb" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -19892,7 +19892,7 @@
 	},
 /area/crew_quarters/bar)
 "baq" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -36630,7 +36630,7 @@
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bQz" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -55181,7 +55181,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "riF" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
