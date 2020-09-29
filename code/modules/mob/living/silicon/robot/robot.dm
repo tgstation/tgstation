@@ -336,8 +336,6 @@
 	if(connected_ai)
 		. += "Master AI: [connected_ai.name]"
 
-/mob/living/silicon/robot/restrained(ignore_grab)
-	return
 
 /mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
