@@ -77,7 +77,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
-	if(do_after_mob(user, src, 30 SECONDS, TRUE))
+	if(do_after_mob(user, src, 12 SECONDS, TRUE))
 		if(user.loc != src)
 			return
 		// you are still in the bag? time to go unless you KO'd, honey!
