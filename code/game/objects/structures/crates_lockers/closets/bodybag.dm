@@ -132,7 +132,7 @@
 /obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message("<span class='notice'>[usr] folds up [src].</span>")
 	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-	var/max_weight_of_contents = B.initial(w_class)
+	var/max_weight_of_contents = initial(B.w_class)
 	for(var/atom/movable/A in contents)
 		A.forceMove(B)
 		if(isliving(A))
