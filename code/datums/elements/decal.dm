@@ -4,12 +4,13 @@
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
-	var/last_dir
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+	if(!isatom(target) || (!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target) && !_pic))
 		return ELEMENT_INCOMPATIBLE
+	if(_pic)
+		pic = _pic
 	description = _description
 	cleanable = _cleanable
 
@@ -21,7 +22,6 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
-		last_dir = _dir
 		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
@@ -65,7 +65,6 @@
 
 	if(old_dir == new_dir)
 		return
-	last_dir = new_dir
 	Detach(source)
 	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
 
@@ -88,4 +87,4 @@
 	if(newT == source)
 		return
 	Detach(source)
-	newT.AddElement(/datum/element/decal, pic.icon, pic.icon_state, last_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
+	newT.AddElement(/datum/element/decal, _cleanable = cleanable, _description = description, _pic = pic)
