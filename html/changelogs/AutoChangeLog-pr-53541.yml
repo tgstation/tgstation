@@ -1,0 +1,4 @@
+author: "bobbahbrown, MrStonedOne, Jordie0608"
+delete-after: True
+changes: 
+  - server: "Added indices to improve support of searching through the tickets table, updated schema to 5.11."

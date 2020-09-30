@@ -206,8 +206,8 @@
   * * no_react - passed through to [/datum/reagents/proc/add_reagent]
   * * mob/transfered_by - used for logging
   * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
-  * * methods - passed through to [/datum/reagents/proc/react_single] and [/datum/reagent/proc/on_transfer]
-  * * show_message - passed through to [/datum/reagents/proc/react_single]
+  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
+  * * show_message - passed through to [/datum/reagents/proc/expose_single]
   * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
   * * ignore_stomach - when using methods INGEST will not use the stomach as the target
   */

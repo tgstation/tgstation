@@ -51,9 +51,11 @@
 	if(isnull(.))
 		return
 	if(. == 0)
+		REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, LACKING_MANIPULATION_APPENDAGES_TRAIT)
 		if(usable_hands != 0) //From having no usable hands to having some.
 			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-	else if(usable_hands == 0) //From having usable hands to no longer having them.
+	else if(usable_hands == 0 && default_num_hands > 0) //From having usable hands to no longer having them.
+		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, LACKING_MANIPULATION_APPENDAGES_TRAIT)
 		if(!usable_legs && !(movement_type & (FLYING | FLOATING)))
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 

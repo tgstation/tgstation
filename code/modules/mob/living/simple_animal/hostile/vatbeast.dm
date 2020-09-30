@@ -4,6 +4,7 @@
 	desc = "A strange molluscoidal creature carrying a busted growing vat.\nYou wonder if this burden is a voluntary undertaking in order to achieve comfort and protection, or simply because the creature is fused to its metal shell?"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "vat_beast"
+	icon_living = "vat_beast"
 	icon_dead = "vat_beast_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mob_size = MOB_SIZE_LARGE

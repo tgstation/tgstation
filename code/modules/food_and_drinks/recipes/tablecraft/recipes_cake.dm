@@ -165,7 +165,7 @@
 	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/sundae = 2,
+		/obj/item/food/sundae = 2,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 5
 	)
 	result = /obj/item/food/cake/clown_cake
@@ -199,7 +199,7 @@
 		/obj/item/organ/brain = 1,
 		/obj/item/organ/heart = 1,
 		/obj/item/food/cake/birthday = 1,
-		/obj/item/reagent_containers/food/snacks/meat/slab = 3,
+		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
 		/datum/reagent/consumable/sprinkles = 5,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life

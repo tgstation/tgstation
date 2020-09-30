@@ -39,5 +39,6 @@
 	return data
 
 /datum/computer_file/program/atmosscan/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
