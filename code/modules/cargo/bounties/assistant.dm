@@ -56,8 +56,6 @@
 	reward = 1500
 	wanted_types = list(/obj/item/storage/box/clown)
 
-<<<<<<< HEAD
-=======
 /datum/bounty/item/assistant/cheesiehonkers
 	name = "Cheesie Honkers"
 	description = "Apparently the company that makes Cheesie Honkers is going out of business soon. CentCom wants to stock up before it happens!"
@@ -65,7 +63,6 @@
 	required_count = 3
 	wanted_types = list(/obj/item/food/cheesiehonkers)
 
->>>>>>> upstream/master
 /datum/bounty/item/assistant/baseball_bat
 	name = "Baseball Bat"
 	description = "Baseball fever is going on at CentCom! Be a dear and ship them some baseball bats, so that management can live out their childhood dream."
