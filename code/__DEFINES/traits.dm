@@ -219,6 +219,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODROP			"nodrop"
 #define TRAIT_NO_STORAGE_INSERT	"no_storage_insert" //cannot be inserted in a storage.
 #define TRAIT_T_RAY_VISIBLE		"t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
+/// Item is invisible to the observer t-ray scanner.
+#define TRAIT_T_RAY_NO_OBSERVER "t-ray-no-observer"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 
 //quirk traits

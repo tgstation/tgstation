@@ -13,19 +13,22 @@
 	var/use_alpha
 	///We will switch between anchored and unanchored. for stuff like satchels that shouldn't be pullable under tiles but are otherwise unanchored
 	var/use_anchor
+	/// Any observer trait to be applied, like TRAIT_T_RAY_NO_OBSERVE to prevent observers seeing this item.
+	var/observer_trait
 
-/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE)
+/datum/element/undertile/Attach(datum/target, invisibility_trait, invisibility_level = INVISIBILITY_MAXIMUM, tile_overlay, use_alpha = TRUE, use_anchor = FALSE, observer_trait)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_OBJ_HIDE, .proc/hide)
 
-	src.invisibility_trait = invisibility_trait
-	src.invisibility_level = invisibility_level
+	src.invisibility_trait 	= invisibility_trait
+	src.invisibility_level 	= invisibility_level
 	src.tile_overlay 		= tile_overlay
 	src.use_alpha			= use_alpha
 	src.use_anchor			= use_anchor
+	src.observer_trait		= observer_trait
 
 ///called when a tile has been covered or uncovered
 /datum/element/undertile/proc/hide(atom/movable/source, covered)
@@ -38,6 +41,8 @@
 	if(covered)
 		if(invisibility_trait)
 			ADD_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
+		if(observer_trait)
+			ADD_TRAIT(source, observer_trait, TRAIT_GENERIC)
 		if(tile_overlay)
 			T.add_overlay(tile_overlay)
 		if(use_alpha)
@@ -48,6 +53,8 @@
 	else
 		if(invisibility_trait)
 			REMOVE_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
+		if(observer_trait)
+			REMOVE_TRAIT(source, observer_trait, TRAIT_GENERIC)
 		if(tile_overlay)
 			T.overlays -= tile_overlay
 		if(use_alpha)

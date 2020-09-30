@@ -313,7 +313,7 @@
 
 /obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_MAXIMUM, use_anchor = TRUE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_anchor = TRUE, observer_trait = TRAIT_T_RAY_NO_OBSERVER)
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
