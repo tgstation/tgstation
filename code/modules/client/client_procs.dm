@@ -934,7 +934,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
 		return
-	set_macros() // reset macros
 	movement_keys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
