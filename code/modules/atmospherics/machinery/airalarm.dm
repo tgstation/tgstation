@@ -306,18 +306,44 @@
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
 		for(var/hid in A.atmos_vents)
-			var/datum/netlink/vent = A.atmos_vents[hid]
-			if(QDELETED(vent) && vent.data)
+			var/list/vent = A.atmos_vents[hid]
+			if(!vent)
 				continue
-			data["vents"] += list(vent.data)
+			data["vents"] += list(list(
+					"id_tag"	= hid,
+					"long_name" = vent["long_name"],
+					"power"		= vent["power"],
+					"checks"	= vent["pressure_checks"],
+					"excheck"	= vent["pressure_checks"]&1,
+					"incheck"	= vent["pressure_checks"]&2,
+					"direction"	= vent["direction"],
+					"external"	= vent["external"],
+					"internal"	= vent["internal"],
+					"extdefault"= (vent["external"] == ONE_ATMOSPHERE),
+					"intdefault"= (vent["internal"] == 0)
+				))
 
 		data["scrubbers"] = list()
 		for(var/hid in A.atmos_scrubbers)
-			var/datum/netlink/scrubber = A.atmos_scrubbers[hid]
-			if(QDELETED(scrubber) && scrubber.data)
+			var/list/scrubber = A.atmos_scrubbers[hid]
+			if(!scrubber)
 				continue
-			data["scrubbers"] += list(scrubber.data)
+			// Does this look like it does alot?  yes.  But its moved from the scrubber to here
+			// I mean, its only used here so why not be just here?
+			var/list/f_types = list()
+			var/list/filter_types = scrubber["filter_types"]
+			for(var/path in GLOB.meta_gas_info)
+				var/list/gas = GLOB.meta_gas_info[path]
+				f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
 
+			data["scrubbers"] += list(list(
+					"id_tag"				= hid,
+					"long_name" 			= scrubber["long_name"],
+					"power"					= scrubber["power"],
+					"scrubbing"				= scrubber["scrubbing"],
+					"widenet"				= scrubber["widenet"],
+					"filter_types"			= f_types
+				))
 		data["mode"] = mode
 		data["modes"] = list()
 		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
@@ -376,10 +402,10 @@
 			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^1), usr)
+			send_signal(device_id, list("pressure_checks" = text2num(params["val"])^1), usr)
 			. = TRUE
 		if("incheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
+			send_signal(device_id, list("pressure_checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 			var/target = params["value"]
@@ -453,12 +479,39 @@
 
 
 /obj/machinery/airalarm/proc/send_signal(target, list/data, atom/user)
-	var/datum/netdata/signal = new(data)
-	signal.data["sigtype"] = "command"
-	signal.receiver_id = target
-	signal.sender_id = hardware_id
-	signal.network_id = network_id
-	ntnet_send(signal)
+	// lets use the port to save tie
+	var/area/A = get_area(src)
+	var/list/datalink = A.atmos_scrubbers[target]
+	if(!datalink)
+		datalink = A.atmos_vents[target]
+	if(datalink)
+		for(var/name in data)
+			switch(name)
+				if("toggle_filter") // special case on filters
+					datalink["filter_types"] ^=  gas_id2path(data[name])
+				if("set_internal_pressure")
+					var/old_pressure = datalink["internal"]
+					var/new_pressure  = clamp(text2num(data[name]),0,ONE_ATMOSPHERE*50)
+					if(old_pressure != new_pressure)
+						datalink["internal"] = new_pressure
+						investigate_log(" internal pressure was set to [new_pressure] by [name]",INVESTIGATE_ATMOS)
+				if("set_external_pressure")
+					var/old_pressure = datalink["external"]
+					var/new_pressure  = clamp(text2num(data[name]),0,ONE_ATMOSPHERE*50)
+					if(old_pressure != new_pressure)
+						datalink["external"] = new_pressure
+						investigate_log(" external pressure was set to [new_pressure] by [name]",INVESTIGATE_ATMOS)
+				if("reset_external_pressure")
+					datalink["external"] =  ONE_ATMOSPHERE
+				if("reset_internal_pressure")
+					datalink["external"] =  0
+				else
+					datalink[name] = data[name]
+		NETWORK_PORT_SET_UPDATE(datalink)
+	else
+		if(user)
+			to_chat(user, "Device '[target]' does not exist")
+
 
 
 
@@ -490,7 +543,7 @@
 			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"filter_types" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
@@ -504,7 +557,7 @@
 			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(
+					"filter_types" = list(
 						/datum/gas/carbon_dioxide,
 						/datum/gas/miasma,
 						/datum/gas/plasma,
@@ -550,7 +603,7 @@
 			for(var/device_id in A.atmos_scrubbers)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"filter_types" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)

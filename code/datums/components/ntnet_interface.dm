@@ -42,18 +42,21 @@
 // in datum/netlink.  I am trying my best to not have hard references in any of these data
 // objects
 
-/datum/component/ntnet_interface/proc/connect_port(hid_or_tag, port)
+/datum/component/ntnet_interface/proc/connect_port(hid_or_tag, port, mob/user=null)
 	ASSERT(hid_or_tag && port)
 	var/datum/component/ntnet_interface/target = network.root_devices[hid_or_tag]
 	if(target && target.registered_sockets[port])
-		return new/datum/netlink(target, port)
+		var/list/datalink = target.registered_sockets[port]
+		return datalink
+	if(user)
+		to_chat(user,"Port [port] does not exist on [hid_or_tag]!")
 
 
 /datum/component/ntnet_interface/proc/deregister_port(port)
 	if(registered_sockets[port]) // should I runtime if this isn't in here?
 		var/list/datalink = registered_sockets[port]
+		NETWORK_PORT_DISCONNECT(datalink)
 		// this should remove all outstanding ports
-		SEND_SIGNAL(src, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, port, datalink)
 		registered_sockets.Remove(port)
 
 
@@ -76,18 +79,19 @@
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
 	for(var/port in registered_sockets)
 		deregister_port(port)
-		qdel(registered_sockets[port])  // hummm
 	registered_sockets = null
 	return ..()
 
 /datum/component/ntnet_interface/proc/join_network(network_name)
 	if(network)
 		leave_network()
-	network = SSnetworks.create_network_simple(network_name)
+	var/datum/ntnet/net = SSnetworks.create_network_simple(network_name)
+	ASSERT(net)
+	net.interface_connect(src)
+	ASSERT(network)
 	if(network)
-		network.interface_connect(src)
-		if(isatom(parent))
-			var/atom/A = parent
+		var/atom/A = parent
+		if(A)
 			A.network_id = 	network.network_id
 		// So why here?  Before this there were hacks (radio, ref sharing, etc) on how other objects "connected" with another
 		// (embedded_controller, assembly's, etc).  They all had their own interfaces and snowflake connections.  By giving

@@ -5793,7 +5793,7 @@
 "oB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	id = "syndie_lavaland_inc_in"
+	id_tag = "syndie_lavaland_inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32

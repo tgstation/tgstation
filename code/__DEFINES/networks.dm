@@ -24,5 +24,12 @@
 #define NETWORK_ATMOS_CONTROL 	"ATMOS.CONTROL"
 #define NETWORK_ATMOS_STORAGE 	"ATMOS.STORAGE"
 #define NETWORK_CHARLIE_ATMOS 	"CHARLIE.ATMOS"
+#define DEEP_STORAGE_ATMOS		"DEEP.ATMOS"
 
+#define NETWORK_PORT_DISCONNECTED(LIST) (!LIST || LIST["_disconnected"])
+#define NETWORK_PORT_UPDATED(LIST) (LIST && !LIST["_disconnected"] && LIST["_updated"])
+#define NETWORK_PORT_UPDATE(LIST) if(LIST) { LIST["_updated"] = TRUE }
+#define NETWORK_PORT_CLEAR_UPDATE(LIST) if(LIST) { LIST["_updated"] = FALSE }
+#define NETWORK_PORT_SET_UPDATE(LIST) if(LIST) { LIST["_updated"] = TRUE }
+#define NETWORK_PORT_DISCONNECT(LIST)  if(LIST) { LIST["_disconnected"] = TRUE }
 

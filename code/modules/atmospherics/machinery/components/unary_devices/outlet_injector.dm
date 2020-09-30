@@ -25,7 +25,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/setup_network()
 	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 	datalink = net.register_port("status", list(
-		"id_tag" = id_tag,
+		"hardware_id" = net.hardware_id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
@@ -65,17 +65,18 @@
 	..()
 
 	injecting = 0
+	// updated by remote port
+	if(NETWORK_PORT_UPDATED(datalink))
+		on = datalink["power"]
+		volume_rate = clamp(datalink["volume_rate"] , 0, MAX_TRANSFER_RATE)
+		NETWORK_PORT_CLEAR_UPDATE(datalink)
 
 	if(!on || !is_operational)
 		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
 
-	// updated by remote port
-	if(datalink && datalink.data["_updated"])
-		on = datalink.data["power"]
-		volume_rate = clamp(datalink.data["volume_rate"] , 0, MAX_TRANSFER_RATE)
-		datalink.data["_updated"] = FALSE
+
 
 	if(air_contents.temperature > 0)
 		var/transfer_moles = air_contents.return_pressure() * volume_rate * delta_time / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -94,18 +95,16 @@
 		return
 
 	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-		datalink?.put("power",on)
+		datalink["power"] = on = text2num(signal.data["power"])
 
 	if("power_toggle" in signal.data)
-		on = !on
-		datalink?.put("power",on)
+		datalink["power"] = on = !on
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
 		volume_rate = clamp(number, 0, air_contents.volume)
-		datalink?.put("volume_rate",volume_rate)
+		datalink["volume_rate"] = volume_rate
 
 	if(!("status" in signal.data)) //do not update_icon
 		update_icon()
@@ -131,7 +130,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			datalink?.put("power",on)
+			datalink["power"] = on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")

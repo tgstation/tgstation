@@ -107,15 +107,16 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		device.network.interface_disconnect(device)
 	linked_devices[device.hardware_id] = device
 	root_devices[device.hardware_id] = device
+	device.network = src
 	if(device.id_tag)
 		// if we have a tag just put it in root devices
 		if(!root_devices[device.id_tag])
 			root_devices[device.id_tag] = device
 #ifdef DEBUG_NETWORKS
 		else
-			throw EXCEPTION("interface_connect: [device.id_tag] already exists")
+			to_chat(world, "interface_connect: [device.id_tag] already exists")
 #endif
-	device.network = src
+
 
 /datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
 	linked_devices.Remove(device.hardware_id)

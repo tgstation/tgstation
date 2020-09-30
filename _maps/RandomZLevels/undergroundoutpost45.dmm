@@ -11284,7 +11284,7 @@
 "vf" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	id = "UO45_o2_in"
+	id_tag = "UO45_o2_in"
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)

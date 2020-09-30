@@ -74,7 +74,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 
 #ifdef DEBUG_NETWORKS
 	if(!verify_network_name(network_id))
-		log_runtime("create_network_simple: [network_id] IS INVALID")
+		to_chat(world, "create_network_simple: [network_id] IS INVALID")
 		return null
 #endif
 	var/list/network_tree = network_string_to_list(network_id)

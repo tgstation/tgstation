@@ -42,8 +42,10 @@
 								//	2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
-#define FORCE_MAP "_maps/runtimestation.json"
+#define FORCE_MAP "_maps/MetaStation.json"
 #endif
+
+#define FORCE_MAP "_maps/MetaStation.json"
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 513

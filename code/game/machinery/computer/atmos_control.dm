@@ -11,7 +11,7 @@
 	var/on = TRUE
 	network_id = NETWORK_ATMOS_STORAGE
 
-	var/datum/netlink/datalink = null
+	var/list/datalink = null
 	var/network_broadcast = NETWORK_ATMOS_CONTROL
 
 
@@ -55,7 +55,7 @@
 	if(on)
 		if(datalink)
 			var/datum/gas_mixture/air_sample = return_air()
-			var/list/gasses = datalink.data["gases"]
+			var/list/gasses = datalink["gases"]
 			var/total_moles = air_sample.total_moles()
 
 			if(total_moles)
@@ -63,9 +63,9 @@
 					var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 					gasses[gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-			datalink.data["pressure"] = air_sample.return_pressure()
-			datalink.data["temperature"] = air_sample.temperature
-			datalink.data["_updated"] = TRUE // always updated
+			datalink["pressure"] = air_sample.return_pressure()
+			datalink["temperature"] = air_sample.temperature
+			datalink["_updated"] = TRUE // always updated
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber",
 		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
-	var/list/sensor_information = list()
+	var/list/sensor_information = null
 	network_id = NETWORK_ATMOS_CONTROL
 
 /obj/machinery/computer/atmos_control/Initialize()
@@ -113,17 +113,17 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/Destroy()
 	GLOB.atmos_air_controllers -= src
 	if(sensor_information)
-		for(var/tag in sensor_information)
-			qdel(sensor_information[tag])
+		sensor_information.Cut()
 		sensor_information = null
 	return ..()
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	if(!sensor_information)
 		var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
+		sensor_information = list()
 		// alright, we are assuming all the sensors are hooked up
 		for(var/tag in sensors) // should throw a runtime here
-			sensor_information[tag]	= conn.connect_port("status")
+			sensor_information[tag]	= conn.connect_port(tag, "status",user)
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -135,15 +135,15 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["sensors"] = list()
 	for(var/tag in sensors)
 		var/long_name = sensors[tag]
-		var/datum/netlink/datalink = sensor_information[tag]
+		var/list/datalink = sensor_information[tag]
 		if(!datalink)
 			continue
 		data["sensors"] += list(list(
-			"id_tag"		= datalink.data["id_tag"],
+			"id_tag"		= datalink["id_tag"],
 			"long_name" 	= sanitize(long_name),
-			"pressure"		= datalink.data["pressure"],
-			"temperature"	= datalink.data["temperature"],
-			"gases"			= datalink.data["gases"]
+			"pressure"		= datalink["pressure"],
+			"temperature"	= datalink["temperature"],
+			"gases"			= datalink["gases"]
 		))
 	return data
 
@@ -167,8 +167,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
-	var/datum/netlink/input_info
-	var/datum/netlink/output_info
+	var/list/input_info
+	var/list/output_info
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -219,30 +219,29 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 
-// This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
-// WarlockD - Not a hacky madness anymore!  If the user knows the hid address, it will just connect
+
 /obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, datum/tgui/ui)
+	// we test for connection here as there really isn't a point till somone
+	// clicks on the terminal
 	var/datum/component/ntnet_interface/conn = null
 	var/datum/component/ntnet_interface/target = null
 	if(!input_info && input_tag)
 		conn = GetComponent(/datum/component/ntnet_interface)
-		target = conn.network.interface_find(input_tag)
 		if(target)
-			input_info = target.connect_port("status")
+			input_info = conn.connect_port(input_tag, "status",user)
 	if(!output_info && output_tag)
 		if(!conn)
 			conn = GetComponent(/datum/component/ntnet_interface)
-		target = conn.network.interface_find(output_tag)
 		if(target)
-			output_info = target.connect_port("status")
+			output_info = conn.connect_port(output_tag, "status",user)
 	return ..()
 
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
 	if(input_info)
-		data["inputting"] = input_info.data["power"]
-		data["inputRate"] = input_info.data["volume_rate"]
+		data["inputting"] = input_info["power"]
+		data["inputRate"] = input_info["volume_rate"]
 	else
 		data["inputting"] = 0
 		data["inputRate"] = 0
@@ -266,8 +265,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			if(!input_info)
 				to_chat(ui.user, "ERROR: No input connection for the terminal detected")
 			else
-				input_info.data["power"] = !input_info.data["power"]
-				input_info.data["_updated"] = TRUE
+				input_info["power"] = !input_info["power"]
+				NETWORK_PORT_UPDATE(input_info)
 			. = TRUE
 		if("rate")
 			if(!input_info)
@@ -275,15 +274,15 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			else
 				var/target = text2num(params["rate"])
 				if(target != null)
-					input_info.data["volume_rate"] = clamp(target, 0, MAX_TRANSFER_RATE)
-					input_info.data["_updated"] = TRUE
+					input_info["volume_rate"] = clamp(target, 0, MAX_TRANSFER_RATE)
+					NETWORK_PORT_UPDATE(input_info)
 			. = TRUE
 		if("output")
 			if(!output_info)
 				to_chat(ui.user, "ERROR: No output connection for the terminal detected")
 			else
-				output_info.data["power"] = !output_info.data["power"]
-				output_info.data["_updated"] = TRUE
+				output_info["power"] = !output_info["power"]
+				NETWORK_PORT_UPDATE(output_info)
 			. = TRUE
 		if("pressure")
 			if(!output_info)
@@ -291,6 +290,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			else
 				var/target = text2num(params["pressure"])
 				if(target != null)
-					output_info.data["internal"] = clamp(target, 0, MAX_OUTPUT_PRESSURE)
-					output_info.data["_updated"] = TRUE
+					output_info["internal"] = clamp(target, 0, MAX_OUTPUT_PRESSURE)
+					NETWORK_PORT_UPDATE(output_info)
 			. = TRUE
