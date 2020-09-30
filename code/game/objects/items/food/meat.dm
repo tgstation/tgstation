@@ -917,7 +917,7 @@
 	name = "chicken cutlet"
 	tastes = list("chicken" = 1)
 
-/obj/item/food/meat/friedchicken
+/obj/item/food/friedchicken
 	name = "fried chicken"
 	desc = "A juicy hunk of chicken meat, fried to perfection."
 	icon_state = "friedchicken1"
