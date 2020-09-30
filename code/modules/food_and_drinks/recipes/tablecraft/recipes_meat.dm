@@ -234,5 +234,5 @@
 		/obj/item/food/meat/slab/chicken = 1,
 		/datum/reagent/consumable/cooking_oil = 10
 	)
-	result = /obj/item/food/meat/friedchicken
+	result = /obj/item/food/friedchicken
 	subcategory = CAT_MEAT
