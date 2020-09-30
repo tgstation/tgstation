@@ -45,7 +45,7 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/destructive/do_action(atom/target)
+/datum/experiment/scanning/destructive/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
 	var/idx = get_contributing_index(target)
 	if (idx)
 		scanned[idx]++
@@ -56,13 +56,3 @@
 	for (var/a in required_atoms)
 		if (istype(target, a) && (a in scanned) && scanned[a] < required_atoms[a])
 			return a
-
-/datum/experiment/scanning/destructive/sabotage()
-	var/list/valid_targets = list()
-	for (var/a in scanned)
-		if (scanned[a] > 0)
-			valid_targets += a
-
-	if (valid_targets.len > 0)
-		scanned[pick(valid_targets)]--
-		return TRUE

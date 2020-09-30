@@ -62,7 +62,7 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/do_action(atom/target)
+/datum/experiment/scanning/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
 	var/idx = get_contributing_index(target)
 	if (idx)
 		scanned[idx] += target
@@ -86,21 +86,3 @@
 		var/list/seen = scanned[a]
 		if (istype(target, a) && seen && seen.len < required_atoms[a] && !(target in seen))
 			return a
-
-/**
-  * Attempts to sabotage the experiment
-  *
-  * This proc attempts to decrease the scanned atom count by one, and
-  * returns TRUE/FALSE based on the success of this operation.
-  */
-/datum/experiment/scanning/sabotage()
-	var/list/valid_targets = list()
-	for (var/a in scanned)
-		var/list/seen = scanned[a]
-		if (seen.len > 0)
-			valid_targets += a
-
-	if (valid_targets.len > 0)
-		var/list/target = scanned[pick(valid_targets)]
-		pick_n_take(target)
-		return TRUE

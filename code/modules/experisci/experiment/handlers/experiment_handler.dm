@@ -25,7 +25,7 @@
 												blacklisted_experiments = list(),
 												config_mode = EXPERIMENT_CONFIG_ATTACKSELF)
 	. = ..()
-	if(!isatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
@@ -41,6 +41,11 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+	GLOB.experiment_handlers += src
+
+/datum/component/experiment_handler/Destroy(force, silent)
+	. = ..()
+	GLOB.experiment_handlers -= src
 
 //Hooks on attack to try and run an experiment (When using a handheld handler)
 /datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
@@ -51,12 +56,15 @@
 
 //This proc exists because Jared Fogle really likes async
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
-	SIGNAL_HANDLER
 	if(!do_after(user, 10, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, "<span>You scan [target.name].</span>")
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		to_chat(user, "<span>[target.name] was not relevant to your experiment.</span>")
+
 
 ///Hooks on succesful explosions on the doppler array this is attached to
 /datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
@@ -64,10 +72,17 @@
 	var/atom/movable/our_array = parent
 	if(action_experiment(source, devastation_range, heavy_impact_range, light_impact_range))
 		playsound(src, 'sound/machines/ping.ogg', 25)
-		our_array.say("Completed experiment.")
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_array.say("Insufficient explosion to contribute to current experiment.")
+
+///Announces a message to all experiment handlers
+/datum/component/experiment_handler/proc/announce_message_to_all(var/message)
+	for(var/i in GLOB.experiment_handlers)
+		var/datum/component/experiment_handler/experi_handler
+		var/atom/movable/experi_parent = experi_handler.parent
+		experi_parent.say(message)
+
 
 /**
   * Attempts to perform the selected experiment given some arguments
@@ -78,11 +93,13 @@
 		return FALSE
 
 	// Attempt to run
-	var/list/arguments = args.len > 1 ? args.Copy(2) : list()
+	var/list/arguments = list(src)
+	arguments = args.len > 1 ? arguments + args.Copy(2) : arguments
 	if (!selected_experiment.actionable(arglist(arguments)))
 		return FALSE
-	else
-		return selected_experiment.do_action(arglist(arguments))
+
+	return selected_experiment.perform_experiment(arglist(arguments)) //Returns true if the experiment was succesfuly handled
+
 
 /**
   * Attempts to show the user the experiment configuration panel
@@ -164,7 +181,7 @@
 			return FALSE
 
 	// Check that this experiment is visible currently
-	if (!linked_web || !(e in linked_web.active_experiments))
+	if (!linked_web || !(e in linked_web.available_experiments))
 		return FALSE
 
 	// Check that this experiment type isn't blacklisted
@@ -202,7 +219,7 @@
 		.["servers"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
-		for (var/datum/experiment/e in linked_web.active_experiments)
+		for (var/datum/experiment/e in linked_web.available_experiments)
 			var/list/data = list(
 				name = e.name,
 				description = e.description,

@@ -21,7 +21,7 @@
 	 devestation, [measured["heavy"]] heavy, and [measured["light"]] light. You must \
 	 reach an explosion of at least [required_devastation]D/[required_heavy]H/[required_light]L."
 
-/datum/experiment/explosion/do_action(devastation, heavy, light)
+/datum/experiment/explosion/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
 	measured["devastation"] = max(measured["devastation"], devastation)
 	measured["heavy"] = max(measured["heavy"], heavy)
 	measured["light"] = max(measured["light"], light)

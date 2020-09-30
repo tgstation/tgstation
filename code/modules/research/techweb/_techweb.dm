@@ -39,7 +39,7 @@
 	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 	var/list/tiers = list()
 	/// Available experiments
-	var/list/active_experiments = list()
+	var/list/available_experiments= list()
 	/// Completed experiments
 	var/list/completed_experiments = list()
 
@@ -228,19 +228,14 @@
 
 /datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
 	. = TRUE
-	for (var/experiment_type in node.experiments)
-		var/datum/experiment/found = null
-		for (var/datum/experiment/e in completed_experiments)
-			if (e.type == experiment_type)
-				found = e
-				break
-		if (!found)
+	for (var/experiment_type in node.required_experiments)
+		if (!completed_experiments[experiment_type])
 			return FALSE
 
 /datum/techweb/proc/add_experiment(experiment_type)
 	. = TRUE
 	// check active experiments for experiment of this type
-	for (var/i in active_experiments)
+	for (var/i in available_experiments)
 		var/datum/experiment/E = i
 		if (E.type == experiment_type)
 			return FALSE
@@ -249,13 +244,17 @@
 		var/datum/experiment/E = i
 		if (E.type == experiment_type)
 			return FALSE
-	active_experiments += new experiment_type()
+	available_experiments+= new experiment_type()
 
 /datum/techweb/proc/add_experiments(list/experiment_list)
 	. = TRUE
 	for (var/e in experiment_list)
 		var/datum/experiment/E = e
 		. = . && add_experiment(E)
+
+/datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
+	available_experiments -= completed_experiment
+	completed_experiments[completed_experiment.type] += completed_experiment
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -276,8 +275,9 @@
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(id)
-		if (n.experiments.len > 0)
-			add_experiments(n.experiments)
+		if (n.required_experiments.len > 0)
+			add_experiments(n.required_experiments)
+			add_experiments(n.discount_experiments)
 		update_node_status(n)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)

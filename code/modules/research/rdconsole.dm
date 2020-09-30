@@ -289,9 +289,9 @@ Nothing else in the console has ID requirements.
 		return l
 	var/display_name = node.display_name
 	var/list/experiment_description = list()
-	if (node.experiments && node.experiments.len)
+	if (node.required_experiments && node.required_experiments.len)
 		experiment_description += "<br />Required experiments:<ul>"
-		for (var/e_type in node.experiments)
+		for (var/e_type in node.required_experiments)
 			var/datum/experiment/e = e_type
 			experiment_description += "<li>[initial(e.name)]</li>"
 		experiment_description += "</ul><br />"

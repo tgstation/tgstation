@@ -2,6 +2,11 @@
 	name = "Base Slime Experiment"
 	total_requirement = 10
 
+/datum/experiment/scanning/random/slime/calibration
+	name = "Slime Sample Test"
+	description = "Lets see if our scanners can pick up the genetic data from a simple slime extract."
+	required_atoms = list(/obj/item/slime_extract/grey = 1)
+
 /datum/experiment/scanning/random/slime/easy
 	name = "Easy Slime Survey"
 	description = "A wealthy client has requested that we provide samples of data from several basic slime cores."
@@ -36,10 +41,17 @@
 							/obj/item/slime_extract/lightpink,
 							/obj/item/slime_extract/adamantine)
 
-/datum/experiment/scanning/destructive/ian
+/datum/experiment/scanning/ian
 	name = "Ian's Connundrum"
 	description = "Central Command seems to have lost its backup of Ian's DNA, could you get a copy for us?"
 	required_atoms = list(/mob/living/simple_animal/pet/dog/corgi/ian = 1)
+
+/datum/experiment/scanning/random/janitor_trash
+	name = "Station Hygiene Inspection"
+	description = "To learn how to clean, we must first learn what it is to have filth. We need you to scan some filth around the station."
+	possible_types = list(/obj/effect/decal/cleanable/vomit,
+	/obj/effect/decal/cleanable/blood/splatter)
+	total_requirement = 3
 
 /datum/experiment/explosion/calibration
 	name = "Is This Thing On?"
@@ -51,6 +63,18 @@
 	name = "Mother of God"
 	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
 					Create a large enough explosion to prove your bomb, we'll be watching."
+
+/datum/experiment/explosion/calibration
+	name = "Is This Thing On?"
+	description = "The engineers from last shift left a notice for us that the doppler array seemed to be malfunctioning. \
+					Could you check that it is still working? Any explosion will do!"
+	required_light = 1
+
+/datum/experiment/explosion/medium
+	name = "Is This Thing On?"
+	description = "Alright, can we really call ourselves professionals if we can't make shit blow up?"
+	required_heavy = 2
+	required_light = 6
 
 /datum/experiment/explosion/maxcap/New()
 	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE

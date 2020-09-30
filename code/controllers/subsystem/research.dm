@@ -82,7 +82,6 @@ SUBSYSTEM_DEF(research)
 		for(var/i in bitcoins)
 			bitcoins[i] *= income_time_difference / 10
 		science_tech.add_point_list(bitcoins)
-	check_experiments()
 	last_income = world.time
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.
@@ -92,13 +91,6 @@ SUBSYSTEM_DEF(research)
 	var/coeff = 100
 	coeff = sqrt(coeff / amt)
 	return coeff
-
-/datum/controller/subsystem/research/proc/check_experiments()
-	for (var/obj/machinery/rnd/server/s in servers)
-		for(var/datum/experiment/e in s.stored_research.active_experiments)
-			if (e.is_complete())
-				s.stored_research.active_experiments -= e
-				s.stored_research.completed_experiments += e
 
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)

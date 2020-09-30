@@ -45,29 +45,21 @@
 	return !is_complete()
 
 /**
-  * Attempts to perform the action of the experiment provided some arguments
+  * Attempts to perform the experiment provided some arguments
   *
   * This proc should be overridden such that the experiment will be actioned
   * with some defined arguments
   */
-/datum/experiment/proc/do_action(...)
-	return actionable()
+/datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
+	perform_experiment_actions(arglist(args))
+	if(is_complete())
+		finish_experiment(arglist(args))
 
-/**
-  * Checks if the experiment can be sabotaged
-  *
-  * This proc should be overridden such that it returns TRUE/FALSE to
-  * state if the experiment can be sabotaged, having its progress
-  * in some way impeded or reverted
-  */
-/datum/experiment/proc/can_sabotage()
+/datum/experiment/proc/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, ...)
 	return
 
-/**
-  * Sabotages the experiment
-  *
-  * This proc should be overridden such that if the experiment supports
-  * it the experiment is sabotaged.
-  */
-/datum/experiment/proc/sabotage()
-	return
+///Called when you complete an experiment, makes sure the techwebs knows the experiment was finished, and tells everyone it happend, yay!
+/datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler, ...)
+	experiment_handler.announce_message_to_all("The [name] has been completed!")
+	experiment_handler.selected_experiment = null
+	experiment_handler.linked_web.complete_experiment(src)
