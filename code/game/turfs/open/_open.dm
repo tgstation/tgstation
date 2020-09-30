@@ -155,18 +155,6 @@
 	blocks_air = TRUE
 	baseturfs = /turf/open/indestructible/airblock
 
-/turf/open/indestructible/cornfloor
-	name = "plowed corn"
-	desc = "Doesn't seem like there'll be any corn down here."
-	icon = 'icons/turf/floors.dmi' // good job, eris
-	icon_state = "sandcorn" // sandcorn maze moment
-	baseturfs = /turf/open/indestructible/cornfloor
-	footstep = FOOTSTEP_GRASS
-	barefootstep = FOOTSTEP_GRASS
-	clawfootstep = FOOTSTEP_GRASS
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-
 /turf/open/Initalize_Atmos(times_fired)
 	excited = FALSE
 	update_visuals()

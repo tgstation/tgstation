@@ -919,6 +919,7 @@
 /obj/item/reagent_containers/food/snacks/corndog
 	name = "corndog"
 	desc = "The busy man's hotdog."
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "corndog_stick"
 	bitesize = 3
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
