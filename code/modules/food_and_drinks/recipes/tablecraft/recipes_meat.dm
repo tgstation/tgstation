@@ -231,8 +231,8 @@
 /datum/crafting_recipe/food/friedchicken
 	name = "Fried Chicken"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1,
+		/obj/item/food/meat/slab/chicken = 1,
 		/datum/reagent/consumable/cooking_oil = 10
 	)
-	result = /obj/item/reagent_containers/food/snacks/friedchicken
+	result = /obj/item/food/meat/friedchicken
 	subcategory = CAT_MEAT
