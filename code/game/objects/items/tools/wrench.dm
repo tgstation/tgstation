@@ -65,7 +65,8 @@
 	sleep(20)
 	if(!user)
 		return
-	for(var/obj/item/W in user)
+	var/list/equipped = user.get_equipped_items(include_pockets=TRUE)
+	for(var/obj/item/W in equipped)
 		user.dropItemToGround(W)
 	suicider = user.real_name
 	user.dust()

@@ -1035,7 +1035,8 @@
 			return
 		var/mob/living/L = M
 
-		for(var/obj/item/I in L)
+		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
+		for(var/obj/item/I in equipped)
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
@@ -1061,7 +1062,8 @@
 			return
 		var/mob/living/L = M
 
-		for(var/obj/item/I in L)
+		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
+		for(var/obj/item/I in equipped)
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
@@ -1110,7 +1112,8 @@
 			return
 		var/mob/living/L = M
 
-		for(var/obj/item/I in L)
+		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
+		for(var/obj/item/I in equipped)
 			L.dropItemToGround(I, TRUE)
 
 		if(ishuman(L))

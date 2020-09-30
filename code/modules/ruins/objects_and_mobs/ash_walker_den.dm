@@ -38,7 +38,8 @@
 /obj/structure/lavaland/ash_walker/proc/consume()
 	for(var/mob/living/H in view(src, 1)) //Only for corpse right next to/on same tile
 		if(H.stat)
-			for(var/obj/item/W in H)
+			var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
+			for(var/obj/item/W in equipped)
 				if(!H.dropItemToGround(W))
 					qdel(W)
 			if(issilicon(H)) //no advantage to sacrificing borgs...

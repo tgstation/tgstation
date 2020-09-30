@@ -482,7 +482,8 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)
 	if(..() && ishuman(user) && !(user in affected_targets))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/W in H)
+		var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
+		for(var/obj/item/W in equipped)
 			H.dropItemToGround(W)
 		var/datum/job/clown/C = new /datum/job/clown()
 		C.equip(H)

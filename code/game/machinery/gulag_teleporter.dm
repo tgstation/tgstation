@@ -133,7 +133,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
-	var/list/equipped = mob_occupant.get_equipped_items()
+	var/list/equipped = mob_occupant.get_equipped_items(include_pockets=TRUE)
 	for(var/obj/item/W in equipped)
 		if(!is_type_in_typecache(W, telegulag_required_items))
 			if(mob_occupant.temporarilyRemoveItemFromInventory(W))

@@ -168,7 +168,7 @@
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
 
-	var/list/contents = M.get_equipped_items()
+	var/list/contents = M.get_equipped_items(include_pockets=TRUE)
 
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M

@@ -207,7 +207,8 @@
 		do_sparks(8, FALSE, M)
 		M.visible_message("<span class='notice'>[M] vanishes...</span>")
 
-		for(var/obj/item/W in M)
+		var/list/equipped = M.get_equipped_items(include_pockets=TRUE)
+		for(var/obj/item/W in equipped)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(W == H.w_uniform)
