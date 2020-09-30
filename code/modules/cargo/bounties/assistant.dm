@@ -56,13 +56,6 @@
 	reward = 1500
 	wanted_types = list(/obj/item/storage/box/clown)
 
-/datum/bounty/item/assistant/cheesiehonkers
-	name = "Cheesie Honkers"
-	description = "Apparently the company that makes Cheesie Honkers is going out of business soon. CentCom wants to stock up before it happens!"
-	reward = 1200
-	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/food/snacks/cheesiehonkers)
-
 /datum/bounty/item/assistant/baseball_bat
 	name = "Baseball Bat"
 	description = "Baseball fever is going on at CentCom! Be a dear and ship them some baseball bats, so that management can live out their childhood dream."
@@ -109,13 +102,6 @@
 	description = "One of the scientists at CentCom is interested in testing products on monkey skin. Your mission is to acquire monkey's hide and ship it."
 	reward = 1500
 	wanted_types = list(/obj/item/stack/sheet/animalhide/monkey)
-
-/datum/bounty/item/assistant/shard
-	name = "Shards"
-	description = "A killer clown has been stalking CentCom, and staff have been unable to catch her because she's not wearing shoes. Please ship some shards so that a booby trap can be constructed."
-	reward = 1500
-	required_count = 15
-	wanted_types = list(/obj/item/shard)
 
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfy Chairs"
