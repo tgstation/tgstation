@@ -336,7 +336,7 @@
 		if(ACCESS_MECH_ENGINE)
 			return "Engineering Mech Access"
 		if(ACCESS_AUX_BASE)
-			return "Auxilliary Base"
+			return "Auxiliary Base"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
