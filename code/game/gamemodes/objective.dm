@@ -10,6 +10,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = FALSE				//currently only used for custom objectives.
 	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/end_round_completion = FALSE	//if the objective can only be considered complete at the end of the game aka escape or hijack
 
 /datum/objective/New(text)
 	if(text)
@@ -353,6 +354,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
 	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
 	martyr_compatible = FALSE //Technically you won't get both anyway.
+	end_round_completion = TRUE //this is your entire round's goal
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -413,6 +415,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	team_explanation_text = "Have all members of your team escape on a shuttle or pod alive, without being in custody."
+	end_round_completion = TRUE
 
 /datum/objective/escape/check_completion()
 	// Require all owners escape safely.
@@ -486,6 +489,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/martyr
 	name = "martyr"
 	explanation_text = "Die a glorious death."
+	end_round_completion = TRUE //ehh let them get more objectives, it would be rude not to
 
 /datum/objective/martyr/check_completion()
 	var/list/datum/mind/owners = get_owners()

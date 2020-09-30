@@ -18,6 +18,8 @@
 	var/list/incomplete_objectives = list()
 	for(var/o in antag_datum.objectives)
 		var/datum/objective/objective = o
+		if(objective.end_round_completion)
+			continue //these are stuff like hijack, they cannot count as a failed objective since they are your entire round's goal
 		if(!objective.check_completion())
 			incomplete_objectives += objective
 	if(incomplete_objectives.len)
