@@ -5399,7 +5399,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lU" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 4
 	},
@@ -5486,7 +5486,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/escapepods)
 "mk" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
