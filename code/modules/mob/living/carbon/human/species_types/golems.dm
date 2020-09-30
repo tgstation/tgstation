@@ -383,7 +383,7 @@
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, "shatter", 70, TRUE)
 	H.visible_message("<span class='danger'>[H] shatters!</span>")
-	var/list/equipped = H.get_equipped_items()
+	var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
 	for(var/obj/item/W in equipped)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
@@ -1021,7 +1021,7 @@
 
 /datum/species/golem/snow/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] turns into a pile of snow!</span>")
-	var/list/equipped = H.get_equipped_items()
+	var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
 	for(var/obj/item/W in equipped)
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)

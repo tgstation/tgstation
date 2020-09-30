@@ -192,7 +192,7 @@
 						to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back...")
 						getCultGhost(T,user)
 					else
-						var/list/equipped = T.get_equipped_items()
+						var/list/equipped = T.get_equipped_items(include_pockets=TRUE)
 						for(var/obj/item/W in equipped)
 							T.dropItemToGround(W)
 						init_shade(T, user, message_user = 1)
@@ -350,7 +350,7 @@
 		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
 		return FALSE
-	var/list/equipped = T.get_equipped_items()
+	var/list/equipped = T.get_equipped_items(include_pockets=TRUE)
 	for(var/obj/item/W in equipped)
 		T.dropItemToGround(W)
 	init_shade(T, user , shade_controller = chosen_ghost)
