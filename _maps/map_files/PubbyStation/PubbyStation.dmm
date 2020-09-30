@@ -39666,7 +39666,7 @@
 /turf/open/floor/plasteel,
 /area/chapel/office)
 "ceg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -52331,7 +52331,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "nku" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	req_access_txt = "27"
 	},
@@ -56520,7 +56520,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "tan" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
