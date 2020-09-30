@@ -21,13 +21,12 @@
 		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
-	if(_dir)
-		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
+	RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	RegisterSignal(target, COMSIG_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
