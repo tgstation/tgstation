@@ -1325,9 +1325,9 @@
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
 /obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "acZ" = (
@@ -5128,7 +5128,7 @@
 /area/security/brig)
 "akP" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/energybar,
+/obj/item/food/energybar,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "akQ" = (
@@ -8077,8 +8077,8 @@
 /area/maintenance/port/fore)
 "arO" = (
 /obj/machinery/monkey_recycler,
-/obj/item/reagent_containers/food/snacks/monkeycube,
-/obj/item/reagent_containers/food/snacks/monkeycube,
+/obj/item/food/monkeycube,
+/obj/item/food/monkeycube,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arP" = (
@@ -17220,7 +17220,7 @@
 /area/hydroponics)
 "aMO" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
@@ -22751,9 +22751,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "baA" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/chapel/main)
 "baB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

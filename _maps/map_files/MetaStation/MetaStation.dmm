@@ -8409,9 +8409,9 @@
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
 /obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
+/obj/item/food/meat/rawcutlet/plain,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -27684,7 +27684,7 @@
 /area/hallway/primary/starboard)
 "bnd" = (
 /obj/structure/table/glass,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
 	},
@@ -65674,7 +65674,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "eMU" = (
-/obj/item/reagent_containers/food/snacks/snowcones/clown,
+/obj/item/food/snowcones/clown,
 /turf/open/floor/grass/snow/safe,
 /area/maintenance/port/aft)
 "eNA" = (
@@ -75683,7 +75683,7 @@
 	dir = 4;
 	network = list("ss13","prison")
 	},
-/obj/item/reagent_containers/food/snacks/energybar,
+/obj/item/food/energybar,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1

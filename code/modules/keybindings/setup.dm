@@ -22,8 +22,7 @@
 	set waitfor = FALSE
 
 	//Reset the buffer
-	for(var/key in keys_held)
-		keyUp(key)
+	reset_held_keys()
 
 	erase_all_macros()
 
@@ -37,3 +36,5 @@
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
+
+	update_special_keybinds()

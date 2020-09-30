@@ -3386,11 +3386,11 @@
 "ajN" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/meat/slab/human{
+/obj/item/food/meat/slab/human{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/food/meat/slab/human,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
@@ -6446,7 +6446,7 @@
 /area/security/checkpoint/customs)
 "aqm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aqn" = (
@@ -20170,7 +20170,7 @@
 /area/crew_quarters/bar/atrium)
 "aQt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -22968,7 +22968,7 @@
 /area/crew_quarters/bar/atrium)
 "aVr" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -112081,8 +112081,8 @@
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
 /obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/meat/slab,
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/poster/ripped{
