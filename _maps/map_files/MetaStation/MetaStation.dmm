@@ -14749,7 +14749,7 @@
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
 	pixel_y = -24;
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -60508,7 +60508,7 @@
 	},
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Base Construction";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,

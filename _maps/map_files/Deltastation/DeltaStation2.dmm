@@ -1681,7 +1681,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_one_access_txt = "10;32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -2019,7 +2019,7 @@
 	id = "construction";
 	name = "Auxiliary Construction Shutters";
 	pixel_x = -26;
-	req_access_txt = "32;47;48"
+	req_access_txt = "72"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -38
@@ -2283,7 +2283,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2343,7 +2343,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2530,7 +2530,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
