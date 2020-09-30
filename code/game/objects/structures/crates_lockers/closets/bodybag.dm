@@ -41,7 +41,7 @@
 			tagged = TRUE
 			update_icon()
 		else
-			name = "[initial(name)]"
+			name = initial(name)
 		return
 	else if(I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You cut the tag off [src].</span>")
