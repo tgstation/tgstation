@@ -185,6 +185,20 @@
 	if(whim_datums)
 		initialize_whims()
 
+	if(speak)
+		speak = string_list(speak)
+	if(speak_emote)
+		speak_emote = string_list(speak_emote)
+	if(emote_hear)
+		emote_hear = string_list(emote_hear)
+	if(emote_see)
+		emote_see = string_list(emote_hear)
+	if(atmos_requirements)
+		atmos_requirements = string_assoc_list(atmos_requirements)
+	if(damage_coeff)
+		damage_coeff = string_assoc_list(damage_coeff)
+
+
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
 	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
@@ -449,10 +463,12 @@
 	if(icon_gib)
 		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
+
 /mob/living/simple_animal/say_mod(input, list/message_mods = list())
-	if(speak_emote && speak_emote.len)
+	if(length(speak_emote))
 		verb_say = pick(speak_emote)
-	. = ..()
+	return ..()
+
 
 /mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)

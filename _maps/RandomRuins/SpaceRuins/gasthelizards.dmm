@@ -310,6 +310,7 @@
 	},
 /obj/machinery/light,
 /obj/structure/table,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/gasthelizard)
 "O" = (
@@ -344,7 +345,7 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/ruin/space/has_grav/gasthelizard)
 "S" = (
-/obj/machinery/suit_storage_unit/security,
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/gasthelizard)
 "T" = (
