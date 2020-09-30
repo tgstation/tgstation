@@ -13,7 +13,7 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	food_reagents = list(/datum/reagent/consumable/eggyolk = 5)
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 4)
 	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
@@ -95,7 +95,7 @@
 	name = "boiled egg"
 	desc = "A hard boiled egg."
 	icon_state = "egg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("egg" = 1)
 	foodtypes = MEAT | BREAKFAST
 
