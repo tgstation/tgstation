@@ -429,10 +429,12 @@ GENE SCANNER
 					render_list += "<span class='notice ml-2'>[round(bit.volume, 0.001)] units of [bit.name][bit.overdosed ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
-		if(M.reagents.addiction_list.len)
+
+		var/list/addictions = M.get_addiction_list()
+		if(addictions.len)
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following reagents:</span>\n"
-			for(var/datum/reagent/R in M.reagents.addiction_list)
-				render_list += "<span class='alert ml-2'>[R.name]</span>\n"
+			for(var/datum/reagent/reagent in addictions)
+				render_list += "<span class='alert ml-2'>[reagent.name]</span>\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject is not addicted to any reagents.</span>\n"
 

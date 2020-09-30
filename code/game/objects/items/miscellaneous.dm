@@ -128,7 +128,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/meatball(src)
+		new /obj/item/food/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -151,7 +151,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/meatball(src)
+	new /obj/item/food/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -201,20 +201,20 @@
 	theme_name = "carnivore"
 
 /obj/item/storage/box/ingredients/carnivore/PopulateContents()
-	new /obj/item/reagent_containers/food/snacks/meat/slab/bear(src)
-	new /obj/item/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/food/meat/slab/bear(src)
+	new /obj/item/food/meat/slab/spider(src)
 	new /obj/item/reagent_containers/food/snacks/spidereggs(src)
-	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
-	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
-	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/meatball(src)
+	new /obj/item/food/carpmeat(src)
+	new /obj/item/food/meat/slab/xeno(src)
+	new /obj/item/food/meat/slab/corgi(src)
+	new /obj/item/food/meatball(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
 
 /obj/item/storage/box/ingredients/exotic/PopulateContents()
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/food/snacks/carpmeat(src)
+		new /obj/item/food/carpmeat(src)
 		new /obj/item/reagent_containers/food/snacks/grown/soybeans(src)
 		new /obj/item/reagent_containers/food/snacks/grown/cabbage(src)
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)

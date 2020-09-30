@@ -168,6 +168,46 @@
 /mob/living/proc/get_reagent_amount(reagent)
 	return reagents.get_reagent_amount(reagent)
 
+/**
+ * Get a list of all chems the mob has that they are addicted to.
+ *
+ * This creates a ist of all chems the mob has within its body that it is addicted to.
+ * Returns list of reagents
+ */
+/mob/living/proc/get_addiction_list()
+	var/list/addictions = list()
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(reagents.addiction_list.len)
+		for(var/datum/reagent/reagent in reagents.addiction_list)
+			addictions += reagent
+	if(belly?.reagents.addiction_list.len)
+		for(var/bile in belly.reagents.addiction_list)
+			addictions += bile
+	return addictions
+
+/**
+ * Removes an addiction from the mob
+ *
+ * This will remove addiction to the passeed in chem from the mob
+ * vars:
+ * * addiction (reagent) the reagent to remove
+ */
+/mob/living/proc/remove_addiction(addiction)
+	reagents.remove_addiction(addiction)
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly)
+		belly.reagents.remove_addiction(addiction)
+
+/**
+ * Removes all addictions from the mob
+ *
+ * This will remove all addictions from the mob
+ */
+/mob/living/proc/clear_addictions()
+	var/list/addictions = get_addiction_list()
+	for(var/reagent in addictions)
+		remove_addiction(reagent)
+
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 

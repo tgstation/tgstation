@@ -339,15 +339,36 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
-		C.id = id
-		transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
-		qdel(src)
 	if(is_wire_tool(I))
 		wires.interact(user)
 		return TRUE
+
+/obj/machinery/conveyor_switch/crowbar_act(mob/user, obj/item/I)
+	I.play_tool_sound(src, 50)
+	var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
+	C.id = id
+	transfer_fingerprints_to(C)
+	to_chat(user, "<span class='notice'>You detach the conveyor switch.</span>")
+	qdel(src)
+	return TRUE
+
+/obj/machinery/conveyor_switch/screwdriver_act(mob/user, obj/item/I)
+	I.play_tool_sound(src, 50)
+	oneway = !oneway
+	to_chat(user, "<span class='notice'>You set conveyor switch to [oneway ? "one way" : "default"] configuration.</span>")
+	return TRUE
+
+/obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/I)
+	I.play_tool_sound(src, 50)
+	invert_icon = !invert_icon
+	update_icon()
+	to_chat(user, "<span class='notice'>You set conveyor switch to [invert_icon ? "inverted": "normal"] position.</span>")
+	return TRUE
+
+/obj/machinery/conveyor_switch/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with <b>screwdriver</b>.</span>"
+	. += "<span class='notice'>[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with <b>wrench</b>.</span>"
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
