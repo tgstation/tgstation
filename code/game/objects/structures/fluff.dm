@@ -463,6 +463,18 @@
 	mouse_opacity = 0
 	layer = 5
 
+/obj/structure/fluff/starspawn
+	name = "meta-transdimensional rift"
+	desc = "<span class='nicegreen'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "portal"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+
 /obj/structure/fluff/narsie
 	name = "ritual rune"
 	desc = "Is that a rune of the Geometer? Man, I really hope fake runes don't count for rituals..."
