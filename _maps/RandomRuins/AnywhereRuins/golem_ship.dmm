@@ -51,13 +51,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "j" = (
 /obj/machinery/door/airlock/titanium,
