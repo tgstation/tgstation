@@ -63,17 +63,8 @@
 	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
 	)
 
-/// R&D point value for a maxcap bomb. Can be adjusted if need be. Current Value Cap Radius: 100
-#define TECHWEB_BOMB_POINTCAP		50000
-
-//! Research point values for slime extracts, see: [xenobio_camera][code/modules/research/xenobiology/xenobio_camera.dm]
-#define SLIME_RESEARCH_TIER_0 100
-#define SLIME_RESEARCH_TIER_1 500
-#define SLIME_RESEARCH_TIER_2 1000
-#define SLIME_RESEARCH_TIER_3 1500
-#define SLIME_RESEARCH_TIER_4 2000
-#define SLIME_RESEARCH_TIER_5 2500
-#define SLIME_RESEARCH_TIER_RAINBOW 5000
+/// Amount of cash you can get from a maxcap
+#define TECHWEB_BOMB_CASHCAP		50000
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3

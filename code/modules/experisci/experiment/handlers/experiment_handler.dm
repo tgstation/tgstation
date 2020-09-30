@@ -1,7 +1,7 @@
 /**
   * # Experiment Handler
   *
-  * This is the base component for interacting with experiments from a connected techweb
+  * This is the component for interacting with experiments from a connected techweb. It is generic and should be set-up to automatically work on any class it is attached to without outside code (Excluding potential callbacks)
   */
 /datum/component/experiment_handler
 	/// Holds the currently linked techweb to get experiments from
@@ -25,32 +25,49 @@
 												blacklisted_experiments = list(),
 												config_mode = EXPERIMENT_CONFIG_ATTACKSELF)
 	. = ..()
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
 
-	// Register signals for performing experiments
-	RegisterSignal(parent, COMSIG_EXP_ACTION, .proc/action_experiment)
-	RegisterSignal(parent, COMSIG_EXP_CHECK_ACTIONABLE, .proc/is_experiment_actionable)
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
+	if(istype(parent, /obj/machinery/doppler_array))
+		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
 
 	// Determine UI display mode
 	switch(config_mode)
-		if (EXPERIMENT_CONFIG_ATTACKSELF)
+		if(EXPERIMENT_CONFIG_ATTACKSELF)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
-		if (EXPERIMENT_CONFIG_ALTCLICK)
+		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
-		if (EXPERIMENT_CONFIG_CUSTOMSIGNAL)
-			RegisterSignal(parent, COMSIG_EXP_CONFIGURE, .proc/configure_experiment)
 
-/**
-  * Checks if the selected experiment is actionable given some arguments
-  */
-/datum/component/experiment_handler/proc/is_experiment_actionable(datum/source, ...)
-	// Check if an experiment is selected
-	if (selected_experiment == null)
-		return COMPONENT_EXP_INACTIONABLE
+//Hooks on attack to try and run an experiment (When using a handheld handler)
+/datum/component/experiment_handler/proc/try_run_handheld_experiment(datum/source, atom/target, mob/user, params)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
+	return COMPONENT_NO_ATTACK
 
-	// Check if actionable
-	return selected_experiment.actionable(arglist(args.len > 1 ? args.Copy(2) : list())) ? COMPONENT_EXP_ACTIONABLE : COMPONENT_EXP_INACTIONABLE
+
+//This proc exists because Jared Fogle really likes async
+/datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
+	SIGNAL_HANDLER
+	if(!do_after(user, 10, target = target))
+		return
+	if(action_experiment(source, target))
+		playsound(user, 'sound/machines/ping.ogg', 25)
+		to_chat(user, "<span>You scan [target.name].</span>")
+
+///Hooks on succesful explosions on the doppler array this is attached to
+/datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+	SIGNAL_HANDLER
+	var/atom/movable/our_array = parent
+	if(action_experiment(source, devastation_range, heavy_impact_range, light_impact_range))
+		playsound(src, 'sound/machines/ping.ogg', 25)
+		our_array.say("Completed experiment.")
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		our_array.say("Insufficient explosion to contribute to current experiment.")
 
 /**
   * Attempts to perform the selected experiment given some arguments
@@ -58,14 +75,14 @@
 /datum/component/experiment_handler/proc/action_experiment(datum/source, ...)
 	// Check if an experiment is selected
 	if (selected_experiment == null)
-		return COMPONENT_EXP_NO_SELECTION
+		return FALSE
 
 	// Attempt to run
 	var/list/arguments = args.len > 1 ? args.Copy(2) : list()
 	if (!selected_experiment.actionable(arglist(arguments)))
-		return COMPONENT_EXP_NO_RESULT
+		return FALSE
 	else
-		return selected_experiment.do_action(arglist(arguments)) ? COMPONENT_EXP_SUCCESS : COMPONENT_EXP_FAIL
+		return selected_experiment.do_action(arglist(arguments))
 
 /**
   * Attempts to show the user the experiment configuration panel

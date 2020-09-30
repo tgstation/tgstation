@@ -115,6 +115,8 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+///Runs when an explosion is succesfully detected by a doppler array(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+#define COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED "atom_dopplerarray_explosion_detected"
 ///from base of atom/set_light(): (l_range, l_power, l_color)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
@@ -821,14 +823,3 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
-
-// /datum/experiment related signals
-#define COMSIG_EXP_CONFIGURE "rnd_experiment_configure"	// For calling configuration UI from a custom source
-#define COMSIG_EXP_ACTION "rnd_experiment_action"		// For actioning an experiment, datum/experiment/do_action(...)
-	#define COMPONENT_EXP_NO_SELECTION 	0				// From response of datum/experiment/do_action(...) when no experiment is selected
-	#define COMPONENT_EXP_SUCCESS		(1 << 0)		// From response of datum/experiment/do_action(...) when the action is successful
-	#define COMPONENT_EXP_FAIL			(1 << 1)		// From response of datum/experiment/do_action(...) when the action fails
-	#define COMPONENT_EXP_NO_RESULT		(1 << 2)		// From response of datum/experiment/do_action(...) when the action has no suitable success/fail result
-#define COMSIG_EXP_CHECK_ACTIONABLE 	"rnd_experiment_actionable"	// For checking if an experiment is actionable with provided args, datum/experiment/actionable(...)
-	#define COMPONENT_EXP_INACTIONABLE	0				// From response of datum/experiment/actionable(...) when the action would not be possible
-	#define COMPONENT_EXP_ACTIONABLE	(1 << 0)		// From reseponse of datum/experiment/actionable(...) when the action would be possible

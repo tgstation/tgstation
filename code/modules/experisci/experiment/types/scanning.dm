@@ -71,7 +71,7 @@
 /datum/experiment/scanning/actionable(atom/target)
 	. = ..()
 	if (.)
-		return !!get_contributing_index(target)
+		return get_contributing_index(target)
 
 /**
   * Attempts to get the typepath for an atom that would contribute to the experiment

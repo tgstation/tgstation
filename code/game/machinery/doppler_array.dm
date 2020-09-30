@@ -172,6 +172,9 @@
 
 	record_number++
 	records += R
+
+	SEND_SIGNAL(src, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+
 	return TRUE
 
 /obj/machinery/doppler_array/powered()
@@ -199,43 +202,36 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(!istype(linked_techweb))
 		say("Warning: no linked research system!")
 		return
 
-	// Check for experiment contributions
-	var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, devastation_range, heavy_impact_range, light_impact_range)
-	if (outcome & COMPONENT_EXP_SUCCESS)
-		playsound(src, 'sound/machines/ping.ogg', 25)
-		say("Completed experiment.")
-	else if (outcome & COMPONENT_EXP_FAIL)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
-		say("Insufficient explosion to contribute to current experiment.")
+	var/cash_gain = 0
 
-	var/point_gain = 0
 	/*****The Point Calculator*****/
 	if(orig_light_range < 10)
-		say("Explosion not large enough for research calculations.")
+		say("Explosion not large enough for profitability.")
 		return
 	else if(orig_light_range < 4500)
-		point_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
+		cash_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
 	else
-		point_gain = TECHWEB_BOMB_POINTCAP
+		cash_gain = TECHWEB_BOMB_CASHCAP
 
 	/*****The Point Capper*****/
-	if(point_gain > linked_techweb.largest_bomb_value)
-		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+	if(cash_gain > linked_techweb.largest_bomb_value)
+		if(cash_gain <= TECHWEB_BOMB_CASHCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_CASHCAP)
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
-			linked_techweb.largest_bomb_value = point_gain
-			point_gain -= old_tech_largest_bomb_value
-			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+			linked_techweb.largest_bomb_value = cash_gain
+			cash_gain -= old_tech_largest_bomb_value
+			cash_gain = min(cash_gain,TECHWEB_BOMB_CASHCAP)
 		else
-			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
-			point_gain = 1000
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
+			cash_gain = 1000
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
-			D.adjust_money(point_gain)
-			say("Explosion details and mixture analyzed and sold to the highest bidder for [point_gain] cr.")
+			D.adjust_money(cash_gain)
+			say("Explosion details and mixture analyzed and sold to the highest bidder for [cash_gain] cr.")
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
