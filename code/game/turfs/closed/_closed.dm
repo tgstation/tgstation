@@ -238,7 +238,7 @@
 /turf/closed/indestructible/faketintedglass
     name = "tinted window"
     desc = "I can't see anything inside. Now THAT is spooky!"
-    icon_state = "fakeglass"
+    icon_state = "tinted_window-0"
     smoothing_flags = SMOOTH_CORNERS
     icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 

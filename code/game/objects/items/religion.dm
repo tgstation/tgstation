@@ -399,6 +399,7 @@
 /obj/item/claymore/foam
 	name = "foam sword"
 	desc = "Despite the real plate armor being sold here, they're only making fake swords. Well, at least it can still parry!"
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "foammore"
 	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
