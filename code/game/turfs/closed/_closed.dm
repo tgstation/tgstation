@@ -234,3 +234,16 @@
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
 	smoothing_flags = SMOOTH_CORNERS
+
+/turf/closed/indestructible/faketintedglass
+    name = "tinted window"
+    desc = "I can't see anything inside. Now THAT is spooky!"
+    icon_state = "fakeglass"
+    smoothing_flags = SMOOTH_CORNERS
+    icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+
+/turf/closed/indestructible/faketintedglass/Initialize()
+    . = ..()
+    icon_state = null //set the icon state to null, so our base state isn't visible
+    underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+    underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
