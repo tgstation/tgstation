@@ -47,6 +47,10 @@
 			if(isliving(target))
 				drill_mob(target, source)
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+				// If we gibbed the target by drilling them, we can stop drilling them.
+				// Prevents starting a do_after on a qdeleted target.
+				if(QDELETED(target))
+					break
 			else if(isobj(target))
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
