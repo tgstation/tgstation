@@ -217,7 +217,6 @@
 		else
 			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
 		return FALSE
-	return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process(delta_time)

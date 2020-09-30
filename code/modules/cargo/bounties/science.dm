@@ -27,7 +27,7 @@
 	///What's the instability
 	var/desired_instability = 0
 
-datum/bounty/item/science/genetics/New()
+/datum/bounty/item/science/genetics/New()
 	. = ..()
 	desired_instability = rand(1,20)
 	description += " we want a DNA injector whose instability is higher than [desired_instability] points."
