@@ -53,6 +53,7 @@
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
 	forceMove(M)
+	item_flags &= ~IN_INVENTORY // Remove flag if it ever gets left on some how
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)

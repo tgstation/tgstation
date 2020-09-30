@@ -26,7 +26,6 @@ The console is located at computer/gulag_teleporter.dm
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
 		/obj/item/implant,
-		/obj/item/organ,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
@@ -134,7 +133,13 @@ The console is located at computer/gulag_teleporter.dm
 	if(linked_reclaimer)
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
+	var/list/mob_organs = list()
+	if(istype(occupant, /mob/living/carbon))
+		var/mob/living/carbon/carbo_mob = occupant
+		mob_organs = carbo_mob.internal_organs
 	for(var/obj/item/W in mob_occupant)
+		if(W in mob_organs)
+			continue
 		if(!is_type_in_typecache(W, telegulag_required_items))
 			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
 				if(istype(W, /obj/item/restraints/handcuffs))

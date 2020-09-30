@@ -169,6 +169,9 @@
 	M.invisibility = INVISIBILITY_ABSTRACT
 
 	var/list/contents = M.contents.Copy()
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/carbo_mob = M
+		contents -= carbo_mob.internal_organs
 
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M
