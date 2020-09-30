@@ -103,3 +103,4 @@
 	config_tag = "corporate_traitors"
 	report_type = "corporate_traitors"
 	false_report_weight = 0 //already handled by parent
+

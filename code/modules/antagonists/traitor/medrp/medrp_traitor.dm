@@ -126,4 +126,4 @@
 			. += "<span class='notice'>Death to the Syndicate.</span>"
 			. += "<span class='bold'>Try to stick to your tasks. If they find out what you're actually doing, they're going to be mopping the floor with you.</span>"
 			. += "<span class='notice'>You know where to go to find yourself a Syndicate uplink, and so you have. Just tie up a few loose ends or you'll be dead from the courts by next shift.</span>"
-	. += "<b>Information about your uplink is stored in your memories.</b>
+	. += "<b>Information about your uplink is stored in your memories.</b>"
