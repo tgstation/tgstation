@@ -1920,6 +1920,7 @@
 #include "code\modules\experisci\experiment\types\scanning.dm"
 #include "code\modules\experisci\experiment\types\scanning_destructive.dm"
 #include "code\modules\experisci\experiment\types\scanning_material.dm"
+#include "code\modules\experisci\experiment\types\scanning_vatgrown.dm"
 #include "code\modules\fields\fields.dm"
 #include "code\modules\fields\gravity.dm"
 #include "code\modules\fields\peaceborg_dampener.dm"

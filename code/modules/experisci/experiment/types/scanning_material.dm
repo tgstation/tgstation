@@ -16,13 +16,6 @@
 		var/chosen_material = pick(possible_material_types)
 		required_materials[i] = chosen_material
 
-/datum/experiment/scanning/random/material/is_complete()
-	. = TRUE
-	for (var/a in required_atoms)
-		var/list/seen = scanned[a]
-		if (!seen || seen.len != required_atoms[a])
-			return FALSE
-
 /datum/experiment/scanning/random/material/get_contributing_index(atom/target)
 	for (var/i in required_atoms)
 		var/atom/required_atom = i

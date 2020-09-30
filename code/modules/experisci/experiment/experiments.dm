@@ -1,6 +1,7 @@
 /datum/experiment/scanning/random/slime
 	name = "Base Slime Experiment"
 	total_requirement = 10
+	max_requirement_per_type = 4
 
 /datum/experiment/scanning/random/slime/calibration
 	name = "Slime Sample Test"
@@ -41,10 +42,26 @@
 							/obj/item/slime_extract/lightpink,
 							/obj/item/slime_extract/adamantine)
 
-/datum/experiment/scanning/ian
-	name = "Ian's Connundrum"
-	description = "Central Command seems to have lost its backup of Ian's DNA, could you get a copy for us?"
-	required_atoms = list(/mob/living/simple_animal/pet/dog/corgi/ian = 1)
+
+/datum/experiment/scanning/random/cytology/easy
+	name = "Basic Cytology Scanning Experiment"
+	description = "A scientist needs vermin to test on, use the cytology equipment to grow some of these simple critters!"
+	total_requirement = 3
+	max_requirement_per_type = 2
+	possible_types = list(/mob/living/simple_animal/hostile/cockroach, /datum/micro_organism/cell_line/mouse)
+
+/datum/experiment/scanning/random/cytology/medium
+	name = "Advanced Cytology Scanning Experiment"
+	description = "We need to see how the body functions from the earliest moments. Some cytology experiments will help us gain this understanding."
+	total_requirement = 3
+	max_requirement_per_type = 2
+	possible_types = list(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/retaliate/poison/snake, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/cow, /mob/living/simple_animal/chicken)
+
+/datum/experiment/scanning/random/cytology/medium/one
+	name = "Advanced Cytology Scanning Experiment One"
+
+/datum/experiment/scanning/random/cytology/medium/two
+	name = "Advanced Cytology Scanning Experiment Two"
 
 /datum/experiment/scanning/random/janitor_trash
 	name = "Station Hygiene Inspection"

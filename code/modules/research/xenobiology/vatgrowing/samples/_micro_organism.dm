@@ -99,6 +99,7 @@
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/thing = new created_thing(get_turf(vat))
+			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 			vat.visible_message("<span class='nicegreen'>[thing] pops out of [vat]!</span>")
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
