@@ -28,13 +28,10 @@
 			return FALSE
 
 /datum/experiment/scanning/destructive/check_progress()
-	var/list/status = list()
+	. = list()
 	for (var/a_type in required_atoms)
 		var/atom/a = a_type
-		var/remaining = required_atoms[a] - (scanned[a] ? scanned[a] : 0)
-		if (remaining)
-			status += " - Scan [remaining] more sample[remaining > 1 ? "s" : ""] of \a [initial(a.name)]"
-	return "The following items must be scanned:\n" + jointext(status, ", \n")
+		. += list(EXP_INT_STAGE, "Scan samples of \a [initial(a.name)]", scanned[a] ? scanned[a] : 0, required_atoms[a])
 
 /**
   * Attempts to scan an atom towards the experiment's goal

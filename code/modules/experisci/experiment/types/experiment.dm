@@ -29,10 +29,12 @@
   * Gets the current progress towards the goal of the experiment
   *
   * This proc should be overridden such that the return value is a
-  * string describing the current status of the experiment.
+  * list of lists, wherein each inner list represents a stage. Stages have
+  * types, see _DEFINES/experisci.dm. Each stage should consist of:
+  * (*stage_type*, *description*, *value* [, *second value for integer type*])
   */
 /datum/experiment/proc/check_progress()
-	return
+	. = list()
 
 /**
   * Gets if the experiment is actionable provided some arguments

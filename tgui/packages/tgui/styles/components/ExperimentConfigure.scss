@@ -1,27 +1,45 @@
-.ExperimentConfigure__Server,
+.ExperimentTechweb__Web,
 .ExperimentConfigure__ExperimentPanel {
   background: #000000;
   border: 1px solid #40628a;
 	margin: 3px 0;
 }
 
-.ExperimentConfigure__ServerHeader {
+.ExperimentTechweb__WebHeader {
   background: #40628a;
   padding: 2px;
 }
 
-.ExperimentConfigure__ServerName {
+.ExperimentTechweb__WebName {
   font-size: 18px;
 }
 
-.ExperimentConfigure__ServerContent {
+.ExperimentTechweb__WebContent {
   padding: 4px;
+}
+
+.ExperimentTechweb__WebContent > .LabeledList {
+  margin: 0.25rem 0.25rem 0.25rem 1rem;
 }
 
 .ExperimentConfigure__ExperimentName {
   font-weight: bold;
+  border-radius: 0;
 }
 
 .ExperimentConfigure__ExperimentContent {
   padding: 4px;
+}
+
+.ExperimentStage__StageContainer {
+  margin: 0.25rem 0.25rem 0.25rem 1rem;
+}
+
+.ExperimentStage__Indicator {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.ExperimentStage__StageContainer.complete {
+  opacity: 0.8;
 }

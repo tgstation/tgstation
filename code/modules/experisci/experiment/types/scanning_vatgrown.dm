@@ -12,11 +12,8 @@
 			return null
 
 /datum/experiment/scanning/random/cytology/check_progress()
-	var/list/status = list()
+	. = list()
 	for (var/a_type in required_atoms)
 		var/atom/a = a_type
 		var/list/seen = scanned[a]
-		var/remaining = required_atoms[a] - (seen ? seen.len : 0)
-		if (remaining)
-			status += " - Scan [remaining] more vat-grown [initial(a.name)][remaining > 1 ? "s" : ""]"
-	return "The following things must be scanned:\n" + jointext(status, ", \n")
+		. += list(EXP_INT_STAGE, "Scan samples of \a vat-grown [initial(a.name)]", seen ? seen.len : 0, required_atoms[a])

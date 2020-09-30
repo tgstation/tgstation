@@ -107,8 +107,8 @@
 /datum/experiment/scanning/random/material/medium
 	name = "Medium Grade Material Scanning Experiment"
 	description = "Not all materials are strong enough to hold together a space station. Look at these materials for example, and see what makes them useful for our electronics and equipment."
-
 	possible_material_types = list(/datum/material/silver, /datum/material/gold, /datum/material/plastic, /datum/material/titanium)
+
 /datum/experiment/scanning/random/material/medium/one
 	name = "Medium Grade Material Scanning Experiment One"
 

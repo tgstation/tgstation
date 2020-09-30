@@ -25,12 +25,9 @@
 				return required_atom
 
 /datum/experiment/scanning/random/material/check_progress()
-	var/list/status = list()
+	. = list()
 	for (var/a_type in required_atoms)
 		var/atom/a = a_type
 		var/list/seen = scanned[a]
-		var/remaining = required_atoms[a] - (seen ? seen.len : 0)
 		var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[a])
-		if (remaining)
-			status += " - Scan [remaining] more [required_material.name] [initial(a.name)][remaining > 1 ? "s" : ""]"
-	return "The following items must be scanned:\n" + jointext(status, ", \n")
+		. += list(EXP_INT_STAGE, "Scan samples of \a [required_material.name] [initial(a.name)]", seen ? seen.len : 0, required_atoms[a])
