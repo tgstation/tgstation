@@ -16,7 +16,7 @@
 /datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/tofu(location)
+		new /obj/item/food/tofu(location)
 	return
 
 /datum/chemical_reaction/chocolatepudding
@@ -83,7 +83,7 @@
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat(location)
+		new /obj/item/food/meat/slab/synthmeat(location)
 
 /datum/chemical_reaction/hot_ramen
 	results = list(/datum/reagent/consumable/hot_ramen = 3)
@@ -95,12 +95,12 @@
 
 /datum/chemical_reaction/imitationcarpmeat
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5)
-	required_container = /obj/item/reagent_containers/food/snacks/tofu
+	required_container = /obj/item/food/tofu
 	mix_message = "The mixture becomes similar to carp meat."
 
 /datum/chemical_reaction/imitationcarpmeat/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/reagent_containers/food/snacks/carpmeat/imitation(location)
+	new /obj/item/food/carpmeat/imitation(location)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
@@ -132,7 +132,7 @@
 
 /datum/chemical_reaction/ricebowl/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/reagent_containers/food/snacks/salad/ricebowl(location)
+	new /obj/item/food/salad/ricebowl(location)
 	if(holder && holder.my_atom)
 		qdel(holder.my_atom)
 
@@ -140,7 +140,7 @@
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
-	
+
 /datum/chemical_reaction/protein_peptide
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)

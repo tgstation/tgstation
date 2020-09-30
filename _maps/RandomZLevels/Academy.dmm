@@ -3235,7 +3235,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mU" = (
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/item/food/meat/slab,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mV" = (

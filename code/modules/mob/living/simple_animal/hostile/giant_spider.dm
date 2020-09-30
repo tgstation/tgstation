@@ -31,7 +31,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 4
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -109,7 +109,7 @@
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
 	gender = FEMALE
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5

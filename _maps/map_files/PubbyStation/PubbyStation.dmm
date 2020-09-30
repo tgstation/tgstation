@@ -14469,7 +14469,7 @@
 /area/storage/art)
 "aLA" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/friedegg,
+/obj/item/food/friedegg,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria)
@@ -20562,7 +20562,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
-/obj/item/reagent_containers/food/snacks/monkeycube,
+/obj/item/food/monkeycube,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bce" = (
@@ -45939,7 +45939,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "dWk" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "dWp" = (
@@ -55963,7 +55963,7 @@
 /area/medical/storage)
 "sij" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "siF" = (
@@ -56149,7 +56149,7 @@
 /area/hallway/primary/central)
 "sww" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "swE" = (

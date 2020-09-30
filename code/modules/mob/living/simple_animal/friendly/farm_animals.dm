@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/food/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -125,7 +125,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
+	butcher_results = list(/obj/item/food/meat/slab = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -253,7 +253,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1)
+	butcher_results = list(/obj/item/food/meat/slab/chicken = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -312,8 +312,8 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
-	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
+	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
+	var/egg_type = /obj/item/food/egg
 	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -385,8 +385,8 @@
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
 
-/obj/item/reagent_containers/food/snacks/egg/var/amount_grown = 0
-/obj/item/reagent_containers/food/snacks/egg/process(delta_time)
+/obj/item/food/egg/var/amount_grown = 0
+/obj/item/food/egg/process(delta_time)
 	if(isturf(loc))
 		amount_grown += rand(1,2) * delta_time
 		if(amount_grown >= 200)
@@ -436,7 +436,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently nudges"

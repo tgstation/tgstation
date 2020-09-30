@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
 	///What the species drops when gibbed by a gibber machine.
-	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
 	///Bitfield for food types that the species likes, giving them a mood boost. Lizards like meat, for example.
