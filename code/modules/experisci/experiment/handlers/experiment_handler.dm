@@ -56,6 +56,9 @@
 
 //This proc exists because Jared Fogle really likes async
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
+	if (selected_experiment == null)
+		to_chat(user, "<span>You do not have an experiment selected!.</span>")
+		return
 	if(!do_after(user, 10, target = target))
 		return
 	if(action_experiment(source, target))
@@ -63,7 +66,7 @@
 		to_chat(user, "<span>You scan \the [target.name].</span>")
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span>\the [target.name] was not relevant to your experiment.</span>")
+		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
 
 
 ///Hooks on succesful explosions on the doppler array this is attached to

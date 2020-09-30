@@ -1,7 +1,7 @@
 /datum/experiment/scanning/random
 	name = "Base random scanning experiment"
 	description = "This experiment's contents will be randomized. Good luck!"
-	/// A weighted key, value list which will generate the atoms to be scanned
+	///list of types which that can be included in the experiment. Randomly picked from on New
 	var/list/possible_types = list()
 	/// The total desired number of atoms to have scanned
 	var/total_requirement = 0

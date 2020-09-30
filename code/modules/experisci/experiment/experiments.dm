@@ -80,3 +80,43 @@
 	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE
 	required_heavy = GLOB.MAX_EX_HEAVY_RANGE
 	required_light = GLOB.MAX_EX_LIGHT_RANGE
+
+
+/datum/experiment/scanning/random/material/meat
+	name = "Biological Material Scanning Experiment"
+	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."
+
+/datum/experiment/scanning/random/material/easy
+	name = "Low Grade Material Scanning Experiment"
+	description = "Material science is all about a basic understanding of the universe, and how it's built. To explain this, build something basic and we'll show you how to break it."
+	total_requirement = 6
+	possible_types = list(/obj/structure/chair, /obj/structure/toilet, /obj/structure/table)
+	possible_material_types = list(/datum/material/iron, /datum/material/glass)
+
+/datum/experiment/scanning/random/material/medium
+	name = "Medium Grade Material Scanning Experiment"
+	description = "Not all materials are strong enough to hold together a space station. Look at these materials for example, and see what makes them useful for our electronics and equipment."
+
+	possible_material_types = list(/datum/material/silver, /datum/material/gold, /datum/material/plastic, /datum/material/titanium)
+/datum/experiment/scanning/random/material/medium/one
+	name = "Medium Grade Material Scanning Experiment One"
+
+/datum/experiment/scanning/random/material/medium/two
+	name = "Medium Grade Material Scanning Experiment Two"
+
+/datum/experiment/scanning/random/material/medium/three
+	name = "Medium Grade Material Scanning Experiment Three"
+
+/datum/experiment/scanning/random/material/hard
+	name = "High Grade Material Scanning Experiment"
+	description = "NT spares no expense to test even the most valuable of materials for their qualities as construction materials. Go build us some of the fanciest"
+	possible_material_types = list(/datum/material/diamond, /datum/material/plasma, /datum/material/uranium)
+
+/datum/experiment/scanning/random/material/hard/one
+	name = "High Grade Material Scanning Experiment One"
+
+/datum/experiment/scanning/random/material/hard/two
+	name = "High Grade Material Scanning Experiment Two"
+
+/datum/experiment/scanning/random/material/hard/three
+	name = "High Grade Material Scanning Experiment Three"

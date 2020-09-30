@@ -69,7 +69,7 @@
 	prereq_ids = list("base")
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller", "biopsy_tool", "plumbing_rcd_sci")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/random/slime/calibration)
+	required_experiments = list(/datum/experiment/scanning/random/slime/calibration, /datum/experiment/scanning/random/material)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
