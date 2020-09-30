@@ -227,12 +227,12 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/snacks/candy,
-/obj/item/reagent_containers/food/snacks/candy{
+/obj/item/food/candy,
+/obj/item/food/candy{
 	pixel_x = 3;
 	pixel_y = -1
 	},
@@ -914,13 +914,13 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/snacks/sandwich,
+/obj/item/food/sandwich,
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{

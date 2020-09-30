@@ -263,6 +263,8 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
+	SSticker.emergency_reason = null
+
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
 	var/hijacker_present = FALSE

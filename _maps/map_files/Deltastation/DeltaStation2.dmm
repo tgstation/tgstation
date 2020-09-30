@@ -1681,7 +1681,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Storage";
-	req_one_access_txt = "10;32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -2019,7 +2019,7 @@
 	id = "construction";
 	name = "Auxiliary Construction Shutters";
 	pixel_x = -26;
-	req_access_txt = "32;47;48"
+	req_access_txt = "72"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -38
@@ -2283,7 +2283,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2343,7 +2343,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Construction Zone";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2530,7 +2530,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -3386,11 +3386,11 @@
 "ajN" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/meat/slab/human{
+/obj/item/food/meat/slab/human{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/food/meat/slab/human,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
@@ -5044,7 +5044,7 @@
 /area/maintenance/starboard/fore)
 "anz" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -5595,7 +5595,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/fore)
 "aox" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5609,7 +5609,7 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/fore)
 "aoy" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -6446,7 +6446,7 @@
 /area/security/checkpoint/customs)
 "aqm" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
 "aqn" = (
@@ -7280,7 +7280,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "arX" = (
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -7317,7 +7317,7 @@
 /area/maintenance/starboard/fore)
 "asa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -18630,7 +18630,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aND" = (
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 8
 	},
 /obj/machinery/status_display/evac{
@@ -19532,7 +19532,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aPl" = (
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -20170,7 +20170,7 @@
 /area/crew_quarters/bar/atrium)
 "aQt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+/obj/item/food/cheesiehonkers,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -22968,7 +22968,7 @@
 /area/crew_quarters/bar/atrium)
 "aVr" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/food/chips,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -108539,7 +108539,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -112081,8 +112081,8 @@
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/onion,
 /obj/item/reagent_containers/food/snacks/grown/onion,
-/obj/item/reagent_containers/food/snacks/meat/slab,
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/poster/ripped{
@@ -113382,7 +113382,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -114919,7 +114919,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/randomarcade{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
