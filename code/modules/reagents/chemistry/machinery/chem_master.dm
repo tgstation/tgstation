@@ -1,3 +1,6 @@
+#define AUTO_STYLE "auto"
+#define FALLBACK_STYLE "_"
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -15,10 +18,12 @@
 	var/mode = 1
 	var/condi = FALSE
 	var/chosenPillStyle = 1
+	var/chosenCondiStyle = AUTO_STYLE
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 	var/list/pillStyles = null
+	var/list/condiStyles = null
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
@@ -31,6 +36,8 @@
 		SL["id"] = x
 		SL["className"] = assets.icon_class_name("pill[x]")
 		pillStyles += list(SL)
+
+	condiStyles = strip_condi_styles_to_icons(get_condi_styles())
 
 	. = ..()
 
@@ -153,6 +160,7 @@
 /obj/machinery/chem_master/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/simple/pills),
+		get_asset_datum(/datum/asset/spritesheet/simple/condiments),
 	)
 
 /obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)
@@ -171,6 +179,8 @@
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
 	data["chosenPillStyle"] = chosenPillStyle
+	data["chosenCondiStyle"] = chosenCondiStyle
+	data["autoCondiStyle"] = AUTO_STYLE
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
 		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
@@ -191,6 +201,7 @@
 
 	//Calculated at init time as it never changes
 	data["pillStyles"] = pillStyles
+	data["condiStyles"] = condiStyles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -243,6 +254,10 @@
 		chosenPillStyle = id
 		return TRUE
 
+	if(action == "condiStyle")
+		chosenCondiStyle = params["id"]
+		return TRUE
+
 	if(action == "create")
 		if(reagents.total_volume == 0)
 			return FALSE
@@ -260,6 +275,8 @@
 		var/vol_each = text2num(params["volume"])
 		var/vol_each_text = params["volume"]
 		var/vol_each_max = reagents.total_volume / amount
+		var/list/style;
+
 		if (item_type == "pill")
 			vol_each_max = min(50, vol_each_max)
 		else if (item_type == "patch")
@@ -269,6 +286,11 @@
 		else if (item_type == "condimentPack")
 			vol_each_max = min(10, vol_each_max)
 		else if (item_type == "condimentBottle")
+			var/list/styles = get_condi_styles()
+			if (chosenCondiStyle == AUTO_STYLE || !(chosenCondiStyle in styles))
+				style = guess_condi_style(reagents)
+			else
+				style = styles[chosenCondiStyle]
 			vol_each_max = min(50, vol_each_max)
 		else
 			return FALSE
@@ -286,7 +308,11 @@
 		var/name = params["name"]
 		var/name_has_units = item_type == "pill" || item_type == "patch"
 		if(!name)
-			var/name_default = reagents.get_master_reagent_name()
+			var/name_default
+			if (style && style["name"] && !style["generate_name"])
+				name_default = style["name"]
+			else
+				name_default = reagents.get_master_reagent_name()
 			if (name_has_units)
 				name_default += " ([vol_each]u)"
 			name = stripped_input(usr,
@@ -350,8 +376,10 @@
 			var/obj/item/reagent_containers/food/condiment/P
 			for(var/i = 0; i < amount; i++)
 				P = new/obj/item/reagent_containers/food/condiment(drop_location())
-				P.originalname = name
-				P.name = trim("[name] bottle")
+				if (style)
+					apply_condi_style(P, style)
+				P.renamedByPlayer = TRUE
+				P.name = name
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
 		return FALSE
@@ -412,7 +440,82 @@
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
 
+/obj/machinery/chem_master/proc/strip_condi_styles_to_icons(var/list/styles)
+	var/list/icons = list()
+	for (var/s in styles)
+		if (styles[s] && styles[s]["class_name"])
+			var/list/icon = list()
+			var/list/style = styles[s]
+			icon["id"] = s
+			icon["className"] = style["class_name"]
+			icon["title"] = "[style["name"]]\n[style["desc"]]"
+			// Ugh, why can't I just icons.Add(icon)?
+			icons += list(icon)
+
+	return icons
+
+/obj/machinery/chem_master/proc/get_condi_styles()
+	var/list/styles = typelist("condi_styles")
+	if (!styles.len)
+		//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Was used in the condiment/on_reagent_change(changetype) to change names, descs and sprites.
+		styles += list(
+			FALLBACK_STYLE = list("icon_state" = "emptycondiment", "icon_empty" = "", "name" = "condiment bottle", "desc" = "Just your average condiment bottle.", "fill_icon_thresholds" = list(0, 10, 25, 50, 75, 100), "generate_name" = TRUE),
+			"enzyme" = list("icon_state" = "enzyme", "icon_empty" = "", "name" = "universal enzyme bottle", "desc" = "Used in cooking various dishes."),
+			"flour" = list("icon_state" = "flour", "icon_empty" = "", "name" = "flour sack", "desc" = "A big bag of flour. Good for baking!"),
+			"mayonnaise" = list("icon_state" = "mayonnaise", "icon_empty" = "", "name" = "mayonnaise jar", "desc" = "An oily condiment made from egg yolks."),
+			"milk" = list("icon_state" = "milk", "icon_empty" = "", "name" = "space milk", "desc" = "It's milk. White and nutritious goodness!"),
+			"blackpepper" = list("icon_state" = "peppermillsmall", "inhand_icon_state" = "", "icon_empty" = "emptyshaker", "name" = "pepper mill", "desc" = "Often used to flavor food or make people sneeze."),
+			"rice" = list("icon_state" = "rice", "icon_empty" = "", "name" = "rice sack", "desc" = "A big bag of rice. Good for cooking!"),
+			"sodiumchloride" = list("icon_state" = "saltshakersmall", "inhand_icon_state" = "", "icon_empty" = "emptyshaker", "name" = "salt shaker", "desc" = "Salt. From dead crew, presumably."),
+			"soymilk" = list("icon_state" = "soymilk", "icon_empty" = "", "name" = "soy milk", "desc" = "It's soy milk. White and nutritious goodness!"),
+			"soysauce" = list("icon_state" = "soysauce", "inhand_icon_state" = "", "icon_empty" = "", "name" = "soy sauce bottle", "desc" = "A salty soy-based flavoring."),
+			"sugar" = list("icon_state" = "sugar", "icon_empty" = "", "name" = "sugar sack", "desc" = "Tasty spacey sugar!"),
+			"ketchup" = list("icon_state" = "ketchup", "icon_empty" = "", "name" = "ketchup bottle", "desc" = "You feel more American already."),
+			"capsaicin" = list("icon_state" = "hotsauce", "icon_empty" = "", "name" = "hotsauce bottle", "desc" = "You can almost TASTE the stomach ulcers!"),
+			"frostoil" = list("icon_state" = "coldsauce", "icon_empty" = "", "name" = "coldsauce bottle", "desc" = "Leaves the tongue numb from its passage."),
+			"cornoil" = list("icon_state" = "oliveoil", "icon_empty" = "", "name" = "corn oil bottle", "desc" = "A delicious oil used in cooking. Made from corn."),
+			"bbqsauce" = list("icon_state" = "bbqsauce", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included.")
+		)
+		var/list/cartonInHand = list(
+			"inhand_icon_state" = "carton",
+			"lefthand_file" = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi',
+			"righthand_file" = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+		)
+		for (var/styleReagent in list("flour", "milk", "rice", "soymilk", "sugar"))
+			if (styleReagent in styles)
+				styles[styleReagent] += cartonInHand
+		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/condiments)
+		for (var/reagent in styles)
+			styles[reagent]["class_name"] = assets.icon_class_name(reagent)
+	return styles
+
+/obj/machinery/chem_master/proc/guess_condi_style(datum/reagents/reagents)
+	var/list/styles = get_condi_styles()
+	if (reagents.reagent_list.len > 0)
+		var/main_reagent = reagents.get_master_reagent_id()
+		if (main_reagent)
+			var/list/path = splittext("[main_reagent]", "/")
+			main_reagent = path[path.len]
+		if(main_reagent in styles)
+			return styles[main_reagent]
+	return styles[FALLBACK_STYLE]
+
+/obj/machinery/chem_master/proc/apply_condi_style(var/obj/item/reagent_containers/food/condiment/container, list/style)
+	container.name = style["name"]
+	container.desc = style["desc"]
+	container.icon_state = style["icon_state"]
+	container.icon_empty = style["icon_empty"]
+	container.fill_icon_thresholds = style["fill_icon_thresholds"]
+	if ("inhand_icon_state" in style)
+		container.inhand_icon_state = style["inhand_icon_state"]
+		if (style["lefthand_file"] || style["righthand_file"])
+			container.lefthand_file = style["lefthand_file"]
+			container.righthand_file = style["righthand_file"]
+
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef AUTO_STYLE
+#undef FALLBACK_STYLE
