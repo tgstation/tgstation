@@ -68,7 +68,7 @@
 		scanned[idx] += target
 		return TRUE
 
-/datum/experiment/scanning/actionable(atom/target)
+/datum/experiment/scanning/actionable(datum/component/experiment_handler/experiment_handler, atom/target)
 	. = ..()
 	if (.)
 		return get_contributing_index(target)

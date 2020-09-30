@@ -51,9 +51,10 @@
   * with some defined arguments
   */
 /datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
-	perform_experiment_actions(arglist(args))
+	var/action_succesful = perform_experiment_actions(arglist(args))
 	if(is_complete())
 		finish_experiment(arglist(args))
+	return action_succesful
 
 /datum/experiment/proc/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, ...)
 	return

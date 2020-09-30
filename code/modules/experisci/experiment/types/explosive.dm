@@ -27,6 +27,6 @@
 	measured["light"] = max(measured["light"], light)
 	return is_complete()
 
-/datum/experiment/explosion/actionable(devastation, heavy, light)
+/datum/experiment/explosion/actionable(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
 	return !is_complete()
 

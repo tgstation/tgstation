@@ -60,10 +60,10 @@
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
-		to_chat(user, "<span>You scan [target.name].</span>")
+		to_chat(user, "<span>You scan \the [target.name].</span>")
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span>[target.name] was not relevant to your experiment.</span>")
+		to_chat(user, "<span>\the [target.name] was not relevant to your experiment.</span>")
 
 
 ///Hooks on succesful explosions on the doppler array this is attached to
@@ -79,7 +79,7 @@
 ///Announces a message to all experiment handlers
 /datum/component/experiment_handler/proc/announce_message_to_all(var/message)
 	for(var/i in GLOB.experiment_handlers)
-		var/datum/component/experiment_handler/experi_handler
+		var/datum/component/experiment_handler/experi_handler = i
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 

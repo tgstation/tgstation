@@ -242,9 +242,9 @@
 	// check completed experiments for experiments of this type
 	for (var/i in completed_experiments)
 		var/datum/experiment/E = i
-		if (E.type == experiment_type)
+		if (E == experiment_type)
 			return FALSE
-	available_experiments+= new experiment_type()
+	available_experiments += new experiment_type()
 
 /datum/techweb/proc/add_experiments(list/experiment_list)
 	. = TRUE
