@@ -109,6 +109,7 @@ All ShuttleMove procs go here
 
 	loc = newT
 
+	SEND_SIGNAL(src, COMSIG_ON_SHUTTLE_MOVE, newT)
 
 	return TRUE
 
