@@ -482,6 +482,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #else
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
+#define TURFS_CAN_SHARE(T1, T2) (T1 in T2.atmos_adjacent_turfs) //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all.
 
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"amethyst" = rgb(130,43,255), //supplymain
