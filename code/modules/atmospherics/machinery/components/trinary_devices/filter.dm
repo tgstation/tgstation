@@ -132,7 +132,7 @@
 	data["filter_types"] = list()
 	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
 	for(var/path in GLOB.meta_gas_ids)
-		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[path], "id" = path, "selected" = (path == gas_id2path(filter_type))))
+		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[path], "id" = GLOB.meta_gas_ids[path], "selected" = (path == gas_id2path(filter_type))))
 
 	return data
 
