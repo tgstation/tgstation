@@ -274,8 +274,10 @@
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE * mode)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
 
-
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		if(mode == TANK_TIER_4)
+			explosion(epicenter, min(7, round(range*0.25)), min(15, round(range*0.5)), min(25, round(range)), round(range*1.5), ignorecap = TRUE)
+		else
+			explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 		if(istype(src.loc, /obj/item/transfer_valve))
 			qdel(src.loc)
 		else
