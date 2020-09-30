@@ -11,7 +11,9 @@
 	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
+	///Camera action button to move up a Z level
 	var/datum/action/innate/camera_multiz_up/move_up_action = new
+	///Camera action button to move down a Z level
 	var/datum/action/innate/camera_multiz_down/move_down_action = new
 	var/list/actions = list()
 	///Should we supress any view changes?
