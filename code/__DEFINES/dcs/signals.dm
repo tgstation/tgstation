@@ -822,4 +822,4 @@
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
-#define COMSIG_ON_SHOTTLE_MOVE "on_shuttle_move"
+#define COMSIG_ON_SHUTTLE_MOVE "on_shuttle_move"
