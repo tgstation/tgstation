@@ -473,7 +473,7 @@
 	description = "Upgraded and more powerful cybernetic implants."
 	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
 	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)\
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	required_experiments = list(/datum/experiment/scanning/random/cytology/medium/two, /datum/experiment/scanning/random/slime/moderate)
 
 /datum/techweb_node/combat_cyber_implants
