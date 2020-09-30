@@ -36,7 +36,6 @@
 	name = "Challenging Slime Survey"
 	description = "Another station has challenged your research team to collect several challenging slime cores, \
 	 				including a very valuable rainbow core. Are you up to the task?"
-	required_atoms = list(/obj/item/slime_extract/rainbow = 1)
 	possible_types = list(/obj/item/slime_extract/oil,
 							/obj/item/slime_extract/black,
 							/obj/item/slime_extract/lightpink,
@@ -81,14 +80,9 @@
 	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
 					Create a large enough explosion to prove your bomb, we'll be watching."
 
-/datum/experiment/explosion/calibration
-	name = "Is This Thing On?"
-	description = "The engineers from last shift left a notice for us that the doppler array seemed to be malfunctioning. \
-					Could you check that it is still working? Any explosion will do!"
-	required_light = 1
 
 /datum/experiment/explosion/medium
-	name = "Is This Thing On?"
+	name = "Explosive Ordinance Experiment"
 	description = "Alright, can we really call ourselves professionals if we can't make shit blow up?"
 	required_heavy = 2
 	required_light = 6
