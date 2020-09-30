@@ -29,8 +29,9 @@
 
 /datum/bounty/item/science/genetics/New()
 	. = ..()
-	desired_instability = rand(1,20)
-	description += " we want a DNA injector whose instability is higher than [desired_instability] points."
+	desired_instability = rand(10,40)
+	reward += desired_instability * 100
+	description += " We want a DNA injector whose total instability is higher than [desired_instability] points."
 
 /datum/bounty/item/science/genetics/applies_to(obj/O)
 	if(!..())
@@ -52,14 +53,14 @@
 /datum/bounty/item/science/NTNet
 	name = "Modular Tablets"
 	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Ship us some fully constructed tablets and send it turned on."
-	reward = 5000
+	reward = 3000
 	required_count = 4
 	wanted_types = list(/obj/item/modular_computer/tablet)
 
 /datum/bounty/item/science/NTNet/laptops
 	name = "Modular Laptops"
 	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send it turned on."
-	reward = 4000
+	reward = 1500
 	required_count = 2
 	wanted_types = list(/obj/item/modular_computer/laptop)
 
