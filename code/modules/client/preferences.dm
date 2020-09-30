@@ -1625,9 +1625,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(clear_key)
 						if(key_bindings[old_key])
 							key_bindings[old_key] -= kb_name
+							LAZYADD(key_bindings["Unbound"], kb_name)
 							if(!length(key_bindings[old_key]))
 								key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
+						user.client.set_macros()
 						save_preferences()
 						ShowChoices(user)
 						return
