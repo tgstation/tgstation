@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The AI will no longer partially state laws or potentially even state incorrect laws entirely whenever their lawset is changed in the middle of stating laws."

@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - soundadd: "Rethemed the venus human traps, soundwise"
+  - imageadd: "Rethemed the venus human traps, spritewise"

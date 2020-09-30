@@ -672,6 +672,7 @@
 	///Returned by cleanable components when they are cleaned.
 	#define COMPONENT_CLEANED	(1<<0)
 
+
 //Creamed
 
 ///called when you wash your face at a sink: (num/strength)

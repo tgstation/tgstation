@@ -79,6 +79,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
 #define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
+/// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
+#define TRAIT_HANDS_BLOCKED		"handsblocked"
+/// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
+#define TRAIT_RESTRAINED		"restrained"
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
@@ -286,6 +290,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define RESTING_TRAIT "resting" //trait associated to resting
 #define STAT_TRAIT "stat" //trait associated to a stat value or range of
 #define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
+/// Trait associated to wearing a suit
+#define SUIT_TRAIT "suit"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -331,3 +337,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
+#define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades" //trait associated to not having fine manipulation appendages such as hands
+#define HANDCUFFED_TRAIT "handcuffed"

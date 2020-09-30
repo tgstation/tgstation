@@ -73,7 +73,8 @@ GLOBAL_LIST(labor_sheet_values)
 	return data
 
 /obj/machinery/mineral/labor_claim_console/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/M = usr

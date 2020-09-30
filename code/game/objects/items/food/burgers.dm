@@ -36,7 +36,7 @@
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
-	var/obj/item/reagent_containers/food/snacks/meat/M = locate(/obj/item/reagent_containers/food/snacks/meat/steak/plain/human) in contents
+	var/obj/item/food/meat/M = locate(/obj/item/food/meat/steak/plain/human) in contents
 	if(M)
 		subjectname = M.subjectname
 		subjectjob = M.subjectjob

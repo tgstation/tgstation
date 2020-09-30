@@ -42,7 +42,8 @@
 	return data
 
 /datum/spawners_menu/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/group_name = params["name"]
