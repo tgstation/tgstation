@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "The markings on mothpeople will not show over missing or augmented limbs any more."

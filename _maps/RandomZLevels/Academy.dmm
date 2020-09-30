@@ -560,9 +560,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "cu" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/awaymission/academy/headmaster)
 "cv" = (
 /obj/machinery/door/window{
@@ -2669,9 +2667,7 @@
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
+/turf/open/floor/carpet/lone,
 /area/awaymission/academy/academygate)
 "ky" = (
 /obj/machinery/door/poddoor/shutters{
@@ -3239,7 +3235,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mU" = (
-/obj/item/reagent_containers/food/snacks/meat/slab,
+/obj/item/food/meat/slab,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mV" = (
