@@ -926,7 +926,7 @@
 	foodtypes = MEAT
 	junkiness = 25
 
-/obj/item/food/meat/friedchicken/Initialize()
+/obj/item/food/friedchicken/Initialize()
 	. = ..()
 	if(prob(50))
 		icon_state = "friedchicken2"
