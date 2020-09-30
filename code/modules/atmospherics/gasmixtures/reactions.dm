@@ -644,7 +644,6 @@ nobiliumsuppression = INFINITY
 			cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency * 3.5
 			if (prob(100 / increase_factor))
 				new /obj/item/stack/sheet/mineral/metal_hydrogen(location)
-				SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((heat_efficency * increase_factor * 0.5), METAL_HYDROGEN_RESEARCH_MAX_AMOUNT))
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
