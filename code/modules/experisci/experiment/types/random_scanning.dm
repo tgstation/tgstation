@@ -13,7 +13,7 @@
 	if (possible_types.len)
 		var/picked = 0
 		while (picked < total_requirement)
-			var/r = rand(1, total_requirement - picked)
+			var/r = min(rand(1, total_requirement - picked), max_requirement_per_type)
 			required_atoms[pick(possible_types)] += r
 			picked += r
 
@@ -27,6 +27,8 @@
 	var/list/possible_types = list()
 	/// The total desired number of atoms to have scanned
 	var/total_requirement = 0
+	/// Max amount of a requirement per type
+	var/max_requirement_per_type = 100
 
 /datum/experiment/scanning/destructive/random/New()
 	// Generate random contents
