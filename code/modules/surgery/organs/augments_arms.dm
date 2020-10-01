@@ -230,7 +230,7 @@
 
 /obj/item/organ/cyberimp/arm/flash/Retract()
 	holder.set_light_on(FALSE)
-	..()
+	return ..()
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
