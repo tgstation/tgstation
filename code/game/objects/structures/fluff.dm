@@ -260,8 +260,9 @@
 	name = "hedge"
 	desc = "A large bushy hedge."
 	icon = 'icons/obj/smooth_structures/hedge.dmi'
-	icon_state = "hedge"
-	smoothing_flags = SMOOTH_CORNERS
+	icon_state = "hedge-0"
+	base_icon_state = "hedge"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_HEDGE_FLUFF)
 	canSmoothWith = list(SMOOTH_GROUP_HEDGE_FLUFF)
 	density = TRUE
@@ -451,5 +452,40 @@
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/fakespace
+	name = "space"
+	desc = ""
+	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
+	mouse_opacity = 0
+	layer = 5
+
+/obj/structure/fluff/starspawn
+	name = "meta-transdimensional rift"
+	desc = "<span class='nicegreen'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "portal"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+
+/obj/structure/fluff/narsie
+	name = "ritual rune"
+	desc = "Is that a rune of the Geometer? Man, I really hope fake runes don't count for rituals..."
+	icon = 'icons/effects/96x96.dmi'
+	color = RUNE_COLOR_DARKRED
+	icon_state = "rune_large"
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
+	max_integrity = 9999
+	layer = 2.54
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE

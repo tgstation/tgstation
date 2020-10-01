@@ -162,7 +162,7 @@
 	name = "flower bud countdown"
 
 /obj/effect/countdown/flower_bud/get_value()
-	var/obj/structure/alien/resin/flower_bud_enemy/bud = attached_to
+	var/obj/structure/alien/resin/flower_bud/bud = attached_to
 	if(!istype(bud))
 		return
 	if(!bud.finish_time)

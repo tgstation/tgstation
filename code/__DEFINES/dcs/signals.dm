@@ -672,8 +672,6 @@
 	///Returned by cleanable components when they are cleaned.
 	#define COMPONENT_CLEANED	(1<<0)
 
-///from base of datum/component/forensics/wipe_blood_dna(): ()
-#define COMSIG_WIPE_BLOOD_DNA "wipe_blood_dna"
 
 //Creamed
 

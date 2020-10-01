@@ -151,7 +151,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 24 SECONDS
 	var/nutrition_cost = 10
 	var/active = FALSE
@@ -200,7 +200,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
@@ -426,7 +426,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 10 SECONDS
 
 ///Try to put the pulled mob in a cocoon
