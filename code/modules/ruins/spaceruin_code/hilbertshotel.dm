@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
-GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
+GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, SHORT_REAL_LIMIT))
 
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
@@ -20,9 +20,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 	. = ..()
 	//Load templates
 	INVOKE_ASYNC(src, .proc/prepare_rooms)
-
-	if(!GLOB.hhmysteryRoomNumber)
-		GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 
 /obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
@@ -107,7 +104,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 
 /obj/item/hilbertshotel/proc/sendToNewRoom(roomNumber, mob/user)
 	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
-	if(ruinSpawned && roomNumber == GLOB.hhmysteryRoomNumber)
+	if(ruinSpawned && roomNumber == GLOB.hhMysteryRoomNumber)
 		hotelRoomTempLore.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	else
 		hotelRoomTemp.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
@@ -467,8 +464,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 
 /obj/item/paper/crumpled/docslogs/Initialize()
 	. = ..()
-	if(!GLOB.hhmysteryRoomNumber)
-		GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 	info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
@@ -487,7 +482,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 	It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.<br>
 	I can't stick around to the let that happen.<br>
 	I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.<br>
-	I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
+	I'll be in <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
 	I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...<br>
 	Goodbye<br>
 	<br>
