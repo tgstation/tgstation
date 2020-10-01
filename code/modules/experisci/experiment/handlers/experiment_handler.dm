@@ -229,7 +229,7 @@
 				tag = e.exp_tag,
 				selectable = can_select_experiment(e),
 				selected = selected_experiment == e,
-				progress = list(e.check_progress()),
+				progress = e.check_progress(),
 				ref = REF(e)
 			)
 			.["experiments"] += list(data)

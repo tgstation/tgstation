@@ -80,7 +80,6 @@
 	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
 					Create a large enough explosion to prove your bomb, we'll be watching."
 
-
 /datum/experiment/explosion/medium
 	name = "Explosive Ordinance Experiment"
 	description = "Alright, can we really call ourselves professionals if we can't make shit blow up?"
@@ -91,7 +90,6 @@
 	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE
 	required_heavy = GLOB.MAX_EX_HEAVY_RANGE
 	required_light = GLOB.MAX_EX_LIGHT_RANGE
-
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"

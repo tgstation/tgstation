@@ -11,9 +11,10 @@
 		if(!HAS_TRAIT(target, TRAIT_VATGROWN))
 			return null
 
-/datum/experiment/scanning/random/cytology/check_progress()
-	. = list()
-	for (var/a_type in required_atoms)
-		var/atom/a = a_type
-		var/list/seen = scanned[a]
-		. += list(EXP_INT_STAGE, "Scan samples of \a vat-grown [initial(a.name)]", seen ? seen.len : 0, required_atoms[a])
+/datum/experiment/scanning/random/cytology/serialize_progress_stage(atom/target, list/seen_instances)
+	return list(
+		EXP_INT_STAGE,
+		"Scan samples of \a vat-grown [initial(target.name)]",
+		seen_instances ? seen_instances.len : 0,
+		required_atoms[target]
+	)

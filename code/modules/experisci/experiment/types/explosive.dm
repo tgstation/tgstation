@@ -17,9 +17,9 @@
 		&& required_light <= measured["light"]
 
 /datum/experiment/explosion/check_progress()
-	. = list(EXP_BOOL_STAGE, "The maximum witnessed explosion had ranges of [measured["devastation"]] \
-	 devestation, [measured["heavy"]] heavy, and [measured["light"]] light. You must \
-	 reach an explosion of at least [required_devastation]D/[required_heavy]H/[required_light]L.", is_complete())
+	. = list(EXP_BOOL_STAGE, "You must record an explosion of at ranges of at least \
+	[required_devastation] devastation, [required_heavy] heavy, and [required_light] light. The best \
+	attempt had ranges of [measured["devastation"]]D/[measured["heavy"]]H/[measured["light"]]L.", is_complete())
 
 /datum/experiment/explosion/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
 	measured["devastation"] = max(measured["devastation"], devastation)

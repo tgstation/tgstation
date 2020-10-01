@@ -27,11 +27,13 @@
 		if (!(a in scanned) || scanned[a] != required_atoms[a])
 			return FALSE
 
-/datum/experiment/scanning/destructive/check_progress()
-	. = list()
-	for (var/a_type in required_atoms)
-		var/atom/a = a_type
-		. += list(EXP_INT_STAGE, "Scan samples of \a [initial(a.name)]", scanned[a] ? scanned[a] : 0, required_atoms[a])
+/datum/experiment/scanning/destructive/serialize_progress_stage(atom/target, list/seen_instances)
+	return list(
+		EXP_INT_STAGE,
+		"Scan samples of \a [initial(target.name)]",
+		scanned[target] ? scanned[target] : 0,
+		required_atoms[target]
+	)
 
 /**
   * Attempts to scan an atom towards the experiment's goal

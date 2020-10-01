@@ -24,10 +24,11 @@
 			if(target.custom_materials[SSmaterials.GetMaterialRef(required_materials[required_atom])]) //Checks if the material required for this atom is present in the atom. if its not, return null (As this object is not valid in that case)
 				return required_atom
 
-/datum/experiment/scanning/random/material/check_progress()
-	. = list()
-	for (var/a_type in required_atoms)
-		var/atom/a = a_type
-		var/list/seen = scanned[a]
-		var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[a])
-		. += list(EXP_INT_STAGE, "Scan samples of \a [required_material.name] [initial(a.name)]", seen ? seen.len : 0, required_atoms[a])
+/datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
+	var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[target])
+	return list(
+		EXP_INT_STAGE,
+		"Scan samples of \a [required_material.name] [initial(target.name)]",
+		seen_instances ? seen_instances.len : 0,
+		required_atoms[target]
+	)
