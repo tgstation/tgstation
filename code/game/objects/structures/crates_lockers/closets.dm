@@ -233,6 +233,8 @@
 
 /obj/structure/closet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+		for(var/obj/O in src)
+			qdel(O)
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
