@@ -422,7 +422,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if(T)
 		. = list()
 		var/i = 0
-		while(i < length(processing_list))
+		while(i < processing_list.len)
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
@@ -432,7 +432,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 					. += A
 	else
 		var/i = 0
-		while(i < length(processing_list))
+		while(i < processing_list.len)
 			var/atom/A = processing_list[++i]
 			if (!(A.flags_1 & ignore_flag_1))
 				processing_list += A.contents
@@ -444,7 +444,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/processing = list(src)
 	. = list()
 	var/i = 0
-	while(i < length(processing))
+	while(i < processing.len)
 		var/atom/A = processing[++i]
 		if(!ignore_typecache[A.type])
 			processing += A.contents
