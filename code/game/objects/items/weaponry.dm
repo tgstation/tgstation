@@ -675,6 +675,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, TRUE)
 	return 1
 
+/obj/item/melee/baseball_bat/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("A baseball bat was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
