@@ -410,6 +410,7 @@
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/radio)
+	species_exception = list(/datum/species/golem/bone) //bad to the bone
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -424,6 +425,7 @@
 	icon_state = "pufferjacket"
 	inhand_icon_state = "hostrench"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 0)
+	species_exception = list(/datum/species/golem/bone)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"

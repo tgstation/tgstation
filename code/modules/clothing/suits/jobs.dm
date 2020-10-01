@@ -156,7 +156,6 @@
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(/obj/item/scalpel, /obj/item/surgical_drapes, /obj/item/cautery, /obj/item/hemostat, /obj/item/retractor)
-	species_exception = list(/datum/species/golem)
 
 //Curator
 /obj/item/clothing/suit/curator
