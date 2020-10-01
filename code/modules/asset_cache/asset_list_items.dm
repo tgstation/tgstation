@@ -270,7 +270,7 @@
 	)
 
 /datum/asset/spritesheet/simple/pills
-	name ="pills"
+	name = "pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
@@ -297,9 +297,9 @@
 	)
 
 /datum/asset/spritesheet/simple/condiments
-	name ="condiments"
+	name = "condiments"
 	assets = list(
-		"_" = 'icons/UI_Icons/Condiments/emptycondiment.png',
+		CONDIMASTER_STYLE_FALLBACK = 'icons/UI_Icons/Condiments/emptycondiment.png',
 		"enzyme" = 'icons/UI_Icons/Condiments/enzyme.png',
 		"flour" = 'icons/UI_Icons/Condiments/flour.png',
 		"mayonnaise" = 'icons/UI_Icons/Condiments/mayonnaise.png',

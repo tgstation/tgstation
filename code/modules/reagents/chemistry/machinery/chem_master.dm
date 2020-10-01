@@ -1,6 +1,3 @@
-#define AUTO_STYLE "auto"
-#define FALLBACK_STYLE "_"
-
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -17,27 +14,27 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
-	var/chosenPillStyle = 1
-	var/chosenCondiStyle = AUTO_STYLE
+	var/chosen_pill_style = 1
+	var/chosen_condi_style = CONDIMASTER_STYLE_AUTO
 	var/screen = "home"
-	var/analyzeVars[0]
+	var/analyze_vars[0]
 	var/useramount = 30 // Last used amount
-	var/list/pillStyles = null
-	var/list/condiStyles = null
+	var/list/pill_styles = null
+	var/list/condi_styles = null
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 
 	//Calculate the span tags and ids fo all the available pill icons
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	pillStyles = list()
+	pill_styles = list()
 	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
 		SL["className"] = assets.icon_class_name("pill[x]")
-		pillStyles += list(SL)
+		pill_styles += list(SL)
 
-	condiStyles = strip_condi_styles_to_icons(get_condi_styles())
+	condi_styles = strip_condi_styles_to_icons(get_condi_styles())
 
 	. = ..()
 
@@ -177,31 +174,31 @@
 	data["mode"] = mode
 	data["condi"] = condi
 	data["screen"] = screen
-	data["analyzeVars"] = analyzeVars
-	data["chosenPillStyle"] = chosenPillStyle
-	data["chosenCondiStyle"] = chosenCondiStyle
-	data["autoCondiStyle"] = AUTO_STYLE
+	data["analyzeVars"] = analyze_vars
+	data["chosenPillStyle"] = chosen_pill_style
+	data["chosenCondiStyle"] = chosen_condi_style
+	data["autoCondiStyle"] = CONDIMASTER_STYLE_AUTO
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
 		var/datum/component/storage/STRB = bottle.GetComponent(/datum/component/storage)
 		data["pillBottleCurrentAmount"] = bottle.contents.len
 		data["pillBottleMaxAmount"] = STRB.max_items
 
-	var/beakerContents[0]
+	var/beaker_contents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
-	data["beakerContents"] = beakerContents
+			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
+	data["beakerContents"] = beaker_contents
 
-	var/bufferContents[0]
+	var/buffer_contents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
-	data["bufferContents"] = bufferContents
+			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
+	data["bufferContents"] = buffer_contents
 
 	//Calculated at init time as it never changes
-	data["pillStyles"] = pillStyles
-	data["condiStyles"] = condiStyles
+	data["pillStyles"] = pill_styles
+	data["condiStyles"] = condi_styles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -251,11 +248,11 @@
 
 	if(action == "pillStyle")
 		var/id = text2num(params["id"])
-		chosenPillStyle = id
+		chosen_pill_style = id
 		return TRUE
 
 	if(action == "condiStyle")
-		chosenCondiStyle = params["id"]
+		chosen_condi_style = params["id"]
 		return TRUE
 
 	if(action == "create")
@@ -275,7 +272,7 @@
 		var/vol_each = text2num(params["volume"])
 		var/vol_each_text = params["volume"]
 		var/vol_each_max = reagents.total_volume / amount
-		var/list/style;
+		var/list/style
 
 		if (item_type == "pill")
 			vol_each_max = min(50, vol_each_max)
@@ -287,10 +284,10 @@
 			vol_each_max = min(10, vol_each_max)
 		else if (item_type == "condimentBottle")
 			var/list/styles = get_condi_styles()
-			if (chosenCondiStyle == AUTO_STYLE || !(chosenCondiStyle in styles))
+			if (chosen_condi_style == CONDIMASTER_STYLE_AUTO || !(chosen_condi_style in styles))
 				style = guess_condi_style(reagents)
 			else
-				style = styles[chosenCondiStyle]
+				style = styles[chosen_condi_style]
 			vol_each_max = min(50, vol_each_max)
 		else
 			return FALSE
@@ -338,10 +335,10 @@
 				else
 					P = new/obj/item/reagent_containers/pill(drop_location())
 				P.name = trim("[name] pill")
-				if(chosenPillStyle == RANDOM_PILL_STYLE)
+				if(chosen_pill_style == RANDOM_PILL_STYLE)
 					P.icon_state ="pill[rand(1,21)]"
 				else
-					P.icon_state = "pill[chosenPillStyle]"
+					P.icon_state = "pill[chosen_pill_style]"
 				if(P.icon_state == "pill4")
 					P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 				adjust_item_drop_location(P)
@@ -396,7 +393,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyzeVars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
 			screen = "analyze"
 			return TRUE
 
@@ -449,7 +446,6 @@
 			icon["id"] = s
 			icon["className"] = style["class_name"]
 			icon["title"] = "[style["name"]]\n[style["desc"]]"
-			// Ugh, why can't I just icons.Add(icon)?
 			icons += list(icon)
 
 	return icons
@@ -459,7 +455,7 @@
 	if (!styles.len)
 		//Possible_states has the reagent type as key and a list of, in order, the icon_state, the name and the desc as values. Was used in the condiment/on_reagent_change(changetype) to change names, descs and sprites.
 		styles += list(
-			FALLBACK_STYLE = list("icon_state" = "emptycondiment", "icon_empty" = "", "name" = "condiment bottle", "desc" = "Just your average condiment bottle.", "fill_icon_thresholds" = list(0, 10, 25, 50, 75, 100), "generate_name" = TRUE),
+			CONDIMASTER_STYLE_FALLBACK = list("icon_state" = "emptycondiment", "icon_empty" = "", "name" = "condiment bottle", "desc" = "Just your average condiment bottle.", "fill_icon_thresholds" = list(0, 10, 25, 50, 75, 100), "generate_name" = TRUE),
 			"enzyme" = list("icon_state" = "enzyme", "icon_empty" = "", "name" = "universal enzyme bottle", "desc" = "Used in cooking various dishes."),
 			"flour" = list("icon_state" = "flour", "icon_empty" = "", "name" = "flour sack", "desc" = "A big bag of flour. Good for baking!"),
 			"mayonnaise" = list("icon_state" = "mayonnaise", "icon_empty" = "", "name" = "mayonnaise jar", "desc" = "An oily condiment made from egg yolks."),
@@ -476,14 +472,14 @@
 			"cornoil" = list("icon_state" = "oliveoil", "icon_empty" = "", "name" = "corn oil bottle", "desc" = "A delicious oil used in cooking. Made from corn."),
 			"bbqsauce" = list("icon_state" = "bbqsauce", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included.")
 		)
-		var/list/cartonInHand = list(
+		var/list/carton_in_hand = list(
 			"inhand_icon_state" = "carton",
 			"lefthand_file" = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi',
 			"righthand_file" = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 		)
-		for (var/styleReagent in list("flour", "milk", "rice", "soymilk", "sugar"))
-			if (styleReagent in styles)
-				styles[styleReagent] += cartonInHand
+		for (var/style_reagent in list("flour", "milk", "rice", "soymilk", "sugar"))
+			if (style_reagent in styles)
+				styles[style_reagent] += carton_in_hand
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/condiments)
 		for (var/reagent in styles)
 			styles[reagent]["class_name"] = assets.icon_class_name(reagent)
@@ -498,7 +494,7 @@
 			main_reagent = path[path.len]
 		if(main_reagent in styles)
 			return styles[main_reagent]
-	return styles[FALLBACK_STYLE]
+	return styles[CONDIMASTER_STYLE_FALLBACK]
 
 /obj/machinery/chem_master/proc/apply_condi_style(var/obj/item/reagent_containers/food/condiment/container, list/style)
 	container.name = style["name"]
@@ -516,6 +512,3 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
-
-#undef AUTO_STYLE
-#undef FALLBACK_STYLE
