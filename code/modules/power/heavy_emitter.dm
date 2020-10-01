@@ -1,3 +1,5 @@
+#define EASY_TURN_ON linked_interface ? linked_interface.turn_on() : turn_on()
+#define EASY_TURN_OFF linked_interface ? linked_interface.turn_off() : turn_off()
 /obj/machinery/power/heavy_emitter
 	name = "Heavy Emitter Base"
 	desc = "Message an admin if you see this!"
@@ -86,9 +88,9 @@
 /obj/machinery/power/heavy_emitter/centre/on_set_is_operational(old_value)
 	. = ..()
 	if(is_operational)
-		turn_on()
+		EASY_TURN_ON
 	else
-		turn_off()
+		EASY_TURN_OFF
 
 /obj/machinery/power/heavy_emitter/centre/check_part_connectivity()
 	. = ..()
@@ -145,7 +147,7 @@
 
 /obj/machinery/power/heavy_emitter/centre/turn_on()
 	if(!is_fully_constructed)
-		return linked_interface.turn_off()
+		return EASY_TURN_OFF
 	use_power = IDLE_POWER_USE
 	firing = TRUE
 	icon_state = "centre"
@@ -157,8 +159,9 @@
 /obj/machinery/power/heavy_emitter/centre/process(delta_time)
 	if(!firing || machine_stat & BROKEN || surplus() < active_power_usage)
 		return
+
 	if(!check_part_connectivity())
-		return linked_interface.turn_off()
+		return EASY_TURN_OFF
 
 	timer += delta_time
 
@@ -224,7 +227,7 @@
 
 /obj/machinery/power/heavy_emitter/vent
 	name = "Energy Core Vent"
-	desc = "Circulates air around the core, preventing it from overheating."
+	desc = "Circulates air around the core, preventing it from overheating. Doesn't work in low pressure or when blocked by a wall"
 	icon_state = "vent"
 
 /obj/machinery/power/heavy_emitter/vent/proc/vent_gas()
@@ -232,9 +235,11 @@
 	if(!istype(open_turf))
 		return FALSE
 	var/datum/gas_mixture/gases = open_turf.return_air()
-	//Space can exist
-	if(gases)
-		gases.temperature += 100
+	//You cant cheese it with space!
+	if(!gases)
+		return FALSE
+
+	gases.temperature += 100
 	flick("vent_on",src)
 	return TRUE
 
@@ -259,3 +264,6 @@
 	proj.fire(dir2angle(dir))
 	playsound(src, cooldown_sound, 100)
 	sleep(2 SECONDS)
+
+#undef EASY_TURN_ON
+#undef EASY_TURN_OFF
