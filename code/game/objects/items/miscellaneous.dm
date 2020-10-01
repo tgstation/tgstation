@@ -319,10 +319,13 @@
 	name = "skub"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "skub"
-	tank_holder_icon_state = "holder_skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("skubs")
 	attack_verb_simple = list("skub")
+
+/obj/item/skub/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
 
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")

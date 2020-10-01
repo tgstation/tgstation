@@ -187,9 +187,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
-	/// Item state of tank holder when inside tank holder. null makes it unable to enter a tank holder.
-	var/tank_holder_icon_state = null
-
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)

@@ -1,3 +1,4 @@
+///?
 /obj/structure/tank_holder
 	name = "tank holder"
 	desc = "A metallic frame that can hold tanks and extinguishers."
@@ -19,10 +20,13 @@
 /obj/structure/tank_holder/Initialize()
 	. = ..()
 	if(tank)
-		after_put_tank(new tank)
+		var/obj/item/tank_ = new tank(null)
+		tank = null
+		SEND_SIGNAL(tank_, COMSIG_CONTAINER_TRY_ATTACH, src, null)
 
 /obj/structure/tank_holder/Destroy()
 	if(tank)
+		contents.Cut()
 		QDEL_NULL(tank)
 	return ..()
 
@@ -38,18 +42,8 @@
 /obj/structure/tank_holder/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	if(contents.len)
-		to_chat(user, "<span class='warning'>There's already something in [src].</span>")
-		return
-
-	if(!W.tank_holder_icon_state)
+	if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")
-		return
-
-	if(!user.transferItemToLoc(W, src))
-		return
-	to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
-	after_put_tank(W)
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -64,7 +58,7 @@
 	new /obj/item/stack/rods(get_turf(src), 2)
 	if(tank)
 		tank.forceMove(get_turf(src))
-		tank = null
+		after_detach_tank()
 	qdel(src)
 
 /obj/structure/tank_holder/attack_paw(mob/user)
@@ -77,31 +71,25 @@
 		return ..()
 	to_chat(user, "<span class='notice'>You take [tank] from [src].</span>")
 	add_fingerprint(user)
+	tank.add_fingerprint(user)
 	user.put_in_hands(tank)
-	after_remove_tank()
+	after_detach_tank()
 
 /obj/structure/tank_holder/handle_atom_del(atom/A)
 	if(A == tank)
-		after_remove_tank()
+		after_detach_tank()
 	return ..()
 
 /obj/structure/tank_holder/contents_explosion(severity, target)
 	if(tank)
 		tank.ex_act(severity, target)
 
-/// Call this after inserting the tank into contents in order to update references, icon
-/// and density.
-/obj/structure/tank_holder/proc/after_put_tank(obj/item/tank_)
-	tank = tank_
-	icon_state = tank.tank_holder_icon_state
-	density = TRUE
-
 /// Call this after taking the tank from contents in order to update references, icon
 /// and density.
-/obj/structure/tank_holder/proc/after_remove_tank()
+/obj/structure/tank_holder/proc/after_detach_tank()
 	tank = null
-	icon_state = "holder"
 	density = FALSE
+	icon_state = "holder"
 
 /obj/structure/tank_holder/oxygen
 	icon_state = "holder_oxygen"
