@@ -19,7 +19,7 @@
 /client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
 	set name = "Config/Launch Supplypod"
 	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	new /datum/centcom_podlauncher(usr)//create the datum
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc

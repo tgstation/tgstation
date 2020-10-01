@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Morphs no longer have to wait 5 seconds between disguising themselves and undisguising themselves (or vice versa)."

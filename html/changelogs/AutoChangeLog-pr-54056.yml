@@ -1,0 +1,6 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Medical scanners, and kiosk now show all addictions"
+  - bugfix: "Admin full heal/revival now clears addictions as intended"
+  - bugfix: "Families checks addicts fully now"
