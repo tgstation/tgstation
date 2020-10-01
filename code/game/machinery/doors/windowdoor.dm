@@ -21,7 +21,8 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
-
+	network_id = NETWORK_AIRLOCKS
+	
 /obj/machinery/door/window/Initialize(mapload, set_dir)
 	. = ..()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
@@ -36,10 +37,6 @@
 		debris += new /obj/item/stack/rods(src, rods)
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
-
-/obj/machinery/door/window/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
 	density = FALSE

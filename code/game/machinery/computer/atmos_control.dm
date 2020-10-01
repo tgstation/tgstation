@@ -9,15 +9,15 @@
 	resistance_flags = FIRE_PROOF
 
 	var/on = TRUE
-	network_id = NETWORK_ATMOS_STORAGE
+	network_id = NETWORK_STATION_ATMOS_STORAGE
 
 	var/list/datalink = null
-	var/network_broadcast = NETWORK_ATMOS_CONTROL
 
 
 /obj/machinery/air_sensor/setup_network()
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
-	datalink = conn.register_port("status", list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag))
+	datalink = list("gases" = list(),"temperature" = 0,"pressure" = 0, "timestamp" = 0, "id_tag" = id_tag, "hardware_id" = conn.hardware_id)
+	conn.register_port("status", datalink)
 
 /obj/machinery/air_sensor/atmos/toxin_tank
 	name = "plasma tank gas sensor"
@@ -65,7 +65,7 @@
 
 			datalink["pressure"] = air_sample.return_pressure()
 			datalink["temperature"] = air_sample.temperature
-			datalink["_updated"] = TRUE // always updated
+			NETWORK_PORT_SET_UPDATE(datalink)
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
 	var/list/sensor_information = null
-	network_id = NETWORK_ATMOS_CONTROL
+	network_id = NETWORK_STATION_ATMOS_CONTROL
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
@@ -123,7 +123,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		sensor_information = list()
 		// alright, we are assuming all the sensors are hooked up
 		for(var/tag in sensors) // should throw a runtime here
-			sensor_information[tag]	= conn.connect_port(tag, "status",user)
+			sensor_information[tag]	= conn.connect_port(tag, "status", user)
+			sensor_information[tag]["long_name"] = sanitize(sensors[tag])
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -134,13 +135,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/data = list()
 	data["sensors"] = list()
 	for(var/tag in sensors)
-		var/long_name = sensors[tag]
 		var/list/datalink = sensor_information[tag]
 		if(!datalink)
 			continue
 		data["sensors"] += list(list(
 			"id_tag"		= datalink["id_tag"],
-			"long_name" 	= sanitize(long_name),
+			"long_name" 	= datalink["long_name"],
 			"pressure"		= datalink["pressure"],
 			"temperature"	= datalink["temperature"],
 			"gases"			= datalink["gases"]
@@ -229,11 +229,15 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		conn = GetComponent(/datum/component/ntnet_interface)
 		if(target)
 			input_info = conn.connect_port(input_tag, "status",user)
+	else
+		to_chat(world, "Atmos Control Input error [input_tag] with [src]")
 	if(!output_info && output_tag)
 		if(!conn)
 			conn = GetComponent(/datum/component/ntnet_interface)
 		if(target)
 			output_info = conn.connect_port(output_tag, "status",user)
+	else
+		to_chat(world, "Atmos Control Output error [output_tag] with [src]")
 	return ..()
 
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)

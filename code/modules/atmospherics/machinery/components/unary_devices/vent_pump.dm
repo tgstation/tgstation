@@ -30,7 +30,7 @@
 	// NO_BOUND: Do not pass eithe
 	pipe_state = "uvent"
 
-	network_id = NETWORK_ATMOS_SCUBBERS
+	network_id = NETWORK_STATION_ATMOS_SCUBBERS
 	var/list/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
@@ -358,7 +358,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
-	network_id = NETWORK_ATMOS_STORAGE
+	network_id = NETWORK_STATION_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
 
@@ -435,7 +435,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
-	network_id = NETWORK_ATMOS_STORAGE
+	network_id = NETWORK_STATION_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-2"
 

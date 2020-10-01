@@ -111,6 +111,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	if(device.id_tag)
 		// if we have a tag just put it in root devices
 		if(!root_devices[device.id_tag])
+			to_chat(world, "Tag [device.id_tag] created for [parent]")
 			root_devices[device.id_tag] = device
 #ifdef DEBUG_NETWORKS
 		else
@@ -147,7 +148,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		to_chat(world,"process_data_transmit([data.sender_id]): check_relay_operation")
 		return FALSE					// relay or router dead
 	if(!networks[data.network_id])
-		to_chat(world,"process_data_transmit([data.sender_id]): networks [data.network_id]")
+		to_chat(world,"process_data_transmit([data.sender_id]):bad  networks [data.network_id]")
 		return FALSE					// target not in the right network
 	// log_data_transfer(data) // might need to profile this first
 	var/datum/component/ntnet_interface/target

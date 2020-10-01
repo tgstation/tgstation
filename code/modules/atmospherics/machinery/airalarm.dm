@@ -80,7 +80,7 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	network_id = NETWORK_ATMOS_AIRALARMS
+	network_id = NETWORK_STATION_ATMOS_AIRALARMS
 	var/target_network = null
 
 	var/list/TLV = list( // Breathable air.

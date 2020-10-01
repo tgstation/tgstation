@@ -81,11 +81,15 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	ASSERT(network_tree.len > 0)
 	var/network_name_part = ""
 	var/datum/ntnet/parent = null
-
+	var/start = FALSE
 	for(var/i in 1 to network_tree.len)
-		if(i!=1)
+		if(start)
 			network_name_part += "."
+		if(!network_tree[i])
+			continue
+		start = TRUE
 		network_name_part += network_tree[i]
+
 		network = networks[network_name_part]
 		if(!network)
 			network = new(network_name_part, parent)
@@ -130,6 +134,5 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 			return		//errored
 		. = "[copytext_char(string, 1, 9)]"		//16 ^ 8 possibilities I think.
 	while(interfaces_by_hardware_id[.])
-	interfaces_by_hardware_id[.] = TRUE
 
 

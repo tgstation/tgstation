@@ -15,9 +15,11 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	poddoor = TRUE
+	network_id = NETWORK_AIRLOCKS
 
 /obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+	if(id)
+		id = "[idnum][id]"
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"

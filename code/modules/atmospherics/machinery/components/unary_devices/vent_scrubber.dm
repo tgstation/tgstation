@@ -24,7 +24,7 @@
 
 	pipe_state = "scrubber"
 
-	network_id = NETWORK_ATMOS_SCUBBERS
+	network_id = NETWORK_STATION_ATMOS_SCUBBERS
 	var/list/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
