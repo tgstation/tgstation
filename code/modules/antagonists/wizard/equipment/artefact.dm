@@ -402,7 +402,6 @@
 	heal_oxy = 25
 
 //Warp Whistle: Provides uncontrolled long distance teleportation.
-
 /obj/item/warpwhistle
 	name = "warp whistle"
 	desc = "One toot on this whistle will send you to a far away land!"
