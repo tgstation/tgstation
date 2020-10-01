@@ -7,7 +7,8 @@
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	if(!isatom(target) || (!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target) && !_pic))
+	pic = _pic
+	if(!isatom(target) || (!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target) && !pic))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
@@ -19,6 +20,8 @@
 		target.update_icon() //could use some queuing here now maybe.
 	else
 		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
+	if(_dir)
+		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_cleanable)
@@ -26,8 +29,7 @@
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
-	RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
-	RegisterSignal(target, COMSIG_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
+	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
@@ -39,7 +41,7 @@
 	return TRUE
 
 /datum/element/decal/Detach(atom/source, force)
-	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ON_SHUTTLE_MOVE))
+	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE))
 	source.update_icon()
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
@@ -64,6 +66,15 @@
 
 	if(old_dir == new_dir)
 		return
+
+	var/rotation = 0
+	if(pic.dir != old_dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+		rotation = dir2angle(new_dir)-dir2angle(old_dir)
+		if ((rotation % 90) != 0)
+			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		rotation = SIMPLIFY_DEGREES(rotation)
+		new_dir = angle2dir(rotation+dir2angle(pic.dir))
+
 	Detach(source)
 	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
 
@@ -86,4 +97,4 @@
 	if(newT == source)
 		return
 	Detach(source)
-	newT.AddElement(/datum/element/decal, _cleanable = cleanable, _description = description, _pic = pic)
+	newT.AddElement(/datum/element/decal, _dir = pic.dir, _cleanable = cleanable, _description = description, _pic = pic)
