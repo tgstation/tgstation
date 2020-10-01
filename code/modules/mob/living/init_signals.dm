@@ -74,7 +74,7 @@
 /// Called when [TRAIT_FLOORED] is added to the mob.
 /mob/living/proc/on_floored_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	if(buckled && buckled.buckle_lying != -1)
+	if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
 		return // Handled by the buckle.
 	mobility_flags &= ~MOBILITY_STAND
 	if(lying_angle == 0) //force them on the ground

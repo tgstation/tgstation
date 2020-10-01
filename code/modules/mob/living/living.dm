@@ -445,7 +445,7 @@
 		if(lying_angle == 90 || lying_angle == 270)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to stay lying down on the floor.</span>")
-		else if(buckled && buckled.buckle_lying != -1)
+		else if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now lay down as soon as you are able to.</span>")
 		else
@@ -456,7 +456,7 @@
 		if(lying_angle == 0)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to remain standing up.</span>")
-		else if(HAS_TRAIT(src, TRAIT_FLOORED) || (buckled && buckled.buckle_lying != -1))
+		else if(HAS_TRAIT(src, TRAIT_FLOORED) || (buckled && buckled.buckle_lying != NO_BUCKLE_LYING))
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now stand up as soon as you are able to.</span>")
 		else
@@ -1666,16 +1666,12 @@
 				else // Forcing to a lying position.
 					ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
 			set_lying_angle(buckled.buckle_lying)
-	else if(.)
+	else if(.) // We unbuckled from something.
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
 		var/atom/movable/old_buckled = .
-		switch(old_buckled.buckle_lying)
-			if(-1)
-				return
-			if(0)
-				if(resting)
-					set_lying_down()
+		if(old_buckled.buckle_lying == 0 && resting) // The buckle forced us to stay up (like a chair) and our preference is set to resting...
+			set_lying_down() // ...so let's drop on the ground.
 
 
 /mob/living/set_pulledby(new_pulledby)
@@ -1733,9 +1729,9 @@
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
 	if(usable_legs < default_num_legs)
-		var/limbless_slowdown = (default_num_legs * 3) - (usable_legs * 3)
+		var/limbless_slowdown = (default_num_legs - usable_legs) * 3
 		if(!usable_legs && usable_hands < default_num_hands)
-			limbless_slowdown += (default_num_hands * 3) - (usable_hands * 3)
+			limbless_slowdown += (default_num_hands - usable_hands) * 3
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)

@@ -1034,7 +1034,7 @@
 
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
-/mob/living/silicon/ai/proc/set_aiRestorePowerRoutine(new_value)
+/mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)
 	if(new_value == aiRestorePowerRoutine)
 		return
 	. = aiRestorePowerRoutine
