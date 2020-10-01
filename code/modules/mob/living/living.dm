@@ -1658,7 +1658,7 @@
 		if(!.)
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
 			switch(buckled.buckle_lying)
-				if(-1) // Magic number meaning the buckle doesn't force a lying angle. See more in the [buckle_lying] definition.
+				if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
 					REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
 					return
 				if(0) // Forcing to a standing position.
