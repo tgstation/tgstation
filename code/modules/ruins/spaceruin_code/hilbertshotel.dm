@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
-GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, SHORT_REAL_LIMIT))
+GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
