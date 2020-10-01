@@ -231,10 +231,13 @@
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
+/obj/structure/closet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	for(var/obj/O in src)
+		O.take_damage(damage_amount, damage_type, damage_flag, sound_effect = FALSE, attack_dir, armour_penetration)
+	..()
+	
 /obj/structure/closet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		for(var/obj/O in src)
-			qdel(O)
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
