@@ -148,11 +148,13 @@
 /obj/machinery/power/heavy_emitter/centre/turn_on()
 	if(!is_fully_constructed)
 		return EASY_TURN_OFF
+	log_game("Heavy Emitter was turned on in [loc]")
 	use_power = IDLE_POWER_USE
 	firing = TRUE
 	icon_state = "centre"
 
 /obj/machinery/power/heavy_emitter/centre/turn_off()
+	log_game("Heavy Emitter was turned off in [loc]")
 	firing = FALSE
 	icon_state = "centre_off"
 
@@ -184,7 +186,6 @@
 		var/obj/machinery/power/heavy_emitter/vent/vent = V
 		if(vent.vent_gas())
 			heat -= 100
-
 
 /obj/machinery/power/heavy_emitter/arm
 	name = "Seismic Stabilizer Arm"
@@ -232,11 +233,16 @@
 
 /obj/machinery/power/heavy_emitter/vent/proc/vent_gas()
 	var/turf/open/open_turf = get_step(src,dir)
-	if(!istype(open_turf))
-		return FALSE
-	var/datum/gas_mixture/gases = open_turf.return_air()
 	//You cant cheese it with space!
+	if(!istype(open_turf) || isspaceturf(open_turf))
+		return FALSE
+
+	var/datum/gas_mixture/gases = open_turf.return_air()
+
 	if(!gases)
+		return FALSE
+
+	if(gases.return_pressure() < ONE_ATMOSPHERE/5)
 		return FALSE
 
 	gases.temperature += 100
