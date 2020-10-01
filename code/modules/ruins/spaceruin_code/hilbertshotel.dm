@@ -15,7 +15,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
-	var/mysteryRoom
 
 /obj/item/hilbertshotel/Initialize()
 	. = ..()
@@ -108,12 +107,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, null)
 
 /obj/item/hilbertshotel/proc/sendToNewRoom(roomNumber, mob/user)
 	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
-	if(ruinSpawned)
-		mysteryRoom = GLOB.hhmysteryRoomNumber
-		if(roomNumber == mysteryRoom)
-			hotelRoomTempLore.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
-		else
-			hotelRoomTemp.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
+	if(ruinSpawned && roomNumber == GLOB.hhmysteryRoomNumber)
+		hotelRoomTempLore.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	else
 		hotelRoomTemp.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	activeRooms["[roomNumber]"] = roomReservation
