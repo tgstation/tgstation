@@ -1,0 +1,6 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Icebox RD console can be reached now"
+  - bugfix: "Icebox Xeno fridge is in the cubical is now accessible"
+  - bugfix: "Icebox Xeno apc moved to stop odd power issue"

@@ -1,0 +1,4 @@
+author: "Hamcha"
+delete-after: True
+changes: 
+  - bugfix: "Jumpskirts no longer re-sew themselves into jumpsuits when being dyed in a washing machine"

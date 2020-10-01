@@ -14469,7 +14469,7 @@
 /area/storage/art)
 "aLA" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/friedegg,
+/obj/item/food/friedegg,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria)
@@ -20562,7 +20562,7 @@
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
-/obj/item/reagent_containers/food/snacks/monkeycube,
+/obj/item/food/monkeycube,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bce" = (
@@ -39666,7 +39666,7 @@
 /turf/open/floor/plasteel,
 /area/chapel/office)
 "ceg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -45939,7 +45939,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "dWk" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "dWp" = (
@@ -48568,7 +48568,7 @@
 "hDG" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Base Construction";
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -52331,7 +52331,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/artgallery)
 "nku" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	req_access_txt = "27"
 	},
@@ -55963,7 +55963,7 @@
 /area/medical/storage)
 "sij" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "siF" = (
@@ -56149,7 +56149,7 @@
 /area/hallway/primary/central)
 "sww" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "swE" = (
@@ -56520,7 +56520,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "tan" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -56759,7 +56759,7 @@
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
 	pixel_x = -26;
-	req_one_access_txt = "32;47;48"
+	req_one_access_txt = "72"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/yellow,

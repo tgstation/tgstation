@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Synthmeat works for burgers again, and colored burgers are colored once more."
