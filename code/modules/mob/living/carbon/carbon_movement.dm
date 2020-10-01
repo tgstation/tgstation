@@ -76,7 +76,7 @@
 				ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 				if(!usable_hands)
 					ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-			limbless_slowdown += (default_num_legs * 3) - (usable_legs * 3)
+			limbless_slowdown += (default_num_legs - usable_legs) * 3
 			if(!usable_legs && usable_hands < default_num_hands)
 				limbless_slowdown += (default_num_hands * 3) - (usable_hands * 3)
 		if(limbless_slowdown)
