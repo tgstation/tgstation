@@ -30,3 +30,18 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	var/pacifist = TRUE // if when you enter this zone, you become a pacifist or not
 	var/death = FALSE // if when you enter this zone, you die
+
+/area/awaymission/basketball
+	icon_state = "away"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+
+/area/awaymission/basketball/one
+	name = "Court 1"
+
+/area/awaymission/basketball/two
+	name = "Court 2"
+
+/area/awaymission/basketball/three
+	name = "Court 3"
