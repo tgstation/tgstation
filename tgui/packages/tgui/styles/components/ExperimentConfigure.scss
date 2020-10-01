@@ -40,6 +40,7 @@
   margin-right: 1rem;
 }
 
-.ExperimentStage__StageContainer.complete {
-  opacity: 0.8;
+.ExperimentStage__StageContainer.complete .ExperimentStage__Description {
+  opacity: 0.4;
+  text-decoration: line-through;
 }

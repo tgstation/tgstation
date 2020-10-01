@@ -8,23 +8,29 @@
 	var/required_heavy = 0
 	/// The required light impact range to complete the experiment
 	var/required_light = 0
-	/// The max ranges measured by this experiment
-	var/measured = list("devastation" = 0, "heavy" = 0, "light" = 0)
+	/// The last measured devastation range
+	var/last_devastation
+	/// The last measured heavy range
+	var/last_heavy
+	/// The last measured light range
+	var/last_light
 
 /datum/experiment/explosion/is_complete()
-	return required_devastation <= measured["devastation"] \
-		&& required_heavy <= measured["heavy"] \
-		&& required_light <= measured["light"]
+	return required_devastation <= last_devastation \
+		&& required_heavy <= last_heavy \
+		&& required_light <= last_light
 
 /datum/experiment/explosion/check_progress()
-	. = list(EXP_BOOL_STAGE, "You must record an explosion of at ranges of at least \
-	[required_devastation] devastation, [required_heavy] heavy, and [required_light] light. The best \
-	attempt had ranges of [measured["devastation"]]D/[measured["heavy"]]H/[measured["light"]]L.", is_complete())
+	var/status_message = "You must record an explosion with ranges of at least \
+		[required_devastation] devastation, [required_heavy] heavy, and [required_light] light."
+	if (last_devastation || last_heavy || last_light)
+		status_message += " The last attempt had ranges of [last_devastation]D/[last_heavy]H/[last_light]L."
+	. = list(list(EXP_BOOL_STAGE, status_message, is_complete()))
 
 /datum/experiment/explosion/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
-	measured["devastation"] = max(measured["devastation"], devastation)
-	measured["heavy"] = max(measured["heavy"], heavy)
-	measured["light"] = max(measured["light"], light)
+	last_devastation = devastation
+	last_heavy = heavy
+	last_light = light
 	return is_complete()
 
 /datum/experiment/explosion/actionable(datum/component/experiment_handler/experiment_handler, devastation, heavy, light)
