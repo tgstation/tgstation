@@ -89,9 +89,11 @@
 					var/sx = clone.transform.get_x_scale()
 					var/sy = clone.transform.get_y_scale()
 					if(sx != 1 || sy != 1)
-						img.Scale(img.Width() * sx, img.Height() * sy)
-						xo -= world.icon_size * (sx - 1) / 2
-						yo -= world.icon_size * (sy - 1) / 2
+						var/base_w = img.Width()
+						var/base_h = img.Height()
+						img.Scale(base_w * sx, base_h * sy)
+						xo -= base_w * (sx - 1) / 2
+						yo -= base_h * (sy - 1) / 2
 					var/rx = clone.transform.get_rotation()
 					if(rx != 0)
 						img.Turn(rx)
