@@ -1289,6 +1289,8 @@
 
 // Tournament box
 /obj/item/storage/box/tournament/PopulateContents()
+	if(isplasmaman(loc))
+		new /obj/item/tank/internals/plasmaman/belt(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/cowbell(src)
 	new /obj/item/stack/arcadeticket(src)
