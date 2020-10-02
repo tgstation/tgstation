@@ -15,6 +15,8 @@
 ///
 /// If other operations were applied on the matrix, such as shearing, the result
 /// will not be precise.
+///
+/// Negative scales are not supported.
 /matrix/proc/decompose()
 	var/datum/decompose_matrix/decompose_matrix = new
 	. = decompose_matrix
