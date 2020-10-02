@@ -59,7 +59,7 @@
 		return
 
 	// Failed to fix
-	action = alert(src, "Did that work?", "", "Thanks anyways", "Switch to old UI")
+	action = alert(src, "Did that work?", "", "No, thanks anyways", "Switch to old UI")
 	if (action == "Switch to old UI")
 		winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
 		winset(src, "browseroutput", "is-disabled=1;is-visible=0")
