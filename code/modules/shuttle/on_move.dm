@@ -76,11 +76,21 @@ All ShuttleMove procs go here
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
 	if(shuttle_boundary)
 		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
+		if (isfloorturf(oldT))
+			var/turf/open/floor/oldFloor = oldT
+			oldFloor.icon_regular_floor = initial(oldFloor.icon_regular_floor)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
 
 	return TRUE
+
+/turf/open/floor/afterShuttleMove(turf/oldT, rotation)
+	if (isfloorturf(oldT))
+		var/turf/open/floor/floorTurf = oldT
+		icon_regular_floor = floorTurf.icon_regular_floor
+		update_icon()
+	return ..()
 
 /turf/proc/lateShuttleMove(turf/oldT)
 	blocks_air = initial(blocks_air)
