@@ -207,15 +207,16 @@
 		do_sparks(8, FALSE, M)
 		M.visible_message("<span class='notice'>[M] vanishes...</span>")
 
-		var/list/equipped = M.get_equipped_items(include_pockets=TRUE)
-		for(var/obj/item/W in equipped)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/W in M.inventory)
 				if(W == H.w_uniform)
 					continue //So all they're left with are shoes and uniform.
 				if(W == H.shoes)
 					continue
-			M.dropItemToGround(W)
+				M.dropItemToGround(W)
+		else
+			M.drop_inventory()
 
 		for(var/obj/item/W in victim_belongings)
 			W.forceMove(return_pod)

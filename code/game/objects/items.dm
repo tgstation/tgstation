@@ -457,8 +457,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
-	item_flags &= ~IN_INVENTORY
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	user?.remove_from_inventory(src)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
@@ -467,7 +467,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
-	item_flags |= IN_INVENTORY
+	usr.put_in_inventory(src)
 
 /// called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
-	item_flags |= IN_INVENTORY
+	user.put_in_inventory(src)
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
@@ -653,14 +653,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	thrownby = thrower
-	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
+	callback = CALLBACK(src, .proc/after_throw, callback, thrower) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
 
-/obj/item/proc/after_throw(datum/callback/callback)
+/obj/item/proc/after_throw(datum/callback/callback, mob/thrower)
 	if (callback) //call the original callback
 		. = callback.Invoke()
-	item_flags &= ~IN_INVENTORY
+	thrower.remove_from_inventory(src)
 	if(!pixel_y && !pixel_x)
 		pixel_x = rand(-8,8)
 		pixel_y = rand(-8,8)

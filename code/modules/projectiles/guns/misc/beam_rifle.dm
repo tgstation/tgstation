@@ -281,7 +281,7 @@
 		set_user(mob)
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
-	if((object in mob.contents) || (object == mob))
+	if((object in mob.inventory) || (object == mob))
 		return
 	start_aiming()
 	return ..()
@@ -299,7 +299,7 @@
 
 /obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
+		if(target in user.inventory) //can't shoot stuff inside us.
 			return
 		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return

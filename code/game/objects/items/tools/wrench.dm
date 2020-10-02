@@ -65,9 +65,7 @@
 	sleep(20)
 	if(!user)
 		return
-	var/list/equipped = user.get_equipped_items(include_pockets=TRUE)
-	for(var/obj/item/W in equipped)
-		user.dropItemToGround(W)
+	user.drop_inventory()
 	suicider = user.real_name
 	user.dust()
 	return OXYLOSS

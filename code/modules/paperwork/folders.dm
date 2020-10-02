@@ -79,7 +79,7 @@
 	if(usr.stat || usr.restrained())
 		return
 
-	if(usr.contents.Find(src))
+	if(usr.inventory.Find(src))
 
 		if(href_list["remove"])
 			var/obj/item/I = locate(href_list["remove"]) in src

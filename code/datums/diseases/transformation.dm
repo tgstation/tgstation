@@ -61,8 +61,7 @@
 		if(affected_mob.notransform)
 			return
 		affected_mob.notransform = 1
-		for(var/obj/item/W in affected_mob.get_equipped_items(TRUE))
-			affected_mob.dropItemToGround(W)
+		affected_mob.drop_inventory()
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)

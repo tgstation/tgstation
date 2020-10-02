@@ -168,7 +168,7 @@
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
 
-	var/list/contents = M.get_equipped_items(include_pockets=TRUE)
+	var/list/contents = M.inventory.Copy() //So we can reequip some items if possible
 
 	if(iscyborg(M))
 		var/mob/living/silicon/robot/Robot = M

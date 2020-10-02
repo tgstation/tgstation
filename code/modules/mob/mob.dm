@@ -36,6 +36,7 @@
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
+	QDEL_LIST(inventory)
 	ghostize()
 	return ..()
 

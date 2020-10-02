@@ -144,9 +144,7 @@
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))
 			var/mob/living/carbon/C = old_body
-			var/list/equipped = C.get_equipped_items(include_pockets=TRUE)
-			for(var/obj/item/W in equipped)
-				C.dropItemToGround(W)
+			C.drop_inventory()
 			for(var/X in C.internal_organs)
 				var/obj/item/organ/I = X
 				I.Remove(C)

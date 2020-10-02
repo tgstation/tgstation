@@ -192,7 +192,7 @@
 	. = ..(null, user, flag, params)
 
 	if(flag)
-		if(!(target in user.contents) && ismob(target))
+		if(!(target in user.inventory) && ismob(target))
 			if(user.a_intent == INTENT_HARM) // Flogging action
 				return
 

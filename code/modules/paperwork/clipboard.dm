@@ -73,7 +73,7 @@
 	if(usr.stat || usr.restrained())
 		return
 
-	if(usr.contents.Find(src))
+	if(usr.inventory.Find(src))
 
 		if(href_list["pen"])
 			if(haspen)

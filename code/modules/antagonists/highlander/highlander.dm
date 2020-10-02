@@ -48,8 +48,7 @@
 	if(!istype(H))
 		return
 
-	var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
-	for(var/obj/item/I in equipped)
+	for(var/obj/item/I in H.inventory)
 		if(!H.dropItemToGround(I))
 			qdel(I)
 	H.regenerate_icons()

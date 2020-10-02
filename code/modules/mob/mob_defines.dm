@@ -221,3 +221,6 @@
 
 	///Whether the mob is updating glide size when movespeed updates or not
 	var/updating_glide_size = TRUE
+
+	///List of [/obj/item] in the mobs inventory. They will go in the contents as well.
+	var/list/inventory = list()

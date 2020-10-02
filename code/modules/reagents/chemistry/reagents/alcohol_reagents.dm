@@ -1721,7 +1721,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/thehuman = L
-		for(var/obj/item/shield/theshield in thehuman.contents)
+		for(var/obj/item/shield/theshield in thehuman.inventory)
 			mighty_shield = theshield
 			mighty_shield.block_chance += 10
 			to_chat(thehuman, "<span class='notice'>[theshield] appears polished, although you don't recall polishing it.</span>")
@@ -1729,7 +1729,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L)
 	..()
-	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+	if(mighty_shield && !(mighty_shield in L.inventory)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
 		holder.remove_reagent(type)
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)

@@ -254,8 +254,7 @@
 
 
 /datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
-	for(var/I in mannequin.get_equipped_items(TRUE))
-		qdel(I)
+	mannequin.delete_inventory()
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
 		mannequin.equipOutfit(initial(ert.outfit), TRUE)

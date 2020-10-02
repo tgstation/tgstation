@@ -38,10 +38,7 @@
 /obj/structure/lavaland/ash_walker/proc/consume()
 	for(var/mob/living/H in view(src, 1)) //Only for corpse right next to/on same tile
 		if(H.stat)
-			var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
-			for(var/obj/item/W in equipped)
-				if(!H.dropItemToGround(W))
-					qdel(W)
+			H.drop_inventory(qdel_onfail=TRUE)
 			if(issilicon(H)) //no advantage to sacrificing borgs...
 				H.gib()
 				visible_message("<span class='notice'>Serrated tendrils eagerly pull [H] apart, but find nothing of interest.</span>")

@@ -8,13 +8,7 @@
 	if(confirm != "Yes")
 		return
 
-	var/list/equipped
-	if(istype(M, /mob/living))
-		var/mob/living/live_mob = M
-		equipped = live_mob.get_equipped_items(include_pockets=TRUE)
-	else
-		equipped = M.contents.Copy()
-	for(var/obj/item/W in equipped)
+	for(var/obj/item/W in M.inventory)
 		if(!M.dropItemToGround(W))
 			qdel(W)
 			M.regenerate_icons()

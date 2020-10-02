@@ -52,10 +52,9 @@ It is possible to destroy the net by the occupant or someone else.
 	qdel(src)
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
-		var/list/equipped = H.get_equipped_items(include_pockets=TRUE)
-		for(var/obj/item/W in equipped)
+		for(var/obj/item/W in H.inventory)
 			if(W == H.w_uniform)
-				continue//So all they're left with are shoes and uniform.
+				continue //So all they're left with are shoes and uniform.
 			if(W == H.shoes)
 				continue
 			H.dropItemToGround(W)

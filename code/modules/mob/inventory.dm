@@ -138,7 +138,50 @@
 		hand += " #[num]"
 	return hand.Join()
 
+/**
+ * Put the object in the inventory of the mob.
+ *
+ * Add the item_flags for [IN_INVENTORY] and include the obj in the inventory list
+ * vars:
+ * * object The /obj/item to be added to inventory
+ */
+/mob/proc/put_in_inventory(obj/item/object)
+	object.item_flags |= IN_INVENTORY
+	inventory += object
 
+/**
+ * Take the object from the inventory of the mob.
+ *
+ * Remove the item_flags for [IN_INVENTORY] and removes the obj from the inventory list
+ * vars:
+ * * object The /obj/item to be removed from inventory
+ */
+/mob/proc/remove_from_inventory(obj/item/object)
+	object.item_flags &= ~IN_INVENTORY
+	inventory -= object
+
+/**
+ * Drop all inventory objects for the mob.
+ *
+ * This will itterate over all inventory items dropping them to the ground
+ * var:
+ * * force (optional)(default:false) forces the item to drop
+ * * silent (optional)(default:false) surpresses notice of dropped item
+ * * qdel_onfail (optional)(default:false) qdel any item that fails to drop
+ */
+/mob/proc/drop_inventory(force = FALSE, silent = FALSE, qdel_onfail = FALSE)
+	for(var/obj/item/inv_item in inventory)
+		if(!dropItemToGround(inv_item, force=force, silent=silent) && qdel_onfail)
+			qdel(inv_item)
+
+/**
+ * Delete all inventory objects for the mob.
+ *
+ * Iterates over all inventory items and qdel's them
+ */
+/mob/proc/delete_inventory()
+	for(var/obj/item/inv_item in inventory)
+		qdel(inv_item)
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
@@ -336,9 +379,7 @@
 
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
-	for(var/obj/item/item_contents in contents)
-		if(item_contents.item_flags & IN_INVENTORY)
-			items += item_contents
+	items += inventory
 	items -= held_items
 	return items
 

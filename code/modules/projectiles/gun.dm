@@ -196,7 +196,7 @@
 	if(firing_burst)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
+		if(target in user.inventory) //can't shoot stuff inside us.
 			return
 		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return

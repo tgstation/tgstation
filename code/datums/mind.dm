@@ -613,9 +613,7 @@
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
-				var/list/equipped = current.get_equipped_items(include_pockets=TRUE)
-				for(var/obj/item/W in equipped)
-					current.dropItemToGround(W, TRUE) //The 1 forces all items to drop, since this is an admin undress.
+				current.drop_inventory(force=TRUE) //Forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
 				memory = null//Remove any memory they may have had.

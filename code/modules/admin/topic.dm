@@ -1033,12 +1033,9 @@
 		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
+
 		var/mob/living/L = M
-
-		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
-		for(var/obj/item/I in equipped)
-			L.dropItemToGround(I, TRUE)
-
+		L.drop_inventory(force=TRUE)
 		L.Unconscious(100)
 		sleep(5)
 		L.forceMove(pick(GLOB.tdome1))
@@ -1060,12 +1057,9 @@
 		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
+
 		var/mob/living/L = M
-
-		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
-		for(var/obj/item/I in equipped)
-			L.dropItemToGround(I, TRUE)
-
+		L.drop_inventory(force=TRUE)
 		L.Unconscious(100)
 		sleep(5)
 		L.forceMove(pick(GLOB.tdome2))
@@ -1110,11 +1104,9 @@
 		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
-		var/mob/living/L = M
 
-		var/list/equipped = L.get_equipped_items(include_pockets=TRUE)
-		for(var/obj/item/I in equipped)
-			L.dropItemToGround(I, TRUE)
+		var/mob/living/L = M
+		L.drop_inventory(force=TRUE)
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
