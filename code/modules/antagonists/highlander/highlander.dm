@@ -3,7 +3,7 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 2					//if you kill everyone and actually haev a hand to hijack with, you win??
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override

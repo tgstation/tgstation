@@ -16,7 +16,7 @@
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
 	var/datum/contractor_hub/contractor_hub
-	can_hijack = HIJACK_HIJACKER
+	hijack_speed = 0.5				//10 seconds per hijack stage by default
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))

@@ -4,7 +4,6 @@
 	show_in_antagpanel = FALSE
 	var/datum/objective/mission
 	var/datum/team/ert/ert_team
-	can_hijack = HIJACK_PREVENT
 	show_to_ghosts = TRUE
 
 /datum/antagonist/official/greet()

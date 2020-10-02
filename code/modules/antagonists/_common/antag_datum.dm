@@ -14,7 +14,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
 	var/antag_hud_type
 	var/antag_hud_name
 
@@ -263,6 +264,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	if(!isnull(H?.hijack_speed_override))
+		return H.hijack_speed_override
+	return hijack_speed
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
