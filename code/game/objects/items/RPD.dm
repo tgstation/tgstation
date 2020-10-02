@@ -245,10 +245,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /// Installs an upgrade into the RPD checking if it is already installed
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
-	if(rpd_up.upgrade & upgrade_flags)
+	if(rpd_up.upgrade_flags& upgrade_flags)
 		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
 		return
-	upgrade_flags |= rpd_up.upgrade
+	upgrade_flags |= rpd_up.upgrade_flags
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
