@@ -525,7 +525,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "abu" = (
@@ -25203,14 +25202,6 @@
 	},
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
-"bgN" = (
-/obj/structure/table,
-/obj/item/toy/plush/beeplushie{
-	name = "multi-bee plushie";
-	pixel_y = 4
-	},
-/turf/open/floor/plating,
-/area/storage/mining)
 "bgO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/closed/wall/r_wall,
@@ -28446,10 +28437,6 @@
 /obj/structure/sign/warning,
 /turf/closed/wall/r_wall,
 /area/storage/mining)
-"bnW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/storage/mining)
 "bnX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -28912,13 +28899,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
-"bpg" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel,
-/area/storage/mining)
 "bph" = (
 /obj/structure/table,
 /obj/item/clothing/mask/breath{
@@ -29432,11 +29412,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
-"bqD" = (
-/obj/structure/cable/multilayer/multiz,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
-/area/storage/mining)
 "bqE" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -30699,9 +30674,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "btB" = (
-/obj/machinery/computer/bounty{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -44812,6 +44784,12 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cnz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "cnA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -49128,12 +49106,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"cJV" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 10
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "cKG" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -49958,6 +49930,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
+"dIK" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
+/area/storage/mining)
 "dJx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50057,6 +50034,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"dWi" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/storage/mining)
 "dWG" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -50133,13 +50114,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"ejU" = (
-/obj/structure/industrial_lift,
-/obj/structure/railing{
-	dir = 10
-	},
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "ekN" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -50921,13 +50895,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
-"gVn" = (
-/obj/structure/industrial_lift,
-/obj/structure/railing{
-	dir = 6
-	},
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "gWd" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -51224,13 +51191,6 @@
 "hZk" = (
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"hZS" = (
-/obj/structure/industrial_lift{
-	id = "publicElevator"
-	},
-/obj/machinery/light/floor,
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "ibG" = (
 /obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
@@ -51480,10 +51440,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
-"jcM" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/storage/mining)
 "jdH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -52572,6 +52528,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
+"lQA" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/storage/mining)
 "lQG" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -52603,13 +52566,6 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"lSU" = (
-/obj/structure/industrial_lift,
-/obj/structure/railing{
-	dir = 9
-	},
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "lTQ" = (
 /obj/vehicle/ridden/wheelchair{
 	dir = 4
@@ -53039,6 +52995,23 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"mSY" = (
+/obj/structure/industrial_lift{
+	id = "publicElevator"
+	},
+/obj/machinery/light/floor,
+/turf/open/transparent/openspace,
+/area/storage/mining)
+"mVJ" = (
+/obj/machinery/camera{
+	c_tag = "Public Mining Ladder";
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "mWw" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -53131,10 +53104,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
-"nlo" = (
-/obj/structure/industrial_lift,
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "nlN" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -53193,6 +53162,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"nrT" = (
+/obj/structure/table,
+/obj/item/toy/plush/beeplushie{
+	name = "multi-bee plushie";
+	pixel_y = 4
+	},
+/turf/open/floor/plating,
+/area/storage/mining)
 "nsl" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -53239,6 +53216,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"nxw" = (
+/obj/structure/industrial_lift,
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/transparent/openspace,
+/area/storage/mining)
 "nxx" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
@@ -53464,10 +53448,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"ofT" = (
-/obj/machinery/computer/bounty,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "ogj" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -53596,13 +53576,6 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"oGZ" = (
-/obj/structure/industrial_lift,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/transparent/openspace,
-/area/storage/mining)
 "oHH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -53616,6 +53589,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"oME" = (
+/obj/structure/industrial_lift,
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/transparent/openspace,
+/area/storage/mining)
 "oMN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -54200,6 +54180,13 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"pPK" = (
+/obj/structure/industrial_lift,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/transparent/openspace,
+/area/storage/mining)
 "pSb" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -54232,15 +54219,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
-"pTF" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "pUi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
@@ -54655,6 +54633,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"rAD" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/storage/mining)
+"rBC" = (
+/obj/structure/industrial_lift,
+/turf/open/transparent/openspace,
+/area/storage/mining)
 "rHZ" = (
 /obj/structure/rack,
 /obj/item/wrench,
@@ -54741,12 +54727,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
-"rUV" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "rVn" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
@@ -55514,16 +55494,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"uhq" = (
-/obj/machinery/camera{
-	c_tag = "Public Mining Ladder";
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "uhH" = (
 /obj/item/wrench,
 /obj/item/weldingtool,
@@ -55829,6 +55799,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"uWd" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "uZR" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -55951,12 +55927,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
-"voE" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 6
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "vqI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -56331,10 +56301,26 @@
 "wvq" = (
 /turf/closed/wall,
 /area/medical/cryo)
+"wvM" = (
+/obj/structure/industrial_lift,
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/transparent/openspace,
+/area/storage/mining)
 "wxF" = (
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
+"wyf" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "wzx" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -56560,6 +56546,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"xex" = (
+/obj/structure/ladder,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
+"xeI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "xeJ" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -56671,16 +56673,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"xkH" = (
-/obj/structure/ladder,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/mining)
 "xkP" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -77599,7 +77591,7 @@ bxu
 bxu
 bxu
 aZE
-ofT
+bjr
 bjr
 ama
 bmh
@@ -85309,10 +85301,10 @@ beh
 bfv
 urc
 urc
-lSU
-nlo
-ejU
-bnW
+oME
+rBC
+wvM
+dWi
 xbg
 mME
 xbg
@@ -85566,10 +85558,10 @@ aZR
 bft
 urc
 urc
-oGZ
-hZS
-gVn
-bnW
+pPK
+mSY
+nxw
+dWi
 aeE
 aeE
 aeE
@@ -85821,7 +85813,7 @@ aCN
 bdh
 bee
 bfv
-bgN
+nrT
 urc
 urc
 bii
@@ -86078,8 +86070,8 @@ bcf
 bdg
 bed
 bfv
-jcM
-jcM
+rAD
+rAD
 big
 hau
 aIo
@@ -86335,7 +86327,7 @@ aCP
 aEj
 bef
 bfv
-bqD
+dIK
 urc
 urc
 bih
@@ -86344,7 +86336,7 @@ bnV
 olp
 aeE
 aOB
-bpg
+lQA
 buS
 bwn
 xWd
@@ -86594,10 +86586,10 @@ aZR
 bfw
 urc
 urc
-rUV
-pTF
-cJV
-bnW
+cnz
+wyf
+uWd
+dWi
 aeE
 aeE
 aeE
@@ -86851,10 +86843,10 @@ beh
 bfv
 urc
 urc
-uhq
-xkH
-voE
-bnW
+mVJ
+xex
+xeI
+dWi
 xbg
 tGE
 xbg

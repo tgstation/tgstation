@@ -1162,6 +1162,9 @@
 "dm" = (
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/refuel)
+"dn" = (
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/spacechess)
 "do" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -19672,9 +19675,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"ZK" = (
-/turf/open/floor/holofloor/carpet,
-/area/holodeck/rec_center/spacechess)
 "ZN" = (
 /obj/structure/table/wood,
 /obj/item/toy/crayon/spraycan{
@@ -82706,16 +82706,16 @@ aa
 "}
 (246,1,1) = {"
 fx
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
 bj
 dm
 dm
@@ -82963,7 +82963,7 @@ aa
 "}
 (247,1,1) = {"
 fx
-ZK
+dn
 Hk
 ee
 ew
@@ -82972,7 +82972,7 @@ ew
 ev
 eX
 Ul
-ZK
+dn
 bj
 dm
 dm
@@ -83220,7 +83220,7 @@ aa
 "}
 (248,1,1) = {"
 fx
-ZK
+dn
 Ou
 ed
 ev
@@ -83229,7 +83229,7 @@ ev
 ew
 eW
 Yi
-ZK
+dn
 bj
 dm
 dm
@@ -83477,7 +83477,7 @@ aa
 "}
 (249,1,1) = {"
 fx
-ZK
+dn
 Dk
 ee
 ew
@@ -83486,7 +83486,7 @@ ew
 ev
 eX
 RR
-ZK
+dn
 bj
 dm
 dG
@@ -83734,7 +83734,7 @@ aa
 "}
 (250,1,1) = {"
 fx
-ZK
+dn
 VK
 ed
 ev
@@ -83743,7 +83743,7 @@ ev
 ew
 eW
 TP
-ZK
+dn
 bj
 dm
 dG
@@ -83991,7 +83991,7 @@ aa
 "}
 (251,1,1) = {"
 fx
-ZK
+dn
 TM
 ee
 ew
@@ -84000,7 +84000,7 @@ ew
 ev
 eX
 Wu
-ZK
+dn
 bj
 dm
 dG
@@ -84248,7 +84248,7 @@ aa
 "}
 (252,1,1) = {"
 fx
-ZK
+dn
 Oo
 ed
 ev
@@ -84257,7 +84257,7 @@ ev
 ew
 eW
 vp
-ZK
+dn
 bj
 dm
 dm
@@ -84505,7 +84505,7 @@ aa
 "}
 (253,1,1) = {"
 fx
-ZK
+dn
 dK
 ee
 ew
@@ -84514,7 +84514,7 @@ ew
 ev
 eX
 fm
-ZK
+dn
 bj
 dm
 dm
@@ -84762,7 +84762,7 @@ aa
 "}
 (254,1,1) = {"
 fx
-ZK
+dn
 dH
 ed
 ev
@@ -84771,7 +84771,7 @@ ev
 ew
 eW
 fj
-ZK
+dn
 bj
 dm
 dm
