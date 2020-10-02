@@ -86,6 +86,10 @@
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
+///Announces a message to this experiment handler
+/datum/component/experiment_handler/proc/announce_message(var/message)
+	var/atom/movable/experi_parent = parent
+	experi_parent.say(message)
 
 /**
   * Attempts to perform the selected experiment given some arguments

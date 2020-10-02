@@ -13,6 +13,6 @@
 /obj/item/experi_scanner/Initialize()
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/scanning), \
+		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical),\
 		blacklisted_experiments = list(/datum/experiment/scanning/destructive))
 

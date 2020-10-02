@@ -15,6 +15,9 @@
 	var/exp_tag = "Base"
 	/// A list of types that are allowed to experiment with this datum
 	var/list/allowed_experimentors
+	///Whether the experiment has been completed
+	var/completed = FALSE
+
 
 /**
   * Checks if the experiment is complete
@@ -46,23 +49,25 @@
 /datum/experiment/proc/actionable(...)
 	return !is_complete()
 
+///Proc that tries to perform the experiment, and then checks if its completed.
+/datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
+	var/action_succesful = perform_experiment_actions(arglist(args))
+	if(is_complete())
+		finish_experiment(experiment_handler)
+	return action_succesful
+
 /**
   * Attempts to perform the experiment provided some arguments
   *
   * This proc should be overridden such that the experiment will be actioned
   * with some defined arguments
   */
-/datum/experiment/proc/perform_experiment(datum/component/experiment_handler/experiment_handler, ...)
-	var/action_succesful = perform_experiment_actions(arglist(args))
-	if(is_complete())
-		finish_experiment(arglist(args))
-	return action_succesful
-
 /datum/experiment/proc/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, ...)
 	return
 
 ///Called when you complete an experiment, makes sure the techwebs knows the experiment was finished, and tells everyone it happend, yay!
-/datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler, ...)
+/datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler)
+	completed = TRUE
 	experiment_handler.announce_message_to_all("The [name] has been completed!")
 	experiment_handler.selected_experiment = null
 	experiment_handler.linked_web.complete_experiment(src)
