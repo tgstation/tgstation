@@ -85,20 +85,21 @@
 				// Center of the image in Y
 				var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
 
-				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.'
-					var/sx = clone.transform.get_x_scale()
-					var/sy = clone.transform.get_y_scale()
-					if(sx != 1 || sy != 1)
+				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
+					var/datum/decompose_matrix/decompose = clone.transform.decompose()
+					// Scale in X, Y
+					if(decompose.scale_x != 1 || decompose.scale_y != 1)
 						var/base_w = img.Width()
 						var/base_h = img.Height()
-						img.Scale(base_w * sx, base_h * sy)
-						xo -= base_w * (sx - 1) / 2
-						yo -= base_h * (sy - 1) / 2
-					var/rx = clone.transform.get_rotation()
-					if(rx != 0)
-						img.Turn(rx)
-					xo += clone.transform.get_x_shift()
-					yo += clone.transform.get_x_shift()
+						img.Scale(base_w * decompose.scale_x, base_h * decompose.scale_y)
+						xo -= base_w * (decompose.scale_x - 1) / 2
+						yo -= base_h * (decompose.scale_y - 1) / 2
+					// Rotation
+					if(decompose.rotation != 0)
+						img.Turn(decompose.rotation)
+					// Shift
+					xo += decompose.shift_x
+					yo += decompose.shift_y
 
 				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK

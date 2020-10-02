@@ -1,3 +1,34 @@
+/// Datum which stores information about a matrix decomposed with decompose().
+/datum/decompose_matrix
+	///?
+	var/scale_x = 1
+	///?
+	var/scale_y = 1
+	///?
+	var/rotation = 0
+	///?
+	var/shift_x = 0
+	///?
+	var/shift_y = 0
+
+/// Decomposes a matrix into scale, shift and rotation.
+///
+/// If other operations were applied on the matrix, such as shearing, the result
+/// will not be precise.
+/matrix/proc/decompose()
+	var/datum/decompose_matrix/decompose_matrix = new
+	. = decompose_matrix
+	decompose_matrix.scale_x = sqrt(a * a + d * d)
+	decompose_matrix.scale_y = sqrt(b * b + e * e)
+	decompose_matrix.shift_x = c
+	decompose_matrix.shift_y = f
+	if(!decompose_matrix.scale_x || !decompose_matrix.scale_y)
+		return
+	// If only translated, scaled and rotated, a/xs == e/ys and -d/xs == b/xy
+	var/cossine = (a/decompose_matrix.scale_x + e/decompose_matrix.scale_y) / 2
+	var/sine = (b/decompose_matrix.scale_y - d/decompose_matrix.scale_x) / 2
+	decompose_matrix.rotation = arctan(cossine, sine)
+
 /matrix/proc/TurnTo(old_angle, new_angle)
 	. = new_angle - old_angle
 	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
@@ -54,27 +85,6 @@
 	. += c
 	. += f
 	. += 1
-
-///The X scale of the matrix
-/matrix/proc/get_x_scale()
-	return sqrt(a * a + d * d)
-
-///The Y scale of the matrix
-/matrix/proc/get_y_scale()
-	return sqrt(b * b + e * e)
-
-/// Gets the rotation of the matrix, in degrees.
-/// Will produce correct results if the matrix is only being translated, scaled
-/// and rotated. Otherwise this is a best attempt.
-/matrix/proc/get_rotation()
-	var/xs = get_x_scale()
-	var/ys = get_y_scale()
-	if(!xs || !ys)
-		return 0
-	// If only translated, scaled and rotated, a/xs == e/ys and -d/xs == b/xy
-	var/cossine = (a/xs + e/ys) / 2
-	var/sine = (b/ys - d/xs) / 2
-	return arctan(cossine, sine)
 
 ///The X pixel offset of this matrix
 /matrix/proc/get_x_shift()
