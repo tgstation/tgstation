@@ -7,8 +7,7 @@
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	pic = _pic
-	if(!isatom(target) || (!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target) && !pic))
+	if(!isatom(target) || ( !pic && !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target)))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
