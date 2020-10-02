@@ -11,6 +11,12 @@
     spawn_positions = 200
     supervisors = "<span class='danger'>the Gods</span>. Make sure to HAVE FUN."
 
+/datum/job/cyborg/New()
+    ..()
+    MAP_JOB_CHECK
+    total_positions = 200
+    spawn_positions = 200
+
 MAP_REMOVE_JOB(captain) //job_types/captain.dm
 MAP_REMOVE_JOB(hop) //job_types/cargo_service.dm
 MAP_REMOVE_JOB(janitor)
