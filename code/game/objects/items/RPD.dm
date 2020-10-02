@@ -243,7 +243,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return TRUE
 	return ..()
 
-/// Installs an upgrade into the RPD checking if it is already installed
+/**
+  * Installs an upgrade into the RPD
+  *
+  *  Installs an upgrade into the RPD checking if it is already installed
+  * Arguments:
+  * * rpd_up - RPD upgrade
+  * * user - mob that use upgrade on RPD
+  */
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
 	if(rpd_up.upgrade_flags& upgrade_flags)
 		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
