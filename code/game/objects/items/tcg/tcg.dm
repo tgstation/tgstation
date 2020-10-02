@@ -47,6 +47,28 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+/obj/item/tcgcard/proc/extract_datum()
+	var/list/L = GLOB.cached_cards[series]
+	if(!L)
+		return null
+	var/datum/card/data_holder = L["ALL"][id]
+	return data_holder
+
+/obj/item/tcgcard/examine(mob/user)
+	var/list/examine_data = ..()
+	var/datum/card/data_holder = extract_datum()
+	if(!data_holder)
+		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
+	. = list()
+	. += examine_data[1] //WOOOOOOOO THIS CAN ONLY GO WELL
+	. += "Faction: [data_holder.faction]"
+	. += "Cost: [data_holder.summoncost]"
+	. += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
+	. += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
+	if(data_holder.rules) //This can sometimes be empty
+		. += "Ruleset: [data_holder.rules]"
+	. += examine_data.Copy(2) //Everything past the name
+
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard/attack_hand(mob/user)
