@@ -300,7 +300,7 @@
 		if (prob(nitryl_pp))
 			H.emote("burp")
 		if (nitryl_pp>40)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 12)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 25)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your throat</span>")
 		else
 			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
