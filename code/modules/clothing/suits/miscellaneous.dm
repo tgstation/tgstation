@@ -59,7 +59,6 @@
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	inhand_icon_state = "hgpirate"
-	species_exception = list(/datum/species/golem)
 
 
 /obj/item/clothing/suit/cyborg_suit
