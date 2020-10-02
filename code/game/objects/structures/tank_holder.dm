@@ -25,9 +25,7 @@
 		SEND_SIGNAL(tank_, COMSIG_CONTAINER_TRY_ATTACH, src, null)
 
 /obj/structure/tank_holder/Destroy()
-	if(tank)
-		contents.Cut()
-		QDEL_NULL(tank)
+	QDEL_NULL(tank)
 	return ..()
 
 /obj/structure/tank_holder/CanAllowThrough(atom/movable/mover, turf/target)
