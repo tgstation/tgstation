@@ -30,7 +30,7 @@
 		return
 
 	// We can only drill non-space turfs, living mobs and objects.
-	if(isspaceturf(target) || !isliving(target) || !isobj(target) || !isturf(target))
+	if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
 		return
 
 	// For whatever reason we can't drill things that acid won't even stick too, and probably
