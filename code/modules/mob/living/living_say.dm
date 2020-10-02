@@ -278,13 +278,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
 			if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (!mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))))//All existing hands full, can't sign
-				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands full!</span.?>")
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!</span.?>", visible_message_flags = EMOTE_MESSAGE)
 				return FALSE
 			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
 				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
 				return FALSE
 			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
-				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands bound!</span.?>")
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!</span.?>", visible_message_flags = EMOTE_MESSAGE)
 				return FALSE
 			if(HAS_TRAIT(mute, TRAIT_INCAPACITATED))
 				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
