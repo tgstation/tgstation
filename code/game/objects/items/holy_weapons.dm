@@ -764,7 +764,7 @@
 
 /obj/item/clothing/head/helmet/chaplain/knight1
 	name = "holy knight helm"
-	desc = "A great helm with a gryphon on top of it. Looks fancy!"
+	desc = "A great helm with a golden gryphon on top of it. Looks fancy!"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "helm1"
 	inhand_icon_state = "knight_templar"
@@ -809,7 +809,7 @@
 
 /obj/item/clothing/head/helmet/chaplain/knight2
 	name = "holy knight helm"
-	desc = "A great helm with a grail, crown, and angelic wings. Looks fancy!"
+	desc = "A great helm with a grail, crown, and angelic wings on top of it. Looks fancy!"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "helm2"
 	inhand_icon_state = "knight_templar"

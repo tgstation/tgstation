@@ -93,7 +93,7 @@
 	desc = "A stand with a model of the perfect Nanotrasen Employee bolted to it. Signs indicate it is robustly genetically engineered, as well as being ruthlessly loyal."
 
 /obj/structure/showcase/yendor
-	name = "wizard of yendor showcase"
+	name = "Wizard of Yendor showcase"
 	desc = "A historical figure of great importance to wizards (of the wizard federation). He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "nim"

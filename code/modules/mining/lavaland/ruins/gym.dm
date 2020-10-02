@@ -41,7 +41,7 @@
 
 /obj/structure/lazy_mr_bones
 	name = "Animatronic Mr. Bones"
-	desc = "This animatronic of Mr. Bones isn't quite like the real deal however he'll still work as a reminder that there's a riddle to solve if you want out! Just punch his shoulder or something, I guess."
+	desc = "This animatronic of Mr. Bones isn't quite like the real deal, but It should still work as a reminder that there's a riddle to solve if you want out! Just punch his shoulder or something, I guess."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "skeletonman"
 	max_integrity = 9999

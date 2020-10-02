@@ -296,6 +296,10 @@
 	var/origin = pick("Nanotrasen","Syndicate","Local")
 	return "[year] [origin] [type]"
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/ICP/examine() // CURRENTLY BROKEN. EITHER FIX OR DELETE.
+	desc = !list_reagents ? "Who the fuck names these things? There isn't even any wine in the jug to deal with this!" : initial(desc)
+	. = ..()
+
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
 	name = "extra-strong absinthe"
 	desc = "A strong alcoholic drink brewed and distributed by"
