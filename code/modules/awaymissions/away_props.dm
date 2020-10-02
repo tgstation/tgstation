@@ -117,3 +117,15 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/obj/effect/path_blocker/vip
+	name = "VIP barrier"
+	desc = "You feel insignificant looking at it"
+
+/obj/effect/path_blocker/vip/CanPass(atom/movable/mover, turf/target)
+	if(mover.client_mobs_in_contents)
+		var/mob/M = mover
+		if(!(M.ckey in GLOB.vips))
+			return reverse
+		return !reverse
+	return reverse
