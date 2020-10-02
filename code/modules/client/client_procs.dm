@@ -80,7 +80,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return
-
+	if(href_list["reload_statbrowser"])
+		src << browse(file('html/statbrowser.html'), "window=statbrowser")
 	// Log all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -310,11 +311,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(SSinput.initialized)
 		set_macros()
-		update_movement_keys()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
 	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 
 
 	if(alert_mob_dupe_login)
@@ -492,9 +493,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+		movingmob = null
+	active_mousedown_item = null
+	QDEL_NULL(view_size)
+	QDEL_NULL(void)
+	QDEL_NULL(tooltips)
 	seen_messages = null
 	Master.UpdateTickRate()
-	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -915,7 +921,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
-/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+/**
+  * Updates the keybinds for special keys
+  *
+  * Handles adding macros for the keys that need it
+  * And adding movement keys to the clients movement_keys list
+  * At the time of writing this, communication(OOC, Say, IC) require macros
+  * Arguments:
+  * * direct_prefs - the preference we're going to get keybinds from
+  */
+/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.key_bindings)
 		return
@@ -931,6 +946,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
+				if("Say")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=say")
+				if("OOC")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
+				if("Me")
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1009,7 +1030,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		for(var/AM in mob.contents)
 			var/atom/movable/thing = AM
 			verbstoprocess += thing.verbs
-	verb_tabs.Cut()
+	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
 	for(var/thing in verbstoprocess)
 		var/procpath/verb_to_init = thing
 		if(!verb_to_init)
@@ -1018,6 +1039,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			continue
 		if(!istext(verb_to_init.category))
 			continue
-		verb_tabs |= verb_to_init.category
+		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+/client/proc/check_panel_loaded()
+	if(statbrowser_ready)
+		return
+	to_chat(src, "<span class='userdanger'>Statpanel failed to load, click <a href='?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel </span>")

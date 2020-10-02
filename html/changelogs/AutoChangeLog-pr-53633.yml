@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Mass Driver Control now uses tgui."
-  - refactor: "Mass Driver Controls now process only when needed instead of all the time. In short, free performance for you."

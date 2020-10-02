@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "c" = (
 /turf/closed/wall,
 /area/ruin/unpowered)

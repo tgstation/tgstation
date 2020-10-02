@@ -39,10 +39,11 @@
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
+	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
@@ -193,10 +194,18 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
-	qdel(eyeobj) // No AI, no Eye
+	QDEL_NULL(eyeobj) // No AI, no Eye
+	QDEL_NULL(spark_system)
+	QDEL_NULL(malf_picker)
+	QDEL_NULL(doomsday_device)
+	QDEL_NULL(robot_control)
+	QDEL_NULL(aiMulti)
 	malfhack = null
-
-	. = ..()
+	current = null
+	Bot = null
+	controlled_mech = null
+	linked_core = null
+	return ..()
 
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
@@ -372,8 +381,6 @@
 	else
 		mobility_flags = ALL
 
-/mob/living/silicon/ai/restrained(ignore_grab)
-	. = 0
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -959,7 +966,7 @@
 		return
 
 	else if(mind)
-		soullink(/datum/soullink/sharedbody, src, target)
+		RegisterSignal(target, COMSIG_MOB_DEATH, .proc/disconnect_shell)
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
@@ -997,6 +1004,7 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, "<span class='danger'>Your remote connection has been reset!</span>")
 		deployed_shell.undeploy()
+		UnregisterSignal(deployed_shell, COMSIG_MOB_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
@@ -1014,6 +1022,13 @@
 	. = ..()
 	if(.)
 		end_multicam()
+
+/mob/living/silicon/ai/up()
+	set name = "Move Upwards"
+	set category = "IC"
+
+	if(zMove(UP, TRUE))
+		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
 /mob/living/silicon/ai/zMove(dir, feedback = FALSE)
 	. = eyeobj.zMove(dir, feedback)

@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/trinary/filter
-	icon_state = "filter_off"
+	icon_state = "filter_off-0"
 	density = FALSE
 
 	name = "gas filter"
@@ -140,7 +140,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")
@@ -186,7 +187,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/on
 	on = TRUE
-	icon_state = "filter_on"
+	icon_state = "filter_on-0"
 
 /obj/machinery/atmospherics/components/trinary/filter/on/layer2
 	piping_layer = 2
@@ -196,7 +197,7 @@
 	icon_state = "filter_on_map-4"
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped
-	icon_state = "filter_off_f"
+	icon_state = "filter_off-0_f"
 	flipped = TRUE
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped/layer2
@@ -208,7 +209,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped/on
 	on = TRUE
-	icon_state = "filter_on_f"
+	icon_state = "filter_on-0_f"
 
 /obj/machinery/atmospherics/components/trinary/filter/flipped/on/layer2
 	piping_layer = 2
@@ -219,7 +220,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
 	on = TRUE
-	icon_state = "filter_on"
+	icon_state = "filter_on-0"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2
 	name = "nitrogen filter"
 	filter_type = "n2"
@@ -235,9 +236,54 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/plasma
 	name = "plasma filter"
 	filter_type = "plasma"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/bz
+	name = "bz filter"
+	filter_type = "bz"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/freon
+	name = "freon filter"
+	filter_type = "freon"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/halon
+	name = "halon filter"
+	filter_type = "halon"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/healium
+	name = "healium filter"
+	filter_type = "healium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/hexane
+	name = "hexane filter"
+	filter_type = "hexane"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/h2
+	name = "hydrogen filter"
+	filter_type = "hydrogen"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/hypernoblium
+	name = "hypernoblium filter"
+	filter_type = "nob"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/miasma
+	name = "miasma filter"
+	filter_type = "miasma"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/no2
+	name = "nitryl filter"
+	filter_type = "no2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/pluoxium
+	name = "pluoxium filter"
+	filter_type = "pluox"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/proto_nitrate
+	name = "proto-nitrate filter"
+	filter_type = "proto_nitrate"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/stimulum
+	name = "stimulum filter"
+	filter_type = "stim"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/tritium
+	name = "tritium filter"
+	filter_type = "tritium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/h2o
+	name = "water vapor filter"
+	filter_type = "water_vapor"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/zauker
+	name = "zauker filter"
+	filter_type = "zauker"
 
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
-	icon_state = "filter_on_f"
+	icon_state = "filter_on-0_f"
 	flipped = TRUE
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2
 	name = "nitrogen filter"
@@ -254,6 +300,51 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma
 	name = "plasma filter"
 	filter_type = "plasma"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/bz
+	name = "bz filter"
+	filter_type = "bz"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/freon
+	name = "freon filter"
+	filter_type = "freon"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/halon
+	name = "halon filter"
+	filter_type = "halon"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/healium
+	name = "healium filter"
+	filter_type = "healium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hexane
+	name = "hexane filter"
+	filter_type = "hexane"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/h2
+	name = "hydrogen filter"
+	filter_type = "hydrogen"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hypernoblium
+	name = "hypernoblium filter"
+	filter_type = "nob"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/miasma
+	name = "miasma filter"
+	filter_type = "miasma"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/no2
+	name = "nitryl filter"
+	filter_type = "no2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/pluoxium
+	name = "pluoxium filter"
+	filter_type = "pluox"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/proto_nitrate
+	name = "proto-nitrate filter"
+	filter_type = "proto_nitrate"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/stimulum
+	name = "stimulum filter"
+	filter_type = "stim"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/tritium
+	name = "tritium filter"
+	filter_type = "tritium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/h2o
+	name = "water vapor filter"
+	filter_type = "water_vapor"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/zauker
+	name = "zauker filter"
+	filter_type = "zauker"
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

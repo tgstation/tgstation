@@ -194,7 +194,8 @@
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(action == "eject")
@@ -210,8 +211,6 @@
 		return TRUE
 
 	if(action == "transfer")
-		if(!beaker)
-			return FALSE
 		var/reagent = GLOB.name2reagent[params["id"]]
 		var/amount = text2num(params["amount"])
 		var/to_container = params["to"]
@@ -222,14 +221,16 @@
 				name, ""))
 		if (amount == null || amount <= 0)
 			return FALSE
+		if (to_container == "beaker" && !mode)
+			reagents.remove_reagent(reagent, amount)
+			return TRUE
+		if (!beaker)
+			return FALSE
 		if (to_container == "buffer")
 			beaker.reagents.trans_id_to(src, reagent, amount)
 			return TRUE
 		if (to_container == "beaker" && mode)
 			reagents.trans_id_to(beaker, reagent, amount)
-			return TRUE
-		if (to_container == "beaker" && !mode)
-			reagents.remove_reagent(reagent, amount)
 			return TRUE
 		return FALSE
 

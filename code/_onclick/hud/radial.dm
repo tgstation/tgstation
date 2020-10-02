@@ -195,6 +195,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		if(istext(choices_values[choice_id]))
 			E.name = choices_values[choice_id]
+		else if(ispath(choices_values[choice_id],/atom))
+			var/atom/A = choices_values[choice_id]
+			E.name = initial(A.name)
 		else
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name

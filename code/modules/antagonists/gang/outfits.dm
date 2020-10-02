@@ -17,7 +17,7 @@
 	suit = null
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = null
-	glasses = /obj/item/clothing/glasses/hud/spacecop
+	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_sec/alt
 	mask = null
 	head = /obj/item/clothing/head/spacepolice
@@ -25,6 +25,7 @@
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/restraints/handcuffs
 	id = /obj/item/card/id
+	r_hand = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,

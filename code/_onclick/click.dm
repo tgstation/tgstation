@@ -109,9 +109,9 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		RestrainedClickOn(A)
+		UnarmedAttack(A)
 		return
 
 	if(in_throw_mode)
@@ -273,14 +273,7 @@
   */
 /mob/proc/RangedAttack(atom/A, params)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
-/**
-  * Restrained ClickOn
-  *
-  * Used when you are handcuffed and click things.
-  * Not currently used by anything but could easily be.
-  */
-/mob/proc/RestrainedClickOn(atom/A)
-	return
+
 
 /**
   * Middle click

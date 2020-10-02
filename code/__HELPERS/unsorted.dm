@@ -289,8 +289,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/true_devil/M in sortmob)
-		moblist.Add(M)
 	return moblist
 
 // Format a power value in W, kW, MW, or GW.
@@ -1178,6 +1176,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)
@@ -1385,13 +1386,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/cakeslice,
 		/obj/item/reagent_containers/food/snacks/store,
 		/obj/item/reagent_containers/food/snacks/pie,
-		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/food/kebab,
 		/obj/item/reagent_containers/food/snacks/pizza,
 		/obj/item/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/reagent_containers/food/snacks/salad,
-		/obj/item/reagent_containers/food/snacks/meat,
-		/obj/item/reagent_containers/food/snacks/meat/slab,
-		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/food/salad,
+		/obj/item/food/meat,
+		/obj/item/food/meat/slab,
+		/obj/item/food/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		/obj/item/food/deepfryholder,
