@@ -142,7 +142,7 @@
 			O.fire_act(10000, 1000 * delta_time)
 			if(istype(O, /obj/structure/closet))
 				var/obj/structure/closet/C = O
-					for(var/I in C.contents)
+				for(var/I in C.contents)
 					burn_stuff(I)
 		else if (isliving(thing))
 			. = 1
