@@ -281,7 +281,7 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	var/obj/item/rig/module/thingy = module
-	if(!thingy.rig_whitelist.Find(theme))
+	if(thingy.rig_blacklist.Find(theme))
 		if(!starting_module)
 			audible_message("<span class='warning'>[src] indicates that it rejects the module.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
