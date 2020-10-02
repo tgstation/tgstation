@@ -41,6 +41,28 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	id = temp.id
 	series = temp.series
 
+/obj/item/tcgcard/proc/extract_datum()
+	var/list/L = GLOB.cached_cards[series]
+	if(!L)
+		return null
+	var/datum/card/data_holder = L["ALL"][id]
+	return data_holder
+
+/obj/item/tcgcard/examine(mob/user)
+	var/list/examine_data = ..()
+	var/datum/card/data_holder = extract_datum()
+	if(!data_holder)
+		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
+	. = list()
+	. += examine_data[1] //WOOOOOOOO THIS CAN ONLY GO WELL
+	. += "Faction: [data_holder.faction]"
+	. += "Cost: [data_holder.summoncost]"
+	. += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
+	. += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
+	if(data_holder.rules) //This can sometimes be empty
+		. += "Ruleset: [data_holder.rules]"
+	. += examine_data.Copy(2) //Everything past the name
+
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
 	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
@@ -62,40 +84,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /obj/item/tcgcard/dropped(mob/user, silent)
 	. = ..()
 	transform = matrix(0.3,0,0,0,0.3,0)
-
-/obj/item/tcg_cardhand
-	name = "\improper TGC hand"
-	desc = "A collection of TGC cards, ready to enter the battlefield."
-	icon = 'icons/obj/tcgmisc.dmi'
-	icon_state = "none"
-	var/max_hand_size = 7 //set at 7 for Long War gamemode, typical hand size is 5
-	var/list/currenthand = list()
-	var/choice = null
-
-/obj/item/tcg_deck
-	name = "\improper TGC pile"
-	desc = "A pile of TGC cards. May be a deck, may be a discard pile. The only limit is your imagination! (And the rules, naturally)."
-	icon = 'icons/obj/tcgmisc.dmi'
-	icon_state = "none"
-	var/list/card_contents = list()
-
-/obj/item/tcg_deck/attack_hand(mob/user)
-	draw_card(user)
-
-/obj/item/tcg_deck/proc/draw_card(mob/user)
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_PICKUP))
-			return
-	var/choice = null
-	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
-	choice = cards[1]
-	H.cardname = choice
-	H.pickup(user)
-	user.put_in_hands(H)
-	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	update_icon()
-	return H
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
