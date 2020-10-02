@@ -1,3 +1,9 @@
+/**
+  * Machine that allows to identify and separate reagents in fitting container
+  * as well as to create new containers with separated reagents in it.
+  *
+  * Contains logic for both ChemMaster and CondiMaster, switched by "condi".
+  */
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -10,17 +16,26 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
 
-	var/obj/item/reagent_containers/beaker = null
-	var/obj/item/storage/pill_bottle/bottle = null
+	/// Input reagents container
+	var/obj/item/reagent_containers/beaker
+	/// Pill bottle for newly created pills
+	var/obj/item/storage/pill_bottle/bottle
+	/// Whether separated reagents should be moved back to container or destroyed. 1 - move, 0 - destroy
 	var/mode = 1
+	/// Decides what UI to show. If TRUE shows UI of CondiMaster, if FALSE - ChemMaster
 	var/condi = FALSE
+	/// Currently selected pill style
 	var/chosen_pill_style = 1
+	/// Currently selected condiment bottle style
 	var/chosen_condi_style = CONDIMASTER_STYLE_AUTO
+	/// Current UI screen. On the moment of writing this comment there were two: 'home' - main screen, and 'analyze' - info about specific reagent
 	var/screen = "home"
+	/// Info to display on 'analyze' screen
 	var/analyze_vars[0]
-	var/useramount = 30 // Last used amount
-	var/list/pill_styles = null
-	var/list/condi_styles = null
+	/// List of available pill styles for UI
+	var/list/pill_styles
+	/// List of available condibottle styles for UI
+	var/list/condi_styles
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
@@ -135,6 +150,17 @@
 		return
 	replace_beaker(user)
 
+/**
+  * Handles process of moving input reagents containers in/from machine
+  *
+  * When called checks for previously inserted beaker and gives it to user.
+  * Then, if new_beaker provided, places it into src.beaker.
+  * Returns `boolean`. TRUE if user provided (ignoring whether threre was any beaker change) and FALSE if not.
+  *
+  * Arguments:
+  * * user - Mob that initialized replacement, gets previously inserted beaker if there's any
+  * * new_beaker - New beaker to insert. Optional
+  */
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
@@ -403,20 +429,6 @@
 
 	return FALSE
 
-
-/obj/machinery/chem_master/proc/isgoodnumber(num)
-	if(isnum(num))
-		if(num > 200)
-			num = 200
-		else if(num < 0)
-			num = 0
-		else
-			num = round(num)
-		return num
-	else
-		return 0
-
-
 /obj/machinery/chem_master/adjust_item_drop_location(atom/movable/AM) // Special version for chemmasters and condimasters
 	if (AM == beaker)
 		AM.pixel_x = -8
@@ -437,7 +449,16 @@
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
 
-/obj/machinery/chem_master/proc/strip_condi_styles_to_icons(var/list/styles)
+/**
+  * Translates styles data into UI compatible format
+  *
+  * Expects to receive list of availables condiment styles in its complete format, and transforms them in simplified form with enough data to get UI going.
+  * Returns list(list("id" = <key>, "className" = <icon class>, "title" = <name and desc>),..).
+  *
+  * Arguments:
+  * * styles - List of styles for condiment bottles in internal format: [/obj/machinery/chem_master/proc/get_condi_styles]
+  */
+/obj/machinery/chem_master/proc/strip_condi_styles_to_icons(list/styles)
 	var/list/icons = list()
 	for (var/s in styles)
 		if (styles[s] && styles[s]["class_name"])
@@ -450,6 +471,27 @@
 
 	return icons
 
+/**
+  * Defines and provides list of available condiment bottle styles
+  *
+  * Uses typelist() for styles storage after initialization.
+  * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
+  * Returns list(
+  * 	<key> = list(
+  * 		"icon_state" = <bottle icon_state>,
+  * 		"name" = <bottle name>,
+  * 		"desc" = <bottle desc>,
+  * 		?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
+  * 		?"icon_empty" = <icon_state when empty>,
+  * 		?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
+  * 		?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
+  * 		?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
+  * 		?"righthand_file" = <same as "lefthand_file" but for right hand>,
+  * 	),
+  * 	..
+  * )
+  *
+  */
 /obj/machinery/chem_master/proc/get_condi_styles()
 	var/list/styles = typelist("condi_styles")
 	if (!styles.len)
@@ -485,6 +527,13 @@
 			styles[reagent]["class_name"] = assets.icon_class_name(reagent)
 	return styles
 
+/**
+  * Provides condiment bottle style based on reagents.
+  *
+  * Gets style from available by key, using last part of main reagent type (eg. "rice" for /datum/reagent/consumable/rice) as key.
+  * If not available returns fallback style, or null if no such thing.
+  * Returns list that is one of condibottle styles from [/obj/machinery/chem_master/proc/get_condi_styles]
+  */
 /obj/machinery/chem_master/proc/guess_condi_style(datum/reagents/reagents)
 	var/list/styles = get_condi_styles()
 	if (reagents.reagent_list.len > 0)
@@ -496,7 +545,18 @@
 			return styles[main_reagent]
 	return styles[CONDIMASTER_STYLE_FALLBACK]
 
-/obj/machinery/chem_master/proc/apply_condi_style(var/obj/item/reagent_containers/food/condiment/container, list/style)
+/**
+  * Applies style to condiment bottle.
+  *
+  * Applies props provided in "style" assuming that "container" is freshly created with no styles applied before.
+  * User specified name for bottle applied after this method during bottle creation,
+  * so container.name overwritten here for consistency rather than with some purpose in mind.
+  *
+  * Arguments:
+  * * container - condiment bottle that gets style applied to it
+  * * style - assoc list, must probably one from [/obj/machinery/chem_master/proc/get_condi_styles]
+  */
+/obj/machinery/chem_master/proc/apply_condi_style(obj/item/reagent_containers/food/condiment/container, list/style)
 	container.name = style["name"]
 	container.desc = style["desc"]
 	container.icon_state = style["icon_state"]
@@ -508,6 +568,12 @@
 			container.lefthand_file = style["lefthand_file"]
 			container.righthand_file = style["righthand_file"]
 
+/**
+  * Machine that allows to identify and separate reagents in fitting container
+  * as well as to create new containers with separated reagents in it.
+  *
+  * All logic related to this is in [/obj/machinery/chem_master] and condimaster specific UI enabled by "condi = TRUE"
+  */
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."

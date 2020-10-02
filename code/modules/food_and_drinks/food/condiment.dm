@@ -17,9 +17,11 @@
 	obj_flags = UNIQUE_RENAME
 	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	var/icon_empty
-	var/icon_preempty
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
+	/// Icon (icon_state) to be used when container becomes empty (no change if falsy)
+	var/icon_empty
+	/// Holder for original icon_state value if it was overwritten by icon_emty to change back to
+	var/icon_preempty
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
@@ -216,6 +218,10 @@
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list()
+	/**
+	  * List of possible styles (list(<icon_state>, <name>, <desc>)) for condiment packs.
+	  * Since all of them differs only in color should probably be replaced with usual reagentfillings instead
+	  */
 	var/list/possible_states = list(
 		/datum/reagent/consumable/ketchup = list("condi_ketchup", "Ketchup", "You feel more American already."),
 		/datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"),
@@ -228,7 +234,8 @@
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 	)
-	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
+	/// Can't use initial(name) for this. This stores the name set by condimasters.
+	var/originalname = "condiment"
 
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
 	return
