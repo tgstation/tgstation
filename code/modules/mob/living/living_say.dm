@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
 				return FALSE
 			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
-				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands cuffed!</span.?>")
+				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands bound!</span.?>")
 				return FALSE
 			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED))
 				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
