@@ -1,0 +1,9 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "Cyborgs now have a Highlander module to use when said gamemode is enabled. The Highlander borg module comes equipped with a claymore, a pinpointer, and traditional garments for the occasion. Like humanoid contenders, Highlander borgs will die in three strikes."
+  - rscadd: "AIs will become Highlander Cyborgs upon Highlander mode being triggered."
+  - balance: "Humanoid Highlander contenders now get a syndicate headset, so that banter may live on even if telecomms does not."
+  - balance: "Humanoid Highlander contenders are now immune to shocks, preventing them from being able to claim a cyborg killed them with an unfair shocked door."
+  - bugfix: "It is no longer possible to succeed as a highlander contenders if other contenders are alive on the shuttle."
+  - bugfix: "Borg tool storage huds no longer freak out if there are zero stored modules."

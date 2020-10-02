@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - tweak: "Crystal Invasion event is no longer random and is now a delamination event. When a delaminating crystal has high power, but not enough to collapse into a tesla, it may instead trigger the Crystal Invasion event when the countdown hits 0. This gives the crew one last opportunity to complete the event and restore their crystal back to normal."
