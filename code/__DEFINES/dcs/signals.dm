@@ -514,6 +514,7 @@
 #define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"
 ///called on item when microwaved (): (obj/machinery/microwave/M)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
+	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
 ///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
 #define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
@@ -672,8 +673,6 @@
 	///Returned by cleanable components when they are cleaned.
 	#define COMPONENT_CLEANED	(1<<0)
 
-///from base of datum/component/forensics/wipe_blood_dna(): ()
-#define COMSIG_WIPE_BLOOD_DNA "wipe_blood_dna"
 
 //Creamed
 

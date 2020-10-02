@@ -38,7 +38,7 @@
 		if(istype(M, /obj/vehicle/sealed/mecha/working/ripley))
 			var/obj/vehicle/sealed/mecha/working/ripley/RM = M
 			mech_data += list(
-				cargo_space = round((RM.cargo.len / RM.cargo_capacity) * 100)
+				cargo_space = round((LAZYLEN(RM.cargo) / RM.cargo_capacity) * 100)
 		)
 
 		data["mechs"] += list(mech_data)
@@ -102,7 +102,7 @@
 				<b>Active Equipment:</b> [chassis.selected || "None"]"}
 	if(istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/RM = chassis
-		answer += "<br><b>Used Cargo Space:</b> [round((RM.cargo.len / RM.cargo_capacity * 100), 0.01)]%"
+		answer += "<br><b>Used Cargo Space:</b> [round((LAZYLEN(RM.cargo) / RM.cargo_capacity * 100), 0.01)]%"
 
 	return answer
 

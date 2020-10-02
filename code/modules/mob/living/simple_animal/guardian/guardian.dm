@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_state = "holocarp"
 			icon_living = "holocarp"
 			icon_dead = "holocarp"
-			speak_emote = list("gnashes")
+			speak_emote = string_list(list("gnashes"))
 			desc = "A mysterious fish that stands by its charge, ever vigilant."
 			attack_verb_continuous = "bites"
 			attack_verb_simple = "bite"

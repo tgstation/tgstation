@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "Add back Hilbert's Hotel, which once again correctly loads its stored rooms."

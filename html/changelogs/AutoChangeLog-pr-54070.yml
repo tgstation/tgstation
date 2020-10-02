@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Added a cross-server communication network setting to allow clustering servers into distinct groups for cross-server announcements"
