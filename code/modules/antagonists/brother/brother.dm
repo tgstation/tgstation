@@ -5,6 +5,7 @@
 	var/special_role = ROLE_BROTHER
 	antag_hud_type = ANTAG_HUD_BROTHER
 	antag_hud_name = "brother"
+	hijack_speed = 0.5
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
 
