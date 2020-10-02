@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "Fixes decals causing 20k runtimes and blood not cleaning"
