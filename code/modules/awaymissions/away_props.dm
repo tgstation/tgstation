@@ -120,9 +120,10 @@
 
 /obj/effect/path_blocker/vip
 	name = "VIP barrier"
-	desc = "You feel insignificant looking at it"
+	desc = "You feel insignificant looking at it..."
 
-/obj/effect/path_blocker/vip/CanPass(atom/movable/mover, turf/target)
+/obj/effect/path_blocker/vip/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover.client_mobs_in_contents)
 		var/mob/M = mover
 		if(!(M.ckey in GLOB.vips))

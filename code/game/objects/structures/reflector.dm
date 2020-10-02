@@ -255,3 +255,41 @@
 		return
 	else
 		return ..()
+
+/obj/structure/dooropener
+	name = "emitter power collector"
+	desc = "Uses energy from emitters to open doors. Somehow."
+	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
+	icon_state = "coil0"
+	density = TRUE
+	var/id = "haunted"
+	var/shot = 0
+	var/list/poddoorlist = list()
+	var/obj/structure/reflector/box
+
+/obj/structure/dooropener/Initialize()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/dooropener/LateInitialize()
+	for(var/obj/machinery/door/poddoor/door in (GLOB.machines))
+		if(door.id == id)
+			poddoorlist |= door
+	box = locate(/obj/structure/reflector) in range(5,src)
+
+/obj/structure/dooropener/bullet_act(obj/projectile/P)
+	shot += 1
+	color = COLOR_RED
+	sleep(5)
+	color = initial(color)
+	if(shot == 5)
+		shot = 0
+		playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE)
+		for(var/obj/machinery/door/poddoor/door in poddoorlist)
+			door.open()
+		if(box)
+			box.setAngle(dir2angle(initial(box.dir)))
+		sleep(50)
+		for(var/obj/machinery/door/poddoor/door in poddoorlist)
+			door.close()
+	return BULLET_ACT_BLOCK
