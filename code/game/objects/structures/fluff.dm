@@ -376,8 +376,8 @@
 	deconstructible = FALSE
 
 /obj/structure/fluff/thefuckinggate // this shit is 9 fucking tiles, dude. This is a bruh moment.
-	name = "Gate of The Toolbox Tournament"
-	desc = "Man, that looks really fancy! Now, how much of our wages were cut to afford this?"
+	name = "Gate of the Toolbox Tournament"
+	desc = "Man, that looks really fancy! Now, how much of our wages did Nanotrasen cut to afford this?"
 	icon = 'icons/obj/fancy_gate.dmi'
 	icon_state = "gateblue" // I LIKE BLUE SO MY BIAS IS BETTER - blue gang
 	max_integrity = 9999
@@ -465,7 +465,7 @@
 
 /obj/structure/fluff/starspawn
 	name = "meta-transdimensional rift"
-	desc = "<span class='nicegreen'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
+	desc = "<span class='hypnophrase'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "portal"
 	max_integrity = 9999
@@ -476,7 +476,7 @@
 
 
 /obj/structure/fluff/narsie
-	name = "ritual rune"
+	name = "ritual rune" // man, i really hope no one expects this to be a real rune. that'd suck.
 	desc = "Is that a rune of the Geometer? Man, I really hope fake runes don't count for rituals..."
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED

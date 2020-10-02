@@ -73,7 +73,7 @@
 		to_chat(user, "The spell matrix was disrupted by something near the destination.")
 
 /obj/item/teleportation_scroll/no_smoke
-	uses = 6
+	uses = 9
 
 /obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user)
 

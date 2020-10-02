@@ -12,8 +12,10 @@
 		            /obj/item/clothing/head/wizard/yellow = 3,
 		            /obj/item/clothing/suit/wizrobe/yellow = 3,
 		            /obj/item/clothing/shoes/sandal/magic = 3,
-		            /obj/item/staff = 3)
-	contraband = list(/obj/item/staff = 2)	//An admin will probably spawn a multitool, screwdriver, and emag ALL ON ACCIDENT
+		            /obj/item/gun/magic/staff/healing = 6,
+		            /obj/item/gun/magic/wand/nothing = 6,
+		            /obj/item/staff = 6)
+	contraband = list(/obj/item/gun/magic/wand/resurrection = 6)	//An admin will probably spawn a multitool, screwdriver, and emag ALL ON ACCIDENT
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	default_price = 250

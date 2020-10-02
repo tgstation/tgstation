@@ -1,9 +1,8 @@
-/mob/living/simple_animal/pet
+/mob/living/simple_animal/pet // on second thought, godmode catsplosions tis but a silly thing.
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	blood_volume = BLOOD_VOLUME_NORMAL
-	status_flags = GODMODE|CANPUSH // REMEMBER THIS ONE, GAMERS
 	var/unique_pet = FALSE // if the mob can be renamed
 	var/obj/item/clothing/neck/petcollar/pcollar
 	var/collar_type //if the mob has collar sprites, define them.
