@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
-	///Hold upgrade flags
+	/// Bitflags for upgrades
 	var/upgrade_flags
 
 /obj/item/pipe_dispenser/Initialize()
@@ -238,13 +238,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	ui_interact(user)
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/rpd_upgrade))
-		return ..()	
-	var/obj/item/rpd_upgrade/rpd_up = W
-	if(!(upgrade_flags & rpd_up.upgrade_flags))
-		upgrade_flags |= rpd_up.upgrade_flags
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		qdel(W)
+	if(istype(W, /obj/item/rpd_upgrade))
+		install_upgrade(W, user)
+		return TRUE
+	return ..()
+
+/// Installs an upgrade into the RPD checking if it is already installed
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
+	if(rpd_up.upgrade & upgrade_flags)
+		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		return
+	upgrade_flags |= rpd_up.upgrade
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(rpd_up)
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -503,6 +509,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	desc = "It seems to be empty."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
+	/// Bitflags for upgrades
 	var/upgrade_flags
 
 /obj/item/rpd_upgrade/unwrench
