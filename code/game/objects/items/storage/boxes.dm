@@ -485,13 +485,13 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
-	var/cube_type = /obj/item/reagent_containers/food/snacks/monkeycube
+	var/cube_type = /obj/item/food/monkeycube
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.set_holdable(list(/obj/item/food/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
@@ -499,7 +499,7 @@
 
 /obj/item/storage/box/monkeycubes/syndicate
 	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
-	cube_type = /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
+	cube_type = /obj/item/food/monkeycube/syndicate
 
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
@@ -511,11 +511,11 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.set_holdable(list(/obj/item/food/monkeycube))
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/snacks/monkeycube/gorilla(src)
+		new /obj/item/food/monkeycube/gorilla(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -961,7 +961,7 @@
 
 /obj/item/storage/box/papersack/meat/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
+		new /obj/item/food/meat/slab(src)
 
 /obj/item/storage/box/emptysandbags
 	name = "box of empty sandbags"
@@ -1277,3 +1277,12 @@
 		/obj/item/stack/sheet/metal/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/tail_pin
+	name = "pin the tail on the corgi supplies"
+	desc = "For ages 10 and up. ...Why is this even on a space station? Aren't you a little old for babby games?" //Intentional typo.
+
+/obj/item/storage/box/tail_pin/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/poster/tail_board(src)
+		new /obj/item/tail_pin(src)

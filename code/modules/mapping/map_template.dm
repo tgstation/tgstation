@@ -76,6 +76,7 @@
 	for(var/t in template_and_bordering_turfs)
 		var/turf/affected_turf = t
 		affected_turf.air_update_turf(TRUE)
+		affected_turf.levelupdate()
 
 /datum/map_template/proc/load_new_z()
 	var/x = round((world.maxx - width)/2)

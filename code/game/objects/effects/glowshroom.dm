@@ -110,6 +110,10 @@
 		return
 
 	var/turf/ownturf = get_turf(src)
+	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
+		addtimer(CALLBACK(src, .proc/Spread), delay_spread, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		return //Deal with it not now
+
 	var/shrooms_planted = 0
 	var/list/possibleLocs = list()
 	//Lets collect a list of possible viewable turfs BEFORE we iterate for yield so we don't call view multiple
@@ -118,7 +122,7 @@
 	for(var/turf/open/floor/earth in view(3,src))
 		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
-		if(!ownturf.CanAtmosPass(earth))
+		if(!TURF_SHARES(earth))
 			continue
 		possibleLocs += earth
 
