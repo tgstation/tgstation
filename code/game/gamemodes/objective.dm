@@ -363,6 +363,19 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			return FALSE
 	return SSshuttle.emergency.is_hijacked()
 
+/datum/objective/hijack/highlander
+	name="highlander hijack"
+	explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
+
+/datum/objective/hijack/check_completion()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, enforce_human = FALSE) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
+			return FALSE
+	return SSshuttle.emergency.is_hijacked(filter_by_human = FALSE, solo_hijack = TRUE)
+
 /datum/objective/block
 	name = "no organics on shuttle"
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
