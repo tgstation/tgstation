@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /**
   * Installs an upgrade into the RPD
   *
-  *  Installs an upgrade into the RPD checking if it is already installed
+  * Installs an upgrade into the RPD checking if it is already installed
   * Arguments:
   * * rpd_up - RPD upgrade
   * * user - mob that use upgrade on RPD
