@@ -29,3 +29,4 @@
 	var/turf/meat_wall = currently_scanned_atom
 	var/turf/new_turf = meat_wall.ScrapeAway()
 	new /obj/effect/gibspawner/generic(new_turf)
+	new /obj/item/food/meat/steak/plain(new_turf)
