@@ -1,4 +1,4 @@
-//////////////////WELCOME TO MECHA.DM, ENJOY YOUR STAY\\\\\\\\\\\\\\\\\
+/***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
 /**
   * Mechs are now (finally) vehicles, this means you can make them multicrew
@@ -589,7 +589,7 @@
 /obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
-		return TRUE
+		return
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

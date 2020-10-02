@@ -125,12 +125,14 @@
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
-		if(istype(atmos_destination) && !atmos_source.Adjacent(atmos_destination) && !CANATMOSPASS(atmos_destination, atmos_source))
+		if(istype(atmos_destination))
 			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
+			atmos_source.ImmediateCalculateAdjacentTurfs() //Just in case they were next to each other
 		atmos_source = null
 	if(istype(atmos_destination))
-		if(istype(atmos_source) && !atmos_destination.Adjacent(atmos_source) && !CANATMOSPASS(atmos_source, atmos_destination))
+		if(istype(atmos_source))
 			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
+			atmos_destination.ImmediateCalculateAdjacentTurfs()
 		atmos_destination = null
 
 /obj/effect/portal/Destroy()

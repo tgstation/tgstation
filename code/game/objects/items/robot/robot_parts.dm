@@ -361,7 +361,8 @@
 			popup.open()
 
 /obj/item/robot_suit/Topic(href, href_list)
-	if(usr.incapacitated() || !Adjacent(usr))
+	. = ..()
+	if(. || usr.incapacitated() || !Adjacent(usr)) // atom/topic only returns true if clicked
 		return
 
 	var/mob/living/living_user = usr

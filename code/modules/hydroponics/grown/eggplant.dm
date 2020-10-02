@@ -43,7 +43,7 @@
 	name = "egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
-	trash = /obj/item/reagent_containers/food/snacks/egg
+	trash = /obj/item/food/egg
 	filling_color = "#F8F8FF"
 	bitesize_mod = 2
 	foodtype = MEAT

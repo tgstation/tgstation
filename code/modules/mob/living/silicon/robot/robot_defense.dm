@@ -128,6 +128,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 		to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[D]</b>\"...Setup complete.\n----------------")
 		upgrades += B
+		logevent("Hardware [D] detected and installed successfully.")
 		qdel(D)
 		return
 
@@ -171,6 +172,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				update_icons()
 				if(emagged)
 					to_chat(user, "<span class='notice'>The cover interface glitches out for a split second.</span>")
+					logevent("ChÃ¥vÃis cover lock has been [locked ? "engaged" : "released"]") //ChÃ¥vÃis: see above line
+				else
+					logevent("Chassis cover lock has been [locked ? "engaged" : "released"]")
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
@@ -190,10 +194,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 				to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[U]</b>\"...Setup complete.\n----------------")
 				if(U.one_use)
+					logevent("Firmware [U] run successfully.")
 					qdel(U)
 				else
 					U.forceMove(src)
 					upgrades += U
+					logevent("Hardware [U] installed successfully.")
+
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
 				U.forceMove(drop_location())
@@ -214,16 +221,24 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
 			return
-		if(lamp_cooldown <= world.time)
+		if(lamp_functional)
 			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
 			return
 		if(!user.temporarilyRemoveItemFromInventory(W))
 			to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
 			return
-		lamp_cooldown = 0
+		lamp_functional = TRUE
 		qdel(W)
 		to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 		return
+
+	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+		if(!modularInterface)
+			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+			create_modularInterface()
+		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
+		if(modularInterface.install_component(floppy, user))
+			return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
@@ -328,6 +343,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
+		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")
 		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
 		return
@@ -350,10 +366,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 	to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
+	logevent("ALERT: Foreign software detected.")
 	sleep(5)
 	to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 	sleep(20)
 	to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
+	logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 	sleep(5)
 	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 	sleep(5)
