@@ -55,7 +55,7 @@
 /obj/structure/tank_holder/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/rods(get_turf(src), 2)
 	if(tank)
-		tank.forceMove(get_turf(src))
+		tank.forceMove(drop_location())
 		after_detach_tank()
 	qdel(src)
 
