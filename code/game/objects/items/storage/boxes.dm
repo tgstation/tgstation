@@ -120,14 +120,14 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
-	new mask_type(src)
-	if(!isnull(medipen_type))
-		new medipen_type(src)
+//	new mask_type(src)
+//	if(!isnull(medipen_type))
+//		new medipen_type(src)
 
-	if(!isplasmaman(loc))
-		new internal_type(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+//	if(!isplasmaman(loc))
+//		new internal_type(src)
+//	else
+//		new /obj/item/tank/internals/plasmaman/belt(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -1289,12 +1289,6 @@
 
 // Tournament box
 /obj/item/storage/box/tournament/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/cowbell(src)
 
