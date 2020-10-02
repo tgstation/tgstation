@@ -27069,6 +27069,7 @@
 	name = "Recovery Ward";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bvi" = (
@@ -27573,19 +27574,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "bwv" = (
-/obj/structure/table,
-/obj/item/storage/box/rxglasses,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/box/syringes{
-	pixel_y = 2
-	},
-/obj/item/gun/syringe,
-/obj/item/gun/syringe,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "bwx" = (
@@ -28174,16 +28169,19 @@
 	},
 /area/maintenance/department/engine)
 "byd" = (
-/obj/machinery/vending/wardrobe/medi_wardrobe,
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/structure/table,
+/obj/item/storage/box/rxglasses{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/item/storage/box/syringes,
+/obj/item/gun/syringe,
+/obj/item/gun/syringe,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -29717,12 +29715,12 @@
 "bCn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access_txt = "33"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Pharmacy";
+	req_access_txt = "5; 69"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bCo" = (
@@ -48651,7 +48649,7 @@
 /obj/item/cautery,
 /obj/structure/table/glass,
 /obj/machinery/light{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -48660,9 +48658,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "hKm" = (
@@ -48685,6 +48680,15 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/item/stack/medical/bone_gel,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "hMa" = (
@@ -51921,7 +51925,7 @@
 /obj/item/cautery,
 /obj/structure/table/glass,
 /obj/machinery/light{
-	dir = 1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
