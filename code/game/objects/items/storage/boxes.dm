@@ -1286,3 +1286,23 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
+
+// Tournament box
+/obj/item/storage/box/tournament/PopulateContents()
+	new /obj/item/clothing/mask/breath(src)
+
+	if(!isplasmaman(loc))
+		new /obj/item/tank/internals/emergency_oxygen(src)
+	else
+		new /obj/item/tank/internals/plasmaman/belt(src)
+	new /obj/item/binoculars(src)
+	new /obj/item/cowbell(src)
+
+/obj/item/paper/donator
+	name = "paper- 'Letter to all donators'"
+	info = "<h1>Thank you so much for donating!</h1><p>We couldn't have done this event without you. I'm so glad that /tg/ has been able to come together to do something wonderful and I'm even more glad that you've decided to be a part of it. This is truly a great thing and I appreciate your donation.</p><p>This is my second year doing this and it's been an amazing ride. I hope that everything goes well in this event and I'm really glad to have you join us. It's been my pleasure to faciliate and host these events with amazing mappers and people inside of /tg/, including yourself.</p><p>Thank you again, </br> <i>CitrusGender</i></p>"
+
+/obj/item/storage/box/tournament/vip/PopulateContents()
+	..() // we want the regular stuff too
+	new /obj/item/clothing/accessory/medal/bronze_heart/donator(src)
+	new /obj/item/paper/donator(src)

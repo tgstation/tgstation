@@ -21,7 +21,7 @@
 /datum/outfit/job/vip
 	name = "Donator"
 	jobtype = /datum/job/vip
-//	box = /obj/item/storage/box/tournament/vip
+	box = /obj/item/storage/box/tournament/vip
 
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
