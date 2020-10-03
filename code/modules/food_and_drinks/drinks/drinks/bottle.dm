@@ -286,7 +286,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/ICP // dear lady, please don't let anything remotely resembling a clown enter my DMs for this.
 	name = "wine jug-galo"
-	desc = "Who the fuck names these things? Thank the gods that there is at least some wine in it to deal with this shit."
+	desc = "Who the fuck names these things? Thank the gods that some wine came with the jug at least."
 	icon_state = "winejug"
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/ICP/generate_vintage()
@@ -295,10 +295,6 @@
 	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
 	var/origin = pick("Nanotrasen","Syndicate","Local")
 	return "[year] [origin] [type]"
-
-/obj/item/reagent_containers/food/drinks/bottle/wine/ICP/examine() // CURRENTLY BROKEN. EITHER FIX OR DELETE.
-	desc = !list_reagents ? "Who the fuck names these things? There isn't even any wine in the jug to deal with this!" : initial(desc)
-	. = ..()
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
 	name = "extra-strong absinthe"

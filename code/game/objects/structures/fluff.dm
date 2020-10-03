@@ -474,6 +474,16 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/robot
+	name = "Inactive Robot"
+	desc = "That doesn't look good. Well, at least for the A.I. that is."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "getting_wacked"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
 
 /obj/structure/fluff/narsie
 	name = "ritual rune" // man, i really hope no one expects this to be a real rune. that'd suck.
