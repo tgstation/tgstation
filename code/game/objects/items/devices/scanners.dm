@@ -145,7 +145,11 @@ GENE SCANNER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(isliving(user) && (user.incapacitated() || user.is_blind()))
+	if(user.incapacitated())
+		return
+
+	if(user.is_blind())
+		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
 		return
 
 	// the final list of strings to render
@@ -412,6 +416,9 @@ GENE SCANNER
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 
 /proc/chemscan(mob/living/user, mob/living/M)
+	if(user.is_blind())
+		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
+		return
 	if(istype(M) && M.reagents)
 		var/render_list = list()
 		if(M.reagents.reagent_list.len)
