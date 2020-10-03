@@ -207,6 +207,9 @@
 	if(!ishuman(owner.current))
 		to_chat(owner.current, "<span class='warning'>We can't remove our evolutions in this form!</span>")
 		return
+	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
+		to_chat(owner.current, "<span class='warning'>We are too busy reforming ourselves to readapt right now!</span>")
+		return
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
