@@ -274,4 +274,4 @@ Charged extracts:
 	for(var/i in 1 to 3)
 		var/mob/living/simple_animal/slime/S = new(get_turf(user))
 		S.random_colour()
-	..()
+	return ..()

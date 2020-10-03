@@ -240,6 +240,7 @@
 /// just check density
 #define ATMOS_PASS_DENSITY -2
 
+//DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 
@@ -264,6 +265,21 @@
 #define ATMOS_TANK_PLASMA			"plasma=70000;TEMP=293.15"
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
+#define ATMOS_TANK_BZ				"bz=100000;TEMP=293.15"
+#define ATMOS_TANK_FREON			"freon=100000;TEMP=293.15"
+#define ATMOS_TANK_HALON			"halon=100000;TEMP=293.15"
+#define ATMOS_TANK_HEALIUM			"healium=100000;TEMP=293.15"
+#define ATMOS_TANK_HEXANE			"hexane=100000;TEMP=293.15"
+#define ATMOS_TANK_H2				"hydrogen=100000;TEMP=293.15"
+#define ATMOS_TANK_HYPERNOBLIUM		"nob=100000;TEMP=293.15"
+#define ATMOS_TANK_MIASMA			"miasma=100000;TEMP=293.15"
+#define ATMOS_TANK_NO2				"no2=100000;TEMP=293.15"
+#define ATMOS_TANK_PLUOXIUM			"pluox=100000;TEMP=293.15"
+#define ATMOS_TANK_PROTO_NITRATE	"proto_nitrate=100000;TEMP=293.15"
+#define ATMOS_TANK_STIMULUM			"stim=100000;TEMP=293.15"
+#define ATMOS_TANK_TRITIUM			"tritium=100000;TEMP=293.15"
+#define ATMOS_TANK_H2O				"water_vapor=100000;TEMP=293.15"
+#define ATMOS_TANK_ZAUKER			"zauker=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
 
 //LAVALAND
@@ -302,6 +318,66 @@
 #define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
 #define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_BZ "bz_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_BZ "bz_out"
+#define ATMOS_GAS_MONITOR_SENSOR_BZ "bz_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_FREON "freon_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_FREON "freon_out"
+#define ATMOS_GAS_MONITOR_SENSOR_FREON "freon_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HALON "halon_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HALON "halon_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HALON "halon_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HEALIUM "healium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HEALIUM "healium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HEALIUM "healium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HEXANE "hexane_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HEXANE "hexane_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HEXANE "hexane_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_H2 "h2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_H2 "h2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_H2 "h2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_HYPERNOBLIUM "hypernoblium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_HYPERNOBLIUM "hypernoblium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_HYPERNOBLIUM "hypernoblium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_MIASMA "miasma_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_MIASMA "miasma_out"
+#define ATMOS_GAS_MONITOR_SENSOR_MIASMA "miasma_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_NO2 "no2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_NO2 "no2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_NO2 "no2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_PLUOXIUM "pluoxium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM "pluoxium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_PLUOXIUM "pluoxium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE "proto-nitrate_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE "proto-nitrate_out"
+#define ATMOS_GAS_MONITOR_SENSOR_PROTO_NITRATE "proto-nitrate_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_STIMULUM "stimulum_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_STIMULUM "stimulum_out"
+#define ATMOS_GAS_MONITOR_SENSOR_STIMULUM "stimulum_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TRITIUM "tritium_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TRITIUM "tritium_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TRITIUM "tritium_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_H2O "h2o_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_H2O "h2o_out"
+#define ATMOS_GAS_MONITOR_SENSOR_H2O "h2o_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_ZAUKER "zauker_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_ZAUKER "zauker_out"
+#define ATMOS_GAS_MONITOR_SENSOR_ZAUKER "zauker_sensor"
 
 #define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
 #define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
@@ -407,6 +483,11 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #else
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
+
+//If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
+#define TURFS_CAN_SHARE(T1, T2) ((T2.atmos_adjacent_turfs[T1]) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
+//Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
+#define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
 
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"amethyst" = rgb(130,43,255), //supplymain
