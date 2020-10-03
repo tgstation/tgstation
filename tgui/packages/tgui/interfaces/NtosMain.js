@@ -89,8 +89,7 @@ export const NtosMain = (props, context) => {
                   <Button
                     fluid
                     color="transparent"
-                    icon={PROGRAM_ICONS[program.name]
-                      || 'window-maximize-o'}
+                    icon={program.icon}
                     content={program.desc}
                     onClick={() => act('PC_runprogram', {
                       name: program.name,
