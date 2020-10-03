@@ -4,40 +4,18 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
 	density = FALSE
+	vis_flags = VIS_INHERIT_ID
 	var/hp = 1800
-	var/obj/structure/target_stake/pinnedLoc
-
-/obj/item/target/Destroy()
-	removeOverlays()
-	if(pinnedLoc)
-		pinnedLoc.nullPinnedTarget()
-	return ..()
-
-/obj/item/target/proc/nullPinnedLoc()
-	pinnedLoc = null
-	density = FALSE
-
-/obj/item/target/proc/removeOverlays()
-	cut_overlays()
-
-/obj/item/target/Move()
-	. = ..()
-	if(pinnedLoc)
-		pinnedLoc.forceMove(loc)
+	var/list/bullethole_overlays = list()
 
 /obj/item/target/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(I.use_tool(src, user, 0, volume=40))
-		removeOverlays()
+		for (var/image/bullethole in bullethole_overlays)
+			cut_overlay(bullethole)
+		bullethole_overlays = list()
 		to_chat(user, "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>")
 	return TRUE
-
-/obj/item/target/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(pinnedLoc)
-		pinnedLoc.removeTarget(user)
 
 /obj/item/target/syndicate
 	icon_state = "target_s"
@@ -89,6 +67,7 @@
 				bullet_hole.icon_state = "light_scorch"
 		else
 			bullet_hole.icon_state = "dent"
+		bullethole_overlays += bullet_hole
 		add_overlay(bullet_hole)
 		return BULLET_ACT_HIT
 	return BULLET_ACT_FORCE_PIERCE
