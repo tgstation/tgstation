@@ -1078,6 +1078,7 @@
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
 	if(arm)
 		arm.attack_self(src)
+	return ..()
 
 
 //src is the user that will be carrying, target is the mob to be carried
