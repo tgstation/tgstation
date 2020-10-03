@@ -438,12 +438,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
 	inhand_icon_state = "candyoff"
 	icon_state = "candyoff"
-	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash
+	type_butt = /obj/item/food/candy_trash
 	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
 
 /obj/item/clothing/mask/cigarette/candy/nicotine
 	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
-	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash/nicotine
+	type_butt = /obj/item/food/candy_trash/nicotine
 	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10, /datum/reagent/drug/nicotine = 20) //oh no!
 	smoke_all = TRUE //timmy's not getting out of this one
 

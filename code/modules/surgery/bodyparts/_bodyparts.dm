@@ -92,7 +92,7 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
-	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/grasp_self])
+	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
 	var/obj/item/self_grasp/grasped_by
 
 
@@ -122,6 +122,14 @@
 	if(burn_dam > DAMAGE_PRECISION)
 		. += "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
+	if(locate(/datum/wound/blunt) in wounds)
+		. += "<span class='warning'>The bones in this limb appear badly cracked.</span>"
+	if(locate(/datum/wound/slash) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly lacerated.</span>"
+	if(locate(/datum/wound/pierce) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly perforated.</span>"
+	if(locate(/datum/wound/burn) in wounds)
+		. += "<span class='warning'>The flesh on this limb appears badly cooked.</span>"
 
 /obj/item/bodypart/blob_act()
 	take_damage(max_damage)
@@ -356,7 +364,7 @@
 /**
   * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
   *
-  * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_wounding_mods], then go down the list from most severe to least severe wounds in that category.
+  * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_woundings_mods], then go down the list from most severe to least severe wounds in that category.
   * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
   *
   * Arguments:

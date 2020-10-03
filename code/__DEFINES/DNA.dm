@@ -133,6 +133,8 @@
 #define HAS_FLESH	18
 /// if we have bones (can suffer bone wounds)
 #define HAS_BONE	19
+///If we have a limb-specific overlay sprite
+#define HAS_MARKINGS 20
 
 
 //organ slots

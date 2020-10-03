@@ -76,6 +76,8 @@
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)
+		H.failed_last_breath = FALSE //clear oxy issues
+		H.clear_alert("not_enough_oxy")
 		return
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		return

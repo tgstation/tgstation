@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "fixed loading map templates on new z-levels causing them to be off by one turf in the x/y axes."

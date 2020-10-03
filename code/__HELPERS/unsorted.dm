@@ -289,8 +289,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/true_devil/M in sortmob)
-		moblist.Add(M)
 	return moblist
 
 // Format a power value in W, kW, MW, or GW.
@@ -1388,13 +1386,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/cakeslice,
 		/obj/item/reagent_containers/food/snacks/store,
 		/obj/item/reagent_containers/food/snacks/pie,
-		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/food/kebab,
 		/obj/item/reagent_containers/food/snacks/pizza,
 		/obj/item/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/reagent_containers/food/snacks/salad,
-		/obj/item/reagent_containers/food/snacks/meat,
-		/obj/item/reagent_containers/food/snacks/meat/slab,
-		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/food/salad,
+		/obj/item/food/meat,
+		/obj/item/food/meat/slab,
+		/obj/item/food/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		/obj/item/food/deepfryholder,

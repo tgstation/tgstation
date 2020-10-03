@@ -31,13 +31,20 @@
 	var/list/atom/atoms = list()
 	var/list/area/areas = list()
 
-	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
-	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
-							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
+	var/list/turfs = block(
+		locate(
+			bounds[MAP_MINX],
+			bounds[MAP_MINY],
+			bounds[MAP_MINZ]
+			),
+		locate(
+			bounds[MAP_MAXX],
+			bounds[MAP_MAXY],
+			bounds[MAP_MAXZ]
+			)
+		)
 	for(var/L in turfs)
 		var/turf/B = L
-		atoms += B
 		areas |= B.loc
 		for(var/A in B)
 			atoms += A
@@ -46,18 +53,34 @@
 				continue
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
-	for(var/L in border)
-		var/turf/T = L
-		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	SSmapping.reg_in_areas_in_z(areas)
+	SSatoms.InitializeAtoms(turfs)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
+	//calculate all turfs inside the border
+	var/list/template_and_bordering_turfs = block(
+		locate(
+			max(bounds[MAP_MINX]-1, 1),
+			max(bounds[MAP_MINY]-1, 1),
+			bounds[MAP_MINZ]
+			),
+		locate(
+			min(bounds[MAP_MAXX]+1, world.maxx),
+			min(bounds[MAP_MAXY]+1, world.maxy),
+			bounds[MAP_MAXZ]
+			)
+		)
+	for(var/t in template_and_bordering_turfs)
+		var/turf/affected_turf = t
+		affected_turf.air_update_turf(TRUE)
+		affected_turf.levelupdate()
+
 /datum/map_template/proc/load_new_z()
-	var/x = round((world.maxx - width)/2)
-	var/y = round((world.maxy - height)/2)
+	var/x = round((world.maxx - width) * 0.5) + 1
+	var/y = round((world.maxy - height) * 0.5) + 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
 	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)

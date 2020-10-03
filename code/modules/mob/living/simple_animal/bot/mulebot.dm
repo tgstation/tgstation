@@ -266,8 +266,11 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	. = ..()
+
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)

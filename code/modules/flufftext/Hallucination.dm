@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	for(var/turf/FT in flood_turfs)
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
-			if((T in flood_turfs) || !FT.CanAtmosPass(T))
+			if((T in flood_turfs) || !TURFS_CAN_SHARE(T, FT) || isspaceturf(T)) //If we've gottem already, or if they're not alright to spread with.
 				continue
 			var/obj/effect/plasma_image_holder/pih = new(T)
 			var/image/new_plasma = image(image_icon, pih, image_state, FLY_LAYER)
@@ -1108,7 +1108,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	name = "chasm"
 
 /obj/effect/hallucination/danger/chasm/show_icon()
-	image = image('icons/turf/floors/Chasms.dmi',src,"smooth",TURF_LAYER)
+	var/turf/target_loc = get_turf(target)
+	image = image('icons/turf/floors/chasms.dmi', src, "chasms-[target_loc.smoothing_junction]", TURF_LAYER)
 	if(target.client)
 		target.client.images += image
 
