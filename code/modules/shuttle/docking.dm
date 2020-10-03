@@ -1,5 +1,5 @@
 /// This is the main proc. It instantly moves our mobile port to stationary port `new_dock`.
-/obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
+/obj/docking_port/mobile/proc/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force = FALSE, allow_sleep = FALSE)
 	// Crashing this ship with NO SURVIVORS
 
 	if(new_dock.get_docked() == src)
@@ -29,7 +29,9 @@
 	*/
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/list/new_turfs = return_ordered_turfs(new_dock.x, new_dock.y, new_dock.z, new_dock.dir)
-	CHECK_TICK
+	
+	if(allow_sleep)
+		CHECK_TICK
 	/**************************************************************************************************************/
 
 	// The underlying old area is the area assumed to be under the shuttle's starting location
@@ -51,7 +53,7 @@
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
 	var/list/areas_to_move = list() //unique assoc list of areas on turfs being moved
 
-	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation)
+	. = preflight_check(old_turfs, new_turfs, areas_to_move, rotation, allow_sleep)
 	if(.)
 		remove_ripples()
 		return
@@ -62,7 +64,8 @@
 	if(hidden)
 		new_hidden_turfs = list()
 		for(var/i in 1 to old_turfs.len)
-			CHECK_TICK
+			if(allow_sleep)
+				CHECK_TICK
 			var/turf/oldT = old_turfs[i]
 			if(old_turfs[oldT] & MOVE_TURF)
 				new_hidden_turfs += new_turfs[i]
@@ -82,11 +85,13 @@
 	// the ripples go away before it is safe.
 	takeoff(old_turfs, new_turfs, moved_atoms, rotation, movement_direction, old_dock, underlying_old_area)
 
-	CHECK_TICK
+	if(allow_sleep)
+		CHECK_TICK
 
-	cleanup_runway(new_dock, old_turfs, new_turfs, areas_to_move, moved_atoms, rotation, movement_direction, underlying_old_area)
+	cleanup_runway(new_dock, old_turfs, new_turfs, areas_to_move, moved_atoms, rotation, movement_direction, underlying_old_area, allow_sleep)
 
-	CHECK_TICK
+	if(allow_sleep)
+		CHECK_TICK
 
 	/*******************************************Unhiding turfs if necessary******************************************/
 	if(new_hidden_turfs)
@@ -102,9 +107,10 @@
 	remove_ripples()
 	return DOCKING_SUCCESS
 
-/obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)
+/obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation, allow_sleep = FALSE)
 	for(var/i in 1 to old_turfs.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		if(!newT)
@@ -117,7 +123,8 @@
 
 		var/list/old_contents = oldT.contents
 		for(var/k in 1 to old_contents.len)
-			CHECK_TICK
+			if(allow_sleep)
+				CHECK_TICK
 			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
@@ -151,7 +158,7 @@
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas
 
-/obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
+/obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area, allow_sleep = FALSE)
 	underlying_old_area.afterShuttleMove()
 
 	// Parallax handling
@@ -160,12 +167,14 @@
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
 		new_parallax_dir = preferred_direction
 	for(var/i in 1 to areas_to_move.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
 		internal_area.afterShuttleMove(new_parallax_dir)													//areas
 
 	for(var/i in 1 to old_turfs.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		if(!(old_turfs[old_turfs[i]] & MOVE_TURF))
 			continue
 		var/turf/oldT = old_turfs[i]
@@ -173,7 +182,8 @@
 		newT.afterShuttleMove(oldT, rotation)																//turfs
 
 	for(var/i in 1 to moved_atoms.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		var/atom/movable/moved_object = moved_atoms[i]
 		if(QDELETED(moved_object))
 			continue
@@ -185,12 +195,14 @@
 	underlying_old_area.lateShuttleMove()
 
 	for(var/i in 1 to areas_to_move.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
 		internal_area.lateShuttleMove()
 
 	for(var/i in 1 to old_turfs.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		if(!(old_turfs[old_turfs[i]] & MOVE_CONTENTS | MOVE_TURF))
 			continue
 		var/turf/oldT = old_turfs[i]
@@ -198,7 +210,8 @@
 		newT.lateShuttleMove(oldT)
 
 	for(var/i in 1 to moved_atoms.len)
-		CHECK_TICK
+		if(allow_sleep)
+			CHECK_TICK
 		var/atom/movable/moved_object = moved_atoms[i]
 		if(QDELETED(moved_object))
 			continue
