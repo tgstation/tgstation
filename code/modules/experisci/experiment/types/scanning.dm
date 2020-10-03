@@ -49,7 +49,7 @@
 	for (var/a_type in required_atoms)
 		var/atom/a = a_type
 		var/list/seen = scanned[a]
-		. += list(serialize_progress_stage(a, seen))
+		. += serialize_progress_stage(a, seen)
 
 /**
   * Serializes a progress stage into a list to be sent to the UI
@@ -59,11 +59,8 @@
   * * seen_instances - The number of instances seen of this atom
   */
 /datum/experiment/scanning/proc/serialize_progress_stage(var/atom/target, var/list/seen_instances)
-	return list(
-		EXP_INT_STAGE,
-		"Scan samples of \a [initial(target.name)]",
-		seen_instances ? seen_instances.len : 0,
-		required_atoms[target])
+	return EXP_PROG_INT("Scan samples of \a [initial(target.name)]", \
+		seen_instances ? seen_instances.len : 0, required_atoms[target])
 
 /**
   * Attempts to scan an atom towards the experiment's goal

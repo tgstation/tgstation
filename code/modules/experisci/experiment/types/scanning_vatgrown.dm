@@ -12,9 +12,5 @@
 			return null
 
 /datum/experiment/scanning/random/cytology/serialize_progress_stage(atom/target, list/seen_instances)
-	return list(
-		EXP_INT_STAGE,
-		"Scan samples of \a vat-grown [initial(target.name)]",
-		seen_instances ? seen_instances.len : 0,
-		required_atoms[target]
-	)
+	return EXP_PROG_INT("Scan samples of \a vat-grown [initial(target.name)]", \
+		seen_instances ? seen_instances.len : 0, required_atoms[target])

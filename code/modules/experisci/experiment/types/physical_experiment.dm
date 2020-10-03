@@ -10,9 +10,6 @@
 /datum/experiment/physical/is_complete()
 	return completed
 
-/datum/experiment/physical/check_progress()
-	return
-
 /datum/experiment/physical/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
 	unregister_events()
 	currently_scanned_atom = target

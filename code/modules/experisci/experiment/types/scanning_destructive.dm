@@ -28,12 +28,8 @@
 			return FALSE
 
 /datum/experiment/scanning/destructive/serialize_progress_stage(atom/target, list/seen_instances)
-	return list(
-		EXP_INT_STAGE,
-		"Scan samples of \a [initial(target.name)]",
-		scanned[target] ? scanned[target] : 0,
-		required_atoms[target]
-	)
+	return EXP_PROG_INT( "Scan samples of \a [initial(target.name)]", \
+		scanned[target] ? scanned[target] : 0, required_atoms[target])
 
 /**
   * Attempts to scan an atom towards the experiment's goal

@@ -26,9 +26,5 @@
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
 	var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[target])
-	return list(
-		EXP_INT_STAGE,
-		"Scan samples of \a [required_material.name] [initial(target.name)]",
-		seen_instances ? seen_instances.len : 0,
-		required_atoms[target]
-	)
+	return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
+		seen_instances ? seen_instances.len : 0, required_atoms[target])

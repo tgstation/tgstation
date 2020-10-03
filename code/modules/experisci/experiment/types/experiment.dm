@@ -18,7 +18,6 @@
 	///Whether the experiment has been completed
 	var/completed = FALSE
 
-
 /**
   * Checks if the experiment is complete
   *

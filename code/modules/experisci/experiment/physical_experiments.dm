@@ -18,6 +18,9 @@
 /datum/experiment/physical/meat_wall_explosion/unregister_events()
 	UnregisterSignal(currently_scanned_atom, COMSIG_ATOM_BULLET_ACT)
 
+/datum/experiment/physical/meat_wall_explosion/check_progress()
+	. += EXP_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
+
 /datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/Proj)
 	message_admins("test")
 	if(istype(Proj, /obj/projectile/beam/emitter))
