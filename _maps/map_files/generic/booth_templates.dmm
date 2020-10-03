@@ -19,6 +19,24 @@
 "s" = (/obj/structure/fluff/support{pixel_x = 15; pixel_y = -13},/obj/structure/fluff/support{pixel_x = 16; pixel_y = 16},/turf/open/floor/oldshuttle,/area/space)
 "t" = (/obj/structure/fluff/support{pixel_x = 15; pixel_y = -13},/turf/open/floor/oldshuttle,/area/space)
 "u" = (/obj/structure/fluff/support{pixel_x = -13; pixel_y = 16},/obj/structure/fluff/support{pixel_x = -13; pixel_y = -11},/turf/open/floor/oldshuttle,/area/space)
+"v" = (/obj/structure/curtain/cloth,/turf/open/floor/carpet/royalblue,/area/space)
+"w" = (/obj/structure/rack,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/gloves/color/latex/nitrile,/obj/item/clothing/head/soft/paramedic,/obj/item/clothing/head/soft/paramedic,/obj/item/clothing/head/soft/paramedic,/obj/item/clothing/head/soft/paramedic,/obj/item/pinpointer,/obj/item/pinpointer,/obj/item/pinpointer,/obj/item/clothing/mask/surgical,/obj/item/clothing/mask/surgical,/obj/item/clothing/mask/surgical,/obj/item/clothing/mask/surgical,/obj/structure/fluff/support{pixel_x = -13; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"x" = (/obj/structure/fluff/support{pixel_x = -13; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"y" = (/turf/open/floor/carpet/royalblue,/area/space)
+"z" = (/obj/structure/fluff/support{pixel_x = 16; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"A" = (/obj/structure/table/greyscale,/obj/item/storage/firstaid/fire{pixel_y = 3},/obj/item/storage/firstaid/o2,/obj/item/storage/firstaid/advanced{pixel_y = -3},/obj/structure/fluff/support{pixel_x = 15; pixel_y = -13},/obj/structure/fluff/support{pixel_x = 16; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"B" = (/obj/structure/bed/roller,/obj/item/healthanalyzer/advanced,/obj/structure/fluff/support{pixel_x = -13; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"C" = (/obj/structure/table/greyscale,/obj/item/storage/firstaid/brute{pixel_y = 3},/obj/item/storage/firstaid,/obj/item/storage/firstaid/toxin{pixel_y = -3},/obj/structure/fluff/support{pixel_x = 15; pixel_y = -13},/turf/open/floor/carpet/royalblue,/area/space)
+"D" = (/obj/structure/bed/roller,/obj/item/healthanalyzer/advanced,/obj/structure/fluff/support{pixel_x = -13; pixel_y = -11},/obj/structure/fluff/support{pixel_x = -13; pixel_y = 16},/turf/open/floor/carpet/royalblue,/area/space)
+"E" = (/obj/structure/chair/office/light,/turf/open/floor/carpet/royalblue,/area/space)
+"F" = (/obj/structure/closet/crate/freezer,/obj/item/reagent_containers/food/drinks/waterbottle/large,/obj/item/reagent_containers/food/drinks/waterbottle/large,/obj/item/reagent_containers/food/drinks/waterbottle/large,/obj/item/reagent_containers/food/drinks/waterbottle/large,/obj/item/reagent_containers/food/drinks/waterbottle/large,/obj/item/reagent_containers/food/drinks/waterbottle,/obj/item/reagent_containers/food/drinks/waterbottle,/obj/item/reagent_containers/food/drinks/waterbottle,/obj/item/reagent_containers/food/drinks/waterbottle,/obj/item/reagent_containers/food/drinks/waterbottle,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg,/obj/structure/fluff/support{pixel_x = 16; pixel_y = -11},/turf/open/floor/carpet/royalblue,/area/space)
+"G" = (/obj/structure/sign/departments/medbay/alt,/turf/closed/indestructible/oldshuttle{color = "#4169e1"; name = "tent wall"},/area/space)
+"H" = (/obj/structure/table/reinforced,/obj/item/stack/medical/mesh,/obj/item/stack/medical/mesh,/obj/item/stack/medical/suture,/obj/item/stack/medical/suture,/turf/open/floor/carpet/royalblue,/area/space)
+"I" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/item/pen,/turf/open/floor/carpet/royalblue,/area/space)
+"J" = (/obj/structure/table/reinforced,/obj/item/clipboard,/obj/item/pen,/turf/open/floor/carpet/royalblue,/area/space)
+"K" = (/obj/structure/table/reinforced,/obj/item/gun/magic/staff/healing,/obj/item/gun/magic/staff/healing,/obj/item/gun/magic/staff/healing,/obj/item/gun/magic/staff/healing,/turf/open/floor/carpet/royalblue,/area/space)
+"L" = (/obj/machinery/medical_kiosk,/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
+"M" = (/turf/open/floor/plating/grass{color = "#cccc00"},/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -60,12 +78,12 @@ aaaaaaabcbcbaaaaaaaaaaamnmnmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaakfffffkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaabofffsbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaakufffjkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaabifffibaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaakbklkbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaknkvknkaabifffibaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaanwxyzAnaakbklkbkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaakByyyCkaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaanDyEyFnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaGHIJKHGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaLMMMMMLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
