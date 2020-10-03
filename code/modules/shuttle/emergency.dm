@@ -20,11 +20,11 @@
 	var/auth_need = 3
 	var/list/authorized = list()
 	var/list/acted_recently = list()
-	var/hijack_last_stage_increase = 0
-	var/hijack_stage_time = 50
-	var/hijack_stage_cooldown = 50
-	var/hijack_flight_time_increase = 300
-	var/hijack_completion_flight_time_set = 100		//How long in deciseconds to set shuttle's timer after hijack is done.
+	var/hijack_last_stage_increase = 0 SECONDS
+	var/hijack_stage_time = 5 SECONDS
+	var/hijack_stage_cooldown = 5 SECONDS
+	var/hijack_flight_time_increase = 30 SECONDS
+	var/hijack_completion_flight_time_set = 10 SECONDS	//How long in deciseconds to set shuttle's timer after hijack is done.
 	var/hijack_hacking = FALSE
 	var/hijack_announce = TRUE
 
@@ -191,7 +191,8 @@
 	return shuttle.hijack_status
 
 /obj/machinery/computer/emergency_shuttle/AltClick(user)
-	attempt_hijack_stage(user)
+	if(isliving(user))
+		attempt_hijack_stage(user)
 
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
@@ -223,9 +224,7 @@
 		if(NOT_BEGUN)
 			return
 		if(STAGE_1)
-			var/datum/species/S = new
 			msg = "AUTHENTICATING - FAIL. AUTHENTICATING - FAIL. AUTHENTICATING - FAI###### Welcome, technician JOHN DOE."
-			qdel(S)
 		if(STAGE_2)
 			msg = "Warning: Navigational route fails \"IS_AUTHORIZED\". Please try againNN[scramble_message_replace_chars("againagainagainagainagain", 70)]."
 		if(STAGE_3)
@@ -235,7 +234,7 @@
 		if(HIJACKED)
 			msg = "<font color='red'><b>SYSTEM OVERRIDE</b></font> - Resetting course to \[[scramble_message_replace_chars("###########", 100)]\] \
 			([scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]/[scramble_message_replace_chars("#######", 100)]) \
-			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
+			{AUTH - ROOT (uid: 0)}.</font>[SSshuttle.emergency.mode == SHUTTLE_ESCAPE ? "Diverting from existing route - Bluespace exit in [hijack_completion_flight_time_set/10] seconds." : ""]"
 	minor_announce(scramble_message_replace_chars(msg, replaceprob = 10), "Emergency Shuttle", TRUE)
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
@@ -351,6 +350,49 @@
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
 	SSticker.emergency_reason = null
+
+/**
+  * Proc that handles checking if the emergency shuttle was successfully hijacked via being the only people present on the shuttle for the elimination hijack or highlander objective
+  *
+  * Checks for all mobs on the shuttle, checks their status, and checks if they're
+  * borgs or simple animals. Depending on the args, certain mobs may be ignored,
+  * and the presence of other antags may or may not invalidate a hijack.
+  * Args:
+  * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
+  * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
+ */
+/obj/docking_port/mobile/emergency/proc/elimination_hijack(filter_by_human = TRUE, solo_hijack = FALSE)
+	var/has_people = FALSE
+	var/hijacker_count = 0
+	for(var/mob/living/player in GLOB.player_list)
+		if(player.mind)
+			if(player.stat != DEAD)
+				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
+					continue
+				if(isanimal(player) && filter_by_human) //animals don't count
+					continue
+				if(isbrain(player)) //also technically dead
+					continue
+				if(shuttle_areas[get_area(player)])
+					has_people = TRUE
+					var/location = get_turf(player.mind.current)
+					//Non-antag present. Can't hijack.
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+						return FALSE
+					//Antag present, doesn't stop but let's see if we actually want to hijack
+					var/prevent = FALSE
+					for(var/datum/antagonist/A in player.mind.antag_datums)
+						if(A.can_elimination_hijack == ELIMINATION_ENABLED)
+							hijacker_count += 1
+							prevent = FALSE
+							break //If we have both prevent and hijacker antags assume we want to hijack.
+						else if(A.can_elimination_hijack == ELIMINATION_PREVENT)
+							prevent = TRUE
+					if(prevent)
+						return FALSE
+
+	//has people AND either there's only one hijacker or there's any but solo_hijack is disabled
+	return has_people && ((hijacker_count == 1) || (hijacker_count && !solo_hijack))
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	return hijack_status == HIJACKED
@@ -483,7 +525,7 @@
 				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
-				if(is_hijacked())
+				if(is_hijacked() && elimination_hijack())
 					destination_dock = "emergency_syndicate"
 					minor_announce("Corruption detected in \
 						shuttle navigation protocols. Please contact your \
