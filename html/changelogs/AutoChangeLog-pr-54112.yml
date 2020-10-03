@@ -1,0 +1,6 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "The unattended monkey has been removed from Pubby's Medbay"
+  - bugfix: "Pubby's disposals no longer jettisons recycled material into space"
+  - bugfix: "Minor issues in Pubby's pipe, power and camera networks have been corrected"
