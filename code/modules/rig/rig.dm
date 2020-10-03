@@ -15,7 +15,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
-	actions_types = list(/datum/action/item_action/rig/deploy, /datum/action/item_action/rig/activate)
+	actions_types = list(/datum/action/item_action/rig/deploy, /datum/action/item_action/rig/activate, /datum/action/item_action/rig/panel)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -70,6 +70,8 @@
 	var/list/modules
 	/// PAI inserted in the RIG
 	var/obj/item/paicard/pai
+	/// PAI mob inserted in the RIG
+	var/mob/living/silicon/pai/paimob
 	/// Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
@@ -256,12 +258,25 @@
 			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
+	else if(istype(I, /obj/item/paicard))
+		if(open && !active && !activating && !pai && !paimob)
+			var/obj/item/paicard/card = I
+			card.forceMove(src)
+			pai = card
+			paimob = pai.pai
+			audible_message("<span class='notice'>[src] indicates that [pai] has been succesfully installed.</span>")
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			return TRUE
+		else
+			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+			return FALSE
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
 	..()
 
 /obj/item/rig/control/relaymove(mob/user, direction)
-	if(!istype(user, pai) || !(locate(/obj/item/rig/module/pai_upgrade) in contents) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
+	if(!istype(user, paimob) || !(locate(/obj/item/rig/module/pai_upgrade) in contents) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
 		return
 	step_towards(wearer, get_step(wearer, direction))
 
