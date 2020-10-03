@@ -15,3 +15,6 @@
 	if(.)
 		return
 	switch(action)
+		if("h")
+			locked = !locked
+			to_chat(wearer, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
