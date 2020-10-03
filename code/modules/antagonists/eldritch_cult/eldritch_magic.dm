@@ -423,6 +423,7 @@
 	invocation = ""
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
+	range = 10
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/targeted/fire_sworn
