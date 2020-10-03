@@ -110,7 +110,7 @@
 					to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 					return
 			var/list/options = params2list(possible_destinations)
-			var/obj/docking_port/stationary/S = SSshuttle.getShuttle(params["shuttle_id"])
+			var/obj/docking_port/stationary/S = SSshuttle.getDock(params["shuttle_id"])
 			if(!(S.port_destinations in options))
 				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
