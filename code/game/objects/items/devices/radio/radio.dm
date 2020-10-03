@@ -199,7 +199,7 @@
 				return FALSE
 			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
 				return FALSE
-			if(HAS_TRAIT(mute, TRAIT_INCAPACITATED))
+			if(HAS_TRAIT(mute, TRAIT_INCAPACITATED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
 				return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
