@@ -13,10 +13,19 @@
 	var/description = "Base experiment"
 	/// A descriptive tag used on UI elements to denote 'types' of experiments
 	var/exp_tag = "Base"
-	/// A list of types that are allowed to experiment with this datum
+	/// A list of types that are allowed to experiment with this dastum
 	var/list/allowed_experimentors
-	///Whether the experiment has been completed
+	/// Whether the experiment has been completed
 	var/completed = FALSE
+	/// Traits related to the experiment
+	var/traits
+
+/**
+  * Performs any necessary initialization of tags and other variables
+  */
+/datum/experiment/New()
+	if (traits & EXP_TRAIT_DESTRUCTIVE)
+		exp_tag = "Destructive [exp_tag]"
 
 /**
   * Checks if the experiment is complete

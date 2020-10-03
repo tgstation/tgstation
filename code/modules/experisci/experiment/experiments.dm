@@ -94,6 +94,7 @@
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
 	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."
+	possible_material_types = list(/datum/material/meat)
 
 /datum/experiment/scanning/random/material/easy
 	name = "Low Grade Material Scanning Experiment"
@@ -101,6 +102,7 @@
 	total_requirement = 6
 	possible_types = list(/obj/structure/chair, /obj/structure/toilet, /obj/structure/table)
 	possible_material_types = list(/datum/material/iron, /datum/material/glass)
+	traits = EXP_TRAIT_DESTRUCTIVE
 
 /datum/experiment/scanning/random/material/medium
 	name = "Medium Grade Material Scanning Experiment"

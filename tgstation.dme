@@ -1928,7 +1928,6 @@
 #include "code\modules\experisci\experiment\types\physical_experiment.dm"
 #include "code\modules\experisci\experiment\types\random_scanning.dm"
 #include "code\modules\experisci\experiment\types\scanning.dm"
-#include "code\modules\experisci\experiment\types\scanning_destructive.dm"
 #include "code\modules\experisci\experiment\types\scanning_material.dm"
 #include "code\modules\experisci\experiment\types\scanning_vatgrown.dm"
 #include "code\modules\fields\fields.dm"

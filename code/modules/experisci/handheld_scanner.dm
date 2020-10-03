@@ -14,5 +14,5 @@
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical),\
-		blacklisted_experiments = list(/datum/experiment/scanning/destructive))
+		disallowed_traits = EXP_TRAIT_DESTRUCTIVE)
 

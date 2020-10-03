@@ -1,7 +1,9 @@
 /**
   * # Experiment Handler
   *
-  * This is the component for interacting with experiments from a connected techweb. It is generic and should be set-up to automatically work on any class it is attached to without outside code (Excluding potential callbacks)
+  * This is the component for interacting with experiments from a connected techweb. It is generic
+  * and should be set-up to automatically work on any class it is attached to without outside code
+  * (Excluding potential callbacks)
   */
 /datum/component/experiment_handler
 	/// Holds the currently linked techweb to get experiments from
@@ -12,6 +14,8 @@
 	var/list/allowed_experiments
 	/// Holds the list of types of experiments that this experimennt_handler should NOT interact with
 	var/list/blacklisted_experiments
+	/// A set of optional experiment traits (see defines) that are disallowed for any experiments
+	var/disallowed_traits
 
 /**
   * Initializes a new instance of the experiment_handler component
@@ -23,12 +27,14 @@
   */
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
 												blacklisted_experiments = list(),
-												config_mode = EXPERIMENT_CONFIG_ATTACKSELF)
+												config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
+												disallowed_traits = null)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
+	src.disallowed_traits = disallowed_traits
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
@@ -70,7 +76,8 @@
 
 
 ///Hooks on succesful explosions on the doppler array this is attached to
-/datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+/datum/component/experiment_handler/proc/try_run_doppler_experiment(datum/source, turf/epicenter, devastation_range,
+	heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 	SIGNAL_HANDLER
 	var/atom/movable/our_array = parent
 	if(action_experiment(source, devastation_range, heavy_impact_range, light_impact_range))
@@ -160,7 +167,7 @@
   * Arguments:
   * * pos - The turf to get servers on the same z-level of
   */
-/datum/component/experiment_handler/proc/get_available_servers(var/turf/pos = null)
+/datum/component/experiment_handler/proc/get_available_servers(turf/pos = null)
 	if (!pos)
 		pos = get_turf(parent)
 	var/list/local_servers = list()
@@ -177,6 +184,10 @@
   * * e - The experiment to check
   */
 /datum/component/experiment_handler/proc/can_select_experiment(datum/experiment/e)
+	// Check that this experiments has no disallowed traits
+	if (e.traits & disallowed_traits)
+		return FALSE
+
 	// Check against the list of allowed experimentors
 	if (e.allowed_experimentors && e.allowed_experimentors.len)
 		var/matched = FALSE
