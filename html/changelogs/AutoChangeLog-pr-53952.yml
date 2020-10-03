@@ -1,0 +1,6 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - tweak: "fixed the bad descriptions in a few summon recipes"
+  - balance: "rust walker now requires a head."
+  - balance: "stalker needs eyes insted of a knife."

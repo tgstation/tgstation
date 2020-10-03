@@ -240,6 +240,7 @@
 /// just check density
 #define ATMOS_PASS_DENSITY -2
 
+//DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
 #define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
 
@@ -482,6 +483,11 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #else
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
+
+//If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
+#define TURFS_CAN_SHARE(T1, T2) ((T2.atmos_adjacent_turfs[T1]) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
+//Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
+#define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
 
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"amethyst" = rgb(130,43,255), //supplymain
