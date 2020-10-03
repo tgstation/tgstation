@@ -1014,6 +1014,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Garden"
 	icon_state = "garden"
 
+/area/hydroponics/garden/cornmaze
+	name = "Corn Maze"
+	icon_state = "garden"
+
+/area/hydroponics/garden/cornmaze/labyrinth
+	name = "Lost Corn Labyrinth"
+	icon_state = "danger"
+
 /area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
 	icon_state = "abandoned_garden"
