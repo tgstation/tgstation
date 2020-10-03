@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(economy)
 	var/monster_bounty = 150
 	var/mood_bounty = 100
 	var/techweb_bounty = 250
+	var/civ_bounty_value = 25
 	var/slime_bounty = list("grey" = 1,
 							// tier 1
 							"orange" = 10,
@@ -172,7 +173,7 @@ SUBSYSTEM_DEF(economy)
   * Rewards participation towards the rest of the crew getting resources, as the control of this budget is the HOP.
   */
 /datum/controller/subsystem/economy/proc/civ_payout()
-	var/civ_cash = ((rand(1,2) * 500) + (civ_bounty_tracker * 100))
+	var/civ_cash = ((rand(1,2) * 500) + (civ_bounty_tracker * civ_bounty_value))
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
 		D.adjust_money(civ_cash, MAX_GRANT_CIV)
