@@ -104,6 +104,9 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
+/obj/structure/holosign/barrier/atmos/BlockSuperconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
+	return TRUE
+
 /obj/structure/holosign/barrier/atmos/Destroy()
 	. = ..()
 	air_update_turf(TRUE, FALSE)
