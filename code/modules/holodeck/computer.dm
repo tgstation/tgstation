@@ -89,10 +89,9 @@
 			*/
 
 	generate_program_list()
-	//load_program("holodeck_lounge")//honestly there isnt a reason to do this as far as im aware
+	//load_program("holodeck_chapelcourt")//honestly there isnt a reason to do this as far as im aware
 
 /obj/machinery/computer/holodeck/Destroy()
-	message_admins(world,"DEBUG -- lmao youre fucked")
 	emergency_shutdown()
 	if(linked)
 		linked.linked = null
@@ -263,33 +262,6 @@
 		var/obj/effect/holodeck_effect/HE = e
 		HE.safety(active)
 
-/*/obj/machinery/computer/holodeck/proc/prepare_holodeck_area()//called AFTER the current template is selected in l_pro, but BEFORE template.load
-	//spawned += template.get_affected_turfs(bottom_left)//get_a_f shoooould be a list
-	var/list/holodeck_turfs
-	LAZYADD(holodeck_turf_contents, get_area_turfs(current_holodeck_area))//THIS ONLY HAS FUCKIGN TURFS
-	for (var/atom/previous_item in holodeck_turfs.contents)
-		if (previous_item.flags_1 & HOLOGRAM_1)
-			if (!istype(previous_item,/turf/))
-				qdel(previous_item)*/
-/datum/map_template/holodeck/proc/recursive_contents_adder(var/obj/base_container, var/list/object_list)
-	var/no_more_descendants = FALSE
-	if (!base_container)
-		return
-	//object_list += base_container //assume the base_container is already in spawned
-	if (length(base_container.contents) > 0)
-		no_more_descendants = FALSE
-		for (var/obj/contained_object in base_container.contents)
-			object_list += contained_object
-			if (length(contained_object.contents) > 0)
-				no_more_descendants = FALSE
-				..(contained_object, object_list)
-			else
-				no_more_descendants = TRUE
-	else
-		no_more_descendants = TRUE
-	if (no_more_descendants)
-		return
-
 /datum/map_template/holodeck/load(turf/T, centered = FALSE, )
 	if(centered)
 		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
@@ -300,7 +272,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
 							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
 	for(var/L in border)
 		var/turf/turf_to_disable = L
@@ -329,10 +301,6 @@
 			spawned_atoms += base_container.GetAllContents()
 
 	lastparsed = parsed
-	/*var/list/atoms/atoms = parsed.initTemplateBounds().atoms
-	for (var/index in atoms)
-		index.flags_1 |= HOLOGRAM_1*/
-	//spawned_atoms = bounds
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
@@ -347,43 +315,26 @@
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
 							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
+	for(var/L in turfs)
 		var/turf/B = L
-		atoms += B//atoms = atoms + B, turfs are atoms
-		//newatoms += B
-		areas |= B.loc //areas = areas|B.loc
+		atoms += B
+		areas |= B.loc
 		for(var/atom/A in B)
 			if (!(A.flags_1 & INITIALIZED_1))
 				newatoms += A
-				/*if (length(A.contents) > 0)//the reason why it doesnt work here is that closets get populateContents
-					newatoms += A.contents
-					for (var/atom/inner_item in A.contents)
-						if (length(inner_item.contents) > 0)
-							newatoms += inner_item.contents
-							for (var/atom/second_inner_item in inner_item.contents)
-								if (length(second_inner_item.contents) > 0)
-									newatoms += second_inner_item.contents*/
 
-				//A.flags_1 |= HOLOGRAM_1
 			else
-				atoms += A//for each object in the contents of the current turf, add it to the atoms list
+				atoms += A
 
 			if(istype(A, /obj/structure/cable))
-				cables += A//if A is a cable, add to the cable list
+				cables += A
 				continue
-			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
+			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 	for(var/L in border)
 		var/turf/T = L
-		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
-	//for (var/atom/atom in atoms)
-	//	if ((flags_1))
-	//		atom.flags_1 |= HOLOGRAM_1
+		T.air_update_turf(TRUE)
 
-	//for (var/atom/atom in atoms)
-	//	if (!(atom.flags_1 & INITIALIZED_1))
-	//		LAZYADD(newatoms, atom)
-	//		atom.flags_1 |= HOLOGRAM_1
 
 
 	SSmapping.reg_in_areas_in_z(areas)
@@ -398,8 +349,6 @@
 	program = map_id
 	if (spawned)
 		for (var/atom/item in spawned)
-			//spawned -= item
-			//qdel(item)//ol' reliable
 			derez(item)
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left, FALSE)
@@ -411,7 +360,6 @@
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()
-	//kyler, finish_spwn allows effects to work (at least spawning ones). without it pet park will not spawn anything for example
 	var/list/added = list()
 	for(var/obj/effect/holodeck_effect/HE in spawned)
 		effects += HE
@@ -426,11 +374,7 @@
 		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
-	// Emagging a machine creates an anomaly in the derez systems.
-	//if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)//if O exists, and the holodeck computer is emagged, and machine_stat is FALSE, and forced is FALSE
-		//if((ismob(O) || ismob(O.loc)) && prob(50))
-			//addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
-			//return
+
 	if(!O)
 		return
 
@@ -440,7 +384,7 @@
 	for(var/atom/movable/AM in O) // these should be derezed if they were generated
 		AM.forceMove(T)
 		if(ismob(AM))
-			silent = FALSE					// otherwise make sure they are dropped
+			silent = FALSE // otherwise make sure they are dropped
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
