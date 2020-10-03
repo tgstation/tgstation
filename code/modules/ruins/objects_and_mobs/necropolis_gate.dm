@@ -347,11 +347,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	tile_key = "elder_pristine_tile"
 	tile_random_sprite_max = 1
 
-/obj/structure/stone_tile/elder/fancymagic // finish later
-	name = "Temple Tile"
+/obj/structure/stone_tile/elder/fancymagic
+	name = "Eldritch Tile"
+	desc = "Try not to lose your balance on the non-euclidean square tiles..."
 	icon = 'icons/turf/floors/elder_floors.dmi'
-	icon_state = "elder_pristine_tile"
-	tile_key = "elder_pristine_tile"
+	icon_state = "elder_magic_tile"
+	tile_key = "elder_magic_tile"
 	tile_random_sprite_max = 1
 
 /obj/structure/stone_tile/elderblock

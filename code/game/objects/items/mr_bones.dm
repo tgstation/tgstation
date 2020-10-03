@@ -36,7 +36,7 @@
 /obj/structure/fluff/spooky_skeleton
 	name = "spooky skeleton"
 	desc = "Spooked ya!"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "spookedya2"
 	deconstructible = FALSE
 	max_integrity = 9999
