@@ -78,6 +78,7 @@ SUBSYSTEM_DEF(economy)
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
 	for(var/account in bank_accounts)
+		var/datum/bank_account/bank_account = account
 		if(bank_account && bank_account.account_job)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
