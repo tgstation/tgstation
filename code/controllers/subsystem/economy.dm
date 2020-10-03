@@ -15,36 +15,36 @@ SUBSYSTEM_DEF(economy)
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
 							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
-	var/alive_humans_bounty = 100
+	var/alive_humans_bounty = 50
 	var/crew_safety_bounty = 1500
 	var/monster_bounty = 150
 	var/mood_bounty = 100
 	var/techweb_bounty = 250
-	var/slime_bounty = list("grey" = 10,
+	var/slime_bounty = list("grey" = 1,
 							// tier 1
-							"orange" = 100,
-							"metal" = 100,
-							"blue" = 100,
-							"purple" = 100,
+							"orange" = 10,
+							"metal" = 10,
+							"blue" = 10,
+							"purple" = 10,
 							// tier 2
-							"dark purple" = 500,
-							"dark blue" = 500,
-							"green" = 500,
-							"silver" = 500,
-							"gold" = 500,
-							"yellow" = 500,
-							"red" = 500,
-							"pink" = 500,
+							"dark purple" = 50,
+							"dark blue" = 50,
+							"green" = 50,
+							"silver" = 50,
+							"gold" = 50,
+							"yellow" = 50,
+							"red" = 50,
+							"pink" = 50,
 							// tier 3
-							"cerulean" = 750,
-							"sepia" = 750,
-							"bluespace" = 750,
-							"pyrite" = 750,
-							"light pink" = 750,
-							"oil" = 750,
-							"adamantine" = 750,
+							"cerulean" = 75,
+							"sepia" = 75,
+							"bluespace" = 75,
+							"pyrite" = 75,
+							"light pink" = 75,
+							"oil" = 75,
+							"adamantine" = 75,
 							// tier 4
-							"rainbow" = 1000)
+							"rainbow" = 100)
 	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
@@ -69,16 +69,14 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
-	eng_payout()  // Payout based on nothing. What will replace it? Surplus power, powered APC's, air alarms? Who knows.
-	sci_payout() // Payout based on slimes.
-	secmedsrv_payout() // Payout based on crew safety, health, and mood.
-	civ_payout() // Payout based on Effort and market ebb/flow.
-	car_payout() // Cargo's natural gain in the cash moneys.
+	eng_payout()
+	sci_payout()
+	secmedsrv_payout()
+	civ_payout()
+	car_payout()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
 	for(var/account in bank_accounts)
-		var/datum/bank_account/bank_account = account
-		bank_account.payday(1)
 		if(bank_account && bank_account.account_job)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		if(!istype(bank_account, /datum/bank_account/department))
@@ -87,28 +85,45 @@ SUBSYSTEM_DEF(economy)
 	if(!market_crashing)
 		price_update()
 
+/**
+  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
+  */
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
 	for(var/datum/bank_account/department/D in generated_accounts)
 		if(D.department_id == dep_id)
 			return D
 
+/**
+  * How much does the engineering department make in passive income?
+  * Payout used to be based on power generated, but power generated at batshit insane rates, so we'll just go with 1000 credits per supermatter on the map.
+  */
 /datum/controller/subsystem/economy/proc/eng_payout()
-	var/engineering_cash = 3000
+	///How much do we reward per supermatter on the map?
+	var/cash_per_shard = 1000
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_ENG)
 	if(D)
-		D.adjust_money(engineering_cash)
+		for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
+			D.adjust_money(cash_per_shard)
 
-
+/**
+  * Cargo's natural income generation.
+  * Naturally lower than all other departments because they LITERALLY print money.
+  */
 /datum/controller/subsystem/economy/proc/car_payout()
 	var/cargo_cash = 500
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(cargo_cash)
 
+/**
+  * Payout based on crew safety, health, and mood.
+  * Checks through the full list of living players, and obtains their mood. Mood increases departmental earnings.
+  * Then, pays medical based on their percentage of total health, times the alive_human_bounty.
+  * Finally, security is paid based on the number of living crew alive/total crew, multiplied by the crew_safety_bounty.
+  */
 /datum/controller/subsystem/economy/proc/secmedsrv_payout()
 	var/crew
 	var/alive_crew
-	var/dead_monsters
 	var/cash_to_grant
 	for(var/mob/m in GLOB.mob_list)
 		if(isnewplayer(m))
@@ -129,21 +144,19 @@ SUBSYSTEM_DEF(economy)
 							var/mood_dosh = (mood.mood_level / 9) * mood_bounty
 							D.adjust_money(mood_dosh)
 						medical_cash *= (mood.sanity / 100)
-
 					var/datum/bank_account/D = get_dep_account(ACCOUNT_MED)
 					if(D)
 						D.adjust_money(medical_cash)
-		if(ishostile(m))
-			var/mob/living/simple_animal/hostile/H = m
-			if(H.stat == DEAD && (H.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
-				dead_monsters++
 		CHECK_TICK
 	var/living_ratio = alive_crew / crew
-	cash_to_grant = (crew_safety_bounty * living_ratio) + (monster_bounty * dead_monsters)
+	cash_to_grant = (crew_safety_bounty * living_ratio)
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_SEC)
 	if(D)
 		D.adjust_money(min(cash_to_grant, MAX_GRANT_SECMEDSRV))
 
+/**
+  * Science is paid for the number of slimes living at a given time. Remind me to make this something less rudimentry when science has experiments. ~Arcane.
+  */
 /datum/controller/subsystem/economy/proc/sci_payout()
 	var/science_bounty = 0
 	for(var/mob/living/simple_animal/slime/S in GLOB.mob_list)
@@ -154,11 +167,15 @@ SUBSYSTEM_DEF(economy)
 	if(D)
 		D.adjust_money(min(science_bounty, MAX_GRANT_SCI))
 
+/** Payout based on Effort and market ebb/flow.
+  *	For every civilian bounty completed, they make 100 credits plus a random 500-1000.
+  * Rewards participation towards the rest of the crew getting resources, as the control of this budget is the HOP.
+  */
 /datum/controller/subsystem/economy/proc/civ_payout()
-	var/civ_cash = ((rand(1,5) + civ_bounty_tracker) * 500)
+	var/civ_cash = ((rand(1,2) * 500) + (civ_bounty_tracker * 100))
 	var/datum/bank_account/D = get_dep_account(ACCOUNT_CIV)
 	if(D)
-		D.adjust_money(min(civ_cash, MAX_GRANT_CIV))
+		D.adjust_money(civ_cash, MAX_GRANT_CIV)
 
 
 /**
