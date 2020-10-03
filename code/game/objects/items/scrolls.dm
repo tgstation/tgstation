@@ -81,7 +81,7 @@
 	var/list/acceptable_locations = GLOB.teleportlocs
 	for(var/L in acceptable_locations)
 		var/area/T = acceptable_locations[L]
-		if(istype(T, /area/security) || istype(T, /area/shuttle/arrival) || istype(T, /area/crew_quarters/dorms) || istype(T, /area/hydroponics/garden/cornmaze/labyrinth) || istype(T, /area/awaymission/cabin/snowforest/forest)) // areas you aren't allowed to teleport to
+		if(istype(T, /area/security) || istype(T, /area/shuttle/arrival) || istype(T, /area/crew_quarters/dorms) || istype(T, /area/hydroponics/garden/cornmaze) || istype(T, /area/awaymission/cabin/snowforest/forest)) // areas you aren't allowed to teleport to
 			acceptable_locations -= L
 
 	A = input(user, "Area to jump to", "*citrus laugh*", A) as null|anything in acceptable_locations
