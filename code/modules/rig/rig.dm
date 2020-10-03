@@ -68,15 +68,17 @@
 	var/list/initial_modules = list()
 	/// Modules the RIG currently possesses
 	var/list/modules
-	/// PAI inserted in the RIG
-	var/obj/item/paicard/pai
-	/// PAI mob inserted in the RIG
-	var/mob/living/silicon/pai/paimob
+	/// AI mob inhabiting the RIG
+	var/mob/living/silicon/ai/AI
+	/// Prevents relaymove being at zoomin speeds
+	var/movedelay = 0
+	/// Time to add to movedelay var
+	var/movespeed
 	/// Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
 /obj/item/rig/control/Initialize()
-	..()
+	. = ..()
 	START_PROCESSING(SSobj,src)
 	name = "[theme] [initial(name)]"
 	icon_state = "[theme]-[icon_state]"
@@ -120,6 +122,7 @@
 		for(var/obj/item/rig/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
+	movespeed = CONFIG_GET(number/movedelay/run_delay)
 
 
 /obj/item/rig/control/Destroy()
@@ -258,27 +261,9 @@
 			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
-	else if(istype(I, /obj/item/paicard))
-		if(open && !active && !activating && !pai && !paimob)
-			var/obj/item/paicard/card = I
-			card.forceMove(src)
-			pai = card
-			paimob = pai.pai
-			audible_message("<span class='notice'>[src] indicates that [pai] has been succesfully installed.</span>")
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			return TRUE
-		else
-			audible_message("<span class='warning'>[src] indicates that something prevents installing [I].</span>")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-			return FALSE
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
 	..()
-
-/obj/item/rig/control/relaymove(mob/user, direction)
-	if(!istype(user, paimob) || !(locate(/obj/item/rig/module/pai_upgrade) in contents) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
-		return
-	step_towards(wearer, get_step(wearer, direction))
 
 /obj/item/rig/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)

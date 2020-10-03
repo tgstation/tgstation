@@ -40,7 +40,7 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/icon/holo_icon //Default is assigned when AI is created.
-	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
+	var/obj/vehicle/sealed/mecha/controlled_equipment //For controlled_equipment a mech, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	///Used as a fake multitoool in tcomms machinery
@@ -203,7 +203,7 @@
 	malfhack = null
 	current = null
 	Bot = null
-	controlled_mech = null
+	controlled_equipment = null
 	linked_core = null
 	return ..()
 
@@ -442,8 +442,8 @@
 			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
 			return
 
-		if(controlled_mech)
-			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
+		if(controlled_equipment)
+			to_chat(src, "<span class='warning'>You are already loaded into external equipment!</span>")
 			return
 		if(!GLOB.cameranet.checkCameraVis(M))
 			to_chat(src, "<span class='warning'>Exosuit is no longer near active cameras.</span>")

@@ -809,7 +809,7 @@
 			mecha_flags  &= ~SILICON_PILOT
 			AI.forceMove(card)
 			card.AI = AI
-			AI.controlled_mech = null
+			AI.controlled_equipment = null
 			AI.remote_control = null
 			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
@@ -848,7 +848,7 @@
 	mecha_flags |= SILICON_PILOT
 	moved_inside(AI)
 	AI.cancel_camera()
-	AI.controlled_mech = src
+	AI.controlled_equipment = src
 	AI.remote_control = src
 	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a mech somehow.
 	to_chat(AI, AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" :\
@@ -1058,7 +1058,7 @@
 				AI.linked_core = null
 				return
 			to_chat(AI, "<span class='notice'>Returning to core...</span>")
-			AI.controlled_mech = null
+			AI.controlled_equipment = null
 			AI.remote_control = null
 			mob_container = AI
 			newloc = get_turf(AI.linked_core)
