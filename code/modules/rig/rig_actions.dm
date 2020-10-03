@@ -7,6 +7,11 @@
 	..()
 	rig = Target
 
+/datum/action/item_action/rig/Grant(mob/M)
+	if(owner)
+		return
+	..()
+
 /datum/action/item_action/rig/deploy
 	name = "Deploy RIGsuit"
 	desc = "Deploy/Conceal a part of the RIGsuit."
@@ -22,21 +27,21 @@
 		display_names["[piece.name] ([i])"] = REF(piece)
 		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
 		items += list("[piece.name] ([i])" = piece_image)
-	var/pick = show_radial_menu(rig.wearer, rig, items, custom_check = FALSE, require_near = TRUE)
+	var/pick = show_radial_menu(usr, rig, items, custom_check = FALSE, require_near = TRUE)
 	if(!pick)
 		return
 	var/part_reference = display_names[pick]
 	var/obj/item/part = locate(part_reference) in rig.rig_parts
-	if(!istype(part) || rig.wearer.incapacitated() || !rig)
+	if(!istype(part) || usr.incapacitated() || !rig)
 		return
 	if(rig.active || rig.activating)
-		to_chat(rig.wearer, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		to_chat(usr, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
 		playsound(rig, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(part.loc == rig)
-		rig.deploy(part)
+		rig.deploy(usr, part)
 	else
-		rig.conceal(part)
+		rig.conceal(usr, part)
 
 /datum/action/item_action/rig/activate
 	name = "Activate RIGsuit"
@@ -44,7 +49,7 @@
 	button_icon_state = "activate"
 
 /datum/action/item_action/rig/activate/Trigger()
-	rig.toggle_activate()
+	rig.toggle_activate(usr)
 
 /datum/action/item_action/rig/panel
 	name = "RIGsuit Panel"

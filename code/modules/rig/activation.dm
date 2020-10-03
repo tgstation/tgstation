@@ -1,46 +1,46 @@
-/obj/item/rig/control/proc/deploy(part)
+/obj/item/rig/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
-		to_chat(wearer, "<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>")
+		visible_message("<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 		ADD_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
 	else if(piece.loc != src)
-		to_chat(wearer, "<span class='warning'>ERROR: [piece] [piece.p_are()] already deployed.</span>")
+		to_chat(user, "<span class='warning'>ERROR: [piece] [piece.p_are()] already deployed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 	else
-		to_chat(wearer, "<span class='warning'>ERROR: Bodypart clothed.</span>")
+		to_chat(user, "<span class='warning'>ERROR: Bodypart clothed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 
-/obj/item/rig/control/proc/conceal(part)
+/obj/item/rig/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
-	to_chat(wearer, "<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>")
+	visible_message("<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/rig/control/proc/toggle_activate()
+/obj/item/rig/control/proc/toggle_activate(mob/user)
 	for(var/h in rig_parts)
 		var/obj/item/part = h
 		if(part.loc == src)
-			to_chat(wearer, "<span class='warning'>ERROR: Not all parts deployed.</span>")
+			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 	var/list/mobs = list()
 	mobs += wearer
 	if(locked && !active && !allowed(wearer))
-		to_chat(wearer, "<span class='warning'>ERROR: Access level insufficient.</span>")
+		to_chat(user, "<span class='warning'>ERROR: Access level insufficient.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(open)
-		to_chat(wearer, "<span class='warning'>ERROR: Suit panel open. Close before continuing</span>")
+		to_chat(user, "<span class='warning'>ERROR: Suit panel open. Close before continuing</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(activating)
-		to_chat(wearer, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
+		to_chat(user, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	activating = TRUE
-	to_chat(wearer, "<span class='notice'>RIGsuit [active ? "shutting down" : "starting up"]. Please stand still.</span>")
+	to_chat(wearer, "<span class='notice'>RIGsuit [active ? "shutting down" : "starting up"].</span>")
 	if(do_after_mob(wearer,mobs,2 SECONDS,TRUE))
 		to_chat(wearer, "<span class='notice'>The [boots.name] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
 		boots.icon_state = "[theme]-boots[active ? "" : "-sealed"]"

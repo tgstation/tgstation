@@ -18,11 +18,15 @@
 			AI.disconnect_shell()
 			AI.forceMove(card)
 			card.AI = AI
+			for(var/datum/action/action in actions)
+				if(action.owner == AI)
+					action.Remove(AI)
+					qdel(action)
 			AI.controlled_equipment = null
 			AI.remote_control = null
 			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
-			return
+			AI = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
 			var/mob/living/silicon/ai/cardAI = card.AI
@@ -39,21 +43,25 @@
 			cardAI.control_disabled = TRUE
 			cardAI.radio_enabled = TRUE
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [cardAI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+			ai_enter_rig(cardAI)
 			card.AI = null
-	ai_enter_rig(AI)
 
-/obj/item/rig/control/proc/ai_enter_rig(mob/living/silicon/ai/AI)
-	AI.ai_restore_power()
-	AI.cancel_camera()
-	AI.controlled_equipment = src
-	AI.remote_control = src
-	AI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a RIG somehow.
-	to_chat(AI, "<span class='notice'>You have been uploaded to a RIGsuit's onboard system.</span>")
-	for(var/datum/action/action in src.actions)
-		action.Grant(AI)
+/obj/item/rig/control/proc/ai_enter_rig(mob/living/silicon/ai/newAI)
+	newAI.ai_restore_power()
+	newAI.cancel_camera()
+	newAI.controlled_equipment = src
+	newAI.remote_control = src
+	newAI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a RIG somehow.
+	newAI.forceMove(src)
+	AI = newAI
+	to_chat(newAI, "<span class='notice'>You have been uploaded to a RIGsuit's onboard system.</span>")
+	for(var/datum/action/action in actions)
+		var/datum/action/newaction = action.type
+		newaction = new newaction(src)
+		newaction.Grant(newAI)
 
 /obj/item/rig/control/relaymove(mob/user, direction)
-	if(!istype(user,AI) || (movedelay > world.time) || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
-		return
-	step_towards(wearer, get_step(wearer, direction))
-	movedelay = world.time + movespeed
+	if(!COOLDOWN_FINISHED(src, cooldown_rig_move) || user != AI || !wearer || !(wearer.mobility_flags & MOBILITY_STAND))
+		return FALSE
+	COOLDOWN_START(src, cooldown_rig_move, movedelay)
+	return step(wearer, direction)

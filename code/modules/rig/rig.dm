@@ -22,6 +22,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
+	COOLDOWN_DECLARE(cooldown_rig_move)
 	/// How the RIG and things connected to it look
 	var/theme = "standard"
 	/// If the suit is deployed and turned on
@@ -70,10 +71,8 @@
 	var/list/modules
 	/// AI mob inhabiting the RIG
 	var/mob/living/silicon/ai/AI
-	/// Prevents relaymove being at zoomin speeds
+	/// Delay between moves as AI
 	var/movedelay = 0
-	/// Time to add to movedelay var
-	var/movespeed
 	/// Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
 
@@ -122,7 +121,7 @@
 		for(var/obj/item/rig/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
-	movespeed = CONFIG_GET(number/movedelay/run_delay)
+	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 
 /obj/item/rig/control/Destroy()
