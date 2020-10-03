@@ -487,7 +487,7 @@
 
 /obj/structure/fluff/spookedya
 	name = "True Mr. Bones"
-	desc = "You've been spooked, you've been scared by, a smooth skeleton!"
+	desc = "You've been spooked by, you've been scared by, a smooth skeleton!"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "moonspook"
 	max_integrity = 9999
