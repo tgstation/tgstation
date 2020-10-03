@@ -208,6 +208,9 @@
 	for(var/i in SSshuttle.stationary)
 		var/obj/docking_port/stationary/S = i
 		if(S && S.id == check_id)
+			if(S == src)
+				stack_trace("Already registered")
+				unregister()
 			return TRUE
 	return FALSE
 
@@ -227,7 +230,7 @@
 	#endif
 
 /obj/docking_port/stationary/unregister()
-	SSshuttle.stationary -= id
+	SSshuttle.stationary -= src
 
 /obj/docking_port/stationary/Destroy(force)
 	if(force)
@@ -375,7 +378,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/unregister()
-	SSshuttle.mobile -= id
+	SSshuttle.mobile -= src
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
