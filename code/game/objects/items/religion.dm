@@ -402,6 +402,7 @@
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "foammore"
 	inhand_icon_state = "claymore"
+	worn_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/etherealhit.ogg'
