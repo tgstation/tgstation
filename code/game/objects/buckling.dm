@@ -1,5 +1,3 @@
-#define NO_BUCKLE_LYING -1
-
 /atom/movable
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
