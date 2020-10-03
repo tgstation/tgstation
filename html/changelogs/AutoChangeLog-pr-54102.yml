@@ -1,0 +1,7 @@
+author: "MIK517"
+delete-after: True
+changes: 
+  - rscdel: "Condiment containers no longer change icon when their main ingredient changes (eg. salt saker no longer turns into flour sack when you refill it with flour)"
+  - rscadd: "Condiment bottle style can be specified when creating via CondiMaster"
+  - bugfix: "Name given to bottle created through CondiMaster now actually applied to it"
+  - bugfix: "Name given to condiment container by pen persists when container contents changed"
