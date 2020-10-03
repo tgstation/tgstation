@@ -1590,7 +1590,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned/bridge)
 "cv" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1688,11 +1688,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/gps{
-	gpstag = "NTREC1";
-	pixel_x = -9;
-	pixel_y = 7
-	},
 /obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 7
@@ -2151,12 +2146,12 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat{
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -2199,6 +2194,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "do" = (
@@ -2731,6 +2727,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/space/rareseed,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/bar)
 "eh" = (

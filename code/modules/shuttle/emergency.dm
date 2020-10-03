@@ -51,11 +51,14 @@
 	return data
 
 /obj/machinery/computer/emergency_shuttle/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(ENGINES_STARTED) // past the point of no return
 		return
 	if(!IS_DOCKED) // shuttle computer only has uses when onstation
+		return
+	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED) // admins have disabled the shuttle.
 		return
 
 	var/mob/user = usr
@@ -243,7 +246,7 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.adminEmergencyNoRecall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -260,15 +263,28 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/proc/is_hijacked()
+	SSticker.emergency_reason = null
+
+
+/**
+  * Proc that handles checking if the emergency shuttle was successfully hijacked
+  *
+  * Checks for all mobs on the shuttle, checks their status, and checks if they're
+  * borgs or simple animals. Depending on the args, certain mobs may be ignored,
+  * and the presence of other antags may or may not invalidate a hijack.
+  * Args:
+  * filter_by_human, default TRUE, tells the proc that only humans should block a hijack. Borgs and animals are ignored and will not block if this is TRUE.
+  * solo_hijack, default FALSE, tells the proc to fail with multiple hijackers, such as for Highlander mode.
+ */
+/obj/docking_port/mobile/emergency/proc/is_hijacked(filter_by_human = TRUE, solo_hijack = FALSE)
 	var/has_people = FALSE
-	var/hijacker_present = FALSE
+	var/hijacker_count = 0
 	for(var/mob/living/player in GLOB.player_list)
 		if(player.mind)
 			if(player.stat != DEAD)
-				if(issilicon(player)) //Borgs are technically dead anyways
+				if(issilicon(player) && filter_by_human) //Borgs are technically dead anyways
 					continue
-				if(isanimal(player)) //animals don't count
+				if(isanimal(player) && filter_by_human) //animals don't count
 					continue
 				if(isbrain(player)) //also technically dead
 					continue
@@ -282,7 +298,7 @@
 					var/prevent = FALSE
 					for(var/datum/antagonist/A in player.mind.antag_datums)
 						if(A.can_hijack == HIJACK_HIJACKER)
-							hijacker_present = TRUE
+							hijacker_count += 1
 							prevent = FALSE
 							break //If we have both prevent and hijacker antags assume we want to hijack.
 						else if(A.can_hijack == HIJACK_PREVENT)
@@ -290,8 +306,8 @@
 					if(prevent)
 						return FALSE
 
-
-	return has_people && hijacker_present
+	//has people AND either there's only one hijacker or there's any but solo_hijack is disabled
+	return has_people && ((hijacker_count == 1) || (hijacker_count && !solo_hijack))
 
 /obj/docking_port/mobile/emergency/proc/ShuttleDBStuff()
 	set waitfor = FALSE
@@ -387,8 +403,9 @@
 				INVOKE_ASYNC(SSticker, /datum/controller/subsystem/ticker.proc/poll_hearts)
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
-		if(SHUTTLE_STRANDED)
+		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
 			SSshuttle.checkHostileEnvironment()
+
 
 		if(SHUTTLE_ESCAPE)
 			if(sound_played && time_left <= HYPERSPACE_END_TIME)

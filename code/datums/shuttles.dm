@@ -231,13 +231,6 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
-/datum/map_template/shuttle/emergency/discoinferno
-	suffix = "discoinferno"
-	name = "Disco Inferno"
-	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
-	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = 10000
-
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
@@ -378,6 +371,14 @@
 	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
 	credit_cost = 500
+
+/datum/map_template/shuttle/emergency/rollerdome
+	suffix = "rollerdome"
+	name = "Uncle Pete's Rollerdome"
+	description = "Developed by a member of Nanotrasen's R&D crew that claims to have travelled from the year 2028. \
+	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
+	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"

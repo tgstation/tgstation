@@ -22,7 +22,7 @@
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment
-	var/list/cargo = new
+	var/list/cargo
 	/// How much things Ripley can carry in their Cargo Compartment
 	var/cargo_capacity = 15
 
@@ -38,12 +38,14 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
 
 /obj/vehicle/sealed/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage, ignore_threshold = FALSE)
-	if (!enclosed)
-		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH) //if we don't even have an air tank, these two doesn't make a ton of sense.
-	. = ..()
+	if(!enclosed) //if we don't even have an air tank, these two doesn't make a ton of sense.
+		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH)
+	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize()
 	. = ..()
+	//Add ore box to cargo, here because the clarke has a unremovable box
+	LAZYADD(cargo, box)
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 
@@ -51,7 +53,7 @@
 	for(var/atom/movable/A in cargo)
 		A.forceMove(drop_location())
 		step_rand(A)
-	cargo.Cut()
+	QDEL_LIST(cargo)
 	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/mk2
@@ -93,8 +95,8 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/deathripley/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill
-	ME.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake/clamper = new(loc)
+	clamper.attach(src)
 
 /obj/vehicle/sealed/mecha/working/ripley/deathripley/real
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
@@ -105,8 +107,8 @@
 		E.detach()
 		qdel(E)
 	LAZYCLEARLIST(equipment)
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
-	ME.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/clamper = new(loc)
+	clamper.attach(src)
 
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
@@ -129,15 +131,9 @@
 		var/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/P = new
 		P.attach(src)
 
-	//Add ore box to cargo
-	cargo.Add(new /obj/structure/ore_box(src))
-
 	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)//Deletes the beacon so it can't be found easily
-		qdel(B)
-
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
 
@@ -149,27 +145,28 @@
 /obj/vehicle/sealed/mecha/working/ripley/Topic(href, href_list)
 	..()
 	if(href_list["drop_from_cargo"])
-		var/obj/O = locate(href_list["drop_from_cargo"]) in cargo
-		if(O)
-			to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You unload [O].</span>")
-			O.forceMove(drop_location())
-			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]", LOG_MECHA)
-	return
+		var/obj/cargoobj = locate(href_list["drop_from_cargo"]) in cargo
+		if(cargoobj)
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You unload [cargoobj].</span>")
+			cargoobj.forceMove(drop_location())
+			LAZYREMOVE(cargo, cargoobj)
+			if(cargoobj == box)
+				box = null
+			log_message("Unloaded [cargoobj]. Cargo compartment capacity: [cargo_capacity - LAZYLEN(cargo)]", LOG_MECHA)
 
 
 /obj/vehicle/sealed/mecha/working/ripley/contents_explosion(severity, target)
-	for(var/X in cargo)
-		var/obj/O = X
+	for(var/i in cargo)
+		var/obj/cargoobj = i
 		if(prob(30/severity))
-			cargo -= O
-			O.forceMove(drop_location())
-	. = ..()
+			LAZYREMOVE(cargo, cargoobj)
+			cargoobj.forceMove(drop_location())
+	return ..()
 
 /obj/vehicle/sealed/mecha/working/ripley/get_stats_part()
 	var/output = ..()
 	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
-	if(cargo.len)
+	if(LAZYLEN(cargo))
 		for(var/obj/O in cargo)
 			output += "<a href='?src=[REF(src)];drop_from_cargo=[REF(O)]'>Unload</a> : [O]<br>"
 	else
@@ -184,7 +181,7 @@
 			return
 		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
 		O.forceMove(drop_location())
-		cargo -= O
+		LAZYREMOVE(cargo, O)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")

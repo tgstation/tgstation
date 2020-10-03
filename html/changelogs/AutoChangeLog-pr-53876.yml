@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Assuming direct control of mobs now appropriately updates the verb tabs. Notably, this fixes ghosts who accept offered AI roles not getting the AI verb tab, but will fix all instances of special verbs not unlocking for every other mob type too."

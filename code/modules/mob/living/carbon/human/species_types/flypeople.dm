@@ -7,7 +7,7 @@
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	meat = /obj/item/food/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
