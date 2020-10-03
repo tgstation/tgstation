@@ -295,7 +295,7 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 
 ////////////////////Excited Group Cleanup///////////////////////
 
-/turf/open/proc/cleanup_group(fire_count)
+/turf/open/proc/cleanup_group(fire_count, breakdown, dismantle)
 	current_cycle = fire_count + 0.5 //It works, I know it's dumb but it works
 
 	//cache for sanic speed
@@ -324,6 +324,9 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 			if(!enemy_excited_group)
 				EG.add_turf(enemy_tile)
 			our_excited_group = excited_group
+	if(our_excited_group)
+		our_excited_group.breakdown_cooldown = breakdown //Update with the old data
+		our_excited_group.dismantle_cooldown = dismantle
 
 //////////////////////////SPACEWIND/////////////////////////////
 
@@ -457,8 +460,9 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 		var/turf/open/T = t
 		T.air.copy_from(A)
 		T.update_visuals()
-		if(!T.excited && poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to slow space + vent things, increase the wait time for breakdowns
+		if(!T.excited && poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to this code and slow space + vent things, increase the wait time for breakdowns
 			SSair.add_to_active(T, FALSE) //Maybe check molar diff or something? IDK
+
 	if(roundstart)
 		var/datum/gas_mixture/cache = new()
 		cache.copy_from(A)
@@ -489,10 +493,10 @@ GLOBAL_LIST_EMPTY(planetary) //Lets cache static planetary mixes
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.excited_group = null
-		//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
-		if(rebuild_excited_groups && !istype(T.air, /datum/gas_mixture/immutable)) //I want my holes to space consistent you hear me?
-			//There's still some bugs with cleanup, doesn't fully merge properly, but this'll do for now
-			SSair.add_to_cleanup(T) //Poke everybody in the group, just in case
+	//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
+	if(rebuild_excited_groups) //I want my holes to space consistent you hear me?
+		//There's still some bugs with cleanup, doesn't fully merge properly, but this'll do for now
+		SSair.add_to_cleanup(src) //Poke everybody in the group, just in case
 	turf_list.Cut()
 	SSair.excited_groups -= src
 	if(SSair.currentpart == SSAIR_EXCITEDGROUPS)

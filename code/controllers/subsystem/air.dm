@@ -319,12 +319,18 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/open/T = currentrun[currentrun.len]
-		currentrun.len--
-		if (T && !T.excited)
-			T.cleanup_group(fire_count)
-		if (MC_TICK_CHECK)
-			return
+		var/list/turf_packet = currentrun[currentrun.len]
+		var/breakdown = turf_packet[1]
+		var/dismantle = turf_packet[2]
+		var/list/turf_list = turf_packet[3]
+		while(turf_list.len) //The turf list
+			var/turf/open/T = turf_list[turf_list.len]
+			if(T && !istype(T.air, /datum/gas_mixture/immutable))
+				T.cleanup_group(fire_count, breakdown, dismantle)
+			turf_list.len--
+			if (MC_TICK_CHECK)
+				return
+		currentrun.len-- //If we process all the turfs in a packet, del it.
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = FALSE)
 	if (!resumed)
@@ -382,10 +388,9 @@ SUBSYSTEM_DEF(air)
 	else
 		T.requires_activation = TRUE
 
-/datum/controller/subsystem/air/proc/add_to_cleanup(turf/open/T)
-	cleanup_ex_groups += T
-	if(currentpart == SSAIR_EXCITEDCLEANUP)
-		currentrun += T
+/datum/controller/subsystem/air/proc/add_to_cleanup(datum/excited_group/ex_grp)
+	//Store the cooldowns. If we're already doing cleanup, DO NOT add to the currently processing list, infinite loop man bad.
+	cleanup_ex_groups += list(list(ex_grp.breakdown_cooldown, ex_grp.dismantle_cooldown, ex_grp.turf_list.Copy()))
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	LAZYINITLIST(queued_for_activation)
