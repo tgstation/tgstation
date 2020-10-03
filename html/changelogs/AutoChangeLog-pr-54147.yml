@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - tweak: "lowered default volume for musical instruments"
