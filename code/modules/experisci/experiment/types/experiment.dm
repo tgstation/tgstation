@@ -32,8 +32,8 @@
   *
   * This proc should be overridden such that the return value is a
   * list of lists, wherein each inner list represents a stage. Stages have
-  * types, see _DEFINES/experisci.dm. Each stage should consist of:
-  * (*stage_type*, *description*, *value* [, *second value for integer type*])
+  * types, see _DEFINES/experisci.dm. Each stage should be constructed using
+  * one of several available macros in that file.
   */
 /datum/experiment/proc/check_progress()
 	. = list()
