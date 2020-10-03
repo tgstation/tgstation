@@ -43,7 +43,6 @@
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
-	SEND_SIGNAL(src, COMSIG_WIPE_BLOOD_DNA)
 	return TRUE
 
 /datum/component/forensics/proc/wipe_fibers()

@@ -132,7 +132,7 @@
 	return
 
 /obj/machinery/gibber/proc/go_out()
-	drop_stored_items()
+	dump_inventory_contents()
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
@@ -157,10 +157,10 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/food/meat/slab/human
 	var/typeofskin
 
-	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/food/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/skin
 	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
@@ -182,7 +182,7 @@
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
-		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
@@ -202,7 +202,7 @@
 	qdel(src.occupant)
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)

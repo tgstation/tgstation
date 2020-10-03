@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Paystands have visible feedback after for payment, making them usable if your id card is muted"

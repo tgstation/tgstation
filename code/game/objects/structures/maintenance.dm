@@ -12,8 +12,8 @@ at the cost of risking a vicious bite.**/
 	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	var/list/loot = list(
-					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton = 35,
-					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 15,
+					/obj/item/food/meat/slab/human/mutant/skeleton = 35,
+					/obj/item/food/meat/slab/human/mutant/zombie = 15,
 					/obj/item/trash/can = 15,
 					/obj/item/clothing/head/helmet/skull = 10,
 					/obj/item/restraints/handcuffs = 4,
@@ -82,8 +82,8 @@ at the cost of risking a vicious bite.**/
 		return ..()
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers))
-		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
-			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+		if(istype(I, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
 			return
 		var/obj/item/reagent_containers/reagent_container = I

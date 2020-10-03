@@ -16,6 +16,7 @@
 /turf/open/CanAtmosPass = ATMOS_PASS_PROC
 /turf/open/CanAtmosPassVertical = ATMOS_PASS_PROC
 
+//Do NOT use this to see if 2 turfs are connected, it mutates state, and we cache that info anyhow. Use TURFS_CAN_SHARE or TURF_SHARES depending on your usecase
 /turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
 	var/opp = REVERSE_DIR(dir)
