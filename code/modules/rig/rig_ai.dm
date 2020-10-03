@@ -13,7 +13,7 @@
 			if(!do_after(user, 50, target = src))
 				return
 			AI.ai_restore_power()//So the AI initially has power.
-			AI.control_disabled = FALSE
+			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
 			AI.disconnect_shell()
 			AI.forceMove(card)
@@ -40,7 +40,7 @@
 				return
 			if(!do_after(user, 50, target = src))
 				return
-			cardAI.control_disabled = TRUE
+			cardAI.control_disabled = FALSE
 			cardAI.radio_enabled = TRUE
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [cardAI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			ai_enter_rig(cardAI)
