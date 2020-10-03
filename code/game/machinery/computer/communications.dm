@@ -60,8 +60,38 @@
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
+/obj/machinery/computer/communications/ui_act(action, list/params)
+	. = ..()
+	if (!.)
+		return
+
+	. = TRUE
+
+	switch(action)
+		if("toggleAuthentication")
+			// Log out if we're logged in
+			if (authorize_name)
+				authorize_access = null
+				authorize_name = null
+				return
+
+			var/obj/item/card/id/id_card = usr.get_idcard(hand_first = TRUE)
+			if (check_access(id_card))
+				authorize_access = id_card.access
+				authorize_name = "[id_card.registered_name] ([id_card.assignment])"
+				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+
 /obj/machinery/computer/communications/ui_data(mob/user)
-	var/list/data = list()
+	var/list/data = list(
+		"authenticated" = FALSE,
+		"canBuyShuttles" = FALSE,
+		"canMessageAssociated" = FALSE,
+		"canRequestNuke" = FALSE,
+		"canSendToSectors" = FALSE,
+		"emagged" = FALSE,
+		"shuttleCalled" = FALSE,
+		"shuttleLastCalled" = FALSE,
+	)
 
 	var/ui_state = isAI(user) ? ai_state : state
 
