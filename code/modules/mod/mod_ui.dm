@@ -7,14 +7,14 @@
 /obj/item/mod/control/ui_data()
 	var/data = list()
 	data["interface_break"] = interface_break
-	data["malfuction"] = malfunctioning
+	data["malfunction"] = malfunctioning
 	data["open"] = open
 	data["active"] = active
 	data["locked"] = locked
-	data["wearer_name"] = wearer ? wearer.get_id_name("Unknown") : "None"
+	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "None"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "None"
-	data["ai"] = AI
-	data["cell"] = cell
+	data["ai"] = AI ? AI.name : 0
+	data["cell"] = cell?.name
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
 	data["modules"] = LAZYLEN(modules) ? modules : null
 

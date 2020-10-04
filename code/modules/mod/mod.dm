@@ -153,7 +153,8 @@
 		var/chargeremoved = cell_usage
 		for(var/obj/item/mod/module/thingy in modules)
 			chargeremoved += thingy.idle_power_use
-		cell.charge = (min(0, cell.charge -= chargeremoved))
+		if((cell.charge -= chargeremoved) < 0)
+			cell.charge = 0
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()

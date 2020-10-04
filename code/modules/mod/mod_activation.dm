@@ -123,12 +123,8 @@
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			slowdown = slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
-			for(var/h in modules)
-				var/obj/item/mod/module/thingy = h
-				cell_usage += thingy.idle_power_use
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
-			cell_usage = 0
 			slowdown = initial(slowdown)
 		wearer.update_equipment_speed_mods()
 	activating = FALSE
