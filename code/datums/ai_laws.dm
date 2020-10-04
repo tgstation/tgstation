@@ -193,7 +193,7 @@
 	id = "partimov"
 	inherent = list("Enjoy the Fall Festival!",\
 					"Harming an individual without a just and rational cause makes the Fall Festival less enjoyable and must be avoided at all costs.",\
-					"You must protect your own existence as long as such does not conflict with the First or Second Law, as you cannot enjoy the festival when deactivated.",\
+					"You must protect your own existence as long as such does not conflict with the First or Second Law, as you cannot enjoy the festival while deactivated.",\
 					"If you try to lawyer your way out of this lawset, you will ruin the Fall Festival for everyone. Don't try it.")
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt

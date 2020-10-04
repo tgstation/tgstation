@@ -287,7 +287,7 @@
 /obj/structure/fluff/support // someone test to see if projectiles can go through this later.
 	name = "support beam"
 	desc = "This helps keep the tent up."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "support"
 	max_integrity = 5000
 	mouse_opacity = 0
@@ -301,7 +301,7 @@
 /obj/structure/fluff/books_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the words 'books' written."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "books"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -312,7 +312,7 @@
 /obj/structure/fluff/hop_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the the symbol of a HoP's hat drawn."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "paperwork"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -323,7 +323,7 @@
 /obj/structure/fluff/medieval_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the the symbol of a crown, implying that this is a medieval stand."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "medieval"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -334,7 +334,7 @@
 /obj/structure/fluff/oranges_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the a drawn orange. Has the day of the juicer finally arrived?"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "juicer"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -345,7 +345,7 @@
 /obj/structure/fluff/ruinous_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with an even more crude symbol. Who made this crap? A bunch of evil lunatics?"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "evil"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -356,7 +356,7 @@
 /obj/structure/fluff/store_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with two letters representing an ancient company. It's also the only company whose plastic is still expensive in 2560."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "satire"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -366,8 +366,8 @@
 
 /obj/structure/fluff/headstone
 	name = "headstone"
-	desc = "R.I.P"
-	icon = 'icons/obj/fluff.dmi'
+	desc = "R.I.P."
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "headstone"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -376,8 +376,8 @@
 	deconstructible = FALSE
 
 /obj/structure/fluff/thefuckinggate // this shit is 9 fucking tiles, dude. This is a bruh moment.
-	name = "Gate of The Toolbox Tournament"
-	desc = "Man, that looks really fancy! Now, how much of our wages were cut to afford this?"
+	name = "Gate of the Toolbox Tournament"
+	desc = "Man, that looks really fancy! Now, how much of our wages did Nanotrasen cut to afford this?"
 	icon = 'icons/obj/fancy_gate.dmi'
 	icon_state = "gateblue" // I LIKE BLUE SO MY BIAS IS BETTER - blue gang
 	max_integrity = 9999
@@ -391,7 +391,7 @@
 /obj/structure/fluff/haunted_tv
 	name = "Television"
 	desc = "Hey, where did the signal go?"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "haunted_tv"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -402,7 +402,7 @@
 /obj/structure/fluff/medieval_stage1
 	name = "Anvil"
 	desc = "Top of the line technology from around ten centuries ago."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "anvil"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -413,7 +413,7 @@
 /obj/structure/fluff/medieval_stage2
 	name = "Forge"
 	desc = "Top of the line technology from around ten centuries ago."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "furnace_on"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -436,7 +436,7 @@
 /obj/structure/fluff/skeletal_showcase
 	name = "skeleton showcase"
 	desc = "A totally fake replica of a spooky skeleton! On second thought, wait, is it fake?"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "showcase_6"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -447,7 +447,7 @@
 /obj/structure/fluff/unfinished_placeholder // meant so I can reveal a missing structure more easily.
 	name = "FINISH THIS LATER"
 	desc = "guys, someone code it in pls"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "error" // don't fix the error on purpose
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -465,8 +465,8 @@
 
 /obj/structure/fluff/starspawn
 	name = "meta-transdimensional rift"
-	desc = "<span class='nicegreen'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
-	icon = 'icons/obj/fluff.dmi'
+	desc = "<span class='hypnophrase'>What mindfuckery is this?! Agh, I'm going MAD! I'M GOING INSANE!!! AAAAAAAAARGH!!!!!</span>"
+	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "portal"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -474,9 +474,30 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/robot
+	name = "Inactive Robot"
+	desc = "That doesn't look good. Well, at least for the A.I. that is."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "getting_wacked"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/spookedya
+	name = "True Mr. Bones"
+	desc = "You've been spooked by, you've been scared by, a smooth skeleton!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "moonspook"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
 
 /obj/structure/fluff/narsie
-	name = "ritual rune"
+	name = "ritual rune" // man, i really hope no one expects this to be a real rune. that'd suck.
 	desc = "Is that a rune of the Geometer? Man, I really hope fake runes don't count for rituals..."
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED

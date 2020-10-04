@@ -120,7 +120,7 @@
 	harvest_amount_high = 4
 	harvest_time = 50
 	harvest_message_low = "You rip out a pumpkin from the pumpkin vines like a maniac."
-	harvest_message_med = "You delicately remove a few pumpkins from the pumpkin vines. but only a few of them are well grown."
+	harvest_message_med = "You delicately remove a few pumpkins from the pumpkin vines, but only a few of them are well grown."
 	harvest_message_high = "You masterfully harvest a few pumpkins from the pumpkin vines!"
 	regrowth_time_low = 1500
 	regrowth_time_high = 2000
