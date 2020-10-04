@@ -23,6 +23,7 @@
 /obj/structure/statue/proc/can_be_rotated(mob/user)
 	if(!anchored)
 		return TRUE
+	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
 
 /obj/structure/statue/proc/can_user_rotate(mob/user)
 	var/mob/living/L = user
@@ -31,8 +32,6 @@
 			return FALSE
 		else
 			return TRUE
-	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE
 	return FALSE
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
