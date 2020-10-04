@@ -12,14 +12,11 @@
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
-	if(.)
-		if(updating_canmove)
-			owner.update_mobility()
-			if(needs_update_stat || issilicon(owner))
-				owner.update_stat()
+	if(. && updating_canmove && (needs_update_stat || issilicon(owner)))
+		owner.update_stat()
+
 
 /datum/status_effect/incapacitating/on_remove()
-	owner.update_mobility()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 	return ..()
@@ -231,7 +228,6 @@
 		return
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
-	owner.update_mobility()
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
@@ -239,7 +235,6 @@
 /datum/status_effect/grouped/stasis/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
-	owner.update_mobility()
 	update_time_of_death()
 	return ..()
 

@@ -137,7 +137,7 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!isfelinid(H) || H.incapacitated() || H.is_blind())
 			continue
-		if(user.mobility_flags & MOBILITY_STAND)
+		if(user.body_position == STANDING_UP)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")

@@ -218,29 +218,26 @@
 		return P
 
 //Blanket
-/mob/living/proc/AllImmobility(amount, updating)
+/mob/living/proc/AllImmobility(amount)
 	Paralyze(amount, FALSE)
 	Knockdown(amount, FALSE)
 	Stun(amount, FALSE)
 	Immobilize(amount, FALSE)
-	if(updating)
-		update_mobility()
 
-/mob/living/proc/SetAllImmobility(amount, updating)
+
+/mob/living/proc/SetAllImmobility(amount)
 	SetParalyzed(amount, FALSE)
 	SetKnockdown(amount, FALSE)
 	SetStun(amount, FALSE)
 	SetImmobilized(amount, FALSE)
-	if(updating)
-		update_mobility()
 
-/mob/living/proc/AdjustAllImmobility(amount, updating)
+
+/mob/living/proc/AdjustAllImmobility(amount)
 	AdjustParalyzed(amount, FALSE)
 	AdjustKnockdown(amount, FALSE)
 	AdjustStun(amount, FALSE)
 	AdjustImmobilized(amount, FALSE)
-	if(updating)
-		update_mobility()
+
 
 //////////////////UNCONSCIOUS
 /mob/living/proc/IsUnconscious() //If we're unconscious

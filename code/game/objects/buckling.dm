@@ -93,7 +93,6 @@
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.update_mobility()
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled)
 	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
@@ -113,7 +112,6 @@
 		. = buckled_mob
 		buckled_mob.set_buckled(null)
 		buckled_mob.set_anchored(initial(buckled_mob.anchored))
-		buckled_mob.update_mobility()
 		buckled_mob.clear_alert("buckled")
 		buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.total_multiplicative_slowdown()))
 		buckled_mobs -= buckled_mob

@@ -596,8 +596,8 @@
 /**
   * Proc that handles a charge attack windup for a mob.
   */
-/mob/living/simple_animal/hostile/proc/enter_charge(var/atom/target)
-	if((mobility_flags & (MOBILITY_MOVE | MOBILITY_STAND)) != (MOBILITY_MOVE | MOBILITY_STAND) || charge_state)
+/mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
+	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return FALSE
 
 	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
@@ -608,7 +608,7 @@
 /**
   * Proc that throws the mob at the target after the windup.
   */
-/mob/living/simple_animal/hostile/proc/handle_charge_target(var/atom/target)
+/mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
 	charge_state = TRUE
 	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
 	COOLDOWN_START(src, charge_cooldown, charge_frequency)
@@ -648,5 +648,3 @@
 		if(charge_state)
 			charge_state = FALSE
 			update_icons()
-			update_mobility()
-

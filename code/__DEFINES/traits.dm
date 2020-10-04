@@ -76,9 +76,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
-#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
-#define TRAIT_IMMOBILIZED		"immobilized" //Prevents voluntary movement.
-#define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
+// Forces the user to stay unconscious.
+#define TRAIT_KNOCKEDOUT		"knockedout"
+// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED		"immobilized"
+// Prevents voluntary standing or staying up on its own.
+#define TRAIT_FLOORED			"floored"
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED		"handsblocked"
 /// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
@@ -349,3 +352,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HANDCUFFED_TRAIT "handcuffed"
 /// Trait granted by [/obj/item/warpwhistle]
 #define WARPWHISTLE_TRAIT "warpwhistle"
+/// Trait applied by by [/datum/component/soulstoned]
+#define SOULSTONE_TRAIT "soulstone"
+/// Trait applied to slimes by low temperature
+#define SLIME_COLD "slime-cold"
+/// Trait applied to bots by being tipped over
+#define BOT_TIPPED_OVER "bot-tipped-over"
+/// Trait applied to PAIs by being folded
+#define PAI_FOLDED "pai-folded"
+/// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
+#define BRAIN_UNAIDED "brain-unaided"

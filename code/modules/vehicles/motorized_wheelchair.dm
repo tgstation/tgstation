@@ -31,12 +31,11 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-	for(var/atom/movable/A in contents)
-		A.forceMove(T)
-		if(isliving(A))
-			var/mob/living/L = A
-			L.update_mobility()
-	..()
+	for(var/c in contents)
+		var/atom/movable/thing = c
+		thing.forceMove(T)
+	return ..()
+
 
 /obj/vehicle/ridden/wheelchair/motorized/driver_move(mob/living/user, direction)
 	if(istype(user))
@@ -121,11 +120,9 @@
 		new /obj/item/stack/rods(drop_location(), 8)
 		new /obj/item/stack/sheet/metal(drop_location(), 10)
 		var/turf/T = get_turf(src)
-		for(var/atom/movable/A in contents)
-			A.forceMove(T)
-			if(isliving(A))
-				var/mob/living/L = A
-				L.update_mobility()
+		for(var/c in contents)
+			var/atom/movable/thing = c
+			thing.forceMove(T)
 		qdel(src)
 	return TRUE
 

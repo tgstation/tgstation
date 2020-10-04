@@ -584,11 +584,6 @@
 
 	if(!owner)
 		return
-	if(bodypart_disabled)
-		if(!.)
-			owner.update_mobility()
-	else if (.)
-		owner.update_mobility()
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 
@@ -947,7 +942,7 @@
 		var/datum/wound/W = thing
 		bleed_rate += W.blood_flow
 
-	if(owner.mobility_flags & ~MOBILITY_STAND)
+	if(owner.body_position == STANDING_UP)
 		bleed_rate *= 0.75
 
 	if(grasped_by)
