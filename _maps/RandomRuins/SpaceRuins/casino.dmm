@@ -1,0 +1,112 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/closed/mineral/random/no_caves,/area/ruin/space/has_grav/powered/casino)
+"ac" = (/turf/closed/wall/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"ad" = (/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"ae" = (/obj/machinery/light{dir = 1},/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"af" = (/obj/structure/chair/stool,/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"ag" = (/obj/item/kirbyplants/random,/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"ah" = (/obj/structure/chair/stool,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"ai" = (/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aj" = (/obj/machinery/light{dir = 1},/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"ak" = (/turf/open/floor/mineral/diamond,/area/ruin/space/has_grav/powered/casino)
+"al" = (/obj/structure/chair/stool,/turf/open/floor/mineral/diamond,/area/ruin/space/has_grav/powered/casino)
+"am" = (/obj/machinery/roulette,/turf/open/floor/mineral/diamond,/area/ruin/space/has_grav/powered/casino)
+"an" = (/obj/machinery/roulette,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"ao" = (/obj/structure/pillar,/turf/open/floor/mineral/diamond,/area/ruin/space/has_grav/powered/casino)
+"ap" = (/obj/structure/flora/tree/jungle/small,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aq" = (/obj/structure/chair/stool,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"ar" = (/turf/open/floor/brass/north,/area/ruin/space/has_grav/powered/casino)
+"as" = (/obj/item/kirbyplants/random,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"at" = (/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"au" = (/obj/structure/flora/rock/jungle,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"av" = (/obj/structure/pillar/silverpillar,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aw" = (/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"ax" = (/mob/living/simple_animal/butterfly,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"ay" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"az" = (/obj/machinery/computer/slot_machine,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aA" = (/obj/structure/chair/stool,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aB" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aC" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aD" = (/obj/structure/flora/rock/pile/largejungle,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aE" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"aF" = (/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aG" = (/obj/machinery/light{dir = 4},/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aH" = (/obj/machinery/computer/slot_machine,/turf/open/floor/mineral/diamond,/area/ruin/space/has_grav/powered/casino)
+"aI" = (/mob/living/simple_animal/butterfly,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aK" = (/obj/structure/flora/rock/jungle,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aL" = (/obj/structure/flora/ausbushes/genericbush,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aM" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"aN" = (/turf/open/floor/carpet/red,/area/ruin/space/has_grav/powered/casino)
+"aO" = (/obj/machinery/light{dir = 4},/mob/living/simple_animal/butterfly,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aP" = (/obj/structure/fountain,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"aQ" = (/obj/structure/flora/ausbushes/genericbush,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"aR" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aS" = (/mob/living/simple_animal/deer,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aT" = (/obj/structure/flora/tree/jungle,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aU" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aV" = (/obj/machinery/light,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"aW" = (/obj/structure/flora/rock/jungle,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"aX" = (/obj/machinery/light{dir = 8},/turf/open/floor/brass/north,/area/ruin/space/has_grav/powered/casino)
+"aY" = (/obj/machinery/light{dir = 4},/turf/open/floor/brass/north,/area/ruin/space/has_grav/powered/casino)
+"aZ" = (/obj/structure/pillar,/turf/open/floor/light,/area/ruin/space/has_grav/powered/casino)
+"ba" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"bb" = (/obj/item/stack/spacecash/c1000,/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"bc" = (/obj/machinery/door/airlock/external,/obj/effect/mapping_helpers/airlock/cyclelink_helper,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bd" = (/obj/machinery/light{dir = 8},/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"be" = (/obj/machinery/light{dir = 4},/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bf" = (/obj/machinery/door/airlock/external,/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bg" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/space/has_grav/powered/casino)
+"bh" = (/obj/effect/spawner/lootdrop/gambling,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"bi" = (/obj/item/stack/spacecash/c10000,/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"bj" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"bk" = (/obj/item/stack/spacecash/c500,/turf/open/floor/plating/grass,/area/ruin/space/has_grav/powered/casino)
+"bl" = (/obj/effect/spawner/lootdrop/gambling,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bm" = (/obj/item/stack/spacecash/c500,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"bn" = (/obj/effect/decal/remains/human,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"bo" = (/obj/item/stack/spacecash/c200,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bp" = (/obj/effect/spawner/lootdrop/gambling,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"bq" = (/obj/item/stack/spacecash/c200,/turf/open/floor/mineral/silver,/area/ruin/space/has_grav/powered/casino)
+"br" = (/obj/effect/decal/remains/human,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bs" = (/obj/item/stack,/obj/item/stack/spacecash/c500,/turf/open/floor/brass/north,/area/ruin/space/has_grav/powered/casino)
+"bt" = (/obj/machinery/light{dir = 4},/obj/item/stack/spacecash/c500,/obj/item/stack/spacecash/c200,/turf/open/floor/mineral/gold,/area/ruin/space/has_grav/powered/casino)
+"bu" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/floor/carpet/royalblue,/area/crew_quarters/abandoned_gambling_den)
+"bv" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+"bw" = (/mob/living/simple_animal/mouse,/turf/open/floor/carpet/royalblue,/area/ruin/space/has_grav/powered/casino)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabababaaaaabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabababaaaaaaababababababababababaaaaababababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabababababababababababababababababababababababaaaaababaaaaaa
+aaaaaaaaabababababababababababababababababababababababababaaaaabaaaaaa
+aaaaaaabababababababababababababababababababababababababababaaaaaaaaaa
+aaaaaaababababababababababababababababababababababababababababaaaaabaa
+aaaaabababababababacacacacacacacacacacacacacacacabababababababaaaaaaaa
+aaaaababababababacacadaebbafadagahagadafbhajadacacabababababababaaaaaa
+aaaaababababababacbiakakalamalalanalalamalbjakbbacabababababababaaaaaa
+aaaaababababababacadaoapakalaoakaqakaoalakakaoadacababababababababaaaa
+aaaaabababababacacarararararararararararararararacacabababababababaaaa
+aaaaaaababababacasatauatavawawawatawaxawavatbkatasacabababababababaaaa
+aaaaaaababababacayazaAaBaCaDawblatawawaEaFaFaAazaGacabababababababaaaa
+aaabaaababababacaFaHaAaFaFaIawatatatawbwaFapaAazaKacabababababababaaaa
+aaabaaababababacaLatataMaFawatatatatatawaFatatataFacabababababababaaaa
+aaaaabababababacayazaAbmaFawatataNaNatawaFaBaAazaOacababababababaaaaaa
+aaaaabababababacaiazaAbnavawaPatatatataQavaFaAazaFacababababababaaaaaa
+aaababababababacaFatatataFawawatatataEaRaKatataMaFacababababababaaaaaa
+aaababababababacaFazaAaFaSawaTaRatboawawaFaFaAazbpacababababababaaaaaa
+aaababababababacayazaAaFaFaQawaCatawaUaxaFaBaAazaGacababababababaaaaaa
+aaababababababacasataMataFaIbuawatawbvawaFatatataUacababababababaaaaaa
+aaababababababacacaFaFaVavaiaWawatawbwawavaVbqaRacacabababababababaaaa
+aaabababababababacacacacaFblawbrataEawaiaFacacacacababababababababaaaa
+aaababababababababababacacaXarbsarararaYacacabababababababababababaaaa
+aaabababababababababababacadawawaZawawadacababababababababababababaaaa
+aaabababababababababababacagawawatawbragacababababababababababababaaaa
+aaaaababababababababababacbaboawatawawbtacababababababababababababaaaa
+aaaaababababababababababacagawawaZawawagacabababababababababababaaaaaa
+aaaaaaabababababababababacacbcbcacbcbcacacabababababababababababaaaaaa
+aaaaaaaaaaababababababababacbdawacawbeacabababababababababababaaaaaaaa
+aaababababaaabababababababacbfbfacbfbfacabababababababababaaaaaaaaaaaa
+aaaaababaaaaaaaaababababababbgbgabbgbgabababababababababaaaaaaaaabaaaa
+aaaaaaaaaaababaaaaaaaaaaabbgbgbgbgbgbgbgababababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

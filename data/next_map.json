@@ -1,11 +1,10 @@
 {
-    "map_name": "Delta Station",
-    "map_path": "map_files/Deltastation",
-    "map_file": "DeltaStation2.dmm",
+    "map_name": "OmegaStation",
+    "map_path": "map_files/OmegaStation",
+    "map_file": "OmegaStation.dmm",
     "shuttles": {
-	    "emergency": "emergency_delta",
+	    "emergency": "emergency_omega",
 	    "ferry": "ferry_fancy",
-	    "cargo": "cargo_delta",
-	    "whiteship": "whiteship_delta"
+	    "cargo": "cargo_delta"
     }
 }
