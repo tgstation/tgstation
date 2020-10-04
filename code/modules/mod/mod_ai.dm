@@ -1,8 +1,8 @@
-/obj/item/rig/control/transfer_ai(interaction, mob/user, mob/living/silicon/ai/oldAI, obj/item/aicard/card)
+/obj/item/mod/control/transfer_ai(interaction, mob/user, mob/living/silicon/ai/oldAI, obj/item/aicard/card)
 	. = ..()
 	if(!.)
 		return
-	if(!open) //rig must be open
+	if(!open) //mod must be open
 		to_chat(user, "<span class='warning'>[name] must be open in order to allow a transfer.</span>")
 		return
 	switch(interaction)
@@ -44,26 +44,26 @@
 			cardAI.control_disabled = FALSE
 			cardAI.radio_enabled = TRUE
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [cardAI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
-			ai_enter_rig(cardAI)
+			ai_enter_mod(cardAI)
 			card.AI = null
 
-/obj/item/rig/control/proc/ai_enter_rig(mob/living/silicon/ai/newAI)
+/obj/item/mod/control/proc/ai_enter_mod(mob/living/silicon/ai/newAI)
 	newAI.ai_restore_power()
 	newAI.cancel_camera()
 	newAI.controlled_equipment = src
 	newAI.remote_control = src
-	newAI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a RIG somehow.
+	newAI.mobility_flags = ALL //Much easier than adding AI checks! Be sure to set this back to 0 if you decide to allow an AI to leave a MOD somehow.
 	newAI.forceMove(src)
 	AI = newAI
-	to_chat(newAI, "<span class='notice'>You have been uploaded to a RIGsuit's onboard system.</span>")
+	to_chat(newAI, "<span class='notice'>You have been uploaded to a MODsuit's onboard system.</span>")
 	for(var/datum/action/action in actions)
 		var/datum/action/newaction = action.type
 		newaction = new newaction(src)
 		newaction.Grant(newAI)
 
-/obj/item/rig/control/relaymove(mob/user, direction)
-	if(!COOLDOWN_FINISHED(src, cooldown_rig_move) || user != AI || !wearer || !wearer.has_gravity() || !(wearer.mobility_flags & MOBILITY_STAND) || !active)
+/obj/item/mod/control/relaymove(mob/user, direction)
+	if(!COOLDOWN_FINISHED(src, cooldown_mod_move) || user != AI || !wearer || !wearer.has_gravity() || !(wearer.mobility_flags & MOBILITY_STAND) || !active)
 		return FALSE
 	var/timemodifier = (direction in GLOB.cardinals) ? 1 : 2
-	COOLDOWN_START(src, cooldown_rig_move, movedelay * timemodifier + slowdown)
+	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	return step(wearer, direction)

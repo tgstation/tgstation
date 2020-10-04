@@ -1,13 +1,13 @@
-/obj/item/rig/control/proc/choose_deploy(mob/user)
-	if(!LAZYLEN(rig_parts))
+/obj/item/mod/control/proc/choose_deploy(mob/user)
+	if(!LAZYLEN(mod_parts))
 		return
 	if(isAI(user))
 		to_chat(user, "<span class='warning'>You cannot operate this!</span>")
 		return
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/i in 1 to length(rig_parts))
-		var/obj/item/piece = rig_parts[i]
+	for(var/i in 1 to length(mod_parts))
+		var/obj/item/piece = mod_parts[i]
 		display_names["[piece.name] ([i])"] = REF(piece)
 		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
 		items += list("[piece.name] ([i])" = piece_image)
@@ -15,7 +15,7 @@
 	if(!pick)
 		return
 	var/part_reference = display_names[pick]
-	var/obj/item/part = locate(part_reference) in rig_parts
+	var/obj/item/part = locate(part_reference) in mod_parts
 	if(!istype(part) || user.incapacitated())
 		return
 	if(active || activating)
@@ -27,12 +27,12 @@
 	else
 		conceal(user, part)
 
-/obj/item/rig/control/proc/deploy(mob/user, part)
+/obj/item/mod/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
 		visible_message("<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-		ADD_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
+		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	else if(piece.loc != src)
 		to_chat(user, "<span class='warning'>ERROR: [piece] [piece.p_are()] already deployed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
@@ -40,15 +40,15 @@
 		to_chat(user, "<span class='warning'>ERROR: Bodypart clothed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 
-/obj/item/rig/control/proc/conceal(mob/user, part)
+/obj/item/mod/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
-	REMOVE_TRAIT(piece, TRAIT_NODROP, RIG_TRAIT)
+	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
 	visible_message("<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/rig/control/proc/toggle_activate(mob/user)
-	for(var/h in rig_parts)
+/obj/item/mod/control/proc/toggle_activate(mob/user)
+	for(var/h in mod_parts)
 		var/obj/item/part = h
 		if(part.loc == src)
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
@@ -69,7 +69,7 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	activating = TRUE
-	to_chat(wearer, "<span class='notice'>RIGsuit [active ? "shutting down" : "starting up"].</span>")
+	to_chat(wearer, "<span class='notice'>MODsuit [active ? "shutting down" : "starting up"].</span>")
 	if(do_after_mob(wearer,mobs,2 SECONDS,TRUE))
 		to_chat(wearer, "<span class='notice'>The [boots.name] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
 		boots.icon_state = "[theme]-boots[active ? "" : "-sealed"]"
@@ -121,7 +121,7 @@
 			slowdown = slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 			for(var/h in modules)
-				var/obj/item/rig/module/thingy = h
+				var/obj/item/mod/module/thingy = h
 				cell_usage += thingy.idle_power_use
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
