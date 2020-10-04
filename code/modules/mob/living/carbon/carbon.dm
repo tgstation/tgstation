@@ -542,12 +542,17 @@
 	if(dna)
 		dna.real_name = real_name
 
-/mob/living/carbon/update_mobility()
+
+/mob/living/carbon/set_lying_angle(new_lying)
 	. = ..()
-	if(!(mobility_flags & MOBILITY_STAND))
-		add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
-	else
-		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+	if(isnull(.))
+		return
+	switch(lying_angle)
+		if(90, 270)
+			add_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+		else
+			remove_movespeed_modifier(/datum/movespeed_modifier/carbon_crawling)
+
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
@@ -859,10 +864,6 @@
 	update_mobility()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
-	if(reagents)
-		reagents.clear_reagents()
-		for(var/addi in reagents.addiction_list)
-			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -881,8 +882,7 @@
 		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
-		if(reagents)
-			reagents.addiction_list = list()
+	clear_addictions()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
@@ -1286,7 +1286,5 @@
 	if(.)
 		if(!handcuffed)
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
-			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, HANDCUFFED_TRAIT)
 	else if(handcuffed)
 		ADD_TRAIT(src, TRAIT_RESTRAINED, HANDCUFFED_TRAIT)
-		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, HANDCUFFED_TRAIT)

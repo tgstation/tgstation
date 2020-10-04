@@ -241,9 +241,7 @@
 	var/arena_loaded = FALSE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	if(SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM]
 
 /datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
 	. = ..()
@@ -327,6 +325,10 @@
 	description = "Looks like this shuttle may have wandered into the darkness between the stars on route to the station. Let's not think too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive constructs. Cult mobs will automatically be sentienced by fun balloon. \
 	Cloning pods in 'medbay' area are showcases and nonfunctional."
+	credit_cost = 6667
+
+/datum/map_template/shuttle/emergency/narnar/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR]
 
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
@@ -371,6 +373,14 @@
 	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
 	credit_cost = 500
+
+/datum/map_template/shuttle/emergency/rollerdome
+	suffix = "rollerdome"
+	name = "Uncle Pete's Rollerdome"
+	description = "Developed by a member of Nanotrasen's R&D crew that claims to have travelled from the year 2028. \
+	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
+	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -506,9 +516,7 @@
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
-	if(SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"

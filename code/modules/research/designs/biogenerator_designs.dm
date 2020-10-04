@@ -63,7 +63,7 @@
 	id = "mcube"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 250)
-	build_path = /obj/item/reagent_containers/food/snacks/monkeycube
+	build_path = /obj/item/food/monkeycube
 	category = list("initial","Food")
 
 /datum/design/ez_nut   //easy nut :)

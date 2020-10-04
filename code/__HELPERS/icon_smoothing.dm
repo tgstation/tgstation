@@ -341,15 +341,17 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	set_smoothed_icon_state(new_junction)
 
 
-///Changes the icon state based on the new junction bitmask.
+///Changes the icon state based on the new junction bitmask. Returns the old junction value.
 /atom/proc/set_smoothed_icon_state(new_junction)
+	. = smoothing_junction
 	smoothing_junction = new_junction
 	icon_state = "[base_icon_state]-[smoothing_junction]"
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
-	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && new_junction != smoothing_junction)
-		switch(smoothing_junction)
+	. = ..()
+	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		switch(new_junction)
 			if(
 				NORTH_JUNCTION|WEST_JUNCTION,
 				NORTH_JUNCTION|EAST_JUNCTION,
@@ -361,7 +363,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 				SOUTH_JUNCTION|EAST_JUNCTION|SOUTHEAST_JUNCTION
 				)
 				icon_state = "[base_icon_state]-[smoothing_junction]-d"
-				if(!fixed_underlay) // Mutable underlays?
+				if(!fixed_underlay && new_junction != .) // Mutable underlays?
 					var/junction_dir = reverse_ndir(smoothing_junction)
 					var/turned_adjacency = REVERSE_DIR(junction_dir)
 					var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
@@ -375,7 +377,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 									underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
 									underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
 					underlays = list(underlay_appearance)
-	return ..()
 
 
 /turf/open/floor/set_smoothed_icon_state(new_junction)
