@@ -33,6 +33,13 @@
 	toolspeed = 0.1
 	tool_behaviour = null
 
+/obj/item/debug/omnitool/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("An omnitool was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/debug/omnitool/examine()
 	. = ..()
 	. += " The mode is: [tool_behaviour]"
