@@ -116,7 +116,7 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = 150
-	contains = list(/obj/item/valentine, /obj/item/reagent_containers/food/snacks/candyheart)
+	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"

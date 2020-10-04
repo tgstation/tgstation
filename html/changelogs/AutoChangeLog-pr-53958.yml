@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Arcade machines no longer require deconstructing and reconstructing in order to work."

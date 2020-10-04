@@ -375,7 +375,7 @@
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 
@@ -413,7 +413,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 
