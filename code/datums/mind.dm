@@ -78,6 +78,8 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
+	var/list/disorder_list = list()
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
@@ -111,6 +113,8 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
+
+
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	var/mob/living/old_current = current
 	if(current)
@@ -123,6 +127,8 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
+
+	transfer_disorders(old_current,current)
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
@@ -763,6 +769,27 @@
 	if(G)
 		G.reenter_corpse()
 
+/datum/mind/proc/add_disorder(datum/disorder/_disorder,permanent = FALSE)
+	var/datum/disorder/disorder = new _disorder()
+	if(is_type_in_list(disorder,disorder_list))
+		return FALSE
+	disorder.on_add(current)
+	disorder.permanent = permanent
+	disorder_list +=  disorder
+	return TRUE
+
+/datum/mind/proc/remove_disorder(datum/disorder/_disorder,force = FALSE)
+	for(var/D in disorder_list)
+		var/datum/disorder/disorder = D
+		//strict type check
+		if(disorder.type == _disorder)
+			if(disorder.permanent && !force)
+				return FALSE
+			disorder.on_remove(current)
+			disorder_list -= disorder
+			qdel(disorder)
+			return TRUE
+	return FALSE
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
@@ -778,6 +805,16 @@
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE
+
+/datum/mind/proc/transfer_disorders(mob/living/old_character,mob/living/new_character)
+	for(var/D in disorder_list)
+		var/datum/disorder/disorder = D
+
+		if(ishuman(old_character))
+			disorder.on_remove(old_character)
+
+		if(ishuman(new_character))
+			disorder.on_add(new_character)
 
 /mob/dead/new_player/sync_mind()
 	return

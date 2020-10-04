@@ -650,7 +650,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NODROP))
+	if(HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(thrower,TRAIT_TENSED_ARMS))
 		return
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
@@ -930,7 +930,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
 	SHOULD_BE_PURE(TRUE)
-	return !HAS_TRAIT(src, TRAIT_NODROP)
+	return !(HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(owner,TRAIT_TENSED_ARMS))
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
@@ -947,7 +947,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
-	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
+	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP) || HAS_TRAIT(user,TRAIT_TENSED_ARMS))
 		return
 	user.dropItemToGround(src, silent = TRUE)
 	if(throwforce && HAS_TRAIT(user, TRAIT_PACIFISM))

@@ -203,3 +203,7 @@
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/collectors_satisfacton
+	description = "<span class='nicegreen'>I feel satisfied with my collection.</span>\n"
+	mood_change = 6

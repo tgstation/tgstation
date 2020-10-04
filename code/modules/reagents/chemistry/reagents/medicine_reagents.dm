@@ -584,9 +584,11 @@
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
+	ADD_TRAIT(L,TRAIT_RELAXED,type)
 	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_RELAXED,type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	..()
 
@@ -1406,3 +1408,96 @@
 	glass_desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
 	metabolization_rate = REAGENTS_METABOLISM
 	clot_coeff_per_wound = 0.6
+
+/datum/reagent/medicine/alprazolam
+	name = "Alprazolam"
+	description = "A very old, but useful medicine. It was used ages ago to relax mental patients and help ease psychiatric problems. It is a very strong benzodiazepine, careful with it's dosing!"
+	color = "#98d1e2"
+	reagent_state = LIQUID
+	overdose_threshold = 10
+	metabolization_rate = 0.5
+
+/datum/reagent/medicine/alprazolam/on_mob_metabolize(mob/living/L)
+	. = ..()
+
+	ADD_TRAIT(L,TRAIT_RELAXED,type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+
+/datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_RELAXED,type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	..()
+
+/datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(current_cycle >= 3)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_heavy, name)
+	switch(current_cycle)
+		if(9)
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
+		if(10 to 20)
+			M.drowsyness += 1
+		if(21 to INFINITY)
+			M.Sleeping(10, 0)
+			. = 1
+
+/datum/reagent/medicine/morphine/overdose_process(mob/living/M)
+	. = ..()
+	if(prob(66))
+		M.drop_all_held_items()
+		M.Dizzy(2)
+		M.Jitter(2)
+
+/datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
+	. = ..()
+	if(prob(66))
+		M.drop_all_held_items()
+		M.Jitter(2)
+
+/datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
+	. = ..()
+	if(prob(66))
+		M.drop_all_held_items()
+		M.adjustToxLoss(1*REM, 0)
+		. = 1
+		M.Dizzy(3)
+		M.Jitter(3)
+
+/datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
+	. = ..()
+	if(prob(66))
+		M.drop_all_held_items()
+		M.adjustToxLoss(2*REM, 0)
+		. = 1
+		M.Dizzy(4)
+		M.Jitter(4)
+
+/datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
+	. = ..()
+	if(prob(66))
+		M.drop_all_held_items()
+		M.adjustToxLoss(3*REM, 0)
+		. = 1
+		M.Dizzy(5)
+		M.Jitter(5)
+
+/datum/reagent/medicine/lithium_carbonate
+	name = "Lithium Carbonate"
+	description = "Powerful, yet so dangerous. This chemical was used to treat the most severe of mental disorders, but due to it's side effects it was removed from the shelves. Well NT has a <i>really</i> big backup of that chemical, so they sent you some."
+	color = "#98d1e2"
+	reagent_state = LIQUID
+	overdose_threshold = 20
+	metabolization_rate = 2
+
+//Works exactly the same way syriniver does
+/datum/reagent/medicine/lithium_carbonate/on_transfer(atom/A, methods, trans_volume)
+	if(!(methods & INGEST) || !iscarbon(A))
+		return
+	var/mob/living/carbon/C = A
+	if((L.organ_flags & ORGAN_FAILING) || !L)
+		return
+	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
+	C.reagents.remove_reagent(/datum/reagent/medicine/lithium_carbonate, conversion_amount)
+	C.reagents.add_reagent(/datum/reagent/medicine/lithium_carbonate_metabolite, conversion_amount)
+	..()
+

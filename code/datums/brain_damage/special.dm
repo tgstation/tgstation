@@ -159,13 +159,13 @@
 
 	//Check main hand
 	var/obj/item/held_item = owner.get_active_held_item()
-	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP)))
+	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP) || HAS_TRAIT(owner,TRAIT_TENSED_ARMS)))
 		entangle(held_item)
 		return
 
 	//Check off hand
 	held_item = owner.get_inactive_held_item()
-	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP)))
+	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP) || HAS_TRAIT(owner,TRAIT_TENSED_ARMS)))
 		entangle(held_item)
 		return
 

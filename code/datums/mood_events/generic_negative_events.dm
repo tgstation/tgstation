@@ -254,3 +254,12 @@
 /datum/mood_event/bald
 	description ="<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/collectors_itch
+	description = "<span class='warning'>My collection is incomplete!</span>\n"
+	mood_change = -10
+
+/datum/mood_event/anxiety_eyecontact
+	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
+	mood_change = -5
+	timeout = 3 MINUTES

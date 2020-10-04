@@ -4,6 +4,8 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
+	///Mental entropy, signifies how fucked up the person currently is.
+	var/mental_entropy = 0
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 2 //To track what stage of sanity they're on
@@ -11,6 +13,9 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
+	///Trauma level, this thing can only go up and signifies how much bad shit the character has experienced during the round, affects the severity of psychological disorders.
+	var/trauma = 0
+
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -204,6 +209,7 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
@@ -235,6 +241,9 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 1
+
+	//around 0.5 per tick
+	setMentalEntropy(mental_entropy + (SANITY_MAXIMUM/2 - sanity)/150)
 	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)
@@ -399,6 +408,40 @@
 		return
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
+	if(trauma > 5)
+		roll_add_disorder()
+
+/datum/component/mood/proc/setMentalEntropy(num)
+	mental_entropy = clamp(num,-100,100)
+
+	if(mental_entropy > 50 && prob(abs(100*((mental_entropy/100)*(mental_entropy/100)))))
+		roll_add_disorder()
+	if(mental_entropy < 50 && prob(abs(100*((mental_entropy/100)*(mental_entropy/100)))))
+		roll_cure_disorder()
+
+/datum/component/mood/proc/roll_add_disorder()
+	var/mob/living/owner = parent
+	owner.mind.add_disorder(pick(subtypesof(/datum/disorder)))
+	mental_entropy -= 60
+
+/datum/component/mood/proc/roll_cure_disorder()
+	var/mob/living/owner = parent
+	if(!owner.mind || !owner.mind.disorder_list.len)
+		return
+
+	var/list/lst = list()
+	for(var/D in owner.mind.disorder_list)
+		var/datum/disorder/disorder_check = D
+		if(!disorder_check.permanent)
+			lst += disorder_check
+
+	var/datum/disorder/disorder = pick(lst)
+	if(!disorder)
+		return
+
+	mental_entropy += 60
+	owner.mind.remove_disorder(disorder.type)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+

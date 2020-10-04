@@ -63,7 +63,7 @@
 		to_chat(user, "<span class='warning'>There's something in \the [parent].</span>")
 		return
 
-	if(HAS_TRAIT(inserted_item, TRAIT_NODROP))
+	if(HAS_TRAIT(inserted_item, TRAIT_NODROP) || HAS_TRAIT(user,TRAIT_TENSED_ARMS))
 		to_chat(user, "<span class='warning'>\the [inserted_item] is stuck to your hand, you can't put into \the [parent]!</span>")
 		return
 

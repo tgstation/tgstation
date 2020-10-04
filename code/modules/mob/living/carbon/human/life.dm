@@ -71,6 +71,15 @@
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
 
+/mob/living/carbon/human/handle_disorders()
+	. = ..()
+	if(!mind)
+		return
+	for(var/D in mind.disorder_list)
+		var/datum/disorder/disorder = D
+		disorder.on_life()
+
+
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()

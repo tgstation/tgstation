@@ -61,10 +61,13 @@
 		handle_gravity()
 
 		if(stat != DEAD)
+			handle_disorders() // schizophrenia , bulimia , depression
 			handle_traits() // eye, ear, brain damages
 			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	handle_fire()
+
+
 
 	if(machine)
 		machine.check_eye(src)
@@ -86,6 +89,9 @@
 	return
 
 /mob/living/proc/handle_random_events()
+	return
+
+/mob/living/proc/handle_disorders()
 	return
 
 // Base mob environment handler for body temperature
