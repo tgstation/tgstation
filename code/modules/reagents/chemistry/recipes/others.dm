@@ -440,12 +440,12 @@
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
+	var/location = get_turf(M)
 	if(istype(M, /mob/living/carbon))
 		if(istype(M, /mob/living/carbon/monkey))
 			M.gib()
 		else
 			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
-	var/location = get_turf(M)
 	new /mob/living/carbon/monkey(location, TRUE)
 
 //water electrolysis
