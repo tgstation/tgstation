@@ -190,29 +190,23 @@
 		id = "dock"
 	else 
 		port_destinations = id
+
 	if(!name)
 		name = "dock"
-	var/counter = 1
-	var/tmp_id = id
-	var/tmp_name = name
-	while(Check_id(id))
+
+	var/counter = SSshuttle.assoc_stationary[id]
+	if(counter)
 		counter++
-		id = "[tmp_id]_[counter]"
-		name = "[tmp_name] [counter]"
+		SSshuttle.assoc_stationary[id] = counter
+		id = "[id]_[counter]"
+		name = "[name] [counter]"
+	else
+		SSshuttle.assoc_stationary[id] = 1
+
 	if(!port_destinations)
 		port_destinations = id
 
 	SSshuttle.stationary += src
-
-/obj/docking_port/stationary/Check_id(check_id)
-	for(var/i in SSshuttle.stationary)
-		var/obj/docking_port/stationary/S = i
-		if(S && S.id == check_id)
-			if(S == src)
-				stack_trace("Already registered stationary docking_port")
-				unregister()
-			return TRUE
-	return FALSE
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
@@ -356,26 +350,24 @@
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
-/obj/docking_port/mobile/register()
+/obj/docking_port/mobile/register(replace = FALSE)
 	if(!id)
 		id = "shuttle"
+
 	if(!name)
 		name = "shuttle"
-	var/counter = 1
-	var/tmp_id = id
-	var/tmp_name = name	
-	while(Check_id(id))
-		counter++
-		id = "[tmp_id]_[counter]"
-		name = "[tmp_name] [counter]"
-	SSshuttle.mobile += src
 
-/obj/docking_port/mobile/Check_id(check_id)
-	for(var/i in SSshuttle.mobile)
-		var/obj/docking_port/mobile/M = i
-		if(M && M.id == check_id)
-			return TRUE
-	return FALSE
+	if(!replace)
+		var/counter = SSshuttle.assoc_mobile[id]
+		if(counter)
+			counter++
+			SSshuttle.assoc_mobile[id] = counter
+			id = "[id]_[counter]"
+			name = "[name] [counter]"
+		else
+			SSshuttle.assoc_mobile[id] = 1
+
+	SSshuttle.mobile += src
 
 /obj/docking_port/mobile/unregister()
 	SSshuttle.mobile -= src

@@ -12,6 +12,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/beacons = list()
 	var/list/transit = list()
 
+	//Now it only for ID generation
+	var/list/assoc_mobile = list()
+	var/list/assoc_stationary = list()
+
 	var/list/transit_requesters = list()
 	var/list/transit_request_failures = list()
 
