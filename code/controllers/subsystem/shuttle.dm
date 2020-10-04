@@ -64,6 +64,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/turf_reservation/preview_reservation
 
+	var/shuttle_loading
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -880,14 +882,17 @@ SUBSYSTEM_DEF(shuttle)
 					break
 
 		if("load")
-			. = TRUE
-			// If successful, returns the mobile docking port
-			var/obj/docking_port/mobile/mdp = action_load(S)
-			if(mdp)
-				user.forceMove(get_turf(mdp))
-				message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
-				log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
-				SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+			if(S && !shuttle_loading)
+				. = TRUE
+				shuttle_loading = TRUE
+				// If successful, returns the mobile docking port
+				var/obj/docking_port/mobile/mdp = action_load(S)
+				if(mdp)
+					user.forceMove(get_turf(mdp))
+					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
+					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+				shuttle_loading = FALSE
 
 		if("replace")
 			if(existing_shuttle == backup_shuttle)
@@ -895,8 +900,9 @@ SUBSYSTEM_DEF(shuttle)
 				WARNING("The shuttle that the selected shuttle will replace \
 					is the backup shuttle. Backup shuttle is required to be \
 					intact for round sanity.")
-			else if(S)
+			else if(S && !shuttle_loading)
 				. = TRUE
+				shuttle_loading = TRUE
 				// If successful, returns the mobile docking port
 				var/obj/docking_port/mobile/mdp = action_load(S, replace = TRUE)
 				if(mdp)
@@ -904,3 +910,4 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] load/replaced [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+				shuttle_loading = FALSE
