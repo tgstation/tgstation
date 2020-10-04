@@ -1,0 +1,5 @@
+author: "Rohesie"
+delete-after: True
+changes: 
+  - rscadd: "The rest verb works differently now: it will let you set your desired state. If you set it to resting then you'll fall to the floor as soon as you can (such as if you are buckled to a chair and are unbuckled), else you'll try to get up whenever you can. You can also get up while moving (crawling) now."
+  - bugfix: "AIs can no longer pull things."
