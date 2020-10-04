@@ -765,7 +765,7 @@
 /obj/item/clothing/head/helmet/chaplain/knight1
 	name = "holy knight helm"
 	desc = "A great helm with a golden gryphon on top of it. Looks fancy!"
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm1"
 	inhand_icon_state = "knight_templar"
 	worn_x_dimension = 64
@@ -810,7 +810,7 @@
 /obj/item/clothing/head/helmet/chaplain/knight2
 	name = "holy knight helm"
 	desc = "A great helm with a grail, crown, and angelic wings on top of it. Looks fancy!"
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm2"
 	inhand_icon_state = "knight_templar"
 	worn_x_dimension = 64
@@ -855,7 +855,7 @@
 /obj/item/clothing/head/helmet/chaplain/knight3
 	name = "holy knight helm"
 	desc = "A great helm with a cloth covering some of it. Looks fancy!"
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm3"
 	inhand_icon_state = "knight_templar"
 	worn_x_dimension = 64

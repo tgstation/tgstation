@@ -366,7 +366,7 @@
 
 /obj/structure/fluff/headstone
 	name = "headstone"
-	desc = "R.I.P"
+	desc = "R.I.P."
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "headstone"
 	max_integrity = 9999

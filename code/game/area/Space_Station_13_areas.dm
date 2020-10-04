@@ -764,6 +764,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "morgue"
 	ambientsounds = SPOOKY
 
+/area/medical/morgue/hauntedhouse
+	name = "Haunted Manor"
+	icon_state = "hauntedmorgue"
+
+/area/medical/morgue/tele
+	name = "Haunted Manor"
+	icon_state = "spacecontent10"
+
+/area/medical/morgue/field
+	name = "Haunted Woods"
+	icon_state = "morgue"
+
 /area/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
@@ -1019,7 +1031,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "garden"
 
 /area/hydroponics/garden/cornmaze/labyrinth
-	name = "Lost Corn Labyrinth"
+	name = "Corn Labyrinth"
 	icon_state = "danger"
 
 /area/hydroponics/garden/abandoned
