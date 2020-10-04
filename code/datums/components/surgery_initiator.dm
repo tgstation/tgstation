@@ -100,7 +100,7 @@
 					return
 			else if(carbontarget && surgeryinstance_notonmob.requires_bodypart)
 				return
-			if(surgeryinstance_notonmob.lying_required && (livingtarget.mobility_flags & MOBILITY_STAND))
+			if(surgeryinstance_notonmob.lying_required && MOB_IS_HORIZONTAL(livingtarget))
 				return
 			if(!surgeryinstance_notonmob.can_start(user, livingtarget))
 				return

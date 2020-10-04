@@ -373,3 +373,6 @@
 
 /// Returns whether or not the given mob can succumb
 #define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
+
+/// Whether the mob is lying down, aka in a horizontal position. 90 degrees (head facing east) or 270 (facing west) both satisfy this condition.
+#define MOB_IS_HORIZONTAL(mob) (mob.lying_angle == 90 || mob.lying_angle == 270)

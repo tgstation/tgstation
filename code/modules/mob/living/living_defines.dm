@@ -30,7 +30,8 @@
 
 	var/resting = FALSE
 
-	VAR_PROTECTED/lying_angle = 0			///number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
+	/// Number of degrees of rotation of a mob. 0 means no rotation, up-side facing NORTH. 90 means up-side rotated to face EAST, and so on.
+	var/lying_angle = 0
 	var/lying_prev = 0		///last value of lying on update_mobility
 
 	var/hallucination = 0 ///Directly affects how long a mob will hallucinate for
