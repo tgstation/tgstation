@@ -48,6 +48,10 @@
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_icon()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("A welder was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
 
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
