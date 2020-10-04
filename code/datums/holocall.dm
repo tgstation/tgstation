@@ -45,7 +45,7 @@
 
 	for(var/I in callees)
 		var/obj/machinery/holopad/H = I
-		if(!QDELETED(H) && H.is_operational())
+		if(!QDELETED(H) && H.is_operational)
 			dialed_holopads += H
 			if(head_call)
 				if(H.secure)
@@ -178,13 +178,13 @@
 /datum/holocall/proc/Check()
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
-		if(!H.is_operational())
+		if(!H.is_operational)
 			ConnectionFailure(H)
 
 	if(QDELETED(src))
 		return FALSE
 
-	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational() && user.loc == calling_holopad.loc
+	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational && user.loc == calling_holopad.loc
 
 	if(.)
 		if(!connected_holopad)
@@ -237,7 +237,7 @@
 /obj/item/disk/holodisk/Initialize(mapload)
 	. = ..()
 	if(preset_record_text)
-		build_record()
+		INVOKE_ASYNC(src, .proc/build_record)
 
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)

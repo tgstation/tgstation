@@ -105,6 +105,8 @@
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
+	SIGNAL_HANDLER
+
 	if(examining_mob != owner || !triggering_examiner || prob(50))
 		return
 

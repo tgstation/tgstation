@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -362,7 +362,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/breadslice/meat,
+/obj/item/food/breadslice/meat,
 /obj/machinery/light{
 	dir = 8
 	},

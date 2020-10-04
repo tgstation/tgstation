@@ -24,6 +24,7 @@
 		owner.update_stat()
 	return ..()
 
+
 //STUN
 /datum/status_effect/incapacitating/stun
 	id = "stun"
@@ -33,19 +34,45 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
 
 //KNOCKDOWN
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/knockdown/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
 
+/datum/status_effect/incapacitating/immobilized/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/immobilized/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
+
+//PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 
@@ -54,10 +81,15 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
 	return ..()
+
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
@@ -78,11 +110,13 @@
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
+
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
+	tick_interval = 2 SECONDS
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
@@ -103,11 +137,30 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+		tick_interval = -1
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_insomniac)
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_sleepy)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
+	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
+		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+		tick_interval = initial(tick_interval)
 	return ..()
+
+///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
+/datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	tick_interval = -1
+
+///If the mob has the TRAIT_SLEEPIMMUNE but somehow looses it we make him sleep and restart the tick()
+/datum/status_effect/incapacitating/sleeping/proc/on_owner_sleepy(mob/living/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	tick_interval = initial(tick_interval)
 
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
@@ -162,13 +215,24 @@
 	. = ..()
 	if(.)
 		update_time_of_death()
-		owner.reagents?.end_metabolization(owner, FALSE)
-		owner.update_mobility()
+		if(istype(owner, /mob/living/carbon))
+			var/mob/living/carbon/body = owner
+			body.end_metabolization(FALSE)
+		else
+			owner.reagents?.end_metabolization(owner, FALSE)
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	owner.update_mobility()
 
 /datum/status_effect/grouped/stasis/tick()
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	owner.update_mobility()
 	update_time_of_death()
 	return ..()
@@ -325,6 +389,8 @@
 	return ..()
 
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
 	overlays += marked_underlay
 
 /datum/status_effect/eldritch/Destroy()
@@ -610,6 +676,8 @@
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
 	if(!owner.can_hear())
 		return
 	if(hearing_args[HEARING_SPEAKER] == owner)
@@ -844,7 +912,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
-		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+		if(IS_HERETIC(potential_target) || IS_HERETIC_MONSTER(potential_target))
 			continue
 		targets += potential_target
 	if(LAZYLEN(targets))

@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	36
+#define SAVEFILE_VERSION_MAX	37
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -69,6 +69,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(key_bindings["ShiftQ"] == "quick_equip_suit_storage")
 			key_bindings["ShiftQ"] = list("quick_equip_suit_storage")
 
+	if(current_version < 37)
+		if(clientfps == 0)
+			clientfps = -1
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return
@@ -153,8 +156,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
-		
-		
+
+
 
 	//Sanitize
 	asaycolor		= sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
@@ -172,7 +175,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	windowflashing	= sanitize_integer(windowflashing, FALSE, TRUE, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
-	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
+	clientfps		= sanitize_integer(clientfps, -1, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, FALSE, TRUE, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, FALSE, TRUE, initial(auto_fit_viewport))
@@ -188,11 +191,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_keybindings(key_bindings)
-	
+
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
-		
+
 		for (var/slot in S.dir) //but first, update all current character slots.
 			if (copytext(slot, 1, 10) != "character")
 				continue
@@ -291,7 +294,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-	scars_index = rand(1,5)
 
 	//Character
 	READ_FILE(S["real_name"], real_name)
@@ -326,11 +328,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_wings"], features["moth_wings"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
-	READ_FILE(S["scars1"], scars_list["1"])
-	READ_FILE(S["scars2"], scars_list["2"])
-	READ_FILE(S["scars3"], scars_list["3"])
-	READ_FILE(S["scars4"], scars_list["4"])
-	READ_FILE(S["scars5"], scars_list["5"])
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -422,11 +419,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["moth_markings"] 	= sanitize_inlist(features["moth_markings"], GLOB.moth_markings_list, "None")
 
 	persistent_scars = sanitize_integer(persistent_scars)
-	scars_list["1"] = sanitize_text(scars_list["1"])
-	scars_list["2"] = sanitize_text(scars_list["2"])
-	scars_list["3"] = sanitize_text(scars_list["3"])
-	scars_list["4"] = sanitize_text(scars_list["4"])
-	scars_list["5"] = sanitize_text(scars_list["5"])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -484,12 +476,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
-	WRITE_FILE(S["scars1"]						, scars_list["1"])
-	WRITE_FILE(S["scars2"]						, scars_list["2"])
-	WRITE_FILE(S["scars3"]						, scars_list["3"])
-	WRITE_FILE(S["scars4"]						, scars_list["4"])
-	WRITE_FILE(S["scars5"]						, scars_list["5"])
-
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

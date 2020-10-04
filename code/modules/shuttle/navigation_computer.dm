@@ -36,6 +36,14 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
+	if(my_port && my_port.get_docked())
+		my_port.delete_after = TRUE
+		my_port.id = null
+		my_port.name = "Old [my_port.name]"
+		my_port = null
+	else
+		QDEL_NULL(my_port)
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")

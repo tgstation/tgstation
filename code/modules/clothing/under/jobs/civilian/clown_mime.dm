@@ -28,6 +28,9 @@
 	desc = "<i>'HONK!'</i>"
 	icon_state = "clown"
 	inhand_icon_state = "clown"
+/obj/item/clothing/under/rank/civilian/clown/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/under/rank/civilian/clown/blue
 	name = "blue clown suit"

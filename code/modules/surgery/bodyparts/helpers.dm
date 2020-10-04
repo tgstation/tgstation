@@ -10,11 +10,13 @@
 		if(L.body_zone == zone)
 			return L
 
+
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(i)
-		var/obj/item/bodypart/L = hand_bodyparts[i]
-		if(L && !L.disabled)
-			return L
+	if(!i)
+		return FALSE
+	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
+	if(hand_instance && !hand_instance.bodypart_disabled)
+		return hand_instance
 	return FALSE
 
 
@@ -32,12 +34,14 @@
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
+
 /mob/living/carbon/has_left_hand(check_disabled = TRUE)
-	for(var/obj/item/bodypart/L in hand_bodyparts)
-		if(L.held_index % 2)
-			if(!check_disabled || !L.disabled)
-				return TRUE
+	for(var/obj/item/bodypart/hand_instance in hand_bodyparts)
+		if(!(hand_instance.held_index % 2) || (check_disabled && hand_instance.bodypart_disabled))
+			continue
+		return TRUE
 	return FALSE
+
 
 /mob/living/carbon/alien/larva/has_left_hand()
 	return 1
@@ -46,67 +50,18 @@
 /mob/proc/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
+
 /mob/living/carbon/has_right_hand(check_disabled = TRUE)
-	for(var/obj/item/bodypart/L in hand_bodyparts)
-		if(!(L.held_index % 2))
-			if(!check_disabled || !L.disabled)
-				return TRUE
+	for(var/obj/item/bodypart/hand_instance in hand_bodyparts)
+		if(hand_instance.held_index % 2 || (check_disabled && hand_instance.bodypart_disabled))
+			continue
+		return TRUE
 	return FALSE
+
 
 /mob/living/carbon/alien/larva/has_right_hand()
 	return 1
 
-
-
-//Limb numbers
-/mob/proc/get_num_arms(check_disabled = TRUE)
-	return 2
-
-/mob/living/carbon/get_num_arms(check_disabled = TRUE)
-	. = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/affecting = X
-		if(affecting.body_part == ARM_RIGHT)
-			if(!check_disabled || !affecting.disabled)
-				.++
-		if(affecting.body_part == ARM_LEFT)
-			if(!check_disabled || !affecting.disabled)
-				.++
-
-
-//sometimes we want to ignore that we don't have the required amount of arms.
-/mob/proc/get_arm_ignore()
-	return 0
-
-/mob/living/carbon/alien/larva/get_arm_ignore()
-	return 1 //so we can still handcuff larvas.
-
-
-/mob/proc/get_num_legs(check_disabled = TRUE)
-	return 2
-
-/mob/living/carbon/get_num_legs(check_disabled = TRUE)
-	. = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/affecting = X
-		if(affecting.body_part == LEG_RIGHT)
-			if(!check_disabled || !affecting.disabled)
-				.++
-		if(affecting.body_part == LEG_LEFT)
-			if(!check_disabled || !affecting.disabled)
-				.++
-
-//sometimes we want to ignore that we don't have the required amount of legs.
-/mob/proc/get_leg_ignore()
-	return FALSE
-
-/mob/living/carbon/alien/larva/get_leg_ignore()
-	return TRUE
-
-/mob/living/carbon/human/get_leg_ignore()
-	if(movement_type & (FLYING | FLOATING))
-		return TRUE
-	return FALSE
 
 /mob/living/proc/get_missing_limbs()
 	return list()
@@ -134,7 +89,7 @@
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
-		if(affecting && affecting.disabled)
+		if(affecting?.bodypart_disabled)
 			disabled += zone
 	return disabled
 
@@ -143,7 +98,7 @@
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
-		if(affecting && affecting.disabled)
+		if(affecting?.bodypart_disabled)
 			disabled += zone
 	return disabled
 

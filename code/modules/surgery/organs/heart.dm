@@ -16,7 +16,8 @@
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
-	attack_verb = list("beat", "thumped")
+	attack_verb_continuous = list("beats", "thumps")
+	attack_verb_simple = list("beat", "thump")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
 	var/failed = FALSE		//to prevent constantly running failing code
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
@@ -61,6 +62,11 @@
 
 /obj/item/organ/heart/on_life()
 	..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
@@ -92,7 +98,7 @@
 		failed = TRUE
 
 /obj/item/organ/heart/get_availability(datum/species/S)
-	return !(NOBLOOD in S.species_traits)
+	return !(NOBLOOD in S.inherent_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -204,6 +210,11 @@
 
 /obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
@@ -219,7 +230,7 @@
 
 /obj/item/organ/heart/cybernetic/on_life()
 	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.has_reagent(rid))
 		used_dose()
 
 /obj/item/organ/heart/cybernetic/proc/used_dose()

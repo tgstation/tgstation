@@ -146,7 +146,7 @@
 	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(loc)
-	ExtinguishMob()
+	extinguish_mob()
 	forceMove(holder)
 	holder = holder
 	notransform = FALSE

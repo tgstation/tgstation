@@ -6,7 +6,7 @@
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi' //We reuse the normal vent icons!
-	icon_state = "dpvent_map-2"
+	icon_state = "dpvent_map-3"
 
 	//node2 is output port
 	//node1 is input port
@@ -42,7 +42,7 @@
 		var/image/cap = getpipeimage(icon, "dpvent_cap", dir, piping_layer = piping_layer)
 		add_overlay(cap)
 
-	if(!on || !is_operational())
+	if(!on || !is_operational)
 		icon_state = "vent_off"
 	else
 		icon_state = pump_direction ? "vent_out" : "vent_in"
@@ -185,25 +185,25 @@
 
 // Mapping
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer1
-	piping_layer = 1
-	icon_state = "dpvent_map-1"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer2
+	piping_layer = 2
+	icon_state = "dpvent_map-2"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer3
-	piping_layer = 3
-	icon_state = "dpvent_map-3"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer4
+	piping_layer = 4
+	icon_state = "dpvent_map-4"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/on
 	on = TRUE
+	icon_state = "dpvent_map_on-3"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer2
+	piping_layer = 2
 	icon_state = "dpvent_map_on-2"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer1
-	piping_layer = 1
-	icon_state = "dpvent_map_on-1"
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer3
-	piping_layer = 3
-	icon_state = "dpvent_map_on-3"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer4
+	piping_layer = 4
+	icon_state = "dpvent_map_on-4"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
 	id = INCINERATOR_TOXMIX_DP_VENTPUMP
@@ -217,25 +217,25 @@
 	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer1
-	piping_layer = 1
-	icon_state = "dpvent_map-1"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer2
+	piping_layer = 2
+	icon_state = "dpvent_map-2"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer3
-	piping_layer = 3
-	icon_state = "dpvent_map-3"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer4
+	piping_layer = 4
+	icon_state = "dpvent_map-4"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
 	on = TRUE
+	icon_state = "dpvent_map_on-3"
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer2
+	piping_layer = 2
 	icon_state = "dpvent_map_on-2"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer1
-	piping_layer = 1
-	icon_state = "dpvent_map_on-1"
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer3
-	piping_layer = 3
-	icon_state = "dpvent_map_on-3"
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer4
+	piping_layer = 4
+	icon_state = "dpvent_map_on-4"
 
 #undef EXT_BOUND
 #undef INPUT_MIN

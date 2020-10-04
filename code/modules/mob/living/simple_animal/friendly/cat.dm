@@ -45,7 +45,11 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/lay_down)
+	add_cell_sample()
+
+/mob/living/simple_animal/pet/cat/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/cat/update_mobility()
 	..()
@@ -102,7 +106,19 @@
 	speech_span = SPAN_ROBOT
 	speak = list("Meow!", "Purr...", "Tick. Tick. Tick.", "Mrrrow!", "Mrrrp!!", "YOWWWWW", "CUCKOO! CUCKOO!", "Mew?")
 	emote_see = list("shakes its head.", "shivers.", "rolls over and shows its belly.", "rubs against the nearest object.", "kneads the floor.", "plays with its tail.")
+/mob/living/simple_animal/pet/cat/breadcat
+	name = "bread cat"
+	desc = "It's a cat... with a bread!"
+	gender = MALE
+	icon_state = "breadcat"
+	icon_living = "breadcat"
+	icon_dead = "breadcat_dead"
+	collar_type = null
+	held_state = "breadcat"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
+/mob/living/simple_animal/pet/cat/breadcat/add_cell_sample()
+ 	return
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
@@ -114,6 +130,8 @@
 	unique_pet = TRUE
 	held_state = "original"
 
+/mob/living/simple_animal/pet/cat/original/add_cell_sample()
+	return
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -286,7 +304,7 @@
 	maxHealth = 50
 	gender = FEMALE
 	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
 	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
@@ -294,6 +312,9 @@
 	deathmessage = "loses its false life and collapses!"
 	deathsound = "bodyfall"
 	held_state = "cak"
+
+/mob/living/simple_animal/pet/cat/cak/add_cell_sample()
+	return
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

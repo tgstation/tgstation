@@ -22,24 +22,24 @@
 		if("drop")
 			streak = ""
 			drop(A,D)
-			return 1
+			return TRUE
 		if("strike")
 			streak = ""
 			strike(A,D)
-			return 1
+			return TRUE
 		if("kick")
 			streak = ""
 			kick(A,D)
-			return 1
+			return TRUE
 		if("throw")
 			streak = ""
 			throw_wrassle(A,D)
-			return 1
+			return TRUE
 		if("slam")
 			streak = ""
 			slam(A,D)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
@@ -158,11 +158,11 @@
 
 			if (get_dist(A, D) > 1)
 				to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-				return 0
+				return
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "<span class='warning'>You can't throw [D] from here!</span>")
-				return 0
+				return
 
 			A.setDir(turn(A.dir, 90))
 			var/turf/T = get_step(A, A.dir)
@@ -171,7 +171,7 @@
 				D.forceMove(T)
 				D.setDir(get_dir(D, A))
 		else
-			return 0
+			return
 
 		sleep(delay)
 
@@ -180,11 +180,11 @@
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "<span class='warning'>You can't throw [D] from here!</span>")
-			return 0
+			return
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
@@ -198,7 +198,7 @@
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Paralyze, 20))
 	log_combat(A, D, "has thrown with wrestling")
-	return 0
+	return
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
 	set waitfor = FALSE
@@ -247,7 +247,7 @@
 				A.pixel_y = 0
 				D.pixel_x = 0
 				D.pixel_y = 0
-				return 0
+				return
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "<span class='warning'>You can't slam [D] here!</span>")
@@ -255,7 +255,7 @@
 				A.pixel_y = 0
 				D.pixel_x = 0
 				D.pixel_y = 0
-				return 0
+				return
 		else
 			if (A)
 				A.pixel_x = 0
@@ -263,7 +263,7 @@
 			if (D)
 				D.pixel_x = 0
 				D.pixel_y = 0
-			return 0
+			return
 
 		sleep(1)
 
@@ -275,11 +275,11 @@
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "<span class='warning'>You can't slam [D] here!</span>")
-			return 0
+			return
 
 		D.forceMove(A.loc)
 
@@ -318,7 +318,7 @@
 
 
 	log_combat(A, D, "body-slammed")
-	return 0
+	return
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
 	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
@@ -401,12 +401,12 @@
 				A.adjustBruteLoss(rand(10,20))
 				A.Paralyze(60)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
-			return 0
+			return
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			A.pixel_y = 0
 			to_chat(A, "<span class='warning'>You can't drop onto [D] from here!</span>")
-			return 0
+			return
 
 		if(A)
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)

@@ -18,6 +18,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
+	/client/proc/debugstatpanel,
 	/client/proc/fix_air				/*resets air in designated radius to its default atmos composition*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
@@ -74,7 +75,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
-	/client/proc/discord_id_manipulation,
 	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
@@ -125,7 +125,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
-	/client/proc/toggle_hub
+	/client/proc/toggle_hub,
+	/client/proc/toggle_cdn
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -171,12 +172,16 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/validate_cards,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
+	#ifdef TESTING
+	/client/proc/check_missing_sprites,
+	#endif
 	/datum/admins/proc/create_or_modify_area,
 #ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
 	/datum/admins/proc/view_del_failures,
 #endif
-	/client/proc/check_timer_sources
+	/client/proc/check_timer_sources,
+	/client/proc/toggle_cdn
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -236,7 +241,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
-	/client/proc/startSinglo,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
 	/client/proc/enable_debug_verbs,
@@ -257,36 +261,36 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 		var/rights = holder.rank.rights
-		verbs += GLOB.admin_verbs_default
+		add_verb(src, GLOB.admin_verbs_default)
 		if(rights & R_BUILD)
-			verbs += /client/proc/togglebuildmodeself
+			add_verb(src, /client/proc/togglebuildmodeself)
 		if(rights & R_ADMIN)
-			verbs += GLOB.admin_verbs_admin
+			add_verb(src, GLOB.admin_verbs_admin)
 		if(rights & R_BAN)
-			verbs += GLOB.admin_verbs_ban
+			add_verb(src, GLOB.admin_verbs_ban)
 		if(rights & R_FUN)
-			verbs += GLOB.admin_verbs_fun
+			add_verb(src, GLOB.admin_verbs_fun)
 		if(rights & R_SERVER)
-			verbs += GLOB.admin_verbs_server
+			add_verb(src, GLOB.admin_verbs_server)
 		if(rights & R_DEBUG)
-			verbs += GLOB.admin_verbs_debug
+			add_verb(src, GLOB.admin_verbs_debug)
 		if(rights & R_POSSESS)
-			verbs += GLOB.admin_verbs_possess
+			add_verb(src, GLOB.admin_verbs_possess)
 		if(rights & R_PERMISSIONS)
-			verbs += GLOB.admin_verbs_permissions
+			add_verb(src, GLOB.admin_verbs_permissions)
 		if(rights & R_STEALTH)
-			verbs += /client/proc/stealth
+			add_verb(src, /client/proc/stealth)
 		if(rights & R_ADMIN)
-			verbs += GLOB.admin_verbs_poll
+			add_verb(src, GLOB.admin_verbs_poll)
 		if(rights & R_SOUND)
-			verbs += GLOB.admin_verbs_sounds
+			add_verb(src, GLOB.admin_verbs_sounds)
 			if(CONFIG_GET(string/invoke_youtubedl))
-				verbs += /client/proc/play_web_sound
+				add_verb(src, /client/proc/play_web_sound)
 		if(rights & R_SPAWN)
-			verbs += GLOB.admin_verbs_spawn
+			add_verb(src, GLOB.admin_verbs_spawn)
 
 /client/proc/remove_admin_verbs()
-	verbs.Remove(
+	remove_verb(src, list(
 		GLOB.admin_verbs_default,
 		/client/proc/togglebuildmodeself,
 		GLOB.admin_verbs_admin,
@@ -305,14 +309,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		GLOB.admin_verbs_debug_mapping,
 		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
-		)
+		))
 
 /client/proc/hide_verbs()
 	set name = "Adminverbs - Hide All"
 	set category = "Admin"
 
 	remove_admin_verbs()
-	verbs += /client/proc/show_verbs
+	add_verb(src, /client/proc/show_verbs)
 
 	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hide All Adminverbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -322,7 +326,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Adminverbs - Show"
 	set category = "Admin"
 
-	verbs -= /client/proc/show_verbs
+	remove_verb(src, /client/proc/show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>", confidential = TRUE)
@@ -357,6 +361,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
 		body.ghostize(1)
+		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]"	//Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin Ghost") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -483,7 +488,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	switch(choice)
 		if(null)
-			return 0
+			return
 		if("Small Bomb (1, 2, 3, 3)")
 			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
 		if("Medium Bomb (2, 3, 4, 4)")
@@ -701,7 +706,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	holder.deactivate()
 
-
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadminned themselves.")
 	message_admins("[src] deadminned themselves.")
@@ -777,3 +781,9 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+/client/proc/debugstatpanel()
+	set name = "Debug Stat Panel"
+	set category = "Debug"
+
+	src << output("", "statbrowser:create_debug")

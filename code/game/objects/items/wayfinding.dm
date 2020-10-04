@@ -126,7 +126,6 @@
 	name = "wayfinding pinpointer"
 	desc = "A handheld tracking device that points to useful places."
 	icon_state = "pinpointer_way"
-	resistance_flags = NONE
 	var/owner = null
 	var/list/beacons = list()
 	var/roundstart = FALSE

@@ -1320,7 +1320,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/snacks/burger/spell,
+/obj/item/food/burger/spell,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

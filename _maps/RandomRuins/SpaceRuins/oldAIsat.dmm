@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
@@ -13,16 +13,16 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ae" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "af" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "ag" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/oldaisat)
@@ -97,7 +97,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "au" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -119,7 +119,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ay" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel/airless,
@@ -394,7 +394,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bs" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -427,7 +427,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bz" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -474,7 +474,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -661,7 +661,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "cl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -757,7 +757,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "cB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plating,

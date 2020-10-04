@@ -32,24 +32,24 @@
     'border-color': #87ce87,
   ));
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-background': #910101,
+    'background-color': #910101,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #87ce87,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #4a0202,
+    'background-color': #4a0202,
   ));
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #910101,
+    'background-color': #910101,
   ));
 
   .Layout__content {

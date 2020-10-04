@@ -42,14 +42,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
-			opened = 0
+			opened = FALSE
 			update_icons()
 		else
 			if(locked)
 				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened!</span>")
 			else
 				to_chat(user, "<span class='notice'>You open the cover.</span>")
-				opened = 1
+				opened = TRUE
 				update_icons()
 		return
 
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		return
 
-	if (istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))			// trying to unlock the interface with an ID card
+	if (W.GetID())			// trying to unlock the interface with an ID card
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else
@@ -340,8 +340,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-	lawupdate = 0
-	connected_ai = null
+	lawupdate = FALSE
+	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")

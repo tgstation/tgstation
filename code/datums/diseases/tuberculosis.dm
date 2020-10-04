@@ -14,7 +14,10 @@
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
 /datum/disease/tuberculosis/stage_act() //it begins
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2)
 			if(prob(2))
@@ -30,18 +33,18 @@
 				affected_mob.Dizzy(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a sharp pain from your lower chest!</span>")
-				affected_mob.adjustOxyLoss(5)
+				affected_mob.adjustOxyLoss(5, FALSE)
 				affected_mob.emote("gasp")
 			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You feel air escape from your lungs painfully.</span>")
-				affected_mob.adjustOxyLoss(25)
+				affected_mob.adjustOxyLoss(25, FALSE)
 				affected_mob.emote("gasp")
 		if(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>")
-				affected_mob.adjustStaminaLoss(70)
+				affected_mob.adjustStaminaLoss(70, FALSE)
 			if(prob(10))
-				affected_mob.adjustStaminaLoss(100)
+				affected_mob.adjustStaminaLoss(100, FALSE)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
 				affected_mob.AdjustSleeping(100)
 			if(prob(2))
@@ -56,4 +59,3 @@
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.adjust_bodytemperature(40)
-	return

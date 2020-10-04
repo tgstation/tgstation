@@ -1,6 +1,5 @@
 {
   "private": true,
   "name": "common",
-  "version": "4.1.0",
-  "type": "module"
+  "version": "4.2.0"
 }

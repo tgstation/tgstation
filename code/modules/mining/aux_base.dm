@@ -68,7 +68,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	var/datum/browser/popup = new(user, "computer", "base management", 550, 300) //width, height
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 

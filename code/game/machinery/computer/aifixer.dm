@@ -92,7 +92,7 @@
 		switch (occupier.stat)
 			if (CONSCIOUS)
 				. += "ai-fixer-full"
-			if (UNCONSCIOUS)
+			if (UNCONSCIOUS, HARD_CRIT)
 				. += "ai-fixer-404"
 	else
 		. += "ai-fixer-empty"

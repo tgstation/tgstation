@@ -25,8 +25,8 @@
      'color-transparent-text': color.scale($neutral, $lightness: 30%),
    ));
    @include meta.load-css('../components/ProgressBar.scss', $with: (
-     'color-default': $neutral,
-     'color-background': rgba(0, 0, 0, 0.5),
+     'color-default-fill': $neutral,
+     'background-color': rgba(0, 0, 0, 0.5),
    ));
    @include meta.load-css('../components/Section.scss');
 
@@ -34,7 +34,7 @@
    @include meta.load-css('../layouts/Layout.scss');
    @include meta.load-css('../layouts/Window.scss');
    @include meta.load-css('../layouts/TitleBar.scss', $with: (
-     'color-background': color.scale($neutral, $lightness: -25%),
+     'background-color': color.scale($neutral, $lightness: -25%),
    ));
 
    .Layout__content {

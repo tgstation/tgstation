@@ -50,7 +50,7 @@
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
 	trash = /obj/item/trash/sosjerky
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sodiumchloride = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/sodiumchloride = 2)
 	junkiness = 25
 	filling_color = "#8B0000"
 	tastes = list("dried meat" = 1)
@@ -60,7 +60,7 @@
 /obj/item/reagent_containers/food/snacks/sosjerky/healthy
 	name = "homemade beef jerky"
 	desc = "Homemade beef jerky made from the finest space cows."
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	junkiness = 0
 	value = FOOD_FAST
 

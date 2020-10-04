@@ -18,6 +18,9 @@
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
+ 	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	vis_flags = VIS_INHERIT_PLANE
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/static/next_mob_id = 0
@@ -28,6 +31,12 @@
 	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
+	/// List of action speed modifiers applying to this mob
+	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	/// The calculated mob action speed slowdown based on the modifiers list
+	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
@@ -210,4 +219,5 @@
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	///Whether the mob is updating glide size when movespeed updates or not
+	var/updating_glide_size = TRUE

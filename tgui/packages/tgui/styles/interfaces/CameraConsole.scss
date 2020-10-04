@@ -1,6 +1,6 @@
 @use '../base.scss';
 
-$color-background: rgba(0, 0, 0, 0.33) !default;
+$background-color: rgba(0, 0, 0, 0.33) !default;
 
 .CameraConsole__left {
   position: absolute;
@@ -16,7 +16,7 @@ $color-background: rgba(0, 0, 0, 0.33) !default;
   bottom: 0;
   left: base.em(220px);
   right: 0;
-  background-color: $color-background;
+  background-color: $background-color;
 }
 
 .CameraConsole__toolbar {

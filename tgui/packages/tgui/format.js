@@ -94,3 +94,19 @@ export const formatMoney = (value, precision = 0) => {
   }
   return result;
 };
+
+/**
+ * Formats a floating point number as a number on the decibel scale.
+ */
+export const formatDb = value => {
+  const db = 20 * Math.log(value) / Math.log(10);
+  const sign = db >= 0 ? '+' : db < 0 ? '–' : '';
+  let formatted = Math.abs(db);
+  if (formatted === Infinity) {
+    formatted = 'Inf';
+  }
+  else {
+    formatted = toFixed(formatted, 2);
+  }
+  return sign + formatted + ' dB';
+};

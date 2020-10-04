@@ -13,9 +13,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
+	light_system = MOVABLE_LIGHT
+	light_range = 4
+	light_power = 1
+	light_on = FALSE
 	var/on = FALSE
-	var/brightness_on = 4 //range of light when on
-	var/flashlight_power = 1 //strength of the light when on
+
 
 /obj/item/flashlight/Initialize()
 	. = ..()
@@ -23,16 +26,13 @@
 		on = TRUE
 	update_brightness()
 
-/obj/item/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/flashlight/proc/update_brightness(mob/user)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(flashlight_power)
-			set_light(l_range = brightness_on, l_power = flashlight_power)
-		else
-			set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+	set_light_on(on)
+
 
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
@@ -64,7 +64,7 @@
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
-		if(flashlight_power < 1)
+		if(light_power < 1)
 			to_chat(user, "<span class='warning'>\The [src] isn't bright enough to see anything!</span> ")
 			return
 
@@ -169,7 +169,7 @@
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
 	flags_1 = CONDUCT_1
-	brightness_on = 2
+	light_range = 2
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
@@ -192,7 +192,7 @@
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
-	var/uv_cooldown_length = 1 MINUTES
+	var/uv_cooldown_length = 30 SECONDS
 	/// How much sanitization to apply to the burn wound
 	var/uv_power = 1
 
@@ -217,7 +217,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
-	brightness_on = 5 // A little better than the standard flashlight.
+	light_range = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
@@ -229,7 +229,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
-	brightness_on = 5
+	light_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = null
@@ -265,11 +265,12 @@
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = WEIGHT_CLASS_SMALL
-	brightness_on = 7 // Pretty bright.
+	light_range = 7 // Pretty bright.
 	icon_state = "flare"
 	inhand_icon_state = "flare"
 	worn_icon_state = "flare"
 	actions_types = list()
+	/// How many seconds of fuel we have left
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
@@ -279,12 +280,12 @@
 
 /obj/item/flashlight/flare/Initialize()
 	. = ..()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = rand(1600, 2000)
 
-/obj/item/flashlight/flare/process()
+/obj/item/flashlight/flare/process(delta_time)
 	open_flame(heat)
-	fuel = max(fuel - 1, 0)
-	if(!fuel || !on)
+	fuel = max(fuel -= delta_time, 0)
+	if(fuel <= 0 || !on)
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
@@ -313,7 +314,7 @@
 /obj/item/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
-	if(!fuel)
+	if(fuel <= 0)
 		to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 		return
 	if(on)
@@ -325,7 +326,7 @@
 	if(.)
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
-		damtype = "fire"
+		damtype = BURN
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/flare/get_temperature()
@@ -335,7 +336,7 @@
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = WEIGHT_CLASS_BULKY
-	brightness_on = 4
+	light_range = 4
 	icon_state = "torch"
 	inhand_icon_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -351,19 +352,19 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+	light_range = 6			// luminosity when on
 
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
 	desc = "An old lantern that has seen plenty of use."
-	brightness_on = 4
+	light_range = 4
 
 /obj/item/flashlight/lantern/syndicate
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
 	inhand_icon_state = "syndilantern"
-	brightness_on = 10
+	light_range = 10
 
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
@@ -381,12 +382,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
-	brightness_on = 6 //luminosity when on
+	light_range = 6 //luminosity when on
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
-	var/charge_tick = 0
+	var/charge_timer = 0
+	/// How many seconds between each recharge
+	var/charge_delay = 20
 
 /obj/item/flashlight/emp/New()
 	..()
@@ -396,11 +399,11 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/flashlight/emp/process()
-	charge_tick++
-	if(charge_tick < 10)
+/obj/item/flashlight/emp/process(delta_time)
+	charge_timer += delta_time
+	if(charge_timer < charge_delay)
 		return FALSE
-	charge_tick = 0
+	charge_timer -= charge_delay
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 	return TRUE
 
@@ -442,26 +445,30 @@
 	desc = "A military-grade glowstick."
 	custom_price = 50
 	w_class = WEIGHT_CLASS_SMALL
-	brightness_on = 4
+	light_range = 4
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
+	/// How many seconds of fuel we have left
 	var/fuel = 0
 
+
 /obj/item/flashlight/glowstick/Initialize()
-	fuel = rand(1600, 2000)
+	fuel = rand(3200, 4000)
 	set_light_color(color)
-	. = ..()
+	return ..()
+
 
 /obj/item/flashlight/glowstick/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
-/obj/item/flashlight/glowstick/process()
-	fuel = max(fuel - 1, 0)
-	if(!fuel)
+
+/obj/item/flashlight/glowstick/process(delta_time)
+	fuel = max(fuel - delta_time, 0)
+	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
 		update_icon()
@@ -473,22 +480,22 @@
 /obj/item/flashlight/glowstick/update_icon()
 	inhand_icon_state = "glowstick"
 	cut_overlays()
-	if(!fuel)
+	if(fuel <= 0)
 		icon_state = "glowstick-empty"
 		cut_overlays()
-		set_light(0)
+		set_light_on(FALSE)
 	else if(on)
 		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
 		glowstick_overlay.color = color
 		add_overlay(glowstick_overlay)
 		inhand_icon_state = "glowstick-on"
-		set_light(brightness_on)
+		set_light_on(TRUE)
 	else
 		icon_state = "glowstick"
 		cut_overlays()
 
 /obj/item/flashlight/glowstick/attack_self(mob/user)
-	if(!fuel)
+	if(fuel <= 0)
 		to_chat(user, "<span class='notice'>[src] is spent.</span>")
 		return
 	if(on)
@@ -549,30 +556,56 @@
 	name = "disco light"
 	desc = "Groovy..."
 	icon_state = null
-	light_color = COLOR_WHITE
-	brightness_on = 0
-	light_range = 0
+	light_range = 4
 	light_power = 10
 	alpha = 0
 	layer = 0
 	on = TRUE
 	anchored = TRUE
-	var/range = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
+	var/even_cycle = FALSE
+	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
+	var/base_light_range = 4
+
+
+/obj/item/flashlight/spotlight/Initialize(mapload, _light_range, _light_power, _light_color)
+	. = ..()
+	if(!isnull(_light_range))
+		base_light_range = _light_range
+		set_light_range(_light_range)
+	if(!isnull(_light_power))
+		set_light_power(_light_power)
+	if(!isnull(_light_color))
+		set_light_color(_light_color)
+
 
 /obj/item/flashlight/flashdark
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
-	brightness_on = 2.5
-	flashlight_power = -3
+	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
+	light_range = 0
+	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
+	var/dark_light_range = 2.5
+	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
+	var/dark_light_power = -3
+
+
+/obj/item/flashlight/flashdark/update_brightness(mob/user)
+	. = ..()
+	if(on)
+		set_light(dark_light_range, dark_light_power)
+	else
+		set_light(0)
+
 
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
-	brightness_on = 15
-	flashlight_power = 1
+	light_range = 15
+	light_power = 1
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL
 	actions_types = list()

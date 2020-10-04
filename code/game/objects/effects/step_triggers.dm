@@ -56,7 +56,7 @@
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
-	var/stopthrow = 0
+	var/stopthrow = FALSE
 	for(var/obj/effect/step_trigger/thrower/T in orange(2, src))
 		if(AM in T.affecting)
 			return
@@ -82,11 +82,11 @@
 		if(!nostop)
 			for(var/obj/effect/step_trigger/T in get_step(AM, direction))
 				if(T.stopper && T != src)
-					stopthrow = 1
+					stopthrow = TRUE
 		else
 			for(var/obj/effect/step_trigger/teleporter/T in get_step(AM, direction))
 				if(T.stopper)
-					stopthrow = 1
+					stopthrow = TRUE
 
 		if(AM)
 			var/predir = AM.dir

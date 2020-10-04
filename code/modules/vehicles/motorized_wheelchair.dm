@@ -51,7 +51,7 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		if(user.get_num_arms() < arms_required)
+		if(user.usable_hands < arms_required)
 			to_chat(user, "<span class='warning'>You don't have enough arms to operate the motor controller!</span>")
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)

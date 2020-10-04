@@ -24,6 +24,7 @@ export const Knob = props => {
     format,
     maxValue,
     minValue,
+    unclamped,
     onChange,
     onDrag,
     step,
@@ -37,7 +38,7 @@ export const Knob = props => {
     fillValue,
     color,
     ranges = {},
-    size,
+    size = 1,
     bipolar,
     children,
     ...rest
@@ -50,6 +51,7 @@ export const Knob = props => {
         format,
         maxValue,
         minValue,
+        unclamped,
         onChange,
         onDrag,
         step,
@@ -79,7 +81,7 @@ export const Knob = props => {
         const effectiveColor = color
           || keyOfMatchingRange(fillValue ?? value, ranges)
           || 'default';
-        const rotation = (scaledDisplayValue - 0.5) * 270;
+        const rotation = Math.min((scaledDisplayValue - 0.5) * 270, 225);
         return (
           <div
             className={classes([
@@ -91,7 +93,7 @@ export const Knob = props => {
             ])}
             {...computeBoxProps({
               style: {
-                'font-size': size + 'rem',
+                'font-size': size + 'em',
                 ...style,
               },
               ...rest,
@@ -127,8 +129,8 @@ export const Knob = props => {
                 className="Knob__ringFill"
                 style={{
                   'stroke-dashoffset': (
-                    ((bipolar ? 2.75 : 2.00) - scaledFillValue * 1.5)
-                      * Math.PI * 50
+                    Math.max(((bipolar ? 2.75 : 2.00) - scaledFillValue * 1.5)
+                      * Math.PI * 50, 0)
                   ),
                 }}
                 cx="50"

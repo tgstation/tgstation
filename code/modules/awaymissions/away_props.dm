@@ -72,6 +72,8 @@
 		update_openspace()
 
 /obj/structure/pitgrate/proc/OnButtonPressed(datum/source,obj/machinery/button/button)
+	SIGNAL_HANDLER
+
 	if(button.id == id) //No range checks because this is admin abuse mostly.
 		toggle()
 

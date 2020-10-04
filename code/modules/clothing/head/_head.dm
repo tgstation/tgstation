@@ -1,7 +1,7 @@
 /obj/item/clothing/head
 	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
-	icon_state = "top_hat"
+	icon_state = "tophat"
 	inhand_icon_state = "that"
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD

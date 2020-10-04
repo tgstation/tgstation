@@ -8,7 +8,7 @@
 	throw_range = 7
 	force = 4
 	custom_materials = list(/datum/material/iron=2000)
-	clumsy_check = 0
+	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
@@ -18,6 +18,7 @@
 /obj/item/gun/syringe/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
+	recharge_newshot()
 
 /obj/item/gun/syringe/handle_atom_del(atom/A)
 	. = ..()
@@ -44,7 +45,7 @@
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return 0
+		return FALSE
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
 
@@ -95,6 +96,7 @@
 	force = 2 //Also very weak because it's smaller
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
+	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"

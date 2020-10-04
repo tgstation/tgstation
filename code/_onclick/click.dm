@@ -109,10 +109,6 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(ismecha(loc))
-		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
-
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		RestrainedClickOn(A)
@@ -349,14 +345,14 @@
 	var/turf/T = get_turf(src)
 	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
 		user.listed_turf = T
-		user.client.statpanel = T.name
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
 /// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
 /atom/proc/AltClickNoInteract(mob/user, atom/A)
 	var/turf/T = get_turf(A)
 	if(T && user.TurfAdjacent(T))
 		user.listed_turf = T
-		user.client.statpanel = T.name
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)

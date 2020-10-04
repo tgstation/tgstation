@@ -29,15 +29,21 @@
 	expire = _expire
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	if(!(allowed_slots & slot)) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, _psychic, chargecost, self, list/protection_sources)
+	SIGNAL_HANDLER
+
 	if(((_magic && magic) || (_holy && holy) || (_psychic && psychic)) && (!self || blocks_self))
 		protection_sources += parent
 		reaction?.Invoke(user, chargecost)

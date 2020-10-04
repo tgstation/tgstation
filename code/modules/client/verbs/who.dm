@@ -20,7 +20,7 @@
 				else
 					entry += " - Playing as [C.mob.real_name]"
 					switch(C.mob.stat)
-						if(UNCONSCIOUS)
+						if(UNCONSCIOUS, HARD_CRIT)
 							entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 						if(DEAD)
 							if(isobserver(C.mob))

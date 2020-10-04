@@ -55,7 +55,7 @@
 					dat += {"
 
 		<head>
-			<script src="jquery.min.js"></script>
+			<script src="[SSassets.transport.get_asset_url("jquery.min.js")]"></script>
 			<script type='text/javascript'>
 
 				function updateSearch(){
@@ -258,7 +258,6 @@
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
@@ -856,12 +855,11 @@ What a mess.*/
 			continue
 
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
-	if(user)
-		if(authenticated)
-			if(user.canUseTopic(src, !issilicon(user)))
-				if(!trim(message1))
-					return 0
-				if(!record1 || record1 == active1)
-					if(!record2 || record2 == active2)
-						return 1
-	return 0
+	if(user && authenticated)
+		if(user.canUseTopic(src, !issilicon(user)))
+			if(!trim(message1))
+				return FALSE
+			if(!record1 || record1 == active1)
+				if(!record2 || record2 == active2)
+					return TRUE
+	return FALSE

@@ -19,8 +19,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	wound_bonus = -30
-	bare_wound_bonus = 30
+	wound_bonus = -10
+	bare_wound_bonus = 20
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 	var/drawing_rune = FALSE
@@ -43,10 +43,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
-	wound_bonus = -80
-	bare_wound_bonus = 30
+	wound_bonus = -50
+	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
 /obj/item/melee/cultblade/Initialize()
 	. = ..()
@@ -92,8 +93,11 @@
 	throw_speed = 1
 	throw_range = 3
 	sharpness = SHARP_EDGED
+	light_system = MOVABLE_LIGHT
+	light_range = 4
 	light_color = COLOR_RED
-	attack_verb = list("cleaved", "slashed", "tore", "lacerated", "hacked", "ripped", "diced", "carved")
+	attack_verb_continuous = list("cleaves", "slashes", "tears", "lacerates", "hacks", "rips", "dices", "carves")
+	attack_verb_simple = list("cleave", "slash", "tear", "lacerate", "hack", "rip", "dice", "carve")
 	icon_state = "cultbastard"
 	inhand_icon_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -111,11 +115,11 @@
 
 /obj/item/cult_bastard/Initialize()
 	. = ..()
-	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
 	AddComponent(/datum/component/butchering, 50, 80)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
 
 /obj/item/cult_bastard/examine(mob/user)
 	. = ..()
@@ -271,7 +275,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 40, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -284,7 +288,7 @@
 	inhand_icon_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 40,"energy" = 40, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -320,7 +324,7 @@
 	inhand_icon_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 50,"energy" = 50, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
@@ -330,7 +334,7 @@
 	inhand_icon_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = 50, "bullet" = 30, "laser" = 50,"energy" = 50, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 10, "acid" = 10)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -338,8 +342,9 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = "cult_helmet"
-	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
-	brightness_on = 0
+	armor = list(MELEE = 70, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
+	light_system = NO_LIGHT_SUPPORT
+	light_range = 0
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
@@ -349,7 +354,7 @@
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
-	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
+	armor = list(MELEE = 70, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 40, ACID = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/sharpener/cult
@@ -370,7 +375,7 @@
 	icon_state = "cult_armor"
 	inhand_icon_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 50, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
@@ -378,7 +383,7 @@
 	name = "empowered cultist helmet"
 	desc = "Empowered helmet which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list("melee" = 50, "bullet" = 40, "laser" = 50,"energy" = 50, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 50, "acid" = 60)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
@@ -397,8 +402,8 @@
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
@@ -409,14 +414,14 @@
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list("melee" = -45, "bullet" = -45, "laser" = -45,"energy" = -55, "bomb" = -45, "bio" = -45, "rad" = -45, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = -45, RAD = -45, FIRE = 0, ACID = 0)
 	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "Blood-soaked hood infused with dark magic."
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -451,12 +456,16 @@
 	color = "#333333"
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
 
+///how many times can the shuttle be cursed?
+#define MAX_SHUTTLE_CURSES 3
+
 /obj/item/shuttle_curse
 	name = "cursed orb"
-	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
+	desc = "You peer within this smokey orb and glimpse terrible fates befalling the emergency escape shuttle. "
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
-	var/static/curselimit = 0
+	///how many times has the shuttle been cursed so far?
+	var/static/totalcurses = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -464,8 +473,9 @@
 		user.Paralyze(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
-	if(curselimit > 1)
-		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
+	if(totalcurses >= MAX_SHUTTLE_CURSES)
+		to_chat(user, "<span class='warning'>You try to shatter the orb, but it remains as solid as a rock!</span>")
+		to_chat(user, "<span class='danger'><span class='big'>It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.</span></span>")
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		to_chat(user, "<span class='warning'>Nar'Sie is already on this plane, there is no delaying the end of all things.</span>")
@@ -487,10 +497,9 @@
 		SSshuttle.emergency.setTimer(timer)
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
+		totalcurses++
 		to_chat(user, "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>")
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
-		qdel(src)
-		sleep(20)
 		var/static/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death.",
@@ -503,7 +512,15 @@
 		var/message = pick_n_take(curses)
 		message += " The shuttle will be delayed by three minutes."
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
-		curselimit++
+		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.</span></span>")
+		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed one more time.</span></span>")
+		else
+			to_chat(user, "<span class='danger'><span class='big'>You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.</span></span>")
+		qdel(src)
+
+#undef MAX_SHUTTLE_CURSES
 
 /obj/item/cult_shift
 	name = "veil shifter"
@@ -562,7 +579,7 @@
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
 	w_class = WEIGHT_CLASS_SMALL
-	brightness_on = 1
+	light_range = 1
 	icon_state = "torch"
 	inhand_icon_state = "torch"
 	color = "#ff0000"
@@ -626,7 +643,8 @@
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
-	attack_verb = list("attacked", "impaled", "stabbed", "tore", "lacerated", "gored")
+	attack_verb_continuous = list("attacks", "impales", "stabs", "tears", "lacerates", "gores")
+	attack_verb_simple = list("attack", "impale", "stab", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
@@ -644,10 +662,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/cult_spear/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/cult_spear/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/cult_spear/update_icon_state()
@@ -896,7 +918,8 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bumped", "prodded")
+	attack_verb_continuous = list("bumps", "prods")
+	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
 

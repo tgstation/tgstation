@@ -54,7 +54,8 @@ SUBSYSTEM_DEF(timer)
 	bucket_resolution = world.tick_lag
 
 /datum/controller/subsystem/timer/stat_entry(msg)
-	..("B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]")
+	msg = "B:[bucket_count] P:[length(second_queue)] H:[length(hashes)] C:[length(clienttime_timers)] S:[length(timer_id_dict)]"
+	return ..()
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	// Store local references to datum vars as it is faster to access them
@@ -121,7 +122,7 @@ SUBSYSTEM_DEF(timer)
 		if(ctime_timer.flags & TIMER_LOOP)
 			ctime_timer.spent = 0
 			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
-			BINARY_INSERT(ctime_timer, clienttime_timers, datum/timedevent, ctime_timer, timeToRun, COMPARE_KEY)
+			BINARY_INSERT(ctime_timer, clienttime_timers, /datum/timedevent, ctime_timer, timeToRun, COMPARE_KEY)
 		else
 			qdel(ctime_timer)
 
@@ -524,7 +525,7 @@ SUBSYSTEM_DEF(timer)
 	else if (timeToRun >= TIMER_MAX)
 		L = SStimer.second_queue
 	if(L)
-		BINARY_INSERT(src, L, datum/timedevent, src, timeToRun, COMPARE_KEY)
+		BINARY_INSERT(src, L, /datum/timedevent, src, timeToRun, COMPARE_KEY)
 		return
 
 	// Get a local reference to the bucket list, this is faster than referencing the datum

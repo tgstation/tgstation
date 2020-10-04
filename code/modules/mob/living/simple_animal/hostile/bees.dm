@@ -240,6 +240,9 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
+/mob/living/simple_animal/hostile/poison/bees/will_escape_storage()
+	return TRUE
+
 /mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
@@ -270,6 +273,8 @@
 /mob/living/simple_animal/hostile/poison/bees/queen/pollinate()
 	return
 
+/mob/living/simple_animal/hostile/poison/bees/queen/will_escape_storage()
+	return FALSE
 
 /mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
 	if(!B)

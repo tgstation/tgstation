@@ -36,7 +36,7 @@
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	movement_type = FLYING
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -50,6 +50,9 @@
 	temperature = -75
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
+	// Sentient ice demons teleporting has been linked to server crashes
+	if(client)
+		return ..()
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = list()

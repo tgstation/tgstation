@@ -173,7 +173,7 @@
 	icon_state = "henchmen"
 	inhand_icon_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
 
 
 //Reshia
@@ -207,3 +207,9 @@
 			user.set_species(/datum/species/moth)
 			handled = FALSE
 			to_chat(user, "<span class='notice'>You feel a wave of light wash over you!</span.?>")
+
+/obj/item/clothing/under/suit/tuxedo
+	name = "tuxedo"
+	desc = "A formal black tuxedo. It exudes classiness."
+	icon_state = "tuxedo"
+	inhand_icon_state = "tuxedo"

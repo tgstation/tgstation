@@ -48,15 +48,9 @@
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
-	desc = "The nanites purge toxins and chemicals from the host's bloodstream."
+	desc = "The nanites purge toxins and chemicals from the host's bloodstream. Consumes nanites even if it has no effect."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
-
-/datum/nanite_program/purging/check_conditions()
-	var/foreign_reagent = length(host_mob.reagents?.reagent_list)
-	if(!host_mob.getToxLoss() && !foreign_reagent)
-		return FALSE
-	return ..()
 
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -71,7 +65,7 @@
 
 /datum/nanite_program/brain_heal/check_conditions()
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
-		return ..()	
+		return ..()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if ( C.has_trauma_type( resilience = TRAUMA_RESILIENCE_BASIC) )
@@ -132,29 +126,20 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1.5/parts.len, 1.5/parts.len, null, BODYPART_ROBOTIC)) //much faster than organic healing
+			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ROBOTIC)) //much faster than organic healing
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-1.5, TRUE)
-		host_mob.adjustFireLoss(-1.5, TRUE)
+		host_mob.adjustBruteLoss(-1, TRUE)
+		host_mob.adjustFireLoss(-1, TRUE)
 
 /datum/nanite_program/purging_advanced
 	name = "Selective Blood Purification"
 	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
-			The added processing power required to analyze the chemicals severely increases the nanite consumption rate."
+			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Consumes nanites even if it has no effect."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
-
-/datum/nanite_program/purging_advanced/check_conditions()
-	var/foreign_reagent = FALSE
-	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
-		foreign_reagent = TRUE
-		break
-	if(!host_mob.getToxLoss() && !foreign_reagent)
-		return FALSE
-	return ..()
 
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -176,28 +161,19 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(3/parts.len, 3/parts.len, null, BODYPART_ORGANIC))
+			if(L.heal_damage(2/parts.len, 2/parts.len, null, BODYPART_ORGANIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-3, TRUE)
-		host_mob.adjustFireLoss(-3, TRUE)
+		host_mob.adjustBruteLoss(-2, TRUE)
+		host_mob.adjustFireLoss(-2, TRUE)
 
 /datum/nanite_program/brain_heal_advanced
 	name = "Neural Reimaging"
-	desc = "The nanites are able to backup and restore the host's neural connections, potentially replacing entire chunks of missing or damaged brain matter."
+	desc = "The nanites are able to backup and restore the host's neural connections, potentially replacing entire chunks of missing or damaged brain matter. Consumes nanites even if it has no effect."
 	use_rate = 3
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
-
-/datum/nanite_program/brain_heal_advanced/check_conditions()
-	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
-		return ..()	
-	if(iscarbon(host_mob))
-		var/mob/living/carbon/C = host_mob
-		if ( C.has_trauma_type( resilience = TRAUMA_RESILIENCE_LOBOTOMY) )
-			return ..()
-	return FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)

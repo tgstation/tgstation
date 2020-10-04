@@ -3,10 +3,10 @@
 	desc = "Puts reagents into containers, like bottles and beakers."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
+
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 50
-	rcd_delay = 50
 	buffer = 100
+
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent
@@ -72,8 +72,8 @@
 			AM.forceMove(badspot)
 		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
-			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
+			reagents.trans_to(AM, wanted_amount, transfered_by = src, methods = INJECT)
 			return
 		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
-			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
+			reagents.trans_to(AM, wanted_amount, transfered_by = src, methods = INJECT)
 			return

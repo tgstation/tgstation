@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Adding a symptom to a virus that already has 4 or 5 symptoms in it no longer has a chance of removing a random symptom from that virus."
