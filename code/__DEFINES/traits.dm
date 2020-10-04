@@ -341,4 +341,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HANDCUFFED_TRAIT "handcuffed"
 /// Trait granted by [/obj/item/warpwhistle]
 #define WARPWHISTLE_TRAIT "warpwhistle"
-#define RIG_TRAIT "rig"
+#define MOD_TRAIT "mod"

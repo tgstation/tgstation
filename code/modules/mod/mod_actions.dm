@@ -17,7 +17,7 @@
 	desc = "Deploy/Conceal a part of the MODsuit."
 	button_icon_state = "deploy"
 
-/datum/action/item_action/mod/deploy/Tmodger()
+/datum/action/item_action/mod/deploy/Trigger()
 	mod.choose_deploy(usr)
 
 /datum/action/item_action/mod/activate
@@ -25,7 +25,7 @@
 	desc = "Activate/Deactivate the MODsuit."
 	button_icon_state = "activate"
 
-/datum/action/item_action/mod/activate/Tmodger()
+/datum/action/item_action/mod/activate/Trigger()
 	mod.toggle_activate(usr)
 
 /datum/action/item_action/mod/panel
@@ -33,5 +33,5 @@
 	desc = "Open the MODsuit's panel."
 	button_icon_state = "panel"
 
-/datum/action/item_action/mod/panel/Tmodger()
+/datum/action/item_action/mod/panel/Trigger()
 	mod.ui_interact(usr)
