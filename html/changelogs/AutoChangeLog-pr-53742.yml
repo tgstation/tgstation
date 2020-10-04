@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The Airlock Painter should now paint airlocks in all appropriate scenarios where it failed to do so before."

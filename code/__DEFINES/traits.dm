@@ -81,6 +81,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FLOORED			"floored" //Prevents standing or staying up on its own.
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED		"handsblocked"
+/// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
+#define TRAIT_UI_BLOCKED		"uiblocked"
+/// Inability to pull things. Turned into a trait from [MOBILITY_PULL] to be able to track sources.
+#define TRAIT_PULL_BLOCKED		"pullblocked"
 /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
 #define TRAIT_RESTRAINED		"restrained"
 #define TRAIT_INCAPACITATED		"incapacitated"
@@ -292,6 +296,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
 /// Trait associated to wearing a suit
 #define SUIT_TRAIT "suit"
+/// Trait associated to lying down (having a [lying_angle] of a different value than zero).
+#define LYING_DOWN_TRAIT "lying-down"
+/// Trait associated to lacking electrical power.
+#define POWER_LACK_TRAIT "power-lack"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
