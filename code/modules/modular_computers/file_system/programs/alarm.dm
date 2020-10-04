@@ -7,6 +7,7 @@
 	requires_ntnet = 1
 	size = 5
 	tgui_id = "NtosStationAlertConsole"
+	program_icon = "bell"
 	var/has_alert = 0
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
