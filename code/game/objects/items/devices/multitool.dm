@@ -33,7 +33,7 @@
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
-/obj/item/debug/multitool/Initialize()
+/obj/item/multitool/Initialize()
 	. = ..()
 	if(!(istype(get_area(src), /area/tdome/arena)))
 		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
