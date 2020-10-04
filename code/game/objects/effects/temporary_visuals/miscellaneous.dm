@@ -54,6 +54,10 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
 	duration = 2
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
