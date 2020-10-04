@@ -53,8 +53,6 @@
 	var/slowdown_active = 1
 	/// MOD cell
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
-	/// MOD air tank
-	var/obj/item/tank/internals/oxygen/tank = /obj/item/tank/internals/oxygen
 	/// MOD helmet
 	var/obj/item/clothing/head/helmet/space/mod/helmet = /obj/item/clothing/head/helmet/space/mod
 	/// MOD chestplate
@@ -87,8 +85,6 @@
 		locked = FALSE
 	if(ispath(cell))
 		cell = new cell(src)
-	if(ispath(tank))
-		tank = new tank(src)
 	if(ispath(helmet))
 		helmet = new helmet(src)
 		helmet.mod = src
@@ -356,7 +352,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	visor_flags = STOPSPRESSUREDAMAGE
-	allowed = list(/obj/item/flashlight)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 
