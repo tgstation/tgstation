@@ -403,6 +403,7 @@
 	icon_state = "block"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
+	material_modifier = 0.5 //50% effectiveness of materials
 
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/current_target
