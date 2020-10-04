@@ -8,6 +8,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRevelation"
+	program_icon = "magnet"
 	var/armed = 0
 
 /datum/computer_file/program/revelation/run_program(mob/living/user)
