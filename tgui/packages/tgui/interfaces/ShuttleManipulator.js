@@ -229,7 +229,13 @@ export const ShuttleManipulatorModification = (props, context) => {
             title="Status">
             <Button
               content="Load"
+              color="good"
               onClick={() => act('load', {
+                shuttle_id: selected.shuttle_id,
+              })} />
+            <Button
+              content="Preview"
+              onClick={() => act('preview', {
                 shuttle_id: selected.shuttle_id,
               })} />
             <Button
