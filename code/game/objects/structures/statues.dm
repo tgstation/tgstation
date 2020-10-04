@@ -7,6 +7,8 @@
 	anchored = FALSE
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	material_modifier = 0.5
+	material_flags = MATERIAL_AFFECT_STATISTICS
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
