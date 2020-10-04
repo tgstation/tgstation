@@ -467,13 +467,13 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "bigmacbox"
 	icon_type = "bigmac"
-	spawn_type = /obj/item/reagent_containers/food/snacks/burger/bigmac
+	spawn_type = /obj/item/food/burger/bigmac
 
 /obj/item/storage/fancy/bigmacbox/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/burger/bigmac))
+	STR.set_holdable(list(/obj/item/food/burger/bigmac))
 
 /*
  * Oreos

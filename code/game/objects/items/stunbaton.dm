@@ -367,7 +367,8 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
 	force = 10
-	attack_verb = list("beat", "smacked")
+	attack_verb_simple = list("beat", "smacked")
+	attack_verb_continuous = list("beats", "smacks")
 	hitsound = 'sound/weapons/genhit2.ogg'
 
 /obj/item/melee/baton/baseball/Initialize()

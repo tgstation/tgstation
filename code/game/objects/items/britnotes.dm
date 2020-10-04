@@ -12,7 +12,8 @@
 	light_on = FALSE						//If that light is enabled
 	var/comp_light_luminosity = 2.3				//The brightness of that light
 	var/enabled = 0
-	attack_verb = list("tapped", "slapped", "hit")
+	attack_verb_simple = list("tapped", "slapped", "hit")
+	attack_verb_continuous = list("taps", "slaps", "hits")
 	var/password = "rose"
 
 //wallem made this

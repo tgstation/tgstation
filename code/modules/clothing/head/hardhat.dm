@@ -175,7 +175,6 @@
 	hat_type = "allsign"
 	icon_state = "hardhat0_allsign"
 	inhand_icon_state = "hardhat0_allsign"
-	brightness_on = 0
 	dog_fashion = null
 	actions_types = list(/datum/action/item_action/toggle_welding_screen)
 	flash_protect = FLASH_PROTECTION_WELDER

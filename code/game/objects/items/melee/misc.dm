@@ -424,7 +424,8 @@
 		inhand_icon_state = on_inhand_icon_state
 		w_class = weight_class_on
 		force = force_on
-		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
+		attack_verb_simple = list("smack", "strike", "crack", "beat")
 		tool_behaviour = TOOL_CROWBAR
 		toolspeed = 1.2
 		stamina_damage = 75
@@ -437,7 +438,8 @@
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
-		attack_verb = list("hit", "poked")
+		attack_verb_continuous = list("hits", "pokes")
+		attack_verb_simple = list("hit", "poke")
 		tool_behaviour = null
 		toolspeed = 10
 		stamina_damage = 0

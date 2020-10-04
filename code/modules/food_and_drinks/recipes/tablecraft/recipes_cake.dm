@@ -24,7 +24,7 @@
 /datum/crafting_recipe/food/lemoncheesecake
 	name = "Lemon Cheese cake"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/food/cake/plain = 1,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 1
 	)
@@ -34,7 +34,7 @@
 /datum/crafting_recipe/food/royalcheesecake
 	name = "Royal Cheese cake"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/food/cake/plain = 1,
 		/obj/item/reagent_containers/food/snacks/royalcheese = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/royalcheese

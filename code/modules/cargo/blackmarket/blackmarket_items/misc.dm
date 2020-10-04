@@ -114,7 +114,7 @@
 	/obj/item/pizzabox/bomb,
 	/obj/item/grenade/chem_grenade/teargas/moustache,
 	/obj/item/antag_spawner/nuke_ops/clown,
-	/obj/mecha/combat/gygax/dark/loaded,
+	/obj/vehicle/sealed/mecha/combat/gygax/dark/loaded,
 	/obj/item/card/id/syndicate,
 	/obj/item/multitool/ai_detect,
 	/obj/item/codespeak_manual/unlimited,
@@ -182,7 +182,6 @@
 	)
 	var/marketrandom = pick(gamers)
 	return new marketrandom(loc)
-	return ..()
 
 
 /datum/blackmarket_item/misc/cat

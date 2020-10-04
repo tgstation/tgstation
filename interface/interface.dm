@@ -16,11 +16,11 @@
 
 /client/verb/forum()
 	set name = "forum"
-	set desc = "Visit the forum."
+	set desc = "Visit the registry."
 	set hidden = TRUE
-	var/forumurl = CONFIG_GET(string/forumurl)
-	if(forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")!="Yes")
+	var/registryurl = CONFIG_GET(string/registryurl)
+	if(registryurl)
+		if(alert("This will open the registry in your browser. Are you sure?",,"Yes","No")!="Yes")
 			return
 		src << link(registryurl)
 	else

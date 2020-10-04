@@ -70,7 +70,7 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/inducer,
 		/obj/item/plunger,
-		/obj/item/melee/classic_baton/telescopic/crowbar
+		/obj/item/melee/classic_baton/telescopic/crowbar,
 		/obj/item/airlock_painter,
 		/obj/item/pipe_painter
 		))

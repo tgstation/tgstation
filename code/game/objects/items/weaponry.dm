@@ -688,7 +688,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "An eternal napalm flame ensures whatever is thrown at you is seared to a perfect medium-rare."
 	icon_state = "baseball_bat_burn"
 	inhand_icon_state = "baseball_bat_burn"
-	attack_verb = list("beat", "cooked")
+	attack_verb_simple = list("beat", "cooked")
+	attack_verb_continuous = list("beats", "cooks")
 	damtype = BURN
 	hitsound = 'sound/weapons/genhit2.ogg'
 
@@ -698,7 +699,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A bat wrapped in hooked wires meant to dig into the flesh of the undead, although it works just as well on the living."
 	icon_state = "baseball_bat_barbed"
 	inhand_icon_state = "baseball_bat_barbed"
-	attack_verb = list("beat", "bashed", "tears into")
+	attack_verb_simple = list("beat", "bashed", "tore into")
+	attack_verb_continuous = list("beats", "bashes", "tears into")
 	wound_bonus = 30
 	bare_wound_bonus = 40
 
@@ -708,7 +710,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A circular saw attatched to a baseball bat, perfect for surprise woodwork."
 	icon_state = "baseball_bat_buzz"
 	inhand_icon_state = "baseball_bat_buzz"
-	attack_verb = list("beat", "slashes", "eviscerates")
+	attack_verb_simple = list("beat", "slashed", "eviscerated")
+	attack_verb_continuous = list("beats", "slashes", "eviscerates")
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 16
 	item_flags = SURGICAL_TOOL
@@ -724,7 +727,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Three bluespace crystals duct-taped to a baseball bat. Someone should be fired for this."
 	icon_state = "baseball_bat_bluespace"
 	inhand_icon_state = "baseball_bat_blue"
-	attack_verb = list("beat", "bashed")
+	attack_verb_simple = list("beat", "bashed")
+	attack_verb_continuous = list("beats", "bashes")
 
 /obj/item/melee/baseball_bat/bluespace/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
@@ -749,7 +753,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Useful in case your ingredients are ever hurled at you at incredibly high speeds."
 	icon_state = "baseball_bat_knife"
 	inhand_icon_state = "baseball_bat_knife"
-	attack_verb = list("beat", "bashed", "slashed", "sliced")
+	attack_verb_simple = list("beat", "bashed", "slashed", "sliced")
+	attack_verb_continuous = list("beats", "bashes", "slashes", "slices")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	item_flags = EYE_STAB
 	wound_bonus = -5
@@ -769,7 +774,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Knock a witches' head right off! Soul gem sold separately."
 	icon_state = "baseball_bat_magic"
 	inhand_icon_state = "baseball_bat_magic"
-	attack_verb = list("beat", "bashed", "smacked")
+	attack_verb_simple = list("beat", "bashed", "smacked")
+	attack_verb_continuous = list("beats", "bashes", "smacks")
 
 /obj/item/melee/baseball_bat/magic/attack(mob/living/target, mob/living/user)
 	. = ..()
@@ -784,7 +790,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "'Now I am become Death, the destroyer of worlds.' -J. Robert Oppenheimer"
 	icon_state = "baseball_bat_kitty"
 	inhand_icon_state = "baseball_bat_kitty"
-	attack_verb = list("beat", "bashed", "smacked", "bopped", "poked", "whacked")
+	attack_verb_simple = list("beat", "bashed", "smacked", "bopped", "poked", "whacked")
+	attack_verb_continuous = list("beats", "bashes", "smacks", "bops", "pokes", "whacks")
 	force = 10
 	wound_bonus = -10
 	bare_wound_bonus = 0
@@ -1160,7 +1167,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 1
 	hitsound = 'sound/weapons/genhit.ogg'
-	attack_verb = list("smacked", "poked")
+	attack_verb_simple = list("smacked", "poked")
+	attack_verb_continuous = list("smacks", "pokes")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
 
@@ -1172,7 +1180,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		w_class = WEIGHT_CLASS_BULKY
 		throwforce = 100
 		icon_state = "sinnersoath_1"
-		attack_verb = list("cut", "sliced", "diced","tore", "lacerated", "ripped")
+		attack_verb_simple = list("cut", "sliced", "diced","tore", "lacerated", "ripped")
+		attack_verb_continuous = list("cuts", "slices", "dices","tears", "lacerates", "rips")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = SHARP_EDGED
 	else
@@ -1180,6 +1189,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
 		icon_state = "sinnersoath_0"
-		attack_verb = list("smacked", "poked")
+		attack_verb_simple = list("smacked", "poked")
+		attack_verb_continuous = list("smacks", "pokes")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = SHARP_NONE

@@ -383,3 +383,13 @@
 		var/datum/effect_system/smoke_spread/bad/green/smoke = new
 		smoke.set_up(0, src)
 		smoke.start()
+
+/obj/item/food/burger/bigmac
+	name = "bigmac"
+	desc = "Infused with the secret sauce of the ancients. Happy Meal toy not included."
+	icon_state = "bigmac"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
+	bite_consumption = 3
+	eat_time = 100
+	tastes = list("bun" = 4, "beef patty" = 4, "secret sauce" = 10, "lettuce" = 3)
+	foodtypes = GRAIN | MEAT | DAIRY

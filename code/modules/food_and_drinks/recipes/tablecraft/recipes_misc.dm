@@ -296,7 +296,7 @@
 	name ="Spaghetti Taco"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/tortilla = 1,
-		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato = 1,
+		/obj/item/food/spaghetti/pastatomato = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/taco/spaghetti
