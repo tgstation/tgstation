@@ -1,12 +1,22 @@
 /obj/item/mod/control/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "MOD", name)
+		ui = new(user, src, "MODSuit", name)
 		ui.open()
 
 /obj/item/mod/control/ui_data()
 	var/data = list()
-	data["materials"] = list()
+	data["interface_break"] = interface_break
+	data["malfuction"] = malfunctioning
+	data["open"] = open
+	data["active"] = active
+	data["locked"] = locked
+	data["wearer_name"] = wearer ? wearer.get_id_name("Unknown") : "None"
+	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "None"
+	data["ai"] = AI
+	data["cell"] = cell
+	data["charge"] = cell ? round(cell.percent(), 1) : 0
+	data["modules"] = LAZYLEN(modules) ? modules : null
 
 	return data
 
@@ -14,7 +24,12 @@
 	. = ..()
 	if(.)
 		return
+	if(!allowed(usr) && locked)
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return
 	switch(action)
-		if("h")
+		if("lock")
 			locked = !locked
-			to_chat(wearer, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
+			to_chat(usr, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
+		if("activate")
+			toggle_activate(usr)

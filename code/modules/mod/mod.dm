@@ -47,8 +47,8 @@
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much modules this MOD is carrying
 	var/complexity = 0
-	/// How much battery power the MOD uses per tick
-	var/cell_usage = 0
+	/// How much battery power the MOD uses by just being on
+	var/cell_usage = 5
 	/// Slowdown when active
 	var/slowdown_active = 1
 	/// MOD cell
@@ -146,14 +146,14 @@
 		thingy.mod = null
 		QDEL_NULL(thingy)
 
-/obj/item/mod/control/process()
+/obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 	if(cell && cell.charge > 0 && active)
-		if((cell.charge -= cell_usage) < 0)
-			cell.charge = 0
-		else
-			cell.charge -= cell_usage
+		var/chargeremoved = cell_usage
+		for(var/obj/item/mod/module/thingy in modules)
+			chargeremoved += thingy.idle_power_use
+		cell.charge = (min(0, cell.charge -= chargeremoved))
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()

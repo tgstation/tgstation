@@ -30,7 +30,9 @@
 /obj/item/mod/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
-		visible_message("<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
+		visible_message("<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", \
+		"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", \
+		"<span class='hear'>You hear a mechanical hiss.</span>")
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	else if(piece.loc != src)
@@ -44,7 +46,9 @@
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
-	visible_message("<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", blind_message = "<span class='hear'>You hear a mechanical hiss.</span>")
+	visible_message("<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
+	"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
+	"<span class='hear'>You hear a mechanical hiss.</span>")
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user)
@@ -117,7 +121,6 @@
 		active = !active
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
-			cell_usage += 10
 			slowdown = slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 			for(var/h in modules)
