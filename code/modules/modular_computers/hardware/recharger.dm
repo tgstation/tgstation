@@ -6,8 +6,8 @@
 
 /obj/item/computer_hardware/recharger/proc/use_power(amount, charging=0)
 	if(charging)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/computer_hardware/recharger/process()
 	..()
@@ -34,17 +34,17 @@
 		var/obj/machinery/M = holder.physical
 		if(M.powered())
 			M.use_power(amount)
-			return 1
+			return TRUE
 
 	else
 		var/area/A = get_area(src)
 		if(!istype(A))
-			return 0
+			return FALSE
 
 		if(A.powered(AREA_USAGE_EQUIP))
 			A.use_power(amount, AREA_USAGE_EQUIP)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/computer_hardware/recharger/wired
 	name = "wired power connector"
@@ -56,26 +56,25 @@
 	if(ismachinery(M.physical) && M.physical.anchored)
 		return ..()
 	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
-	return 0
+	return FALSE
 
 /obj/item/computer_hardware/recharger/wired/use_power(amount, charging=0)
 	if(ismachinery(holder.physical) && holder.physical.anchored)
 		var/obj/machinery/M = holder.physical
 		var/turf/T = M.loc
 		if(!T || !istype(T))
-			return 0
+			return FALSE
 
 		var/obj/structure/cable/C = T.get_cable_node()
 		if(!C || !C.powernet)
-			return 0
+			return FALSE
 
 		var/power_in_net = C.powernet.avail-C.powernet.load
 
 		if(power_in_net && power_in_net > amount)
 			C.powernet.load += amount
-			return 1
-
-	return 0
+			return TRUE
+	return FALSE
 
 
 

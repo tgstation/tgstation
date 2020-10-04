@@ -135,13 +135,12 @@
 	update_health_hud()
 	..()
 
-/mob/living/simple_animal/revenant/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
-		stat(null, "Stolen essence: [essence_accumulated]E")
-		stat(null, "Unused stolen essence: [essence_excess]E")
-		stat(null, "Stolen perfect souls: [perfectsouls]")
+/mob/living/simple_animal/revenant/get_status_tab_items()
+	. = ..()
+	. += "Current essence: [essence]/[essence_regen_cap]E"
+	. += "Stolen essence: [essence_accumulated]E"
+	. += "Unused stolen essence: [essence_excess]E"
+	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
@@ -224,7 +223,7 @@
 
 /mob/living/simple_animal/revenant/death()
 	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
-		return 0
+		return
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE

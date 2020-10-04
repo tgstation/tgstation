@@ -9,7 +9,7 @@
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
 
 	var/enabled = 0											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
@@ -35,11 +35,12 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	// Important hardware (must be installed for computer to work)
-
-	// Optional hardware (improves functionality, but is not critical for computer to work)
-
-	var/list/all_components = list()						// List of "connection ports" in this computer and the components with which they are plugged
+	/// List of "connection ports" in this computer and the components with which they are plugged
+	var/list/all_components = list()
+	/// Lazy List of extra hardware slots that can be used modularly.
+	var/list/expansion_bays
+	/// Number of total expansion bays this computer has available.
+	var/max_bays = 0
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
@@ -76,9 +77,9 @@
 		return
 
 	if(user.canUseTopic(src, BE_CLOSE))
+		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		if(card_slot)
-			card_slot.try_eject(null, user)
+		return (card_slot2?.try_eject(user) || card_slot?.try_eject(user)) //Try the secondary one first.
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -94,19 +95,23 @@
 	return ..()
 
 /obj/item/modular_computer/RemoveID()
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(!card_slot)
-		return
-	return card_slot.RemoveID()
+	return (card_slot2?.try_eject() || card_slot?.try_eject()) //Try the secondary one first.
 
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(!card_slot)
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	if(!(card_slot || card_slot2))
 		return FALSE
+
 	var/obj/item/card/inserting_id = inserting_item.RemoveID()
 	if(!inserting_id)
 		return FALSE
-	return card_slot.try_insert(inserting_id)
+
+	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
+		return TRUE
+	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -212,14 +217,14 @@
 			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/item/modular_computer/process()
+/obj/item/modular_computer/process(delta_time)
 	if(!enabled) // The computer is turned off
 		last_power_usage = 0
-		return 0
+		return
 
 	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
-		return 0
+		return
 
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
@@ -231,7 +236,7 @@
 
 	if(active_program)
 		if(active_program.program_state != PROGRAM_STATE_KILLED)
-			active_program.process_tick()
+			active_program.process_tick(delta_time)
 			active_program.ntnet_status = get_ntnet_status()
 		else
 			active_program = null
@@ -239,12 +244,12 @@
 	for(var/I in idle_threads)
 		var/datum/computer_file/program/P = I
 		if(P.program_state != PROGRAM_STATE_KILLED)
-			P.process_tick()
+			P.process_tick(delta_time)
 			P.ntnet_status = get_ntnet_status()
 		else
 			idle_threads.Remove(P)
 
-	handle_power() // Handles all computer power interaction
+	handle_power(delta_time) // Handles all computer power interaction
 	//check_update_ui_need()
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
@@ -343,6 +348,10 @@
 
 
 /obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
+	// Check for ID first
+	if(istype(W, /obj/item/card/id) && InsertID(W))
+		return
+
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]

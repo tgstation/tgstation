@@ -71,7 +71,7 @@
 	var/initialize_dirs = initial(temp.initialize_dirs)
 	var/dpdir = NONE
 
-	if(dir in GLOB.diagonals) // Bent pipes
+	if(ISDIAGONALDIR(dir)) // Bent pipes
 		return dir
 
 	if(initialize_dirs != DISP_DIR_NONE)
@@ -93,7 +93,7 @@
 	if(rotation_type == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
-			if(dir in GLOB.diagonals)	// Fix RPD-induced diagonal turning
+			if(ISDIAGONALDIR(dir))	// Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
 	update_icon()

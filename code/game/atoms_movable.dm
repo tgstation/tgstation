@@ -1,5 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
+	glide_size = 8
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/last_move = null
 	var/last_move_time = 0
 	var/anchored = FALSE
@@ -31,10 +33,9 @@
 	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
-	glide_size = 8
-	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+	var/movement_type = GROUND
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -54,6 +55,12 @@
 	///Used for the calculate_adjacencies proc for icon smoothing.
 	var/can_be_unanchored = FALSE
 
+	///Lazylist to keep track on the sources of illumination.
+	var/list/affected_dynamic_lights
+	///Highest-intensity light affecting us, which determines our visibility.
+	var/affecting_dynamic_lumi = 0
+
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
@@ -63,6 +70,10 @@
 			render_target = ref(src)
 			em_block = new(src, render_target)
 			vis_contents += em_block
+	if(opacity)
+		AddElement(/datum/element/light_blocking)
+	if(light_system == MOVABLE_LIGHT)
+		AddComponent(/datum/component/overlay_lighting)
 
 
 /atom/movable/Destroy(force)
@@ -79,13 +90,8 @@
 			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
 
-		// If we have opacity, make sure to tell (potentially) affected light sources.
-		if(opacity && isturf(loc))
-			var/turf/turf_loc = loc
-			var/old_has_opaque_atom = turf_loc.has_opaque_atom
-			turf_loc.recalc_atom_opacity()
-			if(old_has_opaque_atom != turf_loc.has_opaque_atom)
-				turf_loc.reconsider_lights()
+	if(opacity)
+		RemoveElement(/datum/element/light_blocking)
 
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -224,7 +230,7 @@
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
-	AM.pulledby = src
+	AM.set_pulledby(src)
 	setGrabState(state)
 	if(ismob(AM))
 		var/mob/M = AM
@@ -236,30 +242,40 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
-		pulling.pulledby = null
+		pulling.set_pulledby(null)
 		var/mob/living/ex_pulled = pulling
+		setGrabState(GRAB_PASSIVE)
 		pulling = null
-		setGrabState(0)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
+
+///Reports the event of the change in value of the pulledby variable.
+/atom/movable/proc/set_pulledby(new_pulledby)
+	if(new_pulledby == pulledby)
+		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+	. = pulledby
+	pulledby = new_pulledby
+
+
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
-		return
+		return FALSE
 	if(pulling.anchored || pulling.move_resist > move_force || !pulling.Adjacent(src))
 		stop_pulling()
-		return
+		return FALSE
 	if(isliving(pulling))
 		var/mob/living/L = pulling
 		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
-			return
+			return FALSE
 	if(A == loc && pulling.density)
-		return
-	if(!Process_Spacemove(get_dir(pulling.loc, A)))
-		return
-	step(pulling, get_dir(pulling.loc, A))
+		return FALSE
+	var/move_dir = get_dir(pulling.loc, A)
+	if(!Process_Spacemove(move_dir))
+		return FALSE
+	pulling.Move(get_step(pulling.loc, move_dir), move_dir, glide_size)
 	return TRUE
 
 /mob/living/Move_Pulled(atom/A)
@@ -288,11 +304,20 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
+
+/atom/movable/proc/set_glide_size(target = 8)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
+	glide_size = target
+
+	for(var/m in buckled_mobs)
+		var/mob/buckled_mob = m
+		buckled_mob.set_glide_size(target)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0)
+/atom/movable/Move(atom/newloc, direct=0, glide_size_override = 0)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
@@ -338,7 +363,7 @@
 
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct)
+/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(!moving_from_pull)
@@ -346,6 +371,9 @@
 	if(!loc || !newloc)
 		return FALSE
 	var/atom/oldloc = loc
+	//Early override for some cases like diagonal movement
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
@@ -418,13 +446,19 @@
 			//puller and pullee more than one tile away or in diagonal position
 			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
 				pulling.moving_from_pull = src
-				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
 			check_pulling()
 
+
+	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
+	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
+	if(glide_size_override)
+		set_glide_size(glide_size_override)
+
 	last_move = direct
 	setDir(direct)
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 
 //Called after a successful Move(). By this point, we've already moved
@@ -549,8 +583,14 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+
+///Proc to modify the movement_type and hook behavior associated with it changing.
 /atom/movable/proc/setMovetype(newval)
+	if(movement_type == newval)
+		return
+	. = movement_type
 	movement_type = newval
+
 
 /**
   * Called whenever an object moves and by mobs when they attempt to move themselves through space
@@ -565,38 +605,38 @@
   */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
-		return 1
+		return TRUE
 
 	if(pulledby)
-		return 1
+		return TRUE
 
 	if(throwing)
-		return 1
+		return TRUE
 
 	if(!isturf(loc))
-		return 1
+		return TRUE
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /// Only moves the object if it's under no gravity
 /atom/movable/proc/newtonian_move(direction)
 	if(!loc || Process_Spacemove(0))
 		inertia_dir = 0
-		return 0
+		return FALSE
 
 	inertia_dir = direction
 	if(!direction)
-		return 1
+		return TRUE
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
-	return 1
+	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	set waitfor = 0
+	set waitfor = FALSE
 	var/hitpush = TRUE
 	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
@@ -701,16 +741,16 @@
 	if (quickstart)
 		TT.tick()
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+/atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
+		if(!buckled_mob.Move(newloc, direct, glide_size_override))
 			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /atom/movable/proc/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
@@ -740,12 +780,12 @@
 	return blocker_opinion
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, CONSIG_STORAGE_EXITED, master_storage)
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
-	return
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/master_storage)
+	SEND_SIGNAL(src, COMISG_STORAGE_ENTERED, master_storage)
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -767,7 +807,7 @@
 	. = dense_object_backup
 
 ///called when a mob resists while inside a container that is itself inside something.
-/atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
+/atom/movable/proc/relay_container_resist_act(mob/living/user, obj/O)
 	return
 
 
@@ -779,20 +819,26 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
+	var/turn_dir = 1
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
 		pixel_y_diff = 8
+		turn_dir = prob(50) ? -1 : 1
 	else if(direction & SOUTH)
 		pixel_y_diff = -8
+		turn_dir = prob(50) ? -1 : 1
 
 	if(direction & EAST)
 		pixel_x_diff = 8
 	else if(direction & WEST)
 		pixel_x_diff = -8
+		turn_dir = -1
 
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
+	var/matrix/initial_transform = matrix(transform)
+	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -803,21 +849,21 @@
 		I.plane = GAME_PLANE
 
 		// Scale the icon.
-		I.transform *= 0.75
+		I.transform *= 0.4
 		// The icon should not rotate.
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 		// Set the direction of the icon animation.
 		var/direction = get_dir(src, A)
 		if(direction & NORTH)
-			I.pixel_y = -16
+			I.pixel_y = -12
 		else if(direction & SOUTH)
-			I.pixel_y = 16
+			I.pixel_y = 12
 
 		if(direction & EAST)
-			I.pixel_x = -16
+			I.pixel_x = -14
 		else if(direction & WEST)
-			I.pixel_x = 16
+			I.pixel_x = 14
 
 		if(!direction) // Attacked self?!
 			I.pixel_z = 16
@@ -825,10 +871,12 @@
 	if(!I)
 		return
 
-	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 10)
 
 	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -944,12 +992,6 @@
 
 /* End language procs */
 
-
-/atom/movable/proc/ConveyorMove(movedir)
-	set waitfor = FALSE
-	if(!anchored && has_gravity())
-		step(src, movedir)
-
 //Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
@@ -969,7 +1011,22 @@
   * This exists to act as a hook for behaviour
   */
 /atom/movable/proc/setGrabState(newstate)
+	if(newstate == grab_state)
+		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
+	. = grab_state
 	grab_state = newstate
+	switch(.) //Previous state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(grab_state >= GRAB_NECK)
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+	switch(grab_state) //Current state.
+		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK)
+				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

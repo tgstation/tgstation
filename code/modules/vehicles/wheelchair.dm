@@ -5,7 +5,7 @@
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 30)	//Wheelchairs aren't super tough yo
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 30)	//Wheelchairs aren't super tough yo
 	legs_required = 0	//You'll probably be using this if you don't have legs
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
@@ -40,7 +40,7 @@
 
 /obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
 	if(istype(user))
-		if(canmove && (user.get_num_arms() < arms_required))
+		if(canmove && (user.usable_hands < arms_required))
 			to_chat(user, "<span class='warning'>You don't have enough arms to operate the wheels!</span>")
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
@@ -52,7 +52,7 @@
 	var/datum/component/riding/D = GetComponent(/datum/component/riding)
 	//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
 	//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
-	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / min(user.get_num_arms(), 2)
+	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
@@ -113,7 +113,7 @@
 /obj/vehicle/ridden/wheelchair/the_whip/driver_move(mob/living/user, direction)
 	if(istype(user))
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / user.get_num_arms()
+		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / max(user.usable_hands, 1)
 	return ..()
 
 
@@ -123,5 +123,5 @@
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 40)
 	custom_materials = list(/datum/material/gold = 10000)

@@ -322,11 +322,11 @@
 	if(mm == 9)
 		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
 			if(dd == 12)
-				return 1
+				return TRUE
 		else
 			if(dd == 13)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/holiday/programmers/getStationPrefix()
 	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability

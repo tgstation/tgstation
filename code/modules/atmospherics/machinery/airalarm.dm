@@ -69,7 +69,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
@@ -101,7 +101,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -122,7 +127,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
 		/datum/gas/freon			= new/datum/tlv/no_checks,
-		/datum/gas/hydrogen			= new/datum/tlv/no_checks
+		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
@@ -143,7 +153,12 @@
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon			= new/datum/tlv/dangerous,
-		/datum/gas/hydrogen			= new/datum/tlv/dangerous
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -192,8 +207,6 @@
 
 //all air alarms in area are connected via magic
 /area
-	var/list/air_vent_names = list()
-	var/list/air_scrub_names = list()
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
@@ -296,8 +309,8 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in A.air_vent_names)
-			var/long_name = A.air_vent_names[id_tag]
+		for(var/id_tag in A.air_vent_info)
+			var/long_name = GLOB.air_vent_names[id_tag]
 			var/list/info = A.air_vent_info[id_tag]
 			if(!info || info["frequency"] != frequency)
 				continue
@@ -315,8 +328,8 @@
 					"intdefault"= (info["internal"] == 0)
 				))
 		data["scrubbers"] = list()
-		for(var/id_tag in A.air_scrub_names)
-			var/long_name = A.air_scrub_names[id_tag]
+		for(var/id_tag in A.air_scrub_info)
+			var/long_name = GLOB.air_scrub_names[id_tag]
 			var/list/info = A.air_scrub_info[id_tag]
 			if(!info || info["frequency"] != frequency)
 				continue
@@ -426,12 +439,12 @@
 			. = TRUE
 		if("alarm")
 			var/area/A = get_area(src)
-			if(A.atmosalert(2, src))
+			if(A.atmosalert(TRUE, src))
 				post_alert(2)
 			. = TRUE
 		if("reset")
 			var/area/A = get_area(src)
-			if(A.atmosalert(0, src))
+			if(A.atmosalert(FALSE, src))
 				post_alert(0)
 			. = TRUE
 	update_icon()
@@ -450,16 +463,16 @@
 
 /obj/machinery/airalarm/proc/shock(mob/user, prb)
 	if((machine_stat & (NOPOWER)))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return FALSE //you lucked out, no shock for you
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/airalarm/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -468,7 +481,7 @@
 
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
@@ -476,7 +489,7 @@
 	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
-	return 1
+	return TRUE
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
@@ -503,21 +516,21 @@
 	var/area/A = get_area(src)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_CONTAMINATED)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(
@@ -533,39 +546,44 @@
 						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
-						/datum/gas/hydrogen
+						/datum/gas/hydrogen,
+						/datum/gas/healium,
+						/datum/gas/proto_nitrate,
+						/datum/gas/zauker,
+						/datum/gas/halon,
+						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE
 				), signal_source)
 		if(AALARM_MODE_VENTING)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
 					"set_external_pressure" = ONE_ATMOSPHERE*2
 				), signal_source)
 		if(AALARM_MODE_REFILL)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 1,
@@ -573,43 +591,43 @@
 				), signal_source)
 		if(AALARM_MODE_PANIC,
 			AALARM_MODE_REPLACEMENT)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 1,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_SIPHON)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"widenet" = 0,
 					"scrubbing" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 
 		if(AALARM_MODE_OFF)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
 		if(AALARM_MODE_FLOOD)
-			for(var/device_id in A.air_scrub_names)
+			for(var/device_id in A.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 0
 				), signal_source)
-			for(var/device_id in A.air_vent_names)
+			for(var/device_id in A.air_vent_info)
 				send_signal(device_id, list(
 					"power" = 1,
 					"checks" = 2,
@@ -705,7 +723,7 @@
 	var/new_area_danger_level = 0
 	for(var/obj/machinery/airalarm/AA in A)
 		if (!(AA.machine_stat & (NOPOWER|BROKEN)) && !AA.shorted)
-			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0,1)
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 
@@ -727,7 +745,7 @@
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
-			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
+			else if(W.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
 				return
 			else if(panel_open && is_wire_tool(W))

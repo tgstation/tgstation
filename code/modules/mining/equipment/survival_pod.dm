@@ -5,7 +5,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
@@ -87,8 +87,9 @@
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "smooth"
-	smoothing_flags = SMOOTH_MORE
-	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
+	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
 /obj/structure/window/shuttle/survival_pod/spawner/north
 	dir = NORTH
@@ -134,6 +135,8 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "table"
 	smoothing_flags = NONE
+	smoothing_groups = null
+	canSmoothWith = null
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod
@@ -261,20 +264,6 @@
 	name = "air flow blocker"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_ABSTRACT
-
-//Signs
-/obj/structure/sign/mining
-	name = "\improper Nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "ntpod"
-	buildable_sign = FALSE
-
-/obj/structure/sign/mining/survival
-	name = "shelter sign"
-	desc = "A high visibility sign designating a safe shelter."
-	icon = 'icons/turf/walls/survival_pod_walls.dmi'
-	icon_state = "survival"
 
 //Fluff
 /obj/structure/tubes

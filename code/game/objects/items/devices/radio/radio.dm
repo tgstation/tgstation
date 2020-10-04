@@ -193,13 +193,12 @@
 			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
 			if(!istype(G))
 				return FALSE
-			else
-				if(length(empty_indexes) == 1)
-					message = stars(message)
-				if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
-					return FALSE
-				if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
-					return FALSE
+			if(length(empty_indexes) == 1)
+				message = stars(message)
+			if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
+				return FALSE
+			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
+				return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)

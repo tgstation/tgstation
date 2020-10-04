@@ -5,11 +5,12 @@
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = null
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_MINERAL_WALLS)
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
-	opacity = 1
+	opacity = TRUE
 	density = TRUE
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
@@ -22,13 +23,12 @@
 	var/defer_change = 0
 
 /turf/closed/mineral/Initialize()
-	if (!canSmoothWith)
-		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
+	. = ..()
 	var/matrix/M = new
 	M.Translate(-4, -4)
 	transform = M
 	icon = smooth_icon
-	. = ..()
+
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -254,8 +254,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
@@ -323,8 +323,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	environment_type = "snow"
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
@@ -574,8 +574,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock2"
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	environment_type = "waste"
@@ -587,8 +587,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
+	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
 	environment_type = "snow"
@@ -605,8 +605,7 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smoothing_flags = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smoothing_flags = SMOOTH_CORNERS | SMOOTH_BORDER
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
@@ -639,16 +638,14 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK)
-		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER)
+		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There's gibtonite inside! It's going to explode!</span>")
 
-		var/notify_admins = 0
-		if(z != 5)
-			notify_admins = TRUE
+		var/notify_admins = !is_mining_level(z)
 
 		if(!triggered_by_explosion)
 			log_bomber(user, "has trigged a gibtonite deposit reaction via", src, null, notify_admins)
@@ -657,9 +654,10 @@
 
 		countdown(notify_admins)
 
-/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = 0)
-	set waitfor = 0
+/turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
+	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
+		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
 		det_time--
 		sleep(5)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -680,7 +678,7 @@
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
@@ -689,7 +687,7 @@
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
 		stage = GIBTONITE_DETONATE
-		explosion(bombturf,1,2,5, adminlog = 0)
+		explosion(bombturf,1,2,5, adminlog = FALSE)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)

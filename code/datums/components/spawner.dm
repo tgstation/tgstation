@@ -29,6 +29,8 @@
 
 
 /datum/component/spawner/proc/stop_spawning(force)
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/simple_animal/L in spawned_mobs)
 		if(L.nest == src)
@@ -38,9 +40,9 @@
 /datum/component/spawner/proc/try_spawn_mob()
 	var/atom/P = parent
 	if(spawned_mobs.len >= max_mobs)
-		return 0
+		return
 	if(spawn_delay > world.time)
-		return 0
+		return
 	spawn_delay = world.time + spawn_time
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)

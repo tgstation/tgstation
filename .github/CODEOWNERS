@@ -25,11 +25,20 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Jared-Fogle
+
+/code/modules/unit_tests/ @Jared-Fogle
+
 # Jordie0608
 
 /SQL/ @Jordie0608
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
+
+# LemonInTheDark
+
+/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/modules/atmospherics/ @LemonInTheDark
 
 # MrStonedOne
 
@@ -57,12 +66,19 @@
 
 # stylemistake
 
+/code/__DEFINES/chat.dm @stylemistake
+/code/__DEFINES/tgui.dm @stylemistake
+/code/controllers/subsystem/chat.dm @stylemistake
+/code/controllers/subsystem/tgui.dm @stylemistake
+/code/modules/tgchat @stylemistake
+/code/modules/tgui @stylemistake
+/code/modules/tgui_panel @stylemistake
 /tgui @stylemistake
 
 # Multiple Owners
 
 /icons/ @Twaticus @ShizCalev
-/code/controllers/subsystem/air.dm @MrStonedOne
+/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

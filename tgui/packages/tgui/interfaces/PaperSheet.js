@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { classes, isFalsy } from "common/react";
+import { classes } from 'common/react';
 import { vecScale, vecSubtract } from 'common/vector';
 import DOMPurify from 'dompurify';
 import { Component } from 'inferno';
@@ -241,13 +241,11 @@ const PaperSheetView = (props, context) => {
     stamps,
     backgroundColor,
     readOnly,
-    ...rest
   } = props;
-  const readonly = !isFalsy(readOnly);
   const stamp_list = stamps || [];
   const text_html = {
     __html: '<span class="paper-text">'
-      + setInputReadonly(value, readonly)
+      + setInputReadonly(value, readOnly)
       + '</span>',
   };
   return (
@@ -323,7 +321,12 @@ class PaperSheetStamper extends Component {
   handleMouseClick(e) {
     const pos = this.findStampPosition(e);
     const { act, data } = useBackend(this.context);
-    act("stamp", { x: pos[0], y: pos[1], r: this.state.rotate });
+    const stamp_obj = {
+      x: pos[0], y: pos[1], r: this.state.rotate,
+      stamp_class: this.props.stamp_class,
+      stamp_icon_state: data.stamp_icon_state,
+    };
+    act("stamp", stamp_obj);
     this.setState({ x: pos[0], y: pos[1] });
   }
 
@@ -360,7 +363,7 @@ class PaperSheetStamper extends Component {
         onMouseMove={this.handleMouseMove.bind(this)}
         onwheel={this.handleWheel.bind(this)} {...rest}>
         <PaperSheetView
-          readOnly={1}
+          readOnly
           value={value}
           stamps={stamp_list} />
         <Stamp
@@ -593,7 +596,7 @@ export const PaperSheet = (props, context) => {
           <PaperSheetView
             value={text}
             stamps={stamp_list}
-            readOnly={1} />
+            readOnly />
         );
       case 1:
         return (

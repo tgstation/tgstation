@@ -5,7 +5,7 @@
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	density = TRUE
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
@@ -143,11 +143,11 @@
 			target.LAssailant = user
 		update_icon()
 
-/obj/machinery/disposal/relaymove(mob/user)
+/obj/machinery/disposal/relaymove(mob/living/user, direction)
 	attempt_escape(user)
 
 // resist to escape the bin
-/obj/machinery/disposal/container_resist(mob/living/user)
+/obj/machinery/disposal/container_resist_act(mob/living/user)
 	attempt_escape(user)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
@@ -243,7 +243,7 @@
 	. = ..()
 	if(.)
 		return
-	for(var/obj/item/I in src_object)
+	for(var/obj/item/I in src_object.parent)
 		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
@@ -382,7 +382,7 @@
 
 //timed process
 //charge the gas reservoir and perform flush if ready
-/obj/machinery/disposal/bin/process()
+/obj/machinery/disposal/bin/process(delta_time)
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -415,7 +415,7 @@
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
 	if(env.temperature > 0)
-		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = 0.05 * delta_time * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
@@ -491,7 +491,7 @@
 /obj/effect/CanEnterDisposals()
 	return
 
-/obj/mecha/CanEnterDisposals()
+/obj/vehicle/sealed/mecha/CanEnterDisposals()
 	return
 
 /obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)

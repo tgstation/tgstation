@@ -12,7 +12,7 @@ RLD
 /obj/item/construction
 	name = "not for ingame use"
 	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
 	flags_1 = CONDUCT_1
@@ -24,7 +24,7 @@ RLD
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
@@ -810,7 +810,7 @@ RLD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
-							return 0
+							return FALSE
 						activate()
 						qdel(A)
 						return TRUE
@@ -871,9 +871,9 @@ RLD
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
-							return 0
+							return FALSE
 						if(!useResource(floorcost, user))
-							return 0
+							return FALSE
 						activate()
 						var/destination = get_turf(A)
 						var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(destination)
@@ -906,10 +906,12 @@ RLD
 	max_matter = 100
 	matter_divisor = 20
 
+///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
 	icon_state = "plumberer2"
+	worn_icon_state = "plumbing"
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
 
@@ -922,19 +924,24 @@ RLD
 	var/list/choices = list()
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/name_to_type = list()
-	///
-	var/list/machinery_data = list("cost" = list(), "delay" = list())
+	///All info for construction
+	var/list/machinery_data = list("cost" = list())
+	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
+	var/list/plumbing_design_types
+
+/obj/item/construction/plumbing/Initialize(mapload)
+	. = ..()
+	set_plumbing_designs()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
-		for(var/A in subtypesof(/obj/machinery/plumbing))
+		for(var/A in plumbing_design_types)
 			var/obj/machinery/plumbing/M = A
-			if(initial(M.rcd_constructable))
-				choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
-				name_to_type[initial(M.name)] = M
-				machinery_data["cost"][A] = initial(M.rcd_cost)
-				machinery_data["delay"][A] = initial(M.rcd_delay)
+
+			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
+			name_to_type[initial(M.name)] = M
+			machinery_data["cost"][A] = plumbing_design_types[A]
 
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -944,13 +951,34 @@ RLD
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
 
+///Set the list of designs this plumbing rcd can make
+/obj/item/construction/plumbing/proc/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/bottler = 50,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/fermenter = 30,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/pill_press = 20,
+	/obj/machinery/plumbing/liquid_pump = 35,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/sender = 20
+)
+
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
 	if(!machinery_data || !isopenturf(A))
 		return FALSE
 
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
-		if(do_after(user, machinery_data["delay"][blueprint], target = A))
+		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
+		if(do_after(user, machinery_data["cost"][blueprint], target = A))
 			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()
@@ -980,6 +1008,27 @@ RLD
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
 		create_machine(A, user)
+
+/obj/item/construction/plumbing/research
+	name = "research plumbing constructor"
+	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
+	icon_state = "plumberer_sci"
+	has_ammobar = TRUE
+
+/obj/item/construction/plumbing/research/set_plumbing_designs()
+	plumbing_design_types = list(
+	/obj/machinery/plumbing/input = 5,
+	/obj/machinery/plumbing/output = 5,
+	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/filter = 5,
+	/obj/machinery/plumbing/grinder_chemical = 30,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/splitter = 5,
+	/obj/machinery/plumbing/disposer = 10,
+	/obj/machinery/plumbing/growing_vat = 20
+)
+
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

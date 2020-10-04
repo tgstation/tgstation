@@ -54,7 +54,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	verb_exclaim = "beeps"
 	max_integrity = 300
 	integrity_failure = 0.33
-	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
+	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
@@ -122,8 +122,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///When this is TRUE, we fire items at customers! We're broken!
 	var/shoot_inventory = 0
-	///How likely this is to happen (prob 100)
-	var/shoot_inventory_chance = 2
+	///How likely this is to happen (prob 100) per second
+	var/shoot_inventory_chance = 1
 	//Stop spouting those godawful pitches!
 	var/shut_up = 0
 	///can we access the hidden inventory?
@@ -318,8 +318,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.custom_price = initial(temp.custom_price) * SSeconomy.inflation_value()
-		R.custom_premium_price = initial(temp.custom_premium_price) * SSeconomy.inflation_value()
+		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
+		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
 		recordlist += R
 
@@ -871,7 +871,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 
-/obj/machinery/vending/process()
+/obj/machinery/vending/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 	if(!active)
@@ -881,12 +881,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
-	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && prob(5))
+	if(last_slogan + slogan_delay <= world.time && slogan_list.len > 0 && !shut_up && DT_PROB(2.5, delta_time))
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && prob(shoot_inventory_chance))
+	if(shoot_inventory && DT_PROB(shoot_inventory_chance, delta_time))
 		throw_item()
 /**
   * Speak the given message verbally
@@ -920,7 +920,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for(var/datum/data/vending_product/R in shuffle(product_records))
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -933,13 +933,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_item = new dump_path(loc)
 		break
 	if(!throw_item)
-		return 0
+		return FALSE
 
 	pre_throw(throw_item)
 
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
-	return 1
+	return TRUE
 /**
   * A callback called before an item is tossed out
   *

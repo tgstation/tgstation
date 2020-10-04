@@ -20,7 +20,7 @@
 	var/stored_energy = 0
 	var/active = 0
 	var/locked = FALSE
-	var/drainratio = 1
+	var/drainratio = 0.5
 	var/powerproduction_drain = 0.001
 
 /obj/machinery/power/rad_collector/anchored/Initialize()
@@ -37,7 +37,7 @@
 /obj/machinery/power/rad_collector/should_have_node()
 	return anchored
 
-/obj/machinery/power/rad_collector/process()
+/obj/machinery/power/rad_collector/process(delta_time)
 	if(!loaded_tank)
 		return
 	if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
@@ -45,7 +45,7 @@
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 	else
-		var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
+		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
 		loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
 		loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 		loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained

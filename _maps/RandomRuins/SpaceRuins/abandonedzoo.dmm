@@ -171,7 +171,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -218,7 +218,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -528,7 +528,7 @@
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "bL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -576,14 +576,14 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "bT" = (
 /obj/structure/grille,
 /obj/item/shard{
@@ -677,9 +677,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"KN" = (
-/turf/template_noop,
-/area/space/nearstation)
 "Ng" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -1061,7 +1058,7 @@ ac
 ac
 bN
 bP
-KN
+aa
 aa
 "}
 (19,1,1) = {"

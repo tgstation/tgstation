@@ -16,7 +16,7 @@
 	. = ..()
 	set_light(glow_range)
 
-/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
+/obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
@@ -44,7 +44,7 @@
 	desc = "A machine that prints swarmers."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	max_integrity = 400
 	layer = MASSIVE_OBJ_LAYER
 	light_color = LIGHT_COLOR_CYAN
@@ -75,7 +75,7 @@
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
 	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), 30 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTURCTION INITIALIZED.  TIME TO COMPLETION: 30 SECONDS</span>")
+	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.  TIME TO COMPLETION: 30 SECONDS</span>")
 	processing_swarmer = TRUE
 	return TRUE
 
@@ -87,7 +87,7 @@
   * * swarmer - The swarmer being released and told what to do
   */
 /obj/structure/swarmer_beacon/proc/release_swarmer(mob/swarmer)
-	to_chat(swarmer, "<span class='bold'>SWARMER CONSTURCTION COMPLETED.  OBJECTIVES:\n\
+	to_chat(swarmer, "<span class='bold'>SWARMER CONSTRUCTION COMPLETED.  OBJECTIVES:\n\
 	                     1. CONSUME RESOURCES AND REPLICATE UNTIL THERE ARE NO MORE RESOURCES LEFT\n\
 						 2. ENSURE PROTECTION OF THE BEACON SO THIS LOCATION CAN BE INVADED AT A LATER DATE; DO NOT PERFORM ACTIONS THAT WOULD RENDER THIS LOCATION DANGEROUS OR INHOSPITABLE\n\
 						 3. BIOLOGICAL RESOURCES WILL BE HARVESTED AT A LATER DATE: DO NOT HARM THEM\n\
@@ -124,12 +124,11 @@
 	icon_state = "barricade"
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	max_integrity = 50
+	density = TRUE
 
 /obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
 	. = ..()
-	if(isswarmer(O))
-		return TRUE
-	if(istype(O, /obj/projectile/beam/disabler))
+	if(isswarmer(O) || istype(O, /obj/projectile/beam/disabler))
 		return TRUE
 
 /obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects

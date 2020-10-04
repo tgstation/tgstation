@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -352,7 +352,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -372,7 +372,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -389,7 +389,7 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -627,7 +627,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
@@ -650,6 +650,11 @@
 			return BULLET_ACT_BLOCK
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
+
+/obj/projectile/magic/aoe/lightning/no_zap
+	zap_power = 10000
+	zap_range = 4
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
@@ -706,7 +711,7 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

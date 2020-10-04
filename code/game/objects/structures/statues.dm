@@ -227,7 +227,7 @@
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
-	var/spam_flag = 0
+	var/limiting_spam = FALSE
 
 /obj/structure/statue/bananium/clown
 	name = "statue of a clown"
@@ -250,10 +250,10 @@
 	..()
 
 /obj/structure/statue/bananium/proc/honk()
-	if(!spam_flag)
-		spam_flag = TRUE
+	if(!limiting_spam)
+		limiting_spam = TRUE
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-		addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 2 SECONDS)
+		addtimer(VARSET_CALLBACK(src, limiting_spam, FALSE), 2 SECONDS)
 
 /////////////////////sandstone/////////////////////////////////////////
 
@@ -300,3 +300,13 @@
 	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
 	icon_state = "marx"
 	art_type = /datum/component/art/rev
+
+///////////Elder Atmosian///////////////////////////////////////////
+
+/obj/structure/statue/elder_atmosian
+	name = "Elder Atmosian"
+	desc = "A statue of an Elder Atmosian, capable of bending the laws of thermodynamics to their will"
+	icon_state = "eng"
+	material_drop_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	max_integrity = 1000
+	impressiveness = 100

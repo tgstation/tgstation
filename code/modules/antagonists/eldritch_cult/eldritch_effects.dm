@@ -226,11 +226,11 @@
 		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
+	. = ..()
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
-	. = ..()
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"

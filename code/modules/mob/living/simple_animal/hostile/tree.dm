@@ -44,6 +44,10 @@
 
 	var/is_tree = TRUE
 
+/mob/living/simple_animal/hostile/tree/Initialize()
+	. = ..()
+	add_cell_sample()
+
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
 	if(is_tree && isopenturf(loc))
@@ -64,6 +68,9 @@
 			C.Paralyze(60)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
+
+/mob/living/simple_animal/hostile/tree/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -95,3 +102,6 @@
 		for(var/obj/machinery/power/apc/A in range(2, get_turf(src)))
 			if(A.cell)
 				A.cell.give(75)
+
+/mob/living/simple_animal/hostile/tree/festivus/add_cell_sample()
+	return

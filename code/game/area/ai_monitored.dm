@@ -28,3 +28,7 @@
 			var/obj/machinery/camera/cam = X
 			cam.lostTargetRef(WEAKREF(O))
 			return
+
+/area/ai_monitored/turret_protected/ai/Initialize()
+	. = ..()
+	src.area_flags |= ABDUCTOR_PROOF

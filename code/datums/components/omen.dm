@@ -41,6 +41,8 @@
   * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
   */
 /datum/component/omen/proc/check_accident(atom/movable/our_guy)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(!prob(15))
 		return
 	for(var/t in get_adjacent_open_turfs(our_guy))
@@ -53,6 +55,8 @@
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
+	SIGNAL_HANDLER
+
 	if(amount <= 0 || prob(50)) // 50% chance to bonk our head
 		return
 
@@ -68,6 +72,8 @@
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
 /datum/component/omen/proc/check_bless(mob/living/our_guy, category)
+	SIGNAL_HANDLER
+
 	if(category != "blessing")
 		return
 	to_chat(our_guy, "<span class='nicegreen'>You feel a horrible omen lifted off your shoulders!</span>")

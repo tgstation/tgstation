@@ -52,14 +52,10 @@
 	if(..())
 		return
 
-	var/authed = FALSE
-	var/mob/user = usr
-	var/obj/item/card/id/user_id = user.get_idcard()
-	if(user_id)
-		if(ACCESS_CHANGE_IDS in user_id.access)
-			authed = TRUE
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/card/id/user_id = card_slot?.stored_card
 
-	if(!authed)
+	if(!user_id || !(ACCESS_CHANGE_IDS in user_id.access))
 		return
 
 	switch(action)
@@ -107,10 +103,10 @@
 	var/list/data = get_header_data()
 
 	var/authed = FALSE
-	var/obj/item/card/id/user_id = user.get_idcard(FALSE)
-	if(user_id)
-		if(ACCESS_CHANGE_IDS in user_id.access)
-			authed = TRUE
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/card/id/user_id = card_slot?.stored_card
+	if(user_id && (ACCESS_CHANGE_IDS in user_id.access))
+		authed = TRUE
 
 	data["authed"] = authed
 

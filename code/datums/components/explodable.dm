@@ -36,20 +36,30 @@
 	always_delete = _always_delete
 
 /datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
+	SIGNAL_HANDLER
+
 	check_if_detonate(I)
 
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+
 	check_if_detonate(hit_atom)
 
 /datum/component/explodable/proc/explodable_bump(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	check_if_detonate(A)
 
 ///Called when you use this object to attack sopmething
 /datum/component/explodable/proc/explodable_attack(datum/source, atom/movable/target, mob/living/user)
+	SIGNAL_HANDLER
+
 	check_if_detonate(target)
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+
 	if(!def_zone)
 		return
 	if(damagetype != BURN) //Don't bother if it's not fire.
@@ -59,9 +69,13 @@
 	detonate()
 
 /datum/component/explodable/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMGE,  .proc/explodable_attack_zone, TRUE)
 
 /datum/component/explodable/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, COMSIG_MOB_APPLY_DAMGE)
 
 /// Checks if we're hitting the zone this component is covering
@@ -103,6 +117,8 @@
 
 /// Expldoe and remove the object
 /datum/component/explodable/proc/detonate()
+	SIGNAL_HANDLER
+
 	var/atom/A = parent
 	var/log = TRUE
 	if(light_impact_range < 1)

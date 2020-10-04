@@ -46,6 +46,8 @@
 		materials[M] = 0
 
 /datum/component/material_container/proc/OnExamine(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(show_on_examine)
 		for(var/I in materials)
 			var/datum/material/M = I
@@ -55,6 +57,8 @@
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/OnAttackBy(datum/source, obj/item/I, mob/living/user)
+	SIGNAL_HANDLER
+
 	var/list/tc = allowed_typecache
 	if(disable_attackby)
 		return

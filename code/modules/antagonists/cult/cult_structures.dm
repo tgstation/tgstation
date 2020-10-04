@@ -6,6 +6,8 @@
 	var/cooldowntime = 0
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
+	///if you want to add a special, non-default part of the description that only cultists and observers can see, store it in this variable
+	var/cultist_examine_message
 
 /obj/structure/destructible/cult/proc/conceal() //for spells that hide cult presence
 	density = FALSE
@@ -31,8 +33,11 @@
 /obj/structure/destructible/cult/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
-	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
+	if(iscultist(user) || isobserver(user))
+		if(cultist_examine_message)
+			. += "<span class='cult'>[cultist_examine_message]</span>"
+		if(cooldowntime > world.time)
+			. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -80,6 +85,7 @@
 /obj/structure/destructible/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar'Sie."
+	cultist_examine_message = "A blood cultist can use it to create eldritch whetstones, construct shells, and flasks of unholy water."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
@@ -121,6 +127,7 @@
 /obj/structure/destructible/cult/forge
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar'Sie."
+	cultist_examine_message = "A blood cultist can use it to create shielded robes, flagellant's robes, and mirror shields."
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
@@ -241,6 +248,7 @@
 /obj/structure/destructible/cult/tome
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
+	cultist_examine_message = "A blood cultist can use it to create zealot's blindfolds, shuttle curse orbs, and veil walker equipment."
 	icon_state = "tomealtar"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE

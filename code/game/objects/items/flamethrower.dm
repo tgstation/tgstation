@@ -15,6 +15,8 @@
 	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
 	var/status = FALSE
 	var/lit = FALSE	//on or off
 	var/operating = FALSE//cooldown
@@ -74,6 +76,9 @@
 	if(ishuman(user))
 		if(!can_trigger_gun(user))
 			return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>")
+		return
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
@@ -162,16 +167,15 @@
 	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
-		set_light(1)
 		playsound(loc, acti_sound, 50, TRUE)
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
 			warned_admins = TRUE
 	else
-		set_light(0)
 		playsound(loc, deac_sound, 50, TRUE)
 		STOP_PROCESSING(SSobj,src)
+	set_light_on(lit)
 	update_icon()
 
 /obj/item/flamethrower/CheckParts(list/parts_list)
@@ -218,7 +222,6 @@
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
 	SSair.add_to_active(target, 0)
-
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()

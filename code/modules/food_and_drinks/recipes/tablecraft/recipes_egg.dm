@@ -26,7 +26,7 @@
 	name = "The Eggcellent Challenge"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/omelette = 3,
-		/obj/item/reagent_containers/food/snacks/butterbiscuit = 2,
+		/obj/item/food/butterbiscuit = 2,
 		/obj/item/reagent_containers/food/snacks/meatball = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/eggcellent_plate
@@ -46,7 +46,7 @@
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/friedegg = 1,
 		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
-		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/benedict
 	subcategory = CAT_EGG

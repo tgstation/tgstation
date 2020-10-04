@@ -1,6 +1,5 @@
 
 /mob/living/brain/Life()
-	set invisibility = 0
 	if (notransform)
 		return
 	if(!loc)

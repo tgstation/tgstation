@@ -41,6 +41,8 @@
 
 ///Tell the controller to turn the solar panels
 /obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
+	SIGNAL_HANDLER
+
 	setDir(angle2dir(azimuth))
 	if(control && control.track == SOLAR_TRACK_AUTO)
 		control.set_panels(azimuth)

@@ -50,7 +50,7 @@
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
-	var/flags = 0
+	var/flags = NONE
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0
 	/// Requirements are the threat level requirements per pop range.

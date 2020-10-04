@@ -13,7 +13,8 @@
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
@@ -34,7 +35,8 @@
 /obj/item/bodypart/r_arm/robot
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
+	attack_verb_continuous = list("slaps", "punches")
+	attack_verb_simple = list("slap", "punch")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
@@ -55,7 +57,8 @@
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
@@ -76,7 +79,8 @@
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
+	attack_verb_continuous = list("kicks", "stomps")
+	attack_verb_simple = list("kick", "stomp")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1

@@ -243,7 +243,7 @@ export const StatusPane = (props, context) => {
         <Grid.Column size={0.85}>
           <LabeledList>
             <LabeledList.Item
-              label="TC Availible"
+              label="TC Available"
               buttons={(
                 <Button
                   content="Claim"
@@ -305,7 +305,7 @@ const ContractsTab = (props, context) => {
   return (
     <Fragment>
       <Section
-        title="Availible Contracts"
+        title="Available Contracts"
         buttons={(
           <Button
             content="Call Extraction"

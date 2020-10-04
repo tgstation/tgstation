@@ -159,7 +159,7 @@
 					log_combat(user, L, "injected", src, addition="which had [contained]")
 				else
 					L.log_message("injected themselves ([contained]) with [src.name]", LOG_ATTACK, color="orange")
-			reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, method = INJECT)
+			reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 			if(istype(W))
 				to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The canister now contains [reagents.total_volume] units.</span>")
 				playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
@@ -181,7 +181,7 @@
 	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
 	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 	if(reagents?.total_volume)
-		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, method = INJECT)
+		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
 
 	return discover_after
 

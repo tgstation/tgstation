@@ -7,17 +7,17 @@
 	if(!enabled)
 		if(ui)
 			ui.close()
-		return 0
+		return
 	if(!use_power())
 		if(ui)
 			ui.close()
-		return 0
+		return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
 			ui.close()
-		return 0
+		return
 
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -37,8 +37,8 @@
 	if (!ui)
 		ui = new(user, src, "NtosMain")
 		ui.set_autoupdate(TRUE)
-		ui.open()
-		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
+		if(ui.open())
+			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 
 /obj/item/modular_computer/ui_data(mob/user)
@@ -67,13 +67,16 @@
 	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 	if(intelliholder?.stored_card)
 		data["removable_media"] += "intelliCard"
+	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
+	if(secondarycardholder?.stored_card)
+		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
-		var/running = 0
+		var/running = FALSE
 		if(P in idle_threads)
-			running = 1
+			running = TRUE
 
 		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
 
@@ -197,13 +200,19 @@
 					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 					if(!intelliholder)
 						return
-					if(intelliholder.try_eject(0,user))
+					if(intelliholder.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 					if(!cardholder)
 						return
-					cardholder.try_eject(0, user)
+					cardholder.try_eject(user)
+				if("secondary RFID card")
+					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
+					if(!cardholder)
+						return
+					cardholder.try_eject(user)
+
 
 		else
 			return

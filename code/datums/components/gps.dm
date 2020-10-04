@@ -36,15 +36,21 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	if(user)
 		ui_interact(user)
 
 ///Called on COMSIG_PARENT_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>"
 
 ///Called on COMSIG_ATOM_EMP_ACT
 /datum/component/gps/item/proc/on_emp_act(datum/source, severity)
+	SIGNAL_HANDLER
+
 	emped = TRUE
 	var/atom/A = parent
 	A.cut_overlay("working")
@@ -61,6 +67,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 ///Calls toggletracking
 /datum/component/gps/item/proc/on_AltClick(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	toggletracking(user)
 
 ///Toggles the tracking for the gps

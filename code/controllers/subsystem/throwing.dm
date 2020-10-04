@@ -11,8 +11,9 @@ SUBSYSTEM_DEF(throwing)
 	var/list/currentrun
 	var/list/processing = list()
 
-/datum/controller/subsystem/throwing/stat_entry()
-	..("P:[processing.len]")
+/datum/controller/subsystem/throwing/stat_entry(msg)
+	msg = "P:[length(processing)]"
+	return ..()
 
 
 /datum/controller/subsystem/throwing/fire(resumed = 0)
@@ -95,6 +96,8 @@ SUBSYSTEM_DEF(throwing)
 
 ///Defines the datum behavior on the thrownthing's qdeletion event.
 /datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
+	SIGNAL_HANDLER
+
 	qdel(src)
 
 
@@ -137,7 +140,7 @@ SUBSYSTEM_DEF(throwing)
 			finalize()
 			return
 
-		AM.Move(step, get_dir(AM, step))
+		AM.Move(step, get_dir(AM, step), DELAY_TO_GLIDE_SIZE(1 / speed))
 
 		if (!AM.throwing) // we hit something during our move
 			finalize(hit = TRUE)

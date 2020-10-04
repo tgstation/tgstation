@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 		var/area/place = get_area(turfs[i])
 		if(blacklisted_areas[place.type])
 			continue
-		if(!place.requires_power || place.noteleport || place.hidden)
+		if(!place.requires_power || (place.area_flags & NOTELEPORT) || (place.area_flags & HIDDEN_AREA))
 			continue // No expanding powerless rooms etc
 		areas[place.name] = place
 	var/area_choice = input(creator, "Choose an area to expand or make a new area.", "Area Expansion") as null|anything in areas

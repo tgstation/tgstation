@@ -148,8 +148,8 @@
 						SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 #undef VOX_DELAY
 #endif

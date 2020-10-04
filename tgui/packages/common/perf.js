@@ -1,21 +1,32 @@
 /**
  * Ghetto performance measurement tools.
  *
- * Uses NODE_ENV to redact itself from production bundles.
+ * Uses NODE_ENV to remove itself from production builds.
  *
  * @file
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
 
-let markersByLabel = {};
+const FPS = 60;
+const FRAME_DURATION = 1000 / FPS;
+
+// True if Performance API is supported
+const supportsPerf = !!window.performance?.now;
+// High precision markers
+let hpMarkersByName = {};
+// Low precision markers
+let lpMarkersByName = {};
 
 /**
  * Marks a certain spot in the code for later measurements.
  */
-const mark = (label, timestamp) => {
+const mark = (name, timestamp) => {
   if (process.env.NODE_ENV !== 'production') {
-    markersByLabel[label] = timestamp || Date.now();
+    if (supportsPerf && !timestamp) {
+      hpMarkersByName[name] = performance.now();
+    }
+    lpMarkersByName[name] = timestamp || Date.now();
   }
 };
 
@@ -24,18 +35,23 @@ const mark = (label, timestamp) => {
  *
  * Use logger.log() to print the measurement.
  */
-const measure = (markerA, markerB) => {
+const measure = (markerNameA, markerNameB) => {
   if (process.env.NODE_ENV !== 'production') {
-    return timeDiff(
-      markersByLabel[markerA],
-      markersByLabel[markerB]);
+    let markerA = hpMarkersByName[markerNameA];
+    let markerB = hpMarkersByName[markerNameB];
+    if (!markerA || !markerB) {
+      markerA = lpMarkersByName[markerNameA];
+      markerB = lpMarkersByName[markerNameB];
+    }
+    const duration = Math.abs(markerB - markerA);
+    return formatDuration(duration);
   }
 };
 
-const timeDiff = (startedAt, finishedAt) => {
-  const diff = Math.abs(finishedAt - startedAt);
-  const diffFrames = (diff / 16.6667).toFixed(2);
-  return `${diff}ms (${diffFrames} frames)`;
+const formatDuration = duration => {
+  const durationInFrames = duration / FRAME_DURATION;
+  return duration.toFixed(duration < 10 ? 1 : 0) + 'ms '
+    + '(' + durationInFrames.toFixed(2) + ' frames)';
 };
 
 export const perf = {

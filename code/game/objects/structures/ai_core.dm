@@ -25,16 +25,13 @@
 			update_icon()
 	if(A == brain)
 		brain = null
-	. = ..()
+	return ..()
 
 
 /obj/structure/ai_core/Destroy()
-	if(circuit)
-		qdel(circuit)
-		circuit = null
-	if(brain)
-		qdel(brain)
-		brain = null
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	QDEL_NULL(laws)
 	return ..()
 
 /obj/structure/ai_core/deactivated
@@ -81,7 +78,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	if(!A.blob_allowed)
+	if(!(A.area_flags & BLOBS_ALLOWED))
 		return FALSE
 	if(!A.power_equip)
 		return FALSE

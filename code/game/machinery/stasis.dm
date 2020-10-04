@@ -66,7 +66,7 @@
 	. = ..()
 
 /obj/machinery/stasis/proc/stasis_running()
-	return stasis_enabled && is_operational()
+	return stasis_enabled && is_operational
 
 /obj/machinery/stasis/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -111,7 +111,7 @@
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	target.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
 	ADD_TRAIT(target, TRAIT_TUMOR_SUPPRESSED, TRAIT_GENERIC)
-	target.ExtinguishMob()
+	target.extinguish_mob()
 	use_power = ACTIVE_POWER_USE
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)

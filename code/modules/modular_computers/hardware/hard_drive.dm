@@ -31,43 +31,43 @@
 // Use this proc to add file to the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
 /obj/item/computer_hardware/hard_drive/proc/store_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(!can_store_file(F))
-		return 0
+		return FALSE
 
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	if(!stored_files)
-		return 0
+		return FALSE
 
 	// This file is already stored. Don't store it again.
 	if(F in stored_files)
-		return 0
+		return FALSE
 
 	F.holder = src
 	stored_files.Add(F)
 	recalculate_size()
-	return 1
+	return TRUE
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
 /obj/item/computer_hardware/hard_drive/proc/remove_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(!stored_files)
-		return 0
+		return FALSE
 
 	if(!check_functionality())
-		return 0
+		return FALSE
 
 	if(F in stored_files)
 		stored_files -= F
 		recalculate_size()
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 // Loops through all stored files and recalculates used_capacity of this drive
 /obj/item/computer_hardware/hard_drive/proc/recalculate_size()
@@ -80,24 +80,24 @@
 // Checks whether file can be stored on the hard drive. We can only store unique files, so this checks whether we wouldn't get a duplicity by adding a file.
 /obj/item/computer_hardware/hard_drive/proc/can_store_file(datum/computer_file/F)
 	if(!F || !istype(F))
-		return 0
+		return FALSE
 
 	if(F in stored_files)
-		return 0
+		return FALSE
 
 	var/name = F.filename + "." + F.filetype
 	for(var/datum/computer_file/file in stored_files)
 		if((file.filename + "." + file.filetype) == name)
-			return 0
+			return FALSE
 
 	// In the unlikely event someone manages to create that many files.
 	// BYOND is acting weird with numbers above 999 in loops (infinite loop prevention)
 	if(stored_files.len >= 999)
-		return 0
+		return FALSE
 	if((used_capacity + F.size) > max_capacity)
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 
 // Tries to find the file by filename. Returns null on failure

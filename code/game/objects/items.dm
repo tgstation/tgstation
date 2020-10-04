@@ -128,7 +128,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/breakouttime = 0
 
 	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/attack_verb
+	var/list/attack_verb_continuous
+	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
 
@@ -189,8 +190,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Initialize()
 
-	if(attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
+	if(attack_verb_continuous)
+		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+	if(attack_verb_simple)
+		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
 
 	. = ..()
 	for(var/path in actions_types)
@@ -201,9 +204,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		item_flags |= FORCE_STRING_OVERRIDE
 
 	if(!hitsound)
-		if(damtype == "fire")
+		if(damtype == BURN)
 			hitsound = 'sound/items/welder.ogg'
-		if(damtype == "brute")
+		if(damtype == BRUTE)
 			hitsound = "swing_hit"
 
 /obj/item/Destroy()
@@ -362,15 +365,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
-		var/mob/living/carbon/C = user
-		if(istype(C))
-			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
-				to_chat(user, "<span class='warning'>The acid on [src] burns your hand!</span>")
-				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					C.update_damage_overlays()
-
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
 
@@ -457,7 +451,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -471,7 +465,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /// called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
@@ -488,7 +482,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -755,9 +749,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return ..()
 	return 0
 
-/obj/item/mech_melee_attack(obj/mecha/M)
-	return 0
-
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
@@ -928,12 +919,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/proc/embedded(atom/embedded_target)
+/obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
 	return
 
 /obj/item/proc/unembedded()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
+		qdel(src)
 		return TRUE
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
@@ -948,11 +939,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
-///In case we want to do something special (like self delete) upon failing to embed in something, return true
+///In case we want to do something special (like self delete) upon failing to embed in something. Returns a bitflag.
 /obj/item/proc/failedEmbed()
 	if(item_flags & DROPDEL)
-		QDEL_NULL(src)
-		return TRUE
+		qdel(src)
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE
+	return NONE
+
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.
 /obj/item/proc/on_thrown(mob/living/carbon/user, atom/target)
@@ -969,19 +962,22 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   *
   * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
   *
+  * Returns bitflags informing whether the item was able to embed itself, deleted itself in the process, or nothing happened.
+  *
   * Arguments:
   * * target- Either a body part or a carbon. What are we hitting?
   * * forced- Do we want this to go through 100%?
   */
 /obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
 	if(!isbodypart(target) && !iscarbon(target))
-		return
+		return NONE
 	if(!forced && !LAZYLEN(embedding))
-		return
+		return NONE
 
 	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
-		return TRUE
-	failedEmbed()
+		return COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS
+	return failedEmbed()
+
 
 ///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
 /obj/item/proc/disableEmbedding()
@@ -1040,10 +1036,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 		M.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
 		M.losebreath += 2
-		if(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
-			M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
-			M.losebreath += 6
-			discover_after = FALSE
+		switch(tryEmbed(M.get_bodypart(BODY_ZONE_CHEST), TRUE, TRUE)) //and if it embeds in their chest, cause a lot of pain
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_SELF_DELETE)
+				return
+			if(COMPONENT_PROJECTILE_SELF_ON_HIT_EMBED_SUCCESS)
+				M.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+				M.losebreath += 6
+				discover_after = FALSE
 
 		if(S?.tastes?.len) //is that blood in my mouth?
 			S.tastes += "iron"
@@ -1068,18 +1067,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
 				/// The glass shard that is spawned into the source item
-				var/obj/item/shard/broken_glass = new /obj/item/shard(src)
+				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
 				playsound(M, "shatter", 25, TRUE)
 				qdel(src)
-				if(S)
-					S.contents += broken_glass //puts the glass back into the source item
-				else
+				if(QDELETED(S))
 					broken_glass.on_accidental_consumption(M, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
 				playsound(M, "shatter", 15, TRUE)
-				discover_after = FALSE
+			discover_after = FALSE
 
 		M.adjust_disgust(33)
 		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something hard.</span>", \
@@ -1101,10 +1098,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	else
 		to_chat(M, "<span class='warning'>[source_item? "Something strange was in the \the [source_item]..." : "I just bit something strange..."] </span>")
-
-	//Just in case - can't discover something that doesn't exist
-	if(QDELETED(src))
-		return FALSE
 
 	return discover_after
 

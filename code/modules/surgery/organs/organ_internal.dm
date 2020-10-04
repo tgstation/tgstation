@@ -33,15 +33,15 @@
 /obj/item/organ/Initialize()
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, .proc/OnEatFrom))
+		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, null, CALLBACK(src, .proc/OnEatFrom))
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
 		return
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(M, special = TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -60,6 +60,16 @@
 
 //Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+	//Stop any reagent metabolizing on organ destruction
+	if(reagents && iscarbon(owner))
+		var/mob/living/carbon/body = owner
+		for(var/chem in reagents.reagent_list)
+			var/datum/reagent/reagent = chem
+			if(reagent.metabolizing)
+				reagent.metabolizing = FALSE
+				reagent.on_mob_end_metabolize(body)
+			reagent.on_mob_delete(body) //It was removed from the body
+
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -79,13 +89,13 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()
-	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(delta_time)
+	on_death(delta_time) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+/obj/item/organ/proc/on_death(delta_time = 2)	//runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	applyOrganDamage(maxHealth * decay_factor)
+	applyOrganDamage(maxHealth * decay_factor * 0.5 * delta_time)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
@@ -101,12 +111,16 @@
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
+
+	. += "<span class='notice'>It should be inserted in the [parse_zone(zone)].</span>"
+
 	if(organ_flags & ORGAN_FAILING)
 		if(status == ORGAN_ROBOTIC)
 			. += "<span class='warning'>[src] seems to be broken.</span>"
 			return
 		. += "<span class='warning'>[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.</span>"
 		return
+
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
@@ -125,48 +139,6 @@
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic
-
-/*
- * On accidental consumption, cause organ damage and check if they like eating organs
- */
-/obj/item/organ/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	if(organ_flags & ORGAN_SYNTHETIC)
-		return ..()
-
-	if(organ_flags & ORGAN_FROZEN)
-		return TRUE
-
-	applyOrganDamage(25)
-	OnEatFrom(M, user)
-	if(istype(src, /obj/item/organ/brain)) //brain takes some extra damage
-		applyOrganDamage(25)
-		if(!iszombie(M)) //brains...
-			M.adjust_disgust(50)
-	else if(istype(src, /obj/item/organ/heart)) //heart makes a puddle of blood
-		M.add_splatter_floor(get_turf(src))
-
-	var/obj/item/reagent_containers/food/snacks/S = source_item
-	if(S?.tastes?.len && istype(S))
-		S.tastes += "meat"
-		S.tastes["meat"] = 3
-
-	if(organ_flags & ORGAN_EDIBLE)
-		var/datum/component/edible/EC = src.GetComponent(/datum/component/edible)
-		EC.checkLiked(1, M)
-
-	//people who like gross food or are voracious (voracious people wouldn't even notice)
-	if(((M.dna.species.liked_food & GROSS) && (M.dna.species.liked_food & MEAT)) || M.has_quirk(/datum/quirk/voracious))
-		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something strange.</span>", \
-						"<span class='warning'>Huh, did I just bite into a [name]?</span>")
-	else
-		M.visible_message("<span class='warning'>[M] looks like [M.p_theyve()] just bitten into something awful!</span>", \
-						"<span class='boldwarning'>Ew!! Did I just bite into \a [name]?!</span>")
-
-	if((damage >= maxHealth) && !istype(src, /obj/item/organ/brain)) //don't qdel brains
-		discover_after = FALSE
-		qdel(src) //oops, all gone
-
-	return discover_after
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.

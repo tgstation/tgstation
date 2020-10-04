@@ -23,5 +23,7 @@
 	return ..()
 	
 /obj/effect/blessing/proc/block_cult_teleport(datum/source, channel, turf/origin, turf/destination)
+	SIGNAL_HANDLER
+
 	if(channel == TELEPORT_CHANNEL_CULT)
 		return COMPONENT_BLOCK_TELEPORT

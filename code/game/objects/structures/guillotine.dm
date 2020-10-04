@@ -21,7 +21,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_buckled_mobs = 1
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	var/blade_status = GUILLOTINE_BLADE_RAISED
