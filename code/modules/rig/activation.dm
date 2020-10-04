@@ -1,3 +1,32 @@
+/obj/item/rig/control/proc/choose_deploy(mob/user)
+	if(!LAZYLEN(rig_parts))
+		return
+	if(isAI(user))
+		to_chat(user, "<span class='warning'>You cannot operate this!</span>")
+		return
+	var/list/display_names = list()
+	var/list/items = list()
+	for(var/i in 1 to length(rig_parts))
+		var/obj/item/piece = rig_parts[i]
+		display_names["[piece.name] ([i])"] = REF(piece)
+		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
+		items += list("[piece.name] ([i])" = piece_image)
+	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
+	if(!pick)
+		return
+	var/part_reference = display_names[pick]
+	var/obj/item/part = locate(part_reference) in rig_parts
+	if(!istype(part) || user.incapacitated())
+		return
+	if(active || activating)
+		to_chat(user, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
+	if(part.loc == src)
+		deploy(user, part)
+	else
+		conceal(user, part)
+
 /obj/item/rig/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
