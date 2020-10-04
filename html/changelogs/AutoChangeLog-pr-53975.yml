@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "You can now buy the Shuttle 667 when a cult rune is dispelled with a null rod."
