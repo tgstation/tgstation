@@ -26,7 +26,6 @@
 
 /obj/structure/statue/proc/can_user_rotate(mob/user)
 	var/mob/living/L = user
-
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
