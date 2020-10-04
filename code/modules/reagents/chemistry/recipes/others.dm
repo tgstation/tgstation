@@ -104,7 +104,7 @@
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+		new /obj/item/food/meat/slab/meatproduct(location)
 	return
 
 /datum/chemical_reaction/carbondioxide
@@ -439,6 +439,7 @@
 	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
+
 	var/mob/living/carbon/M = holder.my_atom
 	if(istype(M, /mob/living/carbon))
 		if(istype(M, /mob/living/carbon/monkey))

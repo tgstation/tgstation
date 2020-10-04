@@ -286,12 +286,12 @@
 /obj/structure/closet/secure_closet/freezer/meat{
 	req_access = null
 	},
-/obj/item/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/reagent_containers/food/snacks/meat/rawbacon,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet,
-/obj/item/reagent_containers/food/snacks/meat/rawcrab,
-/obj/item/reagent_containers/food/snacks/meat/rawcrab,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcrab,
+/obj/item/food/meat/rawcrab,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "de" = (

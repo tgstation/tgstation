@@ -327,11 +327,11 @@
 		if(prob(max(metal / 2, 33)))
 			explosion(loc, 0, 1, 2)
 	else
-		drop_stored_items()
+		dump_inventory_contents()
 
 	after_finish_loop()
 
-/obj/machinery/microwave/drop_stored_items()
+/obj/machinery/microwave/dump_inventory_contents()
 	. = ..()
 	ingredients.Cut()
 

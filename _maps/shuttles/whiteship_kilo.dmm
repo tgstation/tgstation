@@ -1817,13 +1817,13 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/snacks/sandwich,
+/obj/item/food/sandwich,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1;
 	icon_state = "trimline_fill"
