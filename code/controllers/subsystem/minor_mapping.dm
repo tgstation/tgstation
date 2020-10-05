@@ -16,10 +16,13 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if(!M)
-			M = new(proposed_turf)
+		if(prob(95))
+			if(!M)
+				M = new(proposed_turf)
+			else
+				M.forceMove(proposed_turf)
 		else
-			M.forceMove(proposed_turf)
+			var/mob/living/simple_animal/hostile/regalrat/controlled/king = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
 		if(M.environment_air_is_safe())
 			num_mice -= 1
 			M = null

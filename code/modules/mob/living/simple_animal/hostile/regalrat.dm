@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/regalrat
-	name = "regal rat"
+	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
 	icon_state = "regalrat"
 	icon_living = "regalrat"
@@ -26,9 +26,10 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
+	///The spell that the rat uses to scrounge up junk.
 	var/datum/action/cooldown/coffer
+	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
-	///Number assigned to rats and mice, checked when determining infighting.
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
@@ -36,7 +37,7 @@
 	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
 	riot.Grant(src)
-	INVOKE_ASYNC(src, .proc/get_player)
+	AddElement(/datum/element/waddling)
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
@@ -78,13 +79,25 @@
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	. = ..()
+	if(health >= maxHealth)
+		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
+		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
-		if (health >= maxHealth)
-			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
-			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
 		heal_bodypart_damage(10)
 		qdel(target)
+	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
+		to_chat(src, "<span class='green'>You eat \the [src], revitalizing your royal resolve completely.</span>")
+		heal_bodypart_damage(70)
+		qdel(target)
+
+/mob/living/simple_animal/hostile/regalrat/controlled
+	name = "regal rat"
+
+/mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/get_player)
+
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -202,6 +215,12 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/rat/death(gibbed)
+	if(!ckey)
+		..(1)
+		if(!gibbed)
+			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			M.icon_state = icon_dead
+			M.name = name
 	SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
