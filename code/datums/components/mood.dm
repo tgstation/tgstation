@@ -444,7 +444,7 @@
 	mental_entropy += 60
 	owner.mind.remove_disorder(disorder.type)
 
-/datum/component/mood/proc/electrocute(/datum/source , shock_damage, source, siemens_coeff, flags)
+/datum/component/mood/proc/electrocute(datum/source , shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(flags & SHOCK_ILLUSION)
 		return
 	if(shock_damage * siemens_coeff < 1)
