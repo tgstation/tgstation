@@ -67,6 +67,8 @@
 	var/list/initial_modules = list()
 	/// Modules the MOD currently possesses
 	var/list/modules
+	/// Currently used module
+	var/obj/item/mod/module/selected_module
 	/// AI mob inhabiting the MOD
 	var/mob/living/silicon/ai/AI
 	/// Delay between moves as AI
@@ -103,6 +105,7 @@
 		LAZYADD(mod_parts, boots)
 	if(LAZYLEN(mod_parts))
 		for(var/obj/item/piece in mod_parts)
+			piece.name = "[theme] [piece.name]"
 			piece.desc = "It seems to be a part of [src]."
 			piece.armor = armor
 			piece.resistance_flags = resistance_flags
@@ -348,6 +351,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL

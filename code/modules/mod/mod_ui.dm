@@ -1,22 +1,36 @@
 /obj/item/mod/control/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "MODSuit", name)
+		ui = new(user, src, "MODsuit", name)
 		ui.open()
 
 /obj/item/mod/control/ui_data()
 	var/data = list()
 	data["interface_break"] = interface_break
-	data["malfunction"] = malfunctioning
+	data["malfunctioning"] = malfunctioning
 	data["open"] = open
 	data["active"] = active
 	data["locked"] = locked
-	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "None"
-	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "None"
+	data["selected_module"] = selected_module ? selected_module.name : 0
+	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "No Occupant"
+	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "No Job"
 	data["ai"] = AI ? AI.name : 0
-	data["cell"] = cell?.name
+	data["cell"] = cell ? cell.name : 0
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
-	data["modules"] = LAZYLEN(modules) ? modules : null
+	data["helmet"] = helmet ? helmet.name : 0
+	data["chestplate"] = chestplate ? chestplate.name : 0
+	data["gauntlets"] = gauntlets ? gauntlets.name : 0
+	data["boots"] = boots ? boots.name : 0
+	data["modules"] = list()
+	for(var/obj/item/mod/module/thingy in modules)
+		var/list/module_data = list(
+			name = thingy.name,
+			description = thingy.desc,
+			idle_power = thingy.idle_power_use,
+			active_power = thingy.active_power_use,
+			ref = REF(thingy)
+		)
+		data["modules"] += list(module_data)
 
 	return data
 

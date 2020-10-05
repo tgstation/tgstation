@@ -8,7 +8,7 @@
 	/// Power use when idle
 	var/idle_power_use = 0
 	/// Power use when used
-	var/power_use = 0
+	var/active_power_use = 0
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
 	/// Whitelist of MOD themes that can use it
@@ -27,7 +27,7 @@
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"
-	desc = "Module that lets MODsuits hold items inside"
+	desc = "A module using nanotechnology to fit a storage inside of the MOD."
 	complexity = 5
 	var/datum/component/storage/concrete/storage
 	var/max_w_class = WEIGHT_CLASS_SMALL
