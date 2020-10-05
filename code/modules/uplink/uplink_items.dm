@@ -1495,6 +1495,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/sbeacondrop
 	cost = 10
 
+/datum/uplink_item/device_tools/supermatter_delaminator
+	name = "Antinoblium Shard"
+	desc = "A special variant of supermatter crystal reverse engineered by syndicate scientists using samples retrieved by agents. \
+			Attaching this to an active supermatter crystal will destabilize the internal crystal well, causing an energy cascade. \
+			Ensures a storm of EMP waves that blacks out the entire station and eventually the full delamination of the crystal. \
+			Comes with a secure radiation shielded containment box, special tweezers and usage instructions."
+	item = /obj/item/storage/box/syndie_kit/supermatter_delaminator
+	cost = 25
+
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \

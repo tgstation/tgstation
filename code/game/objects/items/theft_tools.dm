@@ -29,7 +29,7 @@
 	else
 		return ..()
 
-/obj/item/nuke_core/process()
+/obj/item/nuke_core/process(delta_time)
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
@@ -131,8 +131,8 @@
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/hemostat/supermatter))
-		var/obj/item/hemostat/supermatter/tongs = W
+	if(istype(W, /obj/item/supermatter))
+		var/obj/item/supermatter/tongs = W
 		if (tongs.sliver)
 			to_chat(user, "<span class='warning'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
@@ -192,7 +192,7 @@
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/nuke_core_container/supermatter/load(obj/item/hemostat/supermatter/T, mob/user)
+/obj/item/nuke_core_container/supermatter/load(obj/item/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
 		return FALSE
 	T.sliver.forceMove(src)
@@ -212,7 +212,7 @@
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
+/obj/item/nuke_core_container/supermatter/attackby(obj/item/supermatter/tongs, mob/user)
 	if(istype(tongs))
 		//try to load shard into core
 		load(tongs, user)
@@ -233,7 +233,7 @@
 	. = ..()
 	usesLeft = rand(2, 4)
 
-/obj/item/hemostat/supermatter
+/obj/item/supermatter
 	name = "supermatter extraction tongs"
 	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
@@ -245,22 +245,22 @@
 	damtype = BURN
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
-/obj/item/hemostat/supermatter/Destroy()
+/obj/item/supermatter/Destroy()
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/hemostat/supermatter/update_icon_state()
+/obj/item/supermatter/update_icon_state()
 	icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 	inhand_icon_state = "supermatter_tongs[sliver ? "_loaded" : null]"
 
-/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+/obj/item/supermatter/afterattack(atom/O, mob/user, proximity)
 	. = ..()
 	if(!sliver)
 		return
 	if(proximity && ismovable(O) && O != sliver)
 		Consume(O, user)
 
-/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
+/obj/item/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
 		visible_message("<span class='notice'>\The [sliver] falls out of \the [src] as it hits the ground.</span>")
@@ -268,7 +268,7 @@
 		update_icon()
 	return ..()
 
-/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
+/obj/item/supermatter/proc/Consume(atom/movable/AM, mob/user)
 	if(ismob(AM))
 		if(!isliving(AM))
 			return

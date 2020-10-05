@@ -444,9 +444,18 @@
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/scalpel/supermatter(src)
-	new /obj/item/hemostat/supermatter(src)
+	new /obj/item/supermatter(src)
 	new /obj/item/nuke_core_container/supermatter(src)
 	new /obj/item/paper/guides/antag/supermatter_sliver(src)
+
+/obj/item/storage/box/syndie_kit/supermatter_delaminator
+	name = "box"
+
+/obj/item/storage/box/syndie_kit/supermatter_delaminator/PopulateContents()
+	new /obj/item/antinoblium(src)
+	new /obj/item/antinoblium_container(src)
+	new /obj/item/supermatter_corruptor(src)
+	new /obj/item/paper/guides/antag/antinoblium_guide(src)
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	name = "virus grenade kit"
