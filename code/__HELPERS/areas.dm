@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 		var/turf/sourceT = found_turfs[1]
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
-		for(var/dir in GLOB.alldirs)
+		for(var/dir in GLOB.cardinals)
 			if(length(.) > max_size)
 				return
 			if(dir_flags & dir) // This means we've checked this dir before, probably from the other turf
@@ -35,8 +35,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engine/eng
 			.[checkT] |= turn(dir, 180)
 			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
 				return FALSE
-			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
-			if(!cardinal_cache["[dir]"] || !TURFS_CAN_SHARE(sourceT, checkT))
+			if(!TURFS_CAN_SHARE(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
