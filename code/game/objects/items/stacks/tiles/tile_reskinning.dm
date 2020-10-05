@@ -15,16 +15,16 @@ GLOBAL_LIST_EMPTY(titanium_tile_reskinning_radial_choices)
 	var/list/choices = GLOB.titanium_tile_reskinning_radial_choices
 	if(!length(choices))
 		choices = GLOB.titanium_tile_reskinning_radial_choices = list(
-		"Titanium" 				= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle"),
-		"Yellow Titanium" 		= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_yellow"),
-		"Blue Titanium" 		= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_blue"),
-		"White Titanium" 		= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_white"),
-		"Purple Titanium" 		= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_purple"),
-		"Titanium Tile" 		= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old"),
-		"Yellow Titanium Tile" 	= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_yellow"),
-		"Blue Titanium Tile" 	= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_blue"),
-		"White Titanium Tile" 	= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_white"),
-		"Purple Titanium Tile" 	= image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_purple"),
+			"Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle"),
+			"Yellow Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_yellow"),
+			"Blue Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_blue"),
+			"White Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_white"),
+			"Purple Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_purple"),
+			"Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old"),
+			"Yellow Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_yellow"),
+			"Blue Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_blue"),
+			"White Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_white"),
+			"Purple Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_purple"),
 		)
 	var/choice = show_radial_menu(user, src, choices, require_near = TRUE)
 	switch(choice)
