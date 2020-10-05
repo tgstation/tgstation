@@ -170,6 +170,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
+		/datum/gas/hypernoblium,
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -187,6 +188,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = 0,
 		/datum/gas/proto_nitrate = 0,
 		/datum/gas/zauker = 0,
+		/datum/gas/hypernoblium = 0,
 	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
 	var/list/gas_trans = list(
@@ -238,6 +240,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = 1,
 		/datum/gas/proto_nitrate = 1,
 		/datum/gas/zauker = 1,
+		/datum/gas/hypernoblium = 1,
 	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -263,6 +266,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
+
 	///integrity of the support base, used when antinoblium is attached
 	var/support_integrity = 100
 	///Check if the antinoblium shard is attached
@@ -689,6 +693,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
+
+		if(gas_comp[/datum/gas/hypernoblium] > 10 && antinoblium_attached)
+			antinoblium_attached = FALSE
 
 		//Power * 0.55 * a value between 1 and 0.8
 		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
