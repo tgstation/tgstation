@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
 	var/list/exposed_wires = find_exposed_wires()
 
-	var/mob/living/simple_animal/mouse/M
+	var/mob/living/simple_animal/M
 	var/turf/proposed_turf
 
 	while((num_mice > 0) && exposed_wires.len)
@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(minor_mapping)
 			else
 				M.forceMove(proposed_turf)
 		else
-			var/mob/living/simple_animal/hostile/regalrat/controlled/king = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
+			M = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
 		if(M.environment_air_is_safe())
 			num_mice -= 1
 			M = null
