@@ -112,3 +112,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash
+
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+  . = ..() //call everything from species/on_species_gain()
+  C.dna.add_mutation(DWARFISM)
