@@ -1,7 +1,13 @@
-#define STATE_MAIN "main"
-#define STATE_MESSAGES "messages"
+/* TODO:
+ * Change authenticated checks to care about if user is AI (and therefore, not normally authenticated)
+*/
+
+#define MAX_STATUS_LINE_LENGTH 40
+
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
 #define STATE_CHANGING_STATUS "changing_status"
+#define STATE_MAIN "main"
+#define STATE_MESSAGES "messages"
 
 // The communications computer
 /obj/machinery/computer/communications
@@ -29,7 +35,14 @@
 	var/list/authorize_access
 
 	/// The messages this console has been sent
-	var/list/datum/comm_message/messages = list()
+	var/list/datum/comm_message/messages
+
+	/// How many times the alert level has been changed
+	/// Used to clear the modal to change alert level
+	var/alert_level_tick = 0
+
+	/// The last lines used for changing the status display
+	var/last_status_display
 
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
@@ -61,26 +74,94 @@
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
 /obj/machinery/computer/communications/ui_act(action, list/params)
+	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
+	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
+
 	. = ..()
 	if (.)
 		return
 
 	. = TRUE
 
-	switch(action)
-		if("callShuttle")
-			if (!authenticated)
+	switch (action)
+		if ("callShuttle")
+			if (!authenticated_as_ai_or_captain(usr))
 				return
 			var/reason = params["reason"]
 			if (length(reason) < CALL_SHUTTLE_REASON_LENGTH)
 				return
 			SSshuttle.requestEvac(usr, reason)
 			post_status("shuttle")
-		if("makePriorityAnnouncement")
+		if ("changeSecurityLevel")
+			if (!authenticated_as_ai_or_captain(usr))
+				return
+
+			// Check if they have
+			if (!isAI(usr))
+				var/obj/item/held_item = usr.get_active_held_item()
+				var/obj/item/card/id/id_card = held_item?.GetID()
+				if (!istype(id_card))
+					to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+					return
+				if (!(ACCESS_CAPTAIN in id_card.access))
+					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+					return
+
+			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
+			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
+				return
+			if (GLOB.security_level == new_sec_level)
+				return
+
+			set_security_level(new_sec_level)
+
+			to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+
+			// Only notify people if an actual change happened
+			log_game("[key_name(usr)] has changed the security level to [params["newSecurityLevel"]] with [src] at [AREACOORD(usr)].")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [params["newSecurityLevel"]] with [src] at [AREACOORD(usr)].")
+			deadchat_broadcast(" has changed the security level to [params["newSecurityLevel"]] with [src] at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type=DEADCHAT_ANNOUNCEMENT)
+
+			alert_level_tick += 1
+		if ("makePriorityAnnouncement")
 			if (!authenticated_as_ai_or_captain(usr))
 				return
 			make_announcement(usr)
-		if("toggleAuthentication")
+		if ("recallShuttle")
+			// AIs cannot recall the shuttle
+			if (!authenticated_as_non_ai_captain(usr))
+				return
+			SSshuttle.cancelEvac(usr)
+		if ("setState")
+			if (!authenticated)
+				return
+			if (!(params["state"] in approved_states))
+				return
+			if (state == STATE_BUYING_SHUTTLE && !can_buy_shuttles(usr))
+				return
+			set_state(usr, params["state"])
+			playsound(src, "terminal_type", 50, FALSE)
+		if ("setStatusMessage")
+			if (!authenticated)
+				return
+			var/line_one = reject_bad_text(params["lineOne"] || "", MAX_STATUS_LINE_LENGTH)
+			var/line_two = reject_bad_text(params["lineTwo"] || "", MAX_STATUS_LINE_LENGTH)
+			post_status("message", line_one, line_two)
+			post_status("alert", "message")
+			last_status_display = list(line_one, line_two)
+			playsound(src, "terminal_type", 50, FALSE)
+		if ("setStatusPicture")
+			if (!authenticated)
+				return
+			var/picture = params["picture"]
+			if (!(picture in approved_status_pictures))
+				return
+			post_status("alert", picture)
+			playsound(src, "terminal_type", 50, FALSE)
+		if ("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)
 				authenticated = FALSE
@@ -94,18 +175,13 @@
 				authenticated = TRUE
 				authorize_access = id_card.access
 				authorize_name = "[id_card.registered_name] - [id_card.assignment]"
+				state = STATE_MAIN
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
 		"authenticated" = FALSE,
-		"canBuyShuttles" = FALSE,
-		"canMessageAssociated" = FALSE,
-		"canRequestNuke" = FALSE,
-		"canSendToSectors" = FALSE,
 		"emagged" = FALSE,
-		"shuttleCalled" = FALSE,
-		"shuttleLastCalled" = FALSE,
 	)
 
 	var/ui_state = isAI(user) ? ai_state : state
@@ -114,18 +190,22 @@
 		data["authenticated"] = TRUE
 		data["canLogOut"] = !isAI(user)
 		data["page"] = ui_state
-		data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
 
 		switch (ui_state)
 			if (STATE_MAIN)
+				data["canBuyShuttles"] = can_buy_shuttles(user)
+				data["canMessageAssociated"] = FALSE
+				data["canRequestNuke"] = FALSE
+				data["canSendToSectors"] = FALSE
+				data["shuttleCalled"] = FALSE
+				data["shuttleLastCalled"] = FALSE
+
 				data["alertLevel"] = get_security_level()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !isAI(user)
+				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
 
 				if (authenticated_as_non_ai_captain(user))
-					if (SSmapping.config.allow_custom_shuttles)
-						data["canBuyShuttles"] = TRUE
-
 					var/list/cross_servers = CONFIG_GET(keyed_list/cross_server)
 					if (cross_servers.len)
 						data["canSendToSectors"] = TRUE
@@ -140,8 +220,9 @@
 					data["canToggleEmergencyAccess"] = TRUE
 					data["emergencyAccess"] = GLOB.emergency_access
 
+					data["alertLevelTick"] = alert_level_tick
 					data["canMakeAnnouncement"] = TRUE
-					data["canSetAlertLevel"] = TRUE
+					data["canSetAlertLevel"] = isAI(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
 
 				if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
 					data["shuttleCalled"] = TRUE
@@ -154,19 +235,21 @@
 			if (STATE_MESSAGES)
 				data["messages"] = list()
 
-				for (var/_message in messages)
-					var/datum/comm_message/message = _message
-					data["messages"] += list(list(
-						"content" = message.content,
-						"title" = message.title,
-						"possibleAnswers" = message.possible_answers,
-					))
+				if (messages)
+					for (var/_message in messages)
+						var/datum/comm_message/message = _message
+						data["messages"] += list(list(
+							"content" = message.content,
+							"title" = message.title,
+							"possibleAnswers" = message.possible_answers,
+						))
 			if (STATE_BUYING_SHUTTLE)
 				// NYI
 				pass()
 			if (STATE_CHANGING_STATUS)
 				// NYI
-				pass()
+				data["lineOne"] = last_status_display ? last_status_display[1] : ""
+				data["lineTwo"] = last_status_display ? last_status_display[2] : ""
 
 	return data
 
@@ -179,7 +262,17 @@
 /obj/machinery/computer/communications/ui_static_data(mob/user)
 	return list(
 		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
+		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
 	)
+
+/obj/machinery/computer/communications/proc/set_state(mob/user, new_state)
+	if (isAI(user))
+		ai_state = new_state
+	else
+		state = new_state
+
+/obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
+	return authenticated_as_non_ai_captain(user) && SSmapping.config.allow_custom_shuttles
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = isAI(user)
@@ -226,7 +319,7 @@
 	COOLDOWN_RESET(src, important_action_cooldown)
 
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
-	messages += new_message
+	LAZYADD(messages, new_message)
 
 /datum/comm_message
 	var/title
@@ -244,7 +337,8 @@
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
 
-#undef STATE_MAIN
-#undef STATE_MESSAGES
+#undef MAX_STATUS_LINE_LENGTH
 #undef STATE_BUYING_SHUTTLE
 #undef STATE_CHANGING_STATUS
+#undef STATE_MAIN
+#undef STATE_MESSAGES
