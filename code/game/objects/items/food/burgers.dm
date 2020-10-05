@@ -36,7 +36,7 @@
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
-	var/obj/item/reagent_containers/food/snacks/meat/M = locate(/obj/item/reagent_containers/food/snacks/meat/steak/plain/human) in contents
+	var/obj/item/food/meat/M = locate(/obj/item/food/meat/steak/plain/human) in contents
 	if(M)
 		subjectname = M.subjectname
 		subjectjob = M.subjectjob
@@ -182,6 +182,7 @@
 	name = "red burger"
 	desc = "Perfect for hiding the fact it's burnt to a crisp."
 	icon_state = "cburger"
+	color = COLOR_RED
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/red = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -189,6 +190,7 @@
 	name = "orange burger"
 	desc = "Contains 0% juice."
 	icon_state = "cburger"
+	color = COLOR_ORANGE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/orange = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -196,6 +198,7 @@
 	name = "yellow burger"
 	desc = "Bright to the last bite."
 	icon_state = "cburger"
+	color = COLOR_YELLOW
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/yellow = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -203,6 +206,7 @@
 	name = "green burger"
 	desc = "It's not tainted meat, it's painted meat!"
 	icon_state = "cburger"
+	color = COLOR_GREEN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/green = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -210,6 +214,7 @@
 	name = "blue burger"
 	desc = "Is this blue rare?"
 	icon_state = "cburger"
+	color = COLOR_BLUE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/blue = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -217,6 +222,7 @@
 	name = "purple burger"
 	desc = "Regal and low class at the same time."
 	icon_state = "cburger"
+	color = COLOR_PURPLE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/purple = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -224,6 +230,7 @@
 	name = "black burger"
 	desc = "This is overcooked."
 	icon_state = "cburger"
+	color = COLOR_ALMOST_BLACK
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/black = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -231,6 +238,7 @@
 	name = "white burger"
 	desc = "Delicous Titanium!"
 	icon_state = "cburger"
+	color = COLOR_WHITE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/colorful_reagent/powder/white = 10)
 	foodtypes = GRAIN | MEAT
 
@@ -366,3 +374,20 @@
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
 
+/obj/item/food/burger/crazy
+	name = "crazy hamburger"
+	desc = "This looks like the sort of food that a demented clown in a trenchcoat would make."
+	icon_state = "crazyburger"
+	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 2, "beef soaked in chili" = 3, "a smoking flare" = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/condensedcapsaicin = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
+	foodtypes = GRAIN | MEAT | DAIRY
+
+/obj/item/food/burger/crazy/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
+	if(DT_PROB(2.5, delta_time))
+		var/datum/effect_system/smoke_spread/bad/green/smoke = new
+		smoke.set_up(0, src)
+		smoke.start()

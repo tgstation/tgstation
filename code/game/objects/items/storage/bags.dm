@@ -305,12 +305,14 @@
 	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
+	worn_icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 5
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
 	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
@@ -421,7 +423,7 @@
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/food/snacks/deadmouse,
-		/obj/item/reagent_containers/food/snacks/monkeycube,
+		/obj/item/food/monkeycube,
 		/obj/item/organ,
 		/obj/item/bodypart
 		))
