@@ -1,5 +1,5 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
-GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
+GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
@@ -15,7 +15,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
-	var/mysteryRoom
 
 /obj/item/hilbertshotel/Initialize()
 	. = ..()
@@ -91,7 +90,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 				for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
 					if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
 						A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
-					turfNumber++
+				turfNumber++
 		for(var/obj/item/abstracthotelstorage/S in storageTurf)
 			if((S.roomNumber == roomNumber) && (S.parentSphere == src))
 				qdel(S)
@@ -105,12 +104,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/sendToNewRoom(roomNumber, mob/user)
 	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
-	if(ruinSpawned)
-		mysteryRoom = GLOB.hhmysteryRoomNumber
-		if(roomNumber == mysteryRoom)
-			hotelRoomTempLore.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
-		else
-			hotelRoomTemp.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
+	if(ruinSpawned && roomNumber == GLOB.hhMysteryRoomNumber)
+		hotelRoomTempLore.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	else
 		hotelRoomTemp.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 	activeRooms["[roomNumber]"] = roomReservation
@@ -127,7 +122,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	currentArea.reservation = currentReservation
 	for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
 		door.parentSphere = src
-		door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
+		door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strangely, this door doesn't even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
 	for(var/turf/open/space/bluespace/BSturf in currentArea)
 		BSturf.parentSphere = src
 
@@ -176,21 +171,21 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 //Template Stuff
 /datum/map_template/hilbertshotel
 	name = "Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotel.dmm'
+	mappath = "_maps/templates/hilbertshotel.dmm"
 	var/landingZoneRelativeX = 2
 	var/landingZoneRelativeY = 8
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"
-	mappath = '_maps/templates/hilbertshotelempty.dmm'
+	mappath = "_maps/templates/hilbertshotelempty.dmm"
 
 /datum/map_template/hilbertshotel/lore
 	name = "Doctor Hilbert's Deathbed"
-	mappath = '_maps/templates/hilbertshotellore.dmm'
+	mappath = "_maps/templates/hilbertshotellore.dmm"
 
 /datum/map_template/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage"
-	mappath = '_maps/templates/hilbertshotelstorage.dmm'
+	mappath = "_maps/templates/hilbertshotelstorage.dmm"
 
 
 //Turfs and Areas
@@ -221,6 +216,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	flags_1 = NOJAUNT_1
 	explosion_block = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
+
+/turf/open/space/bluespace/Initialize()
+	. = ..()
+	update_icon_state()
+
+/turf/open/space/bluespace/update_icon_state()
+	icon_state = "bluespace"
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
 	. = ..()
@@ -283,14 +285,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	if(get_dist(get_turf(src), get_turf(user)) <= 1)
 		to_chat(user, "<span class='notice'>You peak through the door's bluespace peephole...</span>")
 		user.reset_perspective(parentSphere)
-		user.set_machine(src)
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
-		user.unset_machine()
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
 			PHC.Trigger()
 
@@ -304,6 +305,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	to_chat(owner, "<span class='warning'>You move away from the peephole.</span>")
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	qdel(src)
 
 /area/hilbertshotel
@@ -417,6 +419,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	name = "custom rigged analyzer"
 	desc = "A hand-held environmental scanner which reports current gas levels. This one seems custom rigged to additionally be able to analyze some sort of bluespace device."
 	icon_state = "hilbertsanalyzer"
+	worn_icon_state = "analyzer"
 
 /obj/item/analyzer/hilbertsanalyzer/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -461,7 +464,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/docslogs/Initialize()
 	. = ..()
-	GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
 	info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
@@ -480,7 +482,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.<br>
 	I can't stick around to the let that happen.<br>
 	I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.<br>
-	I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
+	I'll be in <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
 	I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...<br>
 	Goodbye<br>
 	<br>

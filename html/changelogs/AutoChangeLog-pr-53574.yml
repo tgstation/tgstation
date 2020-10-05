@@ -1,6 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - code_imp: "Moves spaghetti to new food"
-  - bugfix: "Fixes some more size problems on food"
-  - bugfix: "Fixes organs having wrong params"

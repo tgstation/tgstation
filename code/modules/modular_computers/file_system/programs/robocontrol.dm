@@ -8,6 +8,7 @@
 	requires_ntnet = TRUE
 	size = 12
 	tgui_id = "NtosRoboControl"
+	program_icon = "robot"
 	///Number of simple robots on-station.
 	var/botcount = 0
 	///Used to find the location of the user for the purposes of summoning robots.
@@ -53,8 +54,9 @@
 	return data
 
 /datum/computer_file/program/robocontrol/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/card/id/id_card
 	if(computer)

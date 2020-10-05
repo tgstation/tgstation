@@ -7,7 +7,7 @@
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	meat = /obj/item/food/meat/slab/human/mutant/fly
 	disliked_food = null
 	liked_food = GROSS
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -30,8 +30,8 @@
 
 /datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 29 //Flyswatters deal 30x damage to flypeople.
-	return 0
+		return 30 //Flyswatters deal 30x damage to flypeople.
+	return 1
 
 /obj/item/organ/heart/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."

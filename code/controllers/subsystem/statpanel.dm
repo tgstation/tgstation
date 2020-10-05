@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
 	wait = 4
 	init_order = INIT_ORDER_STATPANELS
+	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	var/list/currentrun = list()
 	var/encoded_global_data
