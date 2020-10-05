@@ -98,7 +98,7 @@ Slimecrossing Items
 	rating = 7
 	custom_materials = null
 	maxcharge = 50000
-	chargerate = 3500
+	chargerate = 2500
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube
