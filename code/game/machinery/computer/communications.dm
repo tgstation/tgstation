@@ -62,23 +62,38 @@
 
 /obj/machinery/computer/communications/ui_act(action, list/params)
 	. = ..()
-	if (!.)
+	if (.)
 		return
 
 	. = TRUE
 
 	switch(action)
+		if("callShuttle")
+			if (!authenticated)
+				return
+			var/reason = params["reason"]
+			if (length(reason) < CALL_SHUTTLE_REASON_LENGTH)
+				return
+			SSshuttle.requestEvac(usr, reason)
+			post_status("shuttle")
+		if("makePriorityAnnouncement")
+			if (!authenticated_as_ai_or_captain(usr))
+				return
+			make_announcement(usr)
 		if("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)
+				authenticated = FALSE
 				authorize_access = null
 				authorize_name = null
+				playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 				return
 
 			var/obj/item/card/id/id_card = usr.get_idcard(hand_first = TRUE)
 			if (check_access(id_card))
+				authenticated = TRUE
 				authorize_access = id_card.access
-				authorize_name = "[id_card.registered_name] ([id_card.assignment])"
+				authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 
 /obj/machinery/computer/communications/ui_data(mob/user)
@@ -99,6 +114,7 @@
 		data["authenticated"] = TRUE
 		data["canLogOut"] = !isAI(user)
 		data["page"] = ui_state
+		data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
 
 		switch (ui_state)
 			if (STATE_MAIN)
@@ -160,45 +176,14 @@
 		ui = new(user, src, "CommunicationsConsole")
 		ui.open()
 
-/obj/machinery/computer/communications/proc/get_javascript_header(form_id)
-	var/dat = {"<script type="text/javascript">
-						function getLength(){
-							var reasonField = document.getElementById('reasonfield');
-							if(reasonField.value.length >= [CALL_SHUTTLE_REASON_LENGTH]){
-								reasonField.style.backgroundColor = "#DDFFDD";
-							}
-							else {
-								reasonField.style.backgroundColor = "#FFDDDD";
-							}
-						}
-						function submit() {
-							document.getElementById('[form_id]').submit();
-						}
-					</script>"}
-	return dat
+/obj/machinery/computer/communications/ui_static_data(mob/user)
+	return list(
+		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
+	)
 
-/obj/machinery/computer/communications/proc/get_call_shuttle_form(ai_interface = 0)
-	var/form_id = "callshuttle"
-	var/dat = get_javascript_header(form_id)
-	dat += "<form name='callshuttle' id='[form_id]' action='?src=[REF(src)]' method='get' style='display: inline'>"
-	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
-	dat += "<input type='hidden' name='operation' value='[ai_interface ? "ai-callshuttle2" : "callshuttle2"]'>"
-	dat += "<b>Nature of emergency:</b><BR> <input type='text' id='reasonfield' name='call' style='width:250px; background-color:#FFDDDD; onkeydown='getLength() onkeyup='getLength()' onkeypress='getLength()'>"
-	dat += "<BR>Are you sure you want to call the shuttle? \[ <a href='#' onclick='submit()'>Call</a> \]"
-	return dat
-
-/obj/machinery/computer/communications/proc/get_cancel_shuttle_form()
-	var/form_id = "cancelshuttle"
-	var/dat = get_javascript_header(form_id)
-	dat += "<form name='cancelshuttle' id='[form_id]' action='?src=[REF(src)]' method='get' style='display: inline'>"
-	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
-	dat += "<input type='hidden' name='operation' value='cancelshuttle2'>"
-
-	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <a href='#' onclick='submit()'>Cancel</a> \]"
-	return dat
-
-/obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
-	if(!SScommunications.can_announce(user, is_silicon))
+/obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
+	var/is_ai = isAI(user)
+	if(!SScommunications.can_announce(user, is_ai))
 		to_chat(user, "<span class='alert'>Intercomms recharging. Please stand by.</span>")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
@@ -209,7 +194,7 @@
 		to_chat(user, "<span class='warning'>You find yourself unable to speak.</span>")
 	else
 		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
-	SScommunications.make_announcement(user, is_silicon, input)
+	SScommunications.make_announcement(user, is_ai, input)
 	deadchat_broadcast(" made a priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)

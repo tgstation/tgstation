@@ -1,6 +1,6 @@
 import { capitalize, multiline } from "common/string";
-import { useBackend } from "../backend";
-import { Box, Button, Flex, Section, Table } from "../components";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Flex, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
 
 const AlertButton = (props, context) => {
@@ -17,12 +17,14 @@ const PageMain = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     alertLevel,
+    callShuttleReasonMinLength,
     canMakeAnnouncement,
     canSetAlertLevel,
     canToggleEmergencyAccess,
     emergencyAccess,
     shuttleCalled,
     shuttleCalledPreviously,
+    shuttleCanEvacOrFailReason,
     shuttleLastCalled,
     shuttleRecallable,
   } = data;
@@ -30,10 +32,14 @@ const PageMain = (props, context) => {
   const children = [];
   const generalFunctions = [];
 
+  const [callingShuttle, setCallingShuttle] = useLocalState(context, "calling_shuttle", false);
+  const [shuttleCallReason, setShuttleCallReason] = useLocalState(context, "shuttle_call_reason", "");
+
   if (canMakeAnnouncement) {
     generalFunctions.push(<Button
       icon="bullhorn"
       content="Make Priority Announcement"
+      onClick={() => act("makePriorityAnnouncement")}
     />);
   }
 
@@ -58,7 +64,7 @@ const PageMain = (props, context) => {
   let emergencyShuttleButton;
 
   if (shuttleCalled) {
-    emergencyShuttleButton = (<Button
+    emergencyShuttleButton = (<Button.Confirm
       icon="space-shuttle"
       content="Recall Emergency Shuttle"
       color="bad"
@@ -70,7 +76,70 @@ const PageMain = (props, context) => {
     emergencyShuttleButton = (<Button
       icon="space-shuttle"
       content="Call Emergency Shuttle"
+      disabled={shuttleCanEvacOrFailReason !== 1}
+      tooltip={
+        shuttleCanEvacOrFailReason !== 1
+          ? shuttleCanEvacOrFailReason
+          : undefined
+      }
+      tooltipPosition="bottom-right"
+      onClick={() => {
+        setShuttleCallReason("");
+        setCallingShuttle(true);
+      }}
     />);
+  }
+
+  if (callingShuttle) {
+    const reasonLongEnough = shuttleCallReason.length
+      >= callShuttleReasonMinLength;
+
+    children.push((
+      <Modal>
+        <Flex direction="column">
+          <Flex.Item fontSize="16px">
+            Nature of emergency:
+          </Flex.Item>
+
+          <Flex.Item mr={2} mb={1}>
+            <TextArea
+              fluid
+              height="35vh"
+              width="80vw"
+              backgroundColor="black"
+              textColor="white"
+              onInput={(_, value) => setShuttleCallReason(value)}
+            />
+          </Flex.Item>
+
+          <Flex.Item>
+            <Button
+              icon="space-shuttle"
+              content="Call Shuttle"
+              color="good"
+              disabled={!reasonLongEnough}
+              tooltip={!reasonLongEnough ? "You need a longer call reason." : ""}
+              tooltipPosition="right"
+              onClick={() => {
+                if (reasonLongEnough) {
+                  setCallingShuttle(false);
+                  act("callShuttle", {
+                    reason: shuttleCallReason,
+                  });
+                }
+              }}
+            />
+
+            <Button
+              icon="times"
+              content="Cancel"
+              color="bad"
+              onClick={() => setCallingShuttle(false)}
+            />
+          </Flex.Item>
+        </Flex>
+      </Modal>
+    ));
   }
 
   children.push(
@@ -79,14 +148,14 @@ const PageMain = (props, context) => {
 
       {shuttleCalledPreviously
         ? (
-          <Box>
-            {
-              shuttleLastCalled
-                ? `Most recent shuttle call/recall traced to: `
-                  + `<b>${shuttleLastCalled}</b>`
-                : "Unable to trace most recent shuttle/recall signal."
-            }
-          </Box>
+          shuttleLastCalled
+            ? (
+              <Box>
+                Most recent shuttle call/recall traced to:
+                <b>{shuttleLastCalled}</b>
+              </Box>
+            )
+            : <Box>Unable to trace most recent shuttle/recall signal.</Box>
         )
         : null}
     </Section>
@@ -157,7 +226,7 @@ export const CommunicationsConsole = (props, context) => {
             <Section title="Authentication">
               <Button
                 icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
-                content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName}` : ""})` : "Log In"}
+                content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
                 color={authenticated ? "bad" : "good"}
                 onClick={() => act("toggleAuthentication")}
               />
