@@ -299,7 +299,10 @@
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
 		if (prob(nitryl_pp))
 			H.emote("burp")
+		if (nitryl_pp>40)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 25)
 			to_chat(H, "<span class='notice'>You feel a burning sensation in your throat</span>")
+		else
 			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
