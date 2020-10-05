@@ -33,6 +33,71 @@ const AlertButton = (props, context) => {
   />);
 };
 
+const PageBuyingShuttle = (props, context) => {
+  const { act, data } = useBackend(context);
+
+  const buyableShuttles = [...data.shuttles];
+  buyableShuttles.sort((a, b) => a.creditCost - b.creditCost);
+
+  const shuttles = [];
+
+  for (const shuttle of buyableShuttles) {
+    shuttles.push((
+      <Section
+        title={(
+          <span
+            style={{
+              display: "inline-block",
+              width: "70%",
+            }}>
+            {shuttle.name}
+          </span>
+        )}
+        key={shuttle.ref}
+        buttons={(
+          <Button
+            content={`Buy for ${shuttle.creditCost.toLocaleString()} credits`}
+            disabled={data.budget < shuttle.creditCost}
+            onClick={() => act("purchaseShuttle", {
+              shuttle: shuttle.ref,
+            })}
+            tooltip={
+              data.budget < shuttle.creditCost
+                ? `You need ${(shuttle.creditCost - data.budget)} more credits.`
+                : undefined
+            }
+            tooltipPosition="left"
+          />
+        )}>
+        <Box>{shuttle.description}</Box>
+        {
+          shuttle.prerequisites
+            ? <b>Prerequisites: {shuttle.prerequisites}</b>
+            : null
+        }
+      </Section>
+    ));
+  }
+
+  return (
+    <Box>
+      <Section>
+        <Button
+          icon="chevron-left"
+          content="Back"
+          onClick={() => act("setState", { state: STATE_MAIN })}
+        />
+      </Section>
+
+      <Section>
+        Budget: <b>{data.budget.toLocaleString()}</b> credits
+      </Section>
+
+      {shuttles}
+    </Box>
+  );
+};
+
 const PageChangingStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const { maxStatusLineLength } = data;
@@ -137,6 +202,7 @@ const PageMain = (props, context) => {
     alertLevel,
     alertLevelTick,
     callShuttleReasonMinLength,
+    canBuyShuttles,
     canMakeAnnouncement,
     canSetAlertLevel,
     canToggleEmergencyAccess,
@@ -213,6 +279,19 @@ const PageMain = (props, context) => {
         setShuttleCallReason("");
         setCallingShuttle(true);
       }}
+    />);
+  }
+
+  if (canBuyShuttles !== 0) {
+    generalFunctions.push(<Button
+      icon="shopping-cart"
+      content="Purchase Shuttle"
+      disabled={canBuyShuttles !== 1}
+      // canBuyShuttles is a string detailing the fail reason
+      // if one can be given
+      tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
+      tooltipPosition="right"
+      onClick={() => act("setState", { state: STATE_BUYING_SHUTTLE })}
     />);
   }
 
@@ -433,6 +512,9 @@ export const CommunicationsConsole = (props, context) => {
 
   if (authenticated) {
     switch (page) {
+      case STATE_BUYING_SHUTTLE:
+        pageComponent = <PageBuyingShuttle />;
+        break;
       case STATE_CHANGING_STATUS:
         pageComponent = <PageChangingStatus />;
         break;

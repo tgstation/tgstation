@@ -38,7 +38,7 @@
 	var/alert_level_tick = 0
 
 	/// The last lines used for changing the status display
-	var/last_status_display
+	var/static/last_status_display
 
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
@@ -146,6 +146,32 @@
 			if (!authenticated_as_ai_or_captain(usr))
 				return
 			make_announcement(usr)
+		if ("purchaseShuttle")
+			var/can_buy_shuttles_or_fail_reason = can_buy_shuttles(usr)
+			if (can_buy_shuttles_or_fail_reason != TRUE)
+				if (can_buy_shuttles_or_fail_reason != FALSE)
+					to_chat(usr, "<span class='alert'>[can_buy_shuttles_or_fail_reason]</span>")
+				return
+			var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
+			var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
+			if (!istype(shuttle))
+				return
+			if (!shuttle.prerequisites_met())
+				to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
+				return
+			var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if (bank_account.account_balance < shuttle.credit_cost)
+				return
+			SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_PURCHASED
+			SSshuttle.unload_preview()
+			SSshuttle.existing_shuttle = SSshuttle.emergency
+			SSshuttle.action_load(shuttle)
+			bank_account.adjust_money(-shuttle.credit_cost)
+			minor_announce("[usr.real_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")
+			log_shuttle("[key_name(usr)] has purchased [shuttle.name].")
+			SSblackbox.record_feedback("text", "shuttle_purchase", 1, shuttle.name)
+			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
 			if (!authenticated_as_non_ai_captain(usr))
@@ -156,7 +182,7 @@
 				return
 			if (!(params["state"] in approved_states))
 				return
-			if (state == STATE_BUYING_SHUTTLE && !can_buy_shuttles(usr))
+			if (state == STATE_BUYING_SHUTTLE && can_buy_shuttles(usr) != TRUE)
 				return
 			set_state(usr, params["state"])
 			playsound(src, "terminal_type", 50, FALSE)
@@ -261,8 +287,23 @@
 							"possibleAnswers" = message.possible_answers,
 						))
 			if (STATE_BUYING_SHUTTLE)
-				// NYI
-				pass()
+				var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+				var/list/shuttles = list()
+
+				for (var/shuttle_id in SSmapping.shuttle_templates)
+					var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
+					if (!shuttle_template.can_be_bought || shuttle_template.credit_cost == INFINITY)
+						continue
+					shuttles += list(list(
+						"name" = shuttle_template.name,
+						"description" = shuttle_template.description,
+						"creditCost" = shuttle_template.credit_cost,
+						"prerequisites" = shuttle_template.prerequisites,
+						"ref" = REF(shuttle_template),
+					))
+
+				data["budget"] = bank_account.account_balance
+				data["shuttles"] = shuttles
 			if (STATE_CHANGING_STATUS)
 				data["lineOne"] = last_status_display ? last_status_display[1] : ""
 				data["lineTwo"] = last_status_display ? last_status_display[2] : ""
@@ -287,8 +328,20 @@
 	else
 		state = new_state
 
+/// Returns TRUE if the user can buy shuttles.
+/// If they cannot, returns FALSE or a string detailing why.
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
-	return authenticated_as_non_ai_captain(user) && SSmapping.config.allow_custom_shuttles
+	if (!SSmapping.config.allow_custom_shuttles)
+		return FALSE
+	if (!authenticated_as_non_ai_captain(user))
+		return FALSE
+	if (SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+		return "The shuttle is already in transit."
+	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
+		return "A replacement shuttle has already been purchased."
+	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
+		return "Due to unforseen circumstances, shuttle purchasing is no longer available."
+	return TRUE
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = isAI(user)
