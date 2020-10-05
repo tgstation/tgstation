@@ -1636,24 +1636,24 @@
 	. = buckled
 	buckled = new_buckled
 	if(buckled)
-		if(!.)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
-			switch(buckled.buckle_lying)
-				if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
-					REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
-					return
-				if(0) // Forcing to a standing position.
-					REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
-				else // Forcing to a lying position.
-					ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
-					set_body_position(LYING_DOWN)
-			set_lying_angle(buckled.buckle_lying)
-	else if(.) // We unbuckled from something.
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
+		switch(buckled.buckle_lying)
+			if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
+				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+			if(0) // Forcing to a standing position.
+				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				set_lying_angle(0)
+			else // Forcing to a lying position.
+				ADD_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
+				set_body_position(LYING_DOWN)
+				set_lying_angle(buckled.buckle_lying)
+	else
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
-		var/atom/movable/old_buckled = .
-		if(old_buckled.buckle_lying == 0 && resting) // The buckle forced us to stay up (like a chair) and our preference is set to resting...
-			set_lying_down() // ...so let's drop on the ground.
+		if(.) // We unbuckled from something.
+			var/atom/movable/old_buckled = .
+			if(old_buckled.buckle_lying == 0 && (resting || HAS_TRAIT(src, TRAIT_FLOORED))) // The buckle forced us to stay up (like a chair)
+				set_lying_down() // We want to rest or are otherwise floored, so let's drop on the ground.
 
 
 /mob/living/set_pulledby(new_pulledby)
