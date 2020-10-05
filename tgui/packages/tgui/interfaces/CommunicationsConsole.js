@@ -33,6 +33,70 @@ const AlertButton = (props, context) => {
   />);
 };
 
+const MessageModal = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { maxMessageLength } = data;
+
+  const [input, setInput] = useLocalState(context, props.label, "");
+
+  const longEnough = props.minLength === undefined
+    || input.length >= props.minLength;
+
+  return (
+    <Modal>
+      <Flex direction="column">
+        <Flex.Item fontSize="16px" maxWidth="90vw" mb={1}>
+          {props.label}:
+        </Flex.Item>
+
+        <Flex.Item mr={2} mb={1}>
+          <TextArea
+            fluid
+            height="20vh"
+            width="80vw"
+            backgroundColor="black"
+            textColor="white"
+            onInput={(_, value) => {
+              setInput(value.substring(0, maxMessageLength));
+            }}
+            value={input}
+          />
+        </Flex.Item>
+
+        <Flex.Item>
+          <Button
+            icon={props.icon}
+            content={props.buttonText}
+            color="good"
+            disabled={!longEnough}
+            tooltip={!longEnough ? "You need a longer reason." : ""}
+            tooltipPosition="right"
+            onClick={() => {
+              if (longEnough) {
+                setInput("");
+                props.onSubmit(input);
+              }
+            }}
+          />
+
+          <Button
+            icon="times"
+            content="Cancel"
+            color="bad"
+            onClick={props.onBack}
+          />
+        </Flex.Item>
+
+        {
+          props.notice
+            ? <Flex.Item maxWidth="90vw">{props.notice}</Flex.Item>
+            : null
+        }
+      </Flex>
+    </Modal>
+  );
+};
+
 const PageBuyingShuttle = (props, context) => {
   const { act, data } = useBackend(context);
 
@@ -56,7 +120,7 @@ const PageBuyingShuttle = (props, context) => {
         key={shuttle.ref}
         buttons={(
           <Button
-            content={`Buy for ${shuttle.creditCost.toLocaleString()} credits`}
+            content={`${shuttle.creditCost.toLocaleString()} credits`}
             disabled={data.budget < shuttle.creditCost}
             onClick={() => act("purchaseShuttle", {
               shuttle: shuttle.ref,
@@ -204,9 +268,13 @@ const PageMain = (props, context) => {
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
+    canMessageAssociates,
+    canRequestNuke,
     canSetAlertLevel,
     canToggleEmergencyAccess,
+    emagged,
     emergencyAccess,
+    importantActionReady,
     shuttleCalled,
     shuttleCalledPreviously,
     shuttleCanEvacOrFailReason,
@@ -218,7 +286,9 @@ const PageMain = (props, context) => {
   const generalFunctions = [];
 
   const [callingShuttle, setCallingShuttle] = useLocalState(context, "calling_shuttle", false);
-  const [shuttleCallReason, setShuttleCallReason] = useLocalState(context, "shuttle_call_reason", "");
+  const [messagingAssociates, setMessagingAssociates] = useLocalState(context, "messaging_assocaites", false);
+  const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(context, "requesting_nuke_codes", false);
+
   const [
     [showAlertLevelConfirm, confirmingAlertLevelTick],
     setShowAlertLevelConfirm,
@@ -233,10 +303,11 @@ const PageMain = (props, context) => {
   }
 
   if (canToggleEmergencyAccess) {
-    generalFunctions.push(<Button
+    generalFunctions.push(<Button.Confirm
       icon="id-card-o"
       content={`${emergencyAccess ? "Disable" : "Enable"} Emergency Maintenance Access`}
       color={emergencyAccess ? "bad" : undefined}
+      onClick={() => act("toggleEmergencyAccess")}
     />);
   }
 
@@ -275,10 +346,7 @@ const PageMain = (props, context) => {
           : undefined
       }
       tooltipPosition="bottom-right"
-      onClick={() => {
-        setShuttleCallReason("");
-        setCallingShuttle(true);
-      }}
+      onClick={() => setCallingShuttle(true)}
     />);
   }
 
@@ -295,56 +363,78 @@ const PageMain = (props, context) => {
     />);
   }
 
+  if (canMessageAssociates) {
+    generalFunctions.push(<Button
+      icon="comment-o"
+      content={`Send message to ${emagged ? "[UNKNOWN]" : "CentCom"}`}
+      disabled={!importantActionReady}
+      onClick={() => setMessagingAssociates(true)}
+    />);
+
+    if (messagingAssociates) {
+      children.push(<MessageModal
+        label={`Message to transmit to ${emagged ? "[ABNORMAL ROUTING COORDINATES]" : "CentCom"} via quantum entanglement`}
+        notice="Please be aware that this process is very expensive, and abuse will lead to...termination. Transmission does not guarantee a response."
+        icon="comment-o"
+        buttonText="Send"
+        onBack={() => setMessagingAssociates(false)}
+        onSubmit={message => {
+          setMessagingAssociates(false);
+          act("messageAssociates", {
+            message,
+          });
+        }}
+      />);
+    }
+  }
+
+  if (canRequestNuke) {
+    generalFunctions.push(<Button
+      icon="bomb"
+      content="Request Nuclear Authentication Codes"
+      disabled={!importantActionReady}
+      onClick={() => setRequestingNukeCodes(true)}
+    />);
+
+    if (requestingNukeCodes) {
+      children.push(<MessageModal
+        label="Reason for requesting nuclear self-destruct codes"
+        notice="Misuse of the nuclear request system will not be tolerated under any circumstances. Transmission does not guarantee a response."
+        icon="bomb"
+        buttonText="Request Codes"
+        onBack={() => setRequestingNukeCodes(false)}
+        onSubmit={reason => {
+          setRequestingNukeCodes(false);
+          act("requestNukeCodes", {
+            reason,
+          });
+        }}
+      />);
+    }
+  }
+
+  if (emagged) {
+    generalFunctions.push(<Button
+      icon="undo"
+      content="Restore Backup Routing Data"
+      onClick={() => act("restoreBackupRoutingData")}
+    />);
+  }
+
   if (callingShuttle) {
-    const reasonLongEnough = shuttleCallReason.length
-      >= callShuttleReasonMinLength;
-
-    children.push((
-      <Modal>
-        <Flex direction="column">
-          <Flex.Item fontSize="16px">
-            Nature of emergency:
-          </Flex.Item>
-
-          <Flex.Item mr={2} mb={1}>
-            <TextArea
-              fluid
-              height="35vh"
-              width="80vw"
-              backgroundColor="black"
-              textColor="white"
-              onInput={(_, value) => setShuttleCallReason(value)}
-            />
-          </Flex.Item>
-
-          <Flex.Item>
-            <Button
-              icon="space-shuttle"
-              content="Call Shuttle"
-              color="good"
-              disabled={!reasonLongEnough}
-              tooltip={!reasonLongEnough ? "You need a longer call reason." : ""}
-              tooltipPosition="right"
-              onClick={() => {
-                if (reasonLongEnough) {
-                  setCallingShuttle(false);
-                  act("callShuttle", {
-                    reason: shuttleCallReason,
-                  });
-                }
-              }}
-            />
-
-            <Button
-              icon="times"
-              content="Cancel"
-              color="bad"
-              onClick={() => setCallingShuttle(false)}
-            />
-          </Flex.Item>
-        </Flex>
-      </Modal>
-    ));
+    children.push(<MessageModal
+      label="Nature of emergency"
+      icon="space-shuttle"
+      buttonText="Call Shuttle"
+      minLength={callShuttleReasonMinLength}
+      onBack={() => setCallingShuttle(false)}
+      onSubmit={reason => {
+        setCallingShuttle(false);
+        act("callShuttle", {
+          reason,
+        });
+      }}
+    />);
   }
 
   children.push(
@@ -486,7 +576,19 @@ const PageMessages = (props, context) => {
     }
 
     messageElements.push((
-      <Section title={message.title} key={messageIndex}>
+      <Section
+        title={message.title}
+        key={messageIndex}
+        buttons={(
+          <Button.Confirm
+            icon="trash"
+            content="Delete"
+            color="red"
+            onClick={() => act("deleteMessage", {
+              message: messageIndex + 1,
+            })}
+          />
+        )}>
         <Box>{message.content}</Box>
 
         {answers}
@@ -505,6 +607,7 @@ export const CommunicationsConsole = (props, context) => {
     authenticated,
     authorizeName,
     canLogOut,
+    emagged,
     page,
   } = data;
 
@@ -530,7 +633,10 @@ export const CommunicationsConsole = (props, context) => {
   }
 
   return (
-    <Window resizable>
+    <Window
+      height={500}
+      theme={emagged ? "syndicate" : undefined}
+      resizable>
       <Window.Content scrollable>
         {(canLogOut || !authenticated)
           ? (

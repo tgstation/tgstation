@@ -1,3 +1,4 @@
+#define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
 #define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
@@ -69,11 +70,11 @@
 		return ..()
 
 /obj/machinery/computer/communications/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
+	if (obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	if(authenticated == 1)
-		authenticated = 2
+	if (authenticated)
+		authorize_access = get_all_accesses()
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
@@ -101,9 +102,9 @@
 			message.answered = answer_index
 			message.answer_callback.InvokeAsync()
 		if ("callShuttle")
-			if (!authenticated_as_ai_or_captain(usr))
+			if (!authenticated(usr))
 				return
-			var/reason = params["reason"]
+			var/reason = trim(params["reason"], MAX_MESSAGE_LEN)
 			if (length(reason) < CALL_SHUTTLE_REASON_LENGTH)
 				return
 			SSshuttle.requestEvac(usr, reason)
@@ -142,10 +143,38 @@
 			deadchat_broadcast(" has changed the security level to [params["newSecurityLevel"]] with [src] at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type=DEADCHAT_ANNOUNCEMENT)
 
 			alert_level_tick += 1
+		if ("deleteMessage")
+			if (!authenticated(usr))
+				return
+			var/message_index = text2num(params["message"])
+			if (!message_index)
+				return
+			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_ai_or_captain(usr))
 				return
 			make_announcement(usr)
+		if ("messageAssociates")
+			if (!authenticated_as_non_ai_captain(usr))
+				return
+			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
+				return
+
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
+
+			var/emagged = obj_flags & EMAGGED
+			if (emagged)
+				message_syndicate(message, usr)
+				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
+			else
+				message_centcomm(message, usr)
+				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
+
+			var/associates = emagged ? "the Syndicate": "CentCom"
+			usr.log_talk(message, LOG_SAY, tag = "message to [associates]")
+			deadchat_broadcast(" has messaged [associates], \"[message]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("purchaseShuttle")
 			var/can_buy_shuttles_or_fail_reason = can_buy_shuttles(usr)
 			if (can_buy_shuttles_or_fail_reason != TRUE)
@@ -174,9 +203,29 @@
 			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated_as_non_ai_captain(usr))
+			if (!authenticated(usr) || isAI(usr))
 				return
 			SSshuttle.cancelEvac(usr)
+		if ("requestNukeCodes")
+			if (!authenticated_as_non_ai_captain(usr))
+				return
+			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
+				return
+			var/reason = trim(html_encode(params["reason"]), MAX_MESSAGE_LEN)
+			nuke_request(reason, usr)
+			to_chat(usr, "<span class='notice'>Request sent.</span>")
+			usr.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
+			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", 'sound/ai/commandreport.ogg')
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
+		if ("restoreBackupRoutingData")
+			if (!authenticated_as_non_ai_captain(usr))
+				return
+			if (!(obj_flags & EMAGGED))
+				return
+			to_chat(usr, "<span class='notice'>Backup routing data restored.</span>")
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			obj_flags &= ~EMAGGED
 		if ("setState")
 			if (!authenticated(usr))
 				return
@@ -212,13 +261,34 @@
 				playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 				return
 
-			var/obj/item/card/id/id_card = usr.get_idcard(hand_first = TRUE)
-			if (check_access(id_card))
+			if (obj_flags & EMAGGED)
 				authenticated = TRUE
-				authorize_access = id_card.access
-				authorize_name = "[id_card.registered_name] - [id_card.assignment]"
-				state = STATE_MAIN
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				authorize_access = get_all_accesses()
+				authorize_name = "Unknown"
+				to_chat(usr, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
+				playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)
+			else
+				var/obj/item/card/id/id_card = usr.get_idcard(hand_first = TRUE)
+				if (check_access(id_card))
+					authenticated = TRUE
+					authorize_access = id_card.access
+					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
+
+			state = STATE_MAIN
+			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+		if ("toggleEmergencyAccess")
+			if (!authenticated_as_ai_or_captain(usr))
+				return
+			if (GLOB.emergency_access)
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] disabled emergency maintenance access.")
+				deadchat_broadcast(" disabled emergency maintenance access at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+			else
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] enabled emergency maintenance access.")
+				deadchat_broadcast(" enabled emergency maintenance access at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -233,12 +303,19 @@
 		data["canLogOut"] = !isAI(user)
 		data["page"] = ui_state
 
+		if (obj_flags & EMAGGED)
+			data["emagged"] = TRUE
+
 		switch (ui_state)
 			if (STATE_MAIN)
 				data["canBuyShuttles"] = can_buy_shuttles(user)
-				data["canMessageAssociated"] = FALSE
+				data["canMakeAnnouncement"] = FALSE
+				data["canMessageAssociates"] = FALSE
 				data["canRequestNuke"] = FALSE
 				data["canSendToSectors"] = FALSE
+				data["canSetAlertLevel"] = FALSE
+				data["canToggleEmergencyAccess"] = FALSE
+				data["importantActionReady"] = COOLDOWN_FINISHED(src, important_action_cooldown)
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
 
@@ -253,9 +330,6 @@
 						data["canSendToSectors"] = TRUE
 
 					data["canMessageAssociates"] = TRUE
-					if (obj_flags & EMAGGED)
-						data["emagged"] = TRUE
-
 					data["canRequestNuke"] = TRUE
 
 				if (authenticated_as_ai_or_captain(user))
@@ -320,6 +394,7 @@
 	return list(
 		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
 		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
+		"maxMessageLength" = MAX_MESSAGE_LEN,
 	)
 
 /obj/machinery/computer/communications/proc/set_state(mob/user, new_state)
@@ -406,6 +481,7 @@
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
 
+#undef IMPORTANT_ACTION_COOLDOWN
 #undef MAX_STATUS_LINE_LENGTH
 #undef STATE_BUYING_SHUTTLE
 #undef STATE_CHANGING_STATUS
