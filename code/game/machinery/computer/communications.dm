@@ -1,7 +1,3 @@
-/* TODO:
- * Change authenticated checks to care about if user is AI (and therefore, not normally authenticated)
-*/
-
 #define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
@@ -48,15 +44,23 @@
 	. = ..()
 	GLOB.shuttle_caller_list += src
 
+/// Are we NOT the AI, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_ai_captain(mob/user)
 	if (isAI(user))
 		return FALSE
 	return ACCESS_CAPTAIN in authorize_access
 
+/// Are we the AI, OR we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_ai_or_captain(mob/user)
 	if (isAI(user))
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
+
+/// Are we the AI, OR logged in?
+/obj/machinery/computer/communications/proc/authenticated(mob/user)
+	if (isAI(user))
+		return TRUE
+	return authenticated
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
@@ -84,6 +88,18 @@
 	. = TRUE
 
 	switch (action)
+		if ("answerMessage")
+			if (!authenticated(usr))
+				return
+			var/answer_index = text2num(params["answer"])
+			var/message_index = text2num(params["message"])
+			if (!answer_index || !message_index || answer_index < 1 || message_index < 1)
+				return
+			var/datum/comm_message/message = messages[message_index]
+			if (message.answered)
+				return
+			message.answered = answer_index
+			message.answer_callback.InvokeAsync()
 		if ("callShuttle")
 			if (!authenticated_as_ai_or_captain(usr))
 				return
@@ -136,7 +152,7 @@
 				return
 			SSshuttle.cancelEvac(usr)
 		if ("setState")
-			if (!authenticated)
+			if (!authenticated(usr))
 				return
 			if (!(params["state"] in approved_states))
 				return
@@ -145,16 +161,16 @@
 			set_state(usr, params["state"])
 			playsound(src, "terminal_type", 50, FALSE)
 		if ("setStatusMessage")
-			if (!authenticated)
+			if (!authenticated(usr))
 				return
 			var/line_one = reject_bad_text(params["lineOne"] || "", MAX_STATUS_LINE_LENGTH)
 			var/line_two = reject_bad_text(params["lineTwo"] || "", MAX_STATUS_LINE_LENGTH)
+			post_status("alert", "blank")
 			post_status("message", line_one, line_two)
-			post_status("alert", "message")
 			last_status_display = list(line_one, line_two)
 			playsound(src, "terminal_type", 50, FALSE)
 		if ("setStatusPicture")
-			if (!authenticated)
+			if (!authenticated(usr))
 				return
 			var/picture = params["picture"]
 			if (!(picture in approved_status_pictures))
@@ -239,6 +255,7 @@
 					for (var/_message in messages)
 						var/datum/comm_message/message = _message
 						data["messages"] += list(list(
+							"answered" = message.answered,
 							"content" = message.content,
 							"title" = message.title,
 							"possibleAnswers" = message.possible_answers,
@@ -247,7 +264,6 @@
 				// NYI
 				pass()
 			if (STATE_CHANGING_STATUS)
-				// NYI
 				data["lineOne"] = last_status_display ? last_status_display[1] : ""
 				data["lineTwo"] = last_status_display ? last_status_display[2] : ""
 

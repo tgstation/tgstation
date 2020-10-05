@@ -2,6 +2,7 @@ import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
+import { logger } from "../logging";
 
 const STATE_BUYING_SHUTTLE = "buying_shuttle";
 const STATE_CHANGING_STATUS = "changing_status";
@@ -41,7 +42,15 @@ const PageChangingStatus = (props, context) => {
 
   return (
     <Box>
-      <Section title="Alert">
+      <Section>
+        <Button
+          icon="chevron-left"
+          content="Back"
+          onClick={() => act("setState", { state: STATE_MAIN })}
+        />
+      </Section>
+
+      <Section>
         <Flex direction="column">
           <Flex.Item>
             <Button
@@ -81,14 +90,6 @@ const PageChangingStatus = (props, context) => {
               icon="space-shuttle"
               content="Shuttle ETA"
               onClick={() => act("setStatusPicture", { picture: "shuttle" })}
-            />
-          </Flex.Item>
-
-          <Flex.Item mt={1}>
-            <Button
-              icon="chevron-left"
-              content="Back"
-              onClick={() => act("setState", { state: STATE_MAIN })}
             />
           </Flex.Item>
         </Flex>
@@ -182,6 +183,7 @@ const PageMain = (props, context) => {
   generalFunctions.push(<Button
     icon="envelope-o"
     content="Message List"
+    onClick={() => act("setState", { state: STATE_MESSAGES })}
   />);
 
   let emergencyShuttleButton;
@@ -365,6 +367,59 @@ const PageMain = (props, context) => {
   return children;
 };
 
+const PageMessages = (props, context) => {
+  const { act, data } = useBackend(context);
+  const messages = data.messages || [];
+
+  const children = [];
+
+  children.push((
+    <Section>
+      <Button
+        icon="chevron-left"
+        content="Back"
+        onClick={() => act("setState", { state: STATE_MAIN })}
+      />
+    </Section>
+  ));
+
+  const messageElements = [];
+
+  for (const [messageIndex, message] of Object.entries(messages)) {
+    let answers = null;
+
+    if (message.possibleAnswers.length > 0) {
+      answers = (
+        <Box mt={1}>
+          {message.possibleAnswers.map((answer, answerIndex) => (
+            <Button
+              content={answer}
+              color={message.answered === answerIndex + 1 ? "good" : undefined}
+              key={answerIndex}
+              onClick={message.answered ? undefined : () => act("answerMessage", {
+                message: messageIndex + 1,
+                answer: answerIndex + 1,
+              })}
+            />
+          ))}
+        </Box>
+      );
+    }
+
+    messageElements.push((
+      <Section title={message.title} key={messageIndex}>
+        <Box>{message.content}</Box>
+
+        {answers}
+      </Section>
+    ));
+  }
+
+  children.push(messageElements.reverse());
+
+  return children;
+};
+
 export const CommunicationsConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -378,11 +433,14 @@ export const CommunicationsConsole = (props, context) => {
 
   if (authenticated) {
     switch (page) {
+      case STATE_CHANGING_STATUS:
+        pageComponent = <PageChangingStatus />;
+        break;
       case STATE_MAIN:
         pageComponent = <PageMain />;
         break;
-      case STATE_CHANGING_STATUS:
-        pageComponent = <PageChangingStatus />;
+      case STATE_MESSAGES:
+        pageComponent = <PageMessages />;
         break;
       default:
         pageComponent = <Box>Page not implemented: {page}</Box>;
