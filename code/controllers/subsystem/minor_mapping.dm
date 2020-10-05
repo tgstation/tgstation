@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if(prob(95))
+		if(prob(98))
 			if(!M)
 				M = new(proposed_turf)
 			else
