@@ -226,6 +226,15 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
+"Q" = (
+/obj/structure/table/glass,
+/obj/item/bag_of_holding_inert{
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/grimy{
+	icon_state = "engine"
+	},
+/area/ruin/space/has_grav/hilbertresearchfacility)
 "U" = (
 /turf/open/floor/plasteel/stairs/medium{
 	initial_gas_mix = "TEMP=2.7"
@@ -778,7 +787,7 @@ e
 f
 q
 g
-g
+Q
 y
 g
 f
