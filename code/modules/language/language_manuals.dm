@@ -94,3 +94,4 @@
 	desc = "The book's cover reads: \"Understanding Dronespeak - An exercise in futility.\""
 	language = /datum/language/drone
 	flavour_text = "suddenly the drone chittering makes sense"
+	charges = INFINITY
