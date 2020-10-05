@@ -25,7 +25,7 @@
 
 	for(var/trait in trait_mods)
 		if(HAS_TRAIT(owner.current,trait))
-			current_resistance += trait_mods[trait]
+			current_resistance -= trait_mods[trait]
 
 	if(current_resistance <= 0)
 		owner.remove_disorder(src)

@@ -509,12 +509,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04) - 0.01, 0)
 		if(drunkenness >= 6)
+			ADD_TRAIT(src,TRAIT_RELAXED,TRAIT_GENERIC)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			throw_alert("drunk", /obj/screen/alert/drunk)
 		else
+			REMOVE_TRAIT(src,TRAIT_RELAXED,TRAIT_GENERIC)
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
 
@@ -544,10 +546,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			Dizzy(10)
 
 		if(drunkenness >= 51)
+			//we become really fucking tense around here-ish.
+			REMOVE_TRAIT(src,TRAIT_RELAXED,TRAIT_GENERIC)
+			ADD_TRAIT(src,TRAIT_TENSED,TRAIT_GENERIC)
 			if(prob(3))
 				add_confusion(15)
 				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(25)
+		else
+			REMOVE_TRAIT(src,TRAIT_TENSED,TRAIT_GENERIC)
 
 		if(drunkenness >= 61)
 			if(prob(50))

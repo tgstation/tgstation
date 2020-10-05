@@ -9,7 +9,7 @@
 	var/mob/living/carbon/human/humie = owner.current
 	if(prob(10) && !humie.get_active_held_item())
 		var/list/steal_list = list()
-		for(var/obj/item/item in range(1,humie))
+		for(var/obj/item/item in spiral_range_turfs(1,humie))
 			steal_list += item
 		var/obj/item/item_to_steal = pick(steal_list)
 		item_to_steal.attack_hand(humie)

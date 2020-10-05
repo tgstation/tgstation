@@ -1033,6 +1033,14 @@
 	color = "#27870a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
+/datum/reagent/medicine/haloperidol/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_TENSED,type)
+	return ..()
+
+/datum/reagent/medicine/haloperidol/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L,TRAIT_TENSED,type)
+
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,5)
@@ -1419,16 +1427,15 @@
 
 /datum/reagent/medicine/alprazolam/on_mob_metabolize(mob/living/L)
 	. = ..()
-
 	ADD_TRAIT(L,TRAIT_RELAXED,type)
 	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
-/datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/alprazolam/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_RELAXED,type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	..()
+	return ..()
 
-/datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/alprazolam/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(current_cycle >= 3)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_heavy, name)
@@ -1441,45 +1448,12 @@
 			M.Sleeping(10, 0)
 			. = 1
 
-/datum/reagent/medicine/morphine/overdose_process(mob/living/M)
+/datum/reagent/medicine/alprazolam/overdose_process(mob/living/M)
 	. = ..()
 	if(prob(66))
 		M.drop_all_held_items()
 		M.Dizzy(2)
 		M.Jitter(2)
-
-/datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
-	. = ..()
-	if(prob(66))
-		M.drop_all_held_items()
-		M.Jitter(2)
-
-/datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
-	. = ..()
-	if(prob(66))
-		M.drop_all_held_items()
-		M.adjustToxLoss(1*REM, 0)
-		. = 1
-		M.Dizzy(3)
-		M.Jitter(3)
-
-/datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
-	. = ..()
-	if(prob(66))
-		M.drop_all_held_items()
-		M.adjustToxLoss(2*REM, 0)
-		. = 1
-		M.Dizzy(4)
-		M.Jitter(4)
-
-/datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
-	. = ..()
-	if(prob(66))
-		M.drop_all_held_items()
-		M.adjustToxLoss(3*REM, 0)
-		. = 1
-		M.Dizzy(5)
-		M.Jitter(5)
 
 /datum/reagent/medicine/lithium_carbonate
 	name = "Lithium Carbonate"
@@ -1488,16 +1462,24 @@
 	reagent_state = LIQUID
 	overdose_threshold = 20
 	metabolization_rate = 2
+	var/digesting = FALSE
 
-//Works exactly the same way syriniver does
 /datum/reagent/medicine/lithium_carbonate/on_transfer(atom/A, methods, trans_volume)
-	if(!(methods & INGEST) || !iscarbon(A))
+	. = ..()
+	if(!methods & INGEST)
 		return
-	var/mob/living/carbon/C = A
-	if((L.organ_flags & ORGAN_FAILING) || !L)
-		return
-	conversion_amount = trans_volume * (min(100 -C.getOrganLoss(ORGAN_SLOT_LIVER), 80) / 100) //the more damaged the liver the worse we metabolize.
-	C.reagents.remove_reagent(/datum/reagent/medicine/lithium_carbonate, conversion_amount)
-	C.reagents.add_reagent(/datum/reagent/medicine/lithium_carbonate_metabolite, conversion_amount)
-	..()
+	digesting = TRUE
 
+/datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(!digesting)
+		return
+	ADD_TRAIT(M,TRAIT_CONTROLLED,type)
+	if(M.disgust < 50)
+		M.adjust_disgust(3)
+	M.adjustStaminaLoss(5)
+	M.adjustToxLoss((volume/overdose_threshold)*current_cycle)
+
+/datum/reagent/medicine/lithium_carbonate/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_CONTROLLED,type)
+	return ..()

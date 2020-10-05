@@ -31,6 +31,8 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
 
+	RegisterSignal(parent,COMSIG_LIVING_ELECTROCUTE_ACT, .proc/electrocute)
+
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
@@ -243,7 +245,7 @@
 			sanity_level = 1
 
 	//around 0.5 per tick
-	setMentalEntropy(mental_entropy + (SANITY_MAXIMUM/2 - sanity)/150)
+	setMentalEntropy(mental_entropy + (SANITY_MAXIMUM/2 - sanity)/300)
 	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)
@@ -414,9 +416,9 @@
 /datum/component/mood/proc/setMentalEntropy(num)
 	mental_entropy = clamp(num,-100,100)
 
-	if(mental_entropy > 50 && prob(abs(100*((mental_entropy/100)*(mental_entropy/100)))))
+	if(mental_entropy > 50 && prob(abs(mental_entropy-50)))
 		roll_add_disorder()
-	if(mental_entropy < 50 && prob(abs(100*((mental_entropy/100)*(mental_entropy/100)))))
+	if(mental_entropy < -50 && prob(abs(mental_entropy-50)))
 		roll_cure_disorder()
 
 /datum/component/mood/proc/roll_add_disorder()
@@ -441,6 +443,23 @@
 
 	mental_entropy += 60
 	owner.mind.remove_disorder(disorder.type)
+
+/datum/component/mood/proc/electrocute(/datum/source , shock_damage, source, siemens_coeff, flags)
+	if(flags & SHOCK_ILLUSION)
+		return
+	if(shock_damage * siemens_coeff < 1)
+		return
+
+	//low damage - good for you most of the time, high damage - bad for you
+	switch(shock_damage * siemens_coeff)
+		if(1 to 25)
+			setMentalEntropy(mental_entropy + rand(-shock_damage,shock_damage/2))
+		if(26 to 50)
+			setMentalEntropy(mental_entropy + rand(-shock_damage/2,shock_damage))
+		if(51 to INFINITY)
+			setMentalEntropy(mental_entropy + rand(0,shock_damage))
+			if(prob(shock_damage/5))
+				roll_add_disorder()
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

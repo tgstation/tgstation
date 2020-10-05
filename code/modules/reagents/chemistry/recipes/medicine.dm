@@ -154,6 +154,14 @@
 	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
 
+/datum/chemical_reaction/alprazolam
+	results = list(/datum/reagent/medicine/alprazolam = 4)
+	required_reagents = list(/datum/reagent/medicine/mannitol = 1, /datum/reagent/carbon = 1 ,  /datum/reagent/hydrogen = 1 , /datum/reagent/phenol = 1)
+
+/datum/chemical_reaction/lithium_carbonate
+	results = list(/datum/reagent/medicine/lithium_carbonate = 3)
+	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/carbon = 1)
+
 ///medical stacks
 
 /datum/chemical_reaction/medsuture
@@ -179,3 +187,5 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/poultice(location)
+
+
