@@ -12,5 +12,7 @@
 
 	"files.eol": "\n",
 
-	"gitlens.advanced.blame.customArguments": ["-w"]
+	"gitlens.advanced.blame.customArguments": ["-w"],
+
+	"dreammaker.extoolsDLL": "byond-extools.dll"
 }

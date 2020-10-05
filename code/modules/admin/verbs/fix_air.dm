@@ -1,5 +1,5 @@
 // Proc taken from yogstation, credit to nichlas0010 for the original
-/client/proc/fix_air(turf/open/T in world)
+/client/proc/fix_air()
 	set name = "Fix Air"
 	set category = "Admin - Game"
 	set desc = "Fixes air in specified radius."
@@ -8,6 +8,7 @@
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	if(check_rights(R_ADMIN,1))
+		var/turf/T = get_turf(usr)
 		var/range=input("Enter range:","Num",2) as num
 		message_admins("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
 		log_game("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
