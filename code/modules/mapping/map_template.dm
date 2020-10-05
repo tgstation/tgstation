@@ -133,6 +133,9 @@
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
+/datum/map_template/proc/post_load()
+	return
+
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T
 	if(centered)
