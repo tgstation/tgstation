@@ -86,10 +86,17 @@
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
 		heal_bodypart_damage(10)
 		qdel(target)
+		return
+	if(istype(target, /obj/item/reagent_containers/food/snacks/store/cheesewheel))
+		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
+		heal_bodypart_damage(35)
+		qdel(target)
+		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
 		to_chat(src, "<span class='green'>You eat \the [src], revitalizing your royal resolve completely.</span>")
 		heal_bodypart_damage(70)
 		qdel(target)
+		return
 
 /mob/living/simple_animal/hostile/regalrat/controlled
 	name = "regal rat"
