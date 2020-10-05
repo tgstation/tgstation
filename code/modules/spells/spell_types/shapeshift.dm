@@ -130,11 +130,12 @@
 	var/mob/living/stored
 	var/mob/living/shape
 	var/restoring = FALSE
+	var/datum/soullink/shapeshift/slink
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/source,mob/living/caster)
 	. = ..()
-	source = _source
+	src.source = source
 	shape = loc
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")
@@ -150,16 +151,15 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	stored.RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/shape_death)
-	stored.RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
-	shape.RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
+	slink = soullink(/datum/soullink/shapeshift, stored , shape)
+	slink.source = src
 
 /obj/shapeshift_holder/Destroy()
 	if(!restoring)
 		restore()
 	stored = null
 	shape = null
-	return ..()
+	. = ..()
 
 /obj/shapeshift_holder/Moved()
 	. = ..()
@@ -174,16 +174,14 @@
 	if(AM == stored && !restoring)
 		restore()
 
-/obj/shapeshift_holder/proc/caster_death()
-	SIGNAL_HANDLER
+/obj/shapeshift_holder/proc/casterDeath()
 	//Something kills the stored caster through direct damage.
 	if(source.revert_on_death)
 		restore(death=TRUE)
 	else
 		shape.death()
 
-/obj/shapeshift_holder/proc/shape_death()
-	SIGNAL_HANDLER
+/obj/shapeshift_holder/proc/shapeDeath()
 	//Shape dies.
 	if(source.die_with_shapeshifted_form)
 		if(source.revert_on_death)
@@ -193,6 +191,7 @@
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
 	restoring = TRUE
+	qdel(slink)
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
 	if(shape.mind)
@@ -208,5 +207,16 @@
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
-	QDEL_NULL(shape)
+	qdel(shape)
 	qdel(src)
+
+/datum/soullink/shapeshift
+	var/obj/shapeshift_holder/source
+
+/datum/soullink/shapeshift/ownerDies(gibbed, mob/living/owner)
+	if(source)
+		source.casterDeath(gibbed)
+
+/datum/soullink/shapeshift/sharerDies(gibbed, mob/living/sharer)
+	if(source)
+		source.shapeDeath(gibbed)

@@ -65,7 +65,7 @@
 	return I.attack(src, user)
 
 /**
-  * Called from [/mob/living/proc/attackby]
+  * Called from [/mob/living/attackby]
   *
   * Arguments:
   * * mob/living/M - The mob being hit by this item

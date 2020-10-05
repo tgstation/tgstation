@@ -103,8 +103,7 @@
 	return data
 
 /obj/item/electropack/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

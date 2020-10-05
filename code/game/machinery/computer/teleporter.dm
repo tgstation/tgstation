@@ -54,8 +54,7 @@
 	return data
 
 /obj/machinery/computer/teleporter/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	if(!check_hub_connection())

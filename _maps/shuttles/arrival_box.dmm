@@ -24,7 +24,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/effect/spawner/randomarcade,
+/obj/machinery/computer/arcade,
 /obj/machinery/light{
 	dir = 1
 	},

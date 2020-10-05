@@ -68,8 +68,8 @@ const HolopadContent = (props, context) => {
           <Button
             icon="bell"
             content={on_cooldown
-              ? "AI's Presence Requested"
-              : "Request AI's Presence"}
+              ? "AI Presence Requested"
+              : "Request AI Presence"}
             disabled={!on_network || on_cooldown}
             onClick={() => act('AIrequest')} />
         )} >

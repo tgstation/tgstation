@@ -27,5 +27,5 @@
 	name = "lattice"
 	desc = "A lightweight support lattice."
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
-	icon_state = "lattice-255"
+	icon_state = "lattice"
 	density = TRUE

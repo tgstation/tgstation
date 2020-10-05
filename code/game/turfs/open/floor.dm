@@ -30,11 +30,10 @@
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
-		broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
 	else
-		broken_states = string_list(broken_states)
-	if(burnt_states)
-		burnt_states = string_list(burnt_states)
+		broken_states = typelist("broken_states", broken_states)
+	burnt_states = typelist("burnt_states", burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
@@ -53,7 +52,7 @@
 					"snow","snow_dug","ice",
 					"snow0","snow1","snow2","snow3","snow4",
 					"snow5","snow6","snow7","snow8","snow9","snow10","snow11","snow12",
-					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood",
+					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
 					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 					"ironsand12", "ironsand13", "ironsand14", "ironsand15")
@@ -140,7 +139,7 @@
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
 		return
-	if(LAZYLEN(burnt_states))
+	if(burnt_states.len)
 		icon_state = pick(burnt_states)
 	else
 		icon_state = pick(broken_states)

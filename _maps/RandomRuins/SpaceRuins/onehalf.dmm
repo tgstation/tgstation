@@ -6,16 +6,16 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ad" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ae" = (
 /obj/item/stack/cable_coil/cut,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ag" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -141,10 +141,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
@@ -248,7 +244,7 @@
 /obj/structure/lattice,
 /obj/item/storage/toolbox/syndicate,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aT" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless{
@@ -707,7 +703,10 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/item/stack/spacecash/c500{
+	pixel_y = 8
+	},
+/obj/item/stack/spacecash/c1000,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -739,7 +738,7 @@
 	icon_state = "small"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -778,7 +777,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/item/lighter,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
@@ -800,7 +799,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ct" = (
 /obj/structure/lattice,
 /obj/item/shard{
@@ -876,8 +875,8 @@
 "cI" = (
 /obj/structure/safe/floor,
 /obj/item/tank/internals/oxygen/red,
-/obj/item/clothing/head/helmet/space/eva,
-/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/suit/space/hardsuit/syndi,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/folder/syndicate/mining,
@@ -945,7 +944,6 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cY" = (
 /obj/structure/table/reinforced,
-/obj/item/gps/spaceruin,
 /obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -953,7 +951,6 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/ore/bluespace_crystal,
 /obj/item/coin/plasma,
-/obj/item/lighter,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "da" = (
@@ -983,19 +980,19 @@
 /obj/item/stack/sheet/plasteel,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "di" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dj" = (
 /obj/item/stack/rods,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dl" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -1011,11 +1008,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
+"Ky" = (
+/turf/template_noop,
+/area/space/nearstation)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
+"Me" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "Vh" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1026,10 +1030,10 @@ aa
 aa
 aa
 aa
-aw
+Me
 aa
 aS
-aw
+Me
 aa
 aa
 aa
@@ -1189,7 +1193,7 @@ bO
 bR
 aa
 cs
-aw
+Me
 aa
 aa
 cr
@@ -1215,7 +1219,7 @@ cA
 cr
 cN
 aa
-aw
+Me
 aa
 dl
 "}
@@ -1230,11 +1234,11 @@ ag
 bi
 bx
 bQ
-aw
+Me
 bV
 aa
 aa
-aw
+Me
 cA
 aa
 cL
@@ -1340,13 +1344,13 @@ aX
 bo
 bp
 bU
-aa
+Ky
 cj
 bU
 cF
 bU
-aw
-aa
+Me
+Ky
 bU
 ad
 aa
@@ -1560,7 +1564,7 @@ ar
 br
 ar
 ar
-aw
+Me
 ad
 ad
 ad

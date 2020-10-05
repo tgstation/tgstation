@@ -117,14 +117,10 @@
 	H.open_language_menu(usr)
 
 /obj/screen/inventory
-	/// The identifier for the slot. It has nothing to do with ID cards.
-	var/slot_id
-	/// Icon when empty. For now used only by humans.
-	var/icon_empty
-	 /// Icon when contains an item. For now used only by humans.
-	var/icon_full
-	/// The overlay when hovering over with an item in your hand
-	var/image/object_overlay
+	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
+	var/icon_empty // Icon when empty. For now used only by humans.
+	var/icon_full  // Icon when contains an item. For now used only by humans.
+	var/list/object_overlays = list()
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -154,8 +150,8 @@
 
 /obj/screen/inventory/MouseExited()
 	..()
-	cut_overlay(object_overlay)
-	QDEL_NULL(object_overlay)
+	cut_overlay(object_overlays)
+	object_overlays.Cut()
 
 /obj/screen/inventory/update_icon_state()
 	if(!icon_empty)
@@ -186,9 +182,8 @@
 	else
 		item_overlay.color = "#00ff00"
 
-	cut_overlay(object_overlay)
-	object_overlay = item_overlay
-	add_overlay(object_overlay)
+	object_overlays += item_overlay
+	add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay

@@ -71,13 +71,12 @@
  * required action string The action/button that has been invoked by the user.
  * required params list A list of parameters attached to the button.
  *
- * return bool If the user's input has been handled and the UI should update.
+ * return bool If the UI should be updated or not.
  */
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
-		return TRUE
+		return 1
 
 /**
  * public

@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
 	///What the species drops when gibbed by a gibber machine.
-	var/meat = /obj/item/food/meat/slab/human
+	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
 	///Bitfield for food types that the species likes, giving them a mood boost. Lizards like meat, for example.
@@ -56,13 +56,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/species_language_holder = /datum/language_holder
 	/// Default mutant bodyparts for this species, like horns. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/default_features = list()
-	/// Visible CURRENT bodyparts that are unique to a species.
-	///
-	/// DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
-	/// SHIT UP! Changes to this list for non-species specific bodyparts (ie
-	/// cat ears and tails) should be assigned at organ level if possible.
-	/// Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts]
-	/// below.
+	/// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by [datum/species/handle_mutant_bodyparts()] below.
 	var/list/mutant_bodyparts = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
@@ -203,7 +197,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * Checks if a species is eligible to be picked at roundstart.
   *
   * Checks the config to see if this species is allowed to be picked in the character setup menu.
-  * Used by [/proc/generate_selectable_species].
+  * Used by [proc/generate_selectable_species].
   */
 /datum/species/proc/check_roundstart_eligible()
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
@@ -246,12 +240,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
 
-/**
-  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does.
+/** regenerate_organs
+  * Corrects organs in a carbon, removing ones it doesn't need and adding ones it does
   *
-  * Takes all organ slots, removes organs a species should not have, adds organs a species should have.
+  * takes all organ slots, removes organs a species should not have, adds organs a species should have.
   * can use replace_current to refresh all organs, creating an entirely new set.
-  *
   * Arguments:
   * * C - carbon, the owner of the species datum AKA whoever we're regenerating organs in
   * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
@@ -637,40 +630,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
 			standing += eye_overlay
 
-	// organic body markings
-	if(HAS_MARKINGS in species_traits)
-		var/obj/item/bodypart/chest/chest = H.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/r_arm/right_arm = H.get_bodypart(BODY_ZONE_R_ARM)
-		var/obj/item/bodypart/l_arm/left_arm = H.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/r_leg/right_leg = H.get_bodypart(BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/l_leg/left_leg = H.get_bodypart(BODY_ZONE_L_LEG)
-		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
-
-		if(!HAS_TRAIT(H, TRAIT_HUSK))
-			if(HD && (HD.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
-				standing += markings_head_overlay
-
-			if(chest && (chest.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
-				standing += markings_chest_overlay
-
-			if(right_arm && (right_arm.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
-				standing += markings_r_arm_overlay
-
-			if(left_arm && (left_arm.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
-				standing += markings_l_arm_overlay
-
-			if(right_leg && (right_leg.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
-				standing += markings_r_leg_overlay
-
-			if(left_leg && (left_leg.status != BODYPART_ROBOTIC))
-				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
-				standing += markings_l_leg_overlay
-
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
 		if(H.underwear)
@@ -781,10 +740,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
-	if("moth_antennae" in mutant_bodyparts)
-		if(!H.dna.features["moth_antennae"] || H.dna.features["moth_antennae"] == "None" || !HD)
-			bodyparts_to_add -= "moth_antennae"
-
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
 	var/not_digitigrade = TRUE
@@ -850,8 +805,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
-				if("moth_antennae")
-					S = GLOB.moth_antennae_list[H.dna.features["moth_antennae"]]
+				if("moth_markings")
+					S = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 			if(!S || S.icon_state == "none")
@@ -1111,7 +1066,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		chem.overdosed = TRUE
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
-	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
+	return 0 //This is not a boolean, it's the multiplier for the damage that the user takes from the item.It is added onto the check_weakness value of the mob, and then the force of the item is multiplied by this value
 
 /**
  * Equip the outfit required for life. Replaces items currently worn.
@@ -1127,7 +1082,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //LIFE//
 ////////
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
@@ -1453,11 +1408,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
-	var/weakness = check_species_weakness(I, user)
+	var/weakness = H.check_weakness(I, user)
+	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	H.send_item_attack_message(I, user, hit_area, affecting)
-
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
 
 	if(!I.force)
 		return FALSE //item force is zero
@@ -1982,7 +1936,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "flight"
 

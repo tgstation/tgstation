@@ -595,7 +595,9 @@
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
-/obj/item/gps/spaceruin,
+/obj/item/gps{
+	gpstag = "Pulpy Signal"
+	},
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bJ" = (

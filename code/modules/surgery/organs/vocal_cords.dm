@@ -180,7 +180,15 @@
 
 	for(var/V in listeners)
 		var/mob/living/L = V
-		if(findtext(message, L.real_name, 1, length(L.real_name) + 1))
+		var/datum/antagonist/devil/devilinfo = is_devil(L)
+		if(devilinfo && findtext(message, devilinfo.truename))
+			var/start = findtext(message, devilinfo.truename)
+			listeners = list(L) //Devil names are unique.
+			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
+			//Cut out the name so it doesn't trigger commands
+			message = copytext(message, 1, start) + copytext(message, start + length(devilinfo.truename))
+			break
+		else if(findtext(message, L.real_name, 1, length(L.real_name) + 1))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.real_name
@@ -355,7 +363,13 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /atom/movable/proc/say, L.real_name), 5 * i)
+			var/text = ""
+			if(is_devil(L))
+				var/datum/antagonist/devil/devilinfo = is_devil(L)
+				text = devilinfo.truename
+			else
+				text = L.real_name
+			addtimer(CALLBACK(L, /atom/movable/proc/say, text), 5 * i)
 			i++
 
 	//SAY MY NAME

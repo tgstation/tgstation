@@ -656,6 +656,10 @@
 
 		..()
 
+/mob/living/carbon/human/RestrainedClickOn(atom/A)
+	. = ..()
+	if(src == A)
+		check_self_for_injuries()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)

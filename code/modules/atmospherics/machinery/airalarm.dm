@@ -104,7 +104,7 @@
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
-		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -130,7 +130,7 @@
 		/datum/gas/hydrogen			= new/datum/tlv/no_checks,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
-		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -156,7 +156,7 @@
 		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
 		/datum/gas/healium			= new/datum/tlv/dangerous,
 		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
-		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/cyrion_b			= new/datum/tlv/dangerous,
 		/datum/gas/halon			= new/datum/tlv/dangerous,
 		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
@@ -385,9 +385,7 @@
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
-	. = ..()
-
-	if(. || buildstage != 2)
+	if(..() || buildstage != 2)
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
@@ -551,7 +549,7 @@
 						/datum/gas/hydrogen,
 						/datum/gas/healium,
 						/datum/gas/proto_nitrate,
-						/datum/gas/zauker,
+						/datum/gas/cyrion_b,
 						/datum/gas/halon,
 						/datum/gas/hexane,
 					),

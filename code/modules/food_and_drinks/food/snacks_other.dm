@@ -42,21 +42,23 @@
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
 	value = FOOD_WORTHLESS
 
-/obj/item/food/candy_corn
+/obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn. Can be stored in a detective's hat."
 	icon_state = "candy_corn"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2)
+	filling_color = "#FF8C00"
 	tastes = list("candy corn" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
 
-/obj/item/food/candy_corn/prison
+/obj/item/reagent_containers/food/snacks/candy_corn/prison
 	name = "desiccated candy corn"
 	desc = "If this candy corn were any harder Security would confiscate it for being a potential shiv."
 	force = 1 // the description isn't lying
 	throwforce = 1 // if someone manages to bust out of jail with candy corn god bless them
 	tastes = list("bitter wax" = 1)
-	foodtypes = GROSS
+	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
@@ -207,13 +209,16 @@
 	foodtype = TOXIC | SUGAR
 	value = FOOD_EXOTIC
 
-/obj/item/food/eggwrap
+/obj/item/reagent_containers/food/snacks/eggwrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "eggwrap"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtype = MEAT | GRAIN
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/spidereggs
 	name = "spider eggs"
@@ -239,7 +244,6 @@
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
-	worn_icon_state = "lollipop_stick"
 	list_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
@@ -280,14 +284,18 @@
 	foodtype = JUNKFOOD | SUGAR
 	value = FOOD_RARE
 
-/obj/item/food/eggplantparm
+/obj/item/reagent_containers/food/snacks/eggplantparm
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash_type = /obj/item/trash/plate
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+
+	filling_color = "#BA55D3"
 	tastes = list("eggplant" = 3, "cheese" = 1)
-	foodtypes = VEGETABLES | DAIRY
+	foodtype = VEGETABLES | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
@@ -605,7 +613,6 @@
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
-	worn_icon_state = "bubblegum"
 	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD

@@ -226,10 +226,7 @@
 		can_use_scanner = TRUE
 	else
 		can_use_scanner = FALSE
-		if(connected_scanner)
-			if(connected_scanner.linked_console == src)
-				connected_scanner.linked_console = null
-			connected_scanner = null
+		connected_scanner = null
 		is_viable_occupant = FALSE
 
 	// Check for a viable occupant in the scanner.
@@ -359,9 +356,8 @@
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	. = TRUE
 
@@ -1611,7 +1607,10 @@
   * Checks if there is a connected DNA Scanner that is operational
   */
 /obj/machinery/computer/scan_consolenew/proc/scanner_operational()
-	return connected_scanner?.is_operational
+	if(!connected_scanner)
+		return FALSE
+
+	return (connected_scanner && connected_scanner.is_operational)
 
 /**
   * Checks if there is a valid DNA Scanner occupant for genetic modification

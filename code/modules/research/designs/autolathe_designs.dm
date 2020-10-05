@@ -1202,11 +1202,3 @@
 	build_path = /obj/item/swab
 	category = list("initial","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/chisel
-	name = "Chisel"
-	id = "chisel"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 75)
-	build_path = /obj/item/chisel
-	category = list("initial","Tools")

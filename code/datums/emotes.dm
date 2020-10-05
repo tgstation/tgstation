@@ -14,8 +14,7 @@
 	var/message_simple = "" //Message to display if the user is a simple_animal
 	var/message_param = "" //Message to display if a param was given
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
-	/// Checks if the mob can use its hands before performing the emote.
-	var/hands_use_check = FALSE
+	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
 	var/list/mob_type_allowed_typecache = /mob //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
@@ -69,7 +68,7 @@
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && user.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message("[FOLLOW_LINK(M, user)] [dchatmsg]")
 
 	if(emote_type == EMOTE_AUDIBLE)
@@ -140,10 +139,18 @@
 				if(DEAD)
 					to_chat(user, "<span class='warning'>You cannot [key] while dead!</span>")
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		if(restraint_check)
+			if(isliving(user))
+				var/mob/living/L = user
+				if(L.IsParalyzed() || L.IsStun())
+					if(!intentional)
+						return FALSE
+					to_chat(user, "<span class='warning'>You cannot [key] while stunned!</span>")
+					return FALSE
+		if(restraint_check && user.restrained())
 			if(!intentional)
 				return FALSE
-			to_chat(user, "<span class='warning'>You cannot use your hands to [key] right now!</span>")
+			to_chat(user, "<span class='warning'>You cannot [key] while restrained!</span>")
 			return FALSE
 
 	if(isliving(user))

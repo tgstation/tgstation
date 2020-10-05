@@ -112,8 +112,7 @@
 	return data
 
 /obj/machinery/portable_atmospherics/pump/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("power")

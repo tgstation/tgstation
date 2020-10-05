@@ -233,8 +233,7 @@
 	return data
 
 /obj/machinery/rnd/bepis/ui_act(action,params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("deposit_cash")

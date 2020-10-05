@@ -172,7 +172,7 @@
   *
   * Use for atoms performing visible actions
   *
-  * message is output to anyone who can see, e.g. `"The [src] does something!"`
+  * message is output to anyone who can see, e.g. "The [src] does something!"
   *
   * Vars:
   * * self_message (optional) is what the src mob sees e.g. "You do something!"
@@ -207,7 +207,7 @@
 			msg = blind_message
 		else if(T != loc && T != src) //if src is inside something and not a turf.
 			msg = blind_message
-		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
+		else if(T.lighting_object && T.lighting_object.invisibility <= M.see_invisible && T.is_softly_lit()) //if it is too dark.
 			msg = blind_message
 		if(!msg)
 			continue
@@ -283,6 +283,9 @@
 /mob/proc/get_item_by_slot(slot_id)
 	return null
 
+///Is the mob restrained
+/mob/proc/restrained(ignore_grab)
+	return
 
 ///Is the mob incapacitated
 /mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
@@ -596,8 +599,6 @@
 	var/D = dir
 	if((spintime < 1)||(speed < 1)||!spintime||!speed)
 		return
-
-	flags_1 |= IS_SPINNING_1
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -611,7 +612,6 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-	flags_1 &= ~IS_SPINNING_1
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
@@ -865,7 +865,7 @@
 		return FALSE
 	if(notransform)
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+	if(restrained())
 		return FALSE
 	return TRUE
 
@@ -1162,9 +1162,7 @@
 	if (!client)
 		return
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
-		client.mouse_pointer_icon = examine_cursor_icon
-	else if (ismecha(loc))
+	if (ismecha(loc))
 		var/obj/vehicle/sealed/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
@@ -1177,6 +1175,7 @@
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
+
 ///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
 	if(is_blind())
@@ -1304,6 +1303,19 @@
 		return
 	update_movespeed(FALSE)
 
+
+/// Updates the grab state of the mob and updates movespeed
+/mob/setGrabState(newstate)
+	. = ..()
+	switch(grab_state)
+		if(GRAB_PASSIVE)
+			remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
+		if(GRAB_AGGRESSIVE)
+			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/aggressive)
+		if(GRAB_NECK)
+			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/neck)
+		if(GRAB_KILL)
+			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()

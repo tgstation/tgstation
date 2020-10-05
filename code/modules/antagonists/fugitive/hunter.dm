@@ -77,7 +77,6 @@
 	var/list/fugitives_captured = list()
 	for(var/datum/antagonist/fugitive/A in GLOB.antagonists)
 		if(!A.owner)
-			stack_trace("Antagonist datum without owner in GLOB.antagonists: [A]")
 			continue
 		fugitives_counted += A
 		if(A.owner.current.stat == DEAD)

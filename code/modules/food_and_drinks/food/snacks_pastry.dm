@@ -667,13 +667,16 @@
 	foodtype = GRAIN | MEAT | VEGETABLES
 	value = FOOD_RARE
 
-/obj/item/food/meatbun
+/obj/item/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	filling_color = "#8B0000"
 	tastes = list("bun" = 3, "meat" = 2)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+	foodtype = GRAIN | MEAT | VEGETABLES
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"

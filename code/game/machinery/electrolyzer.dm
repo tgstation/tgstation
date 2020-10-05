@@ -41,7 +41,7 @@
 
 /obj/machinery/electrolyzer/on_deconstruction()
 	if(cell)
-		LAZYADD(component_parts, cell)
+		component_parts += cell
 		cell = null
 	return ..()
 

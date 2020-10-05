@@ -41,8 +41,6 @@
 	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
-	///Cursor icon used when holding shift over things
-	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
@@ -132,7 +130,7 @@
 	  *
 	  * NB: contains nulls!
 	  *
-	  * `held_items[active_hand_index]` is the actively held item, but please use
+	  * held_items[active_hand_index] is the actively held item, but please use
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
@@ -209,10 +207,7 @@
 
 	var/memory_throttle_time = 0
 
-	/// Contains [/obj/screen/alert] only.
-	///
-	/// On [/mob] so clientless mobs will throw alerts properly.
-	var/list/alerts = list()
+	var/list/alerts = list() /// contains [/obj/screen/alert only] // On /mob so clientless mobs will throw alerts properly
 	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud

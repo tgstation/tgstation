@@ -162,8 +162,7 @@
 	return data
 
 /obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("eject")

@@ -92,7 +92,7 @@
 /obj/machinery/camera/proc/removeEmpProof(ignore_malf_upgrades)
 	if(ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		return
-	QDEL_NULL(emp_component)
+	emp_component.RemoveComponent()
 	upgrades &= ~CAMERA_UPGRADE_EMP_PROOF
 
 

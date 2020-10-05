@@ -24,11 +24,6 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	timeleft = 200
 
-/// A form of the cult forcefield that lasts permanently.
-/// Used on the Shuttle 667.
-/obj/effect/forcefield/cult/permanent
-	timeleft = 0
-
 ///////////Mimewalls///////////
 
 /obj/effect/forcefield/mime

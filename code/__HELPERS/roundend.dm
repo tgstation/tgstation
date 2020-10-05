@@ -476,14 +476,14 @@
 		station_vault += current_acc.account_balance
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
-	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
+	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.</div>"
 	if(total_players > 0)
-		parts += "An average of [station_vault/total_players] credits were collected.<br>"
+		parts += "<div class='panel stationborder'>An average of [station_vault/total_players] credits were collected.</div>"
 		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
 	if(mr_moneybags)
-		parts += "The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+		parts += "<div class='panel clockborder'>The most affulent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
-		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+		parts += "div class = panel redborder'>Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts
 
 /datum/controller/subsystem/ticker/proc/medal_report()
@@ -498,7 +498,8 @@
 ///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
 /datum/controller/subsystem/ticker/proc/hardcore_random_report()
 	. = list()
-	var/list/hardcores = list()
+	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
@@ -507,14 +508,8 @@
 			continue
 		if(!human_player.mind)
 			continue
-		hardcores += human_player
-	if(!length(hardcores))
-		return
-	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
-	. += "<ul class='playerlist'>"
-	for(var/mob/living/carbon/human/human_player in hardcores)
 		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
-	. += "</ul></div>"
+	. += "</ul>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()

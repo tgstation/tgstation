@@ -86,10 +86,8 @@
 	return data
 
 /obj/machinery/roulette/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("anchor")
 			set_anchored(!anchored)

@@ -83,8 +83,7 @@
 	return data
 
 /obj/item/assembly/signaler/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)

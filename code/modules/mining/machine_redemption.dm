@@ -241,8 +241,7 @@
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)

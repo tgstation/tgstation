@@ -25,7 +25,7 @@ export const AtmosMixer = (props, context) => {
                 unit="kPa"
                 width="75px"
                 minValue={0}
-                maxValue={data.max_pressure}
+                maxValue={4500}
                 step={10}
                 onChange={(e, value) => act('pressure', {
                   pressure: value,

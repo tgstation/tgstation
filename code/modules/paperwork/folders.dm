@@ -76,7 +76,7 @@
 
 /obj/item/folder/Topic(href, href_list)
 	..()
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if(usr.stat || usr.restrained())
 		return
 
 	if(usr.contents.Find(src))

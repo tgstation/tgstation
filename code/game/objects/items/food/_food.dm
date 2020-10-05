@@ -4,12 +4,6 @@
 	desc = "you eat this"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_NORMAL
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = null
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	obj_flags = UNIQUE_RENAME
-	grind_results = list()
 	///List of reagents this food gets on creation
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
@@ -30,8 +24,6 @@
 	var/microwaved_type
 	///Type of atom thats spawned after eating this item
 	var/trash_type
-	///How much junkiness this food has? God I should remove junkiness soon
-	var/junkiness
 
 /obj/item/food/Initialize()
 	. = ..()
@@ -56,8 +48,7 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
+				microwaved_type = microwaved_type)
 
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
@@ -66,6 +57,5 @@
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/MakeLeaveTrash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type)
+	AddElement(/datum/element/food_trash, trash_type)
 	return

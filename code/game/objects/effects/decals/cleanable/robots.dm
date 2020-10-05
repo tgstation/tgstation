@@ -12,16 +12,15 @@
 	mergeable_decal = FALSE
 	beauty = -50
 
-/obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
+/obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = FALSE
 	var/direction = pick(directions)
 	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
-		if (!mapload)
-			sleep(2)
+		sleep(2)
 		if (i > 0)
 			if (prob(40))
 				new /obj/effect/decal/cleanable/oil/streak(src.loc)
-			else if (prob(10) && !mapload)
+			else if (prob(10))
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()

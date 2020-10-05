@@ -1,7 +1,6 @@
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
-	icon_state = "generic"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -172,8 +171,7 @@
 	return data
 
 /obj/item/tank/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("pressure")

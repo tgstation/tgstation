@@ -55,10 +55,8 @@
 	return data
 
 /obj/machinery/hypnochair/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	switch(action)
 		if("door")
 			if(state_open)

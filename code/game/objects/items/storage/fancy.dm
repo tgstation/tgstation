@@ -127,13 +127,13 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	name = "egg box"
 	desc = "A carton for containing eggs."
-	spawn_type = /obj/item/food/egg
+	spawn_type = /obj/item/reagent_containers/food/snacks/egg
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 12
-	STR.set_holdable(list(/obj/item/food/egg))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/egg))
 
 /*
  * Candle Box
@@ -146,7 +146,6 @@
 	icon_state = "candlebox5"
 	icon_type = "candle"
 	inhand_icon_state = "candlebox5"
-	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
@@ -173,7 +172,6 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
-	worn_icon_state = "cigpack"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
@@ -453,10 +451,10 @@
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "nuggetbox"
 	icon_type = "nugget"
-	spawn_type = /obj/item/food/nugget
+	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
 
 /obj/item/storage/fancy/nugget_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.set_holdable(list(/obj/item/food/nugget))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/nugget))

@@ -102,8 +102,7 @@
 	return data
 
 /obj/machinery/ntnet_relay/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("restart")

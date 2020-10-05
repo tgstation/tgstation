@@ -67,7 +67,7 @@
 		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
 		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
-		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
+		"cyrion_b" = /obj/machinery/portable_atmospherics/canister/cyrion_b,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon,
 		"hexane" = /obj/machinery/portable_atmospherics/canister/hexane
 	)
@@ -215,12 +215,12 @@
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 
-/obj/machinery/portable_atmospherics/canister/zauker
-	name = "Zauker canister"
-	desc = "Zauker, highly toxic"
-	icon_state = "zauker"
-	base_icon_state = "zauker"
-	gas_type = /datum/gas/zauker
+/obj/machinery/portable_atmospherics/canister/cyrion_b
+	name = "Cyrion B canister"
+	desc = "Cyrion B, highly toxic"
+	icon_state = "cyrion_b"
+	base_icon_state = "cyrion_b"
+	gas_type = /datum/gas/cyrion_b
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/halon
@@ -496,8 +496,7 @@
 	return data
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("relabel")

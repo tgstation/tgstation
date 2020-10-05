@@ -8,7 +8,6 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosNetDos"
-	program_icon = "satellite-dish"
 
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0
@@ -40,8 +39,7 @@
 	..()
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("PRG_target_relay")

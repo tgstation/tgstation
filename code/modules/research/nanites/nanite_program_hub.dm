@@ -109,8 +109,7 @@
 	return data
 
 /obj/machinery/nanite_program_hub/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("eject")

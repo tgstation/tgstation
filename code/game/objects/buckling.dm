@@ -1,7 +1,6 @@
 /atom/movable
 	var/can_buckle = FALSE
-	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
-	var/buckle_lying = NO_BUCKLE_LYING
+	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
 	var/buckle_requires_restraints = FALSE //require people to be handcuffed before being able to buckle. eg: pipes
 	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
@@ -168,8 +167,8 @@
 	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
 		return FALSE
 
-	// If the buckle requires restraints, make sure the target is actually restrained.
-	if(buckle_requires_restraints && !HAS_TRAIT(target, TRAIT_RESTRAINED))
+	// If the buckle requires restraints, make sure the target is actually restrained while ignoring grab restraint.
+	if(buckle_requires_restraints && !target.restrained(TRUE))
 		return FALSE
 
 	return TRUE

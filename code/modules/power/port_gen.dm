@@ -251,8 +251,7 @@
 	. =  data
 
 /obj/machinery/power/port_gen/pacman/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("toggle_power")

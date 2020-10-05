@@ -53,7 +53,7 @@
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
-						gib.streak(directions, mapload)
+						gib.streak(directions)
 
 	return INITIALIZE_HINT_QDEL
 

@@ -109,7 +109,8 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	Friends = null
+	Friends.Cut()
+	speech_buffer.Cut()
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)

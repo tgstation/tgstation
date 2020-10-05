@@ -9,7 +9,6 @@
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
 	tgui_id = "NtosNetChat"
-	program_icon = "comment-alt"
 	var/last_message				// Used to generate the toolbar icon
 	var/username
 	var/active_channel
@@ -21,8 +20,7 @@
 	username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)

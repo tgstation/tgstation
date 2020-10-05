@@ -54,9 +54,7 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
-	if(!owner)
-		CRASH("Antag datum with no owner.")
-	if(!owner.current)
+	if(!owner || !owner.current)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.SendToLateJoin(owner.current)
@@ -116,7 +114,7 @@
 
 /datum/antagonist/wizard/proc/equip_wizard()
 	if(!owner)
-		CRASH("Antag datum with no owner.")
+		return
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
@@ -135,7 +133,7 @@
 	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
-	to_chat(owner,"<B>Remember:</B> Do not forget to prepare your spells.")
+	to_chat(owner,"<B>Remember:</B> do not forget to prepare your spells.")
 
 /datum/antagonist/wizard/farewell()
 	to_chat(owner, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
@@ -193,7 +191,7 @@
 /datum/antagonist/wizard/apprentice/equip_wizard()
 	. = ..()
 	if(!owner)
-		CRASH("Antag datum with no owner.")
+		return
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return

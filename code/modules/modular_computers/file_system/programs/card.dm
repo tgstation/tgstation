@@ -15,7 +15,6 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
-	program_icon = "id-card"
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
@@ -95,9 +94,8 @@
 	return FALSE
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2

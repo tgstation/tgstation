@@ -63,8 +63,7 @@
 	return data
 
 /datum/computer_file/program/radar/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 
 	switch(action)
@@ -213,7 +212,6 @@
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_MEDICAL
 	available_on_ntnet = TRUE
-	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
 	return locate(selected) in GLOB.human_list
@@ -264,7 +262,6 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"
-	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 

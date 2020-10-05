@@ -163,7 +163,7 @@
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
 			return TRUE
-		else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
+		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
 			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return TRUE
@@ -268,8 +268,7 @@
   * You can move in space if you have a spacewalk ability
   */
 /mob/Process_Spacemove(movement_dir = 0)
-	. = ..()
-	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
+	if(HAS_TRAIT(src, TRAIT_SPACEWALK) || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)

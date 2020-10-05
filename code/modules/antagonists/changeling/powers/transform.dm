@@ -58,7 +58,6 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	icon_state = null
 	item_flags = DROPDEL
 
 /obj/item/clothing/head/changeling/Initialize()

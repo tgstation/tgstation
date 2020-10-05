@@ -14,7 +14,6 @@
 
 # Cyberboss
 
-/code/__HELPERS/jatum.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss

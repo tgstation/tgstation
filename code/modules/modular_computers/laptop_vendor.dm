@@ -169,9 +169,8 @@
 
 
 /obj/machinery/lapvend/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	switch(action)
 		if("pick_device")

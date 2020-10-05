@@ -52,15 +52,14 @@
 	id = "EXPERIMENTAL"
 	organization = "Nanotrasen R&D"
 
-/datum/techweb/bepis/New(remove_tech = TRUE)
+/datum/techweb/bepis/New()
 	. = ..()
 	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
 	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
 	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
 	update_node_status(BN)
-	if(remove_tech)
-		SSresearch.techweb_nodes_experimental -= bepis_id
+	SSresearch.techweb_nodes_experimental -= bepis_id
 
 /datum/techweb/Destroy()
 	researched_nodes = null

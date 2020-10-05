@@ -18,7 +18,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/food/egg)
+		/obj/item/reagent_containers/food/snacks/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"

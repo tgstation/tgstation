@@ -80,8 +80,7 @@
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	. = TRUE
 	switch(action)

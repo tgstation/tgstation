@@ -13,7 +13,6 @@
 	available_on_ntnet = 0
 	requires_ntnet = 0
 	tgui_id = "NtosConfiguration"
-	program_icon = "cog"
 
 	var/obj/item/modular_computer/movable = null
 
@@ -58,8 +57,7 @@
 
 
 /datum/computer_file/program/computerconfig/ui_act(action,params)
-	. = ..()
-	if(.)
+	if(..())
 		return
 	switch(action)
 		if("PC_toggle_component")

@@ -114,7 +114,7 @@
  * Security Record Cabinets
  */
 /obj/structure/filingcabinet/security
-	var/virgin = TRUE
+	var/virgin = 1
 
 /obj/structure/filingcabinet/security/proc/populate()
 	if(virgin)
@@ -132,23 +132,22 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = FALSE	//tabbing here is correct- it's possible for people to try and use it
+			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
 /obj/structure/filingcabinet/security/attack_hand()
 	populate()
-	return ..()
+	. = ..()
 
 /obj/structure/filingcabinet/security/attack_tk()
 	populate()
-	return ..()
+	..()
 
 /*
  * Medical Record Cabinets
  */
 /obj/structure/filingcabinet/medical
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
-	var/virgin = TRUE
+	var/virgin = 1
 
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(virgin)
@@ -166,17 +165,17 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = FALSE	//tabbing here is correct- it's possible for people to try and use it
+			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/filingcabinet/medical/attack_hand()
 	populate()
-	return ..()
+	. = ..()
 
 /obj/structure/filingcabinet/medical/attack_tk()
 	populate()
-	return ..()
+	..()
 
 /*
  * Employment contract Cabinets
@@ -185,9 +184,9 @@
 GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
+	var/cooldown = 0
 	icon_state = "employmentcabinet"
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
-	var/virgin = TRUE
+	var/virgin = 1
 
 /obj/structure/filingcabinet/employment/Initialize()
 	. = ..()
@@ -212,8 +211,13 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	new /obj/item/paper/contract/employment(src, employee)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
-	if(virgin)
-		fillCurrent()
-		virgin = FALSE
-	return ..()
-
+	if(!cooldown)
+		if(virgin)
+			fillCurrent()
+			virgin = 0
+		cooldown = TRUE
+		// prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10 SECONDS)
+	else
+		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
+	..()

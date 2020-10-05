@@ -739,13 +739,13 @@
 	return
 
 /obj/item/spellbook/Topic(href, href_list)
-	. = ..()
-
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-	if(!ishuman(usr))
-		return TRUE
+	..()
 	var/mob/living/carbon/human/H = usr
+
+	if(H.stat || H.restrained())
+		return
+	if(!ishuman(H))
+		return TRUE
 
 	if(H.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."

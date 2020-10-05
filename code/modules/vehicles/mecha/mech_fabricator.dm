@@ -512,9 +512,8 @@
 	return data
 
 /obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 
 	. = TRUE
 

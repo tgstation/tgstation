@@ -217,10 +217,8 @@
 	return data
 
 /obj/item/toy/eightball/haunted/ui_act(action, params)
-	. = ..()
-	if(.)
+	if(..())
 		return
-
 	var/mob/user = usr
 
 	switch(action)

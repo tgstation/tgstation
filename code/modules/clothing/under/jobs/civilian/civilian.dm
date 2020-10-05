@@ -24,7 +24,6 @@
 	inhand_icon_state = "bar_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/chaplain
@@ -41,7 +40,6 @@
 	inhand_icon_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/chef
@@ -56,7 +54,6 @@
 	icon_state = "chef_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel
@@ -73,7 +70,6 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/suit
@@ -90,7 +86,6 @@
 	inhand_icon_state = "g_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/hydroponics
@@ -107,7 +102,6 @@
 	inhand_icon_state = "g_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/janitor
@@ -122,7 +116,6 @@
 	icon_state = "janitor_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/janitor/maid
@@ -154,7 +147,6 @@
 	name = "lawyer black suitskirt"
 	icon_state = "lawyer_black_skirt"
 	inhand_icon_state = "lawyer_black"
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/female
@@ -168,7 +160,6 @@
 	icon_state = "black_suit_fem_skirt"
 	inhand_icon_state = "black_suit_fem_skirt"
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/red
@@ -180,7 +171,6 @@
 	name = "lawyer red suitskirt"
 	icon_state = "lawyer_red_skirt"
 	inhand_icon_state = "lawyer_red"
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/blue
@@ -192,7 +182,6 @@
 	name = "lawyer blue suitskirt"
 	icon_state = "lawyer_blue_skirt"
 	inhand_icon_state = "lawyer_blue"
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
@@ -210,7 +199,6 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
@@ -227,7 +215,6 @@
 	inhand_icon_state = "p_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
-	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/galaxy
