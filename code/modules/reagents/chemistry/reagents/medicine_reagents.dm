@@ -1483,3 +1483,11 @@
 /datum/reagent/medicine/lithium_carbonate/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_CONTROLLED,type)
 	return ..()
+
+/datum/reagent/medicine/lithium_carbonate/overdose_process(mob/living/M)
+	. = ..()
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/carbonie = M
+	carbonie.adjustOrganLoss(ORGAN_SLOT_EYES,2)
+	carbonie.adjustOrganLoss(ORGAN_SLOT_EARS,2)
