@@ -29,6 +29,12 @@
 
 /obj/item/mod/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
+	if(piece == gauntlets && wearer.gloves)
+		gauntlets.overslot = wearer.gloves
+		wearer.transferItemToLoc(gauntlets.overslot, gauntlets, TRUE)
+	if(piece == boots && wearer.shoes)
+		boots.overslot = wearer.shoes
+		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
 		visible_message("<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", \
 		"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>", \
@@ -46,6 +52,12 @@
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
+	if(gauntlets.overslot)
+		wearer.equip_to_slot_if_possible(gauntlets.overslot,gauntlets.overslot.slot_flags,0,0,1)
+		gauntlets.overslot = null
+	if(boots.overslot)
+		wearer.equip_to_slot_if_possible(boots.overslot,boots.overslot.slot_flags,0,0,1)
+		boots.overslot = null
 	visible_message("<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
 	"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
 	"<span class='hear'>You hear a mechanical hiss.</span>")

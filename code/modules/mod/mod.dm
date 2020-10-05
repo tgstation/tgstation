@@ -371,12 +371,16 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
+	var/obj/item/clothing/overslot
 
 /obj/item/clothing/gloves/mod/Destroy()
 	..()
 	if(mod)
+		if(mod.wearer)
+			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
+	overslot = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -387,9 +391,13 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
+	var/obj/item/clothing/overslot
 
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
 	if(mod)
+		if(mod.wearer)
+			mod.wearer.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
 		mod.boots = null
 		QDEL_NULL(mod)
+	overslot = null
