@@ -357,6 +357,7 @@
 	uniform = /obj/item/clothing/under/misc/overalls
 	mask = /obj/item/clothing/mask/bandana/blue
 	suit = /obj/item/clothing/suit/apron
+	suit_store = null
 	glasses = /obj/item/clothing/glasses/meson
 	belt = /obj/item/storage/belt/janitor/full
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -372,6 +373,7 @@
 
 	uniform = /obj/item/clothing/under/misc/bouncer
 	suit = /obj/item/clothing/suit/armor/vest
+	suit_store = null
 	belt = /obj/item/melee/classic_baton/telescopic
 	l_pocket = /obj/item/assembly/flash
 	r_pocket = /obj/item/storage/wallet
@@ -387,6 +389,7 @@
 	mask = /obj/item/clothing/mask/gas/atmos
 	head = /obj/item/clothing/head/hardhat/weldhat
 	suit = /obj/item/clothing/suit/hazardvest
+	suit_store = null
 	l_hand = /obj/item/areaeditor/blueprints
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/stack/sheet/metal/fifty=1,\
@@ -402,6 +405,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	head = /obj/item/clothing/head/chameleon
 	suit = /obj/item/clothing/suit/chameleon
+	suit_store = null
 	glasses = /obj/item/clothing/glasses/chameleon
 	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/shield/energy/bananium=1,\
@@ -413,6 +417,7 @@
 	uniform = /obj/item/clothing/under/misc/coordinator
 	head = /obj/item/clothing/head/coordinator
 	suit = /obj/item/clothing/suit/coordinator
+	suit_store = null
 	belt = /obj/item/storage/belt/sabre
 	l_hand = /obj/item/toy/balloon
 	l_pocket = /obj/item/kitchen/knife
