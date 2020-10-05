@@ -178,6 +178,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/check_missing_sprites,
 	#endif
 	/datum/admins/proc/create_or_modify_area,
+	/client/proc/rescan_turfs,
 #ifdef REFERENCE_TRACKING
 	/datum/admins/proc/view_refs,
 	/datum/admins/proc/view_del_failures,
@@ -237,6 +238,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/rescan_turfs,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,

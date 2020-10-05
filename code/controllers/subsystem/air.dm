@@ -7,15 +7,12 @@ SUBSYSTEM_DEF(air)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
-	var/cost_turfs = 0
-	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
 	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
-	var/cost_equalize = 0
 
 	var/list/hotspots = list()
 	var/list/networks = list()
@@ -48,9 +45,6 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "EQ:[round(cost_equalize,1)]|"
-	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
@@ -58,16 +52,12 @@ SUBSYSTEM_DEF(air)
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	var/active_turfs_len = get_amt_active_turfs()
-	msg += "AT:[active_turfs_len]|"
-	msg += "EG:[get_amt_excited_groups()]|"
 	msg += "HS:[hotspots.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
 	msg += "GA:[get_amt_gas_mixes()]|"
 	msg += "MG:[get_max_gas_mixes()]|"
-	msg += "AT/MS:[round((cost ? active_turfs_len/cost : 0),0.1)]"
 	return ..()
 
 /datum/controller/subsystem/air/Initialize(timeofday)
@@ -83,6 +73,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/extools_update_ssair()
 /datum/controller/subsystem/air/proc/extools_update_reactions()
+/datum/controller/subsystem/air/proc/scan_for_active_turfs()
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
@@ -125,42 +116,6 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
-		currentpart = monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_EQUALIZE)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_turf_equalize(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		currentpart = SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_active_turfs(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		currentpart = SSAIR_EXCITEDGROUPS
-
-	if(currentpart == SSAIR_EXCITEDGROUPS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_excited_groups(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
 		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_HIGHPRESSURE)
@@ -197,6 +152,10 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
+
+	if(get_amt_active_turfs() < 3000 && !TICK_CHECK)
+		scan_for_active_turfs()
+
 	currentpart = SSAIR_REBUILD_PIPENETS
 
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
@@ -272,8 +231,8 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_turf_equalize(resumed = FALSE)
-	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+/datum/controller/subsystem/air/proc/process_turf_equalize(resumed = FALSE, fire_count = 0)
+	return process_turf_equalize_extools(resumed, fire_count, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -290,8 +249,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = FALSE)
-	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+/datum/controller/subsystem/air/proc/process_active_turfs(resumed = FALSE, fire_count = 0)
+	return process_turf_equalize_extools(resumed, fire_count, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -339,6 +298,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/remove_from_active_extools()
 /datum/controller/subsystem/air/proc/get_active_turfs()
 /datum/controller/subsystem/air/proc/clear_active_turfs()
+/datum/controller/subsystem/air/proc/rescan_active_turfs()
 
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	remove_from_active_extools(T)
@@ -398,7 +358,7 @@ SUBSYSTEM_DEF(air)
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
 		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
-		var/list/turfs_to_check = get_amt_active_turfs()
+		var/list/turfs_to_check = get_active_turfs()
 		for(var/T in turfs_to_check)
 			GLOB.active_turfs_startlist += T
 

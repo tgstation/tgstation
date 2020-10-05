@@ -51,3 +51,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
+
+/client/proc/rescan_turfs()
+	set category = "Debug"
+	set name = "Rescan turfs"
+	set desc = "Schedules a turf rescan, checking every single turf for whether it should share."
+
+	if(!holder)
+		return
+	SSair_turfs.rescan_enabled = TRUE
+	message_admins("Admin [key_name_admin(usr)] has scheduled a turf rescan.")
