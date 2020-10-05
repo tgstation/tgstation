@@ -723,21 +723,16 @@
 
 /obj/item/clothing/suit/ghost_sheet
 	name = "ghost sheet"
-	desc = "The hands float by themselves, so it's extra spooky."
-	icon_state = "ghost_sheet0"
-	inhand_icon_state = "ghost_sheet0"
+	desc = "Become part of the ghost court."
+	icon_state = "ghost_sheet1"
+	inhand_icon_state = "ghost_sheet1"
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES
 	alternate_worn_layer = UNDER_HEAD_LAYER
-	var/alt = FALSE ///var to swap icon
-
-/obj/item/clothing/suit/ghost_sheet/attack_self(mob/user)
-	alt = !alt
-	icon_state = inhand_icon_state = "ghost_sheet[alt]"
-	update_icon_state()
 
 /obj/item/clothing/suit/ghost_sheet/spooky
 	name = "spooky ghost"
