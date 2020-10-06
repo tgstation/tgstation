@@ -80,9 +80,19 @@
 	return crunch + .
 
 /proc/sanitize_ooccolor(color)
+	if(!istext(color))
+		stack_trace("color ([color]) var is not text")
+		return GLOB.normal_ooc_colour
 	if(length(color) != length_char(color))
-		CRASH("Invalid characters in color '[color]'")
-	var/list/HSL = rgb2hsl(hex2num(copytext(color, 2, 4)), hex2num(copytext(color, 4, 6)), hex2num(copytext(color, 6, 8)))
-	HSL[3] = min(HSL[3],0.4)
-	var/list/RGB = hsl2rgb(arglist(HSL))
-	return "#[num2hex(RGB[1],2)][num2hex(RGB[2],2)][num2hex(RGB[3],2)]"
+		stack_trace("Unicode characters in color ([color])")
+		return GLOB.normal_ooc_colour
+	if(length(color) != 7)
+		stack_trace("Wrong number of characters in color ([color])")
+		return GLOB.normal_ooc_colour
+	if(copytext(color, 1, 2) != "#")
+		stack_trace("Wrong color format in color ([color])")
+		return GLOB.normal_ooc_colour
+	if(isnull(hex2num(copytext(color, 2, 8))))
+		stack_trace("Invalid hex number in color ([color])")
+		return GLOB.normal_ooc_colour
+	return color
