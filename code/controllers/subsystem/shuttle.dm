@@ -899,8 +899,7 @@ SUBSYSTEM_DEF(shuttle)
 				shuttle_loading = FALSE
 
 		if("preview")
-			//if(preview_shuttle && (loading_template != preview_template))
-			if(S && !shuttle_loading)
+			if(S && !shuttle_loading && (!preview_shuttle || (S != preview_template)))
 				. = TRUE
 				shuttle_loading = TRUE
 				unload_preview()
