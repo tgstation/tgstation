@@ -1,13 +1,13 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 /*priority so far, check this list to see what are the numbers used. Please use a different priority for each reaction(higher number are done first)
 miaster = -10 (this should always be under all other fires)
+miasma_decomp = -6
 freonfire = -5
 plasmafire = -4
 h2fire = -3
 tritfire = -2
 halon_o2removal = -1
 nitrous_decomp = 0
-miasma_decomp = 0
 water_vapor = 1
 pluox_formation = 2
 nitrylformation = 3
@@ -1442,7 +1442,7 @@ nobiliumsuppression = INFINITY
 	return REACTING
 
 /datum/gas_reaction/miasma_decomp
-	priority = 0
+	priority = -6
 	name = "miasma decomposition"
 	id = "miasma_decomp"
 
@@ -1460,14 +1460,13 @@ nobiliumsuppression = INFINITY
 	var/temperature = air.temperature
 	var/burned_fuel = 0
 	burned_fuel = min((temperature-300)/10, cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/miasma][MOLES])
-	if(cached_gases[/datum/gas/miasma][MOLES] - burned_fuel < 0)
+	if(cached_gases[/datum/gas/miasma][MOLES] - burned_fuel < 0|| cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.3 < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/miasma][MOLES] -= burned_fuel
 
 	if(burned_fuel)
 		energy_released -= burned_fuel //endothermic babey
 		ASSERT_GAS(/datum/gas/bz, air)
-		ASSERT_GAS(/datum/gas/oxygen, air)
 		ASSERT_GAS(/datum/gas/carbon_dioxide, air)
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel * 0.3
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += burned_fuel * 0.7
