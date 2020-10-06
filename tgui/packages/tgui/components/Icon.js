@@ -1,6 +1,8 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
+ * @author Original Aleksej Komarov
+ * @author Changes ThePotato97
  * @license MIT
  */
 
@@ -10,7 +12,15 @@ import { Box } from './Box';
 const FA_OUTLINE_REGEX = /-o$/;
 
 export const Icon = props => {
-  const { name, size, spin, className, style = {}, rotation, ...rest } = props;
+  const {
+    name,
+    size,
+    spin,
+    className,
+    style = {},
+    rotation,
+    inverse,
+    ...rest } = props;
   if (size) {
     style['font-size'] = (size * 100) + '%';
   }
@@ -23,6 +33,7 @@ export const Icon = props => {
     <Box
       as="i"
       className={classes([
+        'Icon',
         className,
         faRegular ? 'far' : 'fas',
         'fa-' + faName,
@@ -36,46 +47,25 @@ export const Icon = props => {
 Icon.defaultHooks = pureComponentHooks;
 
 export const IconStack = props => {
-  const { nameTop, nameBottom, size, spin, className, style = {}, rotation, sizeBottom='1x', sizeTop='1x', ...rest } = props;
-  if (size) {
-    style['font-size'] = (size * 100) + '%';
-  }
-  if (typeof rotation === 'number') {
-    style['transform'] = `rotate(${rotation}deg)`;
-  }
-  const faRegularBottom = FA_OUTLINE_REGEX.test(nameTop);
-  const faRegularTop = FA_OUTLINE_REGEX.test(nameBottom);
-  const faNameBottom = nameTop.replace(FA_OUTLINE_REGEX, '');
-  const faNameTop = nameBottom.replace(FA_OUTLINE_REGEX, '');
+  const {
+    className,
+    style = {},
+    children,
+    ...rest } = props;
   return (
     <Box
       as="span"
-      class="fa-stack">
-      <Box
-        as="i"
-        className={classes([
-          className,
-          faRegularBottom ? 'far' : 'fas',
-          'fa-' + faNameBottom,
-          spin && 'fa-spin',
-          'fa-stack-' + sizeBottom,
-        ])}
-        style={style}
-        {...rest} />
-      <Box
-        as="i"
-        className={classes([
-          className,
-          faRegularTop ? 'far' : 'fas',
-          'fa-' + faNameTop,
-          spin && 'fa-spin',
-          'fa-stack-' + sizeTop,
-        ])}
-        style={style}
-        {...rest} />
+      class={classes([
+        'IconStack',
+        className,
+      ])}
+      style={style}
+      {...rest}>
+      {children}
     </Box>
   );
 };
 
 
 Icon.Stack = IconStack;
+
