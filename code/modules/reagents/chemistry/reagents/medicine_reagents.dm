@@ -1026,22 +1026,22 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/haloperidol
-	name = "Haloperidol"
+/datum/reagent/medicine/psyloperidol
+	name = "Psyloperidol"
 	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
 	reagent_state = LIQUID
 	color = "#27870a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/haloperidol/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/psyloperidol/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_TENSED,type)
 	return ..()
 
-/datum/reagent/medicine/haloperidol/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/psyloperidol/on_mob_metabolize(mob/living/L)
 	. = ..()
 	ADD_TRAIT(L,TRAIT_TENSED,type)
 
-/datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/psyloperidol/on_mob_life(mob/living/carbon/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,5)
 	M.drowsyness += 2
@@ -1417,25 +1417,25 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	clot_coeff_per_wound = 0.6
 
-/datum/reagent/medicine/alprazolam
-	name = "Alprazolam"
+/datum/reagent/medicine/psylprazolam
+	name = "Psylprazolam"
 	description = "A very old, but useful medicine. It was used ages ago to relax mental patients and help ease psychiatric problems. It is a very strong benzodiazepine, careful with it's dosing!"
 	color = "#98d1e2"
 	reagent_state = LIQUID
 	overdose_threshold = 10
 	metabolization_rate = 0.5
 
-/datum/reagent/medicine/alprazolam/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/psylprazolam/on_mob_metabolize(mob/living/L)
 	. = ..()
 	ADD_TRAIT(L,TRAIT_RELAXED,type)
 	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
-/datum/reagent/medicine/alprazolam/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/psylprazolam/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_RELAXED,type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	return ..()
 
-/datum/reagent/medicine/alprazolam/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/psylprazolam/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(current_cycle >= 3)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_heavy, name)
@@ -1448,15 +1448,15 @@
 			M.Sleeping(10, 0)
 			. = 1
 
-/datum/reagent/medicine/alprazolam/overdose_process(mob/living/M)
+/datum/reagent/medicine/psylprazolam/overdose_process(mob/living/M)
 	. = ..()
 	if(prob(66))
 		M.drop_all_held_items()
 		M.Dizzy(2)
 		M.Jitter(2)
 
-/datum/reagent/medicine/lithium_carbonate
-	name = "Lithium Carbonate"
+/datum/reagent/medicine/psylith_carbonate
+	name = "Psylith Carbonate"
 	description = "Powerful, yet so dangerous. This chemical was used to treat the most severe of mental disorders, but due to it's side effects it was removed from the shelves. Well NT has a <i>really</i> big backup of that chemical, so they sent you some."
 	color = "#98d1e2"
 	reagent_state = LIQUID
@@ -1464,13 +1464,14 @@
 	metabolization_rate = 2
 	var/digesting = FALSE
 
-/datum/reagent/medicine/lithium_carbonate/on_transfer(atom/A, methods, trans_volume)
+/datum/reagent/medicine/psylith_carbonate/on_transfer(atom/A, methods, trans_volume)
 	. = ..()
 	if(!methods & INGEST)
+		digesting = FALSE
 		return
 	digesting = TRUE
 
-/datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/psylith_carbonate/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!digesting)
 		return
@@ -1480,11 +1481,11 @@
 	M.adjustStaminaLoss(5)
 	M.adjustToxLoss((volume/overdose_threshold)*current_cycle)
 
-/datum/reagent/medicine/lithium_carbonate/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/psylith_carbonate/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L,TRAIT_CONTROLLED,type)
 	return ..()
 
-/datum/reagent/medicine/lithium_carbonate/overdose_process(mob/living/M)
+/datum/reagent/medicine/psylith_carbonate/overdose_process(mob/living/M)
 	. = ..()
 	if(!iscarbon(M))
 		return

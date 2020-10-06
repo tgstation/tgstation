@@ -773,9 +773,9 @@
 	var/datum/disorder/disorder = new _disorder()
 	if(is_type_in_list(disorder,disorder_list))
 		return FALSE
-	disorder.on_add(current)
 	disorder.permanent = permanent
 	disorder_list +=  disorder
+	disorder.on_add(current)
 	return TRUE
 
 /datum/mind/proc/remove_disorder(datum/disorder/_disorder,force = FALSE)
@@ -785,8 +785,8 @@
 		if(disorder.type == _disorder)
 			if(disorder.permanent && !force)
 				return FALSE
-			disorder.on_remove(current)
 			disorder_list -= disorder
+			disorder.on_remove(current)
 			qdel(disorder)
 			return TRUE
 	return FALSE

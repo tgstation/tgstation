@@ -230,16 +230,16 @@
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/alprpsych
-	name = "alprazolam pill"
+	name = "psylprazolam pill"
 	desc = "Heavy benzodiazepine used to help mental patients, contact your psychologist if any signs of overdose appear."
-	list_reagents = list(/datum/reagent/medicine/alprazolam = 5)
+	list_reagents = list(/datum/reagent/medicine/psylprazolam = 5)
 	icon_state = "pill13"
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/lithpsych
-	name = "lithium carbonate pill"
+	name = "psylith carbonate pill"
 	desc = "Powerful psychosuppresive agent that was declassified a long time ago from any use, but it was reclassified recently as a brand new medicine."
-	list_reagents = list(/datum/reagent/medicine/lithium_carbonate = 5)
+	list_reagents = list(/datum/reagent/medicine/psylith_carbonate = 5)
 	icon_state = "pill11"
 	rename_with_volume = TRUE
 

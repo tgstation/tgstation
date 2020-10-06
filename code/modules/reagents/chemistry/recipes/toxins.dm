@@ -81,7 +81,7 @@
 
 /datum/chemical_reaction/anacea
 	results = list(/datum/reagent/toxin/anacea = 3)
-	required_reagents = list(/datum/reagent/medicine/haloperidol = 1, /datum/reagent/impedrezene = 1, /datum/reagent/uranium/radium = 1)
+	required_reagents = list(/datum/reagent/medicine/psyloperidol = 1, /datum/reagent/impedrezene = 1, /datum/reagent/uranium/radium = 1)
 
 /datum/chemical_reaction/mimesbane
 	results = list(/datum/reagent/toxin/mimesbane = 3)

@@ -531,15 +531,15 @@
 		new /obj/item/reagent_containers/pill/paxpsych(src)
 
 /obj/item/storage/pill_bottle/alprpsych
-	name = "alprazolam pills"
-	desc = "!FOR THERAPEUTIC USE ONLY! Contains heavy benzodiazepiene commonly known as 'Xanax', medically known as Alprazolam."
+	name = "psylprazolam pills"
+	desc = "!FOR THERAPEUTIC USE ONLY! Contains heavy benzodiazepiene commonly known as 'Xanax', medically known as Psylprazolam."
 
 /obj/item/storage/pill_bottle/alprpsych/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/alprpsych(src)
 
 /obj/item/storage/pill_bottle/lithpsych
-	name = "lithium carbonate pills"
+	name = "psylith carbonate pills"
 	desc = "Old and dusty container, it has clearly worn out warning symbols on all sides, over the old description there is a NT logo followed by 'AUTHORIZED FOR MEDICAL USE ONLY'"
 
 /obj/item/storage/pill_bottle/lithpsych/PopulateContents()
