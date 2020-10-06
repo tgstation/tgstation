@@ -9,12 +9,8 @@
 // A: Unfortunately, this does not work on subtypes of plasteel and instead we must change the icon_state of these turfs instead, as the icon_regular_floor var that "saves" what type of floor a plasteel subtype turf was so once repaired...
 // ... it'll go back to the floor it was instead of grey (medical floors turn white even after crowbaring the tile and putting it back). This stops changing turf_type from working.
 
-GLOBAL_LIST_EMPTY(titanium_tile_reskinning_radial_choices)
-
 /obj/item/stack/tile/mineral/titanium/attack_self(mob/user)
-	var/list/choices = GLOB.titanium_tile_reskinning_radial_choices
-	if(!length(choices))
-		choices = GLOB.titanium_tile_reskinning_radial_choices = list(
+	var/static/list/choices = list(
 			"Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle"),
 			"Yellow Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_yellow"),
 			"Blue Titanium" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_blue"),
