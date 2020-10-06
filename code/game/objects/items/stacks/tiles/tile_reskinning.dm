@@ -45,22 +45,22 @@
 			icon_state = "tile_shuttle_purple"
 			desc = "Sleek purple titanium tiles."
 		if("Titanium Tile")
-			turf_type = /turf/open/floor/mineral/titanium/old
+			turf_type = /turf/open/floor/mineral/titanium/tiled
 			icon_state = "tile_shuttle_old"
 			desc = "Titanium floor tiles."
 		if("Yellow Titanium Tile")
-			turf_type = /turf/open/floor/mineral/titanium/old/yellow
+			turf_type = /turf/open/floor/mineral/titanium/tiled/yellow
 			icon_state = "tile_shuttle_old_yellow"
 			desc = "Yellow titanium floor tiles."
 		if("Blue Titanium Tile")
-			turf_type = /turf/open/floor/mineral/titanium/old/blue
+			turf_type = /turf/open/floor/mineral/titanium/tiled/blue
 			icon_state = "tile_shuttle_old_blue"
 			desc = "Blue titanium floor tiles."
 		if("White Titanium Tile")
-			turf_type = /turf/open/floor/mineral/titanium/old/white
+			turf_type = /turf/open/floor/mineral/titanium/tiled/white
 			icon_state = "tile_shuttle_old_white"
 			desc = "White titanium floor tiles."
 		if("Purple Titanium Tile")
-			turf_type = /turf/open/floor/mineral/titanium/old/purple
+			turf_type = /turf/open/floor/mineral/titanium/tiled/purple
 			icon_state = "tile_shuttle_old_purple"
 			desc = "Purple titanium floor tiles."
