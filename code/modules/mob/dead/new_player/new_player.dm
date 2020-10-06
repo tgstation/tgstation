@@ -404,6 +404,13 @@
 					command_bold = " command"
 				if(job_datum in SSjob.prioritized_jobs)
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+				if(job_datum.title == "Vip")
+					if(!check_donators(src.ckey))
+						dept_dat += "<span class='nopositions'>Reserved.</span>"
+						continue
+					else
+						dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+						continue
 				else
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
 		if(!dept_dat.len)

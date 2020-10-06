@@ -42,6 +42,10 @@
 		var/our_color = pick(wirecutter_colors)
 		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
 		update_icon()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("A wirecutter was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
 
 /obj/item/wirecutters/update_overlays()
 	. = ..()
