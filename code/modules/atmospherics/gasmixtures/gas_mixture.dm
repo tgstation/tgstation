@@ -428,7 +428,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	///Performs various reactions such as combustion or fusion (LOL)
 	///Returns: 1 if any reaction took place; 0 otherwise
-/datum/gas_mixture/proc/react(datum/holder)
+/datum/gas_mixture/proc/react(datum/holder, have_whitelist = FALSE, reaction_whitelist = list())
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
@@ -446,6 +446,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	reaction_loop:
 		for(var/r in reactions)
 			var/datum/gas_reaction/reaction = r
+
+			if(!is_type_in_typecache(reaction,reaction_whitelist) && have_whitelist == TRUE)
+				message_admins("continue")
+				continue
 
 			var/list/min_reqs = reaction.min_requirements
 			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
