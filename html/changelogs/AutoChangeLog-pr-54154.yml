@@ -1,0 +1,4 @@
+author: "Owai-Seek"
+delete-after: True
+changes: 
+  - tweak: "Vendor refills in cargo are now in their own tab."
