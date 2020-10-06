@@ -11,16 +11,16 @@
 	data["open"] = open
 	data["active"] = active
 	data["locked"] = locked
-	data["selected_module"] = selected_module ? selected_module.name : 0
+	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "No Job"
-	data["ai"] = AI ? AI.name : 0
-	data["cell"] = cell ? cell.name : 0
+	data["ai"] = AI?.name
+	data["cell"] = cell?.name
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
-	data["helmet"] = helmet ? helmet.name : 0
-	data["chestplate"] = chestplate ? chestplate.name : 0
-	data["gauntlets"] = gauntlets ? gauntlets.name : 0
-	data["boots"] = boots ? boots.name : 0
+	data["helmet"] = helmet?.name
+	data["chestplate"] = chestplate?.name
+	data["gauntlets"] = gauntlets?.name
+	data["boots"] = boots?.name
 	data["modules"] = list()
 	for(var/obj/item/mod/module/thingy in modules)
 		var/list/module_data = list(

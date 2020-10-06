@@ -17,12 +17,15 @@ export const MODsuit = (props, context) => {
       <Window.Content scrollable>
         <Section title="Parameters">
           <LabeledList>
-            <LabeledList.Item label="Status">
-              {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
-              <Button
+            <LabeledList.Item
+              label="Status"
+              buttons={
+                <Button
                 icon="power-off"
                 content={data.active ? 'Deactivate' : 'Activate'}
                 onClick={() => act('activate')} />
+              } >
+            {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
             </LabeledList.Item>
             <LabeledList.Item label="Lock">
               {data.lock ? 'Locked' : 'Unlocked'}
@@ -81,7 +84,7 @@ export const MODsuit = (props, context) => {
         <Section title="Modules">
           {inventory.map((module => {
             return (
-              <Table>
+              <Table key={module.name}>
                 <Table.Row>
                   <Table.Cell>
                     <b>{module.name}</b>

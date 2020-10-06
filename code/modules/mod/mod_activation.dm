@@ -123,6 +123,7 @@
 			helmet.clothing_flags |= helmet.visor_flags
 			helmet.alternate_worn_layer = null
 		wearer.update_inv_head()
+		wearer.update_inv_wear_mask()
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after_mob(wearer,mobs,2 SECONDS,TRUE))
