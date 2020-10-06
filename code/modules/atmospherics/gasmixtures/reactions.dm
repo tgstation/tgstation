@@ -7,6 +7,7 @@ h2fire = -3
 tritfire = -2
 halon_o2removal = -1
 nitrous_decomp = 0
+miasma_decomp = 0
 water_vapor = 1
 pluox_formation = 2
 nitrylformation = 3
@@ -1439,3 +1440,41 @@ nobiliumsuppression = INFINITY
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
 	return REACTING
+
+/datum/gas_reaction/miasma_decomp
+	priority = 0
+	name = "miasma decomposition"
+	id = "miasma_decomp"
+
+/datum/gas_reaction/miasma_decomp/init_reqs()
+	min_requirements = list(
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
+		/datum/gas/miasma = MINIMUM_MOLE_COUNT,
+		"TEMP" = 350
+	)
+
+/datum/gas_reaction/miasma_decomp/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/temperature = air.temperature
+	var/burned_fuel = 0
+	burned_fuel = min((temperature-300)/10, cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/miasma][MOLES])
+	if(cached_gases[/datum/gas/miasma][MOLES] - burned_fuel < 0)
+		return NO_REACTION
+	cached_gases[/datum/gas/miasma][MOLES] -= burned_fuel
+
+	if(burned_fuel)
+		energy_released -= burned_fuel //endothermic babey
+		ASSERT_GAS(/datum/gas/bz, air)
+		ASSERT_GAS(/datum/gas/oxygen, air)
+		ASSERT_GAS(/datum/gas/carbon_dioxide, air)
+		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel * 0.3
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += burned_fuel * 0.7
+		cached_gases[/datum/gas/bz][MOLES] += burned_fuel * 0.7
+
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
+		return REACTING
+	return NO_REACTION
