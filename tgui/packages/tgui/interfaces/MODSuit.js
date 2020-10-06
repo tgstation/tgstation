@@ -35,7 +35,7 @@ export const MODsuit = (props, context) => {
                   content={data.locked ? 'Unlock' : 'Lock'}
                   onClick={() => act('lock')} />
               } >
-              {data.lock ? 'Locked' : 'Unlocked'}
+              {data.locked ? 'Locked' : 'Unlocked'}
             </LabeledList.Item>
             <LabeledList.Item label="Cover">
               {data.open ? 'Open' : 'Closed'}
