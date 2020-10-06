@@ -226,6 +226,34 @@
 			to_chat(usr, "<span class='notice'>Backup routing data restored.</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			obj_flags &= ~EMAGGED
+		if ("sendToOtherSector")
+			if (!authenticated_as_non_ai_captain(usr))
+				return
+			if (!can_send_messages_to_other_sectors(usr))
+				return
+			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
+				return
+
+			var/message = trim(html_encode(params["message"]), MAX_MESSAGE_LEN)
+			if (!message)
+				return
+
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+
+			var/destination = params["destination"]
+			var/list/payload = list()
+
+			var/network_name = CONFIG_GET(string/cross_comms_network)
+			if (network_name)
+				payload["network"] = network_name
+
+			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
+			minor_announce(message, title = "Outgoing message to allied station")
+			usr.log_talk(message, LOG_SAY, tag = "message to the other server")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
+			deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+
+			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
 			if (!authenticated(usr))
 				return
@@ -325,12 +353,21 @@
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user)
 
 				if (authenticated_as_non_ai_captain(user))
-					var/list/cross_servers = CONFIG_GET(keyed_list/cross_server)
-					if (cross_servers.len)
-						data["canSendToSectors"] = TRUE
-
 					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
+
+				if (can_send_messages_to_other_sectors(user))
+					data["canSendToSectors"] = TRUE
+
+					var/list/sectors = list()
+					var/our_id = CONFIG_GET(string/cross_comms_name)
+
+					for (var/server in CONFIG_GET(keyed_list/cross_server))
+						if (server == our_id)
+							continue
+						sectors += server
+
+					data["sectors"] = sectors
 
 				if (authenticated_as_ai_or_captain(user))
 					data["canToggleEmergencyAccess"] = TRUE
@@ -417,6 +454,12 @@
 	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return "Due to unforseen circumstances, shuttle purchasing is no longer available."
 	return TRUE
+
+/obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
+	if (!authenticated_as_non_ai_captain(user))
+		return
+
+	return length(CONFIG_GET(keyed_list/cross_server)) > 0
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = isAI(user)

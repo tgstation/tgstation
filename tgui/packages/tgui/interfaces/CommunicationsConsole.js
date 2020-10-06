@@ -270,11 +270,13 @@ const PageMain = (props, context) => {
     canMakeAnnouncement,
     canMessageAssociates,
     canRequestNuke,
+    canSendToSectors,
     canSetAlertLevel,
     canToggleEmergencyAccess,
     emagged,
     emergencyAccess,
     importantActionReady,
+    sectors,
     shuttleCalled,
     shuttleCalledPreviously,
     shuttleCanEvacOrFailReason,
@@ -286,7 +288,8 @@ const PageMain = (props, context) => {
   const generalFunctions = [];
 
   const [callingShuttle, setCallingShuttle] = useLocalState(context, "calling_shuttle", false);
-  const [messagingAssociates, setMessagingAssociates] = useLocalState(context, "messaging_assocaites", false);
+  const [messagingAssociates, setMessagingAssociates] = useLocalState(context, "messaging_associates", false);
+  const [messagingSector, setMessagingSector] = useLocalState(context, "messaing_sector", null);
   const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(context, "requesting_nuke_codes", false);
 
   const [
@@ -375,7 +378,7 @@ const PageMain = (props, context) => {
       children.push(<MessageModal
         label={`Message to transmit to ${emagged ? "[ABNORMAL ROUTING COORDINATES]" : "CentCom"} via quantum entanglement`}
         notice="Please be aware that this process is very expensive, and abuse will lead to...termination. Transmission does not guarantee a response."
-        icon="comment-o"
+        icon="bullhorn"
         buttonText="Send"
         onBack={() => setMessagingAssociates(false)}
         onSubmit={message => {
@@ -533,6 +536,56 @@ const PageMain = (props, context) => {
     </Section>
   );
 
+  if (canSendToSectors && sectors.length > 0) {
+    children.push(
+      <Section title="Allied Sectors">
+        <Table>
+          {
+            sectors.map(sectorName => (
+              <Table.Row key={sectorName}>
+                <Table.Cell>
+                  <Button
+                    content={
+                      `Send a message to station in ${sectorName} sector`
+                    }
+                    disabled={!importantActionReady}
+                    onClick={() => setMessagingSector(sectorName)}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            ))
+          }
+
+          {sectors.length > 2 && (
+            <Button
+              content="Send a message to all allied stations"
+              disabled={!importantActionReady}
+              onClick={() => setMessagingSector("all")}
+            />
+          )}
+        </Table>
+      </Section>
+    );
+
+    if (messagingSector) {
+      children.push(<MessageModal
+        label="Message to send to allied station"
+        notice="Please be aware that this process is very expensive, and abuse will lead to...termination."
+        icon="bullhorn"
+        buttonText="Send"
+        onBack={() => setMessagingSector(null)}
+        onSubmit={message => {
+          act("sendToOtherSector", {
+            destination: messagingSector,
+            message,
+          });
+
+          setMessagingSector(null);
+        }}
+      />);
+    }
+  }
+
   return children;
 };
 
@@ -634,7 +687,8 @@ export const CommunicationsConsole = (props, context) => {
 
   return (
     <Window
-      height={500}
+      width={400}
+      height={650}
       theme={emagged ? "syndicate" : undefined}
       resizable>
       <Window.Content scrollable>
