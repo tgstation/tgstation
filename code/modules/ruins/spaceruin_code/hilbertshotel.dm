@@ -74,7 +74,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		return
 	sendToNewRoom(chosenRoomNumber, user)
 
-
 /obj/item/hilbertshotel/proc/tryActiveRoom(roomNumber, mob/user)
 	if(activeRooms["[roomNumber]"])
 		var/datum/turf_reservation/roomReservation = activeRooms["[roomNumber]"]
@@ -338,6 +337,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		qdel(H)
 		return
 
+	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
+	// Let's gib the last person to use it, which will be the first person after the
 	if(istype(H.last_user))
 		to_chat(H.last_user, "<span class='warning'>\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart.</span>")
 		H.last_user.gib()
