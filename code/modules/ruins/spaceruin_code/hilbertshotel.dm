@@ -15,6 +15,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
+	/// The last mob to attempt to promptAndCheckIn()
+	var/mob/last_user = null
 
 /obj/item/hilbertshotel/Initialize()
 	. = ..()
@@ -46,6 +48,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
 	var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
+	last_user = user
 	if(!chosenRoomNumber)
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
@@ -334,6 +337,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(prob(0.135685)) //Because screw you
 		qdel(H)
 		return
+
+	if(istype(H.last_user))
+		to_chat(H.last_user, "<span class='warning'>\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart.</span>")
+		H.last_user.gib()
+
 	var/turf/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
