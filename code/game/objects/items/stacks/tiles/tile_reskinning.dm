@@ -22,7 +22,7 @@
 			"White Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_white"),
 			"Purple Titanium Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_shuttle_old_purple"),
 		)
-	var/choice = show_radial_menu(user, src, choices, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, choices, radius = 48, require_near = TRUE)
 	switch(choice)
 		if("Titanium")
 			turf_type = /turf/open/floor/mineral/titanium
