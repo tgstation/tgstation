@@ -12,7 +12,7 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
-	///Trauma level, this thing signifies how much bad shit the character has experienced during the round, affects the severity of psychological disorders, currently you can only increase it throguh being shocked and is a multiplier towards cure AND roll chance.
+	///Trauma level, this thing signifies how fucked up your character is mentally, getting shocked has a chance to make some of it disappear, but it will generally only go up. Being revived, getting heavily shocked and recieving critical wounds increase it.
 	var/trauma = 0
 
 /datum/component/mood/Initialize()
@@ -246,6 +246,7 @@
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 1
+			//negative trauma makes it easier to cure by chance.
 			if(prob(max(-trauma,1)*PSYCHOLOGICAL_CHANCE_MULTIPLIER))
 				roll_cure_disorder()
 
