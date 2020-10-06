@@ -168,7 +168,7 @@
 				message_syndicate(message, usr)
 				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
 			else
-				message_centcomm(message, usr)
+				message_centcom(message, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 
 			var/associates = emagged ? "the Syndicate": "CentCom"

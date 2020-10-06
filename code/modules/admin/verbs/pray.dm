@@ -54,7 +54,7 @@
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /// Used by communications consoles to message CentCom
-/proc/message_centcomm(text, mob/sender)
+/proc/message_centcom(text, mob/sender)
 	var/msg = copytext_char(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(sender)] [ADMIN_CENTCOM_REPLY(sender)]:</b> [msg]</span>"
 	to_chat(GLOB.admins, msg, confidential = TRUE)
