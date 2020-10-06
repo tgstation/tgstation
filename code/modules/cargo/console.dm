@@ -29,6 +29,8 @@
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
+
+/obj/machinery/computer/cargo/on_construction()
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	if (board.obj_flags & EMAGGED)
