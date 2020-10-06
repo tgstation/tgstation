@@ -448,7 +448,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			if(!is_type_in_typecache(reaction,reaction_whitelist) && have_whitelist == TRUE)
-				message_admins("continue")
 				continue
 
 			var/list/min_reqs = reaction.min_requirements
