@@ -7,6 +7,8 @@
 	anchored = FALSE
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	material_modifier = 0.5
+	material_flags = MATERIAL_AFFECT_STATISTICS
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
@@ -403,6 +405,7 @@
 	icon_state = "block"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
+	material_modifier = 0.5 //50% effectiveness of materials
 
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/current_target
