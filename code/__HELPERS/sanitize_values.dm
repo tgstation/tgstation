@@ -79,20 +79,7 @@
 
 	return crunch + .
 
+/// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
 /proc/sanitize_ooccolor(color)
-	if(!istext(color))
-		stack_trace("color ([color]) var is not text")
-		return GLOB.normal_ooc_colour
-	if(length(color) != length_char(color))
-		stack_trace("Unicode characters in color ([color])")
-		return GLOB.normal_ooc_colour
-	if(length(color) != 7)
-		stack_trace("Wrong number of characters in color ([color])")
-		return GLOB.normal_ooc_colour
-	if(copytext(color, 1, 2) != "#")
-		stack_trace("Wrong color format in color ([color])")
-		return GLOB.normal_ooc_colour
-	if(isnull(hex2num(copytext(color, 2, 8))))
-		stack_trace("Invalid hex number in color ([color])")
-		return GLOB.normal_ooc_colour
-	return color
+	var/static/regex/color_regex = regex(@"^#[0-9a-fA-F]{6}$")
+	return findtext(color, color_regex) ? color : GLOB.normal_ooc_colour
