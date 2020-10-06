@@ -364,6 +364,39 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/diy_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with three letters standing for Do It Yourself. Well, go on!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "DIY"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/spaghetti_sign
+	name = "crude sign"
+	desc = "A crudely-made sign with three letters standing for Do It Yourself. Well, go on!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "foodghetti"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/dough_sign
+	name = "extremely crude sign"
+	desc = "A crudely-made sign with three symbols of the letter M drawn onto it an- Is that a landmine underneath it?"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "motherfucking_fried_dough"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/headstone
 	name = "headstone"
 	desc = "R.I.P."
@@ -490,6 +523,29 @@
 	desc = "You've been spooked by, you've been scared by, a smooth skeleton!"
 	icon = 'icons/misc/tourny_items.dmi'
 	icon_state = "moonspook"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/spookedaltar // i am tired of it fucking breaking.
+	name = "sacrifical altar"
+	desc = "Hm, I don't think we should actually try and sacrifice anyone on this. Unless..."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "altar"
+	layer = 2.8
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/spookedclue
+	name = "Blue's Clue"
+	desc = "One of the many Blue's Clues. It says, 'WILD RIDE.' No meaning can be gained from this."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "wildride1"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
