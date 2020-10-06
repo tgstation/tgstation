@@ -77,7 +77,7 @@
 			) // see, my quartermaster taught me a few things too
 		if((P.hidden) || (P.special)) // like, how not to rip the manifest
 			continue// by using someone else's crate
-		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
+		if(P.contraband && !contraband) // will you show me?
 			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -198,7 +198,10 @@
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						D.adjust_money(-SO.pack.cost)
-						new /obj/effect/pod_landingzone(LZ, podType, SO)
+						if(pack.special_pod)
+							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+						else
+							new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
@@ -217,7 +220,10 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/pod_landingzone(LZ, podType, SO)
+							if(pack.special_pod)
+								new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
+							else
+								new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK
