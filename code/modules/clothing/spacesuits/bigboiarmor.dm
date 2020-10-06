@@ -44,9 +44,10 @@
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
-/obj/item/clothing/suit/space/hardsuit/spellcostume/equipped(user,slot)
+/obj/item/clothing/suit/space/hardsuit/spellcostume/equipped(mob/user,slot)
 	if(slot == ITEM_SLOT_OCLOTHING)
 		RegisterSignal(user,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,.proc/get_offsets)
+		RegisterSignal(user,COMSIG_HUMAN_LAYER_OFFSETS,.proc/get_layer_offsets)
 		user.regenerate_icons()
 	. = ..()
 
@@ -54,8 +55,25 @@
 	offsets[OFFSET_BELT] = list(0,3) // SEE IF IT LOOKS GOOD LATER
 	offsets[OFFSET_BACK] = list(0,6)
 	offsets[OFFSET_EARS] = list(0,6)
+	offsets[OFFSET_GLASSES] = list(0,6)
+	offsets[OFFSET_GLOVES] = list(0,6)
+	offsets[OFFSET_FACEMASK] = list(0,6)
+	offsets[OFFSET_S_STORE] = list(0,6)
+
+/obj/item/clothing/suit/space/hardsuit/spellcostume/proc/get_layer_offsets(datum/source,list/output)
+	output.len = TOTAL_LAYERS 
+	output[MUTATIONS_LAYER] = list(0,6)
+	output[BODY_BEHIND_LAYER] = list(0,6)
+	output[BODYPARTS_LAYER] = list(0,6)
+	output[BODY_ADJ_LAYER] = list(0,6)
+	output[BODY_LAYER] = list(0,6)
+	output[FRONT_MUTATIONS_LAYER] = list(0,6)
+	output[DAMAGE_LAYER] = list(0,6)
+	output[BODY_FRONT_LAYER] = list(0,6)
+	output[HAIR_LAYER ] = list(0,6)
 
 /obj/item/clothing/suit/space/hardsuit/spellcostume/dropped(mob/user)
 	UnregisterSignal(user,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS)
+	UnregisterSignal(user,COMSIG_HUMAN_LAYER_OFFSETS)
 	user.regenerate_icons()
 	. = ..()
