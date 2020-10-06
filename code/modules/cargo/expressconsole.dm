@@ -61,9 +61,11 @@
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
+	contraband = TRUE
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
+	board.contraband = TRUE
 	packin_up()
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
