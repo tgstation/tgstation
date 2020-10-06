@@ -2365,6 +2365,7 @@
 	cost = 300 //Empty pod, so no crate refund
 	contains = list()
 	DropPodOnly = TRUE
+	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
 
 /datum/supply_pack/misc/religious_supplies

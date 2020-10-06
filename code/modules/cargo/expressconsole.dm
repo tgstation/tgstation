@@ -117,7 +117,7 @@
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
-		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
+		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON."
 	data["message"] = message
 	if(!meme_pack_data)
 		packin_up()
@@ -175,6 +175,9 @@
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			var/points_to_check
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			var/cooldown_time = 5 SECONDS
+			if (!pack.crate_type) //We reload empty supplypods faster!
+				cooldown_time = 2 SECONDS
 			if(D)
 				points_to_check = D.account_balance
 			if(!(obj_flags & EMAGGED))
@@ -196,7 +199,7 @@
 						if(empty_turfs?.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, cooldown_time)
 						D.adjust_money(-SO.pack.cost)
 						if(pack.special_pod)
 							new /obj/effect/pod_landingzone(LZ, pack.special_pod, SO)
@@ -213,7 +216,7 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs?.len)
-						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
+						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, cooldown_time * 2)
 						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
 
 						SO.generateRequisition(get_turf(src))
