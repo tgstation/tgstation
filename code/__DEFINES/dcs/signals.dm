@@ -421,7 +421,7 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 
-///When a mob hugs someone, this is called
+///When a carbon mob hugs someone, this is called on the carbon mob.
 #define COMSIG_CARBON_HUG "carbon_hug"
 
 // /mob/living/carbon physiology signals
