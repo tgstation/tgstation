@@ -323,6 +323,10 @@
 	attack_verb_continuous = list("skubs")
 	attack_verb_simple = list("skub")
 
+/obj/item/skub/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
+
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
 
