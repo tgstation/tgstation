@@ -128,7 +128,6 @@
 	. = ..()
 	REMOVE_TRAIT(human_owner,TRAIT_TENSED_ARMS,type)
 
-//Ported from brain traumas
 /datum/disorder/narcolepsy
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."
@@ -152,7 +151,6 @@
 		to_chat(owner, "<span class='warning'>You feel tired...</span>")
 		humie.drowsyness += 10
 
-//ported from brain traumas
 /datum/disorder/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
