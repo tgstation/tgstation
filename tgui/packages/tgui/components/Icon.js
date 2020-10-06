@@ -20,7 +20,8 @@ export const Icon = props => {
     style = {},
     rotation,
     inverse,
-    ...rest } = props;
+    ...rest
+  } = props;
   if (size) {
     style['font-size'] = (size * 100) + '%';
   }
@@ -51,7 +52,8 @@ export const IconStack = props => {
     className,
     style = {},
     children,
-    ...rest } = props;
+    ...rest
+  } = props;
   return (
     <Box
       as="span"
@@ -66,6 +68,4 @@ export const IconStack = props => {
   );
 };
 
-
 Icon.Stack = IconStack;
-
