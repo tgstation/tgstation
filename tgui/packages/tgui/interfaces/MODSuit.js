@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Table } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Collapsible, Box } from '../components';
 import { Window } from '../layouts';
 
 export const MODsuit = (props, context) => {
@@ -21,18 +21,21 @@ export const MODsuit = (props, context) => {
               label="Status"
               buttons={
                 <Button
-                icon="power-off"
-                content={data.active ? 'Deactivate' : 'Activate'}
-                onClick={() => act('activate')} />
+                  icon="power-off"
+                  content={data.active ? 'Deactivate' : 'Activate'}
+                  onClick={() => act('activate')} />
               } >
-            {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
+              {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
             </LabeledList.Item>
-            <LabeledList.Item label="Lock">
+            <LabeledList.Item
+              label="Lock"
+              buttons={
+                <Button
+                  icon={data.locked ? "lock-open" : "lock"}
+                  content={data.locked ? 'Unlock' : 'Lock'}
+                  onClick={() => act('lock')} />
+              } >
               {data.lock ? 'Locked' : 'Unlocked'}
-              <Button
-                icon={data.locked ? "lock-open" : "lock"}
-                content={data.locked ? 'Unlock' : 'Lock'}
-                onClick={() => act('lock')} />
             </LabeledList.Item>
             <LabeledList.Item label="Cover">
               {data.open ? 'Open' : 'Closed'}
@@ -84,33 +87,28 @@ export const MODsuit = (props, context) => {
         <Section title="Modules">
           {inventory.map((module => {
             return (
-              <Table key={module.name}>
-                <Table.Row>
-                  <Table.Cell>
-                    <b>{module.name}</b>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button
-                      content={'Select'}
-                      onClick={() => act('select', {
-                        'ref': module.ref,
-                      })} />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Collapsible title="Information">
-                    <Table.Cell>
-                      {module.description}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {module.idle_power + ' Idle Power Use'}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {module.active_power + ' Active Power Use'}
-                    </Table.Cell>
-                  </Collapsible>
-                </Table.Row>
-              </Table>
+              <Collapsible
+                title={module.name}
+                key={module.name}
+                buttons={!!module.selectable && (
+                  <Button
+                    content={module.selectable === 1 ? 'Activate' : 'Select'}
+                    selected={module.active}
+                    onClick={() => act('select', {
+                      'ref': module.ref,
+                    })} />)}>
+                <Box mb={1}>
+                  {module.description}
+                </Box>
+                <LabeledList>
+                  <LabeledList.Item label="Idle Power Use">
+                    {module.idle_power}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Active Power Use">
+                    {module.active_power}
+                  </LabeledList.Item>
+                </LabeledList>
+              </Collapsible>
             );
           }))}
         </Section>

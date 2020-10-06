@@ -26,6 +26,8 @@
 		var/list/module_data = list(
 			name = thingy.name,
 			description = thingy.desc,
+			selectable = thingy.selectable,
+			active = thingy.active,
 			idle_power = thingy.idle_power_use,
 			active_power = thingy.active_power_use,
 			ref = REF(thingy)
@@ -47,3 +49,10 @@
 			to_chat(usr, "<span class='notice'>The suit has been [locked ? "unlocked" : "locked"].</span>")
 		if("activate")
 			toggle_activate(usr)
+		if("select")
+			var/obj/item/mod/module/thingy = locate(params["ref"]) in modules
+			if(thingy.selectable == MOD_USABLE)
+				selected_module.active = FALSE
+				selected_module = thingy
+			thingy.active = !thingy.active
+	return TRUE

@@ -3,6 +3,10 @@
 	icon_state = "module"
 	/// If it can be removed
 	var/removable = TRUE
+	/// If it's passive, active or usable
+	var/selectable = MOD_PASSIVE
+	/// Is the module active
+	var/active = FALSE
 	/// How much space it takes up in the MOD
 	var/complexity = 0
 	/// Power use when idle
