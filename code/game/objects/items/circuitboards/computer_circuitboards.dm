@@ -502,14 +502,13 @@
 
 /obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
 	if(!istype(machine))
-		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine.type])")
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
 
 	machine.contraband = contraband
 	if (obj_flags & EMAGGED)
 		machine.obj_flags |= EMAGGED
 	else
 		machine.obj_flags &= ~EMAGGED
-	return
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"
