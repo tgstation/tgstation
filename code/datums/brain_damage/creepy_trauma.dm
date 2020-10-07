@@ -90,7 +90,7 @@
 			owner.vomit()
 			fail = TRUE
 		if(2)
-			owner.emote("cough")
+			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
 			owner.dizziness += 10
 			fail = TRUE
 		if(3)
