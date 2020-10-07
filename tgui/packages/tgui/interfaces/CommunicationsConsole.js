@@ -508,20 +508,16 @@ const PageMain = (props, context) => {
         && sectors.length > 0
         && (
           <Section title="Allied Sectors">
-            <Table>
+            <Flex>
               {
                 sectors.map(sectorName => (
-                  <Table.Row key={sectorName}>
-                    <Table.Cell>
-                      <Button
-                        content={
-                          `Send a message to station in ${sectorName} sector`
-                        }
-                        disabled={!importantActionReady}
-                        onClick={() => setMessagingSector(sectorName)}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
+                  <Button
+                    content={
+                      `Send a message to station in ${sectorName} sector`
+                    }
+                    disabled={!importantActionReady}
+                    onClick={() => setMessagingSector(sectorName)}
+                  />
                 ))
               }
 
@@ -532,7 +528,7 @@ const PageMain = (props, context) => {
                   onClick={() => setMessagingSector("all")}
                 />
               )}
-            </Table>
+            </Flex>
           </Section>
         )
       }
