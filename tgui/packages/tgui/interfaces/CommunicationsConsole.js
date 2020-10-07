@@ -324,15 +324,15 @@ const PageMain = (props, context) => {
           />
         }
 
-        {shuttleCalledPreviously && (
-          shuttleLastCalled
-            ? (
-              <Box>
-                Most recent shuttle call/recall traced to:
-                {" "}<b>{shuttleLastCalled}</b>
-              </Box>
-            )
-            : <Box>Unable to trace most recent shuttle/recall signal.</Box>
+        {!!shuttleCalledPreviously && (
+          shuttleLastCalled && (
+            <Box>
+              Most recent shuttle call/recall traced to:
+              {" "}<b>{shuttleLastCalled}</b>
+            </Box>
+          ) || (
+            <Box>Unable to trace most recent shuttle/recall signal.</Box>
+          )
         )}
       </Section>
 
