@@ -300,28 +300,29 @@ const PageMain = (props, context) => {
   return (
     <Box>
       <Section title="Emergency Shuttle">
-        {shuttleCalled
-          ? <Button.Confirm
-            icon="space-shuttle"
-            content="Recall Emergency Shuttle"
-            color="bad"
-            disabled={!shuttleRecallable}
-            tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
-            tooltipPosition="bottom-right"
-            onClick={() => act("recallShuttle")}
-          />
-          : <Button
-            icon="space-shuttle"
-            content="Call Emergency Shuttle"
-            disabled={shuttleCanEvacOrFailReason !== 1}
-            tooltip={
-              shuttleCanEvacOrFailReason !== 1
-                ? shuttleCanEvacOrFailReason
-                : undefined
-            }
-            tooltipPosition="bottom-right"
-            onClick={() => setCallingShuttle(true)}
-          />
+        {
+          shuttleCalled
+            ? <Button.Confirm
+              icon="space-shuttle"
+              content="Recall Emergency Shuttle"
+              color="bad"
+              disabled={!shuttleRecallable}
+              tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
+              tooltipPosition="bottom-right"
+              onClick={() => act("recallShuttle")}
+            />
+            : <Button
+              icon="space-shuttle"
+              content="Call Emergency Shuttle"
+              disabled={shuttleCanEvacOrFailReason !== 1}
+              tooltip={
+                shuttleCanEvacOrFailReason !== 1
+                  ? shuttleCanEvacOrFailReason
+                  : undefined
+              }
+              tooltipPosition="bottom-right"
+              onClick={() => setCallingShuttle(true)}
+            />
         }
 
         {!!shuttleCalledPreviously && (
@@ -516,6 +517,7 @@ const PageMain = (props, context) => {
                       `Send a message to station in ${sectorName} sector`
                     }
                     disabled={!importantActionReady}
+                    key={sectorName}
                     onClick={() => setMessagingSector(sectorName)}
                   />
                 ))
