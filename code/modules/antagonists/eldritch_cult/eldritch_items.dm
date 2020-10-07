@@ -256,6 +256,9 @@
 	if(!local_user)
 		return PROCESS_KILL
 
+	if((IS_HERETIC(human_in_range) || IS_HERETIC_MONSTER(human_in_range)) && HAS_TRAIT(src,TRAIT_NODROP))
+		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+
 	for(var/mob/living/carbon/human/human_in_range in spiral_range(9,local_user))
 		if(IS_HERETIC(human_in_range) || IS_HERETIC_MONSTER(human_in_range))
 			continue
@@ -275,3 +278,94 @@
 		if(DT_PROB(60,delta_time))
 			human_in_range.hallucination += 5
 
+/obj/item/melee/rune_knife
+	name = "Carving Knife"
+	desc = "Cold Steel, pure, perfect, this knife can carve the floor in many ways, but only few can evoke the dangers that lurk beneath reality."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "rune_carver"
+	flags_1 = CONDUCT_1
+	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_SMALL
+	force = 10
+	throwforce = 5
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
+	var/drawing = FALSE
+	var/list/current_runes = list()
+	var/max_rune_amt = 3
+	var/datum/action/innate/rune_shatter/linked_action
+
+/obj/item/melee/rune_knife/Initialize()
+	. = ..()
+	linked_action = new(src)
+
+/obj/item/melee/rune_knife/pickup(mob/user)
+	. = ..()
+	linked_action.Grant(user, src)
+
+/obj/item/melee/rune_knife/dropped(mob/user, silent)
+	. = ..()
+	linked_action.Remove(user, src)
+
+/obj/item/melee/rune_knife/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
+		carve_rune(target,user,proximity_flag,click_parameters)
+
+/obj/item/melee/rune_knife/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
+	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
+	if(elder)
+		to_chat(user,"<span class='notice'>You can't draw runes that clsoe to each other!</span>")
+		return
+
+	for(var/X in current_runes)
+		var/obj/structure/trap/eldritch/eldritch = X
+		if(QDELETED(eldritch) || !eldritch)
+			current_runes -= eldritch
+
+	if(current_runes.len == max_rune_amt)
+		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
+		return
+
+	var/list/pick_list = list()
+	for(var/E in subtypesof(/obj/structure/trap/eldritch))
+		var/obj/structure/trap/eldritch/eldritch = E
+		pick_list[initial(eldritch.name)] = eldritch
+
+	drawing = TRUE
+
+	var/type = pick_list[input(user,"Choose the rune","Rune") in pick_list]
+
+	to_chat(user,"<span class='notice'>You start drawing the rune...</span>")
+	if(!do_after(user,5 SECONDS,target = target))
+		drawing = FALSE
+		return
+
+	drawing = FALSE
+	var/obj/structure/trap/eldritch/eldritch = new type(target)
+	eldritch.set_owner(user)
+	current_runes += eldritch
+
+/datum/action/innate/rune_shatter
+	name = "Rune break"
+	desc = "Destroys all runes that were drawn by this blade."
+	background_icon_state = "bg_ecult"
+	button_icon_state = "rune_break"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN
+	var/mob/living/carbon/human/holder
+	var/obj/item/melee/rune_knife/sword
+
+/datum/action/innate/rune_shatter/Grant(mob/user, obj/object)
+	sword = object
+	holder = user
+	//i know what im doing
+	return ..()
+
+/datum/action/innate/rune_shatter/Activate()
+	for(var/X in sword.current_runes)
+		var/obj/structure/trap/eldritch/eldritch = X
+		if(!QDELETED(eldritch) && eldritch)
+			qdel(eldritch)
