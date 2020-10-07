@@ -767,6 +767,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue/hauntedhouse
 	name = "Haunted Manor"
 	icon_state = "hauntedmorgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
 
 /area/medical/morgue/tele
 	name = "Haunted Manor"
@@ -775,6 +777,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue/field
 	name = "Haunted Woods"
 	icon_state = "morgue"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -1029,6 +1032,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hydroponics/garden/cornmaze
 	name = "Corn Maze"
 	icon_state = "garden"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/hydroponics/garden/cornmaze/labyrinth
 	name = "Corn Labyrinth"
