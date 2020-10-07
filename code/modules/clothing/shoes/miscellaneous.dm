@@ -52,12 +52,14 @@
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -502,6 +504,7 @@
 	name = "grilling sandals"
 	icon_state = "cookflops"
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
