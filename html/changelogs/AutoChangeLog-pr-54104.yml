@@ -1,0 +1,4 @@
+author: "TMTIME"
+delete-after: True
+changes: 
+  - bugfix: "Clowns no longer harm themselves with toy dualsabers"
