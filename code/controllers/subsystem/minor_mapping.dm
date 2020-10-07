@@ -1,3 +1,5 @@
+#define PROB_MOUSE_SPAWN 98
+
 SUBSYSTEM_DEF(minor_mapping)
 	name = "Minor Mapping"
 	init_order = INIT_ORDER_MINOR_MAPPING
@@ -16,7 +18,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	while((num_mice > 0) && exposed_wires.len)
 		proposed_turf = pick_n_take(exposed_wires)
-		if(prob(98))
+		if(prob(PROB_MOUSE_SPAWN))
 			if(!M)
 				M = new(proposed_turf)
 			else

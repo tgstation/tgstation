@@ -1,3 +1,7 @@
+#define MINOR_HEAL 10
+#define MEDIUM_HEAL 35
+#define MAJOR_HEAL 70
+
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
@@ -45,6 +49,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
+	to_chat(src, "<span class='notice'>You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!</span>")
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -83,18 +88,18 @@
 		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
-		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(10)
+		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
+		heal_bodypart_damage(MINOR_HEAL)
 		qdel(target)
 		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/store/cheesewheel))
-		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(35)
+		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
+		heal_bodypart_damage(MEDIUM_HEAL)
 		qdel(target)
 		return
 	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
-		to_chat(src, "<span class='green'>You eat \the [src], revitalizing your royal resolve completely.</span>")
-		heal_bodypart_damage(70)
+		to_chat(src, "<span class='green'>You eat [src], revitalizing your royal resolve completely.</span>")
+		heal_bodypart_damage(MAJOR_HEAL)
 		qdel(target)
 		return
 
@@ -225,9 +230,9 @@
 	if(!ckey)
 		..(1)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
-			M.icon_state = icon_dead
-			M.name = name
+			var/obj/item/reagent_containers/food/snacks/deadmouse/mouse = new(loc)
+			mouse.icon_state = icon_dead
+			mouse.name = name
 	SSmobs.cheeserats -= src // remove rats on death
 	return ..()
 
@@ -296,5 +301,9 @@
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(5)
+		heal_bodypart_damage(MINOR_HEAL)
 		qdel(target)
+
+#undef MINOR_HEAL
+#undef MEDIUM_HEAL
+#undef MAJOR_HEAL
