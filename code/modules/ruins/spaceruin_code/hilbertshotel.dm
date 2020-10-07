@@ -46,6 +46,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	. = ..()
 	promptAndCheckIn(user, user)
 
+/obj/item/hilbertshotel/attack_tk(mob/user)
+	to_chat(user, "<span class='notice'>Your telekinetic powers are not enough to activate \the [src].</span>")
+	return
+
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user, mob/target)
 	var/chosenRoomNumber
 
