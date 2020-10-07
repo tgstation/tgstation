@@ -5,6 +5,8 @@
 	desc = "Fluffier than a sheep. This shouldn't exist."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "minibar"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 	density = FALSE
 	opacity = FALSE
