@@ -24,6 +24,8 @@
 #define T0C						273.15
 /// 20degC
 #define T20C					293.15
+/// -14C - Temperature used for kitchen cold room, medical freezer, etc.
+#define COLD_ROOM_TEMP			259.15
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
@@ -255,7 +257,7 @@
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180"
 /// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=259.15"
+#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=[COLD_ROOM_TEMP]"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370"
 

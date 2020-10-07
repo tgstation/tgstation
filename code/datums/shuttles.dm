@@ -98,9 +98,10 @@
 					port.dheight = width - port_x_offset
 
 //Whatever special stuff you want
-/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+/datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
 	if(movement_force)
 		M.movement_force = movement_force.Copy()
+	M.linkup(src)
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
@@ -230,6 +231,14 @@
 	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/discoinferno
+	suffix = "discoinferno"
+	name = "Disco Inferno"
+	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
+	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
+	credit_cost = 10000
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"

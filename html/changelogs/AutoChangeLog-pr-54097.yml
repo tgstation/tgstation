@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Science has been given a more experimentally themed set of bounties."
+  - rscdel: "Much of the old science bounties were discontinued."
+  - rscdel: "...As have the glass shard and cheese honker assistant bounties."
