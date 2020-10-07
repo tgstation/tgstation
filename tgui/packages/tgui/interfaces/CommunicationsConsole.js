@@ -1,8 +1,8 @@
+import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
 import { Window } from "../layouts";
-import { logger } from "../logging";
 
 const STATE_BUYING_SHUTTLE = "buying_shuttle";
 const STATE_CHANGING_STATUS = "changing_status";
@@ -12,29 +12,39 @@ const STATE_MESSAGES = "messages";
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
+const sortByCreditCost = sortBy((a, b) => a.creditCost - b.creditCost);
+
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
-  const thisIsCurrent = data.alertLevel === props.alertLevel;
   const { alertLevelTick, canSetAlertLevel } = data;
+  const { alertLevel, setShowAlertLevelConfirm } = props;
 
-  return (<Button
-    icon="exclamation-triangle"
-    color={thisIsCurrent ? "good" : undefined}
-    content={capitalize(props.alertLevel)}
-    onClick={thisIsCurrent ? undefined : () => {
-      if (canSetAlertLevel === SWIPE_NEEDED) {
-        props.setShowAlertLevelConfirm([props.alertLevel, alertLevelTick]);
-      } else {
-        act("changeSecurityLevel", {
-          newSecurityLevel: props.alertLevel,
-        });
-      }
-    }}
-  />);
+  const thisIsCurrent = data.alertLevel === alertLevel;
+
+  return (
+    <Button
+      icon="exclamation-triangle"
+      color={thisIsCurrent ? "good" : undefined}
+      content={capitalize(alertLevel)}
+      onClick={() => {
+        if (thisIsCurrent) {
+          return;
+        }
+
+        if (canSetAlertLevel === SWIPE_NEEDED) {
+          setShowAlertLevelConfirm([alertLevel, alertLevelTick]);
+        } else {
+          act("changeSecurityLevel", {
+            newSecurityLevel: alertLevel,
+          });
+        }
+      }}
+    />
+  );
 };
 
 const MessageModal = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const { maxMessageLength } = data;
 
   const [input, setInput] = useLocalState(context, props.label, "");
@@ -87,11 +97,9 @@ const MessageModal = (props, context) => {
           />
         </Flex.Item>
 
-        {
-          props.notice
-            ? <Flex.Item maxWidth="90vw">{props.notice}</Flex.Item>
-            : null
-        }
+        {!!props.notice && (
+          <Flex.Item maxWidth="90vw">{props.notice}</Flex.Item>
+        )}
       </Flex>
     </Modal>
   );
@@ -99,49 +107,6 @@ const MessageModal = (props, context) => {
 
 const PageBuyingShuttle = (props, context) => {
   const { act, data } = useBackend(context);
-
-  const buyableShuttles = [...data.shuttles];
-  buyableShuttles.sort((a, b) => a.creditCost - b.creditCost);
-
-  const shuttles = [];
-
-  for (const shuttle of buyableShuttles) {
-    shuttles.push((
-      <Section
-        title={(
-          <span
-            style={{
-              display: "inline-block",
-              width: "70%",
-            }}>
-            {shuttle.name}
-          </span>
-        )}
-        key={shuttle.ref}
-        buttons={(
-          <Button
-            content={`${shuttle.creditCost.toLocaleString()} credits`}
-            disabled={data.budget < shuttle.creditCost}
-            onClick={() => act("purchaseShuttle", {
-              shuttle: shuttle.ref,
-            })}
-            tooltip={
-              data.budget < shuttle.creditCost
-                ? `You need ${(shuttle.creditCost - data.budget)} more credits.`
-                : undefined
-            }
-            tooltipPosition="left"
-          />
-        )}>
-        <Box>{shuttle.description}</Box>
-        {
-          shuttle.prerequisites
-            ? <b>Prerequisites: {shuttle.prerequisites}</b>
-            : null
-        }
-      </Section>
-    ));
-  }
 
   return (
     <Box>
@@ -157,7 +122,41 @@ const PageBuyingShuttle = (props, context) => {
         Budget: <b>{data.budget.toLocaleString()}</b> credits
       </Section>
 
-      {shuttles}
+      {sortByCreditCost(data.shuttles).map(shuttle => (
+        <Section
+          title={(
+            <span
+              style={{
+                display: "inline-block",
+                width: "70%",
+              }}>
+              {shuttle.name}
+            </span>
+          )}
+          key={shuttle.ref}
+          buttons={(
+            <Button
+              content={`${shuttle.creditCost.toLocaleString()} credits`}
+              disabled={data.budget < shuttle.creditCost}
+              onClick={() => act("purchaseShuttle", {
+                shuttle: shuttle.ref,
+              })}
+              tooltip={
+                data.budget < shuttle.creditCost
+                  ? `You need ${shuttle.creditCost - data.budget} more credits.`
+                  : undefined
+              }
+              tooltipPosition="left"
+            />
+          )}>
+          <Box>{shuttle.description}</Box>
+          {
+            shuttle.prerequisites
+              ? <b>Prerequisites: {shuttle.prerequisites}</b>
+              : null
+          }
+        </Section>
+      ))}
     </Box>
   );
 };
@@ -334,7 +333,7 @@ const PageMain = (props, context) => {
       content="Recall Emergency Shuttle"
       color="bad"
       disabled={!shuttleRecallable}
-      tooltip={shuttleRecallable ? undefined : "It's too late for the emergency shuttle to be recalled."}
+      tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
       tooltipPosition="bottom-right"
       onClick={() => act("recallShuttle")}
     />);
@@ -705,7 +704,13 @@ export const CommunicationsConsole = (props, context) => {
           )
           : null}
 
-        {pageComponent}
+        {!!authenticated && (
+          page === STATE_BUYING_SHUTTLE && <PageBuyingShuttle />
+          || page === STATE_CHANGING_STATUS && <PageChangingStatus />
+          || page === STATE_MAIN && <PageMain />
+          || page === STATE_MESSAGES && <PageMessages />
+          || <Box>Page not implemented: {page}</Box>
+        )}
       </Window.Content>
     </Window>
   );
