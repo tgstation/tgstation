@@ -663,27 +663,6 @@ export const CommunicationsConsole = (props, context) => {
     page,
   } = data;
 
-  let pageComponent = null;
-
-  if (authenticated) {
-    switch (page) {
-      case STATE_BUYING_SHUTTLE:
-        pageComponent = <PageBuyingShuttle />;
-        break;
-      case STATE_CHANGING_STATUS:
-        pageComponent = <PageChangingStatus />;
-        break;
-      case STATE_MAIN:
-        pageComponent = <PageMain />;
-        break;
-      case STATE_MESSAGES:
-        pageComponent = <PageMessages />;
-        break;
-      default:
-        pageComponent = <Box>Page not implemented: {page}</Box>;
-    }
-  }
-
   return (
     <Window
       width={400}
