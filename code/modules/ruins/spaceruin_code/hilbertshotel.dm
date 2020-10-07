@@ -15,8 +15,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
-	/// The last mob to attempt to promptAndCheckIn()
-	var/mob/last_user = null
 
 /obj/item/hilbertshotel/Initialize()
 	. = ..()
