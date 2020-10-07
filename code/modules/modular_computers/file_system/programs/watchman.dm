@@ -11,7 +11,7 @@
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "CameraConsole"
-	program_icon = "project-diagram"
+	program_icon = "video"
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
