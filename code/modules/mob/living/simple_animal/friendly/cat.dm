@@ -34,6 +34,8 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
 	var/emote_cooldown = 0
+	///Can this cat catch special mice?
+	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE
@@ -221,7 +223,7 @@
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && (name == "Jerry")) //Turns out there's no jerry subtype.
+				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 					if (emote_cooldown < (world.time - 600))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))
@@ -260,6 +262,11 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
+
+/mob/living/simple_animal/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
+	name = "Jerry"
+	desc = "Tom is VERY amused."
+	inept_hunter = TRUE
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"

@@ -1,0 +1,4 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "some cursed snowflake proc call now uses a blessed signal in trauma code"

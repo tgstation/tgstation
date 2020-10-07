@@ -375,7 +375,7 @@
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 

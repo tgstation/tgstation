@@ -64,6 +64,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	else if(istype(I, /obj/item/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 		qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
