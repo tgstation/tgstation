@@ -62,3 +62,5 @@ SUBSYSTEM_DEF(minor_mapping)
 				suitable += t
 
 	return shuffle(suitable)
+
+#undef PROB_MOUSE_SPAWN
