@@ -19,10 +19,10 @@
 		target.update_icon() //could use some queuing here now maybe.
 	else
 		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
-	if(_dir)
-		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
+	if(_dir)
+		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
