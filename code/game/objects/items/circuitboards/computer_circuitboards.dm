@@ -519,6 +519,15 @@
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
 
+/obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
+	if (!(obj_flags & EMAGGED))
+		contraband = !contraband
+		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
+	else
+		to_chat(user, "<span class='notice'>You reset the destination-routing protocols and receiver spectrum to factory defaults.</span>")
+		contraband = FALSE
+		obj_flags &= ~EMAGGED
+
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request

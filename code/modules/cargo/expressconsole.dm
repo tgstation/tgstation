@@ -119,7 +119,7 @@
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
-		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON."
+		message = "(&!#@ERROR: R0UTING_#PRO7O&OL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
 	data["message"] = message
 	if(!meme_pack_data)
 		packin_up()
