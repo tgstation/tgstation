@@ -34,7 +34,10 @@
 		/datum/gas/nitrogen=10,
 		/datum/gas/carbon_dioxide=10,
 	)
-	restricted_chance = 0
+	restricted_gases = list(
+		/datum/gas/plasma=0.1,
+	)
+	restricted_chance = 50
 
 	minimum_pressure = HAZARD_LOW_PRESSURE + 10
 	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
