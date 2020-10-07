@@ -1,3 +1,7 @@
+// THERE IS A CRITICAL ISSUE ON HOW TO MAKE THIS LOOK GOOD WHEN WORN BY OTHER SPECIES.
+// IF SOMEONE CAN FIGURE OUT HOW TO MAKE IT SO HAIR/MOTH FLUFF/ETC IS HIDDEN BY THE SHOULDERS WITHOUT BEING HIDDEN BY THE ENTIRE ARMOR,
+// PLEASE HELP.
+
 /obj/item/clothing/head/helmet/space/hardsuit/spellcostume
 	name = "Spellsword Helm"
 	desc = "Well, I am sure that this plate armor has no evil spirits possessing it which may or may not be subtly affecting my mental psyche."
@@ -47,3 +51,14 @@
 	guy.dna.species.offset_features = initial(guy.dna.species.offset_features)
 	guy.regenerate_icons()
 	guy.transform = initial(guy.transform)
+
+// FIGURE OUT HOW TO MAKE THIS WORK
+/obj/item/clothing/suit/space/hardsuit/spellcostume/Initialize()
+	cut_overlays()
+	var/static/mutable_appearance/shoulders
+	shoulders = new()
+	shoulders.icon = 'icons/misc/tourny_armor.dmi'
+	shoulders.icon_state = "shoulders"
+	shoulders.layer = ABOVE_BODY_FRONT_LAYER
+	add_overlay(shoulders)
+	. = ..()
