@@ -130,7 +130,7 @@
 		wash_atom(loc)
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
-			reagents.expose(movable_content, TOUCH, 5) //There's not many reagents leaving the sink at once!
+			reagents.expose(movable_content, TOUCH, 0.05) //There's not many reagents leaving the sink at once! This should make for a 10 unit reaction
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 				wash_atom(movable_content)
 	else
