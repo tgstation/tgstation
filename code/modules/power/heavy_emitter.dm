@@ -7,7 +7,6 @@
 	icon_state = "centre_off"
 	anchored = FALSE
 	density = TRUE
-	payment_department = ACCOUNT_ENG
 
 /obj/machinery/power/heavy_emitter/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -49,9 +48,9 @@
 	///bool to check if the machine is fully constructed
 	var/is_fully_constructed = FALSE
 	///Current heat level
-	var/heat = 0
+	var/heat = T0C
 	///Max heat level
-	var/max_heat = 1000
+	var/max_heat = 1000 + T0C
 	///List of adjacent vents
 	var/vents = list()
 	///Linked interface
@@ -181,11 +180,10 @@
 		return
 
 	for(var/V in vents)
-		if(heat <= 0 || !V)
+		if(heat <= T0C || !V)
 			break
 		var/obj/machinery/power/heavy_emitter/vent/vent = V
-		if(vent.vent_gas())
-			heat -= 100
+		heat = vent.vent_gas(heat)
 
 /obj/machinery/power/heavy_emitter/arm
 	name = "Seismic Stabilizer Arm"
@@ -231,23 +229,20 @@
 	desc = "Circulates air around the core, preventing it from overheating. Doesn't work in low pressure or when blocked by a wall"
 	icon_state = "vent"
 
-/obj/machinery/power/heavy_emitter/vent/proc/vent_gas()
+/obj/machinery/power/heavy_emitter/vent/proc/vent_gas(heat)
+	. = heat
 	var/turf/open/open_turf = get_step(src,dir)
 	//You cant cheese it with space!
 	if(!istype(open_turf) || isspaceturf(open_turf))
-		return FALSE
+		return
 
 	var/datum/gas_mixture/gases = open_turf.return_air()
 
 	if(!gases)
-		return FALSE
+		return
 
-	if(gases.return_pressure() < ONE_ATMOSPHERE/5)
-		return FALSE
-
-	gases.temperature += 100
 	flick("vent_on",src)
-	return TRUE
+	return gases.temperature_share(null,0.33,heat,20000)
 
 /obj/machinery/power/heavy_emitter/cannon
 	name = "Energy Optic Converging Cannon"
@@ -269,7 +264,6 @@
 	proj.fired_from = src
 	proj.fire(dir2angle(dir))
 	playsound(src, cooldown_sound, 100)
-	sleep(2 SECONDS)
 
 #undef EASY_TURN_ON
 #undef EASY_TURN_OFF
