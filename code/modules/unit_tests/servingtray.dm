@@ -8,12 +8,13 @@
 	var/obj/item/reagent_containers/food/banana = allocate(/obj/item/reagent_containers/food/snacks/grown/banana)
 	var/obj/item/food/the_bread = allocate(/obj/item/food/breadslice)
 	var/obj/item/reagent_containers/food/sugarcookie = allocate(/obj/item/reagent_containers/food/snacks/sugarcookie)
+	var/obj/item/clothing/under/jumpsuit = allocate(/obj/item/clothing/under/color/black)
 
 	TEST_ASSERT_EQUAL((the_bread in test_tray.contents), FALSE, "The bread is on the serving tray at test start")
 
 	// set the tray to single item mode the dirty way
 	var/datum/component/storage/tray_storage = test_tray.GetComponent(/datum/component/storage)
-	tray_storage.collection_mode = 0 //COLLECT_ONE
+	tray_storage.collection_mode = COLLECT_ONE
 
 	test_tray.pre_attack(the_bread, human)
 
@@ -31,8 +32,16 @@
 
 	TEST_ASSERT_EQUAL((sugarcookie in test_tray.contents), TRUE, "The sugarcookie did not get picked up by the serving tray")
 
+	human.equip_to_slot(jumpsuit, ITEM_SLOT_ICLOTHING)
+	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_ICLOTHING), "Human does not have jumpsuit on")
+
+	human.equip_to_slot(test_tray, ITEM_SLOT_LPOCKET)
+	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_LPOCKET), "Serving tray failed to fit in the Left Pocket")
+
+	human.equip_to_slot(test_tray, ITEM_SLOT_RPOCKET)
+	TEST_ASSERT(human.get_item_by_slot(ITEM_SLOT_RPOCKET), "Serving tray failed to fit in the Right Pocket")
+
 	test_tray.attack(human, human)
 
 	TEST_ASSERT_EQUAL(test_tray.contents.len, 0, "The serving tray did not drop all items on hitting a human")
-	TEST_ASSERT(human.has_status_effect(STATUS_EFFECT_PARALYZED), "Human is not paralyzed after being hit with the tray.")
 
