@@ -228,7 +228,7 @@
 
 /mob/living/simple_animal/hostile/rat/death(gibbed)
 	if(!ckey)
-		..(1)
+		..(TRUE)
 		if(!gibbed)
 			var/obj/item/reagent_containers/food/snacks/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
