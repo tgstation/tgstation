@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	promptAndCheckIn(user, user)
 
 /obj/item/hilbertshotel/attack_tk(mob/user)
-	to_chat(user, "<span class='notice'>Your telekinetic powers are not enough to activate \the [src].</span>")
+	to_chat(user, "<span class='notice'>\The [src] actively rejects your mind as the bluespace energies surrounding it disrupt your telekinesis.</span>")
 	return
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user, mob/target)
@@ -372,6 +372,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		qdel(H)
 		return
 
+	// Prepare for...
 	var/mob/unforeseen_consequences = get_atom_on_turf(H, /mob)
 
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
