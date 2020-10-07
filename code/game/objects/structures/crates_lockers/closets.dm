@@ -1,4 +1,4 @@
-/obj/structure/closet
+/obj/structure/close
 	name = "closet"
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
