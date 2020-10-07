@@ -57,7 +57,7 @@
 /obj/structure/pitgrate
 	name = "pit grate"
 	icon = 'icons/obj/smooth_structures/lattice.dmi'
-	icon_state = "lattice"
+	icon_state = "lattice-255"
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -117,3 +117,16 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/obj/effect/path_blocker/vip
+	name = "VIP barrier"
+	desc = "You feel insignificant looking at it..."
+
+/obj/effect/path_blocker/vip/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(mover.client_mobs_in_contents)
+		var/mob/M = mover
+		if(!(M.ckey in GLOB.vips))
+			return reverse
+		return !reverse
+	return reverse

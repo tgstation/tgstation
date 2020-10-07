@@ -123,7 +123,7 @@
 	else
 		return ..()
 
-/obj/machinery/hydroponics/process()
+/obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
@@ -136,9 +136,9 @@
 		update_icon()
 
 	else if(self_sustaining)
-		adjustWater(rand(1,2))
-		adjustWeeds(-1)
-		adjustPests(-1)
+		adjustWater(rand(1,2) * delta_time * 0.5)
+		adjustWeeds(-0.5 * delta_time)
+		adjustPests(-0.5 * delta_time)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time

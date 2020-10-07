@@ -132,6 +132,12 @@
 	icon_state = "villain"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/boatbomber
+	name = "gnome costume"
+	desc = "Chompski? Is that you?"
+	icon_state = "gnome_clothes"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/sailor
 	name = "sailor suit"
 	desc = "Skipper's in the wardroom drinkin gin'."
@@ -156,6 +162,14 @@
 	icon_state = "bsing"
 	inhand_icon_state = "bsing"
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/costume/chika
+	name = "anime uniform"
+	desc = "A school uniform from a popular anime."
+	icon_state = "chika_skirt"
+	inhand_icon_state = "chika_skirt"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"

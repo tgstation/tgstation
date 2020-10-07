@@ -71,9 +71,10 @@
 /**
   * Perform a whitespace cleanup on the text, similar to what HTML renderers do
   *
-  * This is useful if you want to better predict how text is going to look like when displaying it to a user
+  * This is useful if you want to better predict how text is going to look like when displaying it to a user.
   * HTML renderers collapse multiple whitespaces into one, trims prepending and appending spaces, among other things. This proc attempts to do the same thing.
-  * HTML5 defines whitespace pretty much exactly like regex defines the \s group, [ \t\r\n\f].
+  * HTML5 defines whitespace pretty much exactly like regex defines the `\s` group, `[ \t\r\n\f]`.
+  *
   * Arguments:
   * * t - The text to "render"
   */
@@ -294,6 +295,21 @@
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 	return ""
+
+/**
+  * Truncate a string to the given length
+  *
+  * Will only truncate if the string is larger than the length and *ignores unicode concerns*
+  *
+  * This exists soley because trim does other stuff too.
+  *
+  * Arguments:
+  * * text - String
+  * * max_length - integer length to truncate at
+  */
+/proc/truncate(text, max_length)
+	if(length(text) > max_length)
+		return copytext(text, 1, max_length)
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)

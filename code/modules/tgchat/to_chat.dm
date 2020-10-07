@@ -47,9 +47,11 @@
  * Sends the message to the recipient (target).
  *
  * Recommended way to write to_chat calls:
+ * ```
  * to_chat(client,
  *     type = MESSAGE_TYPE_INFO,
  *     html = "You have found <strong>[object]</strong>")
+ * ```
  */
 /proc/to_chat(target, html,
 		type = null,

@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Suit Storage Units will now correctly eject their contents in a variety of scenarios where previously they would refuse to do so."
+  - bugfix: "Grinders and Slime Processors no longer eject their own components."

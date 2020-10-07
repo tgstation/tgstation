@@ -158,6 +158,15 @@
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
 
+/obj/item/reagent_containers/food/snacks/donut/oreo
+	name = "oreo donut"
+	desc = "Goes great with a glass of moth milk."
+	icon_state = "donut_oreo"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 2)
+	tastes = list("donut" = 3, "cookie" = 1, "chocolate" = 1)
+	is_decorated = TRUE
+	value = FOOD_FAST
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -260,6 +269,16 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 	value = FOOD_EXOTIC
+
+/obj/item/reagent_containers/food/snacks/donut/jelly/oreo
+	name = "oreo jelly donut"
+	desc = "Goes great with a glass of moth milk."
+	icon_state = "jelly_oreo"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 2)
+	tastes = list("jelly" = 1, "donut" = 3, "cookie" = 1)
+	is_decorated = TRUE
+	filling_color = "#ebeae4"
+	value = FOOD_FAST
 
 //////////////////////////SLIME DONUTS/////////////////////////
 
@@ -667,16 +686,13 @@
 	foodtype = GRAIN | MEAT | VEGETABLES
 	value = FOOD_RARE
 
-/obj/item/reagent_containers/food/snacks/meatbun
+/obj/item/food/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	filling_color = "#8B0000"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 3, "meat" = 2)
-	foodtype = GRAIN | MEAT | VEGETABLES
-	value = FOOD_EXOTIC
+	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"
@@ -899,3 +915,17 @@
 	filling_color = "#ffffff"
 	tastes = list("pastry" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+
+/obj/item/reagent_containers/food/snacks/corndog
+	name = "corndog"
+	desc = "The busy man's hotdog."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "corndog_stick"
+	bitesize = 3
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
+	filling_color = "#8B0000"
+	tastes = list("cornmeal" = 3, "meat" = 2)
+	trash = /obj/item/trash/corndog
+	foodtype = GRAIN | MEAT | FRIED
+	value = FOOD_RARE

@@ -284,6 +284,18 @@
 	var/origin = pick("Nanotrasen","Syndicate","Local")
 	return "[year] [origin] [type]"
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/ICP // dear lady, please don't let anything remotely resembling a clown enter my DMs for this.
+	name = "wine jug-galo"
+	desc = "Who the fuck names these things? Thank the gods that some wine came with the jug at least."
+	icon_state = "winejug"
+
+/obj/item/reagent_containers/food/drinks/bottle/wine/ICP/generate_vintage()
+	var/current_year = GLOB.year_integer + 540
+	var/year = rand(current_year-50,current_year)
+	var/type = pick("Sparkling","Dry White","Sweet White","Rich White","Rose","Light Red","Medium Red","Bold Red","Dessert")
+	var/origin = pick("Nanotrasen","Syndicate","Local")
+	return "[year] [origin] [type]"
+
 /obj/item/reagent_containers/food/drinks/bottle/absinthe
 	name = "extra-strong absinthe"
 	desc = "A strong alcoholic drink brewed and distributed by"

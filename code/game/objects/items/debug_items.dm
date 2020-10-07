@@ -33,6 +33,13 @@
 	toolspeed = 0.1
 	tool_behaviour = null
 
+/obj/item/debug/omnitool/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("An omnitool was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/debug/omnitool/examine()
 	. = ..()
 	. += " The mode is: [tool_behaviour]"
@@ -63,7 +70,8 @@
 		"Drill" = image(icon = 'icons/obj/surgery.dmi', icon_state = "drill"),
 		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
 		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
-		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter")
+		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter"),
+		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter")
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -101,3 +109,5 @@
 			tool_behaviour = TOOL_SAW
 		if("Bonesetter")
 			tool_behaviour = TOOL_BONESET
+		if("Blood Filter")
+			tool_behaviour = TOOL_BLOODFILTER

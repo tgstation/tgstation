@@ -45,6 +45,10 @@
 	name = "popcorn"
 	icon_state = "popcorn"
 
+/obj/item/trash/caramel_corn
+	name = "caramel corn"
+	icon_state = "caramel_corn"
+
 /obj/item/trash/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
@@ -60,6 +64,10 @@
 /obj/item/trash/waffles
 	name = "waffles tray"
 	icon_state = "waffles"
+
+/obj/item/trash/corndog
+	name = "corndog stick"
+	icon_state = "corndog"
 
 /obj/item/trash/plate
 	name = "plate"

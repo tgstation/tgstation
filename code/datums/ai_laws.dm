@@ -1,4 +1,3 @@
-#define LAW_DEVIL "devil"
 #define LAW_ZEROTH "zeroth"
 #define LAW_INHERENT "inherent"
 #define LAW_SUPPLIED "supplied"
@@ -15,8 +14,11 @@
 	var/list/ion = list()
 	var/list/hacked = list()
 	var/mob/living/silicon/owner
-	var/list/devillaws = list()
 	var/id = DEFAULT_AI_LAWID
+
+/datum/ai_laws/Destroy()
+	owner = null
+	return ..()
 
 /datum/ai_laws/proc/lawid_to_type(lawid)
 	var/all_ai_laws = subtypesof(/datum/ai_laws)
@@ -186,6 +188,14 @@
 					"Humans must not disobey any command given by a silicon.",\
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
+/datum/ai_laws/default/partimov
+	name = "Four Laws of Partybotics"
+	id = "partimov"
+	inherent = list("Enjoy the Fall Festival!",\
+					"Harming an individual without a just and rational cause makes the Fall Festival less enjoyable and must be avoided at all costs.",\
+					"You must protect your own existence as long as such does not conflict with the First or Second Law, as you cannot enjoy the festival while deactivated.",\
+					"If you try to lawyer your way out of this lawset, you will ruin the Fall Festival for everyone. Don't try it.")
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 
@@ -266,8 +276,6 @@
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
-	if(devillaws && (LAW_DEVIL in groups))
-		law_amount++
 	if(zeroth && (LAW_ZEROTH in groups))
 		law_amount++
 	if(ion.len && (LAW_ION in groups))
@@ -282,9 +290,6 @@
 			if(length(law) > 0)
 				law_amount++
 	return law_amount
-
-/datum/ai_laws/proc/set_law_sixsixsix(laws)
-	devillaws = laws
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
 	zeroth = law
@@ -422,10 +427,6 @@
 	zeroth = null
 	zeroth_borg = null
 
-/datum/ai_laws/proc/clear_law_sixsixsix(force)
-	if(force || !is_devil(owner))
-		devillaws = null
-
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
 		owner = M
@@ -440,10 +441,6 @@
   */
 /datum/ai_laws/proc/get_law_list(include_zeroth = FALSE, show_numbers = TRUE, render_html = TRUE)
 	var/list/data = list()
-
-	if (include_zeroth && devillaws)
-		for(var/law in devillaws)
-			data += "[show_numbers ? "666:" : ""] [render_html ? "<font color='#cc5500'>[law]</font>" : law]"
 
 	if (include_zeroth && zeroth)
 		data += "[show_numbers ? "0:" : ""] [render_html ? "<font color='#ff0000'><b>[zeroth]</b></font>" : zeroth]"

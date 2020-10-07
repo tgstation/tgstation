@@ -1752,10 +1752,10 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "dM" = (
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
-/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "meat fridge";
@@ -3886,7 +3886,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
-/obj/machinery/computer/rdconsole/core{
+/obj/machinery/computer/rdconsole{
 	dir = 4;
 	req_access = null
 	},

@@ -15,7 +15,7 @@
 	light_on = FALSE
 	dog_fashion = /datum/dog_fashion/head
 
-	///Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
+	///Determines used sprites: `hardhat[on]_[hat_type]` and `hardhat[on]_[hat_type]2` (lying down sprite)
 	var/hat_type = "yellow"
 	///Whether the headlamp is on or off.
 	var/on = FALSE

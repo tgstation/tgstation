@@ -167,6 +167,15 @@
 	airlock_type = /obj/machinery/door/airlock/grunge
 	noglass = TRUE
 
+/obj/structure/door_assembly/door_assembly_elder
+	name = "strange airlock assembly"
+	desc = "Feels like we aren't intended to see this."
+	icon = 'icons/obj/doors/airlocks/elderdoor/elddoor.dmi'
+	base_name = "wooden voidlock"
+	airlock_type = /obj/machinery/door/airlock/elder
+	mineral = "wood"
+	noglass = TRUE
+
 /obj/structure/door_assembly/door_assembly_gold
 	name = "gold airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'

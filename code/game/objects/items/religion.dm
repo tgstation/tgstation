@@ -300,6 +300,7 @@
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = null
 	flags_1 = 0
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, RAD = 50, FIRE = 60, ACID = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
@@ -394,6 +395,29 @@
 	new /obj/item/clothing/gloves/plate/red(src)
 	new /obj/item/clothing/shoes/plate/red(src)
 
+
+/obj/item/claymore/foam
+	name = "foam sword"
+	desc = "Despite the real plate armor being sold here, they're only making fake swords. Well, at least it can still parry!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "foammore"
+	inhand_icon_state = "claymore"
+	worn_icon_state = "claymore"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	hitsound = 'sound/weapons/etherealhit.ogg'
+	flags_1 = 0
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
+	force = 0
+	throwforce = 0
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash")
+	block_chance = 50
+	sharpness = SHARP_NONE
+	max_integrity = 200
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

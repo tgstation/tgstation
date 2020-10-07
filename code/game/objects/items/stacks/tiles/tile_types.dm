@@ -96,6 +96,16 @@
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
 
+//Astroturf
+/obj/item/stack/tile/astroturf
+	name = "astroturf tile"
+	singular_name = "astroturf tile"
+	desc = "A patch of grass like they use on space golf courses. Wait, this is plastic!"
+	icon_state = "tile_grass"
+	inhand_icon_state = "tile-grass"
+	turf_type = /turf/open/floor/grass
+	resistance_flags = FLAMMABLE
+
 //Fairygrass
 /obj/item/stack/tile/fairygrass
 	name = "fairygrass tile"
@@ -128,7 +138,7 @@
 //Carpets
 /obj/item/stack/tile/carpet
 	name = "carpet"
-	singular_name = "carpet"
+	singular_name = "carpet tile"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	inhand_icon_state = "tile-carpet"
@@ -233,7 +243,7 @@
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
-	singular_name = "astral carpet"
+	singular_name = "astral carpet tile"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	inhand_icon_state = "tile-space"

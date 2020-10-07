@@ -116,6 +116,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M)
 	if(LAZYLEN(M.equipment)<M.max_equip)
 		return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M)
 	LAZYADD(M.equipment, src)

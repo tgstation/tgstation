@@ -75,7 +75,7 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	max_integrity = 70
+	max_integrity = 1000
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
 	open_sound = 'sound/machines/wooden_closet_open.ogg'

@@ -5,3 +5,7 @@
 
 #include "..\..\..\..\_maps\map_files\IceBoxStation\job_changes.dm"
 #undef JOB_MODIFICATION_MAP_NAME
+
+// Fall Festival
+#include "..\..\..\..\_maps\map_files\generic\job_changes.dm"
+#undef JOB_MODIFICATION_MAP_NAME

@@ -24,10 +24,10 @@ This file contains the cult dagger and rune list code
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
 	if(iscultist(M))
-		if(M.reagents && M.reagents.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
+		if(M.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
-			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
-			M.reagents.del_reagent(/datum/reagent/water/holywater)
+			var/holy2unholy = M.get_reagent_amount(/datum/reagent/water/holywater)
+			M.remove_reagent(/datum/reagent/water/holywater, holy2unholy)
 			M.reagents.add_reagent(/datum/reagent/fuel/unholywater,holy2unholy)
 			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE

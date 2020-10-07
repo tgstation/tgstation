@@ -93,7 +93,9 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 0.8)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 0.8)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
@@ -101,10 +103,11 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 1.25)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 1.25)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
-
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
@@ -432,7 +435,7 @@
 		return TRUE
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
-/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+/datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != HARD_CRIT)
@@ -440,7 +443,7 @@
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(owner, TRUE)
+		qdel(I)
 
 	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in view(2,owner))

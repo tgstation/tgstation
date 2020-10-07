@@ -22,6 +22,13 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	var/force_opens = FALSE
 
+/obj/item/crowbar/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		message_admins("A crowbar was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
@@ -50,6 +57,7 @@
 	custom_materials = list(/datum/material/iron=70)
 	icon_state = "crowbar_large"
 	inhand_icon_state = "crowbar"
+	worn_icon_state = "crowbar"
 	toolspeed = 0.7
 
 /obj/item/crowbar/power
@@ -131,6 +139,7 @@
 	desc = "A hydraulic prying tool, simple but powerful."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "crowbar_cyborg"
+	worn_icon_state = "crowbar"
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5

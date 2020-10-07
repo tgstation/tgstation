@@ -374,6 +374,35 @@
 	. = ..()
 	qdel(vat)
 
+//randomizes from the netherworld pool!
+/datum/micro_organism/cell_line/netherworld
+	desc = "Aberrant residue"
+	required_reagents = list(//theme here: very odd requirements
+							/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
+							/datum/reagent/consumable/ethanol/wizz_fizz, //EZ bartender drink, like brainless
+							/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
+
+	supplementary_reagents = list( //all of these are just geyser stuff, rated by their rarity
+							/datum/reagent/wittel = 10, //stupid rare
+							/datum/reagent/medicine/omnizine/protozine = 5,
+							/datum/reagent/plasma_oxide = 3,
+							/datum/reagent/clf3 = 1)//since this is also chemistry it's worth near nothing
+
+	suppressive_reagents = list(//generics you would regularly put in a vat kill abberant residue
+						/datum/reagent/consumable/nutriment/peptides = -6,
+						/datum/reagent/consumable/nutriment/protein = -4,
+						/datum/reagent/consumable/nutriment = -3,
+						/datum/reagent/liquidgibs = -2
+						)
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/simple_animal/hostile/netherworld = 1)
+
+/datum/micro_organism/cell_line/netherworld/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
+	var/random_result = pick(typesof(/mob/living/simple_animal/hostile/netherworld)) //i looked myself, pretty much all of them are reasonably strong and somewhat on the same level. except migo is the jackpot and the blank body is whiff.
+	resulting_atoms = list()
+	resulting_atoms[random_result] = 1
+	return ..()
+
 /datum/micro_organism/cell_line/clown/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have created something horrific!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done

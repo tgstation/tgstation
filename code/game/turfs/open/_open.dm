@@ -155,18 +155,6 @@
 	blocks_air = TRUE
 	baseturfs = /turf/open/indestructible/airblock
 
-/turf/open/indestructible/cornfloor
-	name = "plowed corn"
-	desc = "Doesn't seem like there'll be any corn down here."
-	icon = 'icons/turf/floors.dmi' // good job, eris
-	icon_state = "sandcorn" // sandcorn maze moment
-	baseturfs = /turf/open/indestructible/cornfloor
-	footstep = FOOTSTEP_GRASS
-	barefootstep = FOOTSTEP_GRASS
-	clawfootstep = FOOTSTEP_GRASS
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-
 /turf/open/Initalize_Atmos(times_fired)
 	excited = FALSE
 	update_visuals()
@@ -276,9 +264,18 @@
 /turf/open/rad_act(pulse_strength)
 	. = ..()
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
-		pulse_strength = min(pulse_strength,air.gases[/datum/gas/carbon_dioxide][MOLES]*1000,air.gases[/datum/gas/oxygen][MOLES]*2000) //Ensures matter is conserved properly
-		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
-		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
+		pulse_strength = min(pulse_strength, air.gases[/datum/gas/carbon_dioxide][MOLES] * 1000, air.gases[/datum/gas/oxygen][MOLES] * 2000) //Ensures matter is conserved properly
+		air.gases[/datum/gas/carbon_dioxide][MOLES] = max(air.gases[/datum/gas/carbon_dioxide][MOLES] - (pulse_strength * 0.001),0)
+		air.gases[/datum/gas/oxygen][MOLES] = max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength * 0.002),0)
 		air.assert_gas(/datum/gas/pluoxium)
-		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
+		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.004)
 		air.garbage_collect()
+		air_update_turf()
+	if (air.gases[/datum/gas/hydrogen])
+		pulse_strength = min(pulse_strength, air.gases[/datum/gas/hydrogen][MOLES] * 1000)
+		air.gases[/datum/gas/hydrogen][MOLES] = max(air.gases[/datum/gas/hydrogen][MOLES] - (pulse_strength * 0.001), 0)
+		air.assert_gas(/datum/gas/tritium)
+		air.gases[/datum/gas/tritium][MOLES] += (pulse_strength * 0.001)
+		air.garbage_collect()
+		air_update_turf()
+

@@ -33,7 +33,7 @@
 		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
 	if(start)
-		timestop()
+		INVOKE_ASYNC(src, .proc/timestop)
 
 /obj/effect/timestop/Destroy()
 	qdel(chronofield)

@@ -187,11 +187,11 @@
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
-/obj/item/laser_pointer/process()
+/obj/item/laser_pointer/process(delta_time)
 	if(!diode)
 		recharging = FALSE
 		return PROCESS_KILL
-	if(prob(20 + diode.rating*20 - recharge_locked*2)) //t1 is 20, 2 40
+	if(DT_PROB(10 + diode.rating*10 - recharge_locked*1, delta_time)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy

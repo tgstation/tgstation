@@ -26,6 +26,7 @@ Assistant
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
+	box = /obj/item/storage/box/tournament
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -6,7 +6,7 @@
 	name = "???"
 	id = "shadow"
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
+	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 	inherent_factions = list("faithless")
@@ -50,6 +50,7 @@
 	to_chat(C, "[info_text]")
 
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
+	C.set_safe_hunger_level()
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -173,7 +174,8 @@
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
-	wound_bonus = -60
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	wound_bonus = -30
 	bare_wound_bonus = 20
 
 /obj/item/light_eater/Initialize()
@@ -190,30 +192,26 @@
 
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(isethereal(AM))
+		if(isethereal(L))
 			AM.emp_act(EMP_LIGHT)
 
 		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			if(borg.lamp_intensity)
-				borg.update_headlamp(TRUE, INFINITY)
-				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
+			if(borg.lamp_enabled)
+				borg.smash_headlamp()
 		else if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			for(var/obj/item/O in H.get_all_gear()) //less expensive than getallcontents
-				if(O.light_range && O.light_power)
-					disintegrate(O, AM)
+				light_item_check(O, H)
 		else
-			for(var/obj/item/O in AM.GetAllContents())
-				if(O.light_range && O.light_power)
-					disintegrate(O, AM)
-		if(L.pulling && L.pulling.light_range && isitem(L.pulling))
-			disintegrate(L.pulling, L.pulling)
+			for(var/obj/item/O in L.GetAllContents())
+				light_item_check(O, L)
+		if(L.pulling)
+			light_item_check(L.pulling, L.pulling)
 
 	else if(isitem(AM))
-		var/obj/item/I = AM
-		if(I.light_range && I.light_power)
-			disintegrate(I, I)
+		light_item_check(AM, AM)
+
 
 	else if(ismecha(AM))
 		var/obj/vehicle/sealed/mecha/M = AM
@@ -224,15 +222,28 @@
 		for(var/occupant in M.occupants)
 			M.remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 		for(var/obj/item/O in AM.GetAllContents())
-			if(O.light_range && O.light_power)
-				disintegrate(O, M)
+			light_item_check(O, M)
 
 	else if(istype(AM, /obj/machinery/light))
 		var/obj/machinery/light/L = AM
 		if(L.status == 1)
 			return
-		disintegrate(L.drop_light_tube(), AM)
+		disintegrate(L.drop_light_tube(), L)
 
+///checks if the item has an active light, and destroy the light source if it does.
+/obj/item/light_eater/proc/light_item_check(obj/item/I, atom/A)
+	if(!isitem(I))
+		return
+	if(I.light_range && I.light_power)
+		disintegrate(I, A)
+	else if(istype(I, /obj/item/gun))
+		var/obj/item/gun/G = I
+		if(G.gun_light?.on)
+			disintegrate(G.gun_light, A)
+	else if(istype(I, /obj/item/clothing/head/helmet))
+		var/obj/item/clothing/head/helmet/H = I
+		if(H.attached_light?.on)
+			disintegrate(H.attached_light, A)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O, atom/A)
 	if(istype(O, /obj/item/pda))

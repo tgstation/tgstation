@@ -310,6 +310,7 @@
 /obj/item/nullrod/claymore
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
+	worn_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "holy claymore"
@@ -336,7 +337,7 @@
 	inhand_y_dimension = 64
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -354,6 +355,7 @@
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
 	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = ITEM_SLOT_BELT
@@ -588,6 +590,7 @@
 	desc = "What a terrible night to be on Space Station 13."
 	icon_state = "chain"
 	inhand_icon_state = "chain"
+	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -758,3 +761,138 @@
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/clothing/head/helmet/chaplain/knight1
+	name = "holy knight helm"
+	desc = "A great helm with a golden gryphon on top of it. Looks fancy!"
+	worn_icon = 'icons/misc/tourny_helm.dmi'
+	icon_state = "helm1"
+	inhand_icon_state = "knight_templar"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
+/obj/item/clothing/head/helmet/chaplain/knight1/equipped(mob/M, slot)
+	. = ..()
+	if (slot == ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight1/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight1/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/french_words = strings("french_replacement.json", "french")
+
+		for(var/key in french_words)
+			var/value = french_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+
+		if(prob(3))
+			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/suit/armor/riot/chaplain/knight1
+	name = "holy knight armour"
+	desc = "It has a blue and red that displays a heraldic emblem. This elegant armour is fancy!"
+	icon_state = "frenchknight1"
+	inhand_icon_state = "knight_templar"
+
+/obj/item/clothing/head/helmet/chaplain/knight2
+	name = "holy knight helm"
+	desc = "A great helm with a grail, crown, and angelic wings on top of it. Looks fancy!"
+	worn_icon = 'icons/misc/tourny_helm.dmi'
+	icon_state = "helm2"
+	inhand_icon_state = "knight_templar"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
+/obj/item/clothing/head/helmet/chaplain/knight2/equipped(mob/M, slot)
+	. = ..()
+	if (slot == ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight2/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight2/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/french_words = strings("french_replacement.json", "french")
+
+		for(var/key in french_words)
+			var/value = french_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+
+		if(prob(3))
+			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/suit/armor/riot/chaplain/knight2
+	name = "holy knight armour"
+	desc = "It has a white and red that displays a heraldic emblem. This elegant armour is fancy!"
+	icon_state = "frenchknight2"
+	inhand_icon_state = "knight_templar"
+
+/obj/item/clothing/head/helmet/chaplain/knight3
+	name = "holy knight helm"
+	desc = "A great helm with a cloth covering some of it. Looks fancy!"
+	worn_icon = 'icons/misc/tourny_helm.dmi'
+	icon_state = "helm3"
+	inhand_icon_state = "knight_templar"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
+/obj/item/clothing/head/helmet/chaplain/knight3/equipped(mob/M, slot)
+	. = ..()
+	if (slot == ITEM_SLOT_HEAD)
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	else
+		UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight3/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/head/helmet/chaplain/knight3/proc/handle_speech(datum/source, mob/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/french_words = strings("french_replacement.json", "french")
+
+		for(var/key in french_words)
+			var/value = french_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+
+		if(prob(3))
+			message += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/suit/armor/riot/chaplain/knight3
+	name = "holy knight armour"
+	desc = "It has a yellow and that displays a heraldic emblem. This elegant armour is fancy!"
+	icon_state = "frenchknight3"
+	inhand_icon_state = "knight_templar"

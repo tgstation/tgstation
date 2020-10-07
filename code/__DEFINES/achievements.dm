@@ -25,6 +25,10 @@
 #define MEDAL_LOOKOUTSIR		"Look Out, Sir!"
 #define MEDAL_GOTTEM			"GOTTEM"
 #define MEDAL_ASCENSION			"Ascension"
+#define MEDAL_FRENCHING			"FrenchingTheBubble"
+#define MEDAL_ASH_ASCENSION		"Ash"
+#define MEDAL_FLESH_ASCENSION	"Flesh"
+#define MEDAL_RUST_ASCENSION	"Rust"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"

@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 			return TRUE
 		remove_actionspeed_modifier(existing, FALSE)
 	if(length(actionspeed_modification))
-		BINARY_INSERT(type_or_datum.id, actionspeed_modification, datum/actionspeed_modifier, type_or_datum, priority, COMPARE_VALUE)
+		BINARY_INSERT(type_or_datum.id, actionspeed_modification, /datum/actionspeed_modifier, type_or_datum, priority, COMPARE_VALUE)
 	LAZYSET(actionspeed_modification, type_or_datum.id, type_or_datum)
 	if(update)
 		update_actionspeed()
