@@ -12,7 +12,7 @@ const STATE_MESSAGES = "messages";
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
-const sortByCreditCost = sortBy((a, b) => a.creditCost - b.creditCost);
+const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -283,9 +283,6 @@ const PageMain = (props, context) => {
     shuttleRecallable,
   } = data;
 
-  const children = [];
-  const generalFunctions = [];
-
   const [callingShuttle, setCallingShuttle] = useLocalState(context, "calling_shuttle", false);
   const [messagingAssociates, setMessagingAssociates] = useLocalState(context, "messaging_associates", false);
   const [messagingSector, setMessagingSector] = useLocalState(context, "messaing_sector", null);
@@ -296,85 +293,133 @@ const PageMain = (props, context) => {
     setShowAlertLevelConfirm,
   ] = useLocalState(context, "showConfirmPrompt", [null, null]);
 
-  if (canMakeAnnouncement) {
-    generalFunctions.push(<Button
-      icon="bullhorn"
-      content="Make Priority Announcement"
-      onClick={() => act("makePriorityAnnouncement")}
-    />);
-  }
+  return (
+    <Box>
+      <Section title="Emergency Shuttle">
+        {shuttleCalled
+          ? <Button.Confirm
+            icon="space-shuttle"
+            content="Recall Emergency Shuttle"
+            color="bad"
+            disabled={!shuttleRecallable}
+            tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
+            tooltipPosition="bottom-right"
+            onClick={() => act("recallShuttle")}
+          />
+          : <Button
+            icon="space-shuttle"
+            content="Call Emergency Shuttle"
+            disabled={shuttleCanEvacOrFailReason !== 1}
+            tooltip={
+              shuttleCanEvacOrFailReason !== 1
+                ? shuttleCanEvacOrFailReason
+                : undefined
+            }
+            tooltipPosition="bottom-right"
+            onClick={() => setCallingShuttle(true)}
+          />
+        }
 
-  if (canToggleEmergencyAccess) {
-    generalFunctions.push(<Button.Confirm
-      icon="id-card-o"
-      content={`${emergencyAccess ? "Disable" : "Enable"} Emergency Maintenance Access`}
-      color={emergencyAccess ? "bad" : undefined}
-      onClick={() => act("toggleEmergencyAccess")}
-    />);
-  }
+        {shuttleCalledPreviously && (
+          shuttleLastCalled
+            ? (
+              <Box>
+                Most recent shuttle call/recall traced to:
+                {" "}<b>{shuttleLastCalled}</b>
+              </Box>
+            )
+            : <Box>Unable to trace most recent shuttle/recall signal.</Box>
+        )}
+      </Section>
 
-  generalFunctions.push(<Button
-    icon="desktop"
-    content="Set Status Display"
-    onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
-  />);
+      {!!canSetAlertLevel && (
+        <Section title="Alert Level">
+          <Flex justify="space-between">
+            <Flex.Item>
+              <Box>
+                Currently on <b>{capitalize(alertLevel)}</b> Alert
+              </Box>
+            </Flex.Item>
 
-  generalFunctions.push(<Button
-    icon="envelope-o"
-    content="Message List"
-    onClick={() => act("setState", { state: STATE_MESSAGES })}
-  />);
+            <Flex.Item>
+              <AlertButton
+                alertLevel="green"
+                showAlertLevelConfirm={showAlertLevelConfirm}
+                setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+              />
 
-  let emergencyShuttleButton;
+              <AlertButton
+                alertLevel="blue"
+                showAlertLevelConfirm={showAlertLevelConfirm}
+                setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+              />
+            </Flex.Item>
+          </Flex>
+        </Section>
+      )}
 
-  if (shuttleCalled) {
-    emergencyShuttleButton = (<Button.Confirm
-      icon="space-shuttle"
-      content="Recall Emergency Shuttle"
-      color="bad"
-      disabled={!shuttleRecallable}
-      tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
-      tooltipPosition="bottom-right"
-      onClick={() => act("recallShuttle")}
-    />);
-  } else {
-    emergencyShuttleButton = (<Button
-      icon="space-shuttle"
-      content="Call Emergency Shuttle"
-      disabled={shuttleCanEvacOrFailReason !== 1}
-      tooltip={
-        shuttleCanEvacOrFailReason !== 1
-          ? shuttleCanEvacOrFailReason
-          : undefined
-      }
-      tooltipPosition="bottom-right"
-      onClick={() => setCallingShuttle(true)}
-    />);
-  }
+      <Section title="Functions">
+        <Flex
+          direction="column">
+          {!!canMakeAnnouncement && <Button
+            icon="bullhorn"
+            content="Make Priority Announcement"
+            onClick={() => act("makePriorityAnnouncement")}
+          />}
 
-  if (canBuyShuttles !== 0) {
-    generalFunctions.push(<Button
-      icon="shopping-cart"
-      content="Purchase Shuttle"
-      disabled={canBuyShuttles !== 1}
-      // canBuyShuttles is a string detailing the fail reason
-      // if one can be given
-      tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
-      tooltipPosition="right"
-      onClick={() => act("setState", { state: STATE_BUYING_SHUTTLE })}
-    />);
-  }
+          {!!canToggleEmergencyAccess && <Button.Confirm
+            icon="id-card-o"
+            content={`${emergencyAccess ? "Disable" : "Enable"} Emergency Maintenance Access`}
+            color={emergencyAccess ? "bad" : undefined}
+            onClick={() => act("toggleEmergencyAccess")}
+          />}
 
-  if (canMessageAssociates) {
-    generalFunctions.push(<Button
-      icon="comment-o"
-      content={`Send message to ${emagged ? "[UNKNOWN]" : "CentCom"}`}
-      disabled={!importantActionReady}
-      onClick={() => setMessagingAssociates(true)}
-    />);
+          <Button
+            icon="desktop"
+            content="Set Status Display"
+            onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
+          />
 
-    if (messagingAssociates) {
-      children.push(<MessageModal
+          <Button
+            icon="envelope-o"
+            content="Message List"
+            onClick={() => act("setState", { state: STATE_MESSAGES })}
+          />
+
+          {(canBuyShuttles !== 0) && <Button
+            icon="shopping-cart"
+            content="Purchase Shuttle"
+            disabled={canBuyShuttles !== 1}
+            // canBuyShuttles is a string detailing the fail reason
+            // if one can be given
+            tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
+            tooltipPosition="right"
+            onClick={() => act("setState", { state: STATE_BUYING_SHUTTLE })}
+          />}
+
+          {!!canMessageAssociates && <Button
+            icon="comment-o"
+            content={`Send message to ${emagged ? "[UNKNOWN]" : "CentCom"}`}
+            disabled={!importantActionReady}
+            onClick={() => setMessagingAssociates(true)}
+          />}
+
+          {!!canRequestNuke && <Button
+            icon="bomb"
+            content="Request Nuclear Authentication Codes"
+            disabled={!importantActionReady}
+            onClick={() => setRequestingNukeCodes(true)}
+          />}
+
+          {!!emagged && <Button
+            icon="undo"
+            content="Restore Backup Routing Data"
+            onClick={() => act("restoreBackupRoutingData")}
+          />}
+        </Flex>
+      </Section>
+
+      {!!canMessageAssociates && messagingAssociates && <MessageModal
         label={`Message to transmit to ${emagged ? "[ABNORMAL ROUTING COORDINATES]" : "CentCom"} via quantum entanglement`}
         notice="Please be aware that this process is very expensive, and abuse will lead to...termination. Transmission does not guarantee a response."
         icon="bullhorn"
@@ -386,20 +431,9 @@ const PageMain = (props, context) => {
             message,
           });
         }}
-      />);
-    }
-  }
+      />}
 
-  if (canRequestNuke) {
-    generalFunctions.push(<Button
-      icon="bomb"
-      content="Request Nuclear Authentication Codes"
-      disabled={!importantActionReady}
-      onClick={() => setRequestingNukeCodes(true)}
-    />);
-
-    if (requestingNukeCodes) {
-      children.push(<MessageModal
+      {!!canRequestNuke && requestingNukeCodes && <MessageModal
         label="Reason for requesting nuclear self-destruct codes"
         notice="Misuse of the nuclear request system will not be tolerated under any circumstances. Transmission does not guarantee a response."
         icon="bomb"
@@ -411,181 +445,116 @@ const PageMain = (props, context) => {
             reason,
           });
         }}
-      />);
-    }
-  }
+      />}
 
-  if (emagged) {
-    generalFunctions.push(<Button
-      icon="undo"
-      content="Restore Backup Routing Data"
-      onClick={() => act("restoreBackupRoutingData")}
-    />);
-  }
-
-  if (callingShuttle) {
-    children.push(<MessageModal
-      label="Nature of emergency"
-      icon="space-shuttle"
-      buttonText="Call Shuttle"
-      minLength={callShuttleReasonMinLength}
-      onBack={() => setCallingShuttle(false)}
-      onSubmit={reason => {
-        setCallingShuttle(false);
-        act("callShuttle", {
-          reason,
-        });
-      }}
-    />);
-  }
-
-  children.push(
-    <Section title="Emergency Shuttle">
-      {emergencyShuttleButton}
-
-      {shuttleCalledPreviously
-        ? (
-          shuttleLastCalled
-            ? (
-              <Box>
-                Most recent shuttle call/recall traced to:
-                {" "}<b>{shuttleLastCalled}</b>
-              </Box>
-            )
-            : <Box>Unable to trace most recent shuttle/recall signal.</Box>
-        )
-        : null}
-    </Section>
-  );
-
-  if (canSetAlertLevel) {
-    children.push(
-      <Section title="Alert Level">
-        <Flex justify="space-between">
-          <Flex.Item>
-            <Box>
-              Currently on <b>{capitalize(alertLevel)}</b> Alert
-            </Box>
-          </Flex.Item>
-
-          <Flex.Item>
-            <AlertButton
-              alertLevel="green"
-              showAlertLevelConfirm={showAlertLevelConfirm}
-              setShowAlertLevelConfirm={setShowAlertLevelConfirm}
-            />
-
-            <AlertButton
-              alertLevel="blue"
-              showAlertLevelConfirm={showAlertLevelConfirm}
-              setShowAlertLevelConfirm={setShowAlertLevelConfirm}
-            />
-          </Flex.Item>
-        </Flex>
-      </Section>
-    );
-
-    if (showAlertLevelConfirm && confirmingAlertLevelTick === alertLevelTick) {
-      children.push(
-        <Modal>
-          <Flex
-            direction="column"
-            textAlign="center"
-            width="300px">
-            <Flex.Item fontSize="16px" mb={2}>
-              Swipe ID to confirm change
-            </Flex.Item>
-
-            <Flex.Item mr={2} mb={1}>
-              <Button
-                icon="id-card-o"
-                content="Swipe ID"
-                color="good"
-                fontSize="16px"
-                onClick={() => act("changeSecurityLevel", {
-                  newSecurityLevel: showAlertLevelConfirm,
-                })}
-              />
-
-              <Button
-                icon="times"
-                content="Cancel"
-                color="bad"
-                fontSize="16px"
-                onClick={() => setShowAlertLevelConfirm(false)}
-              />
-            </Flex.Item>
-          </Flex>
-        </Modal>
-      );
-    }
-  }
-
-  children.push(
-    <Section title="Functions">
-      <Table>
-        {generalFunctions.map((button, index) => (
-          <Table.Row key={index}>
-            <Table.Cell>
-              {button}
-            </Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    </Section>
-  );
-
-  if (canSendToSectors && sectors.length > 0) {
-    children.push(
-      <Section title="Allied Sectors">
-        <Table>
-          {
-            sectors.map(sectorName => (
-              <Table.Row key={sectorName}>
-                <Table.Cell>
-                  <Button
-                    content={
-                      `Send a message to station in ${sectorName} sector`
-                    }
-                    disabled={!importantActionReady}
-                    onClick={() => setMessagingSector(sectorName)}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))
-          }
-
-          {sectors.length > 2 && (
-            <Button
-              content="Send a message to all allied stations"
-              disabled={!importantActionReady}
-              onClick={() => setMessagingSector("all")}
-            />
-          )}
-        </Table>
-      </Section>
-    );
-
-    if (messagingSector) {
-      children.push(<MessageModal
-        label="Message to send to allied station"
-        notice="Please be aware that this process is very expensive, and abuse will lead to...termination."
-        icon="bullhorn"
-        buttonText="Send"
-        onBack={() => setMessagingSector(null)}
-        onSubmit={message => {
-          act("sendToOtherSector", {
-            destination: messagingSector,
-            message,
+      {!!callingShuttle && <MessageModal
+        label="Nature of emergency"
+        icon="space-shuttle"
+        buttonText="Call Shuttle"
+        minLength={callShuttleReasonMinLength}
+        onBack={() => setCallingShuttle(false)}
+        onSubmit={reason => {
+          setCallingShuttle(false);
+          act("callShuttle", {
+            reason,
           });
-
-          setMessagingSector(null);
         }}
-      />);
-    }
-  }
+      />}
 
-  return children;
+      {
+        !!canSetAlertLevel
+        && showAlertLevelConfirm
+        && confirmingAlertLevelTick === alertLevelTick
+        && (
+          <Modal>
+            <Flex
+              direction="column"
+              textAlign="center"
+              width="300px">
+              <Flex.Item fontSize="16px" mb={2}>
+                Swipe ID to confirm change
+              </Flex.Item>
+
+              <Flex.Item mr={2} mb={1}>
+                <Button
+                  icon="id-card-o"
+                  content="Swipe ID"
+                  color="good"
+                  fontSize="16px"
+                  onClick={() => act("changeSecurityLevel", {
+                    newSecurityLevel: showAlertLevelConfirm,
+                  })}
+                />
+
+                <Button
+                  icon="times"
+                  content="Cancel"
+                  color="bad"
+                  fontSize="16px"
+                  onClick={() => setShowAlertLevelConfirm(false)}
+                />
+              </Flex.Item>
+            </Flex>
+          </Modal>
+        )
+      }
+
+      {
+        !!canSendToSectors
+        && sectors.length > 0
+        && (
+          <Section title="Allied Sectors">
+            <Table>
+              {
+                sectors.map(sectorName => (
+                  <Table.Row key={sectorName}>
+                    <Table.Cell>
+                      <Button
+                        content={
+                          `Send a message to station in ${sectorName} sector`
+                        }
+                        disabled={!importantActionReady}
+                        onClick={() => setMessagingSector(sectorName)}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              }
+
+              {sectors.length > 2 && (
+                <Button
+                  content="Send a message to all allied stations"
+                  disabled={!importantActionReady}
+                  onClick={() => setMessagingSector("all")}
+                />
+              )}
+            </Table>
+          </Section>
+        )
+      }
+
+      {
+        !!canSendToSectors
+        && sectors.length > 0
+        && messagingSector
+        && <MessageModal
+          label="Message to send to allied station"
+          notice="Please be aware that this process is very expensive, and abuse will lead to...termination."
+          icon="bullhorn"
+          buttonText="Send"
+          onBack={() => setMessagingSector(null)}
+          onSubmit={message => {
+            act("sendToOtherSector", {
+              destination: messagingSector,
+              message,
+            });
+
+            setMessagingSector(null);
+          }}
+        />
+      }
+    </Box>
+  );
 };
 
 const PageMessages = (props, context) => {
