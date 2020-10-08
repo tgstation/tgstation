@@ -1,8 +1,8 @@
-/datum/element/turf_transparency
+/datum/element/turf_z_transparency
 	var/show_bottom_level = FALSE
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_transparency/Attach(datum/target, show_bottom_level = TRUE)
+/datum/element/turf_z_transparency/Attach(datum/target, show_bottom_level = TRUE)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -16,17 +16,20 @@
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
-	RegisterSignal(target, COMSIG_SIGNAL_IS_TRANSPARENT, .proc/transparency_bool)
+
+	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
+
 
 	update_multiz(our_turf, TRUE, TRUE)
 
-/datum/element/turf_transparency/Detach(datum/source, force)
+/datum/element/turf_z_transparency/Detach(datum/source, force)
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
+	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
 ///Updates the viscontents or underlays below this tile.
-/datum/element/turf_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
+/datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
 	var/turf/T = our_turf.below()
 	if(!T)
 		our_turf.vis_contents.len = 0
@@ -38,21 +41,21 @@
 	return TRUE
 
 ///Simply returns a bool, shitty work-around to allow objects to check if they are transparent.
-/datum/element/turf_transparency/proc/transparency_bool()
+/datum/element/turf_z_transparency/proc/transparency_bool()
 	return COMSIG_TURF_TRANSPARENCY_TRUE
 
-/datum/element/turf_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
 	if(dir != DOWN)
 		return
 	update_multiz(our_turf)
 
-/datum/element/turf_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/T, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/T, dir)
 	if(dir != DOWN)
 		return
 	update_multiz(our_turf)
 
 ///Called when there is no real turf below this turf
-/datum/element/turf_transparency/proc/show_bottom_level(turf/our_turf)
+/datum/element/turf_z_transparency/proc/show_bottom_level(turf/our_turf)
 	if(!show_bottom_level)
 		return FALSE
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space

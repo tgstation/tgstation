@@ -112,7 +112,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.clawfootstep = turf_sound_override
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
-		T.AddElement(/datum/element/turf_transparency, TRUE)
+		T.AddElement(/datum/element/turf_z_transparency, TRUE)
 	return
 
 ///This proc is called when the material is removed from an object.
@@ -144,7 +144,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, material_flags)
 	if(alpha)
-		RemoveElement(/datum/element/turf_transparency, FALSE)
+		RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
   *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.

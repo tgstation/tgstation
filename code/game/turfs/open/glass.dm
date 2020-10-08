@@ -21,7 +21,7 @@
 
 /turf/open/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_transparency, TRUE)
+	AddElement(/datum/element/turf_z_transparency, TRUE)
 
 /turf/open/floor/glass/reinforced
 	name = "Reinforced glass floor"
