@@ -88,7 +88,8 @@
 	return data
 
 /obj/machinery/computer/launchpad/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/obj/machinery/launchpad/current_pad = launchpads[selected_id]
 	switch(action)

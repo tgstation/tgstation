@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - tweak: "Medical, chemical, and wound scanners are now consistent in that they are all inaccessible to the blind. Progress!"

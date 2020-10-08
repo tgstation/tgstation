@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "SM will now delaminate faster if exposed to space"

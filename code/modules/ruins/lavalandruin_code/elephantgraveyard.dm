@@ -52,6 +52,8 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
