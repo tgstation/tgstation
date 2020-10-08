@@ -20,13 +20,14 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		SSair.add_to_active(newT,1)
 
 /turf/proc/copyTurf(turf/T)
-	var/obj/O
-	if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
-		O = new()
-		O.underlays.Add(T)
-	T.ChangeTurf(type, flags = CHANGETURF_FORCEOP)
-	if(underlays.len)
-		T.underlays = O.underlays
+	if(T.type != type)
+		var/obj/O
+		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+			O = new()
+			O.underlays.Add(T)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
 		T.icon_state = icon_state
 	if(T.icon != icon)
