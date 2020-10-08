@@ -454,9 +454,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "theatre"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/crew_quarters/theatre/abandoned
 	name = "Abandoned Theatre"
+	icon_state = "abandoned_theatre"
+
+/area/crew_quarters/theatre/zoo_walt // objectively the best one.
+	name = "Walter Pen"
 	icon_state = "abandoned_theatre"
 
 /area/library
