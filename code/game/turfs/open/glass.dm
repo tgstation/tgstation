@@ -16,7 +16,12 @@
 
 /turf/open/floor/glass/Initialize()
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
-	return ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/openspace/LateInitialize()
+	. = ..()
+	AddElement(/datum/element/turf_transparency, TRUE)
 
 /turf/open/floor/glass/reinforced
 	name = "Reinforced glass floor"
