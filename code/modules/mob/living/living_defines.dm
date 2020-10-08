@@ -12,10 +12,8 @@
 	var/lastattackerckey = null
 
 	//Health and life related vars
-	/// Maximum health that should be possible.
-	var/maxHealth = MAX_LIVING_HEALTH
-	/// The mob's current health.
-	var/health = MAX_LIVING_HEALTH
+	var/maxHealth = 100 ///Maximum health that should be possible.
+	var/health = 100 	///A mob's health
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
