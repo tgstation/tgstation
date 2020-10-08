@@ -78,7 +78,8 @@
 	return data
 
 /obj/machinery/computer/pod/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")

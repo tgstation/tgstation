@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Dronespeak manual on KS13 is once again infinite use, and can once again only be used on drones or silicons."

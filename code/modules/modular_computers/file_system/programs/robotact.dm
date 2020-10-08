@@ -12,6 +12,7 @@
 	usage_flags = PROGRAM_TABLET
 	size = 5
 	tgui_id = "NtosRobotact"
+	program_icon = "terminal"
 	///A typed reference to the computer, specifying the borg tablet type
 	var/obj/item/modular_computer/tablet/integrated/tablet
 

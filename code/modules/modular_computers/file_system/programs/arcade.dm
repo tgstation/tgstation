@@ -6,6 +6,7 @@
 	requires_ntnet = FALSE
 	size = 6
 	tgui_id = "NtosArcade"
+	program_icon = "gamepad"
 
 	///Returns TRUE if the game is being played.
 	var/game_active = TRUE
@@ -91,8 +92,10 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
+
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]

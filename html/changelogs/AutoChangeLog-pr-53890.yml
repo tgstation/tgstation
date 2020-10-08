@@ -1,0 +1,5 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - tweak: "Sign language users now make a visual effort to sign when their hands are full, and can't sign if they're holding an item in their one existing arm."
+  - bugfix: "Sign language users are no longer \"cured\" by ling revives, regenerative extracts, or aheals."

@@ -167,6 +167,25 @@ const DELAYS = [
   },
 ];
 
+const REV_DELAYS = [
+  {
+    title: 'Pre',
+    tooltip: 'Time until pod appears above dropoff point',
+  },
+  {
+    title: 'Fall',
+    tooltip: 'Duration of pods\nfalling animation',
+  },
+  {
+    title: 'Open',
+    tooltip: 'Time it takes pod to open after landing',
+  },
+  {
+    title: 'Exit',
+    tooltip: 'Time for pod to\nleave after opening',
+  },
+];
+
 const SOUNDS = [
   {
     title: 'Fall',
@@ -1068,50 +1087,87 @@ const Bays = (props, context) => {
 
 const Timing = (props, context) => {
   const { act, data } = useBackend(context);
-
   return (
     <Section
       fill
-      title="Delay"
+      title="Time"
       buttons={(
-        <Button
-          icon="undo"
-          color="transparent"
-          tooltip={multiline`
+        <Fragment>
+          <Button
+            icon="undo"
+            color="transparent"
+            tooltip={multiline`
             Reset all pod
             timings/delays`}
-          tooltipOverrideLong
-          tooltipPosition="bottom-right"
-          onClick={() => act('resetTiming')} />
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('resetTiming')} />
+          <Button
+            icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
+            selected={data.custom_rev_delay}
+            disabled={!data.effectReverse}
+            color="transparent"
+            tooltip={multiline`
+            Toggle Reverse Delays
+            Note: Top set is  
+            normal delays, bottom set 
+            is reversing pod's delays`}
+            tooltipOverrideLong
+            tooltipPosition="bottom-right"
+            onClick={() => act('toggleRevDelays')} />
+        </Fragment>
       )}>
-      <LabeledControls wrap>
-        {DELAYS.map((delay, i) => (
-          <LabeledControls.Item
-            key={i}
-            label={delay.title}>
-            <Knob
-              inline
-              step={0.02}
-              value={data["delay_"+(i+1)]/10}
-              unclamped
-              minValue={0}
-              unit={"s"}
-              format={value => toFixed(value, 2)}
-              maxValue={10}
-              color={(data["delay_"+(i+1)]/10) > 10 ? "orange" : "default"}
-              onDrag={(e, value) => {
-                act('editTiming', {
-                  timer: i + 1,
-                  value: Math.max(value, 0),
-                });
-              }} />
-          </LabeledControls.Item>
-        ))}
-      </LabeledControls>
+      <DelayHelper 
+        delay_list={DELAYS} 
+      />
+      {data.custom_rev_delay && (
+        <Fragment>
+          <Divider horizontal />
+          <DelayHelper 
+            delay_list={REV_DELAYS} 
+            reverse 
+          />
+        </Fragment>
+      )||""}
     </Section>
   );
 };
-
+const DelayHelper = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    delay_list,
+    reverse = false,
+  } = props;
+  return (
+    <LabeledControls wrap>
+      {delay_list.map((delay, i) => (
+        <LabeledControls.Item
+          key={i}
+          label={data.custom_rev_delay ? "" : delay.title}>
+          <Knob
+            inline
+            step={0.02}
+            size={data.custom_rev_delay ? 0.75 : 1}
+            value={(reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10}
+            unclamped
+            minValue={0}
+            unit={"s"}
+            format={value => toFixed(value, 2)}
+            maxValue={10}
+            color={((reverse ? data.rev_delays[i+1] : data.delays[i+1]) / 10) 
+              > 10 ? "orange" : "default"}
+            onDrag={(e, value) => {
+              act('editTiming', {
+                timer: ""+(i + 1),
+                value: Math.max(value, 0),
+                reverse: reverse,
+              });
+            }} />
+        </LabeledControls.Item>
+      ))}
+    </LabeledControls>
+  );
+};
 const Sounds = (props, context) => {
   const { act, data } = useBackend(context);
   return (
