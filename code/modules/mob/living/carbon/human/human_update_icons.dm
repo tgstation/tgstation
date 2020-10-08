@@ -132,6 +132,12 @@ There are several things that need to be remembered:
 		if(!uniform_overlay)
 			uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, override_state = target_overlay)
 
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_UNIFORM in results)
+			uniform_overlay.pixel_x += results[OFFSET_UNIFORM][1]
+			uniform_overlay.pixel_y += results[OFFSET_UNIFORM][2]
+
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
 			uniform_overlay.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
@@ -158,6 +164,13 @@ There are several things that need to be remembered:
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
+		
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_ID in results)
+			id_overlay.pixel_x += results[OFFSET_ID][1]
+			id_overlay.pixel_y += results[OFFSET_ID][2]
+		
 		if(OFFSET_ID in dna.species.offset_features)
 			id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 			id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
@@ -192,12 +205,18 @@ There are several things that need to be remembered:
 		update_observer_view(gloves,1)
 		overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/clothing/hands.dmi')
 		gloves_overlay = overlays_standing[GLOVES_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_GLOVES in results)
+			gloves_overlay.pixel_x += results[OFFSET_GLOVES][1]
+			gloves_overlay.pixel_y += results[OFFSET_GLOVES][2]
+
 		if(OFFSET_GLOVES in dna.species.offset_features)
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
 	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
-
 
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
@@ -220,6 +239,13 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
 		if(glasses_overlay)
+			
+			var/list/results = list()
+			SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+			if(OFFSET_GLASSES in results)
+				glasses_overlay.pixel_x += results[OFFSET_GLASSES][1]
+				glasses_overlay.pixel_y += results[OFFSET_GLASSES][2]
+
 			if(OFFSET_GLASSES in dna.species.offset_features)
 				glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
@@ -245,6 +271,13 @@ There are several things that need to be remembered:
 		update_observer_view(ears,1)
 		overlays_standing[EARS_LAYER] = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = 'icons/mob/clothing/ears.dmi')
 		var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_EARS in results)
+			ears_overlay.pixel_x += results[OFFSET_EARS][1]
+			ears_overlay.pixel_y += results[OFFSET_EARS][2]
+
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
@@ -270,6 +303,13 @@ There are several things that need to be remembered:
 		update_observer_view(shoes,1)
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi')
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_SHOES in results)
+			shoes_overlay.pixel_x += results[OFFSET_SHOES][1]
+			shoes_overlay.pixel_y += results[OFFSET_SHOES][2]
+
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
@@ -292,6 +332,13 @@ There are several things that need to be remembered:
 		update_observer_view(s_store)
 		overlays_standing[SUIT_STORE_LAYER]	= s_store.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
 		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_STORE_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_S_STORE in results)
+			s_store_overlay.pixel_x += results[OFFSET_S_STORE][1]
+			s_store_overlay.pixel_y += results[OFFSET_S_STORE][2]
+
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
@@ -305,10 +352,17 @@ There are several things that need to be remembered:
 	var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 	if(head_overlay)
 		remove_overlay(HEAD_LAYER)
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_HEAD in results)
+			head_overlay.pixel_x += results[OFFSET_HEAD][1]
+			head_overlay.pixel_y += results[OFFSET_HEAD][2]
+	
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
-			overlays_standing[HEAD_LAYER] = head_overlay
+		overlays_standing[HEAD_LAYER] = head_overlay
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_inv_belt()
@@ -325,6 +379,13 @@ There are several things that need to be remembered:
 		update_observer_view(belt)
 		overlays_standing[BELT_LAYER] = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = 'icons/mob/clothing/belt.dmi')
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_BELT in results)
+			belt_overlay.pixel_x += results[OFFSET_BELT][1]
+			belt_overlay.pixel_y += results[OFFSET_BELT][2]
+
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
@@ -349,6 +410,13 @@ There are several things that need to be remembered:
 		update_observer_view(wear_suit,1)
 		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/clothing/suit.dmi')
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_SUIT in results)
+			suit_overlay.pixel_x += results[OFFSET_SUIT][1]
+			suit_overlay.pixel_y += results[OFFSET_SUIT][2]
+
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
@@ -387,6 +455,13 @@ There are several things that need to be remembered:
 	var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
 	if(mask_overlay)
 		remove_overlay(FACEMASK_LAYER)
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_FACEMASK in results)
+			mask_overlay.pixel_x += results[OFFSET_FACEMASK][1]
+			mask_overlay.pixel_y += results[OFFSET_FACEMASK][2]
+
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
@@ -399,6 +474,13 @@ There are several things that need to be remembered:
 	var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
 	if(back_overlay)
 		remove_overlay(BACK_LAYER)
+
+		var/list/results = list()
+		SEND_SIGNAL(src,COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS,results)
+		if(OFFSET_BACK in results)
+			back_overlay.pixel_x += results[OFFSET_BACK][1]
+			back_overlay.pixel_y += results[OFFSET_BACK][2]
+
 		if(OFFSET_BACK in dna.species.offset_features)
 			back_overlay.pixel_x += dna.species.offset_features[OFFSET_BACK][1]
 			back_overlay.pixel_y += dna.species.offset_features[OFFSET_BACK][2]
@@ -649,3 +731,6 @@ generate/load female uniform sprites matching all previously decided variables
 
 	update_inv_head()
 	update_inv_wear_mask()
+
+/// i hope this works
+#define COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS "spellsword_armor"

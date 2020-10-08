@@ -26,7 +26,8 @@
 	. = ..()
 	if(!(istype(get_area(src), /area/tdome/arena)))
 		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
-		message_admins("A crowbar was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		if(Master.current_runlevel) // If the game hasn't loaded yet, don't display this message
+			message_admins("A crowbar was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
 		qdel(src)
 
 /obj/item/crowbar/suicide_act(mob/user)
