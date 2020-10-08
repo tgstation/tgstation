@@ -287,29 +287,3 @@
 		var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
 		if(objective)
 			objective.completed = TRUE
-	return
-	
-	var/maxcapacity = FALSE //Safety check
-	var/drain = 0 //Drain amount
-	var/drain_total = 0
-
-	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
-
-	if(cell && cell.charge)
-		while(ninja_gloves.candrain && cell.charge > 0 && !maxcapacity)
-			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
-			if(cell.charge < drain)
-				drain = cell.charge
-			if(ninja_suit.cell.charge + drain > ninja_suit.cell.maxcharge)
-				drain = ninja_suit.cell.maxcharge - ninja_suit.cell.charge
-				maxcapacity = TRUE
-			if(do_after(ninja ,10))
-				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE)
-				cell.use(drain)
-				ninja_suit.cell.give(drain)
-				drain_total += drain
-			else
-				break
-
-	return drain_total
