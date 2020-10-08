@@ -82,6 +82,7 @@
 #define HIDENECK		(1<<10)
 /// for wigs, only obscures the headgear
 #define HIDEHEADGEAR	(1<<11)
+#define HIDEMOTHWINGS	(1<<12)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)
