@@ -20016,7 +20016,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aUi" = (
-/turf/open/glass,
+/turf/open/floor/glass,
 /area/hydroponics)
 "aUl" = (
 /obj/structure/chair/office{
@@ -20617,13 +20617,13 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/glass,
+/turf/open/floor/glass,
 /area/hydroponics)
 "aVJ" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/glass,
+/turf/open/floor/glass,
 /area/hydroponics)
 "aVK" = (
 /turf/open/openspace,
@@ -21880,7 +21880,7 @@
 "aYy" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/item/extinguisher,
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "aYz" = (
 /obj/structure/disposalpipe/segment{
@@ -36934,7 +36934,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "bLc" = (
 /obj/machinery/computer/security/telescreen{
@@ -38971,7 +38971,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bRT" = (
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "bRY" = (
 /obj/structure/lattice/catwalk,
@@ -50312,7 +50312,7 @@
 /area/crew_quarters/heads/captain)
 "heL" = (
 /obj/structure/closet/secure_closet/cytology,
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "hgK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -51987,7 +51987,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "lzt" = (
 /obj/item/soap/deluxe,
@@ -56571,7 +56571,7 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/tubes,
 /obj/item/crowbar/red,
-/turf/open/glass/reinforced,
+/turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
 "xzN" = (
 /obj/machinery/door/airlock/external{
