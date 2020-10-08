@@ -41,7 +41,7 @@
 	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
 
 /datum/objective/cyborg_hijack
-	explanation_text = "Use your gloves to convert a cyborg to aide you in sabotaging the station."
+	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
 	
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective
@@ -51,10 +51,10 @@
 	var/area/detonation_location
 
 /datum/objective/security_scramble
-	explanation_text = "Use your gloves on a security console to set everyone to arrest.  Note that the AI will be alerted once you begin!"
+	explanation_text = "Use your gloves on a security console to set everyone to arrest at least once.  Note that the AI will be alerted once you begin!"
 	
 /datum/objective/terror_message
-	explanation_text = "Use your gloves on a communication console to announce a fake warning from Centcom."
+	explanation_text = "Use your gloves on a communication console in order to bring another threat to the station.  Note that the AI will be alerted once you begin!"
 
 /**
   * Proc that adds all the ninja's objectives to the antag datum.
