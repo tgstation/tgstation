@@ -104,12 +104,15 @@
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	if(!cultie || !proximity_flag)
+	if(!cultie)
 		return
 	var/list/knowledge = cultie.get_all_knowledge()
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/eldritch_knowledge_datum = knowledge[X]
-		eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
+		if(proximity_flag)
+			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
+		else
+			eldritch_knowledge_datum.on_distant_eldritch_blade(target,user,proximity_flag,click_parameters)
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"
@@ -369,3 +372,39 @@
 		var/obj/structure/trap/eldritch/eldritch = X
 		if(!QDELETED(eldritch) && eldritch)
 			qdel(eldritch)
+
+/obj/item/eldritch_potion
+	name = "Brew of Day and Night"
+	desc = "You should never see this"
+	icon = 'icons/obj/eldritch.dmi'
+	var/status_effect
+
+/obj/item/eldritch_potion/attack_self(mob/user)
+	. = ..()
+	to_chat(user,"<span class='notice'>You drink the potion and with the viscous liquid, the glass dematerializes.</span>")
+	effect(user)
+	qdel(src)
+
+/obj/item/eldritch_potion/proc/effect(mob/user)
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/carbie = user
+	carbie.apply_status_effect(status_effect)
+
+/obj/item/eldritch_potion/crucible_soul
+	name = "Brew of Crucible Soul"
+	desc = "Allows you to phase through walls for 15 seconds, after the time runs out, you get teleported to your original location."
+	icon_state = "crucible_soul"
+	status_effect = /datum/status_effect/crucible_soul
+
+/obj/item/eldritch_potion/duskndawn
+	name = "Brew of Dusk and Dawn"
+	desc = "Allows you to see clearly through walls and objects for 60 seconds."
+	icon_state = "clarity"
+	status_effect = /datum/status_effect/duskndawn
+
+/obj/item/eldritch_potion/wounded
+	name = "Brew of Wounded Soldier"
+	desc = "For the next 60 seconds each wound will heal you, minor wounds heal 1 of it's damage type per second, moderate heal 3 and critical heal 6."
+	icon_state = "marshal"
+	status_effect = /datum/status_effect/marshal

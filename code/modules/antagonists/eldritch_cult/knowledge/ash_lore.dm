@@ -2,7 +2,7 @@
 	name = "Nightwatcher's secret"
 	desc = "Opens up the path of ash to you. Allows you to transmute a match with a kitchen knife or it's derivatives into an ashen blade."
 	gain_text = "City guard knows their watch. If you ask them at night they may tell you about the ashy lantern."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
@@ -42,7 +42,7 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/C = target
-	var/datum/status_effect/eldritch/E = C.has_status_effect(/datum/status_effect/eldritch/rust) || C.has_status_effect(/datum/status_effect/eldritch/ash) || C.has_status_effect(/datum/status_effect/eldritch/flesh)
+	var/datum/status_effect/eldritch/E = C.has_status_effect(/datum/status_effect/eldritch/rust) || C.has_status_effect(/datum/status_effect/eldritch/ash) || C.has_status_effect(/datum/status_effect/eldritch/flesh) || C.has_status_effect(/datum/status_effect/eldritch/void)
 	if(E)
 		E.on_effect()
 		for(var/X in user.mind.spell_list)
@@ -65,7 +65,7 @@
 	gain_text = "Nightwatcher was a very particular man, always watching, in the night. In spite of his duty, he has tranced through the manse, with his blazing lantern."
 	desc = "Your mansus grasp now applies ash mark on hit. Use your sickly blade to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage decreases with how many times the mark has spread."
 	cost = 2
-	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
+	next_knowledge = list(/datum/eldritch_knowledge/mad_mask)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = PATH_ASH
 
@@ -76,23 +76,15 @@
 		var/mob/living/living_target = target
 		living_target.apply_status_effect(/datum/status_effect/eldritch/ash,5)
 
-/datum/eldritch_knowledge/curse/blindness
-	name = "Curse of blindness"
+/datum/eldritch_knowledge/mad_mask
+	name = "Mask of Madness"
 	gain_text = "He walks through the world, unnoticed by the masses."
-	desc = "Curse someone with 2 minutes of complete blindness by sacrificing a pair of eyes, a screwdriver, with an object that the victim has touched with their bare hands."
+	desc = "Allows you to transmute any mask, with a candle and a pair of eyes, to create a mask of madness, It causes passive stamina damage to everyone around the wearer and hallucinations, can be forced on a non believer to make him unable to take it off..."
 	cost = 1
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/screwdriver)
+	result_atoms = list(/obj/item/clothing/mask/void_mask)
+	required_atoms = list(/obj/item/organ/eyes,/obj/item/clothing/mask,/obj/item/candle)
 	next_knowledge = list(/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/curse/paralysis)
-	timer = 2 MINUTES
 	route = PATH_ASH
-
-/datum/eldritch_knowledge/curse/blindness/curse(mob/living/chosen_mob)
-	. = ..()
-	chosen_mob.become_blind(MAGIC_TRAIT)
-
-/datum/eldritch_knowledge/curse/blindness/uncurse(mob/living/chosen_mob)
-	. = ..()
-	chosen_mob.cure_blind(MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/spell/flame_birth
 	name = "Flame Birth"
@@ -125,7 +117,7 @@
 	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a spill of blood, a heart, left arm and a right arm, and an item that the victim touched  with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/wirecutters,/obj/effect/decal/cleanable/vomit,/obj/item/organ/heart)
-	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness,/datum/eldritch_knowledge/spell/area_conversion)
+	next_knowledge = list(/datum/eldritch_knowledge/mad_mask,/datum/eldritch_knowledge/spell/area_conversion)
 	timer = 2 MINUTES
 
 /datum/eldritch_knowledge/curse/corrosion/curse(mob/living/chosen_mob)
@@ -142,7 +134,7 @@
 	desc = "Curse someone for 5 minutes of inability to walk. Using a knife, pool of blood, left leg, right leg, a hatchet and an item that the victim touched  with their bare hands. "
 	cost = 1
 	required_atoms = list(/obj/item/bodypart/l_leg,/obj/item/bodypart/r_leg,/obj/item/hatchet)
-	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness,/datum/eldritch_knowledge/summon/raw_prophet)
+	next_knowledge = list(/datum/eldritch_knowledge/mad_mask,/datum/eldritch_knowledge/summon/raw_prophet)
 	timer = 5 MINUTES
 
 /datum/eldritch_knowledge/curse/paralysis/curse(mob/living/chosen_mob)

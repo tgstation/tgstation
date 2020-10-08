@@ -1504,6 +1504,7 @@
 #include "code\modules\antagonists\eldritch_cult\eldritch_knowledge.dm"
 #include "code\modules\antagonists\eldritch_cult\eldritch_magic.dm"
 #include "code\modules\antagonists\eldritch_cult\eldritch_monster_antag.dm"
+#include "code\modules\antagonists\eldritch_cult\eldritch_structures.dm"
 #include "code\modules\antagonists\eldritch_cult\knowledge\ash_lore.dm"
 #include "code\modules\antagonists\eldritch_cult\knowledge\flesh_lore.dm"
 #include "code\modules\antagonists\eldritch_cult\knowledge\rust_lore.dm"

@@ -109,6 +109,14 @@
 /datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
 	return
 
+/**
+  * Sickly blade distant act
+  *
+  * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on distant targets
+  */
+/datum/eldritch_knowledge/proc/on_distant_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
+	return
+
 //////////////
 ///Subtypes///
 //////////////
