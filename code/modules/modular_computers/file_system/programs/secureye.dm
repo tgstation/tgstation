@@ -1,8 +1,8 @@
 #define DEFAULT_MAP_SIZE 15
 
-/datum/computer_file/program/watchman
-	filename = "watchman"
-	filedesc = "WaTcHmAn"
+/datum/computer_file/program/secureye
+	filename = "secureye"
+	filedesc = "SecurEye"
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
@@ -10,8 +10,8 @@
 	transfer_access = ACCESS_SECURITY
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
-	tgui_id = "CameraConsole"
-	program_icon = "video"
+	tgui_id = "NtosSecurEye"
+	program_icon = "eye"
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
@@ -26,7 +26,7 @@
 	var/list/cam_plane_masters
 	var/obj/screen/background/cam_background
 
-/datum/computer_file/program/watchman/New()
+/datum/computer_file/program/secureye/New()
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -52,13 +52,13 @@
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
-/datum/computer_file/program/watchman/Destroy()
+/datum/computer_file/program/secureye/Destroy()
 	qdel(cam_screen)
 	QDEL_LIST(cam_plane_masters)
 	qdel(cam_background)
 	return ..()
 
-/datum/computer_file/program/watchman/ui_interact(mob/user, datum/tgui/ui)
+/datum/computer_file/program/secureye/ui_interact(mob/user, datum/tgui/ui)
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -79,8 +79,8 @@
 		user.client.register_map_obj(cam_background)
 		return ..()
 
-/datum/computer_file/program/watchman/ui_data()
-	var/list/data = list()
+/datum/computer_file/program/secureye/ui_data()
+	var/list/data = get_header_data()
 	data["network"] = network
 	data["activeCamera"] = null
 	if(active_camera)
@@ -90,7 +90,7 @@
 		)
 	return data
 
-/datum/computer_file/program/watchman/ui_static_data()
+/datum/computer_file/program/secureye/ui_static_data()
 	var/list/data = list()
 	data["mapRef"] = map_name
 	var/list/cameras = get_available_cameras()
@@ -103,7 +103,7 @@
 
 	return data
 
-/datum/computer_file/program/watchman/ui_act(action, params)
+/datum/computer_file/program/secureye/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -122,7 +122,7 @@
 
 		return TRUE
 
-/datum/computer_file/program/watchman/ui_close(mob/user)
+/datum/computer_file/program/secureye/ui_close(mob/user)
 	. = ..()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
@@ -135,7 +135,7 @@
 		active_camera = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
-/datum/computer_file/program/watchman/proc/update_active_camera_screen()
+/datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
 		show_camera_static()
@@ -169,13 +169,13 @@
 	cam_background.icon_state = "clear"
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
-/datum/computer_file/program/watchman/proc/show_camera_static()
+/datum/computer_file/program/secureye/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 // Returns the list of cameras accessible from this computer
-/datum/computer_file/program/watchman/proc/get_available_cameras()
+/datum/computer_file/program/secureye/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
 		if(!is_station_level(cam.z))//Only show station cameras.

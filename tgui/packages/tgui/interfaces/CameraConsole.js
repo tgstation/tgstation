@@ -4,7 +4,7 @@ import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Input, Section } from '../components';
+import { Button, ByondUi, Input, Section, Flex } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -100,14 +100,22 @@ export const CameraConsoleContent = (props, context) => {
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (
-    <Fragment>
+    <Flex
+      direction={"column"}
+      height="100%">
+      <Flex.Item>
       <Input
         autoFocus
         fluid
         mb={1}
         placeholder="Search for a camera"
         onInput={(e, value) => setSearchText(value)} />
-      <Section>
+      </Flex.Item>
+      <Flex.Item
+      height="90%">
+      <Section
+      fill
+      scrollable>
         {cameras.map(camera => (
           // We're not using the component here because performance
           // would be absolutely abysmal (50+ ms for each re-render).
@@ -130,6 +138,7 @@ export const CameraConsoleContent = (props, context) => {
           </div>
         ))}
       </Section>
-    </Fragment>
+      </Flex.Item>
+    </Flex>
   );
 };

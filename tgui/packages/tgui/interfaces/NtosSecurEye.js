@@ -43,7 +43,7 @@ const selectCameras = (cameras, searchText = '') => {
   ])(cameras);
 };
 
-export const NtosCameraConsole = (props, context) => {
+export const NtosSecurEye = (props, context) => {
   const { act, data, config } = useBackend(context);
   const { PC_device_theme, mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
@@ -57,7 +57,7 @@ export const NtosCameraConsole = (props, context) => {
       height={600}
       theme={PC_device_theme}>
       <div className="CameraConsole__left">
-        <NtosWindow.Content scrollable>
+        <NtosWindow.Content>
           <CameraConsoleContent />
         </NtosWindow.Content>
       </div>
