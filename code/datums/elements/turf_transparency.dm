@@ -1,15 +1,15 @@
 /datum/element/turf_transparency
-	var/show_below = FALSE
+	var/show_bottom_level = FALSE
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_transparency/Attach(datum/target, show_below)
+/datum/element/turf_transparency/Attach(datum/target, show_bottom_level = TRUE)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
 
 	var/turf/our_turf = target
 
-	src.show_below = show_below
+	src.show_bottom_level = show_bottom_level
 
 	our_turf.plane = OPENSPACE_PLANE
 	our_turf.layer = OPENSPACE_LAYER
@@ -30,7 +30,7 @@
 	var/turf/T = our_turf.below()
 	if(!T)
 		our_turf.vis_contents.len = 0
-		if(!show_bottom_level(T) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
+		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
 			our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
 	if(init)
@@ -53,7 +53,7 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_transparency/proc/show_bottom_level(turf/our_turf)
-	if(!show_below)
+	if(!show_bottom_level)
 		return FALSE
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space
 	if(!ispath(path))
