@@ -46,7 +46,7 @@
 	
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(dash_toggled && !target.density)
+	if(dash_toggled && !Adjacent(target) && !target.density)
 		jaunt.Teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
@@ -116,7 +116,7 @@
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
 /datum/action/innate/dash/ninja
-	current_charges = 2
-	max_charges = 2
+	current_charges = 3
+	max_charges = 3
 	charge_rate = 200
 	recharge_sound = null

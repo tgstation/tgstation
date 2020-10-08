@@ -45,14 +45,14 @@
 	///How much energy the suit expends in a single process
 	var/s_cost = 1
 	///Additional energy cost for cloaking per process
-	var/s_acost = 20
+	var/s_acost = 4
 	///How fast the suit is at certain actions, like draining power from things
 	var/s_delay = 40
 	///Units of radium required to refill the adrenaline boost
 	var/a_transfer = 20//How much radium is required to refill the adrenaline boost.
 	///Whether or not the suit is currently in stealth mode.
 	var/stealth = FALSE//Stealth off.
-	///Whether or not the wearing is in the middle of an action, like hacking.
+	///Whether or not the wearer is in the middle of an action, like hacking.
 	var/s_busy = FALSE
 	///Whether or not the adrenaline boost ability is available
 	var/a_boost = TRUE

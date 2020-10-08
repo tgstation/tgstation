@@ -24,7 +24,7 @@
 	ninja.SetKnockdown(0)
 	ninja.SetImmobilized(0)
 	ninja.SetParalyzed(0)
-	ninja.adjustStaminaLoss(-75)
+	ninja.adjustStaminaLoss(-200)
 	ninja.stuttering = 0
 	ninja.update_mobility()
 	ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
@@ -42,5 +42,5 @@
   */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost_after()
 	var/mob/living/carbon/human/ninja = affecting
-	ninja.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer)
+	ninja.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer * 0.25)
 	to_chat(ninja, "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>")

@@ -29,12 +29,8 @@
 	var/mindrain = 200
 	///Maximum amount of power we can drain in a single drain action
 	var/maxdrain = 400
-	///Remaining amount of times that the gloves can be used to hyjack a cyborg
-	var/cyborg_hijacks = 1
-	///Remaining amount of times that the gloves can be used to hyjack a security console
-	var/security_console_hacks = 1
-	///Remaining amount of times that the gloves can be used to hyjack a communication console
-	var/communication_console_hacks = 1
+	///Whether or not the communication console hack was used to summon another antagonist
+	var/communication_console_hack_success = FALSE
 	///How many times the gloves have been used to force open doors.
 	var/door_hack_counter = 0
 

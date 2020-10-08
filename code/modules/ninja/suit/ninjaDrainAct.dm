@@ -143,14 +143,11 @@
 /obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
-	if(ninja_gloves.security_console_hacks <= 0)
-		return
 	AI_notify_hack()
 	if(do_after(ninja, 200))
 		for(var/datum/data/record/rec in sortRecord(GLOB.data_core.general, sortBy, order))
 			for(var/datum/data/record/security_record in GLOB.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
-		ninja_gloves.security_console_hacks--
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return
@@ -162,22 +159,21 @@
 /obj/machinery/computer/communications/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
-	if(ninja_gloves.communication_console_hacks <= 0)
+	if(ninja_gloves.communication_console_hack_success)
 		return
-	if(do_after(ninja, 250))
-		var/announcement_pick = rand(0, 5)
+	AI_notify_hack()
+	if(do_after(ninja, 300))
+		var/announcement_pick = rand(0, 2)
 		switch(announcement_pick)
 			if(0)
-				priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
+				var/datum/round_event_control/spawn_swarmer/swarmer_event = new/datum/round_event_control/spawn_swarmer
+				swarmer_event.runEvent()
 			if(1)
-				priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
-			if(2)
-				priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
-			if(3)
-				priority_announce("Our long-range sensors have detected that your station's defenses have been breached by some sort of alien device.  We suggest searching for and destroying it as soon as possible.", "[command_name()] High-Priority Update")
-			if(4)
-				priority_announce("Unidentified armed ship detected near the station.")
-		ninja_gloves.communication_console_hacks--
+				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
+				var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
+				pirate_event.runEvent()
+		ninja_gloves.communication_console_hack_success = TRUE
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return
@@ -272,28 +268,26 @@
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
 
-	if(ninja_gloves.cyborg_hijacks > 0)
-		to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
-		if (do_after(ninja, 60, target = src))
-			ninja_gloves.cyborg_hijacks--
-			spark_system.start()
-			playsound(loc, "sparks", 50, TRUE)
-			to_chat(src, "<span class='danger'>UPLOAD COMPLETE.  NEW CYBORG MODULE DETECTED.  INSTALLING...</span>")
-			faction = list(ROLE_NINJA)
-			bubble_icon = "syndibot"
-			lawupdate = FALSE
-			scrambledcodes = TRUE
-			ionpulse = TRUE
-			laws = new /datum/ai_laws/ninja_override()
-			module.transform_to(pick(/obj/item/robot_module/syndicate, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/saboteur))
+	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
+	if (do_after(ninja, 60, target = src))
+		spark_system.start()
+		playsound(loc, "sparks", 50, TRUE)
+		to_chat(src, "<span class='danger'>UPLOAD COMPLETE.  NEW CYBORG MODULE DETECTED.  INSTALLING...</span>")
+		faction = list(ROLE_NINJA)
+		bubble_icon = "syndibot"
+		lawupdate = FALSE
+		scrambledcodes = TRUE
+		ionpulse = TRUE
+		laws = new /datum/ai_laws/ninja_override()
+		module.transform_to(pick(/obj/item/robot_module/syndicate, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/saboteur))
 			
-			var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-			if(!ninja_antag)
-				return
-			var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
-			if(objective)
-				objective.completed = TRUE
-		return
+		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+		if(!ninja_antag)
+			return
+		var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
+		if(objective)
+			objective.completed = TRUE
+	return
 	
 	var/maxcapacity = FALSE //Safety check
 	var/drain = 0 //Drain amount
