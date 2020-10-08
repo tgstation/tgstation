@@ -266,9 +266,9 @@
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
 		pulse_strength = min(pulse_strength, air.gases[/datum/gas/carbon_dioxide][MOLES] * 1000, air.gases[/datum/gas/oxygen][MOLES] * 2000) //Ensures matter is conserved properly
 		air.gases[/datum/gas/carbon_dioxide][MOLES] = max(air.gases[/datum/gas/carbon_dioxide][MOLES] - (pulse_strength * 0.001),0)
-		air.gases[/datum/gas/oxygen][MOLES] = max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength * 0.002),0)
+		air.gases[/datum/gas/oxygen][MOLES] = max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength * 0.0005),0)
 		air.assert_gas(/datum/gas/pluoxium)
-		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.004)
+		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.00025)
 		air.garbage_collect()
 		air_update_turf()
 	if (air.gases[/datum/gas/hydrogen])

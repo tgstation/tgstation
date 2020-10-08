@@ -7,6 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -125,7 +126,7 @@
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
-	var/smoothing_junction = NONE
+	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable
@@ -138,7 +139,8 @@
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
-
+	///Reference to atom being orbited
+	var/atom/orbit_target
 
 /**
   * Called when an atom is created in byond (built in engine proc)
