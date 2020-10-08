@@ -463,6 +463,7 @@
 /datum/status_effect/eldritch/void/on_effect()
 	var/turf/open/turfie = get_turf(owner)
 	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
 	return ..()
 
 /// A status effect used for specifying confusion on a living mob.

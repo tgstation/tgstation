@@ -155,9 +155,8 @@
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
-	H.client?.give_award(/datum/award/achievement/misc/rust_ascension, H)
+	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@#  SILENCE! the Void Seer [user.real_name] has come! Fear his call! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
-	new /datum/rust_spread(loc)
 	return ..()
 
 /datum/eldritch_knowledge/final/void_final/on_life(mob/user)
@@ -167,6 +166,7 @@
 
 	for(var/mob/living/carbon/livies in spiral_range(7,user)-user)
 		livies.silent += 5
+		livies.adjust_bodytemperature(-5)
 
 	var/turf/turfie = get_turf(user)
 	if(!isopenturf(turfie))
