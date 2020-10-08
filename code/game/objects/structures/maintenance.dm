@@ -47,7 +47,7 @@ at the cost of risking a vicious bite.**/
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if((living_user.mobility_flags & MOBILITY_STAND) && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if((living_user.mobility_flags & MOBILITY_STAND) || !ishuman(living_user)) //I dont think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 
