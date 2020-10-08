@@ -80,8 +80,7 @@
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	network_id = NETWORK_STATION_ATMOS_AIRALARMS
-	var/target_network = null
+	network_id = NETWORK_ATMOS_AIRALARMS
 
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are min2, min1, max1, max2
@@ -313,9 +312,9 @@
 					"id_tag"	= hid,
 					"long_name" = vent["long_name"],
 					"power"		= vent["power"],
-					"checks"	= vent["pressure_checks"],
-					"excheck"	= vent["pressure_checks"]&1,
-					"incheck"	= vent["pressure_checks"]&2,
+					"checks"	= vent["checks"],
+					"excheck"	= vent["checks"]&1,
+					"incheck"	= vent["checks"]&2,
 					"direction"	= vent["direction"],
 					"external"	= vent["external"],
 					"internal"	= vent["internal"],
@@ -329,12 +328,19 @@
 			if(!scrubber)
 				continue
 			// Does this look like it does alot?  yes.  But its moved from the scrubber to here
-			// I mean, its only used here so why not be just here?
-			var/list/f_types = list()
+			// This ran EACH time it sent updates, so figure it save broadcast if its only run here
+			var/list/f_types = scrubber["_f_types"]
 			var/list/filter_types = scrubber["filter_types"]
-			for(var/path in GLOB.meta_gas_info)
-				var/list/gas = GLOB.meta_gas_info[path]
-				f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
+
+			if(!f_types) // lets cache this mess, save a little bit...
+				f_types = list()
+				for(var/path in GLOB.meta_gas_info)
+					var/list/gas = GLOB.meta_gas_info[path]
+					f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_path" = path, "gas_name" = gas[META_GAS_NAME], "enabled" = FALSE))
+					scrubber["_f_types"] = f_types
+
+			for(var/list/gas in f_types)
+				gas["enabled"] = (gas["gas_path"]  in filter_types)
 
 			data["scrubbers"] += list(list(
 					"id_tag"				= hid,
@@ -402,10 +408,10 @@
 			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
-			send_signal(device_id, list("pressure_checks" = text2num(params["val"])^1), usr)
+			send_signal(device_id, list("checks" = text2num(params["val"])^1), usr)
 			. = TRUE
 		if("incheck")
-			send_signal(device_id, list("pressure_checks" = text2num(params["val"])^2), usr)
+			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 			var/target = params["value"]

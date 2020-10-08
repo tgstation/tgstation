@@ -137,18 +137,6 @@
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
 
-
-
-	///Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
-	var/id_tag = null
-	/// Network id.  A network this item is put on to be searched and found by either its id_tag or hardware_id.  Try to use
-	/// defines as the networks are created on runtime so a misspelling can have your atom end up in network hell.  If you
-	/// want this to be on a network but never FOUND use the define "NETWORK_LIMBO"  This network cannot be searched.
-	var/network_id = null
-	/// Hardware id.  This is created ONLY if a network id is set.  This is a guaranteed unique 32bit hex number for this
-	/// atom.  If this exists, the network is setup and can be used.
-	var/hardware_id = null
-
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -166,7 +154,6 @@
 
 	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
-
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
@@ -237,12 +224,6 @@
 	// apply materials properly from the default custom_materials value
 	set_custom_materials(custom_materials)
 
-	if(network_id)
-		/// This signal will not run till after all maps set up...hopefuly
-		RegisterSignal(src, COMSIG_COMPONENT_NTNET_JOIN_NETWORK, .proc/setup_network)
-		/// See ntnet_join_network wordy comment on why this is here
-		ntnet_join_network(network_id, id_tag)
-
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -300,11 +281,6 @@
 
 	return ..()
 
-
-/// Override this if you need some extra network setup like ports and such
-/// Guaranteed to run after all machines have been placed and have a connection on mapload
-/atom/proc/setup_network()
-	return
 
 /atom/proc/handle_ricochet(obj/projectile/P)
 	var/turf/p_turf = get_turf(P)

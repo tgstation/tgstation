@@ -30,6 +30,7 @@
 	id = "engioutpost"
 	description = "Blown up by an unfortunate accident."
 	suffix = "icemoon_surface_engioutpost.dmm"
+	station_id = STATION_NETWORK_ROOT // should it be on its own network?
 
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
@@ -65,6 +66,7 @@
 	id = "abandonedvillage"
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
+	station_id = "HAPPYPLACE"
 
 /datum/map_template/ruin/icemoon/underground/library
 	name = "Buried Library"
@@ -115,3 +117,4 @@
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
+	station_id = "GOLEM"

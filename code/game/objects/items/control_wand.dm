@@ -39,14 +39,16 @@
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!A.hardware_id) // not on network
+	var/datum/component/ntnet_interface/door = A.GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
+	if(!door || !conn) // not on network
 		return
 
 	// Generate a control packet.
 	var/datum/netdata/data = new("data" = mode)
-	data.sender_id = A.hardware_id
-	data.receiver_id = hardware_id
-	data.network_id = A.network_id
+	data.sender_id = door.hardware_id
+	data.receiver_id = conn.hardware_id
+	data.network_id = door.network.network_id
 	data.passkey = access_list
 
 	ntnet_send(data)

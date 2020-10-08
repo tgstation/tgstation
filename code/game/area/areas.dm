@@ -67,10 +67,13 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-    
+
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
+	///This is the network root id for each item made in this area, detected on map
+	///startup.  If a network_id is detected on the atom, this is used to replace it
+	var/network_root_id = STATION_NETWORK_ROOT
 
 /**
   * A list of teleport locations

@@ -15,6 +15,8 @@
 	var/list/datalink = null
 	var/target_layer = PIPING_LAYER_DEFAULT
 
+	network_id = NETWORK_ATMOS
+
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
 
@@ -37,19 +39,14 @@
 	target = null
 	return ..()
 
-/obj/machinery/meter/New()
-	datalink = list("pressure" = 0)
-	..()
-
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
 	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
-	return ..()
-
-/obj/machinery/meter/setup_network()
+	. = ..()
+	datalink = list("pressure" = 0)
 	var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
 	conn.register_port("status",datalink)
 

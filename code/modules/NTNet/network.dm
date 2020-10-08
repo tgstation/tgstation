@@ -1,17 +1,16 @@
-#define NETWORK_TO_STRING(NETWORK, NODE) "[NETWORK].[NODE].[PORT]"
 /* This is the ntnet!  All network names must be unique.  While, in theory, they can have the same name and
-be under a diffrent parrent, it means we have to implment a proper routing protocal instad of just having a
-big list of networks to search under.  This also means evey device must know its network name and hardware id
+be under a different parent, it means we have to impellent a proper routing protocol instead of just having a
+big list of networks to search under.  This also means every device must know its network name and hardware id
 to find one another.  We also can query an entire network for devices so this works similarly to filter in
 the old radio.
 
-Now port is intresting.  Right now its a list of static data.  So if something querys a port and we have
-it in the list, we can either have it call a call back (not implmented) or return a list of data.
+Now port is interesting.  Right now its a list of static data.  So if something querys a port and we have
+it in the list, we can either have it call a call back (not implemented) or return a list of data.
 
-Port 0 will be the "info" requiest.  It will return the obj.name, obj.type.  More data?
+Port 0 will be the "info" request.  It will return the obj.name, obj.type.  More data?
 Any other port will just fall down
 
-PS - This is just a temp explitaion, I am horiable on typing and documentation because of my dislex ass
+PS - This is just a temp explanation, I am horrible on typing and documentation
 */
 
 /datum/ntnet
@@ -42,7 +41,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	network_id = net_id
 	if(P)
 		parent = P
-		parent.children += src
+		parent.children[network_id] = src
 		root_devices = parent.root_devices
 		networks = parent.networks
 	else
@@ -51,6 +50,13 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		root_devices = list()
 
 	SSnetworks.networks[network_id] = src
+
+/datum/ntnet/vv_edit_var(var_name)
+	. = ..()
+	//switch (var_name)
+	//	if (NAMEOF(src, cyclelinkeddir))
+	//		cyclelinkairlock()
+
 
 // we shouldn't ever need to delete networks.  If we ever have a interface or debug menu to show networks
 // they should just return it as non existent
@@ -69,7 +75,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		children.Cut()
 
 	if(parent)
-		parent.children -= src
+		parent.children.Remove(network_id)
 		parent = null
 
 	SSnetworks.networks.Remove(network_id)
@@ -102,7 +108,7 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 		return SSnetworks.create_network_simple(child_id)
 
 /// connects the component to the network
-/datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device)
+/datum/ntnet/proc/interface_connect(datum/component/ntnet_interface/device, list/alias = null)
 	if(device.network)
 		device.network.interface_disconnect(device)
 	linked_devices[device.hardware_id] = device
@@ -111,12 +117,21 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	if(device.id_tag)
 		// if we have a tag just put it in root devices
 		if(!root_devices[device.id_tag])
-			to_chat(world, "Tag [device.id_tag] created for [parent]")
 			root_devices[device.id_tag] = device
 #ifdef DEBUG_NETWORKS
 		else
-			to_chat(world, "interface_connect: [device.id_tag] already exists")
+			debug_world("interface_connect: [device.id_tag] already exists")
 #endif
+	if(alias)
+		for(var/name in alias)
+			if(name == network_id)
+				continue
+			var/datum/ntnet/net = networks[name]
+			if(!net)
+				debug_world( "Bad alias network.  Networks cannot be created in alias")
+				continue
+			net.linked_devices[device.hardware_id] = device
+		device.network_alias = alias
 
 
 /datum/ntnet/proc/interface_disconnect(datum/component/ntnet_interface/device)
@@ -125,6 +140,14 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 	if(device.id_tag)
 		if(root_devices[device.id_tag] && root_devices[device.id_tag] == device)
 			root_devices.Remove(device.id_tag)
+	if(device.network_alias)
+		for(var/name in device.network_alias)
+			if(name == network_id)
+				continue
+			var/datum/ntnet/net = networks[name]
+			net.linked_devices.Remove(device.hardware_id)
+		device.network_alias = null
+
 	device.network = null
 
 /datum/ntnet/proc/interface_find(tag_or_hid)
@@ -143,27 +166,24 @@ PS - This is just a temp explitaion, I am horiable on typing and documentation b
 // does basic checks before sending
 /datum/ntnet/proc/process_data_transmit(datum/netdata/data)
 	set waitfor = FALSE
-	to_chat(world,"process_data_transmit([data.sender_id]): start ")
-	if(!check_relay_operation())
-		to_chat(world,"process_data_transmit([data.sender_id]): check_relay_operation")
-		return FALSE					// relay or router dead
-	if(!networks[data.network_id])
-		to_chat(world,"process_data_transmit([data.sender_id]):bad  networks [data.network_id]")
+	ASSERT(data.network_id && data.sender_id)
+	// if(!check_relay_operation())
+	// 	to_chat(world,"process_data_transmit([data.sender_id]): check_relay_operation")
+	// 	return FALSE					// relay or router dead
+	if(!root_devices[data.sender_id]) // if the sender is not in the network, we can't transmit it
+		debug_world("process_data_transmit([data.sender_id]):bad  networks [data.network_id]")
 		return FALSE					// target not in the right network
-	// log_data_transfer(data) // might need to profile this first
+	//log_data_transfer(data) // might need to profile this first
 	var/datum/component/ntnet_interface/target
 	var/list/targets = data.receiver_id == null ?  collect_interfaces() : list(data.receiver_id)
 	for(var/hid in targets)
 		target = root_devices[hid]
 		// FOUND IT
-		to_chat(world,"process_data_transmit([data.sender_id]): target [hid]")
-		if(!QDELETED(target)) 		// Do we need this or not? allot of async goes around
-			if(data.passkey && isobj(target.parent))
-				var/obj/O = target.parent
-				if(!O.check_access_ntnet(data))
-					continue // should return
-			target.parent.ntnet_receive(data)
-			to_chat(world,"process_data_transmit([data.sender_id]): transmitted [hid]")
+		if(QDELETED(target)) 		// Do we need this or not? allot of async goes around
+			continue
+		var/obj/O = target.parent
+		if(!O || !data.passkey || O.check_access_ntnet(data))
+			parent.ntnet_receive(data)
 
 
 

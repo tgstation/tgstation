@@ -720,8 +720,6 @@
 
 ///called on an object by its NTNET connection component on receive. (datum/netdata))
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
-///called on an object by its NTNET connection component on joining a network. (datum/ntnet))
-#define COMSIG_COMPONENT_NTNET_JOIN_NETWORK "ntnet_join_network"
 ///called on an object by its NTNET connection component on a port update (hardware_id, port))
 #define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
 

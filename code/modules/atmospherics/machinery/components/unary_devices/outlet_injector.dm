@@ -19,10 +19,11 @@
 
 	pipe_state = "injector"
 
-	network_id = NETWORK_STATION_ATMOS
+	network_id = NETWORK_ATMOS
 	var/datum/netlink/datalink = null
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/setup_network()
+/obj/machinery/atmospherics/components/unary/outlet_injector/Initialize()
+	. = ..()
 	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
 	datalink = net.register_port("status", list(
 		"hardware_id" = net.hardware_id,

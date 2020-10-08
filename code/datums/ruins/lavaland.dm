@@ -52,6 +52,7 @@
 	suffix = "lavaland_surface_ash_walker1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+	station_id = "ASHWALKERS"
 
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"
@@ -60,6 +61,7 @@
 	suffix = "lavaland_surface_syndicate_base1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+	station_id = "SYNDI_LAVALAND"
 
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
@@ -70,6 +72,7 @@
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
+	station_id = "GOLEM"
 
 /datum/map_template/ruin/lavaland/gaia
 	name = "Patch of Eden"

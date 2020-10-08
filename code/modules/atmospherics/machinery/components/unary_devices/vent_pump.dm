@@ -30,14 +30,11 @@
 	// NO_BOUND: Do not pass eithe
 	pipe_state = "uvent"
 
-	network_id = NETWORK_STATION_ATMOS_SCUBBERS
+	network_id = NETWORK_ATMOS_SCUBBERS
 	var/list/datalink = null
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
-	..()
-	if(!id_tag)
-		id_tag = assign_uid_vents()
-
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
+	. = ..()
 	var/area/vent_area = get_area(src)
 	name = sanitize("\proper [vent_area.name] air scrubber [assign_random_name()]")
 	datalink = 	list(
@@ -49,10 +46,8 @@
 			"direction"		= pump_direction,
 			"external"		= external_pressure_bound,
 			"internal"		= internal_pressure_bound,
-)
-/obj/machinery/atmospherics/components/unary/vent_pump/setup_network()
+	)
 	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	var/area/vent_area = get_area(src)
 	net.register_port("status", datalink)
 	if(id_tag)
 		datalink["id_tag"] = id_tag
@@ -63,7 +58,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
-		vent_area.atmos_vents.Remove(hardware_id)
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		vent_area.atmos_vents.Remove(net.hardware_id)
 	datalink = null
 	return ..()
 
@@ -180,13 +176,13 @@
 		pressure_checks &= ~EXT_BOUND
 		pump_direction = SIPHONING
 		datalink["direction"] = pump_direction
-		datalink["pressure_checks"] = pressure_checks
+		datalink["checks"] = pressure_checks
 
 	if("stabilize" in signal.data)
 		pressure_checks |= EXT_BOUND
 		pump_direction = RELEASING
 		datalink["direction"] = pump_direction
-		datalink["pressure_checks"] = pressure_checks
+		datalink["checks"] = pressure_checks
 
 
 	if("power" in signal.data)
@@ -201,12 +197,12 @@
 		var/old_checks = pressure_checks
 		pressure_checks = text2num(signal.data["checks"])
 		if(pressure_checks != old_checks)
-			datalink["pressure_checks"] = pressure_checks
+			datalink["checks"] = pressure_checks
 			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("checks_toggle" in signal.data)
 		pressure_checks = (pressure_checks?0:NO_BOUND)
-		datalink["pressure_checks"] = pressure_checks
+		datalink["checks"] = pressure_checks
 
 	if("direction" in signal.data)
 		pump_direction = text2num(signal.data["direction"])
@@ -358,7 +354,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
-	network_id = NETWORK_STATION_ATMOS_STORAGE
+	network_id = NETWORK_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-3"
 
@@ -435,7 +431,7 @@
 	icon_state = "vent_map_siphon_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
-	network_id = NETWORK_STATION_ATMOS_STORAGE
+	network_id = NETWORK_ATMOS_STORAGE
 	on = TRUE
 	icon_state = "vent_map_siphon_on-2"
 

@@ -9,31 +9,25 @@
 	data.sender_id = NIC.hardware_id
 	return NIC.network.process_data_transmit(data)
 
-/datum/proc/ntnet_join_network(network_name, network_tag=null)
-	if(!SSnetworks.verify_network_name(network_name))
-		return FALSE
-	return AddComponent(/datum/component/ntnet_interface, network_name, network_tag)
-
-
 /datum/component/ntnet_interface
 	var/hardware_id						//text. this is the true ID. do not change this. stuff like ID forgery can be done manually.
 	var/id_tag = null  			// named tag for looking up on mapping objects
 	var/datum/ntnet/network = null		// network we are on, we MUST be on a network or there is no point in this component
 	var/list/registered_sockets 		// list of connections
+	var/list/network_alias = null 	// if we have like an area connection
 
-/datum/component/ntnet_interface/Initialize(network_name, network_tag=null)
+/datum/component/ntnet_interface/Initialize(network_name, network_tag  =null)
 	if(!network_name)
-		log_runtime("Bad network name [network_name], going to limbo it")
+		to_chat(world, "Bad network '[network_name]' for '[parent]', going to limbo it")
 		network_name = NETWORK_LIMBO
-
+	if(network_tag != null && text2num(network_tag) == text2num(num2text(network_tag)))
+		to_chat(world,"Tag is a number?  '[network_name]' for '[parent]', going to limbo it")
+		ASSERT(!isnum(text2num(network_tag)))
 	src.hardware_id = "[SSnetworks.get_next_HID()]"
 	src.id_tag = network_tag
 	SSnetworks.interfaces_by_hardware_id[src.hardware_id] = src
 	src.registered_sockets = list()
 
-	if(isatom(parent))
-		var/atom/A = parent
-		A.hardware_id = src.hardware_id
 	join_network(network_name)
 // Port connection system
 // The basic idea is that two or more objects share a list and transfer data between the list
@@ -73,26 +67,20 @@
 /datum/component/ntnet_interface/Destroy()
 	if(network)
 		leave_network()
-	if(isatom(parent))
-		var/atom/A = parent
-		A.hardware_id = null
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)
 	for(var/port in registered_sockets)
 		deregister_port(port)
 	registered_sockets = null
 	return ..()
 
-/datum/component/ntnet_interface/proc/join_network(network_name)
+/datum/component/ntnet_interface/proc/join_network(network_name, list/extra = null)
 	if(network)
 		leave_network()
 	var/datum/ntnet/net = SSnetworks.create_network_simple(network_name)
 	ASSERT(net)
-	net.interface_connect(src)
+	net.interface_connect(src,extra)
 	ASSERT(network)
-	if(network)
-		var/atom/A = parent
-		if(A)
-			A.network_id = 	network.network_id
+
 		// So why here?  Before this there were hacks (radio, ref sharing, etc) on how other objects "connected" with another
 		// (embedded_controller, assembly's, etc).  They all had their own interfaces and snowflake connections.  By giving
 		// everything a hardware_id and a network_id, now you can find and connect devices.  However, the problem is when maps
@@ -105,15 +93,8 @@
 		// stations that contain multiple map templates or, for example, headset relays are converted to this system, something
 		// needs to run after all the machines are down, all the maps are loaded, but no players exist yet.
 		// So yea.  This is why we have to delay load
-		if(!SSmapping.initialized)
-			SEND_SIGNAL(parent, COMSIG_COMPONENT_NTNET_JOIN_NETWORK, network)
-		else
-			SSnetworks.network_initialize_queue += src
+
 
 /datum/component/ntnet_interface/proc/leave_network()
 	if(network)
 		network.interface_disconnect(src)
-	if(isatom(parent))
-		var/atom/A = parent
-		A.network_id = 	null
-

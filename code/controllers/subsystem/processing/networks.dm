@@ -19,31 +19,54 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	msg = "[stat_tag]:[length(processing)]"
 	return ..()
 
-
 /datum/controller/subsystem/processing/networks/Initialize()
 	station_network = new
-
 	return ..()
+
+
+// verifies the network name has the right letters in it.  Might need to expand unwanted punctuations
+
+/datum/controller/subsystem/processing/networks/proc/verify_network_name(name)
+	return istext(name) && length(name) > 0 && findtext(name, @"[^\.][A-Z0-9_\.]+[^\.]") == 0
+
+// Fixes a network name by replacing the spaces and making eveything uppercase
+/datum/controller/subsystem/processing/networks/proc/_simple_network_name_fix(net_name)
+	return replacetext(uppertext(net_name),"\[ -\]", "_")
+
+/// Ok, so instead of goign though all the maps and making sure all the tags
+/// are set up properly, we can use THIS to set a root id to an area so when the
+/// atom loads it joins the right local network.  neat!
+/datum/controller/subsystem/processing/networks/proc/lookup_root_id(area/A, datum/map_template/M=null)
+	/// Alright boys, lets cycle though a few special cases
+	if(M)
+		if(M.station_id && M.station_id != NETWORK_LIMBO)
+			return M.station_id // override due to template
+		if(istype(M, /datum/map_template/shuttle))
+			var/datum/map_template/shuttle/T = M	// we are a shuttle so use shuttle id
+			return _simple_network_name_fix(T.shuttle_id)
+		else if(istype(M,/datum/map_template/ruin))
+			var/datum/map_template/ruin/R = M	// ruins have an id var?  why so many var names
+			return _simple_network_name_fix(R.id)
+	// ok so template overrides over
+	if(A)
+		if(SSmapping.level_trait(A.z, ZTRAIT_STATION))
+			return STATION_NETWORK_ROOT
+		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
+			return CENTCOM_NETWORK_ROOT
+
+	to_chat(world, "Limbo? Area '[A.name]' is going to limbo?")
+	return NETWORK_LIMBO // shouldn't get here often...hopefully
+
 
 /datum/controller/subsystem/processing/networks/fire(resumed = 0)
 	// so life sucks.  Can't be in Initialize because Initialize is run async and we must start
 	// when everything is built and working.
 	if(SSmapping.initialized)
 		station_network.register_map_supremecy()
-		if(network_initialize_queue.len)
-			for(var/datum/component/ntnet_interface/conn in network_initialize_queue)
-				if(conn.network) // we really should runtime if there is no network
-					SEND_SIGNAL(conn.parent, COMSIG_COMPONENT_NTNET_JOIN_NETWORK, conn.network)
-			network_initialize_queue.Cut()
-		flags |= SS_NO_FIRE // never have to run again yea!
 	else
 		to_chat(world, "Holly fuck those maps take a while to load")
 
 
-// verifies the network name has the right letters in it.  Might need to expand unwanted punctuations
-
-/datum/controller/subsystem/processing/networks/proc/verify_network_name(name)
-	return istext(name) && length(name) > 0 && name[1] != "." && name[length(name)] != "."&& findtext(name,"\[ \n-;:\]*") == 0
 
 
 // create a network name from a list containing the network tree
@@ -124,7 +147,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 #endif
 
 
-
 /// I think we should do this more like a routable ip address
 /datum/controller/subsystem/processing/networks/proc/get_next_HID()
 	do
@@ -136,3 +158,249 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	while(interfaces_by_hardware_id[.])
 
 
+// debug networks.  Gives you a list of networks so you can look to see where eveything is
+/client/proc/debug_networks()
+	set category = "Debug"
+	set name = "View Networks"
+	//set src in world
+	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
+
+	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
+		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>", confidential = TRUE)
+		return
+
+	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
+	asset_cache_datum.send(usr)
+
+
+	var/title = ""
+	var/hash
+
+	var/no_icon = FALSE
+
+
+	title = "Root Networks"
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
+
+	var/sprite_text
+	if(sprite)
+		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
+	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
+
+	var/list/root_networks_html = list()
+	for(var/datum/ntnet/net in SSnetworks.networks)
+
+	var/list/dropdownoptions
+	if (islist)
+		dropdownoptions = list(
+			"---",
+			"Add Item" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ADD),
+			"Remove Nulls" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_NULLS),
+			"Remove Dupes" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_DUPES),
+			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
+			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
+			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+			"View References" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_VIEW_REFERENCES),
+			"---"
+			)
+		for(var/i in 1 to length(dropdownoptions))
+			var/name = dropdownoptions[i]
+			var/link = dropdownoptions[name]
+			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
+	else
+		dropdownoptions = D.vv_get_dropdown()
+
+	var/list/names = list()
+	if(!islist)
+		for(var/V in D.vars)
+			names += V
+	sleep(1)
+
+	var/list/variable_html = list()
+	if(islist)
+		var/list/L = D
+		for(var/i in 1 to L.len)
+			var/key = L[i]
+			var/value
+			if(IS_NORMAL_LIST(L) && IS_VALID_ASSOC_KEY(key))
+				value = L[key]
+			variable_html += debug_variable(i, value, 0, L)
+	else
+		names = sortList(names)
+		for(var/V in names)
+			if(D.can_vv_get(V))
+				variable_html += D.vv_get_var(V)
+
+	var/html = {"
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+		<title>[title]</title>
+		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
+	</head>
+	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
+		<script type="text/javascript">
+			// onload
+			function selectTextField() {
+				var filter_text = document.getElementById('filter');
+				filter_text.focus();
+				filter_text.select();
+				var lastsearch = getCookie("[refid][cookieoffset]search");
+				if (lastsearch) {
+					filter_text.value = lastsearch;
+					updateSearch();
+				}
+			}
+			function getCookie(cname) {
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0; i<ca.length; i++) {
+					var c = ca\[i];
+					while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+				}
+				return "";
+			}
+
+			// main search functionality
+			var last_filter = "";
+			function updateSearch() {
+				var filter = document.getElementById('filter').value.toLowerCase();
+				var vars_ol = document.getElementById("vars");
+
+				if (filter === last_filter) {
+					// An event triggered an update but nothing has changed.
+					return;
+				} else if (filter.indexOf(last_filter) === 0) {
+					// The new filter starts with the old filter, fast path by removing only.
+					var children = vars_ol.childNodes;
+					for (var i = children.length - 1; i >= 0; --i) {
+						try {
+							var li = children\[i];
+							if (li.innerText.toLowerCase().indexOf(filter) == -1) {
+								vars_ol.removeChild(li);
+							}
+						} catch(err) {}
+					}
+				} else {
+					// Remove everything and put back what matches.
+					while (vars_ol.hasChildNodes()) {
+						vars_ol.removeChild(vars_ol.lastChild);
+					}
+
+					for (var i = 0; i < complete_list.length; ++i) {
+						try {
+							var li = complete_list\[i];
+							if (!filter || li.innerText.toLowerCase().indexOf(filter) != -1) {
+								vars_ol.appendChild(li);
+							}
+						} catch(err) {}
+					}
+				}
+
+				last_filter = filter;
+				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
+
+			}
+
+			// onkeydown
+			function handle_keydown() {
+				if(event.keyCode == 116) {  //F5 (to refresh properly)
+					document.getElementById("refresh_link").click();
+					event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+					return false;
+				}
+				return true;
+			}
+
+			// onkeyup
+			function handle_keyup() {
+				updateSearch();
+			}
+
+			// onchange
+			function handle_dropdown(list) {
+				var value = list.options\[list.selectedIndex].value;
+				if (value !== "") {
+					location.href = value;
+				}
+				list.selectedIndex = 0;
+				document.getElementById('filter').focus();
+			}
+
+			// byjax
+			function replace_span(what) {
+				var idx = what.indexOf(':');
+				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
+			}
+		</script>
+		<div align='center'>
+			<table width='100%'>
+				<tr>
+					<td width='50%'>
+						<table align='center' width='100%'>
+							<tr>
+								<td>
+									[sprite_text]
+									<div align='center'>
+										[header.Join()]
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div align='center'>
+							<b><font size='1'>[formatted_type]</font></b>
+							<span id='marked'>[marked_line]</span>
+							<span id='varedited'>[varedited_line]</span>
+							<span id='deleted'>[deleted_line]</span>
+						</div>
+					</td>
+					<td width='50%'>
+						<div align='center'>
+							<a id='refresh_link' href='?_src_=vars;
+datumrefresh=[refid];[HrefToken()]'>Refresh</a>
+							<form>
+								<select name="file" size="1"
+									onchange="handle_dropdown(this)"
+									onmouseclick="this.focus()">
+									<option value selected>Select option</option>
+									[dropdownoptions.Join()]
+								</select>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+		<font size='1'>
+			<b>E</b> - Edit, tries to determine the variable type by itself.<br>
+			<b>C</b> - Change, asks you for the var type first.<br>
+			<b>M</b> - Mass modify: changes this variable for all objects of this type.<br>
+		</font>
+		<hr>
+		<table width='100%'>
+			<tr>
+				<td width='20%'>
+					<div align='center'>
+						<b>Search:</b>
+					</div>
+				</td>
+				<td width='80%'>
+					<input type='text' id='filter' name='filter_text' value='' style='width:100%;'>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<ol id='vars'>
+			[variable_html.Join()]
+		</ol>
+		<script type='text/javascript'>
+			var complete_list = \[\];
+			var lis = document.getElementById("vars").children;
+			for(var i = lis.length; i--;) complete_list\[i\] = lis\[i\];
+		</script>
+	</body>
+</html>
+"}
+	src << browse(html, "window=variables[refid];size=475x650")

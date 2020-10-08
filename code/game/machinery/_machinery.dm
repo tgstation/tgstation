@@ -128,11 +128,33 @@ Class Procs:
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
 
+	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
+	/// Next pr after the network fix will have me refactor door interactions, so help me god.
+	var/id_tag = null
+	/// Network id.  A network this item is put on to be searched and found by either its id_tag or hardware_id.  Try to use
+	/// defines as the networks are created on runtime so a misspelling can have your atom end up in network hell.  If you
+	/// want this to be on a network but never FOUND use the define "NETWORK_LIMBO"  This network cannot be broadcasted or
+	/// searched in but point to point still works.
+	var/network_id = null
 
-/obj/machinery/Initialize()
+/obj/machinery/Initialize(mapload)
 	if(!armor)
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	if(network_id)
+		var/area/A = get_area(src)
+		if(mapload && A && A.network_root_id)
+			// got to love how map loading works
+			// The area name is the root network for this device.  This way
+			// all devices in the area join the same base network.  Next PR will
+			// have a tgui interface to update and change networks
+			network_id = NETWORK_SET_ROOT(A.network_root_id, network_id)
+		else
+			// This should cover areas made after the map loading
+			network_id = NETWORK_SET_ROOT(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+	/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 	. = ..()
+
 	GLOB.machines += src
 
 	if(ispath(circuit, /obj/item/circuitboard))
@@ -146,6 +168,12 @@ Class Procs:
 		occupant_typecache = typecacheof(occupant_typecache)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Helper proc for telling a machine to reconnect to any slave devices.  This runs in LateInitialize, so we are on the network
+/// and "supposedly" the devices we need to connect to are on the network.  But LateInitialize runs async and only at the end
+/// of map templates.  So if your trying to cross connect something over z levels on map load ...well.. good luck.
+/obj/machinery/proc/reconnect_network()
+	return
 
 /// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
@@ -161,6 +189,8 @@ Class Procs:
 	. = ..()
 	power_change()
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
+	reconnect_network()
+
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -648,6 +678,14 @@ Class Procs:
 	. = ..()
 	if(machine_stat & BROKEN)
 		. += "<span class='notice'>It looks broken and non-functional.</span>"
+	else
+		// Simple interface to quickly get the hardware id if you have a multi tool in your hand.
+		var/obj/item/multitool/heldmultitool = get_multitool(user) // see telecoms
+		if(heldmultitool)
+			var/datum/component/ntnet_interface/conn = GetComponent(/datum/component/ntnet_interface)
+			if(conn)
+				. += "<span class='notice'>NTNET HWID: [conn.hardware_id] NETWORK: [conn.network.network_id]</span>"
+
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
 			. += "<span class='warning'>It's on fire!</span>"

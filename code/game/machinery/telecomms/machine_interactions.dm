@@ -204,7 +204,7 @@
 
 // Returns a multitool from a user depending on their mobtype.
 
-/obj/machinery/telecomms/proc/get_multitool(mob/user)
+/obj/machinery/proc/get_multitool(mob/user)
 	var/obj/item/multitool/P = null
 	// Let's double check
 	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))

@@ -24,19 +24,19 @@
 
 	pipe_state = "scrubber"
 
-	network_id = NETWORK_STATION_ATMOS_SCUBBERS
+	network_id = NETWORK_ATMOS_SCUBBERS
 	var/list/datalink = null
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
-	if(!id_tag)
-		id_tag = assign_uid_vents()
-
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
 
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
+	. = ..()
 	var/area/scrub_area = get_area(src)
 	name = sanitize("\proper [scrub_area.name] air scrubber [assign_random_name()]")
 	datalink =  list(
@@ -50,10 +50,7 @@
 		"scrubbing" = scrubbing,
 		"widenet" = widenet,
 	)
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/setup_network()
 	var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
-	var/area/scrub_area = get_area(src)
 	net.register_port("status", datalink)
 	if(id_tag)
 		datalink["id_tag"] = id_tag
@@ -62,11 +59,11 @@
 	scrub_area.atmos_scrubbers[net.hardware_id] = datalink // magic!
 
 
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	if(scrub_area)
-		scrub_area.atmos_scrubbers.Remove(hardware_id)
+		var/datum/component/ntnet_interface/net = GetComponent(/datum/component/ntnet_interface)
+		scrub_area.atmos_scrubbers.Remove(net.hardware_id)
 	datalink = null
 	return ..()
 

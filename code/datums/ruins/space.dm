@@ -50,6 +50,7 @@
 	name = "Survivalist Bunker"
 	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three-man heavily fortified bunker into a giant unused asteroid. \
 	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
+	station_id = "DEEPSTORAGE"
 
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
@@ -57,6 +58,7 @@
 	name = "Derelict Tradepost"
 	description = "A once-bustling tradestation that handled imports and exports from nearby stations now lays eerily dormant. \
 	The last received message was a distress call from one of the on-board officers, but we had no success in making contact again."
+	station_id = "RSS13"
 
 /datum/map_template/ruin/space/derelict1
 	id = "derelict1"
@@ -110,6 +112,7 @@
 	suffix = "gasthelizards.dmm"
 	name = "Disposal Facility 17"
 	description = "Gas efficiency at 95.6%, fluid elimination at 96.2%. Will require renewed supplies of 'carpet' before the end of the quarter."
+	station_id = "GASTHEM"
 
 /datum/map_template/ruin/space/intact_empty_ship
 	id = "intact-empty-ship"
@@ -149,6 +152,7 @@
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
 	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	station_id = "TTOWERS"
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -174,12 +178,14 @@
 	name = "DJ Station"
 	description = "Until very recently this pirate radio station was used to harangue local space stations over a variety of perceived \"ethics violations\". \
 	It seems like someone finally got sick of it, but the equipment still works."
+	station_id = "DJSTATION"
 
 /datum/map_template/ruin/space/thederelict
 	id = "thederelict"
 	suffix = "thederelict.dmm"
 	name = "Kosmicheskaya Stantsiya 13"
 	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open question to this day. Most corporations deny its existence, for fear of questioning on what became of its crew."
+	station_id = "KS13"
 
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
@@ -187,6 +193,7 @@
 	name = "Abandoned Teleporter"
 	description = "In space construction the teleporter is often the first system brought online. \
 	This lonely, half-built teleporter is a sign of a proposed structure that for one reason or another just never got built."
+	station_id = "X2341"
 
 /datum/map_template/ruin/space/crashedclownship
 	id = "crashedclownship"
@@ -194,6 +201,7 @@
 	name = "Crashed Clown Ship"
 	description = "For centuries the promise of a new clown homeworld has been the siren call for countless clown vessels. \
 	Alas, the clown's lust for shenanigans means that successful voyages are almost unheard of, with most vessels falling to hilarious consequences almost immediately."
+
 
 /datum/map_template/ruin/space/crashedship
 	id = "crashedship"
@@ -208,6 +216,7 @@
 	name = "Syndicate Listening Station"
 	description = "Listening stations form the backbone of the syndicate's information-gathering operations. \
 	Assignment to these stations is dreaded by most agents, as it entails long and lonely shifts listening to nearby stations chatter incessantly about the most meaningless things."
+	station_id = "SYNDIPOST"
 
 /datum/map_template/ruin/space/old_ai_sat
 	id = "oldAIsat"
@@ -216,12 +225,14 @@
 	description = "When the inspector told the employees that they were all fired, and that their jobs \"could be done by trained lizards anyway\", they reacted badly. \
 	This event and others is the reason why Central always sends an ERT squad with their competent inspectors. Incompetent inspectors are told they can \"do it alone\" because they're \"that pro\". \
 	Incompetent inspectors believe this."
+	station_id = "SATCOMS"
 
 /datum/map_template/ruin/space/oldteleporter
 	id = "oldteleporter"
 	suffix = "oldteleporter.dmm"
 	name = "Detached Teleporter"
 	description = "The structure of this surprisingly intact teleporter suggests that it was once part of a larger structure, but what remains of said structure, if anything, can only be guessed at."
+	station_id = "X2343"
 
 /datum/map_template/ruin/space/vaporwave
 	id = "vaporwave"
@@ -243,6 +254,7 @@
 	name = "Ancient Space Station"
 	description = "The crew of a space station awaken one hundred years after a crisis. Awaking to a derelict space station on the verge of collapse, and a hostile force of invading \
 	hivebots. Can the surviving crew overcome the odds and survive and rebuild, or will the cold embrace of the stars become their new home?"
+	station_id = "CHARLIE"
 
 /datum/map_template/ruin/space/gondoland
 	id = "gondolaasteroid"
@@ -256,12 +268,14 @@
 	name = "NT Medical Ship"
 	description = "An ancient ship, said to be among the first discovered derelicts near Space Station 13 that was still in working order. \
 	Aged and deprecated by time, this relic of a vessel is now broken beyond repair."
+	station_id = "WHITESHIP1"
 
 /datum/map_template/ruin/space/whiteshipdock
 	id = "whiteshipdock"
 	suffix = "whiteshipdock.dmm"
 	name = "Whiteship Dock"
 	description = "An abandoned but functional vessel parked in deep space, ripe for the taking."
+	station_id = "WHITESHIP2"
 
 /datum/map_template/ruin/space/cat_experiments
 	id = "meow"
@@ -269,12 +283,14 @@
 	name = "Feline-Human Combination Den"
 	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
 	are morally sound or not is another issue entirely."
+	station_id = "KITTY"
 
 /datum/map_template/ruin/space/clownplanet
 	id = "clownplanet"
 	suffix = "clownplanet.dmm"
 	name = "Clown Planet"
 	description = "Thought lost in 2552, this minor planet has recently been rediscovered."
+	station_id = "FUNNEY"
 
 /datum/map_template/ruin/space/clericden
 	id = "clericden"
@@ -287,9 +303,11 @@
 	suffix = "forgottenship.dmm"
 	name = "Syndicate Forgotten Ship"
 	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
+	station_id = "SYNDI_3X24"
 
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
 	suffix = "hellfactory.dmm"
 	name = "Heck Brewery"
 	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
+	station_id = "HELLBREW"
