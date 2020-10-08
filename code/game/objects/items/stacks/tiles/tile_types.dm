@@ -381,5 +381,3 @@
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
-
-
