@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "Pizza now uses the new  food component."
+  - rscdel: "Custom pizza has been temporarily removed as a result."
