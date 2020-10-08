@@ -19,7 +19,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/open/openspace/LateInitialize()
+/turf/open/floor/glass/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, TRUE)
 

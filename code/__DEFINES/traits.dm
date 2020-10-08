@@ -351,4 +351,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define WARPWHISTLE_TRAIT "warpwhistle"
 
 ///Turf traits
-#define TURF_Z_TRANSPARENT_TRAIT
+#define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
