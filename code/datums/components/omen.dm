@@ -65,8 +65,7 @@
 		if(istype(turf_content, /obj/machinery/door/airlock))
 			to_chat(living_guy, "<span class='warning'>A malevolent force launches your body to the floor...</span>")
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
-			living_guy.apply_status_effect(STATUS_EFFECT_KNOCKDOWN, 10, TRUE)
-			living_guy.apply_status_effect(STATUS_EFFECT_STUN, 10, TRUE)
+			living_guy.apply_status_effect(STATUS_EFFECT_WORMED, 10, TRUE)
 			darth_airlock.close(force_crush = TRUE)
 			if(!permanent)
 				qdel(src)

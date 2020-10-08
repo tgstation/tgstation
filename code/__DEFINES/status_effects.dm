@@ -41,6 +41,9 @@
 
 #define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is unable to stand up
 
+/// Status effect knocks the owner to the floor, immobilising and incapacitating them while they are prone.
+#define STATUS_EFFECT_WORMED /datum/status_effect/incapacitating/wormed
+
 #define STATUS_EFFECT_IMMOBILIZED /datum/status_effect/incapacitating/immobilized //the affected is unable to move
 
 #define STATUS_EFFECT_PARALYZED /datum/status_effect/incapacitating/paralyzed //the affected is unable to move, use items, or stand up.
