@@ -16,8 +16,10 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
-	attack_verb_continuous = list("hits", "pierces", "slices", "attacks")
-	attack_verb_simple = list("hit", "pierce", "slice", "attack")
+	attack_verb_simple = list("hit", "pierce", "mine", "attack")
+	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
+	wound_bonus = 10
+	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -29,8 +31,8 @@
 /obj/item/pickaxe/rusted
 	name = "rusty pickaxe"
 	desc = "A pickaxe that's been left to rust."
-	attack_verb_continuous = list("ineffectively hits")
 	attack_verb_simple = list("ineffectively hit")
+	attack_verb_continuous = list("ineffectively hits")
 	force = 1
 	throwforce = 1
 
@@ -47,32 +49,34 @@
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
+	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	icon_state = "spickaxe"
 	inhand_icon_state = "spickaxe"
 	worn_icon_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
-	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
+	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	icon_state = "dpickaxe"
 	inhand_icon_state = "dpickaxe"
 	worn_icon_state = "dpickaxe"
 	toolspeed = 0.3
-	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
+	desc = "An electric mining drill for the especially scrawny."
 	icon_state = "handdrill"
 	inhand_icon_state = "jackhammer"
 	worn_icon_state = "jackhammer"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
+	attack_verb_simple = list("hit", "pierce", "mine", "drill", "attack")
+	attack_verb_continuous = list("hits", "pierces", "mines", "drills", "attacks")
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
-	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
@@ -85,24 +89,28 @@
 
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
+	desc = "Yours is the drill that will pierce the heavens!"
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
-	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
+	desc = "Yours is the drill that will pierce the heavens!" // Copied from the regular diamond drill.
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
+	desc = "Cracks rocks with sonic blasts."
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	worn_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts."
+	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
+	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
+	sharpness = SHARP_NONE
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"
@@ -176,4 +184,3 @@
 	toolspeed = 0.7
 	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
-	sharpness = SHARP_EDGED
