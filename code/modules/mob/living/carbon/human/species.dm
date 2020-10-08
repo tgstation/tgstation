@@ -784,6 +784,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if("moth_antennae" in mutant_bodyparts)
 		if(!H.dna.features["moth_antennae"] || H.dna.features["moth_antennae"] == "None" || !HD)
 			bodyparts_to_add -= "moth_antennae"
+	if("moth_wings" in mutant_bodyparts)
+		if("moth_wings" in mutant_bodyparts) if(!H.dna.features["moth_wings"] || H.dna.features["moth_wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEMOTHWINGS) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))
+			bodyparts_to_add -= "moth_wings"
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE

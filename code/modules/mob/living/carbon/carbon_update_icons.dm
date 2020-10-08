@@ -28,22 +28,6 @@
 	var/list/overlays_standing[TOTAL_LAYERS]
 
 /mob/living/carbon/proc/apply_overlay(cache_index)
-	var/layer_modifiers = list()
-	SEND_SIGNAL(src,COMSIG_HUMAN_LAYER_OFFSETS,layer_modifiers)
-	if(length(layer_modifiers) == TOTAL_LAYERS && layer_modifiers[cache_index] && overlays_standing[cache_index])
-		if (islist(overlays_standing[cache_index]))
-			var/list/modified = list()
-			for(var/A in overlays_standing[cache_index])
-				var/mutable_appearance/MA = A
-				MA.pixel_x += layer_modifiers[cache_index][1]
-				MA.pixel_y += layer_modifiers[cache_index][2]
- 				modified += MA
-			overlays_standing[cache_index] = modified
-		else
-			var/mutable_appearance/MA = mutable_appearance(overlays_standing[cache_index])
-			MA.pixel_x += layer_modifiers[cache_index][1]
-			MA.pixel_y += layer_modifiers[cache_index][2]
-			overlays_standing[cache_index] = MA
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
 

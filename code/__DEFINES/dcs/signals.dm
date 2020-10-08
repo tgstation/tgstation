@@ -825,4 +825,3 @@
 
 // i hope this works
 #define COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS "spellsword_armor"
-#define COMSIG_HUMAN_LAYER_OFFSETS "spellsword_sizeup"
