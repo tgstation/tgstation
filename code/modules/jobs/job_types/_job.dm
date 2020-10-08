@@ -66,6 +66,7 @@
 	var/bounty_types = CIV_JOB_BASIC
 
 /datum/job/New()
+	. = ..()
 	var/list/jobs_changes = GetMapChanges()
 	if(!jobs_changes)
 		return
