@@ -35,14 +35,17 @@
 		our_turf.vis_contents.len = 0
 		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
 			our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-		return FALSE
+			return FALSE
 	if(init)
 		our_turf.vis_contents += T
+	if(isclosedturf(our_turf)) //Show girders below closed turfs
+		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
+		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
+		our_turf.underlays += girder_underlay
+		var/mutable_appearance/plating_underlay = mutable_appearance('icons/turf/floors.dmi', "plating", layer = TURF_LAYER-0.02)
+		plating_underlay = RESET_ALPHA | RESET_COLOR
+		our_turf.underlays += plating_underlay
 	return TRUE
-
-///Simply returns a bool, shitty work-around to allow objects to check if they are transparent.
-/datum/element/turf_z_transparency/proc/transparency_bool()
-	return COMSIG_TURF_TRANSPARENCY_TRUE
 
 /datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
 	if(dir != DOWN)
@@ -64,6 +67,7 @@
 		if(!ispath(path))
 			warning("Z-level [our_turf.z] has invalid baseturf '[SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF)]'")
 			path = /turf/open/space
-	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
+	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance
 	return TRUE
