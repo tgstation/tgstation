@@ -29,12 +29,6 @@
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
-	var/obj/item/circuitboard/computer/cargo/board = circuit
-	contraband = board.contraband
-	if (board.obj_flags & EMAGGED)
-		obj_flags |= EMAGGED
-	else
-		obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -62,6 +56,10 @@
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
+
+/obj/machinery/computer/cargo/on_construction()
+	. = ..()
+	circuit.configure_machine(src)
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -233,7 +233,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0,skip_mindless=0)
+/proc/getpois(mobs_only = FALSE, skip_mindless = FALSE, specify_dead_role = TRUE)
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
@@ -247,7 +247,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 		if(M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if(M.stat == DEAD)
+		if(M.stat == DEAD && specify_dead_role)
 			if(isobserver(M))
 				name += " \[ghost\]"
 			else

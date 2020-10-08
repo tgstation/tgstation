@@ -7,6 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -138,7 +139,8 @@
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
-
+	///Reference to atom being orbited
+	var/atom/orbit_target
 
 /**
   * Called when an atom is created in byond (built in engine proc)

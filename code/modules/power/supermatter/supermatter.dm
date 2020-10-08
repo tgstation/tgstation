@@ -100,6 +100,8 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
+#define MAX_SPACE_EXPOSURE_DAMAGE 2
+
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
@@ -555,6 +557,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
+			//Check for holes in the SM inner chamber
+			for(var/t in RANGE_TURFS(1, loc))
+				if(!isspaceturf(t))
+					continue
+				var/turf/turf_to_check = t
+				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
+					var/integrity = get_integrity()
+					if(integrity < 10)
+						damage += clamp((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+					else if(integrity < 25)
+						damage += clamp((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+					else if(integrity < 45)
+						damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+					else if(integrity < 75)
+						damage += clamp((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+					break
 			//caps damage rate
 
 			//Takes the lower number between archived damage + (1.8) and damage

@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "The kitchen cold room and medbay freezer air alarms on Metastation have been given reasonable temperature thresholds"
