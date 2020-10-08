@@ -103,7 +103,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space)
 "av" = (
 /obj/structure/stairs/north,
@@ -1030,7 +1030,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1139,7 +1139,7 @@
 /area/engine/storage)
 "fp" = (
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -1198,7 +1198,7 @@
 /turf/open/floor/plating,
 /area/construction)
 "iu" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hallway/secondary/service)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -1294,7 +1294,7 @@
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1346,10 +1346,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hallway/secondary/service)
 "qo" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "qx" = (
 /obj/structure/railing/corner{
@@ -1372,7 +1372,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1485,7 +1485,7 @@
 /area/storage/primary)
 "xO" = (
 /obj/structure/lattice,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "yl" = (
 /obj/structure/cable,
@@ -1562,7 +1562,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1754,7 +1754,7 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,

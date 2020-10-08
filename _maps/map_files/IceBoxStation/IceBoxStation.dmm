@@ -932,7 +932,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/security/execution/transfer)
 "acb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1129,7 +1129,7 @@
 	id = "executionflash";
 	pixel_x = 25
 	},
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/security/execution/transfer)
 "acB" = (
 /obj/effect/turf_decal/stripes/end{
@@ -7526,7 +7526,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/quartermaster/storage)
 "aqv" = (
 /obj/machinery/door/airlock/external{
@@ -7870,7 +7870,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "arm" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/quartermaster/storage)
 "arn" = (
 /obj/structure/closet/athletic_mixed,
@@ -8089,7 +8089,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/quartermaster/storage)
 "arR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -10864,7 +10864,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/quartermaster/storage)
 "ayj" = (
 /obj/structure/table,
@@ -17627,7 +17627,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aNO" = (
 /obj/machinery/light/small{
@@ -18039,7 +18039,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics North"
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aOS" = (
 /obj/structure/disposalpipe/segment,
@@ -18071,7 +18071,7 @@
 /area/hallway/secondary/entry)
 "aOZ" = (
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aPa" = (
 /obj/structure/disposalpipe/segment{
@@ -18142,7 +18142,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/security/execution/transfer)
 "aPk" = (
 /turf/open/floor/plasteel/chapel{
@@ -20016,7 +20016,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aUi" = (
-/turf/open/transparent/glass,
+/turf/open/glass,
 /area/hydroponics)
 "aUl" = (
 /obj/structure/chair/office{
@@ -20132,7 +20132,7 @@
 	pixel_x = 24
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aUA" = (
 /obj/structure/table/wood,
@@ -20617,16 +20617,16 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/transparent/glass,
+/turf/open/glass,
 /area/hydroponics)
 "aVJ" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/glass,
+/turf/open/glass,
 /area/hydroponics)
 "aVK" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aVL" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -20641,7 +20641,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aVN" = (
 /obj/structure/disposalpipe/segment{
@@ -20954,7 +20954,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aWA" = (
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/security/execution/transfer)
 "aWC" = (
 /obj/structure/cable,
@@ -21384,7 +21384,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "aXp" = (
 /obj/machinery/door/airlock{
@@ -21880,7 +21880,7 @@
 "aYy" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/item/extinguisher,
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "aYz" = (
 /obj/structure/disposalpipe/segment{
@@ -27288,7 +27288,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "blq" = (
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors)
 "blr" = (
 /obj/machinery/computer/card/minor/cmo,
@@ -36542,7 +36542,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "bJI" = (
 /obj/structure/disposalpipe/segment,
@@ -36831,7 +36831,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/transparent/openspace/icemoon,
+/turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors)
 "bKL" = (
 /obj/structure/disposalpipe/segment{
@@ -36934,7 +36934,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "bLc" = (
 /obj/machinery/computer/security/telescreen{
@@ -38971,18 +38971,18 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bRT" = (
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "bRY" = (
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "bSa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "bSc" = (
 /obj/structure/table,
@@ -49427,7 +49427,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "ekN" = (
 /obj/effect/turf_decal/tile/green,
@@ -49590,7 +49590,7 @@
 	dir = 8;
 	network = list("ss13","rd","xeno_pens")
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "feO" = (
 /obj/structure/disposalpipe/segment{
@@ -50237,7 +50237,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "gWd" = (
 /obj/structure/cable,
@@ -50312,7 +50312,7 @@
 /area/crew_quarters/heads/captain)
 "heL" = (
 /obj/structure/closet/secure_closet/cytology,
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "hgK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -50424,7 +50424,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "hFg" = (
 /obj/machinery/door/airlock/external{
@@ -50556,7 +50556,7 @@
 	id = "publicElevator"
 	},
 /obj/machinery/light/floor,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "ibG" = (
 /obj/machinery/nanite_programmer,
@@ -50963,7 +50963,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "jqx" = (
 /obj/structure/railing/corner{
@@ -51690,7 +51690,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "kKU" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -51987,7 +51987,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "lzt" = (
 /obj/item/soap/deluxe,
@@ -52158,7 +52158,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "lTQ" = (
 /obj/vehicle/ridden/wheelchair{
@@ -52197,7 +52197,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "lZG" = (
 /obj/effect/turf_decal/tile/blue,
@@ -52349,7 +52349,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hydroponics)
 "muM" = (
 /obj/structure/cable,
@@ -52685,11 +52685,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "nka" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "nlo" = (
 /obj/structure/industrial_lift,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "nlN" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -52935,7 +52935,7 @@
 	c_tag = "Xenobiology Lab Entrance";
 	network = list("ss13","rd")
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "nLS" = (
 /obj/machinery/door/airlock/research{
@@ -53256,7 +53256,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/storage/mining)
 "oHU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -53509,7 +53509,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "pnD" = (
 /obj/structure/table/glass,
@@ -53662,7 +53662,7 @@
 	dir = 8;
 	network = list("ss13","rd","xeno_pens")
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "pBF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -55284,7 +55284,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/light,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "ulo" = (
 /obj/effect/turf_decal/delivery,
@@ -56294,7 +56294,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "wUs" = (
 /obj/structure/closet/secure_closet/detective,
@@ -56571,7 +56571,7 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/tubes,
 /obj/item/crowbar/red,
-/turf/open/transparent/glass/reinforced,
+/turf/open/glass/reinforced,
 /area/science/xenobiology)
 "xzN" = (
 /obj/machinery/door/airlock/external{
@@ -56603,7 +56603,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "xCR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -56870,7 +56870,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 "ydc" = (
 /obj/structure/cable,
@@ -56968,7 +56968,7 @@
 	dir = 4;
 	network = list("ss13","rd","xeno_pens")
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/science/xenobiology)
 
 (1,1,1) = {"
