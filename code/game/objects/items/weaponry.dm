@@ -134,7 +134,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
-	if(!QDELETED(target) && iscarbon(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
+	if(!QDELETED(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
 		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
@@ -143,9 +143,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/attack_self(mob/living/user)
 	var/closest_victim
 	var/closest_distance = 255
-	for(var/mob/living/carbon/human/H in GLOB.player_list - user)
-		if(H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
-			closest_victim = H
+	for(var/mob/living/carbon/human/scot in GLOB.player_list - user)
+		if(scot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = scot
+	for(var/mob/living/silicon/robot/siliscot in GLOB.player_list - user)
+		if(siliscot.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
+			closest_victim = siliscot
+
 	if(!closest_victim)
 		to_chat(user, "<span class='warning'>[src] thrums for a moment and falls dark. Perhaps there's nobody nearby.</span>")
 		return
@@ -206,6 +210,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
+
+/obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "claymore_cyborg"
+	var/mob/living/silicon/robot/robot
+
+/obj/item/claymore/highlander/robot/Initialize()
+	var/obj/item/robot_module/kiltkit = loc
+	robot = kiltkit.loc
+	if(!istype(robot))
+		qdel(src)
+	return ..()
+
+/obj/item/claymore/highlander/robot/process()
+	loc.layer = LARGE_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"

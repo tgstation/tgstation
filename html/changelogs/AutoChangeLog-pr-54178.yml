@@ -1,0 +1,6 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - balance: "Uranium material gives less radioactivity per unit"
+  - balance: "Sheets now have more material effects"
+  - balance: "Statues now have less material effects"

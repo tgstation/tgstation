@@ -50,9 +50,7 @@
 		return
 	if(get_active_held_item())
 		return
-	if(!(mobility_flags & MOBILITY_MOVE))
-		return
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	return TRUE
 
@@ -431,12 +429,13 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
-		
+
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-					
+
 	else
+		SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
@@ -467,8 +466,6 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 			else if (mood.sanity >= SANITY_DISTURBED)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-		for(var/datum/brain_trauma/trauma in M.get_traumas())
-			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)

@@ -98,7 +98,8 @@
 	return data
 
 /obj/item/blackmarket_uplink/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("set_category")

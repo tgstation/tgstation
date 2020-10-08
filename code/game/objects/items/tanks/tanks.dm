@@ -23,6 +23,8 @@
 	var/volume = 70
 	///Set the tier of the tanks
 	var/mode = TANK_TIER_1
+	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	var/tank_holder_icon_state = "holder_generic"
 
 /obj/item/tank/tier_1
 	name = "tier 1 tank"
@@ -96,6 +98,11 @@
 
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/item/tank/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
@@ -205,7 +212,8 @@
 	return data
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("pressure")

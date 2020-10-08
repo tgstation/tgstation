@@ -752,7 +752,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM)
+		stomach.adjust_charge(reac_volume * REM * 20)
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))

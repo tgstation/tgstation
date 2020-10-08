@@ -7,6 +7,9 @@
 
 /// Console used on the whiteship bridge. Comes with GPS pre-baked.
 /obj/machinery/computer/shuttle/white_ship/bridge
+	name = "White Ship Bridge Console"
+	desc = "Used to control the White Ship from the bridge. Emits a faint GPS signal."
+	circuit = /obj/item/circuitboard/computer/white_ship/bridge
 
 /obj/machinery/computer/shuttle/white_ship/bridge/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
