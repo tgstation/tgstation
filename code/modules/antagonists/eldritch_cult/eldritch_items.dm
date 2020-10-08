@@ -357,14 +357,11 @@
 	background_icon_state = "bg_ecult"
 	button_icon_state = "rune_break"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN
-	var/mob/living/carbon/human/holder
+	check_flags = AB_CHECK_CONSCIOUS
 	var/obj/item/melee/rune_knife/sword
 
 /datum/action/innate/rune_shatter/Grant(mob/user, obj/object)
 	sword = object
-	holder = user
-	//i know what im doing
 	return ..()
 
 /datum/action/innate/rune_shatter/Activate()
