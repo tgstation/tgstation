@@ -126,35 +126,35 @@
 // OLD TITANIUM (titanium floor tiles before PR #50454)
 /turf/open/floor/mineral/titanium/tiled
 	name = "titanium tile"
-	icon_state = "titanium_old"
+	icon_state = "titanium_tiled"
 	broken_states = list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
 
 /turf/open/floor/mineral/titanium/tiled/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/tiled/yellow
-	icon_state = "titanium_yellow_old"
+	icon_state = "titanium_tiled_yellow"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/yellow
 
 /turf/open/floor/mineral/titanium/tiled/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/tiled/blue
-	icon_state = "titanium_blue_old"
+	icon_state = "titanium_tiled_blue"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/blue
 
 /turf/open/floor/mineral/titanium/tiled/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/tiled/white
-	icon_state = "titanium_white_old"
+	icon_state = "titanium_tiled_white"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/white
 
 /turf/open/floor/mineral/titanium/tiled/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/tiled/purple
-	icon_state = "titanium_purple_old"
+	icon_state = "titanium_tiled_purple"
 	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/purple
 
 /turf/open/floor/mineral/titanium/tiled/purple/airless
