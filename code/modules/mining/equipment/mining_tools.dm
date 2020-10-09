@@ -115,8 +115,8 @@
 	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
 	force = 20
-	bare_wound_bonus = 25 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 	sharpness = SHARP_NONE
+	bare_wound_bonus = 25 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"
