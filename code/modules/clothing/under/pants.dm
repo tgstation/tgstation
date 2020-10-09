@@ -6,6 +6,7 @@
 	custom_price = 60
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"

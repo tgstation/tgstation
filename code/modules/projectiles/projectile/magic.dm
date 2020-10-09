@@ -21,8 +21,6 @@
 		if(isliving(M))
 			var/mob/living/L = M
 			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-				if(L.hellbound && L.stat == DEAD)
-					return BULLET_ACT_BLOCK
 				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
 					L.grab_ghost(force = TRUE) // even suicides
 					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
@@ -49,8 +47,6 @@
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.death(0)
 		else
-			if(target.hellbound && target.stat == DEAD)
-				return BULLET_ACT_BLOCK
 			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE) // even suicides
 				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
@@ -545,7 +541,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind || !L.mind.hasSoul)
+		if(L.anti_magic_check() || !L.mind)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		to_chat(L, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
@@ -553,7 +549,7 @@
 		L.health = min(L.health, L.maxHealth)
 		if(L.maxHealth <= 0)
 			to_chat(L, "<span class='userdanger'>Your weakened soul is completely consumed by the [src]!</span>")
-			L.mind.hasSoul = FALSE
+			return
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
@@ -684,22 +680,6 @@
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 
-/obj/projectile/magic/aoe/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
-/obj/projectile/magic/aoe/fireball/infernal/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			return BULLET_ACT_BLOCK
-	var/turf/T = get_turf(target)
-	for(var/i=0, i<50, i+=10)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
 
 //still magic related, but a different path
 

@@ -54,7 +54,8 @@
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("door")

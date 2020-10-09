@@ -652,8 +652,6 @@
 				set_species(/datum/species/skeleton)
 				if(prob(90))
 					addtimer(CALLBACK(src, .proc/death), 30)
-					if(mind)
-						mind.hasSoul = FALSE
 			if(5)
 				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
 				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)

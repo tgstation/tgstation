@@ -129,7 +129,8 @@
 	return data
 
 /obj/item/assembly/prox_sensor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

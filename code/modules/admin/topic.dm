@@ -1254,12 +1254,6 @@
 			return
 		output_ai_laws()
 
-	else if(href_list["admincheckdevilinfo"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/mob/M = locate(href_list["admincheckdevilinfo"])
-		output_devil_info(M)
-
 	else if(href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
 		if(!ismob(M))
@@ -1413,9 +1407,9 @@
 		else if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
 		else if(isethereal(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+			cookiealt = /obj/item/food/energybar
 		else if(islizard(H))
-			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+			cookiealt = /obj/item/food/meat/slab
 		var/obj/item/new_item = new cookiealt(H)
 		if(H.put_in_hands(new_item))
 			H.update_inv_hands()

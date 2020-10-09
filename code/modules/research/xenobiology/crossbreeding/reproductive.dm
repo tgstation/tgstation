@@ -20,14 +20,14 @@ Reproductive extracts:
 		return
 	if(istype(O, /obj/item/storage/bag/bio))
 		var/list/inserted = list()
-		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/monkeycube, src, 1, null, null, user, inserted)
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/food/monkeycube, src, 1, null, null, user, inserted)
 		if(inserted.len)
-			var/obj/item/reagent_containers/food/snacks/monkeycube/M = inserted[1]
+			var/obj/item/food/monkeycube/M = inserted[1]
 			if(istype(M))
 				eat_cube(M, user)
 		else
 			to_chat(user, "<span class='warning'>There are no monkey cubes in the bio bag!</span>")
-	if(istype(O,/obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O,/obj/item/food/monkeycube))
 		eat_cube(O, user)
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)

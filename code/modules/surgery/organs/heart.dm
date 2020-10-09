@@ -62,6 +62,11 @@
 
 /obj/item/organ/heart/on_life()
 	..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
@@ -93,7 +98,7 @@
 		failed = TRUE
 
 /obj/item/organ/heart/get_availability(datum/species/S)
-	return !(NOBLOOD in S.inherent_traits)
+	return !(NOBLOOD in S.species_traits)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -205,6 +210,11 @@
 
 /obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
