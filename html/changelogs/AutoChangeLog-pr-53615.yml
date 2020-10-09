@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - rscadd: "Reverse wrench mode upgrade to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
