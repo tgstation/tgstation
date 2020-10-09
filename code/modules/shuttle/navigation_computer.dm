@@ -63,7 +63,7 @@
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
-	if(jumpto_ports.len)
+	if(jumpto_ports.len || length(SSshuttle.beacons))
 		jump_action = new /datum/action/innate/camera_jump/shuttle_docker
 	..()
 
