@@ -33354,7 +33354,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bMr" = (
@@ -47940,7 +47939,6 @@
 	id = "trash";
 	name = "Disposals Launch Seal"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},

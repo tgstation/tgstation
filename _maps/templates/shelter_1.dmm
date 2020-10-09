@@ -60,7 +60,6 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "n" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
 /area/survivalpod)

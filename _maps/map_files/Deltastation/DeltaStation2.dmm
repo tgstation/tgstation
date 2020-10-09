@@ -601,7 +601,6 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abt" = (
@@ -6202,7 +6201,6 @@
 	id = "trash";
 	name = "Disposals Launch Seal"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -26379,7 +26377,6 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "bbz" = (
@@ -98260,7 +98257,6 @@
 	id = "toxinsdriver";
 	name = "Toxins Launcher Bay Door"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/misc_lab)
 "dLL" = (
@@ -115232,10 +115228,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
-"xZM" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/space/basic,
-/area/space)
 "yaW" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -151604,7 +151596,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaa
 abE
 aaO
 aca
@@ -152118,7 +152110,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaa
 abG
 aaO
 acc
@@ -156230,7 +156222,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaa
 abE
 aaO
 aca
@@ -156744,7 +156736,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaa
 abG
 aaO
 acc
@@ -173507,9 +173499,9 @@ aaa
 ajr
 aad
 aKV
-xZM
+aaa
 bbv
-xZM
+aaa
 aKV
 aad
 aad

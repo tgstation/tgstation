@@ -13543,7 +13543,6 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEo" = (
@@ -27505,7 +27504,6 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "blT" = (
@@ -36978,7 +36976,6 @@
 	id = "toxinsdriver";
 	name = "toxins launcher bay door"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLm" = (

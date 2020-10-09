@@ -40,8 +40,6 @@
 	var/datum/action/innate/aux_base/build/build_action = new //Action for using the RCD
 	var/datum/action/innate/aux_base/airlock_type/airlock_mode_action = new //Action for setting the airlock type
 	var/datum/action/innate/aux_base/window_type/window_action = new //Action for setting the window type
-	var/datum/action/innate/aux_base/place_fan/fan_action = new //Action for spawning fans
-	var/fans_remaining = 0 //Number of fans in stock.
 	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
 	var/turret_stock = 0 //Turrets in stock
 	var/obj/machinery/computer/auxiliary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
@@ -59,7 +57,6 @@
 	. = ..()
 	if(mapload) //Map spawned consoles have a filled RCD and stocked special structures
 		RCD.matter = RCD.max_matter
-		fans_remaining = 4
 		turret_stock = 4
 
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
@@ -112,11 +109,6 @@
 		window_action.target = src
 		window_action.Grant(user)
 		actions += window_action
-
-	if(fan_action)
-		fan_action.target = src
-		fan_action.Grant(user)
-		actions += fan_action
 
 	if(turret_action)
 		turret_action.target = src
@@ -219,32 +211,6 @@
 	if(..())
 		return
 	B.RCD.toggle_window_glass()
-
-/datum/action/innate/aux_base/place_fan
-	name = "Place Tiny Fan"
-	button_icon_state = "build_fan"
-
-/datum/action/innate/aux_base/place_fan/Activate()
-	if(..())
-		return
-
-	var/turf/fan_turf = get_turf(remote_eye)
-
-	if(!B.fans_remaining)
-		to_chat(owner, "<span class='warning'>[B] is out of fans!</span>")
-		return
-
-	if(!check_spot())
-		return
-
-	if(fan_turf.density)
-		to_chat(owner, "<span class='warning'>Fans may only be placed on a floor.</span>")
-		return
-
-	new /obj/structure/fans/tiny(fan_turf)
-	B.fans_remaining--
-	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
-	playsound(fan_turf, 'sound/machines/click.ogg', 50, TRUE)
 
 /datum/action/innate/aux_base/install_turret
 	name = "Install Plasma Anti-Wildlife Turret"

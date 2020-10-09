@@ -112,6 +112,7 @@
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/machinery/door/airlock/survival_pod/glass
 	opacity = FALSE

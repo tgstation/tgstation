@@ -104,7 +104,6 @@
 	req_one_access = 0;
 	req_one_access_txt = "25;48"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/survivalpod)
 "q" = (
@@ -276,7 +275,6 @@
 /area/survivalpod)
 "R" = (
 /obj/machinery/door/airlock/survival_pod/glass,
-/obj/structure/fans/tiny,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 
