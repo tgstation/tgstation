@@ -639,11 +639,11 @@
 				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 				L.Knockdown(knockdown_time)
 			else
-				Stun((knockdown_time * 2), 1, 1)
+				Stun((knockdown_time * 2), ignore_canstun = TRUE)
 			charge_end()
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
-			Stun((knockdown_time * 2), 1, 1)
+			Stun((knockdown_time * 2), ignore_canstun = TRUE)
 
 		if(charge_state)
 			charge_state = FALSE

@@ -612,13 +612,13 @@
 			log_combat(src, src, "revived")
 
 /mob/living/proc/remove_CC()
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
-	SetImmobilized(0, FALSE)
-	SetParalyzed(0, FALSE)
-	SetSleeping(0, FALSE)
+	SetStun(0)
+	SetKnockdown(0)
+	SetImmobilized(0)
+	SetParalyzed(0)
+	SetSleeping(0)
 	setStaminaLoss(0)
-	SetUnconscious(0, FALSE)
+	SetUnconscious(0)
 
 
 /mob/living/Crossed(atom/movable/AM)

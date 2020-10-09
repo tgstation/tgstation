@@ -74,12 +74,12 @@
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Paralyze(40, 1, 1)
+				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
 		else if(hit_atom.density && !hit_atom.CanPass(src))
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>[src] smashes into [hit_atom]!</span>")
-			Paralyze(40, 1, 1)
+			Paralyze(40, ignore_canstun = TRUE)
 
 		if(leaping)
 			leaping = FALSE
