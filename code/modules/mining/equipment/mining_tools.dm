@@ -18,7 +18,7 @@
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb_simple = list("hit", "pierce", "mine", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
-	wound_bonus = 10
+	wound_bonus = 30
 	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
@@ -54,7 +54,7 @@
 	inhand_icon_state = "spickaxe"
 	worn_icon_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
-	force = 17
+	force = 18
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -63,7 +63,7 @@
 	inhand_icon_state = "dpickaxe"
 	worn_icon_state = "dpickaxe"
 	toolspeed = 0.3
-	force = 19
+	force = 20
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
@@ -77,6 +77,8 @@
 	attack_verb_continuous = list("hits", "pierces", "mines", "drills", "attacks")
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
+	force = 18
+	wound_bonus = 25
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
@@ -92,12 +94,14 @@
 	desc = "Yours is the drill that will pierce the heavens!"
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
+	force = 20
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	desc = "Yours is the drill that will pierce the heavens!" // Copied from the regular diamond drill.
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
+	force = 20
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -110,6 +114,8 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
+	force = 20
+	bare_wound_bonus = 25 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 	sharpness = SHARP_NONE
 
 /obj/item/pickaxe/improvised
