@@ -12,8 +12,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "c" = (
-/obj/machinery/computer/shuttle/mining{
-	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public;construction_mining_custom";
+/obj/machinery/computer/shuttle{
+	possible_destinations = "construction_mining_custom";
 	shuttleId = "construction_mining"
 	},
 /turf/open/floor/plating/airless,
@@ -81,6 +81,7 @@
 /area/shuttle/mining)
 "J" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker{
+	jumpto_ports = list(mining_home = 1, mining_away = 1, landing_zone_dock = 1, mining_public = 1, construction_mining_custom = 1);
 	shuttleId = "construction_mining";
 	shuttlePortId = "construction_mining_custom"
 	},
