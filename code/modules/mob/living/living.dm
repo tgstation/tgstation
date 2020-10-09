@@ -606,7 +606,7 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 		if(excess_healing)
-			emote("gasp")
+			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
