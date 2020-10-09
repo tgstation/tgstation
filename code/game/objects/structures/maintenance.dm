@@ -120,7 +120,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/destructible/cult/beret_altar/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user) && status)
-		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!.</span>")
+		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
 	else
 		return ..()
 
