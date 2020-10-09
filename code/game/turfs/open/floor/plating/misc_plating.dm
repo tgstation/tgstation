@@ -284,6 +284,15 @@
 	layer = HIGH_TURF_LAYER
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 
+/turf/open/floor/plating/grass/fall
+	name = "grass"
+	desc = "A patch of grass."
+	icon_state = "grass_autumn"
+	base_icon_state = "grass_autumn"
+	smoothing_groups = null
+	canSmoothWith = null
+	layer = HIGH_TURF_LAYER
+
 /turf/open/floor/plating/grass/Initialize()
 	. = ..()
 	if(smoothing_flags)
