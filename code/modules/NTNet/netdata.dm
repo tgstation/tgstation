@@ -67,6 +67,8 @@
 	var/network_id
 	var/passkey = null // sends auth data used to check if we can connect or send data to a device
 	var/list/data = list()
+	// Used for packet queuing
+	var/datum/netdata/next = null
 
 /datum/netdata/proc/get(idx)
 	if(data)

@@ -14,12 +14,6 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 */
 
 /datum/ntnet
-	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
-	// High values make displaying logs much laggier.
-	var/static/setting_maxlogcount = 100
-	var/static/list/relays = list()
-	var/static/list/logs = list()
-
 	// special case for network_id being null
 	// We are in general subspace, where all we are is a list of networks
 	//
@@ -154,72 +148,7 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	return root_devices[tag_or_hid]
 
 
-/datum/ntnet/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.
-	for(var/i in relays)
-		var/obj/machinery/ntnet_relay/n = i
-		if(zlevel && n.z != zlevel)
-			continue
-		if(n.is_operational)
-			return TRUE
-	return FALSE
 
-// does basic checks before sending
-/datum/ntnet/proc/process_data_transmit(datum/netdata/data)
-	set waitfor = FALSE
-	ASSERT(data.network_id && data.sender_id)
-	// if(!check_relay_operation())
-	// 	to_chat(world,"process_data_transmit([data.sender_id]): check_relay_operation")
-	// 	return FALSE					// relay or router dead
-	if(!root_devices[data.sender_id]) // if the sender is not in the network, we can't transmit it
-		debug_world("process_data_transmit([data.sender_id]):bad  networks [data.network_id]")
-		return FALSE					// target not in the right network
-	//log_data_transfer(data) // might need to profile this first
-	var/datum/component/ntnet_interface/target
-	var/list/targets = data.receiver_id == null ?  collect_interfaces() : list(data.receiver_id)
-	for(var/hid in targets)
-		target = root_devices[hid]
-		// FOUND IT
-		if(QDELETED(target)) 		// Do we need this or not? allot of async goes around
-			continue
-		var/obj/O = target.parent
-		if(!O || !data.passkey || O.check_access_ntnet(data))
-			parent.ntnet_receive(data)
-
-
-
-/datum/ntnet/proc/log_data_transfer(datum/netdata/data)
-	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
-	if(logs.len > setting_maxlogcount)
-		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
-
-// Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
-/datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
-	var/log_text = "[station_time_timestamp()](network_id) - "
-	if(source)
-		log_text += "[source.get_network_tag()] - "
-	else
-		log_text += "*SYSTEM* - "
-	log_text += log_string
-	logs.Add(log_text)
-
-	// We have too many logs, remove the oldest entries until we get into the limit
-	if(logs.len > setting_maxlogcount)
-		logs = logs.Copy(logs.len-setting_maxlogcount,0)
-
-
-// Removes all logs
-/datum/ntnet/proc/purge_logs()
-	logs = list()
-	add_log("-!- LOGS DELETED BY SYSTEM OPERATOR -!-")
-
-// Updates maximal amount of stored logs. Use this instead of setting the number, it performs required checks.
-/datum/ntnet/proc/update_max_log_count(lognumber)
-	if(!lognumber)
-		return FALSE
-	// Trim the value if necessary
-	lognumber = max(MIN_NTNET_LOGS, min(lognumber, MAX_NTNET_LOGS))
-	setting_maxlogcount = lognumber
-	add_log("Configuration Updated. Now keeping [setting_maxlogcount] logs in system memory.")
 
 /datum/ntnet/station
 	var/list/services_by_path = list()					//type = datum/ntnet_service
@@ -247,14 +176,14 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 /datum/ntnet/station/New(netname = STATION_NETWORK_ROOT, datum/ntnet/parent=null)
 	. = ..(netname,  parent)
 	build_software_lists()
-	add_log("NTNet logging system activated.")
+	SSnetworks.add_log("NTNet logging system activated.")
 
 
 
 /datum/ntnet/station/syndicate/New(network_id = SYNDICATE_NETWORK_ROOT)
 	..()
 	build_software_lists()
-	add_log("NTNet logging system activated.")
+	SSnetworks.add_log("NTNet logging system activated.")
 // not sure if we want service to work as it is, hold off till we get machines working
 
 #ifdef NTNET_SERVICE
@@ -313,11 +242,11 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
 /datum/ntnet/station/proc/check_function(specific_action = 0)
-	if(!relays || !relays.len) // No relays found. NTNet is down
+	if(!SSnetworks.relays || !SSnetworks.relays.len) // No relays found. NTNet is down
 		return FALSE
 
 	// Check all relays. If we have at least one working relay, network is up.
-	if(!check_relay_operation())
+	if(!SSnetworks.check_relay_operation())
 		return FALSE
 
 	if(setting_disabled)
@@ -381,20 +310,20 @@ PS - This is just a temp explanation, I am horrible on typing and documentation
 	switch(function)
 		if(NTNET_SOFTWAREDOWNLOAD)
 			setting_softwaredownload = !setting_softwaredownload
-			add_log("Configuration Updated. Wireless network firewall now [setting_softwaredownload ? "allows" : "disallows"] connection to software repositories.")
+			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_softwaredownload ? "allows" : "disallows"] connection to software repositories.")
 		if(NTNET_PEERTOPEER)
 			setting_peertopeer = !setting_peertopeer
-			add_log("Configuration Updated. Wireless network firewall now [setting_peertopeer ? "allows" : "disallows"] peer to peer network traffic.")
+			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_peertopeer ? "allows" : "disallows"] peer to peer network traffic.")
 		if(NTNET_COMMUNICATION)
 			setting_communication = !setting_communication
-			add_log("Configuration Updated. Wireless network firewall now [setting_communication ? "allows" : "disallows"] instant messaging and similar communication services.")
+			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_communication ? "allows" : "disallows"] instant messaging and similar communication services.")
 		if(NTNET_SYSTEMCONTROL)
 			setting_systemcontrol = !setting_systemcontrol
-			add_log("Configuration Updated. Wireless network firewall now [setting_systemcontrol ? "allows" : "disallows"] remote control of station's systems.")
+			SSnetworks.add_log("Configuration Updated. Wireless network firewall now [setting_systemcontrol ? "allows" : "disallows"] remote control of station's systems.")
 
 
 
 /datum/ntnet/station/proc/register_map_supremecy()					//called at map init to make this what station networks use.
 	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
-		relays.Add(R)
+		SSnetworks.relays.Add(R)
 		R.NTNet = src

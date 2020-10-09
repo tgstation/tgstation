@@ -3,7 +3,7 @@
 	name = "NTNet Quantum Relay"
 	desc = "A very complex router and transmitter capable of connecting electronic devices together. Looks fragile."
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = 10000 //10kW, apropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
+	active_power_usage = 10000 //10kW, appropriate for machine that keeps massive cross-Zlevel wireless network operational. Used to be 20 but that actually drained the smes one round
 	idle_power_usage = 100
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
@@ -79,12 +79,12 @@
 	if((dos_overload > dos_capacity) && !dos_failure)
 		set_dos_failure(TRUE)
 		update_icon()
-		SSnetworks.station_network.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
+		SSnetworks.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		set_dos_failure(FALSE)
 		update_icon()
-		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
+		SSnetworks.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
@@ -109,29 +109,25 @@
 			dos_overload = 0
 			set_dos_failure(FALSE)
 			update_icon()
-			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSnetworks.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_relay_enabled(!relay_enabled)
-			SSnetworks.station_network.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
+			SSnetworks.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
 			update_icon()
 			return TRUE
 
 /obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid++
 	component_parts = list()
+	SSnetworks.relays.Add(src) // add it globals
+	SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSnetworks.relays.len]")
 
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.relays.Add(src)
-		NTNet = SSnetworks.station_network
-		SSnetworks.station_network.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
 	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.relays.Remove(src)
-		SSnetworks.station_network.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
-		NTNet = null
+	SSnetworks.relays.Remove(src) // add it globals
+	SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSnetworks.relays.len]")
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null
