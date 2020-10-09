@@ -78,9 +78,8 @@
 		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
-	shuttle_port = SSshuttle.getShuttle(shuttleId)
 	if(QDELETED(shuttle_port))
-		shuttle_port = null
+		shuttle_port = SSshuttle.getShuttle(shuttleId)
 		return
 
 	eyeobj = new /mob/camera/ai_eye/remote/shuttle_docker(null, src)
@@ -285,8 +284,16 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
+		shuttle_port = port
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
+
+		//Take info from connected port and calculate amendments
+		var/list/shuttlebounds = shuttle_port.return_coords()
+		view_range = round(max((shuttlebounds[1] - shuttlebounds[3]), (shuttlebounds[2] - shuttlebounds[4]))/2)
+		x_offset = round((shuttlebounds[1] + shuttlebounds[3])*0.5) - shuttle_port.x
+		y_offset = round((shuttlebounds[2] + shuttlebounds[4])*0.5) - shuttle_port.y
+
 	if(dock)
 		jumpto_ports[dock.id] = TRUE
 
