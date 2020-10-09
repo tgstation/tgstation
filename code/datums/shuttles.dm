@@ -68,7 +68,9 @@
 			continue
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
-		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+		var/list/sanity = place.baseturfs.Copy()
+		sanity.Insert(3, /turf/baseturf_skipover/shuttle)
+		place.baseturfs = baseturfs_string_list(sanity, place)
 
 		for(var/obj/docking_port/mobile/port in place)
 			if(register)
