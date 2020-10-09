@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - rscdel: "Self-recharging basic yellow slime cores have been removed."
-  - tweak: "Self-recharging hypercharged yellow slime cores are no longer self-recharging. They are now a high capacity cell choice. Their capacity is above Bluespace Cells but they recharge slower than ordinary cells."
-  - tweak: "Motorised wheelchairs now use SIGNIFICANTLY less power and should last around 20 times as long before they run out of charge."

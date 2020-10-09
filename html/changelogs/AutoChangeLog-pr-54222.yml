@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - tweak: "HARS moves your brain to your chest instead of deleting it"
-  - bugfix: "This does in fact mean you can no longer heal admin traumas, roundstart quirks, and other brain oddities"

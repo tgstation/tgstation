@@ -343,7 +343,7 @@
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add, /obj/item/grenade/c4)) // last thing he ever wears, I guess
-		item_to_add.afterattack(src,user,1)
+		INVOKE_ASYNC(item_to_add, /obj/item.proc/afterattack, src, user, 1)
 		return
 
 	if(inventory_head)
