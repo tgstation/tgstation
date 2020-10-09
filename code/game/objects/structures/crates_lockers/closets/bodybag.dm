@@ -133,14 +133,15 @@
 	visible_message("<span class='notice'>[usr] folds up [src].</span>")
 	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 	var/max_weight_of_contents = initial(B.w_class)
-	for(var/atom/movable/A in contents)
-		A.forceMove(B)
-		if(isliving(A))
-			to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
-		if(!isitem(A))
-			max_weight_of_contents = max(WEIGHT_CLASS_BULKY,max_weight_of_contents)
+	for(var/am in contents)
+		var/atom/movable/content = am
+		content.forceMove(B)
+		if(isliving(content))
+			to_chat(content, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
+		if(!isitem(content))
+			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
 			continue
-		var/obj/item/A_is_item = A
+		var/obj/item/A_is_item = content
 		if(A_is_item.w_class < max_weight_of_contents)
 			continue
 		max_weight_of_contents = A_is_item.w_class
