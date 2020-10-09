@@ -170,6 +170,7 @@
 	builtInCamera.network = list("ss13")
 
 	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 
 /mob/living/silicon/ai/key_down(_key, client/user)
@@ -1037,3 +1038,10 @@
 			ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	else if(.)
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+
+
+/mob/living/silicon/on_handsblocked_start()
+	return // AIs have no hands
+
+/mob/living/silicon/on_handsblocked_end()
+	return // AIs have no hands

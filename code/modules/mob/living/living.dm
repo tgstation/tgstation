@@ -492,12 +492,27 @@
 /// Change the [body_position] to [LYING_DOWN] and update associated behavior.
 /mob/living/proc/set_lying_down(new_lying_angle)
 	set_body_position(LYING_DOWN)
-	on_lying_down(new_lying_angle)
 
 
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_lying_down(new_lying_angle)
-	return
+	if(layer == initial(layer)) //to avoid things like hiding larvas.
+		layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+	ADD_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+	density = FALSE // We lose density and stop bumping passable dense things.
+	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
+		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
+
+
+/// Proc to append behavior related to lying down.
+/mob/living/proc/on_standing_up()
+	if(layer == LYING_MOB_LAYER)
+		layer = initial(layer)
+	density = initial(density) // We were prone before, so we become dense and things can bump into us again.
+	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+
 
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
@@ -1588,6 +1603,7 @@
 			ADD_TRAIT(src, TRAIT_FLOORED, UNCONSCIOUS_TRAIT)
 		if(SOFT_CRIT)
 			if(stat >= UNCONSCIOUS)
+				ADD_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
 				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			if(pulledby)
@@ -1610,6 +1626,7 @@
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
+				REMOVE_TRAIT(src, TRAIT_INCAPACITATED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 				REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_KNOCKEDOUT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
@@ -1772,19 +1789,9 @@
 	. = body_position
 	body_position = new_value
 	if(new_value == LYING_DOWN) // From standing to lying down.
-		if(layer == initial(layer)) //to avoid things like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-		ADD_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
-		ADD_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
-		density = FALSE // We lose density and stop bumping passable dense things.
-		if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
-			setDir(pick(NORTH, SOUTH)) // We are and look helpless.
+		on_lying_down()
 	else // From lying down to standing up.
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-		density = initial(density) // We were prone before, so we become dense and things can bump into us again.
-		REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, LYING_DOWN_TRAIT)
-		REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, LYING_DOWN_TRAIT)
+		on_standing_up()
 
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
@@ -1799,3 +1806,16 @@
 /mob/living/proc/on_floored_end()
 	if(!resting)
 		get_up()
+
+
+/// Proc to append behavior to the condition of being handsblocked. Called when the condition starts.
+/mob/living/proc/on_handsblocked_start()
+	drop_all_held_items()
+	ADD_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_HANDS_BLOCKED)
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED)
+
+
+/// Proc to append behavior to the condition of being handsblocked. Called when the condition ends.
+/mob/living/proc/on_handsblocked_end()
+	REMOVE_TRAIT(src, TRAIT_UI_BLOCKED, TRAIT_HANDS_BLOCKED)
+	REMOVE_TRAIT(src, TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED)

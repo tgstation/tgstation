@@ -29,5 +29,5 @@
 	update_icons() //larva icon_state changes if cuffed/uncuffed.
 
 
-/mob/living/carbon/alien/larva/on_lying_down(new_lying_angle)
-	update_icons()
+/mob/living/carbon/alien/larva/lying_angle_on_lying_down(new_lying_angle)
+	return // Larvas don't rotate on lying down, they have their own custom icons.

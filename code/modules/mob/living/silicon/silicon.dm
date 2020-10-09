@@ -427,7 +427,13 @@
 	adjustBruteLoss(500)
 
 /mob/living/silicon/on_floored_start()
-	return //Silicons are always standing by default.
+	return // Silicons are always standing by default.
 
 /mob/living/silicon/on_floored_end()
-	return //Silicons are always standing by default.
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_lying_down()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_standing_up()
+	return // Silicons are always standing by default.
