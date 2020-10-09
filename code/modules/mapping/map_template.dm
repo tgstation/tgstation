@@ -7,6 +7,12 @@
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
 
+	//check_deploy stuff
+	var/blacklisted_turfs
+	var/whitelisted_turfs
+	var/banned_areas
+	var/banned_objects
+
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
 		mappath = path
@@ -150,3 +156,21 @@
 /proc/load_new_z_level(file, name)
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()
+
+
+/datum/map_template/proc/check_deploy(turf/deploy_location)
+	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
+	for(var/turf/T in affected)
+		var/area/A = get_area(T)
+		if(is_type_in_typecache(A, banned_areas))
+			return SHELTER_DEPLOY_BAD_AREA
+
+		var/banned = is_type_in_typecache(T, blacklisted_turfs)
+		var/permitted = is_type_in_typecache(T, whitelisted_turfs)
+		if(banned && !permitted)
+			return SHELTER_DEPLOY_BAD_TURFS
+
+		for(var/obj/O in T)
+			if((O.density && O.anchored) || is_type_in_typecache(O, banned_objects))
+				return SHELTER_DEPLOY_ANCHORED_OBJECTS
+	return SHELTER_DEPLOY_ALLOWED
