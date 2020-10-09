@@ -1,3 +1,9 @@
+#define ALTAR_INACTIVE 0
+#define ALTAR_STAGEONE 1
+#define ALTAR_STAGETHREE 2
+#define ALTAR_STAGETWO 3
+#define ALTAR_TIME 9.5 SECONDS
+
 /** This structure acts as a source of moisture loving cell lines,
 as well as a location where a hidden item can somtimes be retrieved
 at the cost of risking a vicious bite.**/
@@ -99,3 +105,99 @@ at the cost of risking a vicious bite.**/
 		return
 	hidden_item = I
 	to_chat(user, "<span class='notice'>You hide [I] inside the basin.</span>")
+
+/obj/structure/destructible/cult/beret_altar
+	name = "strange structure"
+	desc = "What is this? Who put it on this station? And why does eminate <span class='hypnophrase'>beret energy?</span>"
+	icon_state = "altar"
+	cultist_examine_message = "Even you don't understand the eldritch magic behind this."
+	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
+	break_sound = 'sound/magic/demon_dies.ogg'
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+	var/beret_color = "#ffffff"
+	var/status = ALTAR_INACTIVE
+
+/obj/structure/destructible/cult/beret_altar/update_overlays()
+	. = ..()
+	var/overlayicon
+	switch(status)
+		if(ALTAR_INACTIVE)
+			return
+		if(ALTAR_STAGEONE)
+			overlayicon = "altar_beret1"
+		if(ALTAR_STAGETWO)
+			overlayicon = "altar_beret2"
+		if(ALTAR_STAGETHREE)
+			overlayicon = "altar_beret3"
+	var/mutable_appearance/beret_overlay = mutable_appearance(icon, overlayicon)
+	beret_overlay.appearance_flags = RESET_COLOR
+	beret_overlay.color = beret_color
+	. += beret_overlay
+
+/obj/structure/destructible/cult/beret_altar/proc/beret_stageone()
+	status = ALTAR_STAGEONE
+	update_icon()
+	visible_message("<span class='warning'>[src] starts creating something...</span>")
+	playsound(src, 'sound/magic/beretaltar.ogg', 100)
+	addtimer(CALLBACK(src, .proc/beret_stagetwo), ALTAR_TIME)
+
+/obj/structure/destructible/cult/beret_altar/proc/beret_stagetwo()
+	status = ALTAR_STAGETWO
+	update_icon()
+	visible_message("<span class='warning'>You start feeling nauseous...</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.blur_eyes(10)
+		mob.add_confusion(10)
+	addtimer(CALLBACK(src, .proc/beret_stagethree), ALTAR_TIME)
+
+/obj/structure/destructible/cult/beret_altar/proc/beret_stagethree()
+	status = ALTAR_STAGETHREE
+	update_icon()
+	visible_message("<span class='warning'>You start feeling horrible...</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.Dizzy(10)
+	addtimer(CALLBACK(src, .proc/beret_create), ALTAR_TIME)
+
+/obj/structure/destructible/cult/beret_altar/proc/beret_create()
+	status = ALTAR_INACTIVE
+	update_icon()
+	visible_message("<span class='warning'>[src] eminates a flash of light and creates... a beret?</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.flash_act()
+	var/obj/item/clothing/head/beret/greyscale/beret = new /obj/item/clothing/head/beret/greyscale(get_turf(src))
+	beret.add_atom_colour(beret_color, ADMIN_COLOUR_PRIORITY)
+
+/obj/structure/destructible/cult/beret_altar/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Beret", name)
+		ui.open()
+
+/obj/structure/destructible/cult/beret_altar/ui_data()
+	var/list/data = list()
+	data["beret_color"] = beret_color
+
+	return data
+
+/obj/structure/destructible/cult/beret_altar/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(!Adjacent(usr))
+		return
+	if(status)
+		return
+	usr.set_machine(src)
+	switch(action)
+		if("color")
+			var/chosen_color = input(usr, "", "Choose Color", beret_color) as color|null
+			if (!isnull(chosen_color) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+				beret_color = chosen_color
+		if("create")
+			beret_stageone()
+	return TRUE
+
+/obj/item/clothing/head/beret/greyscale
+	name = "strange beret"
+	desc = "A beret. It does not look natural. It smells like fresh blood."
+	icon_state = "beret_greyscale"

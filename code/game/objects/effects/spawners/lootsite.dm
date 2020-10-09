@@ -8,7 +8,8 @@
 							/obj/effect/spawner/bundle/moisture_trap = 50,
 							/obj/effect/spawner/bundle/hobo_squat = 35,
 							/obj/structure/closet/mini_fridge = 40,
-							/obj/effect/spawner/lootdrop/gross_decal_spawner = 30)
+							/obj/effect/spawner/lootdrop/gross_decal_spawner = 30,
+							/obj/structure/destructible/cult/beret_altar = 10)
 
 
 /obj/effect/loot_site_spawner/Initialize()
