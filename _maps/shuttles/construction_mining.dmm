@@ -6,6 +6,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "b" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "c" = (
@@ -26,9 +29,15 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "f" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
 "h" = (
@@ -40,6 +49,9 @@
 	name = "spare mining shuttle";
 	port_direction = 4;
 	width = 7
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
@@ -74,6 +86,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
+"L" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
 "Q" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -82,25 +98,25 @@
 /area/shuttle/mining)
 
 (1,1,1) = {"
-k
-k
-k
-k
-k
-k
-k
+a
+f
+f
+f
+f
+f
+i
 "}
 (2,1,1) = {"
-k
+b
 c
 k
 k
 k
 k
-k
+L
 "}
 (3,1,1) = {"
-k
+b
 d
 Q
 k
@@ -109,20 +125,20 @@ j
 l
 "}
 (4,1,1) = {"
-k
+b
 J
 k
 k
 k
 k
-k
+L
 "}
 (5,1,1) = {"
-k
-k
-k
+e
+g
+g
 h
-k
-k
-k
+g
+g
+z
 "}
