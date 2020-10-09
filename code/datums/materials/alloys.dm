@@ -147,7 +147,7 @@
 /datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	target_item.AddElement(/datum/element/alloy_regen, _rate=0.02) // 2% regen per tick.
+	target_item.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
 	if(!istype(target_item))
 		return
 
@@ -156,7 +156,7 @@
 /datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	target_item.RemoveElement(/datum/element/alloy_regen, _rate=0.02)
+	target_item.RemoveElement(/datum/element/obj_regen, _rate=0.02)
 	if(!istype(target_item))
 		return
 

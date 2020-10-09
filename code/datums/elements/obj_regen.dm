@@ -1,6 +1,6 @@
 /** Object integrity regeneration element added by alien alloy.
   */
-/datum/element/alloy_regen
+/datum/element/obj_regen
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 	/// The rate of regeneration as a function of maximum integrity.
@@ -13,7 +13,7 @@
 	var/resumed = FALSE
 
 
-/datum/element/alloy_regen/Attach(obj/target, _rate=0)
+/datum/element/obj_regen/Attach(obj/target, _rate=0)
 	. = ..()
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
@@ -27,14 +27,14 @@
 			START_PROCESSING(SSobj, src)
 		processing |= target
 
-/datum/element/alloy_regen/Detach(obj/target)
+/datum/element/obj_regen/Detach(obj/target)
 	UnregisterSignal(target, COMSIG_OBJ_TAKE_DAMAGE)
 	processing -= target
 	if(!length(processing))
 		STOP_PROCESSING(SSobj, src)
 
 /// Handles beginning processing objects.
-/datum/element/alloy_regen/proc/on_take_damage(obj/target, damage_amt)
+/datum/element/obj_regen/proc/on_take_damage(obj/target, damage_amt)
 	if(!damage_amt)
 		return
 	if(!length(processing))
@@ -43,7 +43,7 @@
 
 
 /// Handle regenerating attached objects.
-/datum/element/alloy_regen/process(delta_time)
+/datum/element/obj_regen/process(delta_time)
 	set waitfor = FALSE
 
 	if(!resumed)
