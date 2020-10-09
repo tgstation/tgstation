@@ -740,10 +740,14 @@
 	new /obj/effect/temp_visual/voidout(targeted_turf)
 
 	for(var/mob/living/living_mob in range(1,user)-user)
-		living_mob.adjustOxyLoss(30)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(20)
 
 	for(var/mob/living/living_mob in range(1,targeted_turf)-user)
-		living_mob.adjustOxyLoss(30)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(20)
 
 	do_teleport(user,targeted_turf,channel = TELEPORT_CHANNEL_MAGIC)
 
@@ -766,7 +770,7 @@
 
 /obj/effect/proc_holder/spell/targeted/void_pull
 	name = "Void pull"
-	desc = "Call the void, this pulls all nearby people closer to you"
+	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "BR'NG F'RTH TH'M T' M'"
 	clothes_req = FALSE
@@ -779,6 +783,11 @@
 
 /obj/effect/proc_holder/spell/targeted/void_pull/cast(list/targets, mob/user)
 	. = ..()
+	for(var/mob/living/living_mob in range(1,user)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(20)
+
 	playsound(user,'sound/magic/voidblink.ogg',100)
 	new /obj/effect/temp_visual/voidin(user.drop_location())
 	for(var/mob/living/livies in view(7,user)-user)

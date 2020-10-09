@@ -30,7 +30,7 @@
 	var/mob/living/carbon/carbon_target = target
 	var/turf/open/turfie = get_turf(carbon_target)
 	turfie.TakeTemperature(-20)
-	carbon_target.adjust_bodytemperature(-20)
+	carbon_target.adjust_bodytemperature(-40)
 	carbon_target.silent += 4
 	return TRUE
 
@@ -145,7 +145,7 @@
 
 /datum/eldritch_knowledge/final/void_final
 	name = "Call of the Void"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you aswell as passively cool the environment."
+	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you and will summon a snow storm around you."
 	gain_text = "Calm...... Absolute..... ETERNAL...."
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
@@ -161,15 +161,42 @@
 
 /datum/eldritch_knowledge/final/void_final/on_life(mob/user)
 	. = ..()
+
 	if(!finished)
 		return
 
 	for(var/mob/living/carbon/livies in spiral_range(7,user)-user)
-		livies.silent += 5
-		livies.adjust_bodytemperature(-5)
+		if(IS_HERETIC_MONSTER(livies) || IS_HERETIC(livies))
+			return
+		livies.silent += 1
+		livies.adjust_bodytemperature(-10)
 
 	var/turf/turfie = get_turf(user)
 	if(!isopenturf(turfie))
 		return
 	var/turf/open/open_turfie = turfie
-	open_turfie.TakeTemperature(-10)
+	open_turfie.TakeTemperature(-20)
+
+	var/area/user_area = get_area(user)
+	var/turf/user_turf = get_turf(user)
+	if(!user_area || !user_turf)
+		return
+
+	var/datum/weather/A
+	for(var/V in SSweather.processing)
+		var/datum/weather/W = V
+		if((user_turf.z in W.impacted_z_levels) && W.area_type == user_area.type)
+			A = W
+			break
+	if(A)
+		if(A.stage > 2)
+			A.stage = 2
+			A.start()
+	else
+		A = new /datum/weather/snow_storm(list(user_turf.z))
+		A.name = "void storm"
+		A.area_type = user_area.type
+		A.telegraph_duration =  2 SECONDS
+		A.end_duration = 60 SECONDS
+		A.protect_indoors = FALSE
+		A.telegraph()
