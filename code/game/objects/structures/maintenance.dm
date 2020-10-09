@@ -42,14 +42,16 @@ at the cost of risking a vicious bite.**/
 		QDEL_NULL(hidden_item)
 	return ..()
 
+
 ///This proc checks if we are able to reach inside the trap to interact with it.
 /obj/structure/moisture_trap/proc/CanReachInside(mob/user)
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if((living_user.mobility_flags & MOBILITY_STAND) && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I dont think monkeys can crawl on command.
 		return FALSE
 	return TRUE
+
 
 /obj/structure/moisture_trap/attack_hand(mob/user)
 	. = ..()

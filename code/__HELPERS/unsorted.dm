@@ -697,7 +697,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
-	if(!ismob(target) || !(target.mobility_flags & MOBILITY_STAND))
+	if(!isliving(target) || target.body_position == LYING_DOWN)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
@@ -774,7 +774,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
-		if(!(LA.mobility_flags & MOBILITY_STAND))
+		if(LA.body_position == LYING_DOWN)
 			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)

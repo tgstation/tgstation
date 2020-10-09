@@ -72,7 +72,7 @@
 		affecting = get_bodypart(check_zone(user.zone_selected)) //we're self-mutilating! yay!
 	else
 		var/zone_hit_chance = 80
-		if(!(mobility_flags & MOBILITY_STAND)) // half as likely to hit a different zone if they're on the ground
+		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
 			zone_hit_chance += 10
 		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
@@ -153,7 +153,7 @@
 			ContactContractDisease(D)
 
 	for(var/datum/surgery/S in surgeries)
-		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+		if(body_position == LYING_DOWN || !S.lying_required)
 			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return TRUE
@@ -421,7 +421,7 @@
 	if(M == src && check_self_for_injuries())
 		return
 
-	if(!(mobility_flags & MOBILITY_STAND))
+	if(body_position == LYING_DOWN)
 		if(buckled)
 			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!</span>")
 			return

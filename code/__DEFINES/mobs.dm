@@ -375,3 +375,9 @@
 
 /// Returns whether or not the given mob can succumb
 #define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
+
+// Body position defines.
+/// Mob is standing up, usually associated with lying_angle value of 0.
+#define STANDING_UP 0
+/// Mob is lying down, usually associated with lying_angle values of 90 or 270.
+#define LYING_DOWN 1
