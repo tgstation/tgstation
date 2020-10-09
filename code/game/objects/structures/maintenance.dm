@@ -1,7 +1,7 @@
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
-#define ALTAR_STAGETHREE 2
-#define ALTAR_STAGETWO 3
+#define ALTAR_STAGETWO 2
+#define ALTAR_STAGETHREE 3
 #define ALTAR_TIME 9.5 SECONDS
 
 /** This structure acts as a source of moisture loving cell lines,
