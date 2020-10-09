@@ -146,7 +146,6 @@ SUBSYSTEM_DEF(air)
 		cached_cost += TICK_USAGE_REAL - timer
 		if(state != SS_RUNNING)
 			return
-		cleanup_ex_groups.Cut() //Only once you hear? we do this here cause of how the tick check works.
 		cost_ex_cleanup = MC_AVERAGE(cost_ex_cleanup, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 		currentpart = SSAIR_EXCITEDGROUPS
@@ -316,6 +315,7 @@ SUBSYSTEM_DEF(air)
 	var/fire_count = times_fired
 	if (!resumed)
 		src.currentrun = cleanup_ex_groups.Copy()
+		cleanup_ex_groups.Cut() //Cut the list here so any later breakdowns get added properly
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
