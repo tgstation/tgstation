@@ -25,30 +25,12 @@
 /datum/antagonist/traitor/infiltrator/on_gain()
 	equip_agent()
 	move_to_spawnpoint()
-	SSticker.mode.traitors += owner
-	if(give_objectives)
-		forge_infiltrator_objectives()
-	finalize_traitor()
+	. = ..()
 	//Additional TCs (Mostly for Tiger Co. and MI13)
 	var/datum/component/uplink/U = owner.find_syndicate_uplink()
 	if (U)
 		U.telecrystals += extra_tc
 		U.set_gamemode(/datum/game_mode/traitor/infiltrator) //For gamemode-specific uplink stuff during dynamic rounds
-	//Copy from basic antag_datum.dm because ..() would call standard traitor shit and we don't need it
-	if(!owner)
-		CRASH("[src] ran on_gain() without a mind")
-	if(!owner.current)
-		CRASH("[src] ran on_gain() on a mind without a mob")
-	if(!silent)
-		greet()
-	apply_innate_effects()
-	give_antag_moodies()
-	if(is_banned(owner.current) && replace_banned)
-		replace_banned_player()
-	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
-		owner.current.client.holder.auto_deadmin()
-	if(owner.current.stat != DEAD)
-		owner.current.add_to_current_living_antags()
 
 /datum/antagonist/traitor/infiltrator/proc/move_to_spawnpoint()
 	var/list/emergency_locs = list() //In case map doesn't contain landmarks for infils
@@ -128,7 +110,7 @@
 		else //Used for Syndicate "faction" and non-existant factions, in case there is an error.
 			to_chat(owner.current, "<span class='alertwarning'>[CONFIG_GET(string/infiltrator_syndicate_message)] \n</span>")
 
-/datum/antagonist/traitor/infiltrator/proc/forge_infiltrator_objectives()
+/datum/antagonist/traitor/infiltrator/forge_traitor_objectives()
 	var/is_hijacker = FALSE
 	if (GLOB.joined_player_list.len >= 60)
 		is_hijacker = prob(hijack_chance)
