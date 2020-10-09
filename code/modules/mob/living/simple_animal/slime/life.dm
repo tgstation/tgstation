@@ -74,7 +74,7 @@
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
 					break
-				if((Target.body_position == LYING_DOWN) && prob(80))
+				if((Target.body_position == STANDING_UP) && prob(80))
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)

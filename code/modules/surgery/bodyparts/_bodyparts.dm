@@ -942,7 +942,7 @@
 		var/datum/wound/W = thing
 		bleed_rate += W.blood_flow
 
-	if(owner.body_position == STANDING_UP)
+	if(owner.body_position == LYING_DOWN)
 		bleed_rate *= 0.75
 
 	if(grasped_by)
