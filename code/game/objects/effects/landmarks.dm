@@ -273,6 +273,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.nukeop_leader_start += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/start/infiltrator
+	name = "infiltrator"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "infil_spawn"
+
+/obj/effect/landmark/start/infiltrator/Initialize()
+	..()
+	GLOB.infiltrator_start += loc
+	return INITIALIZE_HINT_QDEL
+
 // Must be immediate because players will
 // join before SSatom initializes everything.
 INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)

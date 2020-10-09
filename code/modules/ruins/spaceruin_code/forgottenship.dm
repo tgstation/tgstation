@@ -129,26 +129,27 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /obj/item/clothing/head/helmet/space/hardsuit/cybersun
 	name = "Cybersun hardsuit helmet"
-	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
+	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons quite well, while giving limited protection against anything else."
 	icon_state = "cybersun"
 	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
-	strip_delay = 600
+	armor = list(MELEE = 15, BULLET = 20, LASER = 50, ENERGY = 60, BOMB = 20, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
 	actions_types = list()
-
 
 /obj/item/clothing/suit/space/hardsuit/cybersun
 	icon_state = "cybersun"
 	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
 	name = "Cybersun hardsuit"
-	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
+	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons quite well, while giving limited protection against anything else."
+	armor = list(MELEE = 15, BULLET = 20, LASER = 50, ENERGY = 60, BOMB = 20, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
 	slowdown = 0
+	w_class = WEIGHT_CLASS_NORMAL
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
+	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
 	jetpack = /obj/item/tank/jetpack/suit
+	cell = /obj/item/stock_parts/cell/hyper
 
 //Special NT NPCs
 

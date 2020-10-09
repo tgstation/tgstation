@@ -201,6 +201,10 @@
 /obj/item/construction/plumbing,
 /turf/open/floor/plasteel,
 /area/bridge)
+"aL" = (
+/obj/effect/landmark/start/infiltrator,
+/turf/open/space/basic,
+/area/space)
 "aN" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -8734,7 +8738,7 @@ ev
 et
 aa
 aa
-aa
+aL
 aa
 aa
 aa

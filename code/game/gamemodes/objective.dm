@@ -475,6 +475,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/escape/escape_with_identity/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
+/datum/objective/escape/escape_with_identity/infiltrator/New() //For infiltrators, so they get mulligan
+	give_special_equipment(/obj/item/adv_mulligan)
+
 /datum/objective/survive
 	name = "survive"
 	explanation_text = "Stay alive until the end."

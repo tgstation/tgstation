@@ -1277,6 +1277,17 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 30
 	illegal_tech = FALSE
 
+/datum/uplink_item/stealthy_tools/adv_mulligan
+	name = "Advanced Mulligan"
+	desc = "An advanced form of toxin created in one of the Tiger Cooperative laboratories using \
+	technology that was made with help of their 'supervisors'. \
+	This item allows you to change your appearance, race and DNA to completely different one. \
+	To use it - stab someone with it and then inject yourself, you will transform into that person. \n \
+	Be aware that it can't be used more than once on yourself."
+	item = /obj/item/adv_mulligan
+	cost = 7
+	surplus = 18
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits"
@@ -1768,7 +1779,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist", "Cybersun Infiltrator", "MI13 Infiltrator")
 	cost = 5
 
 /datum/uplink_item/role_restricted/clown_bomb
@@ -1937,7 +1948,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
-	restricted_roles = list("Roboticist", "Research Director")
+	restricted_roles = list("Roboticist", "Research Director", "Cybersun Infiltrator", "MI13 Infiltrator")
 
 /datum/uplink_item/role_restricted/ocd_device
 	name = "Organic Resources Disturbance Inducer"
@@ -1960,6 +1971,53 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
 	restricted_roles = list("Station Engineer")
+
+////////////// INFILTRATION GAMEMODE ITEMS //////////////
+#define INFILTRATION_FACTIONS list("Syndicate Infiltrator", "Cybersun Infiltrator", "Gorlex Infiltrator", "Tiger Co. Infiltrator", "MI13 Infiltrator")
+//This define exists for midround spawned infiltrators and dynamic mode.
+
+/datum/uplink_item/role_restricted/cybersunsuit
+	name = "Cybersun Hardsuit"
+	desc = "A long forgotten hardsuit made by Cybersun industries. \
+			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
+			to survive assault from a toolbox or shotgun. \
+			Not to mention, it doesn't slow you down and contains an integrated jetpack that runs on standard tanks."
+	item = /obj/item/clothing/suit/space/hardsuit/cybersun
+	cost = 10
+	restricted_roles = list("Cybersun Infiltrator")
+
+/datum/uplink_item/role_restricted/glovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and electrically insulated, however unlike the regular Combat Gloves these use nanotechnology \
+			to teach the martial art of krav maga to the wearer."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 5 //Same as nuke ops.
+	restricted_roles = list("Gorlex Infiltrator")
+
+/datum/uplink_item/role_restricted/flukeop
+	name = "Nuclear Operative Bundle"
+	desc = "A starting kit for wannabe nuclear operatives. \
+	Comes with a tactical duffelbag filled with: \
+	blood-red hardsuit, micro-bomb implant, night vision googles, bowman headset, combat gloves and Makarov pistol."
+	item = /obj/item/storage/backpack/duffelbag/syndie/flukeop
+	cost = 15
+	restricted_roles = list("Gorlex Infiltrator")
+
+/datum/uplink_item/role_restricted/tiger/macrobomb
+	name = "Macrobomb Implant"
+	desc = "An implant injected into the body, and later activated either manually or automatically upon death. \
+			Upon death, releases a massive explosion that will wipe out everything nearby."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
+	cost = 20
+	restricted_roles = list("Tiger Co. Infiltrator")
+
+/datum/uplink_item/role_restricted/tiger/manhacks
+	name = "Viscerator Delivery Grenade"
+	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred \
+			any non-operatives in the area."
+	item = /obj/item/grenade/spawnergrenade/manhacks
+	cost = 6
+	restricted_roles = list("Tiger Co. Infiltrator")
 
 // Pointless
 /datum/uplink_item/badass

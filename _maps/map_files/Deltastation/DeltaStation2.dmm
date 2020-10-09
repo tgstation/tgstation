@@ -84,6 +84,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
+"aak" = (
+/obj/effect/landmark/start/infiltrator,
+/turf/open/space/basic,
+/area/space)
 "aam" = (
 /obj/machinery/airalarm{
 	dir = 1;
@@ -120023,7 +120027,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -123093,7 +123097,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -128215,7 +128219,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -132254,7 +132258,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -136124,7 +136128,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -137469,7 +137473,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -139513,7 +139517,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -147694,7 +147698,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -152577,7 +152581,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -159513,7 +159517,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -165715,7 +165719,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -168574,7 +168578,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -168811,7 +168815,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -175927,7 +175931,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa
@@ -178739,7 +178743,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aak
 aaa
 aaa
 aaa

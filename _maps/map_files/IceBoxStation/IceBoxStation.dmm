@@ -12383,6 +12383,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aBE" = (
+/obj/effect/landmark/start/infiltrator,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "aBF" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -70246,6 +70250,7 @@ boP
 boP
 boP
 boP
+aBE
 boP
 boP
 boP
@@ -70256,8 +70261,7 @@ boP
 boP
 boP
 boP
-boP
-boP
+aBE
 boP
 boP
 boP
@@ -70665,7 +70669,7 @@ boP
 boP
 boP
 boP
-boP
+aBE
 boP
 boP
 boP
@@ -74001,7 +74005,7 @@ aAe
 aAe
 aAe
 aAe
-boP
+aBE
 boP
 boP
 boP
@@ -101885,7 +101889,7 @@ asU
 boP
 boP
 boP
-boP
+aBE
 aAe
 aAe
 aAe
@@ -108315,7 +108319,7 @@ aud
 boP
 bBM
 boP
-boP
+aBE
 boP
 boP
 boP
@@ -114905,7 +114909,7 @@ boP
 boP
 boP
 boP
-boP
+aBE
 boP
 boP
 boP
@@ -115178,6 +115182,7 @@ boP
 boP
 boP
 boP
+aBE
 boP
 boP
 boP
@@ -115193,8 +115198,7 @@ boP
 boP
 boP
 boP
-boP
-boP
+aBE
 boP
 boP
 boP

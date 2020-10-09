@@ -101,6 +101,32 @@
 	config_entry_value = 2
 	min_val = 0
 
+/datum/config_entry/number/infiltrator_objectives_amount
+	config_entry_value = 3
+	min_val = 0
+
+/datum/config_entry/number/infiltrator_faction_syndicate
+	config_entry_value = 70
+	min_val = 1
+
+/datum/config_entry/number/infiltrator_faction_cybersun
+	config_entry_value = 18
+	min_val = 0
+
+/datum/config_entry/number/infiltrator_faction_gorlex
+	config_entry_value = 8
+	min_val = 0
+
+/datum/config_entry/number/infiltrator_faction_tiger
+	config_entry_value = 2
+	min_val = 0
+
+/datum/config_entry/number/infiltrator_faction_mi
+	config_entry_value = 2
+	min_val = 0
+
+/datum/config_entry/flag/infiltrator_give_codespeak	//If infils should get codespeak on start
+
 /datum/config_entry/flag/reactionary_explosions	//If we use reactionary explosions, explosions that react to walls and doors
 
 /datum/config_entry/flag/protect_roles_from_antagonist	//If security and such can be traitor/cult/other
@@ -190,6 +216,24 @@
 
 /datum/config_entry/string/alert_delta
 	config_entry_value = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
+
+/datum/config_entry/string/infiltrator_syndicate_message
+	config_entry_value = "You are a syndicate infiltrator, and you are free to complete your objectives in any way you desire, as long as it helps to finish them, of course."
+
+/datum/config_entry/string/infiltrator_cybersun_message
+	config_entry_value = "As a member of our group remember: Your actions may cause unwanted attention, attempt to stay as stealthy as possible!"
+
+/datum/config_entry/string/infiltrator_gorlex_message
+	config_entry_value = "As a member of our group remember: While stealth is optional, you still have to finish your mission even if it means going with a fight!"
+
+/datum/config_entry/string/infiltrator_tiger_message
+	config_entry_value = "You are here to seize mass destruction and terror! Everyone is your enemy, even the other infiltrators, except for those Gorlex dudes. Rip and tear until it's done, operative!"
+
+/datum/config_entry/string/infiltrator_mi_message
+	config_entry_value = "Welcome operative. Formally - you don't exist and you are not here. \
+	The only people that are allowed to know about your existance is high command of Cybersun. \
+	You must complete your objectives and stay undiscovered AT ALL COST. Remember - every innocent victim will be \
+	deducted from your pay-check."
 
 /datum/config_entry/flag/revival_pod_plants
 

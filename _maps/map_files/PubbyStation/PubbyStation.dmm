@@ -284,12 +284,27 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"aaJ" = (
+/obj/effect/landmark/start/infiltrator,
+/turf/open/space/basic,
+/area/space)
 "aaK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"aaL" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/freezer,
+/area/medical/virology)
 "aaM" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -341,6 +356,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
+"aaS" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/freezer,
+/area/medical/virology)
 "aaT" = (
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/wood,
@@ -473,6 +495,11 @@
 	},
 /turf/open/floor/wood,
 /area/quartermaster/qm)
+"abj" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/mob/living/simple_animal/pet/dog/corgi/puppy,
+/turf/open/floor/grass,
+/area/medical/psychology)
 "aby" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -49487,13 +49514,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-"iQW" = (
-/mob/living/carbon/monkey,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/medical/virology)
 "iRs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -53814,11 +53834,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
-"pds" = (
-/mob/living/simple_animal/pet/dog/corgi/puppy,
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/grass,
-/area/medical/psychology)
 "pdW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -58150,17 +58165,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-"vbv" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/mob/living/carbon/monkey,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/turf/open/floor/plasteel/freezer,
-/area/medical/virology)
 "vcJ" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -61936,7 +61940,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -62722,7 +62726,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -64225,7 +64229,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -64554,7 +64558,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -69092,7 +69096,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -78332,7 +78336,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -83729,7 +83733,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -84100,9 +84104,9 @@ bEr
 bEr
 bEr
 ozc
-vbv
+aaL
 bFJ
-iQW
+aaS
 bFL
 bEr
 aaa
@@ -85645,7 +85649,7 @@ bsu
 wGM
 pTy
 kYt
-pds
+abj
 rhT
 bSs
 aht
@@ -117942,6 +117946,7 @@ aaa
 aaa
 aaa
 aaa
+aaJ
 aaa
 aaa
 aaa
@@ -118034,8 +118039,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -118589,7 +118593,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -119535,7 +119539,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -121863,7 +121867,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa
@@ -122337,7 +122341,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaJ
 aaa
 aaa
 aaa

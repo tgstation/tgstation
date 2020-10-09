@@ -78,7 +78,12 @@ ALERT_RED_UPTO There is an immediate serious threat to the station. Security may
 ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
 ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
-
+## INFILTRATOR SPAWN MESSAGES ###
+INFILTRATOR_SYNDICATE_MESSAGE You are a syndicate infiltrator, and you are free to complete your objectives in any way you desire, as long as it helps to finish them, of course.
+INFILTRATOR_CYBERSUN_MESSAGE As a member of our group remember: Your actions may cause unwanted attention, attempt to stay as stealthy as possible!
+INFILTRATOR_GORLEX_MESSAGE As a member of our group remember: While stealth is optional, you still have to finish your mission even if it means going with a fight!
+INFILTRATOR_TIGER_MESSAGE You are here to seize mass destruction and terror! Everyone is your enemy, even the other infiltrators, except for those Gorlex dudes. Rip and tear until it's done, operative!
+INFILTRATOR_MI_MESSAGE Welcome operative. Formally - you don't exist and you are not here. The only people that are allowed to know about your existance is high command of Cybersun. You must complete your objectives and stay undiscovered AT ALL COST. Remember - every innocent victim will be deducted from your pay-check.
 
 ## GAME MODES ###
 
@@ -103,6 +108,7 @@ PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY CLOWNOPS 0
+PROBABILITY INFILTRATION 4
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -124,6 +130,7 @@ CONTINUOUS CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS INFILTRATION
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -145,6 +152,7 @@ MIDROUND_ANTAG CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
+#MIDROUND_ANTAG  INFILTRATION
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
@@ -210,6 +218,7 @@ SECURITY_SCALING_COEFF 8
 ## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
 BROTHER_OBJECTIVES_AMOUNT 2
+INFILTRATOR_OBJECTIVES_AMOUNT 3
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
@@ -260,6 +269,21 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
+## Infiltration gamemode modificators ###
+### Chances for specific factions
+## Standard faction
+INFILTRATOR_FACTION_SYNDICATE 70
+## Cybersun Industries
+INFILTRATOR_FACTION_CYBERSUN 18
+## Gorlex Marauders
+INFILTRATOR_FACTION_GORLEX 8
+## Tiger Cooperative
+INFILTRATOR_FACTION_TIGER 2
+## MI13
+INFILTRATOR_FACTION_MI 2
+
+## Comment if infiltrators should not get codespeak on roundstart
+INFILTRATOR_GIVE_CODESPEAK
 
 ## AI ###
 
