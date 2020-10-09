@@ -187,6 +187,9 @@ at the cost of risking a vicious bite.**/
 		return
 	if(!Adjacent(usr))
 		return
+	if(!anchored)
+		to_chat(usr, "<span class='notice'>[src] is unanchored!</span>")
+		return
 	if(status)
 		return
 	usr.set_machine(src)
