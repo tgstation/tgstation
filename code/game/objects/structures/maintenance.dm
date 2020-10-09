@@ -167,6 +167,7 @@ at the cost of risking a vicious bite.**/
 		mob.flash_act()
 	var/obj/item/clothing/head/beret/greyscale/beret = new /obj/item/clothing/head/beret/greyscale(get_turf(src))
 	beret.add_atom_colour(beret_color, ADMIN_COLOUR_PRIORITY)
+	cooldowntime = world.time + 1 MINUTES
 
 /obj/structure/destructible/cult/beret_altar/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -186,7 +187,8 @@ at the cost of risking a vicious bite.**/
 		return
 	if(!Adjacent(usr))
 		return
-	if(status)
+	if(status || cooldowntime > world.time)
+		to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
 		return
 	usr.set_machine(src)
 	switch(action)
