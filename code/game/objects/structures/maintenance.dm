@@ -187,8 +187,7 @@ at the cost of risking a vicious bite.**/
 		return
 	if(!Adjacent(usr))
 		return
-	if(status || cooldowntime > world.time)
-		to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
+	if(status)
 		return
 	usr.set_machine(src)
 	switch(action)
@@ -197,6 +196,8 @@ at the cost of risking a vicious bite.**/
 			if (!isnull(chosen_color) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 				beret_color = chosen_color
 		if("create")
+			if(cooldowntime > world.time)
+				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
 			beret_stageone()
 	return TRUE
 
