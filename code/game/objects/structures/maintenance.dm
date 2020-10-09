@@ -108,12 +108,13 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/destructible/cult/beret_altar
 	name = "strange structure"
-	desc = "What is this? Who put it on this station? And why does eminate <span class='hypnophrase'>beret energy?</span>"
+	desc = "What is this? Who put it on this station? And why does it eminate <span class='hypnophrase'>beret energy?</span>"
 	icon_state = "altar"
 	cultist_examine_message = "Even you don't understand the eldritch magic behind this."
 	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
 	break_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
+	light_range = 2
 	var/beret_color = "#ffffff"
 	var/status = ALTAR_INACTIVE
 
