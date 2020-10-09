@@ -4,7 +4,7 @@
 	report_type = "infiltration"
 	antag_flag = ROLE_INFILTRATOR
 	false_report_weight = 10
-	enemy_minimum_age = 14 //It's a bit harder to start from space, you know? Don't want newbies dying in spess because of this.
+	enemy_minimum_age = 7
 	antag_datum = /datum/antagonist/traitor/infiltrator
 	traitor_name = "Syndicate Infiltrator"
 
