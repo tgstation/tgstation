@@ -66,8 +66,8 @@
 
 /*
 	TODO:
-	Heat (might) need to matter for breakdown so hotpockets don't form. it might also slow down heat settling tho
-	Prehaps have it matter for compare()?
+	Reagent containers need to heat up in fires again
+	Investigate (flags = CHANGETURF_RECALC_ADJACENT) and rumors of turfs going unupdated
 	Superconductors need to fucking settle
 	They also need a better qualifyier, shouldn't just be heat.
 	Maybe link some atmos machinery to this system? idk man.
