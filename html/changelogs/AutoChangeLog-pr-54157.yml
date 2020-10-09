@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Jerry the cat is now his own subtype, and cannot catch Tom the Mouse."

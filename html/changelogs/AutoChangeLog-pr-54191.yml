@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Regal rats can now heal off of cheese wheels as well as more royal cheese."
-  - rscadd: "Royal rats can now occasionally appear during the mouse migration event."
-  - tweak: "Rats, when killed, spawn dead rat items that can be eaten or cooked, like dead mice.."
-  - tweak: "Rats and mice now interact with mousetraps, albeit differently than mice do."
