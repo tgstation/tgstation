@@ -436,7 +436,7 @@
 
 
 ///Proc to hook behavior to the change of value in the resting variable.
-/mob/living/proc/set_resting(new_resting, silent = TRUE)
+/mob/living/proc/set_resting(new_resting, silent = TRUE, instant = FALSE)
 	if(new_resting == resting)
 		return
 	. = resting
@@ -462,7 +462,7 @@
 		else
 			if(!silent)
 				to_chat(src, "<span class='notice'>You stand up.</span>")
-			get_up()
+			get_up(instant)
 
 	update_resting()
 
@@ -472,10 +472,10 @@
 	update_rest_hud_icon()
 
 
-/mob/living/proc/get_up()
+/mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
 	var/static/datum/callback/rest_checks = CALLBACK(src, .proc/rest_checks_callback)
-	if(!do_mob(src, src, 2 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
+	if(!instant && !do_mob(src, src, 2 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
