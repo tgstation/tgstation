@@ -3403,11 +3403,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
-"js" = (
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/centcom/supply)
 "jt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3472,10 +3467,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"jA" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/holofloor/hyperspace,
-/area/space)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -4569,7 +4560,6 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "lS" = (
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
 /area/centcom/supplypod/supplypod_temp_holding)
 "lT" = (
@@ -7699,20 +7689,6 @@
 	name = "sand"
 	},
 /area/centcom/supply)
-"rG" = (
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/supply)
 "rH" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -8315,20 +8291,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/evac)
-"sM" = (
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/centcom/evac)
 "sN" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9057,20 +9019,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/ferry)
-"ut" = (
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/control)
 "uu" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -10231,7 +10179,6 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xd" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
@@ -13712,20 +13659,6 @@
 /area/centcom/holding)
 "EE" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/tdome/tdomeobserve)
-"EF" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -24605,21 +24538,21 @@ aa
 aa
 aa
 aa
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
 aa
 "}
 (20,1,1) = {"
@@ -24862,7 +24795,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -24876,7 +24808,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (21,1,1) = {"
@@ -25119,7 +25052,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -25133,7 +25065,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (22,1,1) = {"
@@ -25376,7 +25309,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -25390,7 +25322,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (23,1,1) = {"
@@ -25633,7 +25566,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -25647,7 +25579,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (24,1,1) = {"
@@ -25890,7 +25823,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -25904,7 +25836,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (25,1,1) = {"
@@ -26147,21 +26080,21 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
 hH
-jA
-jA
-jA
-jA
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
+hH
+hH
+hH
+hH
+hH
 aa
 "}
 (26,1,1) = {"
@@ -26404,21 +26337,21 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 lS
 lS
 lS
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (27,1,1) = {"
@@ -26661,21 +26594,21 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 lS
 lS
 lS
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (28,1,1) = {"
@@ -26918,21 +26851,21 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 lS
 lS
 lS
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (29,1,1) = {"
@@ -27175,21 +27108,21 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
 hH
-jA
-jA
-jA
-jA
-jA
 hH
 hH
 hH
 hH
-jA
+hH
+hH
+hH
+hH
+hH
+hH
+hH
 aa
 "}
 (30,1,1) = {"
@@ -27432,7 +27365,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -27446,7 +27378,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (31,1,1) = {"
@@ -27689,7 +27622,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -27703,7 +27635,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (32,1,1) = {"
@@ -27946,7 +27879,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -27960,7 +27892,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (33,1,1) = {"
@@ -28203,7 +28136,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -28217,7 +28149,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (34,1,1) = {"
@@ -28460,7 +28393,6 @@ aa
 aa
 aa
 aa
-jA
 hH
 hH
 hH
@@ -28474,7 +28406,8 @@ hH
 hH
 hH
 hH
-jA
+hH
+hH
 aa
 "}
 (35,1,1) = {"
@@ -28717,21 +28650,21 @@ aa
 aa
 aa
 aa
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
+hH
 aa
 "}
 (36,1,1) = {"
@@ -59206,9 +59139,9 @@ aa
 aa
 jb
 jl
-js
+iO
 iX
-js
+iO
 jJ
 jb
 aa
@@ -59764,7 +59697,7 @@ aa
 aa
 aa
 Eq
-EF
+GM
 Eq
 FH
 Ge
@@ -61044,7 +60977,7 @@ io
 io
 qw
 iu
-ut
+iC
 iu
 lN
 iu
@@ -61797,7 +61730,7 @@ pk
 mg
 qq
 qS
-rG
+mg
 ZX
 tK
 nq
@@ -61811,7 +61744,7 @@ mR
 nq
 zF
 Xt
-ut
+iC
 NG
 iC
 iC
@@ -64381,7 +64314,7 @@ mR
 nq
 zG
 Xt
-ut
+iC
 NG
 iC
 iC
@@ -65141,7 +65074,7 @@ io
 io
 rK
 iu
-ut
+iC
 io
 vP
 vP
@@ -66446,7 +66379,7 @@ kZ
 iC
 iC
 EB
-EF
+GM
 Yt
 FH
 Gq
@@ -67709,7 +67642,7 @@ in
 qx
 qU
 qV
-sM
+Cc
 qV
 uz
 qx
@@ -67721,7 +67654,7 @@ vU
 qx
 zL
 qV
-sM
+Cc
 BM
 Cc
 CO
