@@ -37,7 +37,6 @@
 /area/icemoon/underground)
 "H" = (
 /obj/machinery/door/airlock/cult/friendly,
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/cult,
 /area/icemoon/underground)
 "J" = (

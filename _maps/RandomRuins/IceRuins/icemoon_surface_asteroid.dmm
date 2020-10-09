@@ -63,7 +63,6 @@
 /area/icemoon/surface)
 "H" = (
 /obj/machinery/door/airlock/bronze/seethru,
-/obj/structure/fans/tiny,
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "P" = (
@@ -89,7 +88,6 @@
 /area/icemoon/surface)
 "U" = (
 /obj/machinery/door/airlock/bronze,
-/obj/structure/fans/tiny,
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "V" = (

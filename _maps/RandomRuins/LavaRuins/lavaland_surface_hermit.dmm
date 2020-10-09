@@ -94,10 +94,6 @@
 /obj/item/bedsheet/black,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"v" = (
-/obj/structure/fans,
-/turf/open/floor/pod/dark,
-/area/ruin/powered)
 "w" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod/dark,
@@ -136,7 +132,6 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/survival_pod/glass,
-/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "E" = (
@@ -288,7 +283,7 @@ b
 L
 n
 t
-v
+y
 x
 B
 t

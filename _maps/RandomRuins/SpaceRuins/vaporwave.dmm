@@ -112,7 +112,6 @@
 /turf/open/floor/holofloor/beach/coast_b,
 /area/ruin/space/has_grav/powered/aesthetic)
 "z" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/aesthetic)

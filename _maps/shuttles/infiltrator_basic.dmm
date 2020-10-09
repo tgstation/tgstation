@@ -459,7 +459,6 @@
 	port_direction = 4;
 	width = 23
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

@@ -192,18 +192,12 @@
 "G" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/golem_ship)
-"H" = (
-/obj/machinery/door/airlock/titanium,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
 "I" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "K" = (
 /obj/machinery/door/airlock/titanium,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -236,11 +230,6 @@
 /area/ruin/powered/golem_ship)
 "Q" = (
 /obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/golem_ship)
-"T" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
@@ -304,12 +293,12 @@ a
 a
 b
 b
-H
+j
 b
 r
 l
 G
-T
+j
 b
 b
 a
@@ -533,7 +522,7 @@ f
 b
 "}
 (16,1,1) = {"
-T
+j
 e
 I
 b
@@ -548,10 +537,10 @@ B
 b
 V
 f
-T
+j
 "}
 (17,1,1) = {"
-T
+j
 f
 f
 b
@@ -566,7 +555,7 @@ C
 b
 f
 f
-T
+j
 "}
 (18,1,1) = {"
 b

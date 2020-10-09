@@ -35,11 +35,6 @@
 /obj/machinery/door/airlock/security/glass,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
-"i" = (
-/obj/machinery/door/airlock/security/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/hunter)
 "j" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -188,7 +183,6 @@
 /area/shuttle/hunter)
 "K" = (
 /obj/machinery/door/airlock/security/glass,
-/obj/structure/fans/tiny,
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
@@ -396,7 +390,7 @@ a
 a
 a
 a
-i
+h
 k
 k
 v

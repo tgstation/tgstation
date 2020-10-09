@@ -7478,7 +7478,6 @@
 /area/awaymission/snowdin/post/engineering)
 "rc" = (
 /obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -8725,7 +8724,6 @@
 /area/awaymission/snowdin/cave/cavern)
 "uZ" = (
 /obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -10475,14 +10473,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile/ice,
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_dock)
-"zS" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zT" = (
@@ -14823,12 +14813,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main/mechbay)
-"VW" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_dock)
 "WK" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -61373,7 +61357,7 @@ oZ
 Fk
 oZ
 oZ
-VW
+zn
 FH
 wL
 Lx
@@ -61630,7 +61614,7 @@ sY
 oZ
 oZ
 oZ
-VW
+zn
 wL
 FK
 Lx
@@ -66688,7 +66672,7 @@ xy
 zn
 wL
 wL
-zS
+Lx
 qi
 qi
 At
@@ -66945,7 +66929,7 @@ xy
 zn
 wL
 wL
-zS
+Lx
 qi
 Ar
 zk

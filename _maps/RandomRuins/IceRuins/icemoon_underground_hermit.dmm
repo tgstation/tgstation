@@ -92,7 +92,6 @@
 /obj/machinery/door/airlock/wood{
 	name = "Frozen Shack"
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "Oe" = (

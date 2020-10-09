@@ -129,11 +129,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"aD" = (
-/obj/structure/fans/tiny,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "aG" = (
 /obj/machinery/light{
 	dir = 8
@@ -1134,7 +1129,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "fp" = (
@@ -1744,7 +1738,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "LW" = (
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ME" = (
@@ -3263,7 +3256,7 @@ ae
 ac
 ac
 aj
-aD
+yl
 aj
 ac
 ac

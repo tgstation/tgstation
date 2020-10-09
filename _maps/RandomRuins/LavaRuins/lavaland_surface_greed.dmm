@@ -112,7 +112,6 @@
 /area/ruin/powered/greed)
 "J" = (
 /obj/machinery/door/airlock/gold,
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult,
 /area/ruin/powered/greed)
 "W" = (

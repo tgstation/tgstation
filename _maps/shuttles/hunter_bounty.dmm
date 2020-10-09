@@ -22,12 +22,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
-"f" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
 "g" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/plastitanium,
@@ -77,8 +71,8 @@
 /area/shuttle/hunter)
 "q" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
-	dir = 8
+	dir = 8;
+	icon_state = "heater"
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -133,8 +127,8 @@
 /area/shuttle/hunter)
 "A" = (
 /obj/machinery/computer/shuttle/hunter{
-	icon_state = "computer";
-	dir = 8
+	dir = 8;
+	icon_state = "computer"
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
@@ -173,8 +167,8 @@
 /area/shuttle/hunter)
 "I" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
-	icon_state = "computer";
-	dir = 8
+	dir = 8;
+	icon_state = "computer"
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
@@ -211,20 +205,19 @@
 	rechargeTime = 1800;
 	width = 15
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "M" = (
 /obj/effect/mob_spawn/human/fugitive/bounty/armor{
-	icon_state = "sleeper";
-	dir = 1
+	dir = 1;
+	icon_state = "sleeper"
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "P" = (
 /obj/structure/fluff/empty_sleeper{
-	icon_state = "sleeper-open";
-	dir = 1
+	dir = 1;
+	icon_state = "sleeper-open"
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
@@ -324,7 +317,7 @@ b
 b
 "}
 (7,1,1) = {"
-f
+c
 d
 h
 j

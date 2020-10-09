@@ -14,7 +14,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ac" = (
-/obj/structure/fans/tiny,
 /obj/docking_port/stationary{
 	dir = 4;
 	dwidth = 3;
@@ -120,7 +119,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "te" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"
 	},

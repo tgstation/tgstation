@@ -767,6 +767,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -1483,6 +1484,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "adG" = (
@@ -3540,6 +3542,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aig" = (
@@ -53785,6 +53788,7 @@
 	id = "toxinsdriver";
 	name = "Toxins Launcher Bay Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cDu" = (
@@ -59244,6 +59248,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cRR" = (
@@ -76711,6 +76716,17 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"tZz" = (
+/obj/structure/fans/tiny/invisible,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 4;
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
+	},
+/turf/open/space/basic,
+/area/space)
 "uaC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -77972,6 +77988,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"vTe" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "vTD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -89228,7 +89248,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vTe
 aSH
 aUb
 aVt
@@ -89742,7 +89762,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vTe
 aSI
 aRA
 aVv
@@ -104860,7 +104880,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vTe
 kxJ
 aax
 aaw
@@ -105374,7 +105394,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vTe
 kFW
 aax
 qWF
@@ -117462,9 +117482,9 @@ aaa
 aaf
 aaa
 acP
-aaa
+vTe
 adF
-aaa
+vTe
 acP
 afB
 agz
@@ -125731,9 +125751,9 @@ dgu
 dgm
 dgB
 lMJ
-aaa
-adF
-aaa
+vTe
+tZz
+vTe
 lMJ
 aaa
 bpy

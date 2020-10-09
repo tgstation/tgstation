@@ -25,10 +25,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-"e" = (
-/obj/structure/fans,
-/turf/open/floor/pod,
-/area/survivalpod)
 "f" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod,
@@ -209,7 +205,7 @@ a
 "}
 (2,1,1) = {"
 b
-e
+l
 k
 p
 t

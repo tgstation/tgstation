@@ -746,7 +746,6 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay)
 "cz" = (
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/medical/medbay)
 "cA" = (
@@ -959,7 +958,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "dj" = (
@@ -1280,10 +1278,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"el" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/engine,
-/area/hallway/secondary/entry)
 "em" = (
 /turf/closed/wall/r_wall,
 /area/quartermaster/miningoffice)
@@ -1334,7 +1328,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ey" = (
@@ -1535,7 +1528,6 @@
 	name = "Departure Lounge Airlock"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "fc" = (
@@ -1666,7 +1658,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Transport Airlock"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "ft" = (
@@ -1777,7 +1768,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "fH" = (
@@ -1922,7 +1912,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "gd" = (
@@ -2285,7 +2274,6 @@
 /turf/open/space/basic,
 /area/space)
 "uf" = (
-/obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -2370,7 +2358,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "yK" = (
-/obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2624,11 +2611,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "Vy" = (
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"VA" = (
-/obj/structure/fans/tiny,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -4658,7 +4640,7 @@ aa
 aa
 tG
 aa
-el
+lc
 dV
 dV
 dV
@@ -7142,7 +7124,7 @@ ai
 aj
 aj
 aj
-VA
+Vy
 aj
 ac
 ac

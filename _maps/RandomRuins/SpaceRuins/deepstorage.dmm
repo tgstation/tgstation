@@ -2669,7 +2669,6 @@
 	name = "Inconspicuous Airlock";
 	req_access_txt = "200"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

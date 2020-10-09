@@ -89,7 +89,6 @@
 /area/ruin/powered/gluttony)
 "S" = (
 /obj/machinery/door/airlock/uranium,
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 

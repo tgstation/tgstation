@@ -296,7 +296,6 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/obj/structure/fans/tiny/invisible,
 /obj/effect/decal/cleanable/blood,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)

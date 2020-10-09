@@ -669,7 +669,6 @@
 	pixel_y = 26;
 	req_access_txt = "150"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
@@ -1391,7 +1390,6 @@
 	port_direction = 4;
 	width = 23
 	},
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/box,
 /obj/machinery/button/door{
 	id = "infiltrator_starboardblast";

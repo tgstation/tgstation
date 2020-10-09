@@ -79,10 +79,6 @@
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
-"as" = (
-/obj/structure/fans,
-/turf/closed/wall/mineral/wood,
-/area/ruin/powered/snow_biodome)
 "at" = (
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
@@ -178,11 +174,6 @@
 /area/ruin/powered/snow_biodome)
 "aO" = (
 /obj/machinery/door/airlock/glass_large,
-/obj/structure/fans/tiny,
-/turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
-"aP" = (
-/obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "aQ" = (
@@ -284,7 +275,6 @@
 /area/ruin/powered/snow_biodome)
 "qt" = (
 /obj/machinery/door/airlock/silver,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -303,7 +293,6 @@
 /area/ruin/powered/snow_biodome)
 "zT" = (
 /obj/machinery/door/airlock/silver,
-/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "AM" = (
@@ -321,11 +310,6 @@
 /area/ruin/powered/snow_biodome)
 "Ef" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
-"Ez" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/glass_large,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "HP" = (
@@ -358,7 +342,6 @@
 /area/ruin/powered/snow_biodome)
 "PD" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -882,20 +865,20 @@ ak
 aO
 tl
 tl
-Ez
+aO
 Qa
 "}
 (16,1,1) = {"
 Wg
 ag
 ah
-as
+aq
 aw
 aA
 aA
 at
 aM
-aP
+HP
 ak
 ak
 aQ
@@ -911,10 +894,10 @@ ao
 ao
 ak
 ak
-aP
+HP
 tl
 tl
-aP
+HP
 Qa
 "}
 (17,1,1) = {"

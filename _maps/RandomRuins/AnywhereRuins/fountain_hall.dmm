@@ -24,10 +24,6 @@
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
-"h" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/engine/cult,
-/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -99,7 +95,7 @@ f
 f
 f
 f
-h
+f
 "}
 (5,1,1) = {"
 b

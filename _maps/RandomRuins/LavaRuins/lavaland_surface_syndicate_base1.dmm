@@ -1693,7 +1693,6 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1716,7 +1715,6 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gh" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
@@ -2322,7 +2320,6 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -2559,7 +2556,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hX" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
@@ -2569,7 +2565,6 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hY" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
@@ -4493,7 +4488,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "lT" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
@@ -4893,7 +4887,6 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -6012,14 +6005,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
-"EZ" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Hu" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6106,16 +6091,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
-"St" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
 "Tp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
@@ -7013,10 +6988,10 @@ mt
 mU
 np
 nP
-EZ
+lT
 oI
 oD
-St
+mS
 ab
 ab
 ab
