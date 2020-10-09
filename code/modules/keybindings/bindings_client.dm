@@ -61,7 +61,11 @@
 		if("Alt", "Ctrl", "Shift")
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
-			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+			if(AltMod || CtrlMod || ShiftMod)
+				full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+				key_combos_held[_key] = full_key
+			else
+				full_key = _key
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
@@ -71,14 +75,23 @@
 
 	holder?.key_down(_key, src)
 	mob.focus?.key_down(_key, src)
+	mob.update_mouse_pointer()
+
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
 
+	var/key_combo = key_combos_held[_key]
+	if(key_combo)
+		key_combos_held -= _key
+		keyUp(key_combo)
+
 	if(!keys_held[_key])
 		return
+
 	keys_held -= _key
+
 	if(!movement_locked)
 		var/movement = movement_keys[_key]
 		if(!(next_move_dir_add & movement))
@@ -92,6 +105,8 @@
 			break
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
+	mob.update_mouse_pointer()
+
 
 // Called every game tick
 /client/keyLoop()

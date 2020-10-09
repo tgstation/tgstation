@@ -57,7 +57,7 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		power_cell.use(power_usage / max(power_efficiency, 1))
+		power_cell.use(power_usage / max(power_efficiency, 1) * 0.05)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/set_move_delay(mob/living/user)

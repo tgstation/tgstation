@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "Even more dark omens can befall anyone unlucky enough to get a cursed coupon..."
+  - rscadd: "Admins can now smite players with Bad Luck to make them rather accident prone."
