@@ -123,6 +123,10 @@
 	port_id = "labour"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/construction
+	port_id = "construction"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/mining
 	port_id = "mining"
 	can_be_bought = FALSE
@@ -173,6 +177,12 @@
 	suffix = "backup"
 	name = "Backup Shuttle"
 	can_be_bought = FALSE
+
+/datum/map_template/shuttle/construction/mining
+	suffix = "mining"
+	can_be_bought = FALSE
+	name = "Build your own mining shuttle kit"
+	description = "For the beginning shuttle engineer! Comes stocked with base engine and consoles. Oxygen not included."
 
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"

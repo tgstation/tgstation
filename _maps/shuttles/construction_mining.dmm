@@ -1,0 +1,128 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"b" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"c" = (
+/obj/machinery/computer/shuttle/mining{
+	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public;construction_mining_custom";
+	shuttleId = "construction_mining"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"d" = (
+/obj/structure/table,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"e" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"f" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"g" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"h" = (
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "construction_mining";
+	name = "spare mining shuttle";
+	port_direction = 4;
+	width = 7
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"i" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"j" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"k" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"l" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"J" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	shuttleId = "construction_mining";
+	shuttlePortId = "construction_mining_custom"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"Q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+k
+k
+k
+k
+k
+k
+k
+"}
+(2,1,1) = {"
+k
+c
+k
+k
+k
+k
+k
+"}
+(3,1,1) = {"
+k
+d
+Q
+k
+k
+j
+l
+"}
+(4,1,1) = {"
+k
+J
+k
+k
+k
+k
+k
+"}
+(5,1,1) = {"
+k
+k
+k
+h
+k
+k
+k
+"}
