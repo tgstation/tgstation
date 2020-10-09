@@ -169,7 +169,7 @@
 		if(IS_HERETIC_MONSTER(livies) || IS_HERETIC(livies))
 			return
 		livies.silent += 1
-		livies.adjust_bodytemperature(-10)
+		livies.adjust_bodytemperature(-20)
 
 	var/turf/turfie = get_turf(user)
 	if(!isopenturf(turfie))
