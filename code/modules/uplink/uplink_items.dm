@@ -1804,7 +1804,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Nanite Brainwash Program"
 	desc = "A nanite disk preloaded with a program that can be used by an experienced nanite programer to brainwash people to do their bidding. It functions as a normal nanite disk so try not to override it."
 	item = /obj/item/disk/nanite_program/mind_control
-	cost = 9
+	cost = 3
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
 /datum/uplink_item/role_restricted/clowncar
