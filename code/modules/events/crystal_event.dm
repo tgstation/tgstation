@@ -31,9 +31,9 @@ This section is for the event controller
 /datum/round_event_control/crystal_invasion
 	name = "Crystal Invasion"
 	typepath = /datum/round_event/crystal_invasion
-	weight = 8
+	weight = 0
 	min_players = 35
-	max_occurrences = 1
+	max_occurrences = 0 //no random chance to you
 	earliest_start = 25 MINUTES
 
 /datum/round_event/crystal_invasion
@@ -363,6 +363,10 @@ This section is for the destabilized SM
 	var/datum/gas_mixture/removed
 	var/gasefficency = 0.5
 	removed = env.remove(gasefficency * env.total_moles())
+
+	if(!removed)
+		return
+
 	removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
 	if(!removed || !removed.total_moles() || isspaceturf(loc_turf))
 		removed.gases[/datum/gas/bz][MOLES] += 0.5

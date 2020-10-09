@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/alien_queen_finder
 
-	var/obj/screen/devil/soul_counter/devilsouldisplay
 
 	var/obj/screen/action_intent
 	var/obj/screen/zone_select
@@ -108,7 +107,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	internals = null
 	spacesuit = null
 	lingchemdisplay = null
-	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null

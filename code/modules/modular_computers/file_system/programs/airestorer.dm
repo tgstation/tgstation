@@ -9,6 +9,7 @@
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
+	program_icon = "laptop-code"
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
@@ -31,7 +32,8 @@
 	return
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/living/silicon/ai/A = get_ai()

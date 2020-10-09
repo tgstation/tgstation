@@ -171,7 +171,7 @@
 	dir = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aL" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -189,6 +189,7 @@
 "aN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aO" = (
@@ -218,7 +219,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -252,8 +253,9 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aT" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit/medical,
+/obj/item/clothing/suit/space/eva,
 /obj/item/tank/internals/emergency_oxygen/double,
+/obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aU" = (
@@ -528,7 +530,7 @@
 "bK" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "bL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -576,14 +578,14 @@
 "bP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "bT" = (
 /obj/structure/grille,
 /obj/item/shard{
@@ -677,9 +679,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/abandonedzoo)
-"KN" = (
-/turf/template_noop,
-/area/space/nearstation)
 "Ng" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
@@ -1061,7 +1060,7 @@ ac
 ac
 bN
 bP
-KN
+aa
 aa
 "}
 (19,1,1) = {"
