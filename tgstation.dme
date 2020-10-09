@@ -2854,6 +2854,7 @@
 #include "code\modules\recycling\disposal\outlet.dm"
 #include "code\modules\recycling\disposal\pipe.dm"
 #include "code\modules\recycling\disposal\pipe_sorting.dm"
+#include "code\modules\recycling\disposal\rollercoaster.dm"
 #include "code\modules\religion\religion_sects.dm"
 #include "code\modules\religion\religion_structures.dm"
 #include "code\modules\religion\rites.dm"
