@@ -1401,13 +1401,19 @@
 	. = ..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	ADD_TRAIT(L, TRAIT_SIXTHSENSE, type)
+	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/hexane/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, type)
-	REMOVE_TRAIT(L, TRAIT_SIXTHSENSE, type)
+	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
+
+/datum/reagent/hexane/on_mob_life(mob/living/L)
+	. = ..()
+	L.hallucination += 150
+	if(prob(25))
+		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
