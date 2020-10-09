@@ -45,7 +45,6 @@
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/examine(mob/user)
 	. = ..()
-	. += "This device will let gas flow if the pressure of the gas in the input is [inverted ? "higher" : "lower"] than the pressure set in the interface."
 	if(inverted)
 		. += "The device settings can be restored if a multitool is used on it."
 	else
@@ -67,12 +66,20 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-	if(air1.return_pressure() > target_pressure)
-		if(air1.release_gas_to(air2, air1.return_pressure()))
-			update_parents()
-			is_gas_flowing = TRUE
+	if(!inverted)
+		if(air1.return_pressure() > target_pressure)
+			if(air1.release_gas_to(air2, air1.return_pressure()))
+				update_parents()
+				is_gas_flowing = TRUE
+		else
+			is_gas_flowing = FALSE
 	else
-		is_gas_flowing = FALSE
+		if(air1.return_pressure() < target_pressure)
+			if(air1.release_gas_to(air2, air1.return_pressure()))
+				update_parents()
+				is_gas_flowing = TRUE
+		else
+			is_gas_flowing = FALSE
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)

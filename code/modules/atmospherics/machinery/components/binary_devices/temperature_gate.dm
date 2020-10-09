@@ -37,7 +37,6 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/examine(mob/user)
 	. = ..()
-	. += "This device will let gas flow if the temperature of the gas in the input is [inverted ? "higher" : "lower"] than the temperature set in the interface."
 	if(inverted)
 		. += "The device settings can be restored if a multitool is used on it."
 	else
