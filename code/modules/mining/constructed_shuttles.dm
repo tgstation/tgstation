@@ -13,7 +13,7 @@
 		return
 	template = SSmapping.shuttle_templates[template_id]
 	if(!template)
-		loc.visible_message("<span class='warning'>Wrong template_id: [template_id]</span>")
+		loc.visible_message("<span class='warning'>Error in blurspace unfolding system. Please contact your Nanotrasen contractor.</span>")
 
 /obj/item/shuttlecapsule/Destroy()
 	template = null // without this, capsules would be one use. per round.
@@ -32,7 +32,7 @@
 		loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
 		used = TRUE
 		sleep(50)
-		/*var/turf/deploy_location = get_turf(src)
+		var/turf/deploy_location = get_turf(src)
 		var/status = template.check_deploy(deploy_location)
 		switch(status)
 			if(SHELTER_DEPLOY_BAD_AREA)
@@ -44,9 +44,7 @@
 
 		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
-			return*/
-
-		used = FALSE
+			return
 
 		playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
 

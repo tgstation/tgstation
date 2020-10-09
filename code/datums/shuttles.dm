@@ -127,6 +127,13 @@
 	port_id = "construction"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/construction/New()
+	. = ..()
+	blacklisted_turfs = typecacheof(/turf/closed)
+	whitelisted_turfs = list()
+	banned_areas = typecacheof(/area/shuttle)
+	banned_objects = list()
+
 /datum/map_template/shuttle/mining
 	port_id = "mining"
 	can_be_bought = FALSE
