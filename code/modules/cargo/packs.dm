@@ -220,6 +220,15 @@
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/emergency/miningshuttlecapsule
+	name = "Spare Mining Shuttle Crate"
+	desc = "Contains bluespace shuttle capsule with mining shuttle empty shell. Oxygen not included. Requires AUX access to open."
+	cost = 2500
+	access = ACCESS_AUX_BASE 
+	contains = list(/obj/item/shuttlecapsule)
+	crate_name = "spare mining shuttle crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	desc = "(*!&@#SAD ABOUT THAT NULL_ENTRY, HUH OPERATIVE? WELL, THIS LITTLE ORDER CAN STILL HELP YOU OUT IN A PINCH. CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, AN INCENDIARY GRENADE, AND A \"SLEEPY PEN\" FULL OF NICE TOXINS!#@*$"
