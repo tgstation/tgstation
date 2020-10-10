@@ -20,8 +20,8 @@
 	var/stored_energy = 0
 	var/active = 0
 	var/locked = FALSE
-	var/drainratio = 0.5
-	var/powerproduction_drain = 0.001
+	var/drain_ratio = 0.5
+	var/power_production_drain = 0.001
 
 /obj/machinery/power/rad_collector/anchored/Initialize()
 	. = ..()
@@ -40,19 +40,49 @@
 /obj/machinery/power/rad_collector/process(delta_time)
 	if(!loaded_tank)
 		return
-	if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+	var/datum/gas_mixture/tank_content = loaded_tank.air_contents
+	if(!tank_content.gases[/datum/gas/plasma])
 		investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 	else
-		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
-		loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-		loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
-		loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
-		loaded_tank.air_contents.garbage_collect()
+		var/pressure = tank_content.return_pressure()
+		var/total_moles = tank_content.total_moles()
+		var/temperature = tank_content.temperature
+
+		message_admins("pressure [pressure]")
+		message_admins("total_moles [total_moles]")
+		message_admins("temperature [temperature]")
+
+		var/pressure_ratio = 1 + ((pressure / 300 - 1) * 0.15)
+		var/plasma_ratio = tank_content.gases[/datum/gas/plasma][MOLES] / total_moles
+		var/temperature_ratio = 1 + (T20C / temperature - 1) * 0.3
+
+		message_admins("pressure_ratio [pressure_ratio]")
+		message_admins("plasma_ratio [plasma_ratio]")
+		message_admins("temperature_ratio [temperature_ratio]")
+
+		var/total_ratio = pressure_ratio * plasma_ratio * temperature_ratio
+		total_ratio = clamp(total_ratio, 0.5, 1.6) //max 60% more
+
+		message_admins("total_ratio [total_ratio]")
+
+		var/gas_drained = min(power_production_drain * drain_ratio * delta_time, tank_content.gases[/datum/gas/plasma][MOLES])
+		tank_content.gases[/datum/gas/plasma][MOLES] -= gas_drained
+		tank_content.assert_gas(/datum/gas/tritium)
+		tank_content.gases[/datum/gas/tritium][MOLES] += gas_drained
+		tank_content.garbage_collect()
+
+		message_admins("gas_drained [gas_drained]")
+
+		var/temperature_increase = gas_drained * plasma_ratio * 100
+		if(tank_content.temperature < 400)
+			tank_content.temperature += temperature_increase
+
+		message_admins("temperature_increase [temperature_increase]")
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
-		add_avail(power_produced)
+		add_avail(power_produced * total_ratio)
 		stored_energy-=power_produced
 
 /obj/machinery/power/rad_collector/interact(mob/user)
