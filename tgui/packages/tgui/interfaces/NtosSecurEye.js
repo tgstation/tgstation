@@ -56,39 +56,39 @@ export const NtosSecurEye = (props, context) => {
       width={800}
       height={600}
       theme={PC_device_theme}>
-      <div className="CameraConsole__left">
-        <NtosWindow.Content>
+      <NtosWindow.Content>
+        <div className="CameraConsole__left">
           <CameraConsoleContent />
-        </NtosWindow.Content>
-      </div>
-      <div className="CameraConsole__right">
-        <div className="CameraConsole__toolbar">
-          <b>Camera: </b>
-          {activeCamera
-            && activeCamera.name
-            || '—'}
         </div>
-        <div className="CameraConsole__toolbarRight">
-          <Button
-            icon="chevron-left"
-            disabled={!prevCameraName}
-            onClick={() => act('switch_camera', {
-              name: prevCameraName,
-            })} />
-          <Button
-            icon="chevron-right"
-            disabled={!nextCameraName}
-            onClick={() => act('switch_camera', {
-              name: nextCameraName,
-            })} />
+        <div className="CameraConsole__right">
+          <div className="CameraConsole__toolbar">
+            <b>Camera: </b>
+            {activeCamera
+              && activeCamera.name
+              || '—'}
+          </div>
+          <div className="CameraConsole__toolbarRight">
+            <Button
+              icon="chevron-left"
+              disabled={!prevCameraName}
+              onClick={() => act('switch_camera', {
+                name: prevCameraName,
+              })} />
+            <Button
+              icon="chevron-right"
+              disabled={!nextCameraName}
+              onClick={() => act('switch_camera', {
+                name: nextCameraName,
+              })} />
+          </div>
+          <ByondUi
+            className="CameraConsole__map"
+            params={{
+              id: mapRef,
+              type: 'map',
+            }} />
         </div>
-        <ByondUi
-          className="CameraConsole__map"
-          params={{
-            id: mapRef,
-            type: 'map',
-          }} />
-      </div>
+      </NtosWindow.Content>
     </NtosWindow>
   );
 };

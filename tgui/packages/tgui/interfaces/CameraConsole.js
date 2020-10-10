@@ -104,40 +104,40 @@ export const CameraConsoleContent = (props, context) => {
       direction={"column"}
       height="100%">
       <Flex.Item>
-      <Input
-        autoFocus
-        fluid
-        mb={1}
-        placeholder="Search for a camera"
-        onInput={(e, value) => setSearchText(value)} />
+        <Input
+          autoFocus
+          fluid
+          mb={1}
+          placeholder="Search for a camera"
+          onInput={(e, value) => setSearchText(value)} />
       </Flex.Item>
       <Flex.Item
-      height="90%">
-      <Section
-      fill
-      scrollable>
-        {cameras.map(camera => (
+        height="90%">
+        <Section
+          fill
+          scrollable>
+          {cameras.map(camera => (
           // We're not using the component here because performance
           // would be absolutely abysmal (50+ ms for each re-render).
-          <div
-            key={camera.name}
-            title={camera.name}
-            className={classes([
-              'Button',
-              'Button--fluid',
-              'Button--color--transparent',
-              'Button--ellipsis',
-              activeCamera
+            <div
+              key={camera.name}
+              title={camera.name}
+              className={classes([
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
+                activeCamera
                 && camera.name === activeCamera.name
                 && 'Button--selected',
-            ])}
-            onClick={() => act('switch_camera', {
-              name: camera.name,
-            })}>
-            {camera.name}
-          </div>
-        ))}
-      </Section>
+              ])}
+              onClick={() => act('switch_camera', {
+                name: camera.name,
+              })}>
+              {camera.name}
+            </div>
+          ))}
+        </Section>
       </Flex.Item>
     </Flex>
   );
