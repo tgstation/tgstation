@@ -601,12 +601,11 @@ SUBSYSTEM_DEF(shuttle)
 			return port
 
 /datum/controller/subsystem/shuttle/proc/get_containing_dock(atom/A)
-	. = list()
 	var/list/stationary_cache = stationary
 	for(var/i in 1 to stationary_cache.len)
 		var/obj/docking_port/port = stationary_cache[i]
 		if(port.is_in_shuttle_bounds(A))
-			. += port
+			return port
 
 /datum/controller/subsystem/shuttle/proc/get_dock_overlap(x0, y0, x1, y1, z)
 	. = list()
