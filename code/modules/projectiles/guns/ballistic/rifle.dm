@@ -79,7 +79,7 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	name = "ballistic harpoon gun"
-	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human agressors. Because it's ironic."
+	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
 	icon_state = "speargun"
 	inhand_icon_state = "speargun"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
