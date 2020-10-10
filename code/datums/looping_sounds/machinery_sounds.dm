@@ -61,3 +61,27 @@
 	mid_sounds = list('sound/machines/roulettejackpot.ogg')
 	volume = 85
 	vary = TRUE
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/holopad
+	mid_length = 20
+	mid_sounds = list('sound/machines/hologram.ogg' = 1)
+	volume = 10
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/firealarm
+	start_sound = 'sound/machines/firealarmstart.ogg'
+	start_length = 18
+	mid_sounds = list('sound/machines/firealarmloop.ogg' = 1)
+	mid_length = 70
+	end_sound = 'sound/machines/firealarmend.ogg'
+	volume = 25
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/cryotube
+	mid_sounds = list('sound/machines/cryotube.ogg' = 1)
+	mid_length = 24
+	volume = 25

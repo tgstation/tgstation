@@ -78,6 +78,8 @@ Possible to do for anyone motivated enough:
 	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
+	///Looping audio for the holopad
+	var/datum/looping_sound/holopad/soundloop
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
@@ -126,6 +128,7 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	if(on_network)
 		holopads += src
+	soundloop = new(list(src), FALSE)
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -144,6 +147,7 @@ Possible to do for anyone motivated enough:
 		record_stop()
 
 	QDEL_NULL(disk)
+	QDEL_NULL(soundloop)
 
 	holopads -= src
 	return ..()
@@ -444,8 +448,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	active_power_usage = HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users)
 	if(total_users || replay_mode)
 		set_light(2)
+		soundloop.start()
 	else
 		set_light(0)
+		soundloop.stop()
 	update_icon()
 
 /obj/machinery/holopad/update_icon_state()
