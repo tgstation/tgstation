@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			assemble_baseturfs(fake_turf_type)
 			if(!length(baseturfs))
 				baseturfs = list(baseturfs)
-			baseturfs = baseturfs_string_list((baseturfs - baseturfs & GLOB.blacklisted_automated_baseturfs) + old_baseturfs, src)
+			baseturfs = baseturfs_string_list((baseturfs - (baseturfs & GLOB.blacklisted_automated_baseturfs)) + old_baseturfs, src)
 			return
 		else if(!length(new_baseturfs))
 			new_baseturfs = list(new_baseturfs, fake_turf_type)
