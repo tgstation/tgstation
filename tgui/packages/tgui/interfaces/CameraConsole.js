@@ -107,12 +107,12 @@ export const CameraConsoleContent = (props, context) => {
         <Input
           autoFocus
           fluid
-          mb={1}
+          mt={1}
           placeholder="Search for a camera"
           onInput={(e, value) => setSearchText(value)} />
       </Flex.Item>
       <Flex.Item
-        height="90%">
+        height="100%">
         <Section
           fill
           scrollable>
