@@ -64,7 +64,10 @@
 	//get_spawn_tile(holodeck_helper)
 	current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
 	bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
-
+	//if(istype(AS, /area/holodeck))
+	//	log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
+	//	qdel(src)
+	//	return
 	/*if(ispath(holodeck_type, /area))
 		linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
 	if(ispath(offline_program, /area))
@@ -75,10 +78,7 @@
 		//qdel(src)
 		return
 	var/area/AS = get_area(src)
-	if(istype(AS, /area/holodeck))
-		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
-		//qdel(src)
-		return
+
 	else
 		linked.linked = src
 		var/area/my_area = get_area(src)
@@ -126,9 +126,6 @@
 	. = TRUE
 	switch(action)
 		if("load_program")
-			//var/program_to_load = text2path(params["type"])
-			//^ i might have needed to do this
-			//var/datum/map_template/holodeck/program_to_load = params//this shouldnt work as is, holodeck.js doesnt send the type at all, it only sends the name and template_id
 			var/program_to_load = params["id"]
 			//if(!ispath(program_to_load))
 			//	return FALSE
@@ -144,9 +141,6 @@
 			if(!valid)
 				return FALSE*/
 			//load the map_template that program_to_load represents
-			//var/datum/map_template/shelter/template //template = SSmapping.holodeck_templates[template_id]
-			//var/datum/map_template/shelter/template = SSmapping.holodeck_templates[program_to_load]
-			//var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(program_to_load)
 				//var/id = initial(program_to_load.template_id)
 				load_program(program_to_load)//do i only need to replace this? NO EASYNESS, ONLY PAIN
@@ -158,12 +152,12 @@
 			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process(delta_time)
-	if(damaged && DT_PROB(5, delta_time))
+	/*if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/T in linked)
 			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, T)
 				return
-
+	*/
 	if(!..() || !active)
 		return
 
@@ -178,14 +172,14 @@
 				do_sparks(2, 1, T)
 			SSexplosions.lowturf += T
 			T.hotspot_expose(1000,500,1)
-		*/
-	if(!(obj_flags & EMAGGED))
+
+	/*if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
 			if(!(get_turf(item) in current_holodeck_area))
 				derez(item)
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
-		HE.tick()
+		HE.tick()*/
 
 	//active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
@@ -223,8 +217,8 @@
 		//if(!A)
 			//continue
 		var/list/info_this = list()
-		info_this["name"] = initial(A.name)
 		info_this["id"] = initial(A.template_id)
+		info_this["name"] = initial(A.name)
 		if(initial(A.restricted))
 			LAZYADD(emag_programs, list(info_this))
 		else

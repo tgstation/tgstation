@@ -23,29 +23,24 @@
 /turf/open/floor/holofloor/chapel
 	name = "chapel floor"
 	icon_state = "chapel"
-	dir = 2
 
 /turf/open/floor/holofloor/chapel/bottom_left
 	name = "chapel floor"
 	icon_state = "chapel"
-	dir = 8
 	direction = 8
 
 /turf/open/floor/holofloor/chapel/top_right
 	name = "chapel floor"
 	icon_state = "chapel"
-	dir = 4
 	direction = 4
 
 /turf/open/floor/holofloor/chapel/bottom_right
 	name = "chapel floor"
 	icon_state = "chapel"
-	direction = 2
 
 /turf/open/floor/holofloor/chapel/top_left
 	name = "chapel floor"
 	icon_state = "chapel"
-	dir = 1
 	direction = 1
 
 /turf/open/floor/holofloor/Initialize()
@@ -149,7 +144,8 @@
 	name = "carpet"
 	desc = "Electrically inviting."
 	icon = 'icons/turf/floors/carpet.dmi'
-	icon_state = "carpet"
+	icon_state = "carpet-255"
+	base_icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null

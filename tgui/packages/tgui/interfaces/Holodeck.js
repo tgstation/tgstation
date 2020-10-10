@@ -34,8 +34,10 @@ export const Holodeck = (props, context) => {
               key={def_program.id}
               content={def_program.name.substring(11)}
               textAlign="center"
-              selected={def_program.id === program}//selected={def_program.type === program} //this is supposed to turn green ONLY if the button made by .map is equal to the currently loaded program
-              onClick={() => act('load_program')} />
+              selected={def_program.id === program}
+              onClick={() => act('load_program', {
+                id: def_program.id,
+              })} />
           ))}
         </Section>
         {!!emagged && (
