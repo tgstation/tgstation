@@ -4556,6 +4556,10 @@
 /obj/machinery/mechpad,
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
+"Ni" = (
+/obj/machinery/spaceship_navigation_beacon,
+/turf/open/floor/circuit,
+/area/mine/maintenance)
 "Nj" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -12685,7 +12689,7 @@ cC
 Pa
 zX
 cQ
-dg
+Ni
 dg
 cQ
 dZ
