@@ -49,7 +49,7 @@
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Single-Pack"
 	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
-	cost = 2000
+	cost = 2250
 	contains = list(/obj/item/gun/energy/laser/hellgun)
 
 /datum/supply_pack/goody/wt550_single
@@ -116,7 +116,7 @@
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
 	cost = 150
-	contains = list(/obj/item/valentine, /obj/item/reagent_containers/food/snacks/candyheart)
+	contains = list(/obj/item/valentine, /obj/item/food/candyheart)
 
 /datum/supply_pack/goody/beeplush
 	name = "Bee Plushie"

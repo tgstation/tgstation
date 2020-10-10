@@ -13,7 +13,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	active = 0
+	active = FALSE
 	det_time = 50
 	display_timer = 0
 	var/check_parts = FALSE

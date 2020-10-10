@@ -21,6 +21,14 @@
 	name = "box magazine (Match 7.12x82mm)"
 	ammo_type = /obj/item/ammo_casing/mm712x82/match
 
+/obj/item/ammo_box/magazine/mm712x82/bouncy
+	name = "box magazine (Rubber 7.12x82mm)"
+	ammo_type = /obj/item/ammo_casing/mm712x82/bouncy
+
+/obj/item/ammo_box/magazine/mm712x82/bouncy/hicap
+	name = "hi-cap box magazine (Rubber 7.12x82mm)"
+	max_ammo = 150
+
 /obj/item/ammo_box/magazine/mm712x82/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"

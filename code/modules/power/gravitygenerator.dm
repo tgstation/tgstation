@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	obj_break()
 
 /obj/machinery/gravity_generator/proc/set_fix()
-	machine_stat &= ~BROKEN
+	set_machine_stat(machine_stat & ~BROKEN)
 
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
@@ -238,7 +238,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return data
 
 /obj/machinery/gravity_generator/main/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

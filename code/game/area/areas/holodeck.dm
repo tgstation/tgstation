@@ -6,7 +6,7 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
 
 	var/obj/machinery/computer/holodeck/linked
-	var/restricted = 0 // if true, program goes on emag list
+	var/restricted = FALSE // if true, program goes on emag list
 
 /*
 	Power tracking: Use the holodeck computer's power grid
@@ -33,7 +33,7 @@
 
 /area/holodeck/use_power(amount, chan)
 	if(!linked)
-		return 0
+		return FALSE
 	var/area/A = get_area(linked)
 	ASSERT(!istype(A, /area/holodeck))
 	return ..()
@@ -83,6 +83,9 @@
 /area/holodeck/rec_center/spacechess
 	name = "Holodeck - Space Chess"
 
+/area/holodeck/rec_center/spacecheckers
+	name = "Holodeck - Space Checkers"
+
 /area/holodeck/rec_center/kobayashi
 	name = "Holodeck - Kobayashi Maru"
 
@@ -92,32 +95,35 @@
 /area/holodeck/rec_center/photobooth
 	name = "Holodeck - Photobooth"
 
+/area/holodeck/rec_center/skatepark
+	name = "Holodeck - Skate Park"
+
 // Bad programs
 
 /area/holodeck/rec_center/medical
 	name = "Holodeck - Emergency Medical"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/thunderdome1218
 	name = "Holodeck - 1218 AD"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/wildlife
 	name = "Holodeck - Wildlife Simulation"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/anthophila
 	name = "Holodeck - Anthophila"
-	restricted = 1
+	restricted = TRUE
 
 /area/holodeck/rec_center/refuel
 	name = "Holodeck - Refueling Station"
-	restricted = 1
+	restricted = TRUE

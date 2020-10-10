@@ -81,7 +81,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)
 		return
 	var/displayed_key = key
-	if(client.holder?.fakekey)
+	if(client?.holder?.fakekey)
 		displayed_key = null
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key)
 
@@ -93,7 +93,7 @@
 
 ///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
-	return 0
+	return FALSE
 
 ///Check if the mob has a ling hivemind
 /mob/proc/lingcheck()

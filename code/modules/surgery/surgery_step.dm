@@ -152,12 +152,12 @@
 	if(require_all_chems)
 		. = TRUE
 		for(var/R in chems_needed)
-			if(!target.reagents.has_reagent(R))
+			if(!target.has_reagent(R))
 				return FALSE
 	else
 		. = FALSE
 		for(var/R in chems_needed)
-			if(target.reagents.has_reagent(R))
+			if(target.has_reagent(R))
 				return TRUE
 
 /datum/surgery_step/proc/get_chem_list()
@@ -175,4 +175,5 @@
 /datum/surgery_step/proc/display_results(mob/user, mob/living/carbon/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(!target_detailed)
-		to_chat(target, vague_message)
+		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
+		target.show_message(vague_message, MSG_VISUAL, "<span class='notice'>You feel [you_feel] as you are operated on.</span>")

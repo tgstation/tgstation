@@ -606,7 +606,6 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/machinery/the_singularitygen,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bA" = (
@@ -1250,7 +1249,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "do" = (
-/obj/structure/sink/puddle{
+/obj/structure/water_source/puddle{
 	pixel_x = -3;
 	pixel_y = 1
 	},

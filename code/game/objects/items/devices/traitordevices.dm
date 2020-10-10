@@ -130,7 +130,8 @@ effective or pretty fucking useless.
 	return data
 
 /obj/item/healthanalyzer/rad_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -232,7 +233,7 @@ effective or pretty fucking useless.
 	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
-/obj/item/shadowcloak/process()
+/obj/item/shadowcloak/process(delta_time)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
@@ -240,9 +241,9 @@ effective or pretty fucking useless.
 	if(on)
 		var/lumcount = T.get_lumcount()
 		if(lumcount > 0.3)
-			charge = max(0,charge - 25)//Quick decrease in light
+			charge = max(0, charge - 12.5 * delta_time)//Quick decrease in light
 		else
-			charge = min(max_charge,charge + 50) //Charge in the dark
+			charge = min(max_charge, charge + 25 * delta_time) //Charge in the dark
 		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
 
@@ -262,3 +263,25 @@ effective or pretty fucking useless.
 	else
 		GLOB.active_jammers -= src
 	update_icon()
+
+/obj/item/storage/toolbox/emergency/turret
+	desc = "You feel a strange urge to hit this with a wrench."
+
+/obj/item/storage/toolbox/emergency/turret/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/analyzer(src)
+	new /obj/item/wirecutters(src)
+
+/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
+    if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
+        user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
+            "<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+        playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+        var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
+        turret.faction = list("[REF(user)]")
+        qdel(src)
+
+    ..()

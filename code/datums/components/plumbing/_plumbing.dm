@@ -36,6 +36,11 @@
 		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
 		addtimer(CALLBACK(src, .proc/enable), 0)
 
+/datum/component/plumbing/Destroy()
+	ducts = null
+	reagents = null
+	return ..()
+
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
 		STOP_PROCESSING(SSfluids, src)
@@ -242,11 +247,11 @@
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand
-	demand_connects = NORTH
+	demand_connects = SOUTH
 
 ///has one pipe output that only supplies. example is liquid pump and manual input pipe
 /datum/component/plumbing/simple_supply
-	supply_connects = NORTH
+	supply_connects = SOUTH
 
 ///input and output, like a holding tank
 /datum/component/plumbing/tank

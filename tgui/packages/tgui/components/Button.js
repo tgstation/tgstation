@@ -26,6 +26,7 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    tooltipOverrideLong,
     ellipsis,
     compact,
     circular,
@@ -97,6 +98,7 @@ export const Button = props => {
       {tooltip && (
         <Tooltip
           content={tooltip}
+          overrideLong={tooltipOverrideLong}
           position={tooltipPosition} />
       )}
     </Box>
@@ -221,6 +223,7 @@ export class ButtonInput extends Component {
       iconSpin,
       tooltip,
       tooltipPosition,
+      tooltipOverrideLong,
       color = 'default',
       placeholder,
       maxLength,
@@ -270,6 +273,7 @@ export class ButtonInput extends Component {
         {tooltip && (
           <Tooltip
             content={tooltip}
+            overrideLong={tooltipOverrideLong}
             position={tooltipPosition}
           />
         )}

@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
+	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
+	var/dynamic_lumcount = 0
+
 	var/dynamic_lighting = TRUE
 
 	var/tmp/lighting_corners_initialised = FALSE
@@ -86,7 +89,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
-	if (smoothing_flags)
+	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
 	visibilityChanged()
@@ -201,7 +204,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
 	if(flags & FALL_INTERCEPTED)
 		return
-	if(zFall(A, ++levels))
+	if(zFall(A, levels + 1))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
@@ -446,22 +449,22 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/is_shielded()
 
-/turf/contents_explosion(severity, target)
 
-	for(var/V in contents)
-		var/atom/A = V
-		if(!QDELETED(A))
-			if(ismovable(A))
-				var/atom/movable/AM = A
-				if(!AM.ex_check(explosion_id))
-					continue
-			switch(severity)
-				if(EXPLODE_DEVASTATE)
-					SSexplosions.highobj += A
-				if(EXPLODE_HEAVY)
-					SSexplosions.medobj += A
-				if(EXPLODE_LIGHT)
-					SSexplosions.lowobj += A
+/turf/contents_explosion(severity, target)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		if(!movable_thing.ex_check(explosion_id))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -498,22 +501,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/acid_act(acidpwr, acid_volume)
-	. = 1
-	var/acid_type = /obj/effect/acid
-	if(acidpwr >= 200) //alien acid power
-		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = FALSE
+	. = ..()
+	if((acidpwr <= 0) || (acid_volume <= 0))
+		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
 	for(var/obj/O in src)
 		if(intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			return
-		if(istype(O, acid_type))
-			var/obj/effect/acid/A = O
-			A.acid_level = min(acid_volume * acidpwr, 12000)//capping acid level to limit power of the acid
-			has_acid_effect = 1
 			continue
+
 		O.acid_act(acidpwr, acid_volume)
-	if(!has_acid_effect)
-		new acid_type(src, acidpwr, acid_volume)
+
+	return . || TRUE
 
 /turf/proc/acid_melt()
 	return
@@ -557,18 +556,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents)
-			clear_reagents_to_vomit_pool(C,V, purge)
+			clear_reagents_to_vomit_pool(C, V, purge)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge = FALSE)
-	var/chemicals_lost = M.reagents.total_volume / 10
+	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		return
+	var/chemicals_lost = belly.reagents.total_volume * 0.1
 	if(purge)
-		chemicals_lost = (2 * M.reagents.total_volume)/3				//For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
-	M.reagents.trans_to(V, chemicals_lost, transfered_by = M)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable) || purge)
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.type, min(R.volume, 10))
+		chemicals_lost = belly.reagents.total_volume * 0.67 //For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
+	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
+	//clear the stomach of anything even not food
+	for(var/bile in belly.reagents.reagent_list)
+		var/datum/reagent/reagent = bile
+		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
@@ -581,8 +582,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		. =  BULLET_ACT_TURF
 
 /// Handles exposing a turf to reagents.
-/turf/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
+/turf/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)

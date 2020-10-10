@@ -430,11 +430,13 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		delete_click = new(null, "INITIALIZING", src)
 	if(!action_click)
 		action_click = new(null, "INITIALIZNG", src)
-	stat("[id]		", delete_click.update("DELETE QUERY | STATE : [text_state()] | ALL/ELIG/FIN \
+	var/list/L = list()
+	L[++L.len] = list("[id]		", "[delete_click.update("DELETE QUERY | STATE : [text_state()] | ALL/ELIG/FIN \
 	[islist(obj_count_all)? length(obj_count_all) : (isnull(obj_count_all)? "0" : obj_count_all)]/\
 	[islist(obj_count_eligible)? length(obj_count_eligible) : (isnull(obj_count_eligible)? "0" : obj_count_eligible)]/\
-	[islist(obj_count_finished)? length(obj_count_finished) : (isnull(obj_count_finished)? "0" : obj_count_finished)] - [get_query_text()]"))
-	stat("			", action_click.update("[SDQL2_IS_RUNNING? "HALT" : "RUN"]"))
+	[islist(obj_count_finished)? length(obj_count_finished) : (isnull(obj_count_finished)? "0" : obj_count_finished)] - [get_query_text()]")]", REF(delete_click))
+	L[++L.len] = list("			", "[action_click.update("[SDQL2_IS_RUNNING? "HALT" : "RUN"]")]", REF(action_click))
+	return L
 
 /datum/sdql2_query/proc/delete_click()
 	admin_del(usr)
@@ -1204,10 +1206,18 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	return istype(thing, /datum) || istype(thing, /client)
 
 /obj/effect/statclick/SDQL2_delete/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	var/datum/sdql2_query/Q = target
 	Q.delete_click()
 
 /obj/effect/statclick/SDQL2_action/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	var/datum/sdql2_query/Q = target
 	Q.action_click()
 
@@ -1215,4 +1225,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	name = "VIEW VARIABLES"
 
 /obj/effect/statclick/sdql2_vv_all/Click()
+	if(!usr.client?.holder)
+		message_admins("[key_name_admin(usr)] non-holder clicked on a statclick! ([src])")
+		log_game("[key_name(usr)] non-holder clicked on a statclick! ([src])")
+		return
 	usr.client.debug_variables(GLOB.sdql2_queries)

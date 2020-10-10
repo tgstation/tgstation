@@ -27,6 +27,9 @@
 	if (QDELETED(src))
 		return
 
+	if(light_system != STATIC_LIGHT)
+		CRASH("update_light() for [src] with following light_system value: [light_system]")
+
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
 		QDEL_NULL(light)
 	else
@@ -84,47 +87,54 @@
 /atom/vv_edit_var(var_name, var_value)
 	switch (var_name)
 		if (NAMEOF(src, light_range))
-			set_light(l_range=var_value)
+			if(light_system == STATIC_LIGHT)
+				set_light(l_range = var_value)
+			else
+				set_light_range(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
 		if (NAMEOF(src, light_power))
-			set_light(l_power=var_value)
+			if(light_system == STATIC_LIGHT)
+				set_light(l_power = var_value)
+			else
+				set_light_power(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
 		if (NAMEOF(src, light_color))
-			set_light(l_color=var_value)
+			if(light_system == STATIC_LIGHT)
+				set_light(l_color = var_value)
+			else
+				set_light_color(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
 
 	return ..()
 
 
-/atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+/atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
 	return
 
-/turf/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+
+/turf/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
 	if(!_duration)
 		stack_trace("Lighting FX obj created on a turf without a duration")
-	new /obj/effect/dummy/lighting_obj (src, _color, _range, _power, _duration)
+	new /obj/effect/dummy/lighting_obj (src, _range, _power, _color, _duration)
 
-/obj/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
-	var/temp_color
-	var/temp_power
-	var/temp_range
-	if(!_reset_lighting) //incase the obj already has a lighting color that you don't want cleared out after, ie computer monitors.
-		temp_color = light_color
-		temp_power = light_power
-		temp_range = light_range
-	set_light(_range, _power, _color)
-	addtimer(CALLBACK(src, /atom/proc/set_light, _reset_lighting ? initial(light_range) : temp_range, _reset_lighting ? initial(light_power) : temp_power, _reset_lighting ? initial(light_color) : temp_color), _duration, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/mob/living/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
-	mob_light(_color, _range, _power, _duration)
+/obj/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
+	if(!_duration)
+		stack_trace("Lighting FX obj created on a obj without a duration")
+	new /obj/effect/dummy/lighting_obj (get_turf(src), _range, _power, _color, _duration)
 
-/mob/living/proc/mob_light(_color, _range, _power, _duration)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _color, _range, _power, _duration)
+
+/mob/living/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
+	mob_light(_range, _power, _color, _duration)
+
+
+/mob/living/proc/mob_light(_range, _power, _color, _duration)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _range, _power, _color, _duration)
 	return mob_light_obj
 
 
@@ -158,3 +168,11 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value)
 	. = light_on
 	light_on = new_value
+
+
+/atom/proc/set_light_flags(new_value)
+	if(new_value == light_flags)
+		return
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value)
+	. = light_flags
+	light_flags = new_value

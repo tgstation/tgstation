@@ -71,12 +71,13 @@
  * required action string The action/button that has been invoked by the user.
  * required params list A list of parameters attached to the button.
  *
- * return bool If the UI should be updated or not.
+ * return bool If the user's input has been handled and the UI should update.
  */
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
-		return 1
+		return TRUE
 
 /**
  * public
@@ -175,7 +176,11 @@
 	var/type = href_list["type"]
 	// Unconditionally collect tgui logs
 	if(type == "log")
-		log_tgui(usr, href_list["message"])
+		var/context = href_list["window_id"]
+		if (href_list["ns"])
+			context += " ([href_list["ns"]])"
+		log_tgui(usr, href_list["message"],
+			context = context)
 	// Reload all tgui windows
 	if(type == "cacheReloaded")
 		if(!check_rights(R_ADMIN) || usr.client.tgui_cache_reloaded)
@@ -195,7 +200,9 @@
 	if(window_id)
 		window = usr.client.tgui_windows[window_id]
 		if(!window)
-			log_tgui(usr, "Error: Couldn't find the window datum, force closing.")
+			log_tgui(usr,
+				"Error: Couldn't find the window datum, force closing.",
+				context = window_id)
 			SStgui.force_close_window(usr, window_id)
 			return TRUE
 	// Decode payload

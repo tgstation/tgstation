@@ -18,7 +18,7 @@
 	items = list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
-		/obj/item/reagent_containers/food/snacks/egg)
+		/obj/item/food/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
 	name = "gladiator costume spawner"
@@ -195,3 +195,14 @@
 		/obj/item/clothing/head/fedora/beige,
 		/obj/item/clothing/under/suit/beige,
 		/obj/item/clothing/shoes/laceup)
+
+/obj/effect/spawner/bundle/hobo_squat
+	name = "hobo squat spawner"
+	items = list(/obj/structure/bed/maint,
+				/obj/effect/spawner/scatter/grime,
+				/obj/effect/spawner/lootdrop/maint_drugs)
+
+/obj/effect/spawner/bundle/moisture_trap
+	name = "moisture trap spawner"
+	items = list(/obj/effect/spawner/scatter/moisture,
+				/obj/structure/moisture_trap)

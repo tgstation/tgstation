@@ -59,7 +59,7 @@
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
-	if(is_operational())
+	if(is_operational)
 		icon_state = "kiosk_off"
 	else
 		icon_state = "kiosk"
@@ -234,11 +234,18 @@
 	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
 		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
-			if(R.overdosed == 1)
+			if(R.overdosed)
 				overdose_list += list(list("name" = R.name))
-
-	if(altPatient.reagents.addiction_list.len)
-		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
+	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
+		for(var/bile in belly.reagents.reagent_list)
+			var/datum/reagent/bit = bile
+			chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
+			if(bit.overdosed)
+				overdose_list += list(list("name" = bit.name))
+	var/list/addictions = altPatient.get_addiction_list()
+	if(addictions.len)
+		for(var/datum/reagent/R in addictions)
 			addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
@@ -316,8 +323,10 @@
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("beginScan_1")
 			if(!scan_active_1)

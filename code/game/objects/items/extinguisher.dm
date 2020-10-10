@@ -26,6 +26,8 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	/// Icon state when inside a tank holder
+	var/tank_holder_icon_state = "holder_extinguisher"
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -52,11 +54,17 @@
 	. = ..()
 	refill()
 
+/obj/item/extinguisher/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
-	//inhand_icon_state = "foam_extinguisher" needs sprite
+	inhand_icon_state = "foam_extinguisher"
+	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
@@ -108,7 +116,7 @@
 		if(reagents.total_volume == reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
-			return 1
+			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
 		if(transferred > 0)
@@ -119,9 +127,9 @@
 		else
 			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
 		safety = safety_save
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	. = ..()

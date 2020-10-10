@@ -10,7 +10,7 @@
 	throwforce = 0
 	burst_size = 3
 	can_suppress = TRUE
-	clumsy_check = 0
+	clumsy_check = FALSE
 	item_flags = NONE
 	casing_ejector = FALSE
 

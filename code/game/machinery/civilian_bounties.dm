@@ -134,11 +134,12 @@
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!pad)
 		return
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")

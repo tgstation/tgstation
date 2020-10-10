@@ -93,6 +93,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/rpd_upgrade/unwrench
+	name = "RPD unwrenching upgrade"
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	id = "rpd_upgrade_unwrench"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
+	build_path = /obj/item/rpd_upgrade/unwrench
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
 	desc = "A tool that can portable and standing lighting orbs and glowsticks."
@@ -112,6 +122,34 @@
 	materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/silver=500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/crystal_stabilizer
+	name = "Supermatter Matrix Stabilizer"
+	desc = "A tool that is used to restore the stability of the Crystal Matrix by injecting it with the anomaly liquid"
+	id = "crystal_stabilizer"
+	build_path = /obj/item/crystal_stabilizer
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 4500, /datum/material/silver = 2500)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plumbing_rcd_sci
+	name = "Research Plumbing Constructor"
+	id = "plumbing_rcd_sci"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
+	build_path = /obj/item/construction/plumbing/research
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/biopsy_tool
+	name = "Biopsy Tool"
+	id = "biopsy_tool"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
+	build_path = /obj/item/biopsy_tool
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////

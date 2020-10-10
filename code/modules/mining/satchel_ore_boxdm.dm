@@ -79,7 +79,8 @@
 	return data
 
 /obj/structure/ore_box/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!Adjacent(usr))
 		return

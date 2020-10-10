@@ -28,9 +28,6 @@
 		if(!hand_items.len)
 			to_chat(M, "<span class='warning'>You must hold an item you wish to make your phylactery!</span>")
 			return
-		if(!M.mind.hasSoul)
-			to_chat(user, "<span class='warning'>You do not possess a soul!</span>")
-			return
 
 		var/obj/item/marked_item
 
@@ -60,7 +57,6 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
-		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -81,8 +77,9 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	color = COLOR_VERY_DARK_LIME_GREEN
+	light_system = MOVABLE_LIGHT
+	light_range = 3
 	light_color = COLOR_VERY_DARK_LIME_GREEN
-	var/lon_range = 3
 	var/resurrections = 0
 	var/datum/mind/mind
 	var/respawn_time = 1800
@@ -97,7 +94,6 @@
 	active_phylacteries++
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
-	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
 

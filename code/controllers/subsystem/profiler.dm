@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(profiler)
 /datum/controller/subsystem/profiler/stat_entry(msg)
 	msg += "F:[round(fetch_cost,1)]ms"
 	msg += "|W:[round(write_cost,1)]ms"
-	..(msg)
+	return msg
 
 /datum/controller/subsystem/profiler/Initialize()
 	if(CONFIG_GET(flag/auto_profile))

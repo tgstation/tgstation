@@ -11,8 +11,12 @@
 	desc = "If left untreated subject will regurgitate butterflies."
 	severity = DISEASE_SEVERITY_MINOR
 
+
 /datum/disease/anxiety/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(2) //also changes say, see say.dm
 			if(prob(5))
@@ -38,4 +42,3 @@
 													"<span class='userdanger'>You cough up butterflies!</span>")
 				new /mob/living/simple_animal/butterfly(affected_mob.loc)
 				new /mob/living/simple_animal/butterfly(affected_mob.loc)
-	return

@@ -14,8 +14,9 @@
 	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/plasteel/update_icon()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	if(!broken && !burnt)
 		icon_state = icon_regular_floor
 
@@ -95,7 +96,10 @@
 
 /turf/open/floor/plasteel/kitchen_coldroom
 	name = "cold room floor"
+
+/turf/open/floor/plasteel/kitchen_coldroom/Initialize()
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+	. = ..()
 
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"

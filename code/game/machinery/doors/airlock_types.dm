@@ -431,7 +431,7 @@
 	damage_deflection = 30
 	explosion_block = 3
 	hackProof = TRUE
-	aiControlDisabled = 1
+	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
 
@@ -446,7 +446,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
-	aiControlDisabled = 1
+	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
@@ -472,11 +472,11 @@
 
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
-		return 1
+		return TRUE
 	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
-		return 1
+		return TRUE
 	else
 		if(!stealthy)
 			new /obj/effect/temp_visual/cult/sac(loc)
@@ -486,7 +486,7 @@
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1,src)
-		return 0
+		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -541,7 +541,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 //////////////////////////////////
 /*

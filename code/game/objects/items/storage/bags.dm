@@ -78,6 +78,14 @@
 		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
 		return
 
+/obj/item/storage/bag/trash/filled
+
+/obj/item/storage/bag/trash/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(1, 7))
+		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+	update_icon_state()
+
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
@@ -297,12 +305,14 @@
 	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
+	worn_icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 5
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
 	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
@@ -413,7 +423,7 @@
 		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/food/snacks/deadmouse,
-		/obj/item/reagent_containers/food/snacks/monkeycube,
+		/obj/item/food/monkeycube,
 		/obj/item/organ,
 		/obj/item/bodypart
 		))

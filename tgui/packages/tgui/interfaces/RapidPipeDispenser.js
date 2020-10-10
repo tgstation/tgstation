@@ -128,7 +128,7 @@ export const RapidPipeDispenser = (props, context) => {
             <Section>
               {rootCategoryIndex === 0 && (
                 <Box mb={1}>
-                  {[1, 2, 3].map(layer => (
+                  {[1, 2, 3, 4, 5].map(layer => (
                     <Button.Checkbox
                       key={layer}
                       fluid

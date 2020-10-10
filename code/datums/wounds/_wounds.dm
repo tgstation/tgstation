@@ -16,7 +16,7 @@
 
 /datum/wound
 	/// What it's named
-	var/name = "ouchie"
+	var/name = "Wound"
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
@@ -95,7 +95,7 @@
 		QDEL_NULL(attached_surgery)
 	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
-	limb = null
+	set_limb(null)
 	victim = null
 	return ..()
 
@@ -129,7 +129,7 @@
 			return
 
 	victim = L.owner
-	limb = L
+	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
@@ -192,12 +192,44 @@
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(limb, old_wound = src, smited = smited)
+	. = new_wound
 	qdel(src)
-	return new_wound
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null)
 	return
+
+
+/// Proc called to change the variable `limb` and react to the event.
+/datum/wound/proc/set_limb(new_value)
+	if(limb == new_value)
+		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+	. = limb
+	limb = new_value
+	if(. && disabling)
+		var/obj/item/bodypart/old_limb = .
+		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, src)
+	if(limb)
+		if(disabling)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+
+
+/// Proc called to change the variable `disabling` and react to the event.
+/datum/wound/proc/set_disabling(new_value)
+	if(disabling == new_value)
+		return
+	. = disabling
+	disabling = new_value
+	if(disabling)
+		if(!. && limb) //Gained disabling.
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+	else if(. && limb) //Lost disabling.
+		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
@@ -223,13 +255,15 @@
   */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(!I || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
+	if(QDELETED(I) || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
 		return FALSE
 
 	var/allowed = FALSE
 
-	// check if we have a valid treatable tool (or, if cauteries are allowed, if we have something hot)
-	if((I.tool_behaviour == treatable_tool) || (treatable_tool == TOOL_CAUTERY && I.get_temperature()))
+	// check if we have a valid treatable tool
+	if(I.tool_behaviour == treatable_tool)
+		allowed = TRUE
+	else if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		allowed = TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
@@ -245,10 +279,17 @@
 	if(!allowed)
 		return FALSE
 
-	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient
+	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(INTERACTING_WITH(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return TRUE
+
+	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
+	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
+	if(ishuman(victim))
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+			return TRUE
 
 	// lastly, treat them
 	treat(I, user)
@@ -258,7 +299,7 @@
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example.
+/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
 /datum/wound/proc/try_handling(mob/living/carbon/human/user)
 	return FALSE
 
@@ -290,10 +331,6 @@
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis()
-	return
-
-/// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
-/datum/wound/proc/crush()
 	return
 
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
