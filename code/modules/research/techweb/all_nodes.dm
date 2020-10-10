@@ -56,8 +56,10 @@
 	starting_node = TRUE
 	display_name = "Basic Medical Equipment"
 	description = "Basic medical tools and equipment."
-	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat", "stethoscope",
-					"surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker", "dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
+	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs","cybernetic_stomach", "scalpel",
+					"blood_filter", "circular_saw", "bonesetter", "surgicaldrill", "retractor", "cautery", "hemostat",
+					"stethoscope", "surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker",
+					"dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -137,7 +139,7 @@
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "w-recycler" , "emitter", "high_cell", "adv_matter_bin", "scanner_gate",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "welding_goggles", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "cell_charger", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine",
-	"oxygen_tank", "plasma_tank", "emergency_oxygen", "emergency_oxygen_engi", "plasmaman_tank_belt", "electrolyzer", "adv_electrolite")
+	"oxygen_tank", "plasma_tank", "emergency_oxygen", "emergency_oxygen_engi", "plasmaman_tank_belt", "electrolyzer", "adv_electrolite", "pneumatic_seal")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/adv_engi
@@ -285,7 +287,7 @@
 	display_name = "Cyborg Upgrades: Utility"
 	description = "Utility upgrades for cyborgs."
 	prereq_ids = list("adv_robotics")
-	design_ids = list("borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_disablercooler", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop", "borg_upgrade_broomer")
+	design_ids = list("borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_disablercooler", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop", "borg_upgrade_broomer", "borg_upgrade_prt")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/cyborg_upg_engiminer
@@ -526,9 +528,9 @@
 
 /datum/techweb_node/rcd_upgrade
 	id = "rcd_upgrade"
-	display_name = "RCD designs upgrade"
-	description = "Unlocks new RCD designs."
-	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing")
+	display_name = "rapid device upgrade designs"
+	description = "Unlocks new designs that improve rapid devices."
+	design_ids = list("rcd_upgrade_frames", "rcd_upgrade_simple_circuits", "rcd_upgrade_furnishing", "rpd_upgrade_unwrench")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -826,7 +828,7 @@
 	prereq_ids = list("datatheory")
 	design_ids = list("nanite_disk","nanite_remote","nanite_comm_remote","nanite_scanner",\
 						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
-						"relay_nanites", "monitoring_nanites", "research_nanites" ,"researchplus_nanites", "access_nanites", "repairing_nanites","sensor_nanite_volume", "repeater_nanites", "relay_repeater_nanites","red_diag_nanites")
+						"relay_nanites", "monitoring_nanites", "research_nanites" ,"researchplus_nanites", "access_nanites", "repairing_nanites","sensor_nanite_volume", "repeater_nanites", "relay_repeater_nanites","debugging_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/nanite_smart
@@ -873,10 +875,10 @@
 /datum/techweb_node/nanite_harmonic
 	id = "nanite_harmonic"
 	display_name = "Harmonic Nanite Programming"
-	description = "Nanite programs that require seamless integration between nanites and biology."
+	description = "Nanite programs that require seamless integration between nanites and biology. Passively increases nanite regeneration rate for all clouds upon researching."
 	prereq_ids = list("nanite_bio","nanite_smart","nanite_mesh")
 	design_ids = list("fakedeath_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000, TECHWEB_POINT_TYPE_NANITES = 2000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
 
 /datum/techweb_node/nanite_combat
 	id = "nanite_military"
@@ -918,7 +920,7 @@
 	hidden = TRUE
 
 /datum/techweb_node/alientech/on_research() //Unlocks the Zeta shuttle for purchase
-		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_ALIENTECH
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

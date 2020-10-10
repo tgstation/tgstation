@@ -103,7 +103,7 @@
 		..()
 		if(loc == user)
 			if(candy_cooldown < world.time)
-				var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
+				var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
 				user.put_in_hands(CC)
 				to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
 				candy_cooldown = world.time+1200
@@ -272,6 +272,13 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+
+//Science
+
+/obj/item/clothing/head/beret/science
+	name = "science beret"
+	desc = "A science-themed beret for our hardworking scientists."
+	icon_state = "sciberet"
 
 //Curator
 /obj/item/clothing/head/fedora/curator

@@ -109,8 +109,7 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	Friends.Cut()
-	speech_buffer.Cut()
+	Friends = null
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
@@ -146,9 +145,9 @@
 	. = ..()
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
+	if(has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
+	if(has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
@@ -464,16 +463,17 @@
 
 	SStun = world.time + rand(20,60)
 
-	mobility_flags &= ~MOBILITY_MOVE
+	Stun(3)
 	if(user)
 		step_away(src,user,15)
 
-	addtimer(CALLBACK(src, .proc/slime_move, user), 3)
+	addtimer(CALLBACK(src, .proc/slime_move, user), 0.3 SECONDS)
+
 
 /mob/living/simple_animal/slime/proc/slime_move(mob/user)
 	if(user)
 		step_away(src,user,15)
-	update_mobility()
+
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

@@ -31,10 +31,10 @@
 	if(!.)
 		return default_deconstruction_screwdriver(user, "mechpad-o", "mechpad", tool)
 
-/obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/tool)
+/obj/machinery/mechpad/crowbar_act(mob/user, obj/item/tool)
 	..()
-	default_deconstruction_crowbar(tool)
-	return TRUE
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
 
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
@@ -53,23 +53,18 @@
   */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
-	pod.reverse_dropoff_turf = get_turf(where)
+	var/turf/target_turf = get_turf(where)
+	pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
 /obj/structure/closet/supplypod/mechpod
 	style = STYLE_SEETHROUGH
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
-	landingDelay = 0
-	openingDelay = 0
-	departureDelay = 0
+	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 4, POD_OPENING = 0, POD_LEAVING = 0)
 	effectOrgans = TRUE
 	effectQuiet = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	close_sound = null
 	pod_flags = FIRST_SOUNDS
-
-/obj/structure/closet/supplypod/mechpod/insertion_allowed(atom/movable/AM)
-	if(!ismecha(AM))
-		return FALSE
-	. = ..()

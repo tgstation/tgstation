@@ -38,5 +38,9 @@
 #define FOOD_MEAT_MUTANT 100
 #define FOOD_MEAT_MUTANT_RARE 200
 
+///Amount of reagents you start with on crafted food excluding the used parts
+#define CRAFTED_FOOD_BASE_REAGENT_MODIFIER 0.7
+///Modifier of reagents you get when crafting food from the parts used
+#define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER  0.5
 
 #define IS_EDIBLE(O) (istype(O, /obj/item/reagent_containers/food/snacks) || O.GetComponent(/datum/component/edible))

@@ -7,6 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -74,6 +75,9 @@
 	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
+	/// The icon state intended to be used for the acid component. Used to override the default acid overlay icon state.
+	var/custom_acid_overlay = null
+
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
 	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/custom_materials
@@ -121,6 +125,8 @@
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
+	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
+	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
 	///Smoothing variable
 	var/top_left_corner
 	///Smoothing variable
@@ -133,7 +139,8 @@
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself.
 	var/list/canSmoothWith = null
-
+	///Reference to atom being orbited
+	var/atom/orbit_target
 
 /**
   * Called when an atom is created in byond (built in engine proc)
@@ -191,11 +198,11 @@
   * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
   *
   * Note: the following functions don't call the base for optimization and must copypasta handling:
-  * * [/turf/Initialize]
-  * * [/turf/open/space/Initialize]
+  * * [/turf/proc/Initialize]
+  * * [/turf/open/space/proc/Initialize]
   */
 /atom/proc/Initialize(mapload, ...)
-	//SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -407,7 +414,8 @@
   *
   * Otherwise it simply forceMoves the atom into this atom
   */
-/atom/proc/CheckParts(list/parts_list)
+/atom/proc/CheckParts(list/parts_list, datum/crafting_recipe/R)
+	SEND_SIGNAL(src, COMSIG_ATOM_CHECKPARTS, parts_list, R)
 	if(parts_list)
 		for(var/A in parts_list)
 			if(istype(A, /datum/reagent))
@@ -489,7 +497,8 @@
   * - show_message: Whether to display anything to mobs when they are exposed.
   */
 /atom/proc/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
-	if((. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)) & COMPONENT_NO_EXPOSE_REAGENTS)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)
@@ -786,6 +795,7 @@
   */
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
+	return FALSE
 
 /**
   * Respond to an emag being used on our atom
@@ -877,7 +887,7 @@
 	return null
 
 /**
-  * This proc is called when an atom in our contents has it's [Destroy][/atom/Destroy] called
+  * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
   *
   * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
   */
@@ -990,7 +1000,7 @@
   */
 /atom/proc/wash(clean_types)
 	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types))
+	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
 		. = TRUE
 
 	// Basically "if has washable coloration"
@@ -1213,10 +1223,15 @@
 	if(I.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
-			new atom_to_create(loc)
+			var/atom/created_atom = new atom_to_create(loc)
+			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
+			created_atom.OnCreatedFromProcessing(user, I, chosen_option, src)
 		to_chat(user, "<span class='notice'>You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)] from [src]</span>")
 		qdel(src)
 		return
+
+/atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+	return
 
 //! Tool-specific behavior procs.
 ///
@@ -1433,7 +1448,7 @@
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
-			custom_material.on_removed(src, material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
@@ -1445,6 +1460,25 @@
 			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
 	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
+
+/**Returns the material composition of the atom.
+  *
+  * Used when recycling items, specifically to turn alloys back into their component mats.
+  *
+  * Exists because I'd need to add a way to un-alloy alloys or otherwise deal
+  * with people converting the entire stations material supply into alloys.
+  *
+  * Arguments:
+  * - flags: A set of flags determining how exactly the materials are broken down.
+  */
+/atom/proc/get_material_composition(breakdown_flags=NONE)
+	. = list()
+	var/list/cached_materials = custom_materials
+	for(var/mat in cached_materials)
+		var/datum/material/material = SSmaterials.GetMaterialRef(mat)
+		var/list/material_comp = material.return_composition(cached_materials[material], breakdown_flags)
+		for(var/comp_mat in material_comp)
+			.[comp_mat] += material_comp[comp_mat]
 
 /**
   * Returns true if this atom has gravity for the passed in turf
@@ -1548,3 +1582,23 @@
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)
+		return TRUE
+
+/**
+  * Recursive getter method to return a list of all ghosts orbitting this atom
+  *
+  * This will work fine without manually passing arguments.
+  */
+/atom/proc/get_all_orbiters(list/processed, source = TRUE)
+	var/list/output = list()
+	if (!processed)
+		processed = list()
+	if (src in processed)
+		return output
+	if (!source)
+		output += src
+	processed += src
+	for (var/o in orbiters?.orbiter_list)
+		var/atom/atom_orbiter = o
+		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
+	return output

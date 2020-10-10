@@ -6,11 +6,11 @@ export const Holodeck = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     can_toggle_safety,
-    default_programs = [],
-    emag_programs = [],
     emagged,
     program,
   } = data;
+  const default_programs = data.default_programs || [];
+  const emag_programs = data.emag_programs || [];
   return (
     <Window
       width={400}

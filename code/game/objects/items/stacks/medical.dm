@@ -279,7 +279,7 @@
 	name = "regenerative mesh"
 	desc = "A bacteriostatic mesh used to dress burns."
 	gender = PLURAL
-	singular_name = "regenerative mesh"
+	singular_name = "mesh piece"
 	icon_state = "regen_mesh"
 	self_delay = 30
 	other_delay = 10
@@ -347,7 +347,6 @@
 	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
 
 	gender = PLURAL
-	singular_name = "advanced regenerative mesh"
 	icon_state = "aloe_mesh"
 	heal_burn = 15
 	sanitization = 1.25

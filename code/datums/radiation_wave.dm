@@ -41,12 +41,12 @@
 	STOP_PROCESSING(SSradiation, src)
 	..()
 
-/datum/radiation_wave/process()
+/datum/radiation_wave/process(delta_time)
 	master_turf = get_step(master_turf, move_dir)
 	if(!master_turf)
 		qdel(src)
 		return
-	steps++
+	steps += delta_time
 	var/list/atoms = get_rad_atoms()
 
 	var/strength

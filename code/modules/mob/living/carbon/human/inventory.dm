@@ -136,10 +136,19 @@
 			if (wear_suit && swap)
 				wear_suit.dropped(src, TRUE)
 				current_equip = wear_suit
+
 			wear_suit = I
+
+			if (s_store && swap)
+				var/obj/item/s_store_backup = s_store
+				dropItemToGround(s_store_backup)
+				put_in_inactive_hand(s_store_backup)
+				equip_to_slot_if_possible(s_store_backup, ITEM_SLOT_SUITSTORE)
+
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
+				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
@@ -195,6 +204,7 @@
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
+			REMOVE_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 			drop_all_held_items() //suit is restraining
 			update_action_buttons_icon() //certain action buttons may be usable again.
 		wear_suit = null

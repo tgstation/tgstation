@@ -15,8 +15,15 @@
 	var/no_destination_swap = FALSE
 	/// ID of the currently selected destination of the attached shuttle
 	var/destination
+	/// If the console controls are locked
+	var/locked = FALSE
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
+
+/obj/machinery/computer/shuttle/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -30,7 +37,7 @@
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	data["docked_location"] = M ? M.get_status_text_tgui() : "Unknown"
 	data["locations"] = list()
-	data["locked"] = FALSE
+	data["locked"] = locked
 	data["authorization_required"] = admin_controlled
 	data["timer_str"] = M ? M.getTimerStr() : "00:00"
 	data["destination"] = destination
@@ -39,10 +46,20 @@
 		return data
 	if(admin_controlled)
 		data["status"] = "Unauthorized Access"
+	else if(locked)
+		data["status"] = "Locked"
 	else
-		data["status"] = M.mode == SHUTTLE_IGNITING ? "Igniting" : M.mode != SHUTTLE_IDLE ? "In Transit" : "Idle"
+		switch(M.mode)
+			if(SHUTTLE_IGNITING)
+				data["status"] = "Igniting"
+			if(SHUTTLE_IDLE)
+				data["status"] = "Idle"
+			if(SHUTTLE_RECHARGING)
+				data["status"] = "Recharging"
+			else
+				data["status"] = "In Transit"
 	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
-		if(!options.Find(S.id))
+		if(!options.Find(S.port_destinations))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
 			continue
@@ -60,6 +77,15 @@
 		data["status"] = "Locked"
 	return data
 
+/**
+  * Checks if we are allowed to launch the shuttle, for special cases
+  *
+  * Arguments:
+  * * user - The mob trying to initiate the launch
+  */
+/obj/machinery/computer/shuttle/proc/launch_check(mob/user)
+	return TRUE
+
 /obj/machinery/computer/shuttle/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -70,6 +96,8 @@
 
 	switch(action)
 		if("move")
+			if(!launch_check(usr))
+				return
 			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 			if(M.launch_status == ENDGAME_LAUNCHED)
 				to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
@@ -82,7 +110,8 @@
 					to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 					return
 			var/list/options = params2list(possible_destinations)
-			if(!(params["shuttle_id"] in options))
+			var/obj/docking_port/stationary/S = SSshuttle.getDock(params["shuttle_id"])
+			if(!(S.port_destinations in options))
 				log_admin("[usr] attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[params["shuttle_id"]]\"")
 				return
@@ -106,7 +135,7 @@
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, "<span class='notice'>Your request has been received by CentCom.</span>")
-			to_chat(GLOB.admins, "<b>FERRY: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")
+			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A HREF='?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
@@ -119,3 +148,4 @@
 /obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
+		possible_destinations += ";[port.id]_custom"

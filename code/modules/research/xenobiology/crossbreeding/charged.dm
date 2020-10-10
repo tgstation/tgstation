@@ -77,10 +77,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow
 	colour = "yellow"
-	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity and recharges constantly at a very fast rate."
+	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
+	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
 	user.visible_message("<span class='notice'>[src] sparks violently, and swells with electric power!</span>")
 	..()
 
@@ -107,7 +107,7 @@ Charged extracts:
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
-	new /obj/item/reagent_containers/food/snacks/store/cake/slimecake(get_turf(user))
+	new /obj/item/food/cake/slimecake(get_turf(user))
 	for(var/i in 1 to 10)
 		var/drink_type = get_random_drink()
 		new drink_type(get_turf(user))
@@ -274,4 +274,4 @@ Charged extracts:
 	for(var/i in 1 to 3)
 		var/mob/living/simple_animal/slime/S = new(get_turf(user))
 		S.random_colour()
-	..()
+	return ..()

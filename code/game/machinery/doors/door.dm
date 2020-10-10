@@ -41,6 +41,7 @@
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
@@ -97,6 +98,17 @@
 			return TRUE
 	return FALSE
 
+/**
+  * Called when attempting to remove the seal from an airlock
+  *
+  * Here because we need to call it and return if there was a seal so we don't try to open the door
+  * or try its safety lock while it's sealed
+  * Arguments:
+  * * user - the mob attempting to remove the seal
+  */
+/obj/machinery/door/proc/try_remove_seal(mob/user)
+	return
+
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
 	if(operating || (obj_flags & EMAGGED))
@@ -110,7 +122,7 @@
 			if(world.time - M.last_bumped <= 10)
 				return	//Can bump-open one airlock per second. This is to prevent shock spam.
 			M.last_bumped = world.time
-			if(M.restrained() && !check_access(null))
+			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null))
 				return
 			if(try_safety_unlock(M))
 				return
@@ -158,6 +170,8 @@
 /obj/machinery/door/attack_hand(mob/user)
 	. = ..()
 	if(.)
+		return
+	if(try_remove_seal(user))
 		return
 	if(try_safety_unlock(user))
 		return
@@ -337,11 +351,7 @@
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
 		L.visible_message("<span class='warning'>[src] closes on [L], crushing [L.p_them()]!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			for(var/i in C.all_wounds) // should probably replace with signal
-				var/datum/wound/W = i
-				W.crush(DOOR_CRUSH_DAMAGE)
+		SEND_SIGNAL(L, COMSIG_LIVING_DOORCRUSHED, src)
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
@@ -415,5 +425,10 @@
 	. = ..()
 	if(. && !(machine_stat & NOPOWER))
 		autoclose_in(DOOR_CLOSE_WAIT)
+
+/obj/machinery/door/zap_act(power, zap_flags)
+	zap_flags &= ~ZAP_OBJ_DAMAGE
+	. = ..()
+
 
 #undef DOOR_CLOSE_WAIT

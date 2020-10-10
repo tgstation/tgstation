@@ -93,9 +93,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 20, source, 0) //half-life of 0 because we keep on going.
+	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going. amount / 50 means 40 radiation per sheet.
 
-/datum/material/uranium/on_removed(atom/source, material_flags)
+/datum/material/uranium/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/radioactive))
 
@@ -122,7 +122,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
-/datum/material/plasma/on_removed(atom/source, material_flags)
+/datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
 	qdel(source.GetComponent(/datum/component/explodable))
@@ -217,8 +217,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.01
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1.1, ACID = 1)
 
-/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/M, obj/item/S)
-	M.adjust_disgust(17)
+/datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
+	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
+	food?.reagents?.add_reagent(/datum/reagent/plastic_polymers, food.reagents.total_volume*(2/5))
 	return TRUE
 
 ///Force decrease and mushy sound effect. (Not yet implemented)
@@ -246,7 +247,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		var/obj/wooden = source
 		wooden.resistance_flags |= FLAMMABLE
 
-/datum/material/wood/on_removed_obj(obj/source, material_flags)
+/datum/material/wood/on_removed_obj(obj/source, amount, material_flags)
 	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/wooden = source
@@ -294,7 +295,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(istype(source, /obj/item))
 		source.AddComponent(/datum/component/fantasy)
 
-/datum/material/mythril/on_removed_obj(atom/source, material_flags)
+/datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
 		qdel(source.GetComponent(/datum/component/fantasy))
@@ -451,7 +452,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		paper.resistance_flags |= FLAMMABLE
 		paper.obj_flags |= UNIQUE_RENAME
 
-/datum/material/paper/on_removed_obj(obj/source, material_flags)
+/datum/material/paper/on_removed_obj(obj/source, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/paper = source
 		paper.resistance_flags &= ~FLAMMABLE
@@ -474,7 +475,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
 
-/datum/material/cardboard/on_removed_obj(obj/source, material_flags)
+/datum/material/cardboard/on_removed_obj(obj/source, amount, material_flags)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
 		cardboard.resistance_flags &= ~FLAMMABLE

@@ -85,7 +85,7 @@
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-		failed_last_breath = 1
+		failed_last_breath = TRUE
 
 		var/datum/species/S = dna.species
 
@@ -162,8 +162,8 @@
 		return ..()
 	. = FALSE //No ignition
 
-/mob/living/carbon/human/ExtinguishMob()
-	if(!dna || !dna.species.ExtinguishMob(src))
+/mob/living/carbon/human/extinguish_mob()
+	if(!dna || !dna.species.extinguish_mob(src))
 		last_fire_update = null
 		..()
 //END FIRE CODE

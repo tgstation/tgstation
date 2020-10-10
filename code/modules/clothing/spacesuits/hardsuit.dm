@@ -20,9 +20,9 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH	| PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	var/rad_count = 0
-	var/rad_record = 0
-	var/grace_count = 0
+	var/current_tick_amount = 0
+	var/radiation_count = 0
+	var/grace = RAD_GEIGER_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
@@ -72,23 +72,25 @@
 	if(msg && ishuman(wearer))
 		wearer.show_message("[icon2html(src, wearer)]<b><span class='robot'>[msg]</span></b>", MSG_VISUAL)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
+/obj/item/clothing/head/helmet/space/hardsuit/rad_act(amount)
 	. = ..()
-	rad_count += severity
-
-/obj/item/clothing/head/helmet/space/hardsuit/process()
-	if(!rad_count)
-		grace_count++
-		if(grace_count == 2)
-			soundloop.last_radiation = 0
+	if(amount <= RAD_BACKGROUND_RADIATION)
 		return
+	current_tick_amount += amount
 
-	grace_count = 0
-	rad_record -= rad_record/5
-	rad_record += rad_count/5
-	rad_count = 0
+/obj/item/clothing/head/helmet/space/hardsuit/process(delta_time)
+	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
 
-	soundloop.last_radiation = rad_record
+	if(current_tick_amount)
+		grace = RAD_GEIGER_GRACE_PERIOD
+	else
+		grace -= delta_time
+		if(grace <= 0)
+			radiation_count = 0
+
+	current_tick_amount = 0
+
+	soundloop.last_radiation = radiation_count
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	. = ..()
@@ -472,6 +474,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 	cell = /obj/item/stock_parts/cell/hyper
+	slowdown = 0 //you're spending 2 wizard points on this thing, the least it could do is not make you a sitting duck
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()

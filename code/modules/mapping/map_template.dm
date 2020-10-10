@@ -31,34 +31,56 @@
 	var/list/atom/atoms = list()
 	var/list/area/areas = list()
 
-	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
-	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
-							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	//var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),//kyler, this makes a block of turfs between the farthest possible turf corner and the closest?
-							//locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
-	for(var/L in turfs)//for each element in the list of turfs created by block(stuff)
+	var/list/turfs = block(
+		locate(
+			bounds[MAP_MINX],
+			bounds[MAP_MINY],
+			bounds[MAP_MINZ]
+			),
+		locate(
+			bounds[MAP_MAXX],
+			bounds[MAP_MAXY],
+			bounds[MAP_MAXZ]
+			)
+		)
+	for(var/L in turfs)
 		var/turf/B = L
-		atoms += B//atoms = atoms + B, turfs are atoms
-		areas |= B.loc //areas = areas|B.loc
-		for(var/A in B)//does this look for the contents in the turf represented by B?
-			atoms += A//for each object in the contents of the current turf, add it to the atoms list
+		areas |= B.loc
+		for(var/A in B)
+			atoms += A
 			if(istype(A, /obj/structure/cable))
 				cables += A//if A is a cable, add to the cable list
 				continue
 			if(istype(A, /obj/machinery/atmospherics))//if A is an atmos machine, add it to the atmos machine list
 				atmos_machines += A
-	for(var/L in border)
-		var/turf/T = L
-		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
+
 	SSmapping.reg_in_areas_in_z(areas)
+	SSatoms.InitializeAtoms(turfs)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
+	//calculate all turfs inside the border
+	var/list/template_and_bordering_turfs = block(
+		locate(
+			max(bounds[MAP_MINX]-1, 1),
+			max(bounds[MAP_MINY]-1, 1),
+			bounds[MAP_MINZ]
+			),
+		locate(
+			min(bounds[MAP_MAXX]+1, world.maxx),
+			min(bounds[MAP_MAXY]+1, world.maxy),
+			bounds[MAP_MAXZ]
+			)
+		)
+	for(var/t in template_and_bordering_turfs)
+		var/turf/affected_turf = t
+		affected_turf.air_update_turf(TRUE)
+		affected_turf.levelupdate()
+
 /datum/map_template/proc/load_new_z()
-	var/x = round((world.maxx - width)/2)
-	var/y = round((world.maxy - height)/2)
+	var/x = round((world.maxx - width) * 0.5) + 1
+	var/y = round((world.maxy - height) * 0.5) + 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
 	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
@@ -110,6 +132,9 @@
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
+
+/datum/map_template/proc/post_load()
+	return
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T

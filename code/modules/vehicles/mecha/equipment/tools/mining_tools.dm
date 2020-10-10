@@ -25,24 +25,33 @@
 	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
+	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
 		return
-	if(isspaceturf(target))
+
+	// We can only drill non-space turfs, living mobs and objects.
+	if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
 		return
+
+	// For whatever reason we can't drill things that acid won't even stick too, and probably
+	// shouldn't waste our time drilling indestructible things.
 	if(isobj(target))
 		var/obj/target_obj = target
-		if(target_obj.resistance_flags & UNACIDABLE)
+		if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 			return
+
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
 					 "<span class='hear'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target, source))
 		log_message("Started drilling [target]", LOG_MECHA)
+		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
 			var/turf/T = target
 			T.drill_act(src, source)
-			return
+			return ..()
+		// Drilling objects and mobs is a repeating procedure.
 		while(do_after_mecha(target, source, drill_delay))
 			if(isliving(target))
 				drill_mob(target, source)
@@ -51,8 +60,12 @@
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
 				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
-			else
-				return
+
+			// If we caused a qdel drilling the target, we can stop drilling them.
+			// Prevents starting a do_after on a qdeleted target.
+			if(QDELETED(target))
+				break
+
 	return ..()
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)

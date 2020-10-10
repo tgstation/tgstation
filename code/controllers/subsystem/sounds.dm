@@ -9,14 +9,14 @@ SUBSYSTEM_DEF(sounds)
 	var/static/random_channels_min = 50
 
 	// Hey uh these two needs to be initialized fast because the whole "things get deleted before init" thing.
-	/// Assoc list, "[channel]" = either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
+	/// Assoc list, `"[channel]" =` either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
 	var/list/using_channels
 	/// Assoc list datum = list(channel1, channel2, ...) for what channels something reserved.
 	var/list/using_channels_by_datum
 	// Special datastructure for fast channel management
 	/// List of all channels as numbers
 	var/list/channel_list
-	/// Associative list of all reserved channels associated to their position. "[channel_number]" = index as number
+	/// Associative list of all reserved channels associated to their position. `"[channel_number]" =` index as number
 	var/list/reserved_channels
 	/// lower iteration position - Incremented and looped to get "random" sound channels for normal sounds. The channel at this index is returned when asking for a random channel.
 	var/channel_random_low

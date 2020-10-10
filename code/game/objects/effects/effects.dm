@@ -15,7 +15,7 @@
 	return
 
 /obj/effect/acid_act()
-	return
+	return FALSE
 
 /obj/effect/blob_act(obj/structure/blob/B)
 	return
@@ -42,9 +42,6 @@
 
 /obj/effect/singularity_act()
 	qdel(src)
-
-/obj/effect/ConveyorMove()
-	return
 
 /obj/effect/abstract/ex_act(severity, target)
 	return

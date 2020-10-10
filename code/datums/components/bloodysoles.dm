@@ -127,7 +127,7 @@
 		return
 	if(QDELETED(wielder) || is_obscured())
 		return
-	if(!(wielder.mobility_flags & MOBILITY_STAND) || !wielder.has_gravity(wielder.loc))
+	if(wielder.body_position == LYING_DOWN || !wielder.has_gravity(wielder.loc))
 		return
 
 	var/half_our_blood = bloody_shoes[last_blood_state] / 2
@@ -206,12 +206,12 @@
 	SIGNAL_HANDLER
 
 	if(!(clean_types & CLEAN_TYPE_BLOOD) || last_blood_state == BLOOD_STATE_NOT_BLOODY)
-		return
+		return NONE
 
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	last_blood_state = BLOOD_STATE_NOT_BLOODY
 	update_icon()
-	return TRUE
+	return COMPONENT_CLEANED
 
 
 /**

@@ -8,8 +8,8 @@
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
+	butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	type_of_meat = /obj/item/food/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = TRUE
 	can_be_shoved_into = TRUE
@@ -26,7 +26,7 @@
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/proc/toggle_resting)
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
@@ -70,9 +70,9 @@
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
 	var/amount
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
+	if(has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
-	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
+	if(has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)

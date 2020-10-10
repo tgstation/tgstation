@@ -83,7 +83,8 @@
 	return data
 
 /obj/item/assembly/signaler/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -177,6 +178,9 @@
 	return ..(signal)
 
 /obj/item/assembly/signaler/anomaly/attack_self()
+	return
+
+/obj/item/assembly/signaler/crystal_anomaly/attack_self()
 	return
 
 /obj/item/assembly/signaler/cyborg
