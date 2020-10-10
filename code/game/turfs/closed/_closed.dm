@@ -234,3 +234,5 @@
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
 	smoothing_flags = SMOOTH_CORNERS
+	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
+	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)

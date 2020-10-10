@@ -92,14 +92,13 @@
 	if(is_operational && occupant)
 		open_machine()
 
+
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
-			return
+
 	close_machine(target)
+
 
 /obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE

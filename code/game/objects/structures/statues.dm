@@ -7,6 +7,8 @@
 	anchored = FALSE
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	material_modifier = 0.5
+	material_flags = MATERIAL_AFFECT_STATISTICS
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
@@ -18,6 +20,15 @@
 	. = ..()
 	AddComponent(art_type, impressiveness)
 	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, impressiveness *  75))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
+
+/obj/structure/statue/proc/can_be_rotated(mob/user)
+	if(!anchored)
+		return TRUE
+	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
+
+/obj/structure/statue/proc/can_user_rotate(mob/user)
+	return isliving(user) && user.canUseTopic(src, BE_CLOSE, no_dexterity = ismonkey(user))
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -403,6 +414,7 @@
 	icon_state = "block"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_ADD_PREFIX
 	density = TRUE
+	material_modifier = 0.5 //50% effectiveness of materials
 
 	/// The thing it will look like - Unmodified resulting statue appearance
 	var/current_target

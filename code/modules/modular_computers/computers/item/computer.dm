@@ -195,7 +195,7 @@
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
 		else
 			to_chat(user, "<span class='warning'>You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again.</span>")
-		return
+		return FALSE
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
@@ -210,11 +210,13 @@
 		enabled = 1
 		update_icon()
 		ui_interact(user)
+		return TRUE
 	else // Unpowered
 		if(issynth)
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>")
 		else
 			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
+		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/item/modular_computer/process(delta_time)

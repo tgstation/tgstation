@@ -59,7 +59,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
 	var/security_level = 0 //How much are wires secured
-	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = FALSE // if true, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
@@ -332,10 +332,10 @@
 	return (secondsElectrified != MACHINE_NOT_ELECTRIFIED)
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1) && !isAllPowerCut())
+	return ((aiControlDisabled != AI_WIRE_DISABLED) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/proc/canAIHack()
-	return ((aiControlDisabled==1) && (!hackProof) && (!isAllPowerCut()));
+	return ((aiControlDisabled==AI_WIRE_DISABLED) && (!hackProof) && (!isAllPowerCut()));
 
 /obj/machinery/door/airlock/hasPower()
 	return ((!secondsMainPowerLost || !secondsBackupPowerLost) && !(machine_stat & NOPOWER))
@@ -719,7 +719,7 @@
 		to_chat(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
 		sleep(50)
 		//disable blocked control
-		aiControlDisabled = 2
+		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, "<span class='notice'>Receiving control information from airlock.</span>")
 		sleep(10)
 		//bring up airlock dialog
@@ -1139,7 +1139,7 @@
 	return TRUE
 
 
-/obj/machinery/door/airlock/close(forced=0)
+/obj/machinery/door/airlock/close(forced = FALSE, force_crush = FALSE)
 	if(operating || welded || locked || seal)
 		return
 	if(density)
@@ -1147,7 +1147,9 @@
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_BOLTS))
 			return
-	if(safe)
+
+	var/dangerous_close = !safe || force_crush
+	if(!dangerous_close)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				autoclose_in(DOOR_CLOSE_WAIT)
@@ -1178,7 +1180,7 @@
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(4)
-	if(!safe)
+	if(dangerous_close)
 		crush()
 	if(visible && !glass)
 		set_opacity(1)
@@ -1187,7 +1189,7 @@
 	update_icon(AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
-	if(safe)
+	if(!dangerous_close)
 		CheckForMobs()
 	return TRUE
 

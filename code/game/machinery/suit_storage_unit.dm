@@ -310,7 +310,7 @@
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	var/mob/living/target = A
 	if(!state_open)

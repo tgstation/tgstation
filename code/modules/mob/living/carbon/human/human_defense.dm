@@ -174,7 +174,7 @@
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
 		var/zone_hit_chance = 80
-		if(!(mobility_flags & MOBILITY_STAND)) // half as likely to hit a different zone if they're on the ground
+		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
 			zone_hit_chance += 10
 		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target

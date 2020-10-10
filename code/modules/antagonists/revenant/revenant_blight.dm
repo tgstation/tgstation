@@ -31,7 +31,7 @@
 		return
 
 	if(!finalstage)
-		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage * 6))
+		if(affected_mob.body_position == LYING_DOWN && prob(stage * 6))
 			cure()
 			return FALSE
 		if(prob(stage * 3))

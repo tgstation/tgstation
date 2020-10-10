@@ -500,6 +500,16 @@
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
+/obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+
+	machine.contraband = contraband
+	if (obj_flags & EMAGGED)
+		machine.obj_flags |= EMAGGED
+	else
+		machine.obj_flags &= ~EMAGGED
+
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/express

@@ -1,0 +1,5 @@
+author: "Cobby (Ideas pooled from Anne and ATH)"
+delete-after: True
+changes: 
+  - balance: "BSbodybags now inherit the weight of its heaviest item."
+  - balance: "It is much easier for a <i>conscious</i> individual to escape the bluespace bodybag."

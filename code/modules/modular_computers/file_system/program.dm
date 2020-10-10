@@ -33,6 +33,8 @@
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
+	/// Font Awesome icon to use as this program's icon in the modular computer main menu. Defaults to a basic program maximize window icon if not overridden.
+	var/program_icon = "window-maximize-o"
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
