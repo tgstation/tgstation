@@ -4,6 +4,8 @@
 #define CHARGE_FINALWARNING		1
 /// The carp rift is now fully charged.
 #define CHARGE_COMPLETED		2
+/// The darkness threshold for space dragon when choosing a color
+#define DARKNESS_THRESHOLD		ReadHSV("#7F7F7F")[3]
 
 /**
   * # Space Dragon
@@ -198,15 +200,15 @@
   * If an invalid color is given, will re-prompt the dragon until a proper color is chosen.
   */
 /mob/living/simple_animal/hostile/space_dragon/proc/color_selection()
-	chosen_color = input(src,"What would you like your color to be?","Choose Your Color","#ffffff") as color|null
+	chosen_color = input(src,"What would you like your color to be?","Choose Your Color", COLOR_WHITE) as color|null
 	if(!chosen_color) //redo proc until we get a color
 		to_chat(src, "<span class='warning'>Not a valid color, please try again.</span>")
 		color_selection()
 		return
 	var/temp_hsv = RGBtoHSV(chosen_color)
-	if(chosen_color == "#000000")
-		chosen_color = "#ffffff"
-	else if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+	if(chosen_color == COLOR_BLACK)
+		chosen_color = COLOR_WHITE
+	else if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
 		to_chat(src, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 		color_selection()
 		return
@@ -663,3 +665,4 @@
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING
 #undef CHARGE_COMPLETED
+#undef DARKNESS_THRESHOLD
