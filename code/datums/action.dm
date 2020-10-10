@@ -101,7 +101,7 @@
 		return FALSE
 	if((check_flags & AB_CHECK_LYING) && isliving(owner))
 		var/mob/living/action_user = owner
-		if(!(action_user.mobility_flags & MOBILITY_STAND))
+		if(action_user.body_position == LYING_DOWN)
 			return FALSE
 	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
 		return FALSE

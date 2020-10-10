@@ -1264,14 +1264,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
 	return
 
+
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(!((target.health < 0 || HAS_TRAIT(target, TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
+	if(target.body_position == STANDING_UP || (target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
-		return 1
-	else
-		user.do_cpr(target)
+		return TRUE
+
+	user.do_cpr(target)
+
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
@@ -1283,7 +1285,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return TRUE
 	else
 		//Steal them shoes
-		if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
+		if(target.body_position == LYING_DOWN && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
 			var/obj/item/I = target.shoes
 			user.visible_message("<span class='warning'>[user] starts stealing [target]'s [I.name]!</span>",
 							"<span class='danger'>You start stealing [target]'s [I.name]...</span>", null, null, target)
@@ -1312,7 +1314,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
-		if(!(target.mobility_flags & MOBILITY_STAND))
+		if(target.body_position == LYING_DOWN)
 			atk_verb = ATTACK_EFFECT_KICK
 
 		switch(atk_verb)//this code is really stupid but some genius apparently made "claw" and "slash" two attack types but also the same one so it's needed i guess
@@ -1449,8 +1451,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iwound_bonus = I.wound_bonus
 
-	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are laying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && (H.mobility_flags & ~MOBILITY_STAND) && (LAZYLEN(H.surgeries) > 0))
+	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
+	if((I.item_flags & SURGICAL_TOOL) && user.a_intent == INTENT_HELP && H.body_position == LYING_DOWN && (LAZYLEN(H.surgeries) > 0))
 		Iwound_bonus = CANT_WOUND
 
 	var/weakness = check_species_weakness(I, user)
@@ -1924,7 +1926,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 
 /datum/species/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || !(H.mobility_flags & MOBILITY_STAND))
+	if(H.stat || H.body_position == LYING_DOWN)
 		return FALSE
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "<span class='warning'>Your suit blocks your wings from extending!</span>")
@@ -1971,7 +1973,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		override_float = TRUE
 		passtable_on(H, SPECIES_TRAIT)
 		H.OpenWings()
-		H.update_mobility()
 	else
 		stunmod *= 0.5
 		speedmod += 0.35

@@ -649,7 +649,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!(user.mobility_flags & MOBILITY_STAND) || user.usable_legs < 2)
+	if(user.body_position == LYING_DOWN || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

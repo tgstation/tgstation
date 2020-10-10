@@ -55,7 +55,7 @@
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
-	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND) || !owner.has_gravity() || (owner.movement_type & FLYING) || forced)
+	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & FLYING) || forced)
 		return
 	var/determined_mod = 1
 	if(owner.has_status_effect(STATUS_EFFECT_DETERMINED))
