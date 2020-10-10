@@ -47,25 +47,14 @@
 		eject()
 	else
 		var/pressure = tank_content.return_pressure()
-		var/total_moles = tank_content.total_moles()
 		var/temperature = tank_content.temperature
 
-		message_admins("pressure [pressure]")
-		message_admins("total_moles [total_moles]")
-		message_admins("temperature [temperature]")
-
 		var/pressure_ratio = 1 + ((pressure / 300 - 1) * 0.15)
-		var/plasma_ratio = tank_content.gases[/datum/gas/plasma][MOLES] / total_moles
+		var/plasma_ratio = tank_content.gases[/datum/gas/plasma][MOLES] / tank_content.total_moles()
 		var/temperature_ratio = 1 + (T20C / temperature - 1) * 0.3
-
-		message_admins("pressure_ratio [pressure_ratio]")
-		message_admins("plasma_ratio [plasma_ratio]")
-		message_admins("temperature_ratio [temperature_ratio]")
 
 		var/total_ratio = pressure_ratio * plasma_ratio * temperature_ratio
 		total_ratio = clamp(total_ratio, 0.5, 1.6) //max 60% more
-
-		message_admins("total_ratio [total_ratio]")
 
 		var/gas_drained = min(power_production_drain * drain_ratio * delta_time, tank_content.gases[/datum/gas/plasma][MOLES])
 		tank_content.gases[/datum/gas/plasma][MOLES] -= gas_drained
@@ -73,13 +62,9 @@
 		tank_content.gases[/datum/gas/tritium][MOLES] += gas_drained
 		tank_content.garbage_collect()
 
-		message_admins("gas_drained [gas_drained]")
-
 		var/temperature_increase = gas_drained * plasma_ratio * 100
 		if(tank_content.temperature < 400)
 			tank_content.temperature += temperature_increase
-
-		message_admins("temperature_increase [temperature_increase]")
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
 		add_avail(power_produced * total_ratio)
