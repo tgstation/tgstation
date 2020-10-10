@@ -57,7 +57,6 @@
 		/datum/reagent/silver,
 		/datum/reagent/sodium,
 		/datum/reagent/stable_plasma,
-		/datum/reagent/consumable/sugar,
 		/datum/reagent/sulfur,
 		/datum/reagent/toxin/acid,
 		/datum/reagent/water,
@@ -473,7 +472,6 @@
 		/datum/reagent/consumable/lemon_lime,
 		/datum/reagent/consumable/pwr_game,
 		/datum/reagent/consumable/shamblers,
-		/datum/reagent/consumable/sugar,
 		/datum/reagent/consumable/pineapplejuice,
 		/datum/reagent/consumable/orangejuice,
 		/datum/reagent/consumable/grenadine,
@@ -487,7 +485,8 @@
 		/datum/reagent/consumable/ethanol/thirteenloko,
 		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
-		/datum/reagent/toxin/staminatoxin
+		/datum/reagent/toxin/staminatoxin,
+		/datum/reagent/consumable/sugar,
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
