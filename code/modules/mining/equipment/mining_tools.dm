@@ -5,7 +5,6 @@
 	icon_state = "pickaxe"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
-	force = 15
 	throwforce = 10
 	inhand_icon_state = "pickaxe"
 	worn_icon_state = "pickaxe"
@@ -18,7 +17,8 @@
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb_simple = list("hit", "pierce", "mine", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
-	armour_penetration = 15
+	force = 15
+	armour_penetration = 25
 	wound_bonus = 30
 	sharpness = SHARP_POINTY
 
