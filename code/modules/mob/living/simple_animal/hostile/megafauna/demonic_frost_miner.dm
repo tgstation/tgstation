@@ -340,6 +340,7 @@ Difficulty: Extremely Hard
 	name = "demonic jackhammer"
 	desc = "Cracks rocks at an inhuman speed, as well as being enhanced for combat purposes."
 	toolspeed = 0
+	force = 20 // "enhanced for combat purposes" :)
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
 	. = ..()

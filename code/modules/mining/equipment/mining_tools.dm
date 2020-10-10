@@ -79,6 +79,7 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	force = 18
+	armour_penetration = -15
 	wound_bonus = 25 // Slightly less likely to deal wounds than pickaxes to compensate for slash wounds being worse.
 	sharpness = SHARP_EDGED // The drill head is wider than most pointy objects, likely serrated, and spinning at high speed.
 
@@ -97,6 +98,7 @@
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 	force = 20
+	armour_penetration = -10
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
@@ -104,6 +106,7 @@
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 	force = 20
+	armour_penetration = -10
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -116,10 +119,11 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
-	force = 20
-	armour_penetration = 25
+	force = 10
+	armour_penetration = 50
 	sharpness = SHARP_NONE
-	bare_wound_bonus = 25 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
+	wound_bonus = 40
+	bare_wound_bonus = 60 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"
