@@ -78,7 +78,8 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	force = 18
-	wound_bonus = 25
+	wound_bonus = 25 // Slightly less likely to deal wounds than pickaxes to compensate for slash wounds being worse.
+	sharpness = SHARP_EDGED // The drill head is wider than most pointy objects, likely serrated, and spinning at high speed.
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
