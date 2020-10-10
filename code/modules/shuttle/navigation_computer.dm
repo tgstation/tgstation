@@ -100,6 +100,11 @@
 	if(SSmapping.level_has_any_trait(z, locked_traits))
 		to_chat(user, "<span class='warning'>The bluespace interference is jamming the console!</span>")
 		return
+
+	var/obj/docking_port/stationary/dock = SSshuttle.get_containing_dock(src)
+	if(dock)
+		jumpto_ports[dock.id] = TRUE
+
 	..()
 	if(!QDELETED(user) && user.client)
 		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
