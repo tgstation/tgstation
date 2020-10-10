@@ -17,9 +17,16 @@
 	for(var/X in C.bodyparts)
 		var/obj/item/bodypart/O = X
 		O.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
+		O.brute_reduction = 5
+		O.burn_reduction = 4
+
+	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
+	C.set_safe_hunger_level()
 
 /datum/species/android/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	for(var/X in C.bodyparts)
 		var/obj/item/bodypart/O = X
 		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)
+		O.brute_reduction = initial(O.brute_reduction)
+		O.burn_reduction = initial(O.burn_reduction)

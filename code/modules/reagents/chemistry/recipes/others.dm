@@ -31,6 +31,11 @@
 	results = list(/datum/reagent/consumable/sodiumchloride = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/sodium = 1, /datum/reagent/chlorine = 1)
 
+/datum/chemical_reaction/stable_plasma
+	results = list(/datum/reagent/stable_plasma = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
+
 /datum/chemical_reaction/plasmasolidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
@@ -99,7 +104,7 @@
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+		new /obj/item/food/meat/slab/meatproduct(location)
 	return
 
 /datum/chemical_reaction/carbondioxide
@@ -433,7 +438,7 @@
 	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/reagent_containers/food/snacks/monkeycube/cube = holder.my_atom
+	var/obj/item/food/monkeycube/cube = holder.my_atom
 	if(istype(cube))
 		cube.Expand()
 	else

@@ -29,6 +29,12 @@
 #define COOLDOWN_BORG_SELF_REPAIR	"borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
+//Mecha cooldowns
+#define COOLDOWN_MECHA_MESSAGE "mecha_message"
+#define COOLDOWN_MECHA_EQUIPMENT "mecha_equipment"
+#define COOLDOWN_MECHA_ARMOR "mecha_armor"
+#define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
+#define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 
 //TIMER COOLDOWN MACROS
 

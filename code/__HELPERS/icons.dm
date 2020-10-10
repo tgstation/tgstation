@@ -1124,12 +1124,13 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext_char(partial[2], 3, -5), "\n", "")
 
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
+/proc/icon2html(thing, target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE)
 	if (!thing)
 		return
 
 	var/key
 	var/icon/I = thing
+
 	if (!target)
 		return
 	if (target == world)
@@ -1149,13 +1150,22 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 				SSassets.transport.register_asset(name, thing)
 			for (var/thing2 in targets)
 				SSassets.transport.send_assets(thing2, name)
+			if(sourceonly)
+				return SSassets.transport.get_asset_url(name)
 			return "<img class='icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 		var/atom/A = thing
-		if (isnull(dir))
-			dir = A.dir
+		
+		I = A.icon
 		if (isnull(icon_state))
 			icon_state = A.icon_state
-		I = A.icon
+			if (!(icon_state in icon_states(I, 1)))
+				icon_state = initial(A.icon_state)
+				if (isnull(dir))
+					dir = initial(A.dir)
+		
+		if (isnull(dir))
+			dir = A.dir		
+		
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
@@ -1174,7 +1184,8 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 		SSassets.transport.register_asset(key, I)
 	for (var/thing2 in targets)
 		SSassets.transport.send_assets(thing2, key)
-
+	if(sourceonly)
+		return SSassets.transport.get_asset_url(key)
 	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
 /proc/icon2base64html(thing)
@@ -1211,7 +1222,7 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_icon2html(thing, target)
+/proc/costly_icon2html(thing, target, sourceonly = FALSE)
 	if (!thing)
 		return
 
@@ -1219,4 +1230,62 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 		return icon2html(thing, target)
 
 	var/icon/I = getFlatIcon(thing)
-	return icon2html(I, target)
+	return icon2html(I, target, sourceonly = sourceonly)
+
+GLOBAL_LIST_EMPTY(transformation_animation_objects)
+
+
+/*
+ * Creates animation that turns current icon into result appearance from top down.
+ *
+ * result_appearance - End result appearance/atom/image
+ * time - Animation duration
+ * transform_overlay - Appearance/atom/image of effect that moves along the animation - should be horizonatally centered
+ * reset_after - If FALSE, filters won't be reset and helper vis_objects will not be removed after animation duration expires. Cleanup must be handled by the caller!
+ */
+/atom/movable/proc/transformation_animation(result_appearance,time = 3 SECONDS,transform_overlay,reset_after=TRUE)
+	var/list/transformation_objects = GLOB.transformation_animation_objects[src] || list()
+	//Disappearing part
+	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
+	filters += top_part_filter
+	var/filter_index = length(filters)
+	animate(filters[filter_index],y=-32,time=time)
+	//Appearing part
+	var/obj/effect/overlay/appearing_part = new
+	appearing_part.appearance = result_appearance
+	appearing_part.appearance_flags |= KEEP_TOGETHER | KEEP_APART
+	appearing_part.vis_flags = VIS_INHERIT_ID
+	appearing_part.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
+	animate(appearing_part.filters[1],y=-32,time=time)
+	transformation_objects += appearing_part
+	//Transform effect thing - todo make appearance passed in
+	if(transform_overlay)
+		var/obj/transform_effect = new
+		transform_effect.appearance = transform_overlay
+		transform_effect.vis_flags = VIS_INHERIT_ID
+		transform_effect.pixel_y = 16
+		transform_effect.alpha = 255
+		transformation_objects += transform_effect
+		animate(transform_effect,pixel_y=-16,time=time)
+		animate(alpha=0)
+
+	GLOB.transformation_animation_objects[src] = transformation_objects
+	for(var/A in transformation_objects)
+		vis_contents += A
+	if(reset_after)
+		addtimer(CALLBACK(src,.proc/_reset_transformation_animation,filter_index),time)
+
+/*
+ * Resets filters and removes transformation animations helper objects from vis contents.
+*/
+/atom/movable/proc/_reset_transformation_animation(filter_index)
+	var/list/transformation_objects = GLOB.transformation_animation_objects[src]
+	for(var/A in transformation_objects)
+		vis_contents -= A
+		qdel(A)
+	transformation_objects.Cut()
+	GLOB.transformation_animation_objects -= src
+	if(filters && length(filters) >= filter_index)
+		filters -= filters[filter_index]
+	//else
+	//	filters = null

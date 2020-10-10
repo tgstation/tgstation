@@ -1,6 +1,7 @@
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
+	icon_state = "generic"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -14,11 +15,13 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	var/tank_holder_icon_state = "holder_generic"
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -72,6 +75,11 @@
 
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/item/tank/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
@@ -171,7 +179,8 @@
 	return data
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("pressure")

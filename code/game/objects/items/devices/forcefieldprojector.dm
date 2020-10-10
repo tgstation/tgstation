@@ -68,11 +68,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/forcefield_projector/process()
+/obj/item/forcefield_projector/process(delta_time)
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + 4, max_shield_integrity)
+		shield_integrity = min(shield_integrity + delta_time * 2, max_shield_integrity)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields), 0) //fields degrade slowly over time
+		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * delta_time * 0.5, 0) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
 		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
 			qdel(F)
@@ -88,7 +88,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list("melee" = 0, "bullet" = 25, "laser" = 50, "energy" = 50, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	var/obj/item/forcefield_projector/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)

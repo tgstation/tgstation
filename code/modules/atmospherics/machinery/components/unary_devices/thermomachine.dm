@@ -7,7 +7,7 @@
 
 	density = TRUE
 	max_integrity = 300
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
@@ -45,7 +45,7 @@
 
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(on && is_operational())
+	else if(on && is_operational)
 		icon_state = icon_state_on
 	else
 		icon_state = icon_state_off
@@ -142,8 +142,8 @@
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
-
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -202,7 +202,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
 	. = ..()
-	target_temperature = T0C-14
+	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
@@ -216,6 +216,7 @@
 		return
 	target_temperature = min_temperature
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
+	to_chat(user, "<span class='notice'>You minimize the target temperature on [src] to [target_temperature] K.</span>")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
@@ -243,3 +244,4 @@
 		return
 	target_temperature = max_temperature
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
+	to_chat(user, "<span class='notice'>You maximize the target temperature on [src] to [target_temperature] K.</span>")

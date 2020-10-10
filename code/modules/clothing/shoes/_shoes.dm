@@ -3,7 +3,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	var/chained = 0
+	var/chained = FALSE
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
@@ -11,11 +11,8 @@
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
-	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/offset = 0
 	var/equipped_before_drop = FALSE
-	var/can_be_bloody = TRUE
 	///Whether these shoes have laces that can be tied/untied
 	var/can_be_tied = TRUE
 	///Are we currently tied? Can either be SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED
@@ -46,16 +43,13 @@
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
-		var/bloody = FALSE
-		if(HAS_BLOOD_DNA(src))
-			bloody = TRUE
-		else
-			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
-
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
-		if(bloody)
-			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+		if(HAS_BLOOD_DNA(src))
+			if(clothing_flags & LARGE_WORN_ICON)
+				. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
+			else
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()
@@ -95,17 +89,6 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_shoes()
-
-/obj/item/clothing/shoes/wash(clean_types)
-	. = ..()
-	if(!(clean_types & CLEAN_TYPE_BLOOD) || blood_state == BLOOD_STATE_NOT_BLOODY)
-		return
-	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	blood_state = BLOOD_STATE_NOT_BLOODY
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_shoes()
-	return TRUE
 
 /obj/item/proc/negates_gravity()
 	return FALSE
@@ -172,7 +155,7 @@
 
 	else // if they're someone else's shoes, go knot-wards
 		var/mob/living/L = user
-		if(istype(L) && (L.mobility_flags & MOBILITY_STAND))
+		if(istype(L) && L.body_position == STANDING_UP)
 			to_chat(user, "<span class='warning'>You must be on the floor to interact with [src]!</span>")
 			return
 		if(tied == SHOES_KNOTTED)

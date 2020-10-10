@@ -55,8 +55,10 @@
 	return data
 
 /obj/machinery/hypnochair/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("door")
 			if(state_open)
@@ -97,12 +99,12 @@
 	update_icon()
 	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
 
-/obj/machinery/hypnochair/process()
+/obj/machinery/hypnochair/process(delta_time)
 	var/mob/living/carbon/C = occupant
 	if(!istype(C) || C != victim)
 		interrupt_interrogation()
 		return
-	if(prob(10) && !(C.get_eye_protection() > 0))
+	if(DT_PROB(5, delta_time) && !(C.get_eye_protection() > 0))
 		to_chat(C, "<span class='hypnophrase'>[pick(\
 			"...blue... red... green... blue, red, green, blueredgreen<span class='small'>blueredgreen</span>",\
 			"...pretty colors...",\
@@ -188,17 +190,14 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/hypnochair/relaymove(mob/user)
+/obj/machinery/hypnochair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
-/obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
-		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
-			return
-	close_machine(target)
 
+/obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
+	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
+		return
+
+	close_machine(target)

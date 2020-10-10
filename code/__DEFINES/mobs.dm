@@ -40,10 +40,6 @@
 #define VENTCRAWLER_NUDE   1
 #define VENTCRAWLER_ALWAYS 2
 
-//Bloodcrawling defines
-#define BLOODCRAWL 1 /// bloodcrawling, see: [/mob/living/var/bloodcrawl]
-#define BLOODCRAWL_EAT 2 /// crawling+mob devour
-
 //Mob bio-types flags
 #define MOB_ORGANIC 	(1 << 0)
 #define MOB_MINERAL		(1 << 1)
@@ -63,21 +59,17 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
-#define BODYPART_NOT_DISABLED 0
-#define BODYPART_DISABLED_DAMAGE 1
-#define BODYPART_DISABLED_PARALYSIS 2
-#define BODYPART_DISABLED_WOUND 3
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
-#define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
-// Health/damage defines for carbon mobs
+// Health/damage defines
+#define MAX_LIVING_HEALTH 100
+
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 
@@ -189,12 +181,12 @@
 
 //Charge levels for Ethereals
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER 20
-#define ETHEREAL_CHARGE_NORMAL 50
-#define ETHEREAL_CHARGE_ALMOSTFULL 75
-#define ETHEREAL_CHARGE_FULL 100
-#define ETHEREAL_CHARGE_OVERLOAD 125
-#define ETHEREAL_CHARGE_DANGEROUS 150
+#define ETHEREAL_CHARGE_LOWPOWER 400
+#define ETHEREAL_CHARGE_NORMAL 1000
+#define ETHEREAL_CHARGE_ALMOSTFULL 1500
+#define ETHEREAL_CHARGE_FULL 2000
+#define ETHEREAL_CHARGE_OVERLOAD 2500
+#define ETHEREAL_CHARGE_DANGEROUS 3000
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -219,6 +211,10 @@
 #define SENTIENCE_BOSS 5
 
 //Mob AI Status
+#define POWER_RESTORATION_OFF 0
+#define POWER_RESTORATION_START 1
+#define POWER_RESTORATION_SEARCH_APC 2
+#define POWER_RESTORATION_APC_FOUND 3
 
 //Hostile simple animals
 //If you add a new status, be sure to add a list for it to the simple_animals global in _globalvars/lists/mobs.dm
@@ -300,7 +296,7 @@
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
-#define	ETHEREAL_CHARGE_FACTOR	0.08 //factor at which ethereal's charge decreases
+#define	ETHEREAL_CHARGE_FACTOR	1.6 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -373,3 +369,15 @@
 #define EYE_CONTACT_RANGE	5
 
 #define SILENCE_RANGED_MESSAGE (1<<0)
+
+///Swarmer flags
+#define SWARMER_LIGHT_ON (1<<0)
+
+/// Returns whether or not the given mob can succumb
+#define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
+
+// Body position defines.
+/// Mob is standing up, usually associated with lying_angle value of 0.
+#define STANDING_UP 0
+/// Mob is lying down, usually associated with lying_angle values of 90 or 270.
+#define LYING_DOWN 1

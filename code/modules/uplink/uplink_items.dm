@@ -1049,6 +1049,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
 
+/datum/uplink_item/explosives/syndicate_bomb/emp
+	name = "Syndicate EMP Bomb"
+	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
+	item = /obj/item/sbeacondrop/emp
+	cost = 7
+
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
 	desc = "The Syndicate detonator is a companion device to the Syndicate bomb. Simply press the included button \
@@ -1142,13 +1148,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
 			for hit-and-run style attacks. Features an incendiary carbine, flash bang launcher, teleporter, ion thrusters and a Tesla energy array."
-	item = /obj/mecha/combat/gygax/dark/loaded
+	item = /obj/vehicle/sealed/mecha/combat/gygax/dark/loaded
 	cost = 80
 
 /datum/uplink_item/support/honker
 	name = "Dark H.O.N.K."
 	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
-	item = /obj/mecha/combat/honker/dark/loaded
+	item = /obj/vehicle/sealed/mecha/combat/honker/dark/loaded
 	cost = 80
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -1156,7 +1162,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
 			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
-	item = /obj/mecha/combat/marauder/mauler/loaded
+	item = /obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded
 	cost = 140
 
 // Stealth Items
@@ -1210,7 +1216,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Codespeak Manual"
 	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. \
 			This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
-	item = /obj/item/codespeak_manual/unlimited
+	item = /obj/item/language_manual/codespeak_manual/unlimited
 	cost = 3
 
 /datum/uplink_item/stealthy_tools/combatbananashoes
@@ -1395,7 +1401,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
 	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
-	In it's crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or it's departments."
+	In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
@@ -1948,6 +1954,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 11
 	restricted_roles = list("Cook")
 
+/datum/uplink_item/role_restricted/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret
+	cost = 11
+	restricted_roles = list("Station Engineer")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -2027,5 +2040,4 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
-
 

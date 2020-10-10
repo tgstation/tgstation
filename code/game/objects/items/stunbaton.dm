@@ -14,7 +14,7 @@
 
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
 	throwforce = 7
 	var/throw_stun_chance = 35
@@ -333,9 +333,7 @@
 		if(ishuman(hit_atom) && !caught && prob(throw_stun_chance))//if they are a carbon and they didn't catch it
 			baton_effect(hit_atom)
 		if(thrownby && !caught)
-			sleep(1)
-			if(!QDELETED(src))
-				throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 

@@ -15,7 +15,7 @@
 		return
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/effects/screech.ogg', 100, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_PURPLE, (flashbang_range + 2), 4, 2)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, LIGHT_COLOR_PURPLE, 2)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(M), M)
 	qdel(src)

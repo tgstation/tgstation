@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(garbage)
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	msg += " P:[pass_counts.Join(",")]"
 	msg += "|F:[fail_counts.Join(",")]"
-	..(msg)
+	return ..()
 
 /datum/controller/subsystem/garbage/Shutdown()
 	//Adds the del() log to the qdel log file
@@ -256,8 +256,9 @@ SUBSYSTEM_DEF(garbage)
 	name = "[mytype]"
 
 
-// Should be treated as a replacement for the 'del' keyword.
-// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
+/// Should be treated as a replacement for the 'del' keyword.
+///
+/// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
 		del(D)

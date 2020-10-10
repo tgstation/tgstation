@@ -1,3 +1,5 @@
-const esmRequire = require('esm')(module);
+const esmRequire = require('esm')(module, {
+  cache: false,
+});
 
 esmRequire('./index.js');

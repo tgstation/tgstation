@@ -94,7 +94,7 @@
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
-	if(owner && !((owner.stat == DEAD) || owner.InFullCritical()))
+	if(owner.stat < HARD_CRIT)
 		return FALSE
 	return ..()
 
@@ -262,11 +262,6 @@
 	dismemberable = 0
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
-
-/obj/item/bodypart/head/devil
-	dismemberable = 0
-	max_damage = 5000
-	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/animal_parts.dmi'

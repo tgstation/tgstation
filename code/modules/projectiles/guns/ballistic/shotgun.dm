@@ -227,7 +227,7 @@
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = 0
+		slung = FALSE
 		update_icon()
 		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'

@@ -14,7 +14,7 @@
 		return
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (flashbang_turf, COLOR_WHITE, (flashbang_range + 2), 4, 2)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, COLOR_WHITE, 2)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(M), M)
 	qdel(src)
@@ -57,14 +57,6 @@
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
 	shrapnel_radius = 12
 
-/obj/item/grenade/stingbang/breaker
-	name = "breakbang"
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball/breaker
-
-/obj/item/grenade/stingbang/shred
-	name = "shredbang"
-	shrapnel_type = /obj/projectile/bullet/pellet/stingball/shred
-
 /obj/item/grenade/stingbang/prime(mob/living/lanced_by)
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
@@ -82,7 +74,7 @@
 		return
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/weapons/flashbang.ogg', 50, TRUE, 8, 0.9)
-	new /obj/effect/dummy/lighting_obj (flashbang_turf, COLOR_WHITE, (flashbang_range + 2), 2, 1)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 2, COLOR_WHITE, 1)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		pop(get_turf(M), M)
 	qdel(src)

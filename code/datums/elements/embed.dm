@@ -76,7 +76,7 @@
 	var/actual_chance = embed_chance
 
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
-		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
+		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
 			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
@@ -153,7 +153,7 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	. = payload.tryEmbed(limb)
+	payload.tryEmbed(limb) // at this point we've created our shrapnel baby and set them up to embed in the target, we can now die in peace as they handle their embed try on their own
 	Detach(P)
 
 /**
@@ -187,5 +187,4 @@
 		hit_zone = limb.body_zone
 		C = limb.owner
 
-	checkEmbed(I, C, hit_zone, forced=TRUE)
-	return TRUE
+	return checkEmbed(I, C, hit_zone, forced=TRUE)

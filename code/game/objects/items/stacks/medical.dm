@@ -253,14 +253,14 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount = 10
-	max_amount = 10
+	amount = 8
+	max_amount = 8
 	self_delay = 40
 	other_delay = 20
 
 	heal_burn = 5
 	flesh_regeneration = 2.5
-	sanitization = 0.3
+	sanitization = 0.25
 	grind_results = list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
@@ -279,7 +279,7 @@
 	name = "regenerative mesh"
 	desc = "A bacteriostatic mesh used to dress burns."
 	gender = PLURAL
-	singular_name = "regenerative mesh"
+	singular_name = "mesh piece"
 	icon_state = "regen_mesh"
 	self_delay = 30
 	other_delay = 10
@@ -347,7 +347,6 @@
 	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
 
 	gender = PLURAL
-	singular_name = "advanced regenerative mesh"
 	icon_state = "aloe_mesh"
 	heal_burn = 15
 	sanitization = 1.25

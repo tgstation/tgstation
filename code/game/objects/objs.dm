@@ -22,9 +22,6 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
-	var/acid_level = 0 //how much acid is on that obj
-
-	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
@@ -232,15 +229,15 @@
 		if (islist(result))
 			if (result["button"] != 2) // If the user pressed the cancel button
 				// text2num conveniently returns a null on invalid values
-				armor = armor.setRating(melee = text2num(result["values"]["melee"]),\
-			                  bullet = text2num(result["values"]["bullet"]),\
-			                  laser = text2num(result["values"]["laser"]),\
-			                  energy = text2num(result["values"]["energy"]),\
-			                  bomb = text2num(result["values"]["bomb"]),\
-			                  bio = text2num(result["values"]["bio"]),\
-			                  rad = text2num(result["values"]["rad"]),\
-			                  fire = text2num(result["values"]["fire"]),\
-			                  acid = text2num(result["values"]["acid"]))
+				armor = armor.setRating(melee = text2num(result["values"][MELEE]),\
+			                  bullet = text2num(result["values"][BULLET]),\
+			                  laser = text2num(result["values"][LASER]),\
+			                  energy = text2num(result["values"][ENERGY]),\
+			                  bomb = text2num(result["values"][BOMB]),\
+			                  bio = text2num(result["values"][BIO]),\
+			                  rad = text2num(result["values"][RAD]),\
+			                  fire = text2num(result["values"][FIRE]),\
+			                  acid = text2num(result["values"][ACID]))
 				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]")
 				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]</span>")
 	if(href_list[VV_HK_MASS_DEL_TYPE])
@@ -350,19 +347,18 @@
 
 /obj/handle_ricochet(obj/projectile/P)
 	. = ..()
-	if(. && ricochet_damage_mod)
-		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+	if(. && receive_ricochet_damage_coeff)
+		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /obj/update_overlays()
 	. = ..()
-	if(acid_level)
-		. += GLOB.acid_overlay
 	if(resistance_flags & ON_FIRE)
 		. += custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay
 
 /// Handles exposing an object to reagents.
-/obj/expose_reagents(list/reagents, datum/reagents/source, method=TOUCH, volume_modifier=1, show_message=TRUE)
-	if((. = ..()) & COMPONENT_NO_EXPOSE_REAGENTS)
+/obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	for(var/reagent in reagents)

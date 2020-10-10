@@ -15,6 +15,7 @@
 	icon_state = "white_suit_skirt"
 	inhand_icon_state = "scratch"
 	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/suit/sl
@@ -47,6 +48,7 @@
 	icon_state = "blacksuit_skirt"
 	inhand_icon_state = "bar_suit"
 	alt_covers_chest = TRUE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/suit/black_really
@@ -61,6 +63,7 @@
 	icon_state = "really_black_suit_skirt"
 	inhand_icon_state = "really_black_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/suit/black/female
@@ -124,6 +127,7 @@
 	desc = "An excellent light colored suit, experts in the field stress that it should not to be confused with the inferior tan suit."
 	icon_state = "beige_suit"
 	inhand_icon_state = "beige_suit"
+
 /obj/item/clothing/under/suit/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
@@ -133,3 +137,9 @@
 	inhand_icon_state = "henchmen"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR
+
+/obj/item/clothing/under/suit/tuxedo
+	name = "tuxedo"
+	desc = "A formal black tuxedo. It exudes classiness."
+	icon_state = "tuxedo"
+	inhand_icon_state = "tuxedo"

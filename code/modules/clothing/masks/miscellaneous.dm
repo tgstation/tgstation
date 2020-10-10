@@ -28,7 +28,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 25, RAD = 0, FIRE = 0, ACID = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
@@ -39,6 +39,7 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/mask/fakemoustache/italian
 	name = "italian moustache"
@@ -234,6 +235,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

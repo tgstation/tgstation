@@ -8,6 +8,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosNetDos"
+	program_icon = "satellite-dish"
 
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0
@@ -25,7 +26,7 @@
 			dos_speed = NTNETSPEED_ETHERNET * 10
 	if(target && executed)
 		target.dos_overload += dos_speed
-		if(!target.is_operational())
+		if(!target.is_operational)
 			target.dos_sources.Remove(src)
 			target = null
 			error = "Connection to destination relay lost."
@@ -39,7 +40,8 @@
 	..()
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PRG_target_relay")

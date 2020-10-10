@@ -27,7 +27,7 @@
 #define NO_MAT_REDEMPTION			(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define DROPDEL						(1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON				(1<<7)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff
+#define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff <= wow thanks for the fucking insight sherlock
 #define IMMUTABLE_SLOW			(1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE				(1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
@@ -50,6 +50,8 @@
 #define SNUG_FIT               (1<<11) //Prevents knock-off from things like hat-throwing.
 #define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).
 #define DANGEROUS_OBJECT    (1<<13)     //Clothes that cause a larger notification when placed on a person.
+#define LARGE_WORN_ICON    (1<<14)     //Clothes that use large icons, for applying the proper overlays like blood
+
 /// Flags for the organ_flags var on /obj/item/organ
 
 #define ORGAN_SYNTHETIC			(1<<0)	//Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
@@ -59,6 +61,7 @@
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
 #define ORGAN_EDIBLE			(1<<5)	//is a snack? :D
 #define ORGAN_SYNTHETIC_EMP		(1<<6)	//Synthetic organ affected by an EMP. Deteriorates over time.
+#define ORGAN_UNREMOVABLE		(1<<7)	//Can't be removed using surgery
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing

@@ -350,11 +350,19 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	custom_materials = list(/datum/material/iron=50)
 
+// Misc. Parts
+
 /obj/item/stock_parts/card_reader
 	name = "card reader"
 	icon_state = "card_reader"
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+
+/obj/item/stock_parts/water_recycler
+	name = "water recycler"
+	icon_state = "water_recycler"
+	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
+	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

@@ -5,7 +5,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
@@ -204,13 +204,13 @@
 		return
 	if(has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
-		return 0
+		return
 	if(has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
-		return 0
+		return
 	if(has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
-		return 0
+		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
@@ -235,8 +235,9 @@
 			H.update_suit_sensors()
 
 /obj/item/clothing/under/AltClick(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return

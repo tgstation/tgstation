@@ -101,6 +101,7 @@
 	. = ..()
 	set_nutrition(700)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	add_cell_sample()
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -108,8 +109,7 @@
 		AC.Remove(src)
 	Target = null
 	Leader = null
-	Friends.Cut()
-	speech_buffer.Cut()
+	Friends = null
 	return ..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
@@ -145,9 +145,9 @@
 	. = ..()
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
-	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
+	if(has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
+	if(has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
@@ -200,21 +200,21 @@
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
-/mob/living/simple_animal/slime/Stat()
-	if(..())
-
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(is_adult)
-				stat(null, "You can reproduce!")
-			else
-				stat(null, "You can evolve!")
-
-		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of BZ!")
+/mob/living/simple_animal/slime/get_status_tab_items()
+	. = ..()
+	if(!docile)
+		. += "Nutrition: [nutrition]/[get_max_nutrition()]"
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(is_adult)
+			. += "You can reproduce!"
 		else
-			stat(null,"Power Level: [powerlevel]")
+			. += "You can evolve!"
+
+	switch(stat)
+		if(HARD_CRIT, UNCONSCIOUS)
+			. += "You are knocked out by high levels of BZ!"
+		else
+			. += "Power Level: [powerlevel]"
 
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -420,7 +420,7 @@
 	if (stat == DEAD)
 		. += "<span class='deadsay'>It is limp and unresponsive.</span>"
 	else
-		if (stat == UNCONSCIOUS) // Slime stasis
+		if (stat == UNCONSCIOUS || stat == HARD_CRIT) // Slime stasis
 			. += "<span class='deadsay'>It appears to be alive but unresponsive.</span>"
 		if (getBruteLoss())
 			. += "<span class='warning'>"
@@ -463,25 +463,26 @@
 
 	SStun = world.time + rand(20,60)
 
-	mobility_flags &= ~MOBILITY_MOVE
+	Stun(3)
 	if(user)
 		step_away(src,user,15)
 
-	addtimer(CALLBACK(src, .proc/slime_move, user), 3)
+	addtimer(CALLBACK(src, .proc/slime_move, user), 0.3 SECONDS)
+
 
 /mob/living/simple_animal/slime/proc/slime_move(mob/user)
 	if(user)
 		step_away(src,user,15)
-	update_mobility()
+
 
 /mob/living/simple_animal/slime/pet
 	docile = 1
 
 /mob/living/simple_animal/slime/can_unbuckle()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/slime/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
@@ -492,3 +493,6 @@
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))
+
+/mob/living/simple_animal/slime/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

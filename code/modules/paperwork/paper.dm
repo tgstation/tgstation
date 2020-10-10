@@ -245,6 +245,8 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
+	data["edit_usr"] = "[user]"
+
 	var/obj/O = user.get_active_held_item()
 	if(istype(O, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/PEN = O
@@ -283,7 +285,8 @@
 	return data
 
 /obj/item/paper/ui_act(action, params,datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("stamp")

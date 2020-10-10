@@ -50,7 +50,7 @@
 
 /obj/machinery/drone_dispenser/Initialize()
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack)
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/stack, _breakdown_flags=BREAKDOWN_FLAGS_DRONE_DISPENSER)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = metal_cost, /datum/material/glass = glass_cost)
@@ -216,7 +216,7 @@
 			"<span class='notice'>[user] fixes [src]!</span>",
 			"<span class='notice'>You restore [src] to operation.</span>")
 
-		machine_stat &= ~BROKEN
+		set_machine_stat(machine_stat & ~BROKEN)
 		obj_integrity = max_integrity
 		update_icon()
 	else

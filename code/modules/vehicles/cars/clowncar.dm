@@ -3,7 +3,7 @@
 	desc = "How someone could even fit in there is byond me."
 	icon_state = "clowncar"
 	max_integrity = 150
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	enter_delay = 20
 	max_occupants = 50
 	movedelay = 0.6

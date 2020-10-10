@@ -12,7 +12,7 @@
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_requires_restraints = TRUE
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.

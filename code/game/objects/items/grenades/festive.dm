@@ -7,7 +7,8 @@
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	var/burntime = 60
+	/// Burn time in seconds
+	var/burntime = 120
 	var/lit = FALSE
 
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
@@ -33,14 +34,14 @@
 	attack_verb_continuous = list("burns")
 	attack_verb_simple = list("burn")
 	set_light(l_range = 2, l_power = 2)
-	damtype = "fire"
+	damtype = BURN
 	START_PROCESSING(SSobj, src)
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_icon()
 
-/obj/item/sparkler/process()
-	burntime--
-	if(burntime < 1)
+/obj/item/sparkler/process(delta_time)
+	burntime -= delta_time
+	if(burntime <= 0)
 		new /obj/item/stack/rods(drop_location())
 		qdel(src)
 	else

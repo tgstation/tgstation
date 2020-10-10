@@ -89,14 +89,16 @@ Slimecrossing Items
 		desc = "This camera has seen better days."
 	. = ..()
 
-
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/high/slime/hypercharged
+/obj/item/stock_parts/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
-	desc = "A charged yellow slime extract, infused with even more plasma. It almost hurts to touch."
-	rating = 7 //Roughly 1.5 times the original.
-	maxcharge = 20000 //2 times the normal one.
-	chargerate = 2250 //1.5 times the normal rate.
+	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
+	rating = 7
+	custom_materials = null
+	maxcharge = 50000
+	chargerate = 2500
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube
@@ -171,7 +173,7 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list("melee" = 30, "bullet" = 50, "laser" = -50, "energy" = -50, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = -80, "acid" = 30)
+	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, RAD = 100, FIRE = -80, ACID = 30)
 
 /obj/structure/ice_stasis/Initialize()
 	. = ..()

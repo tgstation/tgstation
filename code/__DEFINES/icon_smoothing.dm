@@ -1,14 +1,30 @@
 /* smoothing_flags */
-#define SMOOTH_CORNERS	(1<<0) //Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
-#define SMOOTH_DIAGONAL	(1<<2)	//if atom should smooth diagonally, this should be present in 'smoothing_flags' var
-#define SMOOTH_BORDER	(1<<3)	//atom will smooth with the borders of the map
-#define SMOOTH_QUEUED	(1<<4)	//atom is currently queued to smooth.
-#define SMOOTH_OBJ		(1<<5)	//smooths with objects, and will thus need to scan turfs for contents.
+/// Smoothing system in where adjacencies are calculated and used to build an image by mounting each corner at runtime.
+#define SMOOTH_CORNERS	(1<<0)
+/// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.
+#define SMOOTH_BITMASK		(1<<1)
+/// Atom has diagonal corners, with underlays under them.
+#define SMOOTH_DIAGONAL_CORNERS	(1<<2)
+/// Atom will smooth with the borders of the map.
+#define SMOOTH_BORDER	(1<<3)
+/// Atom is currently queued to smooth.
+#define SMOOTH_QUEUED	(1<<4)
+/// Smooths with objects, and will thus need to scan turfs for contents.
+#define SMOOTH_OBJ		(1<<5)
+
+DEFINE_BITFIELD(smoothing_flags, list(
+	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
+	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
+	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
+	"SMOOTH_BORDER" = SMOOTH_BORDER,
+	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
+	"SMOOTH_OBJ" = SMOOTH_OBJ,
+))
 
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
 
@@ -29,10 +45,11 @@
 
 #define SMOOTH_GROUP_OPEN_FLOOR S_TURF(4)				///turf/open/floor
 
-#define SMOOTH_GROUP_FLOOR_ASH S_TURF(5)				///turf/open/floor/plating/ashplanet/ash
-#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(6)			///turf/open/floor/plating/ashplanet/rocky
-#define SMOOTH_GROUP_FLOOR_ICE S_TURF(7)				///turf/open/floor/plating/ice
-#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(8)				///turf/open/floor/plating/snowed
+#define SMOOTH_GROUP_FLOOR_GRASS S_TURF(5)				///turf/open/floor/plating/grass
+#define SMOOTH_GROUP_FLOOR_ASH S_TURF(6)				///turf/open/floor/plating/ashplanet/ash
+#define SMOOTH_GROUP_FLOOR_ASH_ROCKY S_TURF(7)			///turf/open/floor/plating/ashplanet/rocky
+#define SMOOTH_GROUP_FLOOR_ICE S_TURF(8)				///turf/open/floor/plating/ice
+#define SMOOTH_GROUP_FLOOR_SNOWED S_TURF(9)				///turf/open/floor/plating/snowed
 
 #define SMOOTH_GROUP_CARPET S_TURF(10)					///turf/open/floor/carpet
 #define SMOOTH_GROUP_CARPET_BLACK S_TURF(11)			///turf/open/floor/carpet/black
@@ -47,7 +64,7 @@
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(24)			///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(25)			///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(26)			///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
 #define SMOOTH_GROUP_HOTEL_WALLS S_TURF(27)				///turf/closed/indestructible/hotelwall
 #define SMOOTH_GROUP_MINERAL_WALLS S_TURF(28)			///turf/closed/mineral, /turf/closed/indestructible
 #define SMOOTH_GROUP_BOSS_WALLS S_TURF(29)				///turf/closed/indestructible/riveted/boss
@@ -73,10 +90,14 @@
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11)			///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13)		///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
 #define SMOOTH_GROUP_SURVIVAL_TIANIUM_POD S_OBJ(14)		///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod
+#define SMOOTH_GROUP_HIERO_WALL S_OBJ(15)				///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(20)				///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
-#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(21)			///obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(21)			///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(22)	///obj/structure/window/bronze/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(23)	///turf/closed/indestructible/opsglass, /obj/structure/window/plasma/reinforced/plastitanium
+#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(24)	///obj/structure/window/shuttle
 
 #define SMOOTH_GROUP_LATTICE  S_OBJ(30)					///obj/structure/lattice
 
@@ -86,7 +107,10 @@
 #define SMOOTH_GROUP_WOOD_TABLES S_OBJ(51)				///obj/structure/table/wood
 #define SMOOTH_GROUP_FANCY_WOOD_TABLES S_OBJ(52)		///obj/structure/table/wood/fancy
 #define SMOOTH_GROUP_BRONZE_TABLES S_OBJ(53)			///obj/structure/table/bronze
+#define SMOOTH_GROUP_ABDUCTOR_TABLES S_OBJ(54)			///obj/structure/table/abductor
+#define SMOOTH_GROUP_GLASS_TABLES S_OBJ(55)				///obj/structure/table/glass
 
+#define SMOOTH_GROUP_ALIEN_NEST S_OBJ(59)				///obj/structure/bed/nest
 #define SMOOTH_GROUP_ALIEN_RESIN S_OBJ(60)				///obj/structure/alien/resin
 #define SMOOTH_GROUP_ALIEN_WALLS S_OBJ(61)				///obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane
 #define SMOOTH_GROUP_ALIEN_WEEDS S_OBJ(62)				///obj/structure/alien/weeds
@@ -96,7 +120,7 @@
 
 #define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65)				///obj/structure/fluff/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66)			///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT	S_OBJ(67)			///obj/effect/decal/cleanable/dirt
 

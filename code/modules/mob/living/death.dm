@@ -70,7 +70,6 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
 	stop_pulling()
@@ -79,12 +78,5 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(gibbed)
 
 	return TRUE

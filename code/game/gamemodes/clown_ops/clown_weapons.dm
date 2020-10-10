@@ -17,40 +17,45 @@
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeak at 100% capacity."
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/// Recharging rate in PPS (peels per second)
+#define BANANA_SHOES_RECHARGE_RATE 17
+#define BANANA_SHOES_MAX_CHARGE 3000
 
 //The super annoying version
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
 	name = "mk-honk combat shoes"
 	desc = "The culmination of years of clown combat research, these shoes leave a trail of chaos in their wake. They will slowly recharge themselves over time, or can be manually charged with bananium."
 	slowdown = SHOES_SLOWDOWN
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 10, RAD = 0, FIRE = 70, ACID = 50)
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
-	var/max_recharge = 3000 //30 peels worth
-	var/recharge_rate = 34 //about 1/3 of a peel per tick
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize()
 	. = ..()
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
-	bananium.insert_amount_mat(max_recharge, /datum/material/bananium)
+	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(delta_time)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
-	if(bananium_amount < max_recharge)
-		bananium.insert_amount_mat(min(recharge_rate, max_recharge - bananium_amount), /datum/material/bananium)
+	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
+		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * delta_time, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/attack_self(mob/user)
 	ui_action_click(user)
+
+#undef BANANA_SHOES_RECHARGE_RATE
+#undef BANANA_SHOES_MAX_CHARGE
 
 //BANANIUM SWORD
 
@@ -152,8 +157,7 @@
 			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
-			sleep(1)
-			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
+			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrownby, throw_range+2, throw_speed, null, TRUE), 1)
 	else
 		return ..()
 
@@ -236,7 +240,7 @@
 	projectiles = 8
 	projectile_energy_cost = 1000
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/mecha/combat/honker/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return TRUE
@@ -254,33 +258,33 @@
 	equip_cooldown = 60
 	det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/mecha/combat/honker/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
 	if(..())
 		if(istype(M))
 			return TRUE
 	return FALSE
 
-/obj/mecha/combat/honker/dark
+/obj/vehicle/sealed/mecha/combat/honker/dark
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one has been painted black for maximum fun. HONK!"
 	name = "\improper Dark H.O.N.K"
 	icon_state = "darkhonker"
 	max_integrity = 300
 	deflect_chance = 15
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 50, "energy" = 35, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 35, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	max_temperature = 35000
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
 	max_equip = 4
 
-/obj/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
+/obj/vehicle/sealed/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
 		C.forceMove(src)
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-/obj/mecha/combat/honker/dark/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize()
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)

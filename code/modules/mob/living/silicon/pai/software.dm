@@ -84,8 +84,6 @@
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
-					body { background-image:url('[SSassets.transport.get_asset_url("paigrid.png")]'); }
-
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
 

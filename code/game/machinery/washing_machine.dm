@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	density = TRUE
 	state_open = TRUE
 	var/busy = FALSE
-	var/bloody_mess = 0
+	var/bloody_mess = FALSE
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
@@ -165,18 +165,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/washing_machine/process()
+/obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
 		animate(src, transform=matrix(), time=2)
 		return PROCESS_KILL
 	if(anchored)
-		if(prob(5))
+		if(DT_PROB(2.5, delta_time))
 			var/matrix/M = new
 			M.Translate(rand(-1, 1), rand(0, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
-		if(prob(1))
+		if(DT_PROB(0.5, delta_time))
 			step(src, pick(GLOB.cardinals))
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
-	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(loc)
+	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
 /mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/WM)
@@ -264,12 +264,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/WM)
 	if(chained)
-		chained = 0
+		chained = FALSE
 		slowdown = SHOES_SLOWDOWN
 		new /obj/item/restraints/handcuffs(loc)
 	..()
 
-/obj/machinery/washing_machine/relaymove(mob/user)
+/obj/machinery/washing_machine/relaymove(mob/living/user, direction)
 	container_resist_act(user)
 
 /obj/machinery/washing_machine/container_resist_act(mob/living/user)

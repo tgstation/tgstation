@@ -54,7 +54,8 @@
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("door")
@@ -134,19 +135,21 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/implantchair/relaymove(mob/user)
+/obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	close_machine(target)
+
 
 /obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
@@ -164,11 +167,11 @@
 
 /obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
 	if(!istype(H))
-		return 0
+		return FALSE
 	H.set_species(/datum/species/human, 1)//lizards go home
 	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out
-	return 1
+	return TRUE
 
 
 /obj/machinery/implantchair/brainwash

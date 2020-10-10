@@ -6,7 +6,7 @@
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(TRAIT_NOMETABOLISM,TRAIT_TOXIMMUNE,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_EASYLIMBWOUND,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH,TRAIT_NOCLONELOSS)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
@@ -59,7 +59,7 @@
 	//They must be restrained, beheaded or gibbed to stop being a threat.
 	if(regen_cooldown < world.time)
 		var/heal_amt = heal_rate
-		if(C.InCritical())
+		if(HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION))
 			heal_amt *= 2
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
@@ -67,7 +67,7 @@
 			var/datum/wound/iter_wound = i
 			if(prob(4-iter_wound.severity))
 				iter_wound.remove_wound()
-	if(!C.InCritical() && prob(4))
+	if(!HAS_TRAIT(C, TRAIT_CRITICAL_CONDITION) && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 
 //Congrats you somehow died so hard you stopped being a zombie
@@ -96,8 +96,10 @@
 	id = "goofzombies"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
+	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	species_traits = list(HAS_FLESH, HAS_BONE)
+	inherent_traits = list(TRAIT_EASYLIMBWOUND)
 
 #undef REGENERATION_DELAY

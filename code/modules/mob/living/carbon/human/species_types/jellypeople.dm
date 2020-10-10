@@ -7,7 +7,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutantlungs = /obj/item/organ/lungs/slime
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
@@ -57,7 +57,7 @@
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
-	if(H.get_num_legs(FALSE)) //Legs go before arms
+	if(H.num_legs) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
@@ -73,14 +73,15 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		var/list/limbs_to_heal = H.get_missing_limbs()
-		if(limbs_to_heal.len < 1)
-			return 0
-		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	var/list/limbs_to_heal = H.get_missing_limbs()
+	if(limbs_to_heal.len < 1)
+		return FALSE
+	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+		return TRUE
 
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -182,11 +183,13 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		return TRUE
+	return FALSE
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -268,7 +271,7 @@
 	return owner
 
 /datum/action/innate/swap_body/ui_state(mob/user)
-	return GLOB.not_incapacitated_state
+	return GLOB.always_state
 
 /datum/action/innate/swap_body/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -334,7 +337,8 @@
 	return data
 
 /datum/action/innate/swap_body/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/carbon/human/H = owner
 	if(!isslimeperson(owner))
@@ -449,13 +453,16 @@
 	name = "luminescent glow"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
+	light_system = MOVABLE_LIGHT
 	light_range = LUMINESCENT_DEFAULT_GLOW
+	light_power = 2.5
 	light_color = COLOR_WHITE
 
 /obj/effect/dummy/luminescent_glow/Initialize()
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
+
 
 /datum/action/innate/integrate_extract
 	name = "Integrate Extract"

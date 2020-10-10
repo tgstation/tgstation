@@ -22,7 +22,7 @@
 
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	var/random_color = TRUE
 	var/static/list/wirecutter_colors = list(
 		"blue" = "#1861d5",
@@ -82,5 +82,6 @@
 	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wirecutters_cyborg"
+	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE

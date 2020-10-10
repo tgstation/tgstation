@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
-	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/requests_console/update_icon_state()
 	if(machine_stat & NOPOWER)

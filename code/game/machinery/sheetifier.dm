@@ -13,7 +13,7 @@
 
 /obj/machinery/sheetifier/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(/datum/material/meat), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/reagent_containers/food/snacks/meat/slab, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials))
+	AddComponent(/datum/component/material_container, list(/datum/material/meat), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, TRUE, /obj/item/food/meat/slab, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials), _breakdown_flags=BREAKDOWN_FLAGS_SHEETIFIER)
 
 /obj/machinery/sheetifier/update_overlays()
 	. = ..()

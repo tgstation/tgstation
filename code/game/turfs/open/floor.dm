@@ -18,9 +18,9 @@
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	intact = 1
-	var/broken = 0
-	var/burnt = 0
+	intact = TRUE
+	var/broken = FALSE
+	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
 	var/list/broken_states
 	var/list/burnt_states
@@ -30,10 +30,11 @@
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
-		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+		broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
 	else
-		broken_states = typelist("broken_states", broken_states)
-	burnt_states = typelist("burnt_states", burnt_states)
+		broken_states = string_list(broken_states)
+	if(burnt_states)
+		burnt_states = string_list(burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
@@ -52,7 +53,7 @@
 					"snow","snow_dug","ice",
 					"snow0","snow1","snow2","snow3","snow4",
 					"snow5","snow6","snow7","snow8","snow9","snow10","snow11","snow12",
-					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
+					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood",
 					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 					"ironsand12", "ironsand13", "ironsand14", "ironsand15")
@@ -139,7 +140,7 @@
 /turf/open/floor/burn_tile()
 	if(broken || burnt)
 		return
-	if(burnt_states.len)
+	if(LAZYLEN(burnt_states))
 		icon_state = pick(burnt_states)
 	else
 		icon_state = pick(broken_states)
@@ -200,8 +201,8 @@
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, force_plating)
 	if(broken || burnt)
-		broken = 0
-		burnt = 0
+		broken = FALSE
+		burnt = FALSE
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the broken plating.</span>")
 	else
@@ -275,7 +276,10 @@
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
-			if(locate(/obj/machinery/door) in src)
+			for(var/obj/machinery/door/door in src)
+				if(door.sub_door)
+					continue
+				to_chat(user, "<span class='notice'>There is another door here!</span>")
 				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, "<span class='notice'>You build a windoor.</span>")

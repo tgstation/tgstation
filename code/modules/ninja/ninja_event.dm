@@ -59,7 +59,7 @@ Contents:
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = ROLE_NINJA
 	Mind.special_role = ROLE_NINJA
-	Mind.active = 1
+	Mind.active = TRUE
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)

@@ -23,7 +23,7 @@
 	var/priority = FIRE_PRIORITY_DEFAULT
 
 	/// [Subsystem Flags][SS_NO_INIT] to control binary behavior. Flags must be set at compile time or before preinit finishes to take full effect. (You can also restart the mc to force them to process again)
-	var/flags = 0
+	var/flags = NONE
 
 	/// This var is set to TRUE after the subsystem has been initialized.
 	var/initialized = FALSE
@@ -97,9 +97,9 @@
 	return
 
 //This is used so the mc knows when the subsystem sleeps. do not override.
-/datum/controller/subsystem/proc/ignite(resumed = 0)
+/datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	set waitfor = 0
+	set waitfor = FALSE
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
@@ -114,7 +114,7 @@
 //previously, this would have been named 'process()' but that name is used everywhere for different things!
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //Sleeping in here prevents future fires until returned.
-/datum/controller/subsystem/proc/fire(resumed = 0)
+/datum/controller/subsystem/proc/fire(resumed = FALSE)
 	flags |= SS_NO_FIRE
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
@@ -220,23 +220,12 @@
 	log_world(msg)
 	return time
 
-//hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/controller/subsystem/stat_entry(msg)
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
-
-
-
 	if(can_fire && !(SS_NO_FIRE & flags))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
-
-	var/title = name
-	if (can_fire)
-		title = "\[[state_letter()]][title]"
-
-	stat(title, statclick.update(msg))
+	return msg
 
 /datum/controller/subsystem/proc/state_letter()
 	switch (state)

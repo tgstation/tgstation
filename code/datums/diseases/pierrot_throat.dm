@@ -11,8 +11,12 @@
 	desc = "If left untreated the subject will probably drive others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
 
+
 /datum/disease/pierrot_throat/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(1)
 			if(prob(10))
@@ -26,6 +30,7 @@
 		if(4)
 			if(prob(5))
 				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
+
 
 /datum/disease/pierrot_throat/after_add()
 	RegisterSignal(affected_mob, COMSIG_MOB_SAY, .proc/handle_speech)

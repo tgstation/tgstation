@@ -53,16 +53,16 @@
 		return SHAME
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
-	return 1
+	return TRUE
 
 /obj/item/storage/can_be_package_wrapped()
-	return 0
+	return FALSE
 
 /obj/item/storage/box/can_be_package_wrapped()
-	return 1
+	return TRUE
 
 /obj/item/small_delivery/can_be_package_wrapped()
-	return 0
+	return FALSE
 
 /obj/item/stack/package_wrap/afterattack(obj/target, mob/user, proximity)
 	. = ..()

@@ -516,18 +516,23 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant/wall //smoothing and pooling were not friends, but pooling is dead.
 	name = "vortex wall"
 	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
-	icon_state = "wall"
+	icon_state = "hierophant_wall_temp-0"
+	base_icon_state = "hierophant_wall_temp"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
+	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	duration = 100
-	smoothing_flags = SMOOTH_CORNERS
 
 /obj/effect/temp_visual/hierophant/wall/Initialize(mapload, new_caster)
 	. = ..()
-	QUEUE_SMOOTH_NEIGHBORS(src)
-	QUEUE_SMOOTH(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		QUEUE_SMOOTH(src)
 
 /obj/effect/temp_visual/hierophant/wall/Destroy()
-	QUEUE_SMOOTH_NEIGHBORS(src)
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
 /obj/effect/temp_visual/hierophant/wall/CanAllowThrough(atom/movable/mover, turf/target)
@@ -680,7 +685,7 @@ Difficulty: Hard
 		playsound(L,'sound/weapons/sear.ogg', 50, TRUE, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
+		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
@@ -694,14 +699,15 @@ Difficulty: Hard
 			L.adjustBruteLoss(damage)
 		if(caster)
 			log_combat(caster, L, "struck with a [name]")
-	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
+	for(var/obj/vehicle/sealed/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
-		if(M.occupant)
-			if(friendly_fire_check && caster && caster.faction_check_mob(M.occupant))
+		for(var/O in M.occupants)
+			var/mob/living/occupant = O
+			if(friendly_fire_check && caster && caster.faction_check_mob(occupant))
 				continue
-			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
-		playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
-		M.take_damage(damage, BURN, 0, 0)
+			to_chat(occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
+			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
+			M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/temp_visual/hierophant/blast/visual
 	icon_state = "hierophant_blast"

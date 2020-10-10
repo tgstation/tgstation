@@ -93,7 +93,7 @@ Difficulty: Hard
 /datum/action/innate/megafauna_attack/hallucination_surround
 	name = "Surround Target"
 	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
+	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now surrounding the target you click on with hallucinations.</span>"
 	chosen_attack_num = 3
 
@@ -196,6 +196,21 @@ Difficulty: Hard
 		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
 			. += L
 
+/**
+  * Attack by override for bubblegum
+  *
+  * This is used to award the frenching achievement for hitting bubblegum with a tongue
+  *
+  * Arguments:
+  * * obj/item/W the item hitting bubblegum
+  * * mob/user The user of the item
+  * * params, extra parameters
+  */
+/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/organ/tongue))
+		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
@@ -246,7 +261,7 @@ Difficulty: Hard
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, TRUE, -1)
 			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration), wound_bonus = CANT_WOUND)
+			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, MELEE, null, null, armour_penetration), wound_bonus = CANT_WOUND)
 	SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
@@ -306,13 +321,12 @@ Difficulty: Hard
 		return TRUE
 	return FALSE
 
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/be_aggressive()
 	if(BUBBLEGUM_IS_ENRAGED)
 		return TRUE
-	if(isliving(target))
-		var/mob/living/livingtarget = target
-		return (livingtarget.stat != CONSCIOUS || !(livingtarget.mobility_flags & MOBILITY_STAND))
-	return FALSE
+	return isliving(target) && HAS_TRAIT(target, TRAIT_INCAPACITATED)
+
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_retreat_distance()
 	return (be_aggressive() ? null : initial(retreat_distance))
@@ -404,7 +418,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
 	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= SHUTTLE_UNLOCK_BUBBLEGUM
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)
@@ -463,7 +477,7 @@ Difficulty: Hard
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			if(isobj(A))
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += A
 			else
 				SSexplosions.medturf += A
 		DestroySurroundings()

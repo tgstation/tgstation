@@ -64,6 +64,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	else if(istype(I, /obj/item/nullrod))
 		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 		qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
@@ -230,12 +231,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
-		return 0
+		return FALSE
 	if(convertee.anti_magic_check(TRUE, TRUE, FALSE, 0)) //Not chargecost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
-		return 0
+		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -258,7 +259,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
-	return 1
+	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/mob/living/first_invoker = invokers[1]
@@ -566,7 +567,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
@@ -816,7 +817,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
-			if(user.stat || new_human.InCritical())
+			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
 				break
 			user.apply_damage(0.1, BRUTE)
 			sleep(1)

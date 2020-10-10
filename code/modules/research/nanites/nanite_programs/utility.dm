@@ -89,18 +89,20 @@
 	. = ..()
 	nanites.stealth = FALSE
 
-/datum/nanite_program/reduced_diagnostics
-	name = "Reduced Diagnostics"
-	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners."
+/datum/nanite_program/nanite_debugging
+	name = "Nanite Debugging"
+	desc = "Enables various high-cost diagnostics in the nanites, making them able to communicate their program list to portable scanners. \
+	Doing so uses some power, slightly decreasing their replication speed."
 	rogue_types = list(/datum/nanite_program/toxic)
+	use_rate = 0.1
 
-/datum/nanite_program/reduced_diagnostics/enable_passive_effect()
-	. = ..()
-	nanites.diagnostics = FALSE
-
-/datum/nanite_program/reduced_diagnostics/disable_passive_effect()
+/datum/nanite_program/nanite_debugging/enable_passive_effect()
 	. = ..()
 	nanites.diagnostics = TRUE
+
+/datum/nanite_program/nanite_debugging/disable_passive_effect()
+	. = ..()
+	nanites.diagnostics = FALSE
 
 /datum/nanite_program/relay
 	name = "Relay"
@@ -344,7 +346,7 @@
 /datum/action/innate/nanite_button
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	button_icon_state = "power_green"
 	var/datum/nanite_program/dermal_button/program
 
