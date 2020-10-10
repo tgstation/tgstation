@@ -59,10 +59,24 @@
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
 	return dpdir & (~turn(H.dir, 180))
 
+// returns the direction of the next pipe object, given the entrance dir (not needing a disposalholder)
+/obj/structure/disposalpipe/proc/nextdir_coaster(obj/vehicle/ridden/rollercoaster/coaster)
+	return dpdir & (~turn(coaster.dir, 180))
+
 // transfer the holder through this pipe segment
 // overridden for special behaviour
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	return transfer_to_dir(H, nextdir(H))
+
+// transfer the holder through this pipe segment
+// overridden for special behaviour
+/obj/structure/disposalpipe/proc/coaster_travel(obj/vehicle/ridden/rollercoaster/coaster)
+	coaster.setDir(nextdir_coaster(coaster))
+	step(coaster, coaster.dir)
+	coaster.current_pipe = locate() in get_turf(coaster)
+	sleep(coaster.coaster_speed)
+	if(coaster.in_progress)
+		coaster.current_pipe.coaster_travel(coaster)//so it will always ask the coaster's current pipe where it should go next
 
 /obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
 	H.setDir(nextdir)
