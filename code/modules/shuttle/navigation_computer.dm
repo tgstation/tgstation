@@ -26,11 +26,13 @@
 	GLOB.navigation_computers += src
 
 	if(!mapload)
-		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src), SSshuttle.get_containing_dock(src))
 
-		for(var/port_id in SSshuttle.stationary)
-			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
-			if(S.id == shuttleId)
+		for(var/port in SSshuttle.stationary)
+			if(!port)
+				continue
+			var/obj/docking_port/stationary/S = port
+			if(S.port_destinations == shuttleId)
 				jumpto_ports[S.id] = TRUE
 
 	whitelist_turfs = typecacheof(whitelist_turfs)
@@ -73,7 +75,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
 	if(QDELETED(shuttle_port))
-		shuttle_port = SSshuttle.getShuttle(shuttleId)
+		shuttle_port = connect_to_shuttle(SSshuttle.get_containing_shuttle(src), SSshuttle.get_containing_dock(src))
 		return
 
 	eyeobj = new /mob/camera/ai_eye/remote/shuttle_docker(null, src)
