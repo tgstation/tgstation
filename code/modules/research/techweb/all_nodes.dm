@@ -228,7 +228,7 @@
 	display_name = "Regulated Bluespace Research"
 	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
 	prereq_ids = list("base")
-	design_ids = list("spaceship_navigation_beacon")
+	design_ids = list("spaceship_navigation_beacon", "shuttle_docker")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/unregulated_bluespace

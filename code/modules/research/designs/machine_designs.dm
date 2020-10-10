@@ -577,6 +577,14 @@
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/shuttle_docker
+	name = "Computer Design (Navigation Computer)"
+	desc = "The circuit board for a Navigation Computer."
+	id = "shuttle_docker"
+	build_path = /obj/item/circuitboard/computer/shuttle_docker
+	category = list ("Teleportation Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/medical_kiosk
 	name = "Machine Design (Medical Kiosk)"
 	desc = "The circuit board for a Medical Kiosk."
