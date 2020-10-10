@@ -1,0 +1,21 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../colors.scss';
+
+$fg-map: colors.$fg-map !default;
+$bg-map: colors.$bg-map !default;
+
+@each $color-name, $color-value in $fg-map {
+  .color-#{$color-name} {
+    color: $color-value !important;
+  }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .color-bg-#{$color-name} {
+    background-color: $color-value !important;
+  }
+}

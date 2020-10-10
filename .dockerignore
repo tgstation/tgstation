@@ -17,7 +17,7 @@ TGS3.json
 cfg
 data
 SQL
-tgui/node_modules
+node_modules
 tgstation.dmb
 tgstation.int
 tgstation.rsc

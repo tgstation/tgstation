@@ -15,16 +15,19 @@ handles linking back and forth.
 	var/category
 	var/allow_standalone
 	var/local_size = INFINITY
+	///Flags used when converting inserted materials into their component materials.
+	var/breakdown_flags = NONE
 
-/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE)
+/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, breakdown_flags=NONE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.category = category
 	src.allow_standalone = allow_standalone
+	src.breakdown_flags = breakdown_flags
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(parent, COMSIG_ATOM_MULTITOOL_ACT, .proc/OnMultitool)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))
@@ -54,11 +57,22 @@ handles linking back and forth.
 
 /datum/component/remote_materials/proc/_MakeLocal()
 	silo = null
-	mat_container = parent.AddComponent(/datum/component/material_container,
-		list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
-		local_size,
-		FALSE,
-		/obj/item/stack)
+
+	var/static/list/allowed_mats = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plasma,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace,
+		/datum/material/plastic,
+		)
+
+	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, allowed_types=/obj/item/stack, _breakdown_flags=breakdown_flags)
 
 /datum/component/remote_materials/proc/set_local_size(size)
 	local_size = size
@@ -75,11 +89,15 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+
 	if (silo && istype(I, /obj/item/stack))
-		if (silo.remote_attackby(parent, user, I))
+		if (silo.remote_attackby(parent, user, I, breakdown_flags))
 			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/I)
+	SIGNAL_HANDLER
+
 	if(!I.multitool_check_buffer(user, I))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 	var/obj/item/multitool/M = I

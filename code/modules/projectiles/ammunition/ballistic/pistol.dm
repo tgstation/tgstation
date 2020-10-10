@@ -1,4 +1,4 @@
-// 10mm (Stechkin)
+// 10mm
 
 /obj/item/ammo_casing/c10mm
 	name = "10mm bullet casing"
@@ -21,7 +21,7 @@
 	desc = "A 10mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c10mm
 
-// 9mm (Stechkin APS)
+// 9mm (Makarov and Stechkin APS)
 
 /obj/item/ammo_casing/c9mm
 	name = "9mm bullet casing"
@@ -33,8 +33,13 @@
 	name = "9mm armor-piercing bullet casing"
 	desc = "A 9mm armor-piercing bullet casing."
 	projectile_type =/obj/projectile/bullet/c9mm_ap
+	
+/obj/item/ammo_casing/c9mm/hp
+	name = "9mm hollow-point bullet casing"
+	desc = "A 10mm hollow-point bullet casing."
+	projectile_type = /obj/projectile/bullet/c9mm_hp
 
-/obj/item/ammo_casing/c9mm/inc
+/obj/item/ammo_casing/c9mm/fire
 	name = "9mm incendiary bullet casing"
 	desc = "A 9mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c9mm
@@ -42,8 +47,8 @@
 
 // .50AE (Desert Eagle)
 
-/obj/item/ammo_casing/a50AE
+/obj/item/ammo_casing/a50ae
 	name = ".50AE bullet casing"
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
-	projectile_type = /obj/projectile/bullet/a50AE
+	projectile_type = /obj/projectile/bullet/a50ae

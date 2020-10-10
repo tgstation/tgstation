@@ -10,10 +10,13 @@
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(poison_type, poison_per_bite)
+	if(.)
+		inject_poison(target)
+
+/// Handles injecting the poison after successful attack
+/mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/L)
+	if(poison_type && istype(L) && L.reagents)
+		L.reagents.add_reagent(poison_type, poison_per_bite)
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
@@ -28,7 +31,7 @@
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 4
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -66,11 +69,13 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
 		var/mob/dead/observer/ghost = usr
-		if(istype(ghost) && playable_spider)
+		if(istype(ghost) && playable_spider && !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 			humanize_spider(ghost)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(directive)
 		to_chat(src, "<span class='spider'>Your mother left you a directive! Follow it at all costs.</span>")
 		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
@@ -85,17 +90,17 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return 0
+		return FALSE
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
 	if(spider_ask == "No" || !src || QDELETED(src))
-		return 1
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
-		return 1
+		return TRUE
 	key = user.key
 	if(directive)
 		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
-	return 1
+	return TRUE
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -104,7 +109,7 @@
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
 	gender = FEMALE
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
+	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8, /obj/item/reagent_containers/food/snacks/spidereggs = 4)
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 5
@@ -163,7 +168,7 @@
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_bite = 5
+	poison_per_bite = 10
 	move_to_delay = 5
 	gold_core_spawnable = NO_SPAWN
 
@@ -206,10 +211,10 @@
 	. = ..()
 	if(slowed_by_webs)
 		if(!(locate(/obj/structure/spider/stickyweb) in loc))
-			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 			slowed_by_webs = FALSE
 	else if(locate(/obj/structure/spider/stickyweb) in loc)
-		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 		slowed_by_webs = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
@@ -239,15 +244,16 @@
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
-	if(!..()) //AIStatus is off
-		return 0
+	. = ..()
+	if(!.)//AIStatus is off
+		return FALSE
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = TRUE
 			Goto(pick(urange(20, src, 1)), move_to_delay)
 			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
 	stop_automated_movement = FALSE
@@ -384,9 +390,9 @@
 	name = "Wrap"
 	panel = "Spider"
 	active = FALSE
-	datum/action/spell_action/action = null
+	action = null
 	desc = "Wrap something or someone in a cocoon. If it's a living being, you'll also consume them, allowing you to lay eggs."
-	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
@@ -444,13 +450,14 @@
 	button_icon_state = "lay_eggs"
 
 /datum/action/innate/spider/lay_eggs/IsAvailable()
-	if(..())
-		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-			return 0
-		var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-		if(S.fed)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		return FALSE
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
+	if(S.fed)
+		return TRUE
 
 /datum/action/innate/spider/lay_eggs/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
@@ -508,6 +515,8 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
+	if(!. || !client)
+		return FALSE
 	GLOB.spidermobs[src] = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
@@ -546,8 +555,12 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 #undef SPIDER_IDLE
 #undef SPINNING_WEB

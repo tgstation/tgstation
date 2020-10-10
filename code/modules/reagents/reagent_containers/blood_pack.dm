@@ -40,22 +40,22 @@
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	return ..()
 
-/obj/item/reagent_containers/blood/APlus
+/obj/item/reagent_containers/blood/a_plus
 	blood_type = "A+"
 
-/obj/item/reagent_containers/blood/AMinus
+/obj/item/reagent_containers/blood/a_minus
 	blood_type = "A-"
 
-/obj/item/reagent_containers/blood/BPlus
+/obj/item/reagent_containers/blood/b_plus
 	blood_type = "B+"
 
-/obj/item/reagent_containers/blood/BMinus
+/obj/item/reagent_containers/blood/b_minus
 	blood_type = "B-"
 
-/obj/item/reagent_containers/blood/OPlus
+/obj/item/reagent_containers/blood/o_plus
 	blood_type = "O+"
 
-/obj/item/reagent_containers/blood/OMinus
+/obj/item/reagent_containers/blood/o_minus
 	blood_type = "O-"
 
 /obj/item/reagent_containers/blood/lizard

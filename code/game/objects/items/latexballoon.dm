@@ -2,7 +2,7 @@
 	name = "latex glove"
 	desc = "Sterile and airtight."
 	icon_state = "latexballon"
-	item_state = "lgloves"
+	inhand_icon_state = "lgloves"
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -15,7 +15,7 @@
 	if (icon_state == "latexballon_bursted")
 		return
 	icon_state = "latexballon_blow"
-	item_state = "latexballon"
+	inhand_icon_state = "latexballon"
 	user.update_inv_hands()
 	to_chat(user, "<span class='notice'>You blow up [src] with [tank].</span>")
 	air_contents = tank.remove_air_volume(3)
@@ -25,7 +25,7 @@
 		return
 	playsound(src, 'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	icon_state = "latexballon_bursted"
-	item_state = "lgloves"
+	inhand_icon_state = "lgloves"
 	if(isliving(loc))
 		var/mob/living/user = src.loc
 		user.update_inv_hands()
@@ -54,5 +54,5 @@
 		var/obj/item/tank/T = W
 		blow(T, user)
 		return
-	if (W.get_sharpness() || W.get_temperature() || is_pointed(W))
+	if (W.get_sharpness() || W.get_temperature())
 		burst()

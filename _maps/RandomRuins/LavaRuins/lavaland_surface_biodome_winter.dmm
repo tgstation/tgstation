@@ -2,6 +2,12 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ab" = (
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/snow_biodome)
 "ac" = (
 /obj/item/stack/medical/ointment,
 /obj/structure/table,
@@ -36,15 +42,13 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ai" = (
-/obj/machinery/shower,
-/turf/open/floor/plating,
+/obj/structure/sink{
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/snow_biodome)
 "aj" = (
-/obj/structure/sink,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/snow_biodome)
 "ak" = (
 /turf/open/floor/plating/asteroid/snow,
@@ -58,10 +62,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "an" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/snow_biodome)
 "ao" = (
 /turf/open/floor/plating/ice,
@@ -156,6 +158,12 @@
 "aJ" = (
 /obj/vehicle/ridden/atv,
 /turf/open/floor/plating/asteroid/snow,
+/area/ruin/powered/snow_biodome)
+"aK" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/snow_biodome)
 "aL" = (
 /obj/structure/displaycase/captain,
@@ -333,7 +341,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "KS" = (
-/obj/item/twohanded/required/chainsaw,
+/obj/item/chainsaw,
 /obj/structure/closet,
 /obj/machinery/light/small{
 	dir = 4
@@ -975,8 +983,8 @@ tb
 "}
 (19,1,1) = {"
 Wg
-ai
-af
+ab
+aj
 aq
 av
 bx
@@ -1007,8 +1015,8 @@ tb
 "}
 (20,1,1) = {"
 Wg
-aj
-af
+ai
+an
 aq
 aq
 aq
@@ -1040,7 +1048,7 @@ tb
 (21,1,1) = {"
 Wg
 Wg
-an
+aK
 Wg
 ay
 ak

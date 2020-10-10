@@ -7,40 +7,44 @@ RPD
 #define DISPOSALS_CATEGORY 1
 #define TRANSIT_CATEGORY 2
 
-#define BUILD_MODE 1
-#define WRENCH_MODE 2
-#define DESTROY_MODE 4
-#define PAINT_MODE 8
+#define BUILD_MODE (1<<0)
+#define WRENCH_MODE (1<<1)
+#define DESTROY_MODE (1<<2)
+#define PAINT_MODE (1<<3)
 
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
-		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple),
-		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold),
-		new /datum/pipe_info/pipe("Manual Valve",		/obj/machinery/atmospherics/components/binary/valve),
-		new /datum/pipe_info/pipe("Digital Valve",		/obj/machinery/atmospherics/components/binary/valve/digital),
-		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w),
-		new /datum/pipe_info/pipe("Layer Manifold",		/obj/machinery/atmospherics/pipe/layer_manifold),
+		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple, TRUE),
+		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/manifold, TRUE),
+		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/manifold4w, TRUE),
+		new /datum/pipe_info/pipe("Layer Adapter",		/obj/machinery/atmospherics/pipe/layer_manifold, TRUE),
+		new /datum/pipe_info/pipe("Multi-Deck Adapter",	/obj/machinery/atmospherics/pipe/multiz, TRUE),
 	),
 	"Devices" = list(
-		new /datum/pipe_info/pipe("Connector",			/obj/machinery/atmospherics/components/unary/portables_connector),
-		new /datum/pipe_info/pipe("Unary Vent",			/obj/machinery/atmospherics/components/unary/vent_pump),
-		new /datum/pipe_info/pipe("Gas Pump",			/obj/machinery/atmospherics/components/binary/pump),
-		new /datum/pipe_info/pipe("Passive Gate",		/obj/machinery/atmospherics/components/binary/passive_gate),
-		new /datum/pipe_info/pipe("Volume Pump",		/obj/machinery/atmospherics/components/binary/volume_pump),
-		new /datum/pipe_info/pipe("Scrubber",			/obj/machinery/atmospherics/components/unary/vent_scrubber),
-		new /datum/pipe_info/pipe("Injector",			/obj/machinery/atmospherics/components/unary/outlet_injector),
-		new /datum/pipe_info/pipe("Passive Vent",		/obj/machinery/atmospherics/components/unary/passive_vent),
+		new /datum/pipe_info/pipe("Connector",			/obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
+		new /datum/pipe_info/pipe("Gas Pump",			/obj/machinery/atmospherics/components/binary/pump, TRUE),
+		new /datum/pipe_info/pipe("Volume Pump",		/obj/machinery/atmospherics/components/binary/volume_pump, TRUE),
+		new /datum/pipe_info/pipe("Gas Filter",			/obj/machinery/atmospherics/components/trinary/filter, TRUE),
+		new /datum/pipe_info/pipe("Gas Mixer",			/obj/machinery/atmospherics/components/trinary/mixer, TRUE),
+		new /datum/pipe_info/pipe("Passive Gate",		/obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
+		new /datum/pipe_info/pipe("Injector",			/obj/machinery/atmospherics/components/unary/outlet_injector, TRUE),
+		new /datum/pipe_info/pipe("Scrubber",			/obj/machinery/atmospherics/components/unary/vent_scrubber, TRUE),
+		new /datum/pipe_info/pipe("Unary Vent",			/obj/machinery/atmospherics/components/unary/vent_pump, TRUE),
+		new /datum/pipe_info/pipe("Passive Vent",		/obj/machinery/atmospherics/components/unary/passive_vent, TRUE),
+		new /datum/pipe_info/pipe("Manual Valve",		/obj/machinery/atmospherics/components/binary/valve, TRUE),
+		new /datum/pipe_info/pipe("Digital Valve",		/obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
+		new /datum/pipe_info/pipe("Pressure Valve",		/obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
+		new /datum/pipe_info/pipe("Temperature Gate",	/obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
+		new /datum/pipe_info/pipe("Temperature Pump",	/obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
 		new /datum/pipe_info/meter("Meter"),
-		new /datum/pipe_info/pipe("Gas Filter",			/obj/machinery/atmospherics/components/trinary/filter),
-		new /datum/pipe_info/pipe("Gas Mixer",			/obj/machinery/atmospherics/components/trinary/mixer),
 	),
 	"Heat Exchange" = list(
-		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/heat_exchanging/simple),
-		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/heat_exchanging/manifold),
-		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w),
-		new /datum/pipe_info/pipe("Junction",			/obj/machinery/atmospherics/pipe/heat_exchanging/junction),
-		new /datum/pipe_info/pipe("Heat Exchanger",		/obj/machinery/atmospherics/components/unary/heat_exchanger),
+		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
+		new /datum/pipe_info/pipe("Manifold",			/obj/machinery/atmospherics/pipe/heat_exchanging/manifold, FALSE),
+		new /datum/pipe_info/pipe("4-Way Manifold",		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w, FALSE),
+		new /datum/pipe_info/pipe("Junction",			/obj/machinery/atmospherics/pipe/heat_exchanging/junction, FALSE),
+		new /datum/pipe_info/pipe("Heat Exchanger",		/obj/machinery/atmospherics/components/unary/heat_exchanger, FALSE),
 	)
 ))
 
@@ -53,7 +57,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		new /datum/pipe_info/disposal("Trunk",			/obj/structure/disposalpipe/trunk),
 		new /datum/pipe_info/disposal("Bin",			/obj/machinery/disposal/bin, PIPE_ONEDIR),
 		new /datum/pipe_info/disposal("Outlet",			/obj/structure/disposaloutlet),
-		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/deliveryChute),
+		new /datum/pipe_info/disposal("Chute",			/obj/machinery/disposal/delivery_chute),
 	)
 ))
 
@@ -78,6 +82,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/icon_state
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
+	var/all_layers
 
 /datum/pipe_info/proc/Render(dispenser)
 	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
@@ -100,22 +105,22 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			dirs = list("[NORTH]" = "Vertical", "[EAST]" = "Horizontal")
 			if(dirtype == PIPE_BENDABLE)
 				dirs += list("[NORTHWEST]" = "West to North", "[NORTHEAST]" = "North to East",
-							 "[SOUTHWEST]" = "South to West", "[SOUTHEAST]" = "East to South")
+							"[SOUTHWEST]" = "South to West", "[SOUTHEAST]" = "East to South")
 		if(PIPE_TRINARY)
-			dirs = list("[NORTH]" = "West South East", "[EAST]" = "North West South",
-						"[SOUTH]" = "East North West", "[WEST]" = "South East North")
+			dirs = list("[NORTH]" = "West South East", "[SOUTH]" = "East North West",
+						"[EAST]" = "North West South", "[WEST]" = "South East North")
 		if(PIPE_TRIN_M)
-			dirs = list("[NORTH]" = "North East South", "[EAST]" = "East South West",
-						"[SOUTH]" = "South West North", "[WEST]" = "West North East",
-						"[SOUTHEAST]" = "West South East", "[NORTHEAST]" = "South East North",
-						"[NORTHWEST]" = "East North West", "[SOUTHWEST]" = "North West South")
+			dirs = list("[NORTH]" = "North East South", "[SOUTHWEST]" = "North West South",
+						"[NORTHEAST]" = "South East North", "[SOUTH]" = "South West North",
+						"[WEST]" = "West North East", "[SOUTHEAST]" = "West South East",
+						"[NORTHWEST]" = "East North West", "[EAST]" = "East South West",)
 		if(PIPE_UNARY)
-			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West")
+			dirs = list("[NORTH]" = "North", "[SOUTH]" = "South", "[WEST]" = "West", "[EAST]" = "East")
 		if(PIPE_ONEDIR)
 			dirs = list("[SOUTH]" = name)
 		if(PIPE_UNARY_FLIPPABLE)
-			dirs = list("[NORTH]" = "North", "[NORTHEAST]" = "North Flipped", "[EAST]" = "East", "[SOUTHEAST]" = "East Flipped",
-						"[SOUTH]" = "South", "[SOUTHWEST]" = "South Flipped", "[WEST]" = "West", "[NORTHWEST]" = "West Flipped")
+			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West",
+						"[NORTHEAST]" = "North Flipped", "[SOUTHEAST]" = "East Flipped", "[SOUTHWEST]" = "South Flipped", "[NORTHWEST]" = "West Flipped")
 
 
 	var/list/rows = list()
@@ -123,7 +128,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/i = 0
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
-		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (numdir in GLOB.diagonals)
+		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		row["previews"] += list(list("selected" = (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
@@ -132,9 +137,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	return rows
 
-/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path)
+/datum/pipe_info/pipe/New(label, obj/machinery/atmospherics/path, use_five_layers)
 	name = label
 	id = path
+	all_layers = use_five_layers
 	icon_state = initial(path.pipe_state)
 	var/obj/item/pipe/c = initial(path.construction_type)
 	dirtype = initial(c.RPD_type)
@@ -178,6 +184,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
+	worn_icon_state = "RPD"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 10
 	throwforce = 10
@@ -186,7 +195,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
@@ -205,7 +214,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
-	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
+	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	/// Bitflags for upgrades
+	var/upgrade_flags
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -229,24 +240,43 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
+/obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rpd_upgrade))
+		install_upgrade(W, user)
+		return TRUE
+	return ..()
+
+/**
+  * Installs an upgrade into the RPD
+  *
+  * Installs an upgrade into the RPD checking if it is already installed
+  * Arguments:
+  * * rpd_up - RPD upgrade
+  * * user - mob that use upgrade on RPD
+  */
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
+	if(rpd_up.upgrade_flags& upgrade_flags)
+		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
+		return
+	upgrade_flags |= rpd_up.upgrade_flags
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(rpd_up)
+
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
 	return(BRUTELOSS)
 
-/obj/item/pipe_dispenser/ui_base_html(html)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/item/pipe_dispenser/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/pipes),
+	)
 
-/obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/pipe_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "rpd", name, 425, 472, master_ui, state)
+		ui = new(user, src, "RapidPipeDispenser", name)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
@@ -274,14 +304,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe)))
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
 	var/playeffect = TRUE
@@ -335,15 +367,21 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
+	//Unwrench pipe before we build one over/paint it.
+	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(A, /obj/machinery/atmospherics))
+		A = A.wrench_act(user, src)	
+
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
+	if(istype(A, /obj/machinery/atmospherics) && (mode & BUILD_MODE && !(mode & PAINT_MODE))) //Reduces pixelhunt when coloring is off.
+		A = get_turf(A)
 	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
 
 	. = TRUE
 
-	if((mode&DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
+	if((mode & DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = A))
@@ -351,25 +389,25 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(A)
 		return
 
-	if((mode&PAINT_MODE))
-		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
-			var/obj/machinery/atmospherics/pipe/P = A
-			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
+	if((mode & PAINT_MODE))
+		var/obj/machinery/atmospherics/M = A
+		if(istype(M) && M.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [M] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = M))
+				M.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [M] [paint_color].</span>","<span class='notice'>You paint \the [M] [paint_color].</span>")
 			return
-		var/obj/item/pipe/P = A
-		if(istype(P) && findtext("[P.pipe_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[P.pipe_type]", "layer_manifold"))
-			to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
+		var/obj/item/pipe/I = A
+		if(istype(I) && I.paintable)
+			to_chat(user, "<span class='notice'>You start painting \the [I] [paint_color]...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = A))
-				A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
+			if(do_after(user, paint_speed, target = I))
+				I.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [I] [paint_color].</span>","<span class='notice'>You paint \the [I] [paint_color].</span>")
 			return
 
-	if(mode&BUILD_MODE)
+	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
@@ -381,11 +419,17 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
 						PM.setAttachLayer(piping_layer)
-						if(mode&WRENCH_MODE)
+						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
 				else
+					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
+						to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")
+						return ..()
 					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
+						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
+							to_chat(user, "<span class='notice'>You can't build this object on the layer...</span>")
+							return ..()
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
@@ -400,7 +444,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						P.setPipingLayer(piping_layer)
 						if(findtext("[queued_p_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[queued_p_type]", "layer_manifold"))
 							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-						if(mode&WRENCH_MODE)
+						if(mode & WRENCH_MODE)
 							P.wrench_act(user, src)
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
@@ -424,7 +468,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 					C.add_fingerprint(usr)
 					C.update_icon()
-					if(mode&WRENCH_MODE)
+					if(mode & WRENCH_MODE)
 						C.wrench_act(user, src)
 					return
 
@@ -442,7 +486,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
 						pod.add_fingerprint(usr)
-						if(mode&WRENCH_MODE)
+						if(mode & WRENCH_MODE)
 							pod.wrench_act(user, src)
 
 					else
@@ -454,7 +498,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							tube.simple_rotate_flip()
 
 						tube.add_fingerprint(usr)
-						if(mode&WRENCH_MODE)
+						if(mode & WRENCH_MODE)
 							tube.wrench_act(user, src)
 					return
 			else
@@ -471,3 +515,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef DESTROY_MODE
 #undef PAINT_MODE
 #undef WRENCH_MODE
+
+/obj/item/rpd_upgrade
+	name = "RPD advanced design disk"
+	desc = "It seems to be empty."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+	/// Bitflags for upgrades
+	var/upgrade_flags
+
+/obj/item/rpd_upgrade/unwrench
+	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
+	upgrade_flags = RPD_UPGRADE_UNWRENCH

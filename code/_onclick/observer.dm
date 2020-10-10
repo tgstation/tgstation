@@ -4,11 +4,11 @@
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
-			reenter_corpse()						// (cloning scanner, body bag, closet, mech, etc)
+			reenter_corpse()						// (body bag, closet, mech, etc)
 			return									// seems legit.
 
 	// Things you might plausibly want to follow
-	if(ismovableatom(A))
+	if(ismovable(A))
 		ManualFollow(A)
 
 	// Otherwise jump
@@ -53,7 +53,7 @@
 	if(user.client)
 		if(user.gas_scan && atmosanalyzer_scan(user, src))
 			return TRUE
-		else if(IsAdminGhost(user))
+		else if(isAdminGhostAI(user))
 			attack_ai(user)
 		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)
@@ -62,24 +62,17 @@
 /mob/living/attack_ghost(mob/dead/observer/user)
 	if(user.client && user.health_scan)
 		healthscan(user, src, 1, TRUE)
+	if(user.client && user.chem_scan)
+		chemscan(user, src)
 	return ..()
 
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(awaygate)
-		user.forceMove(awaygate.loc)
-	else
-		to_chat(user, "<span class='boldwarning'>[src] has no destination.</span>")
-	return ..()
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(stationgate)
-		user.forceMove(stationgate.loc)
-	else
-		to_chat(user, "<span class='boldwarning'>[src] has no destination.</span>")
+/obj/effect/gateway_portal_bumper/attack_ghost(mob/user)
+	if(gateway)
+		gateway.Transfer(user)
 	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)

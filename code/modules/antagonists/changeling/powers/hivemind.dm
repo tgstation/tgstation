@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	chemical_cost = 10
 	dna_cost = -1
 
-/datum/action/changeling/hivemind_upload/sting_action(var/mob/living/user)
+/datum/action/changeling/hivemind_upload/sting_action(mob/living/user)
 	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return

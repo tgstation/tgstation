@@ -1,3 +1,5 @@
+GLOBAL_LIST(gang_tags)
+
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
 	desc = "Graffiti. Damn kids."
@@ -28,6 +30,20 @@
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
-
 /obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
 	return isgroundlessturf(T)
+
+/obj/effect/decal/cleanable/crayon/gang
+	name = "Leet Like Jeff K gang tag"
+	desc = "Looks like someone's claimed this area for Leet Like Jeff K."
+	icon = 'icons/obj/gang/tags.dmi'
+	layer = BELOW_MOB_LAYER
+	var/datum/team/gang/my_gang
+
+/obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
+	. = ..()
+	LAZYADD(GLOB.gang_tags, src)
+
+/obj/effect/decal/cleanable/crayon/gang/Destroy()
+	LAZYREMOVE(GLOB.gang_tags, src)
+	..()

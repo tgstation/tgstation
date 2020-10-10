@@ -10,7 +10,7 @@
 	for(var/obj/item/I in world)
 		CHECK_TICK
 
-		if(!(I.flags_1 & INITIALIZED_1))
+		if(!(I.flags_1 & INITIALIZED_1) || QDELETED(I))
 			continue
 
 		I.AddComponent(/datum/component/fantasy)
@@ -34,6 +34,7 @@
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". Apparently there's a risk of losing the item if it's already \"too good\". <i>This all feels so arbitrary...</i>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
+	worn_icon_state = "scroll"
 	w_class = WEIGHT_CLASS_TINY
 
 	var/upgrade_amount = 1

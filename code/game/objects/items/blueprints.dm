@@ -7,7 +7,8 @@
 	name = "area modification item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "blueprints"
-	attack_verb = list("attacked", "bapped", "hit")
+	attack_verb_continuous = list("attacks", "baps", "hits")
+	attack_verb_simple = list("attack", "bap", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
 	var/in_use = FALSE
 
@@ -32,6 +33,10 @@
 		return TRUE
 	if(href_list["create_area"])
 		if(in_use)
+			return
+		var/area/A = get_area(usr)
+		if(A.area_flags & NOTELEPORT)
+			to_chat(usr, "<span class='warning'>You cannot edit restricted areas.</span>")
 			return
 		in_use = TRUE
 		create_area(usr)

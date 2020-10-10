@@ -11,10 +11,10 @@
 	olddens = parent_atom.density
 	oldopac = parent_atom.opacity
 	parent_atom.density = 0
-	parent_atom.opacity = 0
+	parent_atom.set_opacity(FALSE)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L.add_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
+		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
@@ -27,15 +27,14 @@
 	"<span class='userdanger'>Everything grows bigger!</span>")
 	QDEL_IN(src, shrink_time)
 
-
 /datum/component/shrink/Destroy()
 	var/atom/parent_atom = parent
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
 	parent_atom.density = olddens
-	parent_atom.opacity = oldopac
+	parent_atom.set_opacity(oldopac)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		L.remove_movespeed_modifier(MOVESPEED_ID_SHRINK_RAY)
+		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100

@@ -56,10 +56,10 @@
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/necropolis_gate/CanPass(atom/movable/mover, turf/target)
-	if(get_dir(loc, target) == dir)
-		return !density
-	return 1
+/obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!(get_dir(loc, target) == dir))
+		return TRUE
 
 /obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
 	if(get_dir(O.loc, target) == dir)
@@ -264,6 +264,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	return
 
 /obj/structure/stone_tile/Crossed(atom/movable/AM)
+	. = ..()
 	if(falling || fallen)
 		return
 	var/turf/T = get_turf(src)

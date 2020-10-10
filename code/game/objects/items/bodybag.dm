@@ -45,10 +45,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
 
-/obj/item/bodybag/bluespace/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/CanReachReact)
-
 /obj/item/bodybag/bluespace/examine(mob/user)
 	. = ..()
 	if(contents.len)
@@ -62,9 +58,6 @@
 			to_chat(A, "<span class='notice'>You suddenly feel the space around you torn apart! You're free!</span>")
 	return ..()
 
-/obj/item/bodybag/bluespace/proc/CanReachReact(atom/movable/source, list/next)
-	return COMPONENT_BLOCK_REACH
-
 /obj/item/bodybag/bluespace/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	for(var/atom/movable/A in contents)
@@ -76,7 +69,7 @@
 	R.foldedbag_instance = src
 	moveToNullspace()
 
-/obj/item/bodybag/bluespace/container_resist(mob/living/user)
+/obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated())
 		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
 		return
@@ -84,8 +77,13 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You claw at the fabric of [src], trying to tear it open...</span>")
 	to_chat(loc, "<span class='warning'>Someone starts trying to break free of [src]!</span>")
-	if(!do_after(user, 200, target = src))
-		to_chat(loc, "<span class='warning'>The pressure subsides. It seems that they've stopped resisting...</span>")
-		return
-	loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")
-	qdel(src)
+	if(do_after_mob(user, src, 12 SECONDS, TRUE))
+		if(user.loc != src)
+			return
+		// you are still in the bag? time to go unless you KO'd, honey!
+		// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
+		if(user.incapacitated())
+			to_chat(loc, "<span class='warning'>The pressure subsides. It seems that they've stopped resisting...</span>")
+			return
+		loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")
+		qdel(src)

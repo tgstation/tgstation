@@ -4,6 +4,23 @@ SUBSYSTEM_DEF(assets)
 	flags = SS_NO_FIRE
 	var/list/cache = list()
 	var/list/preload = list()
+	var/datum/asset_transport/transport = new()
+
+/datum/controller/subsystem/assets/OnConfigLoad()
+	var/newtransporttype = /datum/asset_transport
+	switch (CONFIG_GET(string/asset_transport))
+		if ("webroot")
+			newtransporttype = /datum/asset_transport/webroot
+	
+	if (newtransporttype == transport.type)
+		return
+
+	var/datum/asset_transport/newtransport = new newtransporttype ()
+	if (newtransport.validate_config())
+		transport = newtransport
+	transport.Load()
+
+
 
 /datum/controller/subsystem/assets/Initialize(timeofday)
 	for(var/type in typesof(/datum/asset))
@@ -11,8 +28,6 @@ SUBSYSTEM_DEF(assets)
 		if (type != initial(A._abstract))
 			get_asset_datum(type)
 
-	preload = cache.Copy() //don't preload assets generated during the round
+	transport.Initialize(cache)
 
-	for(var/client/C in GLOB.clients)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, preload, FALSE), 10)
 	..()

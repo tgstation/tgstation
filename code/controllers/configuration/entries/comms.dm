@@ -22,7 +22,5 @@
 
 /datum/config_entry/string/cross_comms_name
 
-/datum/config_entry/string/medal_hub_address
-
-/datum/config_entry/string/medal_hub_password
-	protection = CONFIG_ENTRY_HIDDEN
+/datum/config_entry/string/cross_comms_network
+	protection = CONFIG_ENTRY_LOCKED

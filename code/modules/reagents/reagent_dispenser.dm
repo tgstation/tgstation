@@ -1,24 +1,46 @@
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/chemical_tanks.dmi'
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
-	var/tank_volume = 1000 //In units, how much the dispenser can hold
-	var/reagent_id = /datum/reagent/water //The ID of the reagent that the dispenser uses
+	///In units, how much the dispenser can hold
+	var/tank_volume = 1000
+	///The ID of the reagent that the dispenser uses
+	var/reagent_id = /datum/reagent/water
+	///Can you turn this into a plumbing tank?
+	var/can_be_tanked = TRUE
+	///Is this source self-replenishing?
+	var/refilling = FALSE
+
+/obj/structure/reagent_dispensers/examine(mob/user)
+	. = ..()
+	if(can_be_tanked)
+		. += "<span class='notice'>Use a sheet of metal to convert this into a plumbing-compatible tank.</span>"
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && obj_integrity > 0)
-		if(tank_volume && (damage_flag == "bullet" || damage_flag == "laser"))
+		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
-		return 0 //so we can refill them via their afterattack.
+		return FALSE //so we can refill them via their afterattack.
+	if(istype(W, /obj/item/stack/sheet/metal) && can_be_tanked)
+		var/obj/item/stack/sheet/metal/metal_stack = W
+		metal_stack.use(1)
+		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
+		new_tank.reagents.maximum_volume = reagents.maximum_volume
+		reagents.trans_to(new_tank, reagents.total_volume)
+		new_tank.name = "stationary [name]"
+		new_tank.update_overlays()
+		new_tank.anchored = anchored
+		qdel(src)
+		return FALSE
 	else
 		return ..()
 
@@ -77,9 +99,10 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
-	..() //extend the zap
-	boom()
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags)
+	. = ..() //extend the zap
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
 	. = ..()
@@ -94,7 +117,7 @@
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weldingtool/W = I
-		if(!W.welding)
+		if(istype(W) && !W.welding)
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
@@ -103,14 +126,21 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-
+			user.visible_message("<span class='danger'>[user] catastrophically fails at refilling [user.p_their()] [I.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			log_bomber(user, "detonated a", src, "via welding tool")
-
 			boom()
 		return
 	return ..()
 
+/obj/structure/reagent_dispensers/fueltank/large
+	name = "high capacity fuel tank"
+	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
+	icon_state = "fuel_high"
+	tank_volume = 5000
+
+/obj/structure/reagent_dispensers/fueltank/large/boom()
+	explosion(get_turf(src), 1, 2, 7, flame_range = 12)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "pepper spray refiller"
@@ -184,11 +214,20 @@
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
 
-/obj/structure/reagent_dispensers/plumbed
-	name = "stationairy water tank"
+/obj/structure/reagent_dispensers/servingdish
+	name = "serving dish"
+	desc = "A dish full of food slop for your bowl."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "serving"
 	anchored = TRUE
-	icon_state = "water_stationairy"
-	desc = "A stationairy, plumbed, water tank."
+	reagent_id = /datum/reagent/consumable/nutraslop
+
+/obj/structure/reagent_dispensers/plumbed
+	name = "stationary water tank"
+	anchored = TRUE
+	icon_state = "water_stationary"
+	desc = "A stationary, plumbed, water tank."
+	can_be_tanked = FALSE
 
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -199,9 +238,31 @@
 	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/storage
-	name = "stationairy storage tank"
-	icon_state = "tank_stationairy"
+	name = "stationary storage tank"
+	icon_state = "tank_stationary"
 	reagent_id = null //start empty
 
 /obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/tank)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
+	. = ..()
+	if(reagents)
+		if(reagents.total_volume)
+			var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
+			tank_color.color = mix_color_from_reagents(reagents.reagent_list)
+			add_overlay(tank_color)
+		else
+			cut_overlays()
+
+/obj/structure/reagent_dispensers/plumbed/storage/proc/can_be_rotated(mob/user, rotation_type)
+	if(anchored)
+		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+	return !anchored
+
+/obj/structure/reagent_dispensers/plumbed/fuel
+	name = "stationary fuel tank"
+	icon_state = "fuel_stationary"
+	desc = "A stationary, plumbed, fuel tank."
+	reagent_id = /datum/reagent/fuel

@@ -4,9 +4,7 @@
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
-	opacity = 0
-	ui_x = 375
-	ui_y = 280
+	opacity = FALSE
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -28,13 +26,14 @@
 	open_machine()
 	update_icon()
 
+/obj/machinery/implantchair/ui_state(mob/user)
+	return GLOB.notcontained_state
 
-/obj/machinery/implantchair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/implantchair/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "implantchair", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ImplantChair", name)
 		ui.open()
-
 
 /obj/machinery/implantchair/ui_data()
 	var/list/data = list()
@@ -55,7 +54,8 @@
 	return data
 
 /obj/machinery/implantchair/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("door")
@@ -77,10 +77,10 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
+			addtimer(CALLBACK(src,.proc/replenish),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
+			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	update_icon()
@@ -90,24 +90,25 @@
 	if(istype(I, /obj/item/implant))
 		var/obj/item/implant/P = I
 		if(P.implant(M))
-			visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+			visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 			return TRUE
 	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
-		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+		visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 		return TRUE
 
-/obj/machinery/implantchair/update_icon()
+/obj/machinery/implantchair/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+
+/obj/machinery/implantchair/update_overlays()
+	. = ..()
 	if(ready)
-		add_overlay("ready")
-	else
-		cut_overlays()
+		. += "ready"
 
 /obj/machinery/implantchair/proc/replenish()
 	if(ready_implants < max_implants)
@@ -121,7 +122,7 @@
 	ready = TRUE
 	update_icon()
 
-/obj/machinery/implantchair/container_resist(mob/living/user)
+/obj/machinery/implantchair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
@@ -134,19 +135,21 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/implantchair/relaymove(mob/user)
+/obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	close_machine(target)
+
 
 /obj/machinery/implantchair/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open)
@@ -164,11 +167,11 @@
 
 /obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/H,mob/user)
 	if(!istype(H))
-		return 0
+		return FALSE
 	H.set_species(/datum/species/human, 1)//lizards go home
 	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out
-	return 1
+	return TRUE
 
 
 /obj/machinery/implantchair/brainwash

@@ -20,6 +20,9 @@ God bless America.
     -
 */
 
+#define DEEPFRYER_COOKTIME 60
+#define DEEPFRYER_BURNTIME 120
+
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -29,9 +32,10 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
+	circuit = /obj/item/circuitboard/machine/deep_fryer
+	var/obj/item/food/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
-	var/oil_use = 0.05 //How much cooking oil is used per tick
+	var/oil_use = 0.025 //How much cooking oil is used per second
 	var/fry_speed = 1 //How quickly we fry food
 	var/frying_fried //If the object has been fried; used for messages
 	var/frying_burnt //If the object has been burnt
@@ -46,7 +50,7 @@ God bless America.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage,
-		/obj/item/smallDelivery,
+		/obj/item/small_delivery,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -54,17 +58,13 @@ God bless America.
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
-	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
-	component_parts += new /obj/item/stock_parts/micro_laser(null)
-	RefreshParts()
 	fry_loop = new(list(src), FALSE)
 
 /obj/machinery/deepfryer/RefreshParts()
 	var/oil_efficiency
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		oil_efficiency += M.rating
-	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
+	oil_use = initial(oil_use) - (oil_efficiency * 0.00475)
 	fry_speed = oil_efficiency
 
 /obj/machinery/deepfryer/examine(mob/user)
@@ -72,7 +72,7 @@ God bless America.
 	if(frying)
 		. += "You can make out \a [frying] in the oil."
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.</span>"
+		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use]</b> units of oil per second.</span>"
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -89,7 +89,7 @@ God bless America.
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
-	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
+	if(istype(I, /obj/item/food/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
@@ -101,24 +101,24 @@ God bless America.
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
+			frying = new/obj/item/food/deepfryholder(src, I)
 			icon_state = "fryer_on"
 			fry_loop.start()
 
-/obj/machinery/deepfryer/process()
+/obj/machinery/deepfryer/process(delta_time)
 	..()
 	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
 	if(frying)
-		reagents.trans_to(frying, oil_use, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
-		cook_time += fry_speed
-		if(cook_time >= 30 && !frying_fried)
+		reagents.trans_to(frying, oil_use * delta_time, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
+		cook_time += fry_speed * delta_time
+		if(cook_time >= DEEPFRYER_COOKTIME && !frying_fried)
 			frying_fried = TRUE //frying... frying... fried
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 			audible_message("<span class='notice'>[src] dings!</span>")
-		else if (cook_time >= 60 && !frying_burnt)
+		else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 			frying_burnt = TRUE
 			visible_message("<span class='warning'>[src] emits an acrid smell!</span>")
 
@@ -147,10 +147,13 @@ God bless America.
 			return
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class='danger'>[user] dunks [C]'s face in [src]!</span>")
-		reagents.reaction(C, TOUCH)
+		reagents.expose(C, TOUCH)
 		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
 		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
+
+#undef DEEPFRYER_COOKTIME
+#undef DEEPFRYER_BURNTIME

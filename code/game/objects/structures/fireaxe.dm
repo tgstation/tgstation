@@ -5,12 +5,12 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
 	max_integrity = 150
 	integrity_failure = 0.33
 	var/locked = TRUE
 	var/open = FALSE
-	var/obj/item/twohanded/fireaxe/fireaxe
+	var/obj/item/fireaxe/fireaxe
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
@@ -45,13 +45,13 @@
 			return
 		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 		if(do_after(user, 20, target = src) && G.use(2))
-			broken = 0
+			broken = FALSE
 			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
-		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
-			var/obj/item/twohanded/fireaxe/F = I
-			if(F.wielded)
+		if(istype(I, /obj/item/fireaxe) && !fireaxe)
+			var/obj/item/fireaxe/F = I
+			if(F && F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.transferItemToLoc(F, src))
@@ -75,7 +75,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	if(open)
 		return
 	. = ..()
@@ -140,30 +140,30 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/update_icon()
-	cut_overlays()
+/obj/structure/fireaxecabinet/update_overlays()
+	. = ..()
 	if(fireaxe)
-		add_overlay("axe")
+		. += "axe"
 	if(!open)
 		var/hp_percent = obj_integrity/max_integrity * 100
 		if(broken)
-			add_overlay("glass4")
+			. += "glass4"
 		else
 			switch(hp_percent)
 				if(-INFINITY to 40)
-					add_overlay("glass3")
+					. += "glass3"
 				if(40 to 60)
-					add_overlay("glass2")
+					. += "glass2"
 				if(60 to 80)
-					add_overlay("glass1")
+					. += "glass1"
 				if(80 to INFINITY)
-					add_overlay("glass")
+					. += "glass"
 		if(locked)
-			add_overlay("locked")
+			. += "locked"
 		else
-			add_overlay("unlocked")
+			. += "unlocked"
 	else
-		add_overlay("glass_raised")
+		. += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	to_chat(user, "<span class='notice'>Resetting circuitry...</span>")

@@ -24,8 +24,9 @@
 
 
 /turf/open/floor/mineral/update_icon()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)
@@ -58,6 +59,11 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
+//Plasma floor that can't be removed, for disco inferno
+
+/turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
+	return
+
 
 //GOLD
 
@@ -82,6 +88,9 @@
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+
+/turf/open/floor/mineral/titanium/rust_heretic_act()
+	return // titanium does not rust
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -110,12 +119,48 @@
 /turf/open/floor/mineral/titanium/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+// OLD TITANIUM (titanium floor tiles before PR #50454)
+/turf/open/floor/mineral/titanium/tiled
+	name = "titanium tile"
+	icon_state = "titanium_old"
+	broken_states = list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
+
+/turf/open/floor/mineral/titanium/tiled/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/yellow
+	icon_state = "titanium_yellow_old"
+
+/turf/open/floor/mineral/titanium/tiled/yellow/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/blue
+	icon_state = "titanium_blue_old"
+
+/turf/open/floor/mineral/titanium/tiled/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/white
+	icon_state = "titanium_white_old"
+
+/turf/open/floor/mineral/titanium/tiled/white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/purple
+	icon_state = "titanium_purple_old"
+
+/turf/open/floor/mineral/titanium/tiled/purple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	broken_states = list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
+
+/turf/open/floor/mineral/plastitanium/rust_heretic_act()
+	return // plastitanium does not rust
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -136,12 +181,12 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
-	var/spam_flag = 0
+	var/sound_cooldown = 0
 
-/turf/open/floor/mineral/bananium/Entered(mob/living/L)
+/turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
 	.=..()
 	if(!.)
-		if(istype(L))
+		if(isliving(AM))
 			squeak()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
@@ -160,14 +205,14 @@
 		honk()
 
 /turf/open/floor/mineral/bananium/proc/honk()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-		spam_flag = world.time + 20
+		sound_cooldown = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, "clownstep", 50, TRUE)
-		spam_flag = world.time + 10
+		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -191,10 +236,10 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(mob/AM)
+/turf/open/floor/mineral/uranium/Entered(atom/movable/AM)
 	.=..()
 	if(!.)
-		if(istype(AM))
+		if(ismob(AM))
 			radiate()
 
 /turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
@@ -215,12 +260,12 @@
 /turf/open/floor/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
-			active = 1
+			active = TRUE
 			radiation_pulse(src, 10)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
-			active = 0
+			active = FALSE
 			return
 
 // ALIEN ALLOY

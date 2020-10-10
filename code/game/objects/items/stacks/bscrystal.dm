@@ -12,6 +12,7 @@
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	grind_results = list(/datum/reagent/bluespace = 20)
+	scan_state = "rock_BScrystal"
 
 /obj/item/stack/ore/bluespace_crystal/refined
 	name = "refined bluespace crystal"
@@ -61,11 +62,12 @@
 	name = "bluespace polycrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "polycrystal"
-	item_state = "sheet-polycrystal"
+	inhand_icon_state = "sheet-polycrystal"
 	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	custom_materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
-	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
+	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
+	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
 	novariants = TRUE
 	grind_results = list(/datum/reagent/bluespace = 20)
 	point_value = 30

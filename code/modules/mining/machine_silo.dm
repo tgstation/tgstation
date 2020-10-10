@@ -15,14 +15,20 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/material_container,
-		list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
-		INFINITY,
-		FALSE,
-		/obj/item/stack,
-		null,
-		null,
-		TRUE)
+	var/static/list/materials_list = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plasma,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace,
+		/datum/material/plastic,
+		)
+	AddComponent(/datum/component/material_container, materials_list, INFINITY, allowed_types=/obj/item/stack, _disable_attackby=TRUE)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -41,7 +47,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I, breakdown_flags=NONE)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
@@ -51,19 +57,29 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
 		return
-	var/item_mats = I.custom_materials & materials.materials
+	var/item_mats = I.get_material_composition(breakdown_flags) & materials.materials
 	if(!length(item_mats))
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
 		return
 	// assumes unlimited space...
 	var/amount = I.amount
-	materials.user_insert(I, user)
+	materials.user_insert(I, user, breakdown_flags)
 	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
+		updateUsrDialog()
+		return
+	if(default_deconstruction_crowbar(W))
+		return
+
+	if(!powered())
+		return ..()
+
 	if (istype(W, /obj/item/stack))
 		return remote_attackby(src, user, W)
+
 	return ..()
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
@@ -110,7 +126,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/logs = GLOB.silo_access_logs[REF(src)]
 	var/len = LAZYLEN(logs)
 	var/num_pages = 1 + round((len - 1) / 30)
-	var/page = CLAMP(log_page, 1, num_pages)
+	var/page = clamp(log_page, 1, num_pages)
 	if(num_pages > 1)
 		for(var/i in 1 to num_pages)
 			if(i == page)
@@ -232,8 +248,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
 	var/sep = ""
 	for(var/key in materials)
+		var/datum/material/M = key
 		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "
-		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, 2)]"
+		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	formatted = msg.Join()

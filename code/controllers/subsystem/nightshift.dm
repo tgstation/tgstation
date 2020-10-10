@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(nightshift)
 			if(!emergency)
 				announce("Restoring night lighting configuration to normal operation.")
 			else
-				announce("Disabling night lighting: Station is in a state of emergency.")  
+				announce("Disabling night lighting: Station is in a state of emergency.")
 	if(emergency)
 		night_time = FALSE
 	if(nightshift_active != night_time)

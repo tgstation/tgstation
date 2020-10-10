@@ -1,6 +1,8 @@
-/mob/living/proc/Life(seconds, times_fired)
+/// This divisor controls how fast body temperature changes to match the environment
+#define BODYTEMP_DIVISOR 8
+
+/mob/living/proc/Life(times_fired)
 	set waitfor = FALSE
-	set invisibility = 0
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
@@ -8,9 +10,7 @@
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
-			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				forceMove(E.loc)
-				break
+			move_to_error_room()
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
@@ -43,6 +43,8 @@
 			handle_breathing(times_fired)
 
 		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+		handle_wounds()
 
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
@@ -80,33 +82,134 @@
 /mob/living/proc/handle_diseases()
 	return
 
+/mob/living/proc/handle_wounds()
+	return
+
 /mob/living/proc/handle_random_events()
 	return
 
+// Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	return
+	var/loc_temp = get_temperature(environment)
+
+	if(loc_temp < bodytemperature) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))
+	else // this is a hot place
+		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX))
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
+		set_fire_stacks(min(0, fire_stacks + 1)) //So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
-		ExtinguishMob()
-		return TRUE //mob was put out, on_fire = FALSE via ExtinguishMob(), no need to update everything down the chain.
+		extinguish_mob()
+		return TRUE //mob was put out, on_fire = FALSE via extinguish_mob(), no need to update everything down the chain.
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
+		extinguish_mob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
 
+/**
+ * Get the fullness of the mob
+ *
+ * This returns a value form 0 upwards to represent how full the mob is.
+ * The value is a total amount of consumable reagents in the body combined
+ * with the total amount of nutrition they have.
+ * This does not have an upper limit.
+ */
+/mob/living/proc/get_fullness()
+	var/fullness = nutrition
+	// we add the nutrition value of what we're currently digesting
+	for(var/bile in reagents.reagent_list)
+		var/datum/reagent/consumable/bits = bile
+		if(bits)
+			fullness += bits.nutriment_factor * bits.volume / bits.metabolization_rate
+	return fullness
+
+/**
+ * Check if the mob contains this reagent.
+ *
+ * This will validate the the reagent holder for the mob and any sub holders contain the requested reagent.
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ * * amount (int) checks for having a specific amount of that chemical.
+ * * needs_metabolizing (bool) takes into consideration if the chemical is matabolizing when it's checked.
+ */
+/mob/living/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+	return reagents.has_reagent(reagent, amount, needs_metabolizing)
+
+/**
+ * Removes reagents from the mob
+ *
+ * This will locate the reagent in the mob and remove it from reagent holders
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ * * custom_amount (int)(optional) checks for having a specific amount of that chemical.
+ * * safety (bool) check for the trans_id_to
+ */
+/mob/living/proc/remove_reagent(reagent, custom_amount, safety)
+	if(!custom_amount)
+		custom_amount = get_reagent_amount(reagent)
+	return reagents.remove_reagent(reagent, custom_amount, safety)
+
+/**
+ * Returns the amount of a reagent from the mob
+ *
+ * This will locate the reagent in the mob and return the total amount from all reagent holders
+ * Vars:
+ * * reagent (typepath) takes a PATH to a reagent.
+ */
+/mob/living/proc/get_reagent_amount(reagent)
+	return reagents.get_reagent_amount(reagent)
+
+/**
+ * Get a list of all chems the mob has that they are addicted to.
+ *
+ * This creates a ist of all chems the mob has within its body that it is addicted to.
+ * Returns list of reagents
+ */
+/mob/living/proc/get_addiction_list()
+	var/list/addictions = list()
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(reagents.addiction_list.len)
+		for(var/datum/reagent/reagent in reagents.addiction_list)
+			addictions += reagent
+	if(belly?.reagents.addiction_list.len)
+		for(var/bile in belly.reagents.addiction_list)
+			addictions += bile
+	return addictions
+
+/**
+ * Removes an addiction from the mob
+ *
+ * This will remove addiction to the passeed in chem from the mob
+ * vars:
+ * * addiction (reagent) the reagent to remove
+ */
+/mob/living/proc/remove_addiction(addiction)
+	reagents.remove_addiction(addiction)
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly)
+		belly.reagents.remove_addiction(addiction)
+
+/**
+ * Removes all addictions from the mob
+ *
+ * This will remove all addictions from the mob
+ */
+/mob/living/proc/clear_addictions()
+	var/list/addictions = get_addiction_list()
+	for(var/reagent in addictions)
+		remove_addiction(reagent)
+
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(confused)
-		confused = max(0, confused - 1)
 
 /mob/living/proc/handle_traits()
 	//Eyes
@@ -143,3 +246,5 @@
 	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
 		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
 		adjustBruteLoss(min(grav_stregth,3))
+
+#undef BODYTEMP_DIVISOR

@@ -23,11 +23,11 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/chaos
 
-datum/crafting_recipe/food/donut/meat
+/datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/rawcutlet = 1,
+		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut/meat
@@ -273,7 +273,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Soylent green"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2,
-		/obj/item/reagent_containers/food/snacks/meat/slab/human = 2
+		/obj/item/food/meat/slab/human = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/soylentgreen
 	subcategory = CAT_PASTRY
@@ -319,22 +319,87 @@ datum/crafting_recipe/food/donut/meat
 
 /datum/crafting_recipe/food/donkpocket
 	time = 15
-	name = "Donkpocket"
+	name = "Donk-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/dankpocket
 	time = 15
-	name = "Dankpocket"
+	name = "Dank-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cannabis = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/dankpocket
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/spicy
+	time = 15
+	name = "Spicy-pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/teriyaki
+	time = 15
+	name = "Teriyaki-pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/datum/reagent/consumable/soysauce = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/pizza
+	time = 15
+	name = "Pizza-pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/honk
+	time = 15
+	name = "Honk-Pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
+		/datum/reagent/consumable/sugar = 3
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/honk
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/berry
+	time = 15
+	name = "Berry-pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/reagent_containers/food/snacks/grown/berries = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/berry
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/gondola
+	time = 15
+	name = "Gondola-pocket"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/obj/item/food/meatball = 1,
+		/datum/reagent/tranquility = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
 	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
@@ -375,7 +440,7 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/water = 5,
 		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/food/boiledegg = 2,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chawanmushi
@@ -388,7 +453,7 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/sausage = 1
+		/obj/item/food/sausage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotdog
 	subcategory = CAT_PASTRY
@@ -398,10 +463,10 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/food/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/meatbun
+	result = /obj/item/food/meatbun
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/khachapuri
@@ -409,7 +474,7 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/obj/item/reagent_containers/food/snacks/store/bread/plain = 1
+		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/khachapuri
 	subcategory = CAT_PASTRY
@@ -489,7 +554,7 @@ datum/crafting_recipe/food/donut/meat
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/no_raisin = 1,
+		/obj/item/food/no_raisin = 1,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
 		/obj/item/reagent_containers/food/snacks/grown/oat = 1
 	)
@@ -521,4 +586,14 @@ datum/crafting_recipe/food/donut/meat
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/honeybun
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/cannoli
+	name = "Cannoli"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/consumable/milk = 1,
+		/datum/reagent/consumable/sugar = 3,
+	)
+	result = /obj/item/reagent_containers/food/snacks/cannoli
 	subcategory = CAT_PASTRY

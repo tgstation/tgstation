@@ -15,5 +15,5 @@
 	. = ..()
 
 /datum/antagonist/heartbreaker/greet()
-	to_chat(owner, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
+	to_chat(owner, "<span class='warning'><B>You didn't get a date! They're all having fun without you! You'll show them though...</B></span>")
 	owner.announce_objectives()

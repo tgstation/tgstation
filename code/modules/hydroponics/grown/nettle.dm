@@ -8,10 +8,12 @@
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
+	instability = 25
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -27,6 +29,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
+	graft_gene = /datum/plant_gene/trait/stinging
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
 	seed = /obj/item/seeds/nettle
@@ -36,14 +39,15 @@
 	icon_state = "nettle"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-	attack_verb = list("stung")
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -89,6 +93,7 @@
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
+	wound_bonus = CANT_WOUND
 	throwforce = 15
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/add_juice()
@@ -99,13 +104,13 @@
 	if(..())
 		if(prob(50))
 			user.Paralyze(100)
-			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
+			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
+		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)

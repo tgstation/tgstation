@@ -2,9 +2,9 @@
 	. = ..()
 	var/component_probability = min(50, max(damage_amount*0.1, 1 - obj_integrity/max_integrity))
 	switch(damage_flag)
-		if("bullet")
+		if(BULLET)
 			component_probability = damage_amount * 0.5
-		if("laser")
+		if(LASER)
 			component_probability = damage_amount * 0.66
 	if(component_probability)
 		for(var/I in all_components)
@@ -23,6 +23,8 @@
 		new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)
 			var/obj/item/computer_hardware/H = all_components[C]
+			if(QDELETED(H))
+				continue
 			uninstall_component(H)
 			H.forceMove(newloc)
 			if(prob(25))

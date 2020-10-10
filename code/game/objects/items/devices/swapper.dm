@@ -3,7 +3,7 @@
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "swapper"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -20,12 +20,11 @@
 		linked_swapper = null
 	return ..()
 
-/obj/item/swapper/update_icon()
+/obj/item/swapper/update_icon_state()
 	if(linked_swapper)
 		icon_state = "swapper-linked"
 	else
 		icon_state = "swapper"
-	..()
 
 /obj/item/swapper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/swapper))
@@ -82,7 +81,7 @@
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()
 	var/atom/movable/teleportable = src
-	while(ismovableatom(teleportable.loc))
+	while(ismovable(teleportable.loc))
 		var/atom/movable/AM = teleportable.loc
 		if(AM.anchored)
 			break

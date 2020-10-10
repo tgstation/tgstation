@@ -10,8 +10,8 @@
 	. = ..()
 	recursive_organ_check(src)
 
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user)
-	if(opened || !can_open(user))	//dupe check just so we don't let the organs decay when someone fails to open the locker
+/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = TRUE)
+	if(opened || !can_open(user, force))	//dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
 	recursive_organ_check(src)
 	return ..()
@@ -61,7 +61,7 @@
 /obj/structure/closet/secure_closet/freezer/meat/PopulateContents()
 	..()
 	for(var/i = 0, i < 4, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/slab/monkey(src)
+		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
 	req_access = null

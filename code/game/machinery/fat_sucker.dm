@@ -3,7 +3,7 @@
 	desc = "Safely and efficiently extracts excess fat from a subject."
 	icon = 'icons/obj/machines/fat_sucker.dmi'
 	icon_state = "fat"
-
+	circuit = /obj/item/circuitboard/machine/fat_sucker
 	state_open = FALSE
 	density = TRUE
 	req_access = list(ACCESS_KITCHEN)
@@ -11,7 +11,7 @@
 	var/start_at = NUTRITION_LEVEL_WELL_FED
 	var/stop_at = NUTRITION_LEVEL_STARVING
 	var/free_exit = TRUE //set to false to prevent people from exiting before being completely stripped of fat
-	var/bite_size = 15 //amount of nutrients we take per process
+	var/bite_size = 7.5 //amount of nutrients we take per second
 	var/nutrients //amount of nutrients we got build up
 	var/nutrient_to_meat = 90 //one slab of meat gives about 52 nutrition
 	var/datum/looping_sound/microwave/soundloop //100% stolen from microwaves
@@ -37,7 +37,7 @@
 	var/rating = 0
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		rating += L.rating
-	bite_size = initial(bite_size) + rating * 5
+	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
 /obj/machinery/fat_sucker/examine(mob/user)
@@ -68,7 +68,7 @@
 		stop()
 	..()
 
-/obj/machinery/fat_sucker/container_resist(mob/living/user)
+/obj/machinery/fat_sucker/container_resist_act(mob/living/user)
 	if(!free_exit || state_open)
 		to_chat(user, "<span class='notice'>The emergency release is not responding! You start pushing against the hull!</span>")
 		user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -118,20 +118,20 @@
 		else
 			. += "[icon_state]_door_off"
 			if(occupant)
-				if(powered(EQUIP))
+				if(powered())
 					. += "[icon_state]_stack"
 					. += "[icon_state]_yellow"
 			else
 				. += "[icon_state]_red"
-	else if(powered(EQUIP))
+	else if(powered())
 		. += "[icon_state]_red"
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process()
+/obj/machinery/fat_sucker/process(delta_time)
 	if(!processing)
 		return
-	if(!powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!powered() || !occupant || !iscarbon(occupant))
 		open_machine()
 		return
 
@@ -140,8 +140,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size)
-	nutrients += bite_size
+	C.adjust_nutrition(-bite_size * delta_time)
+	nutrients += bite_size * delta_time
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
@@ -152,7 +152,7 @@
 	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
-	if(state_open || !occupant || processing || !powered(EQUIP))
+	if(state_open || !occupant || processing || !powered())
 		return
 	if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant
@@ -164,7 +164,7 @@
 		else
 			say("Subject not fat enough.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
-			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it wont work
+			overlays += "[icon_state]_red" //throw a red light icon over it, to show that it won't work
 
 /obj/machinery/fat_sucker/proc/stop()
 	processing = FALSE
@@ -182,7 +182,7 @@
 				new C.type_of_meat (drop_location())
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
-				new /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain (drop_location())
+				new /obj/item/food/meat/rawcutlet/plain (drop_location())
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)

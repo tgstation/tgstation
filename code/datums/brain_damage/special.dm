@@ -120,6 +120,87 @@
 		user.visible_message("<span class='warning'>[user] [slip_in_message].</span>", null, null, null, user)
 		user.visible_message("<span class='warning'>[user] [slip_out_message].</span>", "<span class='notice'>...and find your way to the other side.</span>")
 
+/datum/brain_trauma/special/quantum_alignment
+	name = "Quantum Alignment"
+	desc = "Patient is prone to frequent spontaneous quantum entanglement, against all odds, causing spatial anomalies."
+	scan_desc = "quantum alignment"
+	gain_text = "<span class='notice'>You feel faintly connected to everything around you...</span>"
+	lose_text = "<span class='warning'>You no longer feel connected to your surroundings.</span>"
+	var/atom/linked_target = null
+	var/linked = FALSE
+	var/returning = FALSE
+	var/snapback_time = 0
+
+/datum/brain_trauma/special/quantum_alignment/on_life()
+	if(linked)
+		if(QDELETED(linked_target))
+			linked_target = null
+			linked = FALSE
+		else if(!returning && world.time > snapback_time)
+			start_snapback()
+		return
+	if(prob(4))
+		try_entangle()
+
+/datum/brain_trauma/special/quantum_alignment/proc/try_entangle()
+	//Check for pulled mobs
+	if(ismob(owner.pulling))
+		entangle(owner.pulling)
+		return
+	//Check for adjacent mobs
+	for(var/mob/living/L in oview(1, owner))
+		if(owner.Adjacent(L))
+			entangle(L)
+			return
+	//Check for pulled objects
+	if(isobj(owner.pulling))
+		entangle(owner.pulling)
+		return
+
+	//Check main hand
+	var/obj/item/held_item = owner.get_active_held_item()
+	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP)))
+		entangle(held_item)
+		return
+
+	//Check off hand
+	held_item = owner.get_inactive_held_item()
+	if(held_item && !(HAS_TRAIT(held_item, TRAIT_NODROP)))
+		entangle(held_item)
+		return
+
+	//Just entangle with the turf
+	entangle(get_turf(owner))
+
+/datum/brain_trauma/special/quantum_alignment/proc/entangle(atom/target)
+	to_chat(owner, "<span class='notice'>You start feeling a strong sense of connection to [target].</span>")
+	linked_target = target
+	linked = TRUE
+	snapback_time = world.time + rand(450, 6000)
+
+/datum/brain_trauma/special/quantum_alignment/proc/start_snapback()
+	if(QDELETED(linked_target))
+		linked_target = null
+		linked = FALSE
+		return
+	to_chat(owner, "<span class='warning'>Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!</span>")
+	owner.playsound_local(owner, 'sound/magic/lightning_chargeup.ogg', 75, FALSE)
+	returning = TRUE
+	addtimer(CALLBACK(src, .proc/snapback), 100)
+
+/datum/brain_trauma/special/quantum_alignment/proc/snapback()
+	returning = FALSE
+	if(QDELETED(linked_target))
+		to_chat(owner, "<span class='notice'>The connection fades abruptly, and the pull with it.</span>")
+		linked_target = null
+		linked = FALSE
+		return
+	to_chat(owner, "<span class='warning'>You're pulled through spacetime!</span>")
+	do_teleport(owner, get_turf(linked_target), null, TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+	owner.playsound_local(owner, 'sound/magic/repulse.ogg', 100, FALSE)
+	linked_target = null
+	linked = FALSE
+
 /datum/brain_trauma/special/psychotic_brawling
 	name = "Violent Psychosis"
 	desc = "Patient fights in unpredictable ways, ranging from helping his target to hitting them with brutal strength."
@@ -142,7 +223,6 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
-	clonable = FALSE
 
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
@@ -244,7 +324,6 @@
 	scan_desc = "criminal mind"
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
-	clonable = FALSE
 	random_gain = FALSE
 	var/obj/effect/hallucination/simple/securitron/beepsky
 

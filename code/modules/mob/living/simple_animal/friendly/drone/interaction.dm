@@ -50,8 +50,18 @@
 		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
 		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
+		DH.slot_flags = worn_slot_flags
 		user.put_in_hands(DH)
 
+/**
+  * Called when a drone attempts to reactivate a dead drone
+  *
+  * If the owner is still ghosted, will notify them.
+  * If the owner cannot be found, fails with an error message.
+  *
+  * Arguments:
+  * * user - The [/mob/living] attempting to reactivate the drone
+  */
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
 	if(!client && (!G || !G.client))
@@ -110,6 +120,18 @@
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
 	return 0 //multiplier for whatever head armor you wear as a drone
 
+/**
+  * Hack or unhack a drone
+  *
+  * This changes the drone's laws to destroy the station or resets them
+  * to normal.
+  *
+  * Some debuffs are applied like slowing the drone down and disabling
+  * vent crawling
+  *
+  * Arguments
+  * * hack - Boolean if the drone is being hacked or unhacked
+  */
 /mob/living/simple_animal/drone/proc/update_drone_hack(hack)
 	if(!mind)
 		return
@@ -146,32 +168,44 @@
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
 		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
-	update_drone_icon()
+	update_drone_icon_hacked()
 
+/**
+  *   # F R E E D R O N E
+  * ### R
+  * ### E
+  * ### E
+  * ### D
+  * ### R
+  * ### O
+  * ### N
+  * ### E
+  */
 /mob/living/simple_animal/drone/proc/liberate()
-	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
 	to_chat(src, laws)
 
-/mob/living/simple_animal/drone/proc/update_drone_icon()
-	//Different icons for different hack states
-	if(!hacked)
-		if(visualAppearence == SCOUTDRONE_HACKED)
-			visualAppearence = SCOUTDRONE
-		else if(visualAppearence == REPAIRDRONE_HACKED)
-			visualAppearence = REPAIRDRONE
-		else if(visualAppearence == MAINTDRONE_HACKED)
-			visualAppearence = MAINTDRONE + "_[colour]"
-	else if(hacked)
-		if(visualAppearence == SCOUTDRONE)
-			visualAppearence = SCOUTDRONE_HACKED
-		else if(visualAppearence == REPAIRDRONE)
-			visualAppearence = REPAIRDRONE_HACKED
-		else if(visualAppearence == MAINTDRONE)
-			visualAppearence = MAINTDRONE_HACKED
-
-	icon_living = "[visualAppearence]"
-	icon_dead = "[visualAppearence]_dead"
+/**
+  * Changes the icon state to a hacked version
+  *
+  * See also
+  * * [/mob/living/simple_animal/drone/var/visualAppearance]
+  * * [MAINTDRONE]
+  * * [REPAIRDRONE]
+  * * [SCOUTDRONE]
+  */
+/mob/living/simple_animal/drone/proc/update_drone_icon_hacked() //this is hacked both ways
+	var/static/hacked_appearances = list(
+		SCOUTDRONE = SCOUTDRONE_HACKED,
+		REPAIRDRONE = REPAIRDRONE_HACKED,
+		MAINTDRONE = MAINTDRONE_HACKED
+	)
+	if(hacked)
+		icon_living = hacked_appearances[visualAppearance]
+	else if(visualAppearance == MAINTDRONE && colour)
+		icon_living = "[visualAppearance]_[colour]"
+	else
+		icon_living = visualAppearance
 	if(stat == DEAD)
 		icon_state = icon_dead
 	else

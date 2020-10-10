@@ -15,7 +15,7 @@
 /datum/wires/roulette/interactable(mob/user)
 	. = FALSE
 	var/obj/machinery/roulette/R = holder
-	if(R.stat & MAINT)
+	if(R.machine_stat & MAINT)
 		. = TRUE
 
 /datum/wires/roulette/get_status()
@@ -36,7 +36,7 @@
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!R.on)
 				return
-			R.anchored = !R.anchored
+			R.set_anchored(!R.anchored)
 		if(WIRE_RESETOWNER)
 			R.my_card = null
 			R.audible_message("<span class='warning'>Owner reset!</span>")
@@ -62,7 +62,7 @@
 		if(WIRE_BOLTS) // Always drop
 			if(!R.on)
 				return
-			R.anchored = TRUE
+			R.set_anchored(TRUE)
 		if(WIRE_RESETOWNER)
 			if(isliving(usr))
 				R.shock(usr, 70)

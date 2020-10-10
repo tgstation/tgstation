@@ -58,6 +58,7 @@
 	M.cure_nearsighted(EYE_DAMAGE)
 	M.set_blindness(0)
 	M.set_blurriness(0)
+	M.clear_fullscreen("eye_damage", 0)
 	M.update_sight()
 
 
@@ -82,7 +83,6 @@
 		damaged = FALSE
 		C.clear_fullscreen("eye_damage")
 	return
-
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -197,7 +197,7 @@
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
@@ -208,7 +208,7 @@
 	var/active = FALSE
 	var/max_light_beam_distance = 5
 	var/light_beam_distance = 5
-	var/light_object_range = 1
+	var/light_object_range = 2
 	var/light_object_power = 2
 	var/list/obj/effect/abstract/eye_lighting/eye_lighting
 	var/obj/effect/abstract/eye_lighting/on_mob
@@ -252,7 +252,7 @@
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 
-	set_distance(CLAMP(range, 0, max_light_beam_distance))
+	set_distance(clamp(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
@@ -319,10 +319,11 @@
 		clear_visuals()
 	var/turf/scanning = scanfrom
 	var/stop = FALSE
+	on_mob.set_light_flags(on_mob.light_flags & ~LIGHT_ATTACHED)
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
-		if(scanning.opacity || scanning.has_opaque_atom)
+		if(IS_OPAQUE_TURF(scanning))
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
 		if(stop)
@@ -339,6 +340,7 @@
 			var/obj/effect/abstract/eye_lighting/L = i
 			L.forceMove(src)
 		if(!QDELETED(on_mob))
+			on_mob.set_light_flags(on_mob.light_flags | LIGHT_ATTACHED)
 			on_mob.forceMove(src)
 
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
@@ -355,26 +357,39 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/regenerate_light_effects()
 	clear_visuals(TRUE)
-	on_mob = new(src)
+	on_mob = new (src, light_object_range, light_object_power, current_color_string, LIGHT_ATTACHED)
 	for(var/i in 1 to light_beam_distance)
-		LAZYADD(eye_lighting,new /obj/effect/abstract/eye_lighting(src))
+		LAZYADD(eye_lighting, new /obj/effect/abstract/eye_lighting(src, light_object_range, light_object_power, current_color_string))
 	sync_light_effects()
 
+
 /obj/item/organ/eyes/robotic/glow/proc/sync_light_effects()
-	for(var/I in eye_lighting)
-		var/obj/effect/abstract/eye_lighting/L = I
-		L.set_light(light_object_range, light_object_power, current_color_string)
-	if(on_mob)
-		on_mob.set_light(1, 1, current_color_string)
+	for(var/e in eye_lighting)
+		var/obj/effect/abstract/eye_lighting/eye_lighting = e
+		eye_lighting.set_light_color(current_color_string)
+	on_mob?.set_light_color(current_color_string)
+
 
 /obj/effect/abstract/eye_lighting
+	light_system = MOVABLE_LIGHT
 	var/obj/item/organ/eyes/robotic/glow/parent
 
-/obj/effect/abstract/eye_lighting/Initialize()
+
+/obj/effect/abstract/eye_lighting/Initialize(mapload, light_object_range, light_object_power, current_color_string, light_flags)
 	. = ..()
 	parent = loc
 	if(!istype(parent))
+		stack_trace("/obj/effect/abstract/eye_lighting added to improper parent ([loc]). Deleting.")
 		return INITIALIZE_HINT_QDEL
+	if(!isnull(light_object_range))
+		set_light_range(light_object_range)
+	if(!isnull(light_object_power))
+		set_light_power(light_object_power)
+	if(!isnull(current_color_string))
+		set_light_color(current_color_string)
+	if(!isnull(light_flags))
+		set_light_flags(light_flags)
+
 
 /obj/item/organ/eyes/moth
 	name = "moth eyes"

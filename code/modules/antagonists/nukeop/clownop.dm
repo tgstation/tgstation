@@ -10,6 +10,7 @@
 	roundend_category = "clown operatives"
 	antagpanel_category = "ClownOp"
 	nukeop_outfit = /datum/outfit/syndicate/clownop/leader
+	challengeitem = /obj/item/nuclear_challenge/clownops
 
 /datum/antagonist/nukeop/leader/clownop/give_alias()
 	title = pick("Head Honker", "Slipmaster", "Clown King", "Honkbearer")

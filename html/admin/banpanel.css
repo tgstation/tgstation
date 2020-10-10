@@ -1,24 +1,9 @@
-.column {
-    float: left;
-    flex-wrap: wrap;
-}
-
-.left {
-    width: 280px;
-}
-
 .middle {
     width: 80px;
 }
 
 .right {
     width: 150px;
-}
-
-.row {
-    content: '';
-    display: table;
-    clear: both;
 }
 
 .reason {
@@ -76,7 +61,7 @@
     background-color: #708090;
 }
 
-.civilian {
+.service {
     background-color: #6eaa2c;
 }
 
@@ -86,22 +71,4 @@
 
 .antagonistpositions {
     background-color: #6d3f40;
-}
-
-.inputbox {
-    position: absolute;
-    top: 0px;
-    left: 4px;
-    width: 14px;
-    height: 14px;
-    background: #e6e6e6;
-}
-
-.select {
-    position: relative;
-    display: inline-block;
-}
-
-.hidden {
-    display: none;
 }

@@ -28,7 +28,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "nanotrasen"
@@ -37,7 +37,7 @@
 	icon_gib = "syndicate_gib"
 	turns_per_move = 5
 	speed = 0
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	vision_range = 3
 	maxHealth = 100

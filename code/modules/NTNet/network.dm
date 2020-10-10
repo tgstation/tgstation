@@ -128,7 +128,7 @@
 		var/obj/machinery/ntnet_relay/n = i
 		if(zlevel && n.z != zlevel)
 			continue
-		if(n.is_operational())
+		if(n.is_operational)
 			return TRUE
 	return FALSE
 
@@ -201,6 +201,11 @@
 		var/datum/computer_file/program/P = N
 		if(filename == P.filename)
 			return P
+
+/datum/ntnet/proc/get_chat_channel_by_id(id)
+	for(var/datum/ntnet_conversation/chan in chat_channels)
+		if(chan.id == id)
+			return chan
 
 // Resets the IDS alarm
 /datum/ntnet/proc/resetIDS()

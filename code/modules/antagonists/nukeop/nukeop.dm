@@ -6,6 +6,7 @@
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
+	show_to_ghosts = TRUE
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
@@ -111,6 +112,7 @@
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)
 				if(!N.owner)
+					stack_trace("Antagonist datum without owner in GLOB.antagonists: [N]")
 					continue
 				if(N.nuke_team)
 					nuke_team = N.nuke_team
@@ -154,6 +156,7 @@
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
 	var/title
+	var/challengeitem = /obj/item/nuclear_challenge
 
 /datum/antagonist/nukeop/leader/memorize_code()
 	..()
@@ -179,7 +182,15 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
 	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+	if(!CONFIG_GET(flag/disable_warops))
+		to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+		var/obj/item/dukinuki = new challengeitem
+		var/mob/living/carbon/human/H = owner.current
+		if(!istype(H))
+			dukinuki.forceMove(H.drop_location())
+		else
+			H.put_in_hands(dukinuki, TRUE)
+		nuke_team.war_button = dukinuki
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 
@@ -229,7 +240,7 @@
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
 		else
-			stack_trace("Station self destruct not found during lone op team creation.")
+			stack_trace("Station self-destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/reinforcement
@@ -242,6 +253,7 @@
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
 	var/list/team_discounts
+	var/obj/item/nuclear_challenge/war_button
 
 /datum/team/nuclear/New()
 	..()
@@ -388,7 +400,10 @@
 		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
 	disk_report += "</table>"
 	var/common_part = ..()
-	return common_part + disk_report
+	var/challenge_report
+	if(!QDELETED(war_button))
+		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
+	return common_part + disk_report + challenge_report
 
 /datum/team/nuclear/is_gamemode_hero()
 	return SSticker.mode.name == "nuclear emergency"

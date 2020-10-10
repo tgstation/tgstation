@@ -11,11 +11,17 @@
 	var/id = 1
 	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
+/obj/machinery/mass_driver/Destroy()
+	for(var/obj/machinery/computer/pod/control in GLOB.machines)
+		if(control.id == id)
+			control.connected = null
+	return ..()
+
 /obj/machinery/mass_driver/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	id = "[idnum][id]"
 
 /obj/machinery/mass_driver/proc/drive(amount)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	use_power(500)
 	var/O_limit
@@ -32,11 +38,10 @@
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
-
 /obj/machinery/mass_driver/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	drive()

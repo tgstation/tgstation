@@ -1,6 +1,6 @@
 /datum/action/changeling/spiders
 	name = "Spread Infestation"
-	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
+	desc = "Our form divides, creating arachnids which will grow into deadly beasts. Costs 45 chemicals."
 	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 3 DNA absorptions."
 	button_icon_state = "spread_infestation"
 	chemical_cost = 45

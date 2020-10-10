@@ -47,7 +47,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "k" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -146,7 +146,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "B" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/mineral/titanium,
@@ -182,7 +182,7 @@
 /area/shuttle/escape)
 "I" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti{
+/obj/item/food/spaghetti/boiledspaghetti{
 	name = "pasghetti";
 	pixel_x = 4;
 	pixel_y = 7

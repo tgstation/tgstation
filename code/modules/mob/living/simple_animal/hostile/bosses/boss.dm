@@ -1,10 +1,11 @@
 /mob/living/simple_animal/hostile/boss
-	name = "A Perfectly Generic Boss Placeholder"
+	name = "\improper A Perfectly Generic Boss Placeholder"
 	desc = ""
 	robust_searching = 1
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	status_flags = 0
 	a_intent = INTENT_HARM
+	sentience_type = SENTIENCE_BOSS
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
 	var/datum/boss_active_timed_battle/atb
@@ -53,21 +54,22 @@
 
 /datum/action/boss/Trigger()
 	. = ..()
-	if(.)
-		if(!istype(boss, boss_type))
-			return 0
-		if(!boss.atb)
-			return 0
-		if(boss.atb.points < boss_cost)
-			return 0
-		if(!boss.client)
-			if(needs_target && !boss.target)
-				return 0
-		if(boss)
-			if(say_when_triggered)
-				boss.say(say_when_triggered, forced = "boss action")
-			if(!boss.atb.spend(boss_cost))
-				return 0
+	if(!.)
+		return
+	if(!istype(boss, boss_type))
+		return
+	if(!boss.atb)
+		return
+	if(boss.atb.points < boss_cost)
+		return
+	if(!boss.client)
+		if(needs_target && !boss.target)
+			return
+	if(boss)
+		if(say_when_triggered)
+			boss.say(say_when_triggered, forced = "boss action")
+		if(!boss.atb.spend(boss_cost))
+			return
 
 //Example:
 /*

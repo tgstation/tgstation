@@ -174,7 +174,7 @@
 	pixel_x = -32
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -247,7 +247,9 @@
 /area/hilbertshotel)
 "aT" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen,
+/obj/structure/sink/kitchen{
+	dir = 1
+	},
 /obj/machinery/light/small,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
@@ -295,7 +297,7 @@
 	pixel_x = -32
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

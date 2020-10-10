@@ -79,9 +79,10 @@
 		damaged = TRUE
 		if(console)
 			console.say("Alert, hull breach detected!")
-		var/obj/machinery/announcement_system/announcer = safepick(GLOB.announcement_systems)
-		if(!QDELETED(announcer))
-			announcer.announce("ARRIVALS_BROKEN", channels = list())
+		if (length(GLOB.announcement_systems))
+			var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+			if(!QDELETED(announcer))
+				announcer.announce("ARRIVALS_BROKEN", channels = list())
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
 			mode = SHUTTLE_IDLE
@@ -201,6 +202,6 @@
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("perma_docked")
+		if(NAMEOF(src, perma_docked))
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("arrivals shuttle", "[var_value ? "stopped" : "started"]"))
 	return ..()

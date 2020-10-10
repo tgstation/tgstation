@@ -7,13 +7,14 @@
 	desc = "A gas-powered cannon that can fire any object loaded into it."
 	w_class = WEIGHT_CLASS_BULKY
 	force = 8 //Very heavy
-	attack_verb = list("bludgeoned", "smashed", "beaten")
+	attack_verb_continuous = list("bludgeons", "smashes", "beats")
+	attack_verb_simple = list("bludgeon", "smash", "beat")
 	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
-	item_state = "bulldog"
+	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -152,6 +153,9 @@
 	if(!tank && checktank)
 		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
 		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>" )
+		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
@@ -174,7 +178,7 @@
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!</span>")
 		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
@@ -212,8 +216,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -254,11 +258,11 @@
 		tank = thetank
 	update_icon()
 
-/obj/item/pneumatic_cannon/update_icon()
-	cut_overlays()
+/obj/item/pneumatic_cannon/update_overlays()
+	. = ..()
 	if(!tank)
 		return
-	add_overlay(tank.icon_state)
+	. += tank.icon_state
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))
@@ -308,7 +312,7 @@
 	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "speargun"
-	item_state = "speargun"
+	inhand_icon_state = "speargun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
@@ -316,6 +320,7 @@
 	checktank = FALSE
 	range_multiplier = 3
 	throw_amount = 1
+	pressureSetting = 2
 	maxWeightClass = 2 //a single magspear
 	spin_item = FALSE
 	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
@@ -328,7 +333,7 @@
 	name = "quiver"
 	desc = "A quiver for holding magspears."
 	icon_state = "quiver"
-	item_state = "quiver"
+	inhand_icon_state = "quiver"
 
 /obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
 	. = ..()

@@ -29,40 +29,12 @@
 
 /obj/screen/human/equip/Click()
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 
-/obj/screen/devil
-	invisibility = INVISIBILITY_ABSTRACT
-
-/obj/screen/devil/soul_counter
-	icon = 'icons/mob/screen_gen.dmi'
-	name = "souls owned"
-	icon_state = "Devil-6"
-	screen_loc = ui_devilsouldisplay
-
-/obj/screen/devil/soul_counter/proc/update_counter(souls = 0)
-	invisibility = 0
-	maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[souls]</font></div>"
-	switch(souls)
-		if(0,null)
-			icon_state = "Devil-1"
-		if(1,2)
-			icon_state = "Devil-2"
-		if(3 to 5)
-			icon_state = "Devil-3"
-		if(6 to 8)
-			icon_state = "Devil-4"
-		if(9 to INFINITY)
-			icon_state = "Devil-5"
-		else
-			icon_state = "Devil-6"
-
-/obj/screen/devil/soul_counter/proc/clear()
-	invisibility = INVISIBILITY_ABSTRACT
-
 /obj/screen/ling
+	icon = 'icons/mob/screen_changeling.dmi'
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling/sting
@@ -82,7 +54,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
-	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/widescreen_layout = FALSE
 	if(owner.client?.prefs?.widescreenpref)
@@ -315,6 +286,10 @@
 	internals.hud = src
 	infodisplay += internals
 
+	spacesuit = new /obj/screen/spacesuit
+	spacesuit.hud = src
+	infodisplay += spacesuit
+
 	healths = new /obj/screen/healths()
 	healths.hud = src
 	infodisplay += healths
@@ -337,10 +312,6 @@
 	lingstingdisplay = new /obj/screen/ling/sting()
 	lingstingdisplay.hud = src
 	infodisplay += lingstingdisplay
-
-	devilsouldisplay = new /obj/screen/devil/soul_counter
-	devilsouldisplay.hud = src
-	infodisplay += devilsouldisplay
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

@@ -5,18 +5,18 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	var/tamperproof = 0
 	damage_deflection = 25
 
-/obj/structure/closet/crate/secure/update_icon()
-	..()
+/obj/structure/closet/crate/secure/update_overlays()
+	. = ..()
 	if(broken)
-		add_overlay("securecrateemag")
+		. += "securecrateemag"
 	else if(locked)
-		add_overlay("securecrater")
+		. += "securecrater"
 	else
-		add_overlay("securecrateg")
+		. += "securecrateg"
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)

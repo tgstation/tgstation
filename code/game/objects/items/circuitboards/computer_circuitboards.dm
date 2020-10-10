@@ -103,10 +103,70 @@
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
 
-/obj/item/circuitboard/computer/auxillary_base
-	name = "Auxillary Base Management Console (Computer Board)"
+/obj/item/circuitboard/computer/atmos_control/tank/bz_tank
+	name = "BZ Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/bz_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/freon_tank
+	name = "Freon Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/freon_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/halon_tank
+	name = "Halon Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/halon_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/healium_tank
+	name = "Healium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/healium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/hexane_tank
+	name = "Hexane Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/hexane_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/hydrogen_tank
+	name = "Hydrogen Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/hydrogen_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/hypernoblium_tank
+	name = "Hypernoblium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/hypernoblium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/miasma_tank
+	name = "Miasma Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
+	name = "Nitryl Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitryl_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
+	name = "Pluoxium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/pluoxium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
+	name = "Proto-Nitrate Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
+	name = "Stimulum Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/stimulum_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
+	name = "Tritium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/tritium_tank
+
+/obj/item/circuitboard/computer/atmos_control/tank/water_vapor
+	name = "Water Vapor Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/water_vapor
+
+/obj/item/circuitboard/computer/atmos_control/tank/zauker_tank
+	name = "Zauker Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/zauker_tank
+
+/obj/item/circuitboard/computer/auxiliary_base
+	name = "Auxiliary Base Management Console (Computer Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/computer/auxillary_base
+	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
@@ -197,13 +257,13 @@
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+		if(build_path == /obj/machinery/computer/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
 			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 		else
 			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			build_path = /obj/machinery/computer/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	else
 		return ..()
@@ -258,6 +318,11 @@
 	icon_state = "generic"
 	build_path = /obj/machinery/computer/shuttle/white_ship
 
+/obj/item/circuitboard/computer/white_ship/bridge
+	name = "White Ship Bridge (Computer Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/computer/shuttle/white_ship/bridge
+
 /obj/item/circuitboard/computer/white_ship/pod
 	name = "Salvage Pod (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod
@@ -266,12 +331,11 @@
 	name = "Salvage Pod Recall (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
 
-//Medical
+/obj/item/circuitboard/computer/bountypad
+	name = "Bounty Pad (Computer Board)"
+	build_path = /obj/machinery/computer/piratepad_control/civilian
 
-/obj/item/circuitboard/computer/cloning
-	name = "Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/cloning
+//Medical
 
 /obj/item/circuitboard/computer/crew
 	name = "Crew Monitoring Console (Computer Board)"
@@ -292,16 +356,6 @@
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/pandemic
-
-/obj/item/circuitboard/computer/prototype_cloning
-	name = "Prototype Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/prototype_cloning
-
-/obj/item/circuitboard/computer/scan_consolenew
-	name = "DNA Machine (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/scan_consolenew
 
 //Science
 
@@ -338,25 +392,7 @@
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
 	icon_state = "science"
-	build_path = /obj/machinery/computer/rdconsole/core
-
-/obj/item/circuitboard/computer/rdconsole/production
-	name = "R&D Console Production Only (Computer Board)"
-	build_path = /obj/machinery/computer/rdconsole/production
-
-
-/obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/rdconsole/core)
-			name = "R&D Console - Robotics (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
-		else
-			name = "R&D Console (Computer Board)"
-			build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
-	else
-		return ..()
+	build_path = /obj/machinery/computer/rdconsole
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
@@ -379,9 +415,19 @@
 	build_path = /obj/machinery/computer/teleporter
 
 /obj/item/circuitboard/computer/xenobiology
-	name = "circuit board (Xenobiology Console)"
+	name = "Xenobiology Console (Computer Board)"
 	icon_state = "science"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
+
+/obj/item/circuitboard/computer/scan_consolenew
+	name = "DNA Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/scan_consolenew
+
+/obj/item/circuitboard/computer/mechpad
+	name = "Mecha Orbital Pad Console (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/mechpad
 
 //Security
 
@@ -430,7 +476,7 @@
 //Supply
 
 /obj/item/circuitboard/computer/bounty
-	name = "Nanotrasen Bounty Console (Computer Board)"
+	name = "\improper Nanotrasen Bounty Console (Computer Board)"
 	icon_state = "supply"
 	build_path = /obj/machinery/computer/bounty
 
@@ -453,6 +499,16 @@
 		contraband = TRUE
 		obj_flags |= EMAGGED
 		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+
+/obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+
+	machine.contraband = contraband
+	if (obj_flags & EMAGGED)
+		machine.obj_flags |= EMAGGED
+	else
+		machine.obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/express
 	name = "Express Supply Console (Computer Board)"

@@ -18,6 +18,11 @@
 	caliber = "a556"
 	projectile_type = /obj/projectile/bullet/a556
 
+/obj/item/ammo_casing/a556/phasic
+	name = "5.56mm phasic bullet casing"
+	desc = "A 5.56mm phasic bullet casing."
+	projectile_type = /obj/projectile/bullet/a556/phasic
+
 // 40mm (Grenade Launcher)
 
 /obj/item/ammo_casing/a40mm

@@ -38,33 +38,33 @@
 			if(M.rating >= 2)
 				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
-/obj/machinery/gibber/update_icon()
-	cut_overlays()
+/obj/machinery/gibber/update_overlays()
+	. = ..()
 	if (dirty)
-		add_overlay("grbloody")
-	if(stat & (NOPOWER|BROKEN))
+		. +="grbloody"
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		add_overlay("grjam")
+		. += "grjam"
 	else if (operating)
-		add_overlay("gruse")
+		. += "gruse"
 	else
-		add_overlay("gridle")
+		. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/gibber/container_resist(mob/living/user)
+/obj/machinery/gibber/container_resist_act(mob/living/user)
 	go_out()
 
-/obj/machinery/gibber/relaymove(mob/living/user)
+/obj/machinery/gibber/relaymove(mob/living/user, direction)
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")
@@ -132,7 +132,7 @@
 	return
 
 /obj/machinery/gibber/proc/go_out()
-	dropContents()
+	dump_inventory_contents()
 	update_icon()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
@@ -157,10 +157,10 @@
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
-	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/food/meat/slab/human
 	var/typeofskin
 
-	var/obj/item/reagent_containers/food/snacks/meat/slab/allmeat[meat_produced]
+	var/obj/item/food/meat/slab/allmeat[meat_produced]
 	var/obj/item/stack/sheet/animalhide/skin
 	var/list/datum/disease/diseases = mob_occupant.get_static_viruses()
 
@@ -182,7 +182,7 @@
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
-		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
+		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
@@ -202,7 +202,7 @@
 	qdel(src.occupant)
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
-/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
+/obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)
@@ -216,7 +216,7 @@
 		meatslab.throw_at(pick(nearby_turfs),i,3)
 		for (var/turfs=1 to meat_produced)
 			var/turf/gibturf = pick(nearby_turfs)
-			if (!gibturf.density && src in view(gibturf))
+			if (!gibturf.density && (src in view(gibturf)))
 				new gibtype(gibturf,i,diseases)
 
 	pixel_x = initial(pixel_x) //return to its spot after shaking

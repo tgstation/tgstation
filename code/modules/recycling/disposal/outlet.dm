@@ -6,13 +6,15 @@
 	icon_state = "outlet"
 	density = TRUE
 	anchored = TRUE
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/active = FALSE
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
 	var/eject_range = 2
+	/// how fast we're spitting fir- atoms
+	var/eject_speed = EJECT_SPEED_MED
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -61,7 +63,7 @@
 		var/atom/movable/AM = A
 		AM.forceMove(T)
 		AM.pipe_eject(dir)
-		AM.throw_at(target, eject_range, 1)
+		AM.throw_at(target, eject_range, eject_speed)
 
 	H.vent_gas(T)
 	qdel(H)
@@ -80,3 +82,39 @@
 		stored = null
 		qdel(src)
 	return TRUE
+
+/obj/structure/disposaloutlet/examine(mob/user)
+	. = ..()
+	switch(eject_speed)
+		if(EJECT_SPEED_SLOW)
+			. += "<span class='info'>An LED image of a turtle is displayed on the side of the outlet.</span>"
+		if(EJECT_SPEED_MED)
+			. += "<span class='info'>An LED image of a bumblebee is displayed on the side of the outlet.</span>"
+		if(EJECT_SPEED_FAST)
+			. += "<span class='info'>An LED image of a speeding bullet is displayed on the side of the outlet.</span>"
+		if(EJECT_SPEED_YEET)
+			. += "<span class='info'>An LED image of a grawlix is displayed on the side of the outlet.</span>"
+
+/obj/structure/disposaloutlet/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	to_chat(user, "<span class='notice'>You adjust the ejection force on \the [src].</span>")
+	switch(eject_speed)
+		if(EJECT_SPEED_SLOW)
+			eject_speed = EJECT_SPEED_MED
+		if(EJECT_SPEED_MED)
+			eject_speed = EJECT_SPEED_FAST
+		if(EJECT_SPEED_FAST)
+			if(obj_flags & EMAGGED)
+				eject_speed = EJECT_SPEED_YEET
+			else
+				eject_speed = EJECT_SPEED_SLOW
+		if(EJECT_SPEED_YEET)
+			eject_speed = EJECT_SPEED_SLOW
+	return TRUE
+
+/obj/structure/disposaloutlet/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class='notice'>You silently disable the sanity checking on \the [src]'s ejection force.</span>")
+	obj_flags |= EMAGGED

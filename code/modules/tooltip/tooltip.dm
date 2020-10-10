@@ -51,7 +51,7 @@ Notes:
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
-		return 0
+		return FALSE
 	if (!init)
 		//Initialize some vars
 		init = 1
@@ -83,7 +83,7 @@ Notes:
 	if (queueHide)
 		hide()
 
-	return 1
+	return TRUE
 
 
 /datum/tooltip/proc/hide()

@@ -68,32 +68,13 @@
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
-/obj/screen/robot/lamp
-	name = "headlamp"
-	icon_state = "lamp0"
-
-/obj/screen/robot/lamp/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.control_headlamp()
-
-/obj/screen/robot/thrusters
-	name = "ion thrusters"
-	icon_state = "ionpulse0"
-
-/obj/screen/robot/thrusters/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	R.toggle_ionpulse()
-
 /datum/hud/robot
 	ui_style = 'icons/mob/screen_cyborg.dmi'
 
 /datum/hud/robot/New(mob/owner)
 	..()
-	var/mob/living/silicon/robot/mymobR = mymob
+	// i, Robit
+	var/mob/living/silicon/robot/robit = mymob
 	var/obj/screen/using
 
 	using = new/obj/screen/language_menu
@@ -107,25 +88,36 @@
 	static_inventory += using
 
 //Module select
-	using = new /obj/screen/robot/module1()
-	using.screen_loc = ui_inv1
-	using.hud = src
-	static_inventory += using
-	mymobR.inv1 = using
+	if(!robit.inv1)
+		robit.inv1 = new /obj/screen/robot/module1()
 
-	using = new /obj/screen/robot/module2()
-	using.screen_loc = ui_inv2
-	using.hud = src
-	static_inventory += using
-	mymobR.inv2 = using
+	robit.inv1.screen_loc = ui_inv1
+	robit.inv1.hud = src
+	static_inventory += robit.inv1
 
-	using = new /obj/screen/robot/module3()
-	using.screen_loc = ui_inv3
-	using.hud = src
-	static_inventory += using
-	mymobR.inv3 = using
+	if(!robit.inv2)
+		robit.inv2 = new /obj/screen/robot/module2()
+
+	robit.inv2.screen_loc = ui_inv2
+	robit.inv2.hud = src
+	static_inventory += robit.inv2
+
+	if(!robit.inv3)
+		robit.inv3 = new /obj/screen/robot/module3()
+
+	robit.inv3.screen_loc = ui_inv3
+	robit.inv3.hud = src
+	static_inventory += robit.inv3
 
 //End of module select
+
+	using = new /obj/screen/robot/lamp()
+	using.screen_loc = ui_borg_lamp
+	using.hud = src
+	static_inventory += using
+	robit.lampButton = using
+	var/obj/screen/robot/lamp/lampscreen = using
+	lampscreen.robot = robit
 
 //Photography stuff
 	using = new /obj/screen/ai/image_take()
@@ -133,30 +125,22 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/ai/image_view()
-	using.screen_loc = ui_borg_album
+//Borg Integrated Tablet
+	using = new /obj/screen/robot/modPC()
+	using.screen_loc = ui_borg_tablet
 	using.hud = src
 	static_inventory += using
+	robit.interfaceButton = using
+	if(robit.modularInterface)
+		using.vis_contents += robit.modularInterface
+	var/obj/screen/robot/modPC/tabletbutton = using
+	tabletbutton.robot = robit
 
-//Sec/Med HUDs
-	using = new /obj/screen/ai/sensors()
-	using.screen_loc = ui_borg_sensor
+//Alerts
+	using = new /obj/screen/robot/alerts()
+	using.screen_loc = ui_borg_alerts
 	using.hud = src
 	static_inventory += using
-
-//Headlamp control
-	using = new /obj/screen/robot/lamp()
-	using.screen_loc = ui_borg_lamp
-	using.hud = src
-	static_inventory += using
-	mymobR.lamp_button = using
-
-//Thrusters
-	using = new /obj/screen/robot/thrusters()
-	using.screen_loc = ui_borg_thrusters
-	using.hud = src
-	static_inventory += using
-	mymobR.thruster_button = using
 
 //Intent
 	action_intent = new /obj/screen/act_intent/robot()
@@ -170,10 +154,10 @@
 	infodisplay += healths
 
 //Installed Module
-	mymobR.hands = new /obj/screen/robot/module()
-	mymobR.hands.screen_loc = ui_borg_module
-	mymobR.hands.hud = src
-	static_inventory += mymobR.hands
+	robit.hands = new /obj/screen/robot/module()
+	robit.hands.screen_loc = ui_borg_module
+	robit.hands.hud = src
+	static_inventory += robit.hands
 
 //Store
 	module_store_icon = new /obj/screen/robot/store()
@@ -228,7 +212,7 @@
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = CEILING(length(R.module.get_inactive_modules()) / 8, 1)
+		var/display_rows = max(CEILING(length(R.module.get_inactive_modules()) / 8, 1),1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
@@ -285,3 +269,44 @@
 		else
 			for(var/obj/item/I in R.held_items)
 				screenmob.client.screen -= I
+
+/obj/screen/robot/lamp
+	name = "headlamp"
+	icon_state = "lamp_off"
+	var/mob/living/silicon/robot/robot
+
+/obj/screen/robot/lamp/Click()
+	. = ..()
+	if(.)
+		return
+	robot?.toggle_headlamp()
+	update_icon()
+
+/obj/screen/robot/lamp/update_icon()
+	if(robot?.lamp_enabled)
+		icon_state = "lamp_on"
+	else
+		icon_state = "lamp_off"
+
+/obj/screen/robot/modPC
+	name = "Modular Interface"
+	icon_state = "template"
+	var/mob/living/silicon/robot/robot
+
+/obj/screen/robot/modPC/Click()
+	. = ..()
+	if(.)
+		return
+	robot.modularInterface?.interact(robot)
+
+/obj/screen/robot/alerts
+	name = "Alert Panel"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "alerts"
+
+/obj/screen/robot/alerts/Click()
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/robot/borgo = usr
+	borgo.robot_alerts()

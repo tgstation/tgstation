@@ -13,6 +13,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
 /datum/component/art/proc/apply_moodlet(mob/M, impress)
+	SIGNAL_HANDLER
+
 	M.visible_message("<span class='notice'>[M] stops and looks intently at [parent].</span>", \
 						 "<span class='notice'>You stop to take in [parent].</span>")
 	switch(impress)
@@ -27,13 +29,19 @@
 
 
 /datum/component/art/proc/on_other_examine(datum/source, mob/M)
+	SIGNAL_HANDLER
+
 	apply_moodlet(M, impressiveness)
 
 /datum/component/art/proc/on_obj_examine(datum/source, mob/M)
+	SIGNAL_HANDLER
+
 	var/obj/O = parent
 	apply_moodlet(M, impressiveness *(O.obj_integrity/O.max_integrity))
 
 /datum/component/art/proc/on_attack_hand(datum/source, mob/M)
+	SIGNAL_HANDLER_DOES_SLEEP
+
 	to_chat(M, "<span class='notice'>You start examining [parent]...</span>")
 	if(!do_after(M, 20, target = parent))
 		return

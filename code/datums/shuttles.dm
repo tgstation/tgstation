@@ -16,6 +16,7 @@
 
 	var/port_x_offset
 	var/port_y_offset
+	var/extra_desc = ""
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -97,9 +98,10 @@
 					port.dheight = width - port_x_offset
 
 //Whatever special stuff you want
-/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+/datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
 	if(movement_force)
 		M.movement_force = movement_force.Copy()
+	M.linkup(src)
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
@@ -175,7 +177,7 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = 2500
 
@@ -226,6 +228,7 @@
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
+	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
@@ -235,6 +238,7 @@
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	credit_cost = 10000
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -242,11 +246,22 @@
 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
 	credit_cost = 10000
+	/// Whether the arena z-level has been created
+	var/arena_loaded = FALSE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	if(SHUTTLE_UNLOCK_BUBBLEGUM in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM]
+
+/datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
+	. = ..()
+	if(!arena_loaded)
+		arena_loaded = TRUE
+		var/datum/map_template/arena/arena_template = new()
+		arena_template.load_new_z()
+
+/datum/map_template/arena
+	name = "The Arena"
+	mappath = "_maps/templates/the_arena.dmm"
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -319,6 +334,10 @@
 	description = "Looks like this shuttle may have wandered into the darkness between the stars on route to the station. Let's not think too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive constructs. Cult mobs will automatically be sentienced by fun balloon. \
 	Cloning pods in 'medbay' area are showcases and nonfunctional."
+	credit_cost = 6667
+
+/datum/map_template/shuttle/emergency/narnar/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR]
 
 /datum/map_template/shuttle/emergency/pubby
 	suffix = "pubby"
@@ -364,6 +383,14 @@
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
 	credit_cost = 500
 
+/datum/map_template/shuttle/emergency/rollerdome
+	suffix = "rollerdome"
+	name = "Uncle Pete's Rollerdome"
+	description = "Developed by a member of Nanotrasen's R&D crew that claims to have travelled from the year 2028. \
+	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
+	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
+	credit_cost = 2500
+
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
 	name = "NT Lepton Violet"
@@ -378,6 +405,20 @@
 	name = "Omegastation Emergency Shuttle"
 	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
 	credit_cost = 1000
+
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "cruise"
+	name = "The NTSS Independence"
+	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
+	admin_notes = "This motherfucker is BIG. You might need to force dock it."
+	credit_cost = 50000
+
+/datum/map_template/shuttle/emergency/monkey
+	suffix = "nature"
+	name = "Dynamic Environmental Interaction Shuttle"
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	credit_cost = 8000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
@@ -455,6 +496,10 @@
 	suffix = "donut"
 	name = "supply shuttle (Donut)"
 
+/datum/map_template/shuttle/cargo/pubby
+	suffix = "pubby"
+	name = "supply shuttle (Pubby)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
@@ -476,13 +521,11 @@
 	name = "Tr%nPo2r& Z3TA"
 	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
 	It seems strange and alien, you may need a special technology to access the signal.."
-	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
-	if(SHUTTLE_UNLOCK_ALIENTECH in SSshuttle.shuttle_purchase_requirements_met)
-		return TRUE
-	return FALSE
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"

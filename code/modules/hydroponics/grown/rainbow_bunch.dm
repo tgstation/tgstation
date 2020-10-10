@@ -12,6 +12,7 @@
 	production = 3
 	yield = 5
 	potency = 20
+	instability = 25
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"
@@ -23,13 +24,15 @@
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
 	icon_state = "rainbow_flower"
+	worn_icon_state = "rainbow"
 	slot_flags = ITEM_SLOT_HEAD
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3
-	attack_verb = list("pompfed")
+	attack_verb_continuous = list("pompfs")
+	attack_verb_simple = list("pompf")
 
 /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/Initialize()
 	. = ..()

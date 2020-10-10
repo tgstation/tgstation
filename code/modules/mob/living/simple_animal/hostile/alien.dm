@@ -8,7 +8,7 @@
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
 	speed = 0
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	maxHealth = 125
 	health = 125
@@ -86,7 +86,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -115,7 +115,7 @@
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] has planted some alien weeds!</span>")
+	visible_message("<span class='alertalien'>[src] plants some alien weeds!</span>")
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
@@ -123,7 +123,7 @@
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
-	visible_message("<span class='alertalien'>[src] has laid an egg!</span>")
+	visible_message("<span class='alertalien'>[src] lays an egg!</span>")
 	new /obj/structure/alien/egg(loc)
 
 /mob/living/simple_animal/hostile/alien/queen/large
@@ -132,11 +132,12 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 10,
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
@@ -149,9 +150,12 @@
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
+		throw_alert("temp", /obj/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"
@@ -172,12 +176,10 @@
 	AddElement(/datum/element/cleaning)
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(ismovableatom(target))
+	if(ismovable(target))
+		target.wash(CLEAN_SCRUB)
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
-			qdel(target)
-			return TRUE
-		var/atom/movable/M = target
-		SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		visible_message("<span class='notice'>[src] polishes \the [target].</span>")
+		else
+			visible_message("<span class='notice'>[src] polishes \the [target].</span>")
 		return TRUE

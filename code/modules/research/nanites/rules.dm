@@ -55,9 +55,8 @@
 	desc = "Checks if the host is in critical condition."
 
 /datum/nanite_rule/crit/check_rule()
-	if(program.host_mob.InCritical())
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(program.host_mob, TRAIT_CRITICAL_CONDITION)
+
 
 /datum/nanite_rule/death
 	name = "Death"
@@ -133,11 +132,12 @@
 		if(CLONE)
 			damage_amt = program.host_mob.getCloneLoss()
 
-	if(damage_amt >= threshold)
-		if(above)
+	if(above)
+		if(damage_amt >= threshold)
 			return TRUE
-	else if(!above)
-		return TRUE
+	else
+		if(damage_amt < threshold)
+			return TRUE
 	return FALSE
 
 /datum/nanite_rule/damage/copy_to(datum/nanite_program/new_program)

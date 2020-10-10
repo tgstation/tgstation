@@ -71,14 +71,14 @@
 		return
 
 //if it's not our target, we ignore it
-/mob/living/simple_animal/hostile/asteroid/curseblob/CanPass(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/asteroid/curseblob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(mover == set_target)
 		return FALSE
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		if(P.firer == set_target)
 			return FALSE
-	return TRUE
 
 #define IGNORE_PROC_IF_NOT_TARGET(X) /mob/living/simple_animal/hostile/asteroid/curseblob/##X(AM) { if (AM == set_target) return ..(); }
 

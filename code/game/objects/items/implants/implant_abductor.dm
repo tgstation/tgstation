@@ -15,7 +15,7 @@
 		return
 
 	home.Retrieve(imp_in,1)
-	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown)
+	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())

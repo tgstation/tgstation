@@ -14,12 +14,12 @@ clamping the Knockback_Force value below. */
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/Item_SelfKnockback)
 	else if(isprojectile(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_FIRE, .proc/Projectile_SelfKnockback)
-	else	
+	else
 		return ELEMENT_INCOMPATIBLE
-	
+
 	override_throw_val = throw_amount
 	override_speed_val = speed_amount
-	
+
 /datum/element/selfknockback/Detach(datum/source, force)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
@@ -37,11 +37,13 @@ clamping the Knockback_Force value below. */
 		return default_speed
 
 /datum/element/selfknockback/proc/Item_SelfKnockback(obj/item/I, atom/attacktarget, mob/usertarget, proximity_flag)
+	SIGNAL_HANDLER
+
 	if(isturf(attacktarget) && !attacktarget.density)
 		return
 	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.reach))
-		var/knockback_force = Get_Knockback_Force(CLAMP(CEILING((I.force / 10), 1), 1, 5))
-		var/knockback_speed = Get_Knockback_Speed(CLAMP(knockback_force, 1, 5))
+		var/knockback_force = Get_Knockback_Force(clamp(CEILING((I.force / 10), 1), 1, 5))
+		var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
 		var/target_angle = Get_Angle(attacktarget, usertarget)
 		var/move_target = get_ranged_target_turf(usertarget, angle2dir(target_angle), knockback_force)
@@ -49,11 +51,13 @@ clamping the Knockback_Force value below. */
 		usertarget.visible_message("<span class='warning'>[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!</span>", "<span class='warning'>The force of \the [I] impacting \the [attacktarget] sends you flying!</span>")
 
 /datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/P)
+	SIGNAL_HANDLER
+
 	if(!P.firer)
 		return
 
-	var/knockback_force = Get_Knockback_Force(CLAMP(CEILING((P.damage / 10), 1), 1, 5))
-	var/knockback_speed = Get_Knockback_Speed(CLAMP(knockback_force, 1, 5))
+	var/knockback_force = Get_Knockback_Force(clamp(CEILING((P.damage / 10), 1), 1, 5))
+	var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
 	var/atom/movable/knockback_target = P.firer
 	var/move_target = get_edge_target_turf(knockback_target, angle2dir(P.original_angle+180))

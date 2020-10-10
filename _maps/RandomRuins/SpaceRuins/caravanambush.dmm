@@ -616,12 +616,10 @@
 /area/shuttle/caravan/freighter3)
 "hx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/crate/secure/plasma,
-/obj/item/tank/internals/plasma/full,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 25
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/engineering,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "hy" = (
@@ -687,7 +685,6 @@
 /area/shuttle/caravan/freighter2)
 "hW" = (
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/crate/secure/gear,
 /obj/machinery/button/door{
 	id = "caravantrade2_cargo_port";
 	name = "Cargo Blast Door Control";
@@ -696,11 +693,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/ammo_box/magazine/m10mm{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/m10mm,
+/obj/structure/closet/crate/secure,
+/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/lootdrop/space/cashmoney,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hX" = (
@@ -747,12 +742,10 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/obj/structure/closet/crate/secure/plasma,
-/obj/item/tank/internals/plasma/full,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 25
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/engineering,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/lootdrop/space/fancytech,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "ic" = (
@@ -950,7 +943,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/shotgun/sc_pump,
+/obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "iX" = (
@@ -1038,7 +1031,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "js" = (

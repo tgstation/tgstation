@@ -53,11 +53,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
-"am" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "an" = (
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /obj/item/assembly/mousetrap,
@@ -366,7 +361,6 @@
 /area/ruin/unpowered/elephant_graveyard)
 "bw" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/floodlight,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -521,7 +515,6 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cb" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/item/reagent_containers/glass/bottle/frostoil{
 	desc = "A small bottle. Contains cold sauce. There's a label on here: APPLY ON SEVERE BURNS.";
@@ -1258,7 +1251,7 @@ bf
 bf
 aE
 bf
-am
+al
 aq
 as
 az
@@ -1346,7 +1339,7 @@ al
 al
 al
 al
-am
+al
 al
 cA
 bf

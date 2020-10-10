@@ -9,6 +9,7 @@
 	maturation = 8
 	potency = 20
 	growthstages = 1
+	instability = 40
 	growing_icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
@@ -48,6 +49,7 @@
 	icon_state = "seed-whitecannabis"
 	species = "whitecannabis"
 	plantname = "Lifeweed"
+	instability = 30
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
@@ -75,6 +77,7 @@
 						/datum/reagent/toxin/lipolicide = 0.15,
 						/datum/reagent/drug/nicotine = 0.1)
 	rarity = 69
+	graft_gene = /datum/plant_gene/trait/glow/green
 
 
 // ---------------------------------------------------------------

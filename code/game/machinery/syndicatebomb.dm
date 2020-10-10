@@ -11,7 +11,8 @@
 	density = FALSE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
@@ -48,7 +49,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
-		STOP_PROCESSING(SSfastprocess, src)
+		end_processing()
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
@@ -87,12 +88,12 @@
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
-	STOP_PROCESSING(SSfastprocess, src)
+	end_processing()
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(countdown)
-	STOP_PROCESSING(SSfastprocess, src)
+	end_processing()
 	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
@@ -116,14 +117,14 @@
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
 				I.play_tool_sound(src)
-				setAnchored(TRUE)
+				set_anchored(TRUE)
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
 				I.play_tool_sound(src)
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -183,7 +184,7 @@
 
 /obj/machinery/syndicatebomb/proc/activate()
 	active = TRUE
-	START_PROCESSING(SSfastprocess, src)
+	begin_processing()
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
@@ -192,12 +193,12 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num|null
-	
+
 	if (isnull(new_timer))
 		return
-	
+
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
-		timer_set = CLAMP(new_timer, minimum_timer, maximum_timer)
+		timer_set = clamp(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(!active)
@@ -217,6 +218,11 @@
 	icon_state = "training-bomb"
 	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
 	payload = /obj/item/bombcore/training
+
+/obj/machinery/syndicatebomb/emp
+	name = "EMP Bomb"
+	desc = "A modified bomb designed to release a crippling electromagnetic pulse instead of explode"
+	payload = /obj/item/bombcore/emp
 
 /obj/machinery/syndicatebomb/badmin
 	name = "generic summoning badmin bomb"
@@ -243,7 +249,7 @@
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
-	name = "self destruct device"
+	name = "self-destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
 	payload = /obj/item/bombcore/large
 	can_unanchor = FALSE
@@ -255,7 +261,7 @@
 	desc = "A powerful secondary explosive of syndicate design and unknown composition, it should be stable under normal conditions..."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
-	item_state = "eshield0"
+	inhand_icon_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -488,8 +494,20 @@
 
 		qdel(G)
 
+/obj/item/bombcore/emp
+	name = "EMP payload"
+	desc = "A set of superconducting electromagnetic coils designed to release a powerful pulse to destroy electronics and scramble circuits"
+	range_heavy = 15
+	range_medium = 25
 
+/obj/item/bombcore/emp/detonate()
+	if(adminlog)
+		message_admins(adminlog)
+		log_game(adminlog)
 
+	empulse(src, range_heavy, range_medium)
+
+	qdel(src)
 
 ///Syndicate Detonator (aka the big red button)///
 
@@ -498,7 +516,7 @@
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

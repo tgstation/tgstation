@@ -63,7 +63,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(15/severity) && owner)
-		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
+		to_chat(owner, "<span class='warning'>The electromagnetic pulse causes [src] to malfunction!</span>")
 		// give the owner an idea about why his implant is glitching
 		Retract()
 
@@ -83,7 +83,7 @@
 	holder = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/organ/cyberimp/arm/proc/Extend(var/obj/item/item)
+/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
 	if(!(item in src))
 		return
 
@@ -187,9 +187,9 @@
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/toolset/emag_act()
+/obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
 	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
-		to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+		to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0

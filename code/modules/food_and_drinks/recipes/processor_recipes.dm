@@ -3,14 +3,15 @@
 	var/output
 	var/time = 40
 	var/required_machine = /obj/machinery/processor
+	var/multiplier = 1 //This multiplies the number of products produced per object processed.
 
 /datum/food_processor_process/meat
-	input = /obj/item/reagent_containers/food/snacks/meat/slab
-	output = /obj/item/reagent_containers/food/snacks/faggot
+	input = /obj/item/food/meat/slab
+	output = /obj/item/food/meatball
 
 /datum/food_processor_process/bacon
-	input = /obj/item/reagent_containers/food/snacks/meat/rawcutlet
-	output = /obj/item/reagent_containers/food/snacks/meat/rawbacon
+	input = /obj/item/food/meat/rawcutlet
+	output = /obj/item/food/meat/rawbacon
 
 /datum/food_processor_process/potatowedges
 	input = /obj/item/reagent_containers/food/snacks/grown/potato/wedges
@@ -34,7 +35,7 @@
 
 /datum/food_processor_process/spaghetti
 	input = /obj/item/reagent_containers/food/snacks/doughslice
-	output = /obj/item/reagent_containers/food/snacks/spaghetti
+	output = /obj/item/food/spaghetti
 
 /datum/food_processor_process/corn
 	input = /obj/item/reagent_containers/food/snacks/grown/corn
@@ -52,3 +53,8 @@
 	input = /mob/living/simple_animal/slime
 	output = null
 	required_machine = /obj/machinery/processor/slime
+
+/datum/food_processor_process/towercap
+	input = /obj/item/grown/log
+	output = /obj/item/popsicle_stick
+	multiplier = 3

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	</head>
+	<body>
+		<script>
+			//this is used over window.location because window.location has a character limit in IE.
+			function sendbyond(text) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '?'+text, true);
+				xhr.send(null);
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'asset_data.json', true);
+			xhr.responseType = 'text';
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					var status = xhr.status;
+    				if (status >= 200 && status < 400) {
+						sendbyond('asset_cache_preload_data=' + encodeURIComponent(xhr.responseText));
+					}
+				}
+			};
+			xhr.send(null);
+			</script>
+	
+</body>
+</html>

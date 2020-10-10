@@ -103,12 +103,10 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space)
 "av" = (
-/obj/structure/stairs{
-	dir = 1
-	},
+/obj/structure/stairs/north,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "aw" = (
@@ -213,6 +211,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aY" = (
 /obj/machinery/light{
 	dir = 4
@@ -314,8 +319,8 @@
 /area/engine/atmos)
 "bm" = (
 /obj/machinery/atmospherics/components/binary/valve/on{
-	icon_state = "mvalve_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "mvalve_map-2"
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -417,7 +422,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bF" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/chief_medical,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bG" = (
@@ -481,7 +486,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bT" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bU" = (
@@ -910,7 +915,7 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/twohanded/fireaxe,
+/obj/item/fireaxe,
 /obj/item/extinguisher,
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1025,7 +1030,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1092,9 +1097,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "eQ" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 4
+/obj/structure/railing{
+	dir = 4;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1104,8 +1109,8 @@
 /area/engine/storage)
 "eX" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 4
+	dir = 4;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1132,10 +1137,14 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/engine/storage)
+"fp" = (
+/obj/structure/lattice/catwalk,
+/turf/open/transparent/openspace,
+/area/engine/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "connector_map-2"
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
@@ -1153,8 +1162,8 @@
 /area/hallway/primary/central)
 "hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "inje_map-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1170,7 +1179,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "hY" = (
-/obj/structure/fluff/railing/corner,
+/obj/structure/railing/corner,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "ij" = (
@@ -1185,18 +1194,17 @@
 /turf/open/floor/plating,
 /area/space)
 "iq" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/construction)
 "iu" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/hallway/secondary/service)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
-	dir = 4
+/obj/structure/railing/corner{
+	dir = 4;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1206,32 +1214,37 @@
 	},
 /area/hallway/secondary/service)
 "jb" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "jA" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 8
+	dir = 8;
+	icon_state = "warningline_white"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/storage)
 "jD" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/construction)
+"jL" = (
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "jT" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/construction)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 6
+	dir = 6;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1257,17 +1270,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"lT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mb" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/storage)
+"mG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mZ" = (
 /turf/open/floor/plasteel{
 	dir = 4
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1276,10 +1303,14 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "nF" = (
-/obj/structure/cable,
-/obj/machinery/power/deck_relay,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"nS" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "od" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/structure/window/reinforced,
@@ -1311,17 +1342,29 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"pi" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/transparent/openspace,
+/area/hallway/secondary/service)
 "qo" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
+"qx" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 9
+	dir = 9;
+	icon_state = "warningline_white"
 	},
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
-	dir = 1
+/obj/structure/railing/corner{
+	dir = 1;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1329,7 +1372,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1344,31 +1387,31 @@
 	},
 /area/hallway/secondary/service)
 "sm" = (
-/obj/structure/stairs,
+/obj/structure/stairs/south,
 /turf/open/floor/plating,
 /area/construction)
 "su" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
+/obj/structure/railing{
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "sE" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 4
+	dir = 4;
+	icon_state = "warningline_white"
 	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
+/obj/structure/railing{
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 8
+	dir = 8;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1386,12 +1429,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"va" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/construction)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1430,8 +1467,8 @@
 /area/construction)
 "xB" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1439,6 +1476,17 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"xK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"xO" = (
+/obj/structure/lattice,
+/turf/open/transparent/openspace,
+/area/engine/storage)
 "yl" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1448,14 +1496,25 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
-"zd" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 4
+"yR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"yX" = (
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"zd" = (
+/obj/structure/railing{
+	dir = 4;
+	icon_state = "railing"
+	},
+/obj/structure/railing{
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1466,8 +1525,8 @@
 /area/construction)
 "zZ" = (
 /obj/structure/disposalpipe/trunk{
-	icon_state = "pipe-t";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe-t"
 	},
 /obj/machinery/disposal/bin,
 /turf/open/floor/plating,
@@ -1477,9 +1536,9 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "Ai" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
-	dir = 8
+/obj/structure/railing/corner{
+	dir = 8;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1503,7 +1562,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1512,7 +1571,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
 /area/storage/primary)
 "BM" = (
 /obj/machinery/power/apc/auto_name/north,
@@ -1533,8 +1593,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "CP" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1557,9 +1616,9 @@
 /area/engine/storage)
 "Eb" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
+/obj/structure/railing{
+	dir = 1;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1569,12 +1628,12 @@
 /area/construction)
 "EH" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline_white"
 	},
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 4
+	dir = 4;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1589,8 +1648,8 @@
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1602,7 +1661,9 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "Hk" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/construction)
 "Hp" = (
@@ -1610,8 +1671,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "In" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1621,10 +1681,10 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "IL" = (
-/obj/structure/fluff/railing/corner,
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
-	dir = 8
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 8;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1670,9 +1730,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "Lu" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 4
+/obj/structure/railing{
+	dir = 4;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1694,15 +1754,14 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Pm" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+/obj/structure/railing/corner{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1721,8 +1780,8 @@
 /area/engine/storage)
 "Qo" = (
 /obj/structure/disposalpipe/trunk/multiz/down{
-	icon_state = "pipe-down";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe-down"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1745,9 +1804,14 @@
 /obj/item/construction/plumbing,
 /turf/open/floor/plasteel,
 /area/construction)
+"SN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "Tf" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/structure/railing{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1770,12 +1834,11 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "UH" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vm" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vn" = (
@@ -1797,7 +1860,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "XN" = (
-/obj/structure/fluff/railing,
+/obj/structure/railing,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "XQ" = (
@@ -1811,14 +1874,25 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"Zv" = (
+/obj/structure/railing/corner,
+/turf/open/floor/plating,
+/area/construction)
 "ZH" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /turf/open/floor/plating,
 /area/construction)
 "ZQ" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 5
+	dir = 5;
+	icon_state = "warningline_white"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2662,7 +2736,7 @@ gY
 bO
 bO
 yt
-va
+vT
 dn
 dn
 dn
@@ -2886,7 +2960,7 @@ dn
 dn
 dn
 dn
-dn
+Zv
 In
 jD
 dL
@@ -2994,7 +3068,7 @@ dn
 dn
 dn
 dn
-dn
+qx
 CP
 Pm
 ij
@@ -3742,9 +3816,9 @@ cH
 cI
 cJ
 by
-dJ
-dJ
-dB
+dk
+dk
+dC
 dl
 dE
 dH
@@ -3796,9 +3870,9 @@ eo
 eo
 cK
 by
-dJ
-dJ
-dB
+Zk
+mG
+xK
 dl
 dF
 dk
@@ -3850,9 +3924,9 @@ eo
 eo
 cL
 by
-dJ
-dJ
-dB
+aW
+yX
+nS
 dl
 dl
 dl
@@ -3904,9 +3978,9 @@ eo
 eo
 cM
 by
-dk
+yR
 Bm
-dC
+lT
 dl
 dl
 dl
@@ -5747,7 +5821,7 @@ Gb
 jb
 LE
 IC
-jb
+jL
 Gb
 XN
 iu
@@ -6551,9 +6625,9 @@ iK
 iK
 en
 TY
-dY
-dY
-dY
+SN
+SN
+SN
 eF
 iu
 iu
@@ -6605,9 +6679,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6659,9 +6733,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6713,9 +6787,9 @@ dY
 dY
 dY
 TY
-dY
-eN
-dY
+iu
+pi
+iu
 eF
 iu
 iu
@@ -8771,7 +8845,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8825,7 +8899,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8877,17 +8951,17 @@ ej
 Qw
 Qw
 Vn
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -8925,15 +8999,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -8979,15 +9053,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9033,15 +9107,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9087,15 +9161,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9141,15 +9215,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9195,15 +9269,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9249,15 +9323,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9303,15 +9377,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9357,15 +9431,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9411,15 +9485,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9452,36 +9526,36 @@ au
 au
 au
 AG
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+fp
 qo
 qo
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+fp
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -9519,15 +9593,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9573,15 +9647,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9627,15 +9701,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
 qo
+xO
 qo
 qo
 qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo

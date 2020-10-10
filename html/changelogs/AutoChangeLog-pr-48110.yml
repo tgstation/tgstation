@@ -1,5 +1,0 @@
-author: "MrPerson"
-delete-after: True
-changes: 
-  - rscadd: "Solar panels will visually rotate a lot more smoothly instead of being locked to only 8 directions."
-  - rscadd: "Timed solar tracking is in degrees per minute. You're still not gonna use it though."

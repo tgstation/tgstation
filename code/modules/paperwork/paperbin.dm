@@ -3,7 +3,7 @@
 	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
-	item_state = "sheet-metal"
+	inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	throwforce = 0
@@ -86,8 +86,7 @@
 			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-					P.rigged = 1
-					P.updateinfolinks()
+					P.AddComponent(/datum/component/honkspam)
 
 		P.add_fingerprint(user)
 		P.forceMove(user.loc)
@@ -125,14 +124,16 @@
 		. += "It doesn't contain anything."
 
 
-/obj/item/paper_bin/update_icon()
+/obj/item/paper_bin/update_icon_state()
 	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
-	cut_overlays()
+
+/obj/item/paper_bin/update_overlays()
+	. = ..()
 	if(bin_pen)
-		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
+		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"

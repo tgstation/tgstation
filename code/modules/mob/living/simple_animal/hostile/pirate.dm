@@ -52,7 +52,10 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+
+/mob/living/simple_animal/hostile/pirate/melee/space/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/pirate/melee/Initialize()
 	. = ..()
@@ -78,8 +81,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/projectile/beam/laser
-	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
-			/obj/item/gun/energy/laser)
+	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged)
 
 /mob/living/simple_animal/hostile/pirate/ranged/space
 	name = "Space Pirate Gunner"
@@ -89,4 +91,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
-	spacewalk = TRUE
+
+/mob/living/simple_animal/hostile/pirate/ranged/space/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)

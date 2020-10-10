@@ -5,6 +5,7 @@
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "ninja"
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
@@ -37,9 +38,9 @@
 		if(M.current && M.current.stat != DEAD)
 			if(ishuman(M.current))
 				if(M.special_role)
-					possible_targets[M] = 0						//bad-guy
+					possible_targets[M] = FALSE						//bad-guy
 				else if(M.assigned_role in GLOB.command_positions)
-					possible_targets[M] = 1						//good-guy
+					possible_targets[M] = TRUE						//good-guy
 
 	var/list/possible_objectives = list(1,2,3,4)
 

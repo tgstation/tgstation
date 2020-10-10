@@ -7,11 +7,12 @@
 	desc = "A big white-and-blue pet carrier. Good for carrying <s>meat to the chef</s> cute animals around."
 	icon = 'icons/obj/pet_carrier.dmi'
 	icon_state = "pet_carrier_open"
-	item_state = "pet_carrier"
+	inhand_icon_state = "pet_carrier"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 5
-	attack_verb = list("bashed", "carried")
+	attack_verb_continuous = list("bashes", "carries")
+	attack_verb_simple = list("bash", "carry")
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
@@ -114,9 +115,9 @@
 		update_icon()
 		return
 	else if(user.client)
-		container_resist(user)
+		container_resist_act(user)
 
-/obj/item/pet_carrier/container_resist(mob/living/user)
+/obj/item/pet_carrier/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.mob_size <= MOB_SIZE_SMALL)
@@ -141,14 +142,16 @@
 		update_icon()
 		remove_occupant(user)
 
-/obj/item/pet_carrier/update_icon()
-	cut_overlay("unlocked")
-	cut_overlay("locked")
+/obj/item/pet_carrier/update_icon_state()
 	if(open)
 		icon_state = initial(icon_state)
 	else
 		icon_state = "pet_carrier_[!occupants.len ? "closed" : "occupied"]"
-		add_overlay("[locked ? "" : "un"]locked")
+
+/obj/item/pet_carrier/update_overlays()
+	. = ..()
+	if(!open)
+		. += "[locked ? "" : "un"]locked"
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
 	. = ..()

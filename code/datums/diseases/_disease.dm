@@ -41,14 +41,14 @@
 	SSdisease.active_diseases.Remove(src)
 
 //add this disease if the host does not already have too many
-/datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
+/datum/disease/proc/try_infect(mob/living/infectee, make_copy = TRUE)
 	infect(infectee, make_copy)
 	return TRUE
 
 //add the disease with no checks
-/datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)
+/datum/disease/proc/infect(mob/living/infectee, make_copy = TRUE)
 	var/datum/disease/D = make_copy ? Copy() : src
-	infectee.diseases += D
+	LAZYADD(infectee.diseases, D)
 	D.affected_mob = infectee
 	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
@@ -62,24 +62,22 @@
 /datum/disease/proc/admin_details()
 	return "[src.name] : [src.type]"
 
+
+///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act()
-	var/cure = has_cure()
-
-	if(carrier && !cure)
-		return
-
-	stage = min(stage, max_stages)
-
-	if(!cure)
-		if(prob(stage_prob))
-			update_stage(min(stage + 1,max_stages))
-	else
+	if(has_cure())
 		if(prob(cure_chance))
 			update_stage(max(stage - 1, 1))
 
-	if(disease_flags & CURABLE)
-		if(cure && prob(cure_chance))
+		if(disease_flags & CURABLE && prob(cure_chance))
 			cure()
+			return FALSE
+
+	else if(prob(stage_prob))
+		update_stage(min(stage + 1, max_stages))
+
+	return !carrier
+
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
@@ -90,7 +88,7 @@
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id))
+		if(!affected_mob.has_reagent(C_id))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
@@ -103,7 +101,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2
@@ -125,7 +123,7 @@
 		if(end == start)
 			return TRUE
 		var/turf/Temp = get_step_towards(end, start)
-		if(!CANATMOSPASS(end, Temp))
+		if(!TURFS_CAN_SHARE(end, Temp)) //Don't go through a wall
 			return FALSE
 		end = Temp
 
@@ -133,7 +131,7 @@
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
-			affected_mob.disease_resistances |= GetDiseaseID()
+			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -166,7 +164,7 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
-	affected_mob.diseases -= src		//remove the datum from the list
+	LAZYREMOVE(affected_mob.diseases, src)	//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
 

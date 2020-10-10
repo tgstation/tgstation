@@ -51,6 +51,10 @@
 		return FALSE
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return FALSE
+	if(ispath(typepath, /datum/round_event/ghost_role) && GHOSTROLE_MIDROUND_EVENT)
+		return FALSE
 	return TRUE
 
 /datum/round_event_control/proc/preRunEvent()
@@ -94,7 +98,7 @@
 	if(random)
 		log_game("Random Event triggering: [name] ([typepath])")
 	if (alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>") //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 	return E
 
 //Special admins setup
@@ -166,6 +170,7 @@
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.
 /datum/round_event/process()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!processing)
 		return
 

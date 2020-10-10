@@ -25,7 +25,7 @@
 /turf/open/floor/engine/burn_tile()
 	return //unburnable
 
-/turf/open/floor/engine/make_plating(force = 0)
+/turf/open/floor/engine/make_plating(force = FALSE)
 	if(force)
 		..()
 	return //unplateable
@@ -49,7 +49,7 @@
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
-	. = ..()
+	return ..()
 
 /turf/open/floor/engine/ex_act(severity,target)
 	var/shielded = is_shielded()
@@ -81,7 +81,7 @@
 		if(floor_tile)
 			if(prob(30))
 				new floor_tile(src)
-				make_plating()
+				make_plating(TRUE)
 		else if(prob(30))
 			ReplaceWithLattice()
 
@@ -118,6 +118,69 @@
 	name = "\improper N2 floor"
 	initial_gas_mix = ATMOS_TANK_N2
 
+/turf/open/floor/engine/bz
+	name = "\improper BZ floor"
+	initial_gas_mix = ATMOS_TANK_BZ
+
+/turf/open/floor/engine/freon
+	name = "\improper Freon floor"
+	initial_gas_mix = ATMOS_TANK_FREON
+
+/turf/open/floor/engine/halon
+	name = "\improper Halon floor"
+	initial_gas_mix = ATMOS_TANK_HALON
+
+/turf/open/floor/engine/healium
+	name = "\improper Healium floor"
+	initial_gas_mix = ATMOS_TANK_HEALIUM
+
+/turf/open/floor/engine/hexane
+	name = "\improper Hexane floor"
+	initial_gas_mix = ATMOS_TANK_HEXANE
+
+/turf/open/floor/engine/h2
+	article = "an"
+	name = "\improper H2 floor"
+	initial_gas_mix = ATMOS_TANK_H2
+
+/turf/open/floor/engine/hypernoblium
+	name = "\improper Hypernoblium floor"
+	initial_gas_mix = ATMOS_TANK_HYPERNOBLIUM
+
+/turf/open/floor/engine/miasma
+	name = "\improper Miasma floor"
+	initial_gas_mix = ATMOS_TANK_MIASMA
+
+/turf/open/floor/engine/no2
+	article = "an"
+	name = "\improper NO2 floor"
+	initial_gas_mix = ATMOS_TANK_NO2
+
+/turf/open/floor/engine/pluoxium
+	name = "\improper Pluoxium floor"
+	initial_gas_mix = ATMOS_TANK_PLUOXIUM
+
+/turf/open/floor/engine/proto_nitrate
+	name = "\improper Proto-Nitrate floor"
+	initial_gas_mix = ATMOS_TANK_PROTO_NITRATE
+
+/turf/open/floor/engine/stimulum
+	name = "\improper Stimulum floor"
+	initial_gas_mix = ATMOS_TANK_STIMULUM
+
+/turf/open/floor/engine/tritium
+	name = "\improper Tritium floor"
+	initial_gas_mix = ATMOS_TANK_TRITIUM
+
+/turf/open/floor/engine/h2o
+	article = "an"
+	name = "\improper H2O floor"
+	initial_gas_mix = ATMOS_TANK_H2O
+
+/turf/open/floor/engine/zauker
+	name = "\improper Zauker floor"
+	initial_gas_mix = ATMOS_TANK_ZAUKER
+
 /turf/open/floor/engine/air
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX
@@ -148,8 +211,7 @@
 	return ..()
 
 /turf/open/floor/engine/cult/proc/be_removed()
-	qdel(realappearance)
-	realappearance = null
+	QDEL_NULL(realappearance)
 
 /turf/open/floor/engine/cult/airless
 	initial_gas_mix = AIRLESS_ATMOS

@@ -117,7 +117,7 @@
 		new /obj/item/stack/sheet/metal(loc)
 	qdel(src)
 
-/obj/machinery/iv_drip/process()
+/obj/machinery/iv_drip/process(delta_time)
 	if(!attached)
 		return PROCESS_KILL
 
@@ -138,13 +138,13 @@
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount *= 2
-				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+				beaker.reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_icon()
 
 		// Take blood
 		else
 			var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-			amount = min(amount, 4)
+			amount = min(amount, 4) * delta_time * 0.5
 			// If the beaker is full, ping
 			if(!amount)
 				if(prob(5))
@@ -240,14 +240,16 @@
 	density = TRUE
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
-    . = ..()
-    beaker = new /obj/item/reagent_containers/glass/saline(src)
+	. = ..()
+	beaker = new /obj/item/reagent_containers/glass/saline(src)
 
-/obj/machinery/iv_drip/saline/update_icon()
-    return
+/obj/machinery/iv_drip/saline/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/iv_drip/saline/eject_beaker()
-    return
+	return
+
 /obj/machinery/iv_drip/saline/toggle_mode()
 	return
 #undef IV_TAKING

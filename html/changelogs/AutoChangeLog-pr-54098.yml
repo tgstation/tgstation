@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Using mecha drills to turn living things into not living piles of gibs will no longer prevent you from doing surgery for the rest of the round."

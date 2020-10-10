@@ -4,6 +4,7 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
+	light_color = COLOR_SOFT_RED
 	var/id = 0
 	var/temp = null
 	var/status = 0
@@ -12,7 +13,6 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	circuit = /obj/item/circuitboard/computer/prisoner
 
-	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/prisoner/management/ui_interact(mob/user)
 	. = ..()
@@ -65,7 +65,6 @@
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
@@ -124,7 +123,7 @@
 				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
 
 		else if(href_list["warn"])
-			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+			var/warning = stripped_input(usr, "Message:", "Enter your message here!", "", MAX_MESSAGE_LEN)
 			if(!warning)
 				return
 			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants

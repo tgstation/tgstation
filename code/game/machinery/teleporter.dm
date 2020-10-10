@@ -13,7 +13,7 @@
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
 	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
-	var/calibrated //Calibration prevents mutation
+	var/calibrated = FALSE//Calibration prevents mutation
 
 /obj/machinery/teleport/hub/Initialize()
 	. = ..()
@@ -70,19 +70,20 @@
 		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (ismovableatom(M))
+	if (ismovable(M))
 		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					if(human.dna && human.dna.species.id == "human")
-						to_chat(M, "<span class='hear'>You hear a buzzing in your ears.</span>")
-						human.set_species(/datum/species/fly)
-						log_game("[human] ([key_name(human)]) was turned into a fly person")
+					if(!(human.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_UNDEAD|MOB_SPIRIT)))
+						if(human.dna && human.dna.species.id != "fly")
+							to_chat(M, "<span class='hear'>You hear a buzzing in your ears.</span>")
+							human.set_species(/datum/species/fly)
+							log_game("[human] ([key_name(human)]) was turned into a fly person")
 
 					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
-			calibrated = 0
+			calibrated = FALSE
 	return
 
 /obj/machinery/teleport/hub/update_icon_state()
@@ -94,13 +95,13 @@
 		icon_state = "tele0"
 
 /obj/machinery/teleport/hub/proc/is_ready()
-	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
+	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/Initialize()
 	. = ..()
-	component_parts += new /obj/item/stock_parts/matter_bin/super(null)
+	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
+	LAZYADD(component_parts, super_bin)
 	RefreshParts()
-
 
 /obj/machinery/teleport/station
 	name = "teleporter station"
@@ -195,10 +196,10 @@
 	toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
-	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
+	if(machine_stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
-		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
+		if(teleporter_hub.panel_open || teleporter_hub.machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
 			engaged = !engaged
@@ -218,7 +219,7 @@
 /obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "controller-o"
-	else if(stat & (BROKEN|NOPOWER))
+	else if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
 	else if(teleporter_console && teleporter_console.calibrating)
 		icon_state = "controller-c"

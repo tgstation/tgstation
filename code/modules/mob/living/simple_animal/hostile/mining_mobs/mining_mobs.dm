@@ -21,13 +21,9 @@
 	var/icon_aggro = null
 	var/crusher_drop_mod = 25
 
-/mob/living/simple_animal/hostile/asteroid/Initialize(mapload)
-	. = ..()
-	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
-	if(vision_range != aggro_vision_range)
+	if(vision_range == aggro_vision_range && icon_aggro)
 		icon_state = icon_aggro
 
 /mob/living/simple_animal/hostile/asteroid/LoseAggro()
@@ -67,5 +63,9 @@
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
+		throw_alert("temp", /obj/screen/alert/cold, 1)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
