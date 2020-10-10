@@ -1,6 +1,4 @@
 
-
-
 /obj/effect/rollercoaster_hint
 	name="rollercoaster hint"
 	invisibility = INVISIBILITY_ABSTRACT //nope, can't see this
@@ -30,11 +28,11 @@
 	coaster.z -= 1
 
 /obj/vehicle/ridden/rollercoaster
-	name = "Terror of the tracks"
+	name = "Terror of the Tracks"
 	desc = "The lord of the night has issues getting a job, so they're really gunning to keep this one."
 	icon = 'icons/mob/eldritch_mobs.dmi'
 	icon_state = "armsy_start"
-	max_integrity = 6 YEARS //scared?
+	max_integrity = 666 HOURS //scared?
 	armor = list(MELEE = 50, BULLET = 25, LASER = 20, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
@@ -68,7 +66,6 @@
 		to_chat(user, "<span class='notice'>Just sit still and enjoy the ride, jesus christ.</span>")
 	return TRUE
 
-
 /obj/vehicle/ridden/rollercoaster/proc/find_previous_coasters(start_previous = TRUE)
 	. = list()
 	var/search_direction = turn(dir, 180)
@@ -81,6 +78,9 @@
 			trailercoaster = locate() in trailerturf
 
 /obj/vehicle/ridden/rollercoaster/proc/start(start_previous = TRUE)
+	for(var/m in occupants)
+		var/mob/living/rider = m
+		rider.Stun(666 HOURS)//JANK ALERT
 	current_pipe = locate() in get_turf(src)
 	in_progress = TRUE
 	INVOKE_ASYNC(current_pipe, /obj/structure/disposalpipe/proc/coaster_travel, src)
@@ -103,13 +103,13 @@
 	for(var/i in previous_coasters) //stops movement, and since some parts will not have reached the final terminus we need to move them there ourselves
 		var/obj/vehicle/ridden/rollercoaster/coaster = i
 		coaster.in_progress = FALSE
+		var/mob/living/rider = occupants[1]
+		if(rider)
+			rider.forceMove(trailerturf)
 		coaster.forceMove(trailerturf)
 		coaster.dir = dir
 		trailerturf = get_step(coaster, search_direction)//turf behind now corrected coaster
-	unbuckle_all_mobs()
-	for(var/ii in previous_coasters) //now that everyone's in the correct spot, lets remove all the people riding.
-		var/obj/vehicle/ridden/rollercoaster/disembark = ii
-		disembark.unbuckle_all_mobs()
+	addtimer(CALLBACK(src, .proc/start), 30 SECONDS) //auto restart 30 secs!
 
 /obj/vehicle/ridden/rollercoaster/Move(newloc, dir)
 	. = ..()
@@ -118,3 +118,15 @@
 	hint = locate() in destination
 	if(hint)
 		hint.action(src)
+
+/obj/vehicle/ridden/rollercoaster/Bump(atom/clong)
+
+	if(isturf(clong) || isobj(clong))
+		if(clong.density && !isturf(clong))
+			qdel(clong)
+	else if(isliving(clong))
+		penetrate(clong)
+
+/obj/vehicle/ridden/rollercoaster/proc/penetrate(mob/living/smeared_mob)
+	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is smashed by [src]!</span>" , "<span class='userdanger'>The coaster smashes you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
+	smeared_mob.gib()

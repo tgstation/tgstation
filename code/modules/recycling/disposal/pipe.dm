@@ -72,7 +72,7 @@
 // overridden for special behaviour
 /obj/structure/disposalpipe/proc/coaster_travel(obj/vehicle/ridden/rollercoaster/coaster)
 	coaster.setDir(nextdir_coaster(coaster))
-	coaster.forceMove(get_step(coaster, coaster.dir))
+	step(coaster, coaster.dir)
 	coaster.current_pipe = locate() in get_turf(coaster)
 	sleep(coaster.coaster_speed)
 	if(coaster.in_progress)
