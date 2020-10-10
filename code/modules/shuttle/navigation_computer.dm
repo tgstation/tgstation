@@ -1,4 +1,4 @@
-/obj/machinery/computer/camera_advanced/shuttle_docker 
+/obj/machinery/computer/camera_advanced/shuttle_docker
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
