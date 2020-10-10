@@ -95,6 +95,9 @@
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
+	if(SSmapping.level_has_any_trait(z, locked_traits))
+		to_chat(user, "<span class='warning'>The bluespace interference is jamming the console!</span>")
+		return
 	..()
 	if(!QDELETED(user) && user.client)
 		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
@@ -106,6 +109,7 @@
 
 		user.client.images += to_add
 		user.client.view_size.setTo(view_range)
+		the_eye.forceMove(locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z))
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
