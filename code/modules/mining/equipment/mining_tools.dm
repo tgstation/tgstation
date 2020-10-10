@@ -18,6 +18,7 @@
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb_simple = list("hit", "pierce", "mine", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
+	armour_penetration = 15
 	wound_bonus = 30
 	sharpness = SHARP_POINTY
 
@@ -116,6 +117,7 @@
 	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
 	force = 20
+	armour_penetration = 25
 	sharpness = SHARP_NONE
 	bare_wound_bonus = 25 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 
