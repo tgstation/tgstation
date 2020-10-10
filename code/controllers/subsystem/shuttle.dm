@@ -702,6 +702,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
+	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.	
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
 

@@ -180,7 +180,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(!(M.mobility_flags & MOBILITY_STAND))
+			if(M.body_position == LYING_DOWN)
 				if(M.buckled)
 					dat += " (Sitting)"
 				else

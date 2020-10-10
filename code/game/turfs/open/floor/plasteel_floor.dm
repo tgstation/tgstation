@@ -96,7 +96,10 @@
 
 /turf/open/floor/plasteel/kitchen_coldroom
 	name = "cold room floor"
+
+/turf/open/floor/plasteel/kitchen_coldroom/Initialize()
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+	. = ..()
 
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"
