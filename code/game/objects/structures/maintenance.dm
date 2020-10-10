@@ -115,14 +115,16 @@ at the cost of risking a vicious bite.**/
 	break_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
-	var/beret_color = "#ffffff"
+	/// Color of the beret that will come out
+	var/beret_color = COLOR_WHITE
+	/// Stage of the beret making process
 	var/status = ALTAR_INACTIVE
 
 /obj/structure/destructible/cult/beret_altar/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user) && status)
 		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/structure/destructible/cult/beret_altar/update_overlays()
 	. = ..()
@@ -173,7 +175,7 @@ at the cost of risking a vicious bite.**/
 		mob.flash_act()
 	var/obj/item/clothing/head/beret/greyscale/beret = new /obj/item/clothing/head/beret/greyscale(get_turf(src))
 	beret.add_atom_colour(beret_color, ADMIN_COLOUR_PRIORITY)
-	cooldowntime = world.time + 1 MINUTES
+	COOLDOWN_START(src, cooldowntime, 1 MINUTES)
 
 /obj/structure/destructible/cult/beret_altar/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -205,8 +207,9 @@ at the cost of risking a vicious bite.**/
 			if (!isnull(chosen_color) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 				beret_color = chosen_color
 		if("create")
-			if(cooldowntime > world.time)
+			if(!COOLDOWN_FINISHED(src, cooldowntime))
 				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
+				return
 			beret_stageone()
 	return TRUE
 
