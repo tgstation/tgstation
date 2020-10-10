@@ -475,7 +475,7 @@
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
 	var/static/datum/callback/rest_checks = CALLBACK(src, .proc/rest_checks_callback)
-	if(!instant && !do_mob(src, src, 2 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
+	if(!instant && !do_mob(src, src, 1 SECONDS, uninterruptible = TRUE, extra_checks = rest_checks))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -614,6 +614,8 @@
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
+		if(admin_revive)
+			get_up(TRUE)
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -625,6 +627,10 @@
 		if(excess_healing)
 			INVOKE_ASYNC(src, .proc/emote, "gasp")
 			log_combat(src, src, "revived")
+	else if(admin_revive)
+		updatehealth()
+		get_up(TRUE)
+
 
 /mob/living/proc/remove_CC()
 	SetStun(0)
