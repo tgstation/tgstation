@@ -821,3 +821,7 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
+
+
+// i hope this works
+#define COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS "spellsword_armor"

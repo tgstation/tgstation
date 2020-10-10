@@ -1785,6 +1785,7 @@
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\_spacesuits.dm"
+#include "code\modules\clothing\spacesuits\bigboiarmor.dm"
 #include "code\modules\clothing\spacesuits\chronosuit.dm"
 #include "code\modules\clothing\spacesuits\hardsuit.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
