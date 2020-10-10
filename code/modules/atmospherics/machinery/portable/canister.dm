@@ -83,6 +83,12 @@
 	. = ..()
 	if(mode)
 		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit(pressure_limit, "Pa", 0)]</b>.</span>"
+	if(!in_range(src, user) && !isobserver(user))
+		. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+		return
+	. += "<span class='notice'>The pressure and temperature gauges read:</span>"
+	. += "<span class='notice'>- [round(air_contents.return_pressure(),0.01)] kPa.</span>"
+	. += "<span class='notice'>- [round(air_contents.return_temperature(),0.01)] K.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
