@@ -173,6 +173,11 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
 
+/obj/item/circuitboard/computer/shuttle_docker
+	name = "circuit board (Navigation Computer)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker
+
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"
 	icon_state = "engineering"
