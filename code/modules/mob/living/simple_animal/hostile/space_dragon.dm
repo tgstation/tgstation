@@ -5,7 +5,7 @@
 /// The carp rift is now fully charged.
 #define CHARGE_COMPLETED		2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		ReadHSV("#7F7F7F")[3]
+#define DARKNESS_THRESHOLD		0.5
 
 /**
   * # Space Dragon
