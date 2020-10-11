@@ -830,15 +830,13 @@
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
-// rot component
-
+// /datum/component/rot component
 ///to rot start_processing()
 #define COMSIG_START_MIASMA_GENERATION "rot_start"
 ///to rot stop_processing()
 #define COMSIG_STOP_MIASMA_GENERATION "rot_stop"
 
-// atmos sensitivity component
-
+// /datum/component/atmos_sensitive
 //from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature): (datum/component/atmos_sensitive)
 #define COMSIG_TURF_EXPOSE "turf_expose"
 
