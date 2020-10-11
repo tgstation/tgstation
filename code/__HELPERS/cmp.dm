@@ -145,14 +145,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	var/lhs
 	var/rhs
 
-	if(ispath(A, /datum/reagent))
-		lhs = 0
-	else
-		lhs = 1
-
-	if(ispath(B, /datum/reagent))
-		rhs = 0
-	else
-		rhs = 1
+	lhs = ispath(A, /datum/reagent) ? 0 : 1
+	rhs = ispath(B, /datum/reagent) ? 0 : 1
 
 	return lhs - rhs
