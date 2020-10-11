@@ -430,21 +430,24 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		var/datum/gas_reaction/reaction = G
 		if(cached_gases[reaction.major_gas])
 			reactions += G
+
 	if(!length(reactions))
 		return
+
 	reaction_results = new
-	var/cached_temp = temperature
-	var/cached_energy = THERMAL_ENERGY(src)
+	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be carful
+	var/temp = temperature
+	var/ener = THERMAL_ENERGY(src)
+
 	reaction_loop:
 		for(var/r in reactions)
-			var/garbage = NO_REACTION
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-
-			if((min_reqs["TEMP"] && cached_temp < min_reqs["TEMP"]) \
-			|| (min_reqs["MAX_TEMP"] && cached_temp > min_reqs["MAX_TEMP"]) \
-			|| (min_reqs["ENER"] && cached_energy < min_reqs["ENER"]))
+			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
+				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
+				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
+			)
 				continue
 
 			for(var/id in min_reqs)
@@ -455,18 +458,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 
-			garbage = reaction.react(src, holder)
+			. |= reaction.react(src, holder)
 
-			if(garbage) // really garbage > NO_REACTION, but ehhhhhhhhhhhhhhhhhhh
-				garbage_collect() //Collect each reaction that changes the mix so some fuck doesn't STEAL ALL MY BZ YOU MOTHERFUCKE
-				cached_energy = THERMAL_ENERGY(src)
-				cached_temp = temperature
-
-			. |= garbage
-
-			if (garbage & STOP_REACTIONS)
+			if (. & STOP_REACTIONS)
 				break
 
+	if(.) //If we changed the mix to any degree, or if we stopped reacting
+		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument
 ///So I don't have to do some hacky switches/defines/magic strings
