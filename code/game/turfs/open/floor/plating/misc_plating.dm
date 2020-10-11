@@ -287,6 +287,7 @@
 /turf/open/floor/plating/grass/fall
 	name = "grass"
 	desc = "A patch of grass."
+	icon = 'icons/misc/back_to_the_lab_again.dmi'
 	icon_state = "grass_autumn"
 	base_icon_state = "grass_autumn"
 	smoothing_groups = null
