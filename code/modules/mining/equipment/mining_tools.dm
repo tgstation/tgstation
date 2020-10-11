@@ -133,6 +133,9 @@
 	inhand_icon_state = "ipickaxe"
 	worn_icon_state = "pickaxe"
 	force = 10
+	armour_penetration = 15
+	wound_bonus = 5
+	bare_wound_bonus = 10
 	throwforce = 7
 	toolspeed = 3 //3 times slower than a normal pickaxe
 	slot_flags = ITEM_SLOT_BELT

@@ -261,7 +261,10 @@
 	icon_state = "digging_pen"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	force = 3
+	force = 7 // The absolute minimum value capable of inflicting wounds on a bio-just-bone target.
+	armour_penetration = 10
+	wound_bonus = 10
+	bare_wound_bonus = 15 // Just barely enough to cause basic piercing wounds and bone wounds.
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
 	pressure_resistance = 2
