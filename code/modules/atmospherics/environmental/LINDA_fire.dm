@@ -64,6 +64,7 @@
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
+#ifndef HALT_ATMOS
 	SSair.hotspots += src
 	if(!isnull(starting_volume))
 		volume = starting_volume
@@ -72,6 +73,9 @@
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf()
+#else
+	qdel(src)
+#endif
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
