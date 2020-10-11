@@ -34,6 +34,7 @@
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
+	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
 
 /datum/brain_trauma/special/obsessed/on_life()
 	if(!obsession || obsession.stat == DEAD)
@@ -76,7 +77,7 @@
 	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
 		speech_args[SPEECH_MESSAGE] = ""
 
-/datum/brain_trauma/special/obsessed/on_hug(mob/living/hugger, mob/living/hugged)
+/datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)
 	if(hugged == obsession)
 		obsession_hug_count++
 
@@ -90,7 +91,7 @@
 			owner.vomit()
 			fail = TRUE
 		if(2)
-			owner.emote("cough")
+			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
 			owner.dizziness += 10
 			fail = TRUE
 		if(3)

@@ -1,0 +1,4 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen has performed repairs on the escape pod navigation computers and they will once again dock at the CentComm recovery ship in the unlikely event of an evacuation."

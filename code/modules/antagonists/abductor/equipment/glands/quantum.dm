@@ -38,6 +38,7 @@
 			var/obj/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert("mind_control", /obj/screen/alert/mind_control)
 			mind_alert.command = command
 			message_admins("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
+			log_game("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
 			update_gland_hud()
 
 /obj/item/organ/heart/gland/quantum/clear_mind_control()

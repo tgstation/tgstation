@@ -416,16 +416,9 @@
 			var/value = params["value"]
 			var/reverse = params["reverse"]
 			if (reverse)
-				message_admins("reversed")
 				temp_pod.reverse_delays[delay] = value * 10
 			else
-				message_admins("not reversed")
 				temp_pod.delays[delay] = value * 10
-			message_admins("output:")
-			for (var/thing in temp_pod.reverse_delays)
-				message_admins(temp_pod.reverse_delays[thing])
-			for (var/thing in temp_pod.delays)
-				message_admins(temp_pod.delays[thing])
 			. = TRUE
 		if("resetTiming")
 			temp_pod.delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)

@@ -69,7 +69,7 @@
 					continue
 			else if(carbontarget && surgeryloop_two.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
-			if(surgeryloop_two.lying_required && (livingtarget.mobility_flags & MOBILITY_STAND))
+			if(surgeryloop_two.lying_required && livingtarget.body_position != LYING_DOWN)
 				continue
 			if(!surgeryloop_two.can_start(user, livingtarget))
 				continue
@@ -100,7 +100,7 @@
 					return
 			else if(carbontarget && surgeryinstance_notonmob.requires_bodypart)
 				return
-			if(surgeryinstance_notonmob.lying_required && (livingtarget.mobility_flags & MOBILITY_STAND))
+			if(surgeryinstance_notonmob.lying_required && livingtarget.body_position != LYING_DOWN)
 				return
 			if(!surgeryinstance_notonmob.can_start(user, livingtarget))
 				return
