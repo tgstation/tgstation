@@ -12,6 +12,8 @@
 #define WOUND_DISMEMBER_OUTRIGHT_THRESH	250
 /// set wound_bonus on an item or attack to this to disable checking wounding for the attack
 #define CANT_WOUND -100
+/// How much bonus wounding power a mining tool has when it's applied to a [BIO_JUST_BONE] organ.
+#define MINING_BONE_WOUND_BONUS		40
 
 // ~wound severities
 /// for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds

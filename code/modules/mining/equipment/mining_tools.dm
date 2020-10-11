@@ -18,8 +18,8 @@
 	attack_verb_simple = list("hit", "pierce", "mine", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
 	force = 15
-	armour_penetration = 25 // Somewhere between spears and broadswords.
-	wound_bonus = 60 // With 15 force this must be at least 56 to inflict a compound fracture on a [BIO_JUST_BONE] bodypart with a hairline fracture.
+	armour_penetration = 25
+	wound_bonus = 25
 	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
@@ -79,10 +79,10 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	force = 18
-	armour_penetration = -40 // Apparently drills have trouble chewing through fibers and smooth metal because they're designed for rock.
-	wound_bonus = -17 // Since they can't get through your armor they aren't going to chew through your skin are they? Must roll a rough abrasion before they can roll a open laceration. Cannot roll a weeping avulsion through armor.
-	bare_wound_bonus = 75 // WARNING: DO NOT APPLY TOPICALLY, SEVERE HEMORRHAGE MAY OCCUR. NOTE: I don't like how high this is either but, in order to be able to inflict a critical bone wound on a BIO_JUST_BONE bodypart with 18 force and no armor the total wound bonus must be at least _58_. This is literally as low as I can make this without refactoring how wounds are dealt.
-	sharpness = SHARP_EDGED // The drill head is wider than most pointy objects, likely serrated, and spinning at high speed.
+	armour_penetration = -40
+	wound_bonus = -20
+	bare_wound_bonus = 50
+	sharpness = SHARP_EDGED
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
@@ -123,8 +123,8 @@
 	force = 5 // Sound usually passes through the body relatively harmlessly.
 	armour_penetration = 80
 	sharpness = SHARP_NONE
-	wound_bonus = 80 // Must be >= 76 to inflict compound fractures through armor if the bodypart already has a hairline fracture.
-	bare_wound_bonus = 30 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
+	wound_bonus = 50
+	bare_wound_bonus = 50 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"

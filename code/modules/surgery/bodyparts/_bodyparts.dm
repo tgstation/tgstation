@@ -209,7 +209,22 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE) // maybe separate BRUTE_SHARP and BRUTE_OTHER eventually somehow hmm
+/**
+  *
+  *
+  * Arguments:
+  * - brute: The amount of [BRUTE] damage this bodypart is recieving.
+  * - burn: the amount of [BURN] damage this bodypart is receiving.
+  * - stamina: The amount of [STAMINA] damage this bodypart is receiving.
+  * - blocked: The percentage of the damag that has been blocked by armor.
+  * - updating_health: Whether the bodypart should update its health values.
+  * - required_status: Whether the damage requires a specific biotype to be applied.
+  * - wound_bonus: How much bonus wounding power to apply.
+  * - bare_wound_bonus: How much extra bonus wounding power to apply if there's no wound armor.
+  * - sharpness: How sharp the applied damage is.
+  * - tool_behavior: Used to make mining tools equally effective at breaking bones and flesh.
+  */
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE, tool_behaviour=null) // maybe separate BRUTE_SHARP and BRUTE_OTHER eventually somehow hmm
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -258,10 +273,12 @@
 		if(BIO_JUST_BONE)
 			if(wounding_type == WOUND_SLASH)
 				wounding_type = WOUND_BLUNT
-				wounding_dmg *= (easy_dismember ? 1 : 0.6)
+				wounding_dmg *= ((easy_dismember || (tool_behaviour == TOOL_MINING)) ? 1 : 0.6)
 			else if(wounding_type == WOUND_PIERCE)
 				wounding_type = WOUND_BLUNT
-				wounding_dmg *= (easy_dismember ? 1 : 0.75)
+				wounding_dmg *= ((easy_dismember || (tool_behaviour == TOOL_MINING)) ? 1 : 0.75)
+			if(tool_behaviour == TOOL_MINING)
+				wound_bonus += MINING_BONE_WOUND_BONUS // To compensate for [BIO_JUST_BONE] not having a critical pierce/slash wound by this point.
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
 		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
