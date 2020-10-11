@@ -1,0 +1,237 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"b" = (
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"c" = (
+/obj/item/stack/tile/bronze,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"d" = (
+/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"e" = (
+/obj/item/clockwork/alloy_shards,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"f" = (
+/obj/item/stack/tile/bronze/thirty,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"g" = (
+/obj/item/clothing/shoes/bronze,
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"h" = (
+/obj/structure/destructible/clockwork/wall_gear,
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"i" = (
+/obj/structure/window/reinforced/clockwork/fulltile,
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"j" = (
+/obj/structure/table_frame/brass,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"k" = (
+/obj/item/clockwork/alloy_shards,
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"l" = (
+/obj/item/clockwork/component/hierophant_ansible/obelisk,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"m" = (
+/obj/item/toy/plush/plushvar,
+/obj/structure/destructible/clockwork/eminence_spire,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"n" = (
+/obj/item/wrench/brass,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"o" = (
+/obj/item/banhammer{
+	desc = "A very REAL ratvarian spear.";
+	icon = 'icons/obj/clockwork_objects.dmi';
+	icon_state = "ratvarian_spear";
+	item_state = "ratvarian_spear";
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi';
+	name = "toy spear";
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	},
+/obj/structure/table/bronze,
+/obj/item/toy/clockwork_watch,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"p" = (
+/obj/item/crowbar/brass,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"q" = (
+/obj/structure/table_frame/brass,
+/turf/open/floor/bronze,
+/area/tdome/arena)
+"r" = (
+/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+"s" = (
+/obj/item/clothing/shoes/bronze,
+/turf/open/floor/clockwork/reebe,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+j
+a
+e
+a
+a
+"}
+(3,1,1) = {"
+b
+b
+b
+k
+g
+b
+q
+b
+"}
+(4,1,1) = {"
+b
+c
+a
+a
+a
+a
+a
+b
+"}
+(5,1,1) = {"
+b
+a
+h
+i
+i
+h
+c
+b
+"}
+(6,1,1) = {"
+b
+a
+i
+a
+a
+i
+r
+b
+"}
+(7,1,1) = {"
+b
+a
+b
+l
+n
+b
+a
+b
+"}
+(8,1,1) = {"
+b
+d
+b
+m
+o
+b
+s
+b
+"}
+(9,1,1) = {"
+b
+e
+b
+l
+p
+b
+a
+b
+"}
+(10,1,1) = {"
+b
+a
+i
+a
+a
+i
+r
+b
+"}
+(11,1,1) = {"
+b
+f
+h
+i
+i
+h
+a
+b
+"}
+(12,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+b
+"}
+(13,1,1) = {"
+b
+g
+b
+b
+b
+b
+q
+b
+"}
+(14,1,1) = {"
+a
+a
+e
+j
+a
+e
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

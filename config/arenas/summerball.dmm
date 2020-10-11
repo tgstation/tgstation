@@ -1,0 +1,236 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"b" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"c" = (
+/obj/item/chair/stool/bar,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"d" = (
+/obj/machinery/computer/slot_machine{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"e" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"g" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"h" = (
+/obj/structure/chair/stool/bar{
+	pixel_y = 10
+	},
+/obj/item/chair/stool/bar,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"i" = (
+/obj/structure/chair/stool/bar{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"j" = (
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4;
+	max_integrity = 9999;
+	pixel_x = 12
+	},
+/obj/structure/table/wood/bar,
+/turf/open/floor/carpet/royalblue,
+/area/tdome/arena)
+"k" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 8;
+	max_integrity = 9999;
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/royalblue,
+/area/tdome/arena)
+"l" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/obj/item/shard,
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+"m" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plasteel/dark,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+d
+g
+h
+a
+d
+g
+i
+"}
+(3,1,1) = {"
+c
+d
+g
+i
+a
+l
+g
+i
+"}
+(4,1,1) = {"
+a
+c
+a
+c
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+a
+b
+a
+"}
+(6,1,1) = {"
+b
+e
+e
+e
+e
+e
+e
+b
+"}
+(7,1,1) = {"
+b
+e
+f
+f
+f
+f
+e
+b
+"}
+(8,1,1) = {"
+a
+f
+f
+j
+k
+f
+f
+a
+"}
+(9,1,1) = {"
+b
+e
+f
+f
+f
+f
+e
+b
+"}
+(10,1,1) = {"
+b
+e
+e
+e
+e
+e
+e
+b
+"}
+(11,1,1) = {"
+b
+a
+b
+b
+b
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+c
+a
+c
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+b
+d
+g
+a
+b
+m
+g
+i
+"}
+(14,1,1) = {"
+b
+d
+g
+a
+b
+d
+g
+h
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

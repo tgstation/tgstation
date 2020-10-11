@@ -1,0 +1,214 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"e" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical/old/clean,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/structure/table,
+/obj/item/storage/briefcase,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/structure/table,
+/obj/item/crowbar/large,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"i" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/artistic,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+a
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+e
+c
+a
+c
+h
+a
+a
+"}
+(4,1,1) = {"
+a
+d
+d
+a
+d
+d
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+b
+b
+a
+a
+a
+a
+b
+b
+"}
+(7,1,1) = {"
+c
+f
+i
+a
+a
+k
+l
+c
+"}
+(8,1,1) = {"
+c
+g
+i
+j
+j
+k
+g
+c
+"}
+(9,1,1) = {"
+c
+f
+i
+a
+a
+k
+l
+c
+"}
+(10,1,1) = {"
+d
+d
+a
+a
+a
+a
+d
+d
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+b
+b
+a
+b
+b
+a
+a
+"}
+(13,1,1) = {"
+a
+h
+c
+a
+c
+e
+a
+a
+"}
+(14,1,1) = {"
+a
+d
+d
+a
+d
+d
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

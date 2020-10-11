@@ -1,0 +1,793 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/sign/poster/contraband/tools{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ab" = (
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ac" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ad" = (
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ae" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/sign/warning/radiation/rad_area{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/structure/sign/warning/electricshock{
+	desc = "A warning sign which reads 'POTENTIAL ELECTRICAL BOLTS', indicating that this area may shock you at random.";
+	name = "\improper POTENTIAL ELECTRIC BOLTS sign";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"af" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/enginesafety{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ag" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	icon_state = "stand_clear";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ah" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ai" = (
+/obj/machinery/airalarm/engine{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/sign/warning/fire{
+	desc = "A warning sign which reads 'DANGER: POTENTIAL FIRE HAZARD', indicating the risk of being set on fire.";
+	name = "\improper DANGER: POTENTIAL FIRE HAZARD sign";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aj" = (
+/obj/structure/sign/poster/official/wtf_is_co2{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ak" = (
+/obj/structure/sign/poster/contraband/missing_gloves{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"al" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"am" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"an" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	icon_state = "pipe11-2";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ao" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Waste to Tank"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ap" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon_state = "plasmarwindow";
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced{
+	icon_state = "plasmarwindow";
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	icon_state = "inje_map-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aq" = (
+/turf/closed/wall/r_wall,
+/area/tdome/arena)
+"ar" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"as" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"at" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"au" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"av" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ax" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ay" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon_state = "plasmarwindow"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "pipe11-2";
+	dir = 8
+	},
+/obj/item/tank/internals/plasma/full,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"az" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	icon_state = "scrub_map_on-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	icon_state = "vent_map_on-2";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aC" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/window/plasma/reinforced{
+	icon_state = "plasmarwindow";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	icon_state = "pipe11-2";
+	dir = 8
+	},
+/obj/item/tank/internals/plasma/full,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aD" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	icon_state = "manifold-2";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aE" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	icon_state = "pipe11-2";
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aG" = (
+/obj/machinery/atmospherics/components/trinary/filter/on{
+	filter_type = "n2"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aH" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	icon_state = "manifold-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	icon_state = "scrub_map_on-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aJ" = (
+/obj/machinery/power/supermatter_crystal/shard/hugbox/fakecrystal,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	icon_state = "vent_map_on-2";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aL" = (
+/obj/machinery/atmospherics/pipe/manifold4w/cyan/visible,
+/obj/item/wrench,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aM" = (
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	icon_state = "manifold-2";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aN" = (
+/obj/machinery/atmospherics/components/trinary/filter/on,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	icon_state = "manifold-2";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	icon_state = "scrub_map_on-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aQ" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	icon_state = "vent_map_on-2";
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aS" = (
+/obj/machinery/atmospherics/pipe/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aT" = (
+/obj/item/wrench,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Filter Loop Bypass"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aU" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aV" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "0"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/tdome/arena)
+"aW" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aX" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	icon_state = "pipe11-2";
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aY" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	icon_state = "pipe11-2";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"aZ" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"ba" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/sign/warning/radiation/rad_area{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bb" = (
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	icon_state = "manifold-2";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bc" = (
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	icon_state = "manifold-2";
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bd" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"be" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Coolant to Pumps"
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/structure/sign/warning/radiation/rad_area{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bf" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	icon_state = "pipe11-2";
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bg" = (
+/obj/structure/sign/poster/contraband/hacking_guide{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bh" = (
+/obj/structure/sign/warning/securearea{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bi" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	icon_state = "pipe11-2";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bk" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 9
+	},
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bm" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1;
+	target_temperature = 73.15
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bn" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1;
+	target_temperature = 73.15
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bo" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bp" = (
+/obj/structure/sign/poster/official/build{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"bq" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"br" = (
+/obj/structure/sign/poster/contraband/atmosia_independence{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+aa
+al
+al
+al
+al
+al
+al
+bg
+"}
+(2,1,1) = {"
+ab
+am
+av
+av
+av
+av
+aX
+bh
+"}
+(3,1,1) = {"
+ac
+an
+au
+aF
+aM
+aM
+aY
+bi
+"}
+(4,1,1) = {"
+ad
+ao
+aw
+aG
+aN
+aN
+aZ
+bj
+"}
+(5,1,1) = {"
+ac
+ap
+ax
+aH
+aO
+aT
+aM
+bk
+"}
+(6,1,1) = {"
+ae
+aq
+ay
+ay
+ay
+aq
+ba
+bl
+"}
+(7,1,1) = {"
+af
+ar
+az
+aI
+aP
+aU
+bb
+bm
+"}
+(8,1,1) = {"
+ag
+as
+aA
+aJ
+aQ
+aV
+bc
+bn
+"}
+(9,1,1) = {"
+ah
+ar
+aB
+aK
+aR
+aU
+bd
+bo
+"}
+(10,1,1) = {"
+ai
+aq
+aC
+aC
+aC
+aq
+be
+bp
+"}
+(11,1,1) = {"
+ac
+at
+aD
+aL
+aS
+aW
+bf
+bq
+"}
+(12,1,1) = {"
+aj
+au
+aE
+aE
+aE
+au
+au
+bq
+"}
+(13,1,1) = {"
+ac
+au
+au
+au
+au
+au
+au
+bq
+"}
+(14,1,1) = {"
+ab
+au
+au
+au
+au
+au
+au
+bh
+"}
+(15,1,1) = {"
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+br
+"}

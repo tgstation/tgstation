@@ -1,0 +1,205 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"b" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"c" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"d" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"e" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"f" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"g" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"h" = (
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"i" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"k" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"l" = (
+/obj/structure/flora/ausbushes/fernybush,
+/mob/living/carbon/monkey,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+"m" = (
+/obj/structure/flora/rock/jungle,
+/mob/living/carbon/monkey,
+/turf/open/floor/plating/grass,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+d
+a
+a
+a
+b
+a
+"}
+(2,1,1) = {"
+d
+a
+a
+a
+e
+a
+a
+c
+"}
+(3,1,1) = {"
+e
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+f
+i
+h
+f
+e
+l
+"}
+(5,1,1) = {"
+a
+b
+g
+e
+a
+h
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+h
+h
+a
+a
+d
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+b
+h
+i
+a
+e
+"}
+(8,1,1) = {"
+a
+a
+a
+d
+a
+h
+b
+a
+"}
+(9,1,1) = {"
+a
+c
+h
+a
+h
+g
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+g
+i
+a
+k
+a
+m
+"}
+(11,1,1) = {"
+a
+b
+h
+a
+a
+h
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+f
+h
+h
+f
+a
+b
+"}
+(13,1,1) = {"
+a
+a
+a
+e
+a
+a
+a
+e
+"}
+(14,1,1) = {"
+a
+d
+a
+a
+a
+d
+a
+a
+"}
+(15,1,1) = {"
+b
+a
+a
+a
+a
+b
+a
+d
+"}
