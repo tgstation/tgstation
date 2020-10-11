@@ -241,7 +241,7 @@
 		return
 
 	var/picked_rod_type = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	var/obj/item/nullrod/holy_weapon = new picked_rod_type(get_turf(src))
+	var/obj/item/nullrod/holy_weapon = new picked_rod_type(drop_location())
 	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
