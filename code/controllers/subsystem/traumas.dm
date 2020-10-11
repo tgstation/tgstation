@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(traumas)
 					   "skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 					   "snakes"   = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/poison/snake)),
 					   "robots"   = typecacheof(list(/mob/living/silicon/robot, /mob/living/silicon/ai,
-					   /mob/living/simple_animal/drone, /mob/living/simple_animal/bot, /mob/living/simple_animal/hostile/swarmer)),
+					   /mob/living/simple_animal/drone, /mob/living/simple_animal/bot)),
 					   "doctors"   = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 					   "the supernatural"   = typecacheof(list(/mob/living/simple_animal/hostile/construct,
 					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/machinery/door/airlock/centcom)),
 
 						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
-						           /obj/item/aicard, /obj/structure/swarmer_beacon)),
+						           /obj/item/aicard)),
 
 						"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical,
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray,
