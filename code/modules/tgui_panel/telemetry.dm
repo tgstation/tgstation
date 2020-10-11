@@ -43,6 +43,7 @@
  * Is currently only useful for detecting ban evasion attempts.
  */
 /datum/tgui_panel/proc/analyze_telemetry(payload)
+
 	if(world.time > telemetry_requested_at + TGUI_TELEMETRY_RESPONSE_WINDOW)
 		message_admins("[key_name(client)] sent telemetry outside of the allocated time window.")
 		return
@@ -51,6 +52,8 @@
 		return
 	telemetry_analyzed_at = world.time
 	if(!payload)
+		return
+	else
 		return
 	telemetry_connections = payload["connections"]
 	var/len = length(telemetry_connections)
