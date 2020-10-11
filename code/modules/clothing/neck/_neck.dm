@@ -89,6 +89,7 @@
 	name = "white scarf"
 	icon_state = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	w_class = WEIGHT_CLASS_TINY
 	dog_fashion = /datum/dog_fashion/head
 	custom_price = 60
 

@@ -2,6 +2,7 @@
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = 1
@@ -54,6 +55,7 @@
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	cell_type = /obj/item/stock_parts/cell/hos_gun
 	icon_state = "hoslaser"
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
 	ammo_x_offset = 4
@@ -67,6 +69,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
+	w_class = WEIGHT_CLASS_NORMAL
 	can_flashlight = FALSE
 	ammo_x_offset = 1
 

@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(buckled)
 		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
-	..()
+	return ..()
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)

@@ -1,4 +1,0 @@
-author: "Winterous"
-delete-after: True
-changes: 
-  - tweak: "The biogenerator in hydroponics will now dispense botany chemicals in volumes that aren't specifically designed to upset the user."
