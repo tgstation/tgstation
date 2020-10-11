@@ -76441,6 +76441,7 @@
 	name = "Supermatter Chamber";
 	req_one_access_txt = "10;24"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "tDQ" = (
