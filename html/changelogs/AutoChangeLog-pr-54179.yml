@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "Statues can be rotated by alt clicking, if unanchored"

@@ -53,7 +53,7 @@
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	if((D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == STANDING_UP)
 		D.apply_damage(10, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.Knockdown(40)

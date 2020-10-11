@@ -1,5 +1,0 @@
-author: "Hulkamania"
-delete-after: True
-changes: 
-  - rscadd: "Adds stasis beds to the empty medbay on the Zeta Shuttle, now with less dying!"
-  - spellcheck: "Shuttle doors were incorrectly labeled \"Theta\" instead of \"Zeta\""

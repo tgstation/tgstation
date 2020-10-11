@@ -1,0 +1,4 @@
+author: "Orange man actually looked at the runtimes, Willox, Inept-At-Job figured out the symptoms, Kylerace owned a map editor, ActionNinja figured out why it was broken, and LemonInTheDark did a one line change"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a memory leak, there's a good chance that it's the same one that killed kilo."

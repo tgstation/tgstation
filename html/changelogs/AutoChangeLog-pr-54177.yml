@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Supply Consoles and Express Supply Consoles will once again be built pre-emagged if their boards used to build them are emagged."
-  - bugfix: "Supply Consoles will now once again allow Cargonia to buy contraband when their circuit boards are appropriately configured with a multitool."
