@@ -18,7 +18,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/spellcostume
-	name = "ARMOR"
+	name = "Spellsword Armor"
 	desc = "Man, this plate armor looks like it would be an UNGODLY amount of weight to bare on your shoulders."
 	icon = 'icons/misc/tourny_items.dmi'
 	worn_icon = 'icons/misc/tourny_armor.dmi'
