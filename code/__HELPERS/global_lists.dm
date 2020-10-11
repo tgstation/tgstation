@@ -54,8 +54,6 @@
 
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
-	if(!istype(crafting_recipes))
-		crafting_recipes = list()
 	for(var/path in subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new path()
 		recipe.reqs = sortList(recipe.reqs, /proc/cmp_crafting_req_priority)
