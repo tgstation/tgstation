@@ -39,6 +39,9 @@
 	var/breakout_time = 300
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
+
+	///Looping sound when cryo is on
+	var/datum/looping_sound/cryotube/soundloop
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
@@ -54,6 +57,8 @@
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
+	soundloop = new(list(src), FALSE)
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
 	var/oldoccupant = occupant
@@ -92,6 +97,7 @@
 		var/datum/gas_mixture/air1 = airs[1]
 		env.merge(air1)
 		T.air_update_turf()
+	QDEL_NULL(soundloop)
 
 	return ..()
 
@@ -226,6 +232,7 @@
 
 		if(!treating_wounds)
 			on = FALSE
+			soundloop.stop()
 			update_icon()
 			playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 			var/msg = "Patient fully restored."
@@ -262,6 +269,7 @@
 
 	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
+		soundloop.stop()
 		update_icon()
 		return
 
@@ -301,12 +309,15 @@
 	occupant = null
 	flick("pod-open-anim", src)
 	reagent_transfer = efficiency * 10 - 5 // wait before injecting the next occupant
+	playsound(src, 'sound/machines/openhiss.ogg', 25)
+	soundloop.stop()
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
+		playsound(src, 'sound/machines/closehiss.ogg', 25)
 		..(user)
 		return occupant
 
@@ -439,8 +450,10 @@
 		if("power")
 			if(on)
 				on = FALSE
+				soundloop.stop()
 			else if(!state_open)
 				on = TRUE
+				soundloop.start()
 			update_icon()
 			. = TRUE
 		if("door")
@@ -463,6 +476,10 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
 		on = !on
+		if(on)
+			soundloop.start()
+		else
+			soundloop.stop()
 		update_icon()
 	return ..()
 
