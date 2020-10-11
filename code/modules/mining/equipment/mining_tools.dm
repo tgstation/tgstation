@@ -18,8 +18,8 @@
 	attack_verb_simple = list("hit", "pierce", "mine", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "attacks")
 	force = 15
-	armour_penetration = 25
-	wound_bonus = 30
+	armour_penetration = 25 // Somewhere between spears and broadswords.
+	wound_bonus = 60 // With 15 force this must be at least 56 to inflict a compound fracture on a [BIO_JUST_BONE] bodypart with a hairline fracture.
 	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
@@ -79,8 +79,9 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	force = 18
-	armour_penetration = -15
-	wound_bonus = 25 // Slightly less likely to deal wounds than pickaxes to compensate for slash wounds being worse.
+	armour_penetration = -40 // Apparently drills have trouble chewing through fibers and smooth metal because they're designed for rock.
+	wound_bonus = -17 // Since they can't get through your armor they aren't going to chew through your skin are they? Must roll a rough abrasion before they can roll a open laceration. Cannot roll a weeping avulsion through armor.
+	bare_wound_bonus = 75 // WARNING: DO NOT APPLY TOPICALLY, SEVERE HEMORRHAGE MAY OCCUR. NOTE: I don't like how high this is either but, in order to be able to inflict a critical bone wound on a BIO_JUST_BONE bodypart with 18 force and no armor the total wound bonus must be at least _58_. This is literally as low as I can make this without refactoring how wounds are dealt.
 	sharpness = SHARP_EDGED // The drill head is wider than most pointy objects, likely serrated, and spinning at high speed.
 
 /obj/item/pickaxe/drill/cyborg
@@ -98,7 +99,7 @@
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 	force = 20
-	armour_penetration = -10
+	armour_penetration = -25 // Better at handling armor than a normal drill.
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
@@ -106,7 +107,7 @@
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 	force = 20
-	armour_penetration = -10
+	armour_penetration = -25
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -119,11 +120,11 @@
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	attack_verb_simple = list("hit", "pierce", "mine", "slam", "attack")
 	attack_verb_continuous = list("hits", "pierces", "mines", "slams", "attacks")
-	force = 10
-	armour_penetration = 50
+	force = 5 // Sound usually passes through the body relatively harmlessly.
+	armour_penetration = 80
 	sharpness = SHARP_NONE
-	wound_bonus = 40
-	bare_wound_bonus = 60 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
+	wound_bonus = 80 // Must be >= 76 to inflict compound fractures through armor if the bodypart already has a hairline fracture.
+	bare_wound_bonus = 30 // It is pumping rock-shattering levels of ultrasound directly into your body. That's going to do _nasty_ things to your bones.
 
 /obj/item/pickaxe/improvised
 	name = "improvised pickaxe"
