@@ -1411,7 +1411,7 @@
 
 /datum/reagent/hexane/on_mob_life(mob/living/L)
 	. = ..()
-	L.hallucination += 150
+	L.hallucination += 10
 	if(prob(25))
 		L.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
