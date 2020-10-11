@@ -126,6 +126,10 @@
 	else if(istype(W, /obj/item/coin))
 		insert_money(W, user, TRUE)
 		return
+	else if(istype(W, /obj/item/card_trimmer))
+		var/obj/item/card_trimmer/CT = W
+		CT.trim_card(src, user)
+		return
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
 		var/list/money_contained = money_bag.contents

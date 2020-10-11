@@ -956,6 +956,7 @@
 #include "code\game\objects\items\bodybag.dm"
 #include "code\game\objects\items\broom.dm"
 #include "code\game\objects\items\candle.dm"
+#include "code\game\objects\items\card_trimmer.dm"
 #include "code\game\objects\items\cardboard_cutouts.dm"
 #include "code\game\objects\items\cards_ids.dm"
 #include "code\game\objects\items\chainsaw.dm"
