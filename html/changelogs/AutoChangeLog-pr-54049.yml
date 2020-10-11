@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - balance: "Aux base is now a separate access. Removed construction access from curator. Everyone else that had access to aux base before has gotten the new access, except for geneticists."

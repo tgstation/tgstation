@@ -147,6 +147,7 @@
 	food_reagents = list(/datum/reagent/monkey_powder = 30)
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtypes = MEAT | SUGAR
+	w_class = WEIGHT_CLASS_TINY
 	var/faction
 	var/spawned_mob = /mob/living/carbon/monkey
 
@@ -466,7 +467,7 @@
 /obj/item/food/meat/slab/synthmeat
 	name = "synthmeat"
 	icon_state = "meat_old"
-	microwaved_type = /obj/item/food/meat/steak/synth
+	microwaved_type = /obj/item/food/meat/steak/plain/synth
 	desc = "A synthetic slab of meat."
 	foodtypes = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
 
@@ -755,7 +756,7 @@
 	icon_state = "meatproductsteak"
 	tastes = list("enhanced char" = 2, "suspicious tenderness" = 2, "natural & artificial dyes" = 2, "emulsifying agents" = 1)
 
-/obj/item/food/meat/steak/synth
+/obj/item/food/meat/steak/plain/synth
 	name = "synthsteak"
 	desc = "A synthetic meat steak. It doesn't look quite right, now does it?"
 	icon_state = "meatsteak_old"

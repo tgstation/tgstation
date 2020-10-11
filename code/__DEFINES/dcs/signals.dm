@@ -833,7 +833,3 @@
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
 #define COMSIG_CONTAINER_TRY_ATTACH "container_try_attach"
-
-
-// i hope this works
-#define COMSIG_HUMAN_UPDATE_CLOTHING_OFFSETS "spellsword_armor"

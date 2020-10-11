@@ -1,0 +1,7 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "Reports indicate that space dragons now come in a variety of colors akin to space carps.  Due to this, our researchers have started giving them names to distinct them from one another."
+  - balance: "Space dragons now vomit up anything living inside them, preventing changelings and blob zombies from killing them from the inside."
+  - balance: "Carp rifts now move around every so often when fully charged, making it harder to simply box them in."
+  - balance: "Random space dragons are now as common as random blobs."

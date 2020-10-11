@@ -83,6 +83,7 @@
 	inhand_icon_state = "cage"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
 
 /obj/item/storage/box/holy/sentinel

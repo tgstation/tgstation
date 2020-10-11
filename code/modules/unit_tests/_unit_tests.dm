@@ -42,6 +42,7 @@
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
+#include "serving_tray.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
