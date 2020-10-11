@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
-	///Species-only traits. Can be found in [code/_DEFINES/DNA.dm]
+	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
 	var/list/inherent_traits = list()
@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Allows the species to not give a single F about gravity. Used by wings.
 	var/override_float = FALSE
 
-	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/_DEFINES/mobs.dm] for possible sources.
+	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
 ///////////
