@@ -377,6 +377,17 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/yeah_go_heck_yourself
+	name = "very important disclaimer"
+	desc = "The sign is telling you that, in an objectively truthful way, this is not canon. Lizards are now also kinda dumb for this one."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "inept_no_stop"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
 /obj/structure/fluff/spaghetti_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with a chef hat drawn onto it. Hope they brought lots of spaghetti!"
