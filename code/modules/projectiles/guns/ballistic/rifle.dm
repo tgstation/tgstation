@@ -82,6 +82,7 @@
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
 	icon_state = "speargun"
 	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
