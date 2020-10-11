@@ -1,33 +1,32 @@
-/*
-	output_atoms	(list of atoms)			The destination(s) for the sounds
-
-	mid_sounds		(list or soundfile)		Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
-	mid_length		(num)					The length to wait between playing mid_sounds
-
-	start_sound		(soundfile)				Played before starting the mid_sounds loop
-	start_length	(num)					How long to wait before starting the main loop after playing start_sound
-
-	end_sound		(soundfile)				The sound played after the main loop has concluded
-
-	chance			(num)					Chance per loop to play a mid_sound
-	volume			(num)					Sound output volume
-	max_loops		(num)					The max amount of loops to run for.
-	direct			(bool)					If true plays directly to provided atoms instead of from them
-*/
 /datum/looping_sound
+	///output_atoms	(list of atoms)			The destination(s) for the sounds
 	var/list/atom/output_atoms
+	///mid_sounds		(list or soundfile)		Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
 	var/mid_sounds
+	///mid_length		(num)					The length to wait between playing mid_sounds
 	var/mid_length
+	///start_sound		(soundfile)				Played before starting the mid_sounds loop
 	var/start_sound
+	///start_length	(num)					How long to wait before starting the main loop after playing start_sound
 	var/start_length
+	///end_sound		(soundfile)				The sound played after the main loop has concluded
 	var/end_sound
+	///chance			(num)					Chance per loop to play a mid_sound
 	var/chance
+	///volume			(num)					Sound output volume
 	var/volume = 100
+	///Whether or not the sound varies every time it plays
 	var/vary = FALSE
+	///max_loops		(num)					The max amount of loops to run for.
 	var/max_loops
+	///direct			(bool)					If true plays directly to provided atoms instead of from them
 	var/direct
 	var/extra_range = 0
 	var/falloff
+	///If this is true, the audio in the list is meant to be played in order
+	var/sequenced_loop = FALSE
+	///Used when sequenced_loop is TRUE, keeps track of what part of the list we are at.
+	var/current_sequence_index = 1
 
 	var/timerid
 
@@ -86,9 +85,17 @@
 			playsound(thing, S, volume, vary, extra_range, falloff)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
-	. = _mid_sounds || mid_sounds
-	while(!isfile(.) && !isnull(.))
-		. = pickweight(.)
+	var/list/sounds = _mid_sounds || mid_sounds
+	if(!sequenced_loop)
+		. = pickweight(sounds)
+	else
+		. = sounds[current_sequence_index]
+
+		if(current_sequence_index >= sounds.len)
+			current_sequence_index = 1
+		else
+			current_sequence_index++
+
 
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
@@ -98,5 +105,6 @@
 	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME)
 
 /datum/looping_sound/proc/on_stop()
+	current_sequence_index = 1 //Back to the start
 	if(end_sound)
 		play(end_sound)

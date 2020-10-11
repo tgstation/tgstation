@@ -83,11 +83,12 @@
 
 /datum/looping_sound/firealarm
 	start_sound = 'sound/machines/firealarmstart.ogg'
-	start_length = 18
-	mid_sounds = list('sound/machines/firealarmloop.ogg' = 1)
-	mid_length = 70
+	start_length = 10
+	mid_sounds = list('sound/machines/firealarmloop1.ogg', 'sound/machines/firealarmloop2.ogg', 'sound/machines/firealarmloop3.ogg')
+	mid_length = 20
 	end_sound = 'sound/machines/firealarmend.ogg'
 	volume = 25
+	sequenced_loop = TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
