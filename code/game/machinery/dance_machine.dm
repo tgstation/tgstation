@@ -22,6 +22,9 @@
 	anchored = FALSE
 	var/list/spotlights = list()
 	var/list/sparkles = list()
+	/// Precentage change per process of the mob dancing.
+	var/dance_chance = 20
+
 
 /obj/machinery/jukebox/disco/indestructible
 	name = "radiant dance machine mark V"
@@ -315,31 +318,40 @@
 
 #undef DISCO_INFENO_RANGE
 
-/obj/machinery/jukebox/disco/proc/dance(mob/living/M) //Show your moves
-	set waitfor = FALSE
-	switch(rand(0,9))
-		if(0 to 1)
-			dance2(M)
-		if(2 to 3)
-			dance3(M)
-		if(4 to 6)
-			dance4(M)
-		if(7 to 9)
-			dance5(M)
 
-/obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
-	for(var/i in 0 to 9)
-		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
-		sleep(20)
+/obj/machinery/jukebox/disco/proc/dance(mob/living/dancer) //Show your moves
+	set waitfor = FALSE
+	switch(rand(0, 9))
+		if(0 to 1)
+			dance2(dancer)
+		if(2 to 3)
+			dance3(dancer)
+		if(4 to 6)
+			dance4(dancer)
+		if(7 to 9)
+			dance5(dancer)
+
+
+/obj/machinery/jukebox/disco/proc/dance2(mob/living/dancer)
+	set waitfor = FALSE
+	for(var/i in 1 to 10)
+		if(QDELETED(dancer))
+			return
+		if(!active)
+			break
+		dancer.emote("flip")
+		sleep(2 SECONDS)
+
 
 /mob/proc/dance_flip()
-	if(dir == WEST)
-		emote("flip")
+	emote("flip")
+
 
 /obj/machinery/jukebox/disco/proc/dance3(mob/living/M)
+	set waitfor = FALSE
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 75)
-		if (!M)
+		if(QDELETED(M))
 			return
 		switch(i)
 			if (1 to 15)
@@ -383,24 +395,28 @@
 		sleep(1)
 	M.lying_fix()
 
-/obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
-	var/speed = rand(1,3)
-	set waitfor = 0
-	var/time = 30
-	while(time)
-		sleep(speed)
-		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinals))
-			for(var/mob/living/carbon/NS in rangers)
-				NS.set_resting(!NS.resting, TRUE)
-		 time--
+
+/obj/machinery/jukebox/disco/proc/dance4(mob/living/dancer)
+	set waitfor = FALSE
+	for(var/i in 1 to 29)
+		if(QDELETED(dancer))
+			return
+		if(!active)
+			break
+		sleep(rand(1, 3))
+		dancer.setDir(pick(GLOB.cardinals))
+	dancer.set_resting(FALSE, TRUE, TRUE) // Last pass gets us up.
+
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
+	set waitfor = FALSE
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	var/matrix/initial_matrix = matrix(M.transform)
 	for (var/i in 1 to 60)
-		if (!M)
+		if(QDELETED(M))
 			return
+		if(!active)
+			break
 		if (i<31)
 			initial_matrix = matrix(M.transform)
 			initial_matrix.Translate(0,1)
@@ -473,6 +489,10 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && (M.mobility_flags & MOBILITY_MOVE))
-				dance(M)
+		for(var/mob/living/dancer in rangers)
+			if(QDELETED(dancer))
+				rangers -= dancer
+				continue
+			if(!prob(dance_chance) || HAS_TRAIT(dancer, TRAIT_IMMOBILIZED))
+				continue
+			dance(dancer)
