@@ -1,0 +1,451 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/item/storage/fancy/donut_box,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/closet,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/closet,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/structure/sign/poster/official/here_for_your_safety{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"i" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"m" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"n" = (
+/turf/closed/wall/r_wall,
+/area/tdome/arena)
+"o" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Cell 1"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"p" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Cell 2"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"q" = (
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"r" = (
+/obj/structure/sign/poster/official/nanotrasen_logo{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"s" = (
+/obj/structure/sign/poster/contraband/fun_police{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"t" = (
+/obj/structure/sign/departments/security{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"u" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"v" = (
+/obj/structure/sign/departments/security{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"w" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"x" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"y" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"z" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"A" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Outer Window"
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	name = "Brig Control Desk";
+	req_access_txt = "3"
+	},
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/poster/random_official,
+/obj/structure/cable,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/tdome/arena)
+"B" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"C" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"D" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"E" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Outer Window"
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 8;
+	name = "Brig Control Desk";
+	req_access_txt = "3"
+	},
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/poster/random_official,
+/obj/structure/cable,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/tdome/arena)
+"F" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"G" = (
+/obj/effect/turf_decal/tile/red,
+/obj/structure/sign/poster/official/obey{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"H" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/twelve_gauge{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"I" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/safety_report{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+k
+k
+k
+k
+k
+k
+k
+"}
+(3,1,1) = {"
+c
+k
+k
+k
+k
+k
+k
+k
+"}
+(4,1,1) = {"
+c
+j
+j
+q
+k
+k
+k
+k
+"}
+(5,1,1) = {"
+d
+d
+n
+k
+t
+w
+z
+G
+"}
+(6,1,1) = {"
+e
+l
+d
+k
+k
+n
+A
+n
+"}
+(7,1,1) = {"
+f
+l
+o
+k
+j
+d
+B
+C
+"}
+(8,1,1) = {"
+d
+d
+n
+r
+u
+x
+C
+H
+"}
+(9,1,1) = {"
+g
+m
+d
+k
+a
+d
+D
+C
+"}
+(10,1,1) = {"
+h
+m
+p
+k
+k
+n
+E
+n
+"}
+(11,1,1) = {"
+d
+d
+n
+k
+v
+y
+F
+I
+"}
+(12,1,1) = {"
+i
+a
+a
+s
+k
+k
+k
+k
+"}
+(13,1,1) = {"
+i
+k
+k
+k
+k
+k
+k
+k
+"}
+(14,1,1) = {"
+b
+k
+k
+k
+k
+k
+k
+k
+"}
+(15,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+"}

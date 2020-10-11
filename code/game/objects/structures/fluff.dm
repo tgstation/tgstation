@@ -601,3 +601,36 @@
 	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/blue
+	name = "Blutopia Flag"
+	desc = "A banner with the logo of the color blue. Team-related violence has never been the same since this flag was made."
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner-blue"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/red
+	name = "Redemoracy Flag"
+	desc = "A banner with the logo of the color red. Team-related violence has never been the same since this flag was made."
+	icon = 'icons/obj/banner.dmi'
+	icon_state = "banner-red"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/playertrophy1 // Ashe
+	name = "Bust of The Rat"
+	desc = "A bust that resembles the head of a rat. Don't worry, it won't chomp down on you!"
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "rat_bust"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE

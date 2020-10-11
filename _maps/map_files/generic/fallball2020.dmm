@@ -2295,6 +2295,7 @@
 /area/awaymission/cabin/snowforest/forest)
 "fu" = (
 /obj/structure/chair/sofa/corner{
+	color = "#c45c57";
 	dir = 4
 	},
 /turf/open/floor/astroturf,
@@ -13239,6 +13240,13 @@
 /obj/structure/table/abductor,
 /obj/item/toy/plush/moth{
 	desc = "A plushie depicting an adorable mothperson. It's a hugbug!"
+	},
+/turf/open/transparent/glass/reinforced,
+/area/space)
+"BN" = (
+/obj/structure/table/abductor,
+/obj/structure/fluff/playertrophy1{
+	pixel_y = -4
 	},
 /turf/open/transparent/glass/reinforced,
 /area/space)
@@ -177082,7 +177090,7 @@ vI
 sD
 sD
 sE
-vP
+BN
 vP
 sK
 sD

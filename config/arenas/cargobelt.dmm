@@ -1,0 +1,241 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/machinery/conveyor/auto,
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"g" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"j" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"n" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"t" = (
+/obj/machinery/conveyor/auto,
+/obj/structure/closet/crate/large{
+	move_resist = 999999;
+	name = "very heavy crate"
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"v" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/closet/crate/large{
+	move_resist = 999999;
+	name = "very heavy crate"
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"x" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/indestructible,
+/area/tdome/arena)
+"z" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+"D" = (
+/turf/open/indestructible,
+/area/tdome/arena)
+"L" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/indestructible,
+/area/tdome/arena)
+"R" = (
+/obj/machinery/conveyor/auto,
+/turf/open/indestructible,
+/area/tdome/arena)
+"V" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
+
+(1,1,1) = {"
+f
+f
+f
+f
+f
+f
+f
+f
+"}
+(2,1,1) = {"
+D
+D
+D
+D
+D
+D
+D
+D
+"}
+(3,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+"}
+(4,1,1) = {"
+d
+R
+t
+t
+t
+t
+R
+j
+"}
+(5,1,1) = {"
+z
+L
+D
+D
+D
+D
+L
+j
+"}
+(6,1,1) = {"
+z
+D
+x
+x
+x
+x
+D
+g
+"}
+(7,1,1) = {"
+z
+D
+x
+x
+x
+x
+D
+j
+"}
+(8,1,1) = {"
+z
+D
+x
+x
+x
+x
+D
+j
+"}
+(9,1,1) = {"
+z
+D
+x
+x
+x
+x
+D
+j
+"}
+(10,1,1) = {"
+z
+D
+x
+x
+x
+x
+D
+j
+"}
+(11,1,1) = {"
+z
+L
+D
+D
+D
+D
+L
+j
+"}
+(12,1,1) = {"
+z
+V
+v
+v
+v
+v
+V
+V
+"}
+(13,1,1) = {"
+r
+r
+r
+r
+r
+r
+r
+r
+"}
+(14,1,1) = {"
+D
+D
+D
+D
+D
+D
+D
+D
+"}
+(15,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+"}

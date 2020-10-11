@@ -1,0 +1,361 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = -5
+	},
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4;
+	icon_state = "warningline"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"m" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table/reinforced,
+/obj/item/lighter,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"n" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"o" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"p" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"s" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"t" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"u" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+k
+k
+k
+k
+k
+k
+t
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+c
+b
+c
+b
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+c
+n
+b
+b
+b
+b
+"}
+(5,1,1) = {"
+d
+b
+m
+n
+o
+p
+s
+b
+"}
+(6,1,1) = {"
+e
+b
+c
+n
+b
+b
+b
+b
+"}
+(7,1,1) = {"
+f
+b
+c
+n
+b
+q
+b
+b
+"}
+(8,1,1) = {"
+g
+b
+c
+n
+b
+p
+b
+b
+"}
+(9,1,1) = {"
+f
+b
+c
+n
+b
+r
+b
+b
+"}
+(10,1,1) = {"
+h
+b
+c
+n
+b
+b
+b
+b
+"}
+(11,1,1) = {"
+i
+b
+m
+n
+o
+p
+s
+b
+"}
+(12,1,1) = {"
+b
+b
+c
+n
+b
+b
+b
+b
+"}
+(13,1,1) = {"
+c
+b
+c
+b
+b
+b
+b
+b
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(15,1,1) = {"
+j
+l
+l
+l
+l
+l
+l
+u
+"}

@@ -1,0 +1,304 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/effect/turf_decal/delivery,
+/mob/living/simple_animal/bot/mulebot,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"e" = (
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/structure/closet/crate/medical,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Mulebot Staging #1"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/door/window/northright{
+	name = "Mulebot Staging #2"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"m" = (
+/obj/structure/closet/crate/radiation,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"n" = (
+/obj/structure/closet/crate/engineering,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"o" = (
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"p" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"s" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"t" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"u" = (
+/obj/structure/closet/crate/engineering/electrical,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"v" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"w" = (
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"x" = (
+/obj/structure/closet/crate/internals,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"y" = (
+/obj/effect/turf_decal/arrows{
+	icon_state = "arrows";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"z" = (
+/obj/structure/closet/crate/science,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"A" = (
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"B" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"C" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+f
+a
+a
+a
+a
+w
+a
+"}
+(3,1,1) = {"
+a
+g
+a
+a
+a
+u
+x
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+B
+"}
+(5,1,1) = {"
+a
+a
+o
+o
+o
+o
+a
+d
+"}
+(6,1,1) = {"
+b
+h
+p
+s
+t
+t
+y
+d
+"}
+(7,1,1) = {"
+c
+i
+q
+q
+q
+q
+a
+d
+"}
+(8,1,1) = {"
+d
+j
+p
+t
+s
+t
+y
+d
+"}
+(9,1,1) = {"
+c
+k
+q
+q
+q
+q
+a
+d
+"}
+(10,1,1) = {"
+e
+l
+p
+t
+t
+s
+y
+d
+"}
+(11,1,1) = {"
+a
+a
+r
+r
+r
+r
+a
+d
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+C
+"}
+(13,1,1) = {"
+a
+m
+a
+a
+a
+v
+z
+a
+"}
+(14,1,1) = {"
+a
+n
+a
+a
+a
+a
+A
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
