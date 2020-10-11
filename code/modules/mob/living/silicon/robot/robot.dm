@@ -164,7 +164,7 @@
 		mmi.brain.organ_flags |= ORGAN_FROZEN
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.name = "[initial(mmi.name)]: [real_name]"
-		mmi.brainmob = new(mmi)
+		mmi.set_brainmob(new /mob/living/brain(mmi))
 		mmi.brainmob.name = src.real_name
 		mmi.brainmob.real_name = src.real_name
 		mmi.brainmob.container = mmi
@@ -510,7 +510,6 @@
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
 	else if(.)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LOCKED_BORG_TRAIT)
-	update_mobility()
 	logevent("System lockdown [lockcharge?"triggered":"released"].")
 
 
@@ -812,7 +811,6 @@
 			set_stat(UNCONSCIOUS)
 		else
 			set_stat(CONSCIOUS)
-	update_mobility()
 	diag_hud_set_status()
 	diag_hud_set_health()
 	diag_hud_set_aishell()

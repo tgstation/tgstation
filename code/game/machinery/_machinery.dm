@@ -254,9 +254,6 @@ Class Procs:
 			continue
 
 		movable_atom.forceMove(this_turf)
-		if(isliving(movable_atom))
-			var/mob/living/living_mob = movable_atom
-			living_mob.update_mobility()
 
 		if(occupant == movable_atom)
 			occupant = null

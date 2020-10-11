@@ -431,7 +431,7 @@
 	damage_deflection = 30
 	explosion_block = 3
 	hackProof = TRUE
-	aiControlDisabled = 1
+	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
 
@@ -446,7 +446,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
-	aiControlDisabled = 1
+	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
