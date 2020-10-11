@@ -16,7 +16,7 @@
 	/// A string detailing the specific part of the bodypart the scar is on, for fluff purposes. See [/datum/scar/proc/generate]
 	var/precise_location
 
-	/// In case we ever want to make scars that won't be saved for persistent scarring (formerly used by the now-removed longtimer quirk)
+	/// These scars are assumed to come from changeling disguises, rather than from persistence or wounds. As such, they are deleted by dropping changeling disguises, and are ignored by persistence
 	var/fake=FALSE
 	/// How many tiles away someone can see this scar, goes up with severity. Clothes covering this limb will decrease visibility by 1 each, except for the head/face which is a binary "is mask obscuring face" check
 	var/visibility = 2
@@ -111,7 +111,7 @@
 			visibility = 5
 		if(WOUND_SEVERITY_LOSS)
 			visibility = 7
-	return TRUE
+	return src
 
 /// What will show up in examine_more() if this scar is visible
 /datum/scar/proc/get_examine_description(mob/viewer)

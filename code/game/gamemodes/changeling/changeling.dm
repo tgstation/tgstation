@@ -179,9 +179,9 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 
-	for(var/i in chosen_prof.stored_scars)
-		var/datum/scar/iter_scar = i
-		user.load_scar(iter_scar)
-		iter_scar.fake = TRUE
+	for(var/stored_scar_line in chosen_prof.stored_scars)
+		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
+		if(attempted_fake_scar)
+			attempted_fake_scar.fake = TRUE
 
 	user.regenerate_icons()
