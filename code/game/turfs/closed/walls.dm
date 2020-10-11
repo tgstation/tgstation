@@ -94,7 +94,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ScrapeAway() //Should prob CHANGETURF_RECALC_ADJACENT but I don't wanna lag explosions further, should get caught in the hole
+			var/turf/NT = ScrapeAway(flags = CHANGETURF_RECALC_ADJACENT) //Maybe attach to the explosion ss, might make this faster
 			NT.contents_explosion(severity, target)
 			return
 		if(2)

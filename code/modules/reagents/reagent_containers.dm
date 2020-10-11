@@ -132,6 +132,9 @@
 	reagents.expose_temperature(1000)
 	..()
 
+/obj/item/reagent_containers/fire_act(temperature, volume)
+	reagents.expose_temperature(temperature)
+
 /obj/item/reagent_containers/on_reagent_change(changetype)
 	update_icon()
 

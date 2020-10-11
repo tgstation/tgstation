@@ -66,9 +66,7 @@
 
 /*
 	TODO:
-	Reagent containers need to heat up in fires again
-	Investigate (flags = CHANGETURF_RECALC_ADJACENT) and rumors of turfs going unupdated
-	Superconductors need to fucking settle
-	They also need a better qualifyier, shouldn't just be heat.
-	Maybe link some atmos machinery to this system? idk man.
+	Superconductors need to fucking settle (Test this later)
+	They also need a better qualifyier, shouldn't just be heat. (maybe)
+	Maybe link some atmos machinery to this system? idk man. (later)
 */
