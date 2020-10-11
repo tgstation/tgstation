@@ -152,9 +152,9 @@
 
 	return TRUE
 
-/// Used to format a scar to save in preferences for persistent scars
-/datum/scar/proc/format(exclude_fakes = TRUE)
-	return (exclude_fakes && fake) ? null : "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[biology]|[persistent_character_slot]"
+/// Used to format a scar to save for either persistent scars, or for changeling disguises
+/datum/scar/proc/format()
+	return "[SCAR_CURRENT_VERSION]|[limb.body_zone]|[description]|[precise_location]|[severity]|[biology]|[persistent_character_slot]"
 
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone)

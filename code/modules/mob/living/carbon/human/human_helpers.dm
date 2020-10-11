@@ -195,8 +195,9 @@
 		var/datum/scar/scaries = new
 		scars += "[scaries.format_amputated(i)]"
 	for(var/i in all_scars)
-		var/datum/scar/scaries = i
-		scars += "[scaries.format()];"
+		var/datum/scar/iter_scar = i
+		if(!iter_scar.fake)
+			scars += "[iter_scar.format()];"
 	return scars
 
 /// Takes a single scar from the persistent scar loader and recreates it from the saved data
