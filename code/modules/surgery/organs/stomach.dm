@@ -144,7 +144,11 @@
 
 /obj/item/organ/stomach/ethereal/on_life()
 	..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+	if(owner.radiation)
+		owner.radiation = max(0,owner.radiation-(ETHEREAL_CHARGE_FACTOR*ETHEREAL_RAD_MULT))
+		adjust_charge(owner.radiation^ETHEREAL_RAD_COEF*ETHEREAL_RAD_MULT)
+	else
+		adjust_charge(-ETHEREAL_CHARGE_FACTOR)
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
 	..()
