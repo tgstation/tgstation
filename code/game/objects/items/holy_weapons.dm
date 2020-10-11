@@ -765,6 +765,7 @@
 /obj/item/clothing/head/helmet/chaplain/knight1
 	name = "holy knight helm"
 	desc = "A great helm with a golden gryphon on top of it. Looks fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
 	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm1"
 	inhand_icon_state = "knight_templar"
@@ -804,12 +805,15 @@
 /obj/item/clothing/suit/armor/riot/chaplain/knight1
 	name = "holy knight armour"
 	desc = "It has a blue and red that displays a heraldic emblem. This elegant armour is fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_armor.dmi'
 	icon_state = "frenchknight1"
 	inhand_icon_state = "knight_templar"
 
 /obj/item/clothing/head/helmet/chaplain/knight2
 	name = "holy knight helm"
 	desc = "A great helm with a grail, crown, and angelic wings on top of it. Looks fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
 	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm2"
 	inhand_icon_state = "knight_templar"
@@ -849,12 +853,15 @@
 /obj/item/clothing/suit/armor/riot/chaplain/knight2
 	name = "holy knight armour"
 	desc = "It has a white and red that displays a heraldic emblem. This elegant armour is fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_armor.dmi'
 	icon_state = "frenchknight2"
 	inhand_icon_state = "knight_templar"
 
 /obj/item/clothing/head/helmet/chaplain/knight3
 	name = "holy knight helm"
 	desc = "A great helm with a cloth covering some of it. Looks fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
 	worn_icon = 'icons/misc/tourny_helm.dmi'
 	icon_state = "helm3"
 	inhand_icon_state = "knight_templar"
@@ -894,5 +901,7 @@
 /obj/item/clothing/suit/armor/riot/chaplain/knight3
 	name = "holy knight armour"
 	desc = "It has a yellow and that displays a heraldic emblem. This elegant armour is fancy!"
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/misc/tourny_armor.dmi'
 	icon_state = "frenchknight3"
 	inhand_icon_state = "knight_templar"

@@ -212,6 +212,7 @@
 /obj/item/clothing/head/helmet/boatbomber
 	name = "gnome hat"
 	desc = "For those who bomb boats."
+	icon = 'icons/misc/tourny_items.dmi'
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "gnome_hat"
 	inhand_icon_state = "constable"
@@ -221,6 +222,8 @@
 /obj/item/clothing/head/helmet/chika
 	name = "anime hat"
 	desc = "Weeb."
+	icon = 'icons/misc/tourny_helm2.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "chika_hat"
 	inhand_icon_state = "beret"
 

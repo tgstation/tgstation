@@ -101,6 +101,7 @@
 /turf/open/floor/astroturf
 	name = "astroturf patch"
 	desc = "This is definitely a cheap plastic imitation."
+	icon = 'icons/misc/back_to_the_lab_again.dmi'
 	icon_state = "old_grass"
 	floor_tile = /obj/item/stack/tile/astroturf
 	broken_states = list("sand")
