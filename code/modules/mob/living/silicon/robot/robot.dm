@@ -379,6 +379,8 @@
 	return !cleared
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
+	if (A == modularInterface)
+		return TRUE //bypass for borg tablets
 	if (low_power_mode)
 		return FALSE
 	var/turf/T0 = get_turf(src)
