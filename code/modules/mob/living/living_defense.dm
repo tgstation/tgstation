@@ -411,9 +411,9 @@
   * Arguments:
   * * atom/A - atom being slapped
   */
-/mob/living/proc/do_slap_animation(atom/A)
-	do_attack_animation(A, no_effect=TRUE)
-	var/image/I = image('icons/effects/effects.dmi', A, "slapglove", A.layer + 0.1)
+/mob/living/proc/do_slap_animation(atom/slapped)
+	do_attack_animation(slapped, no_effect=TRUE)
+	var/image/I = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
 	I.pixel_y = 10 // should line up with head
 	I.pixel_x = 10
 	flick_overlay(I, GLOB.clients, 10)
