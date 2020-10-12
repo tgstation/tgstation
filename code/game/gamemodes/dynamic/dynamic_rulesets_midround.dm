@@ -579,6 +579,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/finish_setup(mob/new_character, index)
 	if (index == 1) // Our first guy is the scientist
+		new_character.mind.remove_antag_datum(/datum/antagonist/abductor/agent)
 		var/datum/antagonist/abductor/scientist/new_role = new
 		new_character.mind.add_antag_datum(new_role)
 	else
