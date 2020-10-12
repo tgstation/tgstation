@@ -48,7 +48,7 @@
 	var/turf/spawn_tile
 	//var/template_id
 	var/turf/bottom_left
-	var/area/current_holodeck_area
+	//var/area/current_holodeck_are
 	var/list/before_load = list()
 	var/list/after_load = list()
 
@@ -62,22 +62,24 @@
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	//var/obj/effect/holodeck_helper = locate(/obj/effect/mapping_helpers/holodeck_spawner) //BAD KYLER :newspaper2:
 	//get_spawn_tile(holodeck_helper)
-	current_holodeck_area = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
-	bottom_left = locate(current_holodeck_area.x, current_holodeck_area.y, 2)
-	//if(istype(AS, /area/holodeck))
-	//	log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
-	//	qdel(src)
-	//	return
-	/*if(ispath(holodeck_type, /area))
+	linked = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
+	bottom_left = locate(linked.x, linked.y, 2)
+	var/area/AS = get_area(src)
+
+	if(istype(AS, /area/holodeck))
+		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
+		qdel(src)
+		return
+	if(ispath(holodeck_type, /area))
 		linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
 	if(ispath(offline_program, /area))
 		offline_program = pop(get_areas(offline_program), FALSE)
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
-		//qdel(src)
+		qdel(src)
 		return
-	var/area/AS = get_area(src)
+
 
 	else
 		linked.linked = src
@@ -86,10 +88,15 @@
 			linked.power_usage = my_area.power_usage
 		else
 			linked.power_usage = new /list(AREA_USAGE_LEN)
-			*/
 
+	linked.linked = src
+	var/area/my_area = get_area(src)
+	if(my_area)
+		linked.power_usage = my_area.power_usage
+	else
+		linked.power_usage = new /list(AREA_USAGE_LEN)
 	generate_program_list()
-	//load_program("holodeck_chapelcourt")//honestly there isnt a reason to do this as far as im aware
+	load_program("holodeck_chapelcourt")//honestly there isnt a reason to do this as far as im aware
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
@@ -98,9 +105,7 @@
 		linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
 
-/obj/machinery/computer/holodeck/power_change()
-	. = ..()
-	toggle_power(!machine_stat)
+
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)//portable
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -152,12 +157,12 @@
 			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process(delta_time)
-	/*if(damaged && DT_PROB(5, delta_time))
+	if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/T in linked)
 			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, T)
 				return
-	*/
+
 	if(!..() || !active)
 		return
 
@@ -173,15 +178,15 @@
 			SSexplosions.lowturf += T
 			T.hotspot_expose(1000,500,1)
 
-	/*if(!(obj_flags & EMAGGED))
+	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
-			if(!(get_turf(item) in current_holodeck_area))
+			if(!(get_turf(item) in linked))
 				derez(item)
 	for(var/e in effects)
 		var/obj/effect/holodeck_effect/HE = e
-		HE.tick()*/
+		HE.tick()
 
-	//active_power_usage = 50 + spawned.len * 3 + effects.len * 5
+	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 
 /obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
@@ -305,10 +310,19 @@
 	var/list/atom/newatoms = list()
 	var/list/area/areas = list()
 
-	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
-	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
-							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
+	var/list/turfs = block(
+		locate(
+			bounds[MAP_MINX],
+			bounds[MAP_MINY],
+			bounds[MAP_MINZ]
+			),
+		locate(
+			bounds[MAP_MAXX],
+			bounds[MAP_MAXY],
+			bounds[MAP_MAXZ]
+			)
+		)
+
 	for(var/L in turfs)
 		var/turf/B = L
 		atoms += B
@@ -325,9 +339,9 @@
 				continue
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
-	for(var/L in border)
-		var/turf/T = L
-		T.air_update_turf(TRUE)
+	//for(var/L in border)
+	//	var/turf/T = L
+	//	T.air_update_turf(TRUE)
 
 
 
@@ -340,6 +354,20 @@
 	return newatoms
 
 /obj/machinery/computer/holodeck/proc/load_program(var/map_id, force = FALSE, add_delay = TRUE)
+
+	if(program == map_id)
+		return
+
+	if(current_cd > world.time && !force)
+		say("ERROR. Recalibrating projection apparatus.")
+		return
+
+	if(add_delay)
+		current_cd = world.time + HOLODECK_CD
+		if(damaged)
+			current_cd += HOLODECK_DMG_CD
+
+	use_power = active + IDLE_POWER_USE
 	program = map_id
 	if (spawned)
 		for (var/atom/item in spawned)
@@ -350,7 +378,7 @@
 	for (var/atom/atom in spawned)
 		if (atom.flags_1 & INITIALIZED_1)
 			atom.flags_1 |= HOLOGRAM_1
-	current_holodeck_area = get_area(bottom_left)
+	linked = get_area(bottom_left)//GLOB.areas_by_type[get_area(bottom_left)]
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()

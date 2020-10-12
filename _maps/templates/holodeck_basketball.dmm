@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/table,
-/turf/open/floor/plasteel,
+/turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "b" = (
 /obj/effect/turf_decal/tile/green{
@@ -39,9 +39,6 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
-/area/holodeck/rec_center/basketball)
-"g" = (
-/turf/open/floor/plasteel,
 /area/holodeck/rec_center/basketball)
 "h" = (
 /obj/effect/turf_decal/tile/green{
@@ -118,7 +115,7 @@
 "q" = (
 /obj/structure/table,
 /obj/item/storage/box/cups,
-/turf/open/floor/plasteel,
+/turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "r" = (
 /obj/effect/turf_decal/tile/red{
@@ -133,7 +130,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "u" = (
 /obj/effect/turf_decal/tile/red,
@@ -235,7 +232,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "U" = (
 /obj/effect/turf_decal/tile/red,
@@ -286,10 +283,10 @@
 a
 s
 s
-g
+w
 s
 s
-g
+w
 s
 s
 a
@@ -298,10 +295,10 @@ a
 q
 s
 s
-g
+w
 s
 s
-g
+w
 s
 s
 q
@@ -370,10 +367,10 @@ E
 q
 T
 T
-g
+w
 T
 T
-g
+w
 T
 T
 q
@@ -382,10 +379,10 @@ q
 a
 T
 T
-g
+w
 T
 T
-g
+w
 T
 T
 a

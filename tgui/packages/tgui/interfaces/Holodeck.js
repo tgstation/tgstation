@@ -49,8 +49,10 @@ export const Holodeck = (props, context) => {
                 content={emag_program.name.substring(11)}
                 color="bad"
                 textAlign="center"
-                selected={emag_programs.id === program}
-                onClick={() => act('load_program')} />
+                selected={emag_program.id === program}
+                onClick={() => act('load_program', {
+                  id: emag_program.id,
+                })} />
             ))}
           </Section>
         )}
