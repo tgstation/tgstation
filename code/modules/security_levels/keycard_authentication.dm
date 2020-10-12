@@ -62,6 +62,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 	if(. || waiting || !allowed(usr))
 		return
+	playsound(src, 'modular_lumos/sound/machines/keycardswipe.ogg', 50, FALSE)
 	switch(action)
 		if("red_alert")
 			if(!event_source)
