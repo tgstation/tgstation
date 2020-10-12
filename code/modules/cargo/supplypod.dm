@@ -166,7 +166,7 @@
 				. += decal
 			return
 		else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
-			. += door	
+			. += door
 		else
 			var/icon/masked_door = new(icon, door) //The door we want to apply
 			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
@@ -456,9 +456,11 @@
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
+	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()
 	deleteRubble()
+	endGlow()
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
 	return ..()
 

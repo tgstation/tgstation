@@ -5,6 +5,8 @@
  *	For documentation on the changelog generator see https://tgstation13.org/phpBB/viewtopic.php?f=5&t=5157
  *	To hide prs from being announced in game, place a [s] in front of the title
  *	All runtime errors are echo'ed to the webhook's logs in github
+ *  Events to be sent via GitHub webhook: Pull Requests, Pushes
+ *  Any other Event will result in a 404 returned to the webhook.
  */
 
 /**CREDITS:

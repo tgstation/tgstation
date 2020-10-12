@@ -149,11 +149,11 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/food/snacks/pizzaslice/margherita{
+/obj/item/food/pizzaslice/margherita{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/pizzaslice/margherita,
+/obj/item/food/pizzaslice/margherita,
 /obj/item/reagent_containers/food/snacks/chocolatebar,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1

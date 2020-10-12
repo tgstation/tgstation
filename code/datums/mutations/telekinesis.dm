@@ -32,4 +32,4 @@
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
 
-	target.attack_tk(owner)
+	INVOKE_ASYNC(target, /atom.proc/attack_tk, owner)
