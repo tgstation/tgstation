@@ -28,7 +28,7 @@
 	occupant.set_lying_angle(0)
 
 /atom/movable/visual/cryo_occupant/proc/on_occupant_exit(mob/living/occupant)
-	vis_contents.Cut()
+	vis_contents -= occupant
 	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
 		occupant.set_lying_down()
