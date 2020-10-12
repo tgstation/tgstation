@@ -286,6 +286,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/card_trimmer
+	name = "Identification Card Trimmer"
+	desc = "A device that can replace the trim of Nanotrasen cards, changing its predefined access slots."
+	id = "idcard_trimmer"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/uranium = 2000, /datum/material/silver = 1000, /datum/material/iron=500, /datum/material/glass = 200)
+	build_path = /obj/item/card_trimmer
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station."
@@ -293,6 +303,26 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
 	build_path = /obj/item/card/id
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/id/silver
+	name = "Silver Identification Card"
+	desc = "A silver card which shows honour and dedication."
+	id = "silver_idcard"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/silver = 1500, /datum/material/glass = 200)
+	build_path = /obj/item/card/id/silver
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/id/gold
+	name = "Gold Identification Card"
+	desc = "A golden card which shows power and might."
+	id = "gold_idcard"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/gold = 5000, /datum/material/silver = 2500, /datum/material/glass = 1500)
+	build_path = /obj/item/card/id/gold
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

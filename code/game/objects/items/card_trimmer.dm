@@ -1,6 +1,6 @@
 /obj/item/card_trimmer
 	name = "card trimmer"
-	desc = "A card trimmer. It is able to replace the trim of Nanotrasen cards, changing a cards access capabilities."
+	desc = "A device that can replace the trim of Nanotrasen cards, changing its predefined access slots."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "card_trimmer"
 	w_class = WEIGHT_CLASS_SMALL

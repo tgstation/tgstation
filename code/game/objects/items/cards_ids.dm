@@ -66,6 +66,8 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	inhand_icon_state = "card-id"
+	worn_icon = 'icons/mob/clothing/belt.dmi'
+	worn_icon_state = "grey_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
@@ -374,6 +376,7 @@ update_label()
 	name = "silver identification card"
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
+	worn_icon_state = "silver_card"
 	card_level = CARD_LEVEL_SILVER
 	common_wildcards = 5
 	command_wildcards = 2
@@ -398,6 +401,7 @@ update_label()
 	// wildcards don't matter at this card level
 	icon_state = "gold"
 	inhand_icon_state = "gold_id"
+	worn_icon_state = "gold_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -526,7 +530,7 @@ update_label()
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
-/obj/item/card/id/captains_spare
+/obj/item/card/id/gold/captains_spare
 	name = "captain's spare ID"
 	id_type_name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
@@ -538,13 +542,13 @@ update_label()
 	assignment = "Captain"
 	registered_age = null
 
-/obj/item/card/id/captains_spare/Initialize()
+/obj/item/card/id/gold/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	. = ..()
 	update_label()
 
-/obj/item/card/id/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
+/obj/item/card/id/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[id_type_name][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
 		update_icon()
@@ -660,6 +664,7 @@ update_label()
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
 	inhand_icon_state = "orange-id"
+	worn_icon_state = "orange_card"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
