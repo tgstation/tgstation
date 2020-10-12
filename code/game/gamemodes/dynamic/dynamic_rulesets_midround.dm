@@ -573,7 +573,7 @@
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
-/datum/dynamic_ruleset/midround/swarmer/execute()
+/datum/dynamic_ruleset/midround/swarmers/execute()
 	var/list/spawn_locs = list()
 	for(var/x in GLOB.xeno_spawn)
 		var/turf/spawn_turf = x
