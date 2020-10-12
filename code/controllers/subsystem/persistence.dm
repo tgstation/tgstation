@@ -405,7 +405,7 @@ SUBSYSTEM_DEF(persistence)
 		if(!original_human)
 			continue
 
-		if(original_human.stat == DEAD || !original_human.all_scars || !(original_human == ending_human))
+		if(original_human.stat == DEAD || !original_human.all_scars || original_human != ending_human)
 			original_human.save_persistent_scars(TRUE)
 		else
 			original_human.save_persistent_scars()

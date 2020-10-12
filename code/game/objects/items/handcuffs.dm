@@ -9,7 +9,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.handcuffed == src)
-			M.handcuffed = null
+			M.set_handcuffed(null)
 			M.update_handcuffed()
 			if(M.buckled && M.buckled.buckle_requires_restraints)
 				M.buckled.unbuckle_mob(M)
@@ -91,7 +91,7 @@
 		cuffs = new type()
 
 	cuffs.forceMove(target)
-	target.handcuffed = cuffs
+	target.set_handcuffed(cuffs)
 
 	target.update_handcuffed()
 	if(trashtype && !dispense)
@@ -238,11 +238,12 @@
 	return (BRUTELOSS)
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
-	..()
-	if(ishuman(user) && !user.stat && !user.restrained())
-		armed = !armed
-		update_icon()
-		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+	. = ..()
+	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return
+	armed = !armed
+	update_icon()
+	to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
@@ -267,7 +268,7 @@
 			var/def_zone = BODY_ZONE_CHEST
 			if(snap && iscarbon(L))
 				var/mob/living/carbon/C = L
-				if(C.mobility_flags & MOBILITY_STAND)
+				if(C.body_position == STANDING_UP)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src

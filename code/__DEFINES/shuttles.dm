@@ -5,6 +5,7 @@
 #define SHUTTLE_CALL		"called"
 #define SHUTTLE_DOCKED		"docked"
 #define SHUTTLE_STRANDED	"stranded"
+#define SHUTTLE_DISABLED	"disabled"
 #define SHUTTLE_ESCAPE		"escape"
 #define SHUTTLE_ENDGAME		"endgame: game over"
 #define SHUTTLE_RECHARGING		"recharging"
@@ -86,5 +87,6 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 //Shuttle unlocks
-#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
+#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_NARNAR "narnar"

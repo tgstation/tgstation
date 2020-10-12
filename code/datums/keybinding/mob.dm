@@ -2,69 +2,6 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
-
-/datum/keybinding/mob/face_north
-	hotkey_keys = list("AltW", "AltNorth")
-	name = "face_north"
-	full_name = "Face North"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_FACENORTH_DOWN
-
-/datum/keybinding/mob/face_north/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.northface()
-	return TRUE
-
-
-/datum/keybinding/mob/face_east
-	hotkey_keys = list("AltD", "AltEast")
-	name = "face_east"
-	full_name = "Face East"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_FACEEAST_DOWN
-
-/datum/keybinding/mob/face_east/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.eastface()
-	return TRUE
-
-
-/datum/keybinding/mob/face_south
-	hotkey_keys = list("AltS", "AltSouth")
-	name = "face_south"
-	full_name = "Face South"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_FACESOUTH_DOWN
-
-/datum/keybinding/mob/face_south/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.southface()
-	return TRUE
-
-/datum/keybinding/mob/face_west
-	hotkey_keys = list("AltA", "AltWest")
-	name = "face_west"
-	full_name = "Face West"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_FACEWEST_DOWN
-
-/datum/keybinding/mob/face_west/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.westface()
-	return TRUE
-
 /datum/keybinding/mob/stop_pulling
 	hotkey_keys = list("H", "Delete")
 	name = "stop_pulling"

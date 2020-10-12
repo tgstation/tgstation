@@ -235,7 +235,7 @@
 	timeout = 1 MINUTES
 
 /datum/mood_event/gates_of_mansus
-	description = "<span class='boldwarning'>LIVING IN A PERFORMANCE IS WORSE THAN DEATH</span>\n"
+	description = "<span class='boldwarning'>I HAD A GLIMPSE OF THE HORROR BEYOND THIS WORLD. REALITY UNCOILED BEFORE MY EYES!</span>\n"
 	mood_change = -25
 	timeout = 4 MINUTES
 
