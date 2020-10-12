@@ -316,16 +316,6 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/id/gold
-	name = "Gold Identification Card"
-	desc = "A golden card which shows power and might."
-	id = "gold_idcard"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/gold = 5000, /datum/material/silver = 2500, /datum/material/glass = 1500)
-	build_path = /obj/item/card/id/gold
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/eng_gloves
 	name = "Tinkers Gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
