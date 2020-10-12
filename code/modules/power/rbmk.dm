@@ -94,6 +94,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	var/last_coolant_temperature = 0
 	var/last_output_temperature = 0
 	var/last_heat_delta = 0 //For administrative cheating only. Knowing the delta lets you know EXACTLY what to set K at.
+	var/gasefficency = 0.15
 
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor/preset
 	id = "default_reactor_for_lazy_mappers"
@@ -181,16 +182,11 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 		var/mob/living/L = AM
 		L.adjust_bodytemperature(clamp(temperature, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)) //If you're on fire, you heat up!
 
-/obj/machinery/atmospherics/components/trinary/nuclear_reactor/process()
-	update_parents() //Update the pipenet to register new gas mixes
-//	if(next_slowprocess < world.time)
-	slowprocess()
-//		next_slowprocess = world.time + 1 SECONDS //Set to wait for another second before processing again, we don't need to process more than once a second
-
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/has_fuel()
 	return fuel_rods?.len
 
-/obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/slowprocess()
+/obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/process()
+	update_parents()
 	//Let's get our gasses sorted out.
 	var/datum/gas_mixture/coolant_input = airs[1]
 	var/datum/gas_mixture/moderator_input = airs[2]
@@ -199,7 +195,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	var/datum/gas_mixture/removed_coolant
 
 	//Firstly, heat up the reactor based off of K.
-	coolant_input.pump_gas_to(removed_coolant, 4500)
+	removed_coolant = coolant_input.remove(gasefficency * coolant_input.total_moles())
 	var/input_moles = removed_coolant.total_moles() //Firstly. Do we have enough moles of coolant?
 	if(input_moles >= minimum_coolant_level)
 		last_coolant_temperature = removed_coolant.return_temperature()
@@ -226,8 +222,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	gas_absorption_effectiveness = gas_absorption_constant
 
 	var/datum/gas_mixture/removed_moderator
-
-	moderator_input.pump_gas_to(removed_moderator, 9000)
+	removed_moderator = moderator_input.remove(gasefficency * moderator_input.total_moles())
 
 	removed_moderator.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/bz, /datum/gas/nitryl)
 	var/combined_moles = removed_moderator.total_moles()
