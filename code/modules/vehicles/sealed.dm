@@ -99,8 +99,12 @@
 		return
 	to_chat(user, "<span class='notice'>You remove [inserted_key] from [src].</span>")
 	inserted_key.forceMove(drop_location())
-	user.put_in_hands(inserted_key)
+	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		user.put_in_hands(inserted_key)
+	else
+		inserted_key.equip_to_best_slot(user, check_hand = FALSE)
 	inserted_key = null
+
 
 /obj/vehicle/sealed/obj_destruction(damage_flag)
 	explosion(loc, 0, 1, 2, 3, 0)
