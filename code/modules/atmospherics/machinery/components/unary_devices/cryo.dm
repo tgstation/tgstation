@@ -190,13 +190,15 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
-	if(on != new_value)
-		on = new_value
-		update_icon()
-		if(on)
-			occupant_vis.on_toggle_on()
-		else
-			occupant_vis.on_toggle_off()
+	if(on == new_value)
+		return
+	. = on
+	on = new_value
+	update_icon()
+	if(on)
+		occupant_vis.on_toggle_on()
+	else
+		occupant_vis.on_toggle_off()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
 	if(old_value) //Turned off
