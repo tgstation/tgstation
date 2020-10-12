@@ -32,7 +32,8 @@
 	var/direct
 	var/extra_range = 0
 	var/falloff
-	var/timerid
+	var/looping_timerid
+	var/start_timerid
 
 /datum/looping_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
 	if(!mid_sounds)
@@ -53,18 +54,22 @@
 /datum/looping_sound/proc/start(atom/add_thing)
 	if(add_thing)
 		output_atoms |= add_thing
-	if(timerid)
+	if(looping_timerid)
 		return
 	on_start()
 
 /datum/looping_sound/proc/stop(atom/remove_thing)
 	if(remove_thing)
 		output_atoms -= remove_thing
-	if(!timerid)
+	if(!looping_timerid && !start_timerid)
 		return
 	on_stop()
-	deltimer(timerid)
-	timerid = null
+	if(looping_timerid)
+		deltimer(looping_timerid)
+		looping_timerid = null
+	else
+		deltimer(start_timerid)
+		start_timerid = null
 
 /datum/looping_sound/proc/sound_loop(starttime)
 	if(max_loops && world.time >= starttime + mid_length * max_loops)
@@ -72,8 +77,8 @@
 		return
 	if(!chance || prob(chance))
 		play(get_sound(starttime))
-	if(!timerid)
-		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP)
+	if(!looping_timerid)
+		looping_timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP)
 
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/list/atoms_cache = output_atoms
@@ -98,7 +103,7 @@
 	if(start_sound)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME)
+	start_timerid = addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_STOPPABLE)
 
 /datum/looping_sound/proc/on_stop()
 	if(end_sound)
