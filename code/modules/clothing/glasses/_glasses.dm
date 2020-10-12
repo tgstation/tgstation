@@ -473,7 +473,7 @@
 	var/old_colour_type = glass_colour_type
 	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
 		glass_colour_type = new_color_type
-		if(H?.glasses == src)
+		if(H && H.glasses == src)
 			if(old_colour_type)
 				H.remove_client_colour(old_colour_type)
 			if(glass_colour_type)

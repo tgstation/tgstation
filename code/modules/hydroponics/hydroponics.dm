@@ -266,7 +266,7 @@
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
-				if(myseed?.yield != -1) // Unharvestable shouldn't be harvested
+				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
 					harvest = TRUE
 				else
 					lastproduce = age
@@ -278,7 +278,7 @@
 
 		// Weeeeeeeeeeeeeeedddssss
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
-			if(myseed?.yield >= 3)
+			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
 				myseed.yield = min((myseed.yield),YIELD_WEED_MINIMUM,YIELD_WEED_MAXIMUM)
 			if(!myseed)

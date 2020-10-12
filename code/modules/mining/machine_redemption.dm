@@ -308,7 +308,7 @@
 			return TRUE
 		if("diskUpload")
 			var/n = text2num(params["design"])
-			if(inserted_disk?.blueprints && inserted_disk.blueprints[n])
+			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
 				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")

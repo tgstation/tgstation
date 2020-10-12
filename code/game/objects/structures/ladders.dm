@@ -48,10 +48,10 @@
 	update_icon()
 
 /obj/structure/ladder/proc/disconnect()
-	if(up?.down == src)
+	if(up && up.down == src)
 		up.down = null
 		up.update_icon()
-	if(down?.up == src)
+	if(down && down.up == src)
 		down.up = null
 		down.update_icon()
 	up = down = null

@@ -209,7 +209,7 @@
 				back_to_idle()
 				return TRUE
 
-			if(target?.stat == CONSCIOUS)		// make sure target exists
+			if(target && target.stat == CONSCIOUS)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc) && !IsDeadOrIncap())	// if right next to perp
 
 					// check if target has a weapon

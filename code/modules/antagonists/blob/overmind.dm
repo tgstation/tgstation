@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/camera/blob/Destroy()
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
-		if(B?.overmind == src)
+		if(B && B.overmind == src)
 			B.overmind = null
 			B.update_icon() //reset anything that was ours
 	for(var/BLO in blob_mobs)

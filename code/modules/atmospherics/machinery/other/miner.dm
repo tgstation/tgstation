@@ -101,7 +101,7 @@
 	var/turf/T = get_turf(src)
 	if(T && istype(T))
 		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
-		if(C?.powernet && (C.powernet.avail > amount))
+		if(C && C.powernet && (C.powernet.avail > amount))
 			C.powernet.load += amount
 			return TRUE
 	if(powered())

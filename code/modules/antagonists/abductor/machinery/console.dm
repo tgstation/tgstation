@@ -95,7 +95,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo?.marked ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -251,7 +251,7 @@
 		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
-	if(experiment?.credits >= cost)
+	if(experiment && experiment.credits >= cost)
 		experiment.credits -=cost
 		say("Incoming supply!")
 		var/drop_location = loc

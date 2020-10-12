@@ -30,7 +30,7 @@
 	else
 		. += "Its cover is closed[locked ? "" : ", and looks unlocked"]."
 
-	if(cell?.charge <= 0)
+	if(cell && cell.charge <= 0)
 		. += "<span class='warning'>Its battery indicator is blinking red!</span>"
 
 	switch(stat)

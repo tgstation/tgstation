@@ -62,7 +62,7 @@
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
-	if(instant || (roundstart && (mapload || (SSticker?.current_state > GAME_STATE_SETTING_UP))))
+	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
 		GLOB.poi_list |= src

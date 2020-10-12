@@ -332,7 +332,7 @@
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
 /datum/action/innate/chrono_teleport/IsAvailable()
-	return (chronosuit?.activated && chronosuit.camera && !chronosuit.teleporting)
+	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
 	if(IsAvailable())

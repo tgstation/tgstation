@@ -88,7 +88,7 @@
 
 
 /datum/antagonist/nukeop/proc/memorize_code()
-	if(nuke_team?.tracked_nuke && nuke_team.memorized_code)
+	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
 		to_chat(owner, "The nuclear authorization code is: <B>[nuke_team.memorized_code]</B>")
 	else

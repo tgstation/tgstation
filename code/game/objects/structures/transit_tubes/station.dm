@@ -88,7 +88,7 @@
 						if(pod.contents.len && user.loc != pod)
 							user.visible_message("<span class='notice'>[user] starts emptying [pod]'s contents onto the floor.</span>", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
 							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
-								if(pod?.loc == loc)
+								if(pod && pod.loc == loc)
 									for(var/atom/movable/AM in pod)
 										AM.forceMove(get_turf(user))
 
@@ -141,7 +141,7 @@
 			pod_moving = TRUE
 			close_animation()
 			sleep(CLOSE_DURATION + 2)
-			if(open_status == STATION_TUBE_CLOSED && pod?.loc == loc)
+			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
 				pod.follow_tube()
 			pod_moving = FALSE
 			return TRUE

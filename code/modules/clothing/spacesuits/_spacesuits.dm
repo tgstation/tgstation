@@ -199,7 +199,7 @@
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
-	if(!thermal_on && !(cell?.charge >= THERMAL_REGULATOR_COST))
+	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
 		return
 
 	thermal_on = !thermal_on

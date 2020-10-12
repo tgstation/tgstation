@@ -300,7 +300,7 @@
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
-	if(pulledby?.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		. = FALSE //getting choked
 
 	if(isturf(loc) && isopenturf(loc))
@@ -637,7 +637,7 @@
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
-	if(client && hud_used?.hud_version != HUD_STYLE_NOHUD)
+	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)
 			I.layer = ABOVE_HUD_LAYER

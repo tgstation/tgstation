@@ -261,7 +261,7 @@
 			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
 			filling_color = "#EFB4B4"
 		if ("custom")
-			if(R?.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
+			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
 				flavoring.color = master.color

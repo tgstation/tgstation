@@ -265,7 +265,7 @@
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return JOB_AVAILABLE
 			for(var/datum/job/J in SSjob.occupations)
-				if(J?.current_positions < J.total_positions && J.title != job.title)
+				if(J && J.current_positions < J.total_positions && J.title != job.title)
 					return JOB_UNAVAILABLE_SLOTFULL
 		else
 			return JOB_UNAVAILABLE_SLOTFULL

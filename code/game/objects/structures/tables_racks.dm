@@ -567,7 +567,7 @@
 
 /obj/structure/table/optable/Destroy()
 	. = ..()
-	if(computer?.table == src)
+	if(computer && computer.table == src)
 		computer.table = null
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)

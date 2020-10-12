@@ -316,7 +316,7 @@
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
 		if("eject_disk")
-			if(auth?.loc == src)
+			if(auth && auth.loc == src)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))

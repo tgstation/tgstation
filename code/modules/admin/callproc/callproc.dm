@@ -124,7 +124,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 #ifdef TESTING
 	return FALSE
 #else
-	return usr?.client && GLOB.AdminProcCaller == usr.client.ckey
+	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
 #endif
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
