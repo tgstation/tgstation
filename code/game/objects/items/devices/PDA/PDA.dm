@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "</ul>"
 				if (count == 0)
 					dat += "None detected.<br>"
-				else if(cartridge && cartridge.spam_enabled)
+				else if(cartridge?.spam_enabled)
 					dat += "<a href='byond://?src=[REF(src)];choice=MessageAll'>Send To All</a>"
 			if(6)
 				dat += "<h4>[PDAIMG(mail)] ExperTrak® Skill Tracker V4.26.2</h4>"
@@ -591,7 +591,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
-				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
+				if(cartridge?.access & CART_REMOTE_DOOR)
 					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)

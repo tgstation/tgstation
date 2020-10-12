@@ -100,7 +100,7 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
-	
+
 
 /mob/living/simple_animal/hostile/space_dragon/Life(mapload)
 	. = ..()
@@ -321,7 +321,7 @@
   * * atom/movable/A - The thing being consumed
   */
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
-	if(A && A.loc != src)
+	if(A?.loc != src)
 		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
 		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
 		A.forceMove(src)

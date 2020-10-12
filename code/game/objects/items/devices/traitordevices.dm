@@ -230,7 +230,7 @@ effective or pretty fucking useless.
 
 /obj/item/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
+	if(user?.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
 /obj/item/shadowcloak/process(delta_time)

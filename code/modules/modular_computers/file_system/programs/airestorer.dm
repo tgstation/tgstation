@@ -20,7 +20,7 @@
 	if(computer)
 		ai_slot = computer.all_components[MC_AI]
 
-	if(computer && ai_slot && ai_slot.check_functionality())
+	if(computer && ai_slot?.check_functionality())
 		if(cardcheck == 1)
 			return ai_slot
 		if(ai_slot.enabled && ai_slot.stored_card)
@@ -42,14 +42,14 @@
 
 	switch(action)
 		if("PRG_beginReconstruction")
-			if(A && A.health < 100)
+			if(A?.health < 100)
 				restoring = TRUE
 				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
-				if(ai_slot && ai_slot.stored_card)
+				if(ai_slot?.stored_card)
 					ai_slot.try_eject(usr)
 					return TRUE
 

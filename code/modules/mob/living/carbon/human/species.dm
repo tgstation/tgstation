@@ -1151,7 +1151,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-		if(mood && mood.sanity > SANITY_DISTURBED)
+		if(mood?.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0
 		if(H.satiety > MAX_SATIETY)
@@ -1281,7 +1281,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style && attacker_style.grab_act(user,target))
+	if(attacker_style?.grab_act(user,target))
 		return TRUE
 	else
 		//Steal them shoes
@@ -1309,7 +1309,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your attack at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style && attacker_style.harm_act(user,target))
+	if(attacker_style?.harm_act(user,target))
 		return TRUE
 	else
 
@@ -1386,7 +1386,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style && attacker_style.disarm_act(user,target))
+	if(attacker_style?.disarm_act(user,target))
 		return TRUE
 	if(user.resting || user.IsKnockdown())
 		return FALSE

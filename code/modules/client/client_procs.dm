@@ -977,7 +977,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)
-	if(prefs && prefs.chat_toggles & CHAT_PULLR)
+	if(prefs?.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
 
 /client/proc/show_character_previews(mutable_appearance/MA)

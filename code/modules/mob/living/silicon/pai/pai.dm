@@ -164,7 +164,7 @@
 /mob/living/silicon/pai/proc/process_hack()
 
 
-	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
+	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = clamp(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."

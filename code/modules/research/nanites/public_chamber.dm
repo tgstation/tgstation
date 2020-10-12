@@ -158,7 +158,7 @@
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
 			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
-			if(nanites && nanites.cloud_id != cloud_id)
+			if(nanites?.cloud_id != cloud_id)
 				change_cloud(attacker)
 			return
 		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))

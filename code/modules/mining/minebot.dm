@@ -83,7 +83,7 @@
 			. += "<span class='boldwarning'>[t_He] look[t_s] severely dented!</span>"
 	. += {"<span class='notice'>Using a mining scanner on [t_him] will instruct [t_him] to drop stored ore. <b>[max(0, LAZYLEN(contents) - 1)] Stored Ore</b>\n
 	Field repairs can be done with a welder."}
-	if(stored_gun && stored_gun.max_mod_capacity)
+	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
 		for(var/A in stored_gun.get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A

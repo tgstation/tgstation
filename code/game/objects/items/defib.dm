@@ -512,7 +512,7 @@
 				busy = FALSE
 				update_icon()
 				return
-			if(H && H.stat == DEAD)
+			if(H?.stat == DEAD)
 				to_chat(user, "<span class='warning'>[H] is dead.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 				busy = FALSE

@@ -266,12 +266,12 @@
 	set waitfor = FALSE
 	if(speak_chance)
 		if(prob(speak_chance) || override)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
+			if(speak?.len)
+				if((emote_hear?.len) || (emote_see?.len))
 					var/length = speak.len
-					if(emote_hear && emote_hear.len)
+					if(emote_hear?.len)
 						length += emote_hear.len
-					if(emote_see && emote_see.len)
+					if(emote_see?.len)
 						length += emote_see.len
 					var/randomValue = rand(1,length)
 					if(randomValue <= speak.len)
@@ -285,11 +285,11 @@
 				else
 					say(pick(speak), forced = "poly")
 			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if(!(emote_hear?.len) && (emote_see?.len))
 					manual_emote(pick(emote_see))
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
+				if((emote_hear?.len) && !(emote_see?.len))
 					manual_emote(pick(emote_hear))
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
+				if((emote_hear?.len) && (emote_see?.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
@@ -300,7 +300,7 @@
 /mob/living/simple_animal/proc/environment_air_is_safe()
 	. = TRUE
 
-	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+	if(pulledby?.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		. = FALSE //getting choked
 
 	if(isturf(loc) && isopenturf(loc))
@@ -637,7 +637,7 @@
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
-	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+	if(client && hud_used?.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)
 			I.layer = ABOVE_HUD_LAYER

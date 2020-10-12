@@ -38,7 +38,7 @@
 	var/retreat_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/wolf/Move(atom/newloc)
-	if(newloc && newloc.z == z && (islava(newloc) || ischasm(newloc)))
+	if(newloc?.z == z && (islava(newloc) || ischasm(newloc)))
 		return FALSE
 	return ..()
 

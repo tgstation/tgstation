@@ -39,7 +39,7 @@
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
-		if(camera && camera.bug == src)
+		if(camera?.bug == src)
 			camera.bug = null
 	bugged_cameras = list()
 	if(tracking)
@@ -142,7 +142,7 @@
 	return html
 
 /obj/item/camera_bug/proc/get_seens()
-	if(current && current.can_use())
+	if(current?.can_use())
 		var/list/seen = current.can_see()
 		return seen
 
@@ -150,7 +150,7 @@
 	// this should only be called if current exists
 	var/dat = ""
 	var/list/seen = get_seens()
-	if(seen && seen.len >= 1)
+	if(seen?.len >= 1)
 		var/list/names = list()
 		for(var/obj/singularity/S in seen) // god help you if you see more than one
 			if(S.name in names)
@@ -213,7 +213,7 @@
 			interact()
 	if("track" in href_list)
 		var/list/seen = get_seens()
-		if(seen && seen.len >= 1)
+		if(seen?.len >= 1)
 			var/atom/A = locate(href_list["track"]) in seen
 			if(A && istype(A))
 				tracking = A

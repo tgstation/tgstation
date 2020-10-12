@@ -184,7 +184,7 @@
 					return
 
 				if(istype(P, /obj/item/ai_module))
-					if(brain && brain.laws.id != DEFAULT_AI_LAWID)
+					if(brain?.laws.id != DEFAULT_AI_LAWID)
 						to_chat(user, "<span class='warning'>The installed [brain.name] already has set laws!</span>")
 						return
 					var/obj/item/ai_module/module = P

@@ -404,7 +404,7 @@ SUBSYSTEM_DEF(shuttle)
 		return 1
 	var/obj/docking_port/stationary/dockedAt = M.get_docked()
 	var/destination = dockHome
-	if(dockedAt && dockedAt.id == dockHome)
+	if(dockedAt?.id == dockHome)
 		destination = dockAway
 	if(timed)
 		if(M.request(getDock(destination)))
@@ -702,7 +702,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/list/force_memory = preview_shuttle.movement_force
 	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.	
+	preview_shuttle.mode = SHUTTLE_PREARRIVAL//No idle shuttle moving. Transit dock get removed if shuttle moves too long.
 	preview_shuttle.initiate_docking(D)
 	preview_shuttle.movement_force = force_memory
 

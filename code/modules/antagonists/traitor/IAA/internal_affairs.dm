@@ -95,7 +95,7 @@
 					continue
 				var/datum/objective/assassinate/internal/objective = objective_
 				var/mob/current = objective.target.current
-				if(current&&current.stat!=DEAD)
+				if(current?.stat!=DEAD)
 					scan_target = current
 				break
 

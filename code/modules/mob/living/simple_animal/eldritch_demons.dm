@@ -220,7 +220,7 @@
 	if(!follow)
 		return
 	gib_trail()
-	if(back && back.loc != oldloc)
+	if(back?.loc != oldloc)
 		back.Move(oldloc)
 	// self fixing properties if somehow broken
 	if(front && loc != front.oldloc)

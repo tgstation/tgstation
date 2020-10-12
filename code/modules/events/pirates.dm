@@ -40,7 +40,7 @@
 	SScommunications.send_message(threat,unique = TRUE)
 
 /datum/round_event/pirates/proc/answered()
-	if(threat && threat.answered == 1)
+	if(threat?.answered == 1)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(D.adjust_money(-payoff))

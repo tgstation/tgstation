@@ -146,7 +146,7 @@
 			"<span class='notice'>[user] inserts something into [target]'s [parse_zone(target_zone)]!</span>")
 
 	else if(current_type == "extract")
-		if(I && I.owner == target)
+		if(I?.owner == target)
 			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 				"<span class='notice'>[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='notice'>[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!</span>")

@@ -159,7 +159,7 @@
 		if(!D || QDELETED(D))
 			return
 
-		if(iswallturf(src) && user && user.loc == temp_loc)	//Let's check if everything is still there
+		if(iswallturf(src) && user?.loc == temp_loc)	//Let's check if everything is still there
 			to_chat(user, "<span class='notice'>You place the poster!</span>")
 			return
 

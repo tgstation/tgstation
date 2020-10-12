@@ -228,7 +228,7 @@
 		shutdown_computer()
 		return
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
+	if(active_program?.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature))
 		active_program.event_networkfailure(0) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/I in idle_threads)
@@ -263,7 +263,7 @@
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
 
-	if(battery_module && battery_module.battery)
+	if(battery_module?.battery)
 		switch(battery_module.battery.percent())
 			if(80 to 200) // 100 should be maximal but just in case..
 				data["PC_batteryicon"] = "batt_100.gif"
@@ -284,7 +284,7 @@
 		data["PC_batterypercent"] = "N/C"
 		data["PC_showbatteryicon"] = battery_module ? 1 : 0
 
-	if(recharger && recharger.enabled && recharger.check_functionality() && recharger.use_power(0))
+	if(recharger?.enabled && recharger.check_functionality() && recharger.use_power(0))
 		data["PC_apclinkicon"] = "charging.gif"
 
 	switch(get_ntnet_status())

@@ -316,7 +316,7 @@
 	playsound(src, "terminal_type", 20, FALSE)
 	switch(action)
 		if("eject_disk")
-			if(auth && auth.loc == src)
+			if(auth?.loc == src)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 				playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 				auth.forceMove(get_turf(src))
@@ -457,7 +457,7 @@
 	safety = TRUE
 	update_icon()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	if(SSticker && SSticker.mode)
+	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 100)
 

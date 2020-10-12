@@ -45,7 +45,7 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
-	if(my_port && my_port.get_docked())
+	if(my_port?.get_docked())
 		my_port.delete_after = TRUE
 		my_port.id = null
 		my_port.name = "Old [my_port.name]"
@@ -154,7 +154,7 @@
 		return
 
 	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
-	if(my_port && my_port.get_docked())
+	if(my_port?.get_docked())
 		my_port.unregister()
 		my_port.delete_after = TRUE
 		my_port.id = null
@@ -279,7 +279,7 @@
 				return SHUTTLE_DOCKER_BLOCKED
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/update_hidden_docking_ports(list/remove_images, list/add_images)
-	if(!see_hidden && current_user && current_user.client)
+	if(!see_hidden && current_user?.client)
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 

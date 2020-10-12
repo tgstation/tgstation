@@ -432,7 +432,7 @@
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
 		else if (SSticker.IsRoundInProgress())
 			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin=1'>(Force Next Latejoin Ruleset)</A><br>"
-			if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
+			if (SSticker?.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
 				var/datum/game_mode/dynamic/mode = SSticker.mode
 				if (mode.forced_latejoin_rule)
 					dat += {"<A href='?src=[REF(src)];[HrefToken()];f_dynamic_latejoin_clear=1'>-> [mode.forced_latejoin_rule.name] <-</A><br>"}

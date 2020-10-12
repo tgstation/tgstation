@@ -44,7 +44,7 @@
 	. += add_mmi_overlay()
 
 /obj/item/mmi/proc/add_mmi_overlay()
-	if(brainmob && brainmob.stat != DEAD)
+	if(brainmob?.stat != DEAD)
 		. += "mmi_alive"
 	else if(brain)
 		. += "mmi_dead"

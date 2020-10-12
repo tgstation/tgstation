@@ -222,7 +222,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
-	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
+	if(heard_by_no_admins && usr?.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2adminchat(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
 	_interactions += "[time_stamp()]: [formatted_message]"
@@ -328,7 +328,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	closed_at = world.time
 	QDEL_NULL(statclick)
 	GLOB.ahelp_tickets.active_tickets -= src
-	if(initiator && initiator.current_ticket == src)
+	if(initiator?.current_ticket == src)
 		initiator.current_ticket = null
 
 //Mark open ticket as closed/meme

@@ -75,7 +75,7 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(cell && cell.charge > 0)
+	if(cell?.charge > 0)
 		var/turf/L = loc
 		if(!istype(L))
 			if(mode != HEATER_MODE_STANDBY)

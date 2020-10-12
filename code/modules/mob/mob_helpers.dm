@@ -283,7 +283,7 @@
 
 		a_intent = possible_a_intents[current_intent]
 
-	if(hud_used && hud_used.action_intent)
+	if(hud_used?.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
@@ -372,7 +372,7 @@
   */
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting?.status == BODYPART_ROBOTIC)
 		var/dam //changes repair text based on how much brute/burn was supplied
 		if(brute_heal > burn_heal)
 			dam = 1

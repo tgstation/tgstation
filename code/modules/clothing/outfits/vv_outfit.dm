@@ -84,7 +84,7 @@
 	if(id_slot)
 		O.stored_access |= id_slot.GetAccess()
 		var/obj/item/card/id/ID = id_slot.GetID()
-		if(ID && ID.registered_name == real_name)
+		if(ID?.registered_name == real_name)
 			O.update_id_name = TRUE
 	//Copy hands
 	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees

@@ -90,7 +90,7 @@
 	var/list/turfs = list()
 	for(var/E in B.elements)
 		var/obj/effect/ebeam/chainpart = E
-		if(chainpart && chainpart.x && chainpart.y && chainpart.z)
+		if(chainpart?.x && chainpart.y && chainpart.z)
 			var/turf/T = get_turf_pixel(chainpart)
 			turfs |= T
 			if(T != get_turf(B.origin) && T != get_turf(B.target))

@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
 	emag_cooldown = world.time + 100
 
-	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
+	if(connected_ai?.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfully defended against subversion.</span>")

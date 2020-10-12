@@ -1115,7 +1115,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				continue
 			ban_details = i
 			break //we only want to get the most recent ban's details
-		if(ban_details && ban_details.len)
+		if(ban_details?.len)
 			var/expires = "This is a permanent ban."
 			if(ban_details["expiration_time"])
 				expires = " The ban is for [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)] and expires on [ban_details["expiration_time"]] (server time)."
@@ -1559,7 +1559,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)
 						UI_style = pickedui
-						if (parent && parent.mob && parent.mob.hud_used)
+						if (parent?.mob && parent.mob.hud_used)
 							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
 				if("pda_style")
 					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
@@ -1785,17 +1785,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("parallaxup")
 					parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
+					if (parent?.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
 				if("parallaxdown")
 					parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
+					if (parent?.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
-					if(parent && parent.screen && parent.screen.len)
+					if(parent?.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 						PM.backdrop(parent.mob)
 

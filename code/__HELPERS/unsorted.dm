@@ -197,7 +197,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
 
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety && !banned)
+		if(C?.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -332,7 +332,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
+	while(loc?.loc && !isturf(loc.loc))
 		loc = loc.loc
 		if(stop_type && istype(loc, stop_type))
 			break

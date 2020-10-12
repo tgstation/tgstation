@@ -168,7 +168,7 @@
 		dat += "<tr><td><font color=grey><B>Shoes:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 	else
 		dat += "<tr><td><B>Shoes:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_FEET]'>[(shoes && !(shoes.item_flags & ABSTRACT))		? shoes		: "<font color=grey>Empty</font>"]</A>"
-		if(shoes && shoes.can_be_tied && shoes.tied != SHOES_KNOTTED)
+		if(shoes?.can_be_tied && shoes.tied != SHOES_KNOTTED)
 			dat += "&nbsp;<A href='?src=[REF(src)];shoes=[ITEM_SLOT_FEET]'>[shoes.tied ? "Untie shoes" : "Knot shoes"]</A>"
 
 		dat += "</td></tr>"
@@ -188,7 +188,7 @@
 		dat += "</td></tr>"
 
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_CHEST)
-	if((w_uniform == null && !(dna && dna.species.nojumpsuit) && !(O && O.status == BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
+	if((w_uniform == null && !(dna?.species.nojumpsuit) && !(O?.status == BODYPART_ROBOTIC)) || (obscured & ITEM_SLOT_ICLOTHING))
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Pockets:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>ID:</B></font></td></tr>"
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
@@ -252,7 +252,7 @@
 			if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
 				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
+		else if(place_item?.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
 			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
 			delay_denominator = 4
 		else
@@ -604,7 +604,7 @@
 	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
-		if(R && R.fields["criminal"])
+		if(R?.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
 					threatcount += 5
@@ -618,7 +618,7 @@
 		threatcount += 2
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && dna.species.id != "human")
+	if(dna?.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
@@ -717,7 +717,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna?.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -806,7 +806,7 @@
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
-	if(dna && dna.species)
+	if(dna?.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
 		var/static/mutable_appearance/electrocution_skeleton_anim
 		if(!electrocution_skeleton_anim)
@@ -834,7 +834,7 @@
 	return TRUE
 
 /mob/living/carbon/human/resist_restraints()
-	if(wear_suit && wear_suit.breakouttime)
+	if(wear_suit?.breakouttime)
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
 		cuff_resist(wear_suit)
@@ -929,7 +929,7 @@
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+	if(dna?.species) //prevents a runtime while a human is being monkeyfied
 		override = dna.species.override_float
 	..()
 

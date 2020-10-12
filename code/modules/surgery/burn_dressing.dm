@@ -16,7 +16,7 @@
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(burn_wound && burn_wound.infestation > 0)
+		return(burn_wound?.infestation > 0)
 
 //SURGERY STEPS
 
@@ -68,7 +68,7 @@
 	if(!..())
 		return
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
-	while(burn_wound && burn_wound.infestation > 0.25)
+	while(burn_wound?.infestation > 0.25)
 		if(!..())
 			break
 

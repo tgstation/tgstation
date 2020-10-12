@@ -179,7 +179,7 @@
 	do
 		T = get_step(T, cyclelinkeddir)
 		FoundDoor = locate() in T
-		if (FoundDoor && FoundDoor.cyclelinkeddir != get_dir(FoundDoor, src))
+		if (FoundDoor?.cyclelinkeddir != get_dir(FoundDoor, src))
 			FoundDoor = null
 		limit--
 	while(!FoundDoor && limit)

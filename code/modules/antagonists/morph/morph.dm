@@ -70,7 +70,7 @@
 	if(morphed && !eat_while_disguised)
 		to_chat(src, "<span class='warning'>You cannot eat anything while you are disguised!</span>")
 		return FALSE
-	if(A && A.loc != src)
+	if(A?.loc != src)
 		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
 		A.forceMove(src)
 		return TRUE

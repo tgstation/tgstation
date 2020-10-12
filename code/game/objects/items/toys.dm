@@ -154,7 +154,7 @@
 
 /obj/item/toy/balloon/syndicate/pickup(mob/user)
 	. = ..()
-	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+	if(user?.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 
 /obj/item/toy/balloon/syndicate/dropped(mob/user)

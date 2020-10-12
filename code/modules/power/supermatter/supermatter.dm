@@ -728,7 +728,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point) //If the power is above 5000 or if the damage is above 550
 		var/range = 4
 		zap_cutoff = 1500
-		if(removed && removed.return_pressure() > 0 && removed.return_temperature() > 0)
+		if(removed?.return_pressure() > 0 && removed.return_temperature() > 0)
 			//You may be able to freeze the zapstate of the engine with good planning, we'll see
 			zap_cutoff = clamp(3000 - (power * (removed.total_moles()) / 10) / removed.return_temperature(), 350, 3000)//If the core is cold, it's easier to jump, ditto if there are a lot of mols
 			//We should always be able to zap our way out of the default enclosure
@@ -1209,7 +1209,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1
-		if(T && T.return_air())
+		if(T?.return_air())
 			pressure = max(1,T.return_air().return_pressure())
 		//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
 		var/new_range = clamp(zap_str / pressure * 10, 2, 7)

@@ -419,7 +419,7 @@
 			for(var/obj/item/reagent_containers/glass/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 
-			if(S && S.reagents && S.reagents.total_volume)
+			if(S?.reagents && S.reagents.total_volume)
 				reactants += S.reagents
 
 	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))

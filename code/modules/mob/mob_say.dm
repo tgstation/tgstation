@@ -67,7 +67,7 @@
 	if(isobserver(src) && O.deadchat_name)
 		name = "[O.deadchat_name]"
 	else
-		if(mind && mind.name)
+		if(mind?.name)
 			name = "[mind.name]"
 		else
 			name = real_name

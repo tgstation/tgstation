@@ -188,14 +188,14 @@
 			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
-	if(user && user.dna && user.dna.unique_enzymes)
+	if(user?.dna && user.dna.unique_enzymes)
 		if(user.dna.unique_enzymes == unique_enzymes)
 			return TRUE
 	return FALSE
 
 /obj/item/firing_pin/dna/auth_fail(mob/living/carbon/user)
 	if(!unique_enzymes)
-		if(user && user.dna && user.dna.unique_enzymes)
+		if(user?.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
 			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 	else

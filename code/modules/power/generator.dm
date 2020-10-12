@@ -85,7 +85,7 @@
 
 		update_icon()
 
-	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
+	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
 		update_icon()
@@ -160,20 +160,20 @@
 	var/circpath = /obj/machinery/atmospherics/components/binary/circulator
 	if(dir == NORTH || dir == SOUTH)
 		C = locate(circpath) in get_step(src, EAST)
-		if(C && C.dir == WEST)
+		if(C?.dir == WEST)
 			circs += C
 
 		C = locate(circpath) in get_step(src, WEST)
-		if(C && C.dir == EAST)
+		if(C?.dir == EAST)
 			circs += C
 
 	else
 		C = locate(circpath) in get_step(src, NORTH)
-		if(C && C.dir == SOUTH)
+		if(C?.dir == SOUTH)
 			circs += C
 
 		C = locate(circpath) in get_step(src, SOUTH)
-		if(C && C.dir == NORTH)
+		if(C?.dir == NORTH)
 			circs += C
 
 	if(circs.len)

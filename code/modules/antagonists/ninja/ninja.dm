@@ -108,7 +108,7 @@
 	return TRUE
 
 /proc/is_ninja(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/ninja)
+	return M?.mind && M.mind.has_antag_datum(/datum/antagonist/ninja)
 
 
 /datum/antagonist/ninja/greet()

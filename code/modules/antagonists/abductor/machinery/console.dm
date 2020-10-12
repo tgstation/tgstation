@@ -95,7 +95,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
+		data["gizmo"] = gizmo?.marked ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -143,7 +143,7 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo && gizmo.marked)
+	if(pad && gizmo?.marked)
 		pad.Retrieve(gizmo.marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
@@ -251,7 +251,7 @@
 		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
-	if(experiment && experiment.credits >= cost)
+	if(experiment?.credits >= cost)
 		experiment.credits -=cost
 		say("Incoming supply!")
 		var/drop_location = loc

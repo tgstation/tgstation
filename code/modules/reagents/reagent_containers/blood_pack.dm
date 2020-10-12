@@ -18,7 +18,7 @@
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
 		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B && B.data && B.data["blood_type"])
+		if(B?.data && B.data["blood_type"])
 			blood_type = B.data["blood_type"]
 		else
 			blood_type = null

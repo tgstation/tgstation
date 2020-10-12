@@ -84,7 +84,7 @@
 			classes += extra_classes
 
 		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
-		if(holder && holder.marked_datum && .["class"] == markstring)
+		if(holder?.marked_datum && .["class"] == markstring)
 			.["class"] = VV_MARKED_DATUM
 
 	switch(.["class"])

@@ -89,7 +89,7 @@
 				var/confirm = alert("Are you sure you want to wipe this card's memory?", name, "Yes", "No")
 				if(confirm == "Yes" && !..())
 					flush = TRUE
-					if(AI && AI.loc == src)
+					if(AI?.loc == src)
 						to_chat(AI, "<span class='userdanger'>Your core files are being wiped!</span>")
 						while(AI.stat != DEAD && flush)
 							AI.adjustOxyLoss(5)

@@ -195,7 +195,7 @@
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+	if(beaker?.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
@@ -366,13 +366,13 @@
 	var/list/datum/reagents/R = list()
 	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
 	var/datum/reagents/Q = new(total*10)
-	if(beaker && beaker.reagents)
+	if(beaker?.reagents)
 		R += beaker.reagents
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10)
 	R += Q
 	chem_splash(get_turf(src), 3, R)
-	if(beaker && beaker.reagents)
+	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
 	cell.emp_act(severity)

@@ -44,7 +44,7 @@
 	SIGNAL_HANDLER
 
 	setDir(angle2dir(azimuth))
-	if(control && control.track == SOLAR_TRACK_AUTO)
+	if(control?.track == SOLAR_TRACK_AUTO)
 		control.set_panels(azimuth)
 
 /obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)

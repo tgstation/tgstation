@@ -126,7 +126,7 @@
 	return 1
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
-	if(I && I.damtype == BURN)
+	if(I?.damtype == BURN)
 		. = 0
 	else
 		. = expected_damage
@@ -461,7 +461,7 @@
 	growth_queue += SV
 	vines += SV
 	SV.master = src
-	if(muts && muts.len)
+	if(muts?.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
 	if(parent)

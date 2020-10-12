@@ -190,7 +190,7 @@
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
-			if(disk && disk.program)
+			if(disk?.program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
@@ -208,7 +208,7 @@
 				qdel(P)
 			. = TRUE
 		if("add_rule")
-			if(disk && disk.program && istype(disk.program, /datum/nanite_program/sensor))
+			if(disk?.program && istype(disk.program, /datum/nanite_program/sensor))
 				var/datum/nanite_program/sensor/rule_template = disk.program
 				if(!rule_template.can_rule)
 					return

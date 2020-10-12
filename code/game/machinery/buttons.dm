@@ -163,7 +163,7 @@
 	if((machine_stat & (NOPOWER|BROKEN)))
 		return
 
-	if(device && device.next_activate > world.time)
+	if(device?.next_activate > world.time)
 		return
 
 	if(!allowed(user))

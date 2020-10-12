@@ -224,7 +224,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return 1
 
 /obj/item/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+	if(B?.loc == loc)
 		qdel(src)
 
 /obj/item/ComponentInitialize()
@@ -360,7 +360,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		else
 			to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
 			var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
+			if(affecting?.receive_damage( 0, 5 ))		// 5 burn damage
 				C.update_damage_overlays()
 			return
 

@@ -52,7 +52,7 @@
 	if(O.refined_type == null)
 		return
 
-	if(O && O.refined_type)
+	if(O?.refined_type)
 		points += O.points * point_upgrade * O.amount
 
 	var/material_amount = mat_container.get_item_material_amount(O, BREAKDOWN_FLAGS_ORM)
@@ -308,7 +308,7 @@
 			return TRUE
 		if("diskUpload")
 			var/n = text2num(params["design"])
-			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
+			if(inserted_disk?.blueprints && inserted_disk.blueprints[n])
 				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")

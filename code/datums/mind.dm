@@ -730,7 +730,7 @@
 			martial_art.teach(new_character)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
-	if(current && current.actions)
+	if(current?.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)
 	transfer_mindbound_actions(new_character)
@@ -775,7 +775,7 @@
 	mind.active = TRUE	//indicates that the mind is currently synced with a client
 
 /datum/mind/proc/has_martialart(string)
-	if(martial_art && martial_art.id == string)
+	if(martial_art?.id == string)
 		return martial_art
 	return FALSE
 

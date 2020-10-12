@@ -43,7 +43,7 @@
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
 	var/marked_line
-	if(holder && holder.marked_datum && holder.marked_datum == D)
+	if(holder?.marked_datum && holder.marked_datum == D)
 		marked_line = VV_MSG_MARKED
 	var/varedited_line
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))

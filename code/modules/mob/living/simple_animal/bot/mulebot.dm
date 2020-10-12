@@ -120,7 +120,7 @@
 
 /// returns true if the bot is fully powered.
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
-	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
+	return (!open || bypass_open_check) && cell?.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
@@ -514,7 +514,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path && path.len)
+	if(path?.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
@@ -700,7 +700,7 @@
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM && AM.Adjacent(src))
+				if(AM?.Adjacent(src))
 					load(AM)
 					if(report_delivery)
 						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)

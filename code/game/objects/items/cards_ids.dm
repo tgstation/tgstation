@@ -92,7 +92,7 @@
 /obj/item/card/id/Destroy()
 	if (registered_account)
 		registered_account.bank_cards -= src
-	if (my_store && my_store.my_card == src)
+	if (my_store?.my_card == src)
 		my_store.my_card = null
 	return ..()
 
@@ -196,7 +196,7 @@
 	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
 		to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span>")
 		return
-	if (registered_account && registered_account.account_id == new_bank_id)
+	if (registered_account?.account_id == new_bank_id)
 		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
 		return
 

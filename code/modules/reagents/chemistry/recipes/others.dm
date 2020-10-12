@@ -178,7 +178,7 @@
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B && B.data)
+	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
 			D.Evolve(level_min, level_max)
@@ -245,7 +245,7 @@
 
 /datum/chemical_reaction/mix_virus/rem_virus/on_reaction(datum/reagents/holder, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B && B.data)
+	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
 			D.Devolve()
@@ -256,7 +256,7 @@
 
 /datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	if(B && B.data)
+	if(B?.data)
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
 			D.Neuter()

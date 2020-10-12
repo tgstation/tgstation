@@ -111,7 +111,7 @@
 			if(product_types[dispense_flavour] > 0)
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
-				if(beaker && beaker.reagents.total_volume)
+				if(beaker?.reagents.total_volume)
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
 					I.add_ice_cream(flavour_name)
@@ -261,7 +261,7 @@
 			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
 			filling_color = "#EFB4B4"
 		if ("custom")
-			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
+			if(R?.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
 				flavoring.color = master.color

@@ -56,7 +56,7 @@
 		. += "[head.icon_state]+o"
 
 /obj/item/robot_suit/proc/check_completion()
-	if(l_arm && r_arm && l_leg && r_leg && head && head.flash1 && head.flash2 && chest && chest.wired && chest.cell)
+	if(l_arm && r_arm && l_leg && r_leg && head?.flash1 && head.flash2 && chest?.wired && chest.cell)
 		SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
 		return TRUE
 	return FALSE

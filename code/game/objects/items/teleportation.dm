@@ -49,7 +49,7 @@
 			var/turf/tr = get_turf(W)
 
 			// Make sure it's on a turf and that its Z-level matches the tracker's Z-level
-			if (tr && tr.z == sr.z)
+			if (tr?.z == sr.z)
 				// Get the distance between the beacon's turf and our turf
 				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
 

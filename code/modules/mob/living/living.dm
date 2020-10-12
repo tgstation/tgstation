@@ -385,7 +385,7 @@
 	death()
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby?.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -445,7 +445,7 @@
 		if(body_position == LYING_DOWN)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to stay lying down on the floor.</span>")
-		else if(buckled && buckled.buckle_lying != NO_BUCKLE_LYING)
+		else if(buckled?.buckle_lying != NO_BUCKLE_LYING)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now lay down as soon as you are able to.</span>")
 		else
@@ -456,7 +456,7 @@
 		if(body_position == STANDING_UP)
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now try to remain standing up.</span>")
-		else if(HAS_TRAIT(src, TRAIT_FLOORED) || (buckled && buckled.buckle_lying != NO_BUCKLE_LYING))
+		else if(HAS_TRAIT(src, TRAIT_FLOORED) || (buckled?.buckle_lying != NO_BUCKLE_LYING))
 			if(!silent)
 				to_chat(src, "<span class='notice'>You will now stand up as soon as you are able to.</span>")
 		else
@@ -688,7 +688,7 @@
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)
-	if (buckled && buckled.loc != newloc) //not updating position
+	if (buckled?.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct, glide_size)
 		else
@@ -786,7 +786,7 @@
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	if(buckled)
 		return
-	if(client && client.move_delay >= world.time + world.tick_lag*2)
+	if(client?.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
@@ -907,7 +907,7 @@
 	if(throwing)
 		return
 	var/fixed = 0
-	if(anchored || (buckled && buckled.anchored))
+	if(anchored || (buckled?.anchored))
 		fixed = 1
 	if(on && !(movement_type & FLOATING) && !fixed)
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
@@ -1229,7 +1229,7 @@
 	C.Paralyze(40)
 
 /mob/living/can_be_pulled()
-	return ..() && !(buckled && buckled.buckle_prevents_pull)
+	return ..() && !(buckled?.buckle_prevents_pull)
 
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
@@ -1261,7 +1261,7 @@
 			if(changeling.changeling_speak)
 				return LINGHIVE_LING
 			return LINGHIVE_OUTSIDER
-	if(mind && mind.linglink)
+	if(mind?.linglink)
 		return LINGHIVE_LINK
 	return LINGHIVE_NONE
 
@@ -1366,7 +1366,7 @@
 
 /mob/living/update_mouse_pointer()
 	..()
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+	if (client && ranged_ability?.ranged_mousepointer)
 		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_edit_var(var_name, var_value)

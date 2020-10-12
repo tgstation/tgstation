@@ -441,7 +441,7 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE && hash)
 		SStimer.hashes -= hash
 
-	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
+	if (callBack?.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
 		callBack.object.active_timers -= src
 		UNSETEMPTY(callBack.object.active_timers)
 
@@ -460,9 +460,9 @@ SUBSYSTEM_DEF(timer)
 		spent = world.time
 		bucketEject()
 	else
-		if (prev && prev.next == src)
+		if (prev?.next == src)
 			prev.next = next
-		if (next && next.prev == src)
+		if (next?.prev == src)
 			next.prev = prev
 	next = null
 	prev = null

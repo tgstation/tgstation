@@ -386,7 +386,7 @@
 /obj/item/chisel/proc/break_sculpting()
 	SIGNAL_HANDLER
 	sculpting = FALSE
-	if(prepared_block && prepared_block.completion == 0)
+	if(prepared_block?.completion == 0)
 		prepared_block.reset_target()
 	prepared_block = null
 	if(tracked_user)

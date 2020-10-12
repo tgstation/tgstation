@@ -42,7 +42,7 @@
 	var/efficiency
 
 /obj/machinery/power/compressor/Destroy()
-	if (turbine && turbine.compressor == src)
+	if (turbine?.compressor == src)
 		turbine.compressor = null
 	turbine = null
 	return ..()
@@ -63,7 +63,7 @@
 	var/productivity = 1
 
 /obj/machinery/power/turbine/Destroy()
-	if (compressor && compressor.turbine == src)
+	if (compressor?.turbine == src)
 		compressor.turbine = null
 	compressor = null
 	return ..()
@@ -272,7 +272,7 @@
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")
@@ -334,7 +334,7 @@
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")

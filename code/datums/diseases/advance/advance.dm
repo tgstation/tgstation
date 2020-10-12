@@ -210,7 +210,7 @@
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
-	if(processing && symptoms && symptoms.len)
+	if(processing && symptoms?.len)
 		for(var/datum/symptom/S in symptoms)
 			S.Start(src)
 			S.on_stage_change(src)
@@ -238,7 +238,7 @@
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties()
 
-	if(properties && properties.len)
+	if(properties?.len)
 		if(properties["stealth"] >= 2)
 			visibility_flags |= HIDDEN_SCANNER
 		else
@@ -308,7 +308,7 @@
 
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
-	if(properties && properties.len)
+	if(properties?.len)
 		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		if(res == oldres)
 			return

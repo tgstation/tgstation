@@ -42,7 +42,7 @@
 	return cell
 
 /obj/item/melee/baton/suicide_act(mob/user)
-	if(cell && cell.charge && turned_on)
+	if(cell?.charge && turned_on)
 		user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		. = (FIRELOSS)
 		attack(user,user)
@@ -156,7 +156,7 @@
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell && cell.charge > cell_hit_cost)
+	if(cell?.charge > cell_hit_cost)
 		turned_on = !turned_on
 		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
 		playsound(src, activate_sound, 75, TRUE, -1)

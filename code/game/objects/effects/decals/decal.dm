@@ -11,7 +11,7 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
+	if(B?.loc == loc)
 		qdel(src)
 
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)

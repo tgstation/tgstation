@@ -72,7 +72,7 @@
 	return ..()
 
 /obj/item/gun/energy/process(delta_time)
-	if(selfcharge && cell && cell.percent() < 100)
+	if(selfcharge && cell?.percent() < 100)
 		charge_timer += delta_time
 		if(charge_timer < charge_delay)
 			return

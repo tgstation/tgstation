@@ -214,7 +214,7 @@
 /mob/living/carbon/human/get_blood_id()
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		return
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] && mind && mind.assigned_role == "Clown")
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] && mind?.assigned_role == "Clown")
 		return /datum/reagent/colorful_reagent
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood

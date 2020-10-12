@@ -86,7 +86,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby?.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs?.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -371,7 +371,7 @@
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
+	if(mind && hud_used?.lingchemdisplay)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.regenerate()
@@ -382,7 +382,7 @@
 
 
 /mob/living/carbon/handle_mutations_and_radiation()
-	if(dna && dna.temporary_mutations.len)
+	if(dna?.temporary_mutations.len)
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -406,7 +406,7 @@
 					dna.temporary_mutations.Remove(mut)
 					continue
 		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM && HM.timed)
+			if(HM?.timed)
 				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
@@ -874,7 +874,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+	if(dna?.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
 	return TRUE
 
