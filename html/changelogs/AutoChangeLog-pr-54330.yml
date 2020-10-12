@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Crafting recipes that require both bottles and reagents now craft properly when the bottle contains the reagent, without duplicating items."
+  - bugfix: "Crafting that consumes items that have some sort of inventory should now dump the inventory contents out instead of deleting them."
