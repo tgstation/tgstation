@@ -59,7 +59,7 @@
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
 	trash_type = /obj/item/trash/sosjerky
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/sodiumchloride = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/salt = 2)
 	junkiness = 25
 	tastes = list("dried meat" = 1)
 	foodtypes = JUNKFOOD | MEAT | SUGAR
@@ -76,7 +76,7 @@
 	icon_state = "chips"
 	trash_type = /obj/item/trash/chips
 	bite_consumption = 1
-	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sodiumchloride = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/salt = 1)
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtypes = JUNKFOOD | FRIED
