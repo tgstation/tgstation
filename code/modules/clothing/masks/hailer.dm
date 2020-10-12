@@ -42,6 +42,27 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	/datum/hailer_phrase/dredd
 ))
 
+GLOBAL_LIST_INIT(monkey_hailer_phrases, list(
+	/datum/monkey_hailer/halt,
+	/datum/monkey_hailer/bobby,
+	/datum/monkey_hailer/compliance,
+	/datum/monkey_hailer/justice,
+	/datum/monkey_hailer/running,
+	/datum/monkey_hailer/dontmove,
+	/datum/monkey_hailer/floor,
+	/datum/monkey_hailer/robocop,
+	/datum/monkey_hailer/god,
+	/datum/monkey_hailer/freeze,
+	/datum/monkey_hailer/imperial,
+	/datum/monkey_hailer/bash,
+	/datum/monkey_hailer/harry,
+	/datum/monkey_hailer/asshole,
+	/datum/monkey_hailer/stfu,
+	/datum/monkey_hailer/shutup,
+	/datum/monkey_hailer/super,
+	/datum/monkey_hailer/dredd
+))
+
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
@@ -77,6 +98,14 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	icon_state = "spacepol"
 	inhand_icon_state = "spacepol"
 
+/obj/item/clothing/mask/gas/sechailer/monkey
+	name = "BAN-AN-O-NATOR 9000"
+	desc = "The unholy love child of a security hailer and a monkey mask. It uses neural feedback to emit loud screeching noises whenever the wearer thinks about bananas."
+	actions_types = list(/datum/action/item_action/halt_monkey)
+	icon_state = "monkeymask"
+	inhand_icon_state = "monkeymask"
+	aggressiveness = AGGR_SHIT_COP
+
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
@@ -107,6 +136,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/halt))
 		halt()
+	if(istype(action, /datum/action/item_action/halt_monkey))
+		halt_monkey()
 	else
 		adjustmask(user)
 
@@ -146,6 +177,36 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 	// select phrase to play
 	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
+
+/obj/item/clothing/mask/gas/sechailer/verb/halt_monkey()
+	set category = "Object"
+	set name = "HALT"
+	set src in usr
+	if(!isliving(usr) || !can_use(usr) || cooldown)
+		return
+	if(broken_hailer)
+		to_chat(usr, "<span class='warning'>\The [src]'s hailing system is broken.</span>")
+		return
+
+	// handle recent uses for overuse
+	recent_uses++
+	if(!overuse_cooldown) // check if we can reset recent uses
+		recent_uses = 0
+		overuse_cooldown = TRUE
+		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown), OVERUSE_COOLDOWN)
+
+	switch(recent_uses)
+		if(3)
+			to_chat(usr, "<span class='warning'>\The [src] is starting to heat up.</span>")
+		if(4)
+			to_chat(usr, "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>")
+		if(5) // overload
+			broken_hailer = TRUE
+			to_chat(usr, "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>")
+			return
+
+	// select phrase to play
+	play_phrase(usr, GLOB.monkey_hailer_phrases[select_phrase()])
 
 
 /obj/item/clothing/mask/gas/sechailer/proc/select_phrase()

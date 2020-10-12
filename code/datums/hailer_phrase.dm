@@ -77,3 +77,80 @@
 /datum/hailer_phrase/dredd
 	phrase_text = "I am, the LAW!"
 	phrase_sound = "dredd"
+
+
+/datum/monkey_hailer
+	var/phrase_text = null
+	var/phrase_sound = null
+
+/datum/monkey_hailer/halt
+	phrase_text = "EEP! EEP! EEP!"
+	phrase_sound = "monkey2"
+
+/datum/monkey_hailer/bobby
+	phrase_text = "Stop in the name of monkeys everywhere."
+	phrase_sound = "monkey1"
+
+/datum/monkey_hailer/compliance
+	phrase_text = "Giving me a banana is in your best interest."
+	phrase_sound = "monkey5"
+
+/datum/monkey_hailer/justice
+	phrase_text = "Prepare for shrieking!"
+	phrase_sound = "monkey3"
+
+/datum/monkey_hailer/running
+	phrase_text = "Running will only increase my cries."
+	phrase_sound = "monkey4"
+
+/datum/monkey_hailer/dontmove
+	phrase_text = "Don't move, chimp!"
+	phrase_sound = "monkey1"
+
+/datum/monkey_hailer/floor
+	phrase_text = "Down on the floor, chimp!"
+	phrase_sound = "monkey3"
+
+/datum/monkey_hailer/robocop
+	phrase_text = "Dead or alive I'll be shrieking at you! "
+	phrase_sound = "monkey2"
+
+/datum/monkey_hailer/god
+	phrase_text = "God made today to sling the shit we could not throw yesterday."
+	phrase_sound = "monkey1"
+
+/datum/monkey_hailer/freeze
+	phrase_text = "Freeze, hairless chimp!"
+	phrase_sound = "monkey4"
+
+/datum/monkey_hailer/imperial
+	phrase_text = "Stop right there, primate scum!"
+	phrase_sound = "monkey5"
+
+/datum/monkey_hailer/bash
+	phrase_text = "Stop or I'll bite you."
+	phrase_sound = "monkey3"
+
+/datum/monkey_hailer/harry
+	phrase_text = "Go ahead, feed me, make my day."
+	phrase_sound = "monkey2"
+
+/datum/monkey_hailer/asshole
+	phrase_text = "Stop feeding the elephants, ass hole."
+	phrase_sound = "monkey4"
+
+/datum/monkey_hailer/stfu
+	phrase_text = "You have the right to be covered in my excrement."
+	phrase_sound = "monkey2"
+
+/datum/monkey_hailer/shutup
+	phrase_text = "Shut up chimp!"
+	phrase_sound = "monkey5"
+
+/datum/monkey_hailer/super
+	phrase_text = "Face the wrath of the golden banana."
+	phrase_sound = "monkey1"
+
+/datum/monkey_hailer/dredd
+	phrase_text = "I AM, A MONKEY!"
+	phrase_sound = "monkey3"
