@@ -208,7 +208,7 @@
 				qdel(P)
 			. = TRUE
 		if("add_rule")
-			if(disk?.program && istype(disk.program, /datum/nanite_program/sensor))
+			if(disk && disk.program && istype(disk.program, /datum/nanite_program/sensor))
 				var/datum/nanite_program/sensor/rule_template = disk.program
 				if(!rule_template.can_rule)
 					return

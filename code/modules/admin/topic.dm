@@ -677,7 +677,7 @@
 	else if(href_list["f_dynamic_latejoin_clear"])
 		if(!check_rights(R_ADMIN))
 			return
-		if (SSticker?.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
+		if (SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.forced_latejoin_rule = null
 			Game()

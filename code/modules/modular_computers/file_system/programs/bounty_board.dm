@@ -25,7 +25,7 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(card_slot?.stored_card && card_slot.stored_card.registered_account)
+	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
 		current_user = card_slot.stored_card.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)

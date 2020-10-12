@@ -184,7 +184,7 @@
 	return ..()
 
 /obj/structure/light_construct/blob_act(obj/structure/blob/B)
-	if(B?.loc == loc)
+	if(B && B.loc == loc)
 		qdel(src)
 
 

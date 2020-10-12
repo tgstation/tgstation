@@ -1393,7 +1393,7 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(/* !get_connection() || */ !operating || shorted)
 		return
-	if( cell?.charge>=20)
+	if( cell && cell.charge>=20)
 		cell.use(20)
 		INVOKE_ASYNC(src, .proc/break_lights)
 
@@ -1416,7 +1416,7 @@
 		return FALSE
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
-	if(cell?.charge > 0)
+	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val
 	else if(val == 3)
 		return TRUE

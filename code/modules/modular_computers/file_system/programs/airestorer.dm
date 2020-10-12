@@ -42,7 +42,7 @@
 
 	switch(action)
 		if("PRG_beginReconstruction")
-			if(A?.health < 100)
+			if(A && A.health < 100)
 				restoring = TRUE
 				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
 			return TRUE

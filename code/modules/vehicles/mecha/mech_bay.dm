@@ -30,7 +30,7 @@
 	recharging_turf = get_step(loc, dir)
 
 /obj/machinery/mech_bay_recharge_port/Destroy()
-	if (recharge_console?.recharge_port == src)
+	if (recharge_console && recharge_console.recharge_port == src)
 		recharge_console.recharge_port = null
 	return ..()
 
@@ -56,7 +56,7 @@
 		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
 		if(recharging_mech)
 			recharge_console.update_icon()
-	if(recharging_mech?.cell)
+	if(recharging_mech && recharging_mech.cell)
 		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
 			var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 			recharging_mech.give_power(delta)
@@ -147,6 +147,6 @@
 	reconnect()
 
 /obj/machinery/computer/mech_bay_power_console/Destroy()
-	if (recharge_port?.recharge_console == src)
+	if (recharge_port && recharge_port.recharge_console == src)
 		recharge_port.recharge_console = null
 	return ..()

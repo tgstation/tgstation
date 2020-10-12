@@ -11,7 +11,7 @@
 
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
 
-	if(battery_module?.battery && battery_module.battery.charge)
+	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/stock_parts/cell/cell = battery_module.battery
 		if(cell.use(amount * GLOB.CELLRATE))
 			return TRUE

@@ -38,7 +38,7 @@
 		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
 
 /obj/item/paper/carbon/attack_hand(mob/living/user)
-	if(loc == user?.is_holding(src))
+	if(loc == user && user.is_holding(src))
 		removecopy(user)
 		return
 	return ..()

@@ -127,7 +127,7 @@
 
 	data["first_load"] = first_load
 
-	if (hard_drive?.traitor_data != null)
+	if (hard_drive && hard_drive.traitor_data != null)
 		var/datum/antagonist/traitor/traitor_data = hard_drive.traitor_data
 		data += get_header_data()
 

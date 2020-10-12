@@ -439,7 +439,7 @@
 	if(!linked_extract || !linked_extract.loc) //Sanity checking
 		qdel(src)
 		return
-	if(linked_extract?.loc != owner && linked_extract.loc.loc != owner)
+	if(linked_extract && linked_extract.loc != owner && linked_extract.loc.loc != owner)
 		linked_extract.linked_effect = null
 		if(!QDELETED(linked_extract))
 			linked_extract.owner = null
@@ -709,7 +709,7 @@
 
 /datum/status_effect/stabilized/cerulean/tick()
 	if(owner.stat == DEAD)
-		if(clone?.stat != DEAD)
+		if(clone && clone.stat != DEAD)
 			owner.visible_message("<span class='warning'>[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away.</span>",
 				"<span class='notice'>You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.</span>")
 			if(owner.mind)

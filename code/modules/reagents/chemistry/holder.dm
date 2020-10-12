@@ -88,7 +88,7 @@
 		qdel(R)
 	cached_reagents.Cut()
 	cached_reagents = null
-	if(my_atom?.reagents == src)
+	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
 

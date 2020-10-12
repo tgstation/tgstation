@@ -42,7 +42,7 @@
 	var/efficiency
 
 /obj/machinery/power/compressor/Destroy()
-	if (turbine?.compressor == src)
+	if (turbine && turbine.compressor == src)
 		turbine.compressor = null
 	turbine = null
 	return ..()
@@ -63,7 +63,7 @@
 	var/productivity = 1
 
 /obj/machinery/power/turbine/Destroy()
-	if (compressor?.turbine == src)
+	if (compressor && compressor.turbine == src)
 		compressor.turbine = null
 	compressor = null
 	return ..()

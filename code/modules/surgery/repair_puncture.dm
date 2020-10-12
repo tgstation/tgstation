@@ -21,7 +21,7 @@
 	if(.)
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		var/datum/wound/burn/pierce_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(pierce_wound?.blood_flow > 0)
+		return(pierce_wound && pierce_wound.blood_flow > 0)
 
 //SURGERY STEPS
 
