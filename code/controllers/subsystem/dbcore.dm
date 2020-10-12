@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(dbcore)
 	var/timeout = max(CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout))
 	var/thread_limit = CONFIG_GET(number/bsql_thread_limit)
 
-	var/result = json_decode(rustg_sql_connect_pool(json_encode(list(
+	var/result = crash_json_decode(rustg_sql_connect_pool(json_encode(list(
 		"host" = address,
 		"port" = port,
 		"user" = user,
@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(dbcore)
 		return FALSE
 	if (!connection)
 		return FALSE
-	return json_decode(rustg_sql_connected(connection))["status"] == "online"
+	return crash_json_decode(rustg_sql_connected(connection))["status"] == "online"
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -360,7 +360,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	else
 		job_result_str = rustg_sql_query_blocking(connection, sql, json_encode(arguments))
 
-	var/result = json_decode(job_result_str)
+	var/result = crash_json_decode(job_result_str)
 	switch (result["status"])
 		if ("ok")
 			rows = result["rows"]

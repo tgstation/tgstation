@@ -62,7 +62,7 @@
 	if(!json_file)
 		TGS_ERROR_LOG("Missing specified json file: [json_path]")
 		return
-	var/cached_json = json_decode(json_file)
+	var/cached_json = crash_json_decode(json_file)
 	if(!cached_json)
 		TGS_ERROR_LOG("Failed to decode info json: [json_file]")
 		return
@@ -137,7 +137,7 @@
 			return result
 		if(TGS4_TOPIC_EVENT)
 			intercepted_message_queue = list()
-			var/list/event_notification = json_decode(params[TGS4_PARAMETER_DATA])
+			var/list/event_notification = crash_json_decode(params[TGS4_PARAMETER_DATA])
 			var/list/event_parameters = event_notification["Parameters"]
 
 			var/list/event_call = list(event_notification["Type"])
@@ -151,7 +151,7 @@
 			intercepted_message_queue = null
 			return
 		if(TGS4_TOPIC_INTEROP_RESPONSE)
-			last_interop_response = json_decode(params[TGS4_PARAMETER_DATA])
+			last_interop_response = crash_json_decode(params[TGS4_PARAMETER_DATA])
 			return
 		if(TGS4_TOPIC_CHANGE_PORT)
 			var/new_port = text2num(params[TGS4_PARAMETER_DATA])
@@ -291,7 +291,7 @@
 /datum/tgs_api/v4/ChatChannelInfo()
 	. = list()
 	//no caching cause tgs may change this
-	var/list/json = json_decode(file2text(chat_channels_json_path))
+	var/list/json = crash_json_decode(file2text(chat_channels_json_path))
 	for(var/I in json)
 		. += DecodeChannel(I)
 

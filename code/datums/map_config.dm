@@ -59,7 +59,7 @@
 		log_world("map_config is not text: [filename]")
 		return
 
-	json = json_decode(json)
+	json = crash_json_decode(json)
 	if(!json)
 		log_world("map_config is not json: [filename]")
 		return

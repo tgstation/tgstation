@@ -344,7 +344,7 @@ Difficulty: Very Hard
 		var/json_file = file("data/npc_saves/Blackbox.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = json_decode(file2text(json_file))
+		var/list/json = crash_json_decode(file2text(json_file))
 		stored_items = json["data"]
 	if(isnull(stored_items))
 		stored_items = list()

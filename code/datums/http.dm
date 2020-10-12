@@ -55,7 +55,7 @@
 	var/datum/http_response/R = new()
 
 	try
-		var/list/L = json_decode(_raw_response)
+		var/list/L = crash_json_decode(_raw_response)
 		R.status_code = L["status_code"]
 		R.headers = L["headers"]
 		R.body = L["body"]

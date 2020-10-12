@@ -57,7 +57,7 @@
 		return list(
 			"jatum\\id" = ref_id,
 			"type" = "/matrix",
-			"jatum\\new_arglist" = _jatum_serialize_value(json_decode(json_encode(value))), seen_references)
+			"jatum\\new_arglist" = _jatum_serialize_value(crash_json_decode(json_encode(value))), seen_references)
 
 	if(istype(value, /savefile)) // Just store the path, rely on BYOND for the rest
 		var/savefile/save = value
@@ -143,7 +143,7 @@
 	if(!istext(json))
 		CRASH("Non-text passed!")
 
-	var/list/structure = json_decode(json)
+	var/list/structure = crash_json_decode(json)
 	if(!structure)
 		CRASH("Invalid JSON!")
 

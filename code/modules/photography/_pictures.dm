@@ -97,7 +97,7 @@
 	var/json_path = file("[dir]/metadata.json")
 	if(!fexists(json_path))
 		return
-	var/list/json = json_decode(file2text(json_path))
+	var/list/json = crash_json_decode(file2text(json_path))
 	if(!json[id])
 		return
 	var/datum/picture/P = new
@@ -147,7 +147,7 @@
 	jsonpath = file(jsonpath)
 	var/list/json
 	if(fexists(jsonpath))
-		json = json_decode(file2text(jsonpath))
+		json = crash_json_decode(file2text(jsonpath))
 		fdel(jsonpath)
 	else
 		json = list()

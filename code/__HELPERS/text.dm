@@ -709,7 +709,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/list/oldjson = list()
 	var/list/oldentries = list()
 	if(fexists(log))
-		oldjson = json_decode(file2text(log))
+		oldjson = crash_json_decode(file2text(log))
 		oldentries = oldjson["data"]
 	if(length(oldentries))
 		for(var/string in accepted)
@@ -868,12 +868,17 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 #define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
 
-//json decode that will return null on parse error instead of runtiming.
+/// json decode that will return null on parse error/too much recursion depth instead of runtiming.
 /proc/safe_json_decode(data)
-	try
+	if (rustg_json_is_valid(data))
 		return json_decode(data)
-	catch
-		return
+
+/// json_decode that validates the data through rust-g, and crashes if it is invalid.
+/// Different from normal json_encode in that rust-g also verifies a sane recursion depth.
+/proc/crash_json_decode(data)
+	if (!rustg_json_is_valid(data))
+		CRASH("Invalid json: [data]")
+	return json_decode(data)
 
 /proc/num2loadingbar(percent as num, numSquares = 20, reverse = FALSE)
 	var/loadstring = ""

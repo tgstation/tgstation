@@ -96,7 +96,7 @@
 			if(!errorlevel)
 				var/list/data
 				try
-					data = json_decode(stdout)
+					data = crash_json_decode(stdout)
 				catch(var/exception/e)
 					to_chat(src, "<span class='boldwarning'>Youtube-dl JSON parsing FAILED:</span>", confidential = TRUE)
 					to_chat(src, "<span class='warning'>[e]: [stdout]</span>", confidential = TRUE)

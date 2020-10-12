@@ -48,13 +48,13 @@ SUBSYSTEM_DEF(persistence)
 		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
 		if(!saved_json)
 			return
-		saved_messages = json_decode(saved_json)
+		saved_messages = crash_json_decode(saved_json)
 		fdel("data/npc_saves/ChiselMessages.sav")
 	else
 		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
 			return
-		var/list/json = json_decode(file2text(json_file))
+		var/list/json = crash_json_decode(file2text(json_file))
 
 		if(!json)
 			return
@@ -92,13 +92,13 @@ SUBSYSTEM_DEF(persistence)
 		S >> saved_json
 		if(!saved_json)
 			return
-		saved_trophies = json_decode(saved_json)
+		saved_trophies = crash_json_decode(saved_json)
 		fdel("data/npc_saves/TrophyItems.sav")
 	else
 		var/json_file = file("data/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = json_decode(file2text(json_file))
+		var/list/json = crash_json_decode(file2text(json_file))
 		if(!json)
 			return
 		saved_trophies = json["data"]
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("data/RecentModes.json")
 	if(!fexists(json_file))
 		return
-	var/list/json = json_decode(file2text(json_file))
+	var/list/json = crash_json_decode(file2text(json_file))
 	if(!json)
 		return
 	saved_modes = json["data"]
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(persistence)
 	var/map_sav = FILE_RECENT_MAPS
 	if(!fexists(FILE_RECENT_MAPS))
 		return
-	var/list/json = json_decode(file2text(map_sav))
+	var/list/json = crash_json_decode(file2text(map_sav))
 	if(!json)
 		return
 	saved_maps = json["data"]
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(persistence)
 			WARNING("Failed to load antag reputation. File likely corrupt.")
 			return
 		return
-	antag_rep = json_decode(json)
+	antag_rep = crash_json_decode(json)
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -185,18 +185,18 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
 	if(fexists(album_path))
-		return json_decode(file2text(album_path))
+		return crash_json_decode(file2text(album_path))
 
 /datum/controller/subsystem/persistence/proc/GetPhotoFrames()
 	var/frame_path = file("data/photo_frames.json")
 	if(fexists(frame_path))
-		return json_decode(file2text(frame_path))
+		return crash_json_decode(file2text(frame_path))
 
 /datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
 	var/album_path = file("data/photo_albums.json")
 	var/frame_path = file("data/photo_frames.json")
 	if(fexists(album_path))
-		var/list/json = json_decode(file2text(album_path))
+		var/list/json = crash_json_decode(file2text(album_path))
 		if(json.len)
 			for(var/i in photo_albums)
 				var/obj/item/storage/photo_album/A = i
@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(persistence)
 					A.populate_from_id_list(json[A.persistence_id])
 
 	if(fexists(frame_path))
-		var/list/json = json_decode(file2text(frame_path))
+		var/list/json = crash_json_decode(file2text(frame_path))
 		if(json.len)
 			for(var/i in photo_frames)
 				var/obj/structure/sign/picture_frame/PF = i
@@ -223,7 +223,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/album_json = list()
 
 	if(fexists(album_path))
-		album_json = json_decode(file2text(album_path))
+		album_json = crash_json_decode(file2text(album_path))
 		fdel(album_path)
 
 	for(var/i in photo_albums)
@@ -238,7 +238,7 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(album_path, album_json)
 
 	if(fexists(frame_path))
-		frame_json = json_decode(file2text(frame_path))
+		frame_json = crash_json_decode(file2text(frame_path))
 		fdel(frame_path)
 
 	for(var/i in photo_frames)
@@ -337,7 +337,7 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("data/RandomizedChemRecipes.json")
 	var/json
 	if(fexists(json_file))
-		json = json_decode(file2text(json_file))
+		json = crash_json_decode(file2text(json_file))
 
 	for(var/randomized_type in subtypesof(/datum/chemical_reaction/randomized))
 		var/datum/chemical_reaction/randomized/R = new randomized_type
@@ -381,7 +381,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/LoadPaintings()
 	var/json_file = file("data/paintings.json")
 	if(fexists(json_file))
-		paintings = json_decode(file2text(json_file))
+		paintings = crash_json_decode(file2text(json_file))
 
 	for(var/obj/structure/sign/painting/P in painting_frames)
 		P.load_persistent()

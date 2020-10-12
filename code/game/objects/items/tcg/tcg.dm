@@ -598,7 +598,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 ///Loads the contents of a json file into our global card list
 /proc/loadCardFile(filename, directory = "strings/tcg")
-	var/list/json = json_decode(file2text("[directory]/[filename]"))
+	var/list/json = crash_json_decode(file2text("[directory]/[filename]"))
 	var/list/cards = json["cards"]
 	var/list/templates = list()
 	for(var/list/data in json["templates"])

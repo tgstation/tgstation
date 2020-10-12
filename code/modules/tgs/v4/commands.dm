@@ -21,7 +21,7 @@
 	text2file(json_encode(results), commands_file)
 
 /datum/tgs_api/v4/proc/HandleCustomCommand(command_json)
-	var/list/data = json_decode(command_json)
+	var/list/data = crash_json_decode(command_json)
 	var/command = data["command"]
 	var/user = data["user"]
 	var/params = data["params"]

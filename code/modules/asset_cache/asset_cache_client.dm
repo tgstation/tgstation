@@ -13,7 +13,7 @@
 /// Process asset cache client topic calls for `"asset_cache_preload_data=[HTML+JSON_STRING]"`
 /client/proc/asset_cache_preload_data(data)
 	var/json = data
-	var/list/preloaded_assets = json_decode(json)
+	var/list/preloaded_assets = crash_json_decode(json)
 
 	for (var/preloaded_asset in preloaded_assets)
 		if (copytext(preloaded_asset, findlasttext(preloaded_asset, ".")+1) in list("js", "jsm", "htm", "html"))
