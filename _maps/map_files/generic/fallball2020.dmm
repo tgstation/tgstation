@@ -15851,7 +15851,8 @@
 	},
 /turf/closed/indestructible/paper{
 	density = 0;
-	desc = "A layering of impenetrable sheets of paper."
+	desc = "A layering of impenetrable sheets of paper.";
+	opacity = 0
 	},
 /area/crew_quarters/theatre/zoo_stick)
 "HY" = (
@@ -16639,8 +16640,8 @@
 /area/crew_quarters/theatre/zoo_chicken)
 "Kb" = (
 /obj/structure/fence/corner{
-	icon_state = "corner";
-	dir = 9
+	dir = 9;
+	icon_state = "corner"
 	},
 /turf/open/floor/pod/light,
 /area/awaymission/cabin/snowforest/forest)
