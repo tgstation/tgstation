@@ -12,7 +12,7 @@
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
-	material_modifier = 0.01
+	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
@@ -76,6 +76,9 @@
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_BASE_RECIPES)
+					var/list/temp = SSmaterials.base_stack_recipes.Copy()
+					recipes += temp
+				if(MAT_CATEGORY_RIGID)
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
@@ -175,12 +178,6 @@
 			if(is_valid_recipe(R, L.recipes))
 				return TRUE
 	return FALSE
-
-/obj/item/stack/attack_self(mob/user)
-	interact(user)
-
-/obj/item/stack/interact(mob/user)
-	ui_interact(user)
 
 /obj/item/stack/ui_state(mob/user)
 	return GLOB.hands_state

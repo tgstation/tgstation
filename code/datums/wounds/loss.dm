@@ -9,6 +9,7 @@
 	status_effect_type = null
 	scar_keyword = "dismember"
 	wound_flags = null
+	already_scarred = TRUE // We manually assign scars for dismembers through endround missing limbs and aheals
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type=WOUND_SLASH, outright = FALSE)
@@ -16,7 +17,6 @@
 		qdel(src)
 		return
 
-	already_scarred = TRUE // so we don't scar a limb we don't have. If I add different levels of amputation desc, do it here
 	victim = dismembered_part.owner
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
@@ -47,7 +47,6 @@
 	victim.visible_message(msg, "<span class='userdanger'>Your [dismembered_part.name] [occur_text]!</span>")
 
 	set_limb(dismembered_part)
-	severity = WOUND_SEVERITY_LOSS
 	second_wind()
 	log_wound(victim, src)
 	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE)

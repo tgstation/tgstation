@@ -15,9 +15,9 @@
 
 	var/id
 	var/obscured = FALSE
-	///[0-1] measure of obscuration -- multipllier against power generation
+	///`[0-1]` measure of obscuration -- multipllier against power generation
 	var/sunfrac = 0
-	///[0-360) degrees, which direction are we facing?
+	///`[0-360)` degrees, which direction are we facing?
 	var/azimuth_current = 0
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
@@ -191,7 +191,7 @@
 		control.gen += sgen
 
 //Bit of a hack but this whole type is a hack
-/obj/machinery/power/solar/fake/Initialize(turf/loc, obj/item/solar_assembly/S)
+/obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	UnregisterSignal(SSsun, COMSIG_SUN_MOVED)
 
@@ -371,7 +371,8 @@
 	return data
 
 /obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(action == "azimuth")
 		var/adjust = text2num(params["adjust"])

@@ -509,9 +509,6 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
 #ENABLE_DISCORD_AUTOROLE
 
-## Set to a value greater than zero to require a user to have at least this many hours of living role time to be assigned the role
-REQUIRED_LIVING_HOURS 0
-
 ## Add your discord bot token here. Make sure it has the ability to manage roles
 #DISCORD_TOKEN someDiscordToken
 

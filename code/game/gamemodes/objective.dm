@@ -25,17 +25,19 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 //Shared by few objective types
 /datum/objective/proc/admin_simple_target_pick(mob/admin)
-	var/list/possible_targets = list("Free objective","Random")
+	var/list/possible_targets = list()
 	var/def_value
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
+	possible_targets = list("Free objective", "Random") + sortNames(possible_targets)
+
 
 	if(target && target.current)
 		def_value = target.current
 
-	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in sortNames(possible_targets)
+	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
 
@@ -360,6 +362,19 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(!considered_alive(M) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
 			return FALSE
 	return SSshuttle.emergency.is_hijacked()
+
+/datum/objective/hijack/highlander
+	name="highlander hijack"
+	explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
+
+/datum/objective/hijack/check_completion()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, enforce_human = FALSE) || !SSshuttle.emergency.shuttle_areas[get_area(M.current)])
+			return FALSE
+	return SSshuttle.emergency.is_hijacked(filter_by_human = FALSE, solo_hijack = TRUE)
 
 /datum/objective/block
 	name = "no organics on shuttle"

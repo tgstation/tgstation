@@ -1,0 +1,8 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscdel: "stimball reaction"
+  - rscdel: "ammonia crystals"
+  - rscdel: "hexane_n2o_filtering"
+  - rscdel: "all three gas crystal_production"
+  - rscdel: "proto_nitrate_plasma_response"

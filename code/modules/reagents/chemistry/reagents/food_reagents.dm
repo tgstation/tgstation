@@ -188,11 +188,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(600, FALSE)
+	M.AdjustSleeping(600)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(40, FALSE)
+	M.AdjustSleeping(40)
 	..()
 	. = 1
 
@@ -354,11 +354,6 @@
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
 	penetrates_skin = NONE
-
-/datum/reagent/consumable/sodiumchloride/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	if(exposed_mob.has_bane(BANE_SALT))
-		exposed_mob.mind.disrupt_spells(-200)
 
 /datum/reagent/consumable/sodiumchloride/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
@@ -757,7 +752,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM)
+		stomach.adjust_charge(reac_volume * REM * 20)
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(prob(25) && !isethereal(M))

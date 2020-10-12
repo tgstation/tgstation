@@ -104,7 +104,8 @@
 	return data
 
 /obj/item/assembly/timer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

@@ -5,6 +5,8 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 
+	circuit = /obj/item/circuitboard/machine/generator
+
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
 
@@ -19,7 +21,6 @@
 	connect_to_network()
 	SSair.start_processing_machine(src)
 	update_icon()
-	component_parts = list(new /obj/item/circuitboard/machine/generator)
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
