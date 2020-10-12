@@ -30,6 +30,7 @@ God bless America.
 	icon_state = "fryer_off"
 	density = TRUE
 	use_power = IDLE_POWER_USE
+	max_integrity = 9999 // normal is 200
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer

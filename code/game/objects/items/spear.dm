@@ -161,6 +161,14 @@
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
 
+/obj/item/spear/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		if(Master.current_runlevel) // If the game hasn't loaded yet, don't display this message
+			message_admins("A spear was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /*
  * Bone Spear
  */

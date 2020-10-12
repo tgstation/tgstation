@@ -13,6 +13,9 @@
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
+	#ifdef EVENTMODE
+	return
+	#endif
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
@@ -128,6 +131,14 @@
 	icon_state = "tree"
 	desc = "It's seriously hampering your view of the jungle."
 	icon = 'icons/obj/flora/jungletrees.dmi'
+	pixel_x = -48
+	pixel_y = -20
+
+/obj/structure/flora/tree/jungle/fall
+	name = "tree"
+	icon_state = "tree"
+	desc = "It's seriously hampering your view of the festivities."
+	icon = 'icons/obj/flora/falljungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
 

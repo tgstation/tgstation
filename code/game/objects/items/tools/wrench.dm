@@ -22,6 +22,14 @@
 	toolspeed = 1
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 
+/obj/item/wrench/Initialize()
+	. = ..()
+	if(!(istype(get_area(src), /area/tdome/arena)))
+		visible_message("<span class='warning'>...Just kidding. [src] snaps in two.</span>")
+		if(Master.current_runlevel) // If the game hasn't loaded yet, don't display this message
+			message_admins("A wrench was crafted out of the arena at [ADMIN_VERBOSEJMP(src.loc)].")
+		qdel(src)
+
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)

@@ -96,6 +96,16 @@
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
 
+//Astroturf
+/obj/item/stack/tile/astroturf
+	name = "astroturf tile"
+	singular_name = "astroturf tile"
+	desc = "A patch of grass like they use on space golf courses. Wait, this is plastic!"
+	icon_state = "tile_grass"
+	inhand_icon_state = "tile-grass"
+	turf_type = /turf/open/floor/grass
+	resistance_flags = FLAMMABLE
+
 //Fairygrass
 /obj/item/stack/tile/fairygrass
 	name = "fairygrass tile"

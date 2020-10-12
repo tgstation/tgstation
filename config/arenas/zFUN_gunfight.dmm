@@ -1,0 +1,401 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/sand,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/effect/turf_decal/sand,
+/obj/item/gun/ballistic/automatic/mini_uzi,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/effect/turf_decal/sand,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/turf/closed/indestructible/sandstone,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/crate,
+/obj/item/wirecutters,
+/obj/item/wirecutters,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table,
+/obj/item/gun/ballistic/rifle/boltaction,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/mini_uzi,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/crate/large,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"m" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/wood{
+	id_tag = "RushRushRushRushB";
+	name = "B Door"
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"n" = (
+/obj/effect/decal/cleanable/crayon{
+	color = "red";
+	icon_state = "b";
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/closed/indestructible/sandstone,
+/area/tdome/arena)
+"o" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"p" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 1
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 5
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"s" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 8
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"t" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/delivery/red,
+/obj/machinery/syndicatebomb/training,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"u" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/crayon{
+	color = "maroon";
+	icon_state = "b"
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"v" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 10
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"w" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"x" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/trimline/red/line{
+	icon_state = "trimline";
+	dir = 6
+	},
+/obj/structure/closet/crate,
+/obj/item/wirecutters,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"y" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet{
+	name = "Counter-Terrorist clothing"
+	},
+/obj/item/clothing/head/helmet/sec,
+/obj/item/clothing/head/helmet/sec,
+/obj/item/clothing/head/helmet/sec,
+/obj/item/clothing/head/helmet/sec,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/under/rank/security/officer/formal,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/wirecutters,
+/obj/item/wirecutters,
+/obj/item/wirecutters,
+/obj/item/wirecutters,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"z" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"A" = (
+/obj/effect/turf_decal/sand,
+/obj/item/gun/ballistic/automatic/pistol,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"B" = (
+/obj/effect/turf_decal/sand,
+/obj/item/gun/ballistic/automatic/pistol/deagle,
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"C" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet{
+	name = "Terrorist Clothing"
+	},
+/obj/item/clothing/mask/balaclava,
+/obj/item/clothing/mask/balaclava,
+/obj/item/clothing/mask/balaclava,
+/obj/item/clothing/mask/balaclava,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/beret/sec,
+/obj/item/clothing/head/beret/sec,
+/obj/item/clothing/head/beret/sec,
+/obj/item/clothing/head/beret/sec,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/color/orange,
+/obj/item/clothing/under/color/orange,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"D" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table/wood,
+/obj/item/gun/ballistic/automatic/pistol/deagle,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"E" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/closet/crate,
+/obj/item/wirecutters,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+e
+e
+e
+e
+e
+e
+A
+"}
+(2,1,1) = {"
+b
+e
+e
+e
+e
+e
+e
+B
+"}
+(3,1,1) = {"
+c
+e
+e
+e
+e
+e
+e
+C
+"}
+(4,1,1) = {"
+d
+d
+m
+m
+n
+d
+d
+d
+"}
+(5,1,1) = {"
+f
+f
+f
+f
+o
+s
+v
+E
+"}
+(6,1,1) = {"
+f
+f
+f
+f
+p
+t
+w
+f
+"}
+(7,1,1) = {"
+f
+h
+f
+f
+q
+u
+x
+f
+"}
+(8,1,1) = {"
+g
+h
+f
+f
+f
+f
+f
+f
+"}
+(9,1,1) = {"
+f
+h
+f
+l
+h
+h
+h
+h
+"}
+(10,1,1) = {"
+f
+f
+f
+f
+f
+f
+r
+f
+"}
+(11,1,1) = {"
+f
+f
+f
+f
+r
+f
+f
+f
+"}
+(12,1,1) = {"
+f
+i
+f
+f
+f
+f
+y
+f
+"}
+(13,1,1) = {"
+f
+j
+f
+e
+e
+f
+z
+f
+"}
+(14,1,1) = {"
+f
+k
+e
+e
+e
+e
+D
+f
+"}
+(15,1,1) = {"
+f
+e
+e
+e
+e
+e
+e
+f
+"}

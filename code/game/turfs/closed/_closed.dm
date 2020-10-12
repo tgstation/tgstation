@@ -272,3 +272,19 @@
 	smoothing_flags = SMOOTH_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
+
+/turf/closed/indestructible/faketintedglass
+	name = "tinted window"
+	desc = "I can't see anything inside. Now THAT is spooky!"
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+	icon_state = "tinted_window-0"
+	base_icon_state = "tinted_window"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
+
+/turf/closed/indestructible/faketintedglass/Initialize()
+	. = ..()
+	icon_state = null //set the icon state to null, so our base state isn't visible
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille

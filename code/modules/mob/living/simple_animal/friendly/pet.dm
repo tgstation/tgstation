@@ -1,4 +1,4 @@
-/mob/living/simple_animal/pet
+/mob/living/simple_animal/pet // on second thought, godmode catsplosions tis but a silly thing.
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST

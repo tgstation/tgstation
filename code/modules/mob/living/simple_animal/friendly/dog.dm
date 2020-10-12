@@ -143,17 +143,28 @@
 	desc = "This dog can tell someting smells around here, and that something is CRIME!"
 
 /mob/living/simple_animal/pet/dog/bullterrier
-	name = "\improper bull terrier"
-	real_name = "bull terrier"
+	name = "\improper soulless bull terrier"
+	real_name = "soulless bull terrier"
 	desc = "It's a bull terrier."
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "bullterrier"
 	icon_living = "bullterrier"
 	icon_dead = "bullterrier_dead"
+	status_flags = GODMODE|CANPUSH
 	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "bullterrier"
 	held_state = "bullterrier"
+
+/mob/living/simple_animal/pet/dog/bullterrier/ogwalter // walter
+	name = "\improper soulful bull terrier"
+	real_name = "soulful bull terrier"
+	desc = "It's a bull... corgi?"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "walter"
+	icon_living = "walter"
+	icon_dead = "walter_dead"
+	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"

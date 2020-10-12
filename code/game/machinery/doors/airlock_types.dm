@@ -274,6 +274,16 @@
 	opacity = FALSE
 	glass = TRUE
 
+/obj/machinery/door/airlock/elder
+	name = "wooden voidlock"
+	desc = "The strange, green rune implies that this airlock is magical in some way."
+	icon = 'icons/obj/doors/airlocks/elderdoor/elddoor.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/elderdoor/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_wood
+	normal_integrity = 1000
+	security_level = 6
+	explosion_block = 2
+
 /obj/machinery/door/airlock/titanium
 	name = "shuttle airlock"
 	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
@@ -558,4 +568,17 @@
 	bound_width = 64 // 2x1
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
+	return
+
+/obj/machinery/door/airlock/wood_large // house of spooks
+	name = "The Abandoned Manor of Spooks"
+	desc = "This door leads to an incredibly haunted manor? Are you brave enough to handle the SPOOKENING OF A LIFE TIME?! Or are you just a chicken..."
+	icon = 'icons/obj/doors/airlocks/glass_large/wood_large.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
+	opacity = FALSE
+	assemblytype = null
+	glass = TRUE
+	bound_width = 64 // 2x1
+
+/obj/machinery/door/airlock/wood_large/narsie_act()
 	return

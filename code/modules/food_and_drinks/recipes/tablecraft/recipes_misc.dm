@@ -12,6 +12,15 @@
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/caramel_corn
+	name = "Caramel corn"
+	reqs = list(
+		/datum/reagent/consumable/caramel = 5,
+		/obj/item/reagent_containers/food/snacks/popcorn = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/caramel_corn
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/spiderlollipop
 	name = "Spider Lollipop"
 	reqs = list(/obj/item/stack/rods = 1,
@@ -354,3 +363,23 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/royalcheese
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/smore
+	name = "S'more"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/cracker = 2,
+		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/smore
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/cotton_candy
+	name = "Cotton Candy"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 15,
+		/obj/item/reagent_containers/food/drinks/sillycup = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cotton_candy
+	subcategory = CAT_MISCFOOD
+	

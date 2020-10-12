@@ -210,6 +210,24 @@
 	clothing_flags = LARGE_WORN_ICON
 	custom_price = 350
 
+/obj/item/clothing/head/helmet/boatbomber
+	name = "gnome hat"
+	desc = "For those who bomb boats."
+	icon = 'icons/misc/tourny_items.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "gnome_hat"
+	inhand_icon_state = "constable"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
+/obj/item/clothing/head/helmet/chika
+	name = "anime hat"
+	desc = "Weeb."
+	icon = 'icons/misc/tourny_helm2.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "chika_hat"
+	inhand_icon_state = "beret"
+
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."

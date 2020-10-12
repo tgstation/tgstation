@@ -16,6 +16,12 @@
 	icon_state = "awaycontent29"
 	requires_power = FALSE
 
+/area/awaymission/cabin/snowforest/forest
+	name = "Toolbox Fair"
+	icon_state = "purple"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+
 /area/awaymission/cabin/lumbermill
 	name = "Lumbermill"
 	icon_state = "away3"

@@ -1,0 +1,285 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/turf/closed/wall/r_wall,
+/area/tdome/arena)
+"d" = (
+/turf/open/space/basic,
+/area/tdome/arena)
+"e" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/tdome/arena)
+"m" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"n" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"o" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"p" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"q" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"r" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}
+(2,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}
+(3,1,1) = {"
+b
+g
+j
+n
+q
+j
+g
+b
+"}
+(4,1,1) = {"
+c
+c
+k
+o
+c
+k
+c
+c
+"}
+(5,1,1) = {"
+d
+d
+l
+h
+h
+l
+h
+d
+"}
+(6,1,1) = {"
+d
+d
+h
+h
+h
+h
+h
+d
+"}
+(7,1,1) = {"
+d
+d
+d
+h
+d
+d
+d
+d
+"}
+(8,1,1) = {"
+d
+h
+h
+h
+d
+d
+d
+d
+"}
+(9,1,1) = {"
+d
+d
+d
+h
+d
+d
+d
+d
+"}
+(10,1,1) = {"
+d
+d
+h
+h
+h
+h
+h
+d
+"}
+(11,1,1) = {"
+d
+d
+l
+h
+h
+l
+h
+d
+"}
+(12,1,1) = {"
+c
+c
+k
+o
+c
+k
+c
+c
+"}
+(13,1,1) = {"
+e
+i
+m
+p
+r
+m
+i
+e
+"}
+(14,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}
+(15,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}

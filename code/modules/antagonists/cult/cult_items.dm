@@ -6,6 +6,15 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/tome/haunted // I'm tired of it fucking breaking each time.
+	name = "ritual book"
+	desc = "A book with a name you can't pronounce on the cover. The pages are still intact."
+	icon = 'icons/misc/tourny_items.dmi'
+	icon_state = "tome-open"
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."

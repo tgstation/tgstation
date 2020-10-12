@@ -1,0 +1,23 @@
+"a" = (/obj/structure/sign/nanotrasen,/obj/structure/girder,/obj/structure/railing{dir = 10},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"g" = (/obj/structure/railing{dir = 1},/obj/item/trash/boritos,/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"h" = (/obj/effect/decal/cleanable/crayon{alpha = 150; color = "red"; icon_state = "c"; mouse_opacity = 0; name = "scribble"; pixel_x = -5},/obj/effect/decal/cleanable/crayon{alpha = 150; color = "red"; icon_state = "="; mouse_opacity = 0; name = "scribble"; pixel_x = 5},/turf/open/floor/plating{icon_state = "platingdmg1"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"p" = (/obj/structure/railing{dir = 4},/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"s" = (/obj/machinery/computer/shuttle/snowdin/mining{desc = "An elevator control computer."; max_integrity = 9999; name = "elevator console"; possible_destinations = "haunted_house_top;haunted_house_bottom"; shuttleId = "snowdin_ball"},/turf/open/floor/plating{icon_state = "panelscorched"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"t" = (/obj/structure/chair/stool,/turf/open/floor/plating{icon_state = "panelscorched"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"w" = (/obj/structure/railing{dir = 8},/obj/item/trash/popcorn,/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"y" = (/obj/structure/table,/obj/machinery/status_display,/obj/structure/fluff{desc = "So creepy!"; icon = 'icons/obj/status_display.dmi'; icon_state = "ai_friend"; mouse_opacity = 0; name = "screen"},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"z" = (/obj/structure/railing{dir = 8},/turf/open/floor/plating{icon_state = "panelscorched"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"E" = (/obj/structure/railing{dir = 4},/obj/item/trash/sosjerky,/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"P" = (/obj/structure/railing{dir = 9},/obj/structure/holobox{desc = "How the fuck is a hologram weighted???"; name = "Nanotrasen Weighted Holographic Box"},/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"R" = (/obj/structure/sign/nanotrasen,/obj/structure/girder,/obj/structure/railing{dir = 6},/turf/open/floor/plating{icon_state = "panelscorched"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"U" = (/obj/structure/railing{dir = 5},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"V" = (/obj/machinery/door/window,/obj/docking_port/mobile/elevator{dwidth = 1; height = 4; id = "snowdin_ball"; name = "haunted house elevator"; width = 4},/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"W" = (/obj/structure/railing{dir = 1},/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+"X" = (/obj/machinery/door/window,/turf/open/floor/plating,/area/shuttle/snowdin/elevator1{name = "Spooky Elevator"})
+
+(1,1,1) = {"
+PWgU
+zysp
+whtE
+aVXR
+"}

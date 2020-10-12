@@ -47,7 +47,7 @@
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
 	/// Default team outfit if `outfits[team]` is empty
-	var/default_outfit = /datum/outfit/job/assistant
+	var/default_outfit = /datum/outfit/arena
 
 	/// Is the arena template loading in
 	var/loading = FALSE
@@ -185,18 +185,35 @@
 
 /obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)
 	var/mob/oldbody = get_mob_by_key(ckey)
-	if(!isobserver(oldbody))
+	if(!oldbody.client)
 		return
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	oldbody.client.prefs.copy_to(M)
-	M.set_species(/datum/species/human) // Could use setting per team
-	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
+	var/datum/species/S = oldbody.client.prefs.pref_species
+	if(S.id == "plasmaman")
+		var/datum/outfit/plasmaman/P = new
+		if(outfits[team])
+			var/datum/outfit/arena/A = outfits[team]
+			P.suit = initial(A.suit)
+		P.l_hand = /obj/item/storage/toolbox
+		M.equipOutfit(P)
+	else
+		M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
+	qdel(oldbody)
 
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
 	set_antag_hud(M,"arena",team_hud_index[team])
+
+/obj/machinery/computer/arena/proc/spawn_team(mob/user,team)
+	var/team_spawnpoint = get_spawn(team)
+	for(var/key in team_keys[team])
+		spawn_member(team_spawnpoint,key,team)
+	to_chat(user,"[team] team has been spawned.")
+
+
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
@@ -240,6 +257,7 @@
 		var/obj/effect/countdown/arena/A = new(team_spawn)
 		A.start()
 		countdowns += A
+	priority_announce("The next match will start in 30 seconds.", null, 'sound/ai/commandreport.ogg')
 
 /obj/machinery/computer/arena/proc/begin()
 	ready_to_spawn = FALSE
@@ -290,6 +308,8 @@
 				load_team(user,team)
 			if("outfit")
 				change_outfit(user,team)
+			if("spawnteam")
+				spawn_team(user,team)
 	if(href_list["special"])
 		switch(href_list["special"])
 			if("reset")
@@ -350,6 +370,7 @@
 		dat += "<a href='?src=[REF(src)];team_action=loadteam;team=[team]'>Load team</a>"
 		dat += "<a href='?src=[REF(src)];team_action=addmember;team=[team]'>Add member</a>"
 		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"
+		dat += "<a href='?src=[REF(src)];team_action=spawnteam;team=[team]'>Spawn Team</a>"
 		//Add more per team features here
 
 	dat += "Current arena: [current_arena_template]"
