@@ -262,6 +262,9 @@
 	else
 		current_action = 0
 
+/obj/structure/guillotine/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+    return ..()
+
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP
 #undef GUILLOTINE_ANIMATION_LENGTH
