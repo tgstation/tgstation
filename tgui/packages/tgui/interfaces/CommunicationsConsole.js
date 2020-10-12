@@ -410,7 +410,7 @@ const PageMain = (props, context) => {
           />}
 
           {!!canRequestNuke && <Button
-            icon="bomb"
+            icon="radiation"
             content="Request Nuclear Authentication Codes"
             disabled={!importantActionReady}
             onClick={() => setRequestingNukeCodes(true)}
