@@ -441,7 +441,7 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE && hash)
 		SStimer.hashes -= hash
 
-	if (callBack?.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
+	if (callBack && callback.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
 		callBack.object.active_timers -= src
 		UNSETEMPTY(callBack.object.active_timers)
 
