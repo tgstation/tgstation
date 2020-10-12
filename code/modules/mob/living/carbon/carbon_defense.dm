@@ -244,12 +244,11 @@
 		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 		if(target_on_help_and_unarmed || target.restrained())
 			do_slap_animation(target)
-			playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)
 			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
 				"<span class='notice'>You slap [target] in the face! </span>",\
 			"You hear a slap.")
-			if(target.dna?.species)
-				target.dna.species.stop_wagging_tail(target)
+			target.dna?.species?.stop_wagging_tail(target)
 			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
