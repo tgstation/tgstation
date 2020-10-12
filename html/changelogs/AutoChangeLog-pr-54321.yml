@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Null rods will no longer banish themselves into the nether realms (never to be seen again) when you select a new null rod skin while your active hand contains anything but the null rod."
