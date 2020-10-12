@@ -21,7 +21,7 @@
 /datum/eldritch_knowledge/ashen_grasp
 	name = "Grasp of Ash"
 	gain_text = "He well knew how to walk between the planes."
-	desc = "Empowers your mansus grasp to throw away enemies."
+	desc = "Empowers your mansus grasp to blind opponents you touch with it."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
 	route = PATH_ASH
@@ -31,10 +31,10 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/C = target
-	var/atom/throw_target = get_edge_target_turf(C, user.dir)
-	if(!C.anchored)
-		. = TRUE
-		C.throw_at(throw_target, rand(4,8), 14, user)
+	to_chat(C, "<span class='danger'>Your eyes burn horrifically!</span>") //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
+	C.become_nearsighted(EYE_DAMAGE)
+	C.blind_eyes(5)
+	C.blur_eyes(10)
 	return
 
 /datum/eldritch_knowledge/ashen_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
@@ -149,13 +149,13 @@
 	. = ..()
 	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
 	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-	chosen_mob.update_mobility()
+
 
 /datum/eldritch_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
 	. = ..()
 	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
 	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-	chosen_mob.update_mobility()
+
 
 /datum/eldritch_knowledge/spell/cleave
 	name = "Blood Cleave"

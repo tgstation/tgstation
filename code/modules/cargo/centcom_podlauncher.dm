@@ -19,7 +19,7 @@
 /client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
 	set name = "Config/Launch Supplypod"
 	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	new /datum/centcom_podlauncher(usr)//create the datum
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
@@ -416,16 +416,9 @@
 			var/value = params["value"]
 			var/reverse = params["reverse"]
 			if (reverse)
-				message_admins("reversed")
 				temp_pod.reverse_delays[delay] = value * 10
 			else
-				message_admins("not reversed")
 				temp_pod.delays[delay] = value * 10
-			message_admins("output:")
-			for (var/thing in temp_pod.reverse_delays)
-				message_admins(temp_pod.reverse_delays[thing])
-			for (var/thing in temp_pod.delays)
-				message_admins(temp_pod.delays[thing])
 			. = TRUE
 		if("resetTiming")
 			temp_pod.delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)

@@ -82,6 +82,8 @@
 #define ACCESS_PSYCHOLOGY 70
 /// Toxins tank storage room access
 #define ACCESS_TOXINS_STORAGE 71
+/// Room and launching.
+#define ACCESS_AUX_BASE 72
 
 	//CARD TRIMS
 	/*These allow access to be added to a card without consuming a wildcard slot.*/

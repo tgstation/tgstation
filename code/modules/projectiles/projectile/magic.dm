@@ -159,7 +159,8 @@
 		return
 
 	M.notransform = TRUE
-	M.mobility_flags = NONE
+	ADD_TRAIT(M, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
+	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT

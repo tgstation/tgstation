@@ -9,6 +9,7 @@
 	unsendable = 1
 	undeletable = 1
 	tgui_id = "SyndContractor"
+	program_icon = "tasks"
 	var/error = ""
 	var/info_screen = TRUE
 	var/assigned = FALSE
