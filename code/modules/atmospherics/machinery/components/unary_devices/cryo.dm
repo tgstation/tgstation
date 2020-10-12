@@ -19,21 +19,19 @@
 	// already accounts for this.
 	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = icon('icons/obj/cryogenics.dmi', "mask"), "y" = -22))
 
-/atom/movable/visual/cryo_occupant/proc/on_occupant_enter(mob/occupant)
+/atom/movable/visual/cryo_occupant/proc/on_occupant_enter(mob/living/occupant)
 	occupant.setDir(SOUTH)
 	vis_contents += occupant
 	pixel_y = 22
-	if(isliving(occupant))
-		var/mob/living/L = occupant
-		ADD_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
-		L.update_mobility()
+	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	occupant.set_body_position(STANDING_UP)
+	occupant.set_lying_angle(0)
 
-/atom/movable/visual/cryo_occupant/proc/on_occupant_exit(mob/occupant)
+/atom/movable/visual/cryo_occupant/proc/on_occupant_exit(mob/living/occupant)
 	vis_contents.Cut()
-	if(isliving(occupant))
-		var/mob/living/L = occupant
-		REMOVE_TRAIT(L, TRAIT_FORCE_STAND, CRYO_TRAIT)
-		L.update_mobility()
+	REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
+	if(occupant.resting || HAS_TRAIT(occupant, TRAIT_FLOORED))
+		occupant.set_lying_down()
 
 /atom/movable/visual/cryo_occupant/proc/on_toggle_on()
 	animate(src, pixel_y = 24, time = 20, loop = -1)
@@ -103,9 +101,9 @@
 	vis_contents += occupant_vis
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
-	var/mob/oldoccupant = occupant
+	var/mob/living/oldoccupant = occupant
 	. = ..() // Parent proc takes care of removing occupant if necessary
-	if (oldoccupant && AM == oldoccupant)
+	if (oldoccupant && istype(oldoccupant) && AM == oldoccupant)
 		update_icon()
 		occupant_vis.on_occupant_exit(oldoccupant)
 
@@ -317,7 +315,8 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
-		occupant_vis.on_occupant_enter(occupant)
+		if(isliving(occupant))
+			occupant_vis.on_occupant_enter(occupant)
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)

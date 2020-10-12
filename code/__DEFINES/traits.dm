@@ -82,8 +82,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IMMOBILIZED		"immobilized"
 /// Prevents voluntary standing or staying up on its own.
 #define TRAIT_FLOORED			"floored"
-/// Makes the mob stand up regardless of other flags.
-#define TRAIT_FORCE_STAND		"force-stand"
 /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
 #define TRAIT_HANDS_BLOCKED		"handsblocked"
 /// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
