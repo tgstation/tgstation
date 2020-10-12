@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the vast majority of the problems with null rod sprites and bible sprites."
+  - bugfix: "Null rods storage spots properly align with worn icon sprites. This includes some size adjustments. This is basically meaningless except for storage."
+  - imageadd: "A sprite for the pride hammer in-hand."
+  - imageadd: "New inhands for the moonlight greatsword and extradimensional sword."
