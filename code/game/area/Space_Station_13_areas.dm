@@ -460,9 +460,57 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Theatre"
 	icon_state = "abandoned_theatre"
 
+// ----------- PETTING ZOO
+
 /area/crew_quarters/theatre/zoo_walt // objectively the best one.
 	name = "Walter Pen"
 	icon_state = "abandoned_theatre"
+
+/area/crew_quarters/theatre/zoo_jungle
+	name = "Jungle Pen"
+	icon_state = "spacecontent1"
+
+/area/crew_quarters/theatre/zoo_heretic
+	name = "Heretic Pen"
+	icon_state = "spacecontent2"
+
+/area/crew_quarters/theatre/zoo_vat
+	name = "Vat Pen"
+	icon_state = "spacecontent3"
+
+/area/crew_quarters/theatre/zoo_spess
+	name = "Spessman Pen"
+	icon_state = "spacecontent4"
+
+/area/crew_quarters/theatre/zoo_stick
+	name = "Stick Dog Pen"
+	icon_state = "spacecontent5"
+
+/area/crew_quarters/theatre/zoo_dragon
+	name = "Stick Dog Pen"
+	icon_state = "spacecontent6"
+
+/area/crew_quarters/theatre/zoo_reptile
+	name = "Reptile Pen"
+	icon_state = "spacecontent7"
+
+/area/crew_quarters/theatre/zoo_cow
+	name = "Cow Pen"
+	icon_state = "spacecontent8"
+
+/area/crew_quarters/theatre/zoo_gondola
+	name = "Gondola Pen"
+	icon_state = "spacecontent9"
+
+/area/crew_quarters/theatre/zoo_penguin
+	name = "Penguin Pen"
+	icon_state = "spacecontent10"
+
+/area/crew_quarters/theatre/zoo_chicken
+	name = "Chicken Pen"
+	icon_state = "spacecontent11"
+
+// -----------
 
 /area/library
 	name = "Library"

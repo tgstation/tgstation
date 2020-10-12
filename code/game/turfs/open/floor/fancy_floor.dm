@@ -135,9 +135,8 @@
 	icon_state = "snow"
 	broken_states = list("snow_dug")
 	ore_type = /obj/item/stack/sheet/mineral/snow
-	planetary_atmos = TRUE
+	planetary_atmos = FALSE
 	floor_tile = null
-	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
