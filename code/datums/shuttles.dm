@@ -552,7 +552,7 @@
 	name = "basic syndicate infiltrator"
 
 /datum/map_template/shuttle/infiltrator/advanced
-	suffix = "basic"
+	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
 
 /datum/map_template/shuttle/cargo/delta

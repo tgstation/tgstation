@@ -5,10 +5,14 @@
 	var/mid_sounds
 	///mid_length		(num)					The length to wait between playing mid_sounds
 	var/mid_length
+	///Override for volume of start sound
+	var/start_volume
 	///start_sound		(soundfile)				Played before starting the mid_sounds loop
 	var/start_sound
 	///start_length	(num)					How long to wait before starting the main loop after playing start_sound
 	var/start_length
+	///Override for volume of end sound
+	var/end_volume
 	///end_sound		(soundfile)				The sound played after the main loop has concluded
 	var/end_sound
 	///chance			(num)					Chance per loop to play a mid_sound
@@ -71,12 +75,12 @@
 	if(!timerid)
 		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP)
 
-/datum/looping_sound/proc/play(soundfile)
+/datum/looping_sound/proc/play(soundfile, volume_override)
 	var/list/atoms_cache = output_atoms
 	var/sound/S = sound(soundfile)
 	if(direct)
 		S.channel = SSsounds.random_available_channel()
-		S.volume = volume
+		S.volume = volume_override || volume //Use volume as fallback if theres no override
 	for(var/i in 1 to atoms_cache.len)
 		var/atom/thing = atoms_cache[i]
 		if(direct)
@@ -100,11 +104,11 @@
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
 	if(start_sound)
-		play(start_sound)
+		play(start_sound, start_volume)
 		start_wait = start_length
 	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME)
 
 /datum/looping_sound/proc/on_stop()
 	current_sequence_index = 1 //Back to the start
 	if(end_sound)
-		play(end_sound)
+		play(end_sound, end_volume)
