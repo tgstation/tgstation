@@ -39,7 +39,6 @@
 	minimum_distance = 0
 	alpha = 255
 
-
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Aggro()
 	..()
 	alpha = 255
@@ -53,17 +52,3 @@
 	nodamage = TRUE
 	damage = 0
 	icon_state = "tentacle_end"
-
-/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
-	if(iscarbon(target) && blocked < 100)
-		var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/B = new /obj/item/restraints/legcuffs/beartrap/mega_arachnid(get_turf(target))
-		B.Crossed(target)
-	..()
-
-/obj/item/restraints/legcuffs/beartrap/mega_arachnid
-	name = "fleshy restraints"
-	desc = "Used by mega arachnids to immobilize their prey."
-	item_flags = DROPDEL
-	flags_1 = NONE
-	icon_state = "tentacle_end"
-	icon = 'icons/obj/projectiles.dmi'
