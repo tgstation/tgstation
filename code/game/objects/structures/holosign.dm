@@ -18,8 +18,9 @@
 		LAZYADD(projector.signs, src)
 
 /obj/structure/holosign/Destroy()
-	LAZYREMOVE(projector.signs, src)
-	projector = null
+	if(projector)
+		LAZYREMOVE(projector.signs, src)
+		projector = null
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
