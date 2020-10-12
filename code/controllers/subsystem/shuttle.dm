@@ -404,7 +404,7 @@ SUBSYSTEM_DEF(shuttle)
 		return 1
 	var/obj/docking_port/stationary/dockedAt = M.get_docked()
 	var/destination = dockHome
-	if(dockedAt?.id == dockHome)
+	if(dockedAt && dockedAt.id == dockHome)
 		destination = dockAway
 	if(timed)
 		if(M.request(getDock(destination)))
