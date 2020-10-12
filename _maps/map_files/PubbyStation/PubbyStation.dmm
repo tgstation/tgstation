@@ -56710,7 +56710,7 @@
 /turf/open/floor/plating,
 /area/science/explab)
 "tix" = (
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
