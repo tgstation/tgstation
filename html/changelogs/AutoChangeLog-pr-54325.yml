@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - tweak: "Teleporter machinery now auto links with each other. This makes the old screwdriver + wirecutter interaction redundant, so it has been removed."
