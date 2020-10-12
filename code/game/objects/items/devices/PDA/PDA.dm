@@ -591,7 +591,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
-				if(cartridge?.access & CART_REMOTE_DOOR)
+				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
 					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
