@@ -229,8 +229,8 @@
 		return
 	var/list/display_names = list()
 	var/list/nullrod_icons = list()
-	for(var/V in typesof(/obj/item/nullrod))
-		var/obj/item/nullrod/rodtype = V
+	for(var/rod in typesof(/obj/item/nullrod))
+		var/obj/item/nullrod/rodtype = rod
 		if(initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
@@ -240,8 +240,8 @@
 	if(!choice || !check_menu(M))
 		return
 
-	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	var/obj/item/nullrod/holy_weapon = new A
+	var/picked_rod_type = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
+	var/obj/item/nullrod/holy_weapon = new picked_rod_type(M.drop_location())
 	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
@@ -249,7 +249,7 @@
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
 		qdel(src)
-		M.put_in_active_hand(holy_weapon)
+		M.put_in_hands(holy_weapon)
 
 /**
   * check_menu: Checks if we are allowed to interact with a radial menu
