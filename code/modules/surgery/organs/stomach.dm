@@ -16,11 +16,15 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
+	//manages it's own reagents, will inject food reagents on first bite.
+	food_volume = 0
+
 	var/disgust_metabolism = 1
 
 /obj/item/organ/stomach/Initialize()
 	. = ..()
 	create_reagents(1000)
+	RegisterSignal(src, COMSIG_FOOD_EATEN, .proc/on_bite)
 
 /obj/item/organ/stomach/on_life()
 	. = ..()
@@ -57,6 +61,19 @@
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.inherent_traits)
+
+/**
+ * Triggers on bitting the food item before it is consumed.
+ *
+ * Checks if the stomach is useable, if so adds the food reagents.
+ */
+/obj/item/organ/stomach/proc/on_bite(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
+	SIGNAL_HANDLER
+
+	if(useable)
+		for(var/reag_id in food_reagents)
+			reagents.add_reagent(reag_id , food_reagents[reag_id])
+			useable = FALSE
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
