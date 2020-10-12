@@ -12,7 +12,7 @@
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
-	var/maxdistance = (world.view + extrarange)
+	var/maxdistance = (SOUND_RANGE + extrarange)
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 

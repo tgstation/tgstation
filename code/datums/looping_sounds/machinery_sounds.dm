@@ -89,7 +89,7 @@
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
 	volume = 3
-	extra_range = -5.5
+	extra_range = -17
 
 /datum/looping_sound/gravgen
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
