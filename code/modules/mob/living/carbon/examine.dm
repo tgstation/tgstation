@@ -66,7 +66,7 @@
 
 
 	var/temp = getBruteLoss()
-	if(!(user == src?.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
 			if (temp < 25)
 				msg += "[t_He] [t_has] minor bruising.\n"

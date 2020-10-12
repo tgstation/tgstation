@@ -439,7 +439,7 @@
 /mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
 	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
-		if(gloves?.siemens_coefficient <= 0)
+		if(gloves && gloves.siemens_coefficient <= 0)
 			siemens_coeff -= 0.5
 		if(wear_suit)
 			if(wear_suit.siemens_coefficient == -1)

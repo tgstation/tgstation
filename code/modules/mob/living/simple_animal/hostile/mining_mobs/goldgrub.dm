@@ -134,7 +134,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/movable/targeted_ore)
-	if(targeted_ore?.loc != src)
+	if(targeted_ore && targeted_ore.loc != src)
 		targeted_ore.forceMove(src)
 		return TRUE
 	return FALSE

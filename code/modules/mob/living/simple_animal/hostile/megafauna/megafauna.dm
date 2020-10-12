@@ -69,7 +69,7 @@
 		small_action.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/Moved()
-	if(nest?.parent && get_dist(nest.parent, src) > nest_range)
+	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
 		var/turf/closest = get_turf(nest.parent)
 		for(var/i = 1 to nest_range)
 			closest = get_step(closest, get_dir(closest, src))

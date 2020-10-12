@@ -542,7 +542,7 @@
 
 /datum/action/innate/use_extract/IsAvailable()
 	if(..())
-		if(species?.current_extract && (world.time > species.extract_cooldown))
+		if(species && species.current_extract && (world.time > species.extract_cooldown))
 			return TRUE
 		return FALSE
 

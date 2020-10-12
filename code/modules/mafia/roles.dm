@@ -513,7 +513,7 @@
 	current_victim = null
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_CAN_PERFORM_ACTION,source,"traitor kill",target) & MAFIA_PREVENT_ACTION)
 		return
-	if(game_status == MAFIA_ALIVE && target?.game_status == MAFIA_ALIVE)
+	if(game_status == MAFIA_ALIVE && target && target.game_status == MAFIA_ALIVE)
 		if(!target.kill(source))
 			to_chat(body,"<span class='danger'>Your attempt at killing [target.body] was prevented!</span>")
 
@@ -586,7 +586,7 @@
 		return
 	for(var/r in flickering)
 		var/datum/mafia_role/role = r
-		if(role?.game_status == MAFIA_ALIVE)
+		if(role && role.game_status == MAFIA_ALIVE)
 			to_chat(role.body, "<span class='userdanger'>A shadowy monster appears out of the darkness!</span>")
 			role.kill(source)
 		flickering -= role

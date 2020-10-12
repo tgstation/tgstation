@@ -184,7 +184,7 @@
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
-	if(!(user == src?.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
 			if(temp < 25)
 				msg += "[t_He] [t_has] minor bruising.\n"

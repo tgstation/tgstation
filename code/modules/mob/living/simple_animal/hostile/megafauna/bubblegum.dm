@@ -386,7 +386,7 @@ Difficulty: Hard
 		var/turf/place = locate(chargeat.x + cos(ang) * radius, chargeat.y + sin(ang) * radius, chargeat.z)
 		if(!place)
 			continue
-		if(!nest || nest?.parent && get_dist(nest.parent, place) <= nest_range)
+		if(!nest || nest && nest.parent && get_dist(nest.parent, place) <= nest_range)
 			if(!srcplaced && useoriginal)
 				forceMove(place)
 				srcplaced = TRUE
