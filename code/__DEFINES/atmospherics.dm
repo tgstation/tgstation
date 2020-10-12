@@ -24,6 +24,8 @@
 #define T0C						273.15
 /// 20degC
 #define T20C					293.15
+/// -14C - Temperature used for kitchen cold room, medical freezer, etc.
+#define COLD_ROOM_TEMP			259.15
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
@@ -255,7 +257,7 @@
 /// -93.15°C snow and ice turfs
 #define FROZEN_ATMOS				"o2=22;n2=82;TEMP=180"
 /// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
-#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=259.15"
+#define KITCHEN_COLDROOM_ATMOS		"o2=26;n2=97;TEMP=[COLD_ROOM_TEMP]"
 /// used in the holodeck burn test program
 #define BURNMIX_ATMOS				"o2=2500;plasma=5000;TEMP=370"
 
@@ -485,7 +487,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #endif
 
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
-#define TURFS_CAN_SHARE(T1, T2) ((T2.atmos_adjacent_turfs[T1]) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
+#define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
 

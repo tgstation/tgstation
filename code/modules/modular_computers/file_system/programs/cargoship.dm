@@ -5,6 +5,7 @@
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6
 	tgui_id = "NtosShipping"
+	program_icon = "tags"
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
 	///The amount which the tagger will receive for the sale.

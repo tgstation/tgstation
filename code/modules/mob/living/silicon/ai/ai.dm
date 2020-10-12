@@ -19,7 +19,6 @@
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
-	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -34,7 +33,7 @@
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
-	var/aiRestorePowerRoutine = 0
+	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
@@ -169,6 +168,10 @@
 
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
+
+	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -374,12 +377,6 @@
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
-
-/mob/living/silicon/ai/update_mobility() //If the AI dies, mobs won't go through it anymore
-	if(stat != CONSCIOUS)
-		mobility_flags = NONE
-	else
-		mobility_flags = ALL
 
 
 /mob/living/silicon/ai/Topic(href, href_list)
@@ -798,10 +795,6 @@
 /mob/living/silicon/ai/can_buckle()
 	return FALSE
 
-/mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(aiRestorePowerRoutine)
-		return TRUE
-	return ..()
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(control_disabled || incapacitated())
@@ -1032,3 +1025,23 @@
 
 /mob/living/silicon/ai/zMove(dir, feedback = FALSE)
 	. = eyeobj.zMove(dir, feedback)
+
+
+/// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
+/mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)
+	if(new_value == aiRestorePowerRoutine)
+		return
+	. = aiRestorePowerRoutine
+	aiRestorePowerRoutine = new_value
+	if(aiRestorePowerRoutine)
+		if(!.)
+			ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+	else if(.)
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
+
+
+/mob/living/silicon/on_handsblocked_start()
+	return // AIs have no hands
+
+/mob/living/silicon/on_handsblocked_end()
+	return // AIs have no hands

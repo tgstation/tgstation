@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		return
 	if(isliving(user))
 		var/mob/living/L = user
-		if(!(L.mobility_flags & MOBILITY_STAND))
+		if(L.body_position == LYING_DOWN)
 			return
 	O.forceMove(src.loc)
 	if (user != O)
