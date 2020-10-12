@@ -185,7 +185,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 /obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/has_fuel()
 	return fuel_rods?.len
 
-/obj/machinery/atmospherics/components/trinary/nuclear_reactor/proc/process()
+/obj/machinery/atmospherics/components/trinary/nuclear_reactor/process()
 	update_parents()
 	//Let's get our gasses sorted out.
 	var/datum/gas_mixture/coolant_input = airs[1]
@@ -221,43 +221,40 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	var/depletion_modifier = 0.035 //How rapidly do your rods decay
 	gas_absorption_effectiveness = gas_absorption_constant
 
-	var/datum/gas_mixture/removed_moderator
-	removed_moderator = moderator_input.remove(gasefficency * moderator_input.total_moles())
-
-	removed_moderator.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/bz, /datum/gas/nitryl)
-	var/combined_moles = removed_moderator.total_moles()
+	moderator_input.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/water_vapor, /datum/gas/hypernoblium, /datum/gas/bz, /datum/gas/nitryl)
+	var/combined_moles = moderator_input.total_moles()
 
 	if(combined_moles >= minimum_coolant_level)
-		var/total_fuel_moles = removed_moderator.gases[/datum/gas/plasma][MOLES] + removed_moderator.gases[/datum/gas/hydrogen][MOLES] * 1.5 + removed_moderator.gases[/datum/gas/tritium][MOLES] * 3
-		var/power_modifier = max((removed_moderator.gases[/datum/gas/oxygen][MOLES] / combined_moles * 10), 1)
+		var/total_fuel_moles = moderator_input.gases[/datum/gas/plasma][MOLES] + moderator_input.gases[/datum/gas/hydrogen][MOLES] * 1.5 + moderator_input.gases[/datum/gas/tritium][MOLES] * 3
+		var/power_modifier = max((moderator_input.gases[/datum/gas/oxygen][MOLES] / combined_moles * 10), 1)
 		if(total_fuel_moles >= minimum_coolant_level) //You at least need SOME fuel.
 			var/power_produced = max((total_fuel_moles / combined_moles * 10), 1)
 			last_power_produced = max(0,((power_produced * power_modifier) * combined_moles))
 			last_power_produced *= (power/100) //Aaaand here comes the cap. Hotter reactor => more power.
 			last_power_produced *= base_power_modifier //Finally, we turn it into actual usable numbers.
-			radioactivity_spice_multiplier += removed_moderator.gases[/datum/gas/tritium][MOLES] / 5 //Chernobyl 2.
+			radioactivity_spice_multiplier += moderator_input.gases[/datum/gas/tritium][MOLES] / 5 //Chernobyl 2.
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(!C || !C.powernet)
 				return
 			else
 				C.powernet.newavail += last_power_produced
-		var/total_control_moles = removed_moderator.gases[/datum/gas/nitrogen][MOLES] + removed_moderator.gases[/datum/gas/carbon_dioxide][MOLES] * 2 + removed_moderator.gases[/datum/gas/pluoxium][MOLES] * 3 //N2 helps you control the reaction at the cost of making it absolutely blast you with rads. Pluoxium has the same effect but without the rads!
+		var/total_control_moles = moderator_input.gases[/datum/gas/nitrogen][MOLES] + moderator_input.gases[/datum/gas/carbon_dioxide][MOLES] * 2 + moderator_input.gases[/datum/gas/pluoxium][MOLES] * 3 //N2 helps you control the reaction at the cost of making it absolutely blast you with rads. Pluoxium has the same effect but without the rads!
 		if(total_control_moles >= minimum_coolant_level)
 			var/control_bonus = total_control_moles / 250 //1 mol of n2 -> 0.002 bonus control rod effectiveness, if you want a super controlled reaction, you'll have to sacrifice some power.
 			control_rod_effectiveness = initial(control_rod_effectiveness) + control_bonus
-			radioactivity_spice_multiplier += removed_moderator.gases[/datum/gas/nitrogen][MOLES] / 25 //An example setup of 50 moles of n2 (for dealing with spent fuel) leaves us with a radioactivity spice multiplier of 3.
-			radioactivity_spice_multiplier += removed_moderator.gases[/datum/gas/carbon_dioxide][MOLES] / 12.5
-		var/total_permeability_moles = removed_moderator.gases[/datum/gas/bz][MOLES] + removed_moderator.gases[/datum/gas/water_vapor][MOLES] * 2 + removed_moderator.gases[/datum/gas/hypernoblium][MOLES] * 10
+			radioactivity_spice_multiplier += moderator_input.gases[/datum/gas/nitrogen][MOLES] / 25 //An example setup of 50 moles of n2 (for dealing with spent fuel) leaves us with a radioactivity spice multiplier of 3.
+			radioactivity_spice_multiplier += moderator_input.gases[/datum/gas/carbon_dioxide][MOLES] / 12.5
+		var/total_permeability_moles = moderator_input.gases[/datum/gas/bz][MOLES] + moderator_input.gases[/datum/gas/water_vapor][MOLES] * 2 + moderator_input.gases[/datum/gas/hypernoblium][MOLES] * 10
 		if(total_permeability_moles >= minimum_coolant_level)
 			var/permeability_bonus = total_permeability_moles / 500
 			gas_absorption_effectiveness = gas_absorption_constant + permeability_bonus
-		var/total_degradation_moles = removed_moderator.gases[/datum/gas/nitryl][MOLES] //Because it's quite hard to get.
+		var/total_degradation_moles = moderator_input.gases[/datum/gas/nitryl][MOLES] //Because it's quite hard to get.
 		if(total_degradation_moles >= minimum_coolant_level*0.5) //I'll be nice.
 			depletion_modifier += total_degradation_moles / 15 //Oops! All depletion. This causes your fuel rods to get SPICY.
 			playsound(src, pick('sound/machines/sm/accent/normal/1.ogg','sound/machines/sm/accent/normal/2.ogg','sound/machines/sm/accent/normal/3.ogg','sound/machines/sm/accent/normal/4.ogg','sound/machines/sm/accent/normal/5.ogg'), 100, TRUE)
 		//From this point onwards, we clear out the remaining gasses.
-		removed_moderator.clear()
+		moderator_input.clear()
 
 		K += total_fuel_moles / 1000
 	var/fuel_power = 0 //So that you can't magically generate K with your control rods.
