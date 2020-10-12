@@ -127,6 +127,7 @@
 /turf/open/floor/mineral/titanium/tiled
 	name = "titanium tile"
 	icon_state = "titanium_tiled"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
 	broken_states = list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
 
 /turf/open/floor/mineral/titanium/tiled/airless
