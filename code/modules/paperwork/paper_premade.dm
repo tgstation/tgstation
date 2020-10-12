@@ -120,3 +120,7 @@
 	name = "URGENT!"
 	info = "A hastily written note has been scribbled here... <br><br> Please use the ore redemption machine in the cargo office for smelting. PLEASE! <br><br>--The Research Staff"
 
+///////////	Toolbox
+/obj/item/paper/fluff/old_spessman
+	name = "CONFIDENTIAL- Neanderthal Deal"
+	info = "We've got a couple of those Neanderthals off of that ship we ran into. They don't seem to understand our sophisticated ways so we gave them something familiar. Don't worry-- according to our volunteer lawyer, everything here is completely ethical." // spoiler alert: none of it is.

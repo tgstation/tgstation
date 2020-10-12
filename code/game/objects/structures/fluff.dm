@@ -300,6 +300,8 @@
 	anchored = TRUE
 	deconstructible = FALSE
 
+// ------------------- SIGNS
+
 /obj/structure/fluff/books_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the words 'books' written. What could it mean?"
@@ -442,6 +444,8 @@
 	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
+
+// -------------------
 
 /obj/structure/fluff/headstone
 	name = "headstone"
@@ -643,5 +647,32 @@
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/ferriswheel
+	name = "Old Swaying Relaxation Spinner" // i didn't come up with this name for nothing, tattlemothe.
+	desc = "You'd be surprised to learn that the most expensive thing for this year's Toolbox Tournament isn't the tents, the arena technology, the announcers' paychecks, or even the golden gate south of us. The most expensive thing is actually straight from Earth/Terra itself: The O.S.R.S. It's a highly advanc- Oh, for fucksake, it's just a ferris wheel. Hop in alre... Wait, we can't. Well, reading this was a waste of time."
+	icon = 'icons/misc/ferris1d.dmi'
+	icon_state = "ferris"
+	pixel_x = -64 //So the big ol' 160x160 sprite shows up right
+	max_integrity = 9999
+	layer = 4
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	density = FALSE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/eldritchbig
+	name = "Transmutation rune" // this is but a tribute!
+	desc = "Yeah, I guess that looks eldritch."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "eldritch_rune1"
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	layer = 2.54
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
+	density = FALSE
 	anchored = TRUE
 	deconstructible = FALSE

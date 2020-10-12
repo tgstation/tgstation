@@ -586,13 +586,6 @@
 /obj/structure/fluff/corn_wall,
 /turf/open/floor/plating/sandy_dirt,
 /area/hydroponics/garden/cornmaze/labyrinth)
-"bv" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Thunderdome Arena Access";
-	req_one_access_txt = "101"
-	},
-/turf/open/floor/wood,
-/area/space)
 "bw" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/grass{
@@ -1877,16 +1870,19 @@
 /turf/open/floor/wood,
 /area/medical/morgue/hauntedhouse)
 "et" = (
-/obj/structure/sign/warning/fire{
-	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "floor1";
-	name = "blood";
-	pass_flags = 64
+/obj/structure/fluff{
+	desc = "Just an imitation of a sacrifce...";
+	icon = 'icons/mob/pets.dmi';
+	icon_state = "corgi_dead";
+	name = "sacrificed corgi"
 	},
-/mob/living/simple_animal/bot/mulebot/paranormal,
-/turf/open/floor/wood,
-/area/medical/morgue/hauntedhouse)
+/obj/effect/decal/cleanable/blood,
+/obj/structure/fluff/narsie{
+	icon_state = "apoc";
+	mouse_opacity = 0
+	},
+/turf/open/floor/plasteel/cult,
+/area/awaymission/cabin/snowforest/forest)
 "eu" = (
 /obj/item/kirbyplants{
 	anchored = 1;
@@ -2265,16 +2261,10 @@
 /turf/open/floor/wood,
 /area/space)
 "fr" = (
-/obj/effect/rune/apocalypse{
+/obj/structure/fluff/narsie{
+	icon_state = "apoc";
 	mouse_opacity = 0
 	},
-/obj/structure/fluff{
-	desc = "Just an imitation of a sacrifce...";
-	icon = 'icons/mob/pets.dmi';
-	icon_state = "corgi_dead";
-	name = "sacrificed corgi"
-	},
-/obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/cult,
 /area/awaymission/cabin/snowforest/forest)
 "fs" = (
@@ -2386,14 +2376,28 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
 "fE" = (
-/obj/effect/rune/apocalypse{
-	mouse_opacity = 0
+/obj/structure/sign/warning/fire{
+	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor1";
+	layer = 2.08;
+	name = "blood";
+	pass_flags = 64
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/pod,
 /area/awaymission/cabin/snowforest/forest)
+"fF" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_jungle)
+"fG" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_spess)
 "fH" = (
 /turf/open/floor/wood,
 /area/space)
+"fI" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_stick)
 "fJ" = (
 /obj/structure/table/reinforced,
 /obj/item/tcgcard_deck,
@@ -2473,12 +2477,18 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
+"fS" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_reptile)
 "fT" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
 /area/space)
+"fU" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_penguin)
 "fV" = (
 /obj/structure/fluff/support{
 	pixel_x = -13;
@@ -2514,6 +2524,28 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/forest)
+"fZ" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/obj/structure/flora/junglebush/c{
+	pixel_x = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"ga" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/jungle/mega_arachnid
+	},
+/mob/living/simple_animal/hostile/jungle/mega_arachnid{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"gb" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
 "gc" = (
 /obj/structure/fluff/support{
 	pixel_x = 15;
@@ -2531,6 +2563,16 @@
 	color = "#6e6e6e"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"ge" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"gf" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
 "gg" = (
 /obj/structure/fluff/support{
 	pixel_x = -13;
@@ -2904,6 +2946,19 @@
 /obj/item/food/cake/holy_cake,
 /turf/open/floor/plastic,
 /area/awaymission/cabin/snowforest/forest)
+"gJ" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
 "gK" = (
 /obj/structure/fluff/support{
 	pixel_x = 16;
@@ -3241,13 +3296,14 @@
 /area/awaymission/cabin/snowforest/forest)
 "hl" = (
 /obj/structure/sign/warning/fire{
-	desc = "They look like tracks left by wheels.";
-	dir = 1;
+	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
 	icon = 'icons/effects/blood.dmi';
-	icon_state = "tracks";
-	name = "blood tracks";
+	icon_state = "floor1";
+	layer = 2.08;
+	name = "blood";
 	pass_flags = 64
 	},
+/mob/living/simple_animal/bot/mulebot/paranormal,
 /turf/open/floor/wood,
 /area/medical/morgue/hauntedhouse)
 "hm" = (
@@ -4122,13 +4178,12 @@
 /turf/open/floor/carpet/cyan,
 /area/awaymission/cabin/snowforest/forest)
 "iM" = (
-/obj/structure/fluff/iced_abductor{
-	desc = "A shadowy figure lies in this sturdy-looking block of ice. Am I supposed to... eat this?"
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/mechanical/old/zoo{
+	anchored = 1
 	},
-/turf/open/floor/plating/grass{
-	color = "#cccc00"
-	},
-/area/awaymission/cabin/snowforest/forest)
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "iN" = (
 /obj/structure/table/wood/fancy/cyan,
 /obj/item/reagent_containers/food/snacks/cotton_candy{
@@ -6512,16 +6567,15 @@
 /turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
 "np" = (
-/obj/effect/rune/manifest,
 /obj/structure/sign/warning/fire{
 	desc = "They look like tracks left by wheels.";
 	dir = 1;
 	icon = 'icons/effects/blood.dmi';
 	icon_state = "tracks";
+	layer = 2.08;
 	name = "blood tracks";
 	pass_flags = 64
 	},
-/obj/structure/fluff/skeletal_bodybody,
 /turf/open/floor/wood,
 /area/medical/morgue/hauntedhouse)
 "nq" = (
@@ -6601,6 +6655,27 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
+"nA" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/paper/fluff/old_spessman,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/mob/living/simple_animal/hostile/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
 "nB" = (
 /obj/structure/flora/tree/jungle/fall,
 /turf/open/floor/plating/grass/fall,
@@ -6658,8 +6733,9 @@
 /obj/structure/railing/wooden{
 	dir = 8
 	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "nL" = (
 /turf/closed/indestructible/wood,
 /area/crew_quarters/theatre/zoo_walt)
@@ -6699,11 +6775,8 @@
 /turf/open/floor/plating/grass/fall,
 /area/medical/morgue/field)
 "nU" = (
-/obj/structure/railing/wooden{
-	dir = 4
-	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "nV" = (
 /obj/structure/fluff/support{
 	pixel_x = -13;
@@ -6957,21 +7030,15 @@
 	},
 /area/awaymission/cabin/snowforest/forest)
 "oF" = (
-/obj/structure/railing/wooden{
-	dir = 10
+/obj/structure/chair/plastic{
+	dir = 4
 	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
-"oG" = (
-/obj/structure/railing/wooden,
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "oH" = (
-/obj/structure/railing/wooden{
-	dir = 6
-	},
-/turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/obj/structure/chair/plastic,
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "oI" = (
 /obj/item/toy/balloon{
 	anchored = 1;
@@ -6988,12 +7055,12 @@
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "oK" = (
-/obj/structure{
-	color = "#000fff";
-	name = "SET ON ANIMALS LATER. USE CUSTOM AREA TURFS."
+/obj/structure/railing/wooden{
+	dir = 4
 	},
-/turf/open/floor/plating/asteroid,
-/area/awaymission/cabin/snowforest/forest)
+/obj/item/stack/spacecash/c1,
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
 "oL" = (
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
@@ -7026,7 +7093,10 @@
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "oQ" = (
-/obj/effect/mapping_helpers/component_injector/areabound,
+/obj/structure/reagent_dispensers/watertank{
+	anchored = 1
+	},
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "oR" = (
@@ -7062,23 +7132,41 @@
 /turf/open/floor/plating/grass/fall,
 /area/awaymission/cabin/snowforest/forest)
 "oW" = (
-/obj/structure/railing/wooden{
-	dir = 9
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
 	},
-/turf/open/floor/plating/sandy_dirt,
+/obj/item/paperplane,
+/obj/item/paperplane,
+/obj/item/paperplane,
+/obj/item/paperplane,
+/obj/item/clothing/head/collectable/paper,
+/obj/item/clothing/head/collectable/paper,
+/obj/item/clothing/head/collectable/paper,
+/obj/item/clothing/head/collectable/paper,
+/obj/item/storage/box/fountainpens,
+/turf/open/floor/plating/asteroid,
 /area/awaymission/cabin/snowforest/forest)
 "oX" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
 /obj/structure/railing/wooden{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/area/crew_quarters/theatre/zoo_stick)
 "oY" = (
-/obj/structure/railing/wooden{
-	dir = 5
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/stickman/dog
+	},
+/mob/living/simple_animal/hostile/stickman/dog{
+	faction = list("neutral");
+	status_flags = 24
 	},
 /turf/open/floor/plating/sandy_dirt,
-/area/awaymission/cabin/snowforest/forest)
+/area/crew_quarters/theatre/zoo_stick)
 "oZ" = (
 /obj/machinery/medical_kiosk,
 /turf/open/floor/plating/grass{
@@ -7112,6 +7200,9 @@
 /obj/item/pen,
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/cabin/snowforest/forest)
+"pe" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
 "pf" = (
 /obj/structure/fluff/support{
 	pixel_x = -13;
@@ -7746,26 +7837,32 @@
 /turf/open/floor/carpet/purple,
 /area/medical/morgue/hauntedhouse)
 "qh" = (
+/obj/effect/rune/manifest{
+	mouse_opacity = 0
+	},
+/obj/structure/sign/warning/fire{
+	desc = "They look like tracks left by wheels.";
+	dir = 1;
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "tracks";
+	layer = 2.08;
+	name = "blood tracks";
+	pass_flags = 64
+	},
+/obj/structure/fluff/skeletal_bodybody,
+/turf/open/floor/wood,
+/area/medical/morgue/hauntedhouse)
+"qi" = (
 /obj/structure/sign/warning/fire{
 	desc = "They look like tracks left by wheels.";
 	dir = 4;
 	icon = 'icons/effects/blood.dmi';
 	icon_state = "tracks";
+	layer = 2.08;
 	name = "blood tracks";
 	pass_flags = 64
 	},
 /turf/open/floor/carpet/purple,
-/area/medical/morgue/hauntedhouse)
-"qi" = (
-/obj/structure/sign/warning/fire{
-	desc = "They look like tracks left by wheels.";
-	dir = 6;
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "tracks";
-	name = "blood tracks";
-	pass_flags = 64
-	},
-/turf/open/floor/wood,
 /area/medical/morgue/hauntedhouse)
 "qj" = (
 /obj/structure/chair/sofa/right,
@@ -7838,17 +7935,12 @@
 /area/medical/morgue/hauntedhouse)
 "qw" = (
 /obj/structure/sign/warning/fire{
-	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
+	desc = "They look like tracks left by wheels.";
+	dir = 6;
 	icon = 'icons/effects/blood.dmi';
-	icon_state = "floor1";
-	name = "\improper blood";
-	pass_flags = 64
-	},
-/obj/structure/sign/warning/radiation{
-	desc = "A repulsive pile of guts and gore.";
-	icon = 'icons/obj/surgery.dmi';
-	icon_state = "innards";
-	name = "viscera";
+	icon_state = "tracks";
+	layer = 2.08;
+	name = "blood tracks";
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
@@ -7859,11 +7951,19 @@
 /area/medical/morgue/hauntedhouse)
 "qy" = (
 /obj/structure/sign/warning/fire{
-	desc = "WHOSE FOOTPRINTS ARE THESE?";
-	dir = 8;
-	icon = 'icons/effects/footprints.dmi';
-	icon_state = "blood1";
-	name = "footprints";
+	desc = "It's red and gooey. Perhaps it's the chef's cooking?";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor1";
+	layer = 2.08;
+	name = "\improper blood";
+	pass_flags = 64
+	},
+/obj/structure/sign/warning/radiation{
+	desc = "A repulsive pile of guts and gore.";
+	icon = 'icons/obj/surgery.dmi';
+	icon_state = "innards";
+	layer = 2.08;
+	name = "viscera";
 	pass_flags = 64
 	},
 /turf/open/floor/wood,
@@ -7874,10 +7974,11 @@
 	dir = 8;
 	icon = 'icons/effects/footprints.dmi';
 	icon_state = "blood1";
+	layer = 2.08;
 	name = "footprints";
 	pass_flags = 64
 	},
-/turf/open/floor/carpet/purple,
+/turf/open/floor/wood,
 /area/medical/morgue/hauntedhouse)
 "qA" = (
 /turf/closed/indestructible/oldshuttle{
@@ -8030,23 +8131,14 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/hydroponics/garden/cornmaze/labyrinth)
 "qL" = (
-/obj/item/scrying{
-	anchored = 1;
-	color = "red";
-	pixel_y = 4
-	},
-/obj/effect/rune/narsie,
-/obj/machinery/porta_turret/syndicate/shuttle{
-	base_icon_state = null;
-	damtype = null;
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "curse";
-	name = "ghostly aura";
-	shot_delay = 600
-	},
-/obj/structure/table/wood/fancy/royalblack{
-	max_integrity = 9999;
-	resistance_flags = 115
+/obj/structure/sign/warning/fire{
+	desc = "WHOSE FOOTPRINTS ARE THESE?";
+	dir = 8;
+	icon = 'icons/effects/footprints.dmi';
+	icon_state = "blood1";
+	layer = 2.08;
+	name = "footprints";
+	pass_flags = 64
 	},
 /turf/open/floor/carpet/purple,
 /area/medical/morgue/hauntedhouse)
@@ -11563,6 +11655,7 @@
 "yG" = (
 /obj/structure/stone_tile/eldersurrounding,
 /obj/structure/fluff/starspawn,
+/obj/structure/fluff/eldritchbig,
 /turf/open/floor/black{
 	mouse_opacity = 0
 	},
@@ -13507,12 +13600,23 @@
 	color = "#cccc00"
 	},
 /area/awaymission/cabin/snowforest/forest)
+"CF" = (
+/obj/structure/fluff/paper/corner,
+/obj/structure/fluff/paper/stack{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
 "CG" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_cultist"
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/forest)
+"CH" = (
+/obj/structure/fluff/paper,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
 "CI" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/rollercoaster_hint/speed_up,
@@ -15536,6 +15640,1085 @@
 "Hy" = (
 /obj/structure/fluff/yeah_go_heck_yourself,
 /turf/open/floor/plating/grass/fall,
+/area/awaymission/cabin/snowforest/forest)
+"Hz" = (
+/obj/structure/fluff/paper/stack,
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"HA" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"HB" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/lizard
+	},
+/mob/living/simple_animal/hostile/lizard{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"HC" = (
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"HD" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/retaliate/poison/snake
+	},
+/mob/living/simple_animal/hostile/retaliate/poison/snake{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"HE" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"HF" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/toy/plush/lizardplushie,
+/obj/item/clothing/mask/frog,
+/obj/item/clothing/mask/frog,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"HG" = (
+/obj/structure/bed/dogbed,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_walt)
+"HH" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/stack/sheet/bone,
+/obj/item/stack/sheet/bone,
+/obj/item/stack/sheet/bone,
+/obj/item/stack/sheet/bone,
+/obj/item/stack/sheet/bone,
+/obj/item/stack/sheet/bone,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/clothing/neck/petcollar,
+/obj/item/clothing/neck/petcollar,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"HI" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/item/food/fishfingers,
+/obj/item/food/fishfingers,
+/obj/item/food/fishfingers,
+/obj/item/food/fishandchips,
+/obj/item/food/fishandchips,
+/obj/item/food/fishandchips,
+/obj/item/food/burger/fish,
+/obj/item/food/burger/fish,
+/obj/item/food/burger/fish,
+/obj/item/clothing/suit/jacket,
+/obj/item/clothing/suit/jacket,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"HJ" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"HK" = (
+/obj/structure/flora/rock/pile/icy{
+	density = 0
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"HL" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/pet/penguin/baby
+	},
+/mob/living/simple_animal/pet/penguin/baby{
+	status_flags = 24
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"HM" = (
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"HN" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/structure/statue/snow/snowman{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"HO" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"HP" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"HQ" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/jungle/seedling
+	},
+/mob/living/simple_animal/hostile/jungle/seedling{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"HR" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"HS" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/retaliate/spaceman
+	},
+/mob/living/simple_animal/hostile/retaliate/spaceman{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"HT" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"HU" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"HV" = (
+/obj/structure/fluff/paper/stack{
+	dir = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"HW" = (
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"HX" = (
+/obj/structure/bed/dogbed{
+	pixel_y = 9
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/stickman/dog
+	},
+/mob/living/simple_animal/hostile/stickman/dog{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/closed/indestructible/paper{
+	density = 0;
+	desc = "A layering of impenetrable sheets of paper."
+	},
+/area/crew_quarters/theatre/zoo_stick)
+"HY" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"HZ" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"Ia" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"Ib" = (
+/obj/structure/water_source/puddle,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/retaliate/frog
+	},
+/mob/living/simple_animal/hostile/retaliate/frog{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"Ic" = (
+/obj/structure/flora/ausbushes/reedbush,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/lizard/space
+	},
+/mob/living/simple_animal/hostile/lizard/space{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"Id" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"Ie" = (
+/obj/item/toy/beach_ball,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_walt)
+"If" = (
+/obj/structure/reagent_dispensers/watertank{
+	anchored = 1
+	},
+/obj/item/reagent_containers/glass/bucket/wooden,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"Ig" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/pet/penguin/emperor
+	},
+/mob/living/simple_animal/pet/penguin/emperor{
+	status_flags = 24
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"Ih" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/pet/penguin/emperor/shamebrero
+	},
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero{
+	status_flags = 24
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"Ii" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"Ij" = (
+/obj/structure/sign/departments/xenobio,
+/turf/closed/indestructible/wood,
+/area/awaymission/cabin/snowforest/forest)
+"Ik" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"Il" = (
+/obj/structure/railing/wooden,
+/obj/structure/flora/junglebush/c{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"Im" = (
+/obj/structure/railing/wooden,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"In" = (
+/obj/structure/railing/wooden{
+	dir = 6
+	},
+/obj/structure/flora/junglebush{
+	pixel_x = -13;
+	pixel_y = 11
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_jungle)
+"Io" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"Ip" = (
+/obj/structure/railing/wooden,
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"Iq" = (
+/obj/structure/railing/wooden{
+	dir = 6
+	},
+/turf/open/floor/oldshuttle,
+/area/crew_quarters/theatre/zoo_spess)
+"Ir" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"Is" = (
+/obj/structure/fluff/paper/stack{
+	dir = 8
+	},
+/obj/structure/railing/wooden,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"It" = (
+/obj/structure/railing/wooden,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/stickman/dog
+	},
+/mob/living/simple_animal/hostile/stickman/dog{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"Iu" = (
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"Iv" = (
+/obj/structure/railing/wooden,
+/obj/structure/fluff/paper{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"Iw" = (
+/obj/structure/fluff/paper/stack{
+	dir = 6
+	},
+/obj/structure/railing/wooden{
+	dir = 6
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_stick)
+"Ix" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"Iy" = (
+/obj/structure/railing/wooden,
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_reptile)
+"Iz" = (
+/obj/structure/railing/wooden,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"IA" = (
+/obj/structure/railing/wooden{
+	dir = 6
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_reptile)
+"IB" = (
+/obj/structure/railing/wooden,
+/obj/item/food/meat/slab/human/mutant/skeleton,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_walt)
+"IC" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"ID" = (
+/obj/structure/railing/wooden{
+	dir = 10
+	},
+/obj/structure/flora/rock/pile/icy{
+	density = 0
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"IE" = (
+/obj/structure/railing/wooden,
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"IF" = (
+/obj/structure/railing/wooden{
+	dir = 6
+	},
+/turf/open/floor/holofloor/snow,
+/area/crew_quarters/theatre/zoo_penguin)
+"IG" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"IH" = (
+/obj/structure/reagent_dispensers/watertank{
+	anchored = 1
+	},
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/plating/grass{
+	color = "#cccc00"
+	},
+/area/awaymission/cabin/snowforest/forest)
+"II" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"IJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/forest)
+"IK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/forest)
+"IL" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/forest)
+"IM" = (
+/obj/structure/sign/poster/official/nanotrasen_logo,
+/turf/closed/indestructible/wood{
+	opacity = 0
+	},
+/area/awaymission/cabin/snowforest/forest)
+"IN" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/forest)
+"IO" = (
+/obj/structure/sign/poster/official/cleanliness,
+/turf/closed/indestructible/wood{
+	opacity = 0
+	},
+/area/awaymission/cabin/snowforest/forest)
+"IP" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_heretic)
+"IQ" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"IR" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"IS" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"IT" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"IU" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"IV" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"IW" = (
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"IX" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"IY" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"IZ" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"Ja" = (
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"Jb" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"Jc" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"Jd" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"Je" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"Jf" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"Jg" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"Jh" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/structure/marker_beacon,
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"Ji" = (
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"Jj" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"Jk" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/pet/gondola
+	},
+/mob/living/simple_animal/pet/gondola{
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"Jl" = (
+/obj/structure/railing/wooden{
+	dir = 9
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"Jm" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/chick
+	},
+/mob/living/simple_animal/chick{
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"Jn" = (
+/obj/structure/railing/wooden{
+	dir = 1
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"Jo" = (
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"Jp" = (
+/obj/structure/railing/wooden{
+	dir = 5
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"Jq" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"Jr" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/eldritch/raw_prophet
+	},
+/mob/living/simple_animal/hostile/eldritch/raw_prophet{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"Js" = (
+/obj/item/scrying{
+	anchored = 1;
+	color = "red";
+	pixel_y = 4
+	},
+/obj/machinery/porta_turret/syndicate/shuttle{
+	base_icon_state = null;
+	damtype = null;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "curse";
+	name = "ghostly aura";
+	shot_delay = 600
+	},
+/obj/structure/table/wood/fancy/royalblack{
+	max_integrity = 9999;
+	resistance_flags = 115
+	},
+/obj/structure/fluff/narsie,
+/turf/open/floor/carpet/purple,
+/area/medical/morgue/hauntedhouse)
+"Jt" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/eldritch/ash_spirit
+	},
+/mob/living/simple_animal/hostile/eldritch/ash_spirit{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"Ju" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"Jv" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"Jw" = (
+/obj/item/clothing/mask/facehugger/lamarr,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /obj/item/clothing/mask/facehugger/lamarr
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"Jx" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/vatbeast
+	},
+/mob/living/simple_animal/hostile/vatbeast{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"Jy" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/crew_quarters/theatre/zoo_vat)
+"Jz" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"JA" = (
+/obj/item/toy/plush/carpplushie,
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"JB" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"JC" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"JD" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/cow
+	},
+/mob/living/simple_animal/cow{
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"JE" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_cow)
+"JF" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"JG" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/pet/gondola
+	},
+/mob/living/simple_animal/pet/gondola{
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"JH" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/pet/gondola/gondolapod
+	},
+/mob/living/simple_animal/pet/gondola/gondolapod{
+	status_flags = 24
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"JI" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/grass,
+/area/crew_quarters/theatre/zoo_gondola)
+"JJ" = (
+/obj/structure/railing/wooden{
+	dir = 8
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"JK" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/chicken
+	},
+/mob/living/simple_animal/chicken{
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"JL" = (
+/obj/structure/railing/wooden{
+	dir = 4
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"JM" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	target_type = /mob/living/simple_animal/hostile/eldritch/stalker
+	},
+/mob/living/simple_animal/hostile/eldritch/stalker{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"JN" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/obj/item/emptysandbag,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JO" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/storage/box/beakers,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
+/obj/machinery/plumbing/growing_vat,
+/obj/machinery/plumbing/growing_vat,
+/obj/item/clothing/accessory/armband/science,
+/obj/item/clothing/glasses/science,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JP" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/clothing/suit/hooded/carp_costume,
+/obj/item/clothing/suit/hooded/carp_costume,
+/obj/item/food/carpmeat/imitation,
+/obj/item/food/carpmeat/imitation,
+/obj/item/food/carpmeat/imitation,
+/obj/item/food/carpmeat/imitation,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JQ" = (
+/obj/effect/decal/remains/human,
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/carp
+	},
+/mob/living/simple_animal/hostile/carp{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"JR" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/hostile/space_dragon
+	},
+/mob/living/simple_animal/hostile/space_dragon{
+	faction = list("neutral");
+	status_flags = 24
+	},
+/turf/open/floor/fakespace,
+/area/crew_quarters/theatre/zoo_dragon)
+"JS" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/saddle,
+/obj/item/saddle,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JT" = (
+/obj/item/clothing/under/costume/gondola,
+/obj/item/clothing/mask/gondola,
+/obj/item/clothing/under/costume/gondola,
+/obj/item/clothing/mask/gondola,
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/food/chocolateegg,
+/obj/item/food/chocolateegg,
+/obj/item/food/chocolateegg,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JU" = (
+/obj/structure/closet/cabinet{
+	anchored = 1;
+	max_integrity = 9999
+	},
+/obj/item/clothing/suit/chickensuit,
+/obj/item/clothing/suit/chickensuit,
+/obj/item/clothing/head/chicken,
+/obj/item/clothing/head/chicken,
+/obj/item/seeds/wheat,
+/obj/item/seeds/wheat,
+/turf/open/floor/plating/asteroid,
+/area/awaymission/cabin/snowforest/forest)
+"JV" = (
+/obj/effect/mapping_helpers/component_injector/areabound{
+	all = 1;
+	target_type = /mob/living/simple_animal/chick
+	},
+/mob/living/simple_animal/chick{
+	status_flags = 24
+	},
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_chicken)
+"JW" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_vat)
+"JX" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_dragon)
+"JY" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_cow)
+"JZ" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_gondola)
+"Ka" = (
+/turf/closed/indestructible/wood,
+/area/crew_quarters/theatre/zoo_chicken)
+"Kb" = (
+/obj/structure/fence/corner{
+	icon_state = "corner";
+	dir = 9
+	},
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kc" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kd" = (
+/obj/structure/fence/post{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Ke" = (
+/obj/structure/fence/corner{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kf" = (
+/obj/structure/fluff/ferriswheel{
+	layer = 4;
+	mouse_opacity = 0;
+	pixel_x = 0
+	},
+/turf/open/floor/pod,
+/area/awaymission/cabin/snowforest/forest)
+"Kg" = (
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kh" = (
+/turf/open/floor/pod,
+/area/awaymission/cabin/snowforest/forest)
+"Ki" = (
+/obj/structure/fluff/ferriswheel{
+	layer = 4
+	},
+/turf/open/floor/pod,
+/area/awaymission/cabin/snowforest/forest)
+"Kj" = (
+/obj/structure/fence,
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kk" = (
+/obj/structure/fluff/ferriswheel{
+	layer = 4;
+	mouse_opacity = 0;
+	pixel_x = -128
+	},
+/turf/open/floor/pod,
+/area/awaymission/cabin/snowforest/forest)
+"Kl" = (
+/obj/structure/fluff/eldritchbig,
+/turf/open/floor/plating/sandy_dirt,
+/area/crew_quarters/theatre/zoo_heretic)
+"Km" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kn" = (
+/obj/structure/fence/door,
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Ko" = (
+/obj/structure/fence/corner,
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kp" = (
+/obj/item/caution,
+/turf/open/floor/pod/light,
+/area/awaymission/cabin/snowforest/forest)
+"Kq" = (
+/obj/item/caution,
+/turf/open/floor/pod,
 /area/awaymission/cabin/snowforest/forest)
 
 (1,1,1) = {"
@@ -17999,19 +19182,19 @@ nO
 nB
 kN
 an
-nL
-nL
-nL
-nL
-an
+fF
+fF
+fF
+fF
+IH
 br
 br
 br
-an
-ae
-ae
-ae
-ae
+IH
+IP
+IP
+IP
+IP
 an
 an
 an
@@ -18256,19 +19439,19 @@ nO
 kN
 an
 bw
-nL
-oA
-oA
-AJ
+fF
+fZ
+HO
+Ik
 br
 br
 br
 br
 br
-oW
-nK
-nK
-ae
+IQ
+Jq
+Jq
+IP
 bw
 an
 an
@@ -18513,19 +19696,19 @@ nO
 nI
 an
 an
-nL
-AF
-AG
-AK
+fF
+ga
+gb
+Il
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IR
+Jr
+IS
+IP
 an
 an
 an
@@ -18770,19 +19953,19 @@ kN
 kN
 an
 an
-nL
-AG
-AG
-AK
+fF
+gb
+HP
+Im
 br
 br
 br
 br
 br
-bk
-bk
-bk
-ae
+IS
+Kl
+JM
+IP
 an
 an
 an
@@ -19027,19 +20210,19 @@ kN
 an
 an
 an
-nL
-AG
-AG
-AG
+fF
+gb
+HQ
+gb
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IR
+IS
+IS
+IP
 an
 an
 an
@@ -19284,19 +20467,19 @@ an
 an
 an
 an
-nL
-AG
-AI
-AK
+fF
+ge
+gb
+Im
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IR
+Jt
+IS
+IP
 an
 an
 an
@@ -19541,19 +20724,19 @@ an
 an
 bw
 an
-nL
-AH
-AH
-AL
+fF
+gf
+gf
+In
 br
 br
 br
 br
 br
-oY
-nU
-nU
-ae
+IT
+Ju
+Ju
+IP
 an
 an
 an
@@ -19798,7 +20981,8 @@ kN
 an
 an
 an
-nL
+ae
+gJ
 br
 br
 br
@@ -19808,8 +20992,7 @@ br
 br
 br
 br
-br
-br
+JN
 ae
 an
 an
@@ -20060,9 +21243,9 @@ an
 an
 br
 br
-br
-oK
-br
+IJ
+IL
+hc
 br
 br
 an
@@ -20317,9 +21500,9 @@ an
 an
 an
 br
-oK
-oQ
-oK
+dF
+IM
+ch
 br
 an
 an
@@ -20574,9 +21757,9 @@ an
 an
 br
 br
-br
-oK
-br
+IK
+IN
+hd
 br
 br
 an
@@ -20827,6 +22010,7 @@ an
 an
 an
 ae
+nA
 br
 br
 br
@@ -20836,8 +22020,7 @@ br
 br
 br
 br
-br
-br
+JO
 ae
 an
 an
@@ -21083,19 +22266,19 @@ kN
 kN
 an
 an
-ae
+fG
 nK
-nK
-oF
+HR
+Io
 br
 br
 br
 br
 br
-oW
-nK
-nK
-ae
+IU
+Jv
+Jv
+JW
 an
 an
 an
@@ -21340,19 +22523,19 @@ nB
 kN
 an
 an
-ae
-bk
-bk
-oG
+fG
+nU
+HS
+Ip
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IV
+Jw
+Jx
+JW
 an
 an
 an
@@ -21597,19 +22780,19 @@ kN
 kN
 an
 an
-ae
-bk
-bk
-bk
+fG
+oF
+nU
+nU
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IV
+IW
+IW
+JW
 an
 an
 an
@@ -21854,19 +23037,19 @@ kN
 an
 an
 an
-ae
-bk
-bk
-oG
+fG
+iM
+nU
+Ip
 br
 br
 br
 br
 br
-bk
-bk
-bk
-ae
+IW
+IW
+IW
+JW
 an
 an
 an
@@ -22111,19 +23294,19 @@ kN
 an
 an
 an
-ae
-bk
-bk
-oG
+fG
+oH
+HS
+Ip
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IV
+Jx
+IW
+JW
 an
 an
 an
@@ -22368,19 +23551,19 @@ nI
 an
 an
 an
-ae
-nU
-nU
-oH
+fG
+oK
+HT
+Iq
 br
 br
 br
 br
 br
-oY
-nU
-nU
-ae
+IX
+Jy
+Jy
+JW
 an
 an
 an
@@ -22626,6 +23809,7 @@ an
 an
 an
 ae
+oQ
 br
 br
 br
@@ -22635,8 +23819,7 @@ br
 br
 br
 br
-br
-br
+oQ
 ae
 an
 an
@@ -22887,9 +24070,9 @@ an
 an
 br
 br
-br
-oK
-br
+IJ
+IL
+hc
 br
 br
 an
@@ -23144,9 +24327,9 @@ an
 an
 an
 br
-oK
-oQ
-oK
+dF
+IO
+ch
 br
 an
 an
@@ -23401,9 +24584,9 @@ an
 an
 br
 br
-br
-oK
-br
+IK
+IN
+hd
 br
 br
 an
@@ -23654,6 +24837,7 @@ an
 an
 an
 ae
+oW
 br
 br
 br
@@ -23663,8 +24847,7 @@ br
 br
 br
 br
-br
-br
+JP
 ae
 an
 an
@@ -23910,19 +25093,19 @@ an
 an
 an
 an
-ae
-nK
-nK
-oF
+fI
+oX
+HU
+Ir
 br
 br
 br
 br
 br
-oW
-nK
-nK
-ae
+IY
+Jz
+Jz
+JX
 an
 an
 an
@@ -24167,19 +25350,19 @@ an
 an
 an
 an
-ae
-bk
-bk
-oG
+fI
+oY
+pe
+Is
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IZ
+JA
+JQ
+JX
 an
 an
 an
@@ -24424,19 +25607,19 @@ an
 an
 an
 an
-ae
-bk
-bk
-oG
+fI
+pe
+HV
+It
 br
 br
 br
 br
 br
-bk
-bk
-bk
-ae
+Ja
+Ja
+JR
+JX
 an
 an
 an
@@ -24681,19 +25864,19 @@ kN
 kN
 an
 an
-ae
-bk
-bk
-bk
+fI
+CF
+HW
+Iu
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IZ
+Ja
+Ja
+JX
 an
 an
 an
@@ -24938,19 +26121,19 @@ nI
 kN
 an
 an
-ae
-bk
-bk
-oG
+fI
+CH
+HX
+Iv
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+IZ
+Ja
+JA
+JX
 an
 an
 an
@@ -25195,19 +26378,19 @@ or
 kN
 an
 an
-ae
-nU
-nU
-oH
+fI
+Hz
+HY
+Iw
 br
 br
 br
 br
 br
-oY
-nU
-nU
-ae
+Jb
+JB
+JB
+JX
 an
 an
 an
@@ -25453,6 +26636,7 @@ kN
 an
 an
 ae
+oQ
 br
 br
 br
@@ -25462,8 +26646,7 @@ br
 br
 br
 br
-br
-br
+oQ
 ae
 an
 an
@@ -25714,14 +26897,14 @@ an
 an
 br
 br
+IJ
+IL
+hc
 br
-oK
 br
 br
 br
-an
-an
-an
+br
 an
 an
 an
@@ -25971,14 +27154,14 @@ an
 an
 an
 br
-oK
-oQ
-oK
+dF
+IM
+ch
 br
-an
-an
-an
-an
+br
+br
+br
+br
 an
 an
 an
@@ -26228,14 +27411,14 @@ an
 an
 br
 br
+IK
+IN
+hd
 br
-oK
 br
 br
 br
-an
-an
-an
+br
 an
 an
 an
@@ -26481,6 +27664,7 @@ kN
 an
 an
 ae
+oQ
 br
 br
 br
@@ -26490,8 +27674,7 @@ br
 br
 br
 br
-br
-br
+oQ
 ae
 an
 an
@@ -26737,19 +27920,19 @@ nI
 kN
 an
 an
-ae
-nK
-nK
-oF
+fS
+HA
+HZ
+Ix
 br
 br
 br
 br
 br
-oW
-nK
-nK
-ae
+Jc
+JC
+JC
+JY
 an
 an
 an
@@ -26994,19 +28177,19 @@ nI
 nB
 an
 an
-ae
-bk
-bk
-oG
+fS
+HB
+Ia
+Iy
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jd
+JD
+Je
+JY
 an
 an
 an
@@ -27251,19 +28434,19 @@ kN
 kN
 an
 an
-ae
-bk
-bk
-bk
+fS
+HC
+Ib
+HC
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jd
+Je
+Je
+JY
 an
 an
 an
@@ -27508,19 +28691,19 @@ kN
 an
 an
 an
-ae
-bk
-bk
-oG
+fS
+HD
+HC
+Iz
 br
 br
 br
 br
 br
-bk
-bk
-bk
-ae
+Je
+Je
+Je
+JY
 an
 an
 an
@@ -27765,19 +28948,19 @@ kN
 an
 an
 an
-ae
-bk
-bk
-oG
+fS
+HC
+Ic
+Iz
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jd
+Je
+JD
+JY
 an
 an
 an
@@ -28022,19 +29205,19 @@ nI
 kN
 kN
 an
-ae
-nU
-nU
-oH
+fS
+HE
+Id
+IA
 br
 br
 br
 br
 br
-oY
-nU
-nU
-ae
+Jf
+JE
+JE
+JY
 an
 an
 an
@@ -28280,6 +29463,7 @@ kN
 kN
 an
 ae
+HF
 br
 br
 br
@@ -28289,8 +29473,7 @@ br
 br
 br
 br
-br
-br
+JS
 ae
 an
 an
@@ -28541,9 +29724,9 @@ an
 an
 br
 br
-br
-oK
-br
+IJ
+IL
+hc
 br
 br
 an
@@ -28798,9 +29981,9 @@ an
 an
 an
 br
-oK
-oQ
-oK
+dF
+IO
+ch
 br
 an
 an
@@ -29055,9 +30238,9 @@ an
 an
 br
 br
-br
-oK
-br
+IK
+IN
+hd
 br
 br
 an
@@ -29308,6 +30491,7 @@ nI
 an
 an
 ae
+oQ
 br
 br
 br
@@ -29317,8 +30501,7 @@ br
 br
 br
 br
-br
-br
+oQ
 ae
 an
 an
@@ -29564,19 +30747,19 @@ nB
 kN
 kN
 an
-ae
-nK
-nK
-oF
+nL
+oA
+oA
+AJ
 br
 br
 br
 br
 br
-oW
-nK
-nK
-ae
+Jg
+JF
+JF
+JZ
 an
 an
 an
@@ -29821,19 +31004,19 @@ kN
 kN
 kN
 kN
-ae
-bk
-bk
-oG
+nL
+AF
+AG
+IB
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jh
+JG
+Ji
+JZ
 an
 an
 an
@@ -30078,19 +31261,19 @@ kN
 kN
 nB
 nI
-ae
-bk
-bk
-oG
+nL
+AG
+AG
+AK
 br
 br
 br
 br
 br
-bk
-bk
-bk
-ae
+Ji
+Ji
+Ji
+JZ
 an
 an
 an
@@ -30335,19 +31518,19 @@ kN
 kN
 kN
 kN
-ae
-bk
-bk
-bk
+nL
+AG
+Ie
+AG
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jh
+JH
+Ji
+JZ
 an
 an
 an
@@ -30592,19 +31775,19 @@ kN
 an
 an
 an
-ae
-bk
-bk
-oG
+nL
+HG
+AI
+AK
 br
 br
 br
 br
 br
-oX
-bk
-bk
-ae
+Jj
+Ji
+Ji
+JZ
 an
 an
 an
@@ -30849,19 +32032,19 @@ nB
 kN
 an
 an
-ae
-nU
-nU
-oH
+nL
+AH
+AH
+AL
 br
 br
 br
 br
 br
-oY
-nU
-nU
-ae
+Jk
+JI
+JI
+JZ
 an
 an
 an
@@ -31107,6 +32290,7 @@ kN
 an
 an
 ae
+HH
 br
 br
 br
@@ -31116,8 +32300,7 @@ br
 br
 br
 br
-br
-br
+JT
 ae
 an
 an
@@ -31368,9 +32551,9 @@ an
 an
 br
 br
-br
-oK
-br
+IJ
+IL
+hc
 br
 br
 an
@@ -31625,9 +32808,9 @@ an
 an
 an
 br
-oK
-oQ
-oK
+dF
+IM
+ch
 br
 an
 an
@@ -31882,9 +33065,9 @@ an
 an
 br
 br
-br
-oK
-br
+IK
+IN
+hd
 br
 br
 an
@@ -32135,17 +33318,17 @@ kN
 an
 an
 ae
+HI
+If
+IC
 br
 br
 br
 br
 br
 br
-br
-br
-br
-br
-br
+oQ
+JU
 ae
 an
 an
@@ -32391,19 +33574,19 @@ nB
 an
 an
 an
-ae
-nK
-nK
-oF
+fU
+HJ
+HJ
+ID
+II
 br
 br
 br
 br
-br
-oW
-nK
-nK
-ae
+Jl
+JJ
+JJ
+Ka
 an
 an
 an
@@ -32648,19 +33831,19 @@ nI
 kN
 an
 an
-ae
-bk
-bk
-oG
+fU
+HK
+Ig
+IE
+II
 br
 br
 br
 br
-br
-oX
-bk
-bk
-ae
+Jm
+JK
+Jo
+Ka
 an
 an
 an
@@ -32905,19 +34088,19 @@ an
 an
 an
 an
-ae
-bk
-bk
-bk
+fU
+HL
+HM
+HM
+II
 br
 br
 br
 br
-br
-oX
-bk
-bk
-ae
+Jn
+Jo
+Jo
+Ka
 an
 an
 an
@@ -33162,19 +34345,19 @@ an
 an
 an
 an
-ae
-bk
-bk
-oG
+fU
+HM
+HK
+IE
+II
 br
 br
 br
 br
-br
-bk
-bk
-bk
-ae
+Jo
+Jo
+JV
+Ka
 an
 an
 an
@@ -33419,19 +34602,19 @@ an
 an
 an
 an
-ae
-bk
-bk
-oG
+fU
+HM
+Ih
+IE
+II
 br
 br
 br
 br
-br
-oX
-bk
-bk
-ae
+Jn
+JK
+Jo
+Ka
 an
 an
 an
@@ -33676,19 +34859,19 @@ an
 an
 an
 an
-ae
-nU
-nU
-oH
+fU
+HN
+Ii
+IF
+II
 br
 br
 br
 br
-br
-oY
-nU
-nU
-ae
+Jp
+JL
+JL
+Ka
 an
 an
 an
@@ -33935,15 +35118,15 @@ an
 an
 ae
 ae
-ae
-an
+Ij
+IG
 br
 br
 br
 br
 br
 an
-ae
+Ij
 ae
 ae
 an
@@ -51384,18 +52567,18 @@ ez
 ez
 jO
 ez
-bv
+dZ
 fH
-bv
+dZ
 kF
 kV
 kW
 kW
 kV
 lo
-bv
+dZ
 fH
-bv
+dZ
 ez
 lG
 jz
@@ -52210,12 +53393,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
+Kb
+Kj
+Kj
+Kj
+Km
+br
 br
 AW
 br
@@ -52467,12 +53650,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
+Kc
+Kg
+Kf
+Kp
+Kc
+br
 br
 br
 br
@@ -52724,13 +53907,13 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Kc
+Kh
+Kh
+fE
+Kc
+br
+br
 AW
 br
 br
@@ -52981,13 +54164,13 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Kd
+Kh
+Ki
+Kq
+Kn
+br
+br
 br
 br
 br
@@ -53238,13 +54421,13 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
-an
+Kc
+Kh
+Kh
+Kh
+Kc
+br
+br
 AW
 br
 br
@@ -53495,12 +54678,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
+Kc
+Kg
+Kk
+Kg
+Kc
+br
 br
 br
 br
@@ -53752,12 +54935,12 @@ an
 an
 an
 an
-an
-an
-an
-an
-an
-an
+Ke
+Kj
+Kj
+Kj
+Ko
+br
 br
 AW
 br
@@ -54503,7 +55686,7 @@ br
 br
 br
 br
-iM
+an
 iS
 hy
 hp
@@ -54529,7 +55712,7 @@ an
 an
 an
 an
-br
+an
 br
 br
 br
@@ -56045,7 +57228,7 @@ br
 br
 br
 br
-iM
+an
 iS
 hy
 hp
@@ -57746,7 +58929,7 @@ ae
 Cf
 Cl
 Cx
-fr
+et
 Cx
 Cx
 Cz
@@ -65199,7 +66382,7 @@ br
 br
 BX
 Cx
-fE
+fr
 Cx
 Cx
 CC
@@ -68179,7 +69362,7 @@ ev
 qo
 en
 qs
-qw
+qy
 er
 en
 zN
@@ -68693,7 +69876,7 @@ en
 qp
 qq
 qt
-qy
+qz
 er
 er
 er
@@ -68950,7 +70133,7 @@ er
 er
 er
 qg
-qz
+qL
 qg
 qg
 qg
@@ -69207,7 +70390,7 @@ qg
 qg
 qg
 qg
-qz
+qL
 qg
 qJ
 qg
@@ -69466,7 +70649,7 @@ qg
 qg
 qg
 qB
-qL
+Js
 qU
 qg
 re
@@ -69715,7 +70898,7 @@ er
 pY
 en
 er
-qh
+qi
 qg
 er
 er
@@ -69966,13 +71149,13 @@ nX
 nX
 nY
 eo
-et
 hl
 np
+qh
 pY
 qb
-hl
-qi
+np
+qw
 er
 er
 en

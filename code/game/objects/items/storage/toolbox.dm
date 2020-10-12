@@ -86,6 +86,15 @@
 	has_latches = FALSE
 	material_flags = NONE
 
+/obj/item/storage/toolbox/mechanical/old/zoo
+	name = "rusty blue toolbox"
+	icon_state = "toolbox_blue_old"
+	has_latches = FALSE
+	material_flags = NONE
+
+/obj/item/storage/toolbox/mechanical/old/zoo/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "toolbox" //this will be named "X family toolbox"
 	desc = "It's seen better days."
