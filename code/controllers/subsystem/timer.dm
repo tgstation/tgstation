@@ -460,9 +460,9 @@ SUBSYSTEM_DEF(timer)
 		spent = world.time
 		bucketEject()
 	else
-		if (prev?.next == src)
+		if (prev && prev.next == src)
 			prev.next = next
-		if (next?.prev == src)
+		if (next && next.prev == src)
 			next.prev = prev
 	next = null
 	prev = null

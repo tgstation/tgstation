@@ -95,7 +95,7 @@
 		icon_state = "tele0"
 
 /obj/machinery/teleport/hub/proc/is_ready()
-	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station?.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
+	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/Initialize()
 	. = ..()

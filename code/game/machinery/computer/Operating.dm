@@ -23,11 +23,11 @@
 /obj/machinery/computer/operating/Destroy()
 	for(var/direction in GLOB.alldirs)
 		table = locate(/obj/structure/table/optable) in get_step(src, direction)
-		if(table?.computer == src)
+		if(table && table.computer == src)
 			table.computer = null
 		else
 			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
-			if(sbed?.op_computer == src)
+			if(sbed && sbed.op_computer == src)
 				sbed.op_computer = null
 	. = ..()
 

@@ -29,7 +29,7 @@
 
 /obj/machinery/stasis/Destroy()
 	. = ..()
-	if(op_computer?.sbed == src)
+	if(op_computer && op_computer.sbed == src)
 		op_computer.sbed = null
 
 /obj/machinery/stasis/examine(mob/user)

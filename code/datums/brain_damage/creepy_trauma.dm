@@ -74,7 +74,7 @@
 	if(!viewing)
 		return
 	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-	if(mood?.sanity >= SANITY_GREAT && social_interaction())
+	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
 		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)

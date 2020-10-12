@@ -515,7 +515,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	martyr_compatible = TRUE
 
 /datum/objective/nuclear/check_completion()
-	if(SSticker?.mode && SSticker.mode.station_was_nuked)
+	if(SSticker && SSticker.mode && SSticker.mode.station_was_nuked)
 		return TRUE
 	return FALSE
 

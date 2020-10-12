@@ -105,7 +105,7 @@
 			return FALSE
 
 		var/turf/there = get_turf(H)
-		return (H.z != 0 || (there?.z == here.z))
+		return (H.z != 0 || (there && there.z == here.z))
 
 	return FALSE
 

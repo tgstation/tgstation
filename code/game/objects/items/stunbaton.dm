@@ -156,7 +156,7 @@
 	toggle_on(user)
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
-	if(cell?.charge > cell_hit_cost)
+	if(cell && cell.charge > cell_hit_cost)
 		turned_on = !turned_on
 		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
 		playsound(src, activate_sound, 75, TRUE, -1)

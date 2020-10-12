@@ -450,7 +450,7 @@
 		to_chat(user, "<span class='notice'>Your [name] is in combat.</span>")
 		target?.to_chat(target, "<span class='notice'>[target.p_their()] [name] is in combat.</span>")
 		return FALSE
-	if(attacker?.timer > world.time)
+	if(attacker && attacker.timer > world.time)
 		to_chat(user, "<span class='notice'>[target?target.p_their() : "Your" ] [attacker.name] isn't ready for battle.</span>")
 		target?.to_chat(target, "<span class='notice'>Your [attacker.name] isn't ready for battle.</span>")
 		return FALSE
