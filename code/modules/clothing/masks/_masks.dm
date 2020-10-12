@@ -26,7 +26,19 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
+/obj/item/clothing/mask/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, modifies_speech) && ismob(loc))
+		var/mob/M = loc
+		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
+			if(vval)
+				if(!modifies_speech)
+					RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+			else if(modifies_speech)
+				UnregisterSignal(M, COMSIG_MOB_SAY)
+	return ..()
+
 /obj/item/clothing/mask/proc/handle_speech()
+	SIGNAL_HANDLER
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
