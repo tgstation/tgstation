@@ -179,3 +179,7 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/poultice(location)
+
+/datum/chemical_reaction/c2/protoneurite
+	results = list(/datum/reagent/medicine/c2/protoneurite = 3)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/phenol = 1, /datum/reagent/consumable/sugar = 1)

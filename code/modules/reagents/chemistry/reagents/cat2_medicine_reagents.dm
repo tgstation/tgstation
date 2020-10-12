@@ -500,6 +500,26 @@
 	H.adjustOrganLoss(ORGAN_SLOT_HEART,10)
 	H.set_heartattack(TRUE)
 
+/*
+ *Proto-Neurite
+ *Does nothing below 30 brain damage. At or above, heals 3 brain damage.
+ *Deals 1 tox and 1 heart damage every tick, with a rare chance of seizure.
+*/
+/datum/reagent/medicine/c2/protoneurite
+	name = "Proto-Neurite"
+	description = "Prototype neurorestorative which rapidly heals brain damage, but causes toxic responses and cardiovascular stress within the body. Rarely causes seizures."
+	color = "#CCCCCC" //very light grey
+
+/datum/reagent/medicine/c2/protoneurite/on_mob_life(mob/living/carbon/M)
+	if(M.getOrganLoss(ORGAN_SLOT_BRAIN)>=30)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+	M.adjustToxLoss(1*REM,0)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,1*REM)
+	if(prob(1) && iscarbon(M))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		M.Unconscious(100)
+		M.Jitter(350)
+	..()
 
 /******NICHE******/
 //todo
