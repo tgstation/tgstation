@@ -97,11 +97,6 @@
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
-
-	var/obj/docking_port/stationary/dock = SSshuttle.get_containing_dock(src)
-	if(dock)
-		jumpto_ports[dock.id] = TRUE
-
 	..()
 	if(!QDELETED(user) && user.client)
 		var/mob/camera/ai_eye/remote/shuttle_docker/the_eye = eyeobj
