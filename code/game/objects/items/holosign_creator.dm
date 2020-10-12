@@ -22,7 +22,7 @@
 	. = ..()
 	if(!proximity_flag)
 		return
-	if(!check_allowed_items(target, 1))
+	if(!check_allowed_items(target, not_inside = TRUE))
 		return
 	var/turf/target_turf = get_turf(target)
 	var/obj/structure/holosign/target_holosign = locate(holosign_type) in target_turf
