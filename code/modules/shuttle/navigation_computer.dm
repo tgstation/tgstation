@@ -287,7 +287,7 @@
 
 		//Take info from connected port and calculate amendments
 		var/list/shuttlebounds = shuttle_port.return_coords()
-		view_range = round(max((shuttlebounds[1] - shuttlebounds[3]), (shuttlebounds[2] - shuttlebounds[4]))/2)
+		view_range = min(round(max(port.width, port.height)*0.5), 15)
 		x_offset = round((shuttlebounds[1] + shuttlebounds[3])*0.5) - shuttle_port.x
 		y_offset = round((shuttlebounds[2] + shuttlebounds[4])*0.5) - shuttle_port.y
 
