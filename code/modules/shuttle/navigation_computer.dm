@@ -97,9 +97,6 @@
 			the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
-	if((locked_traits & ZTRAIT_RESERVED) && SSmapping.level_trait(z, ZTRAIT_RESERVED))
-		to_chat(user, "<span class='warning'>The bluespace interference is jamming the console!</span>")
-		return
 
 	var/obj/docking_port/stationary/dock = SSshuttle.get_containing_dock(src)
 	if(dock)
