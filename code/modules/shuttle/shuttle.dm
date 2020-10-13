@@ -188,7 +188,7 @@
 /obj/docking_port/stationary/register()
 	if(!id)
 		id = "dock"
-	else 
+	else
 		port_destinations = id
 
 	if(!name)
@@ -391,7 +391,7 @@
 		name = "shuttle"
 	var/counter = 1
 	var/tmp_id = id
-	var/tmp_name = name	
+	var/tmp_name = name
 	while(Check_id(id))
 		counter++
 		id = "[tmp_id]_[counter]"
@@ -872,7 +872,7 @@
 		for(var/mob/M in SSmobs.clients_by_zlevel[z])
 			var/dist_far = get_dist(M, distant_source)
 			if(dist_far <= long_range && dist_far > range)
-				M.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100, falloff = 20)
+				M.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100)
 			else if(dist_far <= range)
 				var/source
 				if(engine_list.len == 0)
@@ -884,7 +884,7 @@
 						if(dist_near < closest_dist)
 							source = O
 							closest_dist = dist_near
-				M.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100, falloff = range / 2)
+				M.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

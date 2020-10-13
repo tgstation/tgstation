@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(sounds)
 	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels. Also a nice safeguard for when someone screws up.
 	var/static/random_channels_min = 50
 
+	var/falloff_exponent = 5
+
 	// Hey uh these two needs to be initialized fast because the whole "things get deleted before init" thing.
 	/// Assoc list, `"[channel]" =` either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
 	var/list/using_channels
