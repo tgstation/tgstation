@@ -392,7 +392,7 @@
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			for(var/mob/living/carbon/NS in rangers)
-				NS.set_resting(!NS.resting, TRUE)
+				NS.set_resting(!NS.resting, TRUE, TRUE)
 		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)

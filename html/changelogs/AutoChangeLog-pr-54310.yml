@@ -1,0 +1,5 @@
+author: "VexingRaven"
+delete-after: True
+changes: 
+  - tweak: "It is now possible to use item actions (internals!) while laying down"
+  - bugfix: "Being buckled to something no longer prevents using item actions"
