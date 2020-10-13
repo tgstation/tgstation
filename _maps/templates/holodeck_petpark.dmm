@@ -37,10 +37,6 @@
 /obj/effect/holodeck_effect/mobspawner/pet,
 /turf/open/floor/holofloor/grass,
 /area/holodeck/rec_center/pet_lounge)
-"r" = (
-/obj/structure/sink/puddle,
-/turf/open/floor/holofloor/grass,
-/area/holodeck/rec_center/pet_lounge)
 "v" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/holofloor/grass,
@@ -181,7 +177,7 @@ R
 I
 k
 l
-r
+I
 c
 c
 I
@@ -230,7 +226,7 @@ v
 I
 f
 C
-r
+I
 I
 v
 "}
@@ -239,7 +235,7 @@ f
 C
 f
 I
-r
+I
 I
 g
 I

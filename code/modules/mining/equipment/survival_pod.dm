@@ -22,7 +22,6 @@
 /obj/item/survivalcapsule/proc/get_template()
 	if(template)
 		return
-
 	template = SSmapping.shelter_templates[template_id]
 	if(!template)
 		WARNING("Shelter template ([template_id]) not found!")
@@ -80,7 +79,6 @@
 	name = "luxury elite bar capsule"
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
-
 
 //Pod objects
 

@@ -83,7 +83,7 @@
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
-	load_program(offline_program)//honestly there isnt a reason to do this as far as im aware
+	load_program(offline_program,TRUE)//this does nothing for normal holodecks, but will help with additional custom holodecks
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
@@ -165,10 +165,10 @@
 	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
 
 
-/obj/machinery/computer/holodeck/emag_act(mob/user)//low priority
+/obj/machinery/computer/holodeck/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	if(!LAZYLEN(emag_programs))//porting dangerzone
+	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
 	playsound(src, "sparks", 75, TRUE)
@@ -178,17 +178,17 @@
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED))
 
-/obj/machinery/computer/holodeck/emp_act(severity)//low priority
+/obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	emergency_shutdown()
 
-/obj/machinery/computer/holodeck/ex_act(severity, target)//low priority
+/obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()
 	return ..()
 
-/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)//low priority
+/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	return ..()
 //FUCKING DO IT PUSSY
@@ -205,7 +205,7 @@
 		else
 			LAZYADD(program_cache, list(info_this))
 
-/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)//low priority
+/obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
 		return
 
@@ -219,12 +219,12 @@
 		load_program("holodeck_offline")
 		active = FALSE
 
-/obj/machinery/computer/holodeck/proc/emergency_shutdown()//low priority
+/obj/machinery/computer/holodeck/proc/emergency_shutdown()
 	last_program = program
 	load_program("holodeck_offline", TRUE)
 	active = FALSE
 
-/obj/machinery/computer/holodeck/proc/floorcheck()//low priority
+/obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/T in linked)
 		if(!T.intact || isspaceturf(T))
 			return FALSE
@@ -360,22 +360,19 @@
 	if (spawned)
 		for (var/atom/item in spawned)
 			derez(item)
+
 	template = SSmapping.holodeck_templates[map_id]
-	template.load(bottom_left, FALSE)
+	template.load(bottom_left, FALSE)//this actually loads the holodeck simulation into the map
 	spawned += template.spawned_atoms
+
 	for (var/atom/atom in spawned)
 		if (atom.flags_1 & INITIALIZED_1)
 			atom.flags_1 |= HOLOGRAM_1
-	linked = get_area(bottom_left)//GLOB.areas_by_type[get_area(bottom_left)]
-	//linked = GLOB.areas_by_type[/area/holodeck/rec_center]
+	linked = get_area(bottom_left)
 	linked.linked = src
 	for (var/obj/obbies in spawned)
 		if (istype(obbies, /obj))
 			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-			if(isitem(obbies))
-				var/obj/item/I = obbies
-				I.damtype = STAMINA
-
 			if (ismachinery(obbies))
 				var/obj/machinery/M = obbies
 				M.power_change()
@@ -385,7 +382,7 @@
 
 	finish_spawn()
 
-/obj/machinery/computer/holodeck/proc/finish_spawn()
+/obj/machinery/computer/holodeck/proc/finish_spawn()//this is used for holodeck effects (like spawners). otherwise they dont do shit
 	var/list/added = list()
 	for(var/obj/effect/holodeck_effect/HE in spawned)
 		effects += HE
@@ -400,12 +397,10 @@
 		S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
-
 	if(!O)
 		return
 
 	spawned -= O
-
 	var/turf/T = get_turf(O)
 	for(var/atom/movable/AM in O) // these should be derezed if they were generated
 		AM.forceMove(T)
@@ -416,7 +411,6 @@
 		visible_message("<span class='notice'>[O] fades away!</span>")
 
 	qdel(O)
-
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
