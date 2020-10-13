@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Borg tablets now correctly work when the borg is out of power (though you'll get no networking until you get that power issue sorted out)."
+  - bugfix: "Borgs that are synced to AIs can correctly view and print photos once more."

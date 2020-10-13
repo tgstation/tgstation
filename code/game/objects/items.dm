@@ -190,9 +190,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
-		attack_verb_continuous = typelist("attack_verb_continuous", attack_verb_continuous)
+		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
-		attack_verb_simple = typelist("attack_verb_simple", attack_verb_simple)
+		attack_verb_simple = string_list(attack_verb_simple)
+	if(species_exception)
+		species_exception = string_list(species_exception)
 
 	. = ..()
 	for(var/path in actions_types)
