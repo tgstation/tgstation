@@ -10,7 +10,7 @@
 #define CHANNEL_BICYCLE 1016
 
 ///Default range of a sound.
-#define SOUND_RANGE 18
+#define SOUND_RANGE 17
 ///The range deducted from sound range for things that are considered silent / sneaky
 #define SILENCED_SOUND_EXTRARANGE -12
 ///Percentage of sound's range where no falloff is applied
