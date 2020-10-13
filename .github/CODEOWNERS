@@ -50,8 +50,6 @@
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
 
 # ninjanomnom
 
