@@ -70,16 +70,13 @@
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
-	if(ispath(holodeck_type, /area))
-		linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
-	if(ispath(offline_program, /area))
-		offline_program = pop(get_areas(offline_program), FALSE)
+	//if(ispath(holodeck_type, /area))//evaluates to false, i dont think that holodeck_type is used
+	//	linked = pop(get_areas(holodeck_type, FALSE))//maybe pop removes holodeck/rec_area?
 	// the following is necessary for power reasons
 	if(!linked || !offline_program)
 		log_world("No matching holodeck area found")
 		qdel(src)
 		return
-
 
 	else
 		linked.linked = src
@@ -89,14 +86,14 @@
 		else
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
-	linked.linked = src
-	var/area/my_area = get_area(src)
-	if(my_area)
-		linked.power_usage = my_area.power_usage
-	else
-		linked.power_usage = new /list(AREA_USAGE_LEN)
+	//linked.linked = src
+	//var/area/my_area = get_area(src)
+	//if(my_area)
+	//	linked.power_usage = my_area.power_usage
+	//else
+	//	linked.power_usage = new /list(AREA_USAGE_LEN)
 	generate_program_list()
-	load_program("holodeck_chapelcourt")//honestly there isnt a reason to do this as far as im aware
+	load_program("holodeck_offline")//honestly there isnt a reason to do this as far as im aware
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
@@ -105,7 +102,10 @@
 		linked.power_usage = new /list(AREA_USAGE_LEN)
 	return ..()
 
-
+/obj/machinery/computer/holodeck/power_change()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
+	//toggle_power(!machine_stat)
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)//portable
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -282,7 +282,7 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=FALSE))
 		return
 	var/list/bounds = parsed.bounds
 	if(!bounds)
@@ -327,6 +327,9 @@
 		var/turf/B = L
 		atoms += B
 		areas |= B.loc
+		//for (var/a in B.baseturfs)
+		//	if (!istype(/turf/baseturf_bottom))
+
 		for(var/atom/A in B)
 			if (!(A.flags_1 & INITIALIZED_1))
 				newatoms += A
@@ -358,14 +361,14 @@
 	if(program == map_id)
 		return
 
-	if(current_cd > world.time && !force)
-		say("ERROR. Recalibrating projection apparatus.")
-		return
+	//if(current_cd > world.time && !force)
+	//	say("ERROR. Recalibrating projection apparatus.")
+	//	return
 
 	if(add_delay)
 		current_cd = world.time + HOLODECK_CD
-		if(damaged)
-			current_cd += HOLODECK_DMG_CD
+//		if(damaged)
+//			current_cd += HOLODECK_DMG_CD
 
 	use_power = active + IDLE_POWER_USE
 	program = map_id
@@ -379,6 +382,23 @@
 		if (atom.flags_1 & INITIALIZED_1)
 			atom.flags_1 |= HOLOGRAM_1
 	linked = get_area(bottom_left)//GLOB.areas_by_type[get_area(bottom_left)]
+	//linked = GLOB.areas_by_type[/area/holodeck/rec_center]
+	linked.linked = src
+	for (var/obj/obbies in spawned)
+		if (istype(obbies, /obj))
+			obbies.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+			if(isitem(obbies))
+				var/obj/item/I = obbies
+				I.damtype = STAMINA
+
+			if (ismachinery(obbies))
+				var/obj/machinery/M = obbies
+				M.power_change()
+				if(istype(M, /obj/machinery/button))
+					var/obj/machinery/button/B = M
+					B.setup_device()
+
+
 	finish_spawn()
 
 /obj/machinery/computer/holodeck/proc/finish_spawn()
