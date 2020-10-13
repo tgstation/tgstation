@@ -35,7 +35,7 @@ falloff_distance - Distance at which falloff begins.
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
-	var/maxdistance = (SOUND_RANGE + extrarange)
+	var/maxdistance = (SOUND_RANGE + extrarange + SSsounds.offset_range)
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
