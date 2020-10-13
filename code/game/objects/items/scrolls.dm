@@ -75,13 +75,13 @@
 /obj/item/teleportation_scroll/no_smoke
 	uses = 9
 
-/obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user) // /area/hydroponics/garden/cornlabyrinth
+/obj/item/teleportation_scroll/no_smoke/teleportscroll(mob/user)
 
 	var/A
 	var/list/acceptable_locations = GLOB.teleportlocs
 	for(var/L in acceptable_locations)
 		var/area/T = acceptable_locations[L]
-		if(istype(T, /area/security) || istype(T, /area/shuttle/arrival) || istype(T, /area/crew_quarters/dorms) || istype(T, /area/hydroponics/garden/cornmaze) || istype(T, /area/awaymission/cabin/snowforest/forest)) // areas you aren't allowed to teleport to
+		if(istype(T, /area/security) || istype(T, /area/shuttle/arrival) || istype(T, /area/crew_quarters/dorms) || istype(T, /area/awaymission/basketball) || istype(T, /area/crew_quarters/theatre) || istype(T, /area/hydroponics/garden/cornmaze) || istype(T, /area/awaymission/cabin/snowforest/forest) || istype(T, /area/medical/morgue/field) || istype(T, /area/medical/morgue/hauntedhouse) || istype(T, /area/crew_quarters/bar) || istype(T, /area/tdome/arena)) // areas you aren't allowed to teleport to
 			acceptable_locations -= L
 
 	A = input(user, "Area to jump to", "*citrus laugh*", A) as null|anything in acceptable_locations
