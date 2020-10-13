@@ -94,7 +94,7 @@
 	var/list/protection = list()
 
 	var/choose_list_begin = list("assassinate","protect")
-	var/choose_list_end = list("assassinate","hjiack","protect","glory")
+	var/choose_list_end = list("assassinate","hijack","protect","glory")
 
 	var/pck1 = pick(choose_list_begin)
 	var/pck2 = pick(choose_list_end)
@@ -116,7 +116,7 @@
 			A.find_target(owners,protection)
 			assasination += A.target
 			objectives += A
-		if("hjiack")
+		if("hijack")
 			var/datum/objective/hijack/hijack = new
 			hijack.owner = owner
 			objectives += hijack
