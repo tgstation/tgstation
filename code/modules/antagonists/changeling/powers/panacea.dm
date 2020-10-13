@@ -19,7 +19,6 @@
 		var/obj/item/organ/O = o
 		if(!istype(O))
 			continue
-
 		O.Remove(user)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -33,8 +32,8 @@
 		C.drunkenness = 0
 		C.silent = 0
 		var/obj/item/organ/stomach/belly = C.getorganslot(ORGAN_SLOT_STOMACH)
-  		if(belly)
-    		belly.clear_reagents()
+		if(belly)
+			belly.clear_reagents()
 
     if(user.reagents)
 		user.reagents.clear_reagents()
