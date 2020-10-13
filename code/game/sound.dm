@@ -25,8 +25,10 @@ falloff_distance - Distance at which falloff begins.
 	if (!turf_source)
 		return
 
-	falloff_exponent = SSsounds.sound_exponent
-	falloff_distance = SSsounds.falloff_start
+	if(falloff_exponent == SOUND_FALLOFF_EXPONENT) // test var for default
+		falloff_exponent = SSsounds.sound_exponent
+	if(falloff_distance == SOUND_DEFAULT_FALLOFF_DISTANCE) // test var for default
+		falloff_distance = SSsounds.falloff_start
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()

@@ -16,16 +16,20 @@
 	var/authenticated = 0
 	///Looping audio for when the computer is on
 	var/datum/looping_sound/computer/soundloop
+	///Whether or not to use looping audio
+	var/looping_sound = TRUE
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 
-	soundloop = new(list(src))
+	if(looping_sound)
+		soundloop = new(list(src))
 	power_change()
 
 /obj/machinery/computer/Destroy()
 	. = ..()
-	QDEL_NULL(soundloop)
+	if(looping_sound)
+		QDEL_NULL(soundloop)
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -51,10 +55,12 @@
 /obj/machinery/computer/power_change()
 	. = ..()
 	if(machine_stat & NOPOWER)
-		soundloop.stop()
+		if(looping_sound)
+			soundloop.stop()
 		set_light(0)
 	else
-		soundloop.start()
+		if(looping_sound)
+			soundloop.start()
 		set_light(brightness_on)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)

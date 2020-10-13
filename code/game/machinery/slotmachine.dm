@@ -23,7 +23,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/computer/slot_machine
-	light_color = LIGHT_COLOR_BROWN
+	light_color = LIGHT_COLOR_BROWN]
+	looping_sound = FALSE
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE

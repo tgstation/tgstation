@@ -88,13 +88,15 @@
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
-	volume = 3
-	falloff_exponent = 20 //Ultra quiet very fast
-	extra_range = -14
-	falloff_distance = 1
+	volume = 2
+	falloff_exponent = 5 //Ultra quiet very fast
+	extra_range = -12
+	falloff_distance = 1 //Instant falloff after initial tile
 
 /datum/looping_sound/gravgen
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
 	volume = 70
+	falloff_distance = 5
+	falloff_exponent = 20
