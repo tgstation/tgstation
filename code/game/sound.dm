@@ -8,7 +8,7 @@ vol - The volume of the sound, excluding falloff
 vary - bool that determines if the sound changes pitch every time it plays
 extrarange - modifier for sound range
 falloff - number between 0 and 1, to determine how steep the falloff reaches 0 at max distance
-frequency - no clue tbf
+frequency - playback speed of audio
 channel - The channel the sound is played at
 pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space)
 ignore_walls - Whether or not the sound can pass through walls.
