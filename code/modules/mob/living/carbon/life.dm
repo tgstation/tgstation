@@ -21,12 +21,6 @@
 			handle_blood()
 
 		if(stat != DEAD)
-			var/bprv = handle_bodyparts()
-			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-				update_stamina() //needs to go before updatehealth to remove stamcrit
-				updatehealth()
-
-		if(stat != DEAD)
 			handle_brain_damage()
 
 	else
@@ -35,6 +29,11 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
+	else
+		var/bprv = handle_bodyparts()
+		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+			update_stamina() //needs to go before updatehealth to remove stamcrit
+			updatehealth()
 
 	check_cremation()
 

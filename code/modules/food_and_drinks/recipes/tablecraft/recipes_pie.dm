@@ -17,7 +17,7 @@
 	name = "Meat pie"
 	reqs = list(
 		/datum/reagent/consumable/blackpepper = 1,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/obj/item/reagent_containers/food/snacks/pie/plain = 1,
 		/obj/item/food/meat/steak/plain = 1
 	)
