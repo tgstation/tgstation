@@ -26,7 +26,6 @@
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
 #define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS 0.4
 
 
 //Ambience types
