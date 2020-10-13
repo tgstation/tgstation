@@ -36,8 +36,8 @@
 			belly.clear_reagents()
 
     if(user.reagents)
-		user.reagents.clear_reagents()
-		user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10) //I hate hate hate HATE this "solution", but I fear that just copy+pasting the code from mutadone here could cause an issue if that causes a monkey changeling to turn back into a human mid-power execution...
+    	user.reagents.clear_reagents()
+    	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10) //I hate hate hate HATE this "solution", but I fear that just copy+pasting the code from mutadone here could cause an issue if that causes a monkey changeling to turn back into a human mid-power execution...
 
 	if(isliving(user))
 		var/mob/living/L = user
