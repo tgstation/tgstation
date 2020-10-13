@@ -334,6 +334,42 @@
 #undef PATH_FREEZER
 #undef PATH_HEATER
 
+/obj/item/circuitboard/machine/hypertorus/fuel_input
+	name = "Hypertorus Coolant Input(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
+
+/obj/item/circuitboard/machine/hypertorus/waste_output
+	name = "Hypertorus Coolant Output(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
+
+/obj/item/circuitboard/machine/hypertorus/moderator_input
+	name = "Hypertorus Moderator Input(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+
+/obj/item/circuitboard/machine/hypertorus/core
+	name = "Hypertorus Core(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/hypertorus/core
+
+/obj/item/circuitboard/machine/hypertorus/corner
+	name = "Hypertorus Corner(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/hypertorus/corner
+
+/obj/item/circuitboard/machine/hypertorus/interface
+	name = "Hypertorus Interface(Machine Board)"
+	icon_state = "engineering"
+	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/hypertorus/interface
+
 //Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter
