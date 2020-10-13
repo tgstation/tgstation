@@ -56,17 +56,21 @@
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	linked = GLOB.areas_by_type[/area/holodeck/rec_center] //this should make current_area be the actual holodeck offline area object
-	bottom_left = locate(linked.x, linked.y, 2)
-	var/area/AS = get_area(src)
+	bottom_left = locate(linked.x, linked.y, src.z)
 
+	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
 		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 
 	// the following is necessary for power reasons
-	if(!linked || !offline_program)
+	if(!linked)
 		log_world("No matching holodeck area found")
+		qdel(src)
+		return
+	else if (!offline_program)
+		log_world("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
@@ -79,7 +83,7 @@
 			linked.power_usage = new /list(AREA_USAGE_LEN)
 
 	generate_program_list()
-	load_program("holodeck_offline")//honestly there isnt a reason to do this as far as im aware
+	load_program(offline_program)//honestly there isnt a reason to do this as far as im aware
 
 /obj/machinery/computer/holodeck/Destroy()
 	emergency_shutdown()
@@ -247,7 +251,7 @@
 							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
 	for(var/L in border)
 		var/turf/turf_to_disable = L
-		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in holodeckTemplateBounds()
 		turf_to_disable.atmos_adjacent_turfs?.Cut()
 
 	// Accept cached maps, but don't save them automatically - we don't want
@@ -297,7 +301,7 @@
 
 	for(var/L in turfs)
 		var/turf/B = L
-		atoms += B
+		//atoms += B
 		areas |= B.loc
 		for(var/atom/A in B)
 			if (!(A.flags_1 & INITIALIZED_1))
@@ -313,10 +317,27 @@
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
+	SSatoms.InitializeAtoms(turfs)
 	SSatoms.InitializeAtoms(atoms)
 	SSatoms.InitializeAtoms(newatoms) //copy the whole scanning thingy in another proc, look for all atoms that dont have the INITIALIZED_1 flag & have the HOLOGRAM_1 flag, add them to spawned
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
+	var/list/template_and_bordering_turfs = block(
+		locate(
+			max(bounds[MAP_MINX]-1, 1),
+			max(bounds[MAP_MINY]-1, 1),
+			bounds[MAP_MINZ]
+			),
+		locate(
+			min(bounds[MAP_MAXX]+1, world.maxx),
+			min(bounds[MAP_MAXY]+1, world.maxy),
+			bounds[MAP_MAXZ]
+			)
+		)
+	for(var/t in template_and_bordering_turfs)
+		var/turf/affected_turf = t
+		affected_turf.air_update_turf(TRUE)
 
 	return newatoms
 
@@ -394,9 +415,9 @@
 
 	if(!silent)
 		visible_message("<span class='notice'>[O] fades away!</span>")
-		qdel(O)
-	else
-		qdel(O)
+
+	qdel(O)
+
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
