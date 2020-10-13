@@ -95,7 +95,7 @@ The previous code made compliant:
 /datum/datum1/datum2/proc/proc3()
 	code
 /datum/datum1/datum2/proc2()
-	..()
+	. = ..()
 	code
 ```
 
@@ -181,7 +181,7 @@ This is clearer and enhances readability of your code! Get used to doing it!
 ### Control statements
 (if, while, for, etc)
 
-* All control statements must not contain code on the same line as the statement (`if (blah) return`)
+* No control statement may contain code on the same line as the statement (`if (blah) return`)
 * All control statements comparing a variable to a number should use the formula of `thing` `operator` `number`, not the reverse (eg: `if (count <= 10)` not `if (10 >= count)`)
 
 ### Use early return
@@ -229,6 +229,47 @@ This is good:
 	if(do_after(mob, 1.5 SECONDS))
 		mob.dothing()
 ````
+
+### Getters and setters
+
+* Avoid getter procs. They are useful tools in languages with that properly enforce variable privacy and encapsulation, but DM is not one of them. The upfront cost in proc overhead is met with no benefits, and it may tempt to develop worse code.
+
+This is bad:
+```DM
+/datum/datum1/proc/simple_getter()
+	return gotten_variable
+```
+Prefer to either access the variable directly or use a macro/define.
+
+
+* Make usage of variables or traits, set up through condition setters, for a more maintainable alternative to compex and redefined getters.
+
+These are bad:
+```DM
+/datum/datum1/proc/complex_getter()
+	return condition_a ? derivative_condition_a : derivative_condition_b
+
+/datum/datum1/child_datum/complex_getter()
+	return condition_a ? derivative_condition_b : derivative_condition_c
+```
+
+This is good:
+```DM
+/datum/datum1
+	var/getter_turned_into_variable
+
+/datum/datum1/proc/set_condition_a(new_value)
+	if(condition_a == new_value)
+		return
+	condition_a = new_value
+	on_set_condition_a_change()
+
+/datum/datum1/proc/on_set_condition_a_change()
+	getter_turned_into_variable = condition_a ? derivative_condition_a : derivative_condition_b
+
+/datum/datum1/child_datum/on_set_condition_a_change()
+	getter_turned_into_variable = condition_a ? derivative_condition_b : derivative_condition_c
+```
 
 
 ### Develop Secure Code
