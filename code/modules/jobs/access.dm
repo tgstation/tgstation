@@ -189,9 +189,9 @@
 			var/datum/job/J = new /datum/job/warden
 			return J.get_access()
 
-/proc/get_common_accesses() // for determining what wildcard slot to use
+/proc/get_common_accesses() // accesses in here will count towards common wildcard total
 	return list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER, ACCESS_SEC_DOORS, ACCESS_BRIG,
-				ACCESS_COURT, ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY,
+				ACCESS_COURT, ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_SURGERY, ACCESS_MECH_MEDICAL, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY,
 				ACCESS_RESEARCH, ACCESS_RND, ACCESS_TOXINS, ACCESS_TOXINS_STORAGE, ACCESS_GENETICS, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_MECH_SCIENCE,
 				ACCESS_CONSTRUCTION, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_TECH_STORAGE, ACCESS_ATMOSPHERICS, ACCESS_MECH_ENGINE,
 				ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_CARGO)
@@ -206,6 +206,35 @@
 
 /proc/get_captain_accesses()
 	return list(ACCESS_CAPTAIN)
+
+/proc/check_access_valid(var/list/accesses, var/card_level, var/trim) // tests a list of accesses against a trim and card level to see if it's valid
+	var/list/r_access = list()
+	if(trim)
+		r_access = get_region_accesses(trim)
+	var/list/pc_access = get_private_command_accesses()
+	var/list/ca_access = get_captain_accesses()
+	switch(card_level)
+		if(CARD_LEVEL_GREY)
+			var/obj/item/card/id/C = new /obj/item/card/id
+			C.access = accesses
+			C.trim = trim
+			if((C.common_wildcards < C.get_common_wildcards()) || (C.command_wildcards < C.get_command_wildcards())) // make sure wildcards are valid
+				return FALSE
+			for(var/A in C.access)
+				if(pc_access.Find(A) || ca_access.Find(A)) // make sure there are no flags of these levels
+					return FALSE
+		if(CARD_LEVEL_SILVER)
+			var/obj/item/card/id/silver/C = new /obj/item/card/id/silver
+			C.access = accesses
+			C.trim = trim
+			if((C.common_wildcards < C.get_common_wildcards()) || (C.command_wildcards < C.get_command_wildcards()))
+				return FALSE
+			for(var/A in C.access)
+				if((pc_access.Find(A) && !r_access.Find(A)) || ca_access.Find(A)) // make sure there are no flags of these levels if the trim and region mismatch
+					return FALSE
+		if(CARD_LEVEL_GOLD)
+			return TRUE
+	return TRUE
 
 /proc/get_region_accesses_name(code)
 	switch(code)

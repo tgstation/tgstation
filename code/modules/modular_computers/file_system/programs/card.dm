@@ -212,10 +212,13 @@
 					if(!job)
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
-					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.get_card_trim() && job.get_card_trim() != NONE)) // Grey & Silver cards don't have enough wildcards if the trims don't match
+					if(target_id_card.card_level < CARD_LEVEL_GOLD && (target_id_card.trim != job.card_trim && job.card_trim != NONE)) // Grey & Silver cards don't have enough wildcards if the trims don't match
 						to_chat(user, "<span class='warning'>Card trim doesn't match the selected job.</span>")
 						return
 					new_access = job.get_access()
+					if(!check_access_valid(new_access, target_id_card.card_level, target_id_card.trim))
+						to_chat(user, "<span class='warning'>This job has accesses that cannot fit on this card.</span>")
+						return
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
 				target_id_card.assignment = target

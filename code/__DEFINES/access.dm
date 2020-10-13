@@ -100,7 +100,6 @@
 /// These jobs have too many accesses for their card level, or access of too high a level.
 #define TRIM_PARAMEDIC 		8
 #define TRIM_HOP 			9
-#define TRIM_WARDEN			10
 
 	//CARD LEVELS
 #define CARD_LEVEL_PRISONER 	1
