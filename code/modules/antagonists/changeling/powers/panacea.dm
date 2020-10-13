@@ -31,6 +31,7 @@
 		C.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 		C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -200) //this is redundant with regenerate, but old!anatomic panacea gave you some mannitol and I want new!anatomic panacea to be consistent with that
 		C.drunkenness = 0
+		C.silent = 0
 		var/obj/item/organ/stomach/belly = C.getorganslot(ORGAN_SLOT_STOMACH)
   		if(belly)
     		belly.clear_reagents()
@@ -46,12 +47,16 @@
 			if(D.severity == DISEASE_SEVERITY_POSITIVE)
 				continue
 			D.cure()
-		radiation = 0
+		L.radiation = 0
 		L.clear_addictions()
 		L.dizziness = 0
 		L.drowsyness = 0
-		L.slurring = 0
+		L.stuttering = 0
 		L.jitteriness = 0
+		L.hallucination = 0
+		L.slurring = 0
+		L.cultslurring = 0
+		L.derpspeech = 0
 		L.set_confusion(0)
 		L.set_drugginess(amount)
 		L.set_disgust(amount)

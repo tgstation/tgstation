@@ -59,7 +59,6 @@
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
-	M.radiation = 0
 	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
@@ -71,27 +70,34 @@
 	M.SetUnconscious(0)
 	M.SetParalyzed(0)
 	M.SetImmobilized(0)
-	M.silent = FALSE
+	M.radiation = 0
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
 	M.slurring = 0
+	M.cultslurring = 0
+	M.derpspeech = 0
 	M.set_confusion(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = BLOOD_VOLUME_NORMAL
+	if(istype(M))
+		M.silent = FALSE
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = BLOOD_VOLUME_NORMAL
 
-	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
-	for(var/organ in M.internal_organs)
-		var/obj/item/organ/O = organ
-		O.setOrganDamage(0)
-	for(var/thing in M.diseases)
-		var/datum/disease/D = thing
-		if(D.severity == DISEASE_SEVERITY_POSITIVE)
-			continue
-		D.cure()
+		M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+		for(var/organ in M.internal_organs)
+			var/obj/item/organ/O = organ
+			O.setOrganDamage(0)
+		var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
+		if(istype(ears))
+			ears.deaf = 0 //because deafness isn't cured by just healing ear damage
+		for(var/thing in M.diseases)
+			var/datum/disease/D = thing
+			if(D.severity == DISEASE_SEVERITY_POSITIVE)
+				continue
+			D.cure()
 	..()
 	. = 1
 
