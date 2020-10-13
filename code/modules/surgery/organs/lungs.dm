@@ -300,10 +300,10 @@
 		if (prob(nitryl_pp))
 			H.emote("burp")
 		if (nitryl_pp>40)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 20)
-			to_chat(H, "<span class='notice'>You feel a burning sensation in your throat</span>")
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
+			to_chat(H, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		else
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/4)
 		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			H.reagents.add_reagent(/datum/reagent/nitryl,1)
