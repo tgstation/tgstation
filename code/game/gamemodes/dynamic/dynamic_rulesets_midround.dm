@@ -614,7 +614,7 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			spawn_locs += spawn_turf
 	if(!spawn_locs.len)
-    	message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
+		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
 		return MAP_ERROR
 	var/obj/structure/swarmer_beacon/new_beacon = new /obj/structure/swarmer_beacon(pick(spawn_locs))
 	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
